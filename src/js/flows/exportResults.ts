@@ -1,6 +1,7 @@
+import fs from "fs"
+import http from "http"
 import {SearchFormat} from "zealot"
 import brim from "../brim"
-import {saveToFile} from "../lib/response"
 import Columns from "../state/Columns"
 import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
@@ -40,19 +41,36 @@ export default (
   const [from, to] = Tab.getSpan(getState())
     .map(brim.time)
     .map((t) => t.toDate())
+  const {host, port} = Current.mustGetWorkspace(getState())
 
   dispatch(SystemTest.hook("export-start"))
-  return zealot
-    .search(program, {
-      from,
-      to,
-      poolId,
-      format,
-      controlMessages: false
-    })
-    .then((resp) => saveToFile(resp.origResp as Response, filePath))
-    .then((result) => {
-      dispatch(SystemTest.hook("export-complete"))
-      return result
-    })
+  const {body, path, method} = zealot.inspect.search(program, {
+    format,
+    from,
+    to,
+    poolId,
+    controlMessages: false
+  })
+  return new Promise<string>((resolve, reject) => {
+    http
+      .request(
+        {
+          method,
+          path,
+          host,
+          port
+        },
+        (res) => {
+          const fileStream = fs
+            .createWriteStream(filePath)
+            .on("error", reject)
+            .on("close", () => resolve(filePath))
+          res.pipe(fileStream)
+        }
+      )
+      .write(body)
+  }).then((result) => {
+    dispatch(SystemTest.hook("export-complete"))
+    return result
+  })
 }
