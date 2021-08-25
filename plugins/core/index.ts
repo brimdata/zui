@@ -3,18 +3,6 @@ import brim from "src/js/brim"
 
 export function activate(api: BrimApi) {
   api.configs.add({
-    name: "core",
-    title: "General",
-    properties: {
-      dataDir: {
-        name: "dataDir",
-        label: "Data Directory",
-        type: "directory",
-        defaultValue: ""
-      }
-    }
-  })
-  api.configs.add({
     name: "display",
     title: "Display",
     properties: {
