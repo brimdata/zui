@@ -5,16 +5,16 @@ import {ZeekEvent} from "ppl/detail/models/ZeekEvent"
 import RelatedAlerts from "ppl/detail/RelatedAlerts"
 import RelatedConns from "ppl/detail/RelatedConns"
 import UidPanel from "ppl/detail/UidPanel"
-import React, {useLayoutEffect, memo, useMemo, useRef} from "react"
+import React, {memo, useLayoutEffect, useMemo, useRef} from "react"
 import {useSelector} from "react-redux"
 import ConnPanel from "src/js/components/LogDetails/ConnPanel"
 import {Md5Panel} from "src/js/components/LogDetails/Md5Panel"
 import LogDetails from "src/js/state/LogDetails"
 import styled from "styled-components"
+import {detailPane} from "test/integration/helpers/locators"
+import {zed} from "zealot"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
-import {zed} from "zealot"
-import {detailPane} from "test/integration/helpers/locators"
 
 const BG = styled.div`
   padding: 12px;
@@ -60,7 +60,7 @@ const Wrap = styled.div`
 
 export default function Pane() {
   const record = useSelector(LogDetails.build)
-  const ref = useRef<HTMLDivElement>()
+  const ref = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     const node = ref.current

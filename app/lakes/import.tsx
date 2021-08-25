@@ -28,7 +28,7 @@ function handleError(e: TransactionError, dispatch: AppDispatch) {
 export default function TabImport() {
   const dispatch = useDispatch<AppDispatch>()
 
-  function onChange(_e, files) {
+  function onChange(_e: KeyboardEvent, files: File[]) {
     if (!files.length) return
     dispatch(ingestFiles(files))
       .then(() => toast.success("Import complete."))

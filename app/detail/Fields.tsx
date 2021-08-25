@@ -1,7 +1,7 @@
 import {Data, Name, Value} from "app/core/Data"
 import {useZedFormatter} from "app/core/format"
 import {typeClassNames} from "app/core/utils/type-class-names"
-import React, {memo, useCallback, useMemo, useState} from "react"
+import React, {memo, ReactNode, useCallback, useMemo, useState} from "react"
 import {useDispatch} from "react-redux"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
@@ -46,7 +46,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
   )
 })
 
-function TooltipAnchor({children}) {
+function TooltipAnchor({children}: {children: ReactNode}) {
   return (
     <span
       data-tip="column-description"
@@ -60,7 +60,13 @@ function TooltipAnchor({children}) {
   )
 }
 
-function Tooltip({field, record}) {
+function Tooltip({
+  field,
+  record
+}: {
+  field: {name: string; type: string}
+  record: zed.Record
+}) {
   return (
     <BrimTooltip id="column-description" className="brim-tooltip-show-hover">
       <ColumnDescription
@@ -85,8 +91,11 @@ export default memo(function Fields({record}: Props) {
   )
 
   const fields = useMemo(() => {
-    if (!record) return []
-    else return record.flatten().fields
+    if (record) {
+      const flat = record.flatten()
+      if (flat) return flat.fields
+    }
+    return []
   }, [record])
 
   return (
@@ -94,7 +103,7 @@ export default memo(function Fields({record}: Props) {
       <PanelHeading>Fields</PanelHeading>
       <DataPanel
         format={format}
-        fields={fields}
+        fields={fields || []}
         onRightClick={onRightClick}
         onHover={onHover}
       />

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {MouseEventHandler, ReactNode, useState} from "react"
 import styled from "styled-components"
 import BrimTextLogo from "../../src/js/components/BrimTextLogo"
 import electronIsDev from "../../src/js/electron/isDev"
@@ -20,7 +20,13 @@ const Nav = styled.nav`
   }
 `
 
-const Link = ({active, onClick, children}) => {
+type Props = {
+  active: boolean
+  onClick: MouseEventHandler
+  children: ReactNode
+}
+
+const Link = ({active, onClick, children}: Props) => {
   if (active) return <b>{children}</b>
   else return <a onClick={onClick}>{children}</a>
 }

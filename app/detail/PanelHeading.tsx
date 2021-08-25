@@ -24,7 +24,7 @@ export default function PanelHeading({children, isLoading}: Props) {
   return (
     <BG>
       <h4>{children}</h4>
-      <LoadingBurst show={isLoading} />
+      <LoadingBurst show={isLoading || false} />
     </BG>
   )
 }
