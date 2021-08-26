@@ -55,3 +55,16 @@ test("encode decode a field", () => {
   expect(before).toEqual(after)
   expect(before.value.type === after.value.type).toBe(true)
 })
+
+test("encode decode a type", () => {
+  const input = zq("count() by typeof(this) | cut typeof | sort typeof", file)
+  const ctx = new ZedContext()
+  const [rec] = ctx.decode(input)
+
+  const before = rec.getField("typeof")
+  const after = ctx.decodeField(ctx.encodeField(before))
+
+  expect(before).toEqual(after)
+  expect(ctx.encodeField(before)).toEqual(ctx.encodeRecord(rec))
+  expect(before.value.type === after.value.type).toBe(true)
+})

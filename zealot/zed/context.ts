@@ -1,3 +1,4 @@
+import * as zjson from "../zjson"
 import {TypeAlias} from "./types/type-alias"
 import {TypeArray} from "./types/type-array"
 import {TypeMap} from "./types/type-map"
@@ -7,9 +8,8 @@ import {TypeSet} from "./types/type-set"
 import {TypeUnion} from "./types/type-union"
 import {ContainerTypeInterface, ZedType} from "./types/types"
 import {isAlias, isNull, typeId} from "./utils"
-import {Record} from "./values/record"
-import * as zjson from "../zjson"
 import {Field} from "./values/field"
+import {Record} from "./values/record"
 
 export class ZedContext {
   private id = 23
@@ -219,7 +219,8 @@ export class ZedContext {
     const type = this.lookupTypeRecord([
       {name: field.name, type: field.value.type}
     ])
-    const transport = type.create([field.value.serialize()], {})
+
+    const transport = type.create([field.value.serialize()], {...this.typeById})
     return this.encodeRecord(transport)
   }
 }
