@@ -47,24 +47,29 @@ test("types from one search are the same", () => {
 test("encode decode a field", () => {
   const input = zq("*", file)
   const ctx = new ZedContext()
-  const [rec] = ctx.decode(input)
+  const records = ctx.decode(input)
+  expect.assertions(224)
 
-  const before = rec.getField("uid")
-  const after = ctx.decodeField(ctx.encodeField(before))
-
-  expect(before).toEqual(after)
-  expect(before.value.type === after.value.type).toBe(true)
+  records.forEach((rec) => {
+    rec.fields.forEach((field) => {
+      const after = ctx.decodeField(ctx.encodeField(field))
+      expect(field).toEqual(after)
+      expect(field.value.type === after.value.type).toBe(true)
+    })
+  })
 })
 
-test("encode decode a type", () => {
-  const input = zq("count() by typeof(this) | cut typeof | sort typeof", file)
+test("encode decode a typeof value", () => {
+  const input = zq("count() by typeof(this) | sort typeof", file)
   const ctx = new ZedContext()
-  const [rec] = ctx.decode(input)
+  const records = ctx.decode(input)
+  expect.assertions(36)
 
-  const before = rec.getField("typeof")
-  const after = ctx.decodeField(ctx.encodeField(before))
-
-  expect(before).toEqual(after)
-  expect(ctx.encodeField(before)).toEqual(ctx.encodeRecord(rec))
-  expect(before.value.type === after.value.type).toBe(true)
+  records.forEach((rec) => {
+    rec.fields.forEach((field) => {
+      const after = ctx.decodeField(ctx.encodeField(field))
+      expect(field).toEqual(after)
+      expect(field.value.type === after.value.type).toBe(true)
+    })
+  })
 })
