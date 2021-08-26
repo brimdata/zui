@@ -3,6 +3,7 @@ import {SearchStats, SearchStatus} from "../../types/searches"
 
 type EventNames =
   | "start"
+  | "end"
   | "stats"
   | "status"
   | "chan-end"
@@ -30,12 +31,16 @@ export class SearchResponse {
     this.callbacks.set("status", func)
     return this
   }
-  end(func: (id: number) => void) {
-    this.callbacks.set("chan-end", func)
-    return this
-  }
   start(func: () => void) {
     this.callbacks.set("start", func)
+    return this
+  }
+  end(func: () => void) {
+    this.callbacks.set("end", func)
+    return this
+  }
+  chanEnd(func: (id: number) => void) {
+    this.callbacks.set("chan-end", func)
     return this
   }
   error(func: (arg0: string) => void) {

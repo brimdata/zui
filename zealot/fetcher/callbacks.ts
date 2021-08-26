@@ -8,6 +8,8 @@ type EventName =
   | "QueryStats"
   | "QueryWarning"
   | "QueryError"
+  | "QueryStart"
+  | "QueryEnd"
   | "error"
 
 export class Callbacks {
@@ -16,16 +18,22 @@ export class Callbacks {
     this.callbacks = new Map()
   }
 
-  add(name: EventName, cb: (args: ZealotPayloadValue) => void) {
+  add(name: EventName, cb: (args?: ZealotPayloadValue) => void) {
     this.callbacks.set(name, cb)
     return this
   }
-  emit(name: EventName | "Object", payload: ZealotPayloadValue) {
+  emit(name: EventName | "Object", payload?: ZealotPayloadValue) {
     // backend sends kind: "Object" for records, swap that name for the more
     // meaningful "QueryRecord" event name here
     if (name === "Object") name = "QueryRecord"
     const cb = this.callbacks.get(name)
     if (cb) cb(payload)
+  }
+  start(cb: () => void) {
+    return this.add("QueryStart", cb)
+  }
+  end(cb: () => void) {
+    return this.add("QueryEnd", cb)
   }
   channelSet(cb: (payload: lake.QueryChannelSetValue) => void) {
     return this.add("QueryChannelSet", cb)

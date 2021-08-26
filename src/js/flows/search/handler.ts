@@ -42,10 +42,12 @@ export function handle(request: Promise<ZResponse>) {
 
     request
       .then((stream) => {
-        response.emit("start")
-        response.emit("status", "FETCHING")
         stream
           .callbacks()
+          .start(() => {
+            response.emit("start")
+            response.emit("status", "FETCHING")
+          })
           .channelSet(({channel_id}) => {
             currentChannel = channel_id
           })
@@ -62,14 +64,16 @@ export function handle(request: Promise<ZResponse>) {
           .warning((pl) => response.emit("warning", pl.warning))
           .error(errored)
           .internalError(errored)
+          .end(() => {
+            flushBuffer()
+            response.emit("end")
+            if (!isErrSet) {
+              response.emit("status", "SUCCESS")
+              setTimeout(resolve)
+            }
+          })
       })
       .catch(errored)
-      .finally(() => {
-        if (!isErrSet) {
-          response.emit("status", "SUCCESS")
-          setTimeout(resolve)
-        }
-      })
   })
 
   return {response, promise}
