@@ -1,8 +1,10 @@
 import {lakePath, workspacePath} from "app/router/utils/paths"
-import fsExtra from "fs-extra"
+import {Zealot} from "../../../zealot"
+import BrimApi from "../api"
 import brim from "../brim"
 import ingest from "../brim/ingest"
 import {IngestParams} from "../brim/ingest/getParams"
+import interop from "../brim/interop"
 import lib from "../lib"
 import Current from "../state/Current"
 import Handlers from "../state/Handlers"
@@ -12,10 +14,6 @@ import SystemTest from "../state/SystemTest"
 import Tabs from "../state/Tabs"
 import {Dispatch, Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
-import BrimApi from "../api"
-import {Zealot} from "../../../zealot"
-import interop from "../brim/interop"
-import ConfigPropValues from "../state/ConfigPropValues"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
@@ -27,14 +25,12 @@ export default (files: File[]): Thunk<Promise<void>> => (
   const zealot = dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
-  const dataDir = ConfigPropValues.get("display", "dataDir")(getState())
   const poolNames = Pools.getPoolNames(workspaceId)(getState())
 
   dispatch(SystemTest.hook("import-start"))
   return lib
     .transaction([
-      validateInput(files, dataDir, poolNames),
-      createDir(),
+      validateInput(files, poolNames),
       createPool(zealot, dispatch, workspaceId),
       setPool(dispatch, tabId, workspaceId),
       registerHandler(dispatch, requestId),
@@ -46,11 +42,11 @@ export default (files: File[]): Thunk<Promise<void>> => (
     })
 }
 
-const validateInput = (files: File[], dataDir, poolNames) => ({
+const validateInput = (files: File[], poolNames) => ({
   async do() {
     const params = await ingest
       .detectFileTypes(files)
-      .then((data) => ingest.getParams(data, dataDir, poolNames))
+      .then((data) => ingest.getParams(data, poolNames))
       .catch((e) => {
         if (e.message.startsWith("EISDIR"))
           throw new Error(
@@ -63,24 +59,9 @@ const validateInput = (files: File[], dataDir, poolNames) => ({
   }
 })
 
-const createDir = () => ({
-  async do({dataDir}: IngestParams) {
-    dataDir && (await fsExtra.ensureDir(dataDir))
-  },
-  async undo({dataDir}: IngestParams) {
-    dataDir && (await fsExtra.remove(dataDir))
-  }
-})
-
 const createPool = (client: Zealot, gDispatch, workspaceId) => ({
   async do(params: IngestParams) {
-    let createParams
-    if (params.dataDir) {
-      createParams = {data_path: params.dataDir, name: params.name}
-    } else {
-      createParams = {name: params.name}
-    }
-    const pool = await client.pools.create(createParams)
+    const pool = await client.pools.create({name: params.name})
     gDispatch(
       Pools.setDetail(workspaceId, {
         ...pool,

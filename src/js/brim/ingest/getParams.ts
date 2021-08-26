@@ -1,13 +1,10 @@
-import path from "path"
-
-import {getUniqName} from "../../lib/uniqName"
-import fileList, {FileListData} from "./fileList"
 import lib from "../../lib"
+import {getUniqName} from "../../lib/uniqName"
 import time from "../time"
+import fileList, {FileListData} from "./fileList"
 
 export type IngestParams = {
   name: string
-  dataDir: string
   fileListData: FileListData
 }
 
@@ -17,18 +14,13 @@ export type IngestParamsError = {
 
 export default function getParams(
   data: FileListData,
-  dataDir?: string,
   existingNames: string[] = [],
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
   const files = fileList(data)
 
-  function getDataDir() {
-    return dataDir ? path.join(dataDir, getPoolName()) : ""
-  }
-
   function getPoolName() {
-    let name
+    let name: string
     if (files.oneFile()) name = lib.file(files.first().file.path).fileName()
     else if (files.inSameDir()) name = files.dirName()
     else name = generateDirName(now)
@@ -38,11 +30,10 @@ export default function getParams(
 
   return {
     name: getPoolName(),
-    dataDir: getDataDir(),
     fileListData: data
   }
 }
 
-function generateDirName(now) {
+function generateDirName(now: Date) {
   return "zeek_" + time(now).format("YYYY-MM-DD_HH:mm:ss")
 }

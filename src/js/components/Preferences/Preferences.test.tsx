@@ -29,9 +29,6 @@ const $ = {
   get timeFormat() {
     return screen.getByLabelText("Time Format docs") as HTMLInputElement
   },
-  get dataDirectory() {
-    return screen.getByLabelText("Data Directory") as HTMLInputElement
-  },
   get brimcapConfig() {
     return screen.getByLabelText(
       "Brimcap YAML Config File docs"
@@ -70,15 +67,6 @@ test("change time format", async () => {
   const record = createRecord({ts: new Date(2019, 9, 1, 8)})
   render(<Fields record={record} />, {store: brim.store})
   expect($.dd.textContent).toBe("2019")
-})
-
-test("data directory", async () => {
-  fireEvent.change($.dataDirectory, {target: {value: __dirname}})
-  fireEvent.click($.ok)
-  await waitForElementToBeRemoved($.modal)
-
-  brim.dispatch(Modal.show("settings"))
-  expect($.dataDirectory.value).toBe(__dirname)
 })
 
 test("Brimcap YAML Config File docs", async () => {
