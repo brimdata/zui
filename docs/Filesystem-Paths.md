@@ -161,8 +161,7 @@ set and is typically of a format like
 
 * **macOS** - The base path specified in the `$TMPDIR` environment variable is
 used. In a default test environment we've found this variable is already set
-and is typically of a format like `/var/folders/yn/jbkxxkpd4vg142pc3_bd_krc0000gn/T/`
-that varies with each system reboot.
+and is typically of a format like `/var/folders/yn/jbkxxkpd4vg142pc3_bd_krc0000gn/T/`.
 
 * **Linux** - A base path specified in a `$TMP` environment variable would be
 used, if it were set. However, in default test environments we've found this
