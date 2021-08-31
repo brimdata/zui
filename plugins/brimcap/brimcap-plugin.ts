@@ -12,7 +12,7 @@ import {reactElementProps} from "../../test/integration/helpers/integration"
 import BrimcapCLI, {analyzeOptions, searchOptions} from "./brimcap-cli"
 import {ChildProcess, spawn} from "child_process"
 import {MenuItemConstructorOptions} from "electron"
-import {compact, get} from "lodash"
+import {compact} from "lodash"
 import env from "app/core/env"
 
 export default class BrimcapPlugin {
@@ -269,7 +269,7 @@ export default class BrimcapPlugin {
 
   private setupLoader() {
     const load = async (
-      params: IngestParams & {poolId: string},
+      params: IngestParams & {poolId: string; branchId: string},
       onProgressUpdate: (value: number | null) => void,
       onWarning: (warning: string) => void,
       onDetailUpdate: () => void,
@@ -330,16 +330,10 @@ export default class BrimcapPlugin {
 
       // stream analyze output to pool
       const zealot = this.api.getZealot()
-      const res = await zealot.pools.add(params.poolId, {
-        data: p.stdout,
-        signal
-      })
-      const commitId = get(res, ["value", "commit"], "")
-      if (!commitId) throw new Error("No commit obtained from lake add")
-
-      await zealot.pools.commit(params.poolId, commitId, {
+      await zealot.pools.load(params.poolId, params.branchId, {
         author: "brim",
         message: "automatic import with brimcap analyze",
+        data: p.stdout,
         signal
       })
 

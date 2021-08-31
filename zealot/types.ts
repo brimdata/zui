@@ -41,15 +41,11 @@ export interface SearchArgs {
   signal?: AbortSignal
 }
 
-export interface PoolAddArgs {
-  data: NodeJS.ReadableStream
-  signal?: AbortSignal
-}
-
-export interface PoolCommitArgs {
-  message: string
+export interface PoolLoadArgs {
   author: string
   date?: number
+  message: string
+  data: NodeJS.ReadableStream
   signal?: AbortSignal
 }
 
@@ -82,4 +78,15 @@ export interface PoolConfig {
 export interface PoolStats {
   size: number
   span?: Span
+}
+
+export interface BranchConfig {
+  name: string
+  id: string
+  parent: string
+}
+
+export interface BranchMeta {
+  pool: PoolConfig
+  branch: BranchConfig
 }
