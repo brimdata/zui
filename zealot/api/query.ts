@@ -6,7 +6,8 @@ export default function queryApi(zql: string, args: QueryArgs): FetchArgs {
     method: "POST",
     path: `/query?${getQueryParams(args)}`,
     body: JSON.stringify({query: zql}),
-    headers: getHeaders(args)
+    headers: getHeaders(args),
+    signal: args.signal
   }
 }
 
