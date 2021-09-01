@@ -61,14 +61,14 @@ const validateInput = (files: File[], poolNames) => ({
 
 const createPool = (client: Zealot, gDispatch, workspaceId) => ({
   async do(params: IngestParams) {
-    const create = await client.pools.create({name: params.name})
+    const {pool, branch} = await client.pools.create({name: params.name})
     gDispatch(
       Pools.setDetail(workspaceId, {
-        ...create.pool,
+        ...pool,
         ingest: {progress: 0, warnings: []}
       })
     )
-    return {...params, poolId: create.pool.id, branchId: create.branch.id}
+    return {...params, poolId: pool.id, branchId: branch.id}
   },
   async undo({poolId}: IngestParams & {poolId: string}) {
     await client.pools.delete(poolId)

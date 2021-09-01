@@ -10,7 +10,7 @@ test("listing the pool", () => {
 
 test("creating a pool", () => {
   return withLake(async (zealot: any) => {
-    const create = await zealot.pools.create({name: "pool1"})
-    expect(create.pool.name).toBe("pool1")
+    const {pool} = await zealot.pools.create({name: "pool1"})
+    expect(pool.name).toBe("pool1")
   })
 })
