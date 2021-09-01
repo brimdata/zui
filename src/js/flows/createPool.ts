@@ -19,9 +19,9 @@ export const createPool = ({name}: Props): Thunk<Promise<void>> => (
     .create({
       name
     })
-    .then((pool) => {
+    .then((create) => {
       dispatch(refreshPoolNames()).then(() =>
-        dispatch(tabHistory.push(lakePath(pool.id, workspaceId)))
+        dispatch(tabHistory.push(lakePath(create.pool.id, workspaceId)))
       )
     })
 }

@@ -4,14 +4,14 @@ import {getHost} from "./util/host"
 import {getDefaultSearchArgs} from "./config/search_args"
 import nodeFetch from "node-fetch"
 import {
+  BranchMeta,
   SearchArgs,
   Response,
   PoolArgs,
   PoolConfig,
   PoolStats,
   ZealotArgs,
-  PoolCommitArgs,
-  PoolAddArgs
+  PoolLoadArgs
 } from "./types"
 import {Context, Int64, Record, Time} from "./zed"
 import {IndexSearchArgs} from "./api/archive"
@@ -88,7 +88,7 @@ export function createZealot(
         }
         return stats
       },
-      create: async (args: PoolArgs): Promise<PoolConfig> => {
+      create: async (args: PoolArgs): Promise<BranchMeta> => {
         let res = await promise(pools.create(args))
         return res.value
       },
@@ -98,19 +98,11 @@ export function createZealot(
       update: (id: string, args: Partial<PoolArgs>) => {
         return promise(pools.update(id, args))
       },
-      add: async (id: string, args: PoolAddArgs) => {
-        const {path, method, body, headers} = pools.add(id, args)
-        const resp = await nodeFetch(url(host, path), {
-          method,
-          body,
-          headers,
-          signal: args.signal
-        })
+      load: async (poolId: string, branchId: string, args: PoolLoadArgs) => {
+        const {path, ...rest} = pools.load(poolId, branchId, args)
+        const resp = await nodeFetch(url(host, path), rest)
         const content = await parseContentType(resp)
         return resp.ok ? content : Promise.reject(createError(content))
-      },
-      commit: (id: string, commitId: string, args: PoolCommitArgs) => {
-        return promise(pools.commit(id, commitId, args))
       }
     },
     inspect: {
