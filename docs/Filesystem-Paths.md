@@ -141,12 +141,13 @@ about what you may continue to do with the pcap file outside the app.
 
 Standard conventions are used for creating these directories/files in the
 appropriate location for each supported platform. As a result, temporary
-storage should always be freed up automatically by the OS during normal
-operations, such as when performing a system restart. However, bugs or abrupt
-shutdowns to Zed/Brimcap processes (e.g., `kill -9` or similar) may prevent
-the tools from deleting their temporary directories as individual operations
-finish. This may lead to excess consumption of temporary storage over time,
-particularly if your system is rarely rebooted.
+storage may be freed up automatically by the OS during normal operations, such
+as when performing a system restart or running common cleanup utilities.
+However, bugs or abrupt shutdowns to Zed/Brimcap processes (e.g., `kill -9` or
+similar) may prevent the tools from deleting their temporary directories as
+individual operations finish. This may lead to excess consumption of temporary
+storage over time, particularly if your temporary storage is not regularly
+cleared in the course of normal operations.
 
 If during the course of operations or debugging you'd like to check for signs
 of unreaped temporary storage, you can look below a base temporary directory
