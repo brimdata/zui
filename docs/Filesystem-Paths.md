@@ -143,7 +143,7 @@ Standard conventions are used for creating these directories/files in the
 appropriate location for each supported platform. As a result, temporary
 storage may be freed up automatically by the OS during normal operations, such
 as when performing a system restart or running common cleanup utilities.
-However, bugs or abrupt shutdowns to Zed/Brimcap processes (e.g., `kill -9` or
+However, bugs or abrupt shutdowns of Zed/Brimcap processes (e.g., `kill -9` or
 similar) may prevent the tools from deleting their temporary directories as
 individual operations finish. This may lead to excess consumption of temporary
 storage over time, particularly if your temporary storage is not regularly
