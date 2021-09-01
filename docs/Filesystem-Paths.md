@@ -164,7 +164,7 @@ set and is typically of a format like
 used. In a default test environment we've found this variable is already set
 and is typically of a format like `/var/folders/yn/jbkxxkpd4vg142pc3_bd_krc0000gn/T/`.
 
-* **Linux** - A base path specified in a `$TMP` environment variable would be
+* **Linux** - A base path specified in a `$TMPDIR` environment variable would be
 used, if it were set. However, in default test environments we've found this
 variable is typically not set, and therefore the `/tmp` path is used.
 
