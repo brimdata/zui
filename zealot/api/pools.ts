@@ -46,14 +46,14 @@ export default {
       body: JSON.stringify(args)
     }
   },
-  load(poolId: string, branchId: string, args: PoolLoadArgs) {
+  load(poolId: string, branch: string, args: PoolLoadArgs) {
     const {data, signal, ...rest} = args
     return {
       headers: new Headers({
         Accept: "application/json",
         "Zed-Commit": JSON.stringify(rest)
       }),
-      path: `/pool/${poolId}/${branchId}`,
+      path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: "POST",
       body: data,
       signal

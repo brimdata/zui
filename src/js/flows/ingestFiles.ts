@@ -68,7 +68,7 @@ const createPool = (client: Zealot, gDispatch, workspaceId) => ({
         ingest: {progress: 0, warnings: []}
       })
     )
-    return {...params, poolId: pool.id, branchId: branch.id}
+    return {...params, poolId: pool.id, branch: branch.name}
   },
   async undo({poolId}: IngestParams & {poolId: string}) {
     await client.pools.delete(poolId)
