@@ -14,8 +14,8 @@ test("ingest ZNG logs", () => {
       author: "test author",
       message: "test message",
       data: logStream
-    });
-    ({size} = await zealot.pools.stats(pool.id))
+    })
+    ;({size} = await zealot.pools.stats(pool.id))
     expect(size).toBe(5250)
   })
 })
@@ -30,8 +30,8 @@ test("ingest TSV logs", () => {
       author: "test author",
       message: "test message",
       data: logStream
-    });
-    ({size} = await zealot.pools.stats(pool.id))
+    })
+    ;({size} = await zealot.pools.stats(pool.id))
     expect(size).toBe(4084)
   })
 })
@@ -46,8 +46,8 @@ test("ingest NDJSON logs", () => {
       author: "test author",
       message: "test message",
       data: logStream
-    });
-    ({size} = await zealot.pools.stats(pool.id))
+    })
+    ;({size} = await zealot.pools.stats(pool.id))
     expect(size).toBe(4467)
   })
 })
