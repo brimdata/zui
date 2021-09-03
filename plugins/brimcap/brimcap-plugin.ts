@@ -269,7 +269,7 @@ export default class BrimcapPlugin {
 
   private setupLoader() {
     const load = async (
-      params: IngestParams & {poolId: string; branchId: string},
+      params: IngestParams & {poolId: string; branch: string},
       onProgressUpdate: (value: number | null) => void,
       onWarning: (warning: string) => void,
       onDetailUpdate: () => void,
@@ -330,9 +330,9 @@ export default class BrimcapPlugin {
 
       // stream analyze output to pool
       const zealot = this.api.getZealot()
-      await zealot.pools.load(params.poolId, params.branchId, {
+      await zealot.pools.load(params.poolId, params.branch, {
         author: "brim",
-        message: "automatic import with brimcap analyze",
+        body: "automatic import with brimcap analyze",
         data: p.stdout,
         signal
       })

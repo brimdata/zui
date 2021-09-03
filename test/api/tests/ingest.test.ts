@@ -10,9 +10,9 @@ test("ingest ZNG logs", () => {
     let {size} = await zealot.pools.stats(pool.id)
     expect(size).toBe(0)
     const logStream = fs.createReadStream(data.getPath("sample.zng"))
-    await zealot.pools.load(pool.id, branch.id, {
+    await zealot.pools.load(pool.id, branch.name, {
       author: "test author",
-      message: "test message",
+      body: "test message",
       data: logStream
     })
     ;({size} = await zealot.pools.stats(pool.id))
@@ -26,9 +26,9 @@ test("ingest TSV logs", () => {
     let {size} = await zealot.pools.stats(pool.id)
     expect(size).toBe(0)
     const logStream = fs.createReadStream(data.getPath("sample.tsv"))
-    await zealot.pools.load(pool.id, branch.id, {
+    await zealot.pools.load(pool.id, branch.name, {
       author: "test author",
-      message: "test message",
+      body: "test message",
       data: logStream
     })
     ;({size} = await zealot.pools.stats(pool.id))
@@ -42,9 +42,9 @@ test("ingest NDJSON logs", () => {
     let {size} = await zealot.pools.stats(pool.id)
     expect(size).toBe(0)
     const logStream = fs.createReadStream(data.getPath("custom-sample.ndjson"))
-    await zealot.pools.load(pool.id, branch.id, {
+    await zealot.pools.load(pool.id, branch.name, {
       author: "test author",
-      message: "test message",
+      body: "test message",
       data: logStream
     })
     ;({size} = await zealot.pools.stats(pool.id))

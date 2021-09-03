@@ -23,8 +23,7 @@ beforeEach(() => {
         id: "poolId"
       },
       branch: {
-        name: "main",
-        id: "branchId"
+        name: "main"
       }
     })
     .stubPromise(

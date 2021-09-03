@@ -5,9 +5,9 @@ import data from "test/shared/data"
 
 async function setup(zealot: any) {
   const {pool, branch} = await zealot.pools.create({name: "pool1"})
-  await zealot.pools.load(pool.id, branch.id, {
+  await zealot.pools.load(pool.id, branch.name, {
     author: "test author",
-    message: "test message",
+    body: "test message",
     data: createReadStream(data.getPath("sample.tsv"))
   })
 

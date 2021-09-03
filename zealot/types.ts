@@ -44,7 +44,7 @@ export interface SearchArgs {
 export interface PoolLoadArgs {
   author: string
   date?: number
-  message: string
+  body: string
   data: NodeJS.ReadableStream
   signal?: AbortSignal
 }

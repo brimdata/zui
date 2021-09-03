@@ -98,8 +98,8 @@ export function createZealot(
       update: (id: string, args: Partial<PoolArgs>) => {
         return promise(pools.update(id, args))
       },
-      load: async (poolId: string, branchId: string, args: PoolLoadArgs) => {
-        const {path, ...rest} = pools.load(poolId, branchId, args)
+      load: async (poolId: string, branch: string, args: PoolLoadArgs) => {
+        const {path, ...rest} = pools.load(poolId, branch, args)
         const resp = await nodeFetch(url(host, path), rest)
         const content = await parseContentType(resp)
         return resp.ok ? content : Promise.reject(createError(content))
