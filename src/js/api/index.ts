@@ -12,8 +12,10 @@ import {
 } from "./registries"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {StorageApi} from "./storage"
+import {Abortables} from "app/core/models/abortables"
 
 export default class BrimApi {
+  public abortables = new Abortables()
   public commands = new CommandRegistry()
   public loaders = new LoaderRegistry()
   public contextMenus = {
