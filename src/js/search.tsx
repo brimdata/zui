@@ -1,26 +1,22 @@
-import "regenerator-runtime/runtime"
-
-import {Provider} from "react-redux"
-import {ThemeProvider} from "styled-components"
+import {BrimProvider} from "app/core/context"
+import {ipcRenderer} from "electron"
 import React from "react"
 import ReactDOM from "react-dom"
-
+import "regenerator-runtime/runtime"
 import App from "./components/App"
-import AppErrorBoundary from "./components/AppErrorBoundary"
 import StartupError from "./components/StartupError"
+import deletePartialPools from "./flows/deletePartialPools"
 import initialize from "./initializers/initialize"
 import lib from "./lib"
-import theme from "./style-theme"
-import deletePartialPools from "./flows/deletePartialPools"
-import TabHistories from "./state/TabHistories"
 import {getWindowPersistable} from "./state/getPersistable"
-import {ipcRenderer} from "electron"
+import TabHistories from "./state/TabHistories"
 
 initialize()
-  .then(({store, pluginManager}) => {
+  .then(({store, api, pluginManager}) => {
     window.onbeforeunload = () => {
       // This runs during reload
       // Visit initIpcListeners.ts#prepareClose for closing window
+      api.abortables.abort()
       pluginManager.deactivate()
       store.dispatch(deletePartialPools())
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))
@@ -31,13 +27,9 @@ initialize()
       )
     }
     ReactDOM.render(
-      <AppErrorBoundary>
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <App />
-          </ThemeProvider>
-        </Provider>
-      </AppErrorBoundary>,
+      <BrimProvider store={store} api={api}>
+        <App />
+      </BrimProvider>,
       lib.doc.id("app-root")
     )
   })
