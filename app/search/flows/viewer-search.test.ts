@@ -81,22 +81,6 @@ describe("a normal response", () => {
     expect(select(Viewer.getEndStatus)).toBe("COMPLETE")
   })
 
-  test("registers a table request then cleans it up", async () => {
-    const promise = submit()
-    expect(select(Handlers.get)["Table"]).toEqual(
-      expect.objectContaining({type: "SEARCH"})
-    )
-    await promise
-    expect(select(Handlers.get)["Table"]).toBe(undefined)
-  })
-
-  test("aborts previous table request", async () => {
-    const abort = jest.fn()
-    dispatch(Handlers.register("Table", {type: "SEARCH", abort}))
-    await submit()
-    expect(abort).toHaveBeenCalledTimes(1)
-  })
-
   test("sets the viewer columns", async () => {
     await submit()
     expect(select(Viewer.getColumns)).toMatchSnapshot()

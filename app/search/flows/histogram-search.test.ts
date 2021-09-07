@@ -50,27 +50,6 @@ test("the chart status updates", async () => {
   expect(select(Chart.getStatus)).toBe("SUCCESS")
 })
 
-test("registers historgram request then cleans it up", async (done) => {
-  const promise = submit()
-  expect(select(Handlers.get)["Histogram"]).toEqual(
-    expect.objectContaining({type: "SEARCH"})
-  )
-  await promise
-  // The promise only waits for the table, might be good to return two
-  // promises so people can decide what they want to wait for.
-  setTimeout(() => {
-    expect(select(Handlers.get)["Histogram"]).toBe(undefined)
-    done()
-  })
-})
-
-test("aborts previous histogram request", async () => {
-  const abort = jest.fn()
-  dispatch(Handlers.register("Histogram", {type: "SEARCH", abort}))
-  await submit()
-  expect(abort).toHaveBeenCalledTimes(1)
-})
-
 test("populates the chart", async () => {
   await submit()
   expect(select(Chart.getData)).toMatchSnapshot()

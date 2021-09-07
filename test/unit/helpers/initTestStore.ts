@@ -12,7 +12,7 @@ export type TestStore = {
   clearActions: Function
 } & Store
 
-export default (zealot?: Zealot, api?: BrimApi): TestStore => {
+export default (zealot?: Zealot, api: BrimApi = new BrimApi()): TestStore => {
   const client = zealot || createZealotMock().zealot
   const createZealot = () => client
   const store = configureStore({
