@@ -16,7 +16,7 @@
 # Summary
 
 By default, the Brim application connects to a Workspace on the system on which
-it is launched. This Workspace includes [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/design.md)
+it is launched. This Workspace includes [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
 storage on the local filesystem for holding imported data. However, Brim is
 capable of accessing data stored in a Zed Lake in a remote Workspace as well.
 This cookbook describes the available options and current limitations.
