@@ -20,10 +20,10 @@ export interface indexOptions {
 
 export interface analyzeOptions {
   config?: string
-  suricata?: boolean
+  suricataDisabled?: boolean
   suricataStderr?: string
   suricataStdout?: string
-  zeek?: boolean
+  zeekDisabled?: boolean
   zeekStdout?: string
   zeekStderr?: string
   utf8?: boolean
@@ -46,10 +46,12 @@ export interface searchOptions extends packetOptions {
 
 const OPTION_NAME_MAP = {
   pool: "p",
-  suricataStderr: "suricata.stderr",
-  suricataStdout: "suricata.stdout",
-  zeekStdout: "zeek.stdout",
-  zeekStderr: "zeek.stderr",
+  suricataDisabled: "analyzers.suricata.disabled",
+  suricataStderr: "analyzers.suricata.stderr",
+  suricataStdout: "analyzers.suricata.stdout",
+  zeekDisabled: "analyzers.zeek.disabled",
+  zeekStdout: "analyzers.zeek.stdout",
+  zeekStderr: "analyzers.zeek.stderr",
   write: "w",
   dstIp: "dst.ip",
   dstPort: "dst.port",
