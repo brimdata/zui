@@ -131,7 +131,7 @@ function Modal({onClose}) {
           migration tool
         </Link>{" "}
         and the{" "}
-        <Link href="https://github.com/brimdata/zed/blob/main/docs/lake/design.md">
+        <Link href="https://github.com/brimdata/zed/blob/main/docs/lake/README.md">
           Zed Lake design
         </Link>
         .

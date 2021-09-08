@@ -41,7 +41,7 @@ shy!
 By its nature, a join operation requires two inputs that will
 ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tree/main/docs/language/operators#join)
 show examples with the [Zed CLI tools](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md)
-that specify these inputs as named files or Pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/design.md).
+that specify these inputs as named files or Pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md).
 
 Brim release `v0.25.0` includes initial support for storing data in Zed Lakes.
 However, due to a current limitation ([brim/1618](https://github.com/brimdata/brim/issues/1618)),
