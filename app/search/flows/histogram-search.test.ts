@@ -1,7 +1,6 @@
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import Chart from "src/js/state/Chart"
-import Handlers from "src/js/state/Handlers"
 import Pools from "src/js/state/Pools"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "test/unit/fixtures"
