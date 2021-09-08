@@ -4,8 +4,9 @@ import {releaseNotesPath} from "app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Launches from "src/js/state/Launches"
 import Tabs from "src/js/state/Tabs"
+import {Thunk} from "src/js/state/types"
 
-export function maybeShowReleaseNotes() {
+export function maybeShowReleaseNotes(): Thunk {
   return async (dispatch, getState) => {
     const version = await metaClient.version()
     if (
@@ -18,7 +19,7 @@ export function maybeShowReleaseNotes() {
   }
 }
 
-export function showReleaseNotes() {
+export function showReleaseNotes(): Thunk {
   return (dispatch, getState) => {
     const id = Current.getWorkspaceId(getState())
     dispatch(Tabs.new(releaseNotesPath(id)))

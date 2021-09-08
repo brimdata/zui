@@ -1,4 +1,5 @@
 import Current from "src/js/state/Current"
+import {Thunk} from "src/js/state/types"
 import Url from "src/js/state/Url"
 
 /**
@@ -9,22 +10,22 @@ import Url from "src/js/state/Url"
  */
 
 export default {
-  push: (url) => (dispatch, getState) => {
+  push: (url: string): Thunk => (dispatch, getState) => {
     Current.getHistory(getState()).push(url)
     dispatch(Url.changed())
   },
 
-  replace: (url) => (dispatch, getState) => {
+  replace: (url: string): Thunk => (dispatch, getState) => {
     Current.getHistory(getState()).replace(url)
     dispatch(Url.changed())
   },
 
-  goBack: () => (dispatch, getState) => {
+  goBack: (): Thunk => (dispatch, getState) => {
     Current.getHistory(getState()).goBack()
     dispatch(Url.changed())
   },
 
-  goForward: () => (dispatch, getState) => {
+  goForward: (): Thunk => (dispatch, getState) => {
     Current.getHistory(getState()).goForward()
     dispatch(Url.changed())
   }

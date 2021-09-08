@@ -1,7 +1,7 @@
 import {metaClient} from "app/ipc/meta"
 import {useEffect, useState} from "react"
 
-async function fetchNotes(version) {
+async function fetchNotes(version: string) {
   const repo = await metaClient.repo()
 
   const url = `https://api.github.com/repos/${repo}/releases/tags/v${version}`
@@ -17,10 +17,14 @@ async function fetchNotes(version) {
   } catch (e) {
     let message =
       "There was a problem fetching the release notes for this version. \n\n"
-    if (e.message === "Failed to fetch") {
-      return message + "Error: No internet access"
+    if (e instanceof Error) {
+      if (e.message === "Failed to fetch") {
+        return message + "Error: No internet access"
+      } else {
+        return message + e.toString()
+      }
     } else {
-      return message + e.toString()
+      return message + JSON.stringify(e)
     }
   }
 }

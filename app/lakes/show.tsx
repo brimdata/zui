@@ -2,7 +2,7 @@ import useLakeId from "app/router/hooks/use-lake-id"
 import useWorkspaceId from "app/router/hooks/use-workspace-id"
 import {lakeSearch} from "app/router/routes"
 import {workspacePath} from "app/router/utils/paths"
-import React, {useEffect, useState} from "react"
+import React, {ReactElement, useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Redirect, Route, Switch, useRouteMatch} from "react-router"
 import {initPool} from "src/js/flows/initPool"
@@ -26,7 +26,7 @@ export default function LakeShow() {
   )
 }
 
-function InitLake({children}) {
+function InitLake({children}: {children: ReactElement}) {
   const dispatch = useDispatch<AppDispatch>()
   const lakeId = useLakeId()
   const workspaceId = useWorkspaceId()

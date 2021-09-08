@@ -2,12 +2,12 @@ import ColumnsModal from "app/columns/columns-modal"
 import env from "app/core/env"
 import SpaceMigration from "app/legacy/space-migration/space-migration"
 import HookLog from "app/system-test/HookLog"
-import React from "react"
+import React, {ReactElement} from "react"
 import BrimToaster from "src/js/components/BrimToaster"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ErrorNotice from "src/js/components/ErrorNotice"
 import HTMLContextMenu from "src/js/components/HTMLContextMenu"
-import {XLatestError} from "src/js/components/LatestError"
+import {LatestError} from "src/js/components/LatestError"
 import {LeftPane} from "src/js/components/LeftPane"
 import {Modals} from "src/js/components/Modals"
 import PoolModal from "src/js/components/PoolModal"
@@ -47,11 +47,11 @@ const SearchPageWrapper = styled.div`
   animation: fadein 300ms;
 `
 
-export default function AppWrapper({children}) {
+export default function AppWrapper({children}: {children: ReactElement}) {
   return (
     <div className="app-wrapper">
       <div className="title-bar-drag-area" />
-      <XLatestError />
+      <LatestError />
       <SearchPageWrapper>
         <SearchPageMain>
           <ColumnLayout>

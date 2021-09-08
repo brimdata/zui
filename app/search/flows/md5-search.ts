@@ -12,12 +12,12 @@ import {Thunk} from "src/js/state/types"
 
 const id = "Md5"
 
-export const md5Search = (md5: string): Thunk<BrimSearch> => (
+export const md5Search = (md5: string): Thunk<BrimSearch | null> => (
   dispatch,
   getState
 ) => {
   const poolId = Current.getPoolId(getState())
-  if (!poolId) return
+  if (!poolId) return null
   const [from, to] = Tab.getSpanAsDates(getState())
   const query = parallelizeProcs([
     filenameCorrelation(md5),

@@ -1,6 +1,6 @@
 import {remote} from "electron"
 import {join} from "path"
-import React, {useEffect, useState} from "react"
+import React, {MouseEvent, MouseEventHandler, useEffect, useState} from "react"
 import toast from "react-hot-toast"
 import {useDispatch} from "react-redux"
 import Link from "src/js/components/common/Link"
@@ -21,8 +21,8 @@ import styled from "styled-components"
 import SpaceMigrator from "./space-migrator"
 import ToolbarButton from "../../toolbar/button"
 
-let src
-let dst
+let src: string
+let dst: string
 
 async function needsToMigrate() {
   src = join(await remote.app.getPath("userData"), "data/spaces")
@@ -44,7 +44,7 @@ export default function SpaceMigration() {
   else return null
 }
 
-function Modal({onClose}) {
+function Modal({onClose}: {onClose: () => void}) {
   const dispatch = useDispatch<AppDispatch>()
   const spaces = new SpaceMigrator(src, dst)
   // @ts-ignore
@@ -53,8 +53,8 @@ function Modal({onClose}) {
   function onMigrate() {
     onClose()
 
-    let id
-    const onContextMenu = (e) => {
+    let id: string
+    const onContextMenu = (e: MouseEvent) => {
       const {x, y} = e.currentTarget.getBoundingClientRect()
       showContextMenu(
         [
@@ -172,7 +172,15 @@ const Block = styled.span`
   display: block;
 `
 
-function LoadingToast({title, message, onContextMenu}) {
+function LoadingToast({
+  title,
+  message,
+  onContextMenu
+}: {
+  title: string
+  message: string
+  onContextMenu: MouseEventHandler
+}) {
   return (
     <Wrap>
       <Block>

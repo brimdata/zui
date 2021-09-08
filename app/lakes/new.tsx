@@ -1,14 +1,13 @@
+import React, {ChangeEvent, FormEvent, useState} from "react"
 import {useDispatch} from "react-redux"
-import React, {useState} from "react"
 import styled from "styled-components"
-
-import {createPool} from "../../src/js/flows/createPool"
-import ErrorFactory from "../../src/js/models/ErrorFactory"
+import PrimaryButton from "../../src/js/components/common/buttons/PrimaryButton"
 import InputField from "../../src/js/components/common/forms/InputField"
 import InputLabel from "../../src/js/components/common/forms/InputLabel"
-import Notice from "../../src/js/state/Notice"
-import PrimaryButton from "../../src/js/components/common/buttons/PrimaryButton"
 import TextInput from "../../src/js/components/common/forms/TextInput"
+import {createPool} from "../../src/js/flows/createPool"
+import ErrorFactory from "../../src/js/models/ErrorFactory"
+import Notice from "../../src/js/state/Notice"
 import {AppDispatch} from "../../src/js/state/types"
 
 const Wrap = styled.section`
@@ -33,7 +32,7 @@ export default function TabCreatePool() {
   const dispatch = useDispatch<AppDispatch>()
   const [name, setName] = useState("")
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     dispatch(createPool({name})).catch((e) => {
       dispatch(Notice.set(ErrorFactory.create(e)))
     })
@@ -49,7 +48,9 @@ export default function TabCreatePool() {
           <TextInput
             autoFocus
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setName(e.target.value)
+            }
           />
         </InputField>
         <SubmitWrap>

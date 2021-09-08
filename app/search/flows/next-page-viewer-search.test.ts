@@ -10,7 +10,7 @@ import Workspaces from "src/js/state/Workspaces"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
 import {createRecord} from "test/shared/factories/zed-factory"
-import {createZealotMock} from "zealot"
+import {createZealotMock, ZealotMock} from "zealot"
 import {zed} from "zealot"
 import nextPageViewerSearch from "./next-page-viewer-search"
 
@@ -20,7 +20,7 @@ const records = [
   createRecord({td: "1", ts: new Date(300)})
 ]
 
-let store, zealot, tabId
+let store: any, zealot: ZealotMock, tabId: string
 beforeEach(() => {
   zealot = createZealotMock()
   zealot.stubStream("search", [])
@@ -52,7 +52,9 @@ test("#fetchNextPage adds 1ms to ts of last change", () => {
   store.dispatch(nextPageViewerSearch())
 
   const data = records[1].at(1) as zed.Time
-  const lastChangeTs = data.toDate().getTime()
+  const lastChangeTs = data.toDate()?.getTime()
+  if (!lastChangeTs) throw new Error("No last change ts")
+
   expect(search).toHaveBeenCalledWith(
     expect.any(String),
     expect.objectContaining({

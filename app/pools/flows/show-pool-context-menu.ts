@@ -7,10 +7,11 @@ import {showContextMenu, showMessageBox} from "src/js/lib/System"
 import Current from "src/js/state/Current"
 import Modal from "src/js/state/Modal"
 import Pools from "src/js/state/Pools"
+import {Thunk} from "src/js/state/types"
 
-const showPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
+const showPoolContextMenu = (pool: BrimPool): Thunk => (dispatch, getState) => {
   const workspaceId = Current.getWorkspaceId(getState())
-  const poolIds = Pools.ids(workspaceId)(getState())
+  const poolIds = workspaceId ? Pools.ids(workspaceId)(getState()) : []
   const template = [
     {
       label: "Rename",

@@ -3,17 +3,18 @@ import {lakePath} from "app/router/utils/paths"
 import Chart from "src/js/state/Chart"
 import Handlers from "src/js/state/Handlers"
 import Pools from "src/js/state/Pools"
+import {Dispatch} from "src/js/state/types"
 import Workspaces from "src/js/state/Workspaces"
+import {useResponse} from "test/shared/responses"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
-import {useResponse} from "test/shared/responses"
-import {createZealotMock} from "zealot"
+import {createZealotMock, ZealotMock} from "zealot"
 import {histogramSearch} from "./histogram-search"
 
 const countByPathResp = useResponse("everyCountByPath")
 const pool = fixtures("pool1")
 
-let store, zealot, dispatch, select
+let store: any, zealot: ZealotMock, dispatch: Dispatch, select: any
 beforeEach(() => {
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)

@@ -28,7 +28,7 @@ export function lakeSearchPath(
   return `${lakePath(id, workspaceId)}/search?${encodeSearchParams(params)}`
 }
 
-export function releaseNotesPath(workspaceId) {
+export function releaseNotesPath(workspaceId: string | null) {
   if (workspaceId) {
     return `${workspacePath(workspaceId)}/release-notes`
   } else {

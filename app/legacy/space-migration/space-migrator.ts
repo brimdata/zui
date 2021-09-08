@@ -2,6 +2,7 @@ import {pathsClient} from "app/ipc/paths"
 import {ChildProcess, spawn} from "child_process"
 import fs from "fs-extra"
 import readline from "readline"
+// @ts-ignore
 import tee from "tee-1"
 
 /**
@@ -10,8 +11,8 @@ import tee from "tee-1"
  * there are any filestore spaces on the system and migrates them.
  */
 export default class SpaceMigrator {
-  process: ChildProcess | null
-  currentPoolID: String | null
+  process: ChildProcess | null = null
+  currentPoolID: String | null = null
 
   constructor(readonly srcDir: string, readonly destDir: string) {}
 
@@ -29,7 +30,9 @@ export default class SpaceMigrator {
     }
   }
 
-  async migrate(onUpdate) {
+  async migrate(
+    onUpdate: (args: {total: number; count: number; space: string}) => void
+  ) {
     await fs.ensureDir(this.destDir)
     const cmd = await pathsClient.brimcap()
     return new Promise<void>((resolve, reject) => {
@@ -38,7 +41,7 @@ export default class SpaceMigrator {
         `-zqd=${this.srcDir}`,
         `-root=${this.destDir}`
       ])
-      let stderr = this.process.stderr.pipe(tee(process.stderr))
+      let stderr = this.process.stderr?.pipe(tee(process.stderr))
       const linesErr = readline.createInterface({input: stderr})
       let space = ""
       let total = 0
@@ -65,7 +68,7 @@ export default class SpaceMigrator {
       })
 
       this.process.on("exit", (code) => {
-        if (this.process.killed) {
+        if (this.process?.killed) {
           reject({
             message: "Migration was cancelled",
             currentPoolID: this.currentPoolID
@@ -83,7 +86,7 @@ export default class SpaceMigrator {
   }
 }
 
-function tryJson(data) {
+function tryJson(data: string) {
   try {
     return JSON.parse(data)
   } catch {

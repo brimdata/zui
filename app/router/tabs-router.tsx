@@ -23,9 +23,9 @@ type State = {
 export default class TabsRouter extends React.Component<Props, State> {
   private _isMounted: boolean
   private _pendingLocation: Location | null
-  private unlisten: () => void
+  private unlisten: () => void = () => {}
 
-  static computeRootMatch(pathname) {
+  static computeRootMatch(pathname: string) {
     return {path: "/", url: "/", params: {}, isExact: pathname === "/"}
   }
 
