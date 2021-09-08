@@ -65,7 +65,6 @@ test("encode decode a typeof value", () => {
   const records = ctx.decode(input)
   expect.assertions(36)
 
-<<<<<<< HEAD
   records.forEach((rec) => {
     rec.fields.forEach((field) => {
       const after = ctx.decodeField(ctx.encodeField(field))
@@ -73,8 +72,4 @@ test("encode decode a typeof value", () => {
       expect(field.value.type === after.value.type).toBe(true)
     })
   })
-=======
-  expect(before).toEqual(after)
-  expect(before.value.type === after?.value.type).toBe(true)
->>>>>>> Found 2169 errors.
 })
