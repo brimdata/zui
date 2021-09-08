@@ -4,7 +4,7 @@ import {BasePrimitive} from "./base-primitive"
 class TypeOfUint64 extends BasePrimitive<Uint64> {
   name = "uint64"
 
-  create(value) {
+  create(value: string | null) {
     return new Uint64(value)
   }
 }

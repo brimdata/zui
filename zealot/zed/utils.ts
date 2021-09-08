@@ -11,7 +11,7 @@ import {String} from "./values/string"
 import {Time} from "./values/time"
 import {ZedInt} from "./values/types"
 
-export function typeId(type) {
+export function typeId(type: any) {
   switch (type.kind) {
     case "primitive":
     case "alias":
@@ -24,7 +24,7 @@ export function typeId(type) {
   }
 }
 
-export function isAlias(name) {
+export function isAlias(name: string) {
   // an alias is a non-integer string
   return isNaN(name as any)
 }
@@ -62,11 +62,11 @@ export function trueType<T extends ZedType>(start: ZedType): T {
   return t as T
 }
 
-export function isNull(value): value is null {
+export function isNull(value: unknown): value is null {
   return value === null
 }
 
-export function isStringy(value): value is String | BString {
+export function isStringy(value: unknown): value is String | BString {
   return value instanceof String || value instanceof BString
 }
 
@@ -74,6 +74,6 @@ export function isDuration(value: unknown): value is Duration {
   return value instanceof Duration
 }
 
-export function isFloat64(value): value is Float64 {
+export function isFloat64(value: unknown): value is Float64 {
   return value instanceof Float64
 }

@@ -23,7 +23,8 @@ export class Record implements ZedValueInterface {
     return trueType<TypeRecord>(this.type)
   }
 
-  toString() {
+  // @ts-ignore
+  toString(): string {
     if (isNull(this.fields)) return "null"
     let s = "{"
     let sep = ""
@@ -36,6 +37,7 @@ export class Record implements ZedValueInterface {
     return s
   }
 
+  // @ts-ignore
   serialize() {
     if (isNull(this.fields)) return null
     return this.fields.map((f) => f.value.serialize())

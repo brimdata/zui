@@ -8,9 +8,10 @@ export class ZedMap implements ZedValueInterface {
     public value: Map<ZedValue, ZedValue> | null
   ) {}
 
+  // @ts-ignore
   toString() {
     if (isNull(this.value)) return "null"
-    const contents = Array.from(this.value.entries())
+    const contents: string = Array.from(this.value.entries())
       .map(
         ([key, value]) => "{" + key.toString() + "," + value.toString() + "}"
       )
@@ -18,6 +19,7 @@ export class ZedMap implements ZedValueInterface {
     return `|{${contents}}|}`
   }
 
+  // @ts-ignore
   serialize() {
     if (isNull(this.value)) return null
     return Array.from(this.value.entries()).map(([k, v]) => {

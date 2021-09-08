@@ -4,7 +4,7 @@ import {BasePrimitive} from "./base-primitive"
 class TypeOfUint32 extends BasePrimitive<Uint32> {
   name = "uint32"
 
-  create(value) {
+  create(value: string | null) {
     return new Uint32(value)
   }
 }

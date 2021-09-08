@@ -4,12 +4,13 @@ import {ZedContext} from "../context"
 import {typeId} from "../utils"
 import {Set} from "../values/set"
 import {ContainerTypeInterface, ZedType} from "./types"
+import {TypeValue} from ".."
 
 export class TypeSet implements ContainerTypeInterface {
   kind = "set"
   type: ZedType
 
-  constructor(type) {
+  constructor(type: ZedType) {
     this.type = type
   }
 
@@ -17,13 +18,14 @@ export class TypeSet implements ContainerTypeInterface {
     return `|[${typeId(type)}]|`
   }
 
+  // @ts-ignore
   create(values: SetValue, typedefs) {
     return new Set(
       this,
       isNull(values) ? null : values.map((v) => this.type.create(v, typedefs))
     )
   }
-
+  // @ts-ignore
   serialize(typedefs: object) {
     return {
       kind: "set",
@@ -35,11 +37,16 @@ export class TypeSet implements ContainerTypeInterface {
     return ctx.hasTypeType(this.type)
   }
 
-  walkTypeValues(ctx: ZedContext, value: Value[] | null, visit) {
+  walkTypeValues(
+    ctx: ZedContext,
+    value: Value[] | null,
+    visit: (v: TypeValue) => void
+  ) {
     if (isNull(value)) return
     value.forEach((v) => ctx.walkTypeValues(this.type, v, visit))
   }
 
+  // @ts-ignore
   toString() {
     return `|[` + this.type.toString() + `]|`
   }

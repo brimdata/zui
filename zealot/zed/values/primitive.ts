@@ -1,9 +1,9 @@
-import {isNull} from "../utils"
 import {ZedType} from "../types/types"
+import {isNull} from "../utils"
 import {ZedValueInterface} from "./types"
 
-export class Primitive implements ZedValueInterface {
-  type: ZedType
+export abstract class Primitive implements ZedValueInterface {
+  abstract type: ZedType
 
   constructor(public value: string | null = null) {}
 

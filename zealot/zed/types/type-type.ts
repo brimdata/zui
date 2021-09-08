@@ -1,11 +1,13 @@
+import {ZedContext} from "../context"
 import {isNull} from "../utils"
 import {TypeValue} from "../values/type"
 import {BasePrimitive} from "./base-primitive"
+import {ZedType} from "./types"
 
 export class TypeOfType extends BasePrimitive<TypeValue> {
   name = "type"
 
-  create(value: string | null, typedefs) {
+  create(value: string | null, typedefs: {[id: string]: ZedType}) {
     if (isNull(value)) {
       return new TypeValue(null)
     } else {
@@ -17,7 +19,11 @@ export class TypeOfType extends BasePrimitive<TypeValue> {
     return true
   }
 
-  walkTypeValues(ctx, value, visit) {
+  walkTypeValues(
+    ctx: ZedContext,
+    value: TypeValue,
+    visit: (v: TypeValue) => void
+  ) {
     visit(value)
   }
 }

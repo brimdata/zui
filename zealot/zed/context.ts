@@ -2,8 +2,8 @@ import * as zjson from "../zjson"
 import {TypeAlias} from "./types/type-alias"
 import {TypeArray} from "./types/type-array"
 import {TypeMap} from "./types/type-map"
-import primitives from "./types/type-primitives"
-import {TypeRecord} from "./types/type-record"
+import primitives, {PrimitiveNames} from "./types/type-primitives"
+import {TypeField, TypeField, TypeRecord} from "./types/type-record"
 import {TypeSet} from "./types/type-set"
 import {TypeUnion} from "./types/type-union"
 import {ContainerTypeInterface, ZedType} from "./types/types"
@@ -13,9 +13,9 @@ import {Record} from "./values/record"
 
 export class ZedContext {
   private id = 23
-  private typeByShape = {}
-  public typeById = {}
-  private typetype = {}
+  private typeByShape: {[shape: string]: ZedType} = {}
+  public typeById: {[id: string]: ZedType} = {}
+  private typetype: unknown = {}
 
   decode(objects: zjson.RootRecord[], typedefs = {}): Record[] {
     return objects.map((object) => this.decodeRecord(object, typedefs))
@@ -23,14 +23,15 @@ export class ZedContext {
 
   decodeRecord(
     {schema, types, values}: zjson.RootRecord,
-    typedefs = {}
+    typedefs: {[id: string]: ZedType} = {}
   ): Record {
     types && types.forEach((type) => this.decodeType(type, typedefs))
     const type = typedefs[schema]
     return type.create(values, typedefs)
   }
 
-  decodeType(obj: zjson.Type, typedefs = {}) {
+  // @ts-ignore
+  decodeType(obj: zjson.Type, typedefs: {[id: string]: ZedType} = {}) {
     // All types with the same shape in a zed context must point to the same type instance. When
     // decoding a stream of zjson, use the following logic to get the correct type instance.
     //
@@ -54,7 +55,7 @@ export class ZedContext {
     switch (obj.kind) {
       // Primitives
       case "primitive":
-        var type = primitives[obj.name]
+        var type = primitives[obj.name as PrimitiveNames]
         if (!type) throw `Implement primitive: ${obj.name}`
         return type
 
@@ -86,7 +87,7 @@ export class ZedContext {
 
       // Type Definitions
       case "typedef":
-        var innerType = this.decodeType(obj.type, typedefs)
+        var innerType: ZedType = this.decodeType(obj.type, typedefs)
         return (typedefs[obj.name] = isAlias(obj.name)
           ? this.lookupTypeAlias(obj.name, innerType)
           : innerType)
@@ -97,7 +98,7 @@ export class ZedContext {
     }
   }
 
-  lookupTypeRecord(fields) {
+  lookupTypeRecord(fields: TypeField[]) {
     const key = TypeRecord.stringify(fields)
     if (key in this.typeByShape) {
       return this.typeByShape[key]
@@ -106,7 +107,7 @@ export class ZedContext {
     }
   }
 
-  lookupTypeArray(type) {
+  lookupTypeArray(type: ZedType) {
     const key = TypeArray.stringify(type)
     if (key in this.typeByShape) {
       return this.typeByShape[key]

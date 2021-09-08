@@ -51,9 +51,11 @@ test("encode decode a field", () => {
   expect.assertions(224)
 
   records.forEach((rec) => {
+    if (!rec.fields) throw new Error("Expected fields")
     rec.fields.forEach((field) => {
       const after = ctx.decodeField(ctx.encodeField(field))
       expect(field).toEqual(after)
+      if (!after) throw new Error("Expected after to be truthy")
       expect(field.value.type === after.value.type).toBe(true)
     })
   })
@@ -66,9 +68,11 @@ test("encode decode a typeof value", () => {
   expect.assertions(36)
 
   records.forEach((rec) => {
+    if (!rec.fields) throw new Error("Expected fields")
     rec.fields.forEach((field) => {
       const after = ctx.decodeField(ctx.encodeField(field))
       expect(field).toEqual(after)
+      if (!after) throw new Error("Expected after to be truthy")
       expect(field.value.type === after.value.type).toBe(true)
     })
   })

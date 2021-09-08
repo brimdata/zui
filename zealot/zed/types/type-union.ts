@@ -1,9 +1,9 @@
-import {isNull} from "../utils"
 import {Value} from "zealot/zjson"
+import {ZedContext} from "../context"
+import {isNull, typeId} from "../utils"
 import {Union} from "../values/union"
 import {TypeNull} from "./type-null"
 import {ContainerTypeInterface, ZedType} from "./types"
-import {typeId} from "../utils"
 
 type UnionValue = [string, Value] | null
 export class TypeUnion implements ContainerTypeInterface {
@@ -15,7 +15,8 @@ export class TypeUnion implements ContainerTypeInterface {
     return `(${types.map(typeId).join(",")})`
   }
 
-  create(value: UnionValue, typedefs) {
+  // @ts-ignore
+  create(value: UnionValue, typedefs: object): Union {
     if (value === null) {
       return new Union(this, TypeNull, null, null)
     } else {
@@ -26,6 +27,7 @@ export class TypeUnion implements ContainerTypeInterface {
     }
   }
 
+  // @ts-ignore
   serialize(typedefs: object) {
     return {
       kind: "union",
@@ -33,20 +35,25 @@ export class TypeUnion implements ContainerTypeInterface {
     }
   }
 
-  hasTypeType(ctx) {
+  hasTypeType(ctx: ZedContext) {
     return this.types.some((t) => ctx.hasTypeType(t))
   }
 
-  walkTypeValues(ctx, value: UnionValue, visit) {
+  walkTypeValues(
+    ctx: ZedContext,
+    value: UnionValue,
+    visit: (name: string) => void
+  ) {
     if (isNull(value)) return
 
     const index = parseInt(value[0])
     const innerType = this.types[index]
     const innerValue = value[1]
 
-    if (value === null) ctx.walkTypeValue(innerType, innerValue, visit)
+    if (value === null) ctx.walkTypeValues(innerType, innerValue, visit)
   }
 
+  // @ts-ignore
   toString() {
     return `(${this.types.map((t) => t.toString()).join(",")})`
   }

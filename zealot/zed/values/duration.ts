@@ -37,7 +37,7 @@ export const Hour = 60n * Minute
 export const Day = 24n * Hour
 export const Week = 7n * Day
 export const Year = 365n * Day
-const scale = {
+const scale: {[key: string]: BigInt} = {
   ns: Nanosecond,
   us: Microsecond,
   ms: Millisecond,
@@ -63,6 +63,7 @@ function parseNanos(s: string) {
     if (match.length !== 3) throw new Error("Invalid Duration")
     const [_all, num, unitName] = match
     let unit = scale[unitName]
+    if (typeof unit !== "bigint") continue
     if (num.includes(".")) {
       const parts = num.split(".")
       if (parts.length !== 2) throw new Error("Invalid Duration")

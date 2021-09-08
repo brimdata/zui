@@ -4,7 +4,7 @@ import {BasePrimitive} from "./base-primitive"
 class TypeOfUint8 extends BasePrimitive<Uint8> {
   name = "uint8"
 
-  create(value) {
+  create(value: string | null) {
     return new Uint8(value)
   }
 }

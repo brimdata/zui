@@ -1,7 +1,6 @@
-import {isNull} from "../utils"
-import {RecordFieldType, RecordType, Value} from "../../zjson"
+import {RecordType, Value} from "../../zjson"
 import {ZedContext} from "../context"
-import {typeId} from "../utils"
+import {isNull, typeId} from "../utils"
 import {Field} from "../values/field"
 import {Record} from "../values/record"
 import {ContainerTypeInterface, ZedType} from "./types"
@@ -18,7 +17,7 @@ export class TypeRecord implements ContainerTypeInterface {
     this.fields = fields
   }
 
-  static stringify(fields: RecordFieldType[] | null) {
+  static stringify(fields: TypeField[] | null) {
     if (isNull(fields)) return "null"
     let s = "{"
     let sep = ""

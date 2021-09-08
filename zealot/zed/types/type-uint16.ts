@@ -4,7 +4,7 @@ import {BasePrimitive} from "./base-primitive"
 class TypeOfUint16 extends BasePrimitive<Uint16> {
   name = "uint16"
 
-  create(value) {
+  create(value: string | null) {
     return new Uint16(value)
   }
 }

@@ -1,3 +1,4 @@
+import {TypeValue} from ".."
 import {Type, Value} from "../../zjson"
 import {ZedContext} from "../context"
 import {ZedValue} from "../values/types"
@@ -26,6 +27,6 @@ export interface ContainerTypeInterface {
   walkTypeValues(
     context: ZedContext,
     value: Value,
-    visit: (name: string) => void
-  )
+    visit: (v: TypeValue) => void
+  ): void
 }
