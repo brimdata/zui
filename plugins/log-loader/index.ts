@@ -5,7 +5,7 @@ import {Readable} from "stream"
 
 export const activate = (api: BrimApi) => {
   const load = async (
-    params: IngestParams & {poolId: string},
+    params: IngestParams & {poolId: string; branch: string},
     onProgressUpdate: (value: number | null) => void,
     onWarning: (warning: string) => void,
     onDetailUpdate: () => Promise<void>,
@@ -25,18 +25,13 @@ export const activate = (api: BrimApi) => {
         }
       })
       const stream = file.stream().pipeThrough(progressUpdateTransformStream)
-      const res = await zealot.pools.add(params.poolId, {
+      const res = await zealot.pools.load(params.poolId, params.branch, {
+        author: "brim",
+        body: "automatic import of " + file.path,
         data: nodeJSReadableStreamFromReadableStream(stream),
         signal
       })
-      const commitId = get(res, ["value", "commit"], "")
-      if (!commitId) throw new Error("No commit obtained from lake add")
       forEach(get(res, ["value", "warnings"], []), onWarning)
-      await zealot.pools.commit(params.poolId, commitId, {
-        author: "brim",
-        message: "automatic import of " + file.path,
-        signal
-      })
     }
     await onDetailUpdate()
     onProgressUpdate(1)

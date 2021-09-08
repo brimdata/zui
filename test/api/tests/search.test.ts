@@ -4,13 +4,11 @@ import {withLake} from "../helpers/with-lake"
 import data from "test/shared/data"
 
 async function setup(zealot: any) {
-  const pool = await zealot.pools.create({name: "pool1"})
-  const add = await zealot.pools.add(pool.id, {
+  const {pool, branch} = await zealot.pools.create({name: "pool1"})
+  await zealot.pools.load(pool.id, branch.name, {
+    author: "test author",
+    body: "test message",
     data: createReadStream(data.getPath("sample.tsv"))
-  })
-  await zealot.pools.commit(pool.id, add.value.commit, {
-    message: "test message",
-    author: "test author"
   })
 
   zealot.setSearchOptions({

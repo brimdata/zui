@@ -18,8 +18,13 @@ let store, zealot, apiMock
 beforeEach(() => {
   zealot = createZealotMock()
     .stubPromise("pools.create", {
-      name: "sample.pcap.brim",
-      id: "poolId"
+      pool: {
+        name: "sample.pcap.brim",
+        id: "poolId"
+      },
+      branch: {
+        name: "main"
+      }
     })
     .stubPromise(
       "pools.get",

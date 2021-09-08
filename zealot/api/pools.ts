@@ -1,4 +1,4 @@
-import {PoolAddArgs, PoolArgs, PoolCommitArgs} from "../types"
+import {PoolArgs, PoolLoadArgs} from "../types"
 
 export default {
   list() {
@@ -46,21 +46,16 @@ export default {
       body: JSON.stringify(args)
     }
   },
-  add(poolId: string, args: PoolAddArgs) {
+  load(poolId: string, branch: string, args: PoolLoadArgs) {
+    const {data, signal, ...rest} = args
     return {
-      headers: new Headers({Accept: "application/json"}),
-      path: `/pool/${poolId}/add`,
+      headers: new Headers({
+        Accept: "application/json",
+        "Zed-Commit": JSON.stringify(rest)
+      }),
+      path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: "POST",
-      body: args.data
-    }
-  },
-  commit(poolId: string, commitId: string, args: PoolCommitArgs) {
-    const {signal, ...rest} = args
-    return {
-      headers: new Headers({Accept: "application/json"}),
-      path: `/pool/${poolId}/staging/${commitId}`,
-      method: "POST",
-      body: JSON.stringify(rest),
+      body: data,
       signal
     }
   }

@@ -8,12 +8,11 @@ const FILE = join(process.cwd(), process.argv[2])
 const QUERY = process.argv[3]
 
 async function ingest(zealot) {
-  const pool = await zealot.pools.create({name: "gen space"})
-  const add = await zealot.pools.add(pool.id, {
+  const {pool, branch} = await zealot.pools.create({name: "gen space"})
+  await zealot.pools.load(pool.id, branch.name, {
     data: createReadStream(FILE)
   })
-  await zealot.pools.commit(pool.id, add.value.commit, {})
-  return pool.id
+  return {poolId: pool.id, branch: branch.name}
 }
 
 withLake(

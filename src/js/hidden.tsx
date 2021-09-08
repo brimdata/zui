@@ -55,18 +55,18 @@ const Hidden = () => {
       wsSource.addEventListener("pool-delete", (_e) => {
         dispatch(refreshPoolNames(workspace(w)))
       })
-      wsSource.addEventListener("pool-commit", (e) => {
+      wsSource.addEventListener("branch-commit", (e) => {
         let eventData
         try {
           eventData = JSON.parse(e["data"])
         } catch (e) {
           return log.error(
-            new Error("Cannot parse pool-commit event data: " + e)
+            new Error("Cannot parse branch-commit event data: " + e)
           )
         }
         const poolId = eventData && eventData["pool_id"]
         if (!poolId)
-          return log.error(new Error("No 'pool_id' from pool-commit event"))
+          return log.error(new Error("No 'pool_id' from branch-commit event"))
 
         dispatch(refreshPoolInfo({workspaceId: w.id, poolId}))
       })
