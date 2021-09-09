@@ -14,8 +14,17 @@ type NewAbortable = Omit<Abortable, "id">
 export class Abortables {
   registry: Abortable[] = []
 
-  abort(predicate?: Partial<Abortable>) {
-    this.filter(predicate).forEach((a) => a.abort())
+  async abort(predicate: string | Partial<Abortable>) {
+    if (isString(predicate)) {
+      const a = this.get(predicate)
+      if (a) return await a.abort()
+    } else {
+      return Promise.all(this.filter(predicate).map((a) => a.abort()))
+    }
+  }
+
+  async abortAll() {
+    return Promise.all(this.all().map((a) => a.abort()))
   }
 
   add(a: Abortable | NewAbortable) {
@@ -25,11 +34,11 @@ export class Abortables {
   }
 
   all() {
-    return this.registry
+    return [...this.registry]
   }
 
   filter(predicate?: Partial<Abortable>) {
-    if (!predicate) return this.registry
+    if (!predicate) return this.all()
     return this.registry.filter(this.matchFn(predicate))
   }
 

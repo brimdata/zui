@@ -24,7 +24,7 @@ describe("add get remove", () => {
 
   test("remove by tab", () => {
     const {instance} = setup()
-    instance.add({abort: jest.fn(), tab: "a"})
+    instance.add({abort: jest.fn(() => Promise.resolve()), tab: "a"})
     instance.add({abort: jest.fn(), tab: "a"})
     instance.add({abort: jest.fn(), tab: "b"})
 
@@ -73,14 +73,23 @@ describe("filter and abort", () => {
     expect(ids(result)).toEqual(["3"])
   })
 
-  test("abort", () => {
+  test("abort all", async () => {
     const {instance, a1, a2, a3} = setup()
 
-    instance.abort()
+    await instance.abortAll()
 
     expect(a1.abort).toHaveBeenCalled()
     expect(a2.abort).toHaveBeenCalled()
     expect(a3.abort).toHaveBeenCalled()
+  })
+
+  test("abort by id", async () => {
+    const {instance, a1} = setup()
+
+    await instance.abort(a1.id)
+    await instance.abort("no-id")
+
+    expect(a1.abort).toHaveBeenCalled()
   })
 
   test("abort by tab", () => {
