@@ -199,10 +199,13 @@ ubuntu# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010
 ubuntu# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
 ubuntu# export PATH="/opt/Brim/resources/app.asar.unpacked/zdeps:$PATH"
 
-ubuntu# zapi create -p wrccdc
-pool created: wrccdc
+ubuntu# zapi create wrccdc
+pool created: wrccdc 1xu2rXQ7D6ayTxrJE7XDVDS3mm8
 
-ubuntu# brimcap analyze wrccdc.2018-03-23.010014000000000.pcap | zapi load -p wrccdc -
+ubuntu# zapi use -p wrccdc
+Switched to branch "main" on pool "wrccdc"
+
+ubuntu# brimcap analyze wrccdc.2018-03-23.010014000000000.pcap | zapi load -
 1ulxiph6bNX4ZgubZFeCIIDaozj committed
 
 ubuntu# brimcap index -root ~/.config/Brim/data/brimcap-root -r wrccdc.2018-03-23.010014000000000.pcap
@@ -213,10 +216,13 @@ Zed Lake, we can also use `zapi` on our Linux VM. Here we'll import the Zeek
 TSV logs from our [zed-sample-data](https://github.com/brimdata/zed-sample-data).
 ```
 ubuntu# git clone --quiet --depth=1 https://github.com/brimdata/zed-sample-data
-ubuntu# zapi create -p zed-sample-data
-pool created: zed-sample-data
+ubuntu# zapi create zed-sample-data
+pool created: zed-sample-data 1xu3fug3iq1y17RMQYRiCtORLMC
 
-ubuntu# zapi load -p zed-sample-data zed-sample-data/zeek-default/*
+ubuntu# zapi use -p zed-sample-data
+Switched to branch "main" on pool "zed-sample-data"
+
+ubuntu# zapi load zed-sample-data/zeek-default/*
 1uMRE9bZnbNAIY8tEOfIXOa8c2w committed
 ```
 
