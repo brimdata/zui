@@ -16,7 +16,7 @@ initialize()
     window.onbeforeunload = () => {
       // This runs during reload
       // Visit initIpcListeners.ts#prepareClose for closing window
-      api.abortables.abort()
+      api.abortables.abortAll()
       pluginManager.deactivate()
       store.dispatch(deletePartialPools())
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))

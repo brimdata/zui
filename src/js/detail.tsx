@@ -13,7 +13,7 @@ import lib from "./lib"
 initDetail()
   .then(({store, api, pluginManager}) => {
     window.onbeforeunload = () => {
-      api.abortables.abort()
+      api.abortables.abortAll()
       pluginManager.deactivate()
     }
     ReactDOM.render(

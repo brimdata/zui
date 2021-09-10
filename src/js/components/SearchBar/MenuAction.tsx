@@ -1,6 +1,7 @@
 import {useBrimApi} from "app/core/context"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
+import Tabs from "src/js/state/Tabs"
 import {reactElementProps} from "../../../../test/integration/helpers/integration"
 import ThreeDotsIcon from "../../icons/ThreeDotsIcon"
 import open from "../../lib/open"
@@ -13,6 +14,7 @@ export default function MenuAction() {
   const dispatch = useDispatch()
   const api = useBrimApi()
   const isFetching = useSelector(Tab.isFetching)
+  const tab = useSelector(Tabs.getActive)
 
   const menu = [
     {label: "Debug query", click: () => dispatch(Modal.show("debug"))},
@@ -25,7 +27,7 @@ export default function MenuAction() {
     },
     {
       label: "Kill search",
-      click: () => api.abortables.abort(),
+      click: () => api.abortables.abort({tab}),
       disabled: !isFetching
     }
   ]
