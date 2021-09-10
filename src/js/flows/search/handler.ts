@@ -22,6 +22,7 @@ export function handle(request: any) {
     function errored(e) {
       flushBufferLazy.cancel()
       if (abortError(e)) {
+        response.emit("status", "ABORTED")
         resolve()
       } else {
         response.emit("status", "ERROR")

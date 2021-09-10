@@ -21,5 +21,5 @@ export default async function initialize() {
   initMenuActionListeners(store)
   initWorkspaceParams(store)
   initDebugGlobals(store)
-  return {store, pluginManager}
+  return {store, api, pluginManager}
 }
