@@ -18,7 +18,7 @@ jobs:
       with:
         python-version: 3.7
     - name: Setup Google Cloud Platform
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@master
       env:
         CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
       with:

@@ -13,7 +13,7 @@ jobs:
       run: echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/})"
       id: extract_tag
     - name: Setup Google Cloud Platform
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@master
       with:
         version: '290.0.1'
         project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
