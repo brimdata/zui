@@ -30,7 +30,7 @@
 * Ensure pool updates made from outside the app are reflected automatically in Brim (#1702, #1709, #1711, #1713, #1722, #1733, #1734)
 * The [Brim wiki](https://github.com/brimdata/brim/wiki) now has articles for changes specific to the `v0.25.0` release, with parallel articles remaining for older Brim where functionality has changed significantly (#1723)
 * Update the [Code Base Walkthrough wiki article](https://github.com/brimdata/brim/wiki/Code-Base-Walkthrough) to reflect recent changes to where code lives in the repo (#1738)
-* **Preferences** now has settings for a "thousands separator" and "decimal" that allow changing from `,` & `.` defaults or removing them entirely (#1740, #1765)
+* **Preferences** now has settings for a "thousands separator" and "decimal" that allow changing from `,` and `.` defaults or removing them entirely (#1740, #1765)
 * Fix issues where error messages from failed imports were not being fully surfaced (#1760, #1786)
 * Zed `type` values that are output in Brim are no longer wrapped with parentheses (#1757)
 * Hovering over a field value now displays the Zed data type in a tooltip (#1766)
