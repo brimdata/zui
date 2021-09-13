@@ -35,7 +35,7 @@
 * Zed `type` values that are output in Brim are no longer wrapped with parentheses (#1757)
 * Hovering over a field value now displays the Zed data type in a tooltip (#1766)
 * Fix an issue where selecting a range from the time span pull-down caused a crash with unshaped data (#1777)
-* On macOS, if all Brim windows are closed but the app is still running, clicking the Brim icon in the dock now opens a new window (#1782)
+* On macOS, if all Brim windows are closed but the app is still running, clicking the Brim icon in the Dock now opens a new window (#1782)
 * Fix an issue where numbers were being incorrectly output in scientific notation (#1787)
 * Fix a memory leak that occurred during large data imports (#1793)
 * Due to the deprecation of Spaces, the **Data Directory** setting has been removed from **Preferences** (#1794)
