@@ -12,7 +12,7 @@ As you can see below, there've been many changes since the last Brim GA release!
   exploration and shaping, and more! Review the
   [Zed language docs](https://github.com/brimdata/zed/blob/main/docs/language/README.md)
   for details.
-* pcap-processing functionality is now handled by a separate new component
+* pcap processing is now handled by a separate, new component
   called Brimcap. Your favorite pcap workflows in Brim have not changed, but
   Brimcap also opens up new flexible custom configurations and can be used as
   a separate standalone tool. For more info, check out the
