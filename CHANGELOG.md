@@ -19,7 +19,7 @@ As you can see below, there've been many changes since the last Brim GA release!
   Brimcap [README](https://github.com/brimdata/brimcap/blob/main/README.md)
   and [wiki](https://github.com/brimdata/brimcap/wiki).
 
-Among the many detailed changes listed further below, there's a few big ones in
+Among the many detailed changes listed below, there're a few big ones in
 particular we'd like to bring to your attention first.
 
 * You will be prompted upon first launch of Brim `v0.25.0` to allow
