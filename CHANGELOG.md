@@ -15,7 +15,7 @@ As you can see below, there've been many changes since the last Brim GA release!
 * pcap processing is now handled by a separate, new component
   called Brimcap. Your favorite pcap workflows in Brim have not changed, but
   Brimcap also opens up new flexible custom configurations and can be used as
-  a separate standalone tool. For more info, check out the
+  a standalone tool. For more info, check out the
   Brimcap [README](https://github.com/brimdata/brimcap/blob/main/README.md)
   and [wiki](https://github.com/brimdata/brimcap/wiki).
 
