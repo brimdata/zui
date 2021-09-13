@@ -1,3 +1,111 @@
+## v0.25.0
+
+As you can see below, there's been many changes since the last Brim GA release!  Highlights include:
+* The storage used by Brim to hold your logs is now a Zed lake. Though the
+  introduction of Zed lakes causes no immediate change to your favorite Brim
+  workflows, they unlock powerful new functionality that will be revealed in
+  Brim going forward, including Git-like branching. See the
+  [Zed lake README](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
+  for details.
+* Enhancements have been made to the Zed language to unify search and
+  expression syntax, introduce new operators and functions for data
+  exploration and shaping, and more! Review the
+  [Zed language docs](https://github.com/brimdata/zed/blob/main/docs/language/README.md)
+  for details.
+* pcap-processing functionality is now handled by a separate new component
+  called Brimcap. Your favorite pcap workflows in Brim have not changed, but
+  Brimcap also opens up new flexible custom configurations and can be used as
+  a separate standalone tool. For more info, check out the
+  Brimcap [README](https://github.com/brimdata/brimcap/blob/main/README.md)
+  and [wiki](https://github.com/brimdata/brimcap/wiki).
+
+Among the many detailed changes listed further below, there's a few big ones in
+particular we'd like to bring to your attention first.
+
+* You will be prompted upon first launch of Brim `v0.25.0` to allow
+  auto-migration of saved data from your `v0.24.0` Spaces to pools in Zed
+  lakes. See the
+  [Space Migration](https://github.com/brimdata/brim/wiki/Migration-of-Spaces-%28v0.25.0-%29)
+  article in the Brim wiki for details.
+
+* Brim `v0.25.0` includes a new installer that will make upgrades to future
+  versions more seamless. However, when making the jump from `v0.24.0` to the
+  newer release:
+   * Windows users will not be prompted to auto-update as they were in the
+     past. Windows users will also have to manually uninstall the old release
+     before `v0.25.0` will start. Auto-update notifications for Windows will
+     resume on the
+     next release. See the
+     [Installation](https://github.com/brimdata/brim/wiki/Installation#windows-installation-v0250)
+     article on the Brim wiki for details.
+   * Linux users of RPM packages (such as for Red Hat-style distributions) will
+     need to uninstall the older `v0.24.0` release before the RPM package for
+     `v0.25.0` will successfully install. See the 
+     [Linux RPM Upgrade](https://github.com/brimdata/brim/wiki/Linux-RPM-Upgrade-%28v0.25.0-%29)
+     article in the Brim wiki for details.
+
+   Note that a Brim uninstall does _not_ disturb the data you've saved in
+   the app. See the [Filesystem Paths](https://github.com/brimdata/brim/wiki/Filesystem-Paths)
+   article in the Brim wiki for details of how Brim stores user data separately
+   from app binaries.
+
+* When upgrading to `v0.25.0`, the pre-installed entries in the Query Library
+  are auto-updated to adapt to new Zed language syntax. However, if you've
+  saved custom entries to the Query Library, you'll need to change these
+  yourself. Some key changes include `:=` now being used for assignment, `==`
+  for equality comparisons, and string values
+  must now be quoted in [field/value](https://github.com/brimdata/zed/tree/main/docs/language/search-syntax#fieldvalue-match) matches.
+
+The exhaustive set of changes is listed below. Come talk to us on
+[Slack](https://www.brimsecurity.com/join-slack/) if you have additional
+questions.
+
+---
+
+* Update Zed to [v0.30.0](https://github.com/brimdata/zed/releases/tag/v0.30.0)
+* Make the toolbar "responsive" such that buttons hide when the window is made small (#1416, #1553)
+* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting-%28v0.25.0-%29#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached) for the case when Brim shows "Connection Error: The service at localhost:9867 could not be reached" (#1448, #1491)
+* Fix an issue where the "Back" button in the **Log Detail** view was not returning to the previously-viewed record (#1447)
+* Upgrade Electron dependency to 11.2.1 (#1426)
+* Add wiki cookbooks for use of Zed `join` in Brim for releases [`v0.24.0`](https://github.com/brimdata/brim/wiki/Joining-Data) and [`v0.25.0+`](https://github.com/brimdata/brim/wiki/Joining-Data-%28v0.25.0-%29) (#1430, #1729)
+* Improve the error messages shown when imports fail (#1467)
+* Fix an issue where the **Log Detail** pane would crash when certain named fields were missing from the target record (#1494)
+* Use URLs to keep track of routing and tab history, which allows for direct edits of pinned items (#1473, #1649)
+* Fix an issue where deleting a Space that was shown in the active tab would cause a crash (#1527)
+* Fix an issue where navigating to a workspace that does not exist would cause a crash (#1533)
+* Commas are now stripped when a numeric value is copied into the paste buffer via right-click **Copy** (#1535)
+* Adjust the guidance on the **Import Files** page and add a [wiki article](https://github.com/brimdata/brim/wiki/Importing-CSV%2C-JSON%2C-Parquet%2C-and-ZST-%28v0.25.0-%29) with more detail (#1548, #1625, #1626, #1635)
+* Brim is now packaged using [electron-builder](https://www.electron.build/), which streamlines installation and auto-update (#1508)
+* Fix an issue where importing an NDJSON record containing an empty object caused a "Cannot read property 'map' of null" pop-up error (#1581)
+* Remove the legacy approach for applying Zed types to NDJSON input, as this is now done via Zed shapers ([docs](https://github.com/brimdata/zed/blob/main/zeek/Shaping-Zeek-NDJSON.md)) (#1580, #1582)
+* Brim now invokes [Brimcap](https://github.com/brimdata/brimcap) to generate logs from imported pcaps and to extract flows when **Packets** is clicked, rather than relying on `zqd` (#1584, #1573, #1591, #1590, #1598, #1614, #1617, #1637, #1651, #1664, #1668, #1705, #1731, #1735, #1748, #1747, #1781, #1789, #1810, #1816, #1829, #1833)
+* Use pools in Zed lakes for backend storage rather than Spaces (#1589, #1601, #1633, #1676, #1696, #1710, #1712, #1772, #1822)
+* Implement the full Zed type system in JavaScript, which allows for improved presentation of array and set types, and also fixes an issue where named types were rejected at import (#1603, #1623, #1663, #1732)
+* Offer the option to migrate Spaces to pools when new Brim launches ([wiki article](https://github.com/brimdata/brim/wiki/Migration-of-Spaces-%28v0.25.0-%29)) (#1621, #1587, #1636, #1641, #1640, #1657, #1671, #1682, #1762)
+* Automatically append `| fuse` to the Zed pipeline if the user is exporting data in CSV format (#1622)
+* Notify a Windows user if they've launched new Brim while old Brim is still installed (#1627, #1751)
+* Update default **Query Library** entries to reflect newer Zed language syntax (#1489, #1645)
+* Fix an issue where timestamps in **Log Detail** were not displayed with full precision and did not reflect current **Preferences** settings (#1643)
+* Fix an issue where selecting **File > New Window** on a freshly-installed app triggered a crash (#1654)
+* Show Release Notes for the currently-installed Brim version in a tab (#1655, #1670, #1679, #1680)
+* Add a [wiki article](https://github.com/brimdata/brim/wiki/Linux-RPM-Upgrade-%28v0.25.0-%29) to inform Linux RPM users that their old Brim will need to be manually uninstalled before the new Brim will install (#1683)
+* Fix an issue where viewing Suricata alerts in Brim could trigger a "TypeError: Cannot read property 'startsWith' of undefined" error (#1706)
+* Ensure pool updates made from outside the app are reflected automatically in Brim (#1702, #1709, #1711, #1713, #1722, #1733, #1734)
+* The [Brim wiki](https://github.com/brimdata/brim/wiki) now has articles for changes specific to the `v0.25.0` release, with parallel articles remaining for older Brim where functionality has changed significantly (#1723)
+* Update the [Code Base Walkthrough wiki article](https://github.com/brimdata/brim/wiki/Code-Base-Walkthrough) to reflect recent changes to where code lives in the repo (#1738)
+* **Preferences** now has settings for a "thousands separator" and "decimal" that allow changing from `,` and `.` defaults or removing them entirely (#1740, #1765)
+* Fix issues where error messages from failed imports were not being fully surfaced (#1760, #1786)
+* Zed `type` values that are output in Brim are no longer wrapped with parentheses (#1757)
+* Hovering over a field value now displays the Zed data type in a tooltip (#1766)
+* Fix an issue where selecting a range from the time span pull-down caused a crash with unshaped data (#1777)
+* On macOS, if all Brim windows are closed but the app is still running, clicking the Brim icon in the Dock now opens a new window (#1782)
+* Fix an issue where numbers were being incorrectly output in scientific notation (#1787)
+* Fix a memory leak that occurred during large data imports (#1793)
+* Due to the deprecation of Spaces, the **Data Directory** setting has been removed from **Preferences** (#1794)
+* Fix an issue where Zed type definition values could not be copied into the paste buffer (#1796)
+* Add a new [section](https://github.com/brimdata/brim/wiki/Filesystem-Paths#temporary-storage-all-versions) to the [Filesystem Paths](https://github.com/brimdata/brim/wiki/Filesystem-Paths) wiki article to describe how Brim and Zed use temporary storage (#1801)
+* Fix an issue where "Kill search" was not halting a search in progress (#1814)
+
 ## v0.24.0
 * Update zq to [v0.29.0](https://github.com/brimdata/zed/releases/tag/v0.29.0)
 * Consolidate the colors used in Brim (#1405)
@@ -27,7 +135,7 @@ PPL-covered code to make replacement offerings of our projects. We believe
 users and developers should have access to the source code for our projects,
 and we need a sustainable business model to continue funding our work. Using
 the source-available Polyform Perimeter license on portions of the source code
-lets us realize both. 
+lets us realize both.
 
 For more detail regarding licensing, see the [CONTRIBUTING.md](CONTRIBUTING.md)
 doc, and feel free to come talk to us on
@@ -313,7 +421,7 @@ as usual.
 
 ## v0.5.2
 
-This is the same as v0.5.1, but addresses a CI issue that stopped the creation of the Windows installer executable. 
+This is the same as v0.5.1, but addresses a CI issue that stopped the creation of the Windows installer executable.
 
 ## v0.5.1
 
