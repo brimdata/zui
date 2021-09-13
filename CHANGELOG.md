@@ -1,6 +1,6 @@
 ## v0.25.0
 
-As you can see below, there's been many changes since the last Brim GA release!  Highlights include:
+As you can see below, there've been many changes since the last Brim GA release!  Highlights include:
 * The storage used by Brim to hold your logs is now a Zed lake. Though the
   introduction of Zed lakes causes no immediate change to your favorite Brim
   workflows, they unlock powerful new functionality that will be revealed in
