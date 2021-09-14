@@ -19,7 +19,7 @@ describe("reducer", () => {
   const pool = brim.pool(fixtures("pool1"))
 
   beforeEach(() => {
-    store = initTestStore(createZealotMock().stubStream("search", []).zealot)
+    store = initTestStore(createZealotMock().stubStream("query", []).zealot)
 
     store.dispatchAll([Workspaces.add(ws), Pools.setDetail(ws.id, pool)])
 

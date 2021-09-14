@@ -30,16 +30,18 @@ beforeEach(() => {
     Pools.setDetail("1", pool)
   ])
   store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
-  zealot.stubStream("search", countByPathResp)
+  zealot.stubStream("query", countByPathResp)
 })
 
 const submit = () => dispatch(histogramSearch())
 
 test("zealot gets the request", async () => {
   await submit()
-  const calls = zealot.calls("search")
+  const calls = zealot.calls("query")
   expect(calls.length).toBe(1)
-  expect(calls[0].args).toEqual("* | every 12h count() by _path")
+  expect(calls[0].args).toEqual(
+    "from '1' | ts >= 2015-03-05T14:15:00Z | ts <= 2015-04-13T09:36:33.751Z | * | every 12h count() by _path"
+  )
 })
 
 test("the chart status updates", async () => {

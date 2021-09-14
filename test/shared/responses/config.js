@@ -42,6 +42,11 @@ module.exports = {
     input: "no-community-id-in-conn.zson",
     output: "no-community-id-in-conn.response"
   },
+  searchWarning: {
+    query: "* | sort boo",
+    input: "sample.tsv",
+    output: "search-warning.response"
+  },
   onlyAlerts: {
     query: "*",
     input: "only-alerts.zng",

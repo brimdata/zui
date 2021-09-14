@@ -1,15 +1,22 @@
 import {ZealotContext, zed} from "zealot"
 import {RootRecord} from "zealot/zjson"
-import {ZCallbacks, ZIterator} from "../types"
-import {createCallbacks} from "./callbacks"
+import {ZIterator} from "../types"
+import {Callbacks} from "./callbacks"
 
-async function emitCallbacks(iterator: ZIterator, callbacks: ZCallbacks) {
+async function emitCallbacks(iterator: ZIterator, callbacks: Callbacks) {
   try {
+    let hasStarted = false
     for await (const payload of iterator) {
-      callbacks.emit(payload.type, payload)
+      if (!hasStarted) {
+        callbacks.emit("QueryStart")
+        hasStarted = true
+      }
+      callbacks.emit(payload.kind, payload.value)
     }
   } catch (e) {
     callbacks.emit("error", e)
+  } finally {
+    callbacks.emit("QueryEnd")
   }
 }
 
@@ -30,14 +37,14 @@ export function createStream(
     records: async (): Promise<zed.Record[]> => {
       let records: RootRecord[] = []
       for await (let payload of iterator) {
-        if (payload.type === "SearchRecords") {
-          records = records.concat(payload.records)
+        if (payload.kind === "Object") {
+          records = records.concat(payload.value)
         }
       }
       return ZealotContext.decode(records)
     },
     callbacks: () => {
-      const cbs = createCallbacks()
+      const cbs = new Callbacks()
       emitCallbacks(iterator, cbs)
       return cbs
     }

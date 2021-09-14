@@ -6,18 +6,19 @@ import Pools from "src/js/state/Pools"
 import Viewer from "src/js/state/Viewer"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "test/unit/fixtures"
-import initTestStore from "test/unit/helpers/initTestStore"
-import responses from "test/unit/responses"
+import initTestStore, {TestStore} from "test/unit/helpers/initTestStore"
 import {createRecord} from "test/shared/factories/zed-factory"
 import {useResponse} from "test/shared/responses"
-import {createZealotMock} from "zealot"
+import {createZealotMock, ZealotMock} from "zealot"
 import {viewerSearch} from "./viewer-search"
 
 const dnsResp = useResponse("dns")
 const pool = fixtures("pool1")
-const warningResp = responses("search_warning.txt")
+const warningResp = useResponse("searchWarning")
 
-let store, zealot, dispatch, select
+let dispatch, select
+let zealot: ZealotMock
+let store: TestStore
 beforeEach(() => {
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)
@@ -37,27 +38,30 @@ beforeEach(() => {
   store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
 })
 
+const from = new Date()
+const to = new Date(1)
 const submit = () =>
   dispatch(
     viewerSearch({
       query: "dns query | head 500",
-      from: new Date(),
-      to: new Date(1)
+      from,
+      to
     })
   )
 
 describe("a normal response", () => {
   beforeEach(() => {
-    zealot.stubStream("search", dnsResp)
+    zealot.stubStream("query", dnsResp)
   })
 
   test("zealot gets the request", async () => {
     await submit()
-    const calls = zealot.calls("search")
+    const calls = zealot.calls("query")
     expect(calls.length).toBe(1)
-    expect(calls[0].args).toEqual("dns query | head 500")
+    expect(calls[0].args).toEqual(
+      `from '1' | ts >= ${from.toISOString()} | ts <= 1970-01-01T00:00:00.001Z | dns query | head 500`
+    )
   })
-
   test("the table gets populated", async () => {
     await submit()
     expect(select(Viewer.getViewerRecords).length).toBe(2)
@@ -92,9 +96,9 @@ describe("a normal response", () => {
 })
 
 test("a response with a warning", async () => {
-  zealot.stubStream("search", warningResp)
+  zealot.stubStream("query", warningResp)
   await submit()
   expect(select(SearchBar.getSearchBarError)).toBe(
-    "Cut field boo not present in input"
+    "Sort field boo not present in input"
   )
 })

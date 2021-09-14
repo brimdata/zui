@@ -13,7 +13,7 @@ const zealot = createZealot("localhost:9867")
 zealot.spaces.create({name: "my_space"})
 zealot.spaces.list()
 
-const resp = await zealot.search("192.4.53.101 | count()", {
+const resp = await zealot.query("192.4.53.101 | count()", {
   spaceId: "1",
   from: new Date(0),
   to: new Date()
@@ -55,6 +55,6 @@ stream.callbacks()
   .end(payload => {...})
   .records(payload => {...})
   .stats(payload => {...})
-  .warnings(payload => {...})
+  .warning(payload => {...})
   .error(e => {...})
 ```

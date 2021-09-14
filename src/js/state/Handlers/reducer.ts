@@ -14,7 +14,6 @@ export default function reducer(
       return remove(state, action.id)
     case "HANDLERS_ABORT_ALL":
       for (const handler of values(state)) tryAbort(handler, action.emit)
-
       return {}
     case "HANDLERS_REMOVE":
       return remove(state, action.id)
