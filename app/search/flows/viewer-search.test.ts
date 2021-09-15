@@ -38,6 +38,27 @@ beforeEach(() => {
   store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
 })
 
+const getQueryCallChecker = () => {
+  let callCount = 0
+  return async (query: string, expectAnnotation = false) => {
+    zealot.stubStream("query", dnsResp)
+    await dispatch(
+      viewerSearch({
+        query,
+        from,
+        to
+      })
+    )
+    callCount++
+    const calls = zealot.calls("query")
+    expect(calls.length).toBe(callCount)
+    const expected = expectAnnotation
+      ? `from '1' | ts >= ${from.toISOString()} | ts <= 1970-01-01T00:00:00.001Z | ${query}`
+      : query
+    expect(calls[callCount - 1].args).toEqual(expected)
+  }
+}
+
 const from = new Date()
 const to = new Date(1)
 const submit = () =>
@@ -55,13 +76,18 @@ describe("a normal response", () => {
   })
 
   test("zealot gets the request", async () => {
-    await submit()
-    const calls = zealot.calls("query")
-    expect(calls.length).toBe(1)
-    expect(calls[0].args).toEqual(
-      `from '1' | ts >= ${from.toISOString()} | ts <= 1970-01-01T00:00:00.001Z | dns query | head 500`
-    )
+    const checkQueryCall = getQueryCallChecker()
+    await checkQueryCall("dns query | head 500", true)
   })
+
+  test("zealot does not annotate requests beginning with variations of 'from'", async () => {
+    const checkQueryCall = getQueryCallChecker()
+    await checkQueryCall("from 'test' | test")
+    await checkQueryCall("from('test') | test")
+    await checkQueryCall("from ('test') | test")
+    await checkQueryCall("from    ('test') | test")
+  })
+
   test("the table gets populated", async () => {
     await submit()
     expect(select(Viewer.getViewerRecords).length).toBe(2)
