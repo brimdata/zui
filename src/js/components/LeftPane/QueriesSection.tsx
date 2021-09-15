@@ -1,10 +1,11 @@
 import {MenuItemConstructorOptions, remote} from "electron"
 import {includes} from "lodash"
 import React, {useEffect, useState} from "react"
+import {Tree} from "react-arborist"
 import toast from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux"
 import TreeModel from "tree-model"
-import {TreeList} from "../../../pkg/tree-list"
+import useResizeObserver from "use-resize-observer"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import DropdownArrow from "../../icons/DropdownArrow"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
@@ -13,11 +14,11 @@ import Current from "../../state/Current"
 import Modal from "../../state/Modal"
 import Notice from "../../state/Notice"
 import Queries from "../../state/Queries"
-import {Group, Query} from "../../state/Queries/types"
+import {Group, Item, Query} from "../../state/Queries/types"
 import SearchBar from "../../state/SearchBar"
 import EmptySection from "../common/EmptySection"
 import usePopupMenu from "../hooks/usePopupMenu"
-import Item from "../SideBar/Item"
+import ItemComponent from "../SideBar/Item"
 import {
   ClickRegion,
   DragAnchor,
@@ -76,7 +77,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const [contextArgs, setContextArgs] = useState(null)
   const [selectedTag, setSelectedTag] = useState("All")
   const currentPool = useSelector(Current.getPool)
-  const queriesRoot = useSelector(Queries.getRaw)
+  const queriesRoot = useSelector(Queries.getRaw) as Item
   const [queries, setQueries] = useState(queriesRoot)
   const tags = useSelector(Queries.getTags)
   const hasMultiSelected = contextArgs && contextArgs.selections.length > 1
@@ -151,7 +152,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
 
   const menu = usePopupMenu(template)
 
-  function onItemClick(_, item) {
+  function _onItemClick(_, item) {
     if (!currentPool)
       return dispatch(
         Notice.set({type: "NoPoolError", message: "No Pool Selected"})
@@ -162,12 +163,12 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     runQuery(item.value)
   }
 
-  function onItemMove(sourceItem, destIndex) {
+  function _onItemMove(sourceItem, destIndex) {
     if (selectedTag !== "All") return
     dispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
   }
 
-  function onItemContextMenu(_, item, selections) {
+  function _onItemContextMenu(_, item, selections) {
     setContextArgs({item, selections})
   }
 
@@ -190,6 +191,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     menu.open()
   }, [contextArgs])
 
+  const {ref, width = 1, height = 1} = useResizeObserver<HTMLDivElement>()
   return (
     <StyledSection style={style}>
       <DragAnchor {...resizeProps} />
@@ -206,17 +208,18 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           />
         )}
       </SectionHeader>
-      <SectionContents>
+      <SectionContents ref={ref}>
         {currentPool ? (
-          <TreeList
-            root={queries}
-            itemHeight={24}
-            onItemMove={onItemMove}
-            onItemClick={onItemClick}
-            onItemContextMenu={onItemContextMenu}
+          <Tree
+            data={queries}
+            getChildren={(n) => ("items" in n ? n.items : undefined)}
+            getIsOpen={() => true}
+            height={height}
+            rowHeight={24}
+            width={width}
           >
-            {Item}
-          </TreeList>
+            {ItemComponent}
+          </Tree>
         ) : (
           <EmptySection
             icon={<MagnifyingGlass />}
