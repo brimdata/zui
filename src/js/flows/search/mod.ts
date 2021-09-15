@@ -28,7 +28,7 @@ type annotateArgs = {
 
 export const annotateQuery = (query: string, args: annotateArgs) => {
   // if query already starts with 'from', we do not annotate it further
-  if (/^from\s*\(?/i.test(query)) return query
+  if (/^from[\s(]/i.test(query)) return query
   const {
     poolId,
     from = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000), // 30 days
