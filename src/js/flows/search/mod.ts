@@ -27,6 +27,8 @@ type annotateArgs = {
 }
 
 export const annotateQuery = (query: string, args: annotateArgs) => {
+  // if query already starts with 'from', we do not annotate it further
+  if (/^from[\s(]/i.test(query)) return query
   const {
     poolId,
     from = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000), // 30 days
@@ -52,10 +54,10 @@ const isZeroDefaultSpan = (
   )
 }
 
-const dateToNanoTs = (date: Date | Ts | bigint): string => {
+export const dateToNanoTs = (date: Date | Ts | bigint): string => {
   const NanoFormat = new DateTimeFormatterBuilder()
     .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
-    .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true)
+    .appendFraction(ChronoField.NANO_OF_SECOND, 3, 9, true)
     .appendLiteral("Z")
     .toFormatter()
 

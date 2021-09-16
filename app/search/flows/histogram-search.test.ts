@@ -40,7 +40,7 @@ test("zealot gets the request", async () => {
   const calls = zealot.calls("query")
   expect(calls.length).toBe(1)
   expect(calls[0].args).toEqual(
-    "from '1' | ts >= 2015-03-05T14:15:00Z | ts <= 2015-04-13T09:36:33.751Z | * | every 12h count() by _path"
+    "from '1' | ts >= 2015-03-05T14:15:00.000Z | ts <= 2015-04-13T09:36:33.751Z | * | every 12h count() by _path"
   )
 })
 
