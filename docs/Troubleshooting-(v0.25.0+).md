@@ -12,7 +12,7 @@ before you [open an issue](#opening-an-issue).
   * [I've clicked in Brim to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark](#ive-clicked-in-brim-to-extract-a-flow-from-my-pcap-into-wireshark-but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
   * [Brim seems unable to restart normally, such as after a bad crash](#brim-seems-unable-to-restart-normally-such-as-after-a-bad-crash)
   * [Brim shows "Connection Error: The service at localhost:9867 could not be reached"](#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached)
-  * [My antivirus software has flagged Brim as potentially malicious](http://localhost:6419/#my-antivirus-software-has-flagged-brim-as-potentially-malicious)
+  * [My antivirus software has flagged Brim as potentially malicious](#my-antivirus-software-has-flagged-brim-as-potentially-malicious)
 - [Gathering Info](#gathering-info)
   * [Sensitive Information (important!)](#sensitive-information-important)
   * [Screenshots/Videos](#screenshotsvideos)
