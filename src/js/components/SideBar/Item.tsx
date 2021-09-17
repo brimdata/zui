@@ -81,11 +81,14 @@ function Edit({item}) {
   )
 }
 
-export default function Item({item, innerRef, itemProps, isSelected}) {
+export default function Item({indent, props, node, state}) {
   const isEditing = false // for later
+  const item = node.model
   return (
-    <BG {...itemProps} ref={innerRef} className={classNames({isSelected})}>
-      {isEditing ? <Edit item={item} /> : <Show item={item} />}
+    <BG {...props} className={classNames(state)}>
+      <div style={{paddingLeft: indent}}>
+        {isEditing ? <Edit item={item} /> : <Show item={item} />}
+      </div>
     </BG>
   )
 }

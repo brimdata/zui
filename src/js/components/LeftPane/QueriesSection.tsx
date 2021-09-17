@@ -4,7 +4,8 @@ import React, {useEffect, useState} from "react"
 import toast from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux"
 import TreeModel from "tree-model"
-import {TreeList} from "../../../pkg/tree-list"
+import {Tree} from "react-arborist"
+import useResizeObserver from "use-resize-observer"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import DropdownArrow from "../../icons/DropdownArrow"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
@@ -151,7 +152,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
 
   const menu = usePopupMenu(template)
 
-  function onItemClick(_, item) {
+  function _onItemClick(_, item) {
     if (!currentPool)
       return dispatch(
         Notice.set({type: "NoPoolError", message: "No Pool Selected"})
@@ -162,12 +163,12 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     runQuery(item.value)
   }
 
-  function onItemMove(sourceItem, destIndex) {
+  function _onItemMove(sourceItem, destIndex) {
     if (selectedTag !== "All") return
     dispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
   }
 
-  function onItemContextMenu(_, item, selections) {
+  function _onItemContextMenu(_, item, selections) {
     setContextArgs({item, selections})
   }
 
@@ -190,6 +191,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     menu.open()
   }, [contextArgs])
 
+  const {ref, width = 1, height = 1} = useResizeObserver<HTMLDivElement>()
   return (
     <StyledSection style={style}>
       <DragAnchor {...resizeProps} />
@@ -206,17 +208,22 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           />
         )}
       </SectionHeader>
-      <SectionContents>
+      <SectionContents ref={ref}>
         {currentPool ? (
-          <TreeList
-            root={queries}
-            itemHeight={24}
-            onItemMove={onItemMove}
-            onItemClick={onItemClick}
-            onItemContextMenu={onItemContextMenu}
+          <Tree
+            data={queries}
+            // @ts-ignore
+            getChildren={(n) => ("items" in n ? n.items : undefined)}
+            getIsOpen={() => true}
+            rowHeight={24}
+            width={width}
+            height={height}
+            // onItemMove={onItemMove}
+            // onItemClick={onItemClick}
+            // onItemContextMenu={onItemContextMenu}
           >
             {Item}
-          </TreeList>
+          </Tree>
         ) : (
           <EmptySection
             icon={<MagnifyingGlass />}
