@@ -12,6 +12,7 @@ before you [open an issue](#opening-an-issue).
   * [I've clicked in Brim to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark](#ive-clicked-in-brim-to-extract-a-flow-from-my-pcap-into-wireshark-but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
   * [Brim seems unable to restart normally, such as after a bad crash](#brim-seems-unable-to-restart-normally-such-as-after-a-bad-crash)
   * [Brim shows "Connection Error: The service at localhost:9867 could not be reached"](#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached)
+  * [My antivirus software has flagged Brim as potentially malicious](http://localhost:6419/#my-antivirus-software-has-flagged-brim-as-potentially-malicious)
 - [Gathering Info](#gathering-info)
   * [Sensitive Information (important!)](#sensitive-information-important)
   * [Screenshots/Videos](#screenshotsvideos)
@@ -112,7 +113,7 @@ was not able to successfully communicate with a `zed lake serve` process via
 In all cases, you should plan to [open an issue](#opening-an-issue) with
 Brim/Zed logs attached, as these may include crash/failure details. However,
 for situations other than simple crashes, the problem may be related to
-anti-virus tools that could block the install/upgrade of software and/or
+antivirus tools that could block the install/upgrade of software and/or
 firewalls that block communications between unfamiliar processes. You may
 therefore need to work with your IT department to examine logs from such
 utilities and determine if settings can be adjusted to allow Brim to operate.
@@ -200,6 +201,95 @@ returned from `zed`, and/or if some other process is getting in the way of the
 communications. It may be necessary to examine firewall logs (perhaps with
 assistance from an IT department) to look for evidence of the connection
 having been blocked.
+
+## My antivirus software has flagged Brim as potentially malicious
+
+We've been made aware that the Windows binary `suricata-update.exe` has been
+flagged by several antivirus engines, as summarized in
+[this VirusTotal entry](https://www.virustotal.com/gui/file/b184511d689d547fa5fd524c7ca120586fcffc60f338f932d41800c63961d723/detection).
+If your antivirus software should flag a different Brim-related binary as
+potentially malicious, please [open an issue](#opening-an-issue), as we'd
+want to investigate that as well.
+
+Specifically regarding the Windows binary `suricata-update.exe`, we strongly
+believe this to be a "false positive". However, we understand that users may
+still have concerns. Thankfully the code and tools involved in building
+the binary are all open source, so we encourage users to perform their own
+assessment as to whether they feel safe installing and using the software. As
+we don't claim deep expertise in antivirus matters, we'd also welcome input
+from experienced members of the Brim community on ways we can best address
+the topic. Please come talk to us on [public Slack](https://www.brimsecurity.com/join-slack/)
+if you feel you could offer further assistance.
+
+It may be helpful to first understand the role of this binary. As the name
+suggests, the binary is part of the [Suricata threat detection engine](https://suricata.io/)
+that's bundled with Brim as part of the [Brimcap](https://github.com/brimdata/brimcap)
+tool that generates summary logs from packet captures. When used in a default
+configuration, Brim invokes Suricata's update utility each time the app
+launches to ensure the most recent threat rules are locally cached such that
+accurate alerts can be generated from pcaps you import into Brim.
+
+Considering how the tool functions and how Brim uses it, it becomes plausible
+that a conservative antivirus engine may perceive the observed network
+behavior as consistent with that of ["backdoor"](https://en.wikipedia.org/wiki/Backdoor_(computing))
+malware that may reach out to arbitrary network destinations in the name of
+transmitting sensitive information or providing network channels for
+nefarious remote logins. Of course, the [functionality of Suricata-Update](https://suricata.readthedocs.io/en/suricata-6.0.0/rule-management/suricata-update.html)
+as described by the OISF is of course quite benign: In its default
+configuration as it's used by Brimcap/Brim, the network destinations it
+reaches out to are servers associated with providing the
+[Emerging Threats Open](https://rules.emergingthreats.net/open/) ruleset.
+
+Having established its benign nature, a likely follow-on concern would be
+whether it has been altered in the process of bundling it for use with the app.
+Indeed, the Suricata-Update tool in its original form is written in Python and
+in a normal Suricata install, users are responsible for having a compatible
+Python installation that's capable of running the tool. This seems a reasonable
+expectation for the types of servers on which Suricata is often installed.
+However, since it is our intent for Brim to be desktop software that's easy
+to install, we felt that bundling Python with Brim would bring excessive
+bloat, and we felt requiring users to maintain a working Python installation
+as a prerequisite for having valid alerts would be a heavy burden. It's for
+this reason that we made the decision to use the popular [PyInstaller](https://www.pyinstaller.org/)
+tool to "freeze" Suricata-Update into standalone executables that could be
+bundled with each platform and hence run without external dependencies.
+
+If you wish to perform your own audit to confirm that the executable has not
+been tampered with in the build process, below are some pointers to trace
+its origin.
+
+* A Brim-managed [fork of suricata-update](https://github.com/brimdata/suricata-update) holds a
+  copy of the [original OISF repo](https://github.com/OISF/suricata-update).
+  As of Brim
+  release `v0.25.0`, the fork is holding a copy of the OISF repo as of tag
+  `1.2.0`.
+
+* A branch [`fix-windows`](https://github.com/brimdata/suricata-update/tree/fix-windows)
+  exists in the Brim-managed repo that includes minimal changes that we found
+  necessary for the executable to build and run on Windows. The total set of
+  changes can be reviewed [here](https://github.com/brimdata/suricata-update/compare/1.2.0...0b10a83).
+
+* A [build-suricata repo](https://github.com/brimdata/build-suricata) contains automation that's
+  used to create the Suricata packages that are bundled with Brimcap. This
+  includes [script code](https://github.com/brimdata/build-suricata/blob/9847f9ba72b24a132aa7068a15b9d3ff9e63af1b/.github/workflows/windows-build.yaml#L103-L109)
+  that unpacks the enhanced Python and runs PyInstaller to generate the
+  `suricata-update.exe` executable. The same automation also creates the
+  Suricata artifacts on the repo's
+  [GitHub Releases](https://github.com/brimdata/build-suricata/releases) page.
+
+* The [Brimcap repo](https://github.com/brimdata/brimcap) then has its own
+  [release automation](https://github.com/brimdata/brimcap/blob/4fc6d62e8e12f0949074225274c3f9ea3074344c/.github/workflows/ci.yaml#L43)
+  which [downloads the Suricata artifact](https://github.com/brimdata/brimcap/blob/4fc6d62e8e12f0949074225274c3f9ea3074344c/Makefile#L41) which is bundled
+  into [Brimcap releases](https://github.com/brimdata/brimcap/releases).
+
+* Each Brim release points at a [Brimcap release](https://github.com/brimdata/brim/blob/b288fae1654bd6b848a0714583f6570d22e91d97/package.json#L68)
+  that's bundled by Brim's own [release automation](https://github.com/brimdata/brim/blob/v0.25.0/.github/workflows/win-release-candidate.yml).
+
+To summarize, the executable consists of minimally-enhanced Python that's been
+turned into an executable by other open source tools. If your conclusion
+matches our own that this is a "false positive", you can help others by
+[flagging it as harmless in VirusTotal](https://support.virustotal.com/hc/en-us/articles/115002146769-Comments),
+as multiple community members have already done.
 
 # Gathering Info
 
