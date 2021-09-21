@@ -272,7 +272,7 @@ its origin.
 * A [build-suricata repo](https://github.com/brimdata/build-suricata) contains automation that's
   used to create the Suricata packages that are bundled with Brimcap. This
   includes [script code](https://github.com/brimdata/build-suricata/blob/9847f9ba72b24a132aa7068a15b9d3ff9e63af1b/.github/workflows/windows-build.yaml#L103-L109)
-  that unpacks the enhanced Python and runs PyInstaller to generate the
+  that unpacks the enhanced Suricata-Update and runs PyInstaller to generate the
   `suricata-update.exe` executable. The same automation also creates the
   Suricata artifacts on the repo's
   [GitHub Releases](https://github.com/brimdata/build-suricata/releases) page.
