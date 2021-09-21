@@ -236,7 +236,7 @@ malware that may reach out to arbitrary network destinations in the name of
 transmitting sensitive information or providing network channels for
 nefarious remote logins. Of course, the [functionality of Suricata-Update](https://suricata.readthedocs.io/en/suricata-6.0.0/rule-management/suricata-update.html)
 as described by the OISF is quite benign: In its default
-configuration as it's used by Brimcap/Brim, the network destinations it
+configuration as it's used by Brimcap and Brim, the network destinations it
 reaches out to are servers associated with providing the
 [Emerging Threats Open](https://rules.emergingthreats.net/open/) ruleset.
 
