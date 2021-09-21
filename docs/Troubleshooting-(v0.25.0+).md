@@ -285,7 +285,7 @@ its origin.
 * Each Brim release points at a [Brimcap release](https://github.com/brimdata/brim/blob/b288fae1654bd6b848a0714583f6570d22e91d97/package.json#L68)
   that's bundled by Brim's own [release automation](https://github.com/brimdata/brim/blob/v0.25.0/.github/workflows/win-release-candidate.yml).
 
-To summarize, the executable consists of minimally-enhanced Python that's been
+To summarize, the executable consists of a minimally-enhanced Suricata-Update that's been
 turned into an executable by other open source tools. If your conclusion
 matches our own that this is a "false positive", you can help others by
 [flagging it as harmless in VirusTotal](https://support.virustotal.com/hc/en-us/articles/115002146769-Comments),
