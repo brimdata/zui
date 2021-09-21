@@ -1,6 +1,17 @@
 import classNames from "classnames"
 import React, {useRef} from "react"
 import styled from "styled-components"
+import Notice from "../../state/Notice"
+import {useDispatch, useSelector} from "react-redux"
+import Current from "../../state/Current"
+import SearchBar from "../../state/SearchBar"
+import {submitSearch} from "../../flows/submitSearch/mod"
+import {MenuItemConstructorOptions, remote} from "electron"
+import lib from "../../lib"
+import toast from "react-hot-toast"
+import Modal from "../../state/Modal"
+import Queries from "../../state/Queries"
+import usePopupMenu from "../hooks/usePopupMenu"
 
 const BG = styled.div`
   padding-left: 18px;
@@ -81,11 +92,97 @@ function Edit({item}) {
   )
 }
 
-export default function Item({indent, props, node, state}) {
+export default function Item({indent, props, node, state, handlers}) {
+  const dispatch = useDispatch()
+  const currentPool = useSelector(Current.getPool)
   const isEditing = false // for later
   const item = node.model
+
+  const runQuery = (value) => {
+    dispatch(SearchBar.clearSearchBar())
+    dispatch(SearchBar.changeSearchBarInput(value))
+    dispatch(submitSearch())
+  }
+
+  const onItemClick = () => {
+    if (!currentPool)
+      return dispatch(
+        Notice.set({type: "NoPoolError", message: "No Pool Selected"})
+      )
+
+    if (!item.value) return
+
+    runQuery(item.value)
+  }
+
+  const hasMultiSelected =
+  const template: MenuItemConstructorOptions[] = [
+    {
+      label: "Run Query",
+      enabled: !hasMultiSelected && !!currentPool,
+      click: () => {
+        const {
+          item: {value}
+        } = contextArgs
+
+        runQuery(value)
+      }
+    },
+    {
+      label: "Copy Query",
+      enabled: !hasMultiSelected,
+      click: () => {
+        const {
+          item: {value}
+        } = contextArgs
+        lib.doc.copyToClipboard(value)
+        toast("Query copied to clipboard")
+      }
+    },
+    {type: "separator"},
+    {
+      label: "Edit",
+      enabled: !hasMultiSelected,
+      click: () => {
+        const {item} = contextArgs
+        // only edit queries
+        if ("items" in item) return
+        dispatch(Modal.show("edit-query", {query: item}))
+      }
+    },
+    {type: "separator"},
+    {
+      label: hasMultiSelected ? "Delete Selected" : "Delete",
+      click: () => {
+        return remote.dialog
+          .showMessageBox({
+            type: "warning",
+            title: "Confirm Delete Query Window",
+            message: `Are you sure you want to delete the ${(contextArgs.selections &&
+              contextArgs.selections.length) ||
+              ""} selected quer${hasMultiSelected ? "ies" : "y"}?`,
+            buttons: ["OK", "Cancel"]
+          })
+          .then(({response}) => {
+            if (response === 0) {
+              const {selections, item} = contextArgs
+              if (hasMultiSelected) dispatch(Queries.removeItems(selections))
+              else dispatch(Queries.removeItems([item]))
+            }
+          })
+      }
+    }
+  ]
+
+  const menu = usePopupMenu(template)
+
   return (
-    <BG {...props} className={classNames(state)}>
+    <BG
+      {...props}
+      className={classNames(state)}
+      onClick={onItemClick}
+      onContextMenu={menu.open}
+    >
       <div style={{paddingLeft: indent}}>
         {isEditing ? <Edit item={item} /> : <Show item={item} />}
       </div>

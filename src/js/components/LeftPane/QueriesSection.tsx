@@ -92,64 +92,6 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     dispatch(submitSearch())
   }
 
-  const template: MenuItemConstructorOptions[] = [
-    {
-      label: "Run Query",
-      enabled: !hasMultiSelected && !!currentPool,
-      click: () => {
-        const {
-          item: {value}
-        } = contextArgs
-
-        runQuery(value)
-      }
-    },
-    {
-      label: "Copy Query",
-      enabled: !hasMultiSelected,
-      click: () => {
-        const {
-          item: {value}
-        } = contextArgs
-        lib.doc.copyToClipboard(value)
-        toast("Query copied to clipboard")
-      }
-    },
-    {type: "separator"},
-    {
-      label: "Edit",
-      enabled: !hasMultiSelected,
-      click: () => {
-        const {item} = contextArgs
-        // only edit queries
-        if ("items" in item) return
-        dispatch(Modal.show("edit-query", {query: item}))
-      }
-    },
-    {type: "separator"},
-    {
-      label: hasMultiSelected ? "Delete Selected" : "Delete",
-      click: () => {
-        return remote.dialog
-          .showMessageBox({
-            type: "warning",
-            title: "Confirm Delete Query Window",
-            message: `Are you sure you want to delete the ${(contextArgs.selections &&
-              contextArgs.selections.length) ||
-              ""} selected quer${hasMultiSelected ? "ies" : "y"}?`,
-            buttons: ["OK", "Cancel"]
-          })
-          .then(({response}) => {
-            if (response === 0) {
-              const {selections, item} = contextArgs
-              if (hasMultiSelected) dispatch(Queries.removeItems(selections))
-              else dispatch(Queries.removeItems([item]))
-            }
-          })
-      }
-    }
-  ]
-
   const menu = usePopupMenu(template)
 
   function _onItemClick(_, item) {
@@ -166,10 +108,6 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   function _onItemMove(sourceItem, destIndex) {
     if (selectedTag !== "All") return
     dispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
-  }
-
-  function _onItemContextMenu(_, item, selections) {
-    setContextArgs({item, selections})
   }
 
   function onTagSelect(tag) {
@@ -218,9 +156,9 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
             rowHeight={24}
             width={width}
             height={height}
+            hideRoot
             // onItemMove={onItemMove}
             // onItemClick={onItemClick}
-            // onItemContextMenu={onItemContextMenu}
           >
             {Item}
           </Tree>
