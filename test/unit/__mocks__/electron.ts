@@ -18,6 +18,7 @@ class WebContents extends EventEmitter {
   }
 }
 export class BrowserWindow {
+  static getAllWindows = jest.fn(() => [])
   webContents = new WebContents()
   isDestroyed = jest.fn(() => false)
   focus = jest.fn()

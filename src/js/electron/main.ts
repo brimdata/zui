@@ -23,6 +23,8 @@ import {windowsPre25Exists} from "./windows-pre-25"
 import {meta} from "app/ipc/meta"
 import secureWebContents from "./secure-web-contents"
 import env from "app/core/env"
+import {join} from "path"
+import requireAll from "./require-all"
 
 console.time("init")
 
@@ -33,6 +35,7 @@ function mainDefaults() {
 }
 
 export async function main(opts = mainDefaults()) {
+  requireAll(join(__dirname, "./initializers"))
   secureWebContents()
   if (handleSquirrelEvent(app)) return
   if (await windowsPre25Exists()) {

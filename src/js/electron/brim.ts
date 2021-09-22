@@ -1,6 +1,5 @@
 import {app} from "electron"
 import keytar from "keytar"
-import {join} from "path"
 import os from "os"
 import path from "path"
 import {Lake} from "ppl/lake/lake"
@@ -18,7 +17,6 @@ import {installExtensions} from "./extensions"
 import ipc from "./ipc"
 import sendTo from "./ipc/sendTo"
 import isDev from "./isDev"
-import requireAll from "./require-all"
 import tron, {Session} from "./tron"
 import formatSessionState from "./tron/formatSessionState"
 import {sessionStateFile} from "./tron/session"
@@ -63,7 +61,6 @@ export class BrimMain {
   }
 
   async start(opts = {backend: true}) {
-    requireAll(join(__dirname, "./initializers"))
     if (opts.backend) {
       this.lake.start()
     }
