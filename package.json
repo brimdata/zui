@@ -115,6 +115,7 @@
     "date-fns": "^2.16.1",
     "electron-devtools-installer": "^3.1.1",
     "electron-dl": "^3.0.1",
+    "electron-localshortcut": "^3.2.1",
     "electron-log": "^4.2.2",
     "electron-updater": "^4.3.8",
     "extract-zip": "^1.6.7",

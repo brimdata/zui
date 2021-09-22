@@ -49,7 +49,10 @@ export function setupBrim(opts: Args = defaults()) {
   const context = new BrimTestContext()
 
   beforeEach(async () => {
-    context.assign(await bootBrim(opts))
+    // If this fails, the tests will still run. When we're on
+    // jest 27, this will fail the test as expected.
+    const props = await bootBrim(opts)
+    context.assign(props)
     if (opts.workspace) {
       context.dispatch(Workspaces.add(opts.workspace))
       if (opts.pool) {
