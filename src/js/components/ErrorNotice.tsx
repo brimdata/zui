@@ -41,19 +41,22 @@ function Default({error}: {error: BrimError}) {
   const msg = upperFirst(error.message)
 
   const generateErrorDetails = (details) => {
-    if (!details) return null
     // in case the backend returns a single string instead of array
     let detailsContent = null
     if (typeof details === "string" || details instanceof String)
-      detailsContent = <p>{details}</p>
+      detailsContent = details.split("\n")
     else if (Array.isArray(details) && details.length > 0)
-      detailsContent = details
-        .flatMap((s) => s.split("\n"))
-        .map((string, i) => <p key={i}>{string}</p>)
+      detailsContent = details.flatMap((s) => s.split("\n"))
 
     if (!detailsContent) return null
 
-    return <div className="error-details">{detailsContent}</div>
+    return (
+      <div className="error-details">
+        {detailsContent.map((detail, i) => (
+          <p key={i}>{detail}</p>
+        ))}
+      </div>
+    )
   }
   return (
     <>
