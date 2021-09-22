@@ -13,7 +13,7 @@ export default function ErrorNotice() {
   const visible = useSelector(Notice.getVisible)
 
   return (
-    <NoticeBanner show={visible}>
+    <NoticeBanner role="alert" show={visible}>
       <ErrorMessage error={error} />
     </NoticeBanner>
   )
