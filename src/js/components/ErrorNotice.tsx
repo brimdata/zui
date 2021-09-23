@@ -13,7 +13,7 @@ export default function ErrorNotice() {
   const visible = useSelector(Notice.getVisible)
 
   return (
-    <NoticeBanner show={visible}>
+    <NoticeBanner role="alert" show={visible}>
       <ErrorMessage error={error} />
     </NoticeBanner>
   )
@@ -39,21 +39,31 @@ function None() {
 function Default({error}: {error: BrimError}) {
   const dispatch = useDispatch()
   const msg = upperFirst(error.message)
-  const details = error.details
+
+  const generateErrorDetails = (details) => {
+    // in case the backend returns a single string instead of array
+    let detailsContent = null
+    if (typeof details === "string" || details instanceof String)
+      detailsContent = details.split("\n")
+    else if (Array.isArray(details) && details.length > 0)
+      detailsContent = details.flatMap((s) => s.split("\n"))
+
+    if (!detailsContent) return null
+
+    return (
+      <div className="error-details">
+        {detailsContent.map((detail, i) => (
+          <p key={i}>{detail}</p>
+        ))}
+      </div>
+    )
+  }
   return (
     <>
       <p>
         {msg} <a onClick={() => dispatch(Notice.dismiss())}>Dismiss</a>
       </p>
-      {details && details.length > 0 && (
-        <div className="error-details">
-          {details
-            .flatMap((s) => s.split("\n"))
-            .map((string, i) => (
-              <p key={i}>{string}</p>
-            ))}
-        </div>
-      )}
+      {generateErrorDetails(error.details)}
     </>
   )
 }
