@@ -54,7 +54,7 @@
     array: ["1", "2", "3"],
     set: |["a", "b", "c"]|,
     union: "hi james" ((string, int64)),
-    map: |{ {"best", 1}, {"worst", 0} }|,
+    map: |{ "best": 1, "worst": 0 }|,
     null: null
 }
 { city: "Berkeley", state: "CA", population: 121643 (uint32) } (=city_schema)

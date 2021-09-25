@@ -10,7 +10,7 @@ export class TypeMap implements ContainerTypeInterface {
   constructor(public keyType: ZedType, public valType: ZedType) {}
 
   static stringify(keyType, valType) {
-    return `|{` + typeId(keyType) + "," + typeId(valType) + "}|"
+    return `|{` + typeId(keyType) + ":" + typeId(valType) + "}|"
   }
 
   create(value: [Value, Value][], typedefs) {
@@ -45,6 +45,6 @@ export class TypeMap implements ContainerTypeInterface {
   }
 
   toString() {
-    return "|{" + this.keyType.toString() + "," + this.valType.toString() + "}|"
+    return "|{" + this.keyType.toString() + ":" + this.valType.toString() + "}|"
   }
 }
