@@ -99,7 +99,7 @@ function buildSearchActions() {
     }),
     include: action({
       name: "search-cell-menu-include",
-      label: "Filter = value",
+      label: "Filter == value",
       listener(dispatch, data: zjson.FieldRootRecord) {
         dispatch(appendQueryInclude(ZealotContext.decodeField(data)))
         dispatch(submitSearch())
