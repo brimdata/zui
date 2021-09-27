@@ -25,7 +25,7 @@ describe("context menu tests", () => {
       const fieldName = "scalar"
       const query = `_path=="${path}" ${fieldName}!=null | cut id, ${fieldName} | sort id`
       const cell = cellContaining(value)
-      return () => runTest(query, cell, "Filter = value")
+      return () => runTest(query, cell, "Filter == value")
     }
     test("mystr", scalarString("mystr"))
     test("-", scalarString("-"))
@@ -51,7 +51,7 @@ describe("context menu tests", () => {
       const fieldName = "scalar"
       const query = `_path=="${path}" ${fieldName}!=null | cut id, ${fieldName} | sort id`
       const cell = cellContaining(value)
-      return () => runTest(query, cell, "Filter = value")
+      return () => runTest(query, cell, "Filter == value")
     }
     test("1.1.1.1", scalarAddr("1.1.1.1"))
     test("fe80::58d2:2d09:e8cb:a8ad", scalarAddr("fe80::58d2:2d09:e8cb:a8ad"))
@@ -63,7 +63,7 @@ describe("context menu tests", () => {
     function scalarUnset(value) {
       const query = `_path=="string" | cut id, scalar | sort -r id | head 10`
       const cell = cellContaining(value)
-      return () => runTest(query, cell, "Filter = value")
+      return () => runTest(query, cell, "Filter == value")
     }
     test("unset", scalarUnset(UNSET))
   })

@@ -95,7 +95,7 @@ function buildDetailActions() {
     }),
     include: action({
       name: "detail-cell-menu-include",
-      label: "Filter = value in new search",
+      label: "Filter == value in new search",
       listener(dispatch, field: zjson.FieldRootRecord) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryInclude(ZealotContext.decodeField(field)))
