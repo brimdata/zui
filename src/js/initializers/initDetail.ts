@@ -6,7 +6,7 @@ import brim from "../brim"
 import initialize from "./initialize"
 
 export default async () => {
-  const {store, pluginManager} = await initialize()
+  const {store, api, pluginManager} = await initialize()
   // Set the span to everything
   const pool = Current.mustGetPool(store.getState())
   pool && store.dispatch(Search.setSpan(brim.pool(pool).everythingSpan()))
@@ -16,5 +16,5 @@ export default async () => {
   store.dispatch(LogDetails.clear())
   log && store.dispatch(viewLogDetail(log))
 
-  return {store, pluginManager}
+  return {store, api, pluginManager}
 }

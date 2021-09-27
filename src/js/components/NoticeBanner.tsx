@@ -3,7 +3,7 @@ import classNames from "classnames"
 
 import Animate from "./Animate"
 
-type Props = {show: boolean; children: any; className?: string}
+type Props = {show: boolean; children: any; className?: string; role?: string}
 
 export default function NoticeBanner({
   show,

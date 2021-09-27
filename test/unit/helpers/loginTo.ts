@@ -17,10 +17,10 @@ export default async function loginTo(
     .stubPromise("pools.list", [{name: "dataPool", id: "1"}], "always")
     .stubPromise("pools.get", {name: "dataPool", id: "1"}, "always")
     .stubStream(
-      "search",
+      "query",
       [
-        {type: "TaskStart", task_id: 1},
-        {type: "TaskEnd", task_id: 1}
+        {kind: "QueryChannelSet", value: {channel_id: 0}},
+        {kind: "QueryChannelEnd", value: {channel_id: 0}}
       ],
       "always"
     )

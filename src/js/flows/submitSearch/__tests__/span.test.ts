@@ -10,11 +10,11 @@ import Pools from "../../../state/Pools"
 import Workspaces from "../../../state/Workspaces"
 import fixtures from "../../../../../test/unit/fixtures"
 import initTestStore from "../../../../../test/unit/helpers/initTestStore"
-import responses from "../../../../../test/unit/responses"
 import {submitSearch} from "../mod"
+import {useResponse} from "../../../../../test/shared/responses"
 
-const dnsResp = responses("dns.txt")
-const countByPathResp = responses("count_by_path.txt")
+const dnsResp = useResponse("dns")
+const countByPathResp = useResponse("countByPath")
 const pool = fixtures("pool1")
 
 let store, zealot, dispatch
@@ -22,7 +22,7 @@ beforeEach(() => {
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
-  zealot.stubStream("search", countByPathResp).stubStream("search", dnsResp)
+  zealot.stubStream("query", countByPathResp).stubStream("query", dnsResp)
   store.dispatchAll([
     Workspaces.add({
       host: "testHost",

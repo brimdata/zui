@@ -1,14 +1,15 @@
-import {RecordsCallbackArgs} from "zealot/fetcher/records_callback"
+import {RecordCallbackRet} from "zealot/fetcher/records-callback"
 import {SearchStats, SearchStatus} from "../../types/searches"
 
 type EventNames =
+  | "start"
+  | "end"
   | "stats"
   | "status"
-  | "end"
-  | "start"
+  | "chan-end"
   | "error"
   | "abort"
-  | "warnings"
+  | "warning"
   | number
 
 export class SearchResponse {
@@ -18,7 +19,7 @@ export class SearchResponse {
     this.callbacks = new Map<EventNames, Function>()
   }
 
-  chan(num: number, func: (data: RecordsCallbackArgs) => void) {
+  chan(num: number, func: (data: RecordCallbackRet) => void) {
     this.callbacks.set(num, func)
     return this
   }
@@ -30,12 +31,16 @@ export class SearchResponse {
     this.callbacks.set("status", func)
     return this
   }
-  end(func: (id: number) => void) {
+  start(func: () => void) {
+    this.callbacks.set("start", func)
+    return this
+  }
+  end(func: () => void) {
     this.callbacks.set("end", func)
     return this
   }
-  start(func: (arg0: number) => void) {
-    this.callbacks.set("start", func)
+  chanEnd(func: (id: number) => void) {
+    this.callbacks.set("chan-end", func)
     return this
   }
   error(func: (arg0: string) => void) {
@@ -46,8 +51,8 @@ export class SearchResponse {
     this.callbacks.set("abort", func)
     return this
   }
-  warnings(func: (arg0: string) => void) {
-    this.callbacks.set("warnings", func)
+  warning(func: (arg0: string) => void) {
+    this.callbacks.set("warning", func)
     return this
   }
   emit(event: EventNames, ...data: any) {

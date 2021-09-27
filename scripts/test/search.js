@@ -19,9 +19,10 @@ withLake(
   async (zealot) => {
     try {
       const poolId = await ingest(zealot)
-      const from = new Date(0)
-      const to = new Date()
-      const search = await zealot.search(QUERY, {poolId, from, to})
+      const from = new Date(0).toISOString()
+      const to = new Date().toISOString()
+      const annotatedQuery = `from '${poolId}' | ts >= ${from} | ts <= ${to} | ${QUERY}`
+      const search = await zealot.query(annotatedQuery)
       const text = await search.origResp.text()
       console.log(text)
     } catch (e) {

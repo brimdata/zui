@@ -1,12 +1,16 @@
+import Tabs from "src/js/state/Tabs"
 import {Thunk} from "../../state/types"
 import {getZealot} from "../getZealot"
 import {handle} from "./handler"
-import Handlers from "../../state/Handlers"
 import {SearchResponse} from "./response"
-import {Handler} from "src/js/state/Handlers/types"
 import Current from "../../state/Current"
 import Tab from "../../state/Tab"
-import randomHash from "../../brim/randomHash"
+import brim, {Ts} from "src/js/brim"
+import {
+  ChronoField,
+  DateTimeFormatterBuilder,
+  LocalDateTime
+} from "@js-joda/core"
 
 type Args = {
   query: string
@@ -16,35 +20,79 @@ type Args = {
   id?: string
 }
 
+type annotateArgs = {
+  poolId: string
+  from?: Date | Ts | bigint
+  to?: Date | Ts | bigint
+}
+
+export const annotateQuery = (query: string, args: annotateArgs) => {
+  // if query already starts with 'from', we do not annotate it further
+  if (/^from[\s(]/i.test(query)) return query
+  const {
+    poolId,
+    from = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000), // 30 days
+    to = new Date()
+  } = args
+
+  const annotated = [`from '${poolId}'`]
+  if (!isZeroDefaultSpan(from, to)) {
+    annotated.push(`ts >= ${dateToNanoTs(from)}`)
+    annotated.push(`ts <= ${dateToNanoTs(to)}`)
+  }
+  annotated.push(query)
+
+  return annotated.join(" | ")
+}
+
+const isZeroDefaultSpan = (
+  from: Date | Ts | bigint,
+  to: Date | Ts | bigint
+): boolean => {
+  return (
+    brim.time(from).toBigInt() === 0n && brim.time(to).toBigInt() === 1000000n
+  )
+}
+
+export const dateToNanoTs = (date: Date | Ts | bigint): string => {
+  const NanoFormat = new DateTimeFormatterBuilder()
+    .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
+    .appendFraction(ChronoField.NANO_OF_SECOND, 3, 9, true)
+    .appendLiteral("Z")
+    .toFormatter()
+
+  return LocalDateTime.parse(brim.time(date).format()).format(NanoFormat)
+}
+
 export type BrimSearch = {
   response: SearchResponse
   promise: Promise<void>
   abort: () => void
 }
 
-export function search({
-  query,
-  from,
-  to,
-  poolId,
-  id = randomHash()
-}: Args): Thunk<BrimSearch> {
-  return (dispatch, getState) => {
+export function search({query, from, to, poolId, id}: Args): Thunk<BrimSearch> {
+  return (dispatch, getState, {api}) => {
     const [defaultFrom, defaultTo] = Tab.getSpanAsDates(getState())
+    const tab = Tabs.getActive(getState())
     const defaultPoolId = Current.getPoolId(getState())
     const zealot = dispatch(getZealot())
     const ctl = new AbortController()
-    const searchHandle: Handler = {type: "SEARCH", abort: () => ctl.abort()}
+    const abort = () => ctl.abort()
+    const tag = id
+
     poolId = poolId || defaultPoolId
     to = to || defaultTo
     from = from || defaultFrom
-    const req = zealot.search(query, {from, to, poolId, signal: ctl.signal})
-    dispatch(Handlers.abort(id, false))
-    dispatch(Handlers.register(id, searchHandle))
+    const req = zealot.query(annotateQuery(query, {from, to, poolId}), {
+      signal: ctl.signal
+    })
 
-    const abort = () => ctl.abort()
+    api.abortables.abort({tab, tag})
+    const aId = api.abortables.add({abort, tab, tag})
+
     const {response, promise} = handle(req)
-    promise.finally(() => dispatch(Handlers.remove(id)))
+    promise.finally(() => api.abortables.remove(aId))
+
     return {response, promise, abort}
   }
 }

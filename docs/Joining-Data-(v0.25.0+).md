@@ -41,7 +41,7 @@ shy!
 By its nature, a join operation requires two inputs that will
 ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tree/main/docs/language/operators#join)
 show examples with the [Zed CLI tools](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md)
-that specify these inputs as named files or Pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/design.md).
+that specify these inputs as named files or Pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md).
 
 Brim release `v0.25.0` includes initial support for storing data in Zed Lakes.
 However, due to a current limitation ([brim/1618](https://github.com/brimdata/brim/issues/1618)),
@@ -78,16 +78,16 @@ example commands with the creation and population of the separate Pools
 ```
 $ export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
 
-$ zapi create -p fruit -orderby flavor:asc
-pool created: fruit
+$ zapi create -orderby flavor:asc fruit
+pool created: fruit 1xu7lTnMF7n3TcT3Rg3ivZ0Q9N3
 
-$ zapi create -p people -orderby likes:asc
-pool created: people
+$ zapi create -orderby likes:asc people
+pool created: people 1xu7nejkZEysqneOCcBhhkgkbrO
 
-$ zapi load -p fruit fruit.ndjson
+$ zapi load -use fruit@main fruit.ndjson
 1ujTdNNId0s6TmVKd02lFRuwzN2 committed
 
-$ zapi load -p people people.ndjson
+$ zapi load -use people@main people.ndjson
 1ujTeU44ZbqdE5x6DvMoTwSkztS committed
 ```
 
@@ -98,10 +98,10 @@ intend to execute on the data in this Pool, you may wish to specify a different
 `-orderby` setting.
 
 ```
-$ zapi create -p joined -orderby name:asc
+$ zapi create -orderby name:asc joined
 pool created: joined
 
-$ zapi query -I inner-join-pools.zed | zapi load -p joined -
+$ zapi query -I inner-join-pools.zed | zapi load -use joined@main -
 1ujUTZvk5KyAoGlSMSGvzFcUGgy committed
 ```
 

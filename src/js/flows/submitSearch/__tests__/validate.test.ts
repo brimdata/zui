@@ -5,11 +5,11 @@ import SearchBar from "../../../state/SearchBar"
 import Pools from "../../../state/Pools"
 import fixtures from "../../../../../test/unit/fixtures"
 import initTestStore from "../../../../../test/unit/helpers/initTestStore"
-import responses from "../../../../../test/unit/responses"
 import {lakePath} from "app/router/utils/paths"
 import tabHistory from "app/router/tab-history"
+import {useResponse} from "../../../../../test/shared/responses"
 
-const dnsResp = responses("dns.txt")
+const dnsResp = useResponse("dns")
 const pool = fixtures("pool1")
 
 let store, zealot, dispatch, select
@@ -18,7 +18,7 @@ beforeEach(() => {
   store = initTestStore(zealot.zealot)
   dispatch = store.dispatch
   select = (s: any) => s(store.getState())
-  zealot.stubStream("search", dnsResp)
+  zealot.stubStream("query", dnsResp)
   store.dispatchAll([
     Pools.setDetail("1", pool),
     SearchBar.changeSearchBarInput("dns"),

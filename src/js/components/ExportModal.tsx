@@ -10,7 +10,7 @@ import ToolbarButton from "../../../app/toolbar/button"
 import exportResults from "../flows/exportResults"
 import {ipcRenderer} from "electron"
 import {useDispatch} from "react-redux"
-import {SearchFormat} from "../../../zealot"
+import {QueryFormat} from "../../../zealot"
 import InputLabel from "./common/forms/InputLabel"
 import {defaultModalButton} from "../../../test/integration/helpers/locators"
 import {toast} from "react-hot-toast"
@@ -69,7 +69,7 @@ const ExportModal = ({onClose}) => {
     if (canceled) return
 
     toast.promise(
-      dispatch(exportResults(filePath, format as SearchFormat)),
+      dispatch(exportResults(filePath, format as QueryFormat)),
       {
         loading: "Exporting...",
         success: "Export Complete",

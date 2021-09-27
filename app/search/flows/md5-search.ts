@@ -19,12 +19,12 @@ export const md5Search = (md5: string): Thunk<BrimSearch | null> => (
   const poolId = Current.getPoolId(getState())
   if (!poolId) return null
   const [from, to] = Tab.getSpanAsDates(getState())
-  const query = parallelizeProcs([
+  const q = parallelizeProcs([
     filenameCorrelation(md5),
     md5Correlation(md5),
     rxHostsCorrelation(md5),
     txHostsCorrelation(md5)
   ])
 
-  return dispatch(search({id, query, from, to, poolId}))
+  return dispatch(search({id, query: q, from, to, poolId}))
 }

@@ -1,6 +1,5 @@
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import {search} from "src/js/flows/search/mod"
-import {SearchResponse} from "src/js/flows/search/response"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Columns from "src/js/state/Columns"
 import Current from "src/js/state/Current"
@@ -11,6 +10,7 @@ import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
 import {SchemaMap} from "src/js/state/Viewer/types"
 import {zed} from "zealot"
+import {SearchResponse} from "../../../src/js/flows/search/response"
 
 type Args = {
   query: string
@@ -70,7 +70,7 @@ function handle(
         dispatch(Viewer.updateColumns(tabId, schemas))
         dispatch(Columns.touch(schemas))
       })
-      .warnings((warning) => dispatch(SearchBar.errorSearchBarParse(warning)))
+      .warning((warning) => dispatch(SearchBar.errorSearchBarParse(warning)))
       .error((error) => {
         dispatch(Notice.set(ErrorFactory.create(error)))
       })

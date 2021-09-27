@@ -1,18 +1,20 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useBrimApi} from "app/core/context"
 import React from "react"
-
+import {useDispatch, useSelector} from "react-redux"
+import Tabs from "src/js/state/Tabs"
 import {reactElementProps} from "../../../../test/integration/helpers/integration"
-import Handlers from "../../state/Handlers"
-import InputAction from "./InputAction"
-import Modal from "../../state/Modal"
-import PopMenuPointy from "../PopMenu/PopMenuPointy"
-import Tab from "../../state/Tab"
 import ThreeDotsIcon from "../../icons/ThreeDotsIcon"
 import open from "../../lib/open"
+import Modal from "../../state/Modal"
+import Tab from "../../state/Tab"
+import PopMenuPointy from "../PopMenu/PopMenuPointy"
+import InputAction from "./InputAction"
 
 export default function MenuAction() {
   const dispatch = useDispatch()
+  const api = useBrimApi()
   const isFetching = useSelector(Tab.isFetching)
+  const tab = useSelector(Tabs.getActive)
 
   const menu = [
     {label: "Debug query", click: () => dispatch(Modal.show("debug"))},
@@ -25,7 +27,7 @@ export default function MenuAction() {
     },
     {
       label: "Kill search",
-      click: () => dispatch(Handlers.abortAll()),
+      click: () => api.abortables.abort({tab}),
       disabled: !isFetching
     }
   ]

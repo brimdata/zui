@@ -3,6 +3,7 @@ import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import {getZealot} from "./getZealot"
+import {annotateQuery} from "./search/mod"
 
 type ReturnValue = {
   search: {
@@ -23,7 +24,7 @@ export const inspectSearch = (): Thunk<ReturnValue> => (dispatch, getState) => {
   let search
 
   try {
-    search = zealot.inspect.search(program, {from, to, poolId})
+    search = zealot.inspect.query(annotateQuery(program, {from, to, poolId}))
   } catch (_) {
     // Parsing error
   }

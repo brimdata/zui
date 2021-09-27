@@ -1,4 +1,5 @@
 import {isNull} from "../utils"
+import {TypeIp} from "../types/type-ip"
 import {TypeMap} from "../types/type-map"
 import {ZedValue, ZedValueInterface} from "./types"
 
@@ -12,11 +13,12 @@ export class ZedMap implements ZedValueInterface {
   toString() {
     if (isNull(this.value)) return "null"
     const contents: string = Array.from(this.value.entries())
-      .map(
-        ([key, value]) => "{" + key.toString() + "," + value.toString() + "}"
-      )
+      .map(([key, value]) => {
+        const sep = isIPv6(key) ? " :" : ":"
+        return key.toString() + sep + value.toString()
+      })
       .join(",")
-    return `|{${contents}}|}`
+    return `|{${contents}}|`
   }
 
   // @ts-ignore
@@ -30,4 +32,8 @@ export class ZedMap implements ZedValueInterface {
   isUnset() {
     return isNull(this.value)
   }
+}
+
+function isIPv6(v: ZedValue): boolean {
+  return v.type === TypeIp && v.toString().includes(":")
 }

@@ -1,24 +1,24 @@
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import Columns from "src/js/state/Columns"
-import Handlers from "src/js/state/Handlers"
 import SearchBar from "src/js/state/SearchBar"
 import Pools from "src/js/state/Pools"
 import Viewer from "src/js/state/Viewer"
 import Workspaces from "src/js/state/Workspaces"
 import fixtures from "test/unit/fixtures"
-import initTestStore from "test/unit/helpers/initTestStore"
-import responses from "test/unit/responses"
+import initTestStore, {TestStore} from "test/unit/helpers/initTestStore"
 import {createRecord} from "test/shared/factories/zed-factory"
 import {useResponse} from "test/shared/responses"
-import {createZealotMock} from "zealot"
+import {createZealotMock, ZealotMock} from "zealot"
 import {viewerSearch} from "./viewer-search"
 
 const dnsResp = useResponse("dns")
 const pool = fixtures("pool1")
-const warningResp = responses("search_warning.txt")
+const warningResp = useResponse("searchWarning")
 
-let store, zealot, dispatch, select
+let dispatch, select
+let zealot: ZealotMock
+let store: TestStore
 beforeEach(() => {
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)
@@ -38,25 +38,54 @@ beforeEach(() => {
   store.dispatch(tabHistory.push(lakePath(pool.id, "1")))
 })
 
+const getQueryCallChecker = () => {
+  let callCount = 0
+  return async (query: string, expectAnnotation = false) => {
+    zealot.stubStream("query", dnsResp)
+    await dispatch(
+      viewerSearch({
+        query,
+        from,
+        to
+      })
+    )
+    callCount++
+    const calls = zealot.calls("query")
+    expect(calls.length).toBe(callCount)
+    const expected = expectAnnotation
+      ? `from '1' | ts >= ${from.toISOString()} | ts <= 1970-01-01T00:00:00.001Z | ${query}`
+      : query
+    expect(calls[callCount - 1].args).toEqual(expected)
+  }
+}
+
+const from = new Date()
+const to = new Date(1)
 const submit = () =>
   dispatch(
     viewerSearch({
       query: "dns query | head 500",
-      from: new Date(),
-      to: new Date(1)
+      from,
+      to
     })
   )
 
 describe("a normal response", () => {
   beforeEach(() => {
-    zealot.stubStream("search", dnsResp)
+    zealot.stubStream("query", dnsResp)
   })
 
   test("zealot gets the request", async () => {
-    await submit()
-    const calls = zealot.calls("search")
-    expect(calls.length).toBe(1)
-    expect(calls[0].args).toEqual("dns query | head 500")
+    const checkQueryCall = getQueryCallChecker()
+    await checkQueryCall("dns query | head 500", true)
+  })
+
+  test("zealot does not annotate requests beginning with variations of 'from'", async () => {
+    const checkQueryCall = getQueryCallChecker()
+    await checkQueryCall("from 'test' | test")
+    await checkQueryCall("from('test') | test")
+    await checkQueryCall("from ('test') | test")
+    await checkQueryCall("from    ('test') | test")
   })
 
   test("the table gets populated", async () => {
@@ -81,22 +110,6 @@ describe("a normal response", () => {
     expect(select(Viewer.getEndStatus)).toBe("COMPLETE")
   })
 
-  test("registers a table request then cleans it up", async () => {
-    const promise = submit()
-    expect(select(Handlers.get)["Table"]).toEqual(
-      expect.objectContaining({type: "SEARCH"})
-    )
-    await promise
-    expect(select(Handlers.get)["Table"]).toBe(undefined)
-  })
-
-  test("aborts previous table request", async () => {
-    const abort = jest.fn()
-    dispatch(Handlers.register("Table", {type: "SEARCH", abort}))
-    await submit()
-    expect(abort).toHaveBeenCalledTimes(1)
-  })
-
   test("sets the viewer columns", async () => {
     await submit()
     expect(select(Viewer.getColumns)).toMatchSnapshot()
@@ -109,9 +122,9 @@ describe("a normal response", () => {
 })
 
 test("a response with a warning", async () => {
-  zealot.stubStream("search", warningResp)
+  zealot.stubStream("query", warningResp)
   await submit()
   expect(select(SearchBar.getSearchBarError)).toBe(
-    "Cut field boo not present in input"
+    "Sort field boo not present in input"
   )
 })

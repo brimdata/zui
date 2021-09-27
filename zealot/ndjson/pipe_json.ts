@@ -1,6 +1,6 @@
 import {parse} from "./parse"
 
-export const NEW_LINE = "\n\n\n"
+export const NEW_LINE = "\n"
 
 export async function* pipeJson(iterator: AsyncGenerator<string>) {
   let leftover = ""

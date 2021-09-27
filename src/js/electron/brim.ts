@@ -1,10 +1,10 @@
 import {app} from "electron"
 import keytar from "keytar"
-import url from "url"
 import os from "os"
 import path from "path"
 import {Lake} from "ppl/lake/lake"
 import {Store} from "redux"
+import url from "url"
 import {
   deserializeState,
   toAccessTokenKey,
@@ -65,6 +65,7 @@ export class BrimMain {
       this.lake.start()
     }
     if (this.isDev()) await installExtensions()
+
     this.windows.init()
   }
 
