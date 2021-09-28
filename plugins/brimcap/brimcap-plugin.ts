@@ -294,9 +294,9 @@ export default class BrimcapPlugin {
       const p = this.cli.analyze(pcapFilePath, cliOpts, signal)
       this.processes[p.pid] = p
 
-      let brimcapErr
+      let analyzeErr
       p.on("error", (err) => {
-        brimcapErr = err
+        analyzeErr = err
       })
 
       const handleRespMsg = async (jsonMsg) => {
@@ -310,7 +310,7 @@ export default class BrimcapPlugin {
             if (status.warning) onWarning(status.warning)
             break
           case "error":
-            if (status.error) brimcapErr = status.error
+            if (status.error) analyzeErr = status.error
             break
         }
       }
@@ -321,7 +321,7 @@ export default class BrimcapPlugin {
           jsonMsgs.forEach(handleRespMsg)
         } catch (e) {
           console.error(e)
-          brimcapErr = d.toString()
+          analyzeErr = d.toString()
         }
       })
       p.on("close", () => {
@@ -330,12 +330,20 @@ export default class BrimcapPlugin {
 
       // stream analyze output to pool
       const zealot = this.api.getZealot()
-      await zealot.pools.load(params.poolId, params.branch, {
-        author: "brim",
-        body: "automatic import with brimcap analyze",
-        data: p.stdout,
-        signal
-      })
+      try {
+        await zealot.pools.load(params.poolId, params.branch, {
+          author: "brim",
+          body: "automatic import with brimcap analyze",
+          data: p.stdout,
+          signal
+        })
+      } catch (e) {
+        console.error(e)
+        // if load failed because analyze did, report the analyzeErr
+        if (analyzeErr) throw errors.pcapIngest(analyzeErr)
+        // otherwise report the loadErr
+        throw errors.pcapIngest(e)
+      }
 
       // generate pcap index
       try {
@@ -345,10 +353,9 @@ export default class BrimcapPlugin {
         })
       } catch (e) {
         console.error(e)
-        brimcapErr = e.toString()
+        throw errors.pcapIngest(e)
       }
 
-      if (brimcapErr) throw errors.pcapIngest(brimcapErr)
       await onDetailUpdate()
       onProgressUpdate(1)
       onProgressUpdate(null)
