@@ -1,4 +1,4 @@
-import {isNull} from "../utils"
+import {isNull, getPrimitiveType, isPrimitiveName} from "../utils"
 import {TypeValue} from "../values/type"
 import {BasePrimitive} from "./base-primitive"
 
@@ -9,7 +9,11 @@ export class TypeOfType extends BasePrimitive<TypeValue> {
     if (isNull(value)) {
       return new TypeValue(null)
     } else {
-      return new TypeValue(typedefs[value])
+      if (isPrimitiveName(value)) {
+        return new TypeValue(getPrimitiveType(value))
+      } else {
+        return new TypeValue(typedefs[value])
+      }
     }
   }
 
