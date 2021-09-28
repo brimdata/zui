@@ -55,7 +55,9 @@ export class ZedContext {
       // Primitives
       case "primitive":
         var type = primitives[obj.name]
-        if (!type) throw `Implement primitive: ${obj.name}`
+        if (!type) {
+          throw `Implement primitive: ${obj.name}`
+        }
         return type
 
       // Containers

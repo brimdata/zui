@@ -45,6 +45,7 @@ const primitives = {
   error: TypeError
 } as const
 
-export type PrimitiveTypes = typeof primitives[keyof typeof primitives]
-
 export default primitives
+
+export type PrimitiveName = keyof typeof primitives
+export type PrimitiveTypes = typeof primitives[PrimitiveName]
