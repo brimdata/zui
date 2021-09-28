@@ -6,7 +6,7 @@ import {createSelection} from "./helpers/selection"
 
 const init = (): ViewerState => ({
   records: [],
-  endStatus: "INCOMPLETE",
+  endStatus: "INIT",
   status: "INIT",
   columns: {},
   scrollPos: {x: 0, y: 0},
