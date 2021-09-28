@@ -4,14 +4,15 @@ import {$Column, createColumn} from "./column"
 
 type Args = {[name: string]: zed.Schema}
 
-export function createColumnSet(c: Args) {
+export function createColumnSet(schemaMap: Args) {
+  const byColumNames = fingerPrintSchemas(schemaMap)
+
   return {
     getName() {
-      const keys = Object.keys(c)
-      const size = keys.length
-      if (size === 0) {
+      const keys = Object.keys(byColumNames)
+      if (keys.length === 0) {
         return "none"
-      } else if (size === 1) {
+      } else if (keys.length === 1) {
         return keys[0]
       } else {
         return "temp"
@@ -19,7 +20,7 @@ export function createColumnSet(c: Args) {
     },
     getUniqColumns() {
       let allCols = []
-      for (const schema of Object.values(c)) {
+      for (const schema of Object.values(byColumNames)) {
         let inner = schema.flatten().type
         if (inner.kind === "record") {
           allCols = [...allCols, ...inner.fields]
@@ -28,4 +29,19 @@ export function createColumnSet(c: Args) {
       return uniqBy<$Column>(allCols.map(createColumn), "key")
     }
   }
+}
+
+function fingerPrintSchemas(map: Args): Args {
+  return Object.values(map).reduce((obj, value) => {
+    obj[fingerprint(value)] = value
+    return obj
+  }, {})
+}
+
+function fingerprint(schema: zed.Schema) {
+  return schema
+    .flatten()
+    .type.fields.map((f) => f.name)
+    .sort()
+    .join("")
 }
