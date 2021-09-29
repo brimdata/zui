@@ -11,7 +11,7 @@ export function isEventType(field) {
 }
 
 export default function eventTypeClassNames(record: zed.Record) {
-  const severity = record.try("alert.severity")
+  const severity = record.try(["alert", "severity"])
   if (severity instanceof zed.Primitive && severity.isSet()) {
     return `path-tag alert-${severity.toString()}-bg-color`
   } else return ""

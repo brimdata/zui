@@ -51,14 +51,16 @@ export class Record implements ZedValueInterface {
     return this.fields[index]
   }
 
-  has(name: string, ...types: ZedType[]) {
-    return (
-      this.columns.includes(name) &&
-      (types.length > 0 ? types.some((t) => this.get(name).type === t) : true)
-    )
+  has(name: string | string[], ...types: ZedType[]) {
+    try {
+      let type = this.get(name).type
+      return types.length === 0 ? true : types.some((t) => type === t)
+    } catch (e) {
+      return false
+    }
   }
 
-  get<T extends ZedValue>(name: string): T {
+  get<T extends ZedValue>(name: string | string[]): T {
     return this.getField(name).value as T
   }
 
@@ -78,7 +80,7 @@ export class Record implements ZedValueInterface {
     }, null) as Field
   }
 
-  try<T extends ZedValue>(name: string): T | null {
+  try<T extends ZedValue>(name: string | string[]): T | null {
     try {
       return this.get(name) as T
     } catch {
@@ -86,7 +88,7 @@ export class Record implements ZedValueInterface {
     }
   }
 
-  tryField(name: string) {
+  tryField(name: string | string[]) {
     try {
       return this.getField(name)
     } catch {

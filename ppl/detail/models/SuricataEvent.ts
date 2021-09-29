@@ -21,6 +21,8 @@ export class SuricataEvent implements BrimEventInterface {
   }
 
   getSeverity(): number {
-    return this.r.get<zed.Uint64>("alert.severity").toInt()
+    return this.r
+      .get<zed.Uint64>(["alert", "severity"])
+      .toInt()
   }
 }

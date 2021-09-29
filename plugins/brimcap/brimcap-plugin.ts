@@ -217,13 +217,13 @@ export default class BrimcapPlugin {
     )
 
     return {
-      dstIp: log.get("id.resp_h").toString(),
-      dstPort: log.get("id.resp_p").toString(),
+      dstIp: log.get(["id", "resp_h"]).toString(),
+      dstPort: log.get(["id", "resp_p"]).toString(),
       duration: dur?.isSet() ? dur.toString() : "0s",
       proto: log.get("proto").toString(),
       root: this.brimcapDataRoot,
-      srcIp: log.get("id.orig_h").toString(),
-      srcPort: log.get("id.orig_p").toString(),
+      srcIp: log.get(["id", "orig_h"]).toString(),
+      srcPort: log.get(["id", "orig_p"]).toString(),
       ts: tsString,
       write: dest
     }
