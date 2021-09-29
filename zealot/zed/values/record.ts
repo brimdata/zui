@@ -1,3 +1,4 @@
+import {isEmpty, isString} from "lodash"
 import {TypeAlias} from "../types/type-alias"
 import {TypeField, TypeRecord} from "../types/type-record"
 import {ZedType} from "../types/types"
@@ -61,14 +62,20 @@ export class Record implements ZedValueInterface {
     return this.getField(name).value as T
   }
 
-  getField(name: string): Field {
-    return name.split(".").reduce<Field>((field, namePart) => {
+  getField(name: string | string[]): Field {
+    if (isString(name)) return this._getField(name)
+    if (isEmpty(name)) throw new Error("No fields specified")
+
+    return name.reduce<Field | null>((field, namePart) => {
+      if (!field) return this._getField(namePart)
       if (field.value instanceof Record) {
-        return new Field(name, field.value._getField(namePart).value)
+        const next = field.value._getField(namePart)
+        next.parents = field.path
+        return next
       } else {
         throw new Error("Dot syntax is only for nested records")
       }
-    }, new Field("", this))
+    }, null) as Field
   }
 
   try<T extends ZedValue>(name: string): T | null {
