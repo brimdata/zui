@@ -3,19 +3,19 @@ import {toZql} from "../zql/toZql"
 
 export default {
   exclude(field: zed.Field) {
-    return `${field.name}!=${toZql(field.value)}`
+    return `${toZql(field)}!=${toZql(field.value)}`
   },
   include(field: zed.Field) {
-    return `${field.name}==${toZql(field.value)}`
+    return `${toZql(field)}==${toZql(field.value)}`
   },
   in(field: zed.Field) {
-    return `${toZql(field.value)} in ${field.name}`
+    return `${toZql(field)} in ${toZql(field.name)}"`
   },
   notIn(field: zed.Field) {
-    return `!${toZql(field.value)} in ${field.name}`
+    return `!${toZql(field)} in "${toZql(field.name)}"`
   },
   countBy(field: zed.Field) {
-    return `count() by ${field.name}`
+    return `count() by "${toZql(field)}"`
   },
   sortBy(name: string, direction: "asc" | "desc") {
     if (direction === "asc") return `sort ${name}`
