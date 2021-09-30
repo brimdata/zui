@@ -2,7 +2,7 @@ import {app} from "electron"
 import {Lake} from "ppl/lake/lake"
 import {BrimMain} from "./brim"
 import tron from "./tron"
-import windowManager from "./tron/windowManager"
+import {WindowManager} from "./tron/window-manager"
 
 function mockLake() {
   const lake = new Lake("test")
@@ -19,7 +19,7 @@ function mockSession() {
 }
 
 function mockWindows() {
-  const windows = windowManager()
+  const windows = new WindowManager()
   jest
     .spyOn(windows, "confirmQuit")
     .mockImplementation(() => Promise.resolve(true))
