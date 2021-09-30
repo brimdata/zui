@@ -8,6 +8,7 @@ import log from "electron-log"
 
 export function installExtensions() {
   if (env.isIntegrationTest) return
+  // @ts-ignore The types package is not up to date
   return installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS], {
     loadExtensionOptions: {allowFileAccess: true}
   })
