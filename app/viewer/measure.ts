@@ -11,14 +11,14 @@ const MIN_WIDTH = 10
 const resizeHandle = 5
 const sortIcon = 11
 
-export function estimateHeaderWidth(name: string | string[]) {
+export function estimateHeaderWidth(name: string) {
   let width = Math.ceil(name.length * ONE_CHAR + resizeHandle + sortIcon)
   return Math.min(MAX_WIDTH, width)
 }
 
 export function estimateCellWidth(
   value: zed.AnyValue,
-  name: string | string[],
+  name: string,
   config: Partial<FormatConfig>
 ) {
   let width = MIN_WIDTH

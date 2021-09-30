@@ -10,6 +10,7 @@ import IconAsc from "../icons/icon-asc.svg"
 import IconDesc from "../icons/icon-desc.svg"
 import columnKey from "../../lib/columnKey"
 import {toFieldPath} from "src/js/zql/toZql"
+import {printColumnName} from "src/js/state/Columns/models/column"
 
 let oldWidth = null
 let start = null
@@ -77,7 +78,7 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
       })}
       style={{width: column.width || 200}}
     >
-      {column.name}
+      {printColumnName(column.name)}
       {sorted === "desc" && <IconDesc />}
       {sorted === "asc" && <IconAsc />}
       <div
