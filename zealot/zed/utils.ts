@@ -1,4 +1,4 @@
-import {TypeAlias, Uint16, Uint32, Uint64, Uint8} from "./index"
+import {TypeAlias, TypeRecord, Uint16, Uint32, Uint64, Uint8} from "./index"
 import primitives, {PrimitiveName} from "./types/type-primitives"
 import {ZedType} from "./types/types"
 import {BString} from "./values/bstring"
@@ -85,4 +85,20 @@ export function getPrimitiveType(name: PrimitiveName) {
 
 export function isPrimitiveName(name: string): name is PrimitiveName {
   return name in primitives
+}
+
+export function flatColumns(
+  record: TypeRecord,
+  columns: (string | string[])[] = [],
+  path: string[] | undefined = undefined
+) {
+  if (isNull(record.fields)) return []
+  for (let f of record.fields) {
+    if (f.type instanceof TypeRecord) {
+      flatColumns(f.type, columns, !path ? [f.name] : [...path, f.name])
+    } else {
+      columns.push(path ? [...path, f.name] : f.name)
+    }
+  }
+  return columns
 }

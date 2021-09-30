@@ -1,26 +1,27 @@
 import {zed} from "zealot"
-import {toZql} from "../zql/toZql"
+import zql from "../zql"
+import {toFieldPath} from "../zql/toZql"
 
 export default {
   exclude(field: zed.Field) {
-    return `${toZql(field)}!=${toZql(field.value)}`
+    return zql`${field}!=${field.value}`
   },
   include(field: zed.Field) {
-    return `${toZql(field)}==${toZql(field.value)}`
+    return zql`${field}==${field.value}`
   },
   in(field: zed.Field) {
-    return `${toZql(field)} in ${toZql(field.name)}"`
+    return zql`${field.value} in ${field}`
   },
   notIn(field: zed.Field) {
-    return `!${toZql(field)} in "${toZql(field.name)}"`
+    return zql`!${field.value} in ${field}`
   },
   countBy(field: zed.Field) {
-    return `count() by "${toZql(field)}"`
+    return zql`count() by ${field}`
   },
-  sortBy(name: string, direction: "asc" | "desc") {
-    if (direction === "asc") return `sort ${name}`
+  sortBy(name: string | string[], direction: "asc" | "desc") {
+    if (direction === "asc") return `sort ${toFieldPath(name)}`
     else {
-      return `sort -r ${name}`
+      return `sort -r ${toFieldPath(name)}`
     }
   }
 }

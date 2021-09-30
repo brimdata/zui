@@ -11,14 +11,14 @@ const MIN_WIDTH = 10
 const resizeHandle = 5
 const sortIcon = 11
 
-export function estimateHeaderWidth(name: string) {
+export function estimateHeaderWidth(name: string | string[]) {
   let width = Math.ceil(name.length * ONE_CHAR + resizeHandle + sortIcon)
   return Math.min(MAX_WIDTH, width)
 }
 
 export function estimateCellWidth(
   value: zed.AnyValue,
-  name: string,
+  name: string | string[],
   config: Partial<FormatConfig>
 ) {
   let width = MIN_WIDTH
@@ -31,12 +31,12 @@ export function estimateCellWidth(
   }
 
   // Move to plugin
-  if (isPath(new zed.Field(name, value))) {
+  if (isPath(name, value)) {
     width += 12 // padding
   }
 
   // Move to plugin
-  if (isEventType(new zed.Field(name, value))) {
+  if (isEventType(name, value)) {
     width += 12 // padding
   }
 

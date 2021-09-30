@@ -3,79 +3,79 @@
 exports[`a normal response sets the Columns columns 1`] = `
 Object {
   "AARARDTCTTLsZ_pathanswersid.orig_hid.orig_pid.resp_hid.resp_pprotoqclassqclass_nameqtypeqtype_namequeryrcodercode_namerejectedrtttrans_idtsuid": Object {
-    "AA:bool": Object {
+    "AA": Object {
       "isVisible": true,
     },
-    "RA:bool": Object {
+    "RA": Object {
       "isVisible": true,
     },
-    "RD:bool": Object {
+    "RD": Object {
       "isVisible": true,
     },
-    "TC:bool": Object {
+    "TC": Object {
       "isVisible": true,
     },
-    "TTLs:27": Object {
+    "TTLs": Object {
       "isVisible": true,
     },
-    "Z:uint64": Object {
+    "Z": Object {
       "isVisible": true,
     },
-    "_path:string": Object {
+    "_path": Object {
       "isVisible": true,
     },
-    "answers:26": Object {
+    "answers": Object {
       "isVisible": true,
     },
-    "id.orig_h:ip": Object {
+    "idorig_h": Object {
       "isVisible": true,
     },
-    "id.orig_p:uint16": Object {
+    "idorig_p": Object {
       "isVisible": true,
     },
-    "id.resp_h:ip": Object {
+    "idresp_h": Object {
       "isVisible": true,
     },
-    "id.resp_p:uint16": Object {
+    "idresp_p": Object {
       "isVisible": true,
     },
-    "proto:string": Object {
+    "proto": Object {
       "isVisible": true,
     },
-    "qclass:uint64": Object {
+    "qclass": Object {
       "isVisible": true,
     },
-    "qclass_name:bstring": Object {
+    "qclass_name": Object {
       "isVisible": true,
     },
-    "qtype:uint64": Object {
+    "qtype": Object {
       "isVisible": true,
     },
-    "qtype_name:bstring": Object {
+    "qtype_name": Object {
       "isVisible": true,
     },
-    "query:bstring": Object {
+    "query": Object {
       "isVisible": true,
     },
-    "rcode:uint64": Object {
+    "rcode": Object {
       "isVisible": true,
     },
-    "rcode_name:bstring": Object {
+    "rcode_name": Object {
       "isVisible": true,
     },
-    "rejected:bool": Object {
+    "rejected": Object {
       "isVisible": true,
     },
-    "rtt:duration": Object {
+    "rtt": Object {
       "isVisible": true,
     },
-    "trans_id:uint64": Object {
+    "trans_id": Object {
       "isVisible": true,
     },
-    "ts:time": Object {
+    "ts": Object {
       "isVisible": true,
     },
-    "uid:bstring": Object {
+    "uid": Object {
       "isVisible": true,
     },
   },

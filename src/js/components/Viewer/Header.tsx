@@ -30,7 +30,7 @@ export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
     <header {...rest} style={Styler.header(dimens, scrollLeft)}>
       {columns.getVisible().map((column) => (
         <HeaderCell
-          key={columnKey(column)}
+          key={columnKey(column.name)}
           column={column}
           tableId={columns.id}
           sorts={sorts}

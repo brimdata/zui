@@ -29,18 +29,26 @@ beforeEach(() => {
 
 test("visibility false when at least one is hidden", () => {
   const prefName = "temp"
-  const col = createColumn({name: "_path", type: zed.TypeString.serialize()})
+  const col = createColumn("_path")
   const update = {[col.key]: {isVisible: false}}
 
   store.dispatch(actions.updateColumns(prefName, update))
   store.dispatch(touch(columns))
   const prefs = Columns.getColumns(store.getState())[prefName]
 
-  expect(prefs).toEqual({
-    "_path:string": {isVisible: false},
-    "duration:duration": {isVisible: false},
-    "ts:time": {isVisible: false}
-  })
+  expect(prefs).toMatchInlineSnapshot(`
+    Object {
+      "_path": Object {
+        "isVisible": false,
+      },
+      "duration": Object {
+        "isVisible": false,
+      },
+      "ts": Object {
+        "isVisible": false,
+      },
+    }
+  `)
 })
 
 test("visibility true when no preferences exist", () => {
@@ -49,21 +57,26 @@ test("visibility true when no preferences exist", () => {
   store.dispatch(touch(columns))
   const prefs = Columns.getColumns(store.getState())[prefName]
 
-  expect(prefs).toEqual({
-    "_path:string": {isVisible: true},
-    "duration:duration": {isVisible: true},
-    "ts:time": {isVisible: true}
-  })
+  expect(prefs).toMatchInlineSnapshot(`
+    Object {
+      "_path": Object {
+        "isVisible": true,
+      },
+      "duration": Object {
+        "isVisible": true,
+      },
+      "ts": Object {
+        "isVisible": true,
+      },
+    }
+  `)
 })
 
 test("visibility true when all are visible", () => {
   const prefName = "temp"
 
-  const col = createColumn({name: "_path", type: zed.TypeString.serialize()})
-  const col2 = createColumn({
-    name: "duration",
-    type: zed.TypeDuration.serialize()
-  })
+  const col = createColumn("_path")
+  const col2 = createColumn("duration")
   const update = {
     [col.key]: {isVisible: true},
     [col2.key]: {isVisible: true}
@@ -73,9 +86,17 @@ test("visibility true when all are visible", () => {
   store.dispatch(touch(columns))
   const prefs = Columns.getColumns(store.getState())[prefName]
 
-  expect(prefs).toEqual({
-    "_path:string": {isVisible: true},
-    "duration:duration": {isVisible: true},
-    "ts:time": {isVisible: true}
-  })
+  expect(prefs).toMatchInlineSnapshot(`
+    Object {
+      "_path": Object {
+        "isVisible": true,
+      },
+      "duration": Object {
+        "isVisible": true,
+      },
+      "ts": Object {
+        "isVisible": true,
+      },
+    }
+  `)
 })

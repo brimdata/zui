@@ -1,8 +1,8 @@
-import {isEmpty, isString} from "lodash"
+import {isEmpty, isNull, isString} from "lodash"
 import {TypeAlias} from "../types/type-alias"
 import {TypeField, TypeRecord} from "../types/type-record"
 import {ZedType} from "../types/types"
-import {isNull, trueType} from "../utils"
+import {flatColumns, trueType} from "../utils"
 import {Field} from "./field"
 import {ZedValue, ZedValueInterface} from "./types"
 export class Record implements ZedValueInterface {
@@ -13,6 +13,10 @@ export class Record implements ZedValueInterface {
 
   get null() {
     return this.fields === null
+  }
+
+  get flatColumns() {
+    return flatColumns(this.trueType)
   }
 
   get columns() {

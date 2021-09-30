@@ -52,7 +52,7 @@ export function appendQueryCountBy(field: zed.Field): Thunk {
 }
 
 export function appendQuerySortBy(
-  name: string,
+  name: string | string[],
   direction: "asc" | "desc"
 ): Thunk {
   return function(dispatch, getState) {

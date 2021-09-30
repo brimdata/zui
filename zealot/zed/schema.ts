@@ -1,8 +1,13 @@
 import {trueType} from "./index"
+import {flatColumns} from "./utils"
 import {TypeField, TypeRecord} from "./types/type-record"
 
 export class Schema {
   constructor(public name: string, public type: TypeRecord) {}
+
+  flatColumns() {
+    return flatColumns(this.type)
+  }
 
   flatten(): Schema {
     const inner = trueType<TypeRecord>(this.type)

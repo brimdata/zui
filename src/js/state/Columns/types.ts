@@ -15,8 +15,7 @@ export type ColumnSetting = {
 export type TableColumn = {
   isVisible?: boolean
   width?: number | undefined | null
-  name: string
-  type: string
+  name: string | string[]
   position: number
 }
 

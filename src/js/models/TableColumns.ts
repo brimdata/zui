@@ -20,8 +20,8 @@ export default class TableColumns {
     this.config = config
     this.cols = columnOrder(columns)
       .map(
-        ({name, type, key}, index): TableColumn => ({
-          ...{name, type, position: index},
+        ({name, key}, index): TableColumn => ({
+          ...{name, position: index},
           ...tableSetting[key]
         })
       )

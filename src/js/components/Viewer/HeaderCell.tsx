@@ -9,6 +9,7 @@ import Columns from "../../state/Columns"
 import IconAsc from "../icons/icon-asc.svg"
 import IconDesc from "../icons/icon-desc.svg"
 import columnKey from "../../lib/columnKey"
+import {toFieldPath} from "src/js/zql/toZql"
 
 let oldWidth = null
 let start = null
@@ -38,7 +39,7 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
     if (start !== null) {
       const moved = e.clientX - start
       const update: ColumnUpdates = {
-        [columnKey(column)]: {width: oldWidth + moved}
+        [columnKey(column.name)]: {width: oldWidth + moved}
       }
       dispatch(Columns.updateColumns(tableId, update))
     }
@@ -62,7 +63,7 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
     setActive(true)
   }
 
-  const sorted = sorts[column.name] || ""
+  const sorted = sorts[toFieldPath(column.name)] || ""
   function onClick() {
     dispatch(appendQuerySortBy(column.name, sorted === "asc" ? "desc" : "asc"))
     dispatch(submitSearch())
@@ -70,7 +71,7 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
   return (
     <div
       onClick={onClick}
-      className={classNames("header-cell", column.type, {
+      className={classNames("header-cell", {
         active,
         sorted
       })}

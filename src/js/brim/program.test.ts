@@ -56,6 +56,7 @@ describe("excluding and including", () => {
 describe("drill down", () => {
   const result = createRecord({
     id: {orig_h: "192.168.0.54"},
+    "i d": {"orig h": "192.168.0.54"},
     proto: "udp",
     query: "WPAD",
     count: 24
@@ -63,11 +64,11 @@ describe("drill down", () => {
 
   test("when there is no leading filter", () => {
     const program = brim
-      .program("count() by id.orig_h")
+      .program('count() by this["i d"]["orig h"]')
       .drillDown(result)
       .string()
 
-    expect(program).toBe("id.orig_h==192.168.0.54")
+    expect(program).toBe('this["i d"]["orig h"]==192.168.0.54')
   })
 
   test("combines keys in the group by proc", () => {

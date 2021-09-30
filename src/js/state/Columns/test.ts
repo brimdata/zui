@@ -46,30 +46,28 @@ describe("Columns", () => {
   })
 
   test("hide one column", () => {
-    const state = store.dispatchAll([
-      Columns.hideColumn(tableId, {name: "a", type: "string"})
-    ])
+    const state = store.dispatchAll([Columns.hideColumn(tableId, "a")])
 
     const table = Columns.getColumns(state)[tableId]
 
-    expect(table["a:string"]).toEqual({isVisible: false})
+    expect(table["a"]).toEqual({isVisible: false})
   })
 
   test("show one column", () => {
     const state = store.dispatchAll([
-      Columns.hideColumn(tableId, {name: "a", type: "string"}),
-      Columns.showColumn(tableId, {name: "a", type: "string"})
+      Columns.hideColumn(tableId, "a"),
+      Columns.showColumn(tableId, "a")
     ])
 
     const table = Columns.getColumns(state)[tableId]
 
-    expect(table["a:string"]).toEqual({isVisible: true})
+    expect(table["a"]).toEqual({isVisible: true})
   })
 
   test("show all columns", () => {
     store.dispatch(
       Columns.updateColumns(tableId, {
-        "a:string": {isVisible: false},
+        a: {isVisible: false},
         "b:string": {isVisible: false},
         "c:string": {isVisible: false}
       })
@@ -79,7 +77,7 @@ describe("Columns", () => {
 
     const table = Columns.getColumns(state)[tableId]
 
-    expect(table["a:string"]).toEqual({isVisible: true})
+    expect(table["a"]).toEqual({isVisible: true})
     expect(table["b:string"]).toEqual({isVisible: true})
     expect(table["c:string"]).toEqual({isVisible: true})
   })
@@ -87,7 +85,7 @@ describe("Columns", () => {
   test("hide all columns", () => {
     store.dispatch(
       Columns.updateColumns(tableId, {
-        "a:string": {isVisible: true},
+        a: {isVisible: true},
         "b:string": {isVisible: true},
         "c:string": {isVisible: false}
       })
@@ -97,7 +95,7 @@ describe("Columns", () => {
 
     const table = Columns.getColumns(state)[tableId]
 
-    expect(table["a:string"]).toEqual({isVisible: false})
+    expect(table["a"]).toEqual({isVisible: false})
     expect(table["b:string"]).toEqual({isVisible: false})
     expect(table["c:string"]).toEqual({isVisible: false})
   })

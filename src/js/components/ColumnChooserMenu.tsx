@@ -1,18 +1,18 @@
-import {CSSTransition} from "react-transition-group"
-import {connect} from "react-redux"
 import React from "react"
+import {connect} from "react-redux"
+import {CSSTransition} from "react-transition-group"
 import styled from "styled-components"
-
-import {State, DispatchProps} from "../state/types"
-import {Fieldset, Subscript, Label} from "./Typography"
-import {TableColumn} from "../state/Columns/types"
-import Checkbox from "./common/Checkbox"
-import CloseButton from "./CloseButton"
-import Columns from "../state/Columns"
-import Layout from "../state/Layout"
-import SelectInput from "./common/forms/SelectInput"
 import dispatchToProps from "../lib/dispatchToProps"
+import Columns from "../state/Columns"
+import {printColumnName} from "../state/Columns/models/column"
+import {TableColumn} from "../state/Columns/types"
+import Layout from "../state/Layout"
+import {DispatchProps, State} from "../state/types"
+import CloseButton from "./CloseButton"
+import Checkbox from "./common/Checkbox"
 import SearchInput from "./common/forms/SearchInput"
+import SelectInput from "./common/forms/SelectInput"
+import {Fieldset, Label} from "./Typography"
 
 const ControlListItem = styled.li`
   display: flex;
@@ -89,9 +89,9 @@ export default class ColumnChooserMenu extends React.Component<
   onColumnClick(e, column: TableColumn) {
     e.stopPropagation()
     if (column.isVisible) {
-      this.props.dispatch(Columns.hideColumn(this.tableId(), column))
+      this.props.dispatch(Columns.hideColumn(this.tableId(), column.name))
     } else {
-      this.props.dispatch(Columns.showColumn(this.tableId(), column))
+      this.props.dispatch(Columns.showColumn(this.tableId(), column.name))
     }
   }
 
@@ -162,7 +162,7 @@ export default class ColumnChooserMenu extends React.Component<
               .filter((c) => {
                 if (this.state.searchValue === "") return true
                 return (
-                  c.name
+                  printColumnName(c.name)
                     .toLowerCase()
                     .search(new RegExp(this.state.searchValue, "g")) > -1
                 )
@@ -172,13 +172,12 @@ export default class ColumnChooserMenu extends React.Component<
                 else return 1
               })
               .map((c) => (
-                <ColumnListItem key={`${c.name}-${c.type}`}>
+                <ColumnListItem key={`${c.name}`}>
                   <Checkbox
-                    label={c.name}
+                    label={printColumnName(c.name)}
                     checked={c.isVisible}
                     onChange={(e) => this.onColumnClick(e, c)}
                   />
-                  <Subscript>{c.type}</Subscript>
                 </ColumnListItem>
               ))}
           </ul>
