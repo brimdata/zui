@@ -1,12 +1,11 @@
+import columnKey from "../../lib/columnKey"
+import {ColumnName} from "./models/column"
 import {
   COLUMNS_HIDE_ALL,
   COLUMNS_SHOW_ALL,
   COLUMNS_UPDATE,
   ColumnUpdates
 } from "./types"
-import {Column} from "../../types"
-import columnKey from "../../lib/columnKey"
-import {ColumnName} from "./models/column"
 
 function updateColumns(
   tableId: string,
