@@ -40,10 +40,10 @@ Array [
 exports[`Ingest tests ingest of sample.pcap 1`] = `
 Array [
   "ts",
-  "id.orig_h",
-  "id.orig_p",
-  "id.resp_h",
-  "id.resp_p",
+  "id › orig_h",
+  "id › orig_p",
+  "id › resp_h",
+  "id › resp_p",
   "proto",
   "2020-02-25T16:03:05.983",
   "192.168.1.110",
@@ -141,10 +141,10 @@ Array [
 exports[`Ingest tests ingest of sample.pcapng 1`] = `
 Array [
   "ts",
-  "id.orig_h",
-  "id.orig_p",
-  "id.resp_h",
-  "id.resp_p",
+  "id › orig_h",
+  "id › orig_p",
+  "id › resp_h",
+  "id › resp_p",
   "proto",
   "2020-02-25T16:03:05.983",
   "192.168.1.110",
@@ -242,10 +242,10 @@ Array [
 exports[`Ingest tests ingest of sample.tsv 1`] = `
 Array [
   "ts",
-  "id.orig_h",
-  "id.orig_p",
-  "id.resp_h",
-  "id.resp_p",
+  "id › orig_h",
+  "id › orig_p",
+  "id › resp_h",
+  "id › resp_p",
   "proto",
   "2020-02-25T16:03:05.983",
   "192.168.1.110",
@@ -343,10 +343,10 @@ Array [
 exports[`Ingest tests ingest of sample.zng 1`] = `
 Array [
   "ts",
-  "id.orig_h",
-  "id.orig_p",
-  "id.resp_h",
-  "id.resp_p",
+  "id › orig_h",
+  "id › orig_p",
+  "id › resp_h",
+  "id › resp_p",
   "proto",
   "2020-02-25T16:03:05.983",
   "192.168.1.110",
