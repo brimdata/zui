@@ -190,7 +190,7 @@ export class WindowManager {
         id,
         ref,
         name,
-        lastFocused: new Date().getTime(),
+        lastFocused: name === "hidden" ? 0 : new Date().getTime(),
         initialState,
         close: () => Promise.resolve(),
         async confirmClose() {
