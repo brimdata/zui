@@ -17,8 +17,23 @@ const file = data.getPath("sample.zson")
 test("decode, then encode", () => {
   const input = zq("*", file)
   const ctx = new ZedContext()
+  const decoded = ctx.decode(input)
+  const encoded = ctx.encode(decoded)
 
-  expect(ctx.encode(ctx.decode(input))).toEqual(input)
+  for (let i = 0; i < input.length; ++i) {
+    expect(encoded[i]).toEqual(input[i])
+  }
+})
+
+test("decode, then encode a fused input", () => {
+  const input = zq("fuse", file)
+  const ctx = new ZedContext()
+  const decoded = ctx.decode(input)
+  const encoded = ctx.encode(decoded)
+
+  for (let i = 0; i < input.length; ++i) {
+    expect(encoded[i]).toEqual(input[i])
+  }
 })
 
 test("decode, encode with type values", () => {

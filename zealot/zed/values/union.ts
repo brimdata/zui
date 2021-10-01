@@ -18,7 +18,7 @@ export class Union implements ZedValueInterface {
 
   serialize() {
     if (isNull(this.index) || isNull(this.value)) return null
-    return [this.index.toString(), this.value.toString()]
+    return [this.index.toString(), this.value.serialize()]
   }
 
   isUnset() {
