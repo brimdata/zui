@@ -4,7 +4,6 @@ import {isStringy} from "zealot/zed"
 
 const needsQuotes = (fieldName: string) => !/^[a-zA-Z_$][\w]*$/.test(fieldName)
 
-// TODO: Mason - make field type a 'zed.Field' once it has path getter
 export const toFieldPath = (arg: string | string[] | zed.Field) => {
   const result = []
   const path =
