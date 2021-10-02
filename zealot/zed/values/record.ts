@@ -71,15 +71,12 @@ export class Record implements ZedValueInterface {
   getField(name: string | string[]): Field {
     if (isString(name)) return this._getField(name)
     if (isEmpty(name)) throw new Error("No fields specified")
-
     return name.reduce<Field | null>((field, namePart) => {
       if (!field) return this._getField(namePart)
       if (field.value instanceof Record) {
-        const next = field.value._getField(namePart)
-        next.parents = field.path
-        return next
+        return field.value._getField(namePart)
       } else {
-        throw new Error("Dot syntax is only for nested records")
+        throw new Error(`${namePart} is not a record`)
       }
     }, null) as Field
   }
@@ -107,6 +104,8 @@ export class Record implements ZedValueInterface {
     return field
   }
 
+  // TODO: Remove this method and provide a way to just
+  // get the flattened columns.
   flatten(prefix = ""): Record | null {
     if (isNull(this.fields)) return null
 
@@ -124,7 +123,7 @@ export class Record implements ZedValueInterface {
         const value = field.value
         const type = field.value.type
         typeFields.push({name, type})
-        fields.push(new Field(name, value))
+        fields.push(new Field(name, value, null))
       }
     })
     const type = new TypeRecord(typeFields)

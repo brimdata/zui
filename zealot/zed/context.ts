@@ -210,19 +210,19 @@ export class ZedContext {
     return bool
   }
 
-  decodeField(obj: zjson.FieldRootRecord) {
+  decodeField(obj: {record: zjson.RootRecord; path: string | string[]}) {
     // Grab the first field and return it
-    const transport = this.decodeRecord(obj)
-    return transport.fieldAt(0)
+    const transport = this.decodeRecord(obj.record)
+    return transport.getField(obj.path)
   }
 
   encodeField(field: Field) {
     // Wrap a field in a record to encode
-    const type = this.lookupTypeRecord([
-      {name: field.name, type: field.value.type}
-    ])
-
-    const transport = type.create([field.value.serialize()], {...this.typeById})
-    return this.encodeRecord(transport)
+    const root = field.rootRecord
+    if (!root) throw new Error("Unable to encode field, no root record")
+    return {
+      record: this.encodeRecord(root),
+      path: field.path
+    }
   }
 }

@@ -48,10 +48,11 @@ test("encode decode a field", () => {
   const input = zq("*", file)
   const ctx = new ZedContext()
   const records = ctx.decode(input)
-  expect.assertions(224)
+  expect.assertions(238)
 
   records.forEach((rec) => {
-    rec.fields.forEach((field) => {
+    rec.flatColumns.forEach((column) => {
+      const field = rec.getField(column)
       const after = ctx.decodeField(ctx.encodeField(field))
       expect(field).toEqual(after)
       expect(field.value.type === after.value.type).toBe(true)
@@ -66,7 +67,8 @@ test("encode decode a typeof value", () => {
   expect.assertions(36)
 
   records.forEach((rec) => {
-    rec.fields.forEach((field) => {
+    rec.flatColumns.forEach((column) => {
+      const field = rec.getField(column)
       const after = ctx.decodeField(ctx.encodeField(field))
       expect(field).toEqual(after)
       expect(field.value.type === after.value.type).toBe(true)

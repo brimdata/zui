@@ -1,10 +1,11 @@
+import {Record} from "./record"
 import {ZedValue} from "./types"
 
 export class Field {
   constructor(
     public name: string,
     public value: ZedValue,
-    public parents: string[] = []
+    public parent: Record | Field | null
   ) {}
 
   /**
@@ -15,6 +16,21 @@ export class Field {
   }
 
   get path() {
-    return [...this.parents, this.name]
+    let path: string[] = [this.name]
+    let parent = this.parent
+    while (parent && parent instanceof Field) {
+      path.unshift(parent.name)
+      parent = parent.parent
+    }
+    return path
+  }
+
+  get rootRecord() {
+    let parent = this.parent
+    while (parent && parent instanceof Field) {
+      parent = parent.parent
+    }
+    if (parent instanceof Record) return parent
+    else return null
   }
 }

@@ -5,6 +5,7 @@ import {typeId} from "../utils"
 import {Field} from "../values/field"
 import {Record} from "../values/record"
 import {ContainerTypeInterface, ZedType} from "./types"
+import {Null} from ".."
 
 export type TypeField = {
   name: string
@@ -43,19 +44,25 @@ export class TypeRecord implements ContainerTypeInterface {
     return s
   }
 
-  create(values: Value, typedefs: object) {
-    if (values === null) return new Record(this, null)
-    return new Record(
-      this,
-      isNull(this.fields)
-        ? null
-        : this.fields.map((field, index) => {
-            return new Field(
-              field.name,
-              field.type.create(values[index], typedefs)
-            )
-          })
-    )
+  create(values: Value, typedefs: object, parent?: Field) {
+    if (values === null || isNull(this.fields)) return new Record(this, null)
+    const record = new Record(this, null /* temp */)
+    // If a parent was passed in, then we are constructing a nested record
+    // and the parent is a Field. If no parent, then we are creating the
+    // root record and the parent is this record.
+    const progenitor = parent || record // just needed another variable name for parent
+
+    record.fields = this.fields.map((f, i) => {
+      if (f.type instanceof TypeRecord) {
+        const field = new Field(f.name, new Null() /* temp */, progenitor)
+        field.value = f.type.create(values[i], typedefs, field)
+        return field
+      } else {
+        return new Field(f.name, f.type.create(values[i], typedefs), progenitor)
+      }
+    })
+
+    return record
   }
 
   serialize(typedefs): RecordType {
