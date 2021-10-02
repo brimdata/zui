@@ -13,15 +13,17 @@ export class TypeMap implements ContainerTypeInterface {
     return `|{` + typeId(keyType) + ":" + typeId(valType) + "}|"
   }
 
-  create(value: [Value, Value][], typedefs) {
+  create(value: [Value, Value][] | null, typedefs) {
     return new ZedMap(
       this,
-      new Map(
-        value.map((entry) => [
-          this.keyType.create(entry[0], typedefs),
-          this.valType.create(entry[1], typedefs)
-        ])
-      )
+      isNull(value)
+        ? null
+        : new Map(
+            value.map((entry) => [
+              this.keyType.create(entry[0], typedefs),
+              this.valType.create(entry[1], typedefs)
+            ])
+          )
     )
   }
 
