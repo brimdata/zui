@@ -12,6 +12,7 @@ import {Sectional} from "../../../pkg/sectional"
 import HistorySection from "./HistorySection"
 import PoolsSection from "./PoolsSection"
 import QueriesSection from "./QueriesSection"
+import Appearance from "src/js/state/Appearance"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -23,8 +24,8 @@ const EmptyText = styled.div`
 
 export function LeftPane() {
   const dispatch = useDispatch()
-  const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
-  const width = useSelector(Layout.getLeftSidebarWidth)
+  const isOpen = useSelector(Appearance.sidebarIsOpen)
+  const width = useSelector(Appearance.sidebarWidth)
   const sections = useSelector(Layout.getSidebarSections).map((s) => ({
     ...s,
     min: 100,
@@ -39,7 +40,7 @@ export function LeftPane() {
   function onDragPane(e: MouseEvent) {
     const width = e.clientX
     const max = window.innerWidth
-    dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)))
+    dispatch(Appearance.resizeSidebar(Math.min(width, max)))
   }
 
   if (!isOpen) return <XLeftPaneExpander />

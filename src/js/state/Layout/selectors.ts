@@ -14,14 +14,6 @@ export default {
     (state: TabState) => state.layout.rightSidebarIsOpen
   ),
 
-  getLeftSidebarWidth: activeTabSelect(
-    (state: TabState) => state.layout.leftSidebarWidth
-  ),
-
-  getLeftSidebarIsOpen: activeTabSelect(
-    (state: TabState) => state.layout.leftSidebarIsOpen
-  ),
-
   getInvestigationView: activeTabSelect(
     (state: TabState) => state.layout.investigationView
   ),

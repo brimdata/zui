@@ -40,26 +40,6 @@ export default function reducer(
         ...state,
         rightSidebarWidth: action.width
       }
-    case "LAYOUT_LEFT_SIDEBAR_SHOW":
-      return {
-        ...state,
-        leftSidebarIsOpen: true
-      }
-    case "LAYOUT_LEFT_SIDEBAR_HIDE":
-      return {
-        ...state,
-        leftSidebarIsOpen: false
-      }
-    case "LAYOUT_LEFT_SIDEBAR_TOGGLE":
-      return {
-        ...state,
-        leftSidebarIsOpen: !state.leftSidebarIsOpen
-      }
-    case "LAYOUT_LEFT_SIDEBAR_WIDTH_SET":
-      return {
-        ...state,
-        leftSidebarWidth: action.width
-      }
     case "LAYOUT_INVESTIGATION_VIEW_SET":
       return {
         ...state,
