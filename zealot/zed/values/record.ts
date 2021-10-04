@@ -1,4 +1,5 @@
 import {isEmpty, isNull, isString} from "lodash"
+import {Null} from ".."
 import {TypeAlias} from "../types/type-alias"
 import {TypeRecord} from "../types/type-record"
 import {ZedType} from "../types/types"
@@ -74,7 +75,7 @@ export class Record implements ZedValueInterface {
     return name.reduce<Field | null>((field, namePart) => {
       if (!field) return this._getField(namePart)
       if (field.value instanceof Record) {
-        return field.value._getField(namePart)
+        return field.value._getField(namePart, field)
       } else {
         throw new Error(`${namePart} is not a record`)
       }
@@ -97,11 +98,15 @@ export class Record implements ZedValueInterface {
     }
   }
 
-  private _getField(name: string) {
-    if (isNull(this.fields)) throw new Error("Record is unset")
-    const field = this.fields.find((f) => f.name == name)
-    if (!field) throw new UnknownColumnError(name, this.columns)
-    return field
+  private _getField(name: string, parent?: Field): Field {
+    if (!this.trueType.has(name)) {
+      throw new UnknownColumnError(name, this.columns)
+    }
+    if (isNull(this.fields)) {
+      return new Field(name, new Null(), parent || this)
+    } else {
+      return this.fields.find((f) => f.name == name)!
+    }
   }
 
   isUnset() {

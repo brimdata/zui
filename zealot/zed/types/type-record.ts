@@ -19,6 +19,10 @@ export class TypeRecord implements ContainerTypeInterface {
     this.fields = fields
   }
 
+  has(name: string) {
+    return !!this.fields?.find((f) => f.name === name)
+  }
+
   static stringify(fields: RecordFieldType[] | null) {
     if (isNull(fields)) return "null"
     let s = "{"

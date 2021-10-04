@@ -5,6 +5,7 @@ import React, {memo, useCallback, useMemo, useState} from "react"
 import {useDispatch} from "react-redux"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
+import {printColumnName} from "src/js/state/Columns/models/column"
 import {zed} from "zealot"
 import contextMenu from "./flows/contextMenu"
 import Panel from "./Panel"
@@ -32,7 +33,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
       {fields.map((field, index) => (
         <Data key={index} onMouseEnter={() => onHover(field)}>
           <Name>
-            <TooltipAnchor>{field.name}</TooltipAnchor>
+            <TooltipAnchor>{printColumnName(field.path)}</TooltipAnchor>
           </Name>
           <Value
             className={typeClassNames(field.data)}
@@ -85,9 +86,10 @@ export default memo(function Fields({record}: Props) {
   )
 
   const fields = useMemo(() => {
-    if (!record) return []
-    else {
+    if (record) {
       return record.flatColumns.map((c) => record.getField(c))
+    } else {
+      return []
     }
   }, [record])
 
