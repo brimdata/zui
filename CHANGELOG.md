@@ -1,3 +1,18 @@
+## v0.26.0
+
+* Update Zed to [v0.31.0](https://github.com/brimdata/zed/releases/tag/v0.31.0)
+* Brim now uses the Zed API `/query` endpoint, which allows for full use of Zed lake language features (e.g., referencing branches and pools using `from`) (#1792, #1836)
+* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting-%28v0.25.0-%29#my-antivirus-software-has-flagged-brim-as-potentially-malicious) regarding the false flagging of Brim as potentially malicious by some antivirus software (#1840)
+* The keyboard shortcut for "zoom in" (`Cmd+` on macOS, `Ctrl+` on Windows/Linux) no longer requires holding down the Shift key (#1842)
+* Fix an issue where selecting **Delete All** in the Pools list caused a crash (#1845)
+* The right-click filter option has been updated to **Filter == value** to reflect current Zed syntax (#1849)
+* Fix an issue where some errors from a Brimcap analyzer failure were not being surfaced (#1850)
+* Fix an issue where primitive type values were not being shown (#1852)
+* Fields of the same name may now be presented under the same column header, regardless of type (#1853)
+* Fix an issue where a record was incorrectly displayed twice after data import (#1854)
+* Fix an issue where clicking a field of type `union` caused a crash (#1861)
+* For field names that require quoting (e.g., containing spaces or dots), ensure they're correctly presented and that their names are quoted when added to a query via right-click operations (#1856)
+
 ## v0.25.0
 
 As you can see below, there've been many changes since the last Brim GA release!  Highlights include:
