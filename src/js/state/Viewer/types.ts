@@ -2,7 +2,12 @@ import {zed} from "zealot"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 
-export type ViewerStatus = "FETCHING" | "INCOMPLETE" | "COMPLETE" | "LIMIT"
+export type ViewerStatus =
+  | "INIT"
+  | "FETCHING"
+  | "INCOMPLETE"
+  | "COMPLETE"
+  | "LIMIT"
 
 export type SchemaMap = {[name: string]: zed.Schema}
 export type ViewerSelectionData = {

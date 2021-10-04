@@ -18,7 +18,7 @@ export class TypeArray implements ContainerTypeInterface {
     return `[${typeId(type)}]`
   }
 
-  create(values: zjson.ArrayValue, typedefs) {
+  create(values: zjson.ArrayValue | null, typedefs) {
     return new Array(
       this,
       isNull(values)
