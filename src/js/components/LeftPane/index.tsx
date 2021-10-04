@@ -26,7 +26,7 @@ export function LeftPane() {
   const dispatch = useDispatch()
   const isOpen = useSelector(Appearance.sidebarIsOpen)
   const width = useSelector(Appearance.sidebarWidth)
-  const sections = useSelector(Layout.getSidebarSections).map((s) => ({
+  const sections = useSelector(Appearance.sidebarSections).map((s) => ({
     ...s,
     min: 100,
     closedSize: 24
@@ -35,7 +35,7 @@ export function LeftPane() {
   const ws = useSelector(Current.getWorkspace)
   const id = get(ws, ["id"], "")
   const setSections = (sections) =>
-    dispatch(Layout.setSidebarSections(sections))
+    dispatch(Appearance.updateSidebarSections(sections))
 
   function onDragPane(e: MouseEvent) {
     const width = e.clientX

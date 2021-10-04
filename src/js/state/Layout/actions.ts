@@ -1,22 +1,13 @@
-import {SectionData} from "../../../pkg/sectional"
 import {
   InvestigationView,
   LAYOUT_INVESTIGATION_VIEW_SET,
   LAYOUT_RIGHT_SIDEBAR_HIDE,
   LAYOUT_RIGHT_SIDEBAR_SHOW,
   LAYOUT_RIGHT_SIDEBAR_TOGGLE,
-  LAYOUT_RIGHT_SIDEBAR_WIDTH_SET,
-  LAYOUT_SIDEBAR_SECTIONS_SET
+  LAYOUT_RIGHT_SIDEBAR_WIDTH_SET
 } from "./types"
 
 export default {
-  setSidebarSections: (
-    sections: SectionData[]
-  ): LAYOUT_SIDEBAR_SECTIONS_SET => ({
-    type: "LAYOUT_SIDEBAR_SECTIONS_SET",
-    sections
-  }),
-
   showRightSidebar: (): LAYOUT_RIGHT_SIDEBAR_SHOW => ({
     type: "LAYOUT_RIGHT_SIDEBAR_SHOW"
   }),

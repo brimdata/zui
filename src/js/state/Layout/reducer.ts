@@ -3,11 +3,8 @@ import {LayoutState, LayoutAction} from "./types"
 const init: LayoutState = {
   rightSidebarIsOpen: false,
   rightSidebarWidth: 260,
-  leftSidebarIsOpen: true,
-  leftSidebarWidth: 230,
   investigationView: "linear",
-  columnHeadersView: "AUTO",
-  sidebarSections: [{id: "pools"}, {id: "queries"}, {id: "history"}]
+  columnHeadersView: "AUTO"
 }
 
 export default function reducer(
@@ -15,11 +12,6 @@ export default function reducer(
   action: LayoutAction
 ): LayoutState {
   switch (action.type) {
-    case "LAYOUT_SIDEBAR_SECTIONS_SET":
-      return {
-        ...state,
-        sidebarSections: action.sections
-      }
     case "LAYOUT_RIGHT_SIDEBAR_SHOW":
       return {
         ...state,
