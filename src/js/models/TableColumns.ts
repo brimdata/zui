@@ -2,7 +2,7 @@ import {FormatConfig} from "app/core/format"
 import {estimateCellWidth, estimateHeaderWidth} from "app/viewer/measure"
 import {zed} from "zealot"
 import columnOrder from "../lib/columnOrder"
-import {$Column} from "../state/Columns/models/column"
+import {$Column, printColumnName} from "../state/Columns/models/column"
 import {ColumnSettingsMap, TableColumn} from "../state/Columns/types"
 
 export default class TableColumns {
@@ -20,8 +20,8 @@ export default class TableColumns {
     this.config = config
     this.cols = columnOrder(columns)
       .map(
-        ({name, type, key}, index): TableColumn => ({
-          ...{name, type, position: index},
+        ({name, key}, index): TableColumn => ({
+          ...{name, position: index},
           ...tableSetting[key]
         })
       )
@@ -38,11 +38,12 @@ export default class TableColumns {
   setWidths(records: zed.Record[]) {
     this.cols.forEach((col) => {
       if (col.width) return
-      let max = estimateHeaderWidth(col.name)
+      const stringName = printColumnName(col.name)
+      let max = estimateHeaderWidth(stringName)
       records.forEach((r) => {
         const data = r.try(col.name)
         if (!data) return
-        const width = estimateCellWidth(data, col.name, this.config)
+        const width = estimateCellWidth(data, stringName, this.config)
         if (width > max) max = width
       })
       col.width = max

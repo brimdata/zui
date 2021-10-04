@@ -40,10 +40,10 @@ Array [
 exports[`Query tests query003: "_path=="conn" | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts" 1`] = `
 Array [
   "ts",
-  "id.orig_h",
-  "id.orig_p",
-  "id.resp_h",
-  "id.resp_p",
+  "id › orig_h",
+  "id › orig_p",
+  "id › resp_h",
+  "id › resp_p",
   "proto",
   "2020-02-25T16:03:05.983",
   "192.168.1.110",

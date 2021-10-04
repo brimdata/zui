@@ -31,12 +31,12 @@ export function estimateCellWidth(
   }
 
   // Move to plugin
-  if (isPath(new zed.Field(name, value))) {
+  if (isPath(name, value)) {
     width += 12 // padding
   }
 
   // Move to plugin
-  if (isEventType(new zed.Field(name, value))) {
+  if (isEventType(name, value)) {
     width += 12 // padding
   }
 

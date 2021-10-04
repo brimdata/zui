@@ -1,3 +1,4 @@
+import {compact} from "lodash"
 import lib from "../lib"
 
 export default function ast(tree: any) {
@@ -53,13 +54,17 @@ function _fieldExprToName(expr) {
   switch (expr.kind) {
     case "BinaryExpr":
       if (expr.op == "." || expr.op == "[") {
-        return `${_fieldExprToName(expr.lhs)}.${_fieldExprToName(expr.rhs)}`
+        return compact(
+          [].concat(_fieldExprToName(expr.lhs), _fieldExprToName(expr.rhs))
+        )
       }
       return "<not-a-field>"
     case "ID":
       return expr.name
     case "Root":
-      return ""
+      return null
+    case "Primitive":
+      return expr.text
     default:
       return "<not-a-field>"
   }

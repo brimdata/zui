@@ -1,5 +1,6 @@
-import {Column} from "../types"
+import {ColumnName} from "../state/Columns/models/column"
+import {toFieldPath} from "../zql/toZql"
 
-export default (col: Column) => {
-  return `${col.name}:${col.type}`
+export default (col: ColumnName) => {
+  return toFieldPath(col)
 }

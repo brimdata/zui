@@ -1,11 +1,11 @@
+import columnKey from "../../lib/columnKey"
+import {ColumnName} from "./models/column"
 import {
   COLUMNS_HIDE_ALL,
   COLUMNS_SHOW_ALL,
   COLUMNS_UPDATE,
   ColumnUpdates
 } from "./types"
-import {Column} from "../../types"
-import columnKey from "../../lib/columnKey"
 
 function updateColumns(
   tableId: string,
@@ -18,14 +18,14 @@ function updateColumns(
   }
 }
 
-const hideColumn = (tableId: string, column: Column): COLUMNS_UPDATE =>
+const hideColumn = (tableId: string, column: ColumnName): COLUMNS_UPDATE =>
   updateColumns(tableId, {
     [columnKey(column)]: {
       isVisible: false
     }
   })
 
-const showColumn = (tableId: string, column: Column): COLUMNS_UPDATE =>
+const showColumn = (tableId: string, column: ColumnName): COLUMNS_UPDATE =>
   updateColumns(tableId, {
     [columnKey(column)]: {
       isVisible: true

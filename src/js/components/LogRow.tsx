@@ -32,7 +32,7 @@ const LogRow = (props: Props) => {
         <Cell
           width={width}
           key={key}
-          name={field.name}
+          name={field.path}
           type={field.data.type.toString()}
         >
           <Value

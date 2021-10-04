@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import Tooltip from "src/js/components/Tooltip"
+import {printColumnName} from "src/js/state/Columns/models/column"
 import styled from "styled-components"
 
 const BG = styled.div`
@@ -15,7 +16,7 @@ const getTooltipStyle = (el: Element) => {
 type Props = {
   width: number
   children: JSX.Element
-  name: string
+  name: string | string[]
   type: string
 }
 
@@ -42,7 +43,7 @@ export default function Cell({width, children, name, type}: Props) {
       {children}
       {hover && (
         <Tooltip style={tooltipStyle}>
-          <span>{name} </span>
+          <span>{printColumnName(name)} </span>
           <span className="secondary">{type}</span>
         </Tooltip>
       )}

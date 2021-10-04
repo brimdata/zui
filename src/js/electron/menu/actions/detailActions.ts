@@ -24,7 +24,7 @@ function buildDetailActions() {
     copy: action({
       name: "detail-cell-menu-copy",
       label: "Copy",
-      listener(_dispatch, data: zjson.FieldRootRecord) {
+      listener(_dispatch, data: zjson.EncodedField) {
         const f = ZealotContext.decodeField(data)
         lib.doc.copyToClipboard(f.data.toString())
       }
@@ -32,7 +32,7 @@ function buildDetailActions() {
     countBy: action({
       name: "detail-cell-menu-count-by",
       label: "Count by field",
-      listener(dispatch, data: zjson.FieldRootRecord) {
+      listener(dispatch, data: zjson.EncodedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryCountBy(ZealotContext.decodeField(data)))
         dispatch(openNewSearchTab())
@@ -48,7 +48,7 @@ function buildDetailActions() {
     exclude: action({
       name: "detail-cell-menu-exclude",
       label: "Filter != value in new search",
-      listener(dispatch, field: zjson.FieldRootRecord) {
+      listener(dispatch, field: zjson.EncodedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryExclude(ZealotContext.decodeField(field)))
         dispatch(openNewSearchTab())
@@ -57,7 +57,7 @@ function buildDetailActions() {
     freshInclude: action({
       name: "detail-cell-menu-fresh-include",
       label: "New search with this value",
-      listener(dispatch, field: zjson.FieldRootRecord) {
+      listener(dispatch, field: zjson.EncodedField) {
         const f = ZealotContext.decodeField(field)
         dispatch(SearchBar.clearSearchBar())
         dispatch(SearchBar.changeSearchBarInput(toZql(f.value)))
@@ -67,7 +67,7 @@ function buildDetailActions() {
     fromTime: action({
       name: "detail-cell-menu-from-time",
       label: 'Use as "start" time in new search',
-      listener(dispatch, fieldJSON: zjson.FieldRootRecord) {
+      listener(dispatch, fieldJSON: zjson.EncodedField) {
         const field = ZealotContext.decodeField(fieldJSON)
         const data = field.data
         if (data instanceof zed.Time) {
@@ -96,7 +96,7 @@ function buildDetailActions() {
     include: action({
       name: "detail-cell-menu-include",
       label: "Filter == value in new search",
-      listener(dispatch, field: zjson.FieldRootRecord) {
+      listener(dispatch, field: zjson.EncodedField) {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryInclude(ZealotContext.decodeField(field)))
         dispatch(openNewSearchTab())
@@ -105,19 +105,31 @@ function buildDetailActions() {
     in: action({
       name: "detail-cell-menu-in",
       label: "Filter in field in new search",
-      listener(dispatch, field: zjson.FieldRootRecord) {
+      listener(dispatch, data: zjson.EncodedField, index: number) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryIn(ZealotContext.decodeField(field)))
-        dispatch(openNewSearchTab())
+        const field = ZealotContext.decodeField(data)
+        if (zed.isIterable(field.value)) {
+          const item = field.value.at(index)
+          if (item) {
+            dispatch(appendQueryIn(field, item))
+            dispatch(openNewSearchTab())
+          }
+        }
       }
     }),
     notIn: action({
       name: "detail-cell-menu-not-in",
       label: "Filter not in field in new search",
-      listener(dispatch, field: zjson.FieldRootRecord) {
+      listener(dispatch, data: zjson.EncodedField, index: number) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryNotIn(ZealotContext.decodeField(field)))
-        dispatch(openNewSearchTab())
+        const field = ZealotContext.decodeField(data)
+        if (zed.isIterable(field.value)) {
+          const item = field.value.at(index)
+          if (item) {
+            dispatch(appendQueryNotIn(field, item))
+            dispatch(openNewSearchTab())
+          }
+        }
       }
     }),
     logResult: action({
@@ -131,7 +143,7 @@ function buildDetailActions() {
     sortAsc: action({
       name: "detail-cell-menu-sort-asc",
       label: "Sort A...Z",
-      listener(dispatch, field: zjson.FieldRootRecord) {
+      listener(dispatch, field: zjson.EncodedField) {
         const f = ZealotContext.decodeField(field)
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(f.name, "asc"))
@@ -141,7 +153,7 @@ function buildDetailActions() {
     sortDesc: action({
       name: "detail-cell-menu-sort-desc",
       label: "Sort Z...A",
-      listener(dispatch, field: zjson.FieldRootRecord) {
+      listener(dispatch, field: zjson.EncodedField) {
         const f = ZealotContext.decodeField(field)
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(f.name, "desc"))
@@ -151,7 +163,7 @@ function buildDetailActions() {
     toTime: action({
       name: "detail-cell-menu-to-time",
       label: 'Use as "end" time',
-      listener(dispatch, data: zjson.FieldRootRecord) {
+      listener(dispatch, data: zjson.EncodedField) {
         const field = ZealotContext.decodeField(data)
         if (field.data instanceof zed.Time) {
           dispatch(SearchBar.clearSearchBar())
@@ -170,7 +182,7 @@ function buildDetailActions() {
     virusTotalRightclick: action({
       name: "detail-cell-menu-virus-total",
       label: "VirusTotal Lookup",
-      listener(_dispatch, data: zjson.FieldRootRecord) {
+      listener(_dispatch, data: zjson.EncodedField) {
         const field = ZealotContext.decodeField(data)
         open(virusTotal.url(field.data.toString()))
       }
@@ -178,7 +190,7 @@ function buildDetailActions() {
     whoisRightclick: action({
       name: "detail-cell-menu-who-is",
       label: "Whois Lookup",
-      listener(dispatch, data: zjson.FieldRootRecord) {
+      listener(dispatch, data: zjson.EncodedField) {
         const field = ZealotContext.decodeField(data)
         dispatch(Modal.show("whois", {addr: field.data.toString()}))
       }

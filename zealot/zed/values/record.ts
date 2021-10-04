@@ -1,7 +1,9 @@
+import {isEmpty, isNull, isString} from "lodash"
+import {Null} from ".."
 import {TypeAlias} from "../types/type-alias"
-import {TypeField, TypeRecord} from "../types/type-record"
+import {TypeRecord} from "../types/type-record"
 import {ZedType} from "../types/types"
-import {isNull, trueType} from "../utils"
+import {flatColumns, trueType} from "../utils"
 import {Field} from "./field"
 import {ZedValue, ZedValueInterface} from "./types"
 export class Record implements ZedValueInterface {
@@ -12,6 +14,10 @@ export class Record implements ZedValueInterface {
 
   get null() {
     return this.fields === null
+  }
+
+  get flatColumns() {
+    return flatColumns(this.trueType)
   }
 
   get columns() {
@@ -50,28 +56,33 @@ export class Record implements ZedValueInterface {
     return this.fields[index]
   }
 
-  has(name: string, ...types: ZedType[]) {
-    return (
-      this.columns.includes(name) &&
-      (types.length > 0 ? types.some((t) => this.get(name).type === t) : true)
-    )
+  has(name: string | string[], ...types: ZedType[]) {
+    try {
+      let type = this.get(name).type
+      return types.length === 0 ? true : types.some((t) => type === t)
+    } catch (e) {
+      return false
+    }
   }
 
-  get<T extends ZedValue>(name: string): T {
+  get<T extends ZedValue>(name: string | string[]): T {
     return this.getField(name).value as T
   }
 
-  getField(name: string): Field {
-    return name.split(".").reduce<Field>((field, namePart) => {
+  getField(name: string | string[]): Field {
+    if (isString(name)) return this._getField(name)
+    if (isEmpty(name)) throw new Error("No fields specified")
+    return name.reduce<Field | null>((field, namePart) => {
+      if (!field) return this._getField(namePart)
       if (field.value instanceof Record) {
-        return new Field(name, field.value._getField(namePart).value)
+        return field.value._getField(namePart, field)
       } else {
-        throw new Error("Dot syntax is only for nested records")
+        throw new Error(`${namePart} is not a record`)
       }
-    }, new Field("", this))
+    }, null) as Field
   }
 
-  try<T extends ZedValue>(name: string): T | null {
+  try<T extends ZedValue>(name: string | string[]): T | null {
     try {
       return this.get(name) as T
     } catch {
@@ -79,7 +90,7 @@ export class Record implements ZedValueInterface {
     }
   }
 
-  tryField(name: string) {
+  tryField(name: string | string[]) {
     try {
       return this.getField(name)
     } catch {
@@ -87,35 +98,15 @@ export class Record implements ZedValueInterface {
     }
   }
 
-  private _getField(name: string) {
-    if (isNull(this.fields)) throw new Error("Record is unset")
-    const field = this.fields.find((f) => f.name == name)
-    if (!field) throw new UnknownColumnError(name, this.columns)
-    return field
-  }
-
-  flatten(prefix = ""): Record | null {
-    if (isNull(this.fields)) return null
-
-    let fields: Field[] = []
-    let typeFields: TypeField[] = []
-
-    this.fields.forEach((field) => {
-      if (field.value instanceof Record) {
-        const record = field.value.flatten(field.name + ".")
-        if (!record) return
-        typeFields = typeFields.concat(record.trueType.fields || [])
-        fields = fields.concat(record.fields || [])
-      } else {
-        const name = prefix + field.name
-        const value = field.value
-        const type = field.value.type
-        typeFields.push({name, type})
-        fields.push(new Field(name, value))
-      }
-    })
-    const type = new TypeRecord(typeFields)
-    return new Record(type, fields)
+  private _getField(name: string, parent?: Field): Field {
+    if (!this.trueType.has(name)) {
+      throw new UnknownColumnError(name, this.columns)
+    }
+    if (isNull(this.fields)) {
+      return new Field(name, new Null(), parent || this)
+    } else {
+      return this.fields.find((f) => f.name == name)!
+    }
   }
 
   isUnset() {

@@ -19,13 +19,13 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    in(field: zed.Field) {
-      p = insertFilter(p, brim.syntax.in(field))
+    in(field: zed.Field, value: zed.AnyValue) {
+      p = insertFilter(p, brim.syntax.in(field, value))
       return this
     },
 
-    notIn(field: zed.Field) {
-      p = insertFilter(p, brim.syntax.notIn(field))
+    notIn(field: zed.Field, value: zed.AnyValue) {
+      p = insertFilter(p, brim.syntax.notIn(field, value))
       return this
     },
 
@@ -41,7 +41,7 @@ export default function(p = "", pins: string[] = []) {
       let filter = this.filter()
       const newFilters = this.ast()
         .groupByKeys()
-        .map((n) => log.tryField(n))
+        .map((name) => log.tryField(name))
         .filter((f) => !!f)
         .map(brim.syntax.include)
         .join(" ")
@@ -69,7 +69,7 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    sortBy(name: string, direction: "asc" | "desc" = "asc") {
+    sortBy(name: string | string[], direction: "asc" | "desc" = "asc") {
       p = stdlib
         .string(p)
         .replace(/\|\s*sort[^|]*$/i, "")

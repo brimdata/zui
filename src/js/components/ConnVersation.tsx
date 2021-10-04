@@ -36,16 +36,16 @@ const ConnVersation = ({record}: Props) => {
         title="Originator"
         className="originator"
         record={filter(record, ORIG_FIELDS)}
-        ip={record.getField("id.orig_h")}
-        port={record.getField("id.orig_p")}
+        ip={record.getField(["id", "orig_h"])}
+        port={record.getField(["id", "orig_p"])}
       />
       <ConnHistory history={record.get("history").toString()} />
       <Host
         title="Responder"
         className="responder"
         record={filter(record, RESP_FIELDS)}
-        ip={record.getField("id.resp_h")}
-        port={record.getField("id.resp_p")}
+        ip={record.getField(["id", "resp_h"])}
+        port={record.getField(["id", "resp_p"])}
       />
     </div>
   )

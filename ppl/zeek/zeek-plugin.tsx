@@ -4,10 +4,9 @@
 
 import React from "react"
 import {zed} from "zealot"
-import {isStringy} from "zealot/zed"
 
-export function isPath(field) {
-  return field.name === "_path" && isStringy(field.value)
+export function isPath(name: string | string[], value: zed.AnyValue) {
+  return name === "_path" && zed.isStringy(value)
 }
 
 export default function pathClassNames(field: zed.Field) {

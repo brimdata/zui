@@ -79,9 +79,9 @@ export function PrimitiveValue(props: ValueProps) {
 }
 
 function renderValue(props, format) {
-  if (isPath(props.field)) {
+  if (isPath(props.field.name, props.field.value)) {
     return <ZeekPath {...props} />
-  } else if (isEventType(props.field)) {
+  } else if (isEventType(props.field.name, props.field.value)) {
     return <SuricataEventType {...props} />
   } else {
     return format(props.value as zed.Primitive)

@@ -2,7 +2,29 @@ import isString from "lodash/isString"
 import {zed} from "zealot"
 import {isStringy} from "zealot/zed"
 
+const needsQuotes = (fieldName: string) => !/^[a-zA-Z_$][\w]*$/.test(fieldName)
+
+export const toFieldPath = (arg: string | string[] | zed.Field) => {
+  const result = []
+  const path =
+    arg instanceof zed.Field ? arg.path : Array.isArray(arg) ? arg : [arg]
+  path.forEach((path, i) => {
+    if (needsQuotes(path)) {
+      // if first path needs quoting, use 'this' as the bracket parent
+      if (i === 0) result.push("this")
+      result.push(`["${path}"]`)
+    } else {
+      // prepend path with '.' unless it is the first
+      if (i !== 0) result.push(".")
+      result.push(path)
+    }
+  })
+
+  return result.join("")
+}
+
 export function toZql(object: unknown): string {
+  if (object instanceof zed.Field) return toFieldPath(object)
   if (object instanceof zed.Primitive) return toZqlZngPrimitive(object)
   if (isString(object)) return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)

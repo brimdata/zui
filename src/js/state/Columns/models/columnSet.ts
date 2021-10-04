@@ -21,9 +21,9 @@ export function createColumnSet(schemaMap: Args) {
     getUniqColumns() {
       let allCols = []
       for (const schema of Object.values(byColumNames)) {
-        let inner = schema.flatten().type
+        let inner = schema.type
         if (inner.kind === "record") {
-          allCols = [...allCols, ...inner.fields]
+          allCols = [...allCols, ...schema.flatColumns()]
         }
       }
       return uniqBy<$Column>(allCols.map(createColumn), "key")
