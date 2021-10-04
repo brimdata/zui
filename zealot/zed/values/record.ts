@@ -1,6 +1,6 @@
 import {isEmpty, isNull, isString} from "lodash"
 import {TypeAlias} from "../types/type-alias"
-import {TypeField, TypeRecord} from "../types/type-record"
+import {TypeRecord} from "../types/type-record"
 import {ZedType} from "../types/types"
 import {flatColumns, trueType} from "../utils"
 import {Field} from "./field"
