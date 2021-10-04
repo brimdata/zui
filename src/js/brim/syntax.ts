@@ -9,11 +9,11 @@ export default {
   include(field: zed.Field) {
     return zql`${field}==${field.value}`
   },
-  in(field: zed.Field) {
-    return zql`${field.value} in ${field}`
+  in(field: zed.Field, value: zed.AnyValue) {
+    return zql`${value} in ${field}`
   },
-  notIn(field: zed.Field) {
-    return zql`!${field.value} in ${field}`
+  notIn(field: zed.Field, value: zed.AnyValue) {
+    return zql`!${value} in ${field}`
   },
   countBy(field: zed.Field) {
     return zql`count() by ${field}`

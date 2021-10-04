@@ -1,4 +1,4 @@
-import {Type, Value} from "../../zjson"
+import {RootRecord, Type, Value} from "../../zjson"
 import {ZedContext} from "../context"
 import {ZedValue} from "../values/types"
 import {TypeAlias} from "./type-alias"

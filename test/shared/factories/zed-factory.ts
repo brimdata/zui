@@ -1,5 +1,6 @@
 import {isDate, isInteger, isNumber, isObject, isString} from "lodash"
 import {ZealotContext, zed} from "zealot"
+import {TypeRecord} from "zealot/zed"
 
 // Convert a js object into a zed record
 
@@ -13,12 +14,16 @@ export function createRecord(object): zed.Record {
     type: f.value.type
   }))
 
-  const type = ZealotContext.lookupTypeRecord(typeFields)
-  return new zed.Record(type, fields)
+  // This could be more efficient
+  const type: TypeRecord = ZealotContext.lookupTypeRecord(typeFields)
+  const r = new zed.Record(type, fields)
+  // This is necessary at the moment to add field parents,
+  // and to match the codepath that runs in production.
+  return ZealotContext.decodeRecord(ZealotContext.encodeRecord(r))
 }
 
 export function createField(name, value): zed.Field {
-  return new zed.Field(name, createData(value))
+  return new zed.Field(name, createData(value), null)
 }
 
 export function createData(value): zed.AnyValue {

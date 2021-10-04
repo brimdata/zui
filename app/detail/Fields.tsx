@@ -86,7 +86,9 @@ export default memo(function Fields({record}: Props) {
 
   const fields = useMemo(() => {
     if (!record) return []
-    else return record.flatten().fields
+    else {
+      return record.flatColumns.map((c) => record.getField(c))
+    }
   }, [record])
 
   return (

@@ -71,26 +71,26 @@ export function appendQuerySortBy(
   }
 }
 
-export function appendQueryIn(field: zed.Field): Thunk {
+export function appendQueryIn(field: zed.Field, value: zed.AnyValue): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .in(field)
+          .in(field, value)
           .string()
       )
     )
   }
 }
 
-export function appendQueryNotIn(field: zed.Field): Thunk {
+export function appendQueryNotIn(field: zed.Field, value: zed.AnyValue): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
         brim
           .program(getSearchBarInputValue(getState()))
-          .notIn(field)
+          .notIn(field, value)
           .string()
       )
     )

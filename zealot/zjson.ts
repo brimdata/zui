@@ -68,8 +68,6 @@ export type RootRecord = {
   values: Value[]
   types?: TypeDefType[]
 }
-// Just to know which decode method to call
-export type FieldRootRecord = RootRecord
 
 export type TypeName = string
 
@@ -80,3 +78,8 @@ export type ArrayValue = Value[] | null
 export type SetValue = Value[] | null
 
 export type TypeContext = object
+
+export type EncodedField = {
+  record: RootRecord
+  path: string | string[]
+}

@@ -19,13 +19,13 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    in(field: zed.Field) {
-      p = insertFilter(p, brim.syntax.in(field))
+    in(field: zed.Field, value: zed.AnyValue) {
+      p = insertFilter(p, brim.syntax.in(field, value))
       return this
     },
 
-    notIn(field: zed.Field) {
-      p = insertFilter(p, brim.syntax.notIn(field))
+    notIn(field: zed.Field, value: zed.AnyValue) {
+      p = insertFilter(p, brim.syntax.notIn(field, value))
       return this
     },
 

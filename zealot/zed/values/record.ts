@@ -104,32 +104,6 @@ export class Record implements ZedValueInterface {
     return field
   }
 
-  // TODO: Remove this method and provide a way to just
-  // get the flattened columns.
-  flatten(prefix = ""): Record | null {
-    if (isNull(this.fields)) return null
-
-    let fields: Field[] = []
-    let typeFields: TypeField[] = []
-
-    this.fields.forEach((field) => {
-      if (field.value instanceof Record) {
-        const record = field.value.flatten(field.name + ".")
-        if (!record) return
-        typeFields = typeFields.concat(record.trueType.fields || [])
-        fields = fields.concat(record.fields || [])
-      } else {
-        const name = prefix + field.name
-        const value = field.value
-        const type = field.value.type
-        typeFields.push({name, type})
-        fields.push(new Field(name, value, null))
-      }
-    })
-    const type = new TypeRecord(typeFields)
-    return new Record(type, fields)
-  }
-
   isUnset() {
     return isNull(this.fields)
   }

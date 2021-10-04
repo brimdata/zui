@@ -1,4 +1,14 @@
-import {TypeAlias, TypeRecord, Uint16, Uint32, Uint64, Uint8} from "./index"
+import {
+  Array,
+  Primitive,
+  Set,
+  TypeAlias,
+  TypeRecord,
+  Uint16,
+  Uint32,
+  Uint64,
+  Uint8
+} from "./index"
 import primitives, {PrimitiveName} from "./types/type-primitives"
 import {ZedType} from "./types/types"
 import {BString} from "./values/bstring"
@@ -83,8 +93,16 @@ export function getPrimitiveType(name: PrimitiveName) {
   return primitives[name]
 }
 
+export function isPrimitive(value: unknown): value is Primitive {
+  return value instanceof Primitive
+}
+
 export function isPrimitiveName(name: string): name is PrimitiveName {
   return name in primitives
+}
+
+export function isIterable(value: unknown): value is Array | Set {
+  return value instanceof Array || value instanceof Set
 }
 
 export function flatColumns(
