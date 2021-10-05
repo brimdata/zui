@@ -1,11 +1,11 @@
 import {GlobalState} from "../../state/globalReducer"
-import {SerializedWindow} from "./windowManager"
+import {SerializedWindow, WindowName} from "./window-manager"
 
 export type SessionState = {
   order: string[]
   windows: {
     [id: string]: {
-      name: string
+      name: WindowName
       position: [number, number]
       size: [number, number]
       state: Object

@@ -1,6 +1,6 @@
 import initIpcListeners from "src/js/initializers/initIpcListeners"
 import initTestStore from "test/unit/helpers/initTestStore"
-import tron from "./index"
+import {WindowManager} from "./window-manager"
 
 let store = initTestStore()
 initIpcListeners(store, null)
@@ -10,7 +10,7 @@ beforeEach(() => {
 })
 
 test("serialize each window", async () => {
-  const manager = tron.windowManager()
+  const manager = new WindowManager()
   manager.openWindow("search")
   const data = await manager.serialize()
   expect(data).toEqual([
@@ -26,14 +26,14 @@ test("serialize each window", async () => {
 })
 
 test("confirm quit is true", async () => {
-  const manager = tron.windowManager()
+  const manager = new WindowManager()
   manager.openWindow("search")
   const ok = await manager.confirmQuit()
   expect(ok).toBe(true)
 })
 
 test("when all closed resolves", (done) => {
-  const manager = tron.windowManager()
+  const manager = new WindowManager()
   let pending = true
   manager.whenAllClosed().then(() => (pending = false))
   setTimeout(() => {
@@ -43,7 +43,7 @@ test("when all closed resolves", (done) => {
 })
 
 test("when all closed waits until windows are done", (done) => {
-  const manager = tron.windowManager()
+  const manager = new WindowManager()
   manager.openWindow("search")
   let pending = true
   manager.whenAllClosed().then(() => (pending = false))
@@ -54,7 +54,7 @@ test("when all closed waits until windows are done", (done) => {
 })
 
 test("prevent multiple hidden windows", async () => {
-  const manager = tron.windowManager()
+  const manager = new WindowManager()
   manager.ensureHiddenRenderer()
   let windows = manager.getAll()
   expect(windows).toHaveLength(1)
@@ -68,7 +68,7 @@ test("prevent multiple hidden windows", async () => {
 })
 
 test("window getters filter properly", async () => {
-  const manager = tron.windowManager()
+  const manager = new WindowManager()
   manager.openWindow("search")
   expect(manager.getVisible()).toHaveLength(1)
   let windows = manager.getAll()

@@ -1,6 +1,6 @@
 import {BrowserWindow, ipcMain, screen} from "electron"
 import randomHash from "../../brim/randomHash"
-import {BrimWindow, WindowName} from "../tron/windowManager"
+import {BrimWindow, WindowName} from "../tron/window-manager"
 import {Dimens, getWindowDimens} from "./dimens"
 
 const DEFAULT_DIMENS = {

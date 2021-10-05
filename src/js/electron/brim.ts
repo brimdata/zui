@@ -20,21 +20,21 @@ import isDev from "./isDev"
 import tron, {Session} from "./tron"
 import formatSessionState from "./tron/formatSessionState"
 import {sessionStateFile} from "./tron/session"
-import windowManager, {$WindowManager} from "./tron/windowManager"
+import {WindowManager} from "./tron/window-manager"
 
 type QuitOpts = {
   saveSession?: boolean
 }
 
 type BrimArgs = {
-  windows?: $WindowManager
+  windows?: WindowManager
   store?: Store
   session?: Session
   lake?: Lake
 }
 
 export class BrimMain {
-  readonly windows: $WindowManager
+  readonly windows: WindowManager
   readonly store: Store
   readonly lake: Lake
   readonly session: Session
@@ -46,7 +46,7 @@ export class BrimMain {
   ) {
     const session = createSession(sessionPath)
     const data = await session.load()
-    const windows = windowManager(data)
+    const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
     const lakeroot = path.join(app.getPath("userData"), "data", "lake")
     const lake = new Lake(lakeroot)
@@ -54,7 +54,7 @@ export class BrimMain {
   }
 
   constructor(args: BrimArgs = {}) {
-    this.windows = args.windows || windowManager()
+    this.windows = args.windows || new WindowManager()
     this.store = args.store || createGlobalStore(undefined)
     this.session = args.session || tron.session()
     this.lake = args.lake || new Lake(null)
