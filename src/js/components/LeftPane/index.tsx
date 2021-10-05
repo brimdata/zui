@@ -1,18 +1,16 @@
-import {useDispatch, useSelector} from "react-redux"
-import React, {MouseEvent} from "react"
-import styled from "styled-components"
-
-import {XLeftPaneExpander} from "./LeftPaneExpander"
-import WorkspacePicker from "../WorkspacePicker"
-import Current from "../../state/Current"
-import Layout from "../../state/Layout"
-import Pane from "./../Pane"
 import get from "lodash/get"
+import React, {MouseEvent} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import Appearance from "src/js/state/Appearance"
+import styled from "styled-components"
 import {Sectional} from "../../../pkg/sectional"
+import Current from "../../state/Current"
+import WorkspacePicker from "../WorkspacePicker"
+import Pane from "./../Pane"
 import HistorySection from "./HistorySection"
+import {XLeftPaneExpander} from "./LeftPaneExpander"
 import PoolsSection from "./PoolsSection"
 import QueriesSection from "./QueriesSection"
-import Appearance from "src/js/state/Appearance"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
