@@ -1,4 +1,15 @@
+import sampleQueries from "test/shared/sample-queries"
 import brim from "./"
+
+test("run all ast methods on sample queries", () => {
+  sampleQueries.forEach((query) => {
+    const ast = brim.program(query).ast()
+    expect(ast.valid()).toBe(true)
+    ast.getProcs()
+    ast.groupByKeys()
+    ast.sorts()
+  })
+})
 
 describe("#sorts", () => {
   const getSorts = (program) =>
