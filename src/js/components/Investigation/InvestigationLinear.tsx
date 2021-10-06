@@ -1,13 +1,12 @@
 import React from "react"
-
-import {getKey} from "../../lib/finding"
-import {useFindings} from "./useFindings"
-import AnimateChildren from "../AnimateChildren"
-import FindingCard from "./FindingCard"
-import EmptySection from "../common/EmptySection"
-import BookIcon from "../../icons/BookSvgIcon"
 import {useSelector} from "react-redux"
+import BookIcon from "../../icons/BookSvgIcon"
+import {getKey} from "../../lib/finding"
 import Current from "../../state/Current"
+import AnimateChildren from "../AnimateChildren"
+import EmptySection from "../common/EmptySection"
+import FindingCard from "./FindingCard"
+import {useFindings} from "./useFindings"
 
 export default React.memo<{}>(function InvestigationLinear() {
   const findings = useFindings()

@@ -1,9 +1,8 @@
 import {keys} from "lodash"
-
-import {Pool} from "./types"
 import {State} from "../types"
+import {Pool} from "./types"
 
-export default {
+const selectors = {
   ids: (workspaceId: string) => (state: State) => {
     return keys(getWorkspace(state, workspaceId))
   },
@@ -52,3 +51,5 @@ function getWorkspace(
   if (!id) return {}
   return state.pools[id] || {}
 }
+
+export default selectors

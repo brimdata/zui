@@ -1,13 +1,12 @@
-import {useSelector} from "react-redux"
 import React, {useMemo} from "react"
-
-import {ViewerDimens} from "../../types"
-import HeaderCell from "./HeaderCell"
-import SearchBar from "../../state/SearchBar"
-import * as Styler from "./Styler"
-import TableColumns from "../../models/TableColumns"
+import {useSelector} from "react-redux"
+import Url from "src/js/state/Url"
 import brim from "../../brim"
 import columnKey from "../../lib/columnKey"
+import TableColumns from "../../models/TableColumns"
+import {ViewerDimens} from "../../types"
+import HeaderCell from "./HeaderCell"
+import * as Styler from "./Styler"
 
 type Props = {
   dimens: ViewerDimens
@@ -16,13 +15,15 @@ type Props = {
 }
 
 export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
-  const program = useSelector(SearchBar.getSearchProgram)
-  const sorts = useMemo(() => {
-    return brim
-      .program(program)
-      .ast()
-      .sorts()
-  }, [program])
+  const program = useSelector(Url.getSearchProgram)
+  const sorts = useMemo(
+    () =>
+      brim
+        .program(program)
+        .ast()
+        .sorts(),
+    [program]
+  )
 
   if (dimens.rowWidth === "auto") return null
 

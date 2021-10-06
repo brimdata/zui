@@ -84,3 +84,10 @@ export const getWorkspace = (state: State) => {
     return null
   }
 }
+
+export const getPools = createSelector(getWorkspace, Pools.raw, (ws, pools) => {
+  const lakePools = pools[ws.id] || {}
+  return Object.keys(lakePools)
+    .map((id) => lakePools[id])
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
+})

@@ -1,7 +1,9 @@
 import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
 import {isEmpty} from "lodash"
-import React, {useEffect} from "react"
+import React, {useEffect, useMemo} from "react"
 import {connect, useDispatch, useSelector} from "react-redux"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
+import Url from "src/js/state/Url"
 import {zed} from "zealot"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
 import {viewLogDetail} from "../../flows/viewLogDetail"
@@ -11,7 +13,6 @@ import Columns from "../../state/Columns"
 import Current from "../../state/Current"
 import Layout from "../../state/Layout"
 import {ColumnHeadersViewState} from "../../state/Layout/types"
-import SearchBar from "../../state/SearchBar"
 import {Pool} from "../../state/Pools/types"
 import {DispatchProps, State} from "../../state/types"
 import Viewer from "../../state/Viewer"
@@ -24,7 +25,6 @@ import ViewerComponent from "../Viewer/Viewer"
 import getEndMessage from "./getEndMessage"
 import NoResults from "./NoResults"
 import {useRowSelection} from "./selection"
-import ConfigPropValues from "src/js/state/ConfigPropValues"
 
 type StateProps = {
   logs: zed.Record[]
@@ -60,14 +60,18 @@ export default function ResultsTable(props: Props) {
     type = columnHeadersView === "ON" ? "fixed" : "auto"
   }
 
-  const dimens = buildViewerDimens({
-    type,
-    height: props.height,
-    width: props.width,
-    size: logs.length,
-    rowHeight: 25,
-    sumColumnWidths: props.tableColumns.sumWidths()
-  })
+  const dimens = useMemo(
+    () =>
+      buildViewerDimens({
+        type,
+        height: props.height,
+        width: props.width,
+        size: logs.length,
+        rowHeight: 25,
+        sumColumnWidths: props.tableColumns.sumWidths()
+      }),
+    [type, props.height, props.width, logs.length, props.tableColumns]
+  )
 
   const chunker = new Chunker({
     size: logs.length,
@@ -142,7 +146,7 @@ function stateToProps(state: State): StateProps {
     tableColumns: Columns.getCurrentTableColumns(state),
     columnHeadersView: Layout.getColumnHeadersView(state),
     logs: Viewer.getLogs(state),
-    program: SearchBar.getSearchProgram(state),
+    program: Url.getSearchProgram(state),
     pool: Current.getPool(state),
     scrollPos: Viewer.getScrollPos(state)
   }

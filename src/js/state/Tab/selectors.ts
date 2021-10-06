@@ -8,6 +8,7 @@ import Tabs from "../Tabs"
 import {State} from "../types"
 import Url from "../Url"
 import {SearchParams} from "../Url/selectors"
+import {createIsEqualSelector} from "../utils"
 import Viewer from "../Viewer"
 import {Workspace} from "../Workspaces/types"
 import activeTabSelect from "./activeTabSelect"
@@ -37,7 +38,7 @@ const getSpanFocus = createSelector<State, TabState, Span | null | undefined>(
   (tab) => tab.search.spanFocus
 )
 
-const getSpanArgs = createSelector<State, TabState, BrimPool, SpanArgs>(
+const _getSpanArgs = createSelector<State, TabState, BrimPool, SpanArgs>(
   Tabs.getActiveTab,
   Current.mustGetPool,
   (tab, pool) => {
@@ -46,6 +47,8 @@ const getSpanArgs = createSelector<State, TabState, BrimPool, SpanArgs>(
     return [from || defaultFrom, to || defaultTo]
   }
 )
+
+const getSpanArgs = createIsEqualSelector(_getSpanArgs, (args) => args)
 
 const getComputedSpan = createSelector<State, SpanArgs, Span>(
   getSpanArgs,
