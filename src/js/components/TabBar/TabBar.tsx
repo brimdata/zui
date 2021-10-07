@@ -28,10 +28,6 @@ export default function TabBar() {
   const ctl = useTabController(count, calcWidth)
   useEffect(() => calcWidth(), [rect.width])
 
-  useEffect(() => {
-    console.log("changed", ids)
-  }, [ids])
-
   return (
     <div className="tab-bar">
       <div className="tabs-container" ref={ref} onMouseLeave={ctl.onMouseLeave}>
