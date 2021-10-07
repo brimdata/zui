@@ -1,11 +1,13 @@
-import {ZedContext} from "../context"
+import {Field, TypeRecord} from ".."
 import {Value} from "../../zjson"
+import {ZedContext} from "../context"
 import {ContainerTypeInterface, ZedType} from "./types"
 
 export class TypeAlias implements ContainerTypeInterface {
   kind = "alias"
   name: string
   type: ZedType
+  id: string | number
 
   constructor(name: string, type: ZedType) {
     this.name = name
@@ -16,8 +18,13 @@ export class TypeAlias implements ContainerTypeInterface {
     return name + "=(" + type.toString() + ")"
   }
 
-  create(value: Value, typedefs: object) {
-    const v = this.type.create(value, typedefs)
+  create(value: Value, typedefs: object, parent?: Field) {
+    let v
+    if (this.type instanceof TypeRecord || this.type instanceof TypeAlias) {
+      v = this.type.create(value, typedefs, parent)
+    } else {
+      v = this.type.create(value, typedefs)
+    }
     v.type = this // a better way to do this?
     return v
   }

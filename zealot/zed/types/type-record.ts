@@ -5,7 +5,7 @@ import {typeId} from "../utils"
 import {Field} from "../values/field"
 import {Record} from "../values/record"
 import {ContainerTypeInterface, ZedType} from "./types"
-import {Null} from ".."
+import {Null, trueType} from ".."
 
 export type TypeField = {
   name: string
@@ -14,6 +14,7 @@ export type TypeField = {
 export class TypeRecord implements ContainerTypeInterface {
   kind = "record"
   fields: TypeField[] | null
+  id: string | number
 
   constructor(fields: TypeField[]) {
     this.fields = fields
@@ -57,7 +58,7 @@ export class TypeRecord implements ContainerTypeInterface {
     const progenitor = parent || record // just needed another variable name for parent
 
     record.fields = this.fields.map((f, i) => {
-      if (f.type instanceof TypeRecord) {
+      if (trueType(f.type) instanceof TypeRecord) {
         const field = new Field(f.name, new Null() /* temp */, progenitor)
         field.value = f.type.create(values[i], typedefs, field)
         return field
@@ -65,7 +66,6 @@ export class TypeRecord implements ContainerTypeInterface {
         return new Field(f.name, f.type.create(values[i], typedefs), progenitor)
       }
     })
-
     return record
   }
 
