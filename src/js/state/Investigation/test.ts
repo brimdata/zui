@@ -15,10 +15,10 @@ const testWorkspaceId = "workspace1"
 const testPoolId = "defaultId"
 
 function get() {
-  return Investigation.getInvestigation(
-    testWorkspaceId,
-    testPoolId
-  )(store.getState())
+  return (
+    (Investigation.raw(store.getState())[testWorkspaceId] || {})[testPoolId] ||
+    []
+  )
 }
 
 const search1: SearchRecord = {

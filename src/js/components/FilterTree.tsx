@@ -128,9 +128,7 @@ function NodeRow({node, i, workspaceId, poolId}: Props) {
 export default function FilterTree() {
   const currentWorkspaceId = useSelector(Current.getWorkspaceId)
   const currentPoolId = useSelector(Current.getPoolId)
-  const investigation = useSelector(
-    Investigation.getInvestigation(currentWorkspaceId, currentPoolId)
-  )
+  const investigation = useSelector(Investigation.getCurrentHistory)
   const tree = createInvestigationTree(investigation)
 
   if (tree.children.length === 0)
