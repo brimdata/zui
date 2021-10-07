@@ -7,9 +7,15 @@ export function toZJSON(zson) {
   const file = tmp.fileSync()
   fs.writeFileSync(file.name, zson, {encoding: "utf-8"})
   const zed = join(__dirname, "../../zdeps/zed")
-  const cmd = `${zed} query -f zjson '*' ${file.name}`
-  return execSync(cmd, {encoding: "utf-8"})
-    .trim()
-    .split("\n")
-    .map((s) => JSON.parse(s))
+  const cmd = `${zed} query -f zjson '*' "${file.name}"`
+  const result = execSync(cmd, {encoding: "utf-8"})
+  try {
+    return result
+      .trim()
+      .split("\n")
+      .map((s) => JSON.parse(s))
+  } catch (e) {
+    console.error(result)
+    throw e
+  }
 }
