@@ -1,15 +1,14 @@
-import {useDispatch, useSelector} from "react-redux"
-import React, {MouseEvent} from "react"
-import styled from "styled-components"
-
-import {XLeftPaneExpander} from "./LeftPaneExpander"
-import WorkspacePicker from "../WorkspacePicker"
-import Current from "../../state/Current"
-import Layout from "../../state/Layout"
-import Pane from "./../Pane"
 import get from "lodash/get"
+import React, {MouseEvent} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import Appearance from "src/js/state/Appearance"
+import styled from "styled-components"
 import {Sectional} from "../../../pkg/sectional"
+import Current from "../../state/Current"
+import WorkspacePicker from "../WorkspacePicker"
+import Pane from "./../Pane"
 import HistorySection from "./HistorySection"
+import {XLeftPaneExpander} from "./LeftPaneExpander"
 import PoolsSection from "./PoolsSection"
 import QueriesSection from "./QueriesSection"
 
@@ -23,9 +22,9 @@ const EmptyText = styled.div`
 
 export function LeftPane() {
   const dispatch = useDispatch()
-  const isOpen = useSelector(Layout.getLeftSidebarIsOpen)
-  const width = useSelector(Layout.getLeftSidebarWidth)
-  const sections = useSelector(Layout.getSidebarSections).map((s) => ({
+  const isOpen = useSelector(Appearance.sidebarIsOpen)
+  const width = useSelector(Appearance.sidebarWidth)
+  const sections = useSelector(Appearance.sidebarSections).map((s) => ({
     ...s,
     min: 100,
     closedSize: 24
@@ -34,12 +33,12 @@ export function LeftPane() {
   const ws = useSelector(Current.getWorkspace)
   const id = get(ws, ["id"], "")
   const setSections = (sections) =>
-    dispatch(Layout.setSidebarSections(sections))
+    dispatch(Appearance.updateSidebarSections(sections))
 
   function onDragPane(e: MouseEvent) {
     const width = e.clientX
     const max = window.innerWidth
-    dispatch(Layout.setLeftSidebarWidth(Math.min(width, max)))
+    dispatch(Appearance.resizeSidebar(Math.min(width, max)))
   }
 
   if (!isOpen) return <XLeftPaneExpander />

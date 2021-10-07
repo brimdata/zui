@@ -13,6 +13,7 @@ import TabHistories from "../state/TabHistories"
 import PluginManager from "./pluginManager"
 import Current from "../state/Current"
 import {releaseNotesPath} from "app/router/utils/paths"
+import Appearance from "../state/Appearance"
 
 export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
@@ -50,7 +51,7 @@ export default (store: Store, pluginManager: PluginManager) => {
   })
 
   ipcRenderer.on("toggleLeftSidebar", () => {
-    store.dispatch(Layout.toggleLeftSidebar())
+    store.dispatch(Appearance.toggleSidebar())
   })
 
   ipcRenderer.on("toggleRightSidebar", () => {
