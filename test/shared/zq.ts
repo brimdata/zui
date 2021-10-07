@@ -9,13 +9,15 @@ export function toZJSON(zson) {
   const zed = join(__dirname, "../../zdeps/zed")
   const cmd = `${zed} query -f zjson '*' "${file.name}"`
   const result = execSync(cmd, {encoding: "utf-8"})
-  try {
-    return result
-      .trim()
-      .split("\n")
-      .map((s) => JSON.parse(s))
-  } catch (e) {
-    console.error(result)
-    throw e
-  }
+  return result
+    .trim()
+    .split("\n")
+    .map((s) => {
+      try {
+        return JSON.parse(s)
+      } catch (e) {
+        console.error(result)
+        throw e
+      }
+    })
 }
