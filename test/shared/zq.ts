@@ -4,11 +4,9 @@ import {join} from "path"
 import tmp from "tmp"
 
 export function toZJSON(zson) {
-  const file = tmp.fileSync()
-  fs.writeFileSync(file.name, zson, {encoding: "utf-8"})
   const zed = join(__dirname, "../../zdeps/zed")
-  const cmd = `${zed} query -f zjson '*' "${file.name}"`
-  const result = execSync(cmd, {encoding: "utf-8"})
+  const cmd = `${zed} query -f zjson -"`
+  const result = execSync(cmd, {encoding: "utf-8", input: zson})
   return result
     .trim()
     .split("\n")
