@@ -206,9 +206,7 @@ having been blocked.
 
 We've been made aware that the Windows binary `suricata-update.exe` has been
 flagged by several antivirus engines, as summarized in
-<!-- markdown-link-check-disable -->
-[this VirusTotal entry](https://www.virustotal.com/gui/file/b184511d689d547fa5fd524c7ca120586fcffc60f338f932d41800c63961d723/detection).
-<!-- markdown-link-check-enable-->
+<!-- markdown-link-check-disable -->[this VirusTotal entry](https://www.virustotal.com/gui/file/b184511d689d547fa5fd524c7ca120586fcffc60f338f932d41800c63961d723/detection). <!-- markdown-link-check-enable-->
 If your antivirus software should flag a different Brim-related binary as
 potentially malicious, please [open an issue](#opening-an-issue), as we'd
 want to investigate that as well.
