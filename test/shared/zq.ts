@@ -1,11 +1,9 @@
 import {execSync} from "child_process"
-import fs from "fs"
 import {join} from "path"
-import tmp from "tmp"
 
 export function toZJSON(zson) {
   const zed = join(__dirname, "../../zdeps/zed")
-  const cmd = `${zed} query -f zjson -"`
+  const cmd = `${zed} query -f zjson -`
   const result = execSync(cmd, {encoding: "utf-8", input: zson})
   return result
     .trim()
