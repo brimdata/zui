@@ -118,4 +118,4 @@ See the [[Adding Migrations]] page for a more detailed guide.
 
 ## Questions?
 
-We appreciate your interest in improving Brim. If you've got questions that aren't answered here or in the [video](#video), please join our [public Slack](https://www.brimsecurity.com/join-slack/) workspace and ask!
+We appreciate your interest in improving Brim. If you've got questions that aren't answered here or in the [video](#video), please join our [public Slack](https://www.brimdata.io/join-slack/) workspace and ask!

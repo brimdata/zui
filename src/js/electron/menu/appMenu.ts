@@ -211,7 +211,7 @@ export default function(
       {
         label: "Slack Support Channel",
         click() {
-          shell.openExternal("https://www.brimsecurity.com/join-slack/")
+          shell.openExternal("https://www.brimdata.io/join-slack/")
         }
       },
       {

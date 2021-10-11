@@ -218,7 +218,7 @@ the binary are all open source, so we encourage users to perform their own
 assessment as to whether they feel safe installing and using the software. As
 we don't claim deep expertise in antivirus matters, we'd also welcome input
 from experienced members of the Brim community on ways we can best address
-the topic. Please come talk to us on [public Slack](https://www.brimsecurity.com/join-slack/)
+the topic. Please come talk to us on [public Slack](https://www.brimdata.io/join-slack/)
 if you feel you could offer further assistance.
 
 It may be helpful to first understand the role of this binary. As the name
@@ -303,7 +303,7 @@ For all information described in this section, we understand that some of it
 may be of a sensitive nature such that you don't feel you can attach it
 directly to a public GitHub Issue. If you can crop, blur, or otherwise modify
 the information before attaching, please do. If you feel you could share such
-information only privately, please notify us on [public Slack](https://www.brimsecurity.com/join-slack/)
+information only privately, please notify us on [public Slack](https://www.brimdata.io/join-slack/)
 and we can arrange to receive it from you in a private 1-on-1 chat.
 
 ## Screenshots/Videos
@@ -375,7 +375,7 @@ you can help us out by doing the following:
 * Review the [common problems](#common-problems) above see if you're hitting one of those.
 * Browse the existing [open issues](https://github.com/brimdata/brim/issues?q=is%3Aissue+is%3Aopen). If you confirm you're hitting one of those, please add a comment to it rather than opening a new issue.
 * [Gather info](#gathering-info) that may help in reproducing the issue and testing a fix, and attach it to your issue.
-* Feel free to chat with the team on the [public Slack](https://www.brimsecurity.com/join-slack/) before/after opening an issue.
+* Feel free to chat with the team on the [public Slack](https://www.brimdata.io/join-slack/) before/after opening an issue.
 * When you open a new issue, its initial text will include a template with standard info that will almost always be needed. Please include detail for all areas of the template.
 
 Thanks for helping us support the Brim community!

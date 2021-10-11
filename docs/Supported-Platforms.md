@@ -15,7 +15,7 @@
 
 # Summary
 
-[Downloadable packages](https://www.brimsecurity.com/download/) for Brim are
+[Downloadable packages](https://www.brimdata.io/download/) for Brim are
 available that run on Windows, macOS, and Linux. Our current platform
 recommendations on which to run Brim:
 

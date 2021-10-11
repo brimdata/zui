@@ -26,7 +26,7 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
         <div>
           <h1>Error</h1>
           <pre>{error.stack}</pre>
-          <Link href="mailto:support@brimsecurity.com">Contact Support</Link>
+          <Link href="mailto:support@brimdata.io">Contact Support</Link>
         </div>
       </div>
     )
