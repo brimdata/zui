@@ -62,5 +62,5 @@ Now our `testxlsx_converted.zng` can be imported into Brim.
 
 If you're struggling with importing alternate file formats or just have
 questions, we'd like to hear from you! Please join our
-[public Slack](https://www.brimsecurity.com/join-slack/)
+[public Slack](https://www.brimdata.io/join-slack/)
 and speak up, or [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!

@@ -37,7 +37,7 @@ jobs:
           # that caused it to wait, reducing push failures down below.
           ref: ${{ github.ref }}
           token: ${{ secrets.ZQ_UPDATE_PAT }}
-      - run: git config --local user.email 'automation@brimsecurity.com'
+      - run: git config --local user.email 'automation@brimdata.io'
       - run: git config --local user.name 'Brim Automation'
 
       # This section gets event information.

@@ -45,7 +45,7 @@ export default function AboutModal() {
           </section>
           <section>
             <label>Website</label>
-            <a onClick={() => open("https://www.brimsecurity.com")}>
+            <a onClick={() => open("https://www.brimdata.io")}>
               Brim Security, Inc.
             </a>
           </section>
