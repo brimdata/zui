@@ -39,9 +39,7 @@ export default function AboutWindow() {
           </section>
           <section>
             <label>Website</label>
-            <a onClick={() => open("https://www.brimdata.io")}>
-              brimdata.io
-            </a>
+            <a onClick={() => open("https://www.brimdata.io")}>brimdata.io</a>
           </section>
           <section>
             <label>Source</label>
