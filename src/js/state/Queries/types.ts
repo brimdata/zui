@@ -13,6 +13,7 @@ export interface Query {
 export interface Group {
   id: string
   name: string
+  isOpen: boolean
   items: (Group | Query)[]
 }
 
@@ -22,6 +23,7 @@ export type QueriesAction =
   | QUERIES_REMOVE_ITEMS
   | QUERIES_EDIT_ITEM
   | QUERIES_MOVE_ITEMS
+  | QUERIES_TOGGLE_GROUP
 
 export interface QUERIES_SET_ALL {
   type: "$QUERIES_SET_ALL"
@@ -36,7 +38,7 @@ export interface QUERIES_ADD_ITEM {
 
 export interface QUERIES_REMOVE_ITEMS {
   type: "$QUERIES_REMOVE_ITEMS"
-  items: Item[]
+  itemIds: string[]
 }
 
 export interface QUERIES_EDIT_ITEM {
@@ -47,7 +49,12 @@ export interface QUERIES_EDIT_ITEM {
 
 export interface QUERIES_MOVE_ITEMS {
   type: "$QUERIES_MOVE_ITEMS"
-  items: Item[]
-  parentGroup: Group
+  itemIds: string[]
+  parentId: string
   index: number
+}
+
+export interface QUERIES_TOGGLE_GROUP {
+  type: "$QUERIES_TOGGLE_GROUP"
+  groupId: string
 }

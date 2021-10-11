@@ -7,11 +7,14 @@ import Current from "../../state/Current"
 import SearchBar from "../../state/SearchBar"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import {MenuItemConstructorOptions, remote} from "electron"
-import lib from "../../lib"
 import toast from "react-hot-toast"
 import Modal from "../../state/Modal"
 import Queries from "../../state/Queries"
 import usePopupMenu from "../hooks/usePopupMenu"
+import lib from "src/js/lib"
+import Folder from "../../icons/Folder"
+import {StyledArrow} from "../LeftPane/common"
+import StarIcon from "../../icons/StarIcon"
 
 const BG = styled.div`
   padding-left: 18px;
@@ -68,8 +71,29 @@ const Input = styled.input`
   width: 100%;
 `
 
+const StyledShow = styled.div`
+  display: flex;
+  align-items: center;
+  ${Folder}, ${StarIcon}, ${StyledArrow} {
+    margin-right: 5px;
+    width: 8px;
+    height: 8px;
+  }
+  ${Folder} {
+    fill: var(--slate);
+  }
+`
+
 function Show({item}) {
-  return <Name>{item.name}</Name>
+  const isGroup = "isOpen" in item
+  const itemIcon = isGroup ? <Folder /> : <StarIcon />
+  return (
+    <StyledShow>
+      {isGroup && <StyledArrow show={item.isOpen} />}
+      {itemIcon}
+      <Name>{item.name}</Name>
+    </StyledShow>
+  )
 }
 
 function Edit({item}) {
@@ -92,11 +116,11 @@ function Edit({item}) {
   )
 }
 
-export default function Item({indent, props, node, state, handlers}) {
+export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const dispatch = useDispatch()
   const currentPool = useSelector(Current.getPool)
   const isEditing = false // for later
-  const item = node.model
+  const {value} = data
 
   const runQuery = (value) => {
     dispatch(SearchBar.clearSearchBar())
@@ -104,27 +128,31 @@ export default function Item({indent, props, node, state, handlers}) {
     dispatch(submitSearch())
   }
 
-  const onItemClick = () => {
+  const onItemClick = (e) => {
     if (!currentPool)
       return dispatch(
         Notice.set({type: "NoPoolError", message: "No Pool Selected"})
       )
 
-    if (!item.value) return
+    handlers.select(e)
+    // item is a group if it contains 'isOpen' key
+    if ("isOpen" in data) {
+      dispatch(Queries.toggleGroup(data.id))
+      handlers.toggle(e)
+      return
+    }
 
-    runQuery(item.value)
+    if (!value) return
+
+    runQuery(value)
   }
 
-  const hasMultiSelected =
+  const hasMultiSelected = tree.getSelectedIds().length > 1
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Run Query",
       enabled: !hasMultiSelected && !!currentPool,
       click: () => {
-        const {
-          item: {value}
-        } = contextArgs
-
         runQuery(value)
       }
     },
@@ -132,9 +160,6 @@ export default function Item({indent, props, node, state, handlers}) {
       label: "Copy Query",
       enabled: !hasMultiSelected,
       click: () => {
-        const {
-          item: {value}
-        } = contextArgs
         lib.doc.copyToClipboard(value)
         toast("Query copied to clipboard")
       }
@@ -144,10 +169,9 @@ export default function Item({indent, props, node, state, handlers}) {
       label: "Edit",
       enabled: !hasMultiSelected,
       click: () => {
-        const {item} = contextArgs
         // only edit queries
-        if ("items" in item) return
-        dispatch(Modal.show("edit-query", {query: item}))
+        if ("items" in data) return
+        dispatch(Modal.show("edit-query", {query: data}))
       }
     },
     {type: "separator"},
@@ -158,16 +182,16 @@ export default function Item({indent, props, node, state, handlers}) {
           .showMessageBox({
             type: "warning",
             title: "Confirm Delete Query Window",
-            message: `Are you sure you want to delete the ${(contextArgs.selections &&
-              contextArgs.selections.length) ||
-              ""} selected quer${hasMultiSelected ? "ies" : "y"}?`,
+            message: `Are you sure you want to delete the ${
+              hasMultiSelected ? tree.getSelectedIds().length : ""
+            } selected quer${hasMultiSelected ? "ies" : "y"}?`,
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
             if (response === 0) {
-              const {selections, item} = contextArgs
-              if (hasMultiSelected) dispatch(Queries.removeItems(selections))
-              else dispatch(Queries.removeItems([item]))
+              if (hasMultiSelected) {
+                dispatch(Queries.removeItems(tree.getSelectedIds()))
+              } else dispatch(Queries.removeItems([data.id]))
             }
           })
       }
@@ -178,13 +202,15 @@ export default function Item({indent, props, node, state, handlers}) {
 
   return (
     <BG
-      {...props}
+      tabIndex={0}
+      ref={innerRef}
+      style={styles.row}
       className={classNames(state)}
       onClick={onItemClick}
-      onContextMenu={menu.open}
+      onContextMenu={() => menu.open()}
     >
-      <div style={{paddingLeft: indent}}>
-        {isEditing ? <Edit item={item} /> : <Show item={item} />}
+      <div style={styles.indent}>
+        {isEditing ? <Edit item={data} /> : <Show item={data} />}
       </div>
     </BG>
   )

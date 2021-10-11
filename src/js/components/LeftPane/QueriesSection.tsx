@@ -1,21 +1,14 @@
-import {MenuItemConstructorOptions, remote} from "electron"
 import {includes} from "lodash"
 import React, {useEffect, useState} from "react"
-import toast from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux"
 import TreeModel from "tree-model"
 import {Tree} from "react-arborist"
 import useResizeObserver from "use-resize-observer"
-import {submitSearch} from "../../flows/submitSearch/mod"
 import DropdownArrow from "../../icons/DropdownArrow"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
-import lib from "../../lib"
 import Current from "../../state/Current"
-import Modal from "../../state/Modal"
-import Notice from "../../state/Notice"
 import Queries from "../../state/Queries"
 import {Group, Query} from "../../state/Queries/types"
-import SearchBar from "../../state/SearchBar"
 import EmptySection from "../common/EmptySection"
 import usePopupMenu from "../hooks/usePopupMenu"
 import Item from "../SideBar/Item"
@@ -29,6 +22,42 @@ import {
   StyledViewSelect,
   Title
 } from "./common"
+import styled from "styled-components"
+import Modal from "../../state/Modal"
+
+const StyledPlus = styled.div`
+  margin-left: auto;
+  margin-right: 8px;
+  background: rgba(0, 0, 0, 0);
+  width: 24px;
+  height: 18px;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 16px;
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--slate);
+  ${(props) => props.theme.hoverQuiet}
+`
+
+const NewActionsDropdown = () => {
+  const dispatch = useDispatch()
+
+  const template = [
+    {
+      label: "New Query",
+      click: () => dispatch(Modal.show("new-query"))
+    },
+    {
+      label: "New Folder",
+      click: () => console.log("new folder modal?")
+    }
+  ]
+
+  const menu = usePopupMenu(template)
+
+  return <StyledPlus onClick={menu.onClick}>+</StyledPlus>
+}
 
 const filterQueriesByTag = (queriesRoot: Group, tag: string): Query[] => {
   const queryResults = []
@@ -74,41 +103,15 @@ const TagsViewSelect = ({selected, tags, onSelect}) => {
 
 function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const dispatch = useDispatch()
-  const [contextArgs, setContextArgs] = useState(null)
   const [selectedTag, setSelectedTag] = useState("All")
   const currentPool = useSelector(Current.getPool)
   const queriesRoot = useSelector(Queries.getRaw)
   const [queries, setQueries] = useState(queriesRoot)
   const tags = useSelector(Queries.getTags)
-  const hasMultiSelected = contextArgs && contextArgs.selections.length > 1
 
   useEffect(() => {
     setQueries(queriesRoot)
   }, [queriesRoot])
-
-  const runQuery = (value) => {
-    dispatch(SearchBar.clearSearchBar())
-    dispatch(SearchBar.changeSearchBarInput(value))
-    dispatch(submitSearch())
-  }
-
-  const menu = usePopupMenu(template)
-
-  function _onItemClick(_, item) {
-    if (!currentPool)
-      return dispatch(
-        Notice.set({type: "NoPoolError", message: "No Pool Selected"})
-      )
-
-    if (!item.value) return
-
-    runQuery(item.value)
-  }
-
-  function _onItemMove(sourceItem, destIndex) {
-    if (selectedTag !== "All") return
-    dispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
-  }
 
   function onTagSelect(tag) {
     setSelectedTag(tag)
@@ -119,15 +122,19 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     setQueries({
       id: "root",
       name: "root",
+      isOpen: true,
       items: filterQueriesByTag(queriesRoot, tag)
     })
   }
 
-  // trigger menu open after contextArgs have updated so it renders with fresh data
-  useEffect(() => {
-    if (!contextArgs) return
-    menu.open()
-  }, [contextArgs])
+  const handleMove = (
+    dragIds: string[],
+    parentId: string | null,
+    index: number
+  ) => {
+    if (selectedTag !== "All") return
+    dispatch(Queries.moveItems(dragIds, parentId, index))
+  }
 
   const {ref, width = 1, height = 1} = useResizeObserver<HTMLDivElement>()
   return (
@@ -139,26 +146,28 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           <Title>Queries</Title>
         </ClickRegion>
         {currentPool && (
-          <TagsViewSelect
-            selected={selectedTag}
-            tags={["All", ...tags]}
-            onSelect={onTagSelect}
-          />
+          <>
+            <TagsViewSelect
+              selected={selectedTag}
+              tags={["All", ...tags]}
+              onSelect={onTagSelect}
+            />
+            <NewActionsDropdown />
+          </>
         )}
       </SectionHeader>
       <SectionContents ref={ref}>
         {currentPool ? (
           <Tree
             data={queries}
-            // @ts-ignore
-            getChildren={(n) => ("items" in n ? n.items : undefined)}
-            getIsOpen={() => true}
+            childrenAccessor="items"
+            isOpenAccessor="isOpen"
             rowHeight={24}
             width={width}
             height={height}
             hideRoot
-            // onItemMove={onItemMove}
-            // onItemClick={onItemClick}
+            openByDefault
+            onMove={handleMove}
           >
             {Item}
           </Tree>
