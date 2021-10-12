@@ -1,5 +1,5 @@
 import {includes} from "lodash"
-import React, {useEffect, useState} from "react"
+import React, {ChangeEvent, useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import TreeModel from "tree-model"
 import {Tree} from "react-arborist"
@@ -24,6 +24,9 @@ import {
 } from "./common"
 import styled from "styled-components"
 import Modal from "../../state/Modal"
+import {nanoid} from "@reduxjs/toolkit"
+import useCallbackRef from "../hooks/useCallbackRef"
+import {parseJSONLib} from "../../state/Queries/parsers"
 
 const StyledPlus = styled.div`
   margin-left: auto;
@@ -42,6 +45,7 @@ const StyledPlus = styled.div`
 
 const NewActionsDropdown = () => {
   const dispatch = useDispatch()
+  const [importer, ref] = useCallbackRef<HTMLButtonElement>()
 
   const template = [
     {
@@ -50,13 +54,44 @@ const NewActionsDropdown = () => {
     },
     {
       label: "New Folder",
-      click: () => console.log("new folder modal?")
+      click: () =>
+        dispatch(
+          Queries.addItem(
+            {
+              isOpen: false,
+              items: [],
+              name: "New Folder",
+              id: nanoid()
+            },
+            "root"
+          )
+        )
+    },
+    {
+      label: "Import from JSON...",
+      click: () => importer.click()
     }
   ]
 
   const menu = usePopupMenu(template)
 
-  return <StyledPlus onClick={menu.onClick}>+</StyledPlus>
+  const onImport = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files[0]
+    const node = parseJSONLib(file)
+    dispatch(Queries.addItem(node, "root"))
+  }
+
+  return (
+    <>
+      <StyledPlus onClick={menu.onClick}>+</StyledPlus>
+      <input
+        ref={ref}
+        type="file"
+        style={{display: "none"}}
+        onChange={onImport}
+      />
+    </>
+  )
 }
 
 const filterQueriesByTag = (queriesRoot: Group, tag: string): Query[] => {
@@ -136,6 +171,9 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     dispatch(Queries.moveItems(dragIds, parentId, index))
   }
 
+  const handleRename = (itemId: string, name: string) =>
+    dispatch(Queries.editItem({name}, itemId))
+
   const {ref, width = 1, height = 1} = useResizeObserver<HTMLDivElement>()
   return (
     <StyledSection style={style}>
@@ -168,6 +206,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
             hideRoot
             openByDefault
             onMove={handleMove}
+            onEdit={handleRename}
           >
             {Item}
           </Tree>

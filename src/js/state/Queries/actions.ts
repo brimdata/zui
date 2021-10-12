@@ -14,16 +14,16 @@ export default {
     type: "$QUERIES_SET_ALL",
     rootGroup
   }),
-  addItem: (item: Item, parentGroup: Group): QUERIES_ADD_ITEM => ({
+  addItem: (item: Item, parentGroupId: string): QUERIES_ADD_ITEM => ({
     type: "$QUERIES_ADD_ITEM",
     item,
-    parentGroup
+    parentGroupId
   }),
   removeItems: (itemIds: string[]): QUERIES_REMOVE_ITEMS => ({
     type: "$QUERIES_REMOVE_ITEMS",
     itemIds
   }),
-  editItem: (item: Item, itemId: string): QUERIES_EDIT_ITEM => ({
+  editItem: (item: Partial<Item>, itemId: string): QUERIES_EDIT_ITEM => ({
     type: "$QUERIES_EDIT_ITEM",
     item,
     itemId

@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React, {useRef} from "react"
+import React, {useLayoutEffect, useRef} from "react"
 import styled from "styled-components"
 import Notice from "../../state/Notice"
 import {useDispatch, useSelector} from "react-redux"
@@ -17,7 +17,7 @@ import {StyledArrow} from "../LeftPane/common"
 import StarIcon from "../../icons/StarIcon"
 
 const BG = styled.div`
-  padding-left: 18px;
+  padding-left: 12px;
   height: 24px;
   font-family: system-ui;
   font-weight: 400;
@@ -71,11 +71,12 @@ const Input = styled.input`
   width: 100%;
 `
 
-const StyledShow = styled.div`
+const StyledItem = styled.div`
   display: flex;
   align-items: center;
   ${Folder}, ${StarIcon}, ${StyledArrow} {
     margin-right: 5px;
+    margin-left: 0;
     width: 8px;
     height: 8px;
   }
@@ -85,30 +86,22 @@ const StyledShow = styled.div`
 `
 
 function Show({item}) {
-  const isGroup = "isOpen" in item
-  const itemIcon = isGroup ? <Folder /> : <StarIcon />
-  return (
-    <StyledShow>
-      {isGroup && <StyledArrow show={item.isOpen} />}
-      {itemIcon}
-      <Name>{item.name}</Name>
-    </StyledShow>
-  )
+  return <Name>{item.name}</Name>
 }
 
-function Edit({item}) {
-  const input = useRef()
-  // useLayoutEffect(() => input.current.select(), [])
-  //   useOutsideClick(input, () => ctx.onRename(item, input.current.value))
-  //   const onEnter = (e) =>
-  // e.key === "Enter" && ctx.onRename(item, input.current.value)
-  //   const onEscape = (e) => e.key === "Escape" && ctx.onRename(item, item.name)
+function Rename({item, onSubmit}) {
+  const input = useRef(null)
+  useLayoutEffect(() => input.current && input.current.select(), [])
+  // useOutsideClick(input, () => ctx.onRename(item, input.current.value))
+  const onKey = (e) => {
+    if (e.key === "Enter") onSubmit(input.current.value)
+    else if (e.key === "Escape") onSubmit(item.name)
+  }
 
   return (
     <Input
       ref={input}
-      // onKeyPress={onEnter}
-      // onKeyDown={onEscape}
+      onKeyDown={onKey}
       type="text"
       autoFocus
       defaultValue={item.name}
@@ -119,7 +112,7 @@ function Edit({item}) {
 export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const dispatch = useDispatch()
   const currentPool = useSelector(Current.getPool)
-  const isEditing = false // for later
+  const {isEditing} = state
   const {value} = data
 
   const runQuery = (value) => {
@@ -166,6 +159,10 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     },
     {type: "separator"},
     {
+      label: "Rename",
+      click: () => handlers.edit()
+    },
+    {
       label: "Edit",
       enabled: !hasMultiSelected,
       click: () => {
@@ -199,6 +196,8 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   ]
 
   const menu = usePopupMenu(template)
+  const isGroup = "isOpen" in data
+  const itemIcon = isGroup ? <Folder /> : <StarIcon />
 
   return (
     <BG
@@ -209,9 +208,15 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       onClick={onItemClick}
       onContextMenu={() => menu.open()}
     >
-      <div style={styles.indent}>
-        {isEditing ? <Edit item={data} /> : <Show item={data} />}
-      </div>
+      <StyledItem style={styles.indent}>
+        {isGroup && <StyledArrow show={data.isOpen} />}
+        {itemIcon}
+        {isEditing ? (
+          <Rename item={data} onSubmit={handlers.submit} />
+        ) : (
+          <Show item={data} />
+        )}
+      </StyledItem>
     </BG>
   )
 }

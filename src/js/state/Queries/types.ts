@@ -13,8 +13,8 @@ export interface Query {
 export interface Group {
   id: string
   name: string
-  isOpen: boolean
   items: (Group | Query)[]
+  isOpen?: boolean
 }
 
 export type QueriesAction =
@@ -33,7 +33,7 @@ export interface QUERIES_SET_ALL {
 export interface QUERIES_ADD_ITEM {
   type: "$QUERIES_ADD_ITEM"
   item: Item
-  parentGroup: Group
+  parentGroupId: string
 }
 
 export interface QUERIES_REMOVE_ITEMS {
@@ -43,7 +43,7 @@ export interface QUERIES_REMOVE_ITEMS {
 
 export interface QUERIES_EDIT_ITEM {
   type: "$QUERIES_EDIT_ITEM"
-  item: Item
+  item: Partial<Item>
   itemId: string
 }
 

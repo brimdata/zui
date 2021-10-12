@@ -88,7 +88,7 @@ test("add query", () => {
   const parentGroup = getGroup([0])
   expect(parentGroup.items).toHaveLength(3)
 
-  store.dispatch(Queries.addItem(newQuery, parentGroup))
+  store.dispatch(Queries.addItem(newQuery, parentGroup.id))
 
   expect(getGroup([0]).items).toHaveLength(4)
   expect(getGroup([0]).items[3]).toEqual(newQuery)
@@ -100,7 +100,7 @@ test("add query, nested", () => {
   const parentGroup = getGroup([0, 1])
   expect(parentGroup.items).toHaveLength(1)
 
-  store.dispatch(Queries.addItem(newQuery, parentGroup))
+  store.dispatch(Queries.addItem(newQuery, parentGroup.id))
 
   expect(getGroup([0, 1]).items).toHaveLength(2)
   expect(getGroup([0, 1]).items[1]).toEqual(newQuery)
@@ -112,13 +112,13 @@ test("add group, add query to new group", () => {
   const parentGroup = getGroup([0])
   expect(parentGroup.items).toHaveLength(3)
 
-  store.dispatch(Queries.addItem(newGroup, parentGroup))
+  store.dispatch(Queries.addItem(newGroup, parentGroup.id))
 
   expect(getGroup([0]).items).toHaveLength(4)
   expect(getGroup([0]).items[3]).toEqual(newGroup)
   expect(getGroup([0, 3]).items).toHaveLength(0)
 
-  store.dispatch(Queries.addItem(newQuery, newGroup))
+  store.dispatch(Queries.addItem(newQuery, newGroup.id))
 
   expect(getGroup([0, 3]).items).toHaveLength(1)
   expect(getGroup([0, 3]).items[0]).toEqual(newQuery)
@@ -169,7 +169,7 @@ test("move query, same group, different group same depth", () => {
   expect(getGroup([0]).items).toEqual(testName1Group.items)
 
   // move to "uncle's" group
-  store.dispatch(Queries.addItem(newGroup, getGroup([0])))
+  store.dispatch(Queries.addItem(newGroup, getGroup([0]).id))
 
   expect(getGroup([0, 1]).items).toHaveLength(1)
   expect(getGroup([0, 3]).items).toHaveLength(0)

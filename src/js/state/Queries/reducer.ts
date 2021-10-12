@@ -14,14 +14,17 @@ const getNodeById = (
 
 export default produce((draft: QueriesState, action: QueriesAction) => {
   const queriesTree = itemToNode(draft)
-  let nodeModel
+  let node
   switch (action.type) {
     case "$QUERIES_SET_ALL":
       return action.rootGroup
     case "$QUERIES_ADD_ITEM":
-      getNodeById(queriesTree, action.parentGroup.id).addChild(
-        itemToNode(action.item)
-      )
+      node = getNodeById(queriesTree, action.parentGroupId)
+      if (!("isOpen" in node.model)) {
+        console.error("items may only be added to groups")
+        return
+      }
+      node.addChild(itemToNode(action.item))
       return queriesTree.model
     case "$QUERIES_REMOVE_ITEMS":
       action.itemIds.forEach((itemId) => {
@@ -32,12 +35,12 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
       Object.assign(getNodeById(queriesTree, action.itemId).model, action.item)
       return queriesTree.model
     case "$QUERIES_TOGGLE_GROUP":
-      nodeModel = getNodeById(queriesTree, action.groupId).model
-      if (nodeModel.isOpen === undefined) {
-        console.error("cannot open/close non-groups")
+      node = getNodeById(queriesTree, action.groupId)
+      if (node.model.isOpen === undefined) {
+        console.error("cannot open/close queries, only groups")
         return
       }
-      nodeModel.isOpen = !nodeModel.isOpen
+      node.model.isOpen = !node.model.isOpen
       return queriesTree.model
     case "$QUERIES_MOVE_ITEMS":
       moveItems(queriesTree, action)
