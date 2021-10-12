@@ -63,7 +63,7 @@ test("encode decode a field", () => {
   const input = zq("*", file)
   const ctx = new ZedContext()
   const records = ctx.decode(input)
-  expect.assertions(238)
+  expect.assertions(246)
 
   records.forEach((rec) => {
     rec.flatColumns.forEach((column) => {

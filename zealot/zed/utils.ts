@@ -112,8 +112,9 @@ export function flatColumns(
 ) {
   if (isNull(record.fields)) return []
   for (let f of record.fields) {
-    if (f.type instanceof TypeRecord) {
-      flatColumns(f.type, columns, !path ? [f.name] : [...path, f.name])
+    const type = trueType(f.type)
+    if (type instanceof TypeRecord) {
+      flatColumns(type, columns, !path ? [f.name] : [...path, f.name])
     } else {
       columns.push(path ? [...path, f.name] : f.name)
     }
