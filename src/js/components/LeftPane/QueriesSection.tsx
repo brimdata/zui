@@ -29,7 +29,7 @@ import useCallbackRef from "../hooks/useCallbackRef"
 import {parseJSONLib} from "../../state/Queries/parsers"
 
 const StyledPlus = styled.div`
-  margin-left: auto;
+  //margin-left: auto;
   margin-right: 8px;
   background: rgba(0, 0, 0, 0);
   width: 24px;
@@ -197,6 +197,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
       <SectionContents ref={ref}>
         {currentPool ? (
           <Tree
+            indent={16}
             data={queries}
             childrenAccessor="items"
             isOpenAccessor="isOpen"

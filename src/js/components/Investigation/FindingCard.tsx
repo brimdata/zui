@@ -13,12 +13,11 @@ import usePopupMenu from "../hooks/usePopupMenu"
 import {remote} from "electron"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
-    fill: var(--lead);
-    min-width: 13px;
-    width: 13px;
-    min-height: 13px;
-    height: 13px;
-  }
+  fill: var(--lead);
+  min-width: 13px;
+  width: 13px;
+  min-height: 13px;
+  height: 13px;
 `
 
 type Props = {finding: Finding; workspaceId: string; poolId: string}

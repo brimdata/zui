@@ -14,7 +14,7 @@ import usePopupMenu from "../hooks/usePopupMenu"
 import lib from "src/js/lib"
 import Folder from "../../icons/Folder"
 import {StyledArrow} from "../LeftPane/common"
-import StarIcon from "../../icons/StarIcon"
+import StarNoFillIcon from "../../icons/StarNoFillIcon"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -27,7 +27,7 @@ const BG = styled.div`
   display: flex;
   align-items: center;
   overflow: hidden;
-  cursor: default !important;
+  cursor: default;
   user-select: none;
   outline: none;
 
@@ -58,7 +58,6 @@ const Input = styled.input`
   font-size: 11px;
   font-family: system-ui;
   font-weight: 400;
-  font-size: 11px;
   line-height: 19px;
   color: var(--aqua);
   padding: 0 1px;
@@ -67,21 +66,38 @@ const Input = styled.input`
   outline: none;
   border-radius: 2px;
   margin: 0 2px 0 -2px;
-  margin-right: 2px;
   width: 100%;
 `
 
-const StyledItem = styled.div`
+const GroupArrow = styled(StyledArrow)`
+  visibility: ${(props) => (props.isVisible ? "visible" : "hidden")};
+  margin-right: 6px;
+  margin-left: 0;
+  width: 8px;
+  height: 8px;
+`
+
+const StyledItem = styled.div<{isSelected: boolean}>`
   display: flex;
   align-items: center;
-  ${Folder}, ${StarIcon}, ${StyledArrow} {
-    margin-right: 5px;
-    margin-left: 0;
-    width: 8px;
-    height: 8px;
+
+  ${GroupArrow} {
+    opacity: ${(p) => (p.isSelected ? 1 : 0.45)};
+    fill: ${(p) => (p.isSelected ? "white" : "var(--slate)")};
   }
+
+  ${Folder}, ${StarNoFillIcon} {
+    margin-right: 6px;
+    width: 13px;
+    height: 13px;
+  }
+
   ${Folder} {
-    fill: var(--slate);
+    fill: ${(p) => (p.isSelected ? "white" : "var(--slate)")};
+  }
+
+  ${StarNoFillIcon} {
+    fill: ${(p) => (p.isSelected ? "white" : "var(--lead)")};
   }
 `
 
@@ -112,13 +128,19 @@ function Rename({item, onSubmit}) {
 export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const dispatch = useDispatch()
   const currentPool = useSelector(Current.getPool)
-  const {isEditing} = state
+  const {isEditing, isSelected} = state
   const {value} = data
 
   const runQuery = (value) => {
     dispatch(SearchBar.clearSearchBar())
     dispatch(SearchBar.changeSearchBarInput(value))
     dispatch(submitSearch())
+  }
+
+  const onGroupClick = (e) => {
+    e.stopPropagation()
+    dispatch(Queries.toggleGroup(data.id))
+    handlers.toggle(e)
   }
 
   const onItemClick = (e) => {
@@ -128,15 +150,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       )
 
     handlers.select(e)
-    // item is a group if it contains 'isOpen' key
-    if ("isOpen" in data) {
-      dispatch(Queries.toggleGroup(data.id))
-      handlers.toggle(e)
-      return
-    }
-
     if (!value) return
-
     runQuery(value)
   }
 
@@ -145,9 +159,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {
       label: "Run Query",
       enabled: !hasMultiSelected && !!currentPool,
-      click: () => {
-        runQuery(value)
-      }
+      click: () => runQuery(value)
     },
     {
       label: "Copy Query",
@@ -197,7 +209,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
 
   const menu = usePopupMenu(template)
   const isGroup = "isOpen" in data
-  const itemIcon = isGroup ? <Folder /> : <StarIcon />
+  const itemIcon = isGroup ? <Folder /> : <StarNoFillIcon />
 
   return (
     <BG
@@ -208,8 +220,12 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       onClick={onItemClick}
       onContextMenu={() => menu.open()}
     >
-      <StyledItem style={styles.indent}>
-        {isGroup && <StyledArrow show={data.isOpen} />}
+      <StyledItem isSelected={isSelected} style={styles.indent}>
+        <GroupArrow
+          isVisible={isGroup}
+          show={data.isOpen}
+          onClick={onGroupClick}
+        />
         {itemIcon}
         {isEditing ? (
           <Rename item={data} onSubmit={handlers.submit} />

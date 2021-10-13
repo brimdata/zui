@@ -36,10 +36,9 @@
     p {
       @include label-small;
       line-height: 16px;
-      padding: 0 5px;
+      padding: 0;
       display: inline-block;
       margin: 0;
-      margin-right: 1px;
       overflow-x: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
