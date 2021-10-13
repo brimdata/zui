@@ -65,7 +65,7 @@
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-source-map-support": "^2.1.2",
-    "brimcap": "brimdata/brimcap#v1.1.1",
+    "brimcap": "brimdata/brimcap#v1.1.2",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
@@ -156,7 +156,7 @@
     "tee-1": "^0.2.0",
     "tree-model": "^1.0.7",
     "valid-url": "^1.0.9",
-    "zed": "git+https://github.com/brimdata/zed.git#17e41cc599b48ee3f48ddd8c0702ef632fb41219"
+    "zed": "git+https://github.com/brimdata/zed.git#c1e781a7665f8d0a2dc522e39e722df4461dc68c"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",

@@ -157,7 +157,7 @@ export class ZedContext {
   }
 
   alloc(key, type) {
-    type.id = this.id++ // Typescript doesn't know about this id yet...
+    type.id = this.id++
     this.typeByShape[key] = type
     this.typeById[type.id.toString()] = type
     return type

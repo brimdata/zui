@@ -1,4 +1,5 @@
 import {uniqBy} from "lodash"
+import {toFieldPath} from "src/js/zql/toZql"
 import {zed} from "zealot"
 import {$Column, createColumn} from "./column"
 
@@ -21,10 +22,7 @@ export function createColumnSet(schemaMap: Args) {
     getUniqColumns() {
       let allCols = []
       for (const schema of Object.values(byColumNames)) {
-        let inner = schema.type
-        if (inner.kind === "record") {
-          allCols = [...allCols, ...schema.flatColumns()]
-        }
+        allCols = [...allCols, ...schema.flatColumns()]
       }
       return uniqBy<$Column>(allCols.map(createColumn), "key")
     }
@@ -40,8 +38,8 @@ function fingerPrintSchemas(map: Args): Args {
 
 function fingerprint(schema: zed.Schema) {
   return schema
-    .flatten()
-    .type.fields.map((f) => f.name)
-    .sort()
-    .join("")
+    .flatColumns()
+    .map(toFieldPath)
+    .sort() // We want the schemas with the same columns regardless of order
+    .join(",")
 }

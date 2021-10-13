@@ -37,7 +37,7 @@ regular [User Documentation](https://github.com/brimdata/brim/wiki#user-document
 
 Please report any bugs or usability issues you find when working with cookbooks
 by [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
-or reaching out on the [Brim public Slack](https://www.brimsecurity.com/join-slack/).
+or reaching out on the [Brim public Slack](https://www.brimdata.io/join-slack/).
 We'd also love to hear your success stories and variations, so please don't be
 shy!
 
@@ -145,7 +145,7 @@ ubuntu# sudo apt install -y ./brim_amd64.deb
 ```
 
 > **Variation:** Rather than the full Brim package, we could instead
-> [download a Zed package](https://www.brimsecurity.com/download/). The Zed
+> [download a Zed package](https://www.brimdata.io/download/). The Zed
 > package includes the `zqd` and `zapi` binaries that could be used to construct
 > command lines similar to those shown below. However, as the Zed tools are a
 > general data platform, they do not include an embedded Zeek. This means such a
@@ -298,5 +298,5 @@ does it delete any data stored there.
 # Contact us!
 
 If you have questions or feedback about this cookbook, we'd like to hear from
-you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/) or
+you! Please join our [public Slack](https://www.brimdata.io/join-slack/) or
 [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!

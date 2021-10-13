@@ -86,7 +86,7 @@ export default function StartupError({error}: Props) {
         <Title>Brim Failed to Start</Title>
         <Pre>{e}</Pre>
         <Actions>
-          <StyledLink href="mailto:support@brimsecurity.com">
+          <StyledLink href="mailto:support@brimdata.io">
             Contact Support
           </StyledLink>
           <ToolbarButton text="Relaunch" onClick={onClick} />

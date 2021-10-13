@@ -46,7 +46,7 @@ const autoUpdateLinux = async () => {
   }
 
   dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    const navUrl = "https://www.brimsecurity.com/download/"
+    const navUrl = "https://www.brimdata.io/download/"
     if (returnValue.response === 0) open(navUrl)
   })
 }

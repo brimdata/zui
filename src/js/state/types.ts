@@ -1,26 +1,27 @@
-import {Store as ReduxStore, Action as ReduxAction} from "redux"
+import {Action as ReduxAction, Store as ReduxStore} from "redux"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
+import {createZealot, Zealot} from "zealot"
+import BrimApi from "../api"
+import {AppearanceState} from "./Appearance"
+import {ConfigPropValuesState} from "./ConfigPropValues"
+import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
+import {FeatureState} from "./Feature"
 import {HandlersState} from "./Handlers/types"
 import {InvestigationState} from "./Investigation/types"
+import {LaunchesState} from "./Launches"
 import {ModalState} from "./Modal/types"
 import {NoticeState} from "./Notice/types"
+import {PluginStorageState} from "./PluginStorage"
 import {PoolsState} from "./Pools/types"
+import {QueriesState} from "./Queries/types"
+import {SystemTestState} from "./SystemTest"
+import {TabHistoriesState} from "./TabHistories/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
 import {ViewState} from "./View/types"
-import {createZealot, Zealot} from "zealot"
-import {QueriesState} from "./Queries/types"
-import {SystemTestState} from "./SystemTest"
-import {FeatureState} from "./Feature"
 import {WorkspacesState} from "./Workspaces/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
-import {TabHistoriesState} from "./TabHistories/types"
-import BrimApi from "../api"
-import {PluginStorageState} from "./PluginStorage"
-import {ConfigsState} from "./Configs"
-import {ConfigPropValuesState} from "./ConfigPropValues"
-import {LaunchesState} from "./Launches"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
@@ -38,6 +39,7 @@ export type Dispatch = AppDispatch
 
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
+  appearance: AppearanceState
   launches: LaunchesState
   configs: ConfigsState
   configPropValues: ConfigPropValuesState

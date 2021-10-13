@@ -94,6 +94,6 @@ clicking **Migrate**, here are some tips to help ensure a successful migration.
 # Contact us!
 
 If you have questions about Space migration or anything else, we'd like to hear
-from you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/)
+from you! Please join our [public Slack](https://www.brimdata.io/join-slack/)
 and speak up, or [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue).
 Thanks!
