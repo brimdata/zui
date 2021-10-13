@@ -2,7 +2,7 @@
 
 * Update Zed to [v0.31.0](https://github.com/brimdata/zed/releases/tag/v0.31.0)
 * Brim now uses the Zed API `/query` endpoint, which allows for full use of Zed lake language features (e.g., referencing branches and pools using `from`) (#1792, #1836)
-* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting-%28v0.25.0-%29#my-antivirus-software-has-flagged-brim-as-potentially-malicious) regarding the false flagging of Brim as potentially malicious by some antivirus software (#1840)
+* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting#my-antivirus-software-has-flagged-brim-as-potentially-malicious) regarding the false flagging of Brim as potentially malicious by some antivirus software (#1840)
 * The keyboard shortcut for "zoom in" (`Cmd+` on macOS, `Ctrl+` on Windows/Linux) no longer requires holding down the Shift key (#1842)
 * Fix an issue where selecting **Delete All** in the Pools list caused a crash (#1845)
 * The right-click filter option has been updated to **Filter == value** to reflect current Zed syntax (#1849)
@@ -40,7 +40,7 @@ particular we'd like to bring to your attention first.
 * You will be prompted upon first launch of Brim `v0.25.0` to allow
   auto-migration of saved data from your `v0.24.0` Spaces to pools in Zed
   lakes. See the
-  [Space Migration](https://github.com/brimdata/brim/wiki/Migration-of-Spaces-%28v0.25.0-%29)
+  [Space Migration](https://github.com/brimdata/brim/wiki/Migration-of-Spaces)
   article in the Brim wiki for details.
 
 * Brim `v0.25.0` includes a new installer that will make upgrades to future
@@ -56,7 +56,7 @@ particular we'd like to bring to your attention first.
    * Linux users of RPM packages (such as for Red Hat-style distributions) will
      need to uninstall the older `v0.24.0` release before the RPM package for
      `v0.25.0` will successfully install. See the 
-     [Linux RPM Upgrade](https://github.com/brimdata/brim/wiki/Linux-RPM-Upgrade-%28v0.25.0-%29)
+     [Linux RPM Upgrade](https://github.com/brimdata/brim/wiki/Linux-RPM-Upgrade)
      article in the Brim wiki for details.
 
    Note that a Brim uninstall does _not_ disturb the data you've saved in
@@ -79,31 +79,31 @@ questions.
 
 * Update Zed to [v0.30.0](https://github.com/brimdata/zed/releases/tag/v0.30.0)
 * Make the toolbar "responsive" such that buttons hide when the window is made small (#1416, #1553)
-* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting-%28v0.25.0-%29#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached) for the case when Brim shows "Connection Error: The service at localhost:9867 could not be reached" (#1448, #1491)
+* Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached) for the case when Brim shows "Connection Error: The service at localhost:9867 could not be reached" (#1448, #1491)
 * Fix an issue where the "Back" button in the **Log Detail** view was not returning to the previously-viewed record (#1447)
 * Upgrade Electron dependency to 11.2.1 (#1426)
-* Add wiki cookbooks for use of Zed `join` in Brim for releases [`v0.24.0`](https://github.com/brimdata/brim/wiki/Joining-Data) and [`v0.25.0+`](https://github.com/brimdata/brim/wiki/Joining-Data-%28v0.25.0-%29) (#1430, #1729)
+* Add wiki cookbooks for use of Zed `join` in Brim for releases `v0.24.0` and [`v0.25.0+`](https://github.com/brimdata/brim/wiki/Joining-Data) (#1430, #1729)
 * Improve the error messages shown when imports fail (#1467)
 * Fix an issue where the **Log Detail** pane would crash when certain named fields were missing from the target record (#1494)
 * Use URLs to keep track of routing and tab history, which allows for direct edits of pinned items (#1473, #1649)
 * Fix an issue where deleting a Space that was shown in the active tab would cause a crash (#1527)
 * Fix an issue where navigating to a workspace that does not exist would cause a crash (#1533)
 * Commas are now stripped when a numeric value is copied into the paste buffer via right-click **Copy** (#1535)
-* Adjust the guidance on the **Import Files** page and add a [wiki article](https://github.com/brimdata/brim/wiki/Importing-CSV%2C-JSON%2C-Parquet%2C-and-ZST-%28v0.25.0-%29) with more detail (#1548, #1625, #1626, #1635)
+* Adjust the guidance on the **Import Files** page and add a [wiki article](https://github.com/brimdata/brim/wiki/Importing-CSV%2C-JSON%2C-Parquet%2C-and-ZST) with more detail (#1548, #1625, #1626, #1635)
 * Brim is now packaged using [electron-builder](https://www.electron.build/), which streamlines installation and auto-update (#1508)
 * Fix an issue where importing an NDJSON record containing an empty object caused a "Cannot read property 'map' of null" pop-up error (#1581)
 * Remove the legacy approach for applying Zed types to NDJSON input, as this is now done via Zed shapers ([docs](https://github.com/brimdata/zed/blob/main/zeek/Shaping-Zeek-NDJSON.md)) (#1580, #1582)
 * Brim now invokes [Brimcap](https://github.com/brimdata/brimcap) to generate logs from imported pcaps and to extract flows when **Packets** is clicked, rather than relying on `zqd` (#1584, #1573, #1591, #1590, #1598, #1614, #1617, #1637, #1651, #1664, #1668, #1705, #1731, #1735, #1748, #1747, #1781, #1789, #1810, #1816, #1829, #1833)
 * Use pools in Zed lakes for backend storage rather than Spaces (#1589, #1601, #1633, #1676, #1696, #1710, #1712, #1772, #1822)
 * Implement the full Zed type system in JavaScript, which allows for improved presentation of array and set types, and also fixes an issue where named types were rejected at import (#1603, #1623, #1663, #1732)
-* Offer the option to migrate Spaces to pools when new Brim launches ([wiki article](https://github.com/brimdata/brim/wiki/Migration-of-Spaces-%28v0.25.0-%29)) (#1621, #1587, #1636, #1641, #1640, #1657, #1671, #1682, #1762)
+* Offer the option to migrate Spaces to pools when new Brim launches ([wiki article](https://github.com/brimdata/brim/wiki/Migration-of-Spaces)) (#1621, #1587, #1636, #1641, #1640, #1657, #1671, #1682, #1762)
 * Automatically append `| fuse` to the Zed pipeline if the user is exporting data in CSV format (#1622)
 * Notify a Windows user if they've launched new Brim while old Brim is still installed (#1627, #1751)
 * Update default **Query Library** entries to reflect newer Zed language syntax (#1489, #1645)
 * Fix an issue where timestamps in **Log Detail** were not displayed with full precision and did not reflect current **Preferences** settings (#1643)
 * Fix an issue where selecting **File > New Window** on a freshly-installed app triggered a crash (#1654)
 * Show Release Notes for the currently-installed Brim version in a tab (#1655, #1670, #1679, #1680)
-* Add a [wiki article](https://github.com/brimdata/brim/wiki/Linux-RPM-Upgrade-%28v0.25.0-%29) to inform Linux RPM users that their old Brim will need to be manually uninstalled before the new Brim will install (#1683)
+* Add a [wiki article](https://github.com/brimdata/brim/wiki/Linux-RPM-Upgrade) to inform Linux RPM users that their old Brim will need to be manually uninstalled before the new Brim will install (#1683)
 * Fix an issue where viewing Suricata alerts in Brim could trigger a "TypeError: Cannot read property 'startsWith' of undefined" error (#1706)
 * Ensure pool updates made from outside the app are reflected automatically in Brim (#1702, #1709, #1711, #1713, #1722, #1733, #1734)
 * The [Brim wiki](https://github.com/brimdata/brim/wiki) now has articles for changes specific to the `v0.25.0` release, with parallel articles remaining for older Brim where functionality has changed significantly (#1723)
@@ -118,7 +118,7 @@ questions.
 * Fix a memory leak that occurred during large data imports (#1793)
 * Due to the deprecation of Spaces, the **Data Directory** setting has been removed from **Preferences** (#1794)
 * Fix an issue where Zed type definition values could not be copied into the paste buffer (#1796)
-* Add a new [section](https://github.com/brimdata/brim/wiki/Filesystem-Paths#temporary-storage-all-versions) to the [Filesystem Paths](https://github.com/brimdata/brim/wiki/Filesystem-Paths) wiki article to describe how Brim and Zed use temporary storage (#1801)
+* Add a new [section](https://github.com/brimdata/brim/wiki/Filesystem-Paths#temporary-storage) to the [Filesystem Paths](https://github.com/brimdata/brim/wiki/Filesystem-Paths) wiki article to describe how Brim and Zed use temporary storage (#1801)
 * Fix an issue where "Kill search" was not halting a search in progress (#1814)
 
 ## v0.24.0
