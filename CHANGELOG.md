@@ -89,7 +89,7 @@ questions.
 * Fix an issue where deleting a Space that was shown in the active tab would cause a crash (#1527)
 * Fix an issue where navigating to a workspace that does not exist would cause a crash (#1533)
 * Commas are now stripped when a numeric value is copied into the paste buffer via right-click **Copy** (#1535)
-* Adjust the guidance on the **Import Files** page and add a [wiki article](https://github.com/brimdata/brim/wiki/Importing-CSV%2C-JSON%2C-Parquet%2C-and-ZST) with more detail (#1548, #1625, #1626, #1635)
+* Adjust the guidance on the **Import Files** page and add a [wiki article](https://github.com/brimdata/brim/wiki/Importing-CSV%2C-Parquet%2C-and-ZST) with more detail (#1548, #1625, #1626, #1635)
 * Brim is now packaged using [electron-builder](https://www.electron.build/), which streamlines installation and auto-update (#1508)
 * Fix an issue where importing an NDJSON record containing an empty object caused a "Cannot read property 'map' of null" pop-up error (#1581)
 * Remove the legacy approach for applying Zed types to NDJSON input, as this is now done via Zed shapers ([docs](https://github.com/brimdata/zed/blob/main/zeek/Shaping-Zeek-NDJSON.md)) (#1580, #1582)
