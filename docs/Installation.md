@@ -2,7 +2,7 @@
 
 Brim is an interactive desktop application for Windows, macOS, and Linux.
 To install, click the link at the
-[Brim download](https://www.brimsecurity.com/download/) page for your platform
+[Brim download](https://www.brimdata.io/download/) page for your platform
 and double-click to launch the installer.
 
 The notes and short videos below show how to successfully install on each
@@ -29,7 +29,7 @@ For a walk through some typical operations in Brim to get started, watch the
 
 If you run into any problems, you may want to browse the
 [wiki articles](https://github.com/brimdata/brim/wiki), perhaps starting with
-[[Troubleshooting]]. If you get stuck, [join our public Slack](https://www.brimsecurity.com/join-slack/)
+[[Troubleshooting]]. If you get stuck, [join our public Slack](https://www.brimdata.io/join-slack/)
 and we'll be happy to help.
 
 ## Windows Installation (v0.25.0+)
@@ -62,7 +62,7 @@ the update.
 
 ## Windows Installation (v0.24.0 and older)
 
-* Download the Brim installer via the Windows link at the [Brim download](https://www.brimsecurity.com/download/) page
+* Download the Brim installer via the Windows link at the [Brim download](https://www.brimdata.io/download/) page
 * Launch the downloaded `.exe` file to begin installation
 * Click through the "unrecognized app" pop-up, if presented (see [[Microsoft Windows beta limitations]]) for details)
 * A small green animation will play while installation is completing
@@ -79,7 +79,7 @@ uninstall the old one.
 
 ## macOS Installation
 
-* Download the Brim installer via the macOS link at the [Brim download](https://www.brimsecurity.com/download/) page
+* Download the Brim installer via the macOS link at the [Brim download](https://www.brimdata.io/download/) page
 * Launch the downloaded `.dmg` file to begin installation
 * Drag the Brim icon into the Applications folder
 * Click the Brim icon in the Applications folder to start Brim now and in the future
@@ -93,7 +93,7 @@ and pop up a notification offering to restart the app to apply the update.
 ## Linux Installation
 
 * Download either the `.deb` or `.rpm` Brim installer at the
-  [Brim download](https://www.brimsecurity.com/download/) page, as appropriate
+  [Brim download](https://www.brimdata.io/download/) page, as appropriate
   for your Linux distribution
 
 > **Note:** If an RPM-based Brim `v0.24.0` or older is already installed, it
@@ -110,6 +110,6 @@ and pop up a notification offering to restart the app to apply the update.
 
 As newer Linux releases are published, Brim will pop up a notification of their
 availability, but the Linux releases do _not_ auto-update. Follow the link in
-the pop-up to the [Download](https://www.brimsecurity.com/download/) page to
+the pop-up to the [Download](https://www.brimdata.io/download/) page to
 get the latest release and update it using the appropriate package manager for
 your distribution.

@@ -29,5 +29,5 @@ will not require this manual uninstall step.
 # Contact us!
 
 If you've got questions about upgrades or anything else, we'd like to hear
-from you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/)
+from you! Please join our [public Slack](https://www.brimdata.io/join-slack/)
 and speak up, or [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!

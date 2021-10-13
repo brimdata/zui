@@ -34,7 +34,7 @@ regular [User Documentation](https://github.com/brimdata/brim/wiki#user-document
 
 Please report any bugs or usability issues you find when working with cookbooks
 by [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
-or reaching out on the [Brim public Slack](https://www.brimsecurity.com/join-slack/).
+or reaching out on the [Brim public Slack](https://www.brimdata.io/join-slack/).
 We'd also love to hear your success stories and variations, so please don't be
 shy!
 
@@ -175,5 +175,5 @@ present.
 # Contact us!
 
 If you have questions or feedback about this cookbook, we'd like to hear from
-you! Please join our [public Slack](https://www.brimsecurity.com/join-slack/) or
+you! Please join our [public Slack](https://www.brimdata.io/join-slack/) or
 [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue). Thanks!

@@ -1,4 +1,4 @@
-import {combineReducers} from "redux"
+import {combineReducers} from "@reduxjs/toolkit"
 
 import Workspaces from "./Workspaces"
 import Errors from "./Errors"
@@ -20,8 +20,10 @@ import PluginStorage from "./PluginStorage"
 import Configs from "./Configs"
 import ConfigPropValues from "./ConfigPropValues"
 import Launches from "./Launches"
+import Appearance from "./Appearance"
 
-export default combineReducers<any, any>({
+const rootReducer = combineReducers<any, any>({
+  appearance: Appearance.reducer,
   launches: Launches.reducer,
   configs: Configs.reducer,
   configPropValues: ConfigPropValues.reducer,
@@ -43,3 +45,9 @@ export default combineReducers<any, any>({
   url: Url.reducer,
   toolbars: Toolbars.reducer
 })
+
+// A proof of concept. This would be a much nicer way to go
+// once we have time to convert to it.
+// type RootState = ReturnType<typeof rootReducer>
+
+export default rootReducer

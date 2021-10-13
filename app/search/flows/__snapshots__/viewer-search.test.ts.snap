@@ -2,7 +2,7 @@
 
 exports[`a normal response sets the Columns columns 1`] = `
 Object {
-  "AARARDTCTTLsZ_pathanswersid.orig_hid.orig_pid.resp_hid.resp_pprotoqclassqclass_nameqtypeqtype_namequeryrcodercode_namerejectedrtttrans_idtsuid": Object {
+  "AA,RA,RD,TC,TTLs,Z,_path,answers,id.orig_h,id.orig_p,id.resp_h,id.resp_p,proto,qclass,qclass_name,qtype,qtype_name,query,rcode,rcode_name,rejected,rtt,trans_id,ts,uid": Object {
     "AA": Object {
       "isVisible": true,
     },

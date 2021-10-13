@@ -72,7 +72,7 @@ particular we'd like to bring to your attention first.
   must now be quoted in [field/value](https://github.com/brimdata/zed/tree/main/docs/language/search-syntax#fieldvalue-match) matches.
 
 The exhaustive set of changes is listed below. Come talk to us on
-[Slack](https://www.brimsecurity.com/join-slack/) if you have additional
+[Slack](https://www.brimdata.io/join-slack/) if you have additional
 questions.
 
 ---
@@ -154,7 +154,7 @@ lets us realize both.
 
 For more detail regarding licensing, see the [CONTRIBUTING.md](CONTRIBUTING.md)
 doc, and feel free to come talk to us on
-[Slack](https://www.brimsecurity.com/join-slack/) if you have additional
+[Slack](https://www.brimdata.io/join-slack/) if you have additional
 questions.
 
 ---
@@ -210,7 +210,7 @@ that impact the correctness of the alerts seen in Brim:
 These issues are still being investigated and more information will be provided
 as they're better understood. More Suricata-related functionality is also
 planned in upcoming releases. For now, please
-[contact us on Slack](https://www.brimsecurity.com/join-slack/) or
+[contact us on Slack](https://brimdata.io/join-slack/) or
 [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue)
 if you have any questions or problems with the new Suricata support, including
 incidents of the issues described above.

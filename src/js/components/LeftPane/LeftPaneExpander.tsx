@@ -1,14 +1,13 @@
-import {CSSTransition} from "react-transition-group"
-import {connect} from "react-redux"
 import React from "react"
 import ReactDOM from "react-dom"
-
+import {connect} from "react-redux"
+import {CSSTransition} from "react-transition-group"
+import Appearance from "src/js/state/Appearance"
+import lib from "../../lib"
+import dispatchToProps from "../../lib/dispatchToProps"
+import MouseoverWatch from "../../lib/MouseoverWatch"
 import {Dispatch} from "../../state/types"
 import CircleChevron from "../CircleChevron"
-import MouseoverWatch from "../../lib/MouseoverWatch"
-import dispatchToProps from "../../lib/dispatchToProps"
-import lib from "../../lib"
-import Layout from "../../state/Layout"
 
 type Props = {dispatch: Dispatch}
 type State = {show: boolean}
@@ -31,7 +30,7 @@ export default class LeftPaneExpander extends React.Component<Props, State> {
   }
 
   onClick = () => {
-    this.props.dispatch(Layout.showLeftSidebar())
+    this.props.dispatch(Appearance.toggleSidebar())
   }
 
   render() {
