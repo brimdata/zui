@@ -1,5 +1,5 @@
 import lib from "../lib"
-import {printColumnName} from "../state/Columns/models/column"
+import {ColumnName, printColumnName} from "../state/Columns/models/column"
 import {toFieldPath} from "../zql/toZql"
 
 export default function ast(tree: any) {
@@ -10,7 +10,7 @@ export default function ast(tree: any) {
     error() {
       return tree.error || null
     },
-    groupByKeys() {
+    groupByKeys(): ColumnName[] {
       const g = this.proc("Summarize")
       const keys = g ? g.keys : []
       return keys.map((k) => fieldExprToName(k.lhs || k.rhs))
@@ -40,18 +40,17 @@ export default function ast(tree: any) {
 
 function fieldExprToName(expr) {
   let s = _fieldExprToName(expr)
+  // const r = toFieldPath(s)
   return s
 }
 
-function _fieldExprToName(expr): string {
+function _fieldExprToName(expr): string | string[] {
   switch (expr.kind) {
     case "BinaryExpr":
       if (expr.op == "." || expr.op == "[") {
-        const name = [].concat(
-          _fieldExprToName(expr.lhs),
-          _fieldExprToName(expr.rhs)
-        )
-        return toFieldPath(name)
+        return []
+          .concat(_fieldExprToName(expr.lhs), _fieldExprToName(expr.rhs))
+          .filter((n) => n !== "this")
       }
       return "<not-a-field>"
     case "ID":
@@ -61,7 +60,9 @@ function _fieldExprToName(expr): string {
     case "Primitive":
       return expr.text
     case "Call":
-      var args = expr.args.map((e) => _fieldExprToName(e)).join(",")
+      var args = expr.args
+        .map((e) => toFieldPath(_fieldExprToName(e)))
+        .join(",")
       return `${expr.name}(${args})`
     default:
       return "<not-a-field>"

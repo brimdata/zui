@@ -88,12 +88,14 @@ describe("#groupByKeys", () => {
   })
 
   test("nested records", () => {
-    expect(getGroupByKeys("* | count() by id.orig_h")).toEqual(["id.orig_h"])
+    expect(getGroupByKeys("* | count() by id.orig_h")).toEqual([
+      ["id", "orig_h"]
+    ])
   })
 
   test("nested records with weird characters", () => {
     expect(getGroupByKeys("* | count() by this['myfield is here']")).toEqual([
-      'this["myfield is here"]'
+      ["myfield is here"]
     ])
   })
 
