@@ -10,7 +10,7 @@
 
 - [[Migration of Spaces]]
 - [[Linux RPM Upgrade]]
-- [[Importing CSV, JSON, Parquet, and ZST]]
+- [[Importing CSV, Parquet, and ZST]]
 
 **Cookbooks**
 

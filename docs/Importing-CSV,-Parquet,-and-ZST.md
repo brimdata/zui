@@ -1,4 +1,4 @@
-# Importing CSV, JSON, Parquet, and ZST
+# Importing CSV, Parquet, and ZST
 
 - [Summary](#summary)
 - [Example](#example)
