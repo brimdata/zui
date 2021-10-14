@@ -1,8 +1,7 @@
 import {QueriesAction, QueriesState, Item} from "./types"
-import produce, {original} from "immer"
+import produce from "immer"
 import init from "ppl/queries/initial"
 import TreeModel from "tree-model"
-import {includes} from "lodash"
 
 const itemToNode = (item: Item): TreeModel.Node<Item> =>
   new TreeModel({childrenPropertyName: "items"}).parse(item)
@@ -20,7 +19,7 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
       return action.rootGroup
     case "$QUERIES_ADD_ITEM":
       node = getNodeById(queriesTree, action.parentGroupId)
-      if (!("isOpen" in node.model)) {
+      if (!("items" in node.model)) {
         console.error("items may only be added to groups")
         return
       }
@@ -36,7 +35,7 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
       return queriesTree.model
     case "$QUERIES_TOGGLE_GROUP":
       node = getNodeById(queriesTree, action.groupId)
-      if (node.model.isOpen === undefined) {
+      if (!("items" in node)) {
         console.error("cannot open/close queries, only groups")
         return
       }
@@ -50,23 +49,9 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
 
 const moveItems = (queriesTree, action) => {
   const parentNode = getNodeById(queriesTree, action.parentId)
-  action.itemIds.reverse().forEach((itemId) => {
+  action.itemIds.forEach((itemId) => {
     const node = getNodeById(queriesTree, itemId)
-    // If the move is all in the same directory then the adjusting indices can
-    // cause an off-by-one/stale-index issue since the destination index will be affected after
-    // removal (e.g. an item cannot be moved to the end of its current group because of this).
-    // For this situation we instead remove the item first, and then insert its copy
-    if (
-      includes(
-        original(parentNode.model).items.map((i) => i.id),
-        itemId
-      )
-    ) {
-      node.drop()
-      parentNode.addChildAtIndex(itemToNode(node.model), action.index)
-    } else {
-      parentNode.addChildAtIndex(itemToNode(node.model), action.index)
-      node.drop()
-    }
+    parentNode.addChildAtIndex(itemToNode(node.model), action.index)
+    node.drop()
   })
 }

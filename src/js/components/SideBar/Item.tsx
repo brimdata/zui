@@ -15,6 +15,7 @@ import lib from "src/js/lib"
 import Folder from "../../icons/Folder"
 import {StyledArrow} from "../LeftPane/common"
 import StarNoFillIcon from "../../icons/StarNoFillIcon"
+import useOutsideClick from "../hooks/useOutsideClick"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -58,15 +59,16 @@ const Input = styled.input`
   font-size: 11px;
   font-family: system-ui;
   font-weight: 400;
-  line-height: 19px;
+  line-height: 24px;
   color: var(--aqua);
-  padding: 0 1px;
+  padding: 0 3px;
   border: 1px solid var(--havelock);
   height: 19px;
   outline: none;
   border-radius: 2px;
-  margin: 0 2px 0 -2px;
+  margin: 0 2px 0 -4px;
   width: 100%;
+  flex: 1;
 `
 
 const GroupArrow = styled(StyledArrow)`
@@ -80,6 +82,7 @@ const GroupArrow = styled(StyledArrow)`
 const StyledItem = styled.div<{isSelected: boolean}>`
   display: flex;
   align-items: center;
+  width: 100%;
 
   ${GroupArrow} {
     opacity: ${(p) => (p.isSelected ? 1 : 0.45)};
@@ -108,7 +111,7 @@ function Show({item}) {
 function Rename({item, onSubmit}) {
   const input = useRef(null)
   useLayoutEffect(() => input.current && input.current.select(), [])
-  // useOutsideClick(input, () => ctx.onRename(item, input.current.value))
+  useOutsideClick(input, () => onSubmit(input.current.value))
   const onKey = (e) => {
     if (e.key === "Enter") onSubmit(input.current.value)
     else if (e.key === "Escape") onSubmit(item.name)
@@ -208,7 +211,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   ]
 
   const menu = usePopupMenu(template)
-  const isGroup = "isOpen" in data
+  const isGroup = "items" in data
   const itemIcon = isGroup ? <Folder /> : <StarNoFillIcon />
 
   return (

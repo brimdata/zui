@@ -150,7 +150,7 @@ test("move query, same group, different group same depth", () => {
 
   // move to end
   store.dispatch(
-    Queries.moveItems([getGroup([0]).items[0].id], getGroup([0]).id, 2)
+    Queries.moveItems([getGroup([0]).items[0].id], getGroup([0]).id, 3)
   )
 
   expect(getGroup([0]).items).toHaveLength(3)
