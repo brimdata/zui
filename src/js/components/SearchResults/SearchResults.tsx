@@ -3,7 +3,7 @@ import React, {useLayoutEffect} from "react"
 import {useDispatch} from "react-redux"
 import {useLocation} from "react-router"
 import {useResizeObserver} from "../hooks/useResizeObserver"
-import {XResultsTable} from "./ResultsTable"
+import ResultsTable from "./ResultsTable"
 
 export default function SearchResults() {
   const {ref, rect} = useResizeObserver()
@@ -16,7 +16,7 @@ export default function SearchResults() {
 
   return (
     <div className="search-results" ref={ref}>
-      <XResultsTable
+      <ResultsTable
         width={rect.width}
         height={rect.height}
         multiSelect={false}

@@ -1,22 +1,15 @@
 import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
 import {isEmpty} from "lodash"
 import React, {useEffect, useMemo} from "react"
-import {connect, useDispatch, useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import Url from "src/js/state/Url"
-import {zed} from "zealot"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
 import {viewLogDetail} from "../../flows/viewLogDetail"
-import dispatchToProps from "../../lib/dispatchToProps"
-import TableColumns from "../../models/TableColumns"
 import Columns from "../../state/Columns"
-import Current from "../../state/Current"
 import Layout from "../../state/Layout"
-import {ColumnHeadersViewState} from "../../state/Layout/types"
-import {Pool} from "../../state/Pools/types"
-import {DispatchProps, State} from "../../state/types"
 import Viewer from "../../state/Viewer"
-import {ScrollPosition, ViewerDimens} from "../../types"
+import {ViewerDimens} from "../../types"
 import LogRow from "../LogRow"
 import buildViewerDimens from "../Viewer/buildViewerDimens"
 import Chunker from "../Viewer/Chunker"
@@ -26,36 +19,29 @@ import getEndMessage from "./getEndMessage"
 import NoResults from "./NoResults"
 import {useRowSelection} from "./selection"
 
-type StateProps = {
-  logs: zed.Record[]
-  isIncomplete: boolean
-  isFetching: boolean
-  tableColumns: TableColumns
-  columnHeadersView: ColumnHeadersViewState
-  program: string
-  pool: Pool
-  scrollPos: ScrollPosition
-}
-
-type OwnProps = {
+type Props = {
   height: number
   width: number
   multiSelect: boolean
 }
 
-type Props = StateProps & DispatchProps & OwnProps
-
 export default function ResultsTable(props: Props) {
+  const program = useSelector(Url.getSearchProgram)
+  const isFetching = useSelector(Viewer.getStatus) === "FETCHING"
+  const isIncomplete = useSelector(Viewer.getEndStatus) === "INCOMPLETE"
+  const tableColumns = useSelector(Columns.getCurrentTableColumns)
+  const columnHeadersView = useSelector(Layout.getColumnHeadersView)
+  const logs = useSelector(Viewer.getLogs)
+  const scrollPos = useSelector(Viewer.getScrollPos)
   const dispatch = useDispatch()
   const displayConfig = useSelector(ConfigPropValues.get("display"))
   const {parentRef, selection, clicked} = useRowSelection({
     multi: props.multiSelect
   })
-  const {logs, columnHeadersView} = props
 
   let type
   if (columnHeadersView === "AUTO") {
-    type = props.tableColumns.showHeader() ? "fixed" : "auto"
+    type = tableColumns.showHeader() ? "fixed" : "auto"
   } else {
     type = columnHeadersView === "ON" ? "fixed" : "auto"
   }
@@ -68,9 +54,9 @@ export default function ResultsTable(props: Props) {
         width: props.width,
         size: logs.length,
         rowHeight: 25,
-        sumColumnWidths: props.tableColumns.sumWidths()
+        sumColumnWidths: tableColumns.sumWidths()
       }),
-    [type, props.height, props.width, logs.length, props.tableColumns]
+    [type, props.height, props.width, logs.length, tableColumns]
   )
 
   const chunker = new Chunker({
@@ -90,7 +76,7 @@ export default function ResultsTable(props: Props) {
     return (
       <LogRow
         displayConfig={displayConfig}
-        columns={props.tableColumns}
+        columns={tableColumns}
         key={index}
         index={index}
         log={logs[index]}
@@ -106,22 +92,22 @@ export default function ResultsTable(props: Props) {
   }
 
   function onLastChunk() {
-    if (props.isIncomplete && !props.isFetching) {
-      props.dispatch(nextPageViewerSearch())
+    if (isIncomplete && !isFetching) {
+      dispatch(nextPageViewerSearch())
     }
   }
 
   function renderEnd() {
-    if (props.isIncomplete || props.isFetching) return null
+    if (isIncomplete || isFetching) return null
     else
       return (
         <p className="end-message" style={endMessage(dimens)}>
-          {getEndMessage(props.program, logs.length)}
+          {getEndMessage(program, logs.length)}
         </p>
       )
   }
 
-  if (isEmpty(logs) && props.isFetching) return null
+  if (isEmpty(logs) && isFetching) return null
   if (isEmpty(logs)) return <NoResults width={props.width} />
 
   return (
@@ -131,28 +117,10 @@ export default function ResultsTable(props: Props) {
       renderRow={renderRow}
       chunker={chunker}
       dimens={dimens}
-      tableColumns={props.tableColumns}
+      tableColumns={tableColumns}
       onLastChunk={onLastChunk}
       renderEnd={renderEnd}
-      scrollPos={props.scrollPos}
+      scrollPos={scrollPos}
     />
   )
 }
-
-function stateToProps(state: State): StateProps {
-  return {
-    isFetching: Viewer.getStatus(state) === "FETCHING",
-    isIncomplete: Viewer.getEndStatus(state) === "INCOMPLETE",
-    tableColumns: Columns.getCurrentTableColumns(state),
-    columnHeadersView: Layout.getColumnHeadersView(state),
-    logs: Viewer.getLogs(state),
-    program: Url.getSearchProgram(state),
-    pool: Current.getPool(state),
-    scrollPos: Viewer.getScrollPos(state)
-  }
-}
-
-export const XResultsTable = connect<StateProps, DispatchProps, OwnProps>(
-  stateToProps,
-  dispatchToProps
-)(ResultsTable)
