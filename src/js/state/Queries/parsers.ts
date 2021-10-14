@@ -6,8 +6,11 @@ export const parseJSONLib = (file: File): Group => {
   const contents = lib.file(file.path).readSync()
   const itemTreeRoot = JSON.parse(contents)
 
-  // annotate each item (in place) with an internal reference 'id'
-  flattenItemTree(itemTreeRoot).forEach((item) => (item.id = nanoid()))
+  // annotate each item (in place) with an internal reference 'id' and defaults
+  flattenItemTree(itemTreeRoot).forEach((item) => {
+    item.id = nanoid()
+    if ("items" in item) item.isOpen = false
+  })
 
   return itemTreeRoot as Group
 }

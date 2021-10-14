@@ -35,7 +35,7 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
       return queriesTree.model
     case "$QUERIES_TOGGLE_GROUP":
       node = getNodeById(queriesTree, action.groupId)
-      if (!("items" in node)) {
+      if (!("items" in node.model)) {
         console.error("cannot open/close queries, only groups")
         return
       }

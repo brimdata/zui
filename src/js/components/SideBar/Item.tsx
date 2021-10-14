@@ -190,19 +190,20 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {
       label: hasMultiSelected ? "Delete Selected" : "Delete",
       click: () => {
+        const selected = tree.getSelectedIds()
         return remote.dialog
           .showMessageBox({
             type: "warning",
             title: "Confirm Delete Query Window",
             message: `Are you sure you want to delete the ${
-              hasMultiSelected ? tree.getSelectedIds().length : ""
-            } selected quer${hasMultiSelected ? "ies" : "y"}?`,
+              selected.length > 0 ? tree.getSelectedIds().length : ""
+            } selected item${selected.length > 0 ? "s" : ""}?`,
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
             if (response === 0) {
-              if (hasMultiSelected) {
-                dispatch(Queries.removeItems(tree.getSelectedIds()))
+              if (selected.length > 0) {
+                dispatch(Queries.removeItems(selected))
               } else dispatch(Queries.removeItems([data.id]))
             }
           })

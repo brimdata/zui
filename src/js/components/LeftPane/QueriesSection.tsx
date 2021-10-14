@@ -29,7 +29,6 @@ import useCallbackRef from "../hooks/useCallbackRef"
 import {parseJSONLib} from "../../state/Queries/parsers"
 
 const StyledPlus = styled.div`
-  //margin-left: auto;
   margin-right: 8px;
   background: rgba(0, 0, 0, 0);
   width: 24px;
@@ -69,7 +68,7 @@ const NewActionsDropdown = () => {
     },
     {
       label: "Import from JSON...",
-      click: () => importer.click()
+      click: () => importer && importer.click()
     }
   ]
 
@@ -78,6 +77,7 @@ const NewActionsDropdown = () => {
   const onImport = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0]
     const node = parseJSONLib(file)
+    e.target.value = null
     dispatch(Queries.addItem(node, "root"))
   }
 
