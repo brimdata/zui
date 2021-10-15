@@ -75,8 +75,8 @@ const NewActionsDropdown = () => {
   const menu = usePopupMenu(template)
 
   const onImport = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files[0]
-    const node = parseJSONLib(file)
+    const filePath = e.target.files[0].path
+    const node = parseJSONLib(filePath)
     e.target.value = null
     dispatch(Queries.addItem(node, "root"))
   }

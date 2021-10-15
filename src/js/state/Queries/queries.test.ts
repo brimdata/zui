@@ -11,6 +11,7 @@ beforeEach(() => {
 const testLib = {
   id: "root",
   name: "root",
+  isOpen: true,
   items: [
     {
       // .items[0]
@@ -223,4 +224,21 @@ test("edit group", () => {
 
   store.dispatch(Queries.editItem(newGroup, "testId3"))
   expect(getGroup([0, 1])).toEqual(newGroup)
+})
+
+test("toggle group", () => {
+  store.dispatch(Queries.setAll(testLib))
+
+  expect(getGroup([0]).isOpen).toBeUndefined()
+  store.dispatch(Queries.toggleGroup("testId1"))
+  expect(getGroup([0]).isOpen).toEqual(true)
+  store.dispatch(Queries.toggleGroup("testId1"))
+  expect(getGroup([0]).isOpen).toEqual(false)
+
+  // does not set isOpen for queries, only groups
+  // suppress the expected console.error once to keep test logs cleaner
+  jest.spyOn(console, "error").mockImplementationOnce(() => {})
+  expect(getGroup([0]).items[0]["isOpen"]).toBeUndefined()
+  store.dispatch(Queries.toggleGroup("testId2"))
+  expect(getGroup([0]).items[0]["isOpen"]).toBeUndefined()
 })

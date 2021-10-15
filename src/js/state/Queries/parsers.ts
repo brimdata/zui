@@ -2,8 +2,8 @@ import {Group} from "./types"
 import lib from "../../lib"
 import {nanoid} from "@reduxjs/toolkit"
 
-export const parseJSONLib = (file: File): Group => {
-  const contents = lib.file(file.path).readSync()
+export const parseJSONLib = (filePath: string): Group => {
+  const contents = lib.file(filePath).readSync()
   const itemTreeRoot = JSON.parse(contents)
 
   // annotate each item (in place) with an internal reference 'id' and defaults
