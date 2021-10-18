@@ -5,14 +5,14 @@
       "name": "Activity Overview",
       "value": "count() by _path | sort -r",
       "description":
-      "This query shows a list of all Zeek streams in the data set, with a count of associated records",
+      "Shows a list of all Zeek streams in the data set, with a count of associated records",
       "tags": ["zeek", "initial exploration"]
     },
     {
       "name": "Unique DNS Queries",
       "value": "_path==\"dns\" | count() by query | sort -r",
       "description":
-      "Shows all unique DNS queries contained in the data set with count",
+      "Shows all unique DNS queries in the data set with count",
       "tags": ["dns", "initial exploration"]
     },
     {
@@ -25,9 +25,9 @@
     {
       "name": "HTTP Requests",
       "value":
-      "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method,host, uri | uniq -c",
+      "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method, host, uri | uniq -c",
       "description":
-      "Displays a list of the count unique HTTP requests including source and destination",
+      "Displays a list of the count of unique HTTP requests including source and destination",
       "tags": ["http", "initial exploration", "malware"]
     },
     {
@@ -66,7 +66,7 @@
       "value":
       "_path==\"conn\" | put classnet := network_of(id.resp_h) | cut classnet | count() by classnet | sort -r",
       "description":
-      "Enumerates the associated IP subclasses for all destination IP-addresses including count of connections",
+      "Enumerates the classful networks for all destination IP-addresses including count of connections",
       "tags": ["network"]
     },
     {
@@ -74,7 +74,7 @@
       "value":
       "event_type==\"alert\" | count() by alert.severity,alert.category | sort count",
       "description":
-      "Shows all suricata alert counts by category and severity",
+      "Shows all Suricata alert counts by category and severity",
       "tags": ["suricata", "malware"]
     },
     {
@@ -82,14 +82,14 @@
       "value":
       "event_type==\"alert\" | alerts := union(alert.category) by src_ip, dest_ip",
       "description":
-      "Shows all suricata alerts in a list by unique source and destination IP addresses",
+      "Shows all Suricata alerts in a list by unique source and destination IP addresses",
       "tags": ["suricata", "malware"]
     },
     {
       "name": "Suricata Alerts by Subnet",
       "value":
       "event_type==\"alert\" | alerts := union(alert.category) by network_of(dest_ip)",
-      "description": "Displays a list of Suricata Alerts by CIDR IP Subnets",
+      "description": "Displays a list of Suricata alerts by CIDR networks",
       "tags": ["suricata", "malware"]
     }
   ]

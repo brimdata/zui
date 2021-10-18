@@ -1,6 +1,10 @@
 import {getGroupById} from "./selectors"
+import {intersection} from "lodash"
 
-export const isBrimLib = (id: string) => (_, getState) => {
-  const brimQuery = getGroupById("brim")(getState())
-  return id === "brim" || brimQuery.items.map((item) => item.id).includes(id)
+export const isBrimLib = (ids: string[]) => (_, getState) => {
+  const brimIds = [
+    "brim",
+    ...getGroupById("brim")(getState())?.items.map((i) => i.id)
+  ]
+  return intersection(ids, brimIds).length > 0
 }

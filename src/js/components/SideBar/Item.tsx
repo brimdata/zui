@@ -134,7 +134,12 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const currentPool = useSelector(Current.getPool)
   const {isEditing, isSelected} = state
   const {value, id} = data
-  const isBrimItem = dispatch(isBrimLib(id))
+
+  const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
+  const hasMultiSelected = selected.length > 1
+
+  const isBrimItem = dispatch(isBrimLib([id]))
+  const hasBrimItemSelected = dispatch(isBrimLib(selected))
 
   const runQuery = (value) => {
     dispatch(SearchBar.clearSearchBar())
@@ -159,7 +164,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     runQuery(value)
   }
 
-  const hasMultiSelected = tree.getSelectedIds().length > 1
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Run Query",
@@ -192,24 +196,22 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {type: "separator"},
     {
       label: hasMultiSelected ? "Delete Selected" : "Delete",
-      enabled: !isBrimItem,
+      enabled: !hasBrimItemSelected,
       click: () => {
-        const selected = tree.getSelectedIds()
+        const selected = Array.from(
+          new Set([...tree.getSelectedIds(), data.id])
+        )
         return remote.dialog
           .showMessageBox({
             type: "warning",
             title: "Confirm Delete Query Window",
             message: `Are you sure you want to delete the ${
-              selected.length > 0 ? tree.getSelectedIds().length : ""
-            } selected item${selected.length > 0 ? "s" : ""}?`,
+              selected.length > 1 ? selected.length : ""
+            } selected item${selected.length > 1 ? "s" : ""}?`,
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
-            if (response === 0) {
-              if (selected.length > 0) {
-                dispatch(Queries.removeItems(selected))
-              } else dispatch(Queries.removeItems([data.id]))
-            }
+            if (response === 0) dispatch(Queries.removeItems(selected))
           })
       }
     }

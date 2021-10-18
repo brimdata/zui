@@ -171,11 +171,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     // no reordering while a filter is on
     if (selectedTag !== "All") return
     // no reordering if any one item is part of shipped brim lib
-    if (
-      !dragIds.every((id) => !dispatch(isBrimLib(id))) ||
-      dispatch(isBrimLib(parentId))
-    )
-      return
+    if (dispatch(isBrimLib([...dragIds, parentId]))) return
     dispatch(Queries.moveItems(dragIds, parentId, index))
   }
 
