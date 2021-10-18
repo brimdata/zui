@@ -218,7 +218,7 @@ pool created: zed-sample-data 1xu3fug3iq1y17RMQYRiCtORLMC
 ubuntu# zapi use -p zed-sample-data
 Switched to branch "main" on pool "zed-sample-data"
 
-ubuntu# zapi load zed-sample-data/zeek/zeek-default/*
+ubuntu# zapi load zed-sample-data/zeek-default/*
 1uMRE9bZnbNAIY8tEOfIXOa8c2w committed
 ```
 
