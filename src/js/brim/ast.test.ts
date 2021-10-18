@@ -1,4 +1,15 @@
+import sampleQueries from "test/shared/sample-queries"
 import brim from "./"
+
+test("run all ast methods on sample queries", () => {
+  sampleQueries.forEach((query) => {
+    const ast = brim.program(query).ast()
+    expect(ast.valid()).toBe(true)
+    ast.getProcs()
+    ast.groupByKeys()
+    ast.sorts()
+  })
+})
 
 describe("#sorts", () => {
   const getSorts = (program) =>
@@ -44,6 +55,12 @@ describe("#sorts", () => {
       duration: "desc"
     })
   })
+
+  test("sort this", () => {
+    expect(getSorts("* | sort this")).toEqual({
+      this: "asc"
+    })
+  })
 })
 
 describe("#groupByKeys", () => {
@@ -73,6 +90,18 @@ describe("#groupByKeys", () => {
   test("nested records", () => {
     expect(getGroupByKeys("* | count() by id.orig_h")).toEqual([
       ["id", "orig_h"]
+    ])
+  })
+
+  test("nested records with weird characters", () => {
+    expect(getGroupByKeys("* | count() by this['myfield is here']")).toEqual([
+      ["myfield is here"]
+    ])
+  })
+
+  test("group by keys when grouping by a function", () => {
+    expect(getGroupByKeys("count() by typeof(this['my fav field'])")).toEqual([
+      'typeof(this["my fav field"])'
     ])
   })
 })
