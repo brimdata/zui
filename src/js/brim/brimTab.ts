@@ -2,17 +2,16 @@ import {whichRoute} from "app/router/routes"
 import {decodeSearchParams} from "app/search/utils/search-params"
 import get from "lodash/get"
 import {PoolsState} from "../state/Pools/types"
-import {TabState} from "../state/Tab/types"
 import {WorkspacesState} from "../state/Workspaces/types"
 
 export default function(
-  tab: TabState,
+  tabId: string,
   workspaces: WorkspacesState,
   pools: PoolsState
 ) {
   return {
     title() {
-      const history = global.tabHistories.getOrCreate(tab.id)
+      const history = global.tabHistories.getOrCreate(tabId)
       const route = whichRoute(history.location.pathname)
       if (route) {
         return compileTitle(route, history.location, workspaces, pools)

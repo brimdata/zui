@@ -24,10 +24,10 @@ export const getLocation = (state: State) => {
 
 export const getPoolId = (state) => {
   type Params = {lakeId?: string}
-  const match = matchPath<Params>(
-    getLocation(state).pathname,
+  const match = matchPath<Params>(getLocation(state).pathname, [
+    "/workspaces/:workspaceId/lakes/import",
     "/workspaces/:workspaceId/lakes/:lakeId"
-  )
+  ])
   return match?.params?.lakeId || null
 }
 
@@ -84,3 +84,10 @@ export const getWorkspace = (state: State) => {
     return null
   }
 }
+
+export const getPools = createSelector(getWorkspace, Pools.raw, (ws, pools) => {
+  const lakePools = pools[ws.id] || {}
+  return Object.keys(lakePools)
+    .map((id) => lakePools[id])
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
+})

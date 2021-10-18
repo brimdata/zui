@@ -16,33 +16,33 @@ const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 240
 
 export default function TabBar() {
-  const tabs = useSelector(Tabs.getData)
+  const ids = useSelector(Tabs.getIds)
   const pools = useSelector(Pools.raw)
   const workspaces = useSelector(Workspaces.raw)
-  const count = tabs.length
+  const count = ids.length
   const {ref, rect} = useResizeObserver()
   const [width, setWidth] = useState(0)
-  const layout = useTabLayout(tabs, width)
+  const layout = useTabLayout(ids, width)
   const calcWidth = () =>
     setWidth(lib.bounded(rect.width / count, [0, MAX_WIDTH]))
   const ctl = useTabController(count, calcWidth)
-
   useEffect(() => calcWidth(), [rect.width])
+
   return (
     <div className="tab-bar">
       <div className="tabs-container" ref={ref} onMouseLeave={ctl.onMouseLeave}>
-        {tabs.map((tab) => (
+        {ids.map((id) => (
           <AnimatedSearchTab
             {...layout.dragBinding({
-              id: tab.id,
-              onDown: () => ctl.onTabClick(tab.id),
+              id,
+              onDown: () => ctl.onTabClick(id),
               onChange: (indices) => ctl.onTabMove(indices)
             })}
-            key={tab.id}
-            title={brim.tab(tab, workspaces, pools).title()}
-            style={layout.getStyle(tab.id)}
-            removeTab={(e) => ctl.onRemoveClick(e, tab.id)}
-            active={tab.id === ctl.activeId}
+            key={id}
+            title={brim.tab(id, workspaces, pools).title()}
+            style={layout.getStyle(id)}
+            removeTab={(e) => ctl.onRemoveClick(e, id)}
+            active={id === ctl.activeId}
             isNew={false}
           />
         ))}

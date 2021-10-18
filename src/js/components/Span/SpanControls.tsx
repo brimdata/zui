@@ -17,8 +17,9 @@ type Props = {
 
 export default function SpanControls({submit}: Props) {
   const dispatch = useDispatch()
-  const [from, to] = useSelector(Tab.getSpanArgs)
+  const args = useSelector(Tab.getSpanArgs)
   const prev = useSelector(Url.getSpanParamsWithDefaults)
+  const [from, to] = args
 
   function fromChange(arg) {
     dispatch(tab.setFrom(arg))

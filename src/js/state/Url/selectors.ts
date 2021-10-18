@@ -33,17 +33,25 @@ export const getSearchParams = createSelector<
   return {...params, spanArgs, spanArgsFocus} as SearchParams
 })
 
-export const getSpanParams = (state) => {
-  const location = getLocation(state)
+export const getSpanParams = createSelector(getLocation, (location) => {
   return decodeSpanParams(location.search, "from", "to")
-}
-
-export const getSpanParamsWithDefaults = (state) => {
-  const [p1, p2] = getSpanParams(state)
-  const [d1, d2] = getDefaultSpanArgs(state)
-  return [p1 || d1, p2 || d2]
-}
+})
 
 const getDefaultSpanArgs = createSelector(mustGetPool, (pool) => {
   return pool.defaultSpanArgs()
 })
+
+export const getSpanParamsWithDefaults = createSelector(
+  getSpanParams,
+  getDefaultSpanArgs,
+  (params, defaults) => {
+    const [p1, p2] = params
+    const [d1, d2] = defaults
+    return [p1 || d1, p2 || d2]
+  }
+)
+
+export const getSearchProgram = createSelector(
+  getSearchParams,
+  (params) => params.program
+)

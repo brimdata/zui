@@ -1,7 +1,7 @@
 import {createSelector} from "reselect"
-
-import {State} from "../types"
 import {TabState} from "../Tab/types"
+import {State} from "../types"
+import {createIsEqualSelector} from "../utils"
 import {TabsState} from "./types"
 
 const getData = (state: State) => state.tabs.data
@@ -17,9 +17,16 @@ const getActiveTab = createSelector<State, TabsState, TabState>(
   }
 )
 
+const _getIds = createSelector(getData, (data) => {
+  return data.map((d) => d.id)
+})
+
+const getIds = createIsEqualSelector(_getIds, (ids) => ids)
+
 export default {
   getData,
   getActive,
   getCount,
-  getActiveTab
+  getActiveTab,
+  getIds
 }

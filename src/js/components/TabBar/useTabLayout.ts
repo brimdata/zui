@@ -1,7 +1,5 @@
 import {useEffect, useRef} from "react"
 import {useSprings} from "react-spring"
-
-import {TabState} from "../../state/Tab/types"
 import lib from "../../lib"
 import useDrag from "../hooks/useDrag"
 import useFirst from "../hooks/useFirst"
@@ -72,11 +70,9 @@ function orderSprings(
   return orderedIds.map<number>((id) => map.get(id))
 }
 
-const getIds = (tabs) => tabs.map((t) => t.id)
-
-export default function(tabs: TabState[], width: number) {
+export default function(tabIds: string[], width: number) {
   const first = useFirst(width === 0) // The first renders are when the with === 0
-  const ids = useRef(getIds(tabs))
+  const ids = useRef(tabIds)
   const map = useRef(mapToSprings(ids.current))
   const springOrder = orderSprings(ids.current, map.current)
 
@@ -95,7 +91,7 @@ export default function(tabs: TabState[], width: number) {
     // This effect is called when the tabs are reordered/added/removed
     // Keep track of the ids order so we can "move" the springs to the right
     // place.
-    ids.current = getIds(tabs)
+    ids.current = tabIds
   })
 
   useEffect(() => {
@@ -104,7 +100,7 @@ export default function(tabs: TabState[], width: number) {
     map.current = mapToSprings(ids.current)
     const springOrder = orderSprings(ids.current, map.current)
     set(idle(springOrder, width, first))
-  }, [tabs.length, width, first])
+  }, [tabIds.length, width, first])
 
   // The drag handler
   const dragBinding = useDrag(({args, dx, type}) => {

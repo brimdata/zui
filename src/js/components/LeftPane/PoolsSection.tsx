@@ -1,11 +1,10 @@
+import get from "lodash/get"
+import React from "react"
 import {useSelector} from "react-redux"
 import Current from "../../state/Current"
-import get from "lodash/get"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
-import Pools from "../../state/Pools"
 import AddPoolButton from "../AddPoolButton"
 import SavedPoolsList from "../SavedPoolsList"
-import React from "react"
 import {
   ClickRegion,
   DragAnchor,
@@ -20,7 +19,7 @@ function PoolsSection({isOpen, style, resizeProps, toggleProps}) {
   const workspace = useSelector(Current.getWorkspace)
   const id = get(workspace, ["id"], "")
   const wsStatus = useSelector(WorkspaceStatuses.get(id))
-  const pools = useSelector(Pools.getPools(id))
+  const pools = useSelector(Current.getPools)
 
   return (
     <StyledSection style={style}>
