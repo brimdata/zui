@@ -105,17 +105,18 @@ const oldBrimLib = [
   }
 ]
 
-const isOldBrimLib = (query) => {
+const isCustomQuery = (query) => {
   const {id} = query
   const matchingQ = oldBrimLib.find((oldQ) => id === oldQ.id)
-  return id === "brim" || isEqual(matchingQ, query)
+
+  return id !== "brim" && !isEqual(matchingQ, query)
 }
 
 export default function querylibFolders(state: any) {
   for (const s of getAllStates(state)) {
     if (!s.queries) continue
 
-    const userQueries = filter(s.queries, isOldBrimLib)
+    const userQueries = filter(s.queries.items, isCustomQuery)
 
     s.queries.items = [
       {
@@ -126,6 +127,6 @@ export default function querylibFolders(state: any) {
       }
     ]
   }
-  // Migrate state here
+
   return state
 }
