@@ -242,3 +242,12 @@ test("toggle group", () => {
   store.dispatch(Queries.toggleGroup("testId2"))
   expect(getGroup([0]).items[0]["isOpen"]).toBeUndefined()
 })
+
+test("get group by id", () => {
+  store.dispatch(Queries.setAll(testLib))
+
+  expect(Queries.getGroupById("testId1")(store.getState())).toEqual(
+    getGroup([0])
+  )
+  expect(Queries.getGroupById("root")(store.getState())).toEqual(testLib)
+})

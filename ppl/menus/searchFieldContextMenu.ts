@@ -33,7 +33,6 @@ export default function searchFieldContextMenu({
     const isArrayish = zed.isIterable(field.value)
     let index = -1
     if (zed.isIterable(field.value)) {
-      console.log("hi", value)
       index = field.value.indexOf(value)
     }
 

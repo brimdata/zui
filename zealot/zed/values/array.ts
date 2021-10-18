@@ -7,7 +7,6 @@ export class Array implements ZedValueInterface {
 
   indexOf(value: ZedValue) {
     if (isNull(this.items)) return -1
-    console.log(value, this.items, this.items.indexOf(value))
     return this.items.indexOf(value)
   }
 

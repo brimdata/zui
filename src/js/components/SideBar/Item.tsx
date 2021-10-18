@@ -16,6 +16,7 @@ import Folder from "../../icons/Folder"
 import {StyledArrow} from "../LeftPane/common"
 import StarNoFillIcon from "../../icons/StarNoFillIcon"
 import useOutsideClick from "../hooks/useOutsideClick"
+import {isBrimLib} from "../../state/Queries/flows"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -132,7 +133,8 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const dispatch = useDispatch()
   const currentPool = useSelector(Current.getPool)
   const {isEditing, isSelected} = state
-  const {value} = data
+  const {value, id} = data
+  const isBrimItem = dispatch(isBrimLib(id))
 
   const runQuery = (value) => {
     dispatch(SearchBar.clearSearchBar())
@@ -175,11 +177,12 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {type: "separator"},
     {
       label: "Rename",
+      enabled: !isBrimItem,
       click: () => handlers.edit()
     },
     {
       label: "Edit",
-      enabled: !hasMultiSelected,
+      enabled: !hasMultiSelected && !isBrimItem,
       click: () => {
         // only edit queries
         if ("items" in data) return
@@ -189,6 +192,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {type: "separator"},
     {
       label: hasMultiSelected ? "Delete Selected" : "Delete",
+      enabled: !isBrimItem,
       click: () => {
         const selected = tree.getSelectedIds()
         return remote.dialog

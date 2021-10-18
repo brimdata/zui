@@ -1,6 +1,5 @@
 import {QueriesAction, QueriesState, Item} from "./types"
 import produce from "immer"
-import init from "ppl/queries/initial"
 import TreeModel from "tree-model"
 
 const itemToNode = (item: Item): TreeModel.Node<Item> =>
@@ -11,9 +10,30 @@ const getNodeById = (
   itemId: string
 ): TreeModel.Node<Item> => root.first((n) => n.model.id === itemId)
 
+const init = () => ({
+  id: "root",
+  name: "root",
+  isOpen: true,
+  items: []
+})
+
+const upsertItem = (parent: TreeModel.Node<Item>, item: Item) => {
+  const newItemNode = itemToNode(item)
+  const itemNode = parent?.first((n) => n.model.id === item.id)
+  if (!itemNode) {
+    parent?.addChild(newItemNode)
+    return
+  }
+
+  // preserve order if replacing
+  const ndx = itemNode.getIndex()
+  itemNode?.drop()
+  parent.addChildAtIndex(newItemNode, ndx)
+}
+
 export default produce((draft: QueriesState, action: QueriesAction) => {
   const queriesTree = itemToNode(draft)
-  let node
+  let node: TreeModel.Node<Item>
   switch (action.type) {
     case "$QUERIES_SET_ALL":
       return action.rootGroup
@@ -23,11 +43,12 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
         console.error("items may only be added to groups")
         return
       }
-      node.addChild(itemToNode(action.item))
+
+      upsertItem(node, action.item)
       return queriesTree.model
     case "$QUERIES_REMOVE_ITEMS":
       action.itemIds.forEach((itemId) => {
-        getNodeById(queriesTree, itemId).drop()
+        getNodeById(queriesTree, itemId)?.drop()
       })
       return queriesTree.model
     case "$QUERIES_EDIT_ITEM":
@@ -52,6 +73,6 @@ const moveItems = (queriesTree, action) => {
   action.itemIds.forEach((itemId) => {
     const node = getNodeById(queriesTree, itemId)
     parentNode.addChildAtIndex(itemToNode(node.model), action.index)
-    node.drop()
+    node?.drop()
   })
 }

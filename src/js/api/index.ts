@@ -13,6 +13,7 @@ import {
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {StorageApi} from "./storage"
 import {Abortables} from "app/core/models/abortables"
+import {QueriesApi} from "./queries"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -25,6 +26,7 @@ export default class BrimApi {
   public toolbar: ToolbarApi
   public configs: ConfigsApi
   public storage: StorageApi
+  public queries: QueriesApi
 
   public toast = toast
 
@@ -44,6 +46,7 @@ export default class BrimApi {
     this.toolbar = new ToolbarApi(d, gs)
     this.configs = new ConfigsApi(d, gs)
     this.storage = new StorageApi(d, gs)
+    this.queries = new QueriesApi(d, gs)
   }
 
   public getZealot() {

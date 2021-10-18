@@ -27,6 +27,7 @@ import Modal from "../../state/Modal"
 import {nanoid} from "@reduxjs/toolkit"
 import useCallbackRef from "../hooks/useCallbackRef"
 import {parseJSONLib} from "../../state/Queries/parsers"
+import {isBrimLib} from "../../state/Queries/flows"
 
 const StyledPlus = styled.div`
   margin-right: 8px;
@@ -57,7 +58,7 @@ const NewActionsDropdown = () => {
         dispatch(
           Queries.addItem(
             {
-              isOpen: false,
+              isOpen: true,
               items: [],
               name: "New Folder",
               id: nanoid()
@@ -167,7 +168,14 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     parentId: string | null,
     index: number
   ) => {
+    // no reordering while a filter is on
     if (selectedTag !== "All") return
+    // no reordering if any one item is part of shipped brim lib
+    if (
+      !dragIds.every((id) => !dispatch(isBrimLib(id))) ||
+      dispatch(isBrimLib(parentId))
+    )
+      return
     dispatch(Queries.moveItems(dragIds, parentId, index))
   }
 
