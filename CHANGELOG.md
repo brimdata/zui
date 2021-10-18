@@ -69,7 +69,7 @@ particular we'd like to bring to your attention first.
   saved custom entries to the Query Library, you'll need to change these
   yourself. Some key changes include `:=` now being used for assignment, `==`
   for equality comparisons, and string values
-  must now be quoted in [field/value](https://github.com/brimdata/zed/tree/main/docs/language/search-syntax#fieldvalue-match) matches.
+  must now be quoted in [field/value](https://github.com/brimdata/zed/tree/main/docs/language/search-syntax.md#fieldvalue-match) matches.
 
 The exhaustive set of changes is listed below. Come talk to us on
 [Slack](https://www.brimdata.io/join-slack/) if you have additional
