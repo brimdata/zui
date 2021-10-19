@@ -19,7 +19,6 @@ export const SectionHeader = styled.div`
   min-height: 24px;
   max-height: 24px;
   align-items: center;
-  justify-content: space-between;
   user-select: none;
   position: relative;
 
@@ -68,7 +67,6 @@ export const StyledViewSelect = styled.div`
   ${(props) => props.theme.hoverQuiet}
   display: flex;
   margin-left: auto;
-  margin-right: 8px;
   height: 18px;
   padding: 0 8px;
   line-height: 24px;

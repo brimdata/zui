@@ -11,6 +11,7 @@ beforeEach(() => {
 const testLib = {
   id: "root",
   name: "root",
+  isOpen: true,
   items: [
     {
       // .items[0]
@@ -88,7 +89,7 @@ test("add query", () => {
   const parentGroup = getGroup([0])
   expect(parentGroup.items).toHaveLength(3)
 
-  store.dispatch(Queries.addItem(newQuery, parentGroup))
+  store.dispatch(Queries.addItem(newQuery, parentGroup.id))
 
   expect(getGroup([0]).items).toHaveLength(4)
   expect(getGroup([0]).items[3]).toEqual(newQuery)
@@ -100,7 +101,7 @@ test("add query, nested", () => {
   const parentGroup = getGroup([0, 1])
   expect(parentGroup.items).toHaveLength(1)
 
-  store.dispatch(Queries.addItem(newQuery, parentGroup))
+  store.dispatch(Queries.addItem(newQuery, parentGroup.id))
 
   expect(getGroup([0, 1]).items).toHaveLength(2)
   expect(getGroup([0, 1]).items[1]).toEqual(newQuery)
@@ -112,13 +113,13 @@ test("add group, add query to new group", () => {
   const parentGroup = getGroup([0])
   expect(parentGroup.items).toHaveLength(3)
 
-  store.dispatch(Queries.addItem(newGroup, parentGroup))
+  store.dispatch(Queries.addItem(newGroup, parentGroup.id))
 
   expect(getGroup([0]).items).toHaveLength(4)
   expect(getGroup([0]).items[3]).toEqual(newGroup)
   expect(getGroup([0, 3]).items).toHaveLength(0)
 
-  store.dispatch(Queries.addItem(newQuery, newGroup))
+  store.dispatch(Queries.addItem(newQuery, newGroup.id))
 
   expect(getGroup([0, 3]).items).toHaveLength(1)
   expect(getGroup([0, 3]).items[0]).toEqual(newQuery)
@@ -130,12 +131,12 @@ test("remove query, group", () => {
   const testName1Group = getGroup([0])
   expect(testName1Group.items).toHaveLength(3)
 
-  store.dispatch(Queries.removeItems([getGroup([0]).items[0]]))
+  store.dispatch(Queries.removeItems([getGroup([0]).items[0].id]))
 
   expect(getGroup([0]).items).toHaveLength(2)
   expect(getGroup([0]).items).toEqual(testName1Group.items.slice(1))
 
-  store.dispatch(Queries.removeItems([getGroup([0]).items[0]]))
+  store.dispatch(Queries.removeItems([getGroup([0]).items[0].id]))
   expect(getGroup([0]).items).toHaveLength(1)
   expect(getGroup([0]).items).toEqual([testName1Group.items[2]])
 })
@@ -149,7 +150,9 @@ test("move query, same group, different group same depth", () => {
   const testName2Query = testName1Group.items[0]
 
   // move to end
-  store.dispatch(Queries.moveItems([getGroup([0]).items[0]], getGroup([0]), 2))
+  store.dispatch(
+    Queries.moveItems([getGroup([0]).items[0].id], getGroup([0]).id, 3)
+  )
 
   expect(getGroup([0]).items).toHaveLength(3)
 
@@ -159,13 +162,15 @@ test("move query, same group, different group same depth", () => {
   ])
 
   // move back to beginning
-  store.dispatch(Queries.moveItems([getGroup([0]).items[2]], getGroup([0]), 0))
+  store.dispatch(
+    Queries.moveItems([getGroup([0]).items[2].id], getGroup([0]).id, 0)
+  )
 
   expect(getGroup([0]).items).toHaveLength(3)
   expect(getGroup([0]).items).toEqual(testName1Group.items)
 
   // move to "uncle's" group
-  store.dispatch(Queries.addItem(newGroup, getGroup([0])))
+  store.dispatch(Queries.addItem(newGroup, getGroup([0]).id))
 
   expect(getGroup([0, 1]).items).toHaveLength(1)
   expect(getGroup([0, 3]).items).toHaveLength(0)
@@ -173,7 +178,7 @@ test("move query, same group, different group same depth", () => {
   const testName4Query = getGroup([0, 1]).items[0]
 
   store.dispatch(
-    Queries.moveItems([getGroup([0, 1]).items[0]], getGroup([0, 3]), 0)
+    Queries.moveItems([getGroup([0, 1]).items[0].id], getGroup([0, 3]).id, 0)
   )
 
   expect(getGroup([0, 1]).items).toHaveLength(0)
@@ -192,7 +197,7 @@ test("move query, different group", () => {
 
   const testName2Query = testName1Group.items[0]
 
-  store.dispatch(Queries.moveItems([testName2Query], testName3Group, 0))
+  store.dispatch(Queries.moveItems([testName2Query.id], testName3Group.id, 0))
 
   const newTestName1Group = getGroup([0])
   const newTestName3Group = getGroup([0, 0])
@@ -219,4 +224,30 @@ test("edit group", () => {
 
   store.dispatch(Queries.editItem(newGroup, "testId3"))
   expect(getGroup([0, 1])).toEqual(newGroup)
+})
+
+test("toggle group", () => {
+  store.dispatch(Queries.setAll(testLib))
+
+  expect(getGroup([0]).isOpen).toBeUndefined()
+  store.dispatch(Queries.toggleGroup("testId1"))
+  expect(getGroup([0]).isOpen).toEqual(true)
+  store.dispatch(Queries.toggleGroup("testId1"))
+  expect(getGroup([0]).isOpen).toEqual(false)
+
+  // does not set isOpen for queries, only groups
+  // suppress the expected console.error once to keep test logs cleaner
+  jest.spyOn(console, "error").mockImplementationOnce(() => {})
+  expect(getGroup([0]).items[0]["isOpen"]).toBeUndefined()
+  store.dispatch(Queries.toggleGroup("testId2"))
+  expect(getGroup([0]).items[0]["isOpen"]).toBeUndefined()
+})
+
+test("get group by id", () => {
+  store.dispatch(Queries.setAll(testLib))
+
+  expect(Queries.getGroupById("testId1")(store.getState())).toEqual(
+    getGroup([0])
+  )
+  expect(Queries.getGroupById("root")(store.getState())).toEqual(testLib)
 })

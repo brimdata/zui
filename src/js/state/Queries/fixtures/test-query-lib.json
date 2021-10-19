@@ -1,0 +1,33 @@
+{
+  "name": "My Imported Lib",
+  "items": [
+    {
+      "name": "Snactivity Overview",
+      "value": "count() by _path | sort -r",
+      "description": "test description 1",
+      "tags": ["zeek", "initial exploration"]
+    },
+    {
+      "name": "Uniqlo DNS Queries",
+      "value": "_path==\"dns\" | count() by query | sort -r",
+      "description": "test description 2",
+      "tags": ["dns", "initial exploration"]
+    },
+    {
+      "name": "Nested Folder",
+      "items": [
+        {
+          "name": "Nested Query",
+          "value": "nested value",
+          "description": "I'm an only child with no tags"
+        }
+      ]
+    },
+    {
+      "name": "Windmill Networking Activity",
+      "value": "_path matches smb* OR _path==\"dce_rpc\"",
+      "description": "test description 3",
+      "tags": ["windows", "smb", "malware"]
+    }
+  ]
+}

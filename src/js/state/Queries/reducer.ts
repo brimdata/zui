@@ -1,8 +1,6 @@
 import {QueriesAction, QueriesState, Item} from "./types"
-import produce, {original} from "immer"
-import init from "ppl/queries/initial"
+import produce from "immer"
 import TreeModel from "tree-model"
-import {includes} from "lodash"
 
 const itemToNode = (item: Item): TreeModel.Node<Item> =>
   new TreeModel({childrenPropertyName: "items"}).parse(item)
@@ -12,23 +10,57 @@ const getNodeById = (
   itemId: string
 ): TreeModel.Node<Item> => root.first((n) => n.model.id === itemId)
 
+const init = () => ({
+  id: "root",
+  name: "root",
+  isOpen: true,
+  items: []
+})
+
+const upsertItem = (parent: TreeModel.Node<Item>, item: Item) => {
+  const newItemNode = itemToNode(item)
+  const itemNode = parent?.first((n) => n.model.id === item.id)
+  if (!itemNode) {
+    parent?.addChild(newItemNode)
+    return
+  }
+
+  // preserve order if replacing
+  const ndx = itemNode.getIndex()
+  itemNode?.drop()
+  parent.addChildAtIndex(newItemNode, ndx)
+}
+
 export default produce((draft: QueriesState, action: QueriesAction) => {
   const queriesTree = itemToNode(draft)
+  let node: TreeModel.Node<Item>
   switch (action.type) {
     case "$QUERIES_SET_ALL":
       return action.rootGroup
     case "$QUERIES_ADD_ITEM":
-      getNodeById(queriesTree, action.parentGroup.id).addChild(
-        itemToNode(action.item)
-      )
+      node = getNodeById(queriesTree, action.parentGroupId)
+      if (!("items" in node.model)) {
+        console.error("items may only be added to groups")
+        return
+      }
+
+      upsertItem(node, action.item)
       return queriesTree.model
     case "$QUERIES_REMOVE_ITEMS":
-      action.items.forEach((item) => {
-        getNodeById(queriesTree, item.id).drop()
+      action.itemIds.forEach((itemId) => {
+        getNodeById(queriesTree, itemId)?.drop()
       })
       return queriesTree.model
     case "$QUERIES_EDIT_ITEM":
       Object.assign(getNodeById(queriesTree, action.itemId).model, action.item)
+      return queriesTree.model
+    case "$QUERIES_TOGGLE_GROUP":
+      node = getNodeById(queriesTree, action.groupId)
+      if (!("items" in node.model)) {
+        console.error("cannot open/close queries, only groups")
+        return
+      }
+      node.model.isOpen = !node.model.isOpen
       return queriesTree.model
     case "$QUERIES_MOVE_ITEMS":
       moveItems(queriesTree, action)
@@ -37,19 +69,10 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
 }, init())
 
 const moveItems = (queriesTree, action) => {
-  const parentNode = getNodeById(queriesTree, action.parentGroup.id)
-  action.items.reverse().forEach((item) => {
-    const node = getNodeById(queriesTree, item.id)
-    // If the move is all in the same directory then the adjusting indices can
-    // cause an off-by-one/stale-index issue since the destination index will be affected after
-    // removal (e.g. an item cannot be moved to the end of its current group because of this).
-    // For this situation we instead remove the item first, and then insert its copy
-    if (includes(original(parentNode.model).items, item)) {
-      node.drop()
-      parentNode.addChildAtIndex(itemToNode(item), action.index)
-    } else {
-      parentNode.addChildAtIndex(itemToNode(item), action.index)
-      node.drop()
-    }
+  const parentNode = getNodeById(queriesTree, action.parentId)
+  action.itemIds.forEach((itemId) => {
+    const node = getNodeById(queriesTree, itemId)
+    parentNode.addChildAtIndex(itemToNode(node.model), action.index)
+    node?.drop()
   })
 }

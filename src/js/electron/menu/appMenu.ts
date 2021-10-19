@@ -250,7 +250,7 @@ export default function(
         async click() {
           const root = app.getAppPath()
           const version = brim.session.getVersion()
-          const file = path.join(root, `src/js/test/states/${version}.json`)
+          const file = path.join(root, `test/unit/states/${version}.json`)
           const data = formatSessionState(
             await brim.windows.serialize(),
             brim.store.getState()

@@ -168,7 +168,7 @@ const QueryForm = ({onClose, query, value}: Props) => {
               id: nanoid(),
               ...newQuery
             },
-            queriesRoot
+            queriesRoot.id
           )
         )
       }

@@ -5,7 +5,8 @@ import {
   QUERIES_EDIT_ITEM,
   QUERIES_MOVE_ITEMS,
   QUERIES_REMOVE_ITEMS,
-  QUERIES_SET_ALL
+  QUERIES_SET_ALL,
+  QUERIES_TOGGLE_GROUP
 } from "./types"
 
 export default {
@@ -13,28 +14,32 @@ export default {
     type: "$QUERIES_SET_ALL",
     rootGroup
   }),
-  addItem: (item: Item, parentGroup: Group): QUERIES_ADD_ITEM => ({
+  addItem: (item: Item, parentGroupId: string): QUERIES_ADD_ITEM => ({
     type: "$QUERIES_ADD_ITEM",
     item,
-    parentGroup
+    parentGroupId
   }),
-  removeItems: (items: Item[]): QUERIES_REMOVE_ITEMS => ({
+  removeItems: (itemIds: string[]): QUERIES_REMOVE_ITEMS => ({
     type: "$QUERIES_REMOVE_ITEMS",
-    items
+    itemIds
   }),
-  editItem: (item: Item, itemId: string): QUERIES_EDIT_ITEM => ({
+  editItem: (item: Partial<Item>, itemId: string): QUERIES_EDIT_ITEM => ({
     type: "$QUERIES_EDIT_ITEM",
     item,
     itemId
   }),
   moveItems: (
-    items: Item[],
-    parentGroup: Group,
+    itemIds: string[],
+    parentId: string,
     index: number
   ): QUERIES_MOVE_ITEMS => ({
     type: "$QUERIES_MOVE_ITEMS",
-    items,
-    parentGroup,
+    itemIds,
+    parentId,
     index
+  }),
+  toggleGroup: (groupId: string): QUERIES_TOGGLE_GROUP => ({
+    type: "$QUERIES_TOGGLE_GROUP",
+    groupId
   })
 }

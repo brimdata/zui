@@ -1,20 +1,14 @@
-import {MenuItemConstructorOptions, remote} from "electron"
 import {includes} from "lodash"
-import React, {useEffect, useState} from "react"
-import toast from "react-hot-toast"
+import React, {ChangeEvent, useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import TreeModel from "tree-model"
-import {TreeList} from "../../../pkg/tree-list"
-import {submitSearch} from "../../flows/submitSearch/mod"
+import {Tree} from "react-arborist"
+import useResizeObserver from "use-resize-observer"
 import DropdownArrow from "../../icons/DropdownArrow"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
-import lib from "../../lib"
 import Current from "../../state/Current"
-import Modal from "../../state/Modal"
-import Notice from "../../state/Notice"
 import Queries from "../../state/Queries"
 import {Group, Query} from "../../state/Queries/types"
-import SearchBar from "../../state/SearchBar"
 import EmptySection from "../common/EmptySection"
 import usePopupMenu from "../hooks/usePopupMenu"
 import Item from "../SideBar/Item"
@@ -28,6 +22,78 @@ import {
   StyledViewSelect,
   Title
 } from "./common"
+import styled from "styled-components"
+import Modal from "../../state/Modal"
+import {nanoid} from "@reduxjs/toolkit"
+import useCallbackRef from "../hooks/useCallbackRef"
+import {parseJSONLib} from "../../state/Queries/parsers"
+import {isBrimLib} from "../../state/Queries/flows"
+
+const StyledPlus = styled.div`
+  margin-right: 8px;
+  background: rgba(0, 0, 0, 0);
+  width: 24px;
+  height: 18px;
+  border-radius: 3px;
+  text-align: center;
+  line-height: 16px;
+  font-weight: 300;
+  font-size: 18px;
+  color: var(--slate);
+  ${(props) => props.theme.hoverQuiet}
+`
+
+const NewActionsDropdown = () => {
+  const dispatch = useDispatch()
+  const [importer, ref] = useCallbackRef<HTMLButtonElement>()
+
+  const template = [
+    {
+      label: "New Query",
+      click: () => dispatch(Modal.show("new-query"))
+    },
+    {
+      label: "New Folder",
+      click: () =>
+        dispatch(
+          Queries.addItem(
+            {
+              isOpen: true,
+              items: [],
+              name: "New Folder",
+              id: nanoid()
+            },
+            "root"
+          )
+        )
+    },
+    {
+      label: "Import from JSON...",
+      click: () => importer && importer.click()
+    }
+  ]
+
+  const menu = usePopupMenu(template)
+
+  const onImport = (e: ChangeEvent<HTMLInputElement>) => {
+    const filePath = e.target.files[0].path
+    const node = parseJSONLib(filePath)
+    e.target.value = null
+    dispatch(Queries.addItem(node, "root"))
+  }
+
+  return (
+    <>
+      <StyledPlus onClick={menu.onClick}>+</StyledPlus>
+      <input
+        ref={ref}
+        type="file"
+        style={{display: "none"}}
+        onChange={onImport}
+      />
+    </>
+  )
+}
 
 const filterQueriesByTag = (queriesRoot: Group, tag: string): Query[] => {
   const queryResults = []
@@ -73,103 +139,15 @@ const TagsViewSelect = ({selected, tags, onSelect}) => {
 
 function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const dispatch = useDispatch()
-  const [contextArgs, setContextArgs] = useState(null)
   const [selectedTag, setSelectedTag] = useState("All")
   const currentPool = useSelector(Current.getPool)
   const queriesRoot = useSelector(Queries.getRaw)
   const [queries, setQueries] = useState(queriesRoot)
   const tags = useSelector(Queries.getTags)
-  const hasMultiSelected = contextArgs && contextArgs.selections.length > 1
 
   useEffect(() => {
     setQueries(queriesRoot)
   }, [queriesRoot])
-
-  const runQuery = (value) => {
-    dispatch(SearchBar.clearSearchBar())
-    dispatch(SearchBar.changeSearchBarInput(value))
-    dispatch(submitSearch())
-  }
-
-  const template: MenuItemConstructorOptions[] = [
-    {
-      label: "Run Query",
-      enabled: !hasMultiSelected && !!currentPool,
-      click: () => {
-        const {
-          item: {value}
-        } = contextArgs
-
-        runQuery(value)
-      }
-    },
-    {
-      label: "Copy Query",
-      enabled: !hasMultiSelected,
-      click: () => {
-        const {
-          item: {value}
-        } = contextArgs
-        lib.doc.copyToClipboard(value)
-        toast("Query copied to clipboard")
-      }
-    },
-    {type: "separator"},
-    {
-      label: "Edit",
-      enabled: !hasMultiSelected,
-      click: () => {
-        const {item} = contextArgs
-        // only edit queries
-        if ("items" in item) return
-        dispatch(Modal.show("edit-query", {query: item}))
-      }
-    },
-    {type: "separator"},
-    {
-      label: hasMultiSelected ? "Delete Selected" : "Delete",
-      click: () => {
-        return remote.dialog
-          .showMessageBox({
-            type: "warning",
-            title: "Confirm Delete Query Window",
-            message: `Are you sure you want to delete the ${(contextArgs.selections &&
-              contextArgs.selections.length) ||
-              ""} selected quer${hasMultiSelected ? "ies" : "y"}?`,
-            buttons: ["OK", "Cancel"]
-          })
-          .then(({response}) => {
-            if (response === 0) {
-              const {selections, item} = contextArgs
-              if (hasMultiSelected) dispatch(Queries.removeItems(selections))
-              else dispatch(Queries.removeItems([item]))
-            }
-          })
-      }
-    }
-  ]
-
-  const menu = usePopupMenu(template)
-
-  function onItemClick(_, item) {
-    if (!currentPool)
-      return dispatch(
-        Notice.set({type: "NoPoolError", message: "No Pool Selected"})
-      )
-
-    if (!item.value) return
-
-    runQuery(item.value)
-  }
-
-  function onItemMove(sourceItem, destIndex) {
-    if (selectedTag !== "All") return
-    dispatch(Queries.moveItems([sourceItem], queriesRoot, destIndex))
-  }
-
-  function onItemContextMenu(_, item, selections) {
-    setContextArgs({item, selections})
-  }
 
   function onTagSelect(tag) {
     setSelectedTag(tag)
@@ -180,16 +158,27 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     setQueries({
       id: "root",
       name: "root",
+      isOpen: true,
       items: filterQueriesByTag(queriesRoot, tag)
     })
   }
 
-  // trigger menu open after contextArgs have updated so it renders with fresh data
-  useEffect(() => {
-    if (!contextArgs) return
-    menu.open()
-  }, [contextArgs])
+  const handleMove = (
+    dragIds: string[],
+    parentId: string | null,
+    index: number
+  ) => {
+    // no reordering while a filter is on
+    if (selectedTag !== "All") return
+    // no reordering if any one item is part of shipped brim lib
+    if (dispatch(isBrimLib([...dragIds, parentId]))) return
+    dispatch(Queries.moveItems(dragIds, parentId, index))
+  }
 
+  const handleRename = (itemId: string, name: string) =>
+    dispatch(Queries.editItem({name}, itemId))
+
+  const {ref, width = 1, height = 1} = useResizeObserver<HTMLDivElement>()
   return (
     <StyledSection style={style}>
       <DragAnchor {...resizeProps} />
@@ -199,24 +188,33 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           <Title>Queries</Title>
         </ClickRegion>
         {currentPool && (
-          <TagsViewSelect
-            selected={selectedTag}
-            tags={["All", ...tags]}
-            onSelect={onTagSelect}
-          />
+          <>
+            <TagsViewSelect
+              selected={selectedTag}
+              tags={["All", ...tags]}
+              onSelect={onTagSelect}
+            />
+            <NewActionsDropdown />
+          </>
         )}
       </SectionHeader>
-      <SectionContents>
+      <SectionContents ref={ref}>
         {currentPool ? (
-          <TreeList
-            root={queries}
-            itemHeight={24}
-            onItemMove={onItemMove}
-            onItemClick={onItemClick}
-            onItemContextMenu={onItemContextMenu}
+          <Tree
+            indent={16}
+            data={queries}
+            childrenAccessor="items"
+            isOpenAccessor="isOpen"
+            rowHeight={24}
+            width={width}
+            height={height}
+            hideRoot
+            openByDefault
+            onMove={handleMove}
+            onEdit={handleRename}
           >
             {Item}
-          </TreeList>
+          </Tree>
         ) : (
           <EmptySection
             icon={<MagnifyingGlass />}

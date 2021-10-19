@@ -1,9 +1,15 @@
-import {QueriesState} from "./types"
+import {Group, QueriesState} from "./types"
 import {State} from "../types"
 import TreeModel from "tree-model"
 import {createSelector} from "reselect"
 
 export const getRaw = (state: State): QueriesState => state.queries
+
+export const getGroupById = (groupId: string) => (state: State): Group => {
+  return new TreeModel({childrenPropertyName: "items"})
+    .parse(state.queries)
+    .first((n) => n.model.id === groupId && "items" in n.model)?.model
+}
 
 export const getTags = createSelector<State, QueriesState, string[]>(
   getRaw,
