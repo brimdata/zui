@@ -11,8 +11,7 @@ export const activate = (api: BrimApi) => {
   const existingLib = api.queries.get("brim")
 
   // preserve open state if set, else default to open
-  if (existingLib) brimLib.isOpen = !!existingLib.isOpen
-  else brimLib.isOpen = true
+  brimLib.isOpen = existingLib ? !!existingLib.isOpen : true
 
   // updates lib every window startup
   api.queries.add(brimLib)
