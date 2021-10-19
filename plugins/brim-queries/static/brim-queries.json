@@ -89,7 +89,7 @@
       "name": "Suricata Alerts by Subnet",
       "value":
       "event_type==\"alert\" | alerts := union(alert.category) by network_of(dest_ip)",
-      "description": "Displays a list of Suricata alerts by CIDR networks",
+      "description": "Displays a list of Suricata alerts by CIDR network",
       "tags": ["suricata", "malware"]
     }
   ]
