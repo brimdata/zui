@@ -1,8 +1,4 @@
-# Remote Workspaces (v0.25.0 and newer)
-
-> **Note:** The details in this article are specific to Brim release `v0.25.0`
-> and newer. For information regarding release `v0.24.0` and older, review
-> [this article](https://github.com/brimdata/brim/wiki/Remote-zqd).
+# Remote Workspaces
 
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)
@@ -76,7 +72,7 @@ Brim app, and therefore may be useful in scripting and automation.
 The location where Zed stores imported data is known as the
 **Data Directory**. This location can be changed via a setting in Brim's
 **Preferences** menu. The default location is a `lake` subdirectory under the
-Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data)
 path.
 
 If you examine the process table while Brim is running, you can observe the
@@ -105,7 +101,7 @@ for details).
 
 1. We can see the full path to the `zed` binary that's packaged with Brim. This
 binary and other dependencies that are typically launched by Brim can be found
-in the `zdeps` directory under Brim's [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
+in the `zdeps` directory under Brim's [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries)
 path.
 
 Now that we know Brim is simply connecting to Zed locally, next we'll vary
@@ -187,7 +183,7 @@ IP address.
 
 As mentioned in the [Limitations](#Limitations) above, it's not possible for
 remote Brim clients to import packet capture data directly to a remote Zed
-Lake. However we can use the bundled `zapi` command line tool to create a Pool
+Lake. However we can use the bundled `zapi` command line tool to create a pool
 in the Zed Lake for our data and then use the bundled `brimcap` to load data
 into it.
 
@@ -226,7 +222,7 @@ ubuntu# zapi load zed-sample-data/zeek-default/*
 1uMRE9bZnbNAIY8tEOfIXOa8c2w committed
 ```
 
-To see our imported data as Pools in the Zed Lake:
+To see our imported data as pools in the Zed Lake:
 
 ```
 ubuntu# zapi ls
@@ -240,7 +236,7 @@ Now that we've got data imported into our remote Zed Lake, we'll access it from
 the Brim app that's running on our Mac laptop.
 
 The option to initiate a remote connection is available by clicking the
-pull-down above the Pools list in the left panel and selecting **Add
+pull-down above the pools list in the left panel and selecting **Add
 Workspace**.
 
 ![Add Workspace](media/Add-Workspace.png)
@@ -251,11 +247,11 @@ be included if it's listening on a port other than the default `9867`.
 
 ![Add Workspace window](media/Add-Workspace-window.png)
 
-Now the Pools in our remote Zed Lake will appear in the left panel just as we're
+Now the pools in our remote Zed Lake will appear in the left panel just as we're
 accustomed to seeing when working with local data. We can now enter Zed queries
 and perform normal workflows.
 
-For our Pool that was based on the imported packet capture, we'll only be able
+For our pool that was based on the imported packet capture, we'll only be able
 to extract flows into Wireshark via the **Packets** button if we maintain a
 copy of the same pcap locally and add it to the index in our local Brimcap root
 (see [brimcap/105](https://github.com/brimdata/brimcap/issues/105) for details).

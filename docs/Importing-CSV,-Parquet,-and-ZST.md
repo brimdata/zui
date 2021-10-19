@@ -1,4 +1,4 @@
-# Importing CSV, JSON, Parquet, and ZST (v0.25.0 and newer)
+# Importing CSV, Parquet, and ZST
 
 - [Summary](#summary)
 - [Example](#example)
@@ -11,7 +11,6 @@ depends on the backend [Zed](https://github.com/brimdata/zed) platform's
 ability to "auto-detect" these formats. While several formats are covered by
 the current auto-detection implementation,
 [CSV](https://tools.ietf.org/html/rfc4180),
-[JSON](https://tools.ietf.org/html/rfc8259),
 [Parquet](https://parquet.apache.org/), and
 [ZST](https://github.com/brimdata/zed/blob/main/docs/formats/zst.md) are not
 yet (see [zed/2517](https://github.com/brimdata/zed/issues/2517)).
@@ -52,7 +51,7 @@ $ /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/zq -i csv te
 ```
 
 > **Note:** You may want to perform other preprocessing at this phase, such as
-invoking [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/operators#fuse).
+invoking [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#fuse).
 
 Now our `testxlsx_converted.zng` can be imported into Brim.
 

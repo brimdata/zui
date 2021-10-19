@@ -9,8 +9,7 @@
 
 # Summary
 
-As of Brim release [v0.22.0](https://github.com/brimdata/brim/releases/tag/v0.22.0),
-the contents of the Query Library are saved as part of the local app "state"
+The contents of Brim's Query Library are saved as part of the local app "state"
 alongside other persistent data such as the saved entries in the **History**
 panel and user **Preferences**. There are plans for future enhancements to
 allow Query Library contents to be shared directly between users. While
@@ -49,7 +48,7 @@ add/delete of entries.
 # Background: `appState.json`
 
 Brim maintains persistent user configuration in a file `appState.json` which
-is located in Brim's [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+is located in Brim's [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data)
 path.
 
 If we peek inside it with a [JSON browser](http://jsonviewer.stack.hu/) or a

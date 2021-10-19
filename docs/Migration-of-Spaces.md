@@ -1,22 +1,22 @@
-# Migration of Spaces (v0.25.0 and newer)
+# Migration of Spaces
 
-Starting with GA Brim release `v0.25.0`, imported data will now be stored in
-Pools in a Zed Lake rather than in file-based Spaces as they were previously.
+Starting with GA Brim release `v0.25.0`, imported data is now stored in
+pools in a Zed Lake rather than in file-based Spaces as they were previously.
 
 The [Zed Lake README](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
-provides a thorough overview of Pools and how they work. In brief, the use of
-Pools ultimately enables new functionality that was not previously available in
+provides a thorough overview of pools and how they work. In brief, the use of
+pools ultimately enables new functionality that was not previously available in
 Brim, including:
 
-* Data may be incrementally added to, or deleted from, a Pool.
-* Zed queries/analytics can make use of data stored across multiple Pools.
-* Search indexes can be attached to Pools to accelerate query performance.
+* Data may be incrementally added to, or deleted from, a pool.
+* Zed queries/analytics can make use of data stored across multiple pools.
+* Search indexes can be attached to pools to accelerate query performance.
 * Pre-computed derived analytics can be leveraged to accelerate computations
   on stored data.
 
 When upgrading to GA Brim release `v0.25.0` or newer, any data you had stored
 in Spaces that you wish to continue accessing will need to be migrated to
-Pools. To ensure a smooth transition, upon first launch in the newer release,
+pools. To ensure a smooth transition, upon first launch in the newer release,
 a pop-up message will appear with a clickable option to automatically complete
 the data migration.
 
@@ -27,12 +27,12 @@ clicking **Migrate**, here are some tips to help ensure a successful migration.
 
 1. Before starting migration, you may want to make a backup by zipping or
    copying everything below the `spaces` subdirectory under the Brim
-   [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data-all-versions)
+   [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data)
    path.
 
 2. If you have a lot of data saved in Spaces, the migration may take some time
    to complete. If you click **Later**, the pop-up will be dismissed and you
-   can begin importing new data, which will now be stored in Pools. You will
+   can begin importing new data, which will now be stored in pools. You will
    not be able to access the data from your older Spaces until you allow
    migration to complete. The migration pop-up will be presented again the
    next time you relaunch the app or open a new Brim window.
@@ -47,7 +47,7 @@ clicking **Migrate**, here are some tips to help ensure a successful migration.
    ![Migrating spaces](media/Migrating-Spaces.png)
 
    While migration is proceeding, you can use the app as usual (e.g., import new
-   data, start querying new Pools or ones that have finished migration, etc.)
+   data, start querying new pools or ones that have finished migration, etc.)
    When the last Space has been migrated, the now-empty `spaces` directory
    will be automatically deleted at the filesystem layer and the following
    notification will appear:
@@ -55,7 +55,7 @@ clicking **Migrate**, here are some tips to help ensure a successful migration.
    ![Migration complete](media/Migration-Complete.png)
 
 5. During migration, if you click the vertical `...` in the progress indicator
-   and select **Cancel**, the new Pool configuration for the Space that was
+   and select **Cancel**, the new pool configuration for the Space that was
    currently being migrated will be removed by the app. If the Space being
    migrated was large, this cleanup may take several seconds to complete, and
    Brim should be kept open until the following notification appears:
@@ -68,16 +68,16 @@ clicking **Migrate**, here are some tips to help ensure a successful migration.
    Spaces.
 
 6. If you happen to accidentally close the app during cleanup from a cancelled
-   migration (or there's some other catastrophic failure), an empty Pool
+   migration (or there's some other catastrophic failure), an empty pool
    configuration will be left behind. When this happens, the data for this
    Space will fail to be migrated on a future attempt, with the following
    pop-up appearing:
 
    ![Some Spaces not migrated](media/Some-Spaces-Not-Migrated.png)
 
-   If this occurs, first click on the Pool and confirm that the main event
+   If this occurs, first click on the pool and confirm that the main event
    window shows the message "No result data". To then allow the migration to
-   succeed, right-click on the entry in the Pools list and **Delete** it.
+   succeed, right-click on the entry in the pools list and **Delete** it.
 
    ![Right-click pool delete](media/Right-Click-Pool-Delete.png)
 

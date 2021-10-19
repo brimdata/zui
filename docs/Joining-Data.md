@@ -1,31 +1,16 @@
-# Joining Data (v0.24.0 and older)
-
-> **Note:** The details in this article are specific to Brim release `v0.24.0`
-> and older. For information regarding release `v0.25.0` and newer, review
-> [this article](https://github.com/brimdata/brim/wiki/Joining-Data-%28v0.25.0-%29).
+# Joining Data
 
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)
-- [Limitations](#limitations)
-- [Prepping Tools & Test Data](#prepping-tools--test-data)
-- [Examples](#examples)
-  * [Joining Zeek SSL Records With SPL-SPT Data](#joining-zeek-ssl-records-with-spl-spt-data)
-  * [Alternate Schemas For Non-Matches](#alternate-schemas-for-non-matches)
-  * [Records Lacking a Join Key](#records-lacking-a-join-key)
+- [Example Usage](#example-usage)
 - [Contact us!](#contact-us)
 
 # Summary
 
-While the out-of-the-box Zeek and Suricata data typically used in Brim is very
-useful on its own, you may want to further enrich it with additional data
-sources such as threat intelligence or domain/IP details. A common way to
-leverage multiple sources in data technologies is to "join" them together.
-
-The Zed language includes a `join` operator that can be used for this. The
-operator is still new/experimental and represents the first of what will be
-multiple ways of combining different data sources. This cookbook describes
-introductory use cases that leverage the current `join` implementation while
-discussing its limitations.
+Similar to the well-known [SQL construct](https://en.wikipedia.org/wiki/Join_(SQL)),
+the Zed language provides a `join` operator that can be used to combine data
+sources. This cookbook describes how it can be used with the Brim application
+and discusses its limitations.
 
 # About Cookbooks
 
@@ -47,151 +32,73 @@ or reaching out on the [Brim public Slack](https://www.brimdata.io/join-slack/).
 We'd also love to hear your success stories and variations, so please don't be
 shy!
 
-# Limitations
+# Example Usage
 
-Before diving into the specifics of what's possible, here's an overview of
-some rough edges you may encounter as you work through the configurations
-described in this article.
+By its nature, a join operation requires two inputs that will
+ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#join)
+show examples with the [Zed CLI tools](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md)
+that specify these inputs as named files or pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md).
 
-1. For those familiar with SQL, the current `join` implementation in Zed can be
-thought of as similar to a [left outer join](https://en.wikipedia.org/wiki/Join_(SQL)#Left_outer_join)
-and hence applicable to use cases where that approach would apply.
+Brim release `v0.25.0` introduced initial support for storing data in Zed Lakes.
+However, due to a current limitation ([brim/1618](https://github.com/brimdata/brim/issues/1618)),
+Zed queries issued from within Brim cannot yet access multiple pools
+simultaneously. Instead such queries are currently limited to accessing the
+data from whichever pool is currently selected from the **Pools** list.
 
-2. The current `join` implementation is a _merge_-style join that relies on
-each stream of input records being sorted by the field being joined. The Zed
-operators referenced in this cookbook employ "spill-to-disk" functionality
-that ensure they can perform the sort/join with arbitrarily large amounts of
-data without hitting memory limitations. However, we recognize the approach
-may not be as easy-to-use or performant as in-memory approaches that tools
-often use for smaller-scale joins. We hope that user feedback will help us
-confirm which other approaches to joining we should add next.
+Because of this limitation, the [streamed input example](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#example-5---streamed-input)
+is the only one shown that can currently be executed as is from within Brim.
+If the example `fruit.ndjson` and `people.ndjson` are already present in a
+single pool (such as if concatenated into a single file and dragged into the
+app), we can see the same query output as shown in the doc.
 
-3. While the `join` operator is available in the Zed language and hence
-usable from within Brim, the Brim app currently lacks mechanisms to easily
-reference diverse external data sources in the same Space. While these
-mechanisms are planned for future releases, the approach described in this
-cookbook instead leverages the Zed tools outside of Brim with the end result
-being the creation of a
-[ZNG](https://github.com/brimdata/zed/tree/main/docs/formats/zng.md)-format
-log that can be imported into Brim if desired.
+![Streamed Join Example](media/Join-Streamed.png)
 
-# Prepping Tools & Test Data
+> **Note:** Because the data being displayed is of multiple different shapes,
+> Brim's **Columns** setting has been modified here to set **Headers: On**.
 
-For this cookbook, we've sought to employ a join-ready data source that
-readers can access and follow along with. As many Brim users are already
-familiar with [Zeek](https://zeek.org/), we've therefore opted to employ logs
-from the Zeek package [SPL-SPT](https://github.com/micrictor/spl-spt), which
-provides data about payloads in SSL-encrypted connections. The records produced
-by the package include a `uid` value that could be joined to other well-known
-Zeek record types that also include the `uid`, such as `ssl` or `conn`. This
-would allow the SPL-SPT data to appear as additional columns on these records
-as an alternative to pivoting in Brim between the separate logs streams.
+While queries executed from inside Brim are subject to this limitation, the
+Zed backend that's launched behind Brim is not. Therefore if you're willing to
+perform joins in the shell using [`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi)
+you can execute all the other examples shown while accessing data from multiple
+pools. The joined results can be sent into yet another pool for further query
+from within Brim, if desired.
 
-As example input data, we'll use the same publicly-available pcap
-[2020-09-01-Emotet-epoch-3-infection-with-Trickbot-gtag-mor119.pcap.zip](https://www.malware-traffic-analysis.net/2020/09/02/2020-09-01-Emotet-epoch-3-infection-with-Trickbot-gtag-mor119.pcap.zip)
-that's used in the [Hunting Emotet with Brim and Zeek](https://medium.com/brim-securitys-knowledge-funnel/hunting-emotet-with-brim-and-zeek-1000c2f5c1ff)
-blog article.
+To illustrate this, we'll walk through the [example that shows inputs from pools](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#example-4---inputs-from-pools).
+To ensure API-compatibility with the Zed backend, we'll use the `zapi` binary
+found in the `zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
+path, specifically on macOS in this case.
 
-Finally, we'll use a standalone [Zeek v3.2.3](https://github.com/zeek/zeek/releases/tag/v3.2.3)
-install to generate logs from our example pcap. Here we've started from a basic
-[binary package](https://github.com/zeek/zeek/wiki/Binary-Packages) install
-on Linux. After also installing the
-[Zeek Package Manager](https://docs.zeek.org/projects/package-manager/en/stable/quickstart.html),
-adding the [SPL-SPT](https://github.com/micrictor/spl-spt) package is easy.
+Because Brim already takes care of initializing the Zed Lake, we pick up the
+example commands with the creation and population of the separate pools
 
 ```
-# zkg install --force https://github.com/micrictor/spl-spt
-Installing "https://github.com/micrictor/spl-spt".
-Installed "https://github.com/micrictor/spl-spt" (master)
-Loaded "https://github.com/micrictor/spl-spt"
+$ export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
+
+$ zapi create -orderby flavor:asc fruit
+pool created: fruit 1xu7lTnMF7n3TcT3Rg3ivZ0Q9N3
+
+$ zapi create -orderby likes:asc people
+pool created: people 1xu7nejkZEysqneOCcBhhkgkbrO
+
+$ zapi load -use fruit@main fruit.ndjson
+1ujTdNNId0s6TmVKd02lFRuwzN2 committed
+
+$ zapi load -use people@main people.ndjson
+1ujTeU44ZbqdE5x6DvMoTwSkztS committed
 ```
 
-We unpack our test pcap (password: `infected`) and run it through Zeek to
-generate logs.
+Finally, we'll use `zapi query` to perform the `join` using the example Zed
+script, but we'll pipe its output to a `zapi load` that populates a new pool
+we've created to hold the result. Depending on the nature of the queries you
+intend to execute on the data in this pool, you may wish to specify a different
+`-orderby` setting.
 
 ```
-$ unzip 2020-09-01-Emotet-epoch-3-infection-with-Trickbot-gtag-mor119.pcap.zip 
-Archive:  2020-09-01-Emotet-epoch-3-infection-with-Trickbot-gtag-mor119.pcap.zip
-[2020-09-01-Emotet-epoch-3-infection-with-Trickbot-gtag-mor119.pcap.zip] 2020-09-01-Emotet-epoch-3-infection-with-Trickbot-gtag-mor119.pcap password: 
-  inflating: 2020-09-01-Emotet-epoch-3-infection-with-Trickbot-gtag-mor119.pcap
+$ zapi create -orderby name:asc joined
+pool created: joined
 
-$ cat *.pcap | /opt/zeek/bin/zeek -C -r - spl-spt local
-
-$ ls -l *.log
--rw-rw-r-- 1 phil phil   366 Jan 30 00:38 capture_loss.log
--rw-rw-r-- 1 phil phil 20095 Jan 30 00:38 conn.log
--rw-rw-r-- 1 phil phil 15082 Jan 30 00:38 dns.log
--rw-rw-r-- 1 phil phil   599 Jan 30 00:38 dpd.log
--rw-rw-r-- 1 phil phil 14955 Jan 30 00:38 files.log
--rw-rw-r-- 1 phil phil  6023 Jan 30 00:38 http.log
--rw-rw-r-- 1 phil phil 25744 Jan 30 00:38 loaded_scripts.log
--rw-rw-r-- 1 phil phil  1565 Jan 30 00:38 notice.log
--rw-rw-r-- 1 phil phil   254 Jan 30 00:38 packet_filter.log
--rw-rw-r-- 1 phil phil   566 Jan 30 00:38 pe.log
--rw-rw-r-- 1 phil phil  2818 Jan 30 00:38 spl.log
--rw-rw-r-- 1 phil phil  4891 Jan 30 00:38 ssl.log
--rw-rw-r-- 1 phil phil  1310 Jan 30 00:38 stats.log
--rw-rw-r-- 1 phil phil  1032 Jan 30 00:38 weird.log
--rw-rw-r-- 1 phil phil  5317 Jan 30 00:38 x509.log
-```
-
-# Examples
-
-## Joining Zeek SSL Records With SPL-SPT Data
-
-The [SPL-SPT README](https://github.com/micrictor/spl-spt/blob/master/README.md)
-explains that the tool analyzes SSL connections. Looking inside the
-`ssl.log` and `spl.log`, we can indeed see that the same `uid` values appear
-in each, though not in the same order. This highlights the importance of
-sorting by `uid` before joining on it.
-
-```
-$ cat ssl.log
-#separator \x09
-#set_separator	,
-#empty_field	(empty)
-#unset_field	-
-#path	ssl
-#open	2021-02-05-19-26-55
-#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	version	cipher	curve	server_name	resumed	last_alert	next_protocol	established	cert_chain_fuids	client_cert_chain_fuids	subject	issuer	client_subject	client_issuer	validation_status
-#types	time	string	addr	port	addr	port	string	string	string	string	bool	string	string	bool	vector[string]	vector[string]	string	string	string	string	string
-1598992773.193883	CRUIstLprtERqs8c8	10.9.1.101	49816	40.90.22.186	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384	secp256r1	login.live.com	F	-	h2	T	Fxulet2GsFuEn0Uik4,FjJx5d2slh18Zneyg1	(empty)	CN=login.live.com,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	CN=DigiCert SHA2 Secure Server CA,O=DigiCert Inc,C=US	-	-	ok
-1598992774.249073	COboho3mcULvz2l7yl	10.9.1.101	49819	52.158.208.111	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256	x25519	watson.telemetry.microsoft.com	F	-	h2	T	FAl8Tn2Kndq0KjRLbc,F9VOZg1nhKg0R59mK4	(empty)	CN=*.big.telemetry.microsoft.com,OU=WSE,O=Microsoft,L=Redmond,ST=WA,C=US	CN=Microsoft Secure Server CA 2011,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	-	-	unable to get local issuer certificate
-1598992776.460850	CN1TBv4cMtawH69YB5	10.9.1.101	49820	52.109.8.20	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384	secp384r1	nexusrules.officeapps.live.com	F	-	-	T	Fol3JY2CZzUdiaczAh,Fj3y6C1sNWQCOFGPW6	(empty)	CN=nexusrules.officeapps.live.com	CN=Microsoft IT TLS CA 2,OU=Microsoft IT,O=Microsoft Corporation,L=Redmond,ST=Washington,C=US	-	-	ok
-1598992772.249387	CUs6Sq3qciVfv4hbr7	10.9.1.101	49815	52.109.8.20	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384	secp384r1	nexusrules.officeapps.live.com	F	-	-	F	FlOWnD1bpVKj8U6Dnf,FyfwGl3eDHc7yw2Nla	(empty)	-	-	-	-	ok
-1598993440.318372	CDLhMi2tO58cin8BMg	10.9.1.101	49841	45.127.222.8	449	TLSv10	TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA	x25519	-	F	-	-	T	F6M76M2wDqQldrfIw4	(empty)	O=Internet Widgits Pty Ltd,ST=Some-State,C=AUO=Internet Widgits Pty Ltd,ST=Some-State,C=AU	-	-	self signed certificate
-1598993441.496934	Ci7d2m2sQ358a9L6ej	10.9.1.101	49842	54.221.234.156	443	TLSv12	TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256	secp256r1	api.ipify.org	F	-	-	T	FZtbib3l8x1ystI3kj,FwcZye35MeWetibizd,FKUAIQ2DxCfmFQPU64	(empty)	CN=*.ipify.org,OU=PositiveSSL Wildcard,OU=Domain Control Validated	CN=COMODO RSA Domain Validation Secure Server CA,O=COMODO CA Limited,L=Salford,ST=Greater Manchester,C=GB	-	-	ok
-1598993444.468059	CRjp3u3mrdzkKLXgfh	10.9.1.101	49843	62.108.35.9	447	TLSv12	TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384	secp256r1	-	F	-	-	T	Fi8GYS3h2Abx3EGXFd	(empty)	CN=example.com,OU=IT Department,O=Global Security,L=London,ST=London,C=GB	CN=example.com,OU=IT Department,O=Global Security,L=London,ST=London,C=GB	-	-	self signed certificate
-...
-
-
-$ cat spl.log
-#separator \x09
-#set_separator	,
-#empty_field	(empty)
-#unset_field	-
-#path	spl
-#open	2021-02-05-19-26-55
-#fields	uid	orig_spl	resp_spl	orig_spt	resp_spt
-#types	string	vector[count]	vector[count]	vector[double]	vector[double]
-CUs6Sq3qciVfv4hbr7	96	-	0.0	-
-COboho3mcULvz2l7yl	40,82,33,847,4129,925	40,64,33,50,50,50,37,747	0.0,0.010955,0.000084,0.000095,0.000525,0.00001	0.0,0.000582,0.044301,0.037286,0.0,0.000232,0.0,0.07704
-CN1TBv4cMtawH69YB5	96,704	96,16464,16464,8752	0.0,0.003638	0.0,0.081352,0.035947,0.006567
-CRUIstLprtERqs8c8	40,82,33,287,4715	40,64,33,50,50,37,11299,33	0.0,0.003105,0.000176,0.000275,0.00025	0.0,0.0,0.071305,0.066583,0.0,0.0,0.017593,0.0
-Ci7d2m2sQ358a9L6ej	40,124,26	40,211,26	0.0,0.003581,0.00268	0.0,0.067068,59.334662
-CRjp3u3mrdzkKLXgfh	40,191,195,26	40,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408,16408	0.0,0.001702,5.499787,65.32597	0.0,0.494461,0.101639,0.047581,0.128764,0.014464,0.138997,0.004323,0.003257,0.1347,0.003941,0.00431,0.079275,0.059136,0.010274,0.000965,0.005644,0.109902,0.023693,0.000138
-Cwhpf01LpV4ChlWZ59	40,82,287,33,4689	40,64,33,50,50,37,11299,33	0.0,0.001331,0.000164,0.000101,0.000109	0.0,0.0,0.073435,0.066108,0.0,0.000109,0.014119,0.0
-...
-```
-
-The following Zed script can join these together by `uid`.
-
-```
-$ cat join-uid-ssl.zs 
-split (
-  => filter _path=ssl | sort uid
-  => filter _path=spl | sort uid
-) | join uid=uid orig_spl,resp_spl,orig_spt,resp_spt
+$ zapi query -I inner-join-pools.zed | zapi load -use joined@main -
+1ujUTZvk5KyAoGlSMSGvzFcUGgy committed
 ```
 
 As the name indicates, the `split` operator _splits_ the input stream into
@@ -202,13 +109,13 @@ the split, the multiple branches are _merged_ back into a single stream before
 `join` operates on them.
 
 The first argument to `join` is a Zed
-[expression](https://github.com/brimdata/zed/blob/main/docs/language/expressions)
+[expression](https://github.com/brimdata/zed/blob/main/docs/language/expressions.md)
 that references fields in the respective left/right data sources to determine
 if a pair of records from each should be joined. In this case, since the field
 we're joining on is named `uid` in both data sources, the simple expression
 `uid=uid` suffices. The next argument is a comma-separated list of field names
 or assignments, similar to how the
-[`cut`](https://github.com/brimdata/zed/tree/main/docs/language/operators#cut)
+[`cut`](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#cut)
 operator is used.
 
 To apply this using `zq`, we employ its `-P` option that allows us to specify
@@ -356,7 +263,7 @@ predicated on query results all falling under a single schema, since the
 headers need to reflect all fields expected in the output.
 
 Now that we're recognized this, we can make a small change to our Zed to address
-it. By adding the [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/operators#fuse)
+it. By adding the [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#fuse)
 operator, we can ensure all the data is captured under a single, unified
 schema.
 

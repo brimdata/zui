@@ -57,12 +57,11 @@ export default function TabImport() {
             </Link>
           </p>
           See{" "}
-          <Link href="https://github.com/brimdata/brim/wiki/Importing-CSV%2C-JSON%2C-Parquet%2C-and-ZST-%28v0.25.0-%29">
+          <Link href="https://github.com/brimdata/brim/wiki/Importing-CSV%2C-Parquet%2C-and-ZST">
             docs
           </Link>{" "}
           for Zed platform support for{" "}
           <Link href="https://tools.ietf.org/html/rfc4180">CSV</Link>,{" "}
-          <Link href="https://tools.ietf.org/html/rfc8259">JSON</Link>,{" "}
           <Link href="https://parquet.apache.org/">Parquet</Link>, and{" "}
           <Link href="https://github.com/brimdata/zed/blob/main/docs/formats/zst.md">
             ZST
