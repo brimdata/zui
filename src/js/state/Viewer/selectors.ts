@@ -30,6 +30,11 @@ export const getStatus = createSelector<State, ViewerState, SearchStatus>(
   (viewer) => viewer.status
 )
 
+export const getSearchKey = createSelector<State, ViewerState, string>(
+  getViewer,
+  (viewer) => viewer.searchKey
+)
+
 export const getEndStatus = createSelector<State, ViewerState, string>(
   getViewer,
   (viewer) => viewer.endStatus

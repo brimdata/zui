@@ -20,7 +20,8 @@ import {
   VIEWER_SPLICE,
   VIEWER_STATUS,
   SchemaMap,
-  ViewerStatus
+  ViewerStatus,
+  VIEWER_SET_SEARCH_KEY
 } from "./types"
 
 export const clear = (tabId?: string): VIEWER_CLEAR => {
@@ -78,6 +79,17 @@ export const setColumns = (
     type: "VIEWER_SET_COLUMNS",
     columns,
     tabId
+  }
+}
+
+export const setSearchKey = (
+  tabId: string,
+  key: string
+): VIEWER_SET_SEARCH_KEY => {
+  return {
+    type: "VIEWER_SET_SEARCH_KEY",
+    tabId,
+    key
   }
 }
 

@@ -21,6 +21,7 @@ export type ViewerState = {
   columns: SchemaMap
   endStatus: ViewerStatus
   status: SearchStatus
+  searchKey: string
   scrollPos: ScrollPosition
   selection: ViewerSelectionData
 }
@@ -33,6 +34,7 @@ export type ViewerAction =
   | VIEWER_SET_RECORDS
   | VIEWER_COLUMNS
   | VIEWER_SET_COLUMNS
+  | VIEWER_SET_SEARCH_KEY
   | VIEWER_END_STATUS
   | VIEWER_SCROLL
   | VIEWER_SELECT
@@ -129,4 +131,10 @@ export type VIEWER_SELECT_RANGE_PREV = {
 
 export type VIEWER_SELECT_ALL = {
   type: "VIEWER_SELECT_ALL"
+}
+
+export type VIEWER_SET_SEARCH_KEY = {
+  type: "VIEWER_SET_SEARCH_KEY"
+  tabId: string
+  key: string
 }

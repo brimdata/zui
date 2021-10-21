@@ -22,6 +22,12 @@ export function histogramSearch(): Thunk<Promise<void>> {
     const brimProgram = brim.program(program, pins)
     const query = addEveryCountProc(brimProgram.string(), [from, to])
     const poolId = Current.mustGetPool(state).id
+
+    const tabId = Tabs.getActive(getState())
+    const history = global.tabHistories.get(tabId)
+    const {key} = history.location
+    dispatch(Chart.setSearchKey(tabId, key))
+
     const {response, promise} = dispatch(search({id, query, from, to, poolId}))
     dispatch(handle(response))
     return promise
@@ -33,7 +39,11 @@ function handle(response: SearchResponse): Thunk {
     const tabId = Tabs.getActive(getState())
     const params = Url.getSearchParams(getState())
 
-    if (!params.keep) dispatch(Chart.clear(tabId))
+    if (!params.keep) {
+      const currentSearchKey = Chart.getSearchKey(getState())
+      dispatch(Chart.clear(tabId))
+      dispatch(Chart.setSearchKey(tabId, currentSearchKey))
+    }
     dispatch(Chart.setStatus(tabId, "FETCHING"))
 
     response
