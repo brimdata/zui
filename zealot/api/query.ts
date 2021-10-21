@@ -1,3 +1,4 @@
+import newHeaders from "./headers"
 import {QueryArgs} from "../types"
 import {FetchArgs} from "../fetcher/fetcher"
 
@@ -12,7 +13,7 @@ export default function queryApi(zql: string, args: QueryArgs): FetchArgs {
 }
 
 function getHeaders(args: QueryArgs) {
-  let h = new Headers()
+  let h = newHeaders()
 
   let format
   switch (args.format) {
