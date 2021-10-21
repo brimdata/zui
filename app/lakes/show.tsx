@@ -30,9 +30,8 @@ function InitLake({children}) {
   const dispatch = useDispatch<AppDispatch>()
   const lakeId = useLakeId()
   const workspaceId = useWorkspaceId()
-  const lake = useSelector(Current.getPool)
-
   const [fetching, setFetching] = useState(false)
+  const lake = useSelector(Current.getPool)
 
   useEffect(() => {
     if (lakeId) {

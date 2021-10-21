@@ -52,6 +52,12 @@ test("results complete", () => {
   expect(Viewer.getEndStatus(state)).toBe("COMPLETE")
 })
 
+test("set search key", () => {
+  const state = store.dispatchAll([Viewer.setSearchKey(tabId, "testKey")])
+
+  expect(Viewer.getSearchKey(state)).toBe("testKey")
+})
+
 test("results incomplete", () => {
   const state = store.dispatchAll([Viewer.setEndStatus(tabId, "INCOMPLETE")])
 
