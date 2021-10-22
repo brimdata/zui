@@ -1,5 +1,5 @@
 import {createFetcher} from "./fetcher/fetcher"
-import {archive, query} from "./api/mod"
+import {pools, query} from "./api/mod"
 import {getHost} from "./util/host"
 import {getDefaultQueryArgs} from "./config/query-args"
 import nodeFetch from "node-fetch"
@@ -14,8 +14,6 @@ import {
   PoolLoadArgs
 } from "./types"
 import {Context, Int64, Record, Time} from "./zed"
-import {IndexSearchArgs} from "./api/archive"
-import pools from "./api/pools"
 import {url} from "./util/utils"
 import {parseContentType} from "./fetcher/contentType"
 import {createError} from "./util/error"
@@ -50,15 +48,6 @@ export function createZealot(
     },
     query: (zql: string, args?: Partial<QueryArgs>) => {
       return stream(query(zql, {...queryArgs, ...args}))
-    },
-    // deprecated
-    archive: {
-      search: (args: IndexSearchArgs) => {
-        return stream({
-          ...archive.search(args),
-          enhancers: queryArgs.enhancers
-        })
-      }
     },
     pools: {
       list: async (): Promise<PoolConfig[]> => {
