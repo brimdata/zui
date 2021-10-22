@@ -18,11 +18,14 @@ export default function SearchHeaderChart() {
   )
   const data = useSelector(Chart.getData)
   const status = useSelector(Chart.getStatus)
+  const searchKey = useSelector(Chart.getSearchKey)
 
   const isEmpty = status === "SUCCESS" && data.keys.length === 0
 
   useLayoutEffect(() => {
-    dispatch(histogramSearch())
+    if (status === "INIT" || searchKey !== location.key) {
+      dispatch(histogramSearch())
+    }
   }, [location.key])
 
   if (isEmpty || hasAnalytics) return null

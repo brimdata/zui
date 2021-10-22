@@ -9,11 +9,6 @@ export type TabActions =
   | TABS_ORDER
   | TABS_ACTIVE_CLEAR
 
-export type AddTabData = {
-  workspaceId: string | null
-  poolId: string | null
-}
-
 export type TABS_ADD = {
   type: "TABS_ADD"
   id: string

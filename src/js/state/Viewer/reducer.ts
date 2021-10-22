@@ -8,6 +8,7 @@ const init = (): ViewerState => ({
   records: [],
   endStatus: "INIT",
   status: "INIT",
+  searchKey: "",
   columns: {},
   scrollPos: {x: 0, y: 0},
   selection: {
@@ -33,6 +34,8 @@ export default function(
       return {...state, endStatus: action.status}
     case "VIEWER_STATUS":
       return {...state, status: action.status}
+    case "VIEWER_SET_SEARCH_KEY":
+      return {...state, searchKey: action.key}
     case "VIEWER_COLUMNS":
       return {...state, columns: {...state.columns, ...action.columns}}
     case "VIEWER_SET_COLUMNS":

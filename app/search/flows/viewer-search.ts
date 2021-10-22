@@ -39,13 +39,16 @@ function handle(
   keep = false,
   append = false
 ): Thunk {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     let allColumns: SchemaMap = {}
     let allRecords: zed.Record[] = []
     let count = 0
 
+    // preserve searchKey in case of clear
+    const currentSearchKey = Viewer.getSearchKey(getState())
     if (!keep && !append) {
       dispatch(Viewer.clear(tabId))
+      dispatch(Viewer.setSearchKey(tabId, currentSearchKey))
     }
 
     dispatch(Viewer.setStatus(tabId, "FETCHING"))
@@ -77,6 +80,7 @@ function handle(
       .end(() => {
         if (keep) {
           dispatch(Viewer.clear(tabId))
+          dispatch(Viewer.setSearchKey(tabId, currentSearchKey))
           dispatch(Viewer.setRecords(tabId, allRecords))
           dispatch(Viewer.setColumns(tabId, allColumns))
           dispatch(Columns.touch(allColumns))

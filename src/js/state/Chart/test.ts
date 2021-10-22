@@ -14,6 +14,12 @@ const records = [
   createRecord({ts: new Date(100 * 1000), _path: "dns", count: 300})
 ]
 
+test("set search key", () => {
+  const state = store.dispatchAll([chart.setSearchKey(tabId, "testKey")])
+
+  expect(chart.getSearchKey(state)).toBe("testKey")
+})
+
 test("chart records append", () => {
   const state = store.dispatchAll([
     chart.appendRecords(tabId, [records[0]]),
