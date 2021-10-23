@@ -2,11 +2,11 @@ import newHeaders from "./headers"
 import {QueryArgs} from "../types"
 import {FetchArgs} from "../fetcher/fetcher"
 
-export default function queryApi(zql: string, args: QueryArgs): FetchArgs {
+export default function queryApi(zed: string, args: QueryArgs): FetchArgs {
   return {
     method: "POST",
     path: `/query?${getQueryParams(args)}`,
-    body: JSON.stringify({query: zql}),
+    body: JSON.stringify({query: zed}),
     headers: getHeaders(args),
     signal: args.signal
   }
@@ -15,7 +15,7 @@ export default function queryApi(zql: string, args: QueryArgs): FetchArgs {
 function getHeaders(args: QueryArgs) {
   let h = newHeaders()
 
-  let format
+  let format: string
   switch (args.format) {
     case "zng":
       format = "application/x-zng"
@@ -25,6 +25,9 @@ function getHeaders(args: QueryArgs) {
       break
     case "csv":
       format = "text/csv"
+      break
+    case "json":
+      format = "application/json"
       break
     default:
       format = "application/x-zjson"
