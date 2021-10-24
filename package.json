@@ -158,7 +158,7 @@
     "tree-model": "^1.0.7",
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
-    "zed": "git+https://github.com/brimdata/zed.git#dfebcb77b8dddf500be7f3770ee8537afb026762"
+    "zed": "git+https://github.com/brimdata/zed.git#aedf4b51fc16683dfbed06d16f4548ce3ded8bb5"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
