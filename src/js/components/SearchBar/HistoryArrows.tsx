@@ -5,6 +5,8 @@ import Back from "../icons/back-arrow.svg"
 import Button from "./Button"
 import Forward from "../icons/forward-arrow.svg"
 import {useHistory} from "react-router"
+import TabHistory from "app/router/tab-history"
+import {useDispatch} from "react-redux"
 
 const Wrap = styled.div`
   display: flex;
@@ -14,12 +16,13 @@ const Wrap = styled.div`
 
 export default function HistoryArrows() {
   const history = useHistory()
+  const dispatch = useDispatch()
   // @ts-ignore history definitely has an index
   const canGoBack = history.index > 0
   // @ts-ignore history definitely has an index
   const canGoForward = history.length - 1 != history.index
-  const back = () => history.goBack()
-  const forward = () => history.goForward()
+  const back = () => dispatch(TabHistory.goBack())
+  const forward = () => dispatch(TabHistory.goForward())
 
   return (
     <Wrap>

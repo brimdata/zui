@@ -7,10 +7,14 @@ import Tabs from "../Tabs"
 import {State} from "../types"
 import Workspaces from "../Workspaces"
 import {WorkspacesState} from "../Workspaces/types"
+import {MemoryHistory} from "history"
 
 type Id = string | null
 
-export const getHistory = (state, windowName = global.windowName) => {
+export const getHistory = (
+  state,
+  windowName = global.windowName
+): MemoryHistory => {
   const id = Tabs.getActive(state)
   if (windowName === "search") return global.tabHistories.getOrCreate(id)
   if (windowName === "detail" || windowName === "hidden")

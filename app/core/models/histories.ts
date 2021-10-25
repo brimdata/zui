@@ -25,7 +25,7 @@ export default class Histories {
     return () => this.unlistens.forEach((fn) => fn())
   }
 
-  create(id: string, initialEntries?, initialIndex?) {
+  create(id: string, initialEntries?, initialIndex?): MemoryHistory {
     if (isEmpty(initialEntries)) initialEntries = undefined
     const history = createMemoryHistory({initialEntries, initialIndex})
     this.histories.set(id, history)
