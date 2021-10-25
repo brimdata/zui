@@ -2,20 +2,6 @@ import newHeaders from "./headers"
 import {PoolArgs, PoolLoadArgs} from "../types"
 
 export default {
-  list() {
-    return {
-      headers: newHeaders(),
-      path: "/pool",
-      method: "GET"
-    }
-  },
-  get(poolId: string) {
-    return {
-      headers: newHeaders(),
-      path: `/pool/${poolId}`,
-      method: "GET"
-    }
-  },
   stats(poolId: string) {
     return {
       headers: newHeaders({Accept: "application/x-zjson"}),

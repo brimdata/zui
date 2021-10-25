@@ -51,13 +51,20 @@ export function createZealot(
     },
     pools: {
       list: async (): Promise<PoolConfig[]> => {
-        let values: Response<PoolConfig>[] = await promise(pools.list())
+        let values: Response<PoolConfig>[] = await promise(
+          query("from :pools", {format: "json"})
+        )
         if (!values) return []
         return values.map((res) => res.value)
       },
       get: async (id: string): Promise<PoolConfig> => {
-        let res = await promise(pools.get(id))
-        return res.value
+        let values: Response<PoolConfig>[] = await promise(
+          query(`from :pools | id == ${id} or name == "${id}"`, {
+            format: "json"
+          })
+        )
+        if (!values || values.length == 0) throw new Error("pool not found")
+        return values[0].value
       },
       stats: async (id: string): Promise<PoolStats> => {
         const res = await promise(pools.stats(id))

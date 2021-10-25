@@ -18,7 +18,7 @@ export interface ZealotArgs {
   fetcher: (host: string) => ZFetcher
 }
 
-export type QueryFormat = "zjson" | "zng" | "ndjson" | "csv"
+export type QueryFormat = "zjson" | "zng" | "ndjson" | "csv" | "json"
 
 export type Order = "desc" | "asc"
 
@@ -31,8 +31,8 @@ export interface Response<T> {
 
 export interface QueryArgs {
   format: QueryFormat
-  controlMessages: boolean
-  enhancers: Enhancer[]
+  controlMessages?: boolean
+  enhancers?: Enhancer[]
   signal?: AbortSignal
 }
 
