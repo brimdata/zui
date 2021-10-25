@@ -4,7 +4,7 @@ import useExport from "app/toolbar/hooks/useExport"
 import useView from "app/toolbar/hooks/useView"
 import {Toolbar} from "app/toolbar/toolbar"
 import React, {useLayoutEffect} from "react"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {useLocation} from "react-router"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchHeaderChart from "src/js/components/SearchHeaderChart"
@@ -16,6 +16,7 @@ import SearchBarState from "src/js/state/SearchBar"
 import Url from "src/js/state/Url"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 import CommitNotification from "src/js/components/CommitNotification"
+import Current from "src/js/state/Current"
 
 function syncReduxWithUrl() {
   return function(dispatch, getState) {
@@ -41,14 +42,15 @@ function syncReduxWithUrl() {
 
 export function InitSearchParams({children}) {
   const dispatch = useDispatch()
-  const location = useLocation()
+  const globalLocation = useSelector(Current.getLocation)
+  const routerLocation = useLocation()
 
   useLayoutEffect(() => {
     /**
      * Each time the url changes, we update the ui components to reflect whats in the url,
      */
     dispatch(syncReduxWithUrl())
-  }, [location.key])
+  }, [globalLocation.key, routerLocation.key])
 
   return children
 }

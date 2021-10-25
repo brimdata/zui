@@ -1,7 +1,7 @@
 import initialViewerSearch from "app/search/flows/initial-viewer-search"
 import React, {useLayoutEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {useLocation} from "react-router"
+import Current from "src/js/state/Current"
 import Viewer from "src/js/state/Viewer"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import ResultsTable from "./ResultsTable"
@@ -9,7 +9,7 @@ import ResultsTable from "./ResultsTable"
 export default function SearchResults() {
   const {ref, rect} = useResizeObserver()
   const dispatch = useDispatch()
-  const location = useLocation()
+  const location = useSelector(Current.getLocation)
   const status = useSelector(Viewer.getStatus)
   const viewerKey = useSelector(Viewer.getSearchKey)
 
