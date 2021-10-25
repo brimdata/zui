@@ -27,6 +27,8 @@ test("get pool", () => {
 
 test("get non-existant pool", () => {
   return withLake(async (zealot: any) => {
-    await expect(zealot.pools.get("pool1")).rejects.toEqual(new Error("pool not found"))
+    await expect(zealot.pools.get("pool1")).rejects.toEqual(
+      new Error("pool not found")
+    )
   })
 })
