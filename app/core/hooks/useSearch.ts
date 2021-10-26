@@ -16,6 +16,7 @@ export default function useSearch(query: string, deps?: any[]): R {
     const {response, abort} = dispatch(search({query}))
     response.chan(0, ({rows}) => setRecords(rows))
     response.status((status) => setIsFetching(status === "FETCHING"))
+    response.abort(() => response.clearCallbacks())
     return abort
   }, deps)
 

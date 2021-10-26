@@ -28,6 +28,7 @@ export function handle(request: Promise<ZResponse>) {
     function errored(e) {
       flushBufferLazy.cancel()
       if (abortError(e)) {
+        response.emit("abort")
         response.emit("status", "ABORTED")
         resolve()
       } else {

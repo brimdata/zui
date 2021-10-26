@@ -29,6 +29,7 @@ export const Md5Panel = ({record}: Props) => {
       .chan(1, ({rows}) => setMd5(rows))
       .chan(2, ({rows}) => setRx(rows))
       .chan(3, ({rows}) => setTx(rows))
+      .abort(() => response.clearCallbacks())
 
     return abort
   }, [logMd5])
