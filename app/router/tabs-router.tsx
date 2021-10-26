@@ -11,6 +11,7 @@ type Props = {
   tabId: string
   histories: Histories
   staticContext?: any
+  listen: (location: Location) => void
 }
 
 type State = {
@@ -47,6 +48,7 @@ export default class TabsRouter extends React.Component<Props, State> {
       this.unlisten = this.props.histories.listen((location) => {
         if (this._isMounted) {
           this.setState({location})
+          this.props.listen(location)
         } else {
           this._pendingLocation = location
         }

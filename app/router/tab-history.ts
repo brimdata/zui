@@ -1,5 +1,4 @@
 import Current from "src/js/state/Current"
-import Url from "src/js/state/Url"
 
 /**
  * We've got to dispatch the url changed event because useSelector
@@ -11,21 +10,17 @@ import Url from "src/js/state/Url"
 export default {
   push: (url) => (dispatch, getState) => {
     Current.getHistory(getState()).push(url)
-    dispatch(Url.changed())
   },
 
   replace: (url) => (dispatch, getState) => {
     Current.getHistory(getState()).replace(url)
-    dispatch(Url.changed())
   },
 
   goBack: () => (dispatch, getState) => {
     Current.getHistory(getState()).goBack()
-    dispatch(Url.changed())
   },
 
   goForward: () => (dispatch, getState) => {
     Current.getHistory(getState()).goForward()
-    dispatch(Url.changed())
   }
 }

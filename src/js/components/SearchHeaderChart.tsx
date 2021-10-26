@@ -1,14 +1,14 @@
 import {histogramSearch} from "app/search/flows/histogram-search"
 import React, {useLayoutEffect, useMemo} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {useLocation} from "react-router"
 import brim from "../brim"
 import Chart from "../state/Chart"
+import Current from "../state/Current"
 import Url from "../state/Url"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 
 export default function SearchHeaderChart() {
-  const location = useLocation()
+  const location = useSelector(Current.getLocation)
   const dispatch = useDispatch()
   const {program, pins} = useSelector(Url.getSearchParams)
 
