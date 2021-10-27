@@ -16,7 +16,9 @@ const transHavelock = transparentize(0.75, havelock as string)
 
 const BG = styled.span`
   cursor: default;
-  display: inline-block;
+  display: flex;
+  height: 100%;
+  align-items: center;
   min-width: 7px;
   &:hover {
     background: ${transHavelock};
@@ -79,17 +81,19 @@ export function PrimitiveValue(props: ValueProps) {
   )
 }
 
-const StyledErrorField = styled.span`
+const StyledErrorField = styled.div`
   display: inline-flex;
   background-color: var(--alert-1);
   border-radius: 3px;
   color: white;
-  height: 18px;
+  height: 17px;
+  justify-content: center;
   align-items: center;
-  padding: 0 6px;
+  padding: 0 9px;
 
   svg {
     margin-right: 8px;
+    margin-top: 1px;
     fill: white;
     opacity: 0.6;
     width: 11px;
