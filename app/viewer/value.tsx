@@ -1,4 +1,5 @@
 import {useZedFormatter} from "app/core/format"
+import Icon from "app/core/Icon"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
@@ -78,14 +79,41 @@ export function PrimitiveValue(props: ValueProps) {
   )
 }
 
-function renderValue(props, format) {
-  if (isPath(props.field.name, props.field.value)) {
-    return <ZeekPath {...props} />
-  } else if (isEventType(props.field.name, props.field.value)) {
-    return <SuricataEventType {...props} />
-  } else {
-    return format(props.value as zed.Primitive)
+const StyledErrorField = styled.span`
+  display: inline-flex;
+  background-color: var(--alert-1);
+  border-radius: 3px;
+  color: white;
+  height: 18px;
+  align-items: center;
+  padding: 0 6px;
+
+  svg {
+    margin-right: 8px;
+    fill: white;
+    opacity: 0.6;
+    width: 11px;
+    height: 11px;
   }
+`
+
+const ErrorField = (props) => {
+  return (
+    <StyledErrorField>
+      <Icon name="warning" />
+      <span>{props.field.value.toString()}</span>
+    </StyledErrorField>
+  )
+}
+
+function renderValue(props, format) {
+  if (props.field?.data instanceof zed.Error) return <ErrorField {...props} />
+  if (isPath(props.field.name, props.field.value))
+    return <ZeekPath {...props} />
+  if (isEventType(props.field.name, props.field.value))
+    return <SuricataEventType {...props} />
+
+  return format(props.value as zed.Primitive)
 }
 
 export function SetValue(props: ValueProps) {
