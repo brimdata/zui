@@ -60,10 +60,10 @@ jobs:
           npx electron-builder --linux
       - name: Persist Linux packages
         if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: linux-release
-          path: ./dist/installers
+          path: dist/installers/Brim-*
 
   integration_test_centos:
     runs-on: ubuntu-18.04
