@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: linux-release
-          path: ./dist/installers
+          path: dist/installers/Brim-*
 
   integration_test_centos:
     runs-on: ubuntu-18.04
