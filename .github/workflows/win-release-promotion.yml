@@ -30,7 +30,7 @@ jobs:
         CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
       run: gsutil cp -r gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/rc-${{ steps.extract_tag.outputs.tag }}/windows .
     - name: Upload release candidate artifacts to GitHub Releases
-      uses: svenstaro/upload-release-action@1.1.0
+      uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref }}

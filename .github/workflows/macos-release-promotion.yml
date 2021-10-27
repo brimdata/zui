@@ -21,7 +21,7 @@ jobs:
     - name: Copy artifacts from Google Cloud Storage bucket to GitHub Release page
       run: gsutil cp -r gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/rc-${{ steps.extract_tag.outputs.tag }}/macos .
     - name: Upload release candidate artifacts to GitHub Releases
-      uses: svenstaro/upload-release-action@1.1.0
+      uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref }}

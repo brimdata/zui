@@ -17,7 +17,7 @@ jobs:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
       - name: setup node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - uses: actions/setup-go@v2
@@ -60,7 +60,7 @@ jobs:
           npx electron-builder --linux
       - name: Persist Linux packages
         if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: linux-release
           path: ./dist/installers
@@ -90,7 +90,7 @@ jobs:
         with:
           go-version: '1.16'
       - name: setup node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - name: Set NPM Cache Directory
@@ -112,9 +112,10 @@ jobs:
       - run: npm install --no-audit --unsafe-perm
         # Installing Zed requires unsafe-perm when running as root.
       - name: Download rpm package
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: linux-release
+          path: linux-release
       - name: Integration Tests (Centos 8)
         run: |
           dnf install -y ./linux-release/Brim*.rpm
@@ -134,7 +135,7 @@ jobs:
         with:
           go-version: '1.16'
       - name: setup node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       - name: Set NPM Cache Directory
@@ -170,9 +171,10 @@ jobs:
       #        shell: bash
       - name: Download Linux packages
         if: runner.os == 'Linux'
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: linux-release
+          path: linux-release
       - name: Integration Tests (Debian Linux)
         if: runner.os == 'Linux'
         run: |
@@ -190,7 +192,7 @@ jobs:
         run: npm run itest -- --ci --forceExit
         env:
           WORKSPACE: /var/tmp/brimdata
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
