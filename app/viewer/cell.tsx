@@ -5,6 +5,9 @@ import styled from "styled-components"
 
 const BG = styled.div`
   overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
 `
 
 const getTooltipStyle = (el: Element) => {
