@@ -28,8 +28,10 @@ export function handle(request: Promise<ZResponse>) {
     function errored(e) {
       flushBufferLazy.cancel()
       if (abortError(e)) {
-        response.emit("abort")
         response.emit("status", "ABORTED")
+        // NOTE: by clearing callbacks here, consumers of search should expect
+        // the aborted status event to be the last actionable emission
+        response.clearCallbacks()
         resolve()
       } else {
         isErrSet = true

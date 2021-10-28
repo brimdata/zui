@@ -24,12 +24,14 @@ export const Md5Panel = ({record}: Props) => {
   useEffect(() => {
     const {response, abort} = dispatch(md5Search(logMd5))
     response
-      .status(setStatus)
+      .status((status) => {
+        if (status === "ABORTED") return
+        setStatus(status)
+      })
       .chan(0, ({rows}) => setFilenames(rows))
       .chan(1, ({rows}) => setMd5(rows))
       .chan(2, ({rows}) => setRx(rows))
       .chan(3, ({rows}) => setTx(rows))
-      .abort(() => response.clearCallbacks())
 
     return abort
   }, [logMd5])
