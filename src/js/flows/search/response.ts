@@ -19,6 +19,9 @@ export class SearchResponse {
     this.callbacks = new Map<EventNames, Function>()
   }
 
+  clearCallbacks() {
+    this.callbacks.clear()
+  }
   chan(num: number, func: (data: RecordCallbackRet) => void) {
     this.callbacks.set(num, func)
     return this
@@ -45,10 +48,6 @@ export class SearchResponse {
   }
   error(func: (arg0: string) => void) {
     this.callbacks.set("error", func)
-    return this
-  }
-  abort(func: () => void) {
-    this.callbacks.set("abort", func)
     return this
   }
   warning(func: (arg0: string) => void) {
