@@ -36,6 +36,7 @@ export class SearchWindow implements BrimWindow {
       minWidth: 480,
       minHeight: 100,
       webPreferences: {
+        contextIsolation: false,
         nodeIntegration: true,
         experimentalFeatures: true,
         enableRemoteModule: true

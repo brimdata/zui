@@ -14,9 +14,9 @@ export default function() {
       log.error(`Security Warning: Prevented navigation to ${url}`)
     })
 
-    contents.on("new-window", (e) => {
-      e.preventDefault()
+    contents.setWindowOpenHandler(() => {
       log.error("Security Warning: Prevented new window from renderer")
+      return {action: "deny"}
     })
   })
 }
