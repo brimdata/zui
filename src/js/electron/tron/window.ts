@@ -30,6 +30,7 @@ function aboutWindow() {
     width: 360,
     height: 360,
     webPreferences: {
+      contextIsolation: false,
       nodeIntegration: true,
       enableRemoteModule: true
     }
@@ -44,6 +45,7 @@ function hiddenWindow() {
   const win = new BrowserWindow({
     show: false,
     webPreferences: {
+      contextIsolation: false,
       nodeIntegration: true,
       enableRemoteModule: true
     }
@@ -61,6 +63,7 @@ function detailWindow(params) {
     height: 360,
     minWidth: 500,
     webPreferences: {
+      contextIsolation: false,
       nodeIntegration: true,
       enableRemoteModule: true
     }
