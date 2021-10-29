@@ -143,7 +143,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   }
 
   const onGroupClick = (e) => {
-    console.log("group click")
     e.stopPropagation()
     handlers.toggle(e)
   }

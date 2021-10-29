@@ -1,5 +1,4 @@
 import {nanoid} from "@reduxjs/toolkit"
-import {id} from "date-fns/locale"
 import {includes} from "lodash"
 import React, {ChangeEvent, useEffect, useRef, useState} from "react"
 import {Tree, TreeApi} from "react-arborist"
