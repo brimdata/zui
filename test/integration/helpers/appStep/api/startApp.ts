@@ -1,7 +1,6 @@
 import {Application} from "spectron"
-
-import logStep from "../util/logStep"
 import {selectors} from "../../integration"
+import logStep from "../util/logStep"
 
 export const waitForNewTab = (app: Application) =>
   logStep("wait for new tab to appear", async () =>
@@ -10,5 +9,6 @@ export const waitForNewTab = (app: Application) =>
 
 export default async (app: Application) => {
   await logStep("starting app", () => app.start())
+  await app.client.switchWindow("Brim")
   return waitForNewTab(app)
 }
