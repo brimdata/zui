@@ -1,5 +1,5 @@
+import DropdownArrow from "src/js/icons/DropdownArrow"
 import styled from "styled-components"
-import Arrow from "../../icons/Arrow"
 
 export const StyledSection = styled.section`
   position: relative;
@@ -47,14 +47,14 @@ export const Title = styled.label`
   ${(props) => props.theme.typography.headingList}
 `
 
-export const StyledArrow = styled(Arrow)`
-  fill: var(--aqua);
+export const StyledArrow = styled(DropdownArrow)`
+  stroke: var(--aqua);
   opacity: 0.3;
   width: 8px;
   height: 8px;
+  display: block;
   margin-left: 12px;
-  transform: ${(props) => (props.show ? `rotate(90deg)` : "")};
-  transition: transform 150ms;
+  transform: ${(props) => (props.show ? `rotate(0deg)` : "rotate(-90deg)")};
 `
 
 export const ClickRegion = styled.div`

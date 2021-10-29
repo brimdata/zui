@@ -3,7 +3,6 @@ import {MenuItemConstructorOptions, remote} from "electron"
 import React, {useLayoutEffect, useRef} from "react"
 import toast from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux"
-import DropdownArrow from "src/js/icons/DropdownArrow"
 import lib from "src/js/lib"
 import styled from "styled-components"
 import {submitSearch} from "../../flows/submitSearch/mod"
@@ -34,13 +33,12 @@ const BG = styled.div`
   user-select: none;
   outline: none;
 
-  &:active:not(.isSelected) {
-    background: rgba(0, 0, 0, 0.03);
-  }
-
   &.isSelected {
     background: var(--havelock);
     color: white;
+  }
+  &.isOverFolder {
+    background: hsla(0 0% 0% / 0.04);
   }
 `
 
@@ -84,17 +82,17 @@ const StyledItem = styled.div<{isSelected: boolean}>`
 
   ${GroupArrow} {
     opacity: ${(p) => (p.isSelected ? 1 : 0.45)};
-    fill: ${(p) => (p.isSelected ? "white" : "var(--slate)")};
+    fill: ${(p) => (p.isSelected ? "white" : "var(--lead)")};
   }
 
   ${Folder}, ${StarNoFillIcon} {
     margin-right: 6px;
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
   }
 
   ${Folder} {
-    fill: ${(p) => (p.isSelected ? "white" : "var(--slate)")};
+    fill: ${(p) => (p.isSelected ? "white" : "var(--lead)")};
   }
 
   ${StarNoFillIcon} {
@@ -145,8 +143,8 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   }
 
   const onGroupClick = (e) => {
+    console.log("group click")
     e.stopPropagation()
-    dispatch(Queries.toggleGroup(data.id))
     handlers.toggle(e)
   }
 

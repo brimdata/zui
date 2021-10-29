@@ -1,15 +1,22 @@
+import {nanoid} from "@reduxjs/toolkit"
+import {id} from "date-fns/locale"
 import {includes} from "lodash"
-import React, {ChangeEvent, useEffect, useState} from "react"
+import React, {ChangeEvent, useEffect, useRef, useState} from "react"
+import {Tree, TreeApi} from "react-arborist"
 import {useDispatch, useSelector} from "react-redux"
+import styled from "styled-components"
 import TreeModel from "tree-model"
-import {Tree} from "react-arborist"
 import useResizeObserver from "use-resize-observer"
 import DropdownArrow from "../../icons/DropdownArrow"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Current from "../../state/Current"
+import Modal from "../../state/Modal"
 import Queries from "../../state/Queries"
+import {isBrimLib} from "../../state/Queries/flows"
+import {parseJSONLib} from "../../state/Queries/parsers"
 import {Group, Query} from "../../state/Queries/types"
 import EmptySection from "../common/EmptySection"
+import useCallbackRef from "../hooks/useCallbackRef"
 import usePopupMenu from "../hooks/usePopupMenu"
 import Item from "../SideBar/Item"
 import {
@@ -22,12 +29,6 @@ import {
   StyledViewSelect,
   Title
 } from "./common"
-import styled from "styled-components"
-import Modal from "../../state/Modal"
-import {nanoid} from "@reduxjs/toolkit"
-import useCallbackRef from "../hooks/useCallbackRef"
-import {parseJSONLib} from "../../state/Queries/parsers"
-import {isBrimLib} from "../../state/Queries/flows"
 
 const StyledPlus = styled.div`
   margin-right: 8px;
@@ -43,10 +44,10 @@ const StyledPlus = styled.div`
   ${(props) => props.theme.hoverQuiet}
 `
 
-const NewActionsDropdown = () => {
+const NewActionsDropdown = (props: {tree: TreeApi | undefined}) => {
+  const {tree} = props
   const dispatch = useDispatch()
   const [importer, ref] = useCallbackRef<HTMLButtonElement>()
-
   const template = [
     {
       label: "New Query",
@@ -54,18 +55,22 @@ const NewActionsDropdown = () => {
     },
     {
       label: "New Folder",
-      click: () =>
+      click: () => {
+        const id = nanoid()
         dispatch(
           Queries.addItem(
             {
               isOpen: true,
               items: [],
               name: "New Folder",
-              id: nanoid()
+              id
             },
             "root"
           )
         )
+        tree?.scrollToId(id)
+        tree?.edit(id)
+      }
     },
     {
       label: "Import from JSON...",
@@ -138,6 +143,7 @@ const TagsViewSelect = ({selected, tags, onSelect}) => {
 }
 
 function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
+  const tree = useRef()
   const dispatch = useDispatch()
   const [selectedTag, setSelectedTag] = useState("All")
   const currentPool = useSelector(Current.getPool)
@@ -194,17 +200,20 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
               tags={["All", ...tags]}
               onSelect={onTagSelect}
             />
-            <NewActionsDropdown />
+            <NewActionsDropdown tree={tree.current} />
           </>
         )}
       </SectionHeader>
       <SectionContents ref={ref}>
         {currentPool ? (
           <Tree
-            indent={16}
+            ref={tree}
+            indent={12}
             data={queries}
-            childrenAccessor="items"
-            isOpenAccessor="isOpen"
+            getChildren="items"
+            isOpen="isOpen"
+            isDraggable={(d) => !dispatch(isBrimLib([d.id]))}
+            isDroppable={(d) => !dispatch(isBrimLib([d.id]))}
             rowHeight={24}
             width={width}
             height={height}
@@ -212,6 +221,9 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
             openByDefault
             onMove={handleMove}
             onEdit={handleRename}
+            onToggle={(id, value) => {
+              dispatch(Queries.toggleGroup(id, value))
+            }}
           >
             {Item}
           </Tree>

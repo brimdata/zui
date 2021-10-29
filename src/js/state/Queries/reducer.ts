@@ -60,7 +60,8 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
         console.error("cannot open/close queries, only groups")
         return
       }
-      node.model.isOpen = !node.model.isOpen
+      node.model.isOpen =
+        action.value === undefined ? !node.model.isOpen : action.value
       return queriesTree.model
     case "$QUERIES_MOVE_ITEMS":
       moveItems(queriesTree, action)

@@ -57,4 +57,5 @@ export interface QUERIES_MOVE_ITEMS {
 export interface QUERIES_TOGGLE_GROUP {
   type: "$QUERIES_TOGGLE_GROUP"
   groupId: string
+  value?: boolean
 }
