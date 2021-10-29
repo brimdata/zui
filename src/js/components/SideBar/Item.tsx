@@ -1,22 +1,22 @@
 import classNames from "classnames"
-import React, {useLayoutEffect, useRef} from "react"
-import styled from "styled-components"
-import Notice from "../../state/Notice"
-import {useDispatch, useSelector} from "react-redux"
-import Current from "../../state/Current"
-import SearchBar from "../../state/SearchBar"
-import {submitSearch} from "../../flows/submitSearch/mod"
 import {MenuItemConstructorOptions, remote} from "electron"
+import React, {useLayoutEffect, useRef} from "react"
 import toast from "react-hot-toast"
-import Modal from "../../state/Modal"
-import Queries from "../../state/Queries"
-import usePopupMenu from "../hooks/usePopupMenu"
+import {useDispatch, useSelector} from "react-redux"
 import lib from "src/js/lib"
+import styled from "styled-components"
+import {submitSearch} from "../../flows/submitSearch/mod"
 import Folder from "../../icons/Folder"
-import {StyledArrow} from "../LeftPane/common"
 import StarNoFillIcon from "../../icons/StarNoFillIcon"
-import useOutsideClick from "../hooks/useOutsideClick"
+import Current from "../../state/Current"
+import Modal from "../../state/Modal"
+import Notice from "../../state/Notice"
+import Queries from "../../state/Queries"
 import {isBrimLib} from "../../state/Queries/flows"
+import SearchBar from "../../state/SearchBar"
+import useOutsideClick from "../hooks/useOutsideClick"
+import usePopupMenu from "../hooks/usePopupMenu"
+import {StyledArrow} from "../LeftPane/common"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -33,17 +33,12 @@ const BG = styled.div`
   user-select: none;
   outline: none;
 
-  &:hover:not(.isSelected) {
-    background: rgba(0, 0, 0, 0.03);
-  }
-
-  &:active:not(.isSelected) {
-    background: rgba(0, 0, 0, 0.08);
-  }
-
   &.isSelected {
     background: var(--havelock);
     color: white;
+  }
+  &.isOverFolder {
+    background: hsla(0 0% 0% / 0.04);
   }
 `
 
@@ -87,17 +82,17 @@ const StyledItem = styled.div<{isSelected: boolean}>`
 
   ${GroupArrow} {
     opacity: ${(p) => (p.isSelected ? 1 : 0.45)};
-    fill: ${(p) => (p.isSelected ? "white" : "var(--slate)")};
+    fill: ${(p) => (p.isSelected ? "white" : "var(--lead)")};
   }
 
   ${Folder}, ${StarNoFillIcon} {
     margin-right: 6px;
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
   }
 
   ${Folder} {
-    fill: ${(p) => (p.isSelected ? "white" : "var(--slate)")};
+    fill: ${(p) => (p.isSelected ? "white" : "var(--lead)")};
   }
 
   ${StarNoFillIcon} {
@@ -149,7 +144,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
 
   const onGroupClick = (e) => {
     e.stopPropagation()
-    dispatch(Queries.toggleGroup(data.id))
     handlers.toggle(e)
   }
 
@@ -159,7 +153,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
         Notice.set({type: "NoPoolError", message: "No Pool Selected"})
       )
 
-    handlers.select(e)
+    handlers.select(e, false)
     if (!value) return
     runQuery(value)
   }

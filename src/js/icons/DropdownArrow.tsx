@@ -1,14 +1,10 @@
 import React from "react"
 
-export default function DropdownArrow() {
+export default function DropdownArrow(props: any) {
+  // clean this up
+  const {show: _show, isVisible: _isVis, ...rest} = props
   return (
-    <svg
-      className="dropdown-arrow"
-      width="9px"
-      height="9px"
-      viewBox="0 0 9 9"
-      version="1.1"
-    >
+    <svg width="9px" height="9px" viewBox="0 0 9 9" version="1.1" {...rest}>
       <g
         strokeWidth="1.5"
         fill="none"

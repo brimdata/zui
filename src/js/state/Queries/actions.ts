@@ -38,8 +38,9 @@ export default {
     parentId,
     index
   }),
-  toggleGroup: (groupId: string): QUERIES_TOGGLE_GROUP => ({
+  toggleGroup: (groupId: string, value?: boolean): QUERIES_TOGGLE_GROUP => ({
     type: "$QUERIES_TOGGLE_GROUP",
-    groupId
+    groupId,
+    value
   })
 }
