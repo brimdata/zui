@@ -36,7 +36,7 @@ function InitLake({children}) {
     if (poolId) dispatch(initPool(poolId))
   }, [poolId])
 
-  if (!pool.hasStats()) return null
   if (!pool) return <Redirect to={workspacePath(workspaceId)} />
+  if (pool && !pool.hasStats()) return null
   return children
 }
