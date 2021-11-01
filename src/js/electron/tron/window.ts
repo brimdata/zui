@@ -31,7 +31,8 @@ function aboutWindow() {
     height: 360,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      contextIsolation: false
     }
   })
   win.setMenu(null)
@@ -45,7 +46,8 @@ function hiddenWindow() {
     show: false,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      contextIsolation: false
     }
   })
   win.setMenu(null)
@@ -62,7 +64,8 @@ function detailWindow(params) {
     minWidth: 500,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      enableRemoteModule: true,
+      contextIsolation: false
     }
   })
   if (size) {
