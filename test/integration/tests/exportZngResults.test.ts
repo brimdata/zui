@@ -22,7 +22,7 @@ describe("exporting tests", () => {
     await brim.click(defaultModalButton)
     await waitForHook(brim.getApp(), "export-complete")
 
-    expect(fsExtra.statSync(filePath).size).toBeGreaterThan(0)
+    expect(fsExtra.statSync(filePath).size).toBe(4084)
     await fsExtra.remove(filePath)
     done()
   })
