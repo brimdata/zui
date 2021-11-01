@@ -16,6 +16,7 @@ import Url from "src/js/state/Url"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 import CommitNotification from "src/js/components/CommitNotification"
 import Current from "src/js/state/Current"
+import useLakeId from "app/router/hooks/use-lake-id"
 
 function setSearchParamsFromUrl() {
   return function(dispatch, getState) {
@@ -60,7 +61,7 @@ export default function SearchHome() {
   const exportAction = useExport()
   const columns = useColumns()
   const pluginButtons = usePluginToolbarItems("search")
-
+  const poolId = useLakeId()
   const actions = [...pluginButtons, exportAction, columns, view]
 
   return (
@@ -72,7 +73,7 @@ export default function SearchHome() {
       </SearchPageHeader>
 
       <SearchResults />
-      <CommitNotification />
+      <CommitNotification key={poolId} />
     </InitSearchParams>
   )
 }

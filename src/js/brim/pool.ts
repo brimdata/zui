@@ -11,6 +11,9 @@ export default function pool(info: Pool) {
     defaultSpanArgs() {
       return this.everythingSpan()
     },
+    hasStats() {
+      return info.size !== undefined
+    },
     empty() {
       if (!info.min_time || !info.max_time) return true
       return (
