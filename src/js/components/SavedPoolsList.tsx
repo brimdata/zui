@@ -36,36 +36,36 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
   const workspaceId = useSelector(Current.getWorkspaceId)
   const currentPoolId = useSelector(Current.getPoolId)
 
-  const s = brim.pool(pool)
+  const p = brim.pool(pool)
   const history = useHistory()
   const onClick = (e) => {
     e.preventDefault()
     history.push(
-      lakeSearchPath(s.id, workspaceId, {
-        spanArgs: s.empty() ? undefined : s.defaultSpanArgs()
+      lakeSearchPath(p.id, workspaceId, {
+        spanArgs: p.empty() ? undefined : p.defaultSpanArgs()
       })
     )
   }
 
-  const progress = s.ingesting() && (
+  const progress = p.ingesting() && (
     <div className="small-progress-bar">
-      <ProgressIndicator percent={s.ingestProgress()} />
+      <ProgressIndicator percent={p.ingestProgress()} />
     </div>
   )
-  const current = s.id === currentPoolId
+  const current = p.id === currentPoolId
   const testProps = current ? currentPoolItem.props : poolItem.props
   return (
     <li>
       <a
         href="#"
         onClick={onClick}
-        onContextMenu={() => dispatch(showPoolContextMenu(s))}
+        onContextMenu={() => dispatch(showPoolContextMenu(p))}
         className={classNames("pool-link", {"current-pool-link": current})}
         {...testProps}
       >
         <NameWrap>
           <PoolIcon className="pool-icon" />
-          <span className="name">{s.name}</span>
+          <span className="name">{p.name}</span>
         </NameWrap>
         {progress}
       </a>

@@ -2,7 +2,7 @@ import useLakeId from "app/router/hooks/use-lake-id"
 import useWorkspaceId from "app/router/hooks/use-workspace-id"
 import {lakeSearch} from "app/router/routes"
 import {workspacePath} from "app/router/utils/paths"
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Redirect, Route, Switch, useRouteMatch} from "react-router"
 import {initPool} from "src/js/flows/initPool"
@@ -28,21 +28,15 @@ export default function LakeShow() {
 
 function InitLake({children}) {
   const dispatch = useDispatch<AppDispatch>()
-  const lakeId = useLakeId()
+  const poolId = useLakeId()
   const workspaceId = useWorkspaceId()
-  const [fetching, setFetching] = useState(false)
-  const lake = useSelector(Current.getPool)
+  const pool = useSelector(Current.getPool)
 
   useEffect(() => {
-    if (lakeId) {
-      setFetching(true)
-      dispatch(initPool(lakeId)).finally(() => setFetching(false))
-    } else {
-      setFetching(false)
-    }
-  }, [lakeId])
+    if (poolId) dispatch(initPool(poolId))
+  }, [poolId])
 
-  if (fetching) return null
-  if (!lake) return <Redirect to={workspacePath(workspaceId)} />
+  if (!pool.hasStats()) return null
+  if (!pool) return <Redirect to={workspacePath(workspaceId)} />
   return children
 }
