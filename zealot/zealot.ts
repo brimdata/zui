@@ -31,6 +31,9 @@ export function createZealot(
     events: () => {
       return new EventSource(`http://${host}/events`)
     },
+    url: (path: string): string => {
+      return url(host, path)
+    },
     setQueryOptions: (args: Partial<QueryArgs>) => {
       queryArgs = {...queryArgs, ...args}
     },

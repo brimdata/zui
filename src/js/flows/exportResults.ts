@@ -1,5 +1,6 @@
 import fs from "fs"
-import http from "http"
+import {pipeline} from "stream"
+import util from "util"
 import {QueryFormat} from "zealot"
 import brim from "../brim"
 import Columns from "../state/Columns"
@@ -10,6 +11,9 @@ import Tab from "../state/Tab"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 import {annotateQuery} from "./search/mod"
+import fetch from "node-fetch"
+
+const streamPipeline = util.promisify(pipeline)
 
 function cutColumns(program, columns) {
   if (columns.allVisible()) {
@@ -32,7 +36,7 @@ export function prepareProgram(format, program, columns) {
 export default (
   filePath: string,
   format: QueryFormat
-): Thunk<Promise<string>> => (dispatch, getState) => {
+): Thunk<Promise<string>> => async (dispatch, getState): Promise<string> => {
   const zealot = dispatch(getZealot())
   const poolId = Current.getPoolId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
@@ -42,10 +46,9 @@ export default (
   const [from, to] = Tab.getSpan(getState())
     .map(brim.time)
     .map((t) => t.toDate())
-  const {host, port} = Current.mustGetWorkspace(getState())
 
   dispatch(SystemTest.hook("export-start"))
-  const {body, path, method} = zealot.inspect.query(
+  const {body, path, method, headers} = zealot.inspect.query(
     annotateQuery(program, {
       from,
       to,
@@ -56,26 +59,17 @@ export default (
       controlMessages: false
     }
   )
-  return new Promise<string>((resolve, reject) => {
-    http
-      .request(
-        {
-          method,
-          path,
-          host,
-          port
-        },
-        (res) => {
-          const fileStream = fs
-            .createWriteStream(filePath)
-            .on("error", reject)
-            .on("close", () => resolve(filePath))
-          res.pipe(fileStream)
-        }
-      )
-      .write(body)
-  }).then((result) => {
-    dispatch(SystemTest.hook("export-complete"))
-    return result
-  })
+  const res = await fetch(zealot.url(path), {method, body, headers})
+  if (!res.ok) {
+    const err = await res.json()
+    throw new Error(err)
+  }
+  try {
+    await streamPipeline(res.body, fs.createWriteStream(filePath))
+  } catch (e) {
+    fs.unlink(filePath, () => {})
+    throw e
+  }
+  dispatch(SystemTest.hook("export-complete"))
+  return filePath
 }
