@@ -158,14 +158,14 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     handlers.toggle(e)
   }
 
-  const onItemClick = (e) => {
+  const onItemClick = (e: React.MouseEvent) => {
     if (!currentPool)
       return dispatch(
         Notice.set({type: "NoPoolError", message: "No Pool Selected"})
       )
 
     handlers.select(e, false)
-    if (value && !e.meta && !e.shift) {
+    if (value && !e.metaKey && !e.shiftKey) {
       runQuery(value)
     }
   }
