@@ -32,24 +32,24 @@ const BG = styled.div`
   cursor: default;
   user-select: none;
   outline: none;
-  transition: background-color 100ms;
+
+  &:hover {
+    background-color: hsla(0 0% 0% / 0.03);
+  }
+  &:active {
+    background-color: hsla(0 0% 0% / 0.08);
+  }
 
   &.isSelected {
-    transition: none;
     background-color: var(--havelock);
     color: white;
   }
   &.isOverFolder {
     background-color: hsla(0 0% 0% / 0.06);
   }
-  &:hover:not(.isDragging):not(.isSelected) {
-    background-color: hsla(0 0% 0% / 0.03);
-  }
-  &.isDragging {
-    background-color: hsla(0 0% 0% / 0);
-  }
-  &:active:not(.isDragging):not(.isSelected) {
-    background-color: hsla(0 0% 0% / 0.08);
+
+  &.isDragging:not(.isSelected) {
+    background-color: inherit;
   }
 `
 
