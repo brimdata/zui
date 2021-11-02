@@ -34,3 +34,12 @@ test("subtract", () => {
     sec: -1
   })
 })
+
+test("relative time", () => {
+  const ts = brim.time("now - 1y").toTs()
+
+  expect(ts).toEqual({
+    ns: expect.any(Number),
+    sec: expect.any(Number)
+  })
+})
