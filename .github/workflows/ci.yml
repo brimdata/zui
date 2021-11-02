@@ -192,6 +192,7 @@ jobs:
         run: npm run itest -- --ci --forceExit
         env:
           WORKSPACE: /var/tmp/brimdata
+          BRIM_ITEST: true
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
