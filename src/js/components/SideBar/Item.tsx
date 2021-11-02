@@ -129,6 +129,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const currentPool = useSelector(Current.getPool)
   const {isEditing, isSelected} = state
   const {value, id} = data
+  const isGroup = "items" in data
 
   const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
   const hasMultiSelected = selected.length > 1
@@ -161,12 +162,12 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Run Query",
-      enabled: !hasMultiSelected && !!currentPool,
+      enabled: !hasMultiSelected && !!currentPool && !isGroup,
       click: () => runQuery(value)
     },
     {
       label: "Copy Query",
-      enabled: !hasMultiSelected,
+      enabled: !hasMultiSelected && !isGroup,
       click: () => {
         lib.doc.copyToClipboard(value)
         toast("Query copied to clipboard")
@@ -180,7 +181,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     },
     {
       label: "Edit",
-      enabled: !hasMultiSelected && !isBrimItem,
+      enabled: !hasMultiSelected && !isBrimItem && !isGroup,
       click: () => {
         // only edit queries
         if ("items" in data) return
@@ -212,7 +213,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   ]
 
   const menu = usePopupMenu(template)
-  const isGroup = "items" in data
   const itemIcon = isGroup ? <Folder /> : <StarNoFillIcon />
 
   return (
