@@ -32,13 +32,24 @@ const BG = styled.div`
   cursor: default;
   user-select: none;
   outline: none;
+  transition: background-color 100ms;
 
   &.isSelected {
-    background: var(--havelock);
+    transition: none;
+    background-color: var(--havelock);
     color: white;
   }
   &.isOverFolder {
-    background: hsla(0 0% 0% / 0.04);
+    background-color: hsla(0 0% 0% / 0.06);
+  }
+  &:hover:not(.isDragging):not(.isSelected) {
+    background-color: hsla(0 0% 0% / 0.03);
+  }
+  &.isDragging {
+    background-color: hsla(0 0% 0% / 0);
+  }
+  &:active:not(.isDragging):not(.isSelected) {
+    background-color: hsla(0 0% 0% / 0.08);
   }
 `
 
@@ -154,8 +165,9 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       )
 
     handlers.select(e, false)
-    if (!value) return
-    runQuery(value)
+    if (value && !e.meta && !e.shift) {
+      runQuery(value)
+    }
   }
 
   const template: MenuItemConstructorOptions[] = [
