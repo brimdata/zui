@@ -1,15 +1,19 @@
+import {isString} from "lodash"
 import moment from "moment-timezone"
 import {TimeUnit} from "../lib"
 import {isBigInt, isDate} from "../lib/is"
 import {DateTuple} from "../lib/TimeWindow"
 import brim, {Span, Ts} from "./"
+import relTime from "./relTime"
 
-function time(val: Ts | bigint | Date = new Date()) {
+function time(val: Ts | bigint | Date | string = new Date()) {
   let ts: Ts
   if (isBigInt(val)) {
     ts = fromBigInt(val)
   } else if (isDate(val)) {
     ts = dateToTs(val)
+  } else if (isString(val)) {
+    ts = relTime(val).toTs()
   } else {
     ts = val
   }
