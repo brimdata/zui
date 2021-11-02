@@ -144,7 +144,8 @@ export default class BrimcapPlugin {
     this.api.toolbar.add("detail", {
       ...itemOptions,
       id: detailButtonId,
-      command: brimcapDownloadCurrentCmd
+      command: brimcapDownloadCurrentCmd,
+      label: undefined
     })
 
     // add click handlers for button's emitted commands
