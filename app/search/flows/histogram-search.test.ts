@@ -8,6 +8,7 @@ import initTestStore from "test/unit/helpers/initTestStore"
 import {useResponse} from "test/shared/responses"
 import {createZealotMock} from "zealot"
 import {histogramSearch} from "./histogram-search"
+import api from "test/integration/helpers/appStep/api"
 
 const countByPathResp = useResponse("everyCountByPath")
 const pool = fixtures("pool1")
