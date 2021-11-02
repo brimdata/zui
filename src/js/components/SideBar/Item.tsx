@@ -162,12 +162,14 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Run Query",
-      enabled: !hasMultiSelected && !!currentPool && !isGroup,
+      enabled: !hasMultiSelected && !!currentPool,
+      visible: !isGroup,
       click: () => runQuery(value)
     },
     {
       label: "Copy Query",
-      enabled: !hasMultiSelected && !isGroup,
+      enabled: !hasMultiSelected,
+      visible: !isGroup,
       click: () => {
         lib.doc.copyToClipboard(value)
         toast("Query copied to clipboard")
@@ -181,7 +183,8 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     },
     {
       label: "Edit",
-      enabled: !hasMultiSelected && !isBrimItem && !isGroup,
+      enabled: !hasMultiSelected && !isBrimItem,
+      visible: !isGroup,
       click: () => dispatch(Modal.show("edit-query", {query: data}))
     },
     {type: "separator"},
