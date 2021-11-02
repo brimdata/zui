@@ -182,11 +182,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {
       label: "Edit",
       enabled: !hasMultiSelected && !isBrimItem && !isGroup,
-      click: () => {
-        // only edit queries
-        if ("items" in data) return
-        dispatch(Modal.show("edit-query", {query: data}))
-      }
+      click: () => dispatch(Modal.show("edit-query", {query: data}))
     },
     {type: "separator"},
     {
