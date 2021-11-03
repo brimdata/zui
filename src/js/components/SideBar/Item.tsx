@@ -33,12 +33,23 @@ const BG = styled.div`
   user-select: none;
   outline: none;
 
+  &:hover {
+    background-color: hsla(0 0% 0% / 0.03);
+  }
+  &:active {
+    background-color: hsla(0 0% 0% / 0.08);
+  }
+
   &.isSelected {
-    background: var(--havelock);
+    background-color: var(--havelock);
     color: white;
   }
   &.isOverFolder {
-    background: hsla(0 0% 0% / 0.04);
+    background-color: hsla(0 0% 0% / 0.06);
+  }
+
+  &.isDragging:not(.isSelected) {
+    background-color: inherit;
   }
 `
 
@@ -148,15 +159,16 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     handlers.toggle(e)
   }
 
-  const onItemClick = (e) => {
+  const onItemClick = (e: React.MouseEvent) => {
     if (!currentPool)
       return dispatch(
         Notice.set({type: "NoPoolError", message: "No Pool Selected"})
       )
 
     handlers.select(e, false)
-    if (!value) return
-    runQuery(value)
+    if (value && !e.metaKey && !e.shiftKey) {
+      runQuery(value)
+    }
   }
 
   const template: MenuItemConstructorOptions[] = [

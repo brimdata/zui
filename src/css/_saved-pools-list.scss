@@ -25,14 +25,13 @@
     list-style-type: none;
     display: flex;
     align-items: center;
-    border-radius: 4px;
 
     &:hover {
-      background-color: var(--coconut);
+      background-color: rgba(0, 0, 0, 0.03);
     }
 
     &:active {
-      background: rgba(0, 0, 0, 0.08);
+      background-color: rgba(0, 0, 0, 0.08);
     }
   }
 
