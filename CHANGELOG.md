@@ -1,3 +1,18 @@
+## v0.27.0
+
+* Update Zed to [v0.32.0](https://github.com/brimdata/zed/releases/tag/v0.32.0)
+* Fix an issue where entering relative dates in the time range caused a crash (#1932)
+* Fix an issue where selecting a large pool made the app unresponsive (#1919)
+* Fix an issue where exporting data failed (#1909)
+* Highlight Zed error values (#1903)
+* Fix an issue where the bar chart did not stay in sync with the search results (#1897)
+* Fix an issue where switching to a tab reissued its search (#1891)
+* Add nested folders, library importing, and inline renaming to the Query Library (#1887)
+* Improve search bar responsiveness (#1877)
+* Update Brimcap to [v1.1.2](https://github.com/brimdata/brimcap/releases/tag/v1.1.2) (#1889)
+* Fix an issue where records containing a type alias were not displayed properly (#1882)
+* Maintain sidebar layout when switching tabs (#1873)
+
 ## v0.26.0
 
 * Update Zed to [v0.31.0](https://github.com/brimdata/zed/releases/tag/v0.31.0)
