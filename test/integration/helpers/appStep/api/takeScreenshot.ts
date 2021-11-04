@@ -9,7 +9,8 @@ import {itestDir} from "../../env"
 
 export default async (app: Application) => {
   try {
-    const image = await app.browserWindow.capturePage()
+    const currentWin = app.client.getCurrentWindow()
+    const image = await currentWin.capturePage()
     const filePath = path.join(
       itestDir(),
       "failure-" + crypto.randomBytes(4).toString("hex") + ".png"

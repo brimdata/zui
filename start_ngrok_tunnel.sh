@@ -25,11 +25,11 @@ case $(uname) in
         # I wasn't able to get remote login working on Windows using the public key
         # approach we do below on macOS/Linux, so we settle for having to enter a
         # password.
-        if [[ -z "$USER_PASS" ]]; then
-            echo "Please set 'USER_PASS' for user: $USER"
+        if [[ -z "$NGROK_PASS" ]]; then
+            echo "Please set 'NGROK_PASS' for user: $USER"
             exit 1
         fi
-        net user "$USER" "$USER_PASS"
+        net user "$USER" "$NGROK_PASS"
         PKG="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-windows-amd64.zip"
         exe=.exe
         ;;

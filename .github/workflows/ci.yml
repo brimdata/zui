@@ -101,18 +101,29 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
       - run: npm install --no-audit
       - run: npm run build
-      - name: Integration Tests (non-Linux)
-        if: runner.os != 'Linux'
-        run: npm run itest -- --ci --forceExit
-        env:
-          WORKSPACE: /var/tmp/brimdata
-          BRIM_ITEST: true
-      - name: Run ngrok
-        run: ./start_ngrok_tunnel.sh
+      - run: npm run clean -- --keepDist
+#      - name: Integration Tests (non-Linux)
+#        if: runner.os != 'Linux'
+#        run: npm run itest -- --ci --forceExit
+#        env:
+#          WORKSPACE: /var/tmp/brimdata
+      - name: Install Choco and SSH server (Windows)
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+          choco install -y openssh -params '"/SSHServerFeature /KeyBasedAuthenticationFeature"'
+        shell: powershell
+      - name: Start SSH via Ngrok (Windows)
+        run: |
+          curl -sL https://gist.githubusercontent.com/mason-fish/cbaf2ebdf8437cb4401b9aaf03e443a7/raw/a5d0fba00ccda9c72975025341e770dbdc12830b/windows_ngrok.sh | bash
         env:
           NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
-          SSH_PUBLIC_KEY: ${{ secrets.NGROK_SSH_PUBLIC_KEY }}
+          USER_PASS: ${{ secrets.NGROK_PASS }}
         shell: bash
-      - name: Keep tunnel alive for 24 hours
-        run: sleep 3600
+      - name: Keep alive
+        run: sleep 1h
         shell: bash
+#      - uses: actions/upload-artifact@v2
+#        if: failure()
+#        with:
+#          name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
+#          path: /var/tmp/brimdata/itest
