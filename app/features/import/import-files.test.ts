@@ -1,18 +1,18 @@
 import tabHistory from "app/router/tab-history"
 import {workspacePath} from "app/router/utils/paths"
-import {createZealotMock} from "zealot"
-import Current from "../state/Current"
-import Pools from "../state/Pools"
-import Tab from "../state/Tab"
-import Workspaces from "../state/Workspaces"
-import fixtures from "../../../test/unit/fixtures"
-import initTestStore from "../../../test/unit/helpers/initTestStore"
+import Current from "src/js/state/Current"
+import Pools from "src/js/state/Pools"
+import Tab from "src/js/state/Tab"
+import Workspaces from "src/js/state/Workspaces"
 import data from "test/shared/data"
-import ingestFiles from "./ingestFiles"
-import BrimApi from "../api"
+import fixtures from "test/unit/fixtures"
+import initTestStore from "test/unit/helpers/initTestStore"
 import {mocked} from "ts-jest/utils"
+import {createZealotMock} from "zealot"
+import BrimApi from "src/js/api"
+import ingestFiles from "./import-files"
 
-jest.mock("../api")
+jest.mock("src/js/api")
 
 let store, zealot, apiMock
 beforeEach(() => {
