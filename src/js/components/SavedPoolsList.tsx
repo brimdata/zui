@@ -1,3 +1,4 @@
+import {useImportOnDrop} from "app/features/import/use-import-on-drop"
 import showPoolContextMenu from "app/pools/flows/show-pool-context-menu"
 import {lakeSearchPath} from "app/router/utils/paths"
 import classNames from "classnames"
@@ -74,6 +75,7 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
 }
 
 export default function SavedPoolsList({pools, workspaceStatus}: Props) {
+  const [, drop] = useImportOnDrop()
   if (workspaceStatus === "disconnected")
     return (
       <EmptySection
@@ -97,7 +99,7 @@ export default function SavedPoolsList({pools, workspaceStatus}: Props) {
     )
 
   return (
-    <menu className="saved-pools-list">
+    <menu className="saved-pools-list" ref={drop}>
       {pools
         .sort((a, b) => (a.name > b.name ? 1 : -1))
         .map((pool) => {

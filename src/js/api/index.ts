@@ -1,8 +1,15 @@
+import {Abortables} from "app/core/models/abortables"
 import {remote} from "electron"
 import path from "path"
 import toast from "react-hot-toast"
+import errors from "../errors"
 import {getZealot} from "../flows/getZealot"
+import ingestFiles from "../../../app/features/import/import-files"
+import refreshPoolNames from "../flows/refreshPoolNames"
+import ErrorFactory from "../models/ErrorFactory"
+import Notice from "../state/Notice"
 import {AppDispatch, State} from "../state/types"
+import {QueriesApi} from "./queries"
 import {
   CommandRegistry,
   ContextMenuRegistry,
@@ -10,10 +17,8 @@ import {
   LoaderRegistry,
   SearchCtxItemBuilder
 } from "./registries"
-import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {StorageApi} from "./storage"
-import {Abortables} from "app/core/models/abortables"
-import {QueriesApi} from "./queries"
+import {ConfigsApi, ToolbarApi} from "./ui-apis"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -39,7 +44,7 @@ export default class BrimApi {
 
   constructor() {}
 
-  public init(d: AppDispatch, gs: () => State) {
+  init(d: AppDispatch, gs: () => State) {
     this.dispatch = d
     this.getState = gs
 
@@ -49,15 +54,15 @@ export default class BrimApi {
     this.queries = new QueriesApi(d, gs)
   }
 
-  public getZealot() {
+  getZealot() {
     return this.dispatch(getZealot())
   }
 
-  public getTempDir() {
+  getTempDir() {
     return remote.app.getPath("temp")
   }
 
-  public getAppConfig() {
+  getAppConfig() {
     return {
       dataRoot: path.join(remote.app.getPath("userData"), "data"),
       zdepsDirectory: path.join(
@@ -65,5 +70,22 @@ export default class BrimApi {
         "zdeps"
       )
     }
+  }
+
+  import(files: File[]) {
+    this.dispatch(ingestFiles(files))
+      .then(() => toast.success("Import complete."))
+      .catch((e) => {
+        const cause = e.cause
+        if (/(Failed to fetch)|(network error)/.test(cause.message)) {
+          this.dispatch(Notice.set(errors.importInterrupt()))
+        } else if (/format detection error/i.test(cause.message)) {
+          this.dispatch(Notice.set(errors.formatDetection(cause.message)))
+        } else {
+          this.dispatch(Notice.set(ErrorFactory.create(e.cause)))
+        }
+        this.dispatch(refreshPoolNames())
+        console.error(e.message)
+      })
   }
 }
