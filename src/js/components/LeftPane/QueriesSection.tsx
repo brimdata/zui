@@ -234,8 +234,8 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
             data={queries}
             getChildren="items"
             isOpen="isOpen"
-            isDraggable={(d) => !dispatch(isBrimLib([d.id]))}
-            isDroppable={(d) => !dispatch(isBrimLib([d.id]))}
+            disableDrag={(d) => !!dispatch(isBrimLib([d.id]))}
+            disableDrop={(d) => d.id === "brim"}
             rowHeight={24}
             width={width}
             height={height}

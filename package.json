@@ -136,7 +136,7 @@
     "polished": "^3.6.5",
     "prismjs": "^1.20.0",
     "react": "^16.14.0",
-    "react-arborist": "^0.1.11",
+    "react-arborist": "^0.1.14",
     "react-beautiful-dnd": "^13.0.0",
     "react-dnd": "^14.0.4",
     "react-dnd-html5-backend": "^14.0.2",
