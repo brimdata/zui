@@ -11,6 +11,7 @@ export const StyledSection = styled.section`
 export const SectionContents = styled.div`
   flex: 1;
   overflow-y: auto;
+  position: relative;
 `
 
 export const SectionHeader = styled.div`

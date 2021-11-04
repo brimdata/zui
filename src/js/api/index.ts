@@ -2,12 +2,14 @@ import {Abortables} from "app/core/models/abortables"
 import {remote} from "electron"
 import path from "path"
 import toast from "react-hot-toast"
+import ingestFiles from "../../../app/features/import/import-files"
 import errors from "../errors"
 import {getZealot} from "../flows/getZealot"
-import ingestFiles from "../../../app/features/import/import-files"
 import refreshPoolNames from "../flows/refreshPoolNames"
 import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
+import Queries from "../state/Queries"
+import {parseJSONLib} from "../state/Queries/parsers"
 import {AppDispatch, State} from "../state/types"
 import {QueriesApi} from "./queries"
 import {
@@ -87,5 +89,11 @@ export default class BrimApi {
         this.dispatch(refreshPoolNames())
         console.error(e.message)
       })
+  }
+
+  importQueries(file: File) {
+    const node = parseJSONLib(file.path)
+    this.dispatch(Queries.addItem(node, "root"))
+    this.toast.success(`Imported ${node.name}`)
   }
 }

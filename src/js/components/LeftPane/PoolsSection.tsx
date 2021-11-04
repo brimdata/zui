@@ -1,3 +1,4 @@
+import {useImportOnDrop} from "app/features/import/use-import-on-drop"
 import get from "lodash/get"
 import React from "react"
 import {useSelector} from "react-redux"
@@ -14,13 +15,14 @@ import {
   StyledSection,
   Title
 } from "./common"
+import {DropOverlay} from "./drop-overlay"
 
 function PoolsSection({isOpen, style, resizeProps, toggleProps}) {
   const workspace = useSelector(Current.getWorkspace)
   const id = get(workspace, ["id"], "")
   const wsStatus = useSelector(WorkspaceStatuses.get(id))
   const pools = useSelector(Current.getPools)
-
+  const [props, ref] = useImportOnDrop()
   return (
     <StyledSection style={style}>
       <DragAnchor {...resizeProps} />
@@ -31,8 +33,11 @@ function PoolsSection({isOpen, style, resizeProps, toggleProps}) {
         </ClickRegion>
         <AddPoolButton />
       </SectionHeader>
-      <SectionContents>
+      <SectionContents ref={ref}>
         <SavedPoolsList pools={pools} workspaceStatus={wsStatus} />
+        <DropOverlay show={props.canDrop && props.isOver}>
+          Drop to import...
+        </DropOverlay>
       </SectionContents>
     </StyledSection>
   )

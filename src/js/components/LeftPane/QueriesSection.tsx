@@ -1,7 +1,10 @@
 import {nanoid} from "@reduxjs/toolkit"
+import {useBrimApi} from "app/core/context"
 import {includes} from "lodash"
 import React, {ChangeEvent, useEffect, useRef, useState} from "react"
 import {Tree, TreeApi} from "react-arborist"
+import {useDrop} from "react-dnd"
+import {NativeTypes} from "react-dnd-html5-backend"
 import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
 import TreeModel from "tree-model"
@@ -12,7 +15,6 @@ import Current from "../../state/Current"
 import Modal from "../../state/Modal"
 import Queries from "../../state/Queries"
 import {isBrimLib} from "../../state/Queries/flows"
-import {parseJSONLib} from "../../state/Queries/parsers"
 import {Group, Query} from "../../state/Queries/types"
 import EmptySection from "../common/EmptySection"
 import useCallbackRef from "../hooks/useCallbackRef"
@@ -28,7 +30,7 @@ import {
   StyledViewSelect,
   Title
 } from "./common"
-
+import {DropOverlay} from "./drop-overlay"
 const StyledPlus = styled.div`
   margin-right: 8px;
   background: rgba(0, 0, 0, 0);
@@ -46,6 +48,7 @@ const StyledPlus = styled.div`
 const NewActionsDropdown = (props: {tree: TreeApi | undefined}) => {
   const {tree} = props
   const dispatch = useDispatch()
+  const api = useBrimApi()
   const [importer, ref] = useCallbackRef<HTMLButtonElement>()
   const template = [
     {
@@ -80,10 +83,11 @@ const NewActionsDropdown = (props: {tree: TreeApi | undefined}) => {
   const menu = usePopupMenu(template)
 
   const onImport = (e: ChangeEvent<HTMLInputElement>) => {
-    const filePath = e.target.files[0].path
-    const node = parseJSONLib(filePath)
+    const file = e.target.files[0]
+    if (file) {
+      api.importQueries(file)
+    }
     e.target.value = null
-    dispatch(Queries.addItem(node, "root"))
   }
 
   return (
@@ -140,8 +144,9 @@ const TagsViewSelect = ({selected, tags, onSelect}) => {
     </StyledViewSelect>
   )
 }
-
+type DragItem = {files: File[]; items: DataTransferItemList}
 function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
+  const api = useBrimApi()
   const tree = useRef()
   const dispatch = useDispatch()
   const [selectedTag, setSelectedTag] = useState("All")
@@ -149,6 +154,19 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const queriesRoot = useSelector(Queries.getRaw)
   const [queries, setQueries] = useState(queriesRoot)
   const tags = useSelector(Queries.getTags)
+  const [{isOver}, drop] = useDrop<DragItem, unknown, {isOver: boolean}>(
+    () => ({
+      accept: [NativeTypes.FILE],
+      drop: ({files}) => {
+        if (files && files[0]) {
+          api.importQueries(files[0])
+        }
+      },
+      collect: (m) => ({
+        isOver: m.isOver()
+      })
+    })
+  )
 
   useEffect(() => {
     setQueries(queriesRoot)
@@ -203,7 +221,12 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           </>
         )}
       </SectionHeader>
-      <SectionContents ref={ref}>
+      <SectionContents
+        ref={(r) => {
+          ref(r)
+          drop(r)
+        }}
+      >
         {currentPool ? (
           <Tree
             ref={tree}
@@ -232,6 +255,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
             message="You must have a pool selected to run queries."
           />
         )}
+        <DropOverlay show={isOver}>Drop to import...</DropOverlay>
       </SectionContents>
     </StyledSection>
   )
