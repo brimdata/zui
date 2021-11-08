@@ -6,18 +6,37 @@ import {getDefaultQueryArgs} from "./config/query-args"
 import nodeFetch from "node-fetch"
 import {
   BranchMeta,
-  Response,
   PoolArgs,
   PoolConfig,
   PoolStats,
   ZealotArgs,
   QueryArgs,
-  PoolLoadArgs
+  PoolLoadArgs,
+  ZResponse,
+  Order
 } from "./types"
-import {Context, Int64, Record, Time} from "./zed"
+import {Context, Int64, Record, Time, String, Array} from "./zed"
 import {url} from "./util/utils"
 import {parseContentType} from "./fetcher/contentType"
 import {createError} from "./util/error"
+
+async function responseToPoolConfigs(
+  zresponse: ZResponse
+): Promise<PoolConfig[]> {
+  const records = await zresponse?.records()
+  if (!records) return []
+  return records.map<PoolConfig>((r) => {
+    const layout = r.get<Record>("layout")
+    return {
+      name: r.get<String>("name").toString(),
+      id: r.get<String>("id").toString(),
+      layout: {
+        order: layout.get<String>("order").toString() as Order,
+        keys: layout.get<Array>("keys").serialize()
+      }
+    }
+  })
+}
 
 export function createZealot(
   hostUrl: string,
@@ -57,20 +76,18 @@ export function createZealot(
     },
     pools: {
       list: async (): Promise<PoolConfig[]> => {
-        let values: Response<PoolConfig>[] = await promise(
-          query("from :pools", {format: "json"})
-        )
-        if (!values) return []
-        return values.map((res) => res.value)
+        let res = await stream(query("from :pools", {format: "zjson"}))
+        return responseToPoolConfigs(res)
       },
       get: async (id: string): Promise<PoolConfig> => {
-        let values: Response<PoolConfig>[] = await promise(
+        const res = await stream(
           query(`from :pools | id == ${id} or name == "${id}"`, {
-            format: "json"
+            format: "zjson"
           })
         )
+        const values = await responseToPoolConfigs(res)
         if (!values || values.length == 0) throw new Error("pool not found")
-        return values[0].value
+        return values[0]
       },
       stats: async (id: string): Promise<PoolStats> => {
         const res = await promise(pools.stats(id))

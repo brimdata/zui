@@ -7,6 +7,7 @@ import {PoolConfig, PoolStats} from "../../../zealot/types"
 import interop from "../brim/interop"
 import Workspaces from "../state/Workspaces"
 import workspace from "../brim/workspace"
+import log from "electron-log"
 
 type refreshPoolInfoArgs = {
   workspaceId: string
@@ -15,7 +16,7 @@ type refreshPoolInfoArgs = {
 
 export default function refreshPoolInfo(
   refreshPoolInfoArgs?: refreshPoolInfoArgs
-): Thunk {
+): Thunk<Promise<void>> {
   return (dispatch, getState) => {
     const ws = refreshPoolInfoArgs?.workspaceId
       ? workspace(Workspaces.id(refreshPoolInfoArgs.workspaceId)(getState()))
@@ -26,7 +27,7 @@ export default function refreshPoolInfo(
 
     let config: PoolConfig
     let stats: PoolStats
-    Promise.all([
+    return Promise.all([
       zealot.pools.get(poolId).then((data: PoolConfig) => {
         config = data
       }),

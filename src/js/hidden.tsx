@@ -68,7 +68,9 @@ const Hidden = () => {
         if (!poolId)
           return log.error(new Error("No 'pool_id' from branch-commit event"))
 
-        dispatch(refreshPoolInfo({workspaceId: w.id, poolId}))
+        dispatch(refreshPoolInfo({workspaceId: w.id, poolId})).catch((e) => {
+          log.error("branch-commit update failed: ", e)
+        })
       })
     })
 

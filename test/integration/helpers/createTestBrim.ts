@@ -9,7 +9,8 @@ import waitForHook from "./appStep/api/waitForHook"
 // TODO in a future PR: remove direct logStep uses here.
 import logStep from "./appStep/util/logStep"
 import {retryUntil} from "./control"
-import newAppInstance from "./newAppInstance"
+import newAppInstance, {defaultTimeout} from "./newAppInstance"
+import {Application} from "spectron"
 
 export default (name: string) => {
   let app
@@ -25,6 +26,11 @@ export default (name: string) => {
   })
 
   return {
+    async withImplicitTimeout(timeout: number, cb: () => Promise<any>) {
+      app.client.setTimeout({implicit: timeout})
+      await cb()
+      app.client.setTimeout({implicit: defaultTimeout})
+    },
     $(locator: Locator | string): WebdriverIO.Element {
       if (isString(locator)) return app.client.$(locator)
       else return app.client.$(locator.css)
@@ -39,7 +45,7 @@ export default (name: string) => {
       return app.client.execute((path) => navTo(path), path)
     },
 
-    getApp() {
+    getApp(): Application {
       return app
     },
 
