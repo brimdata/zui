@@ -1,4 +1,6 @@
-import React, {useContext, ReactElement} from "react"
+import React, {ReactElement, useContext} from "react"
+import {DndProvider} from "react-dnd"
+import {HTML5Backend} from "react-dnd-html5-backend"
 import {Provider} from "react-redux"
 import BrimApi from "src/js/api"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
@@ -21,11 +23,13 @@ export function BrimProvider(props: {
 }) {
   return (
     <AppErrorBoundary>
-      <BrimApiContext.Provider value={props.api}>
-        <Provider store={props.store}>
-          <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-        </Provider>
-      </BrimApiContext.Provider>
+      <DndProvider backend={HTML5Backend}>
+        <BrimApiContext.Provider value={props.api}>
+          <Provider store={props.store}>
+            <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+          </Provider>
+        </BrimApiContext.Provider>
+      </DndProvider>
     </AppErrorBoundary>
   )
 }

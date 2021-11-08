@@ -1,27 +1,20 @@
-import React, {ChangeEvent, MouseEvent} from "react"
-import classNames from "classnames"
-import useCallbackRef from "src/js/components/hooks/useCallbackRef"
-import useDropzone from "src/js/components/hooks/useDropzone"
+import {useBrimApi} from "app/core/context"
+import {useImportOnDrop} from "app/features/import/use-import-on-drop"
 import ToolbarButton from "app/toolbar/button"
+import classNames from "classnames"
+import React, {ChangeEvent, MouseEvent} from "react"
+import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import Folder from "src/js/icons/Folder"
 import {reactElementProps} from "test/integration/helpers/integration"
 import DataFileIcon from "./DataFileIcon"
 
-type Props = {
-  onChange: (e, files: File[]) => void
-}
-
-export default function LoadFilesInput({onChange}: Props) {
+export default function LoadFilesInput() {
+  const api = useBrimApi()
   const [input, setInput] = useCallbackRef<HTMLInputElement>()
+  const [{canDrop, isOver}, drop] = useImportOnDrop()
 
-  const [bindDropzone, dragging] = useDropzone((e: DragEvent) => {
-    const files = Array.from(e.dataTransfer.files)
-    onChange(e, files)
-  })
-
-  function _onChange(e: ChangeEvent<HTMLInputElement>) {
-    const files = Array.from(e.target.files)
-    onChange(e, files)
+  function onChange(e: ChangeEvent<HTMLInputElement>) {
+    api.import(Array.from(e.target.files))
   }
 
   function openDialog(_: MouseEvent) {
@@ -30,8 +23,8 @@ export default function LoadFilesInput({onChange}: Props) {
 
   return (
     <div
-      className={classNames("load-files-input", {dragging})}
-      {...bindDropzone()}
+      className={classNames("load-files-input", {dragging: canDrop && isOver})}
+      ref={drop}
     >
       <input
         tabIndex={-1}
@@ -39,7 +32,7 @@ export default function LoadFilesInput({onChange}: Props) {
         type="file"
         multiple
         title=""
-        onChange={_onChange}
+        onChange={onChange}
         {...reactElementProps("ingestFilesInput")}
       />
       <div className="radiation">
