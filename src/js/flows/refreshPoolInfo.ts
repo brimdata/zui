@@ -7,7 +7,6 @@ import {PoolConfig, PoolStats} from "../../../zealot/types"
 import interop from "../brim/interop"
 import Workspaces from "../state/Workspaces"
 import workspace from "../brim/workspace"
-import log from "electron-log"
 
 type refreshPoolInfoArgs = {
   workspaceId: string
