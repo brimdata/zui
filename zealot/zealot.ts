@@ -1,3 +1,4 @@
+import {EventSourcePolyfill} from "event-source-polyfill"
 import {createFetcher} from "./fetcher/fetcher"
 import {pools, query} from "./api/mod"
 import {getHost} from "./util/host"
@@ -29,7 +30,9 @@ export function createZealot(
 
   return {
     events: () => {
-      return new EventSource(`http://${host}/events`)
+      return new EventSourcePolyfill(`http://${host}/events`, {
+        headers: {Accept: "application/json"}
+      })
     },
     url: (path: string): string => {
       return url(host, path)
