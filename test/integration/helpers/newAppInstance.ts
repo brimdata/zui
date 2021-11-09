@@ -9,6 +9,8 @@ import {itestDir, repoDir} from "./env"
 import {LOG} from "./log"
 import env from "app/core/env"
 
+export const defaultTimeout = 25000
+
 export default (name: string, idx: number): Application => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
   const linuxInstallPath = "/usr/bin/brim"
@@ -20,7 +22,7 @@ export default (name: string, idx: number): Application => {
   let appArgs = {
     chromeDriverArgs: [`--user-data-dir=${userDataDir}`],
     startTimeout: 60000,
-    waitTimeout: 25000,
+    waitTimeout: defaultTimeout,
     quitTimeout: 10000,
     chromeDriverLogPath: path.join(userDataDir, "chromedriver.log"),
     webdriverLogPath: path.join(userDataDir, webdriverLogDir),
