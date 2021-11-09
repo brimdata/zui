@@ -1,7 +1,7 @@
 import fs from "fs"
 import stream from "stream"
 
-function toNodeReadable(reader) {
+export function toNodeReadable(reader) {
   return new stream.Readable({
     read: async function() {
       const {done, value} = await reader.read()

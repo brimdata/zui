@@ -15,6 +15,7 @@ import {MenuItemConstructorOptions} from "electron"
 import {compact} from "lodash"
 import env from "app/core/env"
 import {decode} from "@brimdata/zealot"
+import {toNodeReadable} from "../../src/js/lib/response"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -280,8 +281,6 @@ export default class BrimcapPlugin {
       const {fileListData} = params
       if (fileListData.length > 1)
         throw new Error("Only one pcap can be opened at a time.")
-      const paths = fileListData.map((f) => f.file.path)
-      const pcapFilePath = paths[0]
 
       const cliOpts: analyzeOptions = {
         json: true
@@ -292,12 +291,22 @@ export default class BrimcapPlugin {
       )
       cliOpts.config = yamlConfig || ""
 
-      onProgressUpdate(0)
-      const p = this.cli.analyze(pcapFilePath, cliOpts, signal)
-      this.processes[p.pid] = p
+      const pcapPath = fileListData[0].file.path
+      const pcapTotalSize = fileListData[0].file.size
+      const pcapStream = toNodeReadable(
+        fileListData[0].file.stream().getReader()
+      )
 
+      onProgressUpdate(0)
+      const analyzeP = this.cli.analyze("-", cliOpts, signal)
+      this.processes[analyzeP.pid] = analyzeP
+      pcapStream.pipe(analyzeP.stdin)
+
+      analyzeP.on("close", () => {
+        delete this.processes[analyzeP.pid]
+      })
       let analyzeErr
-      p.on("error", (err) => {
+      analyzeP.on("error", (err) => {
         analyzeErr = err
       })
 
@@ -305,7 +314,7 @@ export default class BrimcapPlugin {
         const {type, ...status} = jsonMsg
         switch (type) {
           case "status":
-            onProgressUpdate(statusToPercent(status))
+            onProgressUpdate(statusToPercent(status, pcapTotalSize))
             await onDetailUpdate()
             break
           case "warning":
@@ -318,8 +327,8 @@ export default class BrimcapPlugin {
       }
 
       // on first data, emit a 'start' on stdout so zealot knows not to timeout the request
-      p.stderr.once("data", () => p.stdout.emit("start"))
-      p.stderr.on("data", (d) => {
+      analyzeP.stderr.once("data", () => analyzeP.stdout.emit("start"))
+      analyzeP.stderr.on("data", (d) => {
         try {
           const msgs: string[] = compact(d.toString().split("\n"))
           const jsonMsgs = msgs.map((msg) => JSON.parse(msg))
@@ -329,8 +338,8 @@ export default class BrimcapPlugin {
           analyzeErr = d.toString()
         }
       })
-      p.on("close", () => {
-        delete this.processes[p.pid]
+      analyzeP.on("close", () => {
+        delete this.processes[analyzeP.pid]
       })
 
       // stream analyze output to pool
@@ -339,7 +348,7 @@ export default class BrimcapPlugin {
         await zealot.pools.load(params.poolId, params.branch, {
           author: "brim",
           body: "automatic import with brimcap analyze",
-          data: p.stdout,
+          data: analyzeP.stdout,
           signal
         })
       } catch (e) {
@@ -351,14 +360,17 @@ export default class BrimcapPlugin {
       }
 
       // generate pcap index
-      try {
-        await this.cli.index({
-          root: this.brimcapDataRoot,
-          pcap: pcapFilePath
-        })
-      } catch (e) {
-        console.error(e)
-        throw errors.pcapIngest(e)
+      // in tests we may not have the pcapPath, so skip indexing for now
+      if (pcapPath) {
+        try {
+          this.cli.index({
+            root: this.brimcapDataRoot,
+            pcap: pcapPath
+          })
+        } catch (e) {
+          console.error(e)
+          throw errors.pcapIngest(e)
+        }
       }
 
       await onDetailUpdate()
@@ -437,8 +449,6 @@ export default class BrimcapPlugin {
 }
 
 // helpers
-
-function statusToPercent(status): number {
-  if (status.pcap_total_size === 0) return 1
-  else return status.pcap_read_size / status.pcap_total_size || 0
+function statusToPercent(status, totalSize): number {
+  return status.pcap_read_size / totalSize || 0
 }
