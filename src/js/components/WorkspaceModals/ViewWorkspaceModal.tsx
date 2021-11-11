@@ -159,7 +159,7 @@ const ViewWorkspace = ({onClose, onEdit}) => {
           <p>{wsStatus || "unknown"}</p>
         </Status>
         <WorkspaceFields>
-          <Field label="Host" value={[host, port].join(":")} />
+          <Field label="Lake URL" value={[host, port].join(":")} />
           <Field label="Zed Version" value={version} />
           <Field label="Pools" value={`${poolCount}`} />
         </WorkspaceFields>

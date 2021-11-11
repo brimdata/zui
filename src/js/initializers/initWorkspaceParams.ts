@@ -5,14 +5,13 @@ import getUrlSearchParams from "../lib/getUrlSearchParams"
 import {Workspace} from "../state/Workspaces/types"
 
 const setupDefaultWorkspace = () => (dispatch, _) => {
-  const host = "localhost"
+  const host = "http://localhost"
   const port = "9867"
-  const hostPort = [host, port].join(":")
   const ws: Workspace = {
     host,
     port,
-    id: hostPort,
-    name: hostPort,
+    id: "localhost:9867",
+    name: "localhost:9867",
     authType: "none"
   }
   dispatch(Workspaces.add(ws))
@@ -20,7 +19,9 @@ const setupDefaultWorkspace = () => (dispatch, _) => {
 
 export const isDefaultWorkspace = (ws: Workspace): boolean => {
   const {host, port, id} = ws
-  return id === "localhost:9867" && host === "localhost" && port === "9867"
+  return (
+    id === "localhost:9867" && host === "http://localhost" && port === "9867"
+  )
 }
 
 export default function(store: Store) {

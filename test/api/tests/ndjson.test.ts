@@ -10,7 +10,7 @@ afterEach(() => server.resetHandlers())
 
 let zealot
 beforeEach(() => {
-  zealot = createZealot("localhost:9999")
+  zealot = createZealot("http://localhost:9999")
 })
 
 const VALID_NDJSON = `{"test": 1}\n{"test": 2}\n{"test": 3}`

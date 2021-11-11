@@ -15,12 +15,13 @@ export type FetchArgs = {
   headers?: Headers
   enhancers?: Enhancer[]
   signal?: AbortSignal
+  useNodeFetch?: boolean
 }
 
 export function createFetcher(host: string) {
   return {
-    async promise(args: FetchArgs, useNodeFetch = false) {
-      const {path, method, body, signal, headers} = args
+    async promise(args: FetchArgs) {
+      const {path, method, body, signal, headers, useNodeFetch} = args
       const switchFetch = useNodeFetch ? nodeFetch : fetch
       const resp = await switchFetch(url(host, path), {
         method,
@@ -33,7 +34,12 @@ export function createFetcher(host: string) {
     },
     async stream(args: FetchArgs): Promise<ZResponse> {
       const {path, method, body, signal, headers} = args
-      const resp = await fetch(url(host, path), {method, body, signal, headers})
+      const resp = await fetch(url(host, path), {
+        method,
+        body: body as string | FormData | ReadableStream,
+        signal,
+        headers
+      })
       if (!resp.ok) {
         const content = await parseContentType(resp)
         return Promise.reject(createError(content))

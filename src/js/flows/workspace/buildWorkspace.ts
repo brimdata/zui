@@ -10,8 +10,8 @@ export const buildWorkspace = (
   getState,
   {createZealot}
 ) => {
-  if (!ws.host || !ws.port || !ws.id || !ws.name)
-    throw new Error("must provide host, port, id, and name to build lake")
+  if (!ws.host || !ws.id || !ws.name)
+    throw new Error("must provide host, id, and name to build lake")
   const zealot = createZealot(brim.workspace(ws as Workspace).getAddress())
 
   const workspace = {...ws}
@@ -24,7 +24,6 @@ export const buildWorkspace = (
   if (isEmpty(workspace.authType)) {
     const resp = await zealot.authMethod()
     const authMethod = resp?.value
-    console.log({authMethod})
     if (authMethod.kind === "auth0") {
       const {client_id: clientId, domain} = authMethod.auth0
       workspace.authType = "auth0"

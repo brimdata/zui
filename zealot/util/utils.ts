@@ -8,7 +8,7 @@ function hasOwnProperty<X extends {}, Y extends PropertyKey>(
 }
 
 export function url(host: string, path: string) {
-  return `https://${host}${path}`
+  return `${host}${path}`
 }
 
 export function isObject(thing: unknown): thing is Object {

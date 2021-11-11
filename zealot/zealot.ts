@@ -1,7 +1,6 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
 import {createFetcher} from "./fetcher/fetcher"
 import {pools, query} from "./api/mod"
-import {getHost} from "./util/host"
 import {getDefaultQueryArgs} from "./config/query-args"
 import {
   BranchMeta,
@@ -16,8 +15,6 @@ import {
 } from "./types"
 import {Context, Int64, Record, Time, String, Array} from "./zed"
 import {url} from "./util/utils"
-import {parseContentType} from "./fetcher/contentType"
-import {createError} from "./util/error"
 
 async function responseToPoolConfigs(
   zresponse: ZResponse
@@ -38,17 +35,16 @@ async function responseToPoolConfigs(
 }
 
 export function createZealot(
-  hostUrl: string,
+  host: string,
   args: ZealotArgs = {fetcher: createFetcher}
 ) {
-  const host = getHost(hostUrl)
   const {promise, stream} = args.fetcher(host)
 
   let queryArgs: QueryArgs = getDefaultQueryArgs()
 
   return {
     events: () => {
-      return new EventSourcePolyfill(`http://${host}/events`, {
+      return new EventSourcePolyfill(`${host}/events`, {
         headers: {Accept: "application/json"}
       })
     },
@@ -118,9 +114,7 @@ export function createZealot(
         return promise(pools.update(id, args))
       },
       load: async (poolId: string, branch: string, args: PoolLoadArgs) => {
-        const resp = await promise(pools.load(poolId, branch, args), true)
-        const content = await parseContentType(resp)
-        return resp.ok ? content : Promise.reject(createError(content))
+        return await promise(pools.load(poolId, branch, args))
       }
     },
     inspect: {
