@@ -6,11 +6,12 @@ import {createStream} from "./stream"
 import {createError} from "../util/error"
 import {createPushableIterator} from "./pushable-iterator"
 import {parseLines} from "../ndjson/lines"
+import nodeFetch from "node-fetch"
 
 export type FetchArgs = {
   path: string
   method: string
-  body?: string | FormData | ReadableStream
+  body?: string | FormData | ReadableStream | NodeJS.ReadableStream
   headers?: Headers
   enhancers?: Enhancer[]
   signal?: AbortSignal
@@ -18,9 +19,15 @@ export type FetchArgs = {
 
 export function createFetcher(host: string) {
   return {
-    async promise(args: FetchArgs) {
+    async promise(args: FetchArgs, useNodeFetch = false) {
       const {path, method, body, signal, headers} = args
-      const resp = await fetch(url(host, path), {method, body, signal, headers})
+      const switchFetch = useNodeFetch ? nodeFetch : fetch
+      const resp = await switchFetch(url(host, path), {
+        method,
+        body,
+        signal,
+        headers
+      })
       const content = await parseContentType(resp)
       return resp.ok ? content : Promise.reject(createError(content))
     },

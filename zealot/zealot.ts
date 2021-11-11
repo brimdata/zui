@@ -3,7 +3,6 @@ import {createFetcher} from "./fetcher/fetcher"
 import {pools, query} from "./api/mod"
 import {getHost} from "./util/host"
 import {getDefaultQueryArgs} from "./config/query-args"
-import nodeFetch from "node-fetch"
 import {
   BranchMeta,
   PoolArgs,
@@ -119,8 +118,7 @@ export function createZealot(
         return promise(pools.update(id, args))
       },
       load: async (poolId: string, branch: string, args: PoolLoadArgs) => {
-        const {path, ...rest} = pools.load(poolId, branch, args)
-        const resp = await nodeFetch(url(host, path), rest)
+        const resp = await promise(pools.load(poolId, branch, args), true)
         const content = await parseContentType(resp)
         return resp.ok ? content : Promise.reject(createError(content))
       }
