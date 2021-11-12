@@ -5,7 +5,7 @@ export default function prependWorkspaceProtocol(state: any) {
     if (!s.workspaces) continue
     Object.values(s.workspaces).forEach((workspace) => {
       // @ts-ignore
-      workspace.host = `http://${host}`
+      workspace.host = `http://${workspace.host}`
     })
   }
 

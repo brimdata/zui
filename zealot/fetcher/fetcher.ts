@@ -6,7 +6,6 @@ import {createStream} from "./stream"
 import {createError} from "../util/error"
 import {EventSourcePolyfill} from "event-source-polyfill"
 import nodeFetch from "node-fetch"
-import log from "electron-log"
 
 export type FetchArgs = {
   path: string
@@ -50,7 +49,8 @@ export function createFetcher(host: string) {
     async source(args: FetchArgs): Promise<EventSource> {
       const {path, headers} = args
       const unpackedHeaders = {}
-      for (let [hKey, hValue] of headers) unpackedHeaders[hKey] = hValue
+      if (headers)
+        for (let [hKey, hValue] of headers) unpackedHeaders[hKey] = hValue
       return new EventSourcePolyfill(url(host, path), {
         headers: {
           Accept: "application/json",

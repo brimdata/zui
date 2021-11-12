@@ -2,7 +2,6 @@ import {createReadStream} from "fs"
 import {uniq} from "lodash"
 import {withLake} from "../helpers/with-lake"
 import data from "test/shared/data"
-import {useResponse} from "../../shared/responses"
 
 const testPool = "pool1"
 

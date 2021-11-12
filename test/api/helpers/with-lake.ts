@@ -66,7 +66,7 @@ export async function withLake(fn: (zealot: any) => any, config: Config = {}) {
   const DIR = __dirname
   const ZED_LAKE_ROOT = join(DIR, "../lake_root")
   const ZED_RUNNER = join(DIR, "../../../zdeps/zed")
-  const ADDR = "http://localhost:9119"
+  const ADDR = "localhost:9119"
 
   const root = config.root || ZED_LAKE_ROOT
   const runner = config.runner || ZED_RUNNER
@@ -76,7 +76,7 @@ export async function withLake(fn: (zealot: any) => any, config: Config = {}) {
   createDataDir(root)
 
   const lake = await start(runner, root, addr)
-  const zealot = createZealot(addr)
+  const zealot = createZealot("http://" + addr)
   await until(
     () =>
       zealot

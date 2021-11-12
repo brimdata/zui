@@ -1,4 +1,3 @@
-import {log} from "electron-log"
 import {createFetcher, FetchArgs, Zealot} from "zealot"
 import {ZFetcher, ZResponse} from "../../../zealot/types"
 import {validateToken} from "../auth0/utils"

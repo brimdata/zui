@@ -15,8 +15,8 @@ function fakeFetcher() {
     stream: ({method, path}: FetchArgs) => {
       throw new Error(`NoNetwork: You must stub: ${method} ${path}`)
     },
-    upload: ({method, path}: FetchArgs) => {
-      throw new Error(`NoNetwork: You must stub: ${method} ${path}`)
+    source: ({path}: FetchArgs) => {
+      throw new Error(`NoNetwork: You must stub: ${path}`)
     }
   }
 }
