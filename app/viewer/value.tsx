@@ -17,6 +17,7 @@ const transHavelock = transparentize(0.75, havelock as string)
 const BG = styled.span`
   cursor: default;
   display: flex;
+  flex-shrink: 0;
   height: 100%;
   align-items: center;
   min-width: 7px;
@@ -26,7 +27,7 @@ const BG = styled.span`
   }
 `
 const Syntax = styled.span`
-  color: var(--cloudy);
+  color: var(--lead);
 `
 
 type ValueProps = {
