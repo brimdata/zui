@@ -1,3 +1,4 @@
+import {log} from "electron-log"
 import {createFetcher, FetchArgs, Zealot} from "zealot"
 import {ZFetcher, ZResponse} from "../../../zealot/types"
 import {validateToken} from "../auth0/utils"
@@ -11,7 +12,7 @@ import {getAuthCredentials} from "./workspace/getAuthCredentials"
 
 const createBrimFetcher = (dispatch, getState, workspace: BrimWorkspace) => {
   return (hostPort: string): ZFetcher => {
-    const {promise, stream, upload} = createFetcher(hostPort)
+    const {promise, stream, source} = createFetcher(hostPort)
 
     const setWorkspaceAuthArgs = async (
       ws: BrimWorkspace,
@@ -35,7 +36,8 @@ const createBrimFetcher = (dispatch, getState, workspace: BrimWorkspace) => {
       }
 
       const bearerToken = `Bearer ${accessToken}`
-      if (newArgs.headers) newArgs.headers.append("Authorization", bearerToken)
+      if (newArgs.headers instanceof Headers)
+        newArgs.headers.append("Authorization", bearerToken)
       else newArgs.headers = new Headers({Authorization: bearerToken})
 
       return newArgs
@@ -59,14 +61,14 @@ const createBrimFetcher = (dispatch, getState, workspace: BrimWorkspace) => {
       return stream(await setWorkspaceAuthArgs(workspace, args))
     }
 
-    const wrappedUpload = async (args: FetchArgs): Promise<ZResponse> => {
-      return upload(await setWorkspaceAuthArgs(workspace, args))
+    const wrappedSource = async (args: FetchArgs): Promise<EventSource> => {
+      return source(await setWorkspaceAuthArgs(workspace, args))
     }
 
     return {
       promise: wrappedPromise,
       stream: wrappedStream,
-      upload: wrappedUpload
+      source: wrappedSource
     }
   }
 }

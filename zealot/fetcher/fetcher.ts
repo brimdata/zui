@@ -1,16 +1,16 @@
 import {url} from "../util/utils"
 import {parseContentType} from "./contentType"
-import {Enhancer, ZealotUploadPayload, ZResponse} from "../types"
+import {Enhancer, ZResponse} from "../types"
 import {createIterator} from "./iterator"
 import {createStream} from "./stream"
 import {createError} from "../util/error"
-import {createPushableIterator} from "./pushable-iterator"
-import {parseLines} from "../ndjson/lines"
+import {EventSourcePolyfill} from "event-source-polyfill"
 import nodeFetch from "node-fetch"
+import log from "electron-log"
 
 export type FetchArgs = {
   path: string
-  method: string
+  method?: string
   body?: string | FormData | ReadableStream | NodeJS.ReadableStream
   headers?: Headers
   enhancers?: Enhancer[]
@@ -47,39 +47,15 @@ export function createFetcher(host: string) {
       const iterator = createIterator(resp, args)
       return createStream(iterator, resp)
     },
-    async upload(args: FetchArgs): Promise<ZResponse> {
-      return new Promise((resolve) => {
-        const iterator = createPushableIterator<ZealotUploadPayload>()
-        const xhr = new XMLHttpRequest()
-
-        xhr.upload.addEventListener("progress", (e) => {
-          if (!e.lengthComputable) return
-          iterator.push({
-            value: {type: "UploadProgress", progress: e.loaded / e.total},
-            done: false
-          })
-        })
-
-        xhr.addEventListener("load", async () => {
-          for (const value of parseLines(xhr.responseText))
-            iterator.push({value, done: false})
-        })
-
-        xhr.addEventListener("error", () => {
-          iterator.throw(new Error(xhr.responseText))
-        })
-
-        xhr.addEventListener("loadend", () => {
-          iterator.push({done: true, value: undefined})
-        })
-
-        xhr.open(args.method, url(host, args.path), true)
-        if (args.headers) {
-          for (const [header, val] of args.headers.entries())
-            xhr.setRequestHeader(header, val)
+    async source(args: FetchArgs): Promise<EventSource> {
+      const {path, headers} = args
+      const unpackedHeaders = {}
+      for (let [hKey, hValue] of headers) unpackedHeaders[hKey] = hValue
+      return new EventSourcePolyfill(url(host, path), {
+        headers: {
+          Accept: "application/json",
+          ...unpackedHeaders
         }
-        xhr.send(args.body)
-        resolve(createStream(iterator, xhr))
       })
     }
   }

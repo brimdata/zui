@@ -4,7 +4,7 @@ export default function workspace(ws: Workspace) {
   return {
     ...ws,
     getAddress(): string {
-      return [this.host, this.port].join(":")
+      return this.port ? [this.host, this.port].join(":") : this.host
     },
     serialize(): Workspace {
       return {

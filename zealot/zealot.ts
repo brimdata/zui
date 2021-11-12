@@ -1,4 +1,3 @@
-import {EventSourcePolyfill} from "event-source-polyfill"
 import {createFetcher} from "./fetcher/fetcher"
 import {pools, query} from "./api/mod"
 import {getDefaultQueryArgs} from "./config/query-args"
@@ -38,15 +37,13 @@ export function createZealot(
   host: string,
   args: ZealotArgs = {fetcher: createFetcher}
 ) {
-  const {promise, stream} = args.fetcher(host)
+  const {promise, stream, source} = args.fetcher(host)
 
   let queryArgs: QueryArgs = getDefaultQueryArgs()
 
   return {
     events: () => {
-      return new EventSourcePolyfill(`${host}/events`, {
-        headers: {Accept: "application/json"}
-      })
+      return source({path: "/events"})
     },
     url: (path: string): string => {
       return url(host, path)

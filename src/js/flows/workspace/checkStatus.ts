@@ -9,7 +9,7 @@ export const checkStatus = (): Thunk => (
   {createZealot}
 ) => {
   const {host, port, id} = Current.getWorkspace(getState())
-  const hostPort = [host, port].join(":")
+  const hostPort = port ? [host, port].join(":") : host
 
   // create default zealot client
   const zealot = createZealot(hostPort)

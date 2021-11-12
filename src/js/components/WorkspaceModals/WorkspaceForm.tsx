@@ -188,8 +188,15 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
   useEventListener(document, "keyup", keyUp, [formRef])
 
   const defaultName = (workspace && workspace.name) || ""
-  const defaultHost =
-    (workspace && [workspace.host, workspace.port].join(":")) || ""
+  const getDefaultHost = () => {
+    if (workspace) {
+      return workspace.port
+        ? [workspace.host, workspace.port].join(":")
+        : workspace.host
+    }
+
+    return ""
+  }
 
   return (
     <>
@@ -221,7 +228,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
             <InputLabel>{config.host.label}</InputLabel>
             <StyledTextInput
               name={config.host.name}
-              defaultValue={defaultHost}
+              defaultValue={getDefaultHost()}
               disabled={isSubmitting}
             />
           </InputField>
