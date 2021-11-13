@@ -14,7 +14,7 @@ const EditWorkspaceModal = ({onClose}) => {
 
   return (
     <StyledContent>
-      <SmallTitle>Edit Workspace</SmallTitle>
+      <SmallTitle>Edit Lake</SmallTitle>
       <WorkspaceForm onClose={onClose} workspace={workspace} />
     </StyledContent>
   )

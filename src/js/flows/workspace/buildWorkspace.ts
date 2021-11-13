@@ -11,7 +11,7 @@ export const buildWorkspace = (
   {createZealot}
 ) => {
   if (!ws.host || !ws.port || !ws.id || !ws.name)
-    throw new Error("must provide host, port, id, and name to build workspace")
+    throw new Error("must provide host, port, id, and name to build lake")
   const zealot = createZealot(brim.workspace(ws as Workspace).getAddress())
 
   const workspace = {...ws}
