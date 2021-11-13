@@ -43,7 +43,7 @@ export class NoPoolsError extends AppError {
   }
 
   message() {
-    return "No pools in this workspace."
+    return "No pools in this lake."
   }
 }
 

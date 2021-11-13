@@ -5,7 +5,7 @@ import WorkspaceForm from "./WorkspaceForm"
 const NewWorkspaceModal = ({onClose}) => {
   return (
     <Content>
-      <SmallTitle>New Workspace</SmallTitle>
+      <SmallTitle>New Lake</SmallTitle>
       <WorkspaceForm onClose={onClose} />
     </Content>
   )

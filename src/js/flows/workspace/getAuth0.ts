@@ -9,7 +9,7 @@ export const getAuth0 = (ws?: BrimWorkspace): Thunk<Auth0Client> => (
 ) => {
   if (!ws) ws = Current.getWorkspace(getState())
   if (!ws.authType || ws.authType !== "auth0") return null
-  if (!ws.authData) throw new Error("authData missing from workspace")
+  if (!ws.authData) throw new Error("authData missing from lake")
 
   const {clientId, domain} = ws.authData
 
