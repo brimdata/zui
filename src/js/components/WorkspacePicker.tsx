@@ -61,7 +61,7 @@ const showWorkspaceMenu = () => (dispatch, getState) => {
   template.push(
     {type: "separator"},
     {
-      label: "Add Workspace...",
+      label: "Add Lake...",
       click: () => dispatch(Modal.show("new-workspace"))
     }
   )
