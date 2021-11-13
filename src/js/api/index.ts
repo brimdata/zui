@@ -9,7 +9,7 @@ import refreshPoolNames from "../flows/refreshPoolNames"
 import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
 import Queries from "../state/Queries"
-import {parseJSONLib} from "../state/Queries/parsers"
+import {parseJSONLib, serializeQueryLib} from "../state/Queries/parsers"
 import {AppDispatch, State} from "../state/types"
 import {QueriesApi} from "./queries"
 import {
@@ -21,6 +21,7 @@ import {
 } from "./registries"
 import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
+import {Group} from "../state/Queries/types"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -95,5 +96,9 @@ export default class BrimApi {
     const node = parseJSONLib(file.path)
     this.dispatch(Queries.addItem(node, "root"))
     this.toast.success(`Imported ${node.name}`)
+  }
+
+  exportQueries(group: Group) {
+    return serializeQueryLib(group)
   }
 }
