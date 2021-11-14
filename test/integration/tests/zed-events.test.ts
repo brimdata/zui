@@ -36,9 +36,9 @@ describe("Handle Zed server events", () => {
     const {
       pool: {id}
     } = await zealot.pools.create({name: "test-pool-new"})
-    expect(await brim.getText(poolItem)).toBe("test-pool-new")
+    await brim.hasText("test-pool-new", poolItem)
     await zealot.pools.update(id, {name: "test-pool-update"})
-    expect(await brim.getText(poolItem)).toBe("test-pool-update")
+    await brim.hasText("test-pool-update", poolItem)
     await zealot.pools.delete(id)
     await brim.withImplicitTimeout(500, async () => {
       expect(await brim.isNotVisible(poolItem)).toBe(true)
