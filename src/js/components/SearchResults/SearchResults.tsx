@@ -1,5 +1,6 @@
+import {Inspector} from "app/features/inspector/inspector"
 import initialViewerSearch from "app/search/flows/initial-viewer-search"
-import React, {useLayoutEffect} from "react"
+import React, {useLayoutEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import Viewer from "src/js/state/Viewer"
@@ -12,6 +13,7 @@ export default function SearchResults() {
   const location = useSelector(Current.getLocation)
   const status = useSelector(Viewer.getStatus)
   const viewerKey = useSelector(Viewer.getSearchKey)
+  const values = useSelector(Viewer.getLogs)
 
   useLayoutEffect(() => {
     if (status === "INIT" || viewerKey !== location.key) {
@@ -19,13 +21,18 @@ export default function SearchResults() {
     }
   }, [location.key])
 
+  const [view] = useState("inspector")
   return (
     <div className="search-results" ref={ref}>
-      <ResultsTable
-        width={rect.width}
-        height={rect.height}
-        multiSelect={false}
-      />
+      {view === "inspector" ? (
+        <Inspector height={rect.height} width={rect.width} values={values} />
+      ) : (
+        <ResultsTable
+          width={rect.width}
+          height={rect.height}
+          multiSelect={false}
+        />
+      )}
     </div>
   )
 }
