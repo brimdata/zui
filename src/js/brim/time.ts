@@ -81,7 +81,7 @@ function dateToTs(date: Date): Ts {
   const ms = date.getTime()
   const secFloat = ms / 1000
   const sec = Math.floor(secFloat)
-  const ns = +(secFloat - sec).toFixed(3) * 1e9
+  const ns = Math.round((secFloat - sec) * 1e3) * 1e6
   return {
     sec,
     ns
