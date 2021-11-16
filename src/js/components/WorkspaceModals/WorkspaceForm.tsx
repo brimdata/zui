@@ -102,7 +102,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
           const {host, port} = workspace
           isValid = value === host || value === [host, port].join(":")
         }
-        return [isValid, "cannot change lake url of default workspace"]
+        return [isValid, "cannot change lake URL of default workspace"]
       }
     },
     name: {

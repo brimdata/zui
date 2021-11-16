@@ -4,7 +4,8 @@ import {Thunk} from "../../state/types"
 import {Workspace} from "../../state/Workspaces/types"
 
 export const buildWorkspace = (
-  ws: Partial<Workspace>
+  ws: Partial<Workspace>,
+  signal: AbortSignal
 ): Thunk<Promise<BrimWorkspace>> => async (
   dispatch,
   getState,
@@ -17,12 +18,12 @@ export const buildWorkspace = (
   const workspace = {...ws}
 
   // check version to test that zqd is available, retrieve/update version while doing so
-  const {version} = await zealot.version()
+  const {version} = await zealot.version(signal)
   workspace.version = version
 
   // first time connection, need to determine auth type and set authData accordingly
   if (isEmpty(workspace.authType)) {
-    const resp = await zealot.authMethod()
+    const resp = await zealot.authMethod(signal)
     const authMethod = resp?.value
     if (authMethod.kind === "auth0") {
       const {client_id: clientId, domain} = authMethod.auth0

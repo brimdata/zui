@@ -17,12 +17,12 @@ export type FetchArgs = {
   useNodeFetch?: boolean
 }
 
-export function createFetcher(host: string) {
+export function createFetcher(baseUrl: string) {
   return {
     async promise(args: FetchArgs) {
       const {path, method, body, signal, headers, useNodeFetch} = args
       const switchFetch = useNodeFetch ? nodeFetch : fetch
-      const resp = await switchFetch(url(host, path), {
+      const resp = await switchFetch(url(baseUrl, path), {
         method,
         body,
         signal,
@@ -33,7 +33,7 @@ export function createFetcher(host: string) {
     },
     async stream(args: FetchArgs): Promise<ZResponse> {
       const {path, method, body, signal, headers} = args
-      const resp = await fetch(url(host, path), {
+      const resp = await fetch(url(baseUrl, path), {
         method,
         body: body as string | FormData | ReadableStream,
         signal,
@@ -51,7 +51,7 @@ export function createFetcher(host: string) {
       const unpackedHeaders = {}
       if (headers)
         for (let [hKey, hValue] of headers) unpackedHeaders[hKey] = hValue
-      return new EventSourcePolyfill(url(host, path), {
+      return new EventSourcePolyfill(url(baseUrl, path), {
         headers: {
           Accept: "application/json",
           ...unpackedHeaders

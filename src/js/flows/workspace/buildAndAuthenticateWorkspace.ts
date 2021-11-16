@@ -32,7 +32,7 @@ export const buildAndAuthenticateWorkspace = (
   abortSignal: AbortSignal
 ): Thunk<Promise<[Cancelled, WorkspaceError]>> => async (dispatch) => {
   try {
-    const ws = await dispatch(buildWorkspace(workspace))
+    const ws = await dispatch(buildWorkspace(workspace, abortSignal))
 
     if (ws.authType === "none") {
       dispatch(saveWorkspace(ws, "connected"))

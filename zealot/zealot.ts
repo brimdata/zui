@@ -34,10 +34,10 @@ async function responseToPoolConfigs(
 }
 
 export function createZealot(
-  host: string,
+  baseUrl: string,
   args: ZealotArgs = {fetcher: createFetcher}
 ) {
-  const {promise, stream, source} = args.fetcher(host)
+  const {promise, stream, source} = args.fetcher(baseUrl)
 
   let queryArgs: QueryArgs = getDefaultQueryArgs()
 
@@ -46,7 +46,7 @@ export function createZealot(
       return source({path: "/events"})
     },
     url: (path: string): string => {
-      return url(host, path)
+      return url(baseUrl, path)
     },
     setQueryOptions: (args: Partial<QueryArgs>) => {
       queryArgs = {...queryArgs, ...args}
@@ -54,11 +54,11 @@ export function createZealot(
     status: () => {
       return promise({method: "GET", path: "/status"})
     },
-    version: () => {
-      return promise({method: "GET", path: "/version"})
+    version: (signal?: AbortSignal) => {
+      return promise({method: "GET", path: "/version", signal})
     },
-    authMethod: () => {
-      return promise({method: "GET", path: "/auth/method"})
+    authMethod: (signal?: AbortSignal) => {
+      return promise({method: "GET", path: "/auth/method", signal})
     },
     authIdentity: () => {
       return promise({method: "GET", path: "/auth/identity"})
