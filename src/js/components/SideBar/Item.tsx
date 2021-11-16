@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import {MenuItemConstructorOptions, remote} from "electron"
+import {ipcRenderer, MenuItemConstructorOptions, remote} from "electron"
 import React, {useLayoutEffect, useRef} from "react"
 import toast from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux"
@@ -15,8 +15,12 @@ import Queries from "../../state/Queries"
 import {isBrimLib} from "../../state/Queries/flows"
 import SearchBar from "../../state/SearchBar"
 import useOutsideClick from "../hooks/useOutsideClick"
-import usePopupMenu from "../hooks/usePopupMenu"
 import {StyledArrow} from "../LeftPane/common"
+import {useBrimApi} from "../../../../app/core/context"
+import exportQueryLib from "../../flows/exportQueryLib"
+import {AppDispatch} from "../../state/types"
+import {brimQueryLib} from "../../../../test/integration/helpers/locators"
+import {showContextMenu} from "../../lib/System"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -136,11 +140,12 @@ function Rename({item, onSubmit}) {
 }
 
 export default function Item({innerRef, styles, data, state, handlers, tree}) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const currentPool = useSelector(Current.getPool)
   const {isEditing, isSelected} = state
   const {value, id} = data
   const isGroup = "items" in data
+  const api = useBrimApi()
 
   const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
   const hasMultiSelected = selected.length > 1
@@ -187,6 +192,44 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
         toast("Query copied to clipboard")
       }
     },
+    {
+      label: "Export Folder as JSON",
+      visible: isGroup && !hasMultiSelected,
+      click: async () => {
+        const {canceled, filePath} = await ipcRenderer.invoke(
+          "windows:showSaveDialog",
+          {
+            title: `Save Queries Folder as JSON`,
+            buttonLabel: "Export",
+            defaultPath: `${data.name}.json`,
+            properties: ["createDirectory"],
+            showsTagField: false
+          }
+        )
+        if (canceled) return
+        toast.promise(
+          dispatch(exportQueryLib(filePath, api.exportQueries(id))),
+          {
+            loading: "Exporting Queries...",
+            success: "Export Complete",
+            error: "Error Exporting Queries"
+          },
+          {
+            loading: {
+              // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
+              // also, once https://github.com/timolins/react-hot-toast/pull/37 merges, we can set this to -1
+              duration: 2 ** 31 - 1
+            },
+            success: {
+              duration: 3000
+            },
+            error: {
+              duration: 5000
+            }
+          }
+        )
+      }
+    },
     {type: "separator"},
     {
       label: "Rename",
@@ -223,8 +266,9 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     }
   ]
 
-  const menu = usePopupMenu(template)
   const itemIcon = isGroup ? <Folder /> : <StarNoFillIcon />
+
+  const maybeBrimLibTestProps = id === "brim" && brimQueryLib.props
 
   return (
     <BG
@@ -233,7 +277,8 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       style={styles.row}
       className={classNames(state)}
       onClick={onItemClick}
-      onContextMenu={() => menu.open()}
+      onContextMenu={() => showContextMenu(template)}
+      {...maybeBrimLibTestProps}
     >
       <StyledItem isSelected={isSelected} style={styles.indent}>
         <GroupArrow

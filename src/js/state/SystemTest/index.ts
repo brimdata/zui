@@ -5,6 +5,7 @@ export type HookName =
   | "import-complete"
   | "export-start"
   | "export-complete"
+  | "queries-export-complete"
   | "modal-entering"
   | "modal-entered"
   | "pool-deleted"

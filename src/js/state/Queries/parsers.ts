@@ -1,6 +1,7 @@
 import {Group} from "./types"
 import lib from "../../lib"
 import {nanoid} from "@reduxjs/toolkit"
+import {cloneDeep} from "lodash"
 
 export const parseJSONLib = (filePath: string): Group => {
   const contents = lib.file(filePath).readSync()
@@ -13,6 +14,17 @@ export const parseJSONLib = (filePath: string): Group => {
   })
 
   return itemTreeRoot as Group
+}
+
+export const serializeQueryLib = (group: Group) => {
+  // remove internal keys
+  const jsonGroup = cloneDeep(group)
+  flattenItemTree(jsonGroup).forEach((item) => {
+    delete item.id
+    delete item.isOpen
+  })
+
+  return jsonGroup
 }
 
 const flattenItemTree = (root) => {

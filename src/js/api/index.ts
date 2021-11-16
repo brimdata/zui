@@ -9,7 +9,7 @@ import refreshPoolNames from "../flows/refreshPoolNames"
 import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
 import Queries from "../state/Queries"
-import {parseJSONLib} from "../state/Queries/parsers"
+import {parseJSONLib, serializeQueryLib} from "../state/Queries/parsers"
 import {AppDispatch, State} from "../state/types"
 import {QueriesApi} from "./queries"
 import {
@@ -95,5 +95,10 @@ export default class BrimApi {
     const node = parseJSONLib(file.path)
     this.dispatch(Queries.addItem(node, "root"))
     this.toast.success(`Imported ${node.name}`)
+  }
+
+  exportQueries(groupId: string) {
+    const group = Queries.getGroupById(groupId)(this.getState())
+    return serializeQueryLib(group)
   }
 }
