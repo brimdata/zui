@@ -208,7 +208,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
         )
         if (canceled) return
         toast.promise(
-          dispatch(exportQueryLib(filePath, api.exportQueries(data))),
+          dispatch(exportQueryLib(filePath, api.exportQueries(id))),
           {
             loading: "Exporting Queries...",
             success: "Export Complete",

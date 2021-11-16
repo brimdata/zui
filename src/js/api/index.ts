@@ -21,7 +21,6 @@ import {
 } from "./registries"
 import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
-import {Group} from "../state/Queries/types"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -98,7 +97,8 @@ export default class BrimApi {
     this.toast.success(`Imported ${node.name}`)
   }
 
-  exportQueries(group: Group) {
+  exportQueries(groupId: string) {
+    const group = Queries.getGroupById(groupId)(this.getState())
     return serializeQueryLib(group)
   }
 }
