@@ -7,6 +7,7 @@ import {createError} from "../util/error"
 import {EventSourcePolyfill} from "event-source-polyfill"
 import nodeFetch from "node-fetch"
 import stream from "stream"
+import {AbortController as NodeAbortController} from "node-abort-controller"
 
 export type FetchArgs = {
   path: string
@@ -23,9 +24,9 @@ const fetchWithTimeout = async (
   args: FetchArgs
 ): Promise<Response> => {
   const {path, method, body, signal, headers, useNodeFetch} = args
-  const [wrappedSignal, cleanupTimeout] = useTimeoutSignal(signal)
+  const [wrappedSignal, clearTimeout] = useTimeoutSignal(signal)
   if (body instanceof stream.Readable) {
-    body.once("start", () => cleanupTimeout())
+    body.once("data", () => clearTimeout())
   }
   const switchFetch = useNodeFetch ? nodeFetch : fetch
   try {
@@ -43,30 +44,36 @@ const fetchWithTimeout = async (
 
     throw e
   } finally {
-    cleanupTimeout()
+    clearTimeout()
   }
 }
 
 const useTimeoutSignal = (
   wrappedSignal?: AbortSignal
 ): [AbortSignal, () => void] => {
-  const timeoutController = new AbortController()
+  // TODO: once we upgrade to Node 16, we won't need this polyfill
+  let timeoutController
+  try {
+    timeoutController = new AbortController()
+  } catch {
+    timeoutController = new NodeAbortController()
+  }
 
   // 10 second default timeout for all requests
   const id = setTimeout(() => {
     if (timeoutController.signal.aborted) return
     timeoutController.abort()
   }, 10000)
-  const cleanup = () => clearTimeout(id)
+  const clear = () => clearTimeout(id)
 
   if (wrappedSignal) {
     wrappedSignal.addEventListener("abort", () => {
       timeoutController.abort()
-      cleanup()
+      clear()
     })
   }
 
-  return [timeoutController.signal, cleanup]
+  return [timeoutController.signal, clear]
 }
 
 export function createFetcher(baseUrl: string) {
