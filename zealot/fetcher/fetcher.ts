@@ -59,11 +59,11 @@ const useTimeoutSignal = (
     timeoutController = new NodeAbortController()
   }
 
-  // 10 second default timeout for all requests
+  // 15 second default timeout for all requests
   const id = setTimeout(() => {
     if (timeoutController.signal.aborted) return
     timeoutController.abort()
-  }, 10000)
+  }, 15000)
   const clear = () => clearTimeout(id)
 
   if (wrappedSignal) {
