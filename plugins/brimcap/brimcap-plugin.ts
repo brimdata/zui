@@ -316,6 +316,8 @@ export default class BrimcapPlugin {
         }
       }
 
+      // on first data, emit a 'start' on stdout so zealot knows not to timeout the request
+      p.stderr.once("data", () => p.stdout.emit("start"))
       p.stderr.on("data", (d) => {
         try {
           const msgs: string[] = compact(d.toString().split("\n"))

@@ -27,6 +27,7 @@ const fetchWithTimeout = async (
   const [wrappedSignal, clearTimeout] = useTimeoutSignal(signal)
   if (body instanceof stream.Readable) {
     body.once("data", () => clearTimeout())
+    body.once("start", () => clearTimeout())
   }
   const switchFetch = useNodeFetch ? nodeFetch : fetch
   try {
@@ -59,11 +60,11 @@ const useTimeoutSignal = (
     timeoutController = new NodeAbortController()
   }
 
-  // 15 second default timeout for all requests
+  // 10 second default timeout for all requests
   const id = setTimeout(() => {
     if (timeoutController.signal.aborted) return
     timeoutController.abort()
-  }, 15000)
+  }, 10000)
   const clear = () => clearTimeout(id)
 
   if (wrappedSignal) {
