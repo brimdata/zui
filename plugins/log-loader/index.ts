@@ -25,10 +25,12 @@ export const activate = (api: BrimApi) => {
         }
       })
       const stream = file.stream().pipeThrough(progressUpdateTransformStream)
+      const nodeStream = nodeJSReadableStreamFromReadableStream(stream)
+      nodeStream.once("data", () => nodeStream.emit("start"))
       const res = await zealot.pools.load(params.poolId, params.branch, {
         author: "brim",
         body: "automatic import of " + file.path,
-        data: nodeJSReadableStreamFromReadableStream(stream),
+        data: nodeStream,
         signal
       })
       forEach(get(res, ["value", "warnings"], []), onWarning)

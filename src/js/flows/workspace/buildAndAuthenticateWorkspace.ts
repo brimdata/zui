@@ -75,6 +75,7 @@ export const buildAndAuthenticateWorkspace = (
       return [false, new LoginError(e)]
     }
   } catch (e) {
+    if (abortSignal.aborted) return [true, null]
     return [false, new ConnectionError(e)]
   }
 }

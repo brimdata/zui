@@ -97,6 +97,11 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
       label: "Lake URL",
       check: (value) => {
         if (isEmpty(value)) return [false, "must not be blank"]
+        try {
+          new URL("/", value)
+        } catch (e) {
+          return [false, "invalid URL"]
+        }
         let isValid = true
         if (!isNewWorkspace && isDefaultWorkspace(workspace)) {
           const {host, port} = workspace
@@ -202,8 +207,9 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
     <>
       {errors.length > 0 && (
         <Errors>
-          {errors.map(({label, message, input}, i) => {
+          {errors.map(({label, message, input, cause}, i) => {
             const maybePadded = label && input ? " " : ""
+            cause && console.error(cause)
             return (
               <li key={i}>
                 {maybePadded && <a onClick={() => input.focus()}>{label}</a>}

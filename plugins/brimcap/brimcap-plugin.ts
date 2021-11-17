@@ -315,6 +315,8 @@ export default class BrimcapPlugin {
             break
         }
       }
+
+      p.stderr.once("data", () => p.stdout.emit("start"))
       p.stderr.on("data", (d) => {
         try {
           const msgs: string[] = compact(d.toString().split("\n"))
