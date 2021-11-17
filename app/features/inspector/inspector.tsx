@@ -14,7 +14,7 @@ type Props = {
 
 export function Inspector(props: Props) {
   const [expanded, setExpanded] = useState(new Map())
-  const defaultExpanded = false
+  const defaultExpanded = true
   const context = {
     rows: [],
     push(render: ReactNode, indent: number) {

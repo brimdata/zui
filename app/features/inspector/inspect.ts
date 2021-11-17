@@ -17,41 +17,50 @@ export function inspect(
   const suffix = last ? null : ", "
 
   if (isUnset) {
-    ctx.push([prefix, fmt.unset(), suffix], indent)
+    const node = inspectOne(value)
+    ctx.push([prefix, node, suffix], indent)
     return
   }
 
-  if (value instanceof zed.Record) {
-    if (isExpanded) {
-      ctx.push(
-        fmt.expanded([prefix, " {"], () => ctx.setExpanded(value, false)),
-        indent
-      )
-      for (let i = 0; i < value.fields.length; i++) {
-        const last = i === value.fields.length - 1
-        const f = value.fields[i]
-        inspect(ctx, f.value, indent + 1, f.name, last)
-      }
-      ctx.push(["}", suffix], indent)
-    } else {
-      let nodes: ReactNode[] = [prefix, "{ "]
-      for (var i = 0; i < value.fields.length; ++i) {
-        const f = value.fields[i]
-        const last = value.fields.length - 1 === i
-        nodes.push(inspectOne(f.value, f.name, last))
-      }
-      nodes.push("}")
-      ctx.push(
-        fmt.collapsed(nodes, () => ctx.setExpanded(value, true)),
-        indent
-      )
+  if (value instanceof zed.Record && isExpanded) {
+    ctx.push(
+      fmt.expanded({
+        children: [prefix, " {"],
+        onClick: () => ctx.setExpanded(value, false)
+      }),
+      indent
+    )
+    for (let i = 0; i < value.fields.length; i++) {
+      const last = i === value.fields.length - 1
+      const f = value.fields[i]
+      inspect(ctx, f.value, indent + 1, f.name, last)
     }
+    ctx.push(["}", suffix], indent)
+    return
+  }
+
+  if (value instanceof zed.Record && !isExpanded) {
+    let nodes: ReactNode[] = [prefix, " {"]
+    for (var i = 0; i < value.fields.length; ++i) {
+      const f = value.fields[i]
+      const last = value.fields.length - 1 === i
+      nodes.push([fmt.key(f.name), inspectOne(f.value), last ? null : ", "])
+    }
+    nodes.push("}")
+    ctx.push(
+      fmt.collapsed(nodes, () => ctx.setExpanded(value, true)),
+      indent
+    )
+    return
   }
 
   if (value instanceof zed.Array) {
     if (isExpanded) {
       ctx.push(
-        fmt.expanded([prefix, " ["], () => ctx.setExpanded(value, false)),
+        fmt.expanded({
+          children: [prefix, " ["],
+          onClick: () => ctx.setExpanded(value, false)
+        }),
         indent
       )
       value.items.forEach((item, i, a) => {
@@ -59,59 +68,52 @@ export function inspect(
         inspect(ctx, item, indent + 1, i.toString(), last)
       })
       ctx.push(["]", suffix], indent)
+      return
     } else {
       let nodes: ReactNode[] = [prefix, "[ "]
       for (var i = 0; i < value.items.length; ++i) {
         const item = value.items[i]
-        const last = value.items.length - 1 === i
-        nodes.push(inspectOne(item, null, last))
+        // const last = value.items.length - 1 === i
+        nodes.push(inspectOne(item))
       }
       nodes.push("}")
       ctx.push(
         fmt.collapsed(nodes, () => ctx.setExpanded(value, true)),
         indent
       )
+      return
     }
   }
 
-  ctx.push(inspectOne(value, name, last), indent)
+  ctx.push([prefix, inspectOne(value), suffix], indent)
 }
 
-export function inspectOne(
-  value: zed.AnyValue,
-  name: string | null,
-  last: boolean
-) {
+export function inspectOne(value: zed.AnyValue) {
   const isUnset = value.isUnset()
-  const hasName = !!name
-  const prefix = hasName ? fmt.key(name) : null
-  const suffix = last ? null : ", "
+
   if (isUnset) {
-    return [prefix, fmt.unset(), suffix]
+    return fmt.unset()
   }
 
   if (value instanceof zed.Record) {
-    return [prefix, "Record", suffix]
+    return "{...}"
   }
 
   if (value instanceof zed.Array) {
-    return [prefix, `Array(${value.items.length})`, suffix]
+    return `Array(${value.items.length})`
   }
 
-  if (value instanceof zed.String) {
-    return [prefix, fmt.string(value.toString()), suffix]
+  if (zed.isStringy(value)) {
+    return fmt.string(value.toString())
   }
 
   if (value instanceof zed.Ip) {
-    return [prefix, fmt.ip(value.toString()), suffix]
+    return fmt.ip(value.toString())
   }
 
   if (zed.isInt(value)) {
-    return [prefix, fmt.int(value.toString()), suffix]
+    return fmt.int(value.toString())
   }
 
-  if (zed.isTime(value)) {
-    return [prefix, value.toString(), suffix]
-  }
-  return null
+  return value.toString()
 }

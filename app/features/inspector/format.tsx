@@ -1,4 +1,5 @@
 import React, {ReactNode} from "react"
+import Arrow from "src/js/icons/Arrow"
 
 export function key(name: string) {
   return <span className="inspector-key">{name}: </span>
@@ -22,16 +23,19 @@ export function int(s: string) {
 
 export function collapsed(n: ReactNode[], onClick: React.MouseEventHandler) {
   return (
-    <a className="inspector-collpased" onClick={onClick}>
-      {n}
+    <a className="inspector-collapsed" onClick={onClick}>
+      <Arrow /> {n}
     </a>
   )
 }
 
-export function expanded(n: ReactNode[], onClick: React.MouseEventHandler) {
+export function expanded(props: {
+  children: ReactNode
+  onClick: React.MouseEventHandler
+}) {
   return (
-    <a className="inspector-expanded" onClick={onClick}>
-      {n}
+    <a className="inspector-expanded" onClick={props.onClick}>
+      <Arrow /> {props.children}
     </a>
   )
 }

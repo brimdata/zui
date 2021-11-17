@@ -29,4 +29,16 @@ export const List = styled(FixedSizeList)`
   a {
     cursor: pointer;
   }
+
+  .inspector-expanded svg,
+  .inspector-collapsed svg {
+    opacity: 0.6;
+    width: 8px;
+    height: 8px;
+    fill: var(--aqua);
+  }
+
+  .inspector-expanded svg {
+    transform: rotateZ(90deg);
+  }
 `

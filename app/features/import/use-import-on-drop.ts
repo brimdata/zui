@@ -9,7 +9,12 @@ export function useImportOnDrop() {
   const api = useBrimApi()
   return useDrop<DragItem, unknown, DragProps>(() => ({
     accept: [NativeTypes.FILE],
-    drop: ({files}) => {
+    drop: (thing) => {
+      console.log(
+        Array.from(thing.items).map((f) => f.webkitGetAsEntry().fullPath)
+      )
+      return
+      const files = thing.files
       if (files && files.length) {
         api.import(files)
       }
