@@ -30,14 +30,18 @@ jest.mock("electron", () => ({
 
 const fixtures = {
   secureMethodAuth: {
-    kind: "auth0",
-    auth0: {
-      client_id: "testClientId",
-      domain: "testDomain"
+    value: {
+      kind: "auth0",
+      auth0: {
+        client_id: "testClientId",
+        domain: "testDomain"
+      }
     }
   },
   publicMethodAuth: {
-    kind: "none"
+    value: {
+      kind: "none"
+    }
   },
   newWorkspace: {
     id: "1",
@@ -127,8 +131,8 @@ describe("success cases", () => {
       ...fixtures.version,
       authType: "auth0" as AuthType,
       authData: {
-        clientId: fixtures.secureMethodAuth.auth0.client_id,
-        domain: fixtures.secureMethodAuth.auth0.domain
+        clientId: fixtures.secureMethodAuth.value.auth0.client_id,
+        domain: fixtures.secureMethodAuth.value.auth0.domain
       }
     }
     store.dispatch(Workspaces.add(existingWs))
@@ -159,8 +163,8 @@ describe("success cases", () => {
       ...fixtures.version,
       authType: "auth0" as AuthType,
       authData: {
-        clientId: fixtures.secureMethodAuth.auth0.client_id,
-        domain: fixtures.secureMethodAuth.auth0.domain
+        clientId: fixtures.secureMethodAuth.value.auth0.client_id,
+        domain: fixtures.secureMethodAuth.value.auth0.domain
       }
     }
     store.dispatch(Workspaces.add(existingWs))
@@ -193,8 +197,8 @@ describe("success cases", () => {
       ...fixtures.version,
       authType: "auth0" as AuthType,
       authData: {
-        clientId: fixtures.secureMethodAuth.auth0.client_id,
-        domain: fixtures.secureMethodAuth.auth0.domain
+        clientId: fixtures.secureMethodAuth.value.auth0.client_id,
+        domain: fixtures.secureMethodAuth.value.auth0.domain
       }
     }
     store.dispatch(Workspaces.add(existingWs))
@@ -277,12 +281,12 @@ describe("success cases", () => {
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
-    const {domain, client_id: clientId} = fixtures.secureMethodAuth.auth0
+    const {domain, client_id: clientId} = fixtures.secureMethodAuth.value.auth0
     expectWorkspace(
       {
         ...fixtures.newWorkspace,
         ...fixtures.version,
-        authType: fixtures.secureMethodAuth.kind,
+        authType: fixtures.secureMethodAuth.value.kind,
         authData: {clientId, domain, accessToken: fixtures.accessToken}
       },
       "connected"

@@ -1,9 +1,6 @@
-import {EventSourcePolyfill} from "event-source-polyfill"
 import {createFetcher} from "./fetcher/fetcher"
 import {pools, query} from "./api/mod"
-import {getHost} from "./util/host"
 import {getDefaultQueryArgs} from "./config/query-args"
-import nodeFetch from "node-fetch"
 import {
   BranchMeta,
   PoolArgs,
@@ -17,8 +14,6 @@ import {
 } from "./types"
 import {Context, Int64, Record, Time, String, Array} from "./zed"
 import {url} from "./util/utils"
-import {parseContentType} from "./fetcher/contentType"
-import {createError} from "./util/error"
 
 async function responseToPoolConfigs(
   zresponse: ZResponse
@@ -39,22 +34,19 @@ async function responseToPoolConfigs(
 }
 
 export function createZealot(
-  hostUrl: string,
+  baseUrl: string,
   args: ZealotArgs = {fetcher: createFetcher}
 ) {
-  const host = getHost(hostUrl)
-  const {promise, stream} = args.fetcher(host)
+  const {promise, stream, source} = args.fetcher(baseUrl)
 
   let queryArgs: QueryArgs = getDefaultQueryArgs()
 
   return {
     events: () => {
-      return new EventSourcePolyfill(`http://${host}/events`, {
-        headers: {Accept: "application/json"}
-      })
+      return source({path: "/events"})
     },
     url: (path: string): string => {
-      return url(host, path)
+      return url(baseUrl, path)
     },
     setQueryOptions: (args: Partial<QueryArgs>) => {
       queryArgs = {...queryArgs, ...args}
@@ -62,11 +54,11 @@ export function createZealot(
     status: () => {
       return promise({method: "GET", path: "/status"})
     },
-    version: () => {
-      return promise({method: "GET", path: "/version"})
+    version: (signal?: AbortSignal) => {
+      return promise({method: "GET", path: "/version", signal})
     },
-    authMethod: () => {
-      return promise({method: "GET", path: "/auth/method"})
+    authMethod: (signal?: AbortSignal) => {
+      return promise({method: "GET", path: "/auth/method", signal})
     },
     authIdentity: () => {
       return promise({method: "GET", path: "/auth/identity"})
@@ -119,10 +111,7 @@ export function createZealot(
         return promise(pools.update(id, args))
       },
       load: async (poolId: string, branch: string, args: PoolLoadArgs) => {
-        const {path, ...rest} = pools.load(poolId, branch, args)
-        const resp = await nodeFetch(url(host, path), rest)
-        const content = await parseContentType(resp)
-        return resp.ok ? content : Promise.reject(createError(content))
+        return await promise(pools.load(poolId, branch, args))
       }
     },
     inspect: {

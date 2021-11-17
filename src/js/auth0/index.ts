@@ -6,7 +6,7 @@ interface Auth0Response {
 }
 
 export default class Auth0Client {
-  private audience = "https://app.brimdata.io"
+  private audience = "https://lake.brimdata.io"
   private redirectUri = "brim://auth/auth0/callback"
   // 'offline_access' ensures we receive a refresh_token
   private scope = "openid offline_access"

@@ -7,8 +7,8 @@ function hasOwnProperty<X extends {}, Y extends PropertyKey>(
   return Object.prototype.hasOwnProperty.call(obj, prop)
 }
 
-export function url(host: string, path: string) {
-  return `http://${host}${path}`
+export function url(baseUrl: string, path: string) {
+  return `${baseUrl}${path}`
 }
 
 export function isObject(thing: unknown): thing is Object {

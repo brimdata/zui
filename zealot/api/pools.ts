@@ -40,7 +40,8 @@ export default {
       path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: "POST",
       body: data,
-      signal
+      signal,
+      useNodeFetch: true
     }
   }
 }

@@ -76,7 +76,7 @@ export async function withLake(fn: (zealot: any) => any, config: Config = {}) {
   createDataDir(root)
 
   const lake = await start(runner, root, addr)
-  const zealot = createZealot(addr)
+  const zealot = createZealot("http://" + addr)
   await until(
     () =>
       zealot

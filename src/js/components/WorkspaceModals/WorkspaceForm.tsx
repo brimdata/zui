@@ -94,15 +94,20 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
   const config: FormConfig = {
     host: {
       name: "host",
-      label: "Host",
+      label: "Lake URL",
       check: (value) => {
         if (isEmpty(value)) return [false, "must not be blank"]
+        try {
+          new URL("/", value)
+        } catch (e) {
+          return [false, "invalid URL"]
+        }
         let isValid = true
         if (!isNewWorkspace && isDefaultWorkspace(workspace)) {
           const {host, port} = workspace
           isValid = value === host || value === [host, port].join(":")
         }
-        return [isValid, "cannot change host of default workspace"]
+        return [isValid, "cannot change lake URL of default workspace"]
       }
     },
     name: {
@@ -113,8 +118,8 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
   }
 
   const setFields = ({hostPort, name}, ws?: Workspace): Partial<Workspace> => {
-    let [host, port] = hostPort.split(":")
-    if (!port) port = "9867"
+    const {port, hostname, protocol} = new URL("/", hostPort)
+    const host = [protocol, hostname].join("//")
     if (ws) return {...ws, host, port, name}
     return {id, host, port, name}
   }
@@ -160,7 +165,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
       setIsSubmitting(false)
 
       if (error) {
-        setErrors([error.message])
+        setErrors([error])
         return
       }
       setErrors([])
@@ -188,18 +193,30 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
   useEventListener(document, "keyup", keyUp, [formRef])
 
   const defaultName = (workspace && workspace.name) || ""
-  const defaultHost =
-    (workspace && [workspace.host, workspace.port].join(":")) || ""
+  const getDefaultHost = () => {
+    if (workspace) {
+      return workspace.port
+        ? [workspace.host, workspace.port].join(":")
+        : workspace.host
+    }
+
+    return ""
+  }
 
   return (
     <>
       {errors.length > 0 && (
         <Errors>
-          {errors.map(({label, message, input}, i) => (
-            <li key={i}>
-              <a onClick={() => input.focus()}>{label}</a> {message}
-            </li>
-          ))}
+          {errors.map(({label, message, input, cause}, i) => {
+            const maybePadded = label && input ? " " : ""
+            cause && console.error(cause)
+            return (
+              <li key={i}>
+                {maybePadded && <a onClick={() => input.focus()}>{label}</a>}
+                {maybePadded + message}
+              </li>
+            )
+          })}
         </Errors>
       )}
       <SignInForm>
@@ -217,7 +234,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
             <InputLabel>{config.host.label}</InputLabel>
             <StyledTextInput
               name={config.host.name}
-              defaultValue={defaultHost}
+              defaultValue={getDefaultHost()}
               disabled={isSubmitting}
             />
           </InputField>

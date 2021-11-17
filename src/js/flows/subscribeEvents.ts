@@ -4,7 +4,7 @@ import {getZealot} from "./getZealot"
 
 export const subscribeEvents = (
   workspace?: BrimWorkspace
-): Thunk<EventSource> => (dispatch) => {
+): Thunk<Promise<EventSource>> => (dispatch) => {
   const zealot = dispatch(getZealot(workspace))
 
   return zealot.events()

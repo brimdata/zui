@@ -5,7 +5,7 @@ import {selectors} from "../helpers/integration"
 import {poolItem} from "../helpers/locators"
 
 describe("Handle Zed server events", () => {
-  const zealot = createZealot("localhost:9867")
+  const zealot = createZealot("http://localhost:9867")
   const brim = createTestBrim("zed-events-tests")
   let poolId
 

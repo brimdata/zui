@@ -1,32 +1,91 @@
 import {url} from "../util/utils"
 import {parseContentType} from "./contentType"
-import {Enhancer, ZealotUploadPayload, ZResponse} from "../types"
+import {Enhancer, ZResponse} from "../types"
 import {createIterator} from "./iterator"
 import {createStream} from "./stream"
 import {createError} from "../util/error"
-import {createPushableIterator} from "./pushable-iterator"
-import {parseLines} from "../ndjson/lines"
+import {EventSourcePolyfill} from "event-source-polyfill"
+import nodeFetch from "node-fetch"
+import stream from "stream"
+import {AbortController as NodeAbortController} from "node-abort-controller"
 
 export type FetchArgs = {
   path: string
-  method: string
-  body?: string | FormData | ReadableStream
+  method?: string
+  body?: string | FormData | ReadableStream | NodeJS.ReadableStream
   headers?: Headers
   enhancers?: Enhancer[]
   signal?: AbortSignal
+  useNodeFetch?: boolean
 }
 
-export function createFetcher(host: string) {
+const fetchWithTimeout = async (
+  baseUrl: string,
+  args: FetchArgs
+): Promise<Response> => {
+  const {path, method, body, signal, headers, useNodeFetch} = args
+  const [wrappedSignal, clearTimeout] = useTimeoutSignal(signal)
+  if (body instanceof stream.Readable) {
+    body.once("data", () => clearTimeout())
+    body.once("start", () => clearTimeout())
+  }
+  const switchFetch = useNodeFetch ? nodeFetch : fetch
+  try {
+    return await switchFetch(url(baseUrl, path), {
+      method,
+      body,
+      signal: wrappedSignal,
+      headers
+    })
+  } catch (e) {
+    // if wrapped signal is the only one aborted, then this is a timeout
+    if (!signal?.aborted && wrappedSignal.aborted) {
+      throw new Error("Request timed out")
+    }
+
+    throw e
+  } finally {
+    clearTimeout()
+  }
+}
+
+const useTimeoutSignal = (
+  wrappedSignal?: AbortSignal
+): [AbortSignal, () => void] => {
+  // TODO: once we upgrade to Node 16, we won't need this polyfill
+  let timeoutController
+  try {
+    timeoutController = new AbortController()
+  } catch {
+    timeoutController = new NodeAbortController()
+  }
+
+  // 10 second default timeout for all requests
+  const id = setTimeout(() => {
+    if (timeoutController.signal.aborted) return
+    timeoutController.abort()
+  }, 10000)
+  const clear = () => clearTimeout(id)
+
+  if (wrappedSignal) {
+    wrappedSignal.addEventListener("abort", () => {
+      timeoutController.abort()
+      clear()
+    })
+  }
+
+  return [timeoutController.signal, clear]
+}
+
+export function createFetcher(baseUrl: string) {
   return {
     async promise(args: FetchArgs) {
-      const {path, method, body, signal, headers} = args
-      const resp = await fetch(url(host, path), {method, body, signal, headers})
+      const resp = await fetchWithTimeout(baseUrl, args)
       const content = await parseContentType(resp)
       return resp.ok ? content : Promise.reject(createError(content))
     },
     async stream(args: FetchArgs): Promise<ZResponse> {
-      const {path, method, body, signal, headers} = args
-      const resp = await fetch(url(host, path), {method, body, signal, headers})
+      const resp = await fetchWithTimeout(baseUrl, args)
       if (!resp.ok) {
         const content = await parseContentType(resp)
         return Promise.reject(createError(content))
@@ -34,39 +93,16 @@ export function createFetcher(host: string) {
       const iterator = createIterator(resp, args)
       return createStream(iterator, resp)
     },
-    async upload(args: FetchArgs): Promise<ZResponse> {
-      return new Promise((resolve) => {
-        const iterator = createPushableIterator<ZealotUploadPayload>()
-        const xhr = new XMLHttpRequest()
-
-        xhr.upload.addEventListener("progress", (e) => {
-          if (!e.lengthComputable) return
-          iterator.push({
-            value: {type: "UploadProgress", progress: e.loaded / e.total},
-            done: false
-          })
-        })
-
-        xhr.addEventListener("load", async () => {
-          for (const value of parseLines(xhr.responseText))
-            iterator.push({value, done: false})
-        })
-
-        xhr.addEventListener("error", () => {
-          iterator.throw(new Error(xhr.responseText))
-        })
-
-        xhr.addEventListener("loadend", () => {
-          iterator.push({done: true, value: undefined})
-        })
-
-        xhr.open(args.method, url(host, args.path), true)
-        if (args.headers) {
-          for (const [header, val] of args.headers.entries())
-            xhr.setRequestHeader(header, val)
+    async source(args: FetchArgs): Promise<EventSource> {
+      const {path, headers} = args
+      const unpackedHeaders = {}
+      if (headers)
+        for (let [hKey, hValue] of headers) unpackedHeaders[hKey] = hValue
+      return new EventSourcePolyfill(url(baseUrl, path), {
+        headers: {
+          Accept: "application/json",
+          ...unpackedHeaders
         }
-        xhr.send(args.body)
-        resolve(createStream(iterator, xhr))
       })
     }
   }
