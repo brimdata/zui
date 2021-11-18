@@ -33,6 +33,7 @@ export interface QueryArgs {
   format: QueryFormat
   controlMessages?: boolean
   enhancers?: Enhancer[]
+  timeout?: number
   signal?: AbortSignal
 }
 
