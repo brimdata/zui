@@ -8,7 +8,8 @@ export default function queryApi(zed: string, args: QueryArgs): FetchArgs {
     path: `/query?${getQueryParams(args)}`,
     body: JSON.stringify({query: zed}),
     headers: getHeaders(args),
-    signal: args.signal
+    signal: args.signal,
+    timeout: args.timeout
   }
 }
 

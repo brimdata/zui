@@ -17,14 +17,15 @@ export type FetchArgs = {
   enhancers?: Enhancer[]
   signal?: AbortSignal
   useNodeFetch?: boolean
+  timeout?: number
 }
 
 const fetchWithTimeout = async (
   baseUrl: string,
   args: FetchArgs
 ): Promise<Response> => {
-  const {path, method, body, signal, headers, useNodeFetch} = args
-  const [wrappedSignal, clearTimeout] = useTimeoutSignal(signal)
+  const {path, method, body, signal, headers, useNodeFetch, timeout} = args
+  const [wrappedSignal, clearTimeout] = useTimeoutSignal({signal, timeout})
   if (body instanceof stream.Readable) {
     body.once("data", () => clearTimeout())
     body.once("start", () => clearTimeout())
@@ -49,9 +50,13 @@ const fetchWithTimeout = async (
   }
 }
 
-const useTimeoutSignal = (
-  wrappedSignal?: AbortSignal
-): [AbortSignal, () => void] => {
+const useTimeoutSignal = ({
+  signal: wrappedSignal,
+  timeout = 10000
+}: {
+  signal?: AbortSignal
+  timeout?: number
+}): [AbortSignal, () => void] => {
   // TODO: once we upgrade to Node 16, we won't need this polyfill
   let timeoutController
   try {
@@ -64,7 +69,7 @@ const useTimeoutSignal = (
   const id = setTimeout(() => {
     if (timeoutController.signal.aborted) return
     timeoutController.abort()
-  }, 10000)
+  }, timeout)
   const clear = () => clearTimeout(id)
 
   if (wrappedSignal) {
