@@ -1,3 +1,13 @@
+## v0.28.0
+
+* Update Zed to [v0.33.0](https://github.com/brimdata/zed/releases/tag/v0.33.0)
+* Update Auth0 authentication (#1956)
+* Add Query Library folder export (#1958)
+* Rename "workspace" to "lake" (#1957)
+* Fix an issue where array values sometimes overlapped in the search results (#1953)
+* Add file drag and drop to the Pools section (creates a new pool and imports data) and the Query Library (imports queries) (#1938)
+* Fix some issues with read-only folder drag and drop in the Query Library (#1936)
+
 ## v0.27.0
 
 * Update Zed to [v0.32.0](https://github.com/brimdata/zed/releases/tag/v0.32.0)
