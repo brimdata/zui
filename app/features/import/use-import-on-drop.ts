@@ -10,10 +10,6 @@ export function useImportOnDrop() {
   return useDrop<DragItem, unknown, DragProps>(() => ({
     accept: [NativeTypes.FILE],
     drop: (thing) => {
-      console.log(
-        Array.from(thing.items).map((f) => f.webkitGetAsEntry().fullPath)
-      )
-      return
       const files = thing.files
       if (files && files.length) {
         api.import(files)
