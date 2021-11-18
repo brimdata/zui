@@ -8,7 +8,6 @@ tests are better suited as Brim unit tests or tests in the Zed repository.
 The tests use Jest and Spectron.
 
 - https://jestjs.io
-- https://www.electronjs.org/spectron
 - https://github.com/electron-userland/spectron
 
 ## Requirements
