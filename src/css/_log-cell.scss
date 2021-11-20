@@ -7,7 +7,6 @@
   height: 25px;
   display: flex;
   align-items: flex-start;
-  @include type-colors;
 
   &.hover,
   &.active {

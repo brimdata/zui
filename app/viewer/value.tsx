@@ -1,6 +1,6 @@
 import {useZedFormatter} from "app/core/format"
 import Icon from "app/core/Icon"
-import {typeClassNames} from "app/core/utils/type-class-names"
+import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import {isEventType, SuricataEventType} from "ppl/suricata/suricata-plugin"
@@ -64,7 +64,7 @@ export function PrimitiveValue(props: ValueProps) {
   return (
     <BG
       style={{width: fillCell ? "100%" : "auto"}}
-      className={typeClassNames(props.value)}
+      className={zedTypeClassName(props.value)}
       onContextMenu={() =>
         dispatch(
           searchFieldContextMenu({

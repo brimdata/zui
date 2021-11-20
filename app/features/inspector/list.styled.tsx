@@ -2,9 +2,9 @@ import {FixedSizeList} from "react-window"
 import styled from "styled-components"
 
 export const List = styled(FixedSizeList)`
-  font-size: 13px;
+  font-size: 12px;
   font-family: "Cartograph", sans-serif;
-  line-height: 18px;
+  line-height: 20px;
 
   .inspector-row {
     white-space: nowrap;
@@ -15,7 +15,7 @@ export const List = styled(FixedSizeList)`
   }
 
   .inspector-key {
-    color: var(--pecan);
+    color: var(--wet-cement);
   }
 
   .inspector-ip {
@@ -36,9 +36,11 @@ export const List = styled(FixedSizeList)`
     width: 8px;
     height: 8px;
     fill: var(--aqua);
+    margin-left: 1px;
   }
 
   .inspector-expanded svg {
     transform: rotateZ(90deg);
+    margin-top: 1px;
   }
 `

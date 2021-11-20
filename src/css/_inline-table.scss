@@ -36,8 +36,4 @@
     font-weight: bold;
     color: var(--slate);
   }
-
-  td {
-    @include type-colors;
-  }
 }

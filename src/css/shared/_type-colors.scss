@@ -1,44 +1,38 @@
-@mixin type-colors {
-  &.addr,
-  &.ip,
-  &.set\[addr\] {
-    color: var(--ip);
-  }
+.zed-key {
+  color: var(--cello);
+}
 
-  &.port,
-  &.set\[port\] {
-    color: var(--port);
-  }
+.zed-ip {
+  color: var(--ip);
+}
 
-  &.interval,
-  &.duration,
-  &.set\[interval\] {
-    color: var(--interval);
-  }
+.zed-duration {
+  color: var(--interval);
+}
 
-  &.count,
-  &.uint8,
-  &.uint16,
-  &.uint32,
-  &.uint64,
-  &.int8,
-  &.int16,
-  &.int32,
-  &.int64,
-  &.set\[count\] {
-    color: var(--count);
-  }
+.zed-uint8,
+.zed-uint16,
+.zed-uint32,
+.zed-uint64,
+.zed-int8,
+.zed-int16,
+.zed-int32,
+.zed-int64 {
+  color: var(--count);
+}
 
-  &.bool,
-  &.set\[bool\] {
-    color: var(--blue);
-  }
+.zed-bool {
+  color: var(--bool);
+}
 
-  &.null {
-    color: var(--cloudy);
-  }
+.zed-float64 {
+  color: var(--count);
+}
 
-  &.time {
-    color: var(--interval);
-  }
+.zed-null {
+  color: var(--cloudy);
+}
+
+.zed-time {
+  color: var(--interval);
 }

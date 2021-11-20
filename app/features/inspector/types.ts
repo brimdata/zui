@@ -1,3 +1,4 @@
+import {MouseEvent} from "react"
 import {zed} from "zealot"
 import {ReactNode} from "react"
 
@@ -9,6 +10,7 @@ export type Context = {
   setExpanded: SetExpanded
   rows: RowData[]
   push: (render: ReactNode, indent: number) => void
+  onContextMenu: (e: MouseEvent, value: zed.AnyValue, field: zed.Field) => void
 }
 
 export type RowData = {
