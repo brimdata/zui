@@ -3,11 +3,12 @@ import {Inspector} from "app/features/inspector/inspector"
 import initialViewerSearch from "app/search/flows/initial-viewer-search"
 import classNames from "classnames"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
-import React, {useLayoutEffect, useState} from "react"
+import React, {useLayoutEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import ResultsTable from "src/js/components/SearchResults/ResultsTable"
 import Current from "src/js/state/Current"
+import Tab from "src/js/state/Tab"
 import Viewer from "src/js/state/Viewer"
 import styled from "styled-components"
 import {zed} from "zealot"
@@ -90,9 +91,21 @@ export function Results() {
     }
   }, [location.key])
 
-  const [view, setView] = useState<"table" | "objects">("objects")
-  const [defaultExpanded, setDefaultExpanded] = useState<boolean>(false)
-  const [expanded, setExpanded] = useState(new Map())
+  const [view, setView] = Tab.useState<"table" | "objects">(
+    "results.view",
+    "objects"
+  )
+
+  const [defaultExpanded, setDefaultExpanded] = Tab.useState<boolean>(
+    "results.view.objects.defaultExpanded",
+    false
+  )
+
+  const [expanded, setExpanded] = Tab.useState(
+    "results.view.objects.expanded",
+    new Map()
+  )
+
   return (
     <BG className="search-results">
       <Toolbar>

@@ -36,8 +36,9 @@ export function Inspector(props: Props) {
       else return defaultExpanded
     },
     setExpanded: (value: zed.AnyValue, bool: boolean) => {
-      expanded.set(value, bool)
-      setExpanded(new Map(expanded.entries()))
+      const newMap = new Map(expanded.entries())
+      newMap.set(value, bool)
+      setExpanded(newMap)
     }
   }
 
