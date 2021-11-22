@@ -26,6 +26,7 @@ export default class TestApp {
       args: [`--user-data-dir=${userDataDir}`, getAppBinPath()]
     })
     await this.brim.firstWindow()
+
     this.mainWin = await this.getWindowByTitle("Brim")
   }
 

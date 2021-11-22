@@ -22,16 +22,16 @@ describe("Ingest tests", () => {
     "sample.tsv",
     "sample.ndjson",
     "sample.zng"
-  ].map((f) => path.normalize(path.join(testDataDir(), f)))
+  ].map((f) => ({path: path.normalize(path.join(testDataDir(), f)), name: f}))
 
-  sampleFiles.forEach((fileName) => {
-    test(`ingest of ${fileName}`, (done) => {
+  Object.values(sampleFiles).forEach(({path, name}) => {
+    test(`ingest of ${name}`, (done) => {
       app
-        .ingestFiles([fileName])
+        .ingestFiles([path])
         .then(async () => {
           await app.search(searchZql)
           const results = await app.getViewerResults()
-          expect(results).toMatchSnapshot()
+          expect(results).toMatchSnapshot(name)
           done()
         })
         .catch((err) => {
