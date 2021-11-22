@@ -4,7 +4,8 @@ module.exports = {
   globalSetup: "<rootDir>/setup/global.ts",
   setupFilesAfterEnv: ["<rootDir>/setup/after-env.ts"],
   collectCoverageFrom: ["**/*.ts", "!**/test/**"],
-  reporters: ["default", "jest-junit"],
-  bail: 10,
-  maxWorkers: 1
+  reporters: ["default"],
+  bail: 15,
+  maxWorkers: 1,
+  testTimeout: 40000
 }

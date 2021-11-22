@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Ingest tests ingest of /Users/masonfish/go/src/github.com/brimdata/brim/test/shared/data/sample.ndjson 1`] = `
+exports[`Ingest tests ingest of sample.ndjson: sample.ndjson 1`] = `
 Array [
   "ts",
   "proto",
@@ -37,7 +37,7 @@ Array [
 ]
 `;
 
-exports[`Ingest tests ingest of /Users/masonfish/go/src/github.com/brimdata/brim/test/shared/data/sample.pcap 1`] = `
+exports[`Ingest tests ingest of sample.pcap: sample.pcap 1`] = `
 Array [
   "ts",
   "id › orig_h",
@@ -138,7 +138,7 @@ Array [
 ]
 `;
 
-exports[`Ingest tests ingest of /Users/masonfish/go/src/github.com/brimdata/brim/test/shared/data/sample.pcapng 1`] = `
+exports[`Ingest tests ingest of sample.pcapng: sample.pcapng 1`] = `
 Array [
   "ts",
   "id › orig_h",
@@ -239,7 +239,7 @@ Array [
 ]
 `;
 
-exports[`Ingest tests ingest of /Users/masonfish/go/src/github.com/brimdata/brim/test/shared/data/sample.tsv 1`] = `
+exports[`Ingest tests ingest of sample.tsv: sample.tsv 1`] = `
 Array [
   "ts",
   "id › orig_h",
@@ -340,7 +340,7 @@ Array [
 ]
 `;
 
-exports[`Ingest tests ingest of /Users/masonfish/go/src/github.com/brimdata/brim/test/shared/data/sample.zng 1`] = `
+exports[`Ingest tests ingest of sample.zng: sample.zng 1`] = `
 Array [
   "ts",
   "id › orig_h",
