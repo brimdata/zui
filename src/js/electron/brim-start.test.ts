@@ -24,17 +24,17 @@ test("start is called in zed lake", async () => {
   expect(brim.lake.start).toHaveBeenCalledTimes(1)
 })
 
-test("activate when zero windows open", () => {
+test("activate when zero windows open", async () => {
   expect(brim.windows.count()).toBe(0)
-  brim.activate()
+  await brim.activate()
   // default "search" window + "hidden" window (background renderer) === 2
   expect(brim.windows.count()).toBe(2)
 })
 
 test("activate when one or more windows open", async () => {
-  brim.activate()
+  await brim.activate()
   expect(brim.windows.count()).toBe(2)
-  brim.activate()
+  await brim.activate()
   expect(brim.windows.count()).toBe(2)
 })
 
