@@ -11,7 +11,7 @@ beforeEach(() => {
 
 test("serialize each window", async () => {
   const manager = new WindowManager()
-  manager.openWindow("search")
+  await manager.openWindow("search")
   const data = await manager.serialize()
   expect(data).toEqual([
     {
@@ -27,7 +27,7 @@ test("serialize each window", async () => {
 
 test("confirm quit is true", async () => {
   const manager = new WindowManager()
-  manager.openWindow("search")
+  await manager.openWindow("search")
   const ok = await manager.confirmQuit()
   expect(ok).toBe(true)
 })
@@ -42,9 +42,9 @@ test("when all closed resolves", (done) => {
   })
 })
 
-test("when all closed waits until windows are done", (done) => {
+test("when all closed waits until windows are done", async (done) => {
   const manager = new WindowManager()
-  manager.openWindow("search")
+  await manager.openWindow("search")
   let pending = true
   manager.whenAllClosed().then(() => (pending = false))
   setTimeout(() => {
@@ -55,13 +55,13 @@ test("when all closed waits until windows are done", (done) => {
 
 test("prevent multiple hidden windows", async () => {
   const manager = new WindowManager()
-  manager.ensureHiddenRenderer()
+  await manager.ensureHiddenRenderer()
   let windows = manager.getAll()
   expect(windows).toHaveLength(1)
   expect(windows[0].name).toEqual("hidden")
 
   // try again, still expect only 1
-  manager.ensureHiddenRenderer()
+  await manager.ensureHiddenRenderer()
   windows = manager.getAll()
   expect(windows).toHaveLength(1)
   expect(windows[0].name).toEqual("hidden")
@@ -69,14 +69,14 @@ test("prevent multiple hidden windows", async () => {
 
 test("window getters filter properly", async () => {
   const manager = new WindowManager()
-  manager.openWindow("search")
+  await manager.openWindow("search")
   expect(manager.getVisible()).toHaveLength(1)
   let windows = manager.getAll()
   expect(windows).toHaveLength(1)
   expect(windows[0].name).toEqual("search")
   expect(manager.getHidden()).toHaveLength(0)
 
-  manager.openWindow("hidden")
+  await manager.openWindow("hidden")
   windows = manager.getAll()
   expect(windows).toHaveLength(2)
   expect(manager.getVisible()).toHaveLength(1)
