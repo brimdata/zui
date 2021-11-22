@@ -208,7 +208,6 @@ const QueryForm = ({onClose, query, value}: Props) => {
             <QueryValueInput
               name={config.value.name}
               defaultValue={value || get(query, ["value"], "")}
-              autoFocus
             />
           </InputField>
           <InputField>
@@ -216,6 +215,7 @@ const QueryForm = ({onClose, query, value}: Props) => {
             <StyledTextInput
               name={config.name.name}
               defaultValue={get(query, ["name"], "")}
+              autoFocus
             />
           </InputField>
           <InputField>
