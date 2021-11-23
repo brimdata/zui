@@ -174,7 +174,6 @@ jobs:
         if: runner.os != 'Linux'
         run: npm run test:playwright -- --ci --forceExit
         env:
-          DEBUG: pw:api
           WORKSPACE: /var/tmp/brimdata
       - uses: actions/upload-artifact@v2
         if: failure()
