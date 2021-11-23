@@ -5,7 +5,7 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/setup/after-env.ts"],
   collectCoverageFrom: ["**/*.ts", "!**/test/**"],
   reporters: ["default"],
-  bail: 15,
+  bail: 10,
   maxWorkers: 1,
-  testTimeout: 40000
+  testTimeout: 30000
 }
