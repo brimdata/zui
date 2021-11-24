@@ -1,15 +1,15 @@
 import {Field, TypeRecord} from ".."
 import {Value} from "../../zjson"
 import {ZedContext} from "../context"
-import {ContainerTypeInterface, ZedType} from "./types"
+import {ContainerTypeInterface, ZedTypeInterface} from "./types"
 
 export class TypeAlias implements ContainerTypeInterface {
   kind = "alias"
   name: string
-  type: ZedType
+  type: ZedTypeInterface
   id: string | number
 
-  constructor(name: string, type: ZedType) {
+  constructor(name: string, type: ZedTypeInterface) {
     this.name = name
     this.type = type
   }

@@ -45,7 +45,7 @@ export default function reducer(state: TabsState = init, action: TabActions) {
     case "TABS_ACTIVE_CLEAR":
       var index = state.data.findIndex((t) => t.id === state.active)
       var tabs = [...state.data]
-      tabs[index] = tabReducer({id: state.active}, {type: "@INIT"})
+      tabs[index] = tabReducer({id: state.active} as TabState, {type: "@INIT"})
       return {
         ...state,
         data: tabs

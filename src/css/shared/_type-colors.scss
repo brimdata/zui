@@ -1,13 +1,30 @@
-.zed-key {
-  color: var(--cello);
+:root {
+  // type colors
+  --zed-null: var(--lead);
+  --zed-time: hsl(275, 55%, 50%);
+  --zed-symbol: hsl(212, 95%, 55%);
+  --interval: #544aa6;
+  --bool: #3eaef4;
+  --zed-string: hsl(130, 54%, 38%);
+  --zed-key: hsl(212, 17%, 55%);
+  --zed-number: #e65835;
+  --zed-syntax: hsl(212, 17%, 55%);
 }
 
-.zed-ip {
-  color: var(--ip);
+.zed-syntax {
+  color: var(--zed-syntax);
+}
+
+.zed-key {
+  color: var(--zed-key);
+}
+
+.zed-ip, .zed-net {
+  color: var(--zed-symbol);
 }
 
 .zed-duration {
-  color: var(--interval);
+  color: var(--zed-symbol);
 }
 
 .zed-uint8,
@@ -17,22 +34,42 @@
 .zed-int8,
 .zed-int16,
 .zed-int32,
-.zed-int64 {
-  color: var(--count);
+.zed-int64,
+.zed-float64 {
+  color: var(--zed-number);
 }
 
 .zed-bool {
-  color: var(--bool);
-}
-
-.zed-float64 {
-  color: var(--count);
-}
-
-.zed-null {
-  color: var(--cloudy);
+  color: var(--zed-symbol);
 }
 
 .zed-time {
-  color: var(--interval);
+  color: var(--zed-time);
+}
+
+.zed-null {
+  color: var(--zed-null);
+}
+
+.zed-string {
+  color: var(--zed-string);
+}
+
+.zed-bstring {
+  color: var(--zed-string);
+}
+
+.zed-error {
+  background: hsl(3, 97%, 95%);
+  color: hsl(3, 97%, 40%);
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+.zed-type {
+  color: var(--zed-symbol)
+}
+
+.zed-annotation {
+  color: var(--aqua);
 }

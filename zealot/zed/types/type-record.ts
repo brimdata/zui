@@ -4,12 +4,12 @@ import {ZedContext} from "../context"
 import {typeId} from "../utils"
 import {Field} from "../values/field"
 import {Record} from "../values/record"
-import {ContainerTypeInterface, ZedType} from "./types"
+import {ContainerTypeInterface, ZedTypeInterface} from "./types"
 import {Null, trueType} from ".."
 
 export type TypeField = {
   name: string
-  type: ZedType
+  type: ZedTypeInterface
 }
 export class TypeRecord implements ContainerTypeInterface {
   kind = "record"

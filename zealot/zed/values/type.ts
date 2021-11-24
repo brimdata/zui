@@ -1,12 +1,12 @@
 import {isNull} from "../utils"
 import {TypeType} from "../types/type-type"
-import {ZedType} from "../types/types"
+import {ZedTypeInterface} from "../types/types"
 import {typeId} from "../utils"
 
 export class TypeValue {
   type = TypeType
 
-  constructor(public value: ZedType | null = null) {}
+  constructor(public value: ZedTypeInterface | null = null) {}
 
   isUnset() {
     return isNull(this.value)

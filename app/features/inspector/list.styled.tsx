@@ -2,45 +2,39 @@ import {FixedSizeList} from "react-window"
 import styled from "styled-components"
 
 export const List = styled(FixedSizeList)`
-  font-size: 12px;
+  font-size: 13px;
   font-family: "Cartograph", sans-serif;
   line-height: 20px;
 
   .inspector-row {
-    white-space: nowrap;
-  }
-
-  .inspector-string {
-    color: var(--azure);
-  }
-
-  .inspector-key {
-    color: var(--wet-cement);
-  }
-
-  .inspector-ip {
-    color: var(--ip);
-  }
-
-  .inspector-int {
-    color: var(--count);
+    display: inline-flex;
+    white-space: pre;
+    align-items: center;
   }
 
   a {
     cursor: pointer;
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+    border-radius: 3px;
+    display: inline-flex;
+    white-space: pre;
+    align-items: center;
   }
 
-  .inspector-expanded svg,
-  .inspector-collapsed svg {
-    opacity: 0.6;
-    width: 8px;
-    height: 8px;
-    fill: var(--aqua);
-    margin-left: 1px;
+  span {
   }
 
-  .inspector-expanded svg {
-    transform: rotateZ(90deg);
-    margin-top: 1px;
+  i {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    margin-right: 2px;
+    svg {
+      fill: var(--aqua);
+      width: 14px;
+      height: 14px;
+    }
   }
 `

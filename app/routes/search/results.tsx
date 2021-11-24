@@ -22,12 +22,15 @@ const BG = styled.div`
 `
 
 const Toolbar = styled.header`
-  background: var(--ivory);
+  background: white;
   border-bottom: 1px solid var(--pane-border);
   border-top: none;
   flex: 0 0 25px;
   display: flex;
   align-items: center;
+  margin-bottom: 4px;
+  padding: 0 12px;
+  justify-content: space-between;
 `
 const Body = styled.div`
   flex: 1;
@@ -46,15 +49,15 @@ const Button = styled.button`
   svg {
     width: 18px;
     height: 18px;
-    fill: var(--aqua);
+    fill: var(--slate);
   }
   &:hover {
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.04);
   }
 
   &.active,
   &:active {
-    background: rgba(0, 0, 0, 0.12);
+    background: rgba(0, 0, 0, 0.08);
   }
 `
 
@@ -74,7 +77,6 @@ const ButtonSwitch = styled.nav`
 
 const Group = styled.div`
   display: flex;
-  margin: 0 12px;
 `
 
 export function Results() {

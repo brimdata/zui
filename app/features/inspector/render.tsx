@@ -1,0 +1,200 @@
+import Icon from "app/core/Icon"
+import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
+import React, {ReactNode} from "react"
+import {zed} from "zealot"
+import {Union} from "zealot/zed"
+import {InspectArgs} from "./types"
+
+export function renderOneField(args: InspectArgs) {
+  return (
+    <>
+      {args.key ? (
+        <span className="zed-key" key={args.key.toString()}>
+          {typeof args.key === "string"
+            ? args.key
+            : renderOneValue({...args, value: args.key})}
+          :{" "}
+        </span>
+      ) : null}
+
+      {renderOneValue(args)}
+
+      {renderAlias(args.type)}
+
+      {args.last ? null : ", "}
+    </>
+  )
+}
+
+export function renderAlias(type: zed.ZedTypeInterface) {
+  // @ts-ignore
+  if (type && zed.isTypeAlias(type)) {
+    return (
+      <>
+        <span key="alias-1" className="zed-syntax">
+          {" "}
+          (
+        </span>
+        <span key="alias-2" className="zed-annotation">
+          {type.name}
+        </span>
+        <span key="alias-3" className="zed-syntax">
+          )
+        </span>
+      </>
+    )
+  } else {
+    return null
+  }
+}
+
+export function renderOneValue(args: InspectArgs): ReactNode {
+  const {ctx, value, field} = args
+
+  const props = {
+    key: field?.name + value.toString(),
+    className: zedTypeClassName(value),
+    onContextMenu: (e: React.MouseEvent) => ctx.onContextMenu(e, value, field)
+  }
+
+  if (zed.isType(value)) {
+    if (zed.isPrimitiveType(value)) {
+      return <span {...props}>{value.toString()}</span>
+    } else if (value instanceof zed.TypeRecord) {
+      return (
+        <>
+          <span {...props}>{`record(${value.fields.length})`}</span>
+          {renderAlias(args.type)}
+        </>
+      )
+    } else if (value instanceof zed.TypeAlias) {
+      return (
+        <span {...props}>
+          {renderOneValue({...args, value: value.type, type: value})}
+        </span>
+      )
+    } else if (value instanceof zed.TypeArray) {
+      return (
+        <span {...props}>[{renderOneValue({...args, value: value.type})}]</span>
+      )
+    } else if (value instanceof zed.TypeSet) {
+      return (
+        <span {...props}>
+          {"|["}
+          {renderOneValue({...args, value: value.type})}
+          {"]|"}
+        </span>
+      )
+    } else if (value instanceof zed.TypeMap) {
+      return (
+        <span {...props}>
+          {"|{"}
+          {renderOneValue({...args, value: value.keyType})}
+          {": "}
+          {renderOneValue({...args, value: value.valType})}
+          {"}|"}
+        </span>
+      )
+    } else if (value instanceof zed.TypeUnion) {
+      return <span {...props}>{`union(${value.types.length})`}</span>
+    } else {
+      return null
+    }
+  }
+
+  if (value.isUnset()) {
+    return <span {...props}>{value.toString()}</span>
+  }
+
+  if (value instanceof zed.Record) {
+    return <span {...props}>{`Record(${value.fields.length})`}</span>
+  }
+
+  if (value instanceof zed.Array) {
+    return <span {...props}>{`Array(${value.items.length})`}</span>
+  }
+
+  if (value instanceof zed.Set) {
+    return <span {...props}>{`Set(${value.items.length})`}</span>
+  }
+
+  if (value instanceof zed.Map) {
+    return <span {...props}>{`Map(${value.value.size})`}</span>
+  }
+
+  if (zed.isStringy(value)) {
+    return <span {...props}>&quot;{value.toString()}&quot;</span>
+  }
+
+  if (value instanceof Union) {
+    return renderOneValue({...args, value: value.value})
+  }
+
+  if (value instanceof zed.TypeValue) {
+    return renderOneValue({...args, value: value.value})
+  }
+
+  return <span {...props}>{value.toString()}</span>
+}
+
+export function renderContainer(
+  args: InspectArgs,
+  container: string,
+  openToken: string,
+  nodes: ReactNode = null,
+  closeToken: string = null
+) {
+  const {ctx, value, key} = args
+  const isExpanded = ctx.isExpanded(value)
+
+  return (
+    <>
+      {key ? (
+        <span key={"field-" + key} className="zed-key">
+          {key}:{" "}
+        </span>
+      ) : null}
+      <a key="handle" onClick={() => ctx.setExpanded(value, !isExpanded)}>
+        <Icon
+          name={isExpanded ? "chevron-down" : "chevron-right"}
+          key="arrow"
+          size={16}
+        />
+
+        <span key="name" className="zed-container">
+          {container}{" "}
+        </span>
+
+        {openToken ? (
+          <span key="open-token" className="zed-syntax">
+            {openToken}
+          </span>
+        ) : null}
+
+        {nodes}
+
+        {closeToken ? (
+          <span key="close-token" className="zed-syntax">
+            {closeToken}
+          </span>
+        ) : null}
+
+        {closeToken && renderAlias(args.type)}
+      </a>
+    </>
+  )
+}
+
+export function renderClosing(args: InspectArgs, syntax: string) {
+  return (
+    <>
+      <span key="close" className="zed-syntax">
+        {syntax}
+      </span>
+
+      {renderAlias(args.type)}
+
+      {args.last ? null : ","}
+    </>
+  )
+}

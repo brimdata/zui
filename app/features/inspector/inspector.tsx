@@ -1,9 +1,9 @@
 import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
 import {isEqual} from "lodash"
 // @ts-strict
-import React, {ReactNode} from "react"
+import React, {ComponentType, ReactNode} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {FixedSizeListProps} from "react-window"
+import {ListChildComponentProps} from "react-window"
 import Viewer from "src/js/state/Viewer"
 import {zed} from "zealot"
 import {inspect} from "./inspect"
@@ -26,10 +26,17 @@ export function Inspector(props: Props) {
   const isIncomplete = useSelector(Viewer.getEndStatus) === "INCOMPLETE"
   const {defaultExpanded, expanded, setExpanded} = props
   const context: Context = {
-    onContextMenu: props.onContextMenu,
+    indent: 0,
     rows: [],
-    push(render: ReactNode, indent: number) {
-      this.rows.push({render, indent})
+    onContextMenu: props.onContextMenu,
+    nest() {
+      this.indent += 1
+    },
+    unnest() {
+      this.indent -= 1
+    },
+    push(render: ReactNode) {
+      this.rows.push({render, indent: this.indent})
     },
     isExpanded: (value: zed.AnyValue) => {
       if (expanded.has(value)) return expanded.get(value)
@@ -43,7 +50,15 @@ export function Inspector(props: Props) {
   }
 
   for (const v of props.values) {
-    inspect(context, v, 0, null, true)
+    inspect({
+      ctx: context,
+      value: v,
+      field: null,
+      key: null,
+      last: true,
+      // @ts-ignore
+      type: v.type
+    })
   }
 
   return (
@@ -66,10 +81,11 @@ export function Inspector(props: Props) {
   )
 }
 
-const Row: FixedSizeListProps["children"] = React.memo(
+const Row: ComponentType<ListChildComponentProps> = React.memo(
   function Row({style, index, data}) {
     const {render, indent}: RowData = data[index]
-    const innerStyle = {textIndent: indent + "rem", paddingLeft: 18}
+    const innerStyle = {paddingLeft: 12 * (indent + 1)}
+
     return (
       <div className="inspector-row" style={{...style, ...innerStyle}}>
         {render}

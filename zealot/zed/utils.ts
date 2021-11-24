@@ -10,7 +10,7 @@ import {
   Uint8
 } from "./index"
 import primitives, {PrimitiveName} from "./types/type-primitives"
-import {ZedType} from "./types/types"
+import {ZedTypeInterface} from "./types/types"
 import {BString} from "./values/bstring"
 import {Duration} from "./values/duration"
 import {Float64} from "./values/float64"
@@ -57,15 +57,17 @@ export function isTime(value: unknown): value is Time {
   return value instanceof Time
 }
 
-export function isTypeAlias(type: ZedType): type is TypeAlias {
+export function isTypeAlias(type: ZedTypeInterface): type is TypeAlias {
   return type instanceof TypeAlias
 }
 
-export function isNamed(type: ZedType, name: string) {
+export function isNamed(type: ZedTypeInterface, name: string) {
   return isTypeAlias(type) && type.name === name
 }
 
-export function trueType<T extends ZedType>(start: ZedType): T {
+export function trueType<T extends ZedTypeInterface = ZedTypeInterface>(
+  start: ZedTypeInterface
+): T {
   let t = start
   while (isTypeAlias(t)) {
     t = t.type

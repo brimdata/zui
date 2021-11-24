@@ -1,31 +1,29 @@
-import {Type, Value} from "../../zjson"
+import {zjson} from "zealot"
+import {Field} from ".."
 import {ZedContext} from "../context"
-import {ZedValue} from "../values/types"
-import {TypeAlias} from "./type-alias"
-import {TypeArray} from "./type-array"
-import {TypeMap} from "./type-map"
-import {PrimitiveTypes} from "./type-primitives"
-import {TypeRecord} from "./type-record"
-import {TypeSet} from "./type-set"
-import {TypeUnion} from "./type-union"
+import {ContainerType} from "./type-containers"
+import {PrimitiveType} from "./type-primitives"
 
-export type ZedType =
-  | PrimitiveTypes
-  | TypeRecord
-  | TypeArray
-  | TypeSet
-  | TypeUnion
-  | TypeMap
-  | TypeAlias
+export type AnyTime = PrimitiveType | ContainerType
 
-export interface ContainerTypeInterface {
-  serialize(typedefs: object): Type
+export type SerializeTypeDefs = {
+  [key: string]: zjson.Type
+}
+
+export type TypeDefs = {[key: string]: ZedTypeInterface}
+export interface ZedTypeInterface {
+  id?: string | number
+  name?: string
   toString(): string
-  create(value: Value, typedefs?: object): ZedValue
+  serialize(typedefs: any /* SerializeTypeDefs */): any // FIX zjson.Type
+  create(value: zjson.Value, typedefs: any /* TypeDefs */, parent?: Field): any // FIX ZedValueInterface
+}
+
+export interface ContainerTypeInterface extends ZedTypeInterface {
   hasTypeType(ctx: ZedContext): boolean
   walkTypeValues(
     context: ZedContext,
-    value: Value,
+    value: zjson.Value,
     visit: (name: string) => void
-  )
+  ): void
 }

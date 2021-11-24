@@ -1,14 +1,14 @@
-import {isNull} from "../utils"
 import {TypeUnion} from "../types/type-union"
-import {ZedType} from "../types/types"
-import {ZedValue, ZedValueInterface} from "./types"
+import {ZedTypeInterface} from "../types/types"
+import {isNull} from "../utils"
+import {ZedValueInterface} from "./types"
 
 export class Union implements ZedValueInterface {
   constructor(
     public type: TypeUnion,
-    public innerType: ZedType,
+    public innerType: ZedTypeInterface,
     public index: number | null,
-    public value: ZedValue | null
+    public value: ZedValueInterface | null
   ) {}
 
   toString() {

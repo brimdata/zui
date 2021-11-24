@@ -2,16 +2,16 @@ import {isNull} from "../utils"
 import {Value} from "zealot/zjson"
 import {Union} from "../values/union"
 import {TypeNull} from "./type-null"
-import {ContainerTypeInterface, ZedType} from "./types"
+import {ContainerTypeInterface, ZedTypeInterface} from "./types"
 import {typeId} from "../utils"
 
 type UnionValue = [string, Value] | null
 export class TypeUnion implements ContainerTypeInterface {
   kind = "union"
 
-  constructor(public types: ZedType[]) {}
+  constructor(public types: ZedTypeInterface[]) {}
 
-  static stringify(types: ZedType[]) {
+  static stringify(types: ZedTypeInterface[]) {
     return `(${types.map(typeId).join(",")})`
   }
 

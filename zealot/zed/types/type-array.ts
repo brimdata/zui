@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-array-constructor */
-import {isNull} from "../utils"
+import {isNull, typeId} from "../utils"
 import {ZedContext} from "../context"
 import {Array} from "../values/array"
-import {ContainerTypeInterface, ZedType} from "./types"
-import {typeId} from "../utils"
+import {ContainerTypeInterface, ZedTypeInterface} from "./types"
 import * as zjson from "../../zjson"
 
 export class TypeArray implements ContainerTypeInterface {
   kind = "array"
-  type: ZedType
+  type: ZedTypeInterface
 
   constructor(type) {
     this.type = type
   }
 
-  static stringify(type: ZedType) {
+  static stringify(type: ZedTypeInterface) {
     return `[${typeId(type)}]`
   }
 

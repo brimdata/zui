@@ -2,10 +2,10 @@ import {isEmpty, isNull, isString} from "lodash"
 import {Null} from ".."
 import {TypeAlias} from "../types/type-alias"
 import {TypeRecord} from "../types/type-record"
-import {ZedType} from "../types/types"
+import {ZedTypeInterface} from "../types/types"
 import {flatColumns, trueType} from "../utils"
 import {Field} from "./field"
-import {ZedValue, ZedValueInterface} from "./types"
+import {ZedValueInterface} from "./types"
 export class Record implements ZedValueInterface {
   constructor(
     public type: TypeRecord | TypeAlias,
@@ -56,7 +56,7 @@ export class Record implements ZedValueInterface {
     return this.fields[index]
   }
 
-  has(name: string | string[], ...types: ZedType[]) {
+  has(name: string | string[], ...types: ZedTypeInterface[]) {
     try {
       let type = this.get(name).type
       return types.length === 0 ? true : types.some((t) => type === t)
@@ -65,7 +65,7 @@ export class Record implements ZedValueInterface {
     }
   }
 
-  get<T extends ZedValue>(name: string | string[]): T {
+  get<T extends ZedValueInterface>(name: string | string[]): T {
     return this.getField(name).value as T
   }
 
@@ -82,7 +82,7 @@ export class Record implements ZedValueInterface {
     }, null) as Field
   }
 
-  try<T extends ZedValue>(name: string | string[]): T | null {
+  try<T extends ZedValueInterface>(name: string | string[]): T | null {
     try {
       return this.get(name) as T
     } catch {

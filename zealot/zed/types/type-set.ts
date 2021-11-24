@@ -3,17 +3,17 @@ import {SetValue, Value} from "zealot/zjson"
 import {ZedContext} from "../context"
 import {typeId} from "../utils"
 import {Set} from "../values/set"
-import {ContainerTypeInterface, ZedType} from "./types"
+import {ContainerTypeInterface, ZedTypeInterface} from "./types"
 
 export class TypeSet implements ContainerTypeInterface {
   kind = "set"
-  type: ZedType
+  type: ZedTypeInterface
 
   constructor(type) {
     this.type = type
   }
 
-  static stringify(type: ZedType) {
+  static stringify(type: ZedTypeInterface) {
     return `|[${typeId(type)}]|`
   }
 

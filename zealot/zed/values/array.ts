@@ -1,11 +1,14 @@
-import {isNull} from "../utils"
 import {TypeArray} from "../types/type-array"
-import {ZedValue, ZedValueInterface} from "./types"
+import {isNull} from "../utils"
+import {ZedValueInterface} from "./types"
 
 export class Array implements ZedValueInterface {
-  constructor(public type: TypeArray, public items: ZedValue[] | null) {}
+  constructor(
+    public type: TypeArray,
+    public items: ZedValueInterface[] | null
+  ) {}
 
-  indexOf(value: ZedValue) {
+  indexOf(value: ZedValueInterface) {
     if (isNull(this.items)) return -1
     return this.items.indexOf(value)
   }

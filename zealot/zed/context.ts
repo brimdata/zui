@@ -6,7 +6,7 @@ import primitives from "./types/type-primitives"
 import {TypeRecord} from "./types/type-record"
 import {TypeSet} from "./types/type-set"
 import {TypeUnion} from "./types/type-union"
-import {ContainerTypeInterface, ZedType} from "./types/types"
+import {ContainerTypeInterface, ZedTypeInterface} from "./types/types"
 import {isAlias, isNull, typeId} from "./utils"
 import {Field} from "./values/field"
 import {Record} from "./values/record"
@@ -195,7 +195,7 @@ export class ZedContext {
     typedefs[name] = typedef
   }
 
-  walkTypeValues(type: ZedType, value: zjson.Value, visit) {
+  walkTypeValues(type: ZedTypeInterface, value: zjson.Value, visit) {
     if (this.hasTypeType(type)) {
       type.walkTypeValues(this, value, visit)
     }

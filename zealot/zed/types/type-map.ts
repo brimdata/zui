@@ -2,12 +2,15 @@ import {isNull} from "../utils"
 import {Value} from "zealot/zjson"
 import {ZedContext} from "../context"
 import {ZedMap} from "../values/map"
-import {ContainerTypeInterface, ZedType} from "./types"
+import {ContainerTypeInterface, ZedTypeInterface} from "./types"
 import {typeId} from "../utils"
 export class TypeMap implements ContainerTypeInterface {
   kind = "union"
 
-  constructor(public keyType: ZedType, public valType: ZedType) {}
+  constructor(
+    public keyType: ZedTypeInterface,
+    public valType: ZedTypeInterface
+  ) {}
 
   static stringify(keyType, valType) {
     return `|{` + typeId(keyType) + ":" + typeId(valType) + "}|"

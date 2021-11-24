@@ -48,4 +48,4 @@ const primitives = {
 export default primitives
 
 export type PrimitiveName = keyof typeof primitives
-export type PrimitiveTypes = typeof primitives[PrimitiveName]
+export type PrimitiveType = typeof primitives[PrimitiveName]
