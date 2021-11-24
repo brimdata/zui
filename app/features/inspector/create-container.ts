@@ -9,7 +9,7 @@ export function createContainer<T>(
   createIterator
 ) {
   return (args: InspectArgs & {value: T}) => {
-    const {ctx, value, last} = args
+    const {ctx, value} = args
     const iterator = createIterator(args)
 
     if (ctx.isExpanded(value)) {
