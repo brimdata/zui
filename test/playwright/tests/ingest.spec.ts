@@ -1,4 +1,3 @@
-import log from "electron-log"
 import path from "path"
 import {testDataDir} from "../helpers/env"
 import TestApp from "../helpers/test-app"
@@ -25,18 +24,11 @@ describe("Ingest tests", () => {
   ].map((f) => ({path: path.normalize(path.join(testDataDir(), f)), name: f}))
 
   Object.values(sampleFiles).forEach(({path, name}) => {
-    test(`ingest of ${name}`, (done) => {
-      app
-        .ingestFiles([path])
-        .then(async () => {
-          await app.search(searchZql)
-          const results = await app.getViewerResults()
-          expect(results).toMatchSnapshot(name)
-          done()
-        })
-        .catch((err) => {
-          log.error(err)
-        })
+    test(`ingest of ${name}`, async () => {
+      await app.ingestFiles([path])
+      await app.search(searchZql)
+      const results = await app.getViewerResults()
+      expect(results).toMatchSnapshot(name)
     })
   })
 })
