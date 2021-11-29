@@ -1,4 +1,9 @@
-import {_electron as electron, ElectronApplication, Page} from "playwright"
+import {
+  _electron as electron,
+  ElectronApplication,
+  Page,
+  BrowserContext
+} from "playwright"
 import {selectors} from "../../integration/helpers/integration"
 import {selectorWithText} from "./helpers"
 import {hookLogLocator, submitButton} from "../../integration/helpers/locators"
@@ -13,6 +18,8 @@ export default class TestApp {
   zealot: Zealot
   mainWin: Page
   testNdx = 1
+  currentCtx: BrowserContext
+  currentDataDir: string
 
   constructor(private name: string) {
     this.zealot = createZealot("http://localhost:9867")
@@ -22,16 +29,26 @@ export default class TestApp {
     const userDataDir = path.resolve(
       path.join(itestDir(), this.name, (this.testNdx++).toString())
     )
+    this.currentDataDir = userDataDir
     this.brim = await electron.launch({
       args: [`--user-data-dir=${userDataDir}`, getAppBinPath()]
     })
     await this.brim.firstWindow()
 
     this.mainWin = await this.getWindowByTitle("Brim")
+    this.currentCtx = await this.mainWin.context()
+    await this.currentCtx.tracing.start({snapshots: true, screenshots: true})
   }
 
   async shutdown() {
-    await this.brim.close()
+    await this.currentCtx.tracing.stop({
+      path: path.join(this.currentDataDir, "trace.zip")
+    })
+    await new Promise((res) => {
+      this.brim.on("close", res)
+      this.brim.close()
+    })
+    await new Promise((r) => setTimeout(r, 1000))
   }
 
   async getWindowByTitle(title: string): Promise<Page> {
@@ -42,7 +59,7 @@ export default class TestApp {
   }
 
   async ingestFiles(filepaths: string[]): Promise<void> {
-    await this.mainWin.click(".add-tab")
+    await this.mainWin.click(".add-tab", {timeout: 60000})
     const [chooser] = await Promise.all([
       this.mainWin.waitForEvent("filechooser"),
       this.mainWin.click(selectors.ingest.filesButton)
