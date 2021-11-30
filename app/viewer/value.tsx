@@ -42,6 +42,7 @@ type ValueProps = {
 const Space = styled.span`
   display: inline-block;
   width: 7px;
+  height: 100%;
 `
 const pad = (bool) => (bool ? <Space /> : null)
 
@@ -60,10 +61,8 @@ export default function Value(props: ValueProps) {
 export function PrimitiveValue(props: ValueProps) {
   const dispatch = useDispatch()
   const format = useZedFormatter()
-  const fillCell = props.field.value === props.value // This is the only value in the cell
   return (
     <BG
-      style={{width: fillCell ? "100%" : "auto"}}
       className={zedTypeClassName(props.value)}
       onContextMenu={() =>
         dispatch(

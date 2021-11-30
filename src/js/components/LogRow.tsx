@@ -40,8 +40,8 @@ const LogRow = (props: Props) => {
             value={field.value}
             field={field}
             record={log}
-            padBefore
-            padAfter
+            padBefore={false}
+            padAfter={false}
           />
         </Cell>
       )

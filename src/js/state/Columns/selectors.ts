@@ -19,7 +19,7 @@ const getCurrentTableColumns = createSelector<
   FormatConfig,
   TableColumns
 >(
-  Viewer.getColumns,
+  Viewer.getShapes,
   getColumns,
   Viewer.getRecords,
   getFormatConfig,

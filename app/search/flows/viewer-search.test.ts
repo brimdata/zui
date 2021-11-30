@@ -112,7 +112,7 @@ describe("a normal response", () => {
 
   test("sets the viewer columns", async () => {
     await submit()
-    expect(select(Viewer.getColumns)).toMatchSnapshot()
+    expect(select(Viewer.getShapes)).toMatchSnapshot()
   })
 
   test("sets the Columns columns", async () => {

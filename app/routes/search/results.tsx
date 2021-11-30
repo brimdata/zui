@@ -1,159 +1,46 @@
-import Icon from "app/core/Icon"
 import {Inspector} from "app/features/inspector/inspector"
-import initialViewerSearch from "app/search/flows/initial-viewer-search"
-import classNames from "classnames"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
-import React, {useLayoutEffect} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import React from "react"
+import {useDispatch} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import ResultsTable from "src/js/components/SearchResults/ResultsTable"
-import Current from "src/js/state/Current"
-import Tab from "src/js/state/Tab"
-import Viewer from "src/js/state/Viewer"
-import styled from "styled-components"
 import {zed} from "zealot"
-
-const BG = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: none;
-  position: relative;
-  flex: 1;
-`
-
-const Toolbar = styled.header`
-  background: white;
-  border-bottom: 1px solid var(--pane-border);
-  border-top: none;
-  flex: 0 0 25px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 4px;
-  padding: 0 12px;
-  justify-content: space-between;
-`
-const Body = styled.div`
-  flex: 1;
-`
-
-const Button = styled.button`
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 20px;
-  width: 34px;
-  border-radius: 3px;
-
-  svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--slate);
-  }
-  &:hover {
-    background: rgba(0, 0, 0, 0.04);
-  }
-
-  &.active,
-  &:active {
-    background: rgba(0, 0, 0, 0.08);
-  }
-`
-
-const ButtonSwitch = styled.nav`
-  border-radius: 3px;
-  background: rgba(0, 0, 0, 0);
-  display: flex;
-
-  transition: background 300ms;
-  &:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-  ${Button}:not(.active):hover {
-    background: none;
-  }
-`
-
-const Group = styled.div`
-  display: flex;
-`
+import {useResultsData} from "./data-hook"
+import {useExpandState} from "./expand-hook"
+import * as Styled from "./results.styled"
+import {useResultsView} from "./view-hook"
 
 export function Results() {
-  const {ref, rect} = useResizeObserver()
+  const expand = useExpandState()
+  const view = useResultsView()
+  const data = useResultsData()
   const dispatch = useDispatch()
-  const location = useSelector(Current.getLocation)
-  const status = useSelector(Viewer.getStatus)
-  const viewerKey = useSelector(Viewer.getSearchKey)
-  const values = useSelector(Viewer.getLogs)
-
-  useLayoutEffect(() => {
-    if (status === "INIT" || viewerKey !== location.key) {
-      dispatch(initialViewerSearch())
-    }
-  }, [location.key])
-
-  const [view, setView] = Tab.useState<"table" | "objects">(
-    "results.view",
-    "objects"
-  )
-
-  const [defaultExpanded, setDefaultExpanded] = Tab.useState<boolean>(
-    "results.view.objects.defaultExpanded",
-    false
-  )
-
-  const [expanded, setExpanded] = Tab.useState(
-    "results.view.objects.expanded",
-    new Map()
-  )
+  const {ref, rect} = useResizeObserver()
 
   return (
-    <BG className="search-results">
-      <Toolbar>
-        <Group>
-          <ButtonSwitch>
-            <Button
-              title="Show Table View"
-              onClick={() => setView("table")}
-              className={classNames({active: view === "table"})}
-            >
-              <Icon name="columns" />
-            </Button>
-            <Button
-              title="Show Objects View"
-              onClick={() => setView("objects")}
-              className={classNames({active: view === "objects"})}
-            >
-              <Icon name="braces" />
-            </Button>
-          </ButtonSwitch>
-        </Group>
-        {view === "objects" && (
-          <Group>
-            <Button
-              title="Expand All"
-              onClick={() => {
-                setDefaultExpanded(true)
-                setExpanded(new Map())
-              }}
-            >
-              <Icon name="expand" />
-            </Button>
-            <Button
-              title="Collapse All"
-              onClick={() => {
-                setDefaultExpanded(false)
-                setExpanded(new Map())
-              }}
-            >
-              <Icon name="collapse" />
-            </Button>
-          </Group>
+    <Styled.BG className="search-results">
+      <Styled.Toolbar>
+        <Styled.Group>
+          <Styled.ButtonSwitch>
+            <Styled.TableButton
+              onClick={view.setTable}
+              aria-pressed={view.isTable}
+            />
+            <Styled.ObjectsButton
+              onClick={view.setObjects}
+              aria-pressed={view.isObjects}
+            />
+          </Styled.ButtonSwitch>
+        </Styled.Group>
+        {view.isObjects && (
+          <Styled.Group>
+            <Styled.ExpandAllButton onClick={expand.expandAll} />
+            <Styled.CollapseAllButton onClick={expand.collapseAll} />
+          </Styled.Group>
         )}
-      </Toolbar>
-      <Body ref={ref}>
-        {view === "table" ? (
+      </Styled.Toolbar>
+      <Styled.Body ref={ref} data-test-locator="viewer_results">
+        {view.isTable ? (
           <ResultsTable
             height={rect.height}
             width={rect.width}
@@ -162,12 +49,12 @@ export function Results() {
         ) : (
           <div style={{height: 0, width: 0, overflow: "visible"}}>
             <Inspector
-              defaultExpanded={defaultExpanded}
-              expanded={expanded}
-              setExpanded={setExpanded}
+              defaultExpanded={expand.default}
+              expanded={expand.map}
+              setExpanded={expand.set}
               height={rect.height}
               width={rect.width}
-              values={values}
+              values={data.values}
               onContextMenu={(e, value: zed.AnyValue, field: zed.Field) =>
                 dispatch(
                   searchFieldContextMenu({
@@ -180,7 +67,7 @@ export function Results() {
             />
           </div>
         )}
-      </Body>
-    </BG>
+      </Styled.Body>
+    </Styled.BG>
   )
 }
