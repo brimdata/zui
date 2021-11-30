@@ -9,8 +9,7 @@ export function useImportOnDrop() {
   const api = useBrimApi()
   return useDrop<DragItem, unknown, DragProps>(() => ({
     accept: [NativeTypes.FILE],
-    drop: (thing) => {
-      const files = thing.files
+    drop: ({files}) => {
       if (files && files.length) {
         api.import(files)
       }
