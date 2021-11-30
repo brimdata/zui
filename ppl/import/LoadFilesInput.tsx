@@ -1,3 +1,4 @@
+import {useBrimApi} from "app/core/context"
 import {useImportOnDrop} from "app/features/import/use-import-on-drop"
 import ToolbarButton from "app/toolbar/button"
 import classNames from "classnames"
@@ -8,12 +9,12 @@ import {reactElementProps} from "test/integration/helpers/integration"
 import DataFileIcon from "./DataFileIcon"
 
 export default function LoadFilesInput() {
+  const api = useBrimApi()
   const [input, setInput] = useCallbackRef<HTMLInputElement>()
   const [{canDrop, isOver}, drop] = useImportOnDrop()
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
-    e.persist()
-    console.log(e.target)
+    api.import(Array.from(e.target.files))
   }
 
   function openDialog(_: MouseEvent) {
