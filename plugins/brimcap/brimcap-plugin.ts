@@ -74,7 +74,7 @@ export default class BrimcapPlugin {
     this.setupConfig()
     this.setupContextMenus()
     // NOTE: suricata updates async, don't block
-    // this.updateSuricata()
+    this.updateSuricata()
   }
 
   private async tryConn(detail: zed.Record, eventId: string) {
