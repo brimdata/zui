@@ -1,24 +1,18 @@
-import {
-  _electron as electron,
-  ElectronApplication,
-  Page,
-  BrowserContext
-} from "playwright"
+import {_electron as electron, ElectronApplication, Page} from "playwright"
 import {selectors} from "../../integration/helpers/integration"
 import {selectorWithText} from "./helpers"
 import {hookLogLocator, submitButton} from "../../integration/helpers/locators"
-import {createZealot, Zealot} from "../../../zealot"
 import path from "path"
 import {itestDir} from "./env"
 import env from "../../../app/core/env"
 import {existsSync} from "fs"
+import {createZealot, Zealot} from "../../../zealot-old"
 
 export default class TestApp {
   brim: ElectronApplication
   zealot: Zealot
   mainWin: Page
   testNdx = 1
-  currentCtx: BrowserContext
   currentDataDir: string
 
   constructor(private name: string) {
@@ -33,29 +27,37 @@ export default class TestApp {
     this.brim = await electron.launch({
       args: [`--user-data-dir=${userDataDir}`, getAppBinPath()]
     })
+    // wait for main window to render
     await this.brim.firstWindow()
-
+    // wait for hidden window to render
+    await new Promise((res) => {
+      this.brim.waitForEvent("window").then(res)
+    })
     this.mainWin = await this.getWindowByTitle("Brim")
-    this.currentCtx = await this.mainWin.context()
-    await this.currentCtx.tracing.start({snapshots: true, screenshots: true})
+    // NOTE: hack, fixes issue where on Windows the app's windows sometimes don't load properly
+    await this.mainWin.reload()
+    await (await this.getWindowByTitle("Hidden Window")).reload()
   }
 
   async shutdown() {
-    await this.currentCtx.tracing.stop({
-      path: path.join(this.currentDataDir, "trace.zip")
-    })
-    await new Promise((res) => {
-      this.brim.on("close", res)
-      this.brim.close()
-    })
-    await new Promise((r) => setTimeout(r, 1000))
+    await this.brim.close()
+  }
+
+  async withRetry(cb: () => Promise<any>, retries = 5, delay = 400) {
+    for (let i = 0; i < retries; i++) {
+      const res = await cb()
+      if (!res) {
+        if (i < retries - 1) await new Promise((res) => setTimeout(res, delay))
+        continue
+      }
+      return res
+    }
   }
 
   async getWindowByTitle(title: string): Promise<Page> {
     const wins = await this.brim.windows()
-    return wins.find(async (w) => {
-      return (await w.title()) === title
-    })
+    const winTitles = await Promise.all(wins.map((w) => w.title()))
+    return wins[winTitles.findIndex((wTitle) => wTitle === title)]
   }
 
   async ingestFiles(filepaths: string[]): Promise<void> {

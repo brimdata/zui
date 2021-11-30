@@ -43,36 +43,46 @@ const Hidden = () => {
     workspaces.forEach((w) => {
       if (w.id in workspaceSourceMap) return
 
-      dispatch(subscribeEvents(workspace(w))).then((wsSource) => {
-        workspaceSourceMap[w.id] = wsSource
+      dispatch(subscribeEvents(workspace(w)))
+        .then((wsSource) => {
+          workspaceSourceMap[w.id] = wsSource
 
-        wsSource.addEventListener("pool-new", (_e) => {
-          dispatch(refreshPoolNames(workspace(w)))
-        })
-        wsSource.addEventListener("pool-update", (_e) => {
-          dispatch(refreshPoolNames(workspace(w)))
-        })
-        wsSource.addEventListener("pool-delete", (_e) => {
-          dispatch(refreshPoolNames(workspace(w)))
-        })
-        wsSource.addEventListener("branch-commit", (e) => {
-          let eventData
-          try {
-            eventData = JSON.parse(e["data"])
-          } catch (e) {
-            return log.error(
-              new Error("Cannot parse branch-commit event data: " + e)
+          wsSource.addEventListener("pool-new", (_e) => {
+            dispatch(refreshPoolNames(workspace(w)))
+          })
+          wsSource.addEventListener("pool-update", (_e) => {
+            dispatch(refreshPoolNames(workspace(w))).catch((e) =>
+              log.error("refresh error: ", e)
             )
-          }
-          const poolId = eventData && eventData["pool_id"]
-          if (!poolId)
-            return log.error(new Error("No 'pool_id' from branch-commit event"))
+          })
+          wsSource.addEventListener("pool-delete", (_e) => {
+            dispatch(refreshPoolNames(workspace(w)))
+          })
+          wsSource.addEventListener("branch-commit", (e) => {
+            let eventData
+            try {
+              eventData = JSON.parse(e["data"])
+            } catch (e) {
+              return log.error(
+                new Error("Cannot parse branch-commit event data: " + e)
+              )
+            }
+            const poolId = eventData && eventData["pool_id"]
+            if (!poolId)
+              return log.error(
+                new Error("No 'pool_id' from branch-commit event")
+              )
 
-          dispatch(refreshPoolInfo({workspaceId: w.id, poolId})).catch((e) => {
-            log.error("branch-commit update failed: ", e)
+            dispatch(refreshPoolInfo({workspaceId: w.id, poolId})).catch(
+              (e) => {
+                log.error("branch-commit update failed: ", e)
+              }
+            )
           })
         })
-      })
+        .catch((e) => {
+          log.error("error establishing event subscription: ", e)
+        })
     })
 
     // finally, close event sources for workspaces that are no longer present

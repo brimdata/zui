@@ -43,7 +43,6 @@ async function aboutWindow() {
 async function hiddenWindow() {
   const win = new BrowserWindow({
     show: false,
-    // paintWhenInitiallyHidden: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true
