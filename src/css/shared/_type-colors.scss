@@ -19,7 +19,8 @@
   color: var(--zed-key);
 }
 
-.zed-ip, .zed-net {
+.zed-ip,
+.zed-net {
   color: var(--zed-symbol);
 }
 
@@ -67,7 +68,7 @@
 }
 
 .zed-type {
-  color: var(--zed-symbol)
+  color: var(--zed-symbol);
 }
 
 .zed-annotation {
