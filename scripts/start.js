@@ -16,7 +16,9 @@ async function start() {
   run("npx", `${SCSS} --watch --skip-initial`)
   run("npx", `${STATIC} --watch`)
   run("npx", "livereload dist", {desc: "Watching dist for changes"})
-  run("npx", `electron . ${electronArgs}`, {desc: `Starting electron ${electronArgs}`})
+  run("npx", `electron . ${electronArgs}`, {
+    desc: `Starting electron ${electronArgs}`
+  })
 }
 
 process.on("SIGINT", () => process.exit(0))
