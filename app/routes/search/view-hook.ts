@@ -9,20 +9,18 @@ const OBJECTS = "objects"
 const TABLE = "table"
 
 export function useResultsView() {
+  const location = useSelector(Current.getLocation)
   const shapes = useSelector(Viewer.getShapes)
+  const status = useSelector(Viewer.getStatus)
 
   const [view, setView] = Tab.useState<"table" | "objects">(
     "results.view",
     TABLE
   )
 
-  useLayoutEffect(() => {
-    if (Object.keys(shapes).length > 1) {
-      setView(OBJECTS)
-    } else {
-      setView(TABLE)
-    }
-  }, [shapes])
+  useKeybinding("ctrl+d", () => {
+    setView(view === TABLE ? OBJECTS : TABLE)
+  })
 
   return {
     isTable: view === TABLE,
