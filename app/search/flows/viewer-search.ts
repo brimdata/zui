@@ -39,7 +39,7 @@ function handle(
   keep = false,
   append = false
 ): Thunk {
-  return function(dispatch, getState) {
+  return function(dispatch, getState, {api}) {
     let allColumns: SchemaMap = {}
     let allRecords: zed.Record[] = []
     let count = 0
@@ -86,6 +86,7 @@ function handle(
           dispatch(Columns.touch(allColumns))
         }
         dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
+        api.searches.emit("did-finish", {firstPage: !append})
       })
   }
 }

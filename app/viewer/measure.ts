@@ -10,9 +10,12 @@ const MAX_WIDTH = 500
 const MIN_WIDTH = 10
 const resizeHandle = 5
 const sortIcon = 11
+const PADDING = 4
 
 export function estimateHeaderWidth(name: string) {
-  let width = Math.ceil(name.length * ONE_CHAR + resizeHandle + sortIcon)
+  let width = Math.ceil(
+    name.length * ONE_CHAR + resizeHandle + sortIcon + PADDING
+  )
   return Math.min(MAX_WIDTH, width)
 }
 
@@ -24,7 +27,7 @@ export function estimateCellWidth(
   let width = MIN_WIDTH
   if (value instanceof zed.Primitive) {
     width = Math.ceil(
-      formatPrimitive(value, config).length * ONE_CHAR + CELL_PAD
+      formatPrimitive(value, config).length * ONE_CHAR + CELL_PAD + 12
     )
   } else {
     width = Math.ceil(value.toString().length * ONE_CHAR + CELL_PAD)
