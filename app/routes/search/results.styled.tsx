@@ -17,7 +17,7 @@ export const Toolbar = styled.header`
   flex: 0 0 25px;
   display: flex;
   align-items: center;
-  padding: 0 12px;
+  padding: 0 6px;
   justify-content: space-between;
 `
 export const Body = styled.div`

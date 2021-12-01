@@ -11,9 +11,9 @@ import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
 
 export function Results() {
+  const data = useResultsData()
   const expand = useExpandState()
   const view = useResultsView()
-  const data = useResultsData()
   const dispatch = useDispatch()
   const {ref, rect} = useResizeObserver()
 

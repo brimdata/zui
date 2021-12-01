@@ -6,43 +6,38 @@ import {Union} from "zealot/zed"
 import {InspectArgs} from "./types"
 
 export function renderOneField(args: InspectArgs) {
-  return (
-    <>
-      {args.key ? (
-        <span className="zed-key" key={args.key.toString()}>
-          {typeof args.key === "string"
-            ? args.key
-            : renderOneValue({...args, value: args.key})}
-          :{" "}
-        </span>
-      ) : null}
-
-      {renderOneValue(args)}
-
-      {renderAlias(args.type)}
-
-      {args.last ? null : ", "}
-    </>
-  )
+  let nodes = []
+  if (args.key) {
+    nodes.push(
+      <span className="zed-key" key={args.key.toString()}>
+        {typeof args.key === "string"
+          ? args.key
+          : renderOneValue({...args, value: args.key})}
+        :{" "}
+      </span>
+    )
+  }
+  nodes.push(renderOneValue(args))
+  nodes.push(renderAlias(args.type))
+  if (!args.last) nodes.push(", ")
+  return nodes
 }
 
 export function renderAlias(type: zed.ZedTypeInterface) {
   // @ts-ignore
   if (type && zed.isTypeAlias(type)) {
-    return (
-      <>
-        <span key="alias-1" className="zed-syntax">
-          {" "}
-          (
-        </span>
-        <span key="alias-2" className="zed-annotation">
-          {type.name}
-        </span>
-        <span key="alias-3" className="zed-syntax">
-          )
-        </span>
-      </>
-    )
+    return [
+      <span key="alias-1" className="zed-syntax">
+        {" "}
+        (
+      </span>,
+      <span key="alias-2" className="zed-annotation">
+        {type.name}
+      </span>,
+      <span key="alias-3" className="zed-syntax">
+        )
+      </span>
+    ]
   } else {
     return null
   }
@@ -146,55 +141,54 @@ export function renderContainer(
 ) {
   const {ctx, value, key} = args
   const isExpanded = ctx.isExpanded(value)
+  const row = []
+  if (key) {
+    row.push(
+      <span key={"field-" + key} className="zed-key">
+        {key}:{" "}
+      </span>
+    )
+  }
+  row.push(
+    <a key="handle" onClick={() => ctx.setExpanded(value, !isExpanded)}>
+      <Icon
+        name={isExpanded ? "chevron-down" : "chevron-right"}
+        key="arrow"
+        size={16}
+      />
 
-  return (
-    <>
-      {key ? (
-        <span key={"field-" + key} className="zed-key">
-          {key}:{" "}
+      <span key="name" className="zed-container">
+        {container}{" "}
+      </span>
+
+      {openToken ? (
+        <span key="open-token" className="zed-syntax">
+          {openToken}
         </span>
       ) : null}
-      <a key="handle" onClick={() => ctx.setExpanded(value, !isExpanded)}>
-        <Icon
-          name={isExpanded ? "chevron-down" : "chevron-right"}
-          key="arrow"
-          size={16}
-        />
 
-        <span key="name" className="zed-container">
-          {container}{" "}
+      {nodes}
+
+      {closeToken ? (
+        <span key="close-token" className="zed-syntax">
+          {closeToken}
         </span>
+      ) : null}
 
-        {openToken ? (
-          <span key="open-token" className="zed-syntax">
-            {openToken}
-          </span>
-        ) : null}
-
-        {nodes}
-
-        {closeToken ? (
-          <span key="close-token" className="zed-syntax">
-            {closeToken}
-          </span>
-        ) : null}
-
-        {closeToken && renderAlias(args.type)}
-      </a>
-    </>
+      {closeToken && renderAlias(args.type)}
+    </a>
   )
+  return row
 }
 
 export function renderClosing(args: InspectArgs, syntax: string) {
-  return (
-    <>
-      <span key="close" className="zed-syntax">
-        {syntax}
-      </span>
+  return [
+    <span key="close" className="zed-syntax">
+      {syntax}
+    </span>,
 
-      {renderAlias(args.type)}
+    renderAlias(args.type),
 
-      {args.last ? null : ","}
-    </>
-  )
+    args.last ? null : ","
+  ]
 }

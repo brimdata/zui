@@ -1,3 +1,4 @@
+import useKeybinding from "app/core/hooks/use-keybinding"
 import Tab from "src/js/state/Tab"
 
 export function useExpandState() {
@@ -9,6 +10,11 @@ export function useExpandState() {
     "results.view.objects.expanded",
     new Map()
   )
+
+  useKeybinding("ctrl+e", () => {
+    setDefaultExpanded(!defaultExpanded)
+    setExpanded(new Map())
+  })
 
   return {
     expandAll() {
