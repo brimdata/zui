@@ -6,10 +6,8 @@ import {createTime} from "./util/time"
 import {createZealot} from "./zealot"
 import {createZealotMock, ZealotMock} from "./zealot_mock"
 import {zed, zjson} from "@brimdata/zealot"
-const ZealotContext = new zed.Context()
 
 export {
-  ZealotContext,
   zjson,
   createZealot,
   createZealotMock,

@@ -1,5 +1,5 @@
 import {SearchStatus} from "src/js/types/searches"
-import {ZealotContext, zed} from "zealot-old"
+import {encode, zed} from "@brimdata/zealot"
 import {
   LOG_DETAIL_BACK,
   LOG_DETAIL_CLEAR,
@@ -11,7 +11,7 @@ import {
 export default {
   push: (record: zed.Record): LOG_DETAIL_PUSH => ({
     type: "LOG_DETAIL_PUSH",
-    record: ZealotContext.encodeRecord(record)
+    record: encode(record)
   }),
 
   back: (): LOG_DETAIL_BACK => ({
@@ -26,7 +26,7 @@ export default {
     return {
       type: "LOG_DETAIL_UPDATE",
       updates: {
-        uidLogs: records.map((r) => ZealotContext.encodeRecord(r))
+        uidLogs: encode(records)
       }
     }
   },

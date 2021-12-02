@@ -1,4 +1,4 @@
-import {ZealotContext, zed} from "zealot-old"
+import {decode, zed} from "@brimdata/zealot"
 import * as lake from "../lake"
 
 type SchemaMap = {[name: string]: zed.Schema}
@@ -37,7 +37,7 @@ export function createRecordCallback(): RecordCallback {
 
   return (record: lake.QueryRecordValue, channel: number) => {
     const {typedefs, schemas, rows: prevRows} = getChannel(channel, channels)
-    const newRow = ZealotContext.decodeRecord(record, typedefs)
+    const newRow = decode(record, {typedefs})
     const name = record.schema
     const type = typedefs[name]
     schemas[name] = new zed.Schema(name, type as zed.TypeRecord)

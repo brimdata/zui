@@ -1,5 +1,4 @@
-import {ZealotContext, zed} from "zealot-old"
-import {zjson} from "@brimdata/zealot"
+import {decode, zed, zjson} from "@brimdata/zealot"
 import {ZIterator} from "../types"
 import {Callbacks} from "./callbacks"
 
@@ -41,7 +40,7 @@ export function createStream(
           records = records.concat(payload.value)
         }
       }
-      return ZealotContext.decode(records)
+      return decode(records)
     },
     callbacks: () => {
       const cbs = new Callbacks()

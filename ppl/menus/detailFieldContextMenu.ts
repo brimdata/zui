@@ -1,3 +1,4 @@
+import {encode} from "@brimdata/zealot"
 import {isEqual} from "lodash"
 import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
@@ -5,7 +6,7 @@ import {showContextMenu} from "src/js/lib/System"
 import Columns from "src/js/state/Columns"
 import SearchBar from "src/js/state/SearchBar"
 import {Thunk} from "src/js/state/types"
-import {ZealotContext, zed} from "zealot-old"
+import {zed} from "zealot-old"
 
 type Args = {
   field: zed.Field
@@ -48,8 +49,8 @@ export default function detailFieldContextMenu({
     ].includes(field.name)
 
     const detailMenuActions = menu.actions.detail
-    const fieldData = ZealotContext.encodeField(field)
-    const recordData = ZealotContext.encodeRecord(record)
+    const fieldData = encode(field)
+    const recordData = encode(record)
     const pluginMenuItems = api.contextMenus.detail
       .list()
       .map((ctxBuilder) => ctxBuilder({record, field}))

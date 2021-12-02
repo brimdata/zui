@@ -33,7 +33,7 @@ const getUidLogs = createSelector<State, LogDetailHistory, zed.Record[]>(
   getHistory,
   (history) => {
     const entry = history.current()
-    return entry ? entry.uidLogs.map((data) => decode(data)) : []
+    return entry ? decode(entry.uidLogs) : []
   }
 )
 

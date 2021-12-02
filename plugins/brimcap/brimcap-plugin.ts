@@ -1,7 +1,7 @@
 import fsExtra, {pathExistsSync} from "fs-extra"
 import path, {join} from "path"
 import errors from "src/js/errors"
-import {ZealotContext, zed} from "zealot-old"
+import {zed} from "zealot-old"
 import {fetchCorrelation} from "../../ppl/detail/flows/fetch"
 import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"
@@ -14,6 +14,7 @@ import {ChildProcess, spawn} from "child_process"
 import {MenuItemConstructorOptions} from "electron"
 import {compact} from "lodash"
 import env from "app/core/env"
+import {decode} from "@brimdata/zealot"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -164,7 +165,7 @@ export default class BrimcapPlugin {
       // the detail window's packets button will operate off of the 'current' record
       this.api.commands.add("data-detail:current", ([record]) => {
         if (!record) return
-        const data = ZealotContext.decodeRecord(record)
+        const data = decode(record)
 
         updateButtonStatus(
           "detail",

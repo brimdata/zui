@@ -1,5 +1,5 @@
 import {toZql} from "src/js/zql/toZql"
-import {ZealotContext, zed, zjson} from "zealot-old"
+import {decode, zed, zjson} from "@brimdata/zealot"
 import brim from "../../../brim"
 import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
 import {
@@ -25,7 +25,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-copy",
       label: "Copy",
       listener(_dispatch, data: zjson.EncodedField) {
-        const f = ZealotContext.decodeField(data)
+        const f = decode(data)
         lib.doc.copyToClipboard(f.data.toString())
       }
     }),
@@ -34,7 +34,7 @@ function buildDetailActions() {
       label: "Count by field",
       listener(dispatch, data: zjson.EncodedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryCountBy(ZealotContext.decodeField(data)))
+        dispatch(appendQueryCountBy(decode(data)))
         dispatch(openNewSearchTab())
       }
     }),
@@ -42,7 +42,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-detail",
       label: "View details",
       listener(dispatch, log: zjson.RootRecord) {
-        dispatch(viewLogDetail(ZealotContext.decodeRecord(log)))
+        dispatch(viewLogDetail(decode(log)))
       }
     }),
     exclude: action({
@@ -50,7 +50,7 @@ function buildDetailActions() {
       label: "Filter != value in new search",
       listener(dispatch, field: zjson.EncodedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryExclude(ZealotContext.decodeField(field)))
+        dispatch(appendQueryExclude(decode(field)))
         dispatch(openNewSearchTab())
       }
     }),
@@ -58,7 +58,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-fresh-include",
       label: "New search with this value",
       listener(dispatch, field: zjson.EncodedField) {
-        const f = ZealotContext.decodeField(field)
+        const f = decode(field)
         dispatch(SearchBar.clearSearchBar())
         dispatch(SearchBar.changeSearchBarInput(toZql(f.value)))
         dispatch(openNewSearchTab())
@@ -68,7 +68,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-from-time",
       label: 'Use as "start" time in new search',
       listener(dispatch, fieldJSON: zjson.EncodedField) {
-        const field = ZealotContext.decodeField(fieldJSON)
+        const field = decode(fieldJSON)
         const data = field.data
         if (data instanceof zed.Time) {
           dispatch(SearchBar.clearSearchBar())
@@ -83,7 +83,7 @@ function buildDetailActions() {
       listener(dispatch, program, log: zjson.RootRecord) {
         const newProgram = brim
           .program(program)
-          .drillDown(ZealotContext.decodeRecord(log))
+          .drillDown(decode(log))
           .string()
 
         if (newProgram) {
@@ -98,7 +98,7 @@ function buildDetailActions() {
       label: "Filter == value in new search",
       listener(dispatch, field: zjson.EncodedField) {
         dispatch(SearchBar.clearSearchBar())
-        dispatch(appendQueryInclude(ZealotContext.decodeField(field)))
+        dispatch(appendQueryInclude(decode(field)))
         dispatch(openNewSearchTab())
       }
     }),
@@ -107,7 +107,7 @@ function buildDetailActions() {
       label: "Filter in field in new search",
       listener(dispatch, data: zjson.EncodedField, index: number) {
         dispatch(SearchBar.clearSearchBar())
-        const field = ZealotContext.decodeField(data)
+        const field = decode(data)
         if (zed.isIterable(field.value)) {
           const item = field.value.at(index)
           if (item) {
@@ -122,7 +122,7 @@ function buildDetailActions() {
       label: "Filter not in field in new search",
       listener(dispatch, data: zjson.EncodedField, index: number) {
         dispatch(SearchBar.clearSearchBar())
-        const field = ZealotContext.decodeField(data)
+        const field = decode(data)
         if (zed.isIterable(field.value)) {
           const item = field.value.at(index)
           if (item) {
@@ -144,7 +144,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-sort-asc",
       label: "Sort A...Z",
       listener(dispatch, field: zjson.EncodedField) {
-        const f = ZealotContext.decodeField(field)
+        const f = decode(field)
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(f.name, "asc"))
         dispatch(openNewSearchTab())
@@ -154,7 +154,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-sort-desc",
       label: "Sort Z...A",
       listener(dispatch, field: zjson.EncodedField) {
-        const f = ZealotContext.decodeField(field)
+        const f = decode(field)
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(f.name, "desc"))
         dispatch(openNewSearchTab())
@@ -164,7 +164,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-to-time",
       label: 'Use as "end" time',
       listener(dispatch, data: zjson.EncodedField) {
-        const field = ZealotContext.decodeField(data)
+        const field = decode(data)
         if (field.data instanceof zed.Time) {
           dispatch(SearchBar.clearSearchBar())
           dispatch(
@@ -183,7 +183,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-virus-total",
       label: "VirusTotal Lookup",
       listener(_dispatch, data: zjson.EncodedField) {
-        const field = ZealotContext.decodeField(data)
+        const field = decode(data)
         open(virusTotal.url(field.data.toString()))
       }
     }),
@@ -191,7 +191,7 @@ function buildDetailActions() {
       name: "detail-cell-menu-who-is",
       label: "Whois Lookup",
       listener(dispatch, data: zjson.EncodedField) {
-        const field = ZealotContext.decodeField(data)
+        const field = decode(data)
         dispatch(Modal.show("whois", {addr: field.data.toString()}))
       }
     })

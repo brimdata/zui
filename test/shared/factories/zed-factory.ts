@@ -1,8 +1,8 @@
 import {isDate, isInteger, isNumber, isObject, isString} from "lodash"
-import {zed} from "@brimdata/zealot"
+import {zed, decode, encode, DefaultContext} from "@brimdata/zealot"
 
 // Convert a js object into a zed record
-const context = new zed.Context()
+const context = DefaultContext
 
 export function createRecord(object): zed.Record {
   let fields: zed.Field[] = []
@@ -19,7 +19,7 @@ export function createRecord(object): zed.Record {
   const r = new zed.Record(type, fields)
   // This is necessary at the moment to add field parents,
   // and to match the codepath that runs in production.
-  return context.decodeRecord(context.encodeRecord(r))
+  return decode(encode(r))
 }
 
 export function createField(name, value): zed.Field {
