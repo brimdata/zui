@@ -10,3 +10,4 @@ run
 .DS_Store
 .eslintcache
 .yalc
+yalc.lock
