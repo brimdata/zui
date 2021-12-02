@@ -9,3 +9,4 @@ run
 .vscode
 .DS_Store
 .eslintcache
+.yalc
