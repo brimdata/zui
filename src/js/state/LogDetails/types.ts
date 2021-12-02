@@ -1,4 +1,4 @@
-import {zjson} from "zealot-old"
+import {zjson} from "@brimdata/zealot"
 import {SearchStatus} from "../../types/searches"
 
 export type LogDetailsState = {

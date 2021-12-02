@@ -1,4 +1,4 @@
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import zql from "../zql"
 import {toFieldPath} from "../zql/toZql"
 
@@ -9,10 +9,10 @@ export default {
   include(field: zed.Field) {
     return zql`${field}==${field.value}`
   },
-  in(field: zed.Field, value: zed.AnyValue) {
+  in(field: zed.Field, value: zed.Value) {
     return zql`${value} in ${field}`
   },
-  notIn(field: zed.Field, value: zed.AnyValue) {
+  notIn(field: zed.Field, value: zed.Value) {
     return zql`!${value} in ${field}`
   },
   countBy(field: zed.Field) {

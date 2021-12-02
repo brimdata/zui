@@ -1,6 +1,6 @@
 import detailFieldContextMenu from "ppl/menus/detailFieldContextMenu"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 
 const contextMenu = (field: zed.Field, record: zed.Record) => (dispatch) => {
   if (global.windowName === "detail") {

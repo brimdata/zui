@@ -1,4 +1,4 @@
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Columns from "./"
 import actions from "./actions"

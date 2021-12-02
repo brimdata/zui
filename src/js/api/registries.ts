@@ -1,7 +1,7 @@
 import {EventEmitter} from "events"
 import {remove} from "lodash"
 import {IngestParams} from "../brim/ingest/getParams"
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import {MenuItemConstructorOptions} from "electron"
 
 type Cleanup = () => any

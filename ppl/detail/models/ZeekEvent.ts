@@ -1,4 +1,4 @@
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class ZeekEvent implements BrimEventInterface {

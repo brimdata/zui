@@ -11,7 +11,11 @@ export interface RecordCallbackRet {
 }
 
 type ChannelMap = Map<number, Channel>
-type Channel = {rows: zed.Record[]; schemas: SchemaMap; typedefs: object}
+type Channel = {
+  rows: zed.Record[]
+  schemas: SchemaMap
+  typedefs: {[key: string]: zed.Type}
+}
 type RecordCallback = (
   payload: lake.QueryRecordValue,
   channel: number
@@ -36,7 +40,7 @@ export function createRecordCallback(): RecordCallback {
     const newRow = ZealotContext.decodeRecord(record, typedefs)
     const name = record.schema
     const type = typedefs[name]
-    schemas[name] = new zed.Schema(name, type)
+    schemas[name] = new zed.Schema(name, type as zed.TypeRecord)
 
     const rows = prevRows.concat(newRow)
     channels.set(channel, {rows, typedefs, schemas})

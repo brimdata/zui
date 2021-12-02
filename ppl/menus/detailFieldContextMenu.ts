@@ -10,7 +10,7 @@ import {ZealotContext, zed} from "zealot-old"
 type Args = {
   field: zed.Field
   record: zed.Record
-  value: zed.AnyValue
+  value: zed.Value
 }
 
 // Anything done here usually needs to be copied to searchFieldContextMenu

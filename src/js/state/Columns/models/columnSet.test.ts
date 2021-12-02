@@ -1,15 +1,14 @@
+import {decode, zed} from "@brimdata/zealot"
 import {toZJSON} from "test/shared/zq"
-import {ZealotContext} from "zealot-old"
-import {Schema} from "zealot-old/zed"
 import {createColumnSet} from "./columnSet"
 
 function getColumns(zson: string) {
   const objects = toZJSON(zson)
-  const records = ZealotContext.decode(objects)
+  const records = decode(objects)
   const schemaMap = records.reduce((map, obj) => {
     const name = obj.type.id
     const type = obj.type
-    map[name] = new Schema(name, type)
+    map[name] = new zed.Schema(name, type)
     return map
   }, {})
   return createColumnSet(schemaMap)

@@ -1,5 +1,5 @@
 import {Ts} from "./types"
-import * as zjson from "./zjson"
+import {zjson} from "@brimdata/zealot"
 
 export type Payload =
   | QueryRecordPayload

@@ -5,7 +5,7 @@ import {useSelector} from "react-redux"
 import brim from "src/js/brim"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {State} from "src/js/state/types"
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import {isString} from "lodash"
 
 /**
@@ -46,7 +46,7 @@ export function formatPrimitive(
     return data.toString()
   }
   if (zed.isInt(data)) {
-    return formatInt(data.toInt(), config)
+    return formatInt(Number(data.toInt()), config)
   }
   if (zed.isTime(data)) {
     return brim.time(data.toDate()).format(config.timeFormat, config.timeZone)

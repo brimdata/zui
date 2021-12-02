@@ -13,7 +13,7 @@ import LogDetails from "src/js/state/LogDetails"
 import styled from "styled-components"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import {detailPane} from "test/integration/helpers/locators"
 
 const BG = styled.div`

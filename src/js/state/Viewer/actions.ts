@@ -1,4 +1,4 @@
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 import {

@@ -1,5 +1,6 @@
+import {zed} from "@brimdata/zealot"
 import {isEqual} from "lodash"
-import {parse, zed} from "zealot-old"
+import {parse} from "zealot-old"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"
@@ -19,12 +20,12 @@ export default function(p = "", pins: string[] = []) {
       return this
     },
 
-    in(field: zed.Field, value: zed.AnyValue) {
+    in(field: zed.Field, value: zed.Value) {
       p = insertFilter(p, brim.syntax.in(field, value))
       return this
     },
 
-    notIn(field: zed.Field, value: zed.AnyValue) {
+    notIn(field: zed.Field, value: zed.Value) {
       p = insertFilter(p, brim.syntax.notIn(field, value))
       return this
     },

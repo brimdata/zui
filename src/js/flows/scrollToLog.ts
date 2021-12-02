@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import {Thunk} from "../state/types"
 import Viewer from "../state/Viewer"
 

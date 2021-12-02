@@ -1,4 +1,4 @@
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class SuricataEvent implements BrimEventInterface {
@@ -21,8 +21,10 @@ export class SuricataEvent implements BrimEventInterface {
   }
 
   getSeverity(): number {
-    return this.r
-      .get<zed.Uint64>(["alert", "severity"])
-      .toInt()
+    return Number(
+      this.r
+        .get<zed.Uint64>(["alert", "severity"])
+        .toInt()
+    )
   }
 }

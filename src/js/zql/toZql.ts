@@ -1,6 +1,5 @@
 import isString from "lodash/isString"
-import {zed} from "zealot-old"
-import {isStringy} from "zealot-old/zed"
+import {zed} from "@brimdata/zealot"
 
 const needsQuotes = (fieldName: string) => !/^[a-zA-Z_$][\w]*$/.test(fieldName)
 
@@ -55,7 +54,7 @@ function toZqlBool(bool: boolean) {
 function toZqlZngPrimitive(data: zed.Primitive) {
   if (data.isUnset()) {
     return "null"
-  } else if (isStringy(data)) {
+  } else if (zed.isStringy(data)) {
     return toZqlString(data.toString())
   } else {
     return data.toString()

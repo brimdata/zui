@@ -2,7 +2,7 @@ import {useEffect, useState} from "react"
 import {useDispatch} from "react-redux"
 import {search} from "src/js/flows/search/mod"
 import {AppDispatch} from "src/js/state/types"
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 
 type R = [zed.Record[], boolean]
 
