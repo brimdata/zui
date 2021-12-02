@@ -1,6 +1,6 @@
 import {Time} from "./time"
 import {createData} from "test/shared/factories/zed-factory"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 
 test("toDate()", () => {
   new Time("2020-02-25T16:03:13.987654321Z").toDate()

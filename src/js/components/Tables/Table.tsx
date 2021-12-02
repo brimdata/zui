@@ -1,6 +1,6 @@
 import {typeClassNames} from "app/core/utils/type-class-names"
 import React from "react"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import FieldCell from "../FieldCell"
 
 export default function Table({className, ...props}: any) {

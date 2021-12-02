@@ -1,4 +1,4 @@
-import {ZealotContext, zed} from "zealot"
+import {ZealotContext, zed} from "zealot-old"
 import * as lake from "../lake"
 
 type SchemaMap = {[name: string]: zed.Schema}

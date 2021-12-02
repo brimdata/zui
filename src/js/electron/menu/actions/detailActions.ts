@@ -1,5 +1,5 @@
 import {toZql} from "src/js/zql/toZql"
-import {ZealotContext, zed, zjson} from "zealot"
+import {ZealotContext, zed, zjson} from "zealot-old"
 import brim from "../../../brim"
 import {openNewSearchTab} from "../../../flows/openNewSearchWindow"
 import {

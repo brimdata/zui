@@ -1,4 +1,4 @@
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Columns from "./"
 import actions from "./actions"

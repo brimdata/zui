@@ -5,7 +5,7 @@ import {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import LogDetails from "src/js/state/LogDetails"
 import Viewer from "src/js/state/Viewer"
-import {ZealotContext} from "zealot"
+import {ZealotContext} from "zealot-old"
 import {executeCommand} from "../../../src/js/flows/executeCommand"
 
 const useStoreExport = () => {

@@ -1,6 +1,6 @@
 import {FormatConfig} from "app/core/format"
 import {estimateCellWidth, estimateHeaderWidth} from "app/viewer/measure"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import columnOrder from "../lib/columnOrder"
 import {$Column, printColumnName} from "../state/Columns/models/column"
 import {ColumnSettingsMap, TableColumn} from "../state/Columns/types"

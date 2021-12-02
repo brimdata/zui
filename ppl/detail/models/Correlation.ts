@@ -1,5 +1,5 @@
 import {get} from "lodash"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 
 const specialUids = {
   files: "conn_uids",

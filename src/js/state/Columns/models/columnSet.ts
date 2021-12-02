@@ -1,6 +1,6 @@
 import {uniqBy} from "lodash"
 import {toFieldPath} from "src/js/zql/toZql"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import {$Column, createColumn} from "./column"
 
 type Args = {[name: string]: zed.Schema}

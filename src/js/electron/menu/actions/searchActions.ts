@@ -1,6 +1,6 @@
 import lib from "src/js/lib"
 import {toZql} from "src/js/zql/toZql"
-import {ZealotContext, zed, zjson} from "zealot"
+import {ZealotContext, zed, zjson} from "zealot-old"
 import brim from "../../../brim"
 import scrollToLog from "../../../flows/scrollToLog"
 import {

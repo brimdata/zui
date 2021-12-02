@@ -1,6 +1,6 @@
 import PanelHeading from "app/detail/PanelHeading"
 import React from "react"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import ConnVersation from "../ConnVersation"
 
 type Props = {

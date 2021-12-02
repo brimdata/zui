@@ -1,4 +1,4 @@
-import {createZealot} from "zealot"
+import {createZealot} from "zealot-old"
 import {globalDispatchMiddleware} from "../state/GlobalContext"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import invoke from "../electron/ipc/invoke"

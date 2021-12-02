@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import lib from "../../lib"
 import ScrollHooks from "../../lib/ScrollHooks"
 import TableColumns from "../../models/TableColumns"

@@ -1,7 +1,7 @@
 import {FormatConfig, formatPrimitive} from "app/core/format"
 import {isEventType} from "ppl/suricata/suricata-plugin"
 import {isPath} from "ppl/zeek/zeek-plugin"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 
 const ONE_CHAR = 7.39
 const CELL_PAD = ONE_CHAR * 2

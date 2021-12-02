@@ -1,5 +1,5 @@
-import {ZealotContext, zed} from "zealot"
-import {RootRecord} from "zealot/zjson"
+import {ZealotContext, zed} from "zealot-old"
+import {RootRecord} from "zealot-old/zjson"
 import {ZIterator} from "../types"
 import {Callbacks} from "./callbacks"
 

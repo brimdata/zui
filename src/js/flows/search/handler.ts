@@ -3,8 +3,8 @@ import whenIdle from "../../lib/whenIdle"
 import {
   createRecordCallback,
   RecordCallbackRet
-} from "zealot/fetcher/records-callback"
-import {ZResponse} from "../../../../zealot/types"
+} from "zealot-old/fetcher/records-callback"
+import {ZResponse} from "../../../../zealot-old/types"
 
 function abortError(e) {
   return /user aborted/i.test(e.message)

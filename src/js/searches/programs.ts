@@ -1,4 +1,4 @@
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import zql from "../zql"
 
 export function md5Correlation(md5: string) {

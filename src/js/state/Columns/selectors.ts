@@ -1,6 +1,6 @@
 import {FormatConfig, getFormatConfig} from "app/core/format"
 import {createSelector} from "reselect"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import TableColumns from "../../models/TableColumns"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"

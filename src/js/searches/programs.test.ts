@@ -1,5 +1,5 @@
 import {createRecord} from "test/shared/factories/zed-factory"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import {connCorrelation} from "./programs"
 
 test("conn correlation", () => {

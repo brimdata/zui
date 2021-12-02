@@ -3,7 +3,7 @@
  */
 
 import React from "react"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 
 export function isPath(name: string | string[], value: zed.AnyValue) {
   return name === "_path" && zed.isStringy(value)

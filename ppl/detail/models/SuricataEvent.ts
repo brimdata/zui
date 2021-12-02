@@ -1,4 +1,4 @@
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import {BrimEventInterface} from "./BrimEvent"
 
 export class SuricataEvent implements BrimEventInterface {

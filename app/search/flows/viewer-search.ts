@@ -9,7 +9,7 @@ import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
 import {SchemaMap} from "src/js/state/Viewer/types"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import {SearchResponse} from "../../../src/js/flows/search/response"
 
 type Args = {

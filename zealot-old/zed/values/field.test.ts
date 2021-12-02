@@ -1,6 +1,6 @@
 import {createRecord} from "test/shared/factories/zed-factory"
 import {toZJSON} from "test/shared/zq"
-import {ZealotContext} from "zealot"
+import {ZealotContext} from "zealot-old"
 
 test("field path", () => {
   const r = createRecord({id: {person: "alice"}})

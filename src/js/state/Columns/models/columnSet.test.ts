@@ -1,6 +1,6 @@
 import {toZJSON} from "test/shared/zq"
-import {ZealotContext} from "zealot"
-import {Schema} from "zealot/zed"
+import {ZealotContext} from "zealot-old"
+import {Schema} from "zealot-old/zed"
 import {createColumnSet} from "./columnSet"
 
 function getColumns(zson: string) {

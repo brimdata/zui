@@ -1,5 +1,5 @@
 import {createData} from "test/shared/factories/zed-factory"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import {formatPrimitive} from "./format"
 
 test("format a long number", () => {

@@ -2,7 +2,7 @@ import {useZedFormatter} from "app/core/format"
 import {typeClassNames} from "app/core/utils/type-class-names"
 import classNames from "classnames"
 import React from "react"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 
 type Props = {field: zed.Field; record: zed.Record}
 

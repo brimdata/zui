@@ -1,6 +1,6 @@
 import isString from "lodash/isString"
-import {zed} from "zealot"
-import {isStringy} from "zealot/zed"
+import {zed} from "zealot-old"
+import {isStringy} from "zealot-old/zed"
 
 const needsQuotes = (fieldName: string) => !/^[a-zA-Z_$][\w]*$/.test(fieldName)
 

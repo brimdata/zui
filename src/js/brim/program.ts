@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import {parse, zed} from "zealot"
+import {parse, zed} from "zealot-old"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"

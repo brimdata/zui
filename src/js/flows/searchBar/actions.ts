@@ -1,4 +1,4 @@
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import brim from "../../brim"
 import {onlyWhitespace} from "../../lib/Str"
 import SearchBar from "../../state/SearchBar"

@@ -4,7 +4,7 @@ import {
   uidCorrelation
 } from "src/js/searches/programs"
 import {createRecord} from "test/shared/factories/zed-factory"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import {getCorrelationQuery} from "./get-correlation-query"
 
 test("returns uid query if ts and duration are missing", () => {

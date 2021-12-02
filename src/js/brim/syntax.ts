@@ -1,4 +1,4 @@
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import zql from "../zql"
 import {toFieldPath} from "../zql/toZql"
 

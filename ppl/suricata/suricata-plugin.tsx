@@ -3,7 +3,7 @@
  */
 
 import React from "react"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 
 export function isEventType(name: string | string[], value: zed.AnyValue) {
   return name === "event_type" && zed.isStringy(value)

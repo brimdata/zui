@@ -1,4 +1,4 @@
-import {zjson} from "zealot"
+import {zjson} from "zealot-old"
 import {SearchStatus} from "../../types/searches"
 
 export type LogDetailsState = {

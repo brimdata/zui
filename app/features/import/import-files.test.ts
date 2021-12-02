@@ -8,7 +8,7 @@ import data from "test/shared/data"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
 import {mocked} from "ts-jest/utils"
-import {createZealotMock} from "zealot"
+import {createZealotMock} from "zealot-old"
 import BrimApi from "src/js/api"
 import ingestFiles from "./import-files"
 

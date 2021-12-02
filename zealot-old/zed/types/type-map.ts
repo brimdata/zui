@@ -1,5 +1,5 @@
 import {isNull} from "../utils"
-import {Value} from "zealot/zjson"
+import {Value} from "zealot-old/zjson"
 import {ZedContext} from "../context"
 import {ZedMap} from "../values/map"
 import {ContainerTypeInterface, ZedType} from "./types"

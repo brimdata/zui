@@ -1,5 +1,5 @@
 import {isNull} from "../utils"
-import {SetValue, Value} from "zealot/zjson"
+import {SetValue, Value} from "zealot-old/zjson"
 import {ZedContext} from "../context"
 import {typeId} from "../utils"
 import {Set} from "../values/set"

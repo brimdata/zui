@@ -5,7 +5,7 @@ import {showContextMenu} from "src/js/lib/System"
 import Columns from "src/js/state/Columns"
 import SearchBar from "src/js/state/SearchBar"
 import {Thunk} from "src/js/state/types"
-import {ZealotContext, zed} from "zealot"
+import {ZealotContext, zed} from "zealot-old"
 
 type Args = {
   field: zed.Field

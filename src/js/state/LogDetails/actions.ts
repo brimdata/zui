@@ -1,5 +1,5 @@
 import {SearchStatus} from "src/js/types/searches"
-import {ZealotContext, zed} from "zealot"
+import {ZealotContext, zed} from "zealot-old"
 import {
   LOG_DETAIL_BACK,
   LOG_DETAIL_CLEAR,

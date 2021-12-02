@@ -1,6 +1,6 @@
 import {isDate, isInteger, isNumber, isObject, isString} from "lodash"
-import {ZealotContext, zed} from "zealot"
-import {TypeRecord} from "zealot/zed"
+import {ZealotContext, zed} from "zealot-old"
+import {TypeRecord} from "zealot-old/zed"
 
 // Convert a js object into a zed record
 

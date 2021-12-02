@@ -1,6 +1,6 @@
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
-import {createZealotMock} from "zealot"
+import {createZealotMock} from "zealot-old"
 import brim from "../../brim"
 import fixtures from "../../../../test/unit/fixtures"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"

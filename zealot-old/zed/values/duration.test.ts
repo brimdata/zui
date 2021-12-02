@@ -1,5 +1,5 @@
 // simple
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import {
   Hour,
   Microsecond,

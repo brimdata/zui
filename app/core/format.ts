@@ -5,7 +5,7 @@ import {useSelector} from "react-redux"
 import brim from "src/js/brim"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {State} from "src/js/state/types"
-import {zed} from "zealot"
+import {zed} from "zealot-old"
 import {isString} from "lodash"
 
 /**

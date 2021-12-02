@@ -1,5 +1,5 @@
 import createTestBrim from "../helpers/createTestBrim"
-import {createZealot} from "../../../zealot"
+import {createZealot} from "../../../zealot-old"
 import {Readable} from "stream"
 import {selectors} from "../helpers/integration"
 import {poolItem} from "../helpers/locators"

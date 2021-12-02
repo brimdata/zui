@@ -1,4 +1,4 @@
-import {PrimitiveType, Value} from "zealot/zjson"
+import {PrimitiveType, Value} from "zealot-old/zjson"
 
 export abstract class BasePrimitive<T> {
   kind = "primitive"
