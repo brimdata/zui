@@ -18,7 +18,7 @@ export function Results() {
   const {ref, rect} = useResizeObserver()
 
   return (
-    <Styled.BG className="search-results">
+    <Styled.BG>
       <Styled.Toolbar>
         <Styled.Group>
           <Styled.ButtonSwitch>
