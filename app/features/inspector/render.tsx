@@ -1,8 +1,7 @@
 import Icon from "app/core/Icon"
 import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
 import React, {ReactNode} from "react"
-import {zed} from "zealot"
-import {Union} from "zealot/zed"
+import {zed} from "@brimdata/zealot"
 import {InspectArgs} from "./types"
 
 export function renderOneField(args: InspectArgs) {
@@ -23,7 +22,7 @@ export function renderOneField(args: InspectArgs) {
   return nodes
 }
 
-export function renderAlias(type: zed.ZedTypeInterface) {
+export function renderAlias(type: zed.Type) {
   // @ts-ignore
   if (type && zed.isTypeAlias(type)) {
     return [
@@ -121,7 +120,7 @@ export function renderOneValue(args: InspectArgs): ReactNode {
     return <span {...props}>&quot;{value.toString()}&quot;</span>
   }
 
-  if (value instanceof Union) {
+  if (value instanceof zed.Union) {
     return renderOneValue({...args, value: value.value})
   }
 

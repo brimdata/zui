@@ -1,6 +1,6 @@
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 
-export function zedTypeClassName(data: zed.AnyValue | zed.ZedTypeInterface) {
+export function zedTypeClassName(data: zed.Value | zed.Type) {
   if (zed.isType(data)) {
     if (zed.isPrimitiveType(data)) {
       return "zed-type"

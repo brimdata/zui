@@ -4,7 +4,7 @@ import React from "react"
 import {useDispatch} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import ResultsTable from "src/js/components/SearchResults/ResultsTable"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 import {useResultsData} from "./data-hook"
 import {useExpandState} from "./expand-hook"
 import * as Styled from "./results.styled"
@@ -55,7 +55,7 @@ export function Results() {
               height={rect.height}
               width={rect.width}
               values={data.values}
-              onContextMenu={(e, value: zed.AnyValue, field: zed.Field) =>
+              onContextMenu={(e, value: zed.Value, field: zed.Field) =>
                 dispatch(
                   searchFieldContextMenu({
                     value,

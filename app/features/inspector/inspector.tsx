@@ -5,7 +5,7 @@ import React, {ComponentType, ReactNode} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {ListChildComponentProps} from "react-window"
 import Viewer from "src/js/state/Viewer"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 import {inspect} from "./inspect"
 import {List} from "./list.styled"
 import {Context, RowData} from "./types"
@@ -13,10 +13,10 @@ import {Context, RowData} from "./types"
 type Props = {
   height: number
   width: number
-  values: zed.AnyValue[]
+  values: zed.Value[]
   defaultExpanded: boolean
-  expanded: Map<zed.AnyValue, boolean>
-  setExpanded: (m: Map<zed.AnyValue, boolean>) => void
+  expanded: Map<zed.Value, boolean>
+  setExpanded: (m: Map<zed.Value, boolean>) => void
   onContextMenu: Context["onContextMenu"]
 }
 
@@ -38,11 +38,11 @@ export function Inspector(props: Props) {
     push(render: ReactNode) {
       this.rows.push({render, indent: this.indent})
     },
-    isExpanded: (value: zed.AnyValue) => {
+    isExpanded: (value: zed.Value) => {
       if (expanded.has(value)) return expanded.get(value)
       else return defaultExpanded
     },
-    setExpanded: (value: zed.AnyValue, bool: boolean) => {
+    setExpanded: (value: zed.Value, bool: boolean) => {
       const newMap = new Map(expanded.entries())
       newMap.set(value, bool)
       setExpanded(newMap)

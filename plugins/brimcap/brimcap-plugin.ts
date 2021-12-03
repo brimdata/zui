@@ -1,7 +1,7 @@
 import fsExtra, {pathExistsSync} from "fs-extra"
 import path, {join} from "path"
 import errors from "src/js/errors"
-import {zed} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import {fetchCorrelation} from "../../ppl/detail/flows/fetch"
 import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"

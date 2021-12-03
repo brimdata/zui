@@ -1,11 +1,8 @@
 import {MouseEvent, ReactNode} from "react"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 
-export type IsExpanded = (v: zed.AnyValue | zed.ZedTypeInterface) => boolean
-export type SetExpanded = (
-  v: zed.AnyValue | zed.ZedTypeInterface,
-  b: boolean
-) => void
+export type IsExpanded = (v: zed.Value | zed.Type) => boolean
+export type SetExpanded = (v: zed.Value | zed.Type, b: boolean) => void
 
 export type Context = {
   indent: number
@@ -17,16 +14,16 @@ export type Context = {
   push: (render: ReactNode) => void
   onContextMenu: (
     e: MouseEvent,
-    value: zed.AnyValue | zed.ZedTypeInterface,
+    value: zed.Value | zed.Type,
     field: zed.Field
   ) => void
 }
 
 export type InspectArgs = {
   ctx: Context
-  value: zed.AnyValue | zed.ZedTypeInterface
+  value: zed.Value | zed.Type
   field: zed.Field | null
-  type: zed.ZedTypeInterface
+  type: zed.Type
   key: string | null
   last: boolean
 }

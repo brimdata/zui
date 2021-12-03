@@ -1,4 +1,4 @@
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 import {createContainer} from "./create-container"
 import {renderOneField} from "./render"
 import {InspectArgs} from "./types"
@@ -12,7 +12,7 @@ export function inspect(args: InspectArgs) {
   }
 }
 
-function inspectType(args: InspectArgs & {value: zed.ZedTypeInterface}) {
+function inspectType(args: InspectArgs & {value: zed.Type}) {
   const {ctx, value} = args
   if (
     zed.isPrimitiveType(value) ||
@@ -32,7 +32,7 @@ function inspectType(args: InspectArgs & {value: zed.ZedTypeInterface}) {
   }
 }
 
-function inspectValue(args: InspectArgs & {value: zed.AnyValue}) {
+function inspectValue(args: InspectArgs & {value: zed.Value}) {
   const {ctx, value} = args
 
   if (value.isUnset() || zed.isPrimitive(value)) {
