@@ -1,4 +1,4 @@
-import {createZealot} from "zealot"
+import {createZealot} from "zealot-old"
 import {setupServer} from "msw/node"
 import {rest} from "msw"
 

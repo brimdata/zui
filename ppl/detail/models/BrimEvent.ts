@@ -1,4 +1,4 @@
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 import {SuricataEvent} from "./SuricataEvent"
 import {UnknownEvent} from "./UnknownEvent"
 import {ZeekEvent} from "./ZeekEvent"

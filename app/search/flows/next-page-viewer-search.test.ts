@@ -10,8 +10,8 @@ import Workspaces from "src/js/state/Workspaces"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
 import {createRecord} from "test/shared/factories/zed-factory"
-import {createZealotMock} from "zealot"
-import {zed} from "zealot"
+import {createZealotMock} from "zealot-old"
+import {zed} from "@brimdata/zealot"
 import nextPageViewerSearch from "./next-page-viewer-search"
 
 const records = [

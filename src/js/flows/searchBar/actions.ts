@@ -1,4 +1,4 @@
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 import brim from "../../brim"
 import {onlyWhitespace} from "../../lib/Str"
 import SearchBar from "../../state/SearchBar"
@@ -71,7 +71,7 @@ export function appendQuerySortBy(
   }
 }
 
-export function appendQueryIn(field: zed.Field, value: zed.AnyValue): Thunk {
+export function appendQueryIn(field: zed.Field, value: zed.Value): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(
@@ -84,7 +84,7 @@ export function appendQueryIn(field: zed.Field, value: zed.AnyValue): Thunk {
   }
 }
 
-export function appendQueryNotIn(field: zed.Field, value: zed.AnyValue): Thunk {
+export function appendQueryNotIn(field: zed.Field, value: zed.Value): Thunk {
   return function(dispatch, getState) {
     dispatch(
       SearchBar.changeSearchBarInput(

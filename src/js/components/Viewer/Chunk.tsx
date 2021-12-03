@@ -1,5 +1,5 @@
 import React from "react"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 import TableColumns from "../../models/TableColumns"
 import {RowRenderer, ViewerDimens} from "../../types"
 import * as Styler from "./Styler"

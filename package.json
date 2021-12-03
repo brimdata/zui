@@ -103,6 +103,7 @@
     "winston": "^3.3.3"
   },
   "dependencies": {
+    "@brimdata/zealot": "file:.yalc/@brimdata/zealot",
     "@js-joda/core": "^3.2.0",
     "@reduxjs/toolkit": "^1.5.0",
     "@rollup/plugin-typescript": "^8.1.0",
@@ -164,7 +165,7 @@
     "tree-model": "^1.0.7",
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
-    "zed": "git+https://github.com/brimdata/zed.git#36c194c32a3936d5359e88d9308f1178563406dd"
+    "zed": "git+https://github.com/brimdata/zed.git#cd206afb6c2b91a8bffd699f11d426aa51c45986"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",

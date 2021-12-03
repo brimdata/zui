@@ -1,4 +1,4 @@
-import {parse as zParse} from "zealot"
+import {parse as zParse} from "zealot-old"
 import {HEAD_PROC, TAIL_PROC} from "../brim/ast"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"

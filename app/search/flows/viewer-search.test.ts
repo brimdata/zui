@@ -9,7 +9,7 @@ import fixtures from "test/unit/fixtures"
 import initTestStore, {TestStore} from "test/unit/helpers/initTestStore"
 import {createRecord} from "test/shared/factories/zed-factory"
 import {useResponse} from "test/shared/responses"
-import {createZealotMock, ZealotMock} from "zealot"
+import {createZealotMock, ZealotMock} from "zealot-old"
 import {viewerSearch} from "./viewer-search"
 
 const dnsResp = useResponse("dns")

@@ -2,7 +2,7 @@ import {SpanArgs} from "../state/Search/types"
 import {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
 import {MenuItemConstructorOptions} from "electron"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 
 export type Notification =
   | AppError

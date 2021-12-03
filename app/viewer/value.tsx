@@ -9,7 +9,7 @@ import React, {Fragment} from "react"
 import {useDispatch} from "react-redux"
 import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 
 const havelock = cssVar("--havelock")
 const transHavelock = transparentize(0.75, havelock as string)
@@ -32,7 +32,7 @@ const Syntax = styled.span`
 
 type ValueProps = {
   field: zed.Field
-  value: zed.AnyValue
+  value: zed.Value
   record: zed.Record
   padBefore?: boolean
   padAfter?: boolean

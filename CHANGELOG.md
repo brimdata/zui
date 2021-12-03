@@ -353,7 +353,7 @@ as usual.
 * Add [geolocation](https://github.com/brimdata/brimcap/wiki/Geolocation) data to Zeek `conn` logs generated from imported pcaps (#959, #957, #935)
 * Add developer documentation for [adding internal state migrations](https://github.com/brimdata/brim/wiki/Adding-Migrations) (#921)
 * Restore the scroll position when going back to prior search results (#929)
-* Add the [Zealot Client](zealot/README.md) for communicating with `zqd` via the REST API (#934)
+* Add the Zealot Client for communicating with `zqd` via the REST API (#934)
 * Add support documentation explaining where Brim stores debug logs (#939, #943)
 * Fix an issue where records nested more than one level deep were not working correctly in Brim (#937)
 * Improve the Column Chooser (#925, #953)

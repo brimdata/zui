@@ -1,6 +1,6 @@
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
-import {createZealotMock, ZealotMock} from "zealot"
+import {createZealotMock, ZealotMock} from "zealot-old"
 import Pools from "../../../src/js/state/Pools"
 import Workspaces from "../../../src/js/state/Workspaces"
 import {Workspace} from "../../../src/js/state/Workspaces/types"

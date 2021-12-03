@@ -1,4 +1,4 @@
-import {createZealotMock} from "zealot"
+import {createZealotMock} from "zealot-old"
 
 import {submitSearch} from "../mod"
 import SearchBar from "../../../state/SearchBar"

@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import React from "react"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 import Table, {TableData, TableHeader} from "./Table"
 
 type Props = {

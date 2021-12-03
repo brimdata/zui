@@ -1,5 +1,5 @@
 import brim from "./"
-import {PoolStats} from "../../../zealot/types"
+import {PoolStats} from "../../../zealot-old/types"
 import {Pool} from "../state/Pools/types"
 
 export default {

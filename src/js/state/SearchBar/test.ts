@@ -2,7 +2,7 @@ import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import brim from "src/js/brim"
 import {createField} from "test/shared/factories/zed-factory"
-import {createZealotMock} from "zealot"
+import {createZealotMock} from "zealot-old"
 import {
   appendQueryCountBy,
   appendQueryExclude,
