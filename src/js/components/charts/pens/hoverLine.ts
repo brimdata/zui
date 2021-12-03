@@ -26,7 +26,7 @@ export default function(): Pen {
       line.style("display", "none")
     }
 
-    function show() {
+    function show(this: d3.ContainerElement) {
       if (chart.state.isDragging) return hide()
 
       const [x] = d3.mouse(this)

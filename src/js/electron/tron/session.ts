@@ -8,6 +8,7 @@ import {SessionState} from "./formatSessionState"
 import {isNumber} from "../../lib/is"
 import lib from "../../lib"
 import tron from "./"
+import {Migrations} from "./migrations"
 
 export default function session(path: string = sessionStateFile()) {
   let version = 0
@@ -22,7 +23,7 @@ export default function session(path: string = sessionStateFile()) {
     },
 
     load: async function(): Promise<SessionState | null | undefined> {
-      const migrator = await tron.migrations()
+      const migrator = await Migrations.init()
       const file = lib.file(path)
 
       version = migrator.getLatestVersion()

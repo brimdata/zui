@@ -13,6 +13,7 @@ export default function adjustWindowsNetworkingActivityQuery(state: any) {
 
   for (const s of getAllStates(state)) {
     if (!s.queries) continue
+    // @ts-ignore
     const targetQuery = Object.values(s.queries.items).find(({id}) => {
       return id === "3"
     })

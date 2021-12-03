@@ -1,12 +1,12 @@
 import {useEffect, useRef} from "react"
 
-export default function useListener(
+export default function useListener<T>(
   el: Node | null | undefined,
   event: string,
-  callback: EventListener,
+  callback: (e: T) => void,
   opts: boolean | Object = false
 ) {
-  const savedCallback = useRef<EventListener>(() => {})
+  const savedCallback = useRef<(e: T) => void>(() => {})
 
   useEffect(() => {
     savedCallback.current = callback

@@ -15,62 +15,56 @@ type VersionedData = {
   data: any
 }
 
-export type Migrations = {
-  runPending: (arg0: any) => any
-  run: (arg0: VersionedData, arg1: Migration[]) => VersionedData
-  getLatestVersion: () => number
-  getPending: () => Migration[]
-  getAll: () => Migration[]
-  setCurrentVersion: (arg0: number) => void
-}
+export class Migrations {
+  constructor(
+    public migrations: Migration[],
+    public cv: number,
+    public from: string | number,
+    public to?: string | number
+  ) {}
 
-type Args = {
-  from: string | number
-  to?: string | number
-}
+  static async init(
+    args: {from: string | number; to?: string | number} = {from: 0}
+  ) {
+    const cv = parseInt(args.from.toString())
+    const files = await lib.file(dir).contents()
+    const migrations = files
+      .filter(onlyMigrations)
+      .map(build)
+      .sort((a, b) => a.version - b.version)
 
-export default async function migrations(
-  args: Args = {from: 0}
-): Promise<Migrations> {
-  let cv = parseInt(args.from.toString())
+    return new Migrations(migrations, cv, args.from, args.to)
+  }
 
-  const files = await lib.file(dir).contents()
-  const migrations = files
-    .filter(onlyMigrations)
-    .map(build)
-    .sort((a, b) => a.version - b.version)
+  runPending(state: VersionedData) {
+    return this.run(state, this.getPending())
+  }
 
-  return {
-    runPending(state: VersionedData) {
-      return this.run(state, this.getPending())
-    },
-
-    run(state: VersionedData, migrations: Migration[]) {
-      for (const {version, migrate} of migrations) {
-        state.data = state.data ? migrate(state.data) : undefined
-        state.version = version
-      }
-      return state
-    },
-
-    getLatestVersion() {
-      return last(migrations).version || 0
-    },
-
-    getPending() {
-      const upperBound = args.to ? parseInt(args.to.toString()) : Infinity
-      return migrations.filter(
-        (m: Migration) => m.version > cv && m.version <= upperBound
-      )
-    },
-
-    getAll() {
-      return migrations
-    },
-
-    setCurrentVersion(version: number) {
-      cv = version
+  run(state: VersionedData, migrations: Migration[]) {
+    for (const {version, migrate} of migrations) {
+      state.data = state.data ? migrate(state.data) : undefined
+      state.version = version
     }
+    return state
+  }
+
+  getLatestVersion() {
+    return last(this.migrations).version || 0
+  }
+
+  getPending() {
+    const upperBound = this.to ? parseInt(this.to.toString()) : Infinity
+    return this.migrations.filter(
+      (m: Migration) => m.version > this.cv && m.version <= upperBound
+    )
+  }
+
+  getAll() {
+    return this.migrations
+  }
+
+  setCurrentVersion(version: number) {
+    this.cv = version
   }
 }
 
