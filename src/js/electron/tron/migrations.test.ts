@@ -1,4 +1,3 @@
-import tron from "./"
 import {Migrations} from "./migrations"
 
 test("run", async () => {
