@@ -3,9 +3,9 @@
  */
 
 import React from "react"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 
-export function isPath(name: string | string[], value: zed.AnyValue) {
+export function isPath(name: string | string[], value: zed.Value) {
   return name === "_path" && zed.isStringy(value)
 }
 

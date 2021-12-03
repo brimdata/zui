@@ -12,7 +12,7 @@ import {
   ZResponse,
   Order
 } from "./types"
-import {Context, Int64, Record, Time, String, Array} from "./zed"
+import {decode, zed} from "@brimdata/zealot"
 import {url} from "./util/utils"
 
 async function responseToPoolConfigs(
@@ -21,15 +21,15 @@ async function responseToPoolConfigs(
   const records = await zresponse?.records()
   if (!records) return []
   return records.map<PoolConfig>((r) => {
-    const layout = r.get<Record>("layout")
+    const layout = r.get<zed.Record>("layout")
     return {
-      name: r.get<String>("name").toString(),
-      id: r.get<String>("id").toString(),
+      name: r.get<zed.String>("name").toString(),
+      id: r.get<zed.String>("id").toString(),
       layout: {
-        order: layout.get<String>("order").toString() as Order,
-        keys: layout.get<Array>("keys").serialize()
+        order: layout.get<zed.String>("order").toString() as Order,
+        keys: layout.get<zed.Array>("keys").serialize()
       }
-    }
+    } as PoolConfig
   })
 }
 
@@ -86,16 +86,16 @@ export function createZealot(
         if (!res) {
           return null
         }
-        const rec = new Context().decodeRecord(res)
+        const rec = decode(res)
         const stats: PoolStats = {
-          size: rec.get<Int64>("size").toInt(),
+          size: rec.get<zed.Int64>("size").toInt(),
           span: null
         }
-        const spanRec = rec.get<Record>("span")
+        const spanRec = rec.get<zed.Record>("span")
         if (!spanRec.null) {
           stats.span = {
-            ts: spanRec.get<Time>("ts").toBigInt(),
-            dur: spanRec.get<Int64>("dur").toBigInt()
+            ts: spanRec.get<zed.Time>("ts").toBigInt(),
+            dur: spanRec.get<zed.Int64>("dur").toBigInt()
           }
         }
         return stats

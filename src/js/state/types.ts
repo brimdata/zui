@@ -1,6 +1,6 @@
 import {Action as ReduxAction, Store as ReduxStore} from "redux"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
-import {createZealot, Zealot} from "zealot"
+import {createZealot, Zealot} from "zealot-old"
 import BrimApi from "../api"
 import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"

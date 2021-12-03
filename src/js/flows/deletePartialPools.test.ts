@@ -1,4 +1,4 @@
-import {createZealotMock} from "zealot"
+import {createZealotMock} from "zealot-old"
 
 import Workspaces from "../state/Workspaces"
 import Current from "../state/Current"

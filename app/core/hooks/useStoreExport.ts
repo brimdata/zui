@@ -5,13 +5,13 @@ import {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import LogDetails from "src/js/state/LogDetails"
 import Viewer from "src/js/state/Viewer"
-import {ZealotContext} from "zealot"
+import {encode} from "@brimdata/zealot"
 import {executeCommand} from "../../../src/js/flows/executeCommand"
 
 const useStoreExport = () => {
   const currentData = useSelector(LogDetails.build)
   const dispatch = useDispatch()
-  const zjson = currentData ? ZealotContext.encodeRecord(currentData) : null
+  const zjson = currentData ? encode(currentData) : null
 
   useEffect(() => {
     dispatch(executeCommand("data-detail:current", zjson))

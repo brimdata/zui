@@ -6,7 +6,7 @@ import Workspaces from "src/js/state/Workspaces"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
 import {useResponse} from "test/shared/responses"
-import {createZealotMock} from "zealot"
+import {createZealotMock} from "zealot-old"
 import {histogramSearch} from "./histogram-search"
 
 const countByPathResp = useResponse("everyCountByPath")

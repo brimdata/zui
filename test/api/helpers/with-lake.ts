@@ -1,4 +1,4 @@
-import {createZealot} from "zealot"
+import {createZealot} from "zealot-old"
 import {join} from "path"
 import fs from "fs-extra"
 import {spawn, ChildProcess} from "child_process"

@@ -1,4 +1,4 @@
-import {RecordCallbackRet} from "zealot/fetcher/records-callback"
+import {RecordCallbackRet} from "zealot-old/fetcher/records-callback"
 import {SearchStats, SearchStatus} from "../../types/searches"
 
 type EventNames =

@@ -1,5 +1,5 @@
-import {createFetcher, FetchArgs, Zealot} from "zealot"
-import {ZFetcher, ZResponse} from "../../../zealot/types"
+import {createFetcher, FetchArgs, Zealot} from "zealot-old"
+import {ZFetcher, ZResponse} from "../../../zealot-old/types"
 import {validateToken} from "../auth0/utils"
 import {BrimWorkspace} from "../brim"
 import ErrorFactory from "../models/ErrorFactory"

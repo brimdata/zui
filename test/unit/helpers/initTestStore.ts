@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit"
-import {createZealotMock, Zealot} from "zealot"
+import {createZealotMock, Zealot} from "zealot-old"
 import BrimApi from "../../../src/js/api"
 import initGlobals from "../../../src/js/initializers/initGlobals"
 import rootReducer from "../../../src/js/state/rootReducer"

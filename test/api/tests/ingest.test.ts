@@ -1,7 +1,7 @@
 import {uniq} from "lodash"
 import data from "test/shared/data"
 import {withLake} from "../helpers/with-lake"
-import {Zealot} from "../../../zealot"
+import {Zealot} from "../../../zealot-old"
 import fs from "fs"
 
 test("ingest ZNG logs", () => {

@@ -1,7 +1,8 @@
 import {execSync} from "child_process"
 import {join} from "path"
+import {zjson} from "@brimdata/zealot"
 
-export function toZJSON(zson) {
+export function toZJSON(zson: string): zjson.RootRecord[] {
   const zed = join(__dirname, "../../zdeps/zed")
   const cmd = `${zed} query -f zjson -`
   const result = execSync(cmd, {encoding: "utf-8", input: zson})

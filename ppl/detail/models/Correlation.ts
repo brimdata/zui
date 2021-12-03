@@ -1,5 +1,5 @@
 import {get} from "lodash"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 
 const specialUids = {
   files: "conn_uids",

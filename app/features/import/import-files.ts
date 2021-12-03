@@ -1,5 +1,5 @@
 import {lakePath, workspacePath} from "app/router/utils/paths"
-import {Zealot} from "../../../zealot"
+import {Zealot} from "../../../zealot-old"
 import BrimApi from "../../../src/js/api"
 import brim from "../../../src/js/brim"
 import ingest from "../../../src/js/brim/ingest"

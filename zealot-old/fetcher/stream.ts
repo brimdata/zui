@@ -1,5 +1,4 @@
-import {ZealotContext, zed} from "zealot"
-import {RootRecord} from "zealot/zjson"
+import {decode, zed, zjson} from "@brimdata/zealot"
 import {ZIterator} from "../types"
 import {Callbacks} from "./callbacks"
 
@@ -35,13 +34,13 @@ export function createStream(
       return all
     },
     records: async (): Promise<zed.Record[]> => {
-      let records: RootRecord[] = []
+      let records: zjson.RootRecord[] = []
       for await (let payload of iterator) {
         if (payload.kind === "Object") {
           records = records.concat(payload.value)
         }
       }
-      return ZealotContext.decode(records)
+      return decode(records)
     },
     callbacks: () => {
       const cbs = new Callbacks()

@@ -1,6 +1,6 @@
 import {isEqual} from "lodash"
 import {fetchCorrelation} from "ppl/detail/flows/fetch"
-import {zed} from "zealot"
+import {zed} from "@brimdata/zealot"
 import ErrorFactory from "../models/ErrorFactory"
 import Current from "../state/Current"
 import LogDetails from "../state/LogDetails"
