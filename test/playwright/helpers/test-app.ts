@@ -1,4 +1,8 @@
-import {_electron as electron, ElectronApplication, Page} from "playwright"
+import {
+  _electron as electron,
+  ElectronApplication,
+  Page
+} from "playwright-chromium"
 import {selectors} from "../../integration/helpers/integration"
 import {selectorWithText} from "./helpers"
 import {hookLogLocator, submitButton} from "../../integration/helpers/locators"
@@ -40,6 +44,7 @@ export default class TestApp {
       this.brim.waitForEvent("window").then(res)
     })
     this.mainWin = await this.getWindowByTitle("Brim")
+    this.mainWin.setDefaultTimeout(45000)
 
     // NOTE: reload hack, fixes issue where on Windows the app's windows sometimes don't initially load properly
     await this.mainWin.reload()
