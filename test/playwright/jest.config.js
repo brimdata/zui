@@ -7,5 +7,5 @@ module.exports = {
   reporters: ["default"],
   bail: 10,
   maxWorkers: 1,
-  testTimeout: 30000
+  testTimeout: 60000
 }

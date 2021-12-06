@@ -21,9 +21,9 @@ describe("Ingest tests", () => {
     "sample.tsv",
     "sample.ndjson",
     "sample.zng"
-  ].map((f) => ({path: path.normalize(path.join(testDataDir(), f)), name: f}))
+  ].map((f) => [path.normalize(path.join(testDataDir(), f)), f])
 
-  Object.values(sampleFiles).forEach(({path, name}) => {
+  sampleFiles.forEach(([path, name]) => {
     test(`ingest of ${name}`, async () => {
       await app.ingestFiles([path])
       await app.search(searchZql)
