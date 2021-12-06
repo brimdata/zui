@@ -4,6 +4,7 @@ import os from "os"
 import path from "path"
 import {Lake} from "ppl/lake/lake"
 import {Store} from "redux"
+import {collapseTextChangeRangesAcrossMultipleVersions} from "typescript"
 import url from "url"
 import {
   deserializeState,
@@ -17,6 +18,7 @@ import {installExtensions} from "./extensions"
 import ipc from "./ipc"
 import sendTo from "./ipc/sendTo"
 import isDev from "./isDev"
+import {MainArgs} from "./main"
 import tron, {Session} from "./tron"
 import formatSessionState from "./tron/formatSessionState"
 import {sessionStateFile} from "./tron/session"
@@ -33,6 +35,11 @@ type BrimArgs = {
   lake?: Lake
 }
 
+type BootArgs = {
+  zedPort: number
+  zedRoot: string
+}
+
 export class BrimMain {
   readonly windows: WindowManager
   readonly store: Store
@@ -40,16 +47,14 @@ export class BrimMain {
   readonly session: Session
   public isQuitting = false
 
-  static async boot(
-    sessionPath: string = sessionStateFile(),
-    createSession = tron.session
-  ) {
+  static async boot(args: MainArgs) {
+    const sessionPath: string = sessionStateFile()
+    const createSession = tron.session
     const session = createSession(sessionPath)
     const data = await session.load()
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
-    const lakeroot = path.join(app.getPath("userData"), "data", "lake")
-    const lake = new Lake(lakeroot)
+    const lake = new Lake(args.lakeRoot, args.lakePort, args.lakeLogs)
     return new BrimMain({session, windows, store, lake})
   }
 
@@ -57,15 +62,12 @@ export class BrimMain {
     this.windows = args.windows || new WindowManager()
     this.store = args.store || createGlobalStore(undefined)
     this.session = args.session || tron.session()
-    this.lake = args.lake || new Lake(null)
+    this.lake = args.lake || new Lake("", 9867, "")
   }
 
-  async start(opts = {backend: true}) {
-    if (opts.backend) {
-      this.lake.start()
-    }
-    if (this.isDev()) await installExtensions()
-
+  async start(opts: MainArgs) {
+    if (opts.lake) this.lake.start()
+    if (opts.devtools) await installExtensions()
     this.windows.init()
   }
 

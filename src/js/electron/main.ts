@@ -1,6 +1,5 @@
 import {appPathSetup} from "./appPathSetup"
 import userTasks from "./userTasks"
-
 // app path and log setup should happen before other imports.
 appPathSetup()
 
@@ -25,16 +24,22 @@ import secureWebContents from "./secure-web-contents"
 import env from "app/core/env"
 import {join} from "path"
 import requireAll from "./require-all"
+import isDev from "./isDev"
 
 console.time("init")
 
-function mainDefaults() {
-  return {
-    backend: true
-  }
-}
+const mainDefaults = () => ({
+  lakePort: 9867,
+  lakeRoot: join(app.getPath("userData"), "data", "lake"),
+  lakeLogs: app.getPath("logs"),
+  lake: true,
+  devtools: isDev
+})
 
-export async function main(opts = mainDefaults()) {
+export type MainArgs = ReturnType<typeof mainDefaults>
+
+export async function main(args: Partial<MainArgs> = {}) {
+  const opts = {...mainDefaults(), ...args}
   requireAll(join(__dirname, "./initializers"))
   secureWebContents()
   if (handleSquirrelEvent(app)) return
@@ -43,7 +48,7 @@ export async function main(opts = mainDefaults()) {
     return
   }
   userTasks(app)
-  const brim = await BrimMain.boot()
+  const brim = await BrimMain.boot(opts)
   menu.setMenu(brim)
 
   windowsMainHandler(brim)
