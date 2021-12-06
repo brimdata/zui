@@ -24,34 +24,30 @@ export default class TestApp {
       path.join(itestDir(), this.name, (this.testNdx++).toString())
     )
     this.currentDataDir = userDataDir
-    this.brim = await electron.launch({
-      args: [`--user-data-dir=${userDataDir}`, getAppBinPath()]
-    })
+
+    const {bin, entry} = getAppInfo()
+    const launchOpts = {
+      args: [`--user-data-dir=${userDataDir}`, entry]
+    }
+
+    // @ts-ignore
+    if (bin) launchOpts.executablePath = bin
+    this.brim = await electron.launch(launchOpts)
     // wait for main window to render
     await this.brim.firstWindow()
-    // wait for hidden window to render
+    // wait for second window ('Hidden Window') to render
     await new Promise((res) => {
       this.brim.waitForEvent("window").then(res)
     })
     this.mainWin = await this.getWindowByTitle("Brim")
-    // NOTE: hack, fixes issue where on Windows the app's windows sometimes don't load properly
+
+    // NOTE: reload hack, fixes issue where on Windows the app's windows sometimes don't initially load properly
     await this.mainWin.reload()
     await (await this.getWindowByTitle("Hidden Window")).reload()
   }
 
   async shutdown() {
     await this.brim.close()
-  }
-
-  async withRetry(cb: () => Promise<any>, retries = 5, delay = 400) {
-    for (let i = 0; i < retries; i++) {
-      const res = await cb()
-      if (!res) {
-        if (i < retries - 1) await new Promise((res) => setTimeout(res, delay))
-        continue
-      }
-      return res
-    }
   }
 
   async getWindowByTitle(title: string): Promise<Page> {
@@ -97,16 +93,23 @@ export default class TestApp {
   }
 }
 
-const getAppBinPath = () => {
+const getAppInfo = () => {
   const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
   const linuxInstallPath = "/usr/bin/brim"
+  const packagedEntryPoint = "app.asar/app/dist/src/js/electron/main.js"
 
   if (env.isCI && env.isMac && existsSync(macInstallPath)) {
-    return macInstallPath
+    return {
+      bin: macInstallPath,
+      entry: path.join(macInstallPath, "Contents/Resources", packagedEntryPoint)
+    }
   }
   if (env.isCI && env.isLinux && existsSync(linuxInstallPath)) {
-    return linuxInstallPath
+    return {
+      bin: linuxInstallPath,
+      entry: path.join(linuxInstallPath, "resources", packagedEntryPoint)
+    }
   }
 
-  return "."
+  return {bin: null, entry: "."}
 }
