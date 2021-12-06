@@ -3,6 +3,7 @@ import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
 import React, {ReactNode} from "react"
 import {zed} from "@brimdata/zealot"
 import {InspectArgs} from "./types"
+import classNames from "classnames"
 
 export function renderOneField(args: InspectArgs) {
   let nodes = []
@@ -57,7 +58,7 @@ export function renderOneValue(args: InspectArgs): ReactNode {
     } else if (value instanceof zed.TypeRecord) {
       return (
         <>
-          <span {...props}>{`record(${value.fields.length})`}</span>
+          <span {...props}>{`Record(${value.fields.length})`}</span>
           {renderAlias(args.type)}
         </>
       )
@@ -90,7 +91,7 @@ export function renderOneValue(args: InspectArgs): ReactNode {
         </span>
       )
     } else if (value instanceof zed.TypeUnion) {
-      return <span {...props}>{`union(${value.types.length})`}</span>
+      return <span {...props}>{`Union(${value.types.length})`}</span>
     } else {
       return null
     }
@@ -156,7 +157,12 @@ export function renderContainer(
         size={16}
       />
 
-      <span key="name" className="zed-container">
+      <span
+        key="name"
+        className={classNames("zed-container", {
+          "zed-type": zed.isType(args.value)
+        })}
+      >
         {container}{" "}
       </span>
 

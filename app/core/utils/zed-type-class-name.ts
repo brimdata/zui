@@ -2,9 +2,7 @@ import {zed} from "@brimdata/zealot"
 
 export function zedTypeClassName(data: zed.Value | zed.Type) {
   if (zed.isType(data)) {
-    if (zed.isPrimitiveType(data)) {
-      return "zed-type"
-    } else return
+    return "zed-type"
   }
 
   if (data.isUnset()) {

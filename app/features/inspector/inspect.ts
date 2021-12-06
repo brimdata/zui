@@ -132,7 +132,7 @@ export const inspectMap = createContainer<zed.Map>(
 )
 
 export const inspectRecordType = createContainer<zed.TypeRecord>(
-  "RecordType",
+  "Record",
   "{",
   "}",
   function*(args: InspectArgs & {value: zed.TypeRecord}) {
@@ -151,7 +151,7 @@ export const inspectRecordType = createContainer<zed.TypeRecord>(
 )
 
 export const inspectUnionType = createContainer<zed.TypeUnion>(
-  "UnionType",
+  "Union",
   "(",
   ")",
   function*(args: InspectArgs & {value: zed.TypeUnion}) {

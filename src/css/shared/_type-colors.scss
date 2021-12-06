@@ -3,6 +3,7 @@
   --zed-null: var(--lead);
   --zed-time: hsl(275, 55%, 50%);
   --zed-symbol: hsl(212, 95%, 55%);
+  --zed-type: hsla(212, 70%, 50%);
   --interval: #544aa6;
   --bool: #3eaef4;
   --zed-string: hsl(130, 54%, 38%);
@@ -69,8 +70,10 @@
 
 .zed-type {
   color: var(--zed-symbol);
+  font-style: italic;
 }
 
 .zed-annotation {
-  color: var(--aqua);
+  color: var(--zed-type);
+  font-weight: bold;
 }
