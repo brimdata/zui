@@ -2,7 +2,7 @@ import {compact} from "lodash"
 import isEmpty from "lodash/isEmpty"
 import {getUniqName} from "../../lib/uniqName"
 import time from "../time"
-import fileList, {FileListData} from "./fileList"
+import FileList, {FileListData} from "./fileList"
 
 export type IngestParams = {
   name: string
@@ -18,7 +18,7 @@ export default function getParams(
   existingNames: string[] = [],
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
-  const files = new fileList(data)
+  const files = new FileList(data)
 
   function getPoolName() {
     let name: string

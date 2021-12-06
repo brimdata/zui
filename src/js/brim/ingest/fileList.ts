@@ -3,7 +3,7 @@ import lib from "../../lib"
 
 export type FileListData = {type: IngestFileType; file: File}[]
 
-export default class fileList {
+export default class FileList {
   constructor(private list: FileListData) {}
   first() {
     return this.list[0]
