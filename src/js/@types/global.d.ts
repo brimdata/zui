@@ -1,6 +1,7 @@
 import Histories from "app/core/models/histories"
 import {FeatureName} from "../state/Feature"
 import {BrowserHistory} from "history"
+import {MainArgs} from "../electron/main"
 
 declare global {
   namespace NodeJS {
@@ -16,6 +17,7 @@ declare global {
       windowHistory: BrowserHistory
       navTo: (path: string) => void
       dev: DevGlobal
+      mainArgs: MainArgs
     }
 
     interface Process {

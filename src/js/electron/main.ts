@@ -3,7 +3,7 @@ import userTasks from "./userTasks"
 // app path and log setup should happen before other imports.
 appPathSetup()
 
-import {app} from "electron"
+import {app, ipcMain} from "electron"
 import log from "electron-log"
 import "regenerator-runtime/runtime"
 import {setupAutoUpdater} from "./autoUpdater"
@@ -57,6 +57,10 @@ export async function main(args: Partial<MainArgs> = {}) {
   serve(paths)
   serve(meta)
   handleQuit(brim)
+
+  ipcMain.handle("get-main-args", () => ({
+    ...opts
+  }))
 
   // autoUpdater should not run in dev, and will fail if the code has not been signed
   if (!electronIsDev) {

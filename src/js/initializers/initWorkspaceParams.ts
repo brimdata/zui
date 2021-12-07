@@ -4,24 +4,25 @@ import Current from "../state/Current"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import {Workspace} from "../state/Workspaces/types"
 
-const setupDefaultWorkspace = () => (dispatch, _) => {
-  const host = "http://localhost"
-  const port = "9867"
-  const ws: Workspace = {
-    host,
+export const defaultWorkspace = (): Workspace => {
+  const port = global.mainArgs.lakePort.toString()
+  return {
+    host: "http://localhost",
     port,
-    id: "localhost:9867",
-    name: "localhost:9867",
+    id: `localhost:${port}`,
+    name: "Local Lake",
     authType: "none"
   }
-  dispatch(Workspaces.add(ws))
+}
+
+const setupDefaultWorkspace = () => (dispatch, _) => {
+  dispatch(Workspaces.add(defaultWorkspace()))
 }
 
 export const isDefaultWorkspace = (ws: Workspace): boolean => {
   const {host, port, id} = ws
-  return (
-    id === "localhost:9867" && host === "http://localhost" && port === "9867"
-  )
+  const d = defaultWorkspace()
+  return id === d.id && host === d.host && port === d.port
 }
 
 export default function(store: Store) {
@@ -29,7 +30,6 @@ export default function(store: Store) {
   global.windowId = id
 
   const existingWorkspace = Current.getWorkspace(store.getState())
-
   if (!existingWorkspace) {
     store.dispatch(setupDefaultWorkspace())
   }

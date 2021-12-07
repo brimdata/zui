@@ -69,6 +69,7 @@
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
+    "cross-blob": "^2.0.1",
     "electron": "^11.5.0",
     "electron-builder": "^22.9.1",
     "electron-builder-notarize": "^1.2.0",
@@ -96,6 +97,7 @@
     "tmp": "^0.1.0",
     "ts-jest": "^26.5.1",
     "typescript": "^4.0.2",
+    "web-streams-polyfill": "^3.2.0",
     "webdriverio": "^6.6.7",
     "whatwg-fetch": "^3.2.0",
     "win-7zip": "^0.1.0",
@@ -110,6 +112,7 @@
     "@vx/vx": "0.0.199",
     "animejs": "^3.2.0",
     "base64-js": "^1.3.1",
+    "blob-polyfill": "^6.0.20211015",
     "chrono-node": "^1.4.8",
     "classnames": "^2.2.6",
     "cross-fetch": "^3.1.4",
@@ -164,6 +167,7 @@
     "tree-model": "^1.0.7",
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
+    "web-file-polyfill": "^1.0.4",
     "zed": "git+https://github.com/brimdata/zed.git#382a1a74566308cdd35ad75d1bf2413eb13f8614"
   },
   "optionalDependencies": {

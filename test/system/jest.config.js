@@ -11,5 +11,6 @@ module.exports = {
   rootDir: join(__dirname, "../../"),
   testURL: "http://localhost/search.html",
   roots: ["<rootDir>/test/shared", "<rootDir>/test/system"],
-  moduleDirectories: ["node_modules", "<rootDir>"]
+  moduleDirectories: ["node_modules", "<rootDir>"],
+  setupFilesAfterEnv: ["./test/system/setup/after-env.ts"]
 }

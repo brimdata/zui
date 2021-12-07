@@ -6,8 +6,9 @@ import TabHistories from "../state/TabHistories"
 import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
 import tabHistory from "app/router/tab-history"
+import {ipcRenderer} from "electron"
 
-export default function initGlobals(store: Store) {
+export default async function initGlobals(store: Store) {
   global.windowId = getUrlSearchParams().id
   global.windowName = getWindowName()
   global.feature = (name, status) => store.dispatch(Feature.set(name, status))
@@ -15,6 +16,7 @@ export default function initGlobals(store: Store) {
   global.windowHistory = createMemoryHistory()
   global.windowHistory.replace(getUrlSearchParams().href)
   global.navTo = (path) => store.dispatch(tabHistory.push(path))
+  global.mainArgs = await ipcRenderer.invoke("get-main-args")
 }
 
 function getWindowName() {

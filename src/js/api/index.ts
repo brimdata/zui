@@ -21,6 +21,8 @@ import {
 } from "./registries"
 import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
+import {submitSearch} from "src/js/flows/submitSearch/mod"
+import SearchBar from "src/js/state/SearchBar"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -75,7 +77,7 @@ export default class BrimApi {
   }
 
   import(files: File[]) {
-    this.dispatch(ingestFiles(files))
+    return this.dispatch(ingestFiles(files))
       .then(() => toast.success("Import complete."))
       .catch((e) => {
         const cause = e.cause
@@ -89,6 +91,11 @@ export default class BrimApi {
         this.dispatch(refreshPoolNames())
         console.error(e.message)
       })
+  }
+
+  search(zed: string) {
+    this.dispatch(SearchBar.changeSearchBarInput(zed))
+    this.dispatch(submitSearch())
   }
 
   importQueries(file: File) {
