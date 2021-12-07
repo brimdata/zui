@@ -22,7 +22,8 @@ class HTMLDialog {
         show: false,
         backgroundColor: "#F5F5F5",
         webPreferences: {
-          nodeIntegration: true
+          nodeIntegration: true,
+          contextIsolation: false
         }
       })
       // This will remove the menu bar on windows and linux from the top of the window.

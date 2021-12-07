@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [ 12.x ]
+        node-version: [ 14.x ]
         os: [ macos-10.15, ubuntu-18.04, windows-2019 ]
     steps:
       - run: git config --global core.autocrlf false
@@ -65,68 +65,12 @@ jobs:
           name: linux-release
           path: dist/installers/Brim-*
 
-  integration_test_centos:
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        node-version: [ 12.x ]
-    container:
-      image: centos:8
-      env:
-        # This environment variable causes chrome to run with no sandbox- needed
-        # whenever chrome is run as root.
-        APPVEYOR: true
-    needs: build
-    steps:
-      - run: dnf install -y xorg-x11-server-Xvfb git nss-tools pulseaudio unzip make
-      - run: dnf --enablerepo=powertools install -y mesa-libgbm-devel
-      - run: dnf install -y atk.x86_64 cups-libs.x86_64 gtk3.x86_64 libXcomposite.x86_64 libXcursor.x86_64 libXdamage.x86_64 libXext.x86_64 libXi.x86_64 libXrandr.x86_64 libXScrnSaver.x86_64 libXtst.x86_64 pango.x86_64 xorg-x11-fonts-100dpi xorg-x11-fonts-75dpi xorg-x11-fonts-cyrillic xorg-x11-fonts-misc xorg-x11-fonts-Type1 xorg-x11-utils
-      - run: dnf group install -y "Development Tools"
-      - run: dnf install -y python3
-      - run: dnf install -y libsecret
-      - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.16'
-      - name: setup node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Set NPM Cache Directory
-        id: set-npm-cache-dir
-        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-      - name: Clear Extraneous Runner Cache
-        run: rm -rf "${NPM_CACHE:?}"
-        env:
-          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules-ci-v5
-        with:
-          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-      - run: npm install --no-audit --unsafe-perm
-        # Installing Zed requires unsafe-perm when running as root.
-      - name: Download rpm package
-        uses: actions/download-artifact@v2
-        with:
-          name: linux-release
-          path: linux-release
-      - name: Integration Tests (Centos 8)
-        run: |
-          dnf install -y ./linux-release/Brim*.rpm
-          xvfb-run -d -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
-
   playwright_integration_test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [ 12.x ]
-        os: [ macos-10.15, ubuntu-18.04, windows-2019 ]
+        node-version: [ 14.x ]
+        os: [ macos-10.15, ubuntu-18.04 ]
     needs: build
     steps:
       - run: git config --global core.autocrlf false
@@ -181,80 +125,3 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
           path: /var/tmp/brimdata/playwright-itest
-
-  integration_test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node-version: [ 12.x ]
-        os: [ macos-10.15, ubuntu-18.04, windows-2019 ]
-    needs: build
-    steps:
-      - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.16'
-      - name: setup node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Set NPM Cache Directory
-        id: set-npm-cache-dir
-        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-      - name: Clear Extraneous Runner Cache
-        run: rm -rf "${NPM_CACHE:?}"
-        env:
-          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-        shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules-ci-v5
-        with:
-          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-      - run: npm install --no-audit
-      - run: npm run build
-      # Disabling using built & installed app for now;
-      # see brim#1145
-      #      - name: Build and Install MacOS DMG
-      #        if: runner.os == 'macOS'
-      #        run: |
-      #          set -x
-      #          source scripts/lib/common.bash
-      #          npx electron-builder --mac
-      #          hdiutil attach dist/installers/Brim.dmg
-      #          cp -R /Volumes/Brim/Brim.app /Applications
-      #          retry_until_success 60 1 umount_macos_ci_dimg /Volumes/Brim
-      #        shell: bash
-      - name: Download Linux packages
-        if: runner.os == 'Linux'
-        uses: actions/download-artifact@v2
-        with:
-          name: linux-release
-          path: linux-release
-      - name: Integration Tests (Debian Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt install -y ./linux-release/Brim*.deb
-          xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run itest -- --ci --forceExit
-        env:
-          # WORKSPACE represents a top-level place for test infra code to
-          # find and put things. That avoids proliferation of env
-          # variables of directories. It's used to dump logs into the
-          # correct place so that CI can reliably find them for
-          # collection.
-          WORKSPACE: /var/tmp/brimdata
-      - name: Integration Tests (non-Linux)
-        if: runner.os != 'Linux'
-        run: npm run itest -- --ci --forceExit
-        env:
-          WORKSPACE: /var/tmp/brimdata
-      - uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
-          path: /var/tmp/brimdata/itest

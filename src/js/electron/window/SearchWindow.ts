@@ -40,7 +40,8 @@ export class SearchWindow implements BrimWindow {
       webPreferences: {
         nodeIntegration: true,
         experimentalFeatures: true,
-        enableRemoteModule: true
+        enableRemoteModule: true,
+        contextIsolation: false
       }
     })
     this.ref.on("focus", () => {

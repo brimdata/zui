@@ -32,7 +32,8 @@ export default class TestApp {
     const {bin, entry} = getAppInfo()
     const launchOpts = {
       args: [`--user-data-dir=${userDataDir}`, entry],
-      bypassCSP: true
+      bypassCSP: true,
+      timeout: 60000
     }
 
     // @ts-ignore
