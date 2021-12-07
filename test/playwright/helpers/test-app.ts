@@ -1,8 +1,7 @@
 import {
   _electron as electron,
   ElectronApplication,
-  Page,
-  BrowserContext
+  Page
 } from "playwright-chromium"
 import {selectors} from "../../integration/helpers/integration"
 import {selectorWithText} from "./helpers"
@@ -17,10 +16,8 @@ export default class TestApp {
   brim: ElectronApplication
   zealot: Zealot
   mainWin: Page
-  hiddenWin: Page
   testNdx = 1
   currentDataDir: string
-  currentCtx: BrowserContext
 
   constructor(private name: string) {
     this.zealot = createZealot("http://localhost:9867")
@@ -34,43 +31,24 @@ export default class TestApp {
 
     const {bin, entry} = getAppInfo()
     const launchOpts = {
-      args: [`--user-data-dir=${userDataDir}`, entry]
+      args: [`--user-data-dir=${userDataDir}`, entry],
+      bypassCSP: true
     }
 
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin
     this.brim = await electron.launch(launchOpts)
     // wait for both 'Brim' and "Hidden Window' to load
-    const first = await this.brim.firstWindow()
-    const second = await this.brim.waitForEvent("window")
-    if ((await first.title()) === "Brim") {
-      this.mainWin = first
-      this.hiddenWin = second
-    } else {
-      this.mainWin = second
-      this.hiddenWin = first
-    }
-
+    await this.brim.firstWindow()
+    await this.brim.waitForEvent("window")
+    this.mainWin = await this.getWindowByTitle("Brim")
     this.mainWin.setDefaultTimeout(60000)
-
-    this.currentCtx = this.brim.context()
-    this.currentCtx.tracing.start({screenshots: true, snapshots: true})
-
-    // NOTE: reload and wait hack, fixes issue where on Windows the app's windows sometimes don't initially load properly
-    await Promise.all([
-      this.mainWin.reload(),
-      this.mainWin.waitForNavigation({waitUntil: "load"})
-    ])
-    await Promise.all([
-      this.hiddenWin.reload(),
-      this.mainWin.waitForNavigation({waitUntil: "load"})
-    ])
+    await this.mainWin.reload({waitUntil: "load"})
+    const hidden = await this.getWindowByTitle("Hidden Window")
+    await hidden.reload({waitUntil: "load"})
   }
 
   async shutdown() {
-    await this.currentCtx.tracing.stop({
-      path: path.join(this.currentDataDir, "trace.zip")
-    })
     await this.brim.close()
   }
 
