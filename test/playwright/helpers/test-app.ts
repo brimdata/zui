@@ -17,6 +17,7 @@ export default class TestApp {
   brim: ElectronApplication
   zealot: Zealot
   mainWin: Page
+  hiddenWin: Page
   testNdx = 1
   currentDataDir: string
   currentCtx: BrowserContext
@@ -39,13 +40,17 @@ export default class TestApp {
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin
     this.brim = await electron.launch(launchOpts)
-    // wait for main window to render
-    await this.brim.firstWindow()
-    // wait for second window ('Hidden Window') to render
-    await new Promise((res) => {
-      this.brim.waitForEvent("window").then(res)
-    })
-    this.mainWin = await this.getWindowByTitle("Brim")
+    // wait for both 'Brim' and "Hidden Window' to load
+    const first = await this.brim.firstWindow()
+    const second = await this.brim.waitForEvent("window")
+    if ((await first.title()) === "Brim") {
+      this.mainWin = first
+      this.hiddenWin = second
+    } else {
+      this.mainWin = second
+      this.hiddenWin = first
+    }
+
     this.mainWin.setDefaultTimeout(60000)
 
     this.currentCtx = this.brim.context()
@@ -54,8 +59,11 @@ export default class TestApp {
     // NOTE: reload and wait hack, fixes issue where on Windows the app's windows sometimes don't initially load properly
     await Promise.all([
       this.mainWin.reload(),
-      this.mainWin.waitForNavigation({waitUntil: "load"}),
-      this.mainWin.waitForNavigation({waitUntil: "networkidle"})
+      this.mainWin.waitForNavigation({waitUntil: "load"})
+    ])
+    await Promise.all([
+      this.hiddenWin.reload(),
+      this.mainWin.waitForNavigation({waitUntil: "load"})
     ])
   }
 
