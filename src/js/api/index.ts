@@ -19,6 +19,7 @@ import {
   LoaderRegistry,
   SearchCtxItemBuilder
 } from "./registries"
+import {SearchesApi} from "./searches"
 import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
@@ -36,6 +37,7 @@ export default class BrimApi {
   public configs: ConfigsApi
   public storage: StorageApi
   public queries: QueriesApi
+  public searches = new SearchesApi()
 
   public toast = toast
 
@@ -77,7 +79,7 @@ export default class BrimApi {
   }
 
   import(files: File[]) {
-    return this.dispatch(ingestFiles(files))
+    this.dispatch(ingestFiles(files))
       .then(() => toast.success("Import complete."))
       .catch((e) => {
         const cause = e.cause
