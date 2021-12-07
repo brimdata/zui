@@ -47,10 +47,7 @@ export default class TestApp {
     this.mainWin.setDefaultTimeout(60000)
 
     // NOTE: reload and wait hack, fixes issue where on Windows the app's windows sometimes don't initially load properly
-    await this.mainWin.reload()
-    await (await this.getWindowByTitle("Hidden Window")).reload()
-    // the wait here is specifically for Windows CI machines which appear to operate especially slowly
-    await this.mainWin.waitForTimeout(5000)
+    await Promise.all([this.mainWin.reload(), this.mainWin.waitForNavigation()])
   }
 
   async shutdown() {
