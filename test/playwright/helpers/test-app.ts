@@ -46,11 +46,11 @@ export default class TestApp {
     this.mainWin = await this.getWindowByTitle("Brim")
     this.mainWin.setDefaultTimeout(60000)
 
-    // NOTE: reload hack, fixes issue where on Windows the app's windows sometimes don't initially load properly
+    // NOTE: reload and wait hack, fixes issue where on Windows the app's windows sometimes don't initially load properly
     await this.mainWin.reload()
     await (await this.getWindowByTitle("Hidden Window")).reload()
+    // the wait here is specifically for Windows CI machines which appear to operate especially slowly
     await this.mainWin.waitForTimeout(5000)
-    await this.mainWin.click(".add-tab", {timeout: 60000})
   }
 
   async shutdown() {
