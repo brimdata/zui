@@ -1,7 +1,8 @@
 import {
   _electron as electron,
   ElectronApplication,
-  Page
+  Page,
+  BrowserContext
 } from "playwright-chromium"
 import {selectors} from "../../integration/helpers/integration"
 import {selectorWithText} from "./helpers"
@@ -18,6 +19,7 @@ export default class TestApp {
   mainWin: Page
   testNdx = 1
   currentDataDir: string
+  currentCtx: BrowserContext
 
   constructor(private name: string) {
     this.zealot = createZealot("http://localhost:9867")
@@ -46,11 +48,21 @@ export default class TestApp {
     this.mainWin = await this.getWindowByTitle("Brim")
     this.mainWin.setDefaultTimeout(60000)
 
+    this.currentCtx = this.brim.context()
+    this.currentCtx.tracing.start({screenshots: true, snapshots: true})
+
     // NOTE: reload and wait hack, fixes issue where on Windows the app's windows sometimes don't initially load properly
-    await Promise.all([this.mainWin.reload(), this.mainWin.waitForNavigation()])
+    await Promise.all([
+      this.mainWin.reload(),
+      this.mainWin.waitForNavigation({waitUntil: "load"}),
+      this.mainWin.waitForNavigation({waitUntil: "networkidle"})
+    ])
   }
 
   async shutdown() {
+    await this.currentCtx.tracing.stop({
+      path: path.join(this.currentDataDir, "trace.zip")
+    })
     await this.brim.close()
   }
 
