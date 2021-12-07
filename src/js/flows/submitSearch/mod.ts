@@ -7,14 +7,13 @@ import Notice from "../../state/Notice"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
-import {Thunk} from "../../state/types"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
 export function submitSearch(
   save: SaveOpts = {history: true, investigation: true},
   ts: Date = new Date()
-): Thunk<Promise<void>> {
+) {
   return function(dispatch, getState) {
     dispatch(Notice.dismiss())
     const record = Search.getRecord(getState())
@@ -24,7 +23,7 @@ export function submitSearch(
 
     dispatch(Tab.computeSpan(ts))
 
-    if (!dispatch(SearchBar.validate())) return Promise.reject()
+    if (!dispatch(SearchBar.validate())) return
 
     const url = lakeSearchPath(poolId, workspaceId, {...record, spanArgsFocus})
 

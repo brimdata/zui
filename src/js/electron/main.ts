@@ -26,8 +26,6 @@ import {join} from "path"
 import requireAll from "./require-all"
 import isDev from "./isDev"
 
-console.time("init")
-
 const mainDefaults = () => ({
   lakePort: 9867,
   lakeRoot: join(app.getPath("userData"), "data", "lake"),

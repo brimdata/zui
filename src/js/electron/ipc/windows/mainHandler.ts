@@ -20,13 +20,6 @@ export default function(brim: BrimMain) {
     brim.windows.closeWindow()
   })
 
-  ipcMain.handle("windows:ready", () => {
-    if (!started) {
-      console.timeEnd("init")
-      started = true
-    }
-  })
-
   ipcMain.handle("windows:newSearchTab", (e, params) => {
     brim.windows.openSearchTab(params.params)
   })

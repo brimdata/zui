@@ -29,7 +29,7 @@ export function viewerSearch(args: Args): Thunk<Promise<void>> {
     const poolId = Current.mustGetPool(getState()).id
     const {response, promise} = dispatch(search({id, query, from, to, poolId}))
     dispatch(handle(response, tabId, keep, append))
-    return promise
+    return promise.catch((e) => e)
   }
 }
 
@@ -86,7 +86,10 @@ function handle(
           dispatch(Columns.touch(allColumns))
         }
         dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
-        api.searches.emit("did-finish", {firstPage: !append})
+        setTimeout(() => {
+          console.log(allRecords)
+          api.searches.emit("did-finish", {firstPage: !append})
+        })
       })
   }
 }

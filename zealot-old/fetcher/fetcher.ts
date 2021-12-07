@@ -85,18 +85,26 @@ const useTimeoutSignal = ({
 export function createFetcher(baseUrl: string) {
   return {
     async promise(args: FetchArgs) {
-      const resp = await fetchWithTimeout(baseUrl, args)
-      const content = await parseContentType(resp)
-      return resp.ok ? content : Promise.reject(createError(content))
+      try {
+        const resp = await fetchWithTimeout(baseUrl, args)
+        const content = await parseContentType(resp)
+        return resp.ok ? content : Promise.reject(createError(content))
+      } catch (e) {
+        return Promise.reject(createError(e))
+      }
     },
     async stream(args: FetchArgs): Promise<ZResponse> {
-      const resp = await fetchWithTimeout(baseUrl, args)
-      if (!resp.ok) {
-        const content = await parseContentType(resp)
-        return Promise.reject(createError(content))
+      try {
+        const resp = await fetchWithTimeout(baseUrl, args)
+        if (!resp.ok) {
+          const content = await parseContentType(resp)
+          return Promise.reject(createError(content))
+        }
+        const iterator = createIterator(resp, args)
+        return createStream(iterator, resp)
+      } catch (e) {
+        return Promise.reject(createError(e))
       }
-      const iterator = createIterator(resp, args)
-      return createStream(iterator, resp)
     },
     async source(args: FetchArgs): Promise<EventSource> {
       const {path, headers} = args

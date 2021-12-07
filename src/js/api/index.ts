@@ -79,7 +79,7 @@ export default class BrimApi {
   }
 
   import(files: File[]) {
-    this.dispatch(ingestFiles(files))
+    return this.dispatch(ingestFiles(files))
       .then(() => toast.success("Import complete."))
       .catch((e) => {
         const cause = e.cause
@@ -90,14 +90,17 @@ export default class BrimApi {
         } else {
           this.dispatch(Notice.set(ErrorFactory.create(e.cause)))
         }
-        this.dispatch(refreshPoolNames())
+        this.dispatch(refreshPoolNames()).catch((e) => e)
         console.error(e.message)
       })
   }
 
   search(zed: string) {
-    this.dispatch(SearchBar.changeSearchBarInput(zed))
-    this.dispatch(submitSearch())
+    return new Promise((resolve) => {
+      this.dispatch(SearchBar.changeSearchBarInput(zed))
+      this.dispatch(submitSearch())
+      this.searches.onDidFinish(resolve)
+    })
   }
 
   importQueries(file: File) {
