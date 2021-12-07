@@ -9,14 +9,34 @@ import {selectors} from "../../integration/helpers/integration"
 describe("Handle Zed server events", () => {
   const app = new TestApp("Zed Events")
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await app.init()
   })
-  afterEach(async () => {
+  afterAll(async () => {
     await app.shutdown()
   })
 
-  test("branch-commit", async () => {
+  test("pool-new/update/delete/commit", async () => {
+    const [
+      {
+        pool: {id}
+      }
+    ] = await Promise.all([
+      app.zealot.pools.create({name: "test-pool-new"}),
+      app.mainWin.waitForSelector(
+        selectorWithText(poolItem.css, "test-pool-new")
+      )
+    ])
+    await Promise.all([
+      app.mainWin.waitForSelector(
+        selectorWithText(poolItem.css, "test-pool-update")
+      ),
+      app.zealot.pools.update(id, {name: "test-pool-update"})
+    ])
+    await Promise.all([
+      app.zealot.pools.delete(id),
+      app.mainWin.waitForSelector(poolItem.css, {state: "detached"})
+    ])
     await app.ingestFiles([
       path.normalize(path.join(testDataDir(), "sample.ndjson"))
     ])
@@ -35,20 +55,5 @@ describe("Handle Zed server events", () => {
     await app.mainWin.waitForSelector(
       selectorWithText(selectors.infoNotice, "More data is now available.")
     )
-  })
-
-  test("pool-new/update/delete", async () => {
-    const {
-      pool: {id}
-    } = await app.zealot.pools.create({name: "test-pool-new"})
-    await app.mainWin.waitForSelector(
-      selectorWithText(poolItem.css, "test-pool-new")
-    )
-    await app.zealot.pools.update(id, {name: "test-pool-update"})
-    await app.mainWin.waitForSelector(
-      selectorWithText(poolItem.css, "test-pool-update")
-    )
-    await app.zealot.pools.delete(id)
-    await app.mainWin.waitForSelector(poolItem.css, {state: "detached"})
   })
 })
