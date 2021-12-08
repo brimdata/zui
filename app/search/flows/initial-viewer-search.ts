@@ -23,10 +23,8 @@ const initialViewerSearch = () => async (dispatch, getState) => {
   const {key} = history.location
   dispatch(Viewer.setSearchKey(tabId, key))
 
-  try {
-    const [from, to] = brim.span(params.spanArgs).toDateTuple()
-    return await dispatch(viewerSearch({query, from, to, keep: params.keep}))
-  } catch (e) {}
+  const [from, to] = brim.span(params.spanArgs).toDateTuple()
+  return dispatch(viewerSearch({query, from, to, keep: params.keep}))
 }
 
 export default initialViewerSearch

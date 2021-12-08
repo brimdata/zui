@@ -16,7 +16,9 @@ export default function SearchResults() {
 
   useLayoutEffect(() => {
     if (status === "INIT" || viewerKey !== location.key) {
-      dispatch(initialViewerSearch())
+      dispatch(initialViewerSearch()).catch((e) => {
+        console.error(e)
+      })
     }
   }, [location.key])
 

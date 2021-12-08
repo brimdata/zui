@@ -1,4 +1,4 @@
-import {findByText, fireEvent, waitFor} from "@testing-library/dom"
+import {findByText, fireEvent, getRoles, waitFor} from "@testing-library/dom"
 import {
   act,
   cleanup,
@@ -25,17 +25,7 @@ async function viewerResults() {
 
 async function runTest(query: string, cellValue: string, rightClick: string) {
   act(() => system.api.search(query))
-  await waitFor(
-    () =>
-      new Promise<void>((resolve, reject) => {
-        system.select(Tab.isFetching) ? reject() : resolve()
-      })
-  )
-
-  await new Promise((r) => setTimeout(r, 3000))
-  console.log(await viewerResults())
-  const table = await screen.findByRole("table")
-  const cells = await findAllByRole(table, "cell")
+  const cells = await screen.findAllByRole("cell")
   const cell = cells.find((c) => c.textContent === cellValue)
   fireEvent.contextMenu(cell)
   userEvent.click(await screen.findByText(rightClick))
@@ -44,18 +34,16 @@ async function runTest(query: string, cellValue: string, rightClick: string) {
 
 afterAll(cleanup)
 
-jest.setTimeout(10000)
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
 describe("context menu tests", () => {
   beforeAll(async () => {
     system.render(<App />)
     await act(() => system.api.import([file]))
-    await waitFor(
-      () =>
-        new Promise<void>((resolve, reject) => {
-          system.select(Tab.isFetching) ? reject() : resolve()
-        })
+    expect(await screen.findByRole("status")).toHaveTextContent(
+      /import complete/i
     )
+    await screen.findAllByRole("cell")
   })
 
   describe("rightclick scalar strings", () => {
