@@ -16,10 +16,12 @@ import data from "test/shared/data"
 
 type Args = {
   page: string
+  port: number
 }
 
 const defaults = (): Args => ({
-  page: "search"
+  page: "search",
+  port: 9888
 })
 
 export function onPage(name: string) {
@@ -37,12 +39,12 @@ function createWrapper(store: Store, api: BrimApi): React.ComponentType<any> {
 }
 
 async function bootBrim(name: string, args: Partial<Args> = {}) {
-  const {page} = {...defaults(), ...args}
+  args = {...defaults(), ...args}
   const lakeRoot = `./run/system/${name}/root`
   const lakeLogs = `./run/system/${name}/logs`
-  const lakePort = 9888
+  const lakePort = args.port
   const appState = `./run/system/${name}/appState.json`
-  onPage(page)
+  onPage(args.page)
   fsExtra.removeSync(lakeRoot)
   fsExtra.removeSync(lakeLogs)
   fsExtra.removeSync(appState)
@@ -117,7 +119,6 @@ export class SystemTest {
     await tl.act(() => this.api.import([file]))
     const toast = await tl.screen.findByRole("status")
     expect(toast).toHaveTextContent(/import complete/i)
-    await tl.screen.findAllByRole("cell")
   }
 
   async runQuery(query: string) {

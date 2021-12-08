@@ -50,6 +50,7 @@ export function LeftPane() {
       width={width}
       onDrag={onDragPane}
       className="history-pane"
+      aria-label="sidebar"
     >
       {!id ? (
         <EmptyText>

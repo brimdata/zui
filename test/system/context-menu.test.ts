@@ -1,7 +1,7 @@
 import {screen} from "@testing-library/react"
 import {SystemTest} from "./system-test"
 
-const system = new SystemTest("context-menu")
+const system = new SystemTest("context-menu", {port: 9888})
 
 describe("context menu tests", () => {
   beforeAll(async () => {

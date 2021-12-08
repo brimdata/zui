@@ -7,7 +7,7 @@ module.exports = {
       babelConfig: true
     }
   },
-  maxWorkers: 1,
+  maxWorkers: 2,
   rootDir: join(__dirname, "../../"),
   testURL: "http://localhost/search.html",
   roots: ["<rootDir>/test/shared", "<rootDir>/test/system"],

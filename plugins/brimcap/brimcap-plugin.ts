@@ -215,7 +215,7 @@ export default class BrimcapPlugin {
     const dur = log.try("duration") as zed.Duration
     const dest = join(
       this.api.getTempDir(),
-      `packets-${tsString}.pcap`.replaceAll(":", "_")
+      `packets-${tsString}.pcap`.replace(/:/g, "_")
     )
 
     return {

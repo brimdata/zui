@@ -20,7 +20,9 @@ export default function useView(): ActionButtonProps {
       label: "Right Pane",
       type: "checkbox",
       checked: rightIsOpen,
-      click: () => dispatch(Layout.toggleRightSidebar())
+      click: () => {
+        dispatch(Layout.toggleRightSidebar())
+      }
     }
   ] as MenuItemConstructorOptions[]
 

@@ -106,6 +106,7 @@ const List = React.memo<ListProps>(function List(props) {
       style={Styler.list(props.dimens)}
       {...reactElementProps("viewer_results")}
       role="table"
+      aria-label="results"
     >
       {props.chunks.map((chunk) => (
         <Chunk
