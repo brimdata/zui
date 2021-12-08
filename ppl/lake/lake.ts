@@ -77,11 +77,10 @@ export class Lake {
     }
 
     const args = [
-      "lake",
       "serve",
       "-l",
       this.addr(),
-      "-R",
+      "-lake",
       this.root,
       "-log.level=info",
       "-log.filemode=rotate",
@@ -101,7 +100,7 @@ export class Lake {
     // XXX This belongs in the brimcap plugin.
     const suricataUserDir = join(app.getPath("userData"), "suricata")
     process.env.BRIM_SURICATA_USER_DIR = suricataUserDir
-    log.info("spawning zed lake serve:", zedCommand(), args.join(" "))
+    log.info("spawning zed serve:", zedCommand(), args.join(" "))
 
     // @ts-ignore
     this.lake = spawn(zedCommand(), args, opts)
@@ -131,7 +130,7 @@ export class Lake {
       }
 
       if (giveUp) {
-        log.error("gave up waiting for zed lake serve to shutdown")
+        log.error("gave up waiting for zed serve to shutdown")
       } else {
         log.info("zed lake has shutdown")
       }

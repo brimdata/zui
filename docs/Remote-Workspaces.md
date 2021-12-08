@@ -59,15 +59,15 @@ However, the overall app experience is powered by a distributed "backend"
 architecture that includes multiple components.
 
 One essential component is the Zed Lake which is accessed via a
-[`zed lake serve`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake)
+[`zed serve`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake)
 process that manages the storage and querying of imported data. Operations on
 the Zed Lake are invoked via a [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that's utilized by a "client", such as the Brim app. The
-[`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi) command is also available
+[`zed`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zed) command is also available
 as a command line client that can perform many of the same operations as the
 Brim app, and therefore may be useful in scripting and automation.
 
-![Brim zapi and the Zed Lake](media/Brim-zapi-zed-lake-serve.png)
+![Brim zed and the Zed Lake](media/Brim-zapi-zed-lake-serve.png)
 
 The location where Zed stores imported data is known as the
 **Data Directory**. This location can be changed via a setting in Brim's
@@ -82,19 +82,19 @@ here is the process on a Mac laptop being operated by username "phil".
 ```
 macOS# ps auxww | grep zed
 phil             37542   0.0  0.0  4277664    760 s001  S+   10:30AM   0:00.01 grep zed
-phil             37512   0.0  0.2  5042424  29300   ??  S    10:30AM   0:01.50 /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/zed lake serve -l localhost:9867 -R /Users/phil/Library/Application Support/Brim/data/lake -log.level=info -log.filemode=rotate -log.path /Users/phil/Library/Application Support/Brim/logs/zlake.log -brimfd=3
+phil             37512   0.0  0.2  5042424  29300   ??  S    10:30AM   0:01.50 /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/zed serve -l localhost:9867 -R /Users/phil/Library/Application Support/Brim/data/lake -log.level=info -log.filemode=rotate -log.path /Users/phil/Library/Application Support/Brim/logs/zlake.log -brimfd=3
 ```
 
 Some useful information revealed in this command line:
 
 1. The inclusion of `localhost` in the option `-l localhost:9867` indicates
-this `zed lake serve` is prepared to accept _only_ connections that arrive from
+this `zed serve` is prepared to accept _only_ connections that arrive from
 a client running on the same local host.
 
 1. The `-R` option points to the Data Directory, which is the default
 location for macOS in this case.
 
-1. The `-brimfd=3` is an option unique to when `zed lake serve` is launched by
+1. The `-brimfd=3` is an option unique to when `zed serve` is launched by
 Brim. This helps ensure that if Brim is killed abruptly, the `zed` process will
 also be terminated (see [zed/1184](https://github.com/brimdata/zed/pull/1184)
 for details).
@@ -105,13 +105,13 @@ in the `zdeps` directory under Brim's [application binaries](https://github.com/
 path.
 
 Now that we know Brim is simply connecting to Zed locally, next we'll vary
-this approach to instead start a remote `zed lake serve` and connect to it to
+this approach to instead start a remote `zed serve` and connect to it to
 access the data stored there.
 
 # Starting a Remote Zed Lake
 
 For our example remote host, we'll use a Linux Ubuntu 18.04 VM running in
-Amazon AWS. Because Brim interacts with `zed lake serve` over a REST API that
+Amazon AWS. Because Brim interacts with `zed serve` over a REST API that
 is still evolving, care should be taken to ensure the Brim version being
 installed on the remote side matches the version being run locally. In this
 cookbook we'll use Brim v0.25.0, which includes Zed v0.30.0.
@@ -145,15 +145,15 @@ ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/suricata/suricataupdater
 > article in the Brimcap wiki provides relevant guidance for this.
 
 Since there's no desktop environment on this VM, there's no "app" interface to
-see. Therefore we'll start `zed lake serve` manually from the
+see. Therefore we'll start `zed serve` manually from the
 [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250) path for the Linux
 platform as follows:
 
 ```
 ubuntu# mkdir -p ~/.config/Brim/data/lake ~/.config/Brim/data/brimcap-root ~/.config/Brim/logs
-ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/zed lake serve \
+ubuntu# /opt/Brim/resources/app.asar.unpacked/zdeps/zed serve \
           -l :9867 \
-          -R $HOME/.config/Brim/data/lake \
+          -lake $HOME/.config/Brim/data/lake \
           -log.level=info \
           -log.filemode=rotate \
           -log.path $HOME/.config/Brim/logs/zlake.log
@@ -163,13 +163,13 @@ Building on what we learned earlier, we've made two adjustments here compared
 to the command line Brim would have invoked:
 
 1. `localhost` was dropped from the `-l` option. By providing only the port
-`:9867` specification, `zed lake serve` is now prepared to accept remote
+`:9867` specification, `zed serve` is now prepared to accept remote
 connections as well.
 
 2. The `-brimfd=3` was dropped, since we're controlling the start/stop of Zed
 rather than the Brim app.
 
-At this point `zed lake serve` is ready to accept remote connections. However,
+At this point `zed serve` is ready to accept remote connections. However,
 the network between clients and our remote Zed Lake needs to permit this
 connectivity. You'll need to perform whatever firewall/VPN configuration is
 necessary for your environment to enable this. In our specific AWS example, one
@@ -183,7 +183,7 @@ IP address.
 
 As mentioned in the [Limitations](#Limitations) above, it's not possible for
 remote Brim clients to import packet capture data directly to a remote Zed
-Lake. However we can use the bundled `zapi` command line tool to create a pool
+Lake. However we can use the bundled `zed` command line tool to create a pool
 in the Zed Lake for our data and then use the bundled `brimcap` to load data
 into it.
 
@@ -195,37 +195,39 @@ ubuntu# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010
 ubuntu# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
 ubuntu# export PATH="/opt/Brim/resources/app.asar.unpacked/zdeps:$PATH"
 
-ubuntu# zapi create wrccdc
+# Set ZED_LAKE env so zed knows to talk to the local zed service instance.
+ubuntu# export ZED_LAKE=http://localhost:9867
+ubuntu# zed create wrccdc
 pool created: wrccdc 1xu2rXQ7D6ayTxrJE7XDVDS3mm8
 
-ubuntu# zapi use -p wrccdc
+ubuntu# zed use -p wrccdc
 Switched to branch "main" on pool "wrccdc"
 
-ubuntu# brimcap analyze wrccdc.2018-03-23.010014000000000.pcap | zapi load -
+ubuntu# brimcap analyze wrccdc.2018-03-23.010014000000000.pcap | zed load -
 1ulxiph6bNX4ZgubZFeCIIDaozj committed
 
 ubuntu# brimcap index -root ~/.config/Brim/data/brimcap-root -r wrccdc.2018-03-23.010014000000000.pcap
 ```
 
 While it's possible to import logs from the Brim app directly into a remote
-Zed Lake, we can also use `zapi` on our Linux VM. Here we'll import the Zeek
+Zed Lake, we can also use `zed` on our Linux VM. Here we'll import the Zeek
 TSV logs from our [zed-sample-data](https://github.com/brimdata/zed-sample-data).
 ```
 ubuntu# git clone --quiet --depth=1 https://github.com/brimdata/zed-sample-data
-ubuntu# zapi create zed-sample-data
+ubuntu# zed create zed-sample-data
 pool created: zed-sample-data 1xu3fug3iq1y17RMQYRiCtORLMC
 
-ubuntu# zapi use -p zed-sample-data
+ubuntu# zed use -p zed-sample-data
 Switched to branch "main" on pool "zed-sample-data"
 
-ubuntu# zapi load zed-sample-data/zeek-default/*
+ubuntu# zed load zed-sample-data/zeek-default/*
 1uMRE9bZnbNAIY8tEOfIXOa8c2w committed
 ```
 
 To see our imported data as pools in the Zed Lake:
 
 ```
-ubuntu# zapi ls
+ubuntu# zed ls
 wrccdc 1uMPHXonxiBH1gY6TCCFxBNS99Z key ts order desc
 zed-sample-data 1uMR6rGmrSBRHnB0yqOGnzhQb0b key ts order desc
 ```
@@ -277,7 +279,7 @@ for details).
 A connection to a remote Workspace can be removed by selecting the **Get Info**
 option in the pull-down and clicking **Logout**. This only removes the config
 in your Brim app that references the remote Workspace. It does not shutdown the
-remote `zed lake serve` nor does it delete any data stored there.
+remote `zed serve` nor does it delete any data stored there.
 
 ![Get Workspace info](media/Workspace-Get-Info.png)
 
