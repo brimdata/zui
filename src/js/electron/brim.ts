@@ -1,10 +1,8 @@
 import {app} from "electron"
 import keytar from "keytar"
 import os from "os"
-import path from "path"
 import {Lake} from "ppl/lake/lake"
 import {Store} from "redux"
-import {collapseTextChangeRangesAcrossMultipleVersions} from "typescript"
 import url from "url"
 import {
   deserializeState,
@@ -21,7 +19,6 @@ import isDev from "./isDev"
 import {MainArgs} from "./main"
 import tron, {Session} from "./tron"
 import formatSessionState from "./tron/formatSessionState"
-import {sessionStateFile} from "./tron/session"
 import {WindowManager} from "./tron/window-manager"
 
 type QuitOpts = {
@@ -48,9 +45,8 @@ export class BrimMain {
   public isQuitting = false
 
   static async boot(args: MainArgs) {
-    const sessionPath: string = sessionStateFile()
     const createSession = tron.session
-    const session = createSession(sessionPath)
+    const session = createSession(args.appState)
     const data = await session.load()
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
@@ -61,7 +57,7 @@ export class BrimMain {
   constructor(args: BrimArgs = {}) {
     this.windows = args.windows || new WindowManager()
     this.store = args.store || createGlobalStore(undefined)
-    this.session = args.session || tron.session()
+    this.session = args.session
     this.lake = args.lake || new Lake("", 9867, "")
   }
 

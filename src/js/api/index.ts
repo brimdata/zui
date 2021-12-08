@@ -96,11 +96,8 @@ export default class BrimApi {
   }
 
   search(zed: string) {
-    return new Promise((resolve) => {
-      this.dispatch(SearchBar.changeSearchBarInput(zed))
-      this.dispatch(submitSearch())
-      this.searches.onDidFinish(resolve)
-    })
+    this.dispatch(SearchBar.changeSearchBarInput(zed))
+    this.dispatch(submitSearch())
   }
 
   importQueries(file: File) {

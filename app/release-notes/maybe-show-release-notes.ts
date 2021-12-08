@@ -10,6 +10,7 @@ export function maybeShowReleaseNotes() {
     const version = await metaClient.version()
     if (
       !env.isIntegrationTest &&
+      global.mainArgs.releaseNotes &&
       Launches.firstRunOfVersion(getState(), version)
     ) {
       dispatch(showReleaseNotes())

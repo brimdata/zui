@@ -30,7 +30,7 @@ export function histogramSearch(): Thunk<Promise<void>> {
 
     const {response, promise} = dispatch(search({id, query, from, to, poolId}))
     dispatch(handle(response))
-    return promise
+    return promise.catch((e) => e)
   }
 }
 

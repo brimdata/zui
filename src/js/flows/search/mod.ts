@@ -92,7 +92,6 @@ export function search({query, from, to, poolId, id}: Args): Thunk<BrimSearch> {
 
     const {response, promise} = handle(req)
     promise.finally(() => api.abortables.remove(aId))
-
     return {response, promise, abort}
   }
 }

@@ -9,7 +9,7 @@ import {isNumber} from "../../lib/is"
 import lib from "../../lib"
 import tron from "./"
 
-export default function session(path: string = sessionStateFile()) {
+export default function session(path) {
   let version = 0
 
   return {
@@ -50,12 +50,6 @@ export default function session(path: string = sessionStateFile()) {
       }
     }
   }
-}
-
-export function sessionStateFile() {
-  // This can't be a const because we adjust the
-  // userData path first thing inside main().
-  return path.join(app.getPath("userData"), "appState.json")
 }
 
 type VersionedState = {version: number; data: SessionState | null | undefined}

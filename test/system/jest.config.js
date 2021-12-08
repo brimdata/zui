@@ -12,5 +12,6 @@ module.exports = {
   testURL: "http://localhost/search.html",
   roots: ["<rootDir>/test/shared", "<rootDir>/test/system"],
   moduleDirectories: ["node_modules", "<rootDir>"],
-  setupFilesAfterEnv: ["./test/system/setup/after-env.ts"]
+  setupFilesAfterEnv: ["./test/system/setup/after-env.ts"],
+  setupFiles: ["@testing-library/react/dont-cleanup-after-each"]
 }

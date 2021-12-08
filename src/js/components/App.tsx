@@ -24,7 +24,6 @@ export default function App() {
   const dispatch = useDispatch()
   useSearchShortcuts()
   useEffect(() => {
-    ipcRenderer.invoke("windows:ready")
     dispatch(maybeShowReleaseNotes())
     return () => {
       dispatch(Handlers.abortAll())

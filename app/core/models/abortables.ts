@@ -17,9 +17,15 @@ export class Abortables {
   async abort(predicate: string | Partial<Abortable>) {
     if (isString(predicate)) {
       const a = this.get(predicate)
-      if (a) return await a.abort()
+      if (a) {
+        return await a.abort()
+      }
     } else {
-      return Promise.all(this.filter(predicate).map((a) => a.abort()))
+      return Promise.all(
+        this.filter(predicate).map((a) => {
+          return a.abort()
+        })
+      )
     }
   }
 

@@ -86,10 +86,6 @@ function handle(
           dispatch(Columns.touch(allColumns))
         }
         dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
-        setTimeout(() => {
-          console.log(allRecords)
-          api.searches.emit("did-finish", {firstPage: !append})
-        })
       })
   }
 }

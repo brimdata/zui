@@ -1,6 +1,6 @@
 import "regenerator-runtime/runtime"
 import "@testing-library/jest-dom"
-import "web-streams-polyfill/es2018"
+import "web-streams-polyfill"
 import {configure} from "@testing-library/react"
 import env from "app/core/env"
 import log from "electron-log"
@@ -20,8 +20,8 @@ if (env.isCI) {
 
 HTMLElement.prototype.scrollTo = () => {}
 
-process.on("unhandledRejection", (reason) => {
-  throw reason
-})
+// process.on("unhandledRejection", (reason) => {
+// throw reason
+// })
 
 log.transports.console.level = false

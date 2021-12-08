@@ -38,10 +38,19 @@ async function bootBrim(name: string, args: Partial<Args> = {}) {
   const lakeRoot = `./run/system/${name}/root`
   const lakeLogs = `./run/system/${name}/logs`
   const lakePort = 9888
+  const appState = `./run/system/${name}/appState.json`
   onPage(page)
   fsExtra.removeSync(lakeRoot)
   fsExtra.removeSync(lakeLogs)
-  const brimMain = await main({lakePort, lakeRoot, lakeLogs})
+  fsExtra.removeSync(appState)
+  const brimMain = await main({
+    lakePort,
+    lakeRoot,
+    lakeLogs,
+    appState,
+    releaseNotes: false,
+    autoUpdater: false
+  })
   const brimRenderer = await initialize()
   return {
     main: brimMain,
@@ -76,12 +85,12 @@ export class SystemTest {
   constructor(name: string, opts: Partial<Args> = {}) {
     opts = {...defaults(), ...opts}
 
-    beforeEach(async () => {
+    beforeAll(async () => {
       this.assign(await bootBrim(name, opts))
       this.navTo(`/workspaces/${defaultWorkspace().id}`)
     })
 
-    afterEach(async () => {
+    afterAll(async () => {
       await this.plugins.deactivate()
       await this.main.quit()
     })

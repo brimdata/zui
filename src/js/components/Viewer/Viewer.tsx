@@ -24,6 +24,7 @@ type Props = {
 }
 
 export default function Viewer(props: Props) {
+  console.log(props.logs.length)
   const [scrollLeft, setScrollLeft] = useState(0)
   const [chunks, setChunks] = useState(props.chunker.visibleChunks(0))
   const ref = useRef<HTMLDivElement>()

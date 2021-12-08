@@ -31,7 +31,10 @@ const mainDefaults = () => ({
   lakeRoot: join(app.getPath("userData"), "data", "lake"),
   lakeLogs: app.getPath("logs"),
   lake: true,
-  devtools: isDev
+  devtools: isDev,
+  appState: join(app.getPath("userData"), "appState.json"),
+  releaseNotes: true,
+  autoUpdater: true
 })
 
 export type MainArgs = ReturnType<typeof mainDefaults>
@@ -61,7 +64,7 @@ export async function main(args: Partial<MainArgs> = {}) {
   }))
 
   // autoUpdater should not run in dev, and will fail if the code has not been signed
-  if (!electronIsDev) {
+  if (!electronIsDev && opts.autoUpdater) {
     setupAutoUpdater().catch((err) => {
       log.error("Failed to initiate autoUpdater: " + err)
     })
