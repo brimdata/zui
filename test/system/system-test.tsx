@@ -1,7 +1,10 @@
-import {render} from "@testing-library/react"
+import * as tl from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import {BrimProvider} from "app/core/context"
+import fsExtra from "fs-extra"
 import React from "react"
 import BrimApi from "src/js/api"
+import App from "src/js/components/App"
 import {BrimMain} from "src/js/electron/brim"
 import {main} from "src/js/electron/main"
 import initialize from "src/js/initializers/initialize"
@@ -9,7 +12,7 @@ import {defaultWorkspace} from "src/js/initializers/initWorkspaceParams"
 import PluginManager from "src/js/initializers/pluginManager"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
-import fsExtra from "fs-extra"
+import data from "test/shared/data"
 
 type Args = {
   page: string
@@ -88,19 +91,62 @@ export class SystemTest {
     beforeAll(async () => {
       this.assign(await bootBrim(name, opts))
       this.navTo(`/workspaces/${defaultWorkspace().id}`)
-    })
+    }, 10_000)
 
     afterAll(async () => {
       await this.plugins.deactivate()
       await this.main.quit()
-    })
+      tl.cleanup()
+    }, 10_000)
   }
 
-  select = (fn: Function) => fn(this.store.getState())
-  navTo = (path: string) => this.select(Current.getHistory).push(path)
-  cleanup = () => this.plugins.deactivate()
+  mountApp() {
+    return this.render(<App />)
+  }
+
+  navTo(path: string) {
+    Current.getHistory(this.store.getState()).push(path)
+  }
 
   render(ui: JSX.Element) {
-    return render(ui, {wrapper: this.wrapper})
+    return tl.render(ui, {wrapper: this.wrapper})
+  }
+
+  async importFile(name: string) {
+    const file = data.getWebFile(name)
+    await tl.act(() => this.api.import([file]))
+    const toast = await tl.screen.findByRole("status")
+    expect(toast).toHaveTextContent(/import complete/i)
+    await tl.screen.findAllByRole("cell")
+  }
+
+  async runQuery(query: string) {
+    this.api.search(query)
+    await tl.screen.findAllByRole("cell")
+  }
+
+  async findTableResults() {
+    const table = await tl.screen.findByRole("table")
+    const headers = await tl.screen.findAllByRole("columnheader")
+    const rows = await tl.findAllByRole(table, "cell")
+    return headers.concat(rows).map((r) => r.textContent)
+  }
+
+  // Rexport commonly used things
+  async rightClick(element: string | Element, args?: any) {
+    const node =
+      typeof element === "string"
+        ? await tl.screen.findByText(element)
+        : element
+    tl.fireEvent.contextMenu(node, args)
+  }
+
+  async click(element: string | Element) {
+    const node =
+      typeof element === "string"
+        ? await tl.screen.findByText(element)
+        : element
+
+    userEvent.click(node)
   }
 }
