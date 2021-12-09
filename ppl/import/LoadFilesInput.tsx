@@ -5,7 +5,7 @@ import classNames from "classnames"
 import React, {ChangeEvent, MouseEvent} from "react"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import Folder from "src/js/icons/Folder"
-import {reactElementProps} from "test/integration/helpers/integration"
+import {reactElementProps} from "test/playwright/helpers/integration"
 import DataFileIcon from "./DataFileIcon"
 
 export default function LoadFilesInput() {

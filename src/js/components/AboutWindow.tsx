@@ -2,7 +2,7 @@ import React from "react"
 
 import {execSync} from "child_process"
 import {join} from "path"
-import {remote} from "electron"
+import * as remote from "@electron/remote"
 
 import BrimTextLogo from "./BrimTextLogo"
 import Octocat from "../icons/Octocat"

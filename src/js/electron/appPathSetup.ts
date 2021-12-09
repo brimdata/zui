@@ -18,6 +18,8 @@ export function appPathSetup() {
       // For general developer execution, put state and logs under a
       // "run" directory in the git directory.
       app.setPath("userData", path.join(app.getAppPath(), "run"))
+    } else {
+      app.setPath("userData", app.commandLine.getSwitchValue("user-data-dir"))
     }
   }
   // Logs go under userData, to make finding logs consistent across platforms.

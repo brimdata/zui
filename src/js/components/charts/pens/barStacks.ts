@@ -4,7 +4,7 @@ import {Pen} from "../types"
 import {
   d3ElementAttr,
   itestLocator
-} from "../../../../../test/integration/helpers/integration"
+} from "../../../../../test/playwright/helpers/integration"
 import {innerHeight, innerWidth} from "../dimens"
 import brim from "../../../brim"
 

@@ -66,7 +66,7 @@ Additionally, we rely heavily on the node modules listed here:
 **Testing**
 
 - [Jest ](https://jestjs.io/docs/en/getting-started) Unit tests are run with `npm run test`
-- [Spectron](https://github.com/electron-userland/spectron) Used for integration testing `npm run itest`
+- [Playwright](https://playwright.dev/) Used for integration testing `npm run test:playwright`
 
 ## Patterns
 

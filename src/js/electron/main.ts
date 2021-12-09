@@ -25,6 +25,7 @@ import secureWebContents from "./secure-web-contents"
 import env from "app/core/env"
 import {join} from "path"
 import requireAll from "./require-all"
+require("@electron/remote/main").initialize()
 
 console.time("init")
 

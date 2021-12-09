@@ -1,7 +1,7 @@
 import React from "react"
 import {useSelector} from "react-redux"
 import SystemTest from "src/js/state/SystemTest"
-import {hookLogLocator} from "test/integration/helpers/locators"
+import {hookLogLocator} from "test/playwright/helpers/locators"
 import styled from "styled-components"
 
 const BG = styled.ol`

@@ -6,6 +6,7 @@ import ipc from "../electron/ipc"
 import rootReducer from "../state/rootReducer"
 import {configureStore} from "@reduxjs/toolkit"
 import BrimApi from "../api"
+import {log} from "electron-log"
 
 function getInitialState(windowId) {
   return Promise.all([
@@ -17,6 +18,7 @@ function getInitialState(windowId) {
 export default async (api: BrimApi) => {
   const windowId = getUrlSearchParams().id
   const initialState = await getInitialState(windowId)
+  log({initialState})
   return configureStore({
     reducer: rootReducer,
     preloadedState: initialState,

@@ -4,7 +4,7 @@ import detectFileType from "./detectFileType"
 export default function(files: File[]): Promise<FileListData> {
   return Promise.all(
     files.map(async (file) => {
-      const type = await detectFileType(file.path)
+      const type = await detectFileType(file)
       return {type, file}
     })
   )
