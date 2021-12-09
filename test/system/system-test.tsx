@@ -124,7 +124,7 @@ export class SystemTest {
 
   async runQuery(query: string) {
     this.api.search(query)
-    await tl.screen.findAllByRole("cell")
+    await tl.screen.findAllByRole("row")
   }
 
   async findTableResults() {
@@ -156,5 +156,10 @@ export class SystemTest {
     const save = jest.spyOn(dialog, "showSaveDialog")
     save.mockImplementationOnce(() => Promise.resolve(result))
     return save
+  }
+
+  async findCell(text: string) {
+    const table = await tl.screen.findByRole("table", {name: "results"})
+    return tl.within(table).getAllByText(text)[0]
   }
 }

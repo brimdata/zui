@@ -4,6 +4,7 @@ import fsExtra from "fs-extra"
 import os from "os"
 import path from "path"
 import {SystemTest} from "./system-test"
+
 const filePath = path.join(os.tmpdir(), "results.zng")
 
 const system = new SystemTest("export-results")

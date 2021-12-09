@@ -8,6 +8,7 @@ export default function MainHistogramChart() {
   return (
     <Dimens
       className="chart main-search-histogram"
+      data-testid="histogram"
       render={(rect) => (
         <MainHistogramSvg width={rect.width} height={rect.height} />
       )}

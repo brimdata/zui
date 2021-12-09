@@ -2,7 +2,7 @@ import {ANALYTIC_MAX_RESULTS} from "../../flows/config"
 import {withCommas} from "../../lib/fmt"
 import brim from "../../brim"
 
-const EOF = "End of results 🎉"
+const EOF = "End of results"
 const TRUNCATED_ANALYTICS = `Showing first ${withCommas(
   ANALYTIC_MAX_RESULTS
 )} results`
