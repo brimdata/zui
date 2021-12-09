@@ -1,6 +1,7 @@
 import * as tl from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {BrimProvider} from "app/core/context"
+import {dialog} from "electron"
 import fsExtra from "fs-extra"
 import React from "react"
 import BrimApi from "src/js/api"
@@ -149,5 +150,11 @@ export class SystemTest {
         : element
 
     userEvent.click(node)
+  }
+
+  mockSaveDialog(result: {canceled: boolean; filePath: string}) {
+    const save = jest.spyOn(dialog, "showSaveDialog")
+    save.mockImplementationOnce(() => Promise.resolve(result))
+    return save
   }
 }

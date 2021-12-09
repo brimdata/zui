@@ -14,27 +14,22 @@ beforeAll(async () => {
 })
 
 test("clicking the export button", async () => {
-  const save = jest.spyOn(dialog, "showSaveDialog")
-  save.mockImplementationOnce(() =>
-    Promise.resolve({canceled: false, filePath})
-  )
-
   const sidebar = screen.getByRole("complementary", {name: "sidebar"})
   const brimFolder = within(sidebar).getByText("Brim")
   await system.rightClick(brimFolder)
+  system.mockSaveDialog({canceled: false, filePath})
   await system.click("Export Folder as JSON")
   await screen.findByText(/export complete/i)
+
   expect(fsExtra.statSync(filePath).size).toBe(2888)
   await fsExtra.remove(filePath)
 })
 
 test("canceling the export", async () => {
-  const save = jest.spyOn(dialog, "showSaveDialog")
-  save.mockImplementationOnce(() => Promise.resolve({canceled: true, filePath}))
-
   const sidebar = screen.getByRole("complementary", {name: "sidebar"})
   const brimFolder = within(sidebar).getByText("Brim")
   await system.rightClick(brimFolder)
+  system.mockSaveDialog({canceled: true, filePath})
   await system.click("Export Folder as JSON")
 
   expect(await fsExtra.pathExists(filePath)).toBe(false)
