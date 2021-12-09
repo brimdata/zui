@@ -18,7 +18,7 @@ import {ipcRenderer} from "electron"
 import lib from "../lib"
 import useEventListener from "./hooks/useEventListener"
 
-import {reactElementProps} from "../../../test/integration/helpers/integration"
+import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import env from "app/core/env"
 
 export default function HTMLContextMenu() {

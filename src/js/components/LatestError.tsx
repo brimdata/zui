@@ -4,7 +4,7 @@ import React from "react"
 import {BrimError} from "../errors/types"
 import {State} from "../state/types"
 import {first} from "../lib/Array"
-import {reactElementProps} from "../../../test/integration/helpers/integration"
+import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import Errors from "../state/Errors"
 
 type Props = {error: BrimError}

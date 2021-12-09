@@ -3,9 +3,9 @@ import {
   ElectronApplication,
   Page
 } from "playwright-chromium"
-import {selectors} from "../../integration/helpers/integration"
+import {selectors} from "./integration"
 import {selectorWithText} from "./helpers"
-import {hookLogLocator, submitButton} from "../../integration/helpers/locators"
+import {hookLogLocator, submitButton} from "./locators"
 import path from "path"
 import {itestDir} from "./env"
 import env from "../../../app/core/env"

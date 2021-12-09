@@ -62,8 +62,6 @@ npx jest Client.test.js -t "increment by one" # Run a single test by name
 npx jest --watch                              # Run all tests on every change
 ```
 
-For integration tests, see [test/integration/README.md](test/integration/README.md).
-
 **Snapshots**
 
 Some tests use `expect(result).toMatchSnapshot()`. The first time the test is run, it stores the result in a `.snap` file automatically. Later runs, compare their results to the snapshot. Snapshots can easily be updated with the `-u` command line option.
@@ -87,7 +85,7 @@ npm run format # Prettier formats and saves the project files
 npm run lint   # Check eslint
 npm run tsc    # Check the types
 npm test       # Unit tests with jest
-npm run itest  # Integration tests with jest & spectron
+npm run test:playwright  # Integration tests with jest & playwright
 
 npm run check  # Runs all the above at once except for itests
 ```

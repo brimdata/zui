@@ -1,10 +1,10 @@
 import path from "path"
 import {testDataDir} from "../helpers/env"
 import {selectorWithText} from "../helpers/helpers"
-import {poolItem} from "../../integration/helpers/locators"
+import {poolItem} from "../helpers/locators"
 import TestApp from "../helpers/test-app"
 import {Readable} from "stream"
-import {selectors} from "../../integration/helpers/integration"
+import {selectors} from "../helpers/integration"
 
 describe("Handle Zed server events", () => {
   const app = new TestApp("Zed Events")
