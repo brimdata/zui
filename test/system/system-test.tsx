@@ -14,15 +14,13 @@ import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
 import data from "test/shared/data"
 
-type Args = {
-  page: string
-  port: number
-}
-
-const defaults = (): Args => ({
+const defaults = () => ({
   page: "search",
-  port: 9888
+  port: 9888,
+  timeout: 10000
 })
+
+type Args = ReturnType<typeof defaults>
 
 export function onPage(name: string) {
   window.history.replaceState(null, `Testing Page: ${name}`, `${name}.html`)
@@ -42,7 +40,7 @@ async function bootBrim(name: string, args: Partial<Args> = {}) {
   args = {...defaults(), ...args}
   const lakeRoot = `./run/system/${name}/root`
   const lakeLogs = `./run/system/${name}/logs`
-  const lakePort = args.port
+  const lakePort = args.port || 9888
   const appState = `./run/system/${name}/appState.json`
   onPage(args.page)
   fsExtra.removeSync(lakeRoot)
@@ -90,16 +88,18 @@ export class SystemTest {
   constructor(name: string, opts: Partial<Args> = {}) {
     opts = {...defaults(), ...opts}
 
+    jest.setTimeout(opts.timeout)
+
     beforeAll(async () => {
       this.assign(await bootBrim(name, opts))
       this.navTo(`/workspaces/${defaultWorkspace().id}`)
-    }, 10_000)
+    })
 
     afterAll(async () => {
       await this.plugins.deactivate()
       await this.main.quit()
       tl.cleanup()
-    }, 10_000)
+    })
   }
 
   mountApp() {
