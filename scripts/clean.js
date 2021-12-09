@@ -7,12 +7,9 @@ console.log(bold("Cleaning built files"))
 if (!flags.keepDist) {
   fs.removeSync("zealot/dist")
   fs.removeSync("dist")
-  fs.removeSync("zealot/dist")
 } else {
   console.log(bold("Keeping dist directories"))
 }
-fs.removeSync("dist")
-fs.removeSync("zealot/dist")
 // These are broken symlinks that electron leaves around when it
 // forcefully exists and can't clean them up. Babel tries to call
 // stat on the broken symlinks and blows up.
