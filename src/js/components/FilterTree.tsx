@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import {remote} from "electron"
+import * as remote from "@electron/remote"
 import {initial, isEqual, map, tail, take} from "lodash"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"

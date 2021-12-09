@@ -1,5 +1,5 @@
-import {app as electronApp, remote} from "electron"
-const app = electronApp || (remote && remote.app)
+import {app as electronApp} from "electron"
+const app = electronApp
 
 export default {
   get isCI() {

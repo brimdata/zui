@@ -1,7 +1,8 @@
-import {ipcRenderer, remote} from "electron"
+import {ipcRenderer} from "electron"
 import jwtDecode from "jwt-decode"
 import Workspaces from "src/js/state/Workspaces"
 import WorkspaceStatuses from "src/js/state/WorkspaceStatuses"
+import * as remote from "@electron/remote"
 import {mocked} from "ts-jest/utils"
 import {createZealotMock} from "zealot-old"
 import Auth0Client from "../../auth0"
@@ -20,11 +21,6 @@ jest.mock("electron", () => ({
     invoke: jest.fn(),
     once: jest.fn(),
     removeListener: jest.fn()
-  },
-  remote: {
-    dialog: {
-      showMessageBox: jest.fn()
-    }
   }
 }))
 
@@ -61,8 +57,8 @@ let auth0ClientMock, jwtDecodeMock, ipcRendererMock, remoteMock
 beforeEach(() => {
   auth0ClientMock = mocked(Auth0Client)
   jwtDecodeMock = mocked(jwtDecode)
-  remoteMock = mocked(remote)
   ipcRendererMock = mocked(ipcRenderer)
+  remoteMock = mocked(remote)
 
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)
@@ -229,6 +225,7 @@ describe("success cases", () => {
     zealot.stubPromise("authMethod", fixtures.secureMethodAuth)
     ipcRendererMock.invoke.mockReturnValueOnce("")
     ipcRendererMock.invoke.mockReturnValueOnce("")
+    // @ts-ignore
     remoteMock.dialog.showMessageBox.mockReturnValueOnce({response: 1})
 
     const [cancelled, error] = await store.dispatch(
@@ -244,6 +241,7 @@ describe("success cases", () => {
     zealot.stubPromise("authMethod", fixtures.secureMethodAuth)
     ipcRendererMock.invoke.mockReturnValueOnce("")
     ipcRendererMock.invoke.mockReturnValueOnce("")
+    // @ts-ignore
     remoteMock.dialog.showMessageBox.mockReturnValueOnce({response: 0})
 
     setTimeout(() => ctl.abort(), 20)
@@ -260,6 +258,7 @@ describe("success cases", () => {
     zealot.stubPromise("authMethod", fixtures.secureMethodAuth)
     ipcRendererMock.invoke.mockReturnValueOnce("")
     ipcRendererMock.invoke.mockReturnValueOnce("")
+    // @ts-ignore
     remoteMock.dialog.showMessageBox.mockReturnValueOnce({response: 0})
     ipcRendererMock.once = async (_channel, handleAuthCb) => {
       await handleAuthCb("mockEvent", {
@@ -311,6 +310,7 @@ describe("failure cases", () => {
     zealot.stubPromise("authMethod", fixtures.secureMethodAuth)
     ipcRendererMock.invoke.mockReturnValueOnce("")
     ipcRendererMock.invoke.mockReturnValueOnce("")
+    // @ts-ignore
     remoteMock.dialog.showMessageBox.mockReturnValueOnce({response: 0})
     ipcRendererMock.once = async (_channel, handleAuthCb) => {
       await handleAuthCb("mockEvent", {

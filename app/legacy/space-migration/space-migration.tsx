@@ -1,4 +1,4 @@
-import {remote} from "electron"
+import * as remote from "@electron/remote"
 import {join} from "path"
 import React, {useEffect, useState} from "react"
 import toast from "react-hot-toast"

@@ -1,5 +1,5 @@
 import {execSync} from "child_process"
-import {remote} from "electron"
+import * as remote from "@electron/remote"
 import {join} from "path"
 import React from "react"
 import electronIsDev from "../electron/isDev"

@@ -1,4 +1,5 @@
 import {BrowserWindow} from "electron"
+import {enable} from "@electron/remote/main"
 
 import {WindowName} from "./window-manager"
 
@@ -31,10 +32,10 @@ async function aboutWindow() {
     height: 360,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true,
       contextIsolation: false
     }
   })
+  enable(win.webContents)
   win.setMenu(null)
   win.center()
   await win.loadFile("about.html")
@@ -46,10 +47,10 @@ async function hiddenWindow() {
     show: false,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true,
       contextIsolation: false
     }
   })
+  enable(win.webContents)
   win.setMenu(null)
   await win.loadFile("hidden.html")
   return win
@@ -64,10 +65,10 @@ async function detailWindow(params) {
     minWidth: 500,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true,
       contextIsolation: false
     }
   })
+  enable(win.webContents)
   if (size) {
     win.setSize(size[0], size[1])
   }
@@ -77,7 +78,7 @@ async function detailWindow(params) {
     win.center()
   }
 
-  await win.loadFile("detail.html", {query: {...query, id}})
+  win.loadFile("detail.html", {query: {...query, id}})
 
   return win
 }

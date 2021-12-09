@@ -2,6 +2,7 @@ import {BrowserWindow, ipcMain, screen} from "electron"
 import randomHash from "../../brim/randomHash"
 import {BrimWindow, WindowName} from "../tron/window-manager"
 import {Dimens, getWindowDimens} from "./dimens"
+import {enable} from "@electron/remote/main"
 
 const DEFAULT_DIMENS = {
   x: undefined,
@@ -40,10 +41,10 @@ export class SearchWindow implements BrimWindow {
       webPreferences: {
         nodeIntegration: true,
         experimentalFeatures: true,
-        enableRemoteModule: true,
         contextIsolation: false
       }
     })
+    enable(this.ref.webContents)
     this.ref.on("focus", () => {
       this.touchLastFocused()
     })

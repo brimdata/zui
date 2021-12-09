@@ -71,7 +71,7 @@
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
-    "electron": "^13.6.1",
+    "electron": "^14.2.2",
     "electron-builder": "^22.9.1",
     "electron-builder-notarize": "^1.2.0",
     "electron-mock-ipc": "^0.3.10",
@@ -106,6 +106,7 @@
   },
   "dependencies": {
     "@brimdata/zealot": "0.0.15",
+    "@electron/remote": "^2.0.1",
     "@js-joda/core": "^3.2.0",
     "@reduxjs/toolkit": "^1.5.0",
     "@rollup/plugin-typescript": "^8.1.0",

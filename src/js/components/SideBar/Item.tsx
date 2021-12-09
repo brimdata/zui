@@ -1,5 +1,6 @@
 import classNames from "classnames"
-import {ipcRenderer, MenuItemConstructorOptions, remote} from "electron"
+import {ipcRenderer, MenuItemConstructorOptions} from "electron"
+import * as remote from "@electron/remote"
 import React, {useLayoutEffect, useRef} from "react"
 import toast from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux"
