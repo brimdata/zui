@@ -17,12 +17,6 @@ declare global {
       navTo: (path: string) => void
       dev: DevGlobal
     }
-
-    interface Process {
-      on(event: "spectron:mock", listener: MessageListener): this
-
-      on(event: "spectron:clickAppMenuItem", listener: MessageListener): this
-    }
   }
 }
 

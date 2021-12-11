@@ -1,5 +1,5 @@
 /* 
-  This is a component only used for integration tests. Since spectron cannot
+  This is a component only used for integration tests. Since Playwright cannot
   interact with the native right click menus, this component creates an
   html version of the right click menus with the same labels and click handlers
   that the native menu will recieve.

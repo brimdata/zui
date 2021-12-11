@@ -10,7 +10,7 @@ export function appPathSetup() {
   if (electronIsDev) {
     // isDev is true for general dev execution and integration tests.
     // The only known instance of isDev being true and --user-data-dir
-    // being set is under Spectron.
+    // being set is under Playwright.
     // We don't override for integration tests as they set userData
     // via the user-data-dir chromeDriver command line argument,
     // so don't override it.
