@@ -12,7 +12,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [14.x]
         os: [ubuntu-18.04]
     timeout-minutes: 60
     steps:
@@ -75,36 +74,13 @@ jobs:
 
       # This section runs typical CI, with an updated Zed. Most of this
       # is no different than the normal CI flow.
+      - uses: actions/setup-node@v2
+        with:
+          cache: npm
+          node-version-file: .nvmrc
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16'
-      - name: setup node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Set NPM Cache Directory
-        id: set-npm-cache-dir
-        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-      - name: Clear Extraneous Runner Cache
-        # Clear on-runner cache before we create our own cache to prevent
-        # slower build times. See https://github.com/brimdata/brim/pull/590
-        # and https://github.com/brimdata/brim/issues/641
-        run: rm -rf "${NPM_CACHE:?}"
-        env:
-          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-        shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        # Change the cache name any time you want to start with a cleared
-        # cache.
-        env:
-          cache-name: cache-node-modules-ci-v5
-        with:
-          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
-
       - name: Update Zed
         run: npm install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
 
@@ -145,7 +121,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: failure() && steps.testIntegration.conclusion == 'failure'
         with:
-          name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
+          name: artifacts-${{ matrix.os }}
           path: /var/tmp/brimdata/playwright-itest
 
       - name: Create Pull Request for Manual Inspection
