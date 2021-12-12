@@ -6,7 +6,6 @@ import ipc from "../electron/ipc"
 import rootReducer from "../state/rootReducer"
 import {configureStore} from "@reduxjs/toolkit"
 import BrimApi from "../api"
-import {log} from "electron-log"
 
 function getInitialState(windowId) {
   return Promise.all([
