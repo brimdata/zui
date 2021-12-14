@@ -30,7 +30,7 @@ export default function span(args: SpanArgs | Span) {
     },
     getDuration() {
       const [from, to] = this.toDateTuple()
-      return to - from
+      return to.getTime() - from.getTime()
     },
     formatAgo() {
       const [from, to] = this.toDateTuple()

@@ -8,6 +8,7 @@ import formatSessionState from "./formatSessionState"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import tron from "./"
 import states from "test/unit/states"
+import {Migrations} from "./migrations"
 
 const dir = path.join(os.tmpdir(), "session.test.ts")
 const file = path.join(dir, "appState.json")
@@ -18,7 +19,7 @@ afterEach(() => fsExtra.remove(dir))
 
 test("session loading with migrations", async () => {
   const state = initTestStore().getState()
-  const migrations = await tron.migrations()
+  const migrations = await Migrations.init()
   const session = tron.session(file)
   const data = formatSessionState([], state)
 
@@ -38,7 +39,7 @@ test("loading state from release 0.8.0 resets state", async () => {
 
   const session = tron.session(file)
   const data = await session.load()
-  const latestVersion = (await tron.migrations()).getLatestVersion()
+  const latestVersion = (await Migrations.init()).getLatestVersion()
 
   expect(data).toBe(undefined)
   expect(session.getVersion()).toBe(latestVersion)
@@ -60,7 +61,7 @@ test("failing to load sets session to latest version", async () => {
   fsExtra.writeFileSync(file, "this aint json")
   const session = tron.session(file)
   const data = await session.load()
-  const latestVersion = (await tron.migrations()).getLatestVersion()
+  const latestVersion = (await Migrations.init()).getLatestVersion()
 
   expect(session.getVersion()).toEqual(latestVersion)
   expect(data).toBe(undefined)

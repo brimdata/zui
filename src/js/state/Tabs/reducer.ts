@@ -86,8 +86,8 @@ function moveTab(state, action) {
   }
 }
 
-function orderTabs(tabs, indices) {
-  const newTabs = lib.compact(lib.uniq(indices).map((i: number) => tabs[i]))
+function orderTabs(tabs, indices: number[]) {
+  const newTabs = lib.compact(lib.uniq(indices).map((i) => tabs[i]))
   return isEmpty(newTabs) ? tabs : newTabs
 }
 

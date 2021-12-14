@@ -18,7 +18,7 @@ export class Callbacks {
     this.callbacks = new Map()
   }
 
-  add(name: EventName, cb: (args?: ZealotPayloadValue) => void) {
+  add(name: EventName, cb: (args?: any) => void) {
     this.callbacks.set(name, cb)
     return this
   }
