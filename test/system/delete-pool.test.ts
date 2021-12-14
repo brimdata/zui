@@ -1,7 +1,7 @@
 import {SystemTest} from "./system-test"
 import {screen, within} from "@testing-library/react"
 
-const system = new SystemTest("delete-pool", {port: 9887})
+const system = new SystemTest("delete-pool")
 
 test("delete the current pool", async () => {
   system.mountApp()

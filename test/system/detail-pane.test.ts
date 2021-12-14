@@ -3,7 +3,7 @@ import {toLower} from "lodash"
 import Layout from "src/js/state/Layout"
 import {SystemTest} from "./system-test"
 
-const system = new SystemTest("detail-pane", {port: 9886})
+const system = new SystemTest("detail-pane")
 
 beforeAll(async () => {
   system.mountApp()

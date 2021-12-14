@@ -14,11 +14,11 @@ import PluginManager from "src/js/initializers/pluginManager"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
 import data from "test/shared/data"
+import {getPort} from "./port-service"
 
 const defaults = () => ({
   page: "search",
-  port: 9888,
-  timeout: 10000
+  port: null as null | number
 })
 
 type Args = ReturnType<typeof defaults>
@@ -41,12 +41,13 @@ async function bootBrim(name: string, args: Partial<Args> = {}) {
   args = {...defaults(), ...args}
   const lakeRoot = `./run/system/${name}/root`
   const lakeLogs = `./run/system/${name}/logs`
-  const lakePort = args.port || 9888
+  const lakePort = args.port || (await getPort())
   const appState = `./run/system/${name}/appState.json`
   onPage(args.page)
   fsExtra.removeSync(lakeRoot)
   fsExtra.removeSync(lakeLogs)
   fsExtra.removeSync(appState)
+  console.log("booting main")
   const brimMain = await main({
     lakePort,
     lakeRoot,
@@ -55,7 +56,9 @@ async function bootBrim(name: string, args: Partial<Args> = {}) {
     releaseNotes: false,
     autoUpdater: false
   })
+  console.log("booting renderer")
   const brimRenderer = await initialize()
+  console.log("booted")
   return {
     main: brimMain,
     store: brimRenderer.store,
@@ -89,14 +92,14 @@ export class SystemTest {
   constructor(name: string, opts: Partial<Args> = {}) {
     opts = {...defaults(), ...opts}
 
-    jest.setTimeout(opts.timeout)
-
     beforeAll(async () => {
       this.assign(await bootBrim(name, opts))
+      jest.useFakeTimers()
       this.navTo(`/workspaces/${defaultWorkspace().id}`)
     })
 
     afterAll(async () => {
+      jest.useRealTimers()
       await this.plugins.deactivate()
       await this.main.quit()
       tl.cleanup()

@@ -16,19 +16,21 @@ function getInitialState(windowId) {
 
 export default async (api: BrimApi) => {
   const windowId = getUrlSearchParams().id
+  console.log("waiting for initial state")
   const initialState = await getInitialState(windowId)
+  console.log("got intial state")
   return configureStore({
     reducer: rootReducer,
     preloadedState: initialState,
-    middleware: (getDefaults) => [
-      ...getDefaults({
+    middleware: (getDefaults) => {
+      const defaults = getDefaults({
         thunk: {
           extraArgument: {createZealot, api}
         },
         serializableCheck: false,
         immutableCheck: false
-      }),
-      globalDispatchMiddleware
-    ]
+      })
+      return defaults.concat(globalDispatchMiddleware)
+    }
   })
 }

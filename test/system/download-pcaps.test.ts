@@ -4,9 +4,8 @@ import {readFileSync} from "fs"
 import fsExtra from "fs-extra"
 import md5 from "md5"
 import path from "path"
-import {SystemTest} from "./system-test"
 import open from "src/js/lib/open"
-import {findByRole} from "@testing-library/dom"
+import {SystemTest} from "./system-test"
 
 const system = new SystemTest("download-pcaps")
 
