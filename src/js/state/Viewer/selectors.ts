@@ -40,7 +40,7 @@ export const getEndStatus = createSelector<State, ViewerState, string>(
   (viewer) => viewer.endStatus
 )
 
-export const getColumns = createSelector<State, ViewerState, SchemaMap>(
+export const getShapes = createSelector<State, ViewerState, SchemaMap>(
   getViewer,
   (viewer) => viewer.columns
 )

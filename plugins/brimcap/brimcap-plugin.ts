@@ -1,21 +1,19 @@
+import {decode, zed} from "@brimdata/zealot"
+import env from "app/core/env"
+import {ChildProcess, spawn} from "child_process"
+import {MenuItemConstructorOptions} from "electron"
 import fsExtra, {pathExistsSync} from "fs-extra"
+import {compact} from "lodash"
 import path, {join} from "path"
 import errors from "src/js/errors"
-import {zed} from "zealot-old"
 import {fetchCorrelation} from "../../ppl/detail/flows/fetch"
 import BrimApi from "../../src/js/api"
 import {IngestParams} from "../../src/js/brim/ingest/getParams"
 import open from "../../src/js/lib/open"
-import {AppDispatch} from "../../src/js/state/types"
-import {Config} from "../../src/js/state/Configs"
-import {reactElementProps} from "../../test/playwright/helpers/integration"
-import BrimcapCLI, {analyzeOptions, searchOptions} from "./brimcap-cli"
-import {ChildProcess, spawn} from "child_process"
-import {MenuItemConstructorOptions} from "electron"
-import {compact} from "lodash"
-import env from "app/core/env"
-import {decode} from "@brimdata/zealot"
 import {toNodeReadable} from "../../src/js/lib/response"
+import {Config} from "../../src/js/state/Configs"
+import {AppDispatch} from "../../src/js/state/types"
+import BrimcapCLI, {analyzeOptions, searchOptions} from "./brimcap-cli"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -98,8 +96,7 @@ export default class BrimcapPlugin {
       icon: "sharkfin", // TODO: enable plugins to provide their own assets
       disabled: true,
       tooltip: "No connection record found.",
-      order: 0,
-      buttonProps: reactElementProps("pcapsButton")
+      order: 0
     }
 
     const setButtonDetails = (

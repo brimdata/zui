@@ -1,3 +1,4 @@
+import {ipcRenderer} from "electron"
 import BrimApi from "../api"
 import initDebugGlobals from "./initDebugGlobals"
 import initDOM from "./initDOM"
@@ -14,6 +15,7 @@ export default async function initialize() {
   api.init(store.dispatch, store.getState)
 
   const pluginManager = await initPlugins(api)
+  global.featureFlags = await ipcRenderer.invoke("get-feature-flags")
 
   initDOM()
   initGlobals(store)

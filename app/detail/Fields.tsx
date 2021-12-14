@@ -1,6 +1,6 @@
 import {Data, Name, Value} from "app/core/Data"
 import {useZedFormatter} from "app/core/format"
-import {typeClassNames} from "app/core/utils/type-class-names"
+import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
 import React, {memo, useCallback, useMemo, useState} from "react"
 import {useDispatch} from "react-redux"
 import BrimTooltip from "src/js/components/BrimTooltip"
@@ -36,7 +36,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
             <TooltipAnchor>{printColumnName(field.path)}</TooltipAnchor>
           </Name>
           <Value
-            className={typeClassNames(field.data)}
+            className={zedTypeClassName(field.data)}
             onContextMenu={() => onRightClick(field)}
           >
             {format(field.data as zed.Primitive)}

@@ -30,6 +30,7 @@ export function getWindowPersistable(state: State) {
       delete tab.viewer
       delete tab.chart
       delete tab.logDetails
+      delete tab.localState
     }
 
     for (const ws of Object.values(draft.workspaces)) {

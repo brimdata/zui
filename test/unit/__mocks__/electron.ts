@@ -48,6 +48,12 @@ class MockApp {
   on = jest.fn()
   whenReady = jest.fn(() => Promise.resolve())
 
+  commandLine = {
+    getSwitchValue() {
+      return ""
+    }
+  }
+
   getName() {
     return "TestApp"
   }

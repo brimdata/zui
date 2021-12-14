@@ -45,7 +45,7 @@ export default function reducer(state: TabsState = init, action: TabActions) {
     case "TABS_ACTIVE_CLEAR":
       var index = state.data.findIndex((t) => t.id === state.active)
       var tabs = [...state.data]
-      tabs[index] = tabReducer({id: state.active}, {type: "@INIT"})
+      tabs[index] = tabReducer({id: state.active} as TabState, {type: "@INIT"})
       return {
         ...state,
         data: tabs
@@ -101,7 +101,8 @@ function tabAction({type}) {
     type.startsWith("LOG_DETAIL_") ||
     type.startsWith("LAYOUT_") ||
     type.startsWith("CURRENT_") ||
-    type.startsWith("LAST_")
+    type.startsWith("LAST_") ||
+    type.startsWith("TAB_LOCAL_STATE")
   )
 }
 

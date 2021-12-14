@@ -5,6 +5,7 @@ import {BrowserHistory} from "history"
 declare global {
   namespace NodeJS {
     interface Global {
+      featureFlags: string[]
       fetch: any
       DOMRectReadOnly: any
       ResizeObserver: any

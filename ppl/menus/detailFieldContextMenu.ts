@@ -1,4 +1,4 @@
-import {encode} from "@brimdata/zealot"
+import {encode, zed} from "@brimdata/zealot"
 import {isEqual} from "lodash"
 import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
@@ -6,7 +6,6 @@ import {showContextMenu} from "src/js/lib/System"
 import Columns from "src/js/state/Columns"
 import SearchBar from "src/js/state/SearchBar"
 import {Thunk} from "src/js/state/types"
-import {zed} from "zealot-old"
 
 type Args = {
   field: zed.Field
