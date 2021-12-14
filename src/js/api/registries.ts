@@ -31,7 +31,7 @@ export class CommandRegistry {
 interface Loader {
   match: string
   load: (
-    params: IngestParams & {poolId: string},
+    params: IngestParams & {poolId: string; branch: string},
     onProgress: (value: number | null) => void,
     onWarning: (warning: string) => void,
     onDetailUpdate: () => Promise<void>,

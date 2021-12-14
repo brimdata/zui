@@ -28,7 +28,7 @@ export default function(props: Props = {}): Pen {
       prevSelection = d3.brushSelection(brushG.node())
     }
 
-    function onBrushEnd() {
+    function onBrushEnd(this: d3.ContainerElement) {
       const {selection, sourceEvent} = d3.event
 
       if (!sourceEvent) {
