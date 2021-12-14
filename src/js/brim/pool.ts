@@ -5,9 +5,6 @@ import brim, {Span} from "./"
 export default function pool(info: Pool) {
   return {
     ...info,
-    isArchive() {
-      return this.getType() === "archive"
-    },
     defaultSpanArgs() {
       return this.everythingSpan()
     },

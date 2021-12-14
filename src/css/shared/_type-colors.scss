@@ -1,44 +1,79 @@
-@mixin type-colors {
-  &.addr,
-  &.ip,
-  &.set\[addr\] {
-    color: var(--ip);
-  }
+:root {
+  // type colors
+  --zed-null: var(--lead);
+  --zed-time: hsl(275, 55%, 50%);
+  --zed-symbol: hsl(212, 95%, 55%);
+  --zed-type: hsla(212, 70%, 50%);
+  --interval: #544aa6;
+  --bool: #3eaef4;
+  --zed-string: hsl(130, 54%, 38%);
+  --zed-key: hsl(212, 17%, 55%);
+  --zed-number: #e65835;
+  --zed-syntax: hsl(212, 17%, 55%);
+}
 
-  &.port,
-  &.set\[port\] {
-    color: var(--port);
-  }
+.zed-syntax {
+  color: var(--zed-syntax);
+}
 
-  &.interval,
-  &.duration,
-  &.set\[interval\] {
-    color: var(--interval);
-  }
+.zed-key {
+  color: var(--zed-key);
+}
 
-  &.count,
-  &.uint8,
-  &.uint16,
-  &.uint32,
-  &.uint64,
-  &.int8,
-  &.int16,
-  &.int32,
-  &.int64,
-  &.set\[count\] {
-    color: var(--count);
-  }
+.zed-ip,
+.zed-net {
+  color: var(--zed-symbol);
+}
 
-  &.bool,
-  &.set\[bool\] {
-    color: var(--blue);
-  }
+.zed-duration {
+  color: var(--zed-symbol);
+}
 
-  &.null {
-    color: var(--cloudy);
-  }
+.zed-uint8,
+.zed-uint16,
+.zed-uint32,
+.zed-uint64,
+.zed-int8,
+.zed-int16,
+.zed-int32,
+.zed-int64,
+.zed-float64 {
+  color: var(--zed-number);
+}
 
-  &.time {
-    color: var(--interval);
-  }
+.zed-bool {
+  color: var(--zed-symbol);
+}
+
+.zed-time {
+  color: var(--zed-time);
+}
+
+.zed-null {
+  color: var(--zed-null);
+}
+
+.zed-string {
+  color: var(--zed-string);
+}
+
+.zed-bstring {
+  color: var(--zed-string);
+}
+
+.zed-error {
+  background: hsl(3, 97%, 95%);
+  color: hsl(3, 97%, 40%);
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+.zed-type {
+  color: var(--zed-symbol);
+  font-style: italic;
+}
+
+.zed-annotation {
+  color: var(--zed-type);
+  font-weight: bold;
 }

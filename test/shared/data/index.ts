@@ -17,4 +17,16 @@ class Data {
   }
 }
 
+const bufferToReadableStream = (buffer: Buffer) => {
+  return new ReadableStream({
+    start(controller) {
+      return pump()
+      function pump() {
+        controller.enqueue(buffer)
+        controller.close()
+      }
+    }
+  })
+}
+
 export default new Data()

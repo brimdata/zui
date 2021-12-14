@@ -5,10 +5,8 @@ import {Zealot, ZealotPayload, ZealotPayloadValue, QueryFormat} from "./types"
 import {createTime} from "./util/time"
 import {createZealot} from "./zealot"
 import {createZealotMock, ZealotMock} from "./zealot_mock"
-import {zed, zjson} from "@brimdata/zealot"
 
 export {
-  zjson,
   createZealot,
   createZealotMock,
   createTime,
@@ -19,6 +17,5 @@ export {
   ZealotMock,
   createFetcher,
   FetchArgs,
-  parse,
-  zed
+  parse
 }

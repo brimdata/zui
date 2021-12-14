@@ -8,10 +8,6 @@
   .using-keyboard &:focus {
     outline: none;
   }
-
-  * {
-    @include type-colors;
-  }
 }
 
 .viewer .view {
@@ -38,6 +34,7 @@
   line-height: 25px;
   align-items: center;
   opacity: 1;
+  padding-left: 12px;
 
   &.even {
     background: var(--table-stripe-bg);

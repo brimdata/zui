@@ -20,8 +20,8 @@ export default function(brim: BrimMain) {
     brim.windows.closeWindow()
   })
 
-  ipcMain.handle("windows:newSearchTab", (e, params) => {
-    brim.windows.openSearchTab(params.params)
+  ipcMain.handle("windows:newSearchTab", async (e, params) => {
+    await brim.windows.openSearchTab(params.params)
   })
 
   ipcMain.handle("windows:log", (e, {id, args}) => {

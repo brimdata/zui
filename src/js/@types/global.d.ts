@@ -6,6 +6,7 @@ import {MainArgs} from "../electron/main"
 declare global {
   namespace NodeJS {
     interface Global {
+      featureFlags: string[]
       fetch: any
       DOMRectReadOnly: any
       ResizeObserver: any
@@ -18,12 +19,6 @@ declare global {
       navTo: (path: string) => void
       dev: DevGlobal
       mainArgs: MainArgs
-    }
-
-    interface Process {
-      on(event: "spectron:mock", listener: MessageListener): this
-
-      on(event: "spectron:clickAppMenuItem", listener: MessageListener): this
     }
   }
 }

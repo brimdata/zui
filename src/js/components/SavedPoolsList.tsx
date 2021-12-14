@@ -9,7 +9,7 @@ import styled from "styled-components"
 import {
   currentPoolItem,
   poolItem
-} from "../../../test/integration/helpers/locators"
+} from "../../../test/playwright/helpers/locators"
 import brim from "../brim"
 import FileFilled from "../icons/FileFilled"
 import Current from "../state/Current"

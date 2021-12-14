@@ -7,8 +7,9 @@ import logDetailsReducer from "../LogDetails/reducer"
 import searchReducer from "../Search/reducer"
 import searchBarReducer from "../SearchBar/reducer"
 import viewerReducer from "../Viewer/reducer"
+import {tabLocalStateSlice} from "./local-state"
 
-export default combineReducers<any, any>({
+const tabReducer = combineReducers({
   id: (state: string = brim.randomHash(), _) => state,
   search: searchReducer,
   searchBar: searchBarReducer,
@@ -16,5 +17,10 @@ export default combineReducers<any, any>({
   chart: chartReducer,
   columns: columnsReducer,
   logDetails: logDetailsReducer,
-  layout: layoutReducer
+  layout: layoutReducer,
+  localState: tabLocalStateSlice.reducer
 })
+
+export type TabReducer = typeof tabReducer
+
+export default tabReducer

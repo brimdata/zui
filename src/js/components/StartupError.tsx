@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import {remote} from "electron"
+import * as remote from "@electron/remote"
 import Link from "./common/Link"
 import ToolbarButton from "../../../app/toolbar/button"
 
@@ -17,8 +17,8 @@ const WindowDragArea = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  height 30px;
-  background-color: rgba(0,0,0,0.05);
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.05);
 `
 
 const Content = styled.div`

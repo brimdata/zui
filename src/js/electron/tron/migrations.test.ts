@@ -1,7 +1,7 @@
-import tron from "./"
+import {Migrations} from "./migrations"
 
 test("run", async () => {
-  const migrations = await tron.migrations({from: 0})
+  const migrations = await Migrations.init({from: 0})
   const state = {version: 0, data: undefined}
 
   const newState = migrations.run(state, migrations.getPending())
@@ -10,7 +10,7 @@ test("run", async () => {
 })
 
 test("sorts the migrations by version", async () => {
-  const migrations = await tron.migrations()
+  const migrations = await Migrations.init()
   const versions = migrations.getAll().map((m) => m.version)
   const sorted = versions.slice().sort((a, b) => a - b)
 
@@ -18,7 +18,7 @@ test("sorts the migrations by version", async () => {
 })
 
 test("run pending", async () => {
-  const migrations = await tron.migrations()
+  const migrations = await Migrations.init()
   const state = {version: 0, data: undefined}
 
   const newState = migrations.runPending(state)
@@ -27,7 +27,7 @@ test("run pending", async () => {
 })
 
 test("only migration march migrations", async () => {
-  const migrations = await tron.migrations({
+  const migrations = await Migrations.init({
     from: "202010191355",
     to: "202011141515"
   })

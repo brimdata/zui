@@ -4,8 +4,17 @@ import {useDispatch, useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
+import styled from "styled-components"
 import {useResizeObserver} from "../hooks/useResizeObserver"
 import ResultsTable from "./ResultsTable"
+
+const BG = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: none;
+  position: relative;
+  flex: 1;
+`
 
 export default function SearchResults() {
   const {ref, rect} = useResizeObserver()
@@ -23,12 +32,12 @@ export default function SearchResults() {
   }, [location.key])
 
   return (
-    <div className="search-results" ref={ref}>
+    <BG ref={ref}>
       <ResultsTable
         width={rect.width}
         height={rect.height}
         multiSelect={false}
       />
-    </div>
+    </BG>
   )
 }

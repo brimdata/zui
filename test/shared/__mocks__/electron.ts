@@ -55,6 +55,12 @@ class MockApp {
   on = jest.fn()
   whenReady = jest.fn(() => Promise.resolve())
 
+  commandLine = {
+    getSwitchValue() {
+      return ""
+    }
+  }
+
   getName() {
     return "TestApp"
   }
@@ -109,5 +115,3 @@ export const screen = {
 export const autoUpdater = {
   on: jest.fn()
 }
-
-export const remote = {app}

@@ -4,6 +4,8 @@ const flags = require("./util/flags")
 const {JS, SCSS, STATIC} = require("./util/commands")
 
 async function start() {
+  const electronArgs = process.argv.splice(2).join(" ")
+
   if (!flags.noBuild) {
     await run("node", "scripts/build")
   } else {
@@ -14,7 +16,9 @@ async function start() {
   run("npx", `${SCSS} --watch --skip-initial`)
   run("npx", `${STATIC} --watch`)
   run("npx", "livereload dist", {desc: "Watching dist for changes"})
-  run("npx", "electron .", {desc: "Starting electron"})
+  run("npx", `electron . ${electronArgs}`, {
+    desc: `Starting electron ${electronArgs}`
+  })
 }
 
 process.on("SIGINT", () => process.exit(0))

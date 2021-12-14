@@ -1,6 +1,6 @@
 import {useZedFormatter} from "app/core/format"
 import Icon from "app/core/Icon"
-import {typeClassNames} from "app/core/utils/type-class-names"
+import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import {isEventType, SuricataEventType} from "ppl/suricata/suricata-plugin"
@@ -42,6 +42,7 @@ type ValueProps = {
 const Space = styled.span`
   display: inline-block;
   width: 7px;
+  height: 100%;
 `
 const pad = (bool) => (bool ? <Space /> : null)
 
@@ -60,12 +61,10 @@ export default function Value(props: ValueProps) {
 export function PrimitiveValue(props: ValueProps) {
   const dispatch = useDispatch()
   const format = useZedFormatter()
-  const fillCell = props.field.value === props.value // This is the only value in the cell
   return (
     <BG
       role="cell"
-      style={{width: fillCell ? "100%" : "auto"}}
-      className={typeClassNames(props.value)}
+      className={zedTypeClassName(props.value)}
       onContextMenu={() =>
         dispatch(
           searchFieldContextMenu({

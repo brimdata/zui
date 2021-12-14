@@ -64,11 +64,11 @@ export class BrimMain {
   async start(opts: MainArgs) {
     if (opts.lake) this.lake.start()
     if (opts.devtools) await installExtensions()
-    this.windows.init()
+    await this.windows.init()
   }
 
-  activate() {
-    if (!this.windows.getVisible().length) this.windows.init()
+  async activate() {
+    if (!this.windows.getVisible().length) await this.windows.init()
   }
 
   async resetState() {

@@ -15,6 +15,7 @@ test("migrating 202103011928_adjustWindowsNetworkingActivityQuery", async () => 
   }
 
   for (const state of getAllStates(next)) {
+    // @ts-ignore
     const targetQuery = Object.values(state.queries.items).find(({id}) => {
       return id === "3"
     })

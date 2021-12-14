@@ -100,7 +100,7 @@ const executeLoader = (
   api: BrimApi,
   handlerId: string
 ) => ({
-  async do(params: IngestParams & {poolId: string}) {
+  async do(params: IngestParams & {poolId: string; branch: string}) {
     const {poolId, fileListData = []} = params
 
     const space = Pools.actionsFor(workspaceId, poolId)

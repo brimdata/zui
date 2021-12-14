@@ -1,4 +1,5 @@
 import {BrowserWindow} from "electron"
+import {enable} from "@electron/remote/main"
 
 import {WindowName} from "./window-manager"
 
@@ -22,7 +23,7 @@ export default function window(name: WindowName, params: WindowParams) {
   }
 }
 
-function aboutWindow() {
+async function aboutWindow() {
   const win = new BrowserWindow({
     resizable: false,
     minimizable: false,
@@ -31,29 +32,31 @@ function aboutWindow() {
     height: 360,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      contextIsolation: false
     }
   })
+  enable(win.webContents)
   win.setMenu(null)
   win.center()
-  win.loadFile("about.html")
+  await win.loadFile("about.html")
   return win
 }
 
-function hiddenWindow() {
+async function hiddenWindow() {
   const win = new BrowserWindow({
     show: false,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      contextIsolation: false
     }
   })
+  enable(win.webContents)
   win.setMenu(null)
-  win.loadFile("hidden.html")
+  await win.loadFile("hidden.html")
   return win
 }
 
-function detailWindow(params) {
+async function detailWindow(params) {
   const {size, position, query, id} = params
   const win = new BrowserWindow({
     resizable: true,
@@ -62,9 +65,10 @@ function detailWindow(params) {
     minWidth: 500,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true
+      contextIsolation: false
     }
   })
+  enable(win.webContents)
   if (size) {
     win.setSize(size[0], size[1])
   }

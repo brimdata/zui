@@ -59,7 +59,7 @@ function time(val: Ts | bigint | Date | string = new Date()) {
     },
 
     subTs(diff: Ts) {
-      const dur = this.toBigInt().minus(time(diff).toBigInt())
+      const dur = this.toBigInt() - time(diff).toBigInt()
       return brim.time(fromBigInt(dur))
     },
 

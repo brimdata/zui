@@ -1,5 +1,5 @@
 import {useZedFormatter} from "app/core/format"
-import {typeClassNames} from "app/core/utils/type-class-names"
+import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
 import classNames from "classnames"
 import React from "react"
 import {zed} from "@brimdata/zealot"
@@ -23,7 +23,7 @@ export default function FieldCell({field, record}: Props) {
       className={classNames(
         "field-cell",
         field.name,
-        typeClassNames(field.data),
+        zedTypeClassName(field.data),
         getBackground(field, record)
       )}
     >

@@ -1,6 +1,7 @@
 import {useState} from "react"
 
-import {remote, MenuItemConstructorOptions} from "electron"
+import {MenuItemConstructorOptions} from "electron"
+import * as remote from "@electron/remote"
 
 const margin = 8
 

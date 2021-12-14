@@ -13,19 +13,16 @@ const zdepsPath = path.resolve("zdeps")
 const platformDefs = {
   darwin: {
     zqBin: "zq",
-    zapiBin: "zapi",
     zedBin: "zed",
     osarch: "darwin-amd64"
   },
   linux: {
     zqBin: "zq",
-    zapiBin: "zapi",
     zedBin: "zed",
     osarch: "linux-amd64"
   },
   win32: {
     zqBin: "zq.exe",
-    zapiBin: "zapi.exe",
     zedBin: "zed.exe",
     osarch: "windows-amd64"
   }
@@ -89,7 +86,7 @@ async function zedArtifactsDownload(version, destPath) {
 
     fs.mkdirpSync(destPath)
 
-    for (let f of [plat.zqBin, plat.zapiBin, plat.zedBin]) {
+    for (let f of [plat.zqBin, plat.zedBin]) {
       fs.moveSync(
         path.join(tmpdir.name, paths.internalTopDir, f),
         path.join(destPath, f),
@@ -111,7 +108,7 @@ async function zedDevBuild(destPath) {
 
   fs.mkdirpSync(destPath)
 
-  for (let f of [plat.zqBin, plat.zapiBin, plat.zedBin]) {
+  for (let f of [plat.zqBin, plat.zedBin]) {
     fs.copyFileSync(path.join(zedPackageDir, "dist", f), path.join(destPath, f))
   }
 }

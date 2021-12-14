@@ -25,6 +25,7 @@ import env from "app/core/env"
 import {join} from "path"
 import requireAll from "./require-all"
 import isDev from "./isDev"
+require("@electron/remote/main").initialize()
 
 const mainDefaults = () => ({
   lakePort: 9867,
@@ -58,6 +59,9 @@ export async function main(args: Partial<MainArgs> = {}) {
   serve(paths)
   serve(meta)
   handleQuit(brim)
+  ipcMain.handle("get-feature-flags", () => {
+    return app.commandLine.getSwitchValue("feature-flags").split(",")
+  })
 
   ipcMain.handle("get-main-args", () => ({
     ...opts
