@@ -11,40 +11,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [ 14.x ]
         os: [ macos-10.15, ubuntu-18.04, windows-2019 ]
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
-      - name: setup node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16'
-      - name: Set NPM Cache Directory
-        id: set-npm-cache-dir
-        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-      - name: Clear Extraneous Runner Cache
-        # Clear on-runner cache before we create our own cache to prevent
-        # slower build times. See https://github.com/brimdata/brim/pull/590
-        # and https://github.com/brimdata/brim/issues/641
-        run: rm -rf "${NPM_CACHE:?}"
-        env:
-          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-        shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        # Change the cache name any time you want to start with a cleared
-        # cache.
-        env:
-          cache-name: cache-node-modules-ci-v5
+      - uses: actions/setup-node@v2
         with:
-          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+          cache: npm
+          node-version-file: .nvmrc
       - run: npm install --no-audit
       - run: npm run format-check
       - run: npm run build
@@ -69,7 +46,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node-version: [ 14.x ]
         os: [ macos-10.15, ubuntu-18.04 ]
     needs: build
     steps:
@@ -78,27 +54,10 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16'
-      - name: setup node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Set NPM Cache Directory
-        id: set-npm-cache-dir
-        run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-      - name: Clear Extraneous Runner Cache
-        run: rm -rf "${NPM_CACHE:?}"
-        env:
-          NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-        shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules-ci-v5
-        with:
-          path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+          cache: npm
+          node-version-file: .nvmrc
       - run: npm install --no-audit
       - run: npm run build
       - name: Download Linux packages
@@ -123,5 +82,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
-          name: artifacts-${{ matrix.os }}-node-${{ matrix.node-version }}
+          name: artifacts-${{ matrix.os }}
           path: /var/tmp/brimdata/playwright-itest
