@@ -1,5 +1,6 @@
 import classNames from "classnames"
-import {ipcRenderer, MenuItemConstructorOptions, remote} from "electron"
+import {ipcRenderer, MenuItemConstructorOptions} from "electron"
+import * as remote from "@electron/remote"
 import React, {useLayoutEffect, useRef} from "react"
 import toast from "react-hot-toast"
 import {useDispatch, useSelector} from "react-redux"
@@ -19,7 +20,7 @@ import {StyledArrow} from "../LeftPane/common"
 import {useBrimApi} from "../../../../app/core/context"
 import exportQueryLib from "../../flows/exportQueryLib"
 import {AppDispatch} from "../../state/types"
-import {brimQueryLib} from "../../../../test/integration/helpers/locators"
+import {brimQueryLib} from "../../../../test/playwright/helpers/locators"
 import {showContextMenu} from "../../lib/System"
 
 const BG = styled.div`

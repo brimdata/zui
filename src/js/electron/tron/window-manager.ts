@@ -43,18 +43,19 @@ export class WindowManager {
 
   constructor(private session?: SessionState | null | undefined) {}
 
-  init() {
-    // hidden renderer/window is never persisted, so always open it with rest
-    this.ensureHiddenRenderer()
-
+  async init() {
     if (!this.session || (this.session && this.session.order.length === 0)) {
-      this.openWindow("search")
+      await this.openWindow("search")
     } else {
       for (const id of this.session.order) {
         const {name, size, position, state} = this.session.windows[id]
-        this.openWindow(name, {size, position, id}, state)
+        await this.openWindow(name, {size, position, id}, state)
       }
     }
+
+    // hidden renderer/window is never persisted, so always open it. To aid
+    // tests we always open it at the end
+    await this.ensureHiddenRenderer()
   }
 
   whenAllClosed() {
@@ -118,7 +119,7 @@ export class WindowManager {
     return this.windows[id]
   }
 
-  openSearchTab(searchParams: NewTabSearchParams) {
+  async openSearchTab(searchParams: NewTabSearchParams) {
     let isNewWin = true
     const existingWin = this.getAll()
       .sort((a, b) => b.lastFocused - a.lastFocused)
@@ -134,7 +135,7 @@ export class WindowManager {
     }
 
     const {href} = searchParams
-    const win = this.openWindow("search", {query: {href}})
+    const win = await this.openWindow("search", {query: {href}})
     win.ref.webContents.once("did-finish-load", () => {
       sendTo(
         win.ref.webContents,
@@ -143,11 +144,11 @@ export class WindowManager {
     })
   }
 
-  openWindow(
+  async openWindow(
     name: WindowName,
     winParams: Partial<WindowParams> = {},
     initialState: any = undefined
-  ): BrimWindow {
+  ): Promise<BrimWindow> {
     const lastWin = last<BrimWindow>(
       this.getAll().filter((w) => w.name === name)
     )
@@ -171,20 +172,22 @@ export class WindowManager {
       const {size, position, query, id} = params
       const dimens = dimensFromSizePosition(size, position)
       const win = new SearchWindow(dimens, query, initialState, id)
+      await win.load()
       this.windows[id] = win
       win.ref.on("closed", () => {
         onClosed(this.windows[id])
       })
       return win
     } else {
-      const ref = tron
-        .window(name, params)
-        .on("focus", () => {
-          this.windows[id].lastFocused = new Date().getTime()
-        })
-        .on("closed", () => {
-          onClosed(this.windows[id])
-        })
+      const ref = await tron.window(name, params)
+
+      ref.on("focus", () => {
+        this.windows[id].lastFocused = new Date().getTime()
+      })
+
+      ref.on("closed", () => {
+        onClosed(this.windows[id])
+      })
 
       const win = {
         id,
@@ -213,10 +216,10 @@ export class WindowManager {
     }
   }
 
-  ensureHiddenRenderer() {
+  async ensureHiddenRenderer() {
     // only open hidden window if one doesn't already exist
     if (this.getHidden().length) return
-    this.openWindow("hidden")
+    await this.openWindow("hidden")
   }
 
   openAbout() {
@@ -228,7 +231,7 @@ export class WindowManager {
     }
   }
 
-  openPreferences() {
+  async openPreferences() {
     const win = this.getAll()
       .sort((a, b) => (b.lastFocused || 0) - (a.lastFocused || 0))
       .find((w) => w.name === "search")
@@ -236,7 +239,7 @@ export class WindowManager {
     if (win) {
       win.ref.webContents.send("showPreferences")
     } else {
-      const newWin = this.openWindow("search", {})
+      const newWin = await this.openWindow("search", {})
 
       newWin.ref.webContents.once("did-finish-load", () => {
         newWin.ref.webContents.send("showPreferences")
@@ -244,7 +247,7 @@ export class WindowManager {
     }
   }
 
-  openReleaseNotes() {
+  async openReleaseNotes() {
     const win = this.getAll()
       .sort((a, b) => (b.lastFocused || 0) - (a.lastFocused || 0))
       .find((w) => w.name === "search")
@@ -252,7 +255,7 @@ export class WindowManager {
     if (win) {
       win.ref.webContents.send("showReleaseNotes")
     } else {
-      const newWin = this.openWindow("search", {})
+      const newWin = await this.openWindow("search", {})
       newWin.ref.webContents.once("did-finish-load", () => {
         newWin.ref.webContents.send("showReleaseNotes")
       })

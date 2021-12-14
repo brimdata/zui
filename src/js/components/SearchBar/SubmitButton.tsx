@@ -5,7 +5,7 @@ import styled from "styled-components"
 
 import {submitSearch} from "../../flows/submitSearch/mod"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
-import {submitButton} from "test/integration/helpers/locators"
+import {submitButton} from "test/playwright/helpers/locators"
 
 const start = "#6aa4e7"
 const end = "#4b91e2"

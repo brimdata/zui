@@ -1,4 +1,4 @@
-import {remote} from "electron"
+import * as remote from "@electron/remote"
 import {Thunk} from "../../state/types"
 import {Workspace} from "../../state/Workspaces/types"
 import {buildWorkspace} from "./buildWorkspace"

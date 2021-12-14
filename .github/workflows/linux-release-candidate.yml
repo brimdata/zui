@@ -21,27 +21,10 @@ jobs:
     - uses: actions/setup-go@v2
       with:
         go-version: '1.16'
-    - name: setup node
-      uses: actions/setup-node@v2
+    - uses: actions/setup-node@v2
       with:
-        node-version: 12.x
-    - name: Set NPM Cache Directory
-      id: set-npm-cache-dir
-      run: echo "::set-output name=npm_cache_dir::$(npm config get cache)"
-    - name: Clear Extraneous Runner Cache
-      run: rm -rf "${NPM_CACHE:?}"
-      env:
-        NPM_CACHE: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-      shell: bash
-    - name: Cache node modules
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-node-modules-ci-v5
-      with:
-        path: ${{ steps.set-npm-cache-dir.outputs.npm_cache_dir }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+        cache: npm
+        node-version-file: .nvmrc
     - if: ${{ !startsWith(steps.extract_branch.outputs.branch, 'rc-v') }}
       name: Set version string for ad hoc builds
       run: echo "ADHOC_VERSION_STRING=$(npm version preminor --no-git-tag-version --preid prerelease-${GITHUB_SHA:0:8})" >> $GITHUB_ENV

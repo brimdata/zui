@@ -87,10 +87,14 @@ const toCliOpts = (
   )
 
 export default class BrimcapCLI {
+  private isWin = env.isWindows
+  // don't detach if is windows
+  private spawnOpts = this.isWin ? undefined : {detached: true}
+
   constructor(private binPath: string) {}
 
   index(opts: indexOptions) {
-    return this.exec("index", opts)
+    return this.execSpawnSync("index", [...toCliOpts(opts)])
   }
 
   analyze(
@@ -98,13 +102,22 @@ export default class BrimcapCLI {
     opts: analyzeOptions,
     signal?: AbortSignal
   ): ChildProcess {
-    const subCommandWithArgs = ["analyze", ...toCliOpts(opts), pcapPath]
-    const isWin = env.isWindows
+    return this.execSpawn("analyze", [...toCliOpts(opts), pcapPath], signal)
+  }
+
+  search(opts: searchOptions) {
+    return this.execSpawnSync("search", [...toCliOpts(opts)])
+  }
+
+  private execSpawn(
+    subCommand: string,
+    optsAndArgs: string[],
+    signal?: AbortSignal
+  ) {
     // don't detach if is windows
-    const spawnOpts = isWin ? undefined : {detached: true}
-    const p = spawn(this.binPath, subCommandWithArgs, spawnOpts)
+    const p = spawn(this.binPath, [subCommand, ...optsAndArgs], this.spawnOpts)
     signal?.addEventListener("abort", () => {
-      if (isWin) {
+      if (this.isWin) {
         spawnSync("taskkill", ["/pid", p.pid.toString(), "/f", "/t"])
       } else {
         process.kill(-p.pid, "SIGINT")
@@ -113,12 +126,7 @@ export default class BrimcapCLI {
     return p
   }
 
-  search(opts: searchOptions) {
-    return this.exec("search", opts)
-  }
-
-  private exec(subCommand: string, opts: searchOptions | indexOptions) {
-    const subCommandWithArgs = [subCommand, ...toCliOpts(opts)]
-    return spawnSync(this.binPath, subCommandWithArgs)
+  private execSpawnSync(subCommand: string, opts: string[]) {
+    return spawnSync(this.binPath, [subCommand, ...opts])
   }
 }

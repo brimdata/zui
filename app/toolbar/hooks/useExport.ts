@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux"
 import Modal from "src/js/state/Modal"
-import {toolbarExportButton} from "test/integration/helpers/locators"
+import {toolbarExportButton} from "test/playwright/helpers/locators"
 import {ActionButtonProps} from "../action-button"
 
 export default function useExport(): ActionButtonProps {

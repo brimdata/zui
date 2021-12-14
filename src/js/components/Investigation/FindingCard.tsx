@@ -10,7 +10,7 @@ import Investigation from "../../state/Investigation"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Search from "../../state/Search"
 import usePopupMenu from "../hooks/usePopupMenu"
-import {remote} from "electron"
+import * as remote from "@electron/remote"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
   fill: var(--lead);

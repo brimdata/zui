@@ -1,4 +1,3 @@
-import {uniq} from "lodash"
 import data from "test/shared/data"
 import {withLake} from "../helpers/with-lake"
 import {Zealot} from "../../../zealot-old"

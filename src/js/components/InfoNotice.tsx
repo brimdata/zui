@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
-import {reactElementProps} from "../../../test/integration/helpers/integration"
+import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import lib from "../lib"
 
 type Props = {children: any}

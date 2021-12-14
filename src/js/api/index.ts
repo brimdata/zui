@@ -1,5 +1,5 @@
 import {Abortables} from "app/core/models/abortables"
-import {remote} from "electron"
+import * as remote from "@electron/remote"
 import path from "path"
 import toast from "react-hot-toast"
 import ingestFiles from "../../../app/features/import/import-files"

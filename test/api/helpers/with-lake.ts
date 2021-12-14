@@ -26,7 +26,7 @@ async function kill(lake: ChildProcess, client: any) {
 }
 
 async function start(runner, root, addr) {
-  return spawn(runner, ["lake", "serve", "-R", root, "-l", addr], {
+  return spawn(runner, ["serve", "-lake", root, "-l", addr], {
     stdio: null // make this "inherit" to debug a problem
   })
 }
@@ -64,11 +64,11 @@ type Config = {
 
 export async function withLake(fn: (zealot: any) => any, config: Config = {}) {
   const DIR = __dirname
-  const ZED_LAKE_ROOT = join(DIR, "../lake_root")
+  const ZED_LAKE = join(DIR, "../lake_root")
   const ZED_RUNNER = join(DIR, "../../../zdeps/zed")
   const ADDR = "localhost:9119"
 
-  const root = config.root || ZED_LAKE_ROOT
+  const root = config.root || ZED_LAKE
   const runner = config.runner || ZED_RUNNER
   const addr = config.addr || ADDR
 
