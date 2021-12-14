@@ -1,7 +1,8 @@
-import lib from "../../lib"
+import {compact} from "lodash"
+import isEmpty from "lodash/isEmpty"
 import {getUniqName} from "../../lib/uniqName"
 import time from "../time"
-import fileList, {FileListData} from "./fileList"
+import FileList, {FileListData} from "./fileList"
 
 export type IngestParams = {
   name: string
@@ -17,13 +18,17 @@ export default function getParams(
   existingNames: string[] = [],
   now: Date = new Date()
 ): IngestParams | IngestParamsError {
-  const files = fileList(data)
+  const files = new FileList(data)
 
   function getPoolName() {
     let name: string
-    if (files.oneFile()) name = lib.file(files.first().file.path).fileName()
-    else if (files.inSameDir()) name = files.dirName()
-    else name = generateDirName(now)
+    if (files.oneFile()) {
+      name = files.first().file.name
+    } else if (files.inSameDir()) {
+      name = isEmpty(compact(files.paths()))
+        ? files.first().file.name
+        : files.dirName()
+    } else name = generateDirName(now)
 
     return getUniqName(name, existingNames)
   }
@@ -35,5 +40,5 @@ export default function getParams(
 }
 
 function generateDirName(now: Date) {
-  return "zeek_" + time(now).format("YYYY-MM-DD_HH:mm:ss")
+  return "pool_" + time(now).format("YYYY-MM-DD_HH:mm:ss")
 }

@@ -101,5 +101,3 @@ export const screen = {
 export const autoUpdater = {
   on: jest.fn()
 }
-
-export const remote = {app}

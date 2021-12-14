@@ -20,6 +20,6 @@ module.exports = {
     "/itest/",
     "/dist/",
     "<rootDir>/test/api/",
-    "<rootDir>/test/integration/"
+    "<rootDir>/test/playwright/"
   ]
 }

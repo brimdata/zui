@@ -1,5 +1,6 @@
 import env from "app/core/env"
-import {MenuItemConstructorOptions, remote, PopupOptions} from "electron"
+import {MenuItemConstructorOptions, PopupOptions} from "electron"
+import * as remote from "@electron/remote"
 
 export function showContextMenu(
   template: MenuItemConstructorOptions[],

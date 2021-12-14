@@ -2,7 +2,7 @@ import {useDispatch} from "react-redux"
 import React from "react"
 
 import {inspectSearch} from "../flows/inspectSearch"
-import {reactElementProps} from "../../../test/integration/helpers/integration"
+import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
 import {AppDispatch} from "../state/types"

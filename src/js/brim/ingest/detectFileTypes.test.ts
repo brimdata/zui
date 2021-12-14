@@ -9,6 +9,7 @@ const zeek = data.getDOMFile("sample.tsv")
 
 test("add file types", async () => {
   const files = [pcap, pcapng, zeek, json, unknown]
+
   const types = await ingest.detectFileTypes(files)
 
   expect(types).toEqual([

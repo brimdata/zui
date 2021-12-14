@@ -3,8 +3,8 @@ import {join} from "path"
 import {zjson} from "@brimdata/zealot"
 
 export function toZJSON(zson: string): zjson.RootRecord[] {
-  const zed = join(__dirname, "../../zdeps/zed")
-  const cmd = `${zed} query -f zjson -`
+  const zq = join(__dirname, "../../zdeps/zq")
+  const cmd = `${zq} -f zjson -`
   const result = execSync(cmd, {encoding: "utf-8", input: zson})
   return result
     .trim()

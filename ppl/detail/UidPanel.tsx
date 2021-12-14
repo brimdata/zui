@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux"
 import React, {memo, useCallback, useMemo} from "react"
 
-import {reactElementProps} from "test/integration/helpers/integration"
+import {reactElementProps} from "test/playwright/helpers/integration"
 import LogDetails from "src/js/state/LogDetails"
 import {Caption, ChartWrap, TableWrap} from "app/detail/Shared"
 import PanelHeading from "app/detail/PanelHeading"
