@@ -31,11 +31,6 @@ async function runTest(query: string, cellValue: string, menuText: string) {
   expect(await system.findTableResults()).toMatchSnapshot()
 }
 
-function scalarString(value: string): () => Promise<void> {
-  const query = `_path=="string" scalar!=null | cut id, scalar | sort id`
-  return () => runTest(query, value, "Filter == value")
-}
-
 function scalarAddr(value: string) {
   const query = `_path=="addr" scalar!=null | cut id, scalar | sort id`
   return () => runTest(query, value, "Filter == value")
