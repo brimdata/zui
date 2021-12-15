@@ -7,7 +7,7 @@ module.exports = {
       babelConfig: true
     }
   },
-  testTimeout: 30_000,
+  testTimeout: 60_000,
   rootDir: join(__dirname, "../../"),
   testURL: "http://localhost/search.html",
   roots: ["<rootDir>/test/shared", "<rootDir>/test/system"],
