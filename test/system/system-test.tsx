@@ -6,6 +6,7 @@ import fsExtra from "fs-extra"
 import React from "react"
 import BrimApi from "src/js/api"
 import App from "src/js/components/App"
+import useEventListener from "src/js/components/hooks/useEventListener"
 import {BrimMain} from "src/js/electron/brim"
 import {main} from "src/js/electron/main"
 import initialize from "src/js/initializers/initialize"
@@ -47,7 +48,6 @@ async function bootBrim(name: string, args: Partial<Args> = {}) {
   fsExtra.removeSync(lakeRoot)
   fsExtra.removeSync(lakeLogs)
   fsExtra.removeSync(appState)
-  console.log("booting main")
   const brimMain = await main({
     lakePort,
     lakeRoot,
@@ -56,9 +56,7 @@ async function bootBrim(name: string, args: Partial<Args> = {}) {
     releaseNotes: false,
     autoUpdater: false
   })
-  console.log("booting renderer")
   const brimRenderer = await initialize()
-  console.log("booted")
   return {
     main: brimMain,
     store: brimRenderer.store,
@@ -94,12 +92,10 @@ export class SystemTest {
 
     beforeAll(async () => {
       this.assign(await bootBrim(name, opts))
-      jest.useFakeTimers()
       this.navTo(`/workspaces/${defaultWorkspace().id}`)
     })
 
     afterAll(async () => {
-      jest.useRealTimers()
       await this.plugins.deactivate()
       await this.main.quit()
       tl.cleanup()
@@ -121,8 +117,7 @@ export class SystemTest {
   async importFile(name: string) {
     const file = data.getWebFile(name)
     await tl.act(() => this.api.import([file]))
-    const toast = await tl.screen.findByRole("status")
-    expect(toast).toHaveTextContent(/import complete/i)
+    await tl.screen.findByText(/import complete/i)
   }
 
   async runQuery(query: string) {
@@ -146,13 +141,12 @@ export class SystemTest {
     tl.fireEvent.contextMenu(node, args)
   }
 
-  async click(element: string | Element) {
-    const node =
-      typeof element === "string"
-        ? await tl.screen.findByText(element)
-        : element
-
-    userEvent.click(node)
+  click(element: string | Element) {
+    if (typeof element === "string") {
+      return tl.screen.findByText(element).then((n) => userEvent.click(n))
+    } else {
+      return userEvent.click(element)
+    }
   }
 
   mockSaveDialog(result: {canceled: boolean; filePath: string}) {

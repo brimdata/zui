@@ -7,6 +7,7 @@ export default class LoadingBurst extends React.Component<Props> {
   render() {
     return (
       <div
+        data-test-id="loading-burst"
         className={classNames("loading-burst", {
           visible: this.props.show
         })}

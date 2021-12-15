@@ -1,6 +1,5 @@
-import {screen, within} from "@testing-library/react"
+import {screen, waitForElementToBeRemoved, within} from "@testing-library/react"
 import {toLower} from "lodash"
-import Layout from "src/js/state/Layout"
 import {SystemTest} from "./system-test"
 
 const system = new SystemTest("detail-pane")
@@ -14,7 +13,7 @@ beforeAll(async () => {
   await system.click(view)
   await system.click("Right Pane")
   await screen.findByText("No Log Selected")
-}, 10_000)
+})
 
 test("the truth", async () => {})
 const FIELDS = "fields"

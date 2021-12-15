@@ -16,9 +16,7 @@ function getInitialState(windowId) {
 
 export default async (api: BrimApi) => {
   const windowId = getUrlSearchParams().id
-  console.log("waiting for initial state")
   const initialState = await getInitialState(windowId)
-  console.log("got intial state")
   return configureStore({
     reducer: rootReducer,
     preloadedState: initialState,

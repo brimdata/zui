@@ -11,9 +11,7 @@ import initWorkspaceParams from "./initWorkspaceParams"
 
 export default async function initialize() {
   const api = new BrimApi()
-  console.log("initing store")
   const store = await initStore(api)
-  console.log("initedStore")
   api.init(store.dispatch, store.getState)
 
   const pluginManager = await initPlugins(api)

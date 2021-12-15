@@ -15,6 +15,7 @@ import InputLabel from "./common/forms/InputLabel"
 import {defaultModalButton} from "../../../test/playwright/helpers/locators"
 import {toast} from "react-hot-toast"
 import {AppDispatch} from "../state/types"
+import env from "app/core/env"
 
 const RadioButtons = styled.div`
   display: flex;
@@ -82,10 +83,7 @@ const ExportModal = ({onClose}) => {
           duration: 2 ** 31 - 1
         },
         success: {
-          duration: 3000
-        },
-        error: {
-          duration: 5000
+          duration: 2 ** 31 - 1
         }
       }
     )

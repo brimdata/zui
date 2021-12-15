@@ -20,7 +20,6 @@ import Handlers from "../state/Handlers"
 import useSearchShortcuts from "./useSearchShortcuts"
 
 export default function App() {
-  console.log("Render <App>")
   useStoreExport()
   const dispatch = useDispatch()
   useSearchShortcuts()

@@ -128,7 +128,7 @@ export default class BrimcapPlugin {
           setButtonDetails(toolbarId, buttonId, !conn)
         })
         .catch((err) => {
-          console.error(err)
+          if (!env.isTest) console.error(err)
           setConn(null)
           setButtonDetails(toolbarId, buttonId, true)
         })

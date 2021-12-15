@@ -1,4 +1,4 @@
-import {screen, waitForElementToBeRemoved} from "@testing-library/react"
+import {screen} from "@testing-library/react"
 import {SystemTest} from "./system-test"
 
 const system = new SystemTest("context-menu")
@@ -8,7 +8,7 @@ describe("context menu tests", () => {
     system.mountApp()
     await system.importFile("types.tsv")
     await screen.findAllByRole("cell")
-  }, 10_000)
+  })
 
   describe("rightclick scalar strings", () => {
     test("mystr", scalarString("mystr"))
