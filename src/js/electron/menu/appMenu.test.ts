@@ -5,14 +5,24 @@ const mockSend = jest.fn()
 
 test("app menu mac", async () => {
   Object.defineProperty(process, "platform", {value: "darwin"})
-  const menu = appMenu(mockSend, new BrimMain())
+  const brim = await BrimMain.boot({
+    lake: false,
+    devtools: false,
+    autoUpdater: false
+  })
+  const menu = appMenu(mockSend, brim)
 
   expect(menu).toMatchSnapshot()
 })
 
 test("app menu windows", async () => {
   Object.defineProperty(process, "platform", {value: "win32"})
-  const menu = appMenu(mockSend, new BrimMain())
+  const brim = await BrimMain.boot({
+    lake: false,
+    devtools: false,
+    autoUpdater: false
+  })
+  const menu = appMenu(mockSend, brim)
 
   expect(menu).toMatchSnapshot()
 })

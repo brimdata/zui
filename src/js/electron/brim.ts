@@ -16,7 +16,7 @@ import {installExtensions} from "./extensions"
 import ipc from "./ipc"
 import sendTo from "./ipc/sendTo"
 import isDev from "./isDev"
-import {MainArgs} from "./main"
+import {MainArgs, mainDefaults} from "./main"
 import tron, {Session} from "./tron"
 import formatSessionState from "./tron/formatSessionState"
 import {WindowManager} from "./tron/window-manager"
@@ -25,45 +25,32 @@ type QuitOpts = {
   saveSession?: boolean
 }
 
-type BrimArgs = {
-  windows?: WindowManager
-  store?: Store
-  session?: Session
-  lake?: Lake
-}
-
-type BootArgs = {
-  zedPort: number
-  zedRoot: string
-}
-
 export class BrimMain {
-  readonly windows: WindowManager
-  readonly store: Store
-  readonly lake: Lake
-  readonly session: Session
   public isQuitting = false
 
-  static async boot(args: MainArgs) {
+  static async boot(params: Partial<MainArgs> = {}) {
+    const args = {...mainDefaults(), ...params}
     const createSession = tron.session
     const session = createSession(args.appState)
     const data = await session.load()
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
     const lake = new Lake(args.lakeRoot, args.lakePort, args.lakeLogs)
-    return new BrimMain({session, windows, store, lake})
+    return new BrimMain(lake, windows, store, session, args)
   }
 
-  constructor(args: BrimArgs = {}) {
-    this.windows = args.windows || new WindowManager()
-    this.store = args.store || createGlobalStore(undefined)
-    this.session = args.session
-    this.lake = args.lake || new Lake("", 9867, "")
-  }
+  // Only call this from boot
+  constructor(
+    readonly lake: Lake,
+    readonly windows: WindowManager,
+    readonly store: Store,
+    readonly session: Session,
+    readonly args: MainArgs
+  ) {}
 
-  async start(opts: MainArgs) {
-    if (opts.lake) this.lake.start()
-    if (opts.devtools) await installExtensions()
+  async start() {
+    if (this.args.lake) this.lake.start()
+    if (this.args.devtools) await installExtensions()
     await this.windows.init()
   }
 

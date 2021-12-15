@@ -1,11 +1,11 @@
 import ingest from "./"
 import data from "test/shared/data"
 
-const json = data.getDOMFile("sample.ndjson")
-const pcap = data.getDOMFile("sample.pcap")
-const pcapng = data.getDOMFile("sample.pcapng")
-const unknown = data.getDOMFile("plain.txt")
-const zeek = data.getDOMFile("sample.tsv")
+const json = data.getWebFile("sample.ndjson")
+const pcap = data.getWebFile("sample.pcap")
+const pcapng = data.getWebFile("sample.pcapng")
+const unknown = data.getWebFile("plain.txt")
+const zeek = data.getWebFile("sample.tsv")
 
 test("add file types", async () => {
   const files = [pcap, pcapng, zeek, json, unknown]

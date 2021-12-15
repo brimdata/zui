@@ -27,7 +27,7 @@ import requireAll from "./require-all"
 import isDev from "./isDev"
 require("@electron/remote/main").initialize()
 
-const mainDefaults = () => ({
+export const mainDefaults = () => ({
   lakePort: 9867,
   lakeRoot: join(app.getPath("userData"), "data", "lake"),
   lakeLogs: app.getPath("logs"),
@@ -98,7 +98,7 @@ export async function main(args: Partial<MainArgs> = {}) {
     brim.openUrl(url)
   })
 
-  app.whenReady().then(() => brim.start(opts))
+  app.whenReady().then(() => brim.start())
   return brim
 }
 

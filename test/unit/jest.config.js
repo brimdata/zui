@@ -19,6 +19,7 @@ module.exports = {
     "/node_modules/",
     "/itest/",
     "/dist/",
+    "/test/system/",
     "<rootDir>/test/api/",
     "<rootDir>/test/playwright/"
   ]
