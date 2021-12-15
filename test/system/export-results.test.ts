@@ -3,7 +3,7 @@ import fsExtra from "fs-extra"
 import os from "os"
 import path from "path"
 import {act} from "react-dom/test-utils"
-import {SystemTest} from "./system-test"
+import {SystemTest} from "test/system/system-test"
 
 const filePath = path.join(os.tmpdir(), "results.zng")
 

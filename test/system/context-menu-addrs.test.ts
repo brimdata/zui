@@ -1,32 +1,13 @@
 import {screen} from "@testing-library/react"
 import {SystemTest} from "./system-test"
 
-const system = new SystemTest("context-menu")
+const system = new SystemTest("context-menu-addrs")
 
 describe("context menu tests", () => {
   beforeAll(async () => {
     system.mountApp()
     await system.importFile("types.tsv")
     await screen.findAllByRole("cell")
-  })
-
-  describe("rightclick scalar strings", () => {
-    test("mystr", scalarString("mystr"))
-    test("-", scalarString("-"))
-    test('"', scalarString('"'))
-    test("'", scalarString("'"))
-    test(",", scalarString(","))
-    test(";", scalarString(";"))
-    test("∫£œßü™", scalarString("∫£œßü™"))
-    test('"mystr"', scalarString('"mystr"'))
-    test("'mystr'", scalarString("'mystr'"))
-    test("*", scalarString("*"))
-    test('"*"', scalarString('"*"'))
-    test("1.1.1.1", scalarString("1.1.1.1"))
-    test("null", scalarString("null"))
-    test("⦻", scalarString("⦻"))
-    test("\\t (tab)", scalarString("\t"))
-    test("' ' (space)", scalarString(" "))
   })
 
   describe("rightclick scalar addrs", () => {
