@@ -27,8 +27,6 @@ test("clicking the export button", async () => {
   const submit = within(modal).getByRole("button", {name: "Export"})
   act(() => system.click(submit))
   await screen.findByText(/export complete/i)
-
-  await waitForElementToBeRemoved(modal)
   expect(fsExtra.statSync(filePath).size).toBe(4084)
 })
 
