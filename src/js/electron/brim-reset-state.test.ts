@@ -1,6 +1,5 @@
 import {app} from "electron"
 import {BrimMain} from "./brim"
-import {WindowManager} from "./tron/window-manager"
 
 jest.mock("./tron/session", () => {
   return () => ({

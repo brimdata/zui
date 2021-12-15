@@ -10,7 +10,6 @@ import {
 import AppWrapper from "app/routes/app-wrapper"
 import WorkspacesList from "app/workspaces/list"
 import WorkspaceShow from "app/workspaces/show"
-import {ipcRenderer} from "electron"
 import React, {useEffect} from "react"
 import {useDispatch} from "react-redux"
 import {Redirect, Route, Switch} from "react-router"

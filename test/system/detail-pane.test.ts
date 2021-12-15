@@ -1,4 +1,4 @@
-import {screen, waitForElementToBeRemoved, within} from "@testing-library/react"
+import {screen, within} from "@testing-library/react"
 import {toLower} from "lodash"
 import {SystemTest} from "./system-test"
 

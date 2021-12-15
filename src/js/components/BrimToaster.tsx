@@ -1,10 +1,8 @@
 import env from "app/core/env"
 import React from "react"
-import {Toaster, useToasterStore} from "react-hot-toast"
+import {Toaster} from "react-hot-toast"
 
 const BrimToaster = () => {
-  const {toasts, pausedAt} = useToasterStore()
-
   return (
     <Toaster
       position="bottom-right"

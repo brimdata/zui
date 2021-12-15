@@ -1,7 +1,5 @@
-import {app} from "electron"
 import log from "electron-log"
 import {get} from "lodash"
-import path from "path"
 import lib from "../../lib"
 import {isNumber} from "../../lib/is"
 import {SessionState} from "./formatSessionState"

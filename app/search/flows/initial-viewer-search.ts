@@ -1,7 +1,6 @@
 import brim from "src/js/brim"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import {addHeadProc} from "src/js/lib/Program"
-import {Thunk} from "src/js/state/types"
 import Url from "src/js/state/Url"
 import Viewer from "src/js/state/Viewer"
 import Tabs from "../../../src/js/state/Tabs"

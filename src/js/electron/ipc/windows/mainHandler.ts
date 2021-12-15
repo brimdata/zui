@@ -1,8 +1,6 @@
-import log from "electron-log"
 import {BrowserWindow, dialog, ipcMain} from "electron"
+import log from "electron-log"
 import {BrimMain} from "../../brim"
-
-let started = false
 
 // Convert this file to the new ipc model
 export default function(brim: BrimMain) {
