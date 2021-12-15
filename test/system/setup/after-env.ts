@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom"
 import {configure} from "@testing-library/react"
+import env from "app/core/env"
 import log from "electron-log"
 import "regenerator-runtime/runtime"
 import "web-streams-polyfill"
@@ -13,12 +14,8 @@ global.ResizeObserver = class ResizeObserver {
 global.SVGElement.prototype.getTotalLength = () => 0
 document.execCommand = jest.fn()
 
-configure({asyncUtilTimeout: 5000})
+configure({asyncUtilTimeout: env.isCI ? 15_000 : 5000})
 
 HTMLElement.prototype.scrollTo = () => {}
-
-// process.on("unhandledRejection", (reason) => {
-// throw reason
-// })
 
 log.transports.console.level = false
