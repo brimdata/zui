@@ -1,4 +1,4 @@
-import {screen} from "@testing-library/react"
+import {findAllByRole, screen} from "@testing-library/react"
 import {SystemTest} from "./system-test"
 
 const system = new SystemTest("context-menu-addrs")
@@ -26,9 +26,9 @@ async function runTest(query: string, cellValue: string, menuText: string) {
   const cells = await screen.findAllByRole("cell")
   // This works with the empty string fields
   const cell = cells.find((c) => c.textContent === cellValue)
-  await system.rightClick(cell)
-  await system.click(menuText)
-  expect(await system.findTableResults()).toMatchSnapshot()
+  system.rightClick(cell)
+  system.click(await screen.findByText(menuText))
+  expect(await findTableResults()).toMatchSnapshot()
 }
 
 function scalarAddr(value: string) {
@@ -39,4 +39,11 @@ function scalarAddr(value: string) {
 function scalarUnset(value: string) {
   const query = `_path=="string" | cut id, scalar | sort -r id | head 10`
   return () => runTest(query, value, "Filter == value")
+}
+
+async function findTableResults() {
+  const table = await screen.findByRole("table")
+  const headers = await screen.findAllByRole("columnheader")
+  const rows = await findAllByRole(table, "cell")
+  return headers.concat(rows).map((r) => r.textContent)
 }

@@ -11,7 +11,7 @@ beforeAll(async () => {
   await screen.findAllByRole("cell")
   const view = await screen.findByRole("button", {name: "View"})
   await system.click(view)
-  await system.click("Right Pane")
+  system.click(await screen.findByText("Right Pane"))
   await screen.findByText("No Log Selected")
 })
 

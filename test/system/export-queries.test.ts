@@ -21,7 +21,8 @@ test("clicking the export button", async () => {
   const brimFolder = within(sidebar).getByText("Brim")
   await system.rightClick(brimFolder)
   system.mockSaveDialog({canceled: false, filePath})
-  await system.click("Export Folder as JSON")
+  const menuItem = await screen.findByText("Export Folder as JSON")
+  await system.click(menuItem)
   await screen.findByText("Export Complete")
 
   expect(fsExtra.statSync(filePath).size).toBe(2888)
@@ -32,7 +33,8 @@ test("canceling the export", async () => {
   const brimFolder = within(sidebar).getByText("Brim")
   await system.rightClick(brimFolder)
   system.mockSaveDialog({canceled: true, filePath})
-  await system.click("Export Folder as JSON")
+  const menuItem = await screen.findByText("Export Folder as JSON")
+  await system.click(menuItem)
 
   expect(await fsExtra.pathExists(filePath)).toBe(false)
 })

@@ -1,4 +1,5 @@
 import * as tl from "@testing-library/react"
+import {fireEvent} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {BrimProvider} from "app/core/context"
 import {dialog} from "electron"
@@ -71,6 +72,8 @@ export class SystemTest {
   main: BrimMain
   api: BrimApi
   wrapper: React.ComponentType<any>
+  click = userEvent.click
+  rightClick = fireEvent.contextMenu
 
   assign(args: {
     store: Store
@@ -124,29 +127,12 @@ export class SystemTest {
     await tl.screen.findAllByRole("row")
   }
 
-  async findTableResults() {
-    const table = await tl.screen.findByRole("table")
-    const headers = await tl.screen.findAllByRole("columnheader")
-    const rows = await tl.findAllByRole(table, "cell")
-    return headers.concat(rows).map((r) => r.textContent)
-  }
-
-  // Rexport commonly used things
-  async rightClick(element: string | Element, args?: any) {
-    const node =
-      typeof element === "string"
-        ? await tl.screen.findByText(element)
-        : element
-    tl.fireEvent.contextMenu(node, args)
-  }
-
-  click(element: string | Element) {
-    if (typeof element === "string") {
-      return tl.screen.findByText(element).then((n) => userEvent.click(n))
-    } else {
-      return userEvent.click(element)
-    }
-  }
+  // async findTableResults() {
+  // const table = await tl.screen.findByRole("table")
+  // const headers = await tl.screen.findAllByRole("columnheader")
+  // const rows = await tl.findAllByRole(table, "cell")
+  // return headers.concat(rows).map((r) => r.textContent)
+  // }
 
   mockSaveDialog(result: {canceled: boolean; filePath: string}) {
     const save = jest.spyOn(dialog, "showSaveDialog")
@@ -154,8 +140,8 @@ export class SystemTest {
     return save
   }
 
-  async findCell(text: string) {
-    const table = await tl.screen.findByRole("table", {name: "results"})
-    return tl.within(table).getAllByText(text)[0]
-  }
+  // async findCell(text: string) {
+  // const table = await tl.screen.findByRole("table", {name: "results"})
+  // return tl.within(table).getAllByText(text)[0]
+  // }
 }

@@ -1,4 +1,4 @@
-import {screen, waitFor} from "@testing-library/react"
+import {screen, waitFor, within} from "@testing-library/react"
 import {app} from "electron"
 import {readFileSync} from "fs"
 import fsExtra from "fs-extra"
@@ -18,7 +18,7 @@ test("pcap button downloads deterministically-formed pcap file", async () => {
   await system.runQuery(
     '_path=="ssl" id.orig_h==192.168.1.110 id.resp_h==209.216.230.240 id.resp_p==443'
   )
-  system.click(await system.findCell("ssl"))
+  system.click(await findCell("ssl"))
 
   await clickPackets()
   await checkFile(
@@ -29,7 +29,7 @@ test("pcap button downloads deterministically-formed pcap file", async () => {
 
 test("pcap download works for null duration", async () => {
   await system.runQuery("duration==null id.orig_p==47783")
-  await system.click(await system.findCell("conn"))
+  await system.click(await findCell("conn"))
   await clickPackets()
   await checkFile(
     "packets-2020-02-25T16_03_09.440467Z.pcap",
@@ -53,4 +53,9 @@ async function checkFile(name: string, hash: string) {
   // @ts-ignore
   open.mockReset()
   await fsExtra.remove(pcaps)
+}
+
+async function findCell(text: string) {
+  const table = await screen.findByRole("table", {name: "results"})
+  return within(table).getAllByText(text)[0]
 }
