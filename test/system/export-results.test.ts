@@ -1,4 +1,3 @@
-import {waitForElementToBeRemoved} from "@testing-library/dom"
 import {screen, within} from "@testing-library/react"
 import fsExtra from "fs-extra"
 import os from "os"
