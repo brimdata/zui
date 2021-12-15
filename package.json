@@ -13,6 +13,7 @@
     "start": "node scripts/start",
     "test": "jest --projects test/unit",
     "test:api": "jest --projects test/api",
+    "test:system": "jest --projects test/system",
     "lint": "eslint . --cache",
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "generate-responses": "node scripts/test/responses",
