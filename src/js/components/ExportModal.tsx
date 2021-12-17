@@ -68,24 +68,11 @@ const ExportModal = ({onClose}) => {
     const {canceled, filePath} = await showDialog(format)
     if (canceled) return
 
-    toast.promise(
-      dispatch(exportResults(filePath, format as QueryFormat)),
-      {
-        loading: "Exporting...",
-        success: "Export Complete",
-        error: "Error Exporting"
-      },
-      {
-        loading: {
-          // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
-          // also, once https://github.com/timolins/react-hot-toast/pull/37 merges, we can set this to -1
-          duration: 2 ** 31 - 1
-        },
-        success: {
-          duration: 2 ** 31 - 1
-        }
-      }
-    )
+    toast.promise(dispatch(exportResults(filePath, format as QueryFormat)), {
+      loading: "Exporting...",
+      success: "Export Complete",
+      error: "Error Exporting"
+    })
 
     onClose()
   }

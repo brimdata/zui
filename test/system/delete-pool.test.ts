@@ -12,4 +12,4 @@ test("delete the current pool", async () => {
   const del = await screen.findByText("Delete")
   act(() => system.click(del))
   await screen.findByText(/deleted/i)
-}, 20_000)
+})
