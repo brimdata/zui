@@ -93,7 +93,6 @@ function orderTabs(tabs, indices: number[]) {
 
 function tabAction({type}) {
   return (
-    type.startsWith("TAB") ||
     type.startsWith("SEARCH_") ||
     type.startsWith("VIEWER_") ||
     type.startsWith("CHART_") ||

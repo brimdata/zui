@@ -1,23 +1,15 @@
 import {createSelector} from "reselect"
-import {TabsState} from "../Tabs/types"
+
 import {State} from "../types"
 import {TabState} from "./types"
-
-const getActiveTab = createSelector<State, TabsState, TabState>(
-  (state) => state.tabs,
-  (tabs) => {
-    const tab = tabs.data.find((t) => t.id === tabs.active)
-    if (!tab) throw new Error("Can't find active tab")
-    return tab
-  }
-)
+import Tabs from "../Tabs"
 
 export default function activeTabSelect<T>(
-  selector: (tabState: TabState, state: State) => T
-): (state: State) => T {
+  fn: (arg0: TabState, arg1: State) => T
+): (arg0: State) => T {
   return createSelector<State, TabState, State, T>(
-    getActiveTab,
+    Tabs.getActiveTab,
     (state) => state,
-    selector
+    fn
   )
 }

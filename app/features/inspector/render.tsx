@@ -150,7 +150,7 @@ export function renderContainer(
     )
   }
   row.push(
-    <a key="handle" onClick={() => ctx.setExpanded(args, !isExpanded)}>
+    <a key="handle" onClick={() => ctx.setExpanded(value, !isExpanded)}>
       <Icon
         name={isExpanded ? "chevron-down" : "chevron-right"}
         key="arrow"

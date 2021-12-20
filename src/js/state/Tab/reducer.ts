@@ -1,4 +1,3 @@
-import {reducer as inspector} from "app/features/inspector/state"
 import {combineReducers} from "redux"
 import brim from "../../brim"
 import chartReducer from "../Chart/reducer"
@@ -19,8 +18,7 @@ const tabReducer = combineReducers({
   columns: columnsReducer,
   logDetails: logDetailsReducer,
   layout: layoutReducer,
-  localState: tabLocalStateSlice.reducer,
-  inspector
+  localState: tabLocalStateSlice.reducer
 })
 
 export type TabReducer = typeof tabReducer
