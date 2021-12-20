@@ -15,8 +15,7 @@ import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
   const {name, id, authType} = ws
 
-  if (isDefaultWorkspace(ws))
-    throw new Error("Cannot remove the default lake")
+  if (isDefaultWorkspace(ws)) throw new Error("Cannot remove the default lake")
 
   // remove creds from keychain
   if (authType === "auth0") {
