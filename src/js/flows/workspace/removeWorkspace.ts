@@ -16,7 +16,7 @@ const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
   const {name, id, authType} = ws
 
   if (isDefaultWorkspace(ws))
-    throw new Error("Cannot remove the default workspace")
+    throw new Error("Cannot remove the default lake")
 
   // remove creds from keychain
   if (authType === "auth0") {
@@ -29,7 +29,7 @@ const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
   dispatch(Workspaces.remove(id))
 
   dispatch(tabHistory.push(workspacesPath()))
-  toast(`Removed workspace "${name}"`)
+  toast(`Removed lake "${name}"`)
 }
 
 export default removeWorkspace

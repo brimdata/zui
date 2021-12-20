@@ -134,7 +134,7 @@ const ViewWorkspace = ({onClose, onEdit}) => {
     remote.dialog
       .showMessageBox({
         type: "warning",
-        title: "Workspace Logout",
+        title: "Lake Logout",
         message: `Are you sure you want to log out of ${name}?`,
         buttons: ["OK", "Cancel"]
       })

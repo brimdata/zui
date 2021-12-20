@@ -53,7 +53,7 @@ export function LeftPane() {
     >
       {!id ? (
         <EmptyText>
-          The workspace previously on this tab has been removed.
+          The lake previously on this tab has been removed.
         </EmptyText>
       ) : (
         <>

@@ -50,8 +50,8 @@ export const mustGetWorkspace = createSelector<
   Id,
   BrimWorkspace
 >(Workspaces.raw, getWorkspaceId, (workspaces, id) => {
-  if (!id) throw new Error("Current workspace id is unset")
-  if (!workspaces[id]) throw new Error(`Missing workspace id: ${id}`)
+  if (!id) throw new Error("Current lake id is unset")
+  if (!workspaces[id]) throw new Error(`Missing lake id: ${id}`)
 
   return brim.workspace(workspaces[id])
 })
@@ -61,10 +61,10 @@ export const mustGetPool = createSelector<State, PoolsState, Id, Id, BrimPool>(
   getWorkspaceId,
   getPoolId,
   (pools, workspaceId, poolId) => {
-    if (!workspaceId) throw new Error("Current workspace id is unset")
+    if (!workspaceId) throw new Error("Current lake id is unset")
     if (!poolId) throw new Error("Current pool id is unset")
     if (!pools[workspaceId]) {
-      throw new Error(`No pools in workspace id: ${workspaceId}`)
+      throw new Error(`No pools in lake id: ${workspaceId}`)
     }
     if (!pools[workspaceId][poolId])
       throw new Error(`Missing pool id: ${poolId}`)
