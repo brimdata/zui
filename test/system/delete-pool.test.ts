@@ -1,9 +1,11 @@
 import {SystemTest} from "./system-test"
 import {act, screen, within} from "@testing-library/react"
+import env from "app/core/env"
 
 const system = new SystemTest("delete-pool")
 
 test("delete the current pool", async () => {
+  if (env.isWindows) return // We are not going to test this on windows
   system.mountApp()
   await system.importFile("sample.zng")
   const pools = await screen.findByRole("navigation", {name: "pools"})
