@@ -14,7 +14,7 @@ export function useResultsView() {
 
   const [view, setView] = Tab.useState<"table" | "objects">(
     "results.view",
-    TABLE
+    OBJECTS
   )
 
   useKeybinding("ctrl+d", () => {

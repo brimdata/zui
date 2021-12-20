@@ -1,4 +1,3 @@
-import {Inspector} from "app/features/inspector/inspector"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import React from "react"
 import {useDispatch} from "react-redux"
@@ -9,6 +8,7 @@ import {useResultsData} from "./data-hook"
 import {useExpandState} from "./expand-hook"
 import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
+import {InspectorFast} from "app/features/inspector/inspector-fast"
 
 export function Results() {
   const data = useResultsData()
@@ -48,7 +48,8 @@ export function Results() {
           />
         ) : (
           <div style={{height: 0, width: 0, overflow: "visible"}}>
-            <Inspector
+            <InspectorFast
+              rowHeight={20}
               defaultExpanded={expand.default}
               expanded={expand.map}
               setExpanded={expand.set}
