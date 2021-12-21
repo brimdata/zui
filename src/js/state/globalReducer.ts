@@ -7,12 +7,12 @@ import Launches, {LaunchesState} from "./Launches"
 import PluginStorage, {PluginStorageState} from "./PluginStorage"
 import Queries from "./Queries"
 import {QueriesState} from "./Queries/types"
-import Workspaces from "./Workspaces"
-import {WorkspacesState} from "./Workspaces/types"
+import Lakes from "./Lakes"
+import {LakesState} from "./Lakes/types"
 
 export type GlobalState = {
   launches: LaunchesState
-  workspaces: WorkspacesState
+  workspaces: LakesState
   investigation: InvestigationState
   configs: ConfigsState
   configPropValues: ConfigPropValuesState
@@ -22,7 +22,7 @@ export type GlobalState = {
 
 export default combineReducers<any, any>({
   launches: Launches.reducer,
-  workspaces: Workspaces.reducer,
+  workspaces: Lakes.reducer,
   investigation: Investigation.reducer,
   configs: Configs.reducer,
   configPropValues: ConfigPropValues.reducer,

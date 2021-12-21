@@ -1,6 +1,6 @@
 import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
-import Workspaces from "../../state/Workspaces"
+import Lakes from "../../state/Lakes"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import refreshPoolNames from "../refreshPoolNames"
 import {getAuthCredentials} from "./getAuthCredentials"
@@ -14,7 +14,7 @@ export const updateStatus = (workspaceId: string) => async (
   getState,
   {createZealot}
 ): Promise<void> => {
-  const ws = brim.workspace(Workspaces.id(workspaceId)(getState()))
+  const ws = brim.workspace(Lakes.id(workspaceId)(getState()))
   const zealot = createZealot(ws.getAddress())
 
   const activate = async () => {
@@ -38,7 +38,7 @@ export const updateStatus = (workspaceId: string) => async (
   if (await isDown()) return
 
   // update version
-  dispatch(Workspaces.add(ws.serialize()))
+  dispatch(Lakes.add(ws.serialize()))
 
   // no auth required
   if (ws.authType === "none") {
@@ -57,7 +57,7 @@ export const updateStatus = (workspaceId: string) => async (
     // otherwise, need to refresh accessToken
     const accessToken = await dispatch(getAuthCredentials(ws))
     if (accessToken) {
-      dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
+      dispatch(Lakes.setLakeToken(ws.id, accessToken))
       activate()
       return
     }

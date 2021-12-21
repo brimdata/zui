@@ -2,15 +2,15 @@ import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import {createZealotMock, ZealotMock} from "zealot-old"
 import Pools from "../../../src/js/state/Pools"
-import Workspaces from "../../../src/js/state/Workspaces"
-import {Workspace} from "../../../src/js/state/Workspaces/types"
+import Lakes from "../../../src/js/state/Lakes"
+import {Lake} from "../../../src/js/state/Lakes/types"
 import fixtures from "../fixtures"
 import initTestStore, {TestStore} from "./initTestStore"
 
 export default async function loginTo(
   workspaceName: string,
   poolName: string
-): Promise<{store: TestStore; workspace: Workspace; zealot: ZealotMock}> {
+): Promise<{store: TestStore; workspace: Lake; zealot: ZealotMock}> {
   const mock = createZealotMock()
   mock
     .stubPromise("version", {version: "1"}, "always")
@@ -28,7 +28,7 @@ export default async function loginTo(
   const workspace = fixtures(workspaceName)
   const pool = fixtures(poolName)
 
-  store.dispatch(Workspaces.add(workspace))
+  store.dispatch(Lakes.add(workspace))
   store.dispatch(Pools.setDetail(workspace.id, pool))
   store.dispatch(tabHistory.push(lakePath(pool.id, workspace.id)))
   return {store, workspace, zealot: mock}

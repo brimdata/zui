@@ -3,7 +3,7 @@ import {workspacePath} from "app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import Tab from "src/js/state/Tab"
-import Workspaces from "src/js/state/Workspaces"
+import Lakes from "src/js/state/Lakes"
 import data from "test/shared/data"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
@@ -57,7 +57,7 @@ beforeEach(() => {
   }
 
   store = initTestStore(zealot.zealot, apiMock)
-  store.dispatchAll([Workspaces.add(ws)])
+  store.dispatchAll([Lakes.add(ws)])
   store.dispatch(tabHistory.push(workspacePath(ws.id)))
 })
 

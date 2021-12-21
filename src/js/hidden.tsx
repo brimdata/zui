@@ -6,7 +6,7 @@ import ReactDOM from "react-dom"
 
 import initialize from "./initializers/initialize"
 import lib from "./lib"
-import Workspaces from "./state/Workspaces"
+import Lakes from "./state/Lakes"
 import {differenceWith, map} from "lodash"
 import log from "electron-log"
 import refreshPoolNames from "./flows/refreshPoolNames"
@@ -36,7 +36,7 @@ type workspaceSourceMapType = {
 const workspaceSourceMap: workspaceSourceMapType = {}
 
 const Hidden = () => {
-  const workspaces = useSelector(Workspaces.all)
+  const workspaces = useSelector(Lakes.all)
   const dispatch = useDispatch() as AppDispatch
 
   useEffect(() => {

@@ -20,7 +20,7 @@ import {TabHistoriesState} from "./TabHistories/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
 import {ViewState} from "./View/types"
-import {WorkspacesState} from "./Workspaces/types"
+import {LakesState} from "./Lakes/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
 
 export type GetState = () => State
@@ -45,7 +45,7 @@ export type State = {
   configPropValues: ConfigPropValuesState
   tabHistories: TabHistoriesState
   handlers: HandlersState
-  workspaces: WorkspacesState
+  workspaces: LakesState
   errors: ErrorsState
   pools: PoolsState
   view: ViewState

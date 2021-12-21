@@ -6,7 +6,7 @@ import fixtures from "../../../../test/unit/fixtures"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Pools from "../Pools"
 import Tab from "../Tab"
-import Workspaces from "../Workspaces"
+import Workspaces from "../Lakes"
 import Search from "./"
 
 const ts1 = {sec: 1, ns: 0}

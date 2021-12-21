@@ -6,7 +6,7 @@ import SearchBar from "../../../state/SearchBar"
 import Pools from "../../../state/Pools"
 import fixtures from "../../../../../test/unit/fixtures"
 import initTestStore from "../../../../../test/unit/helpers/initTestStore"
-import Workspaces from "../../../state/Workspaces"
+import Lakes from "../../../state/Lakes"
 import {decodeSearchParams} from "app/search/utils/search-params"
 import {lakePath} from "app/router/utils/paths"
 import tabHistory from "app/router/tab-history"
@@ -26,7 +26,7 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
   zealot.stubStream("query", countByPathResp).stubStream("query", dnsResp)
   store.dispatchAll([
-    Workspaces.add({
+    Lakes.add({
       host: "testHost",
       id: "1",
       name: "testName",

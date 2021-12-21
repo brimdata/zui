@@ -10,8 +10,8 @@ import {showContextMenu} from "../lib/System"
 import Current from "../state/Current"
 import Modal from "../state/Modal"
 import {AppDispatch} from "../state/types"
-import Workspaces from "../state/Workspaces"
-import {Workspace} from "../state/Workspaces/types"
+import Lakes from "../state/Lakes"
+import {Lake} from "../state/Lakes/types"
 
 const WorkspacePickerWrapper = styled.div`
   display: flex;
@@ -34,7 +34,7 @@ const WorkspacePickerWrapper = styled.div`
 ` as ComponentType<any>
 
 const showWorkspaceMenu = () => (dispatch, getState) => {
-  const workspaces = Workspaces.all(getState())
+  const workspaces = Lakes.all(getState())
   const currentId = Current.getWorkspaceId(getState())
 
   const template: MenuItemConstructorOptions[] = [
@@ -45,7 +45,7 @@ const showWorkspaceMenu = () => (dispatch, getState) => {
     {type: "separator"}
   ]
 
-  workspaces.forEach((w: Workspace) => {
+  workspaces.forEach((w: Lake) => {
     const isCurrent = w.id === currentId
     template.push({
       type: "checkbox",
@@ -72,7 +72,7 @@ const showWorkspaceMenu = () => (dispatch, getState) => {
 export default function WorkspacePicker() {
   const dispatch = useDispatch<AppDispatch>()
   const workspaceId = useWorkspaceId()
-  const current = useSelector(Workspaces.id(workspaceId))
+  const current = useSelector(Lakes.id(workspaceId))
   return (
     <WorkspacePickerWrapper onClick={() => dispatch(showWorkspaceMenu())}>
       <label>{`${current?.name}`}</label>

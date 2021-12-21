@@ -2,11 +2,11 @@ import {whichRoute} from "app/router/routes"
 import {decodeSearchParams} from "app/search/utils/search-params"
 import get from "lodash/get"
 import {PoolsState} from "../state/Pools/types"
-import {WorkspacesState} from "../state/Workspaces/types"
+import {LakesState} from "../state/Lakes/types"
 
 export default function(
   tabId: string,
-  workspaces: WorkspacesState,
+  workspaces: LakesState,
   pools: PoolsState
 ) {
   return {
