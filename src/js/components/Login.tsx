@@ -70,7 +70,7 @@ const Login = ({workspace}: Props) => {
     <PageWrap>
       <StyledHeader>Login</StyledHeader>
       <StyledP>
-        {"This workspace requires authentication, please login to continue."}
+        {"This lake requires authentication. Please log in to continue."}
       </StyledP>
       <StyledButton
         onClick={isFetching ? onCancel : onClick}

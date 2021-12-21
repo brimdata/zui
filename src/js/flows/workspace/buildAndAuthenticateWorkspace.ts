@@ -17,7 +17,7 @@ export class LoginError extends Error {
 
 export class ConnectionError extends Error {
   readonly name: string = "ConnectionError"
-  readonly message: string = "Unable to connect to Workspace"
+  readonly message: string = "Unable to connect to lake"
 
   constructor(readonly cause: Error) {
     super()
@@ -55,7 +55,7 @@ export const buildAndAuthenticateWorkspace = (
       buttons: ["Continue", "Cancel"],
       title: "Redirect to Browser",
       message:
-        "This Workspace requires authentication. Continue to login with your browser?"
+        "This lake requires authentication. Continue to log in with your browser?"
     }
     const dialogChoice = await remote.dialog.showMessageBox(dialogOpts)
     if (dialogChoice.response === 1) return [true, null]

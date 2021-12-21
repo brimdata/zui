@@ -107,7 +107,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
           const {host, port} = workspace
           isValid = value === host || value === [host, port].join(":")
         }
-        return [isValid, "cannot change lake URL of default workspace"]
+        return [isValid, "cannot change URL of default lake"]
       }
     },
     name: {
@@ -178,7 +178,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
     } catch (e) {
       console.error(e)
       setIsSubmitting(false)
-      setErrors([{message: "Failed to add Workspace"}])
+      setErrors([{message: "Failed to add lake"}])
     }
   }
 
