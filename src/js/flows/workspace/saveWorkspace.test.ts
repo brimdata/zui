@@ -1,7 +1,7 @@
 import fixtures from "../../../../test/unit/fixtures"
 import {createZealotMock} from "zealot-old"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
-import Workspaces from "../../state/Workspaces"
+import Lakes from "../../state/Lakes"
 import Current from "../../state/Current"
 import {saveWorkspace} from "./saveWorkspace"
 import brim from "src/js/brim"
@@ -11,7 +11,7 @@ import tabHistory from "app/router/tab-history"
 let store, mock
 const select = (selector) => selector(store.getState())
 
-const workspaceCount = () => select(Workspaces.all).length
+const workspaceCount = () => select(Lakes.all).length
 const ws1 = fixtures("workspace1")
 const ws2 = fixtures("workspace2")
 
@@ -22,21 +22,18 @@ beforeEach(() => {
     .stubPromise("version", "1")
     .stubPromise("pools.list", [])
   store = initTestStore(mock.zealot)
-  store.dispatchAll([
-    Workspaces.add(ws1),
-    tabHistory.replace(workspacePath(ws1.id))
-  ])
+  store.dispatchAll([Lakes.add(ws1), tabHistory.replace(workspacePath(ws1.id))])
 })
 
 test("Create a new workspace, switch back", async () => {
   expect(workspaceCount()).toBe(1)
   await store.dispatch(saveWorkspace(brim.workspace(ws2), "connected"))
   expect(workspaceCount()).toBe(2)
-  expect(select(Workspaces.id(ws2.id))).toEqual(ws2)
+  expect(select(Lakes.id(ws2.id))).toEqual(ws2)
   expect(select(Current.getWorkspaceId)).toBe(ws2.id)
 
   await store.dispatch(saveWorkspace(brim.workspace(ws1), "connected"))
   expect(workspaceCount()).toBe(2)
-  expect(select(Workspaces.id(ws1.id))).toEqual(ws1)
+  expect(select(Lakes.id(ws1.id))).toEqual(ws1)
   expect(select(Current.getWorkspaceId)).toBe(ws1.id)
 })

@@ -4,7 +4,7 @@ import Columns from "src/js/state/Columns"
 import SearchBar from "src/js/state/SearchBar"
 import Pools from "src/js/state/Pools"
 import Viewer from "src/js/state/Viewer"
-import Workspaces from "src/js/state/Workspaces"
+import Lakes from "src/js/state/Lakes"
 import fixtures from "test/unit/fixtures"
 import initTestStore, {TestStore} from "test/unit/helpers/initTestStore"
 import {createRecord} from "test/shared/factories/zed-factory"
@@ -26,7 +26,7 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
 
   store.dispatchAll([
-    Workspaces.add({
+    Lakes.add({
       host: "testHost",
       id: "1",
       name: "testName",

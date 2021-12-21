@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {useSelector} from "react-redux"
 import {animated} from "react-spring"
-import Workspaces from "src/js/state/Workspaces"
+import Lakes from "src/js/state/Lakes"
 import brim from "../../brim"
 import lib from "../../lib"
 import Pools from "../../state/Pools"
@@ -18,7 +18,7 @@ const MAX_WIDTH = 240
 export default function TabBar() {
   const ids = useSelector(Tabs.getIds)
   const pools = useSelector(Pools.raw)
-  const workspaces = useSelector(Workspaces.raw)
+  const workspaces = useSelector(Lakes.raw)
   const count = ids.length
   const {ref, rect} = useResizeObserver()
   const [width, setWidth] = useState(0)

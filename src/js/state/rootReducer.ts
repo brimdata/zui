@@ -1,6 +1,6 @@
 import {combineReducers} from "@reduxjs/toolkit"
 
-import Workspaces from "./Workspaces"
+import Lakes from "./Lakes"
 import Errors from "./Errors"
 import Handlers from "./Handlers"
 import Investigation from "./Investigation"
@@ -28,7 +28,7 @@ const rootReducer = combineReducers<any, any>({
   configs: Configs.reducer,
   configPropValues: ConfigPropValues.reducer,
   errors: Errors.reducer,
-  workspaces: Workspaces.reducer,
+  workspaces: Lakes.reducer,
   modal: Modal.reducer,
   notice: Notice.reducer,
   handlers: Handlers.reducer,

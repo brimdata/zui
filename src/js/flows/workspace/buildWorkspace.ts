@@ -1,10 +1,10 @@
 import isEmpty from "lodash/isEmpty"
 import brim, {BrimWorkspace} from "../../brim"
 import {Thunk} from "../../state/types"
-import {Workspace} from "../../state/Workspaces/types"
+import {Lake} from "../../state/Lakes/types"
 
 export const buildWorkspace = (
-  ws: Partial<Workspace>,
+  ws: Partial<Lake>,
   signal: AbortSignal
 ): Thunk<Promise<BrimWorkspace>> => async (
   dispatch,
@@ -13,7 +13,7 @@ export const buildWorkspace = (
 ) => {
   if (!ws.host || !ws.id || !ws.name)
     throw new Error("must provide host, id, and name to build lake")
-  const zealot = createZealot(brim.workspace(ws as Workspace).getAddress())
+  const zealot = createZealot(brim.workspace(ws as Lake).getAddress())
 
   const workspace = {...ws}
 
@@ -37,5 +37,5 @@ export const buildWorkspace = (
     }
   }
 
-  return brim.workspace(workspace as Workspace)
+  return brim.workspace(workspace as Lake)
 }

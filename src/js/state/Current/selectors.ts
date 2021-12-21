@@ -5,8 +5,8 @@ import Pools from "../Pools"
 import {PoolsState} from "../Pools/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
-import Workspaces from "../Workspaces"
-import {WorkspacesState} from "../Workspaces/types"
+import Lakes from "../Lakes"
+import {LakesState} from "../Lakes/types"
 import {MemoryHistory} from "history"
 
 type Id = string | null
@@ -46,10 +46,10 @@ export const getWorkspaceId = (state: State = undefined) => {
 
 export const mustGetWorkspace = createSelector<
   State,
-  WorkspacesState,
+  LakesState,
   Id,
   BrimWorkspace
->(Workspaces.raw, getWorkspaceId, (workspaces, id) => {
+>(Lakes.raw, getWorkspaceId, (workspaces, id) => {
   if (!id) throw new Error("Current lake id is unset")
   if (!workspaces[id]) throw new Error(`Missing lake id: ${id}`)
 

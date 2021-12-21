@@ -8,7 +8,7 @@ import {FormConfig} from "../../brim/form"
 import {buildAndAuthenticateWorkspace} from "../../flows/workspace/buildAndAuthenticateWorkspace"
 import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
 import {AppDispatch} from "../../state/types"
-import {Workspace} from "../../state/Workspaces/types"
+import {Lake} from "../../state/Lakes/types"
 import InputField from "../common/forms/InputField"
 import InputLabel from "../common/forms/InputLabel"
 import TextInput from "../common/forms/TextInput"
@@ -117,7 +117,7 @@ const WorkspaceForm = ({onClose, workspace}: Props) => {
     }
   }
 
-  const setFields = ({hostPort, name}, ws?: Workspace): Partial<Workspace> => {
+  const setFields = ({hostPort, name}, ws?: Lake): Partial<Lake> => {
     const {port, hostname, protocol} = new URL("/", hostPort)
     const host = [protocol, hostname].join("//")
     if (ws) return {...ws, host, port, name}

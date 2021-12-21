@@ -1,4 +1,4 @@
-import {Workspace} from "../../../src/js/state/Workspaces/types"
+import {Lake} from "../../../src/js/state/Lakes/types"
 import {Pool} from "../../../src/js/state/Pools/types"
 
 const pool1 = (): Pool => ({
@@ -16,7 +16,7 @@ const pool1 = (): Pool => ({
   ingest: {progress: null, warnings: []}
 })
 
-const workspace1 = (): Workspace => ({
+const workspace1 = (): Lake => ({
   id: "test:9867",
   name: "testName1",
   host: "test",
@@ -24,7 +24,7 @@ const workspace1 = (): Workspace => ({
   authType: "none"
 })
 
-const workspace2 = (): Workspace => ({
+const workspace2 = (): Lake => ({
   id: "test:9868",
   name: "testName2",
   host: "test",

@@ -5,7 +5,7 @@ import styled from "styled-components"
 import ToolbarButton from "../../../app/toolbar/button"
 import {useDispatch} from "react-redux"
 import {initCurrentTab} from "../flows/initCurrentTab"
-import {Workspace} from "../state/Workspaces/types"
+import {Lake} from "../state/Lakes/types"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -32,7 +32,7 @@ const StyledButton = styled(ToolbarButton)`
 `
 
 type Props = {
-  workspace: Workspace
+  workspace: Lake
 }
 
 const ConnectionError = ({workspace}: Props) => {
