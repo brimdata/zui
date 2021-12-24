@@ -26,7 +26,7 @@ Since Brim is most often launched directly from the GUI environment in your OS,
 you'll typically not need to access the application binaries directly. One
 exception is if you wish to make use of the command line binaries that are
 bundled with the app, such as [`zq`](https://github.com/brimdata/zed/tree/main/cmd/zed#zq),
-[`zapi`](https://github.com/brimdata/zed/tree/main/cmd/zed#zapi),
+[`zapi`](https://github.com/brimdata/zed/tree/v0.33.0/cmd/zed#zapi),
 [`brimcap`](https://github.com/brimdata/brimcap), and so forth. These can be
 found in the `zdeps` subdirectory as follows:
 

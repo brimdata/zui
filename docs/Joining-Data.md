@@ -58,7 +58,7 @@ app), we can see the same query output as shown in the doc.
 
 While queries executed from inside Brim are subject to this limitation, the
 Zed backend that's launched behind Brim is not. Therefore if you're willing to
-perform joins in the shell using [`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi)
+perform joins in the shell using [`zapi`](https://github.com/brimdata/zed/tree/v0.33.0/cmd/zed#zapi)
 you can execute all the other examples shown while accessing data from multiple
 pools. The joined results can be sent into yet another pool for further query
 from within Brim, if desired.

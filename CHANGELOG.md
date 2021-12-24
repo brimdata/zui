@@ -281,7 +281,7 @@ as usual.
 
 * Update zq to [v0.23.0](https://github.com/brimdata/zed/releases/tag/v0.23.0)
 * Update Zeek to [v3.2.1-brim4](https://github.com/brimdata/zeek/releases/tag/v3.2.1-brim4) which provides [Community ID](https://github.com/corelight/community-id-spec) generation and the latest [geolocation](https://github.com/brimdata/brimcap/wiki/Geolocation) data (#1202)
-* Binaries for `pcap`, [`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi), and `zar` are now bundled with Brim (#1098)
+* Binaries for `pcap`, [`zapi`](https://github.com/brimdata/zed/tree/v0.33.0/cmd/zed#zapi), and `zar` are now bundled with Brim (#1098)
 * Fix an issue where Brim presented a blank white screen when it failed to initialize (#1035)
 * Improve how Brim handles ZJSON responses from `zqd` (#1108)
 * Upgrade to Electron v10.1.4 and WebdriverIO v6.6.7 (#1106, #1159)
