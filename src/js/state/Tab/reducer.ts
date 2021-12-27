@@ -1,26 +1,24 @@
-import Inspector from "src/js/state/Inspector"
 import {combineReducers} from "redux"
+import {reducer as inspector} from "src/js/state/Inspector/reducer"
 import brim from "../../brim"
-import chartReducer from "../Chart/reducer"
-import columnsReducer from "../Columns/reducer"
-import layoutReducer from "../Layout/reducer"
-import logDetailsReducer from "../LogDetails/reducer"
-import searchReducer from "../Search/reducer"
-import searchBarReducer from "../SearchBar/reducer"
-import viewerReducer from "../Viewer/reducer"
-import {tabLocalStateSlice} from "./local-state"
+import chart from "../Chart/reducer"
+import columns from "../Columns/reducer"
+import layout from "../Layout/reducer"
+import logDetails from "../LogDetails/reducer"
+import search from "../Search/reducer"
+import searchBar from "../SearchBar/reducer"
+import viewer from "../Viewer/reducer"
 
 const tabReducer = combineReducers({
   id: (state: string = brim.randomHash(), _) => state,
-  search: searchReducer,
-  searchBar: searchBarReducer,
-  viewer: viewerReducer,
-  chart: chartReducer,
-  columns: columnsReducer,
-  logDetails: logDetailsReducer,
-  layout: layoutReducer,
-  localState: tabLocalStateSlice.reducer,
-  inspector: Inspector.reducer
+  search,
+  searchBar,
+  viewer,
+  chart,
+  columns,
+  logDetails,
+  layout,
+  inspector
 })
 
 export type TabReducer = typeof tabReducer

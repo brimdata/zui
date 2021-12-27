@@ -1,20 +1,8 @@
-import {createSlice} from "@reduxjs/toolkit"
-
-const slice = createSlice({
-  name: "TAB_INSPECTOR",
-  initialState: {
-    rows: [] as never[],
-    scrollTop: 0,
-    maxVisibleRowIndex: 0
-  },
-  reducers: {},
-  extraReducers: {
-    VIEWER_SET_RECORDS: (state, action) => {
-      console.log("caught ya")
-    }
-  }
-})
+import activeTabSelect from "../Tab/activeTabSelect"
+import {actions} from "./reducer"
 
 export default {
-  reducer: slice.reducer
+  getExpanded: activeTabSelect((t) => t.inspector.expanded),
+  getDefaultExpanded: activeTabSelect((t) => t.inspector.defaultExpanded),
+  ...actions
 }

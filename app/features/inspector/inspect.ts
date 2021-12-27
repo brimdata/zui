@@ -10,6 +10,7 @@ export function inspect(args: InspectArgs) {
   } else {
     inspectValue({...args, value})
   }
+  return args.ctx.rows
 }
 
 function inspectType(args: InspectArgs & {value: zed.Type}) {
@@ -20,7 +21,7 @@ function inspectType(args: InspectArgs & {value: zed.Type}) {
     value instanceof zed.TypeSet ||
     value instanceof zed.TypeMap
   ) {
-    ctx.push(renderOneField(args))
+    ctx.push(args, renderOneField(args))
   } else if (value instanceof zed.TypeRecord) {
     inspectRecordType({...args, value})
   } else if (value instanceof zed.TypeUnion) {
@@ -36,7 +37,7 @@ function inspectValue(args: InspectArgs & {value: zed.Value}) {
   const {ctx, value} = args
 
   if (value.isUnset() || zed.isPrimitive(value)) {
-    ctx.push(renderOneField(args))
+    ctx.push(args, renderOneField(args))
   } else if (value instanceof zed.Record) {
     inspectRecord({...args, value})
   } else if (value instanceof zed.Array) {
@@ -59,11 +60,11 @@ export const inspectRecord = createContainer<zed.Record>(
   "{",
   "}",
   function* iterateRecord(args: InspectArgs & {value: zed.Record}) {
-    const {ctx, value} = args
+    const {value} = args
     for (let i = 0; i < value.fields.length; ++i) {
       const field = value.fields[i]
       yield {
-        ctx,
+        ...args,
         value: field.value,
         field,
         last: i === value.fields.length - 1,
@@ -79,12 +80,11 @@ export const inspectArray = createContainer<zed.Array>(
   "[",
   "]",
   function* iterateArray(args: InspectArgs & {value: zed.Array}) {
-    const {ctx, value, field} = args
+    const {ctx, value} = args
     for (let i = 0; i < value.items.length; ++i) {
       yield {
-        ctx,
+        ...args,
         value: value.items[i],
-        field,
         last: i === value.items.length - 1,
         key: ctx.isExpanded(value) ? i.toString() : null
       }
@@ -97,12 +97,11 @@ export const inspectSet = createContainer<zed.Set>(
   "|[",
   "]|",
   function* iterateSet(args: InspectArgs & {value: zed.Array}) {
-    const {ctx, value, field} = args
+    const {ctx, value} = args
     for (let i = 0; i < value.items.length; ++i) {
       yield {
-        ctx,
+        ...args,
         value: value.items[i],
-        field,
         last: i === value.items.length - 1,
         key: ctx.isExpanded(value) ? i.toString() : null
       }
@@ -115,14 +114,13 @@ export const inspectMap = createContainer<zed.Map>(
   "|{",
   "}|",
   function* iterateMap(args: InspectArgs & {value: zed.Map}) {
-    const {ctx, value, field} = args
+    const {value} = args
     const map = (value as zed.Map).value
     let i = 0
     for (let key of map.keys()) {
       yield {
-        ctx,
+        ...args,
         value: map.get(key),
-        field,
         last: i === map.size - 1,
         key: key
       }

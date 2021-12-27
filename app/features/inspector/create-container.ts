@@ -13,15 +13,15 @@ export function createContainer<T>(
     const iterator = createIterator(args)
 
     if (ctx.isExpanded(value)) {
-      ctx.push(renderContainer(args, name, open))
+      ctx.push(args, renderContainer(args, name, open))
       ctx.nest()
       for (let args of iterator) inspect(args)
       ctx.unnest()
-      ctx.push(renderClosing(args, close))
+      ctx.push(args, renderClosing(args, close))
     } else {
       const nodes = []
       for (let args of iterator) nodes.push(renderOneField(args))
-      ctx.push(renderContainer(args, name, open, nodes, close))
+      ctx.push(args, renderContainer(args, name, open, nodes, close))
     }
   }
 }

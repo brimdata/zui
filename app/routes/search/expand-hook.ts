@@ -1,32 +1,15 @@
-import useKeybinding from "app/core/hooks/use-keybinding"
-import Tab from "src/js/state/Tab"
+import {collapseAll, expandAll} from "app/features/inspector/handlers"
+import {useDispatch} from "react-redux"
 
 export function useExpandState() {
-  const [defaultExpanded, setDefaultExpanded] = Tab.useState<boolean>(
-    "results.view.objects.defaultExpanded",
-    false
-  )
-  const [expanded, setExpanded] = Tab.useState(
-    "results.view.objects.expanded",
-    new Map()
-  )
-
-  useKeybinding("ctrl+e", () => {
-    setDefaultExpanded(!defaultExpanded)
-    setExpanded(new Map())
-  })
+  const dispatch = useDispatch()
 
   return {
     expandAll() {
-      setDefaultExpanded(true)
-      setExpanded(new Map())
+      dispatch(expandAll())
     },
     collapseAll() {
-      setDefaultExpanded(false)
-      setExpanded(new Map())
-    },
-    set: setExpanded,
-    map: expanded,
-    default: defaultExpanded
+      dispatch(collapseAll())
+    }
   }
 }

@@ -1,9 +1,9 @@
+import {zed} from "@brimdata/zealot"
 import Icon from "app/core/Icon"
 import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
-import React, {ReactNode} from "react"
-import {zed} from "@brimdata/zealot"
-import {InspectArgs} from "./types"
 import classNames from "classnames"
+import React, {ReactNode} from "react"
+import {InspectArgs} from "./types"
 
 export function renderOneField(args: InspectArgs) {
   let nodes = []
@@ -49,7 +49,10 @@ export function renderOneValue(args: InspectArgs): ReactNode {
   const props = {
     key: field?.name + value.toString(),
     className: zedTypeClassName(value),
-    onContextMenu: (e: React.MouseEvent) => ctx.onContextMenu(e, value, field)
+    onContextMenu: (e: React.MouseEvent) => {
+      throw new Error("Implement Me Soon")
+      //ctx.onContextMenu(e, value, field)
+    }
   }
 
   if (zed.isType(value)) {
@@ -150,7 +153,10 @@ export function renderContainer(
     )
   }
   row.push(
-    <a key="handle" onClick={() => ctx.setExpanded(value, !isExpanded)}>
+    <a
+      key="handle"
+      onClick={() => ctx.setExpanded({args, isExpanded: !isExpanded})}
+    >
       <Icon
         name={isExpanded ? "chevron-down" : "chevron-right"}
         key="arrow"
