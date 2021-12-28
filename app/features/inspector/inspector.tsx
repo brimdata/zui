@@ -1,5 +1,5 @@
-import {useMemo, useState} from "react"
-import {InspectList} from "./list-context"
+import React, {useMemo, useState} from "react"
+import {InspectList} from "./inspect-list"
 import {List} from "./list.styled"
 import {Row} from "./row"
 import {InspectorProps} from "./types"
@@ -19,7 +19,7 @@ export function Inspector(props: InspectorProps) {
       itemKey={(i) => i.toString()}
       onItemsRendered={(args) => {
         setVisibleRange([args.overscanStartIndex, args.overscanStopIndex])
-        if (args.overscanStopIndex > list.rows.length - 10) props.loadMore()
+        if (args.overscanStopIndex > list.rows.length - 30) props.loadMore()
       }}
     >
       {Row}

@@ -3,6 +3,7 @@ import useSelect from "app/core/hooks/use-select"
 import {Inspector} from "app/features/inspector/inspector"
 import {InspectArgs} from "app/features/inspector/types"
 import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
+import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import React, {useCallback} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Slice from "src/js/state/Inspector"
@@ -37,11 +38,22 @@ export function MainInspector(props: {
     dispatch(nextPageViewerSearch())
   }
 
+  function onContextMenu(e, value: zed.Value, field: zed.Field) {
+    dispatch(
+      searchFieldContextMenu({
+        value,
+        field,
+        record: field.rootRecord
+      })
+    )
+  }
+
   return (
     <Inspector
       isExpanded={useCallback(isExpanded, [expanded, defaultExpanded])}
       setExpanded={useCallback(setExpanded, [])}
       loadMore={useCallback(loadMore, [])}
+      onContextMenu={useCallback(onContextMenu, [])}
       {...props}
     />
   )

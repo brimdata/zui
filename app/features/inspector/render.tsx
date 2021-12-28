@@ -50,8 +50,7 @@ export function renderOneValue(args: InspectArgs): ReactNode {
     key: field?.name + value.toString(),
     className: zedTypeClassName(value),
     onContextMenu: (e: React.MouseEvent) => {
-      throw new Error("Implement Me Soon")
-      //ctx.onContextMenu(e, value, field)
+      ctx.props.onContextMenu(e, value, field)
     }
   }
 
@@ -143,7 +142,7 @@ export function renderContainer(
   closeToken: string = null
 ) {
   const {ctx, value, key} = args
-  const isExpanded = ctx.isExpanded(value)
+  const isExpanded = ctx.props.isExpanded(value)
   const row = []
   if (key) {
     row.push(
@@ -155,7 +154,7 @@ export function renderContainer(
   row.push(
     <a
       key="handle"
-      onClick={() => ctx.setExpanded({args, isExpanded: !isExpanded})}
+      onClick={() => ctx.props.setExpanded({args, isExpanded: !isExpanded})}
     >
       <Icon
         name={isExpanded ? "chevron-down" : "chevron-right"}

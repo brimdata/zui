@@ -85,7 +85,7 @@ export const inspectArray = createContainer<zed.Array>(
         ...args,
         value: value.items[i],
         last: i === value.items.length - 1,
-        key: ctx.isExpanded(value) ? i.toString() : null
+        key: ctx.props.isExpanded(value) ? i.toString() : null
       }
     }
   }
@@ -102,7 +102,7 @@ export const inspectSet = createContainer<zed.Set>(
         ...args,
         value: value.items[i],
         last: i === value.items.length - 1,
-        key: ctx.isExpanded(value) ? i.toString() : null
+        key: ctx.props.isExpanded(value) ? i.toString() : null
       }
     }
   }
@@ -157,7 +157,7 @@ export const inspectUnionType = createContainer<zed.TypeUnion>(
       const type = value.types[i]
       yield {
         ...args,
-        key: ctx.isExpanded(value) ? i.toString() : null,
+        key: ctx.props.isExpanded(value) ? i.toString() : null,
         value: type,
         type: type,
         last: i === value.types.length - 1

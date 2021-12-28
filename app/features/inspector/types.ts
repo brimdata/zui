@@ -20,6 +20,7 @@ export type InspectorProps = {
   values: zed.Value[]
   isExpanded: IsExpanded
   setExpanded: SetExpanded
+  onContextMenu: OnContextMenu
   loadMore?: Function
 }
 
