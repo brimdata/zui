@@ -1,6 +1,6 @@
-import {MouseEvent, ReactNode} from "react"
 import {zed} from "@brimdata/zealot"
-import {InspectorContext} from "./context"
+import {MouseEvent, ReactNode} from "react"
+import {InspectContext} from "./inspect-list"
 
 export type IsExpanded = (v: zed.Value | zed.Type) => boolean
 export type SetExpanded = (payload: {
@@ -20,21 +20,19 @@ export type InspectorProps = {
   values: zed.Value[]
   isExpanded: IsExpanded
   setExpanded: SetExpanded
+  loadMore?: Function
 }
 
 export type InspectArgs = {
-  ctx: InspectorContext
+  ctx: InspectContext
   value: zed.Value | zed.Type
   field: zed.Field | null
   type: zed.Type
   key: string | null
   last: boolean
-  rootValueIndex: number
-  rootValueStartIndex: number
 }
 
 export type RowData = {
-  rootValueIndex: number
   indent: number
   render: ReactNode
 }

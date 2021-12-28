@@ -10,7 +10,6 @@ export function inspect(args: InspectArgs) {
   } else {
     inspectValue({...args, value})
   }
-  return args.ctx.rows
 }
 
 function inspectType(args: InspectArgs & {value: zed.Type}) {
@@ -21,7 +20,7 @@ function inspectType(args: InspectArgs & {value: zed.Type}) {
     value instanceof zed.TypeSet ||
     value instanceof zed.TypeMap
   ) {
-    ctx.push(args, renderOneField(args))
+    ctx.push(renderOneField(args))
   } else if (value instanceof zed.TypeRecord) {
     inspectRecordType({...args, value})
   } else if (value instanceof zed.TypeUnion) {
@@ -37,7 +36,7 @@ function inspectValue(args: InspectArgs & {value: zed.Value}) {
   const {ctx, value} = args
 
   if (value.isUnset() || zed.isPrimitive(value)) {
-    ctx.push(args, renderOneField(args))
+    ctx.push(renderOneField(args))
   } else if (value instanceof zed.Record) {
     inspectRecord({...args, value})
   } else if (value instanceof zed.Array) {
