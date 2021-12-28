@@ -55,7 +55,7 @@ function _fieldExprToName(expr): string | string[] {
       return "<not-a-field>"
     case "ID":
       return expr.name
-    case "Root":
+    case "This":
       return "this"
     case "Primitive":
       return expr.text
