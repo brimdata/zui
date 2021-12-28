@@ -12,27 +12,30 @@ export function Inspector(props: {
   values: zed.Value[]
   isExpanded: IsExpanded
   setExpanded: SetExpanded
+  loadMore: Function
   height: number
   width: number
 }) {
   const dispatch = useDispatch()
   const [visRange, setVisRange] = useState([0, 30])
 
-  let rowToValue = []
-  let valueToRow = []
-  let totalSize = 0
-  props.values.forEach((v, valIndex) => {
-    const size = getRowCount(v, props.isExpanded)
-    rowToValue = rowToValue.concat(Array(size).fill(valIndex))
-    valueToRow.push(totalSize)
-    totalSize += size
-  })
+  const {rowToValue, valueToRow, totalSize} = useMemo(() => {
+    let rowToValue = []
+    let valueToRow = []
+    let totalSize = 0
+    props.values.forEach((v, valIndex) => {
+      const size = getRowCount(v, props.isExpanded)
+      rowToValue = rowToValue.concat(Array(size).fill(valIndex))
+      valueToRow.push(totalSize)
+      totalSize += size
+    })
+    return {rowToValue, valueToRow, totalSize}
+  }, [props])
 
   const rows = useRef<(RowData | undefined)[]>([])
-
   useMemo(() => {
     rows.current = Array(totalSize).fill(null)
-  }, [props.values, totalSize])
+  }, [props])
 
   const [visStart, visEnd] = visRange
   const valStart = rowToValue[visStart]
@@ -74,7 +77,8 @@ export function Inspector(props: {
       itemData={[...rows.current]}
       itemKey={(i) => i.toString()}
       onItemsRendered={(args) => {
-        setVisRange([args.overscanStartIndex, args.visibleStopIndex])
+        setVisRange([args.overscanStartIndex, args.overscanStopIndex])
+        if (args.overscanStopIndex > rows.current.length - 10) props.loadMore()
       }}
     >
       {Row}
@@ -83,35 +87,54 @@ export function Inspector(props: {
 }
 
 function getRowCount(value: zed.Value | zed.Type, isExpanded) {
-  if (!isExpanded(value)) return 1
-  if (value.isUnset()) return 1
-  if (zed.isPrimitive(value)) return 1
-  if (value instanceof zed.Record) {
-    return value.fields.reduce((sum, field) => {
-      return sum + getRowCount(field.data, isExpanded)
-    }, 2) // The two is for the open and closing brackets
+  if (zed.isType(value)) {
+    if (value instanceof zed.TypeRecord) {
+      if (!isExpanded(value)) return 1
+      return value.fields.reduce((sum, field) => {
+        return sum + getRowCount(field.type, isExpanded)
+      }, 2)
+    }
+    if (value instanceof zed.TypeUnion) {
+      if (!isExpanded(value)) return 1
+      return value.types.reduce((sum, type) => {
+        return sum + getRowCount(type, isExpanded)
+      }, 2)
+    }
+    return 1
+  } else {
+    if (value.isUnset()) return 1
+    if (zed.isPrimitive(value)) return 1
+
+    if (value instanceof zed.Record) {
+      if (!isExpanded(value)) return 1
+      return value.fields.reduce((sum, field) => {
+        return sum + getRowCount(field.data, isExpanded)
+      }, 2) // The two is for the open and closing brackets
+    }
+    if (value instanceof zed.Array) {
+      if (!isExpanded(value)) return 1
+      return value.items.reduce((sum, item) => {
+        return sum + getRowCount(item, isExpanded)
+      }, 2)
+    }
+    if (value instanceof zed.Set) {
+      if (!isExpanded(value)) return 1
+      return value.items.reduce((sum, item) => {
+        return sum + getRowCount(item, isExpanded)
+      }, 2)
+    }
+    if (value instanceof zed.Map) {
+      if (!isExpanded(value)) return 1
+      return Array.from(value.value.values()).reduce((sum, value) => {
+        return sum + getRowCount(value, isExpanded)
+      }, 2)
+    }
+    if (value instanceof zed.Union) {
+      return getRowCount(value.value, isExpanded)
+    }
+    if (value instanceof zed.TypeValue) {
+      return getRowCount(value.value, isExpanded)
+    }
+    return 1
   }
-  if (value instanceof zed.Array) {
-    return value.items.reduce((sum, item) => {
-      return sum + getRowCount(item, isExpanded)
-    }, 2)
-  }
-  if (value instanceof zed.Set) {
-    return value.items.reduce((sum, item) => {
-      return sum + getRowCount(item, isExpanded)
-    }, 2)
-  }
-  if (value instanceof zed.Map) {
-    return Array.from(value.value.values()).reduce((sum, value) => {
-      return sum + getRowCount(value, isExpanded)
-    }, 2)
-  }
-  if (value instanceof zed.Union) {
-    return getRowCount(value.value, isExpanded)
-  }
-  if (value instanceof zed.TypeValue) {
-    return getRowCount(value.value, isExpanded)
-  }
-  console.error("Unknown Zed Value:", value)
-  return 1
 }

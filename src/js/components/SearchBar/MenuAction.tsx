@@ -2,6 +2,7 @@ import {useBrimApi} from "app/core/context"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Tabs from "src/js/state/Tabs"
+import Viewer from "src/js/state/Viewer"
 import {reactElementProps} from "../../../../test/playwright/helpers/integration"
 import ThreeDotsIcon from "../../icons/ThreeDotsIcon"
 import open from "../../lib/open"
@@ -13,7 +14,7 @@ import InputAction from "./InputAction"
 export default function MenuAction() {
   const dispatch = useDispatch()
   const api = useBrimApi()
-  const isFetching = useSelector(Tab.isFetching)
+  const isFetching = useSelector(Viewer.isFetching)
   const tab = useSelector(Tabs.getActive)
 
   const menu = [
