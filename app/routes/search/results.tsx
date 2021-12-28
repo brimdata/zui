@@ -1,21 +1,16 @@
-import {Inspector} from "app/features/inspector/inspector"
-import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import React from "react"
-import {useDispatch} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import ResultsTable from "src/js/components/SearchResults/ResultsTable"
-import {zed} from "@brimdata/zealot"
 import {useResultsData} from "./data-hook"
 import {useExpandState} from "./expand-hook"
+import {MainInspector} from "./main-inspector"
 import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
-import {MainInspector} from "./main-inspector"
 
 export function Results() {
   const data = useResultsData()
   const expand = useExpandState()
   const view = useResultsView()
-  const dispatch = useDispatch()
   const {ref, rect} = useResizeObserver()
 
   return (

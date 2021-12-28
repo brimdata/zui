@@ -3,7 +3,6 @@ import React from "react"
 import styled from "styled-components"
 
 import MacSpinner from "../MacSpinner"
-import Tab from "../../state/Tab"
 import useDelayedMount from "../hooks/useDelayedMount"
 import Viewer from "src/js/state/Viewer"
 

@@ -66,7 +66,7 @@ export const dateToNanoTs = (date: Date | Ts | bigint): string => {
 
 export type BrimSearch = {
   response: SearchResponse
-  promise: Promise<void>
+  promise: Promise<{status: "SUCCESS" | "ABORTED"}>
   abort: () => void
 }
 

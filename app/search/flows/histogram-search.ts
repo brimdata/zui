@@ -12,7 +12,9 @@ import Url from "src/js/state/Url"
 
 const id = "Histogram"
 
-export function histogramSearch(): Thunk<Promise<void>> {
+export function histogramSearch(): Thunk<
+  Promise<{status: "SUCCESS" | "ABORTED"}>
+> {
   return (dispatch, getState) => {
     const state = getState()
     const {program, pins} = Url.getSearchParams(state)

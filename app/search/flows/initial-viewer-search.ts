@@ -5,13 +5,14 @@ import Url from "src/js/state/Url"
 import Viewer from "src/js/state/Viewer"
 import {viewerSearch} from "./viewer-search"
 import Tabs from "../../../src/js/state/Tabs"
+import {Thunk} from "src/js/state/types"
 
 /**
  * Initial search to fill the viewer, as opposed to the "next-page"
  * search which allows for the inifinite scroll behavior.
  */
 
-const initialViewerSearch = () => (dispatch, getState) => {
+const initialViewerSearch = (): Thunk => (dispatch, getState) => {
   const params = Url.getSearchParams(getState())
   const program = brim.program(params.program, params.pins)
   const perPage = program.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
@@ -24,7 +25,11 @@ const initialViewerSearch = () => (dispatch, getState) => {
 
   try {
     const [from, to] = brim.span(params.spanArgs).toDateTuple()
-    return dispatch(viewerSearch({query, from, to, keep: params.keep}))
+    return dispatch(viewerSearch({query, from, to, keep: params.keep})).then(
+      (args) => {
+        console.log(args)
+      }
+    )
   } catch (e) {
     console.error(e)
   }

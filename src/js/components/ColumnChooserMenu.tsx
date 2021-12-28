@@ -109,7 +109,7 @@ export default class ColumnChooserMenu extends React.Component<
     const count = this.props.tableColumns.visibleCount()
 
     const onChangeColumnView = (e) => {
-      this.props.dispatch(Layout.setColumnHeadersView(e.target.value))
+      this.props.dispatch(Layout.setColumnsView(e.target.value))
     }
 
     return (

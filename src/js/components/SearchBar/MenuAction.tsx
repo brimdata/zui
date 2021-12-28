@@ -7,7 +7,6 @@ import {reactElementProps} from "../../../../test/playwright/helpers/integration
 import ThreeDotsIcon from "../../icons/ThreeDotsIcon"
 import open from "../../lib/open"
 import Modal from "../../state/Modal"
-import Tab from "../../state/Tab"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
 import InputAction from "./InputAction"
 

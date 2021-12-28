@@ -22,7 +22,9 @@ type Args = {
 
 const id = "Table"
 
-export function viewerSearch(args: Args): Thunk<Promise<void>> {
+export function viewerSearch(
+  args: Args
+): Thunk<Promise<{status: "SUCCESS" | "ABORTED"}>> {
   return (dispatch, getState) => {
     const {query, from, to, keep, append} = args
     const tabId = Tabs.getActive(getState())

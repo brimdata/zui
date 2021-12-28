@@ -31,7 +31,7 @@ export default class RightPaneExpander extends React.Component<Props, State> {
   }
 
   onClick = () => {
-    this.props.dispatch(Layout.showRightSidebar())
+    this.props.dispatch(Layout.showDetailPane())
   }
 
   render() {

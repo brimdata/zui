@@ -11,7 +11,7 @@ import {XRightPane} from "./RightPane"
 test("no errors if pool does not exist", async () => {
   const {store} = await loginTo("workspace1", "pool1")
 
-  store.dispatch(Layout.showRightSidebar())
+  store.dispatch(Layout.showDetailPane())
   store.dispatch(tabHistory.push(workspacesPath()))
   store.dispatch(LogDetails.push(createRecord({})))
   const el = provide(store, <XRightPane />)

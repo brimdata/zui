@@ -39,11 +39,11 @@ const ViewSelect = () => {
   const menu = usePopupMenu([
     {
       label: "Linear",
-      click: () => dispatch(Layout.setInvestigationView("linear"))
+      click: () => dispatch(Layout.setHistoryView("linear"))
     },
     {
       label: "Tree",
-      click: () => dispatch(Layout.setInvestigationView("tree"))
+      click: () => dispatch(Layout.setHistoryView("tree"))
     }
   ])
 

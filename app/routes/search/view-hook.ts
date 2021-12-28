@@ -1,15 +1,10 @@
-import {useBrimApi} from "app/core/context"
 import useKeybinding from "app/core/hooks/use-keybinding"
 import {useState} from "react"
-import {useStore} from "react-redux"
 
 const OBJECTS = "objects"
 const TABLE = "table"
 
 export function useResultsView() {
-  const store = useStore()
-  const api = useBrimApi()
-
   // This belongs in a reducers
   const [view, setView] = useState(OBJECTS)
 

@@ -55,7 +55,7 @@ export default (store: Store, pluginManager: PluginManager) => {
   })
 
   ipcRenderer.on("toggleRightSidebar", () => {
-    store.dispatch(Layout.toggleRightSidebar())
+    store.dispatch(Layout.toggleDetailPane())
   })
 
   ipcRenderer.on("getState", (event, channel) => {
