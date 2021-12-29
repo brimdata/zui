@@ -189,7 +189,7 @@ export default class ColumnChooserMenu extends React.Component<
 
 const stateToProps = (state: State) => ({
   tableColumns: Columns.getCurrentTableColumns(state),
-  columnHeadersView: Layout.getColumnHeadersView(state)
+  columnHeadersView: Layout.getColumnsView(state)
 })
 
 export const XColumnChooserMenu = connect<

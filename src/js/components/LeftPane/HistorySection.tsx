@@ -34,7 +34,7 @@ function InvestigationTree() {
 
 const ViewSelect = () => {
   const dispatch = useDispatch()
-  const currentView = useSelector(Layout.getInvestigationView)
+  const currentView = useSelector(Layout.getHistoryView)
 
   const menu = usePopupMenu([
     {
@@ -56,7 +56,7 @@ const ViewSelect = () => {
 }
 
 function HistorySection({isOpen, style, resizeProps, toggleProps}) {
-  const view = useSelector(Layout.getInvestigationView)
+  const view = useSelector(Layout.getHistoryView)
   return (
     <StyledSection style={style}>
       <DragAnchor {...resizeProps} />

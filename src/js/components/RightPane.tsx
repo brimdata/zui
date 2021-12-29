@@ -96,8 +96,8 @@ export default class RightPane extends React.Component<Props, S> {
 
 const stateToProps = (state) => {
   return {
-    isOpen: Layout.getRightSidebarIsOpen(state),
-    width: Layout.getRightSidebarWidth(state),
+    isOpen: Layout.getDetailPaneIsOpen(state),
+    width: Layout.getDetailPaneWidth(state),
     prevExists: LogDetails.getHistory(state).canGoBack(),
     nextExists: LogDetails.getHistory(state).canGoForward(),
     currentLog: LogDetails.build(state),

@@ -23,12 +23,12 @@ export function Results() {
               aria-pressed={view.isTable}
             />
             <Styled.ObjectsButton
-              onClick={view.setObjects}
-              aria-pressed={view.isObjects}
+              onClick={view.setInspector}
+              aria-pressed={view.isInspector}
             />
           </Styled.ButtonSwitch>
         </Styled.Group>
-        {view.isObjects && (
+        {view.isInspector && (
           <Styled.Group>
             <Styled.ExpandAllButton onClick={expand.expandAll} />
             <Styled.CollapseAllButton onClick={expand.collapseAll} />

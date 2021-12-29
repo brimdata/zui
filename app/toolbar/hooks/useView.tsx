@@ -8,7 +8,7 @@ import {ActionButtonProps} from "../action-button"
 export default function useView(): ActionButtonProps {
   const dispatch = useDispatch()
   const leftIsOpen = useSelector(Appearance.sidebarIsOpen)
-  const rightIsOpen = useSelector(Layout.getRightSidebarIsOpen)
+  const rightIsOpen = useSelector(Layout.getDetailPaneIsOpen)
   const submenu = [
     {
       label: "Left Pane",

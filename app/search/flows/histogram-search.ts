@@ -1,5 +1,5 @@
 import brim from "src/js/brim"
-import {search} from "src/js/flows/search/mod"
+import {search, SearchResult} from "src/js/flows/search/mod"
 import {SearchResponse} from "src/js/flows/search/response"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import {addEveryCountProc} from "src/js/searches/histogramSearch"
@@ -12,9 +12,7 @@ import Url from "src/js/state/Url"
 
 const id = "Histogram"
 
-export function histogramSearch(): Thunk<
-  Promise<{status: "SUCCESS" | "ABORTED"}>
-> {
+export function histogramSearch(): Thunk<Promise<SearchResult>> {
   return (dispatch, getState) => {
     const state = getState()
     const {program, pins} = Url.getSearchParams(state)

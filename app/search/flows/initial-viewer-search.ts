@@ -25,11 +25,7 @@ const initialViewerSearch = (): Thunk => (dispatch, getState) => {
 
   try {
     const [from, to] = brim.span(params.spanArgs).toDateTuple()
-    return dispatch(viewerSearch({query, from, to, keep: params.keep})).then(
-      (args) => {
-        console.log(args)
-      }
-    )
+    return dispatch(viewerSearch({query, from, to, keep: params.keep}))
   } catch (e) {
     console.error(e)
   }

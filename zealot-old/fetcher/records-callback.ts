@@ -44,7 +44,6 @@ export function createRecordCallback(): RecordCallback {
 
     const rows = prevRows.concat(newRow)
     channels.set(channel, {rows, typedefs, schemas})
-
     return {channel, rows, newRow, schemas}
   }
 }
