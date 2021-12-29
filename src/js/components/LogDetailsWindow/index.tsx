@@ -16,8 +16,8 @@ export default function LogDetailsWindow() {
   const prevExists = useSelector(LogDetails.getHistory).canGoBack()
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()
   const pool = useSelector(Current.mustGetPool)
-  const pluginButtons = usePluginToolbarItems("detail").map((button) => (
-    <ToolbarAction key={button.label} {...button} />
+  const pluginButtons = usePluginToolbarItems("detail").map((button, i) => (
+    <ToolbarAction key={button.label || i} {...button} />
   ))
 
   return (

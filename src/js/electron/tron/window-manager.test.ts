@@ -42,14 +42,14 @@ test("when all closed resolves", (done) => {
   })
 })
 
-test("when all closed waits until windows are done", async (done) => {
+test("when all closed waits until windows are done", async () => {
   const manager = new WindowManager()
   await manager.openWindow("search")
   let pending = true
   manager.whenAllClosed().then(() => (pending = false))
-  setTimeout(() => {
+  return new Promise<void>((resolve) => {
     expect(pending).toBe(true)
-    done()
+    resolve()
   })
 })
 

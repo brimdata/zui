@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import ingest from "./index"
 
 const fakeFile = (path: string, name: string): File => {

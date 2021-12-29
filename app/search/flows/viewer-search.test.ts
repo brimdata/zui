@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import Columns from "src/js/state/Columns"
