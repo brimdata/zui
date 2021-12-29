@@ -1,8 +1,6 @@
 import EventEmitter from "events"
 import {SearchResult} from "../flows/search/mod"
 
-const EventName = "did-finish"
-
 type CB<T> = (data: T) => void
 
 export class SearchesApi {
@@ -18,7 +16,7 @@ export class SearchesApi {
     this.emitter.emit(name, ...args)
   }
 
-  private listenTo(name, cb) {
+  private listenTo(name: string, cb: any) {
     this.emitter.addListener(name, cb)
     return () => this.emitter.removeListener(name, cb)
   }

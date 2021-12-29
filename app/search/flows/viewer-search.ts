@@ -41,7 +41,7 @@ function handle(
   keep = false,
   append = false
 ): Thunk {
-  return function(dispatch, getState, {api}) {
+  return function(dispatch, getState) {
     let allColumns: SchemaMap = {}
     let allRecords: zed.Record[] = []
     let count = 0

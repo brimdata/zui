@@ -1,5 +1,4 @@
 import activeTabSelect from "../Tab/activeTabSelect"
-import {TabState} from "../Tab/types"
 
 export default {
   getDetailPaneWidth: activeTabSelect(
