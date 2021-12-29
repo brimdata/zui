@@ -97,9 +97,6 @@ export class Lake {
       opts.stdio.push(readfd)
       args.push(`-brimfd=${opts.stdio.length - 1}`)
     }
-    // XXX This belongs in the brimcap plugin.
-    const suricataUserDir = join(app.getPath("userData"), "suricata")
-    process.env.BRIM_SURICATA_USER_DIR = suricataUserDir
     log.info("spawning zed serve:", zedCommand(), args.join(" "))
 
     // @ts-ignore

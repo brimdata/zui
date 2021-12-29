@@ -1,12 +1,12 @@
-import {Workspace} from "../state/Workspaces/types"
+import {Lake} from "../state/Lakes/types"
 
-export default function workspace(ws: Workspace) {
+export default function workspace(ws: Lake) {
   return {
     ...ws,
     getAddress(): string {
       return this.port ? [this.host, this.port].join(":") : this.host
     },
-    serialize(): Workspace {
+    serialize(): Lake {
       return {
         host: this.host,
         id: this.id,

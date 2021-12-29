@@ -8,6 +8,6 @@ export const initCurrentTab = (): Thunk => async (dispatch, getState) => {
   try {
     await dispatch(updateStatus(ws.id))
   } catch (e) {
-    console.error("Workspace connection failed: ", e)
+    console.error("Lake connection failed: ", e)
   }
 }

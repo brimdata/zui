@@ -62,7 +62,7 @@ const showPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
         showMessageBox({
           type: "warning",
           title: "Delete All Pools",
-          message: `Are you sure you want to delete all pools for this workspace?`,
+          message: `Are you sure you want to delete all pools in this lake?`,
           buttons: ["OK", "Cancel"]
         }).then(({response}) => {
           if (response === 0)

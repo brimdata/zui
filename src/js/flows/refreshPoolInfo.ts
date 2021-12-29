@@ -5,7 +5,7 @@ import {getZealot} from "./getZealot"
 import {Zealot} from "../../../zealot-old"
 import {PoolConfig, PoolStats} from "../../../zealot-old/types"
 import interop from "../brim/interop"
-import Workspaces from "../state/Workspaces"
+import Lakes from "../state/Lakes"
 import workspace from "../brim/workspace"
 
 type refreshPoolInfoArgs = {
@@ -18,7 +18,7 @@ export default function refreshPoolInfo(
 ): Thunk<Promise<void>> {
   return (dispatch, getState) => {
     const ws = refreshPoolInfoArgs?.workspaceId
-      ? workspace(Workspaces.id(refreshPoolInfoArgs.workspaceId)(getState()))
+      ? workspace(Lakes.id(refreshPoolInfoArgs.workspaceId)(getState()))
       : Current.getWorkspace(getState())
     const zealot: Zealot = dispatch(getZealot(ws))
     const poolId = refreshPoolInfoArgs?.poolId || Current.getPoolId(getState())

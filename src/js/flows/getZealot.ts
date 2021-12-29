@@ -5,7 +5,7 @@ import {BrimWorkspace} from "../brim"
 import ErrorFactory from "../models/ErrorFactory"
 import Current from "../state/Current"
 import {Thunk} from "../state/types"
-import Workspaces from "../state/Workspaces"
+import Lakes from "../state/Lakes"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import {getAuthCredentials} from "./workspace/getAuthCredentials"
 
@@ -31,7 +31,7 @@ const createBrimFetcher = (dispatch, getState, workspace: BrimWorkspace) => {
           return args
         }
 
-        await dispatch(Workspaces.setWorkspaceToken(ws.id, accessToken))
+        await dispatch(Lakes.setLakeToken(ws.id, accessToken))
       }
 
       const bearerToken = `Bearer ${accessToken}`

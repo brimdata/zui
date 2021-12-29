@@ -6,7 +6,7 @@ import {BrimWorkspace} from "../brim"
 import {updateStatus} from "../flows/workspace/update-status"
 import {login} from "../flows/workspace/login"
 import {AppDispatch} from "../state/types"
-import Workspaces from "../state/Workspaces"
+import Lakes from "../state/Lakes"
 
 import ToolbarButton from "../../../app/toolbar/button"
 import MacSpinner from "./MacSpinner"
@@ -53,7 +53,7 @@ const Login = ({workspace}: Props) => {
       const accessToken = await dispatch(
         login(workspace, ctlRef.current.signal)
       )
-      dispatch(Workspaces.setWorkspaceToken(workspace.id, accessToken))
+      dispatch(Lakes.setLakeToken(workspace.id, accessToken))
       await dispatch(updateStatus(workspace.id))
     } catch {
       toast.error("Login failed")
@@ -70,7 +70,7 @@ const Login = ({workspace}: Props) => {
     <PageWrap>
       <StyledHeader>Login</StyledHeader>
       <StyledP>
-        {"This workspace requires authentication, please login to continue."}
+        {"This lake requires authentication. Please log in to continue."}
       </StyledP>
       <StyledButton
         onClick={isFetching ? onCancel : onClick}

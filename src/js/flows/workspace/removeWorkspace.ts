@@ -8,15 +8,14 @@ import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
 import Investigation from "../../state/Investigation"
 import Pools from "../../state/Pools"
 import {Thunk} from "../../state/types"
-import Workspaces from "../../state/Workspaces"
-import {Workspace} from "../../state/Workspaces/types"
+import Lakes from "../../state/Lakes"
+import {Lake} from "../../state/Lakes/types"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 
-const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
+const removeWorkspace = (ws: Lake): Thunk => (dispatch, _getState) => {
   const {name, id, authType} = ws
 
-  if (isDefaultWorkspace(ws))
-    throw new Error("Cannot remove the default workspace")
+  if (isDefaultWorkspace(ws)) throw new Error("Cannot remove the default lake")
 
   // remove creds from keychain
   if (authType === "auth0") {
@@ -26,10 +25,10 @@ const removeWorkspace = (ws: Workspace): Thunk => (dispatch, _getState) => {
   dispatch(Investigation.clearWorkspaceInvestigation(id))
   dispatch(Pools.removeForWorkspace(id))
   dispatch(WorkspaceStatuses.remove(id))
-  dispatch(Workspaces.remove(id))
+  dispatch(Lakes.remove(id))
 
   dispatch(tabHistory.push(workspacesPath()))
-  toast(`Removed workspace "${name}"`)
+  toast(`Removed lake "${name}"`)
 }
 
 export default removeWorkspace

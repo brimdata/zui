@@ -5,7 +5,7 @@ import {useHistory} from "react-router"
 import {BrimWorkspace} from "src/js/brim"
 import workspace from "src/js/brim/workspace"
 import DataStoreIcon from "src/js/icons/DataStoreIcon"
-import Workspaces from "src/js/state/Workspaces"
+import Lakes from "src/js/state/Lakes"
 import styled from "styled-components"
 
 const StyledWorkspace = styled.li`
@@ -77,7 +77,7 @@ const WorkspacesWrapper = styled.ul`
 `
 
 const WorkspacesList = () => {
-  const workspaces = useSelector(Workspaces.all)
+  const workspaces = useSelector(Lakes.all)
   const history = useHistory()
   return (
     <PageWrap>

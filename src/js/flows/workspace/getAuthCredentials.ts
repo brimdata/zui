@@ -13,7 +13,7 @@ export const getAuthCredentials = (
   ws: BrimWorkspace
 ): Thunk<Promise<string | null>> => async (dispatch) => {
   if (!ws.authType || ws.authType !== "auth0" || !ws.authData)
-    throw new Error("No auth data set for workspace")
+    throw new Error("No authentication data set for lake")
 
   // first, check if accessToken is in keychain
   let accessToken = await invoke(ipc.secrets.getKey(toAccessTokenKey(ws.id)))

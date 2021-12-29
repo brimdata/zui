@@ -15,7 +15,7 @@ import Search from "../Search"
 import {SpanArgs} from "../Search/types"
 import Url from "../Url"
 import Pools from "../Pools"
-import Workspaces from "../Workspaces"
+import Lakes from "../Lakes"
 import SearchBar from "./"
 import {SearchBarState} from "./types"
 
@@ -27,10 +27,7 @@ beforeEach(() => {
   const workspace = fixtures("workspace1")
   const pool = fixtures("pool1")
 
-  store.dispatchAll([
-    Workspaces.add(workspace),
-    Pools.setDetail(workspace.id, pool)
-  ])
+  store.dispatchAll([Lakes.add(workspace), Pools.setDetail(workspace.id, pool)])
   store.dispatch(tabHistory.push(lakePath(pool.id, workspace.id)))
 })
 

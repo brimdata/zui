@@ -12,7 +12,7 @@ import {
 } from "../auth0/utils"
 import createGlobalStore from "../state/createGlobalStore"
 import {getGlobalPersistable} from "../state/getPersistable"
-import Workspaces from "../state/Workspaces"
+import Lakes from "../state/Lakes"
 import {installExtensions} from "./extensions"
 import ipc from "./ipc"
 import sendTo from "./ipc/sendTo"
@@ -75,7 +75,7 @@ export class BrimMain {
 
   async resetState() {
     // clear keys from secrets storage
-    Workspaces.all(this.store.getState()).forEach((ws) => {
+    Lakes.all(this.store.getState()).forEach((ws) => {
       if (ws.authType !== "auth0") return
       keytar.deletePassword(toRefreshTokenKey(ws.id), os.userInfo().username)
       keytar.deletePassword(toAccessTokenKey(ws.id), os.userInfo().username)

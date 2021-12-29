@@ -2,16 +2,16 @@ import {createSelector} from "reselect"
 import brim, {BrimPool, Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
 import Current from "../Current"
+import {Lake} from "../Lakes/types"
 import {SpanArgs} from "../Search/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
 import Url from "../Url"
 import {SearchParams} from "../Url/selectors"
 import {createIsEqualSelector} from "../utils"
-import {Workspace} from "../Workspaces/types"
 import {TabState} from "./types"
 
-const workspaceUrl = createSelector<State, Workspace | null, string>(
+const workspaceUrl = createSelector<State, Lake | null, string>(
   Current.getWorkspace,
   (c) => {
     if (c) return c.host + ":" + c.port

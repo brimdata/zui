@@ -6,8 +6,8 @@ import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import {Pool} from "src/js/state/Pools/types"
 import {Store} from "src/js/state/types"
-import Workspaces from "src/js/state/Workspaces"
-import {Workspace} from "src/js/state/Workspaces/types"
+import Lakes from "src/js/state/Lakes"
+import {Lake} from "src/js/state/Lakes/types"
 import {onPage} from "./utils"
 
 class BrimTestContext {
@@ -29,7 +29,7 @@ class BrimTestContext {
 
 type Args = {
   page?: string
-  workspace?: Workspace
+  workspace?: Lake
   pool?: Pool
 }
 const defaults = () => ({
@@ -54,7 +54,7 @@ export function setupBrim(opts: Args = defaults()) {
     const props = await bootBrim(opts)
     context.assign(props)
     if (opts.workspace) {
-      context.dispatch(Workspaces.add(opts.workspace))
+      context.dispatch(Lakes.add(opts.workspace))
       if (opts.pool) {
         context.dispatch(Pools.setDetail(opts.workspace.id, opts.pool))
       }

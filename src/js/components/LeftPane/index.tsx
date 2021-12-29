@@ -52,9 +52,7 @@ export function LeftPane() {
       className="history-pane"
     >
       {!id ? (
-        <EmptyText>
-          The workspace previously on this tab has been removed.
-        </EmptyText>
+        <EmptyText>The lake previously on this tab has been removed.</EmptyText>
       ) : (
         <>
           <WorkspacePicker />
