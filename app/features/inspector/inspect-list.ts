@@ -5,6 +5,16 @@ import {getRowCount} from "./count"
 import {inspect} from "./inspect"
 import {InspectorProps, RowData} from "./types"
 
+/**
+ * Not sure about this name. This class makes the inspector render
+ * fast with thousands of rows. It calculates the total number of
+ * rows there will be taking into account the expanded states of
+ * the values, then only fills in the rows that are visible at
+ * that moment. It caches the rows when scrolling as well.
+ *
+ * It's like a map in an exploration computer game. The rows get
+ * filled in more and more as you travel (scroll) around.
+ */
 export class InspectList {
   count = 0
   rows = [] as (RowData | null)[]
