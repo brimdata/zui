@@ -1,6 +1,9 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import ingest from "./"
 import data from "test/shared/data"
-
 const json = data.getDOMFile("sample.ndjson")
 const pcap = data.getDOMFile("sample.pcap")
 const pcapng = data.getDOMFile("sample.pcapng")

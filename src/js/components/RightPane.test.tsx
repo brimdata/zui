@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import tabHistory from "app/router/tab-history"
 import {workspacesPath} from "app/router/utils/paths"
 import React from "react"

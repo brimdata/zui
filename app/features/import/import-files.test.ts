@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import tabHistory from "app/router/tab-history"
 import {workspacePath} from "app/router/utils/paths"
 import Current from "src/js/state/Current"
@@ -7,7 +11,6 @@ import Lakes from "src/js/state/Lakes"
 import data from "test/shared/data"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
-import {mocked} from "ts-jest/utils"
 import {createZealotMock} from "zealot-old"
 import BrimApi from "src/js/api"
 import ingestFiles from "./import-files"
@@ -47,7 +50,8 @@ beforeEach(() => {
     .stubPromise("pools.delete", true)
   const ws = fixtures("workspace1")
 
-  apiMock = mocked(BrimApi)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  apiMock = jest.mocked(BrimApi)
   apiMock.loaders = {
     getMatches: jest.fn(),
     abort: jest.fn(),

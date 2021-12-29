@@ -9,6 +9,7 @@ import {Store} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
 import {Lake} from "src/js/state/Lakes/types"
 import {onPage} from "./utils"
+import "@testing-library/jest-dom"
 
 class BrimTestContext {
   store: Store

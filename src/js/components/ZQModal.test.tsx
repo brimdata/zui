@@ -1,4 +1,10 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from "react"
+
+document.execCommand = jest.fn()
 
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
