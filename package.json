@@ -96,10 +96,8 @@
     "ts-jest": "^26.5.1",
     "typescript": "^4.0.2",
     "web-streams-polyfill": "^3.2.0",
-    "webdriverio": "^6.6.7",
     "whatwg-fetch": "^3.2.0",
-    "win-7zip": "^0.1.0",
-    "winston": "^3.3.3"
+    "win-7zip": "^0.1.0"
   },
   "dependencies": {
     "@brimdata/zealot": "0.0.17",
@@ -107,7 +105,6 @@
     "@js-joda/core": "^3.2.0",
     "@reduxjs/toolkit": "^1.5.0",
     "@types/node-fetch": "^3.0.3",
-    "@vx/vx": "0.0.199",
     "animejs": "^3.2.0",
     "base64-js": "^1.3.1",
     "chrono-node": "^1.4.8",
@@ -143,7 +140,6 @@
     "react-dnd": "^14.0.4",
     "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^16.14.0",
-    "react-grid-layout": "^1.2.0",
     "react-hot-toast": "^1.0.1",
     "react-input-autosize": "^3.0.0",
     "react-markdown": "^6.0.2",
