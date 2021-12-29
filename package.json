@@ -59,6 +59,7 @@
     "@types/tmp": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
+    "abort-controller": "^3.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-react-svg": "^1.1.1",
