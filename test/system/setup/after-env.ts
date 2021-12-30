@@ -1,8 +1,9 @@
+import "regenerator-runtime/runtime"
 import "@testing-library/jest-dom"
 import {configure} from "@testing-library/react"
 import env from "app/core/env"
 import log from "electron-log"
-import "regenerator-runtime/runtime"
+
 import "web-streams-polyfill"
 
 global.DOMRectReadOnly = class DOMRectReadOnly {}
