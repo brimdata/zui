@@ -7,7 +7,7 @@
   "main": "dist/src/js/electron/main.js",
   "author": "Brim Security, Inc.",
   "scripts": {
-    "ci": "npm-run-all clean build -p lint tsc format-check generate-responses test test:api test:playwright",
+    "ci": "npm-run-all -p lint tsc test test:api test:playwright -l --silent",
     "test:playwright": "jest --runInBand --projects test/playwright",
     "build": "node scripts/build",
     "clean": "node scripts/clean",
@@ -18,7 +18,6 @@
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "generate-responses": "node scripts/test/responses",
     "tsc": "tsc",
-    "format-check": "npm run format && git diff --exit-code -- src",
     "release": "npx electron-builder --mac",
     "prerelease": "npm run build",
     "postinstall": "node scripts/post-install",
