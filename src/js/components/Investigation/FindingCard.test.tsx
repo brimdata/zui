@@ -9,7 +9,7 @@ import brim from "../../brim"
 import loginTo from "../../../../test/unit/helpers/loginTo"
 import provide from "../../../../test/unit/helpers/provide"
 import {Finding} from "src/js/state/Investigation/types"
-import {fireEvent} from "@testing-library/dom"
+import {fireEvent} from "@testing-library/react"
 
 let store
 beforeEach(async () => {

@@ -1,6 +1,5 @@
 import {DateSpan} from "../components/charts/types"
 import histogramInterval from "../lib/histogramInterval"
-
 export function addEveryCountProc(program: string, span: DateSpan) {
   const BOOM_INTERVALS = {
     millisecond: "ms",
