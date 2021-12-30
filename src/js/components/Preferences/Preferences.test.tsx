@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Fields from "app/detail/Fields"
 import React from "react"
 import Modal from "src/js/state/Modal"

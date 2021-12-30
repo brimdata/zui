@@ -1,10 +1,10 @@
 import {Store} from "../state/types"
-import Workspaces from "../state/Workspaces"
+import Lakes from "../state/Lakes"
 import Current from "../state/Current"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
-import {Workspace} from "../state/Workspaces/types"
+import {Lake} from "../state/Lakes/types"
 
-export const defaultWorkspace = (): Workspace => {
+export const defaultWorkspace = (): Lake => {
   const port = global.mainArgs.lakePort.toString()
   return {
     host: "http://localhost",
@@ -16,10 +16,10 @@ export const defaultWorkspace = (): Workspace => {
 }
 
 const setupDefaultWorkspace = () => (dispatch, _) => {
-  dispatch(Workspaces.add(defaultWorkspace()))
+  dispatch(Lakes.add(defaultWorkspace()))
 }
 
-export const isDefaultWorkspace = (ws: Workspace): boolean => {
+export const isDefaultWorkspace = (ws: Lake): boolean => {
   const {host, port, id} = ws
   const d = defaultWorkspace()
   return id === d.id && host === d.host && port === d.port

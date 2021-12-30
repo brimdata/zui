@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import tabHistory from "app/router/tab-history"
 import {lakeSearchPath} from "app/router/utils/paths"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
@@ -6,7 +10,7 @@ import Pools from "src/js/state/Pools"
 import Tab from "src/js/state/Tab"
 import Tabs from "src/js/state/Tabs"
 import Viewer from "src/js/state/Viewer"
-import Workspaces from "src/js/state/Workspaces"
+import Lakes from "src/js/state/Lakes"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
 import {createRecord} from "test/shared/factories/zed-factory"
@@ -30,7 +34,7 @@ beforeEach(() => {
   const pool = fixtures("pool1")
   store.dispatch(tabHistory.push(lakeSearchPath(pool.id, ws.id)))
   store.dispatchAll([
-    Workspaces.add(ws),
+    Lakes.add(ws),
     Pools.setDetail(ws.id, pool),
     Search.setSpanArgsFromDates([new Date(0), new Date(10 * 1000)]),
     submitSearch(),

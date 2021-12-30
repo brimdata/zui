@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {last} from "lodash"
 import loginTo from "test/unit/helpers/loginTo"
 import {createRecord} from "test/shared/factories/zed-factory"

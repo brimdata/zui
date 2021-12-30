@@ -32,6 +32,7 @@ export default class BrimcapPlugin {
   } = {}
   private brimcapDataRoot = ""
   private brimcapBinPath = ""
+  private suricataUserDir = ""
   private toastConfig = {
     loading: {
       // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
@@ -55,6 +56,7 @@ export default class BrimcapPlugin {
     this.cli = new BrimcapCLI(this.brimcapBinPath)
 
     this.brimcapDataRoot = path.join(dataRoot, "brimcap-root")
+    this.suricataUserDir = path.join(dataRoot, "suricata")
   }
 
   init() {
@@ -73,6 +75,10 @@ export default class BrimcapPlugin {
     this.setupLoader()
     this.setupConfig()
     this.setupContextMenus()
+
+    // suricataupdater and suricatarunner (run by "brimcap analyze")
+    // both consult BRIM_SURICATA_USER_DIR.
+    process.env.BRIM_SURICATA_USER_DIR = this.suricataUserDir
     // NOTE: suricata updates async, don't block
     this.updateSuricata()
   }

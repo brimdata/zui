@@ -6,6 +6,7 @@ import {MainArgs} from "../electron/main"
 declare global {
   namespace NodeJS {
     interface Global {
+      window: any
       featureFlags: string[]
       fetch: any
       DOMRectReadOnly: any

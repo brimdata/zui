@@ -1,8 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import tabHistory from "app/router/tab-history"
 import {lakePath} from "app/router/utils/paths"
 import Chart from "src/js/state/Chart"
 import Pools from "src/js/state/Pools"
-import Workspaces from "src/js/state/Workspaces"
+import Lakes from "src/js/state/Lakes"
 import fixtures from "test/unit/fixtures"
 import initTestStore from "test/unit/helpers/initTestStore"
 import {useResponse} from "test/shared/responses"
@@ -20,7 +24,7 @@ beforeEach(() => {
   select = (s: any) => s(store.getState())
 
   store.dispatchAll([
-    Workspaces.add({
+    Lakes.add({
       host: "testHost",
       id: "1",
       name: "testName",

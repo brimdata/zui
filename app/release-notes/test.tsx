@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {rest} from "msw"
 import React from "react"
 import server from "test/unit/helpers/server"

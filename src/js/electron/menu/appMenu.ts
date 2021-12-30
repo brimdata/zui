@@ -54,7 +54,7 @@ export default function(
     click: async () => {
       const {response} = await dialog.showMessageBox({
         message: "Are you sure?",
-        detail: "This will reset local app state, but retain workspace data.",
+        detail: "This will reset local app state but retain lake data.",
         buttons: ["OK", "Cancel"]
       })
       if (response === 0) await brim.resetState()

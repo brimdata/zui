@@ -1,6 +1,6 @@
 import * as remote from "@electron/remote"
 import {Thunk} from "../../state/types"
-import {Workspace} from "../../state/Workspaces/types"
+import {Lake} from "../../state/Lakes/types"
 import {buildWorkspace} from "./buildWorkspace"
 import {getAuthCredentials} from "./getAuthCredentials"
 import {saveWorkspace} from "./saveWorkspace"
@@ -17,7 +17,7 @@ export class LoginError extends Error {
 
 export class ConnectionError extends Error {
   readonly name: string = "ConnectionError"
-  readonly message: string = "Unable to connect to Workspace"
+  readonly message: string = "Unable to connect to lake"
 
   constructor(readonly cause: Error) {
     super()
@@ -28,7 +28,7 @@ type Cancelled = boolean
 type WorkspaceError = LoginError | ConnectionError | null
 
 export const buildAndAuthenticateWorkspace = (
-  workspace: Partial<Workspace>,
+  workspace: Partial<Lake>,
   abortSignal: AbortSignal
 ): Thunk<Promise<[Cancelled, WorkspaceError]>> => async (dispatch) => {
   try {
@@ -55,7 +55,7 @@ export const buildAndAuthenticateWorkspace = (
       buttons: ["Continue", "Cancel"],
       title: "Redirect to Browser",
       message:
-        "This Workspace requires authentication. Continue to login with your browser?"
+        "This lake requires authentication. Continue to log in with your browser?"
     }
     const dialogChoice = await remote.dialog.showMessageBox(dialogOpts)
     if (dialogChoice.response === 1) return [true, null]

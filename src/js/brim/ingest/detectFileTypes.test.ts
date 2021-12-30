@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import ingest from "./"
 import data from "test/shared/data"
 

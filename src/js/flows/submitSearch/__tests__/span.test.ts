@@ -7,7 +7,7 @@ import brim from "../../../brim"
 import Search from "../../../state/Search"
 import SearchBar from "../../../state/SearchBar"
 import Pools from "../../../state/Pools"
-import Workspaces from "../../../state/Workspaces"
+import Lakes from "../../../state/Lakes"
 import fixtures from "../../../../../test/unit/fixtures"
 import initTestStore from "../../../../../test/unit/helpers/initTestStore"
 import {submitSearch} from "../mod"
@@ -24,7 +24,7 @@ beforeEach(() => {
   dispatch = store.dispatch
   zealot.stubStream("query", countByPathResp).stubStream("query", dnsResp)
   store.dispatchAll([
-    Workspaces.add({
+    Lakes.add({
       host: "testHost",
       id: "1",
       name: "testName",

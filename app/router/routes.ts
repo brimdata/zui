@@ -12,7 +12,7 @@ export const root = {
 }
 export const workspacesList = {
   path: "/workspaces",
-  title: "Choose a Workspace"
+  title: "Choose a Lake"
 }
 export const workspaceShow = {
   title: "<workspace>",

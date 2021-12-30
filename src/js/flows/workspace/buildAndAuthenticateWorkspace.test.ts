@@ -1,12 +1,15 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {ipcRenderer} from "electron"
 import jwtDecode from "jwt-decode"
-import Workspaces from "src/js/state/Workspaces"
+import Lakes from "src/js/state/Lakes"
 import WorkspaceStatuses from "src/js/state/WorkspaceStatuses"
 import * as remote from "@electron/remote"
-import {mocked} from "ts-jest/utils"
 import {createZealotMock} from "zealot-old"
 import Auth0Client from "../../auth0"
-import {AuthType} from "../../state/Workspaces/types"
+import {AuthType} from "../../state/Lakes/types"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import {
   buildAndAuthenticateWorkspace,
@@ -55,10 +58,14 @@ const fixtures = {
 let store, zealot, ctl
 let auth0ClientMock, jwtDecodeMock, ipcRendererMock, remoteMock
 beforeEach(() => {
-  auth0ClientMock = mocked(Auth0Client)
-  jwtDecodeMock = mocked(jwtDecode)
-  ipcRendererMock = mocked(ipcRenderer)
-  remoteMock = mocked(remote)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  auth0ClientMock = jest.mocked(Auth0Client)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  jwtDecodeMock = jest.mocked(jwtDecode)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  ipcRendererMock = jest.mocked(ipcRenderer)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  remoteMock = jest.mocked(remote)
 
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)
@@ -67,7 +74,7 @@ beforeEach(() => {
 
 const expectWorkspace = (ws, status) => {
   const state = store.getState()
-  expect(Workspaces.id(ws.id)(state)).toEqual(ws)
+  expect(Lakes.id(ws.id)(state)).toEqual(ws)
   expect(WorkspaceStatuses.get(ws.id)(state)).toEqual(status)
 }
 
@@ -104,14 +111,14 @@ describe("success cases", () => {
       version: "0",
       authType: "none" as AuthType
     }
-    store.dispatch(Workspaces.add(existingWs))
+    store.dispatch(Lakes.add(existingWs))
     const [cancelled, error] = await store.dispatch(
       buildAndAuthenticateWorkspace(existingWs, ctl.signal)
     )
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
-    expect(Workspaces.all(store.getState())).toHaveLength(1)
+    expect(Lakes.all(store.getState())).toHaveLength(1)
     expectWorkspace(
       {
         ...existingWs,
@@ -131,7 +138,7 @@ describe("success cases", () => {
         domain: fixtures.secureMethodAuth.value.auth0.domain
       }
     }
-    store.dispatch(Workspaces.add(existingWs))
+    store.dispatch(Lakes.add(existingWs))
     ipcRendererMock.invoke.mockReturnValueOnce(fixtures.accessToken)
     jwtDecodeMock.mockReturnValueOnce({
       exp: fixtures.validDate
@@ -143,7 +150,7 @@ describe("success cases", () => {
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
-    expect(Workspaces.all(store.getState())).toHaveLength(1)
+    expect(Lakes.all(store.getState())).toHaveLength(1)
     expectWorkspace(
       {
         ...existingWs,
@@ -163,7 +170,7 @@ describe("success cases", () => {
         domain: fixtures.secureMethodAuth.value.auth0.domain
       }
     }
-    store.dispatch(Workspaces.add(existingWs))
+    store.dispatch(Lakes.add(existingWs))
     // no access token in secrets
     ipcRendererMock.invoke.mockReturnValueOnce("")
     // do have refresh token though
@@ -197,7 +204,7 @@ describe("success cases", () => {
         domain: fixtures.secureMethodAuth.value.auth0.domain
       }
     }
-    store.dispatch(Workspaces.add(existingWs))
+    store.dispatch(Lakes.add(existingWs))
     ipcRendererMock.invoke.mockReturnValueOnce("expiredToken")
     jwtDecodeMock.mockReturnValueOnce({exp: fixtures.expiredDate})
     ipcRendererMock.invoke.mockReturnValueOnce(fixtures.refreshToken)
@@ -211,7 +218,7 @@ describe("success cases", () => {
 
     expect(cancelled).toEqual(false)
     expect(error).toBeNull()
-    expect(Workspaces.all(store.getState())).toHaveLength(1)
+    expect(Lakes.all(store.getState())).toHaveLength(1)
     expectWorkspace(
       {
         ...existingWs,
@@ -234,7 +241,7 @@ describe("success cases", () => {
 
     expect(cancelled).toEqual(true)
     expect(error).toBeNull()
-    expect(Workspaces.all(store.getState())).toHaveLength(0)
+    expect(Lakes.all(store.getState())).toHaveLength(0)
   })
 
   test("new secure workspace -> login required -> abort login", async () => {
@@ -251,7 +258,7 @@ describe("success cases", () => {
 
     expect(cancelled).toEqual(true)
     expect(error).toBeNull()
-    expect(Workspaces.all(store.getState())).toHaveLength(0)
+    expect(Lakes.all(store.getState())).toHaveLength(0)
   })
 
   test("new secure workspace -> login required -> succeed login", async () => {
@@ -302,7 +309,7 @@ describe("failure cases", () => {
 
     expect(cancelled).toEqual(false)
     expect(error).toBeInstanceOf(ConnectionError)
-    expect(Workspaces.all(store.getState())).toHaveLength(0)
+    expect(Lakes.all(store.getState())).toHaveLength(0)
   })
 
   test("new secure workspace -> login required -> login failure", async () => {
@@ -329,6 +336,6 @@ describe("failure cases", () => {
 
     expect(cancelled).toEqual(false)
     expect(error).toBeInstanceOf(LoginError)
-    expect(Workspaces.all(store.getState())).toHaveLength(0)
+    expect(Lakes.all(store.getState())).toHaveLength(0)
   })
 })

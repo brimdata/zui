@@ -1,6 +1,6 @@
 import {createZealotMock} from "zealot-old"
 
-import Workspaces from "../state/Workspaces"
+import Lakes from "../state/Lakes"
 import Current from "../state/Current"
 import fixtures from "../../../test/unit/fixtures"
 import deletePartialPools from "./deletePartialPools"
@@ -17,7 +17,7 @@ let store, zealot
 beforeEach(() => {
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)
-  store.dispatch(Workspaces.add(ws))
+  store.dispatch(Lakes.add(ws))
 })
 
 test("reset current pool id if mid-ingest", async () => {

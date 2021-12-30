@@ -3,8 +3,8 @@ import {lakePath, workspacePath} from "app/router/utils/paths"
 import fixtures from "../../../../test/unit/fixtures"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Pools from "../Pools"
-import Workspaces from "../Workspaces"
-import {Workspace} from "../Workspaces/types"
+import Lakes from "../Lakes"
+import {Lake} from "../Lakes/types"
 import Current from "./"
 
 let store
@@ -26,14 +26,14 @@ test("setting the workspace id", () => {
 })
 
 test("getting the actual workspace", () => {
-  const ws: Workspace = {
+  const ws: Lake = {
     id: "myws",
     name: "myws",
     host: "www.myws.com",
     port: "123",
     authType: "none"
   }
-  const state = store.dispatchAll([Workspaces.add(ws)])
+  const state = store.dispatchAll([Lakes.add(ws)])
   store.dispatch(tabHistory.push(workspacePath(ws.id)))
 
   expect(Current.mustGetWorkspace(state).serialize()).toEqual(ws)
@@ -41,7 +41,7 @@ test("getting the actual workspace", () => {
 
 test("getting the actual pool", () => {
   const pool = fixtures("pool1")
-  const ws: Workspace = {
+  const ws: Lake = {
     id: "myws",
     name: "myws",
     host: "www.myws.com",
@@ -49,7 +49,7 @@ test("getting the actual pool", () => {
     authType: "none"
   }
   const state = store.dispatchAll([
-    Workspaces.add(ws),
+    Lakes.add(ws),
     Pools.setDetail("myws", pool)
   ])
   store.dispatch(tabHistory.push(lakePath(pool.id, ws.id)))

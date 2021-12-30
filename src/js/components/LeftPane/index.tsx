@@ -53,9 +53,7 @@ export function LeftPane() {
       aria-label="sidebar"
     >
       {!id ? (
-        <EmptyText>
-          The workspace previously on this tab has been removed.
-        </EmptyText>
+        <EmptyText>The lake previously on this tab has been removed.</EmptyText>
       ) : (
         <>
           <WorkspacePicker />
