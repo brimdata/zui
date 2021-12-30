@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {lakePath} from "app/router/utils/paths"
 import React from "react"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"

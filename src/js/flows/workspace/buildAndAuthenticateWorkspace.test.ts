@@ -1,9 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {ipcRenderer} from "electron"
 import jwtDecode from "jwt-decode"
 import Lakes from "src/js/state/Lakes"
 import WorkspaceStatuses from "src/js/state/WorkspaceStatuses"
 import * as remote from "@electron/remote"
-import {mocked} from "ts-jest/utils"
 import {createZealotMock} from "zealot-old"
 import Auth0Client from "../../auth0"
 import {AuthType} from "../../state/Lakes/types"
@@ -55,10 +58,14 @@ const fixtures = {
 let store, zealot, ctl
 let auth0ClientMock, jwtDecodeMock, ipcRendererMock, remoteMock
 beforeEach(() => {
-  auth0ClientMock = mocked(Auth0Client)
-  jwtDecodeMock = mocked(jwtDecode)
-  ipcRendererMock = mocked(ipcRenderer)
-  remoteMock = mocked(remote)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  auth0ClientMock = jest.mocked(Auth0Client)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  jwtDecodeMock = jest.mocked(jwtDecode)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  ipcRendererMock = jest.mocked(ipcRenderer)
+  // @ts-ignore https://github.com/DefinitelyTyped/DefinitelyTyped/pull/57776
+  remoteMock = jest.mocked(remote)
 
   zealot = createZealotMock()
   store = initTestStore(zealot.zealot)

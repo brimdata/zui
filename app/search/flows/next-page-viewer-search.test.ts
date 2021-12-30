@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import tabHistory from "app/router/tab-history"
 import {lakeSearchPath} from "app/router/utils/paths"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
