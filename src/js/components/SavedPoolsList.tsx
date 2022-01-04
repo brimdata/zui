@@ -1,5 +1,4 @@
 import {useImportOnDrop} from "app/features/import/use-import-on-drop"
-import showPoolContextMenu from "app/pools/flows/show-pool-context-menu"
 import {lakeSearchPath} from "app/router/utils/paths"
 import classNames from "classnames"
 import React from "react"
@@ -20,6 +19,9 @@ import EmptySection from "./common/EmptySection"
 import PoolIcon from "./PoolIcon"
 import ProgressIndicator from "./ProgressIndicator"
 import {remoteQueriesPoolName} from "./LeftPane/remote-queries"
+import Modal from "../state/Modal"
+import {showContextMenu} from "../lib/System"
+import getPoolContextMenu from "../../../app/pools/flows/get-pool-context-menu"
 
 type Props = {
   pools: Pool[]
@@ -56,12 +58,24 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
   )
   const current = p.id === currentPoolId
   const testProps = current ? currentPoolItem.props : poolItem.props
+
+  const showPoolContextMenu = () => {
+    const renameMenuItem = {
+      label: "Rename",
+      click: () => {
+        dispatch(Modal.show("pool", {workspaceId, poolId: p.id}))
+      }
+    }
+    const poolContextMenu = dispatch(getPoolContextMenu(p))
+    showContextMenu([renameMenuItem, ...poolContextMenu])
+  }
+
   return (
     <li>
       <a
         href="#"
         onClick={onClick}
-        onContextMenu={() => dispatch(showPoolContextMenu(p))}
+        onContextMenu={() => showPoolContextMenu()}
         className={classNames("pool-link", {"current-pool-link": current})}
         {...testProps}
       >

@@ -16,6 +16,8 @@ import {XRightPane} from "src/js/components/RightPane"
 import StatusBar from "src/js/components/StatusBar"
 import TabBar from "src/js/components/TabBar/TabBar"
 import styled from "styled-components"
+import {FeatureFlag} from "../core/feature-flag"
+import {LeftSidebar} from "src/js/components/LeftSidebar"
 
 const ColumnLayout = styled.div`
   display: flex;
@@ -58,7 +60,11 @@ export default function AppWrapper({children}) {
             <div id="modal-dialog-root" />
             <TabBar />
             <RowLayout>
-              <LeftPane />
+              <FeatureFlag
+                name="query-flow"
+                on={<LeftSidebar />}
+                off={<LeftPane />}
+              />
               <ColumnLayout>{children}</ColumnLayout>
               <XRightPane />
             </RowLayout>
