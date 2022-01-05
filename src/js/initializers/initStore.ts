@@ -6,6 +6,9 @@ import ipc from "../electron/ipc"
 import rootReducer from "../state/rootReducer"
 import {configureStore} from "@reduxjs/toolkit"
 import BrimApi from "../api"
+import {enableMapSet} from "immer"
+
+enableMapSet()
 
 function getInitialState(windowId) {
   return Promise.all([

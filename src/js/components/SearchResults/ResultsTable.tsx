@@ -30,7 +30,7 @@ export default function ResultsTable(props: Props) {
   const isFetching = useSelector(Viewer.getStatus) === "FETCHING"
   const isIncomplete = useSelector(Viewer.getEndStatus) === "INCOMPLETE"
   const tableColumns = useSelector(Columns.getCurrentTableColumns)
-  const columnHeadersView = useSelector(Layout.getColumnHeadersView)
+  const columnHeadersView = useSelector(Layout.getColumnsView)
   const logs = useSelector(Viewer.getLogs)
   const scrollPos = useSelector(Viewer.getScrollPos)
   const dispatch = useDispatch()

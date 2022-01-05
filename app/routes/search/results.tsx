@@ -1,12 +1,9 @@
-import {Inspector} from "app/features/inspector/inspector"
-import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
 import React from "react"
-import {useDispatch} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import ResultsTable from "src/js/components/SearchResults/ResultsTable"
-import {zed} from "@brimdata/zealot"
 import {useResultsData} from "./data-hook"
 import {useExpandState} from "./expand-hook"
+import {MainInspector} from "./main-inspector"
 import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
 
@@ -14,7 +11,6 @@ export function Results() {
   const data = useResultsData()
   const expand = useExpandState()
   const view = useResultsView()
-  const dispatch = useDispatch()
   const {ref, rect} = useResizeObserver()
 
   return (
@@ -27,12 +23,12 @@ export function Results() {
               aria-pressed={view.isTable}
             />
             <Styled.ObjectsButton
-              onClick={view.setObjects}
-              aria-pressed={view.isObjects}
+              onClick={view.setInspector}
+              aria-pressed={view.isInspector}
             />
           </Styled.ButtonSwitch>
         </Styled.Group>
-        {view.isObjects && (
+        {view.isInspector && (
           <Styled.Group>
             <Styled.ExpandAllButton onClick={expand.expandAll} />
             <Styled.CollapseAllButton onClick={expand.collapseAll} />
@@ -48,22 +44,10 @@ export function Results() {
           />
         ) : (
           <div style={{height: 0, width: 0, overflow: "visible"}}>
-            <Inspector
-              defaultExpanded={expand.default}
-              expanded={expand.map}
-              setExpanded={expand.set}
+            <MainInspector
               height={rect.height}
               width={rect.width}
               values={data.values}
-              onContextMenu={(e, value: zed.Value, field: zed.Field) =>
-                dispatch(
-                  searchFieldContextMenu({
-                    value,
-                    field,
-                    record: field.rootRecord
-                  })
-                )
-              }
             />
           </div>
         )}

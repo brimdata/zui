@@ -34,16 +34,16 @@ function InvestigationTree() {
 
 const ViewSelect = () => {
   const dispatch = useDispatch()
-  const currentView = useSelector(Layout.getInvestigationView)
+  const currentView = useSelector(Layout.getHistoryView)
 
   const menu = usePopupMenu([
     {
       label: "Linear",
-      click: () => dispatch(Layout.setInvestigationView("linear"))
+      click: () => dispatch(Layout.setHistoryView("linear"))
     },
     {
       label: "Tree",
-      click: () => dispatch(Layout.setInvestigationView("tree"))
+      click: () => dispatch(Layout.setHistoryView("tree"))
     }
   ])
 
@@ -56,7 +56,7 @@ const ViewSelect = () => {
 }
 
 function HistorySection({isOpen, style, resizeProps, toggleProps}) {
-  const view = useSelector(Layout.getInvestigationView)
+  const view = useSelector(Layout.getHistoryView)
   return (
     <StyledSection style={style}>
       <DragAnchor {...resizeProps} />

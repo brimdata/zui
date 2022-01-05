@@ -1,5 +1,5 @@
 import {inspect} from "./inspect"
-import {renderContainer, renderClosing, renderOneField} from "./render"
+import {renderClosing, renderContainer, renderOneField} from "./render"
 import {InspectArgs} from "./types"
 
 export function createContainer<T>(
@@ -12,7 +12,7 @@ export function createContainer<T>(
     const {ctx, value} = args
     const iterator = createIterator(args)
 
-    if (ctx.isExpanded(value)) {
+    if (ctx.props.isExpanded(value)) {
       ctx.push(renderContainer(args, name, open))
       ctx.nest()
       for (let args of iterator) inspect(args)

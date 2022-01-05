@@ -44,7 +44,7 @@ export default class RightPane extends React.Component<Props, S> {
   onDrag = (e: MouseEvent) => {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
-    this.props.dispatch(Layout.setRightSidebarWidth(Math.min(width, max)))
+    this.props.dispatch(Layout.setDetailPaneWidth(Math.min(width, max)))
   }
 
   render() {
@@ -79,7 +79,7 @@ export default class RightPane extends React.Component<Props, S> {
             <Right>
               <CloseButton
                 className="panel-button close-button"
-                onClick={() => this.props.dispatch(Layout.hideRightSidebar())}
+                onClick={() => this.props.dispatch(Layout.hideDetailPane())}
               />
             </Right>
           </PaneHeader>
@@ -96,8 +96,8 @@ export default class RightPane extends React.Component<Props, S> {
 
 const stateToProps = (state) => {
   return {
-    isOpen: Layout.getRightSidebarIsOpen(state),
-    width: Layout.getRightSidebarWidth(state),
+    isOpen: Layout.getDetailPaneIsOpen(state),
+    width: Layout.getDetailPaneWidth(state),
     prevExists: LogDetails.getHistory(state).canGoBack(),
     nextExists: LogDetails.getHistory(state).canGoForward(),
     currentLog: LogDetails.build(state),

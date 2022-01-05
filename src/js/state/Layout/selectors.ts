@@ -1,20 +1,17 @@
 import activeTabSelect from "../Tab/activeTabSelect"
-import {TabState} from "../Tab/types"
 
 export default {
-  getRightSidebarWidth: activeTabSelect(
-    (state: TabState) => state.layout.rightSidebarWidth
+  getDetailPaneWidth: activeTabSelect(
+    (state) => state.layout.rightSidebarWidth
   ),
 
-  getRightSidebarIsOpen: activeTabSelect(
-    (state: TabState) => state.layout.rightSidebarIsOpen
+  getDetailPaneIsOpen: activeTabSelect(
+    (state) => state.layout.rightSidebarIsOpen
   ),
 
-  getInvestigationView: activeTabSelect(
-    (state: TabState) => state.layout.investigationView
-  ),
+  getHistoryView: activeTabSelect((state) => state.layout.investigationView),
 
-  getColumnHeadersView: activeTabSelect(
-    (state: TabState) => state.layout.columnHeadersView
-  )
+  getColumnsView: activeTabSelect((state) => state.layout.columnHeadersView),
+
+  getResultsView: activeTabSelect((s) => s.layout.resultsView)
 }

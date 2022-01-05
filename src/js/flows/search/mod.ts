@@ -11,6 +11,8 @@ import {
   DateTimeFormatterBuilder,
   LocalDateTime
 } from "@js-joda/core"
+import {zed} from "@brimdata/zealot"
+import {isUndefined} from "lodash"
 
 type Args = {
   query: string
@@ -18,6 +20,7 @@ type Args = {
   to?: Date
   poolId?: string
   id?: string
+  initial?: boolean
 }
 
 type annotateArgs = {
@@ -66,11 +69,26 @@ export const dateToNanoTs = (date: Date | Ts | bigint): string => {
 
 export type BrimSearch = {
   response: SearchResponse
-  promise: Promise<void>
+  promise: Promise<SearchResult>
   abort: () => void
 }
 
-export function search({query, from, to, poolId, id}: Args): Thunk<BrimSearch> {
+export type SearchResult = {
+  id: string
+  tabId: string
+  status: string
+  initial: boolean
+  shapes: zed.Schema[]
+}
+
+export function search({
+  query,
+  from,
+  to,
+  poolId,
+  id,
+  initial
+}: Args): Thunk<BrimSearch> {
   return (dispatch, getState, {api}) => {
     const [defaultFrom, defaultTo] = Tab.getSpanAsDates(getState())
     const tab = Tabs.getActive(getState())
@@ -83,6 +101,7 @@ export function search({query, from, to, poolId, id}: Args): Thunk<BrimSearch> {
     poolId = poolId || defaultPoolId
     to = to || defaultTo
     from = from || defaultFrom
+    initial = isUndefined(initial) ? true : initial
     const req = zealot.query(annotateQuery(query, {from, to, poolId}), {
       signal: ctl.signal
     })
@@ -90,9 +109,23 @@ export function search({query, from, to, poolId, id}: Args): Thunk<BrimSearch> {
     api.abortables.abort({tab, tag})
     const aId = api.abortables.add({abort, tab, tag})
 
-    const {response, promise} = handle(req)
-    promise.finally(() => api.abortables.remove(aId))
-
-    return {response, promise, abort}
+    const {promise, response} = handle(req)
+    return {
+      response,
+      abort,
+      promise: promise
+        .then<SearchResult>(({status, shapes}) => {
+          const data = {
+            tabId: tab,
+            id,
+            shapes,
+            status,
+            initial
+          }
+          api.searches.emit("did-finish", data)
+          return data
+        })
+        .finally(() => api.abortables.remove(aId))
+    }
   }
 }

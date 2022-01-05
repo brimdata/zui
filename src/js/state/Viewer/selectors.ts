@@ -19,15 +19,27 @@ export const getViewerRecords = createSelector<
   zed.Record[]
 >(getViewer, (viewer) => viewer.records)
 
-export const isFetching = (state: TabState) =>
-  state.viewer.status === "FETCHING"
-
 export const getLogs = getViewerRecords
 export const getRecords = getViewerRecords
 
 export const getStatus = createSelector<State, ViewerState, SearchStatus>(
   getViewer,
   (viewer) => viewer.status
+)
+
+export const isFetching = createSelector<State, ViewerState, boolean>(
+  getViewer,
+  (viewer) => viewer.status === "FETCHING"
+)
+
+export const isComplete = createSelector<State, ViewerState, boolean>(
+  getViewer,
+  (viewer) => viewer.endStatus === "COMPLETE"
+)
+
+export const isLimited = createSelector<State, ViewerState, boolean>(
+  getViewer,
+  (viewer) => viewer.endStatus === "LIMIT"
 )
 
 export const getSearchKey = createSelector<State, ViewerState, string>(

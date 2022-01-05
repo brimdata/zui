@@ -1,17 +1,14 @@
 import {createSelector} from "reselect"
 import brim, {BrimPool, Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
-import Chart from "../Chart"
 import Current from "../Current"
+import {Lake} from "../Lakes/types"
 import {SpanArgs} from "../Search/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
 import Url from "../Url"
 import {SearchParams} from "../Url/selectors"
 import {createIsEqualSelector} from "../utils"
-import Viewer from "../Viewer"
-import {Lake} from "../Lakes/types"
-import activeTabSelect from "./activeTabSelect"
 import {TabState} from "./types"
 
 const workspaceUrl = createSelector<State, Lake | null, string>(
@@ -21,10 +18,6 @@ const workspaceUrl = createSelector<State, Lake | null, string>(
     else return "localhost:9867"
   }
 )
-
-export function tabIsFetching(tab: TabState) {
-  return Viewer.isFetching(tab) || Chart.isFetching(tab)
-}
 
 const getSpan = createSelector<State, SearchParams, Span>(
   Url.getSearchParams,
@@ -80,7 +73,6 @@ export default {
     const s = Current.mustGetPool(state)
     return s ? s.name : ""
   },
-  isFetching: activeTabSelect<boolean>(tabIsFetching),
   getSpan,
   getSpanAsDates,
   getSpanFocus,
