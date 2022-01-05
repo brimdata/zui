@@ -132,7 +132,11 @@ export class SystemTest {
 
   mockSaveDialog(result: {canceled: boolean; filePath: string}) {
     const save = jest.spyOn(dialog, "showSaveDialog")
-    save.mockImplementationOnce(() => Promise.resolve(result))
+    console.log("spying on mock")
+    save.mockImplementationOnce(() => {
+      console.log("resolving the dialog call")
+      return Promise.resolve(result)
+    })
     return save
   }
 }

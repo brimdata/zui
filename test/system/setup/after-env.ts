@@ -15,7 +15,7 @@ global.ResizeObserver = class ResizeObserver {
 global.SVGElement.prototype.getTotalLength = () => 0
 document.execCommand = jest.fn()
 
-configure({asyncUtilTimeout: env.isCI ? 15_000 : 5000})
+configure({asyncUtilTimeout: env.isCI ? 20_000 : 1000})
 
 HTMLElement.prototype.scrollTo = () => {}
 

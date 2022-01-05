@@ -7,6 +7,7 @@ module.exports = {
       babelConfig: true
     }
   },
+  testEnvironment: "./test/system/environment",
   testTimeout: 60_000,
   rootDir: join(__dirname, "../../"),
   testURL: "http://localhost/search.html",

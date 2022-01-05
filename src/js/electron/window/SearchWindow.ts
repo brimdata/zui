@@ -1,4 +1,4 @@
-import {BrowserWindow, ipcMain, screen} from "electron"
+import {BrowserWindow, ipcMain, ipcRenderer, screen} from "electron"
 import randomHash from "../../brim/randomHash"
 import {BrimWindow, WindowName} from "../tron/window-manager"
 import {Dimens, getWindowDimens} from "./dimens"
@@ -100,10 +100,11 @@ export class SearchWindow implements BrimWindow {
   async confirmClose() {
     const replyChannel = randomHash()
     return new Promise<boolean>((resolve) => {
-      this.ref.webContents.send("confirmClose", replyChannel)
-      ipcMain.once(replyChannel, (e, confirmed: boolean) => {
+      ipcMain.on(replyChannel, (e, confirmed: boolean) => {
+        console.log("got the message", confirmed)
         resolve(confirmed)
       })
+      this.ref.webContents.send("confirmClose", replyChannel)
     })
   }
 

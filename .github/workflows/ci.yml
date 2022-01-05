@@ -47,7 +47,7 @@ jobs:
         env:
           DEBUG: pw:api
       - uses: actions/upload-artifact@v2
-        if: failure() && steps.playwright.outcome == 'failure'
+        if: failure()
         with:
           name: artifacts-${{ matrix.os }}
-          path: run/playwright-itest
+          path: run/

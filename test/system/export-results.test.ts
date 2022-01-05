@@ -1,4 +1,5 @@
 import {screen, within} from "@testing-library/react"
+import {dialog} from "electron"
 import fsExtra from "fs-extra"
 import os from "os"
 import path from "path"
@@ -16,32 +17,36 @@ beforeAll(async () => {
 })
 
 afterEach(() => fsExtra.remove(filePath))
-
+afterEach(() => jest.useRealTimers())
+// test("mocking the save dialog", async () => {
+//   system.mockSaveDialog({canceled: false, filePath})
+//   const result = await dialog.showSaveDialog({})
+//   console.log(result)
+// })
 test("clicking the export button", async () => {
+  system.mockSaveDialog({canceled: false, filePath})
   const toolbarBtn = await screen.findByRole("button", {name: "Export"})
   await system.click(toolbarBtn)
+  await screen.findByRole("heading", {name: /export results/i})
   const modal = await screen.findByRole("dialog")
-  system.mockSaveDialog({canceled: false, filePath})
+
   const submit = within(modal).getByRole("button", {name: "Export"})
-  jest.useFakeTimers()
   act(() => system.click(submit))
   await screen.findByText(/export complete/i)
-  act(() => jest.runAllTimers())
   expect(fsExtra.statSync(filePath).size).toBe(4084)
-  jest.useRealTimers()
 })
 
-test("canceling the export", async () => {
-  const toolbarBtn = await screen.findByRole("button", {name: "Export"})
-  await system.click(toolbarBtn)
-  const modal = await screen.findByRole("dialog")
-  system.mockSaveDialog({canceled: true, filePath})
-  const submit = within(modal).getByRole("button", {name: "Export"})
-  act(() => system.click(submit))
-  const cancel = within(modal).getByRole("button", {name: "Close"})
-  jest.useFakeTimers()
-  act(() => system.click(cancel))
-  act(() => jest.runAllTimers())
-  expect(await fsExtra.pathExists(filePath)).toBe(false)
-  jest.useRealTimers()
-})
+// test("canceling the export", async () => {
+//   const toolbarBtn = await screen.findByRole("button", {name: "Export"})
+//   await system.click(toolbarBtn)
+//   const modal = await screen.findByRole("dialog")
+//   system.mockSaveDialog({canceled: true, filePath})
+//   const submit = within(modal).getByRole("button", {name: "Export"})
+//   act(() => system.click(submit))
+//   const cancel = within(modal).getByRole("button", {name: "Close"})
+//   jest.useFakeTimers()
+//   act(() => system.click(cancel))
+//   act(() => jest.runAllTimers())
+//   expect(await fsExtra.pathExists(filePath)).toBe(false)
+//   jest.useRealTimers()
+// })

@@ -42,6 +42,7 @@ function histogramFormat(records: zed.Record[]): ChartData {
 
     try {
       const pathName = path.toString()
+      if (!(ts instanceof zed.Time)) console.log(ts)
       const key = ts.toDate().getTime()
       const val = {[path.toString()]: count.toInt()}
 
