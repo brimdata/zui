@@ -101,7 +101,6 @@ export class SearchWindow implements BrimWindow {
     const replyChannel = randomHash()
     return new Promise<boolean>((resolve) => {
       ipcMain.on(replyChannel, (e, confirmed: boolean) => {
-        console.log("got the message", confirmed)
         resolve(confirmed)
       })
       this.ref.webContents.send("confirmClose", replyChannel)

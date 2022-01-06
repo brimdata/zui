@@ -51,7 +51,6 @@ const StyledFooter = styled(Footer)`
 `
 
 const showDialog = (format) => {
-  console.log("invoking")
   return ipcRenderer.invoke("windows:showSaveDialog", {
     title: `Export Results as ${format.toUpperCase()}`,
     buttonLabel: "Export",
@@ -67,7 +66,6 @@ const ExportModal = ({onClose}) => {
 
   const onExport = async () => {
     const {canceled, filePath} = await showDialog(format)
-    console.log("we got the result")
     if (canceled) return
 
     toast.promise(dispatch(exportResults(filePath, format as QueryFormat)), {

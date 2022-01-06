@@ -33,12 +33,10 @@ export default function(brim: BrimMain) {
     })
   })
 
-  console.log("main is listening")
   ipcMain.handle("windows:showSaveDialog", async (e, args) => {
     const win = BrowserWindow.fromWebContents(e.sender)
     return dialog.showSaveDialog(win, args)
   })
-  console.log(ipcMain)
 
   ipcMain.on("windows:updateState", (e, id, state) => {
     brim.windows.getWindow(id).initialState = state
