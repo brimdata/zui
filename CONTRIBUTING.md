@@ -44,6 +44,7 @@ Brim is a TypeScript, React, Electron app.
 * Main process - `src/js/electron/main.ts`
 * Renderer process - `src/js/search.tsx`
 
+<<<<<<< HEAD
 ## Directory Structure
 
 This directory structure is a work in progress. You will see many files not in the places described here. Please migrate what you can and follow this for any new code.
@@ -61,6 +62,9 @@ This directory structure is a work in progress. You will see many files not in t
 ├── electron (main process code)
 └── ppl (licensed code)
 ```
+=======
+Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimdata/zed/blob/main/docs/data-model/zng.md) format.
+>>>>>>> main
 
 
 **Import Rule**: Only import modules from `/core`, `/state`, or your own descendants. Components in `/routes` can import modules from `/features`.

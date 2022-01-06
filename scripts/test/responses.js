@@ -35,7 +35,10 @@ function saveResponse(input, output, query) {
     search.stdout.pipe(process.stdout)
     search.stderr.pipe(process.stderr)
   }
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    search.on("exit", (code) => {
+      if (code !== 0) reject()
+    })
     search.on("close", () => {
       resolve()
     })

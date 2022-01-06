@@ -1,11 +1,12 @@
-import {SearchResponse} from "./response"
-import whenIdle from "../../lib/whenIdle"
+import {zed} from "@brimdata/zealot"
 import {
   createRecordCallback,
   RecordCallbackRet
 } from "zealot-old/fetcher/records-callback"
 import {ZResponse} from "../../../../zealot-old/types"
 import {isEqual} from "lodash"
+import whenIdle from "../../lib/whenIdle"
+import {SearchResponse} from "./response"
 
 function abortError(e) {
   return (
@@ -13,16 +14,20 @@ function abortError(e) {
   )
 }
 
+type HandleResult = {
+  status: "SUCCESS" | "ABORTED"
+  shapes: zed.Schema[]
+}
+
 export function handle(request: Promise<ZResponse>) {
   const response = new SearchResponse()
   const channels = new Map<number, RecordCallbackRet>()
   let currentChannel = null
-  const promise = new Promise<void>((resolve, reject) => {
+  const promise = new Promise<HandleResult>((resolve, reject) => {
     function flushBuffer() {
       for (const [id, data] of channels) {
         response.emit(id, data)
       }
-      channels.clear()
     }
 
     const flushBufferLazy = whenIdle(flushBuffer)
@@ -35,7 +40,7 @@ export function handle(request: Promise<ZResponse>) {
         // NOTE: by clearing callbacks here, consumers of search should expect
         // the aborted status event to be the last actionable emission
         response.clearCallbacks()
-        resolve()
+        resolve({status: "ABORTED", shapes: []})
       } else {
         isErrSet = true
         response.emit("status", "ERROR")
@@ -75,7 +80,14 @@ export function handle(request: Promise<ZResponse>) {
             response.emit("end")
             if (!isErrSet) {
               response.emit("status", "SUCCESS")
-              setTimeout(resolve)
+              setTimeout(() => {
+                resolve({
+                  status: "SUCCESS",
+                  shapes: channels.has(0)
+                    ? Object.values(channels.get(0).schemas)
+                    : []
+                })
+              })
             }
           })
       })

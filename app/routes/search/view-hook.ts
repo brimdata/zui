@@ -1,45 +1,42 @@
 import {useBrimApi} from "app/core/context"
 import useKeybinding from "app/core/hooks/use-keybinding"
-import {useEffect} from "react"
-import {useStore} from "react-redux"
-import Tab from "src/js/state/Tab"
-import Viewer from "src/js/state/Viewer"
+import {useTabId} from "app/core/hooks/use-tab-id"
+import {useLayoutEffect} from "react"
+import {useDispatch, useSelector} from "react-redux"
+import Layout from "src/js/state/Layout"
+import {ResultsView} from "src/js/state/Layout/types"
 
-const OBJECTS = "objects"
-const TABLE = "table"
+const INSPECTOR = "INSPECTOR"
+const TABLE = "TABLE"
 
 export function useResultsView() {
-  const store = useStore()
+  const dispatch = useDispatch()
   const api = useBrimApi()
+  const currentTabId = useTabId()
+  const view = useSelector(Layout.getResultsView)
 
-  const [view, setView] = Tab.useState<"table" | "objects">(
-    "results.view",
-    TABLE
-  )
+  const setView = (view: ResultsView) => {
+    dispatch(Layout.setResultsView(view as ResultsView))
+  }
 
   useKeybinding("ctrl+d", () => {
-    setView(view === TABLE ? OBJECTS : TABLE)
+    setView(view === TABLE ? INSPECTOR : TABLE)
   })
 
-  useEffect(
-    () =>
-      api.searches.onDidFinish(({firstPage}) => {
-        if (firstPage) {
-          const shapes = Viewer.getShapes(store.getState())
-          if (Object.keys(shapes).length > 1) {
-            setView(OBJECTS)
-          } else {
-            setView(TABLE)
-          }
-        }
-      }),
-    []
-  )
+  useLayoutEffect(() => {
+    return api.searches.onDidFinish(({id, status, tabId, shapes, initial}) => {
+      if (id !== "Table") return
+      if (tabId !== currentTabId) return
+      if (status !== "SUCCESS") return
+      if (!initial) return
+      setView(shapes.length > 1 ? INSPECTOR : TABLE)
+    })
+  }, [currentTabId])
 
   return {
     isTable: view === TABLE,
-    isObjects: view === OBJECTS,
+    isInspector: view === INSPECTOR,
     setTable: () => setView(TABLE),
-    setObjects: () => setView(OBJECTS)
+    setInspector: () => setView(INSPECTOR)
   }
 }

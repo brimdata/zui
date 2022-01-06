@@ -25,8 +25,8 @@ only modified when a newer version of the app is being installed.
 Since Brim is most often launched directly from the GUI environment in your OS,
 you'll typically not need to access the application binaries directly. One
 exception is if you wish to make use of the command line binaries that are
-bundled with the app, such as [`zq`](https://github.com/brimdata/zed/tree/main/cmd/zed#zq),
-[`zapi`](https://github.com/brimdata/zed/tree/main/cmd/zed#zapi),
+bundled with the app, such as [`zq`](https://github.com/brimdata/zed/tree/main/cmd/zq),
+[`zed`](https://github.com/brimdata/zed#quick-start),
 [`brimcap`](https://github.com/brimdata/brimcap), and so forth. These can be
 found in the `zdeps` subdirectory as follows:
 
@@ -70,7 +70,7 @@ categories of interest include:
 
 Generally you should not need to directly access the saved user data, though
 it may prove necessary during [[Troubleshooting]] or if you use
-[Zed](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md)
+[Zed](https://github.com/brimdata/zed#quick-start)
 or [Brimcap](https://github.com/brimdata/brimcap/blob/main/README.md) CLI tools
 to perform scripted operations from outside the app against data that's stored
 behind Brim.

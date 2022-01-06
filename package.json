@@ -15,11 +15,10 @@
     "test": "jest --projects test/unit --ci --bail",
     "test:api": "jest --projects test/api",
     "test:system": "jest --projects test/system",
-    "lint": "eslint . --cache",
+    "lint": "eslint . --cache --color",
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "generate-responses": "node scripts/test/responses",
     "tsc": "tsc",
-    "format-check": "npm run format && git diff --exit-code -- src",
     "release": "npx electron-builder --mac",
     "prerelease": "npm run build",
     "postinstall": "node scripts/post-install",
@@ -83,6 +82,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
     "glob": "^7.1.6",
+    "husky": "^7.0.4",
     "jest": "^27.4.5",
     "jest-playwright-preset": "^1.7.0",
     "livereload": "^0.9.1",
@@ -159,7 +159,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "git+https://github.com/brimdata/zed.git#2af8b6a10c77b0a76ece54becf79286a279b87ea"
+    "zed": "git+https://github.com/brimdata/zed.git#9aa6ed2388009374482568b3e55cef55f42421ec"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",

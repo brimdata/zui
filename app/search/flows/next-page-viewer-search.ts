@@ -46,7 +46,7 @@ function nextPageArgs(
           .time(prevTs)
           .add(1, "ms")
           .toDate()
-        spliceIndex = index + 1
+        spliceIndex = index
       }
     }
   }

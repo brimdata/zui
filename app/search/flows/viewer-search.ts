@@ -22,12 +22,14 @@ type Args = {
 
 const id = "Table"
 
-export function viewerSearch(args: Args): Thunk<Promise<void>> {
+export function viewerSearch(args: Args): Thunk {
   return (dispatch, getState) => {
     const {query, from, to, keep, append} = args
     const tabId = Tabs.getActive(getState())
     const poolId = Current.mustGetPool(getState()).id
-    const {response, promise} = dispatch(search({id, query, from, to, poolId}))
+    const {response, promise} = dispatch(
+      search({id, query, from, to, poolId, initial: !append})
+    )
     dispatch(handle(response, tabId, keep, append))
     return promise.catch((e) => e)
   }
@@ -39,7 +41,7 @@ function handle(
   keep = false,
   append = false
 ): Thunk {
-  return function(dispatch, getState, {api}) {
+  return function(dispatch, getState) {
     let allColumns: SchemaMap = {}
     let allRecords: zed.Record[] = []
     let count = 0
@@ -86,7 +88,6 @@ function handle(
           dispatch(Columns.touch(allColumns))
         }
         dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
-        api.searches.emit("did-finish", {firstPage: !append})
       })
   }
 }

@@ -16,7 +16,7 @@ import {viewLogDetail} from "../../../flows/viewLogDetail"
 import open from "../../../lib/open"
 import ErrorFactory from "../../../models/ErrorFactory"
 import virusTotal from "../../../services/virusTotal"
-import Layout from "../../../state/Layout/actions"
+import Layout from "../../../state/Layout"
 import Modal from "../../../state/Modal"
 import Notice from "../../../state/Notice"
 import SearchBar from "../../../state/SearchBar"
@@ -47,7 +47,7 @@ function buildSearchActions() {
       label: "Open details",
       listener(dispatch, data: zjson.RootRecord) {
         const record = decode(data)
-        dispatch(Layout.showRightSidebar())
+        dispatch(Layout.showDetailPane())
         dispatch(viewLogDetail(record))
       }
     }),

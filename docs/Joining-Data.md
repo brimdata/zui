@@ -36,7 +36,7 @@ shy!
 
 By its nature, a join operation requires two inputs that will
 ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#join)
-show examples with the [Zed CLI tools](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md)
+show examples with the [Zed CLI tools](https://github.com/brimdata/zed#quick-start)
 that specify these inputs as named files or pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md).
 
 Brim release `v0.25.0` introduced initial support for storing data in Zed Lakes.
@@ -58,46 +58,48 @@ app), we can see the same query output as shown in the doc.
 
 While queries executed from inside Brim are subject to this limitation, the
 Zed backend that's launched behind Brim is not. Therefore if you're willing to
-perform joins in the shell using [`zapi`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zapi)
+perform joins in the shell using [`zed`](https://github.com/brimdata/zed#quick-start)
 you can execute all the other examples shown while accessing data from multiple
 pools. The joined results can be sent into yet another pool for further query
 from within Brim, if desired.
 
 To illustrate this, we'll walk through the [example that shows inputs from pools](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#example-4---inputs-from-pools).
-To ensure API-compatibility with the Zed backend, we'll use the `zapi` binary
+To ensure API-compatibility with the Zed backend, we'll use the `zed` binary
 found in the `zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
 path, specifically on macOS in this case.
 
 Because Brim already takes care of initializing the Zed Lake, we pick up the
 example commands with the creation and population of the separate pools
 
-```
+```bash
 $ export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
+# Setting ZED_LAKE is optional as http://localhost:9867 is the default.
+$ export ZED_LAKE="http://localhost:9867"
 
-$ zapi create -orderby flavor:asc fruit
+$ zed create -orderby flavor:asc fruit
 pool created: fruit 1xu7lTnMF7n3TcT3Rg3ivZ0Q9N3
 
-$ zapi create -orderby likes:asc people
+$ zed create -orderby likes:asc people
 pool created: people 1xu7nejkZEysqneOCcBhhkgkbrO
 
-$ zapi load -use fruit@main fruit.ndjson
+$ zed load -use fruit@main fruit.ndjson
 1ujTdNNId0s6TmVKd02lFRuwzN2 committed
 
-$ zapi load -use people@main people.ndjson
+$ zed load -use people@main people.ndjson
 1ujTeU44ZbqdE5x6DvMoTwSkztS committed
 ```
 
-Finally, we'll use `zapi query` to perform the `join` using the example Zed
-script, but we'll pipe its output to a `zapi load` that populates a new pool
+Finally, we'll use `zed query` to perform the `join` using the example Zed
+script, but we'll pipe its output to a `zed load` that populates a new pool
 we've created to hold the result. Depending on the nature of the queries you
 intend to execute on the data in this pool, you may wish to specify a different
 `-orderby` setting.
 
-```
-$ zapi create -orderby name:asc joined
+```bash
+$ zed create -orderby name:asc joined
 pool created: joined
 
-$ zapi query -I inner-join-pools.zed | zapi load -use joined@main -
+$ zed query -I inner-join-pools.zed | zed load -use joined@main -
 1ujUTZvk5KyAoGlSMSGvzFcUGgy committed
 ```
 
@@ -175,7 +177,7 @@ laid out in columns with headers. However, this did not occur with our joined
 ZNG data.
 
 To understand why, it helps to look at our two example `conn` records in
-[ZSON](https://github.com/brimdata/zed/blob/main/docs/formats/zson.md) format.
+[ZSON](https://github.com/brimdata/zed/blob/main/docs/data-model/zson.md) format.
 
 ```
 $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
@@ -254,7 +256,7 @@ $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
 ```
 
 The presence of the separate
-[Type Definitions](https://github.com/brimdata/zed/blob/main/docs/formats/zson.md#321-type-definitions)
+[Type Definitions](https://github.com/brimdata/zed/blob/main/docs/data-model/zson.md#25-types)
 `(=2)` and `(=5)` shows us how separate schemas were generated for the two
 record variations produced by the `join`: The ones that matched on `uid` (and
 hence contained the additional SPL-SPT fields) and the ones that didn't.

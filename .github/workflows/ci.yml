@@ -23,7 +23,6 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - run: npm install --no-audit
-      - run: npm run format-check
       - run: npm run build
       - run: npm run lint
       - run: npm run tsc

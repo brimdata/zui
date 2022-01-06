@@ -47,7 +47,7 @@ test("#fetchNextPage dispatches splice", () => {
   store.dispatch(nextPageViewerSearch())
 
   expect(store.getActions()).toEqual(
-    expect.arrayContaining([{tabId, type: "VIEWER_SPLICE", index: 2}])
+    expect.arrayContaining([{tabId, type: "VIEWER_SPLICE", index: 1}])
   )
 })
 

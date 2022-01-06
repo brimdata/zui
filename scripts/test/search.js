@@ -14,7 +14,7 @@ async function ingest(zealot) {
   })
   return {poolId: pool.id, branch: branch.name}
 }
-
+let code = 0
 withLake(
   async (zealot) => {
     try {
@@ -27,6 +27,7 @@ withLake(
       console.log(text)
     } catch (e) {
       console.error(e)
+      code = 1
     }
   },
   {
@@ -35,3 +36,5 @@ withLake(
     addr: "localhost:9119"
   }
 )
+
+process.exit(code)

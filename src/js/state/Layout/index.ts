@@ -1,5 +1,4 @@
-import actions from "./actions"
-import reducer from "./reducer"
+import {reducer, actions} from "./reducer"
 import selectors from "./selectors"
 
 export default {

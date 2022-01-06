@@ -43,7 +43,7 @@ test("Validates the zql", () => {
 
 test("Checks for parallel procs", () => {
   dispatch(
-    SearchBar.changeSearchBarInput("files | split ( => count(); => head 1;)")
+    SearchBar.changeSearchBarInput("files | split ( => count() => head 1 )")
   )
   submit()
   expect(select(SearchBar.getSearchBarError)).toMatch(

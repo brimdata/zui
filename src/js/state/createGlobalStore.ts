@@ -5,10 +5,12 @@ export default function(initState: GlobalState | undefined) {
   return configureStore({
     reducer: globalReducer,
     preloadedState: initState,
-    middleware: (m) =>
-      m({
-        serializableCheck: false,
-        immutableCheck: false
+    middleware: (getDefaultMiddleware) => {
+      return getDefaultMiddleware({
+        thunk: true,
+        immutableCheck: false,
+        serializableCheck: false
       })
+    }
   })
 }
