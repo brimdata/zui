@@ -59,11 +59,11 @@ However, the overall app experience is powered by a distributed "backend"
 architecture that includes multiple components.
 
 One essential component is the Zed Lake which is accessed via a
-[`zed serve`](https://github.com/brimdata/zed/tree/main/cmd/zed/lake)
+[`zed serve`](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
 process that manages the storage and querying of imported data. Operations on
 the Zed Lake are invoked via a [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that's utilized by a "client", such as the Brim app. The
-[`zed`](https://github.com/brimdata/zed/blob/main/cmd/zed/README.md#zed) command is also available
+[`zed`](https://github.com/brimdata/zed#quick-start) command is also available
 as a command line client that can perform many of the same operations as the
 Brim app, and therefore may be useful in scripting and automation.
 
