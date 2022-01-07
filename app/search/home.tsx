@@ -1,4 +1,3 @@
-import {FeatureFlag} from "app/core/feature-flag"
 import useLakeId from "app/router/hooks/use-lake-id"
 import {Results} from "app/routes/search/results"
 import useIngestWatch from "app/search/hooks/use-ingest-watch"
@@ -6,13 +5,12 @@ import useColumns from "app/toolbar/hooks/useColumns"
 import useExport from "app/toolbar/hooks/useExport"
 import useView from "app/toolbar/hooks/useView"
 import {Toolbar} from "app/toolbar/toolbar"
-import React, {useLayoutEffect} from "react"
+import {useLayoutEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import CommitNotification from "src/js/components/CommitNotification"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchHeaderChart from "src/js/components/SearchHeaderChart"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
-import SearchResults from "src/js/components/SearchResults/SearchResults"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Current from "src/js/state/Current"
 import Search from "src/js/state/Search"
@@ -73,11 +71,7 @@ export default function SearchHome() {
         <SearchBar />
         <SearchHeaderChart />
       </SearchPageHeader>
-      <FeatureFlag
-        name="zed-inspector"
-        on={<Results />}
-        off={<SearchResults />}
-      />
+      <Results />
       <CommitNotification key={poolId} />
     </InitSearchParams>
   )
