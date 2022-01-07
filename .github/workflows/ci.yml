@@ -49,4 +49,6 @@ jobs:
         if: failure()
         with:
           name: artifacts-${{ matrix.os }}
-          path: run/
+          path: |
+            run
+            !run/**/SS
