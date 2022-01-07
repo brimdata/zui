@@ -85,7 +85,6 @@ jobs:
         run: npm install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
 
       - run: npm install --no-audit
-      - run: npm run format-check
       - run: npm run build
       - run: npm run lint
       - run: npm run tsc

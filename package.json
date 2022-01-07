@@ -125,7 +125,7 @@
     "is-wsl": "^2.2.0",
     "jwt-decode": "^3.1.2",
     "keytar": "^7.7.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "md5": "^2.2.1",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
@@ -159,7 +159,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "git+https://github.com/brimdata/zed.git#9aa6ed2388009374482568b3e55cef55f42421ec"
+    "zed": "git+https://github.com/brimdata/zed.git#bc919de1a8e800a16b5a369149e159642ec592d8"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
