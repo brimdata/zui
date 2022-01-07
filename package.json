@@ -122,7 +122,7 @@
     "is-wsl": "^2.2.0",
     "jwt-decode": "^3.1.2",
     "keytar": "^7.7.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "md5": "^2.2.1",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
