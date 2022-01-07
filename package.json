@@ -21,7 +21,8 @@
     "release": "npx electron-builder --mac",
     "prerelease": "npm run build",
     "postinstall": "node scripts/post-install",
-    "watch": "node scripts/watch"
+    "watch": "node scripts/watch",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -82,6 +83,7 @@
     "husky": "^7.0.4",
     "jest": "^27.4.5",
     "jest-playwright-preset": "^1.7.0",
+    "lint-staged": "^12.1.5",
     "livereload": "^0.9.1",
     "msw": "^0.29.0",
     "node-sass-chokidar": "^1.5.0",
@@ -161,5 +163,8 @@
     "electron-installer-debian": "^3.0.0",
     "electron-installer-redhat": "^3.0.0",
     "node-pipe": "^0.1.1"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": "eslint --cache --fix"
   }
 }
