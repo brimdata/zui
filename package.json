@@ -95,7 +95,6 @@
     "set-tz": "^0.2.0",
     "sprintf-js": "^1.1.2",
     "tmp": "^0.1.0",
-    "tsc-files": "^1.1.3",
     "typescript": "^4.0.2",
     "web-streams-polyfill": "^3.2.0",
     "whatwg-fetch": "^3.2.0",
