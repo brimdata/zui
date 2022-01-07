@@ -74,28 +74,33 @@ jobs:
 
       # This section runs typical CI, with an updated Zed. Most of this
       # is no different than the normal CI flow.
+      - uses: actions/setup-go@v2
+        with:
+          go-version: "1.16"
       - uses: actions/setup-node@v2
         with:
           cache: npm
           node-version-file: .nvmrc
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.16'
-      - name: Update Zed
-        run: npm install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
-
+      - run: npm install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
       - run: npm install --no-audit
       - run: npm run build
       - run: npm run lint
       - run: npm run tsc
       - run: npm test -- --maxWorkers=2 --ci
       - run: npm run test:api
-      - name: Integration Tests
-        id: testIntegration
-        run: xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" npm run test:playwright -- --ci --forceExit
-        timeout-minutes: 30
+      - name: Playwright tests
+        id: playwright
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          options: -screen 0 1280x1024x24
+          run: npm run test:playwright -- --ci --forceExit
         env:
-          WORKSPACE: /var/tmp/brimdata
+          DEBUG: pw:api
+      - uses: actions/upload-artifact@v2
+        if: failure() && steps.playwright.outcome == 'failure'
+        with:
+          name: artifacts-${{ matrix.os }}
+          path: run/playwright-itest
 
       # This push logic is simple. If someone merges a different brim PR
       # while this job is running, this push will fail. I anticipate
@@ -116,12 +121,6 @@ jobs:
           ${{ steps.zed_pr.outputs.body }}
           EOF
           git push
-
-      - uses: actions/upload-artifact@v2
-        if: failure() && steps.testIntegration.conclusion == 'failure'
-        with:
-          name: artifacts-${{ matrix.os }}
-          path: /var/tmp/brimdata/playwright-itest
 
       - name: Create Pull Request for Manual Inspection
         if: failure()
