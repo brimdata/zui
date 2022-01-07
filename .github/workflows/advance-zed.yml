@@ -100,7 +100,9 @@ jobs:
         if: failure() && steps.playwright.outcome == 'failure'
         with:
           name: artifacts-${{ matrix.os }}
-          path: run/playwright-itest
+          path: |
+            run/playwright-itest
+            !run/**/SS
 
       # This push logic is simple. If someone merges a different brim PR
       # while this job is running, this push will fail. I anticipate
