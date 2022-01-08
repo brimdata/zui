@@ -11,6 +11,7 @@ const system = new SystemTest("download-pcaps")
 
 beforeAll(async () => {
   system.mountApp()
+  // This takes a while because it starts up zeek and suricata
   await system.importFile("sample.pcap")
 })
 

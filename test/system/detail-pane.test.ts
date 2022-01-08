@@ -1,4 +1,4 @@
-import {screen, within} from "@testing-library/react"
+import {act, screen, within} from "@testing-library/react"
 import {toLower} from "lodash"
 import {SystemTest} from "./system-test"
 
@@ -15,7 +15,6 @@ beforeAll(async () => {
   await screen.findByText("No Log Selected")
 })
 
-test("the truth", async () => {})
 const FIELDS = "fields"
 const UID = "correlation"
 const ALERTS = "related alerts"
@@ -25,8 +24,10 @@ const MD5 = "md5 correlation"
 
 // Helper function to perform the common actions
 async function testDetailHeaders(path, sectionNames) {
+  const tableView = await screen.findByRole("button", {name: "Table View"})
+  act(() => system.click(tableView))
   const table = await screen.findByRole("table", {name: "results"})
-  await system.click(within(table).getAllByText(path)[0])
+  system.click(within(table).getAllByText(path)[0])
   const details = await screen.findByRole("complementary", {name: "details"})
   const sections = await within(details).findAllByRole("heading")
   const headers = await Promise.all(sections.map((s) => s.textContent))
