@@ -1,8 +1,8 @@
-import {BrowserWindow, ipcMain, ipcRenderer, screen} from "electron"
+import {enable} from "@electron/remote/main"
+import {BrowserWindow, ipcMain, screen} from "electron"
 import randomHash from "../../brim/randomHash"
 import {BrimWindow, WindowName} from "../tron/window-manager"
 import {Dimens, getWindowDimens} from "./dimens"
-import {enable} from "@electron/remote/main"
 
 const DEFAULT_DIMENS = {
   x: undefined,
