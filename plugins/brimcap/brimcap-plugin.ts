@@ -410,6 +410,8 @@ export default class BrimcapPlugin {
   }
 
   private async updateSuricata() {
+    /* To get better coverage we can mock the spawn call */
+    if (env.isTest) return
     const {zdepsDirectory} = this.api.getAppConfig()
     const cmdName = env.isWindows ? "suricataupdater.exe" : "suricataupdater"
     const cmdPath = path.join(zdepsDirectory, "suricata", cmdName)
@@ -419,7 +421,7 @@ export default class BrimcapPlugin {
     let err
     proc.on("error", (e) => (err = e))
 
-    await new Promise((res) =>
+    await new Promise<void>((res) =>
       proc.on("close", () => {
         delete this.processes[proc.pid]
         res()

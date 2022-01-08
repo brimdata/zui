@@ -1,4 +1,4 @@
-import {screen, within} from "@testing-library/react"
+import {screen, waitForElementToBeRemoved, within} from "@testing-library/react"
 import fsExtra from "fs-extra"
 import os from "os"
 import path from "path"
@@ -17,19 +17,6 @@ beforeAll(async () => {
 
 afterEach(() => fsExtra.remove(filePath))
 
-test("clicking the export button", async () => {
-  system.mockSaveDialog({canceled: false, filePath})
-  const toolbarBtn = await screen.findByRole("button", {name: "Export"})
-  await system.click(toolbarBtn)
-  await screen.findByRole("heading", {name: /export results/i})
-  const modal = await screen.findByRole("dialog")
-
-  const submit = within(modal).getByRole("button", {name: "Export"})
-  act(() => system.click(submit))
-  await screen.findByText(/export complete/i)
-  expect(fsExtra.statSync(filePath).size).toBe(4084)
-})
-
 test("canceling the export", async () => {
   const toolbarBtn = await screen.findByRole("button", {name: "Export"})
   await system.click(toolbarBtn)
@@ -40,4 +27,19 @@ test("canceling the export", async () => {
   const cancel = within(modal).getByRole("button", {name: "Close"})
   act(() => system.click(cancel))
   expect(await fsExtra.pathExists(filePath)).toBe(false)
+  await waitForElementToBeRemoved(modal)
+})
+
+test("clicking the export button", async () => {
+  system.mockSaveDialog({canceled: false, filePath})
+  const toolbarBtn = await screen.findByRole("button", {name: "Export"})
+  await system.click(toolbarBtn)
+  await screen.findByRole("heading", {name: /export results/i})
+  const modal = await screen.findByRole("dialog")
+
+  const submit = within(modal).getByRole("button", {name: "Export"})
+  act(() => system.click(submit))
+  await screen.findByText(/export complete/i)
+  expect(fsExtra.statSync(filePath).size).toBe(4346)
+  await waitForElementToBeRemoved(modal)
 })
