@@ -125,9 +125,13 @@ export class SystemTest {
     await tl.screen.findByText(/import complete/i)
   }
 
-  async runQuery(query: string) {
+  runQuery(query: string, id = "Table") {
     this.api.search(query)
-    await tl.screen.findAllByRole("row")
+    return new Promise<void>((resolve) => {
+      this.api.searches.onDidFinish((search) => {
+        if (search.id === id) resolve()
+      })
+    })
   }
 
   mockSaveDialog(result: {canceled: boolean; filePath: string}) {
