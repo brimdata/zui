@@ -19,6 +19,7 @@ import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
 import EmptySection from "./common/EmptySection"
 import PoolIcon from "./PoolIcon"
 import ProgressIndicator from "./ProgressIndicator"
+import {remoteQueriesPoolName} from "./LeftPane/remote-queries"
 
 type Props = {
   pools: Pool[]
@@ -103,6 +104,8 @@ export default function SavedPoolsList({pools, workspaceStatus}: Props) {
       {pools
         .sort((a, b) => (a.name > b.name ? 1 : -1))
         .map((pool) => {
+          // Do not show remote queries pool in list
+          if (pool.name === remoteQueriesPoolName) return
           return <PoolListItem key={pool.id} pool={pool} />
         })}
     </menu>

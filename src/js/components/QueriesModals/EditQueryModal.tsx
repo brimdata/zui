@@ -13,10 +13,11 @@ const StyledContent = styled(Content)`
 const EditQueryModal = ({onClose}) => {
   const modalArgs = useSelector(Modal.getArgs)
   const query = get(modalArgs, "query", null)
+  const isRemote = get(modalArgs, "isRemote", null)
   return (
     <StyledContent>
       <SmallTitle>Edit Query</SmallTitle>
-      <QueryForm query={query} onClose={onClose} />
+      <QueryForm query={query} onClose={onClose} isRemote={isRemote} />
     </StyledContent>
   )
 }

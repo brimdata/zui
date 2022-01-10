@@ -25,6 +25,7 @@ export function getWindowPersistable(state: State) {
     delete draft.toolbars
     delete draft.configs
     delete draft.modal
+    delete draft.remoteQueries
 
     for (const tab of draft.tabs.data) {
       delete tab.viewer

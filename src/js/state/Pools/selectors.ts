@@ -1,4 +1,4 @@
-import {keys} from "lodash"
+import {find, keys} from "lodash"
 import {State} from "../types"
 import {Pool} from "./types"
 
@@ -12,6 +12,10 @@ const selectors = {
   getName: (workspaceId: string, poolId: string) => (state: State) => {
     const pool = getWorkspace(state, workspaceId)[poolId]
     return pool ? pool.name : ""
+  },
+  getByName: (workspaceId: string, name: string) => (state: State) => {
+    const wsPools = getWorkspace(state, workspaceId)
+    return find(wsPools, ["name", name])
   },
   raw: (state: State) => state.pools,
   getPools: (workspaceId: string | null) => (state: State): Pool[] => {

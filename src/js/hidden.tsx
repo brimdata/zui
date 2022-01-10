@@ -14,6 +14,11 @@ import workspace from "./brim/workspace"
 import {AppDispatch} from "./state/types"
 import {subscribeEvents} from "./flows/subscribeEvents"
 import refreshPoolInfo from "./flows/refreshPoolInfo"
+import {
+  getRemotePoolForLake,
+  refreshRemoteQueries
+} from "./components/LeftPane/remote-queries"
+import brim from "./brim"
 
 initialize()
   .then(({store}) => {
@@ -73,6 +78,9 @@ const Hidden = () => {
                 new Error("No 'pool_id' from branch-commit event")
               )
 
+            const remotePool = dispatch(getRemotePoolForLake(w.id))
+            if (poolId === remotePool?.id)
+              dispatch(refreshRemoteQueries(brim.workspace(w)))
             dispatch(refreshPoolInfo({workspaceId: w.id, poolId})).catch(
               (e) => {
                 log.error("branch-commit update failed: ", e)

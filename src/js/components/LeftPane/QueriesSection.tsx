@@ -1,6 +1,6 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {useBrimApi} from "app/core/context"
-import {includes} from "lodash"
+import {find, includes} from "lodash"
 import React, {ChangeEvent, useEffect, useRef, useState} from "react"
 import {Tree, TreeApi} from "react-arborist"
 import {useDrop} from "react-dnd"
@@ -31,6 +31,9 @@ import {
   Title
 } from "./common"
 import {DropOverlay} from "./drop-overlay"
+import {refreshRemoteQueries, setRemoteQueries} from "./remote-queries"
+import {AppDispatch} from "../../state/types"
+import RemoteQueries from "src/js/state/RemoteQueries"
 const StyledPlus = styled.div`
   margin-right: 8px;
   background: rgba(0, 0, 0, 0);
@@ -45,40 +48,50 @@ const StyledPlus = styled.div`
   ${(props) => props.theme.hoverQuiet}
 `
 
-const NewActionsDropdown = (props: {tree: TreeApi | undefined}) => {
-  const {tree} = props
+const NewActionsDropdown = (props: {
+  tree: TreeApi | undefined
+  isRemote: boolean
+}) => {
+  const {tree, isRemote} = props
   const dispatch = useDispatch()
   const api = useBrimApi()
   const [importer, ref] = useCallbackRef<HTMLButtonElement>()
-  const template = [
-    {
-      label: "New Query",
-      click: () => dispatch(Modal.show("new-query"))
-    },
-    {
-      label: "New Folder",
-      click: () => {
-        const id = nanoid()
-        dispatch(
-          Queries.addItem(
-            {
-              isOpen: true,
-              items: [],
-              name: "New Folder",
-              id
-            },
-            "root"
-          )
-        )
-        tree?.scrollToId(id)
-        tree?.edit(id)
-      }
-    },
-    {
-      label: "Import from JSON...",
-      click: () => importer && importer.click()
-    }
-  ]
+  const template = isRemote
+    ? [
+        {
+          label: "New Remote Query",
+          click: () => dispatch(Modal.show("new-query", {isRemote: true}))
+        }
+      ]
+    : [
+        {
+          label: "New Query",
+          click: () => dispatch(Modal.show("new-query"))
+        },
+        {
+          label: "New Folder",
+          click: () => {
+            const id = nanoid()
+            dispatch(
+              Queries.addItem(
+                {
+                  isOpen: true,
+                  items: [],
+                  name: "New Folder",
+                  id
+                },
+                "root"
+              )
+            )
+            tree?.scrollToId(id)
+            tree?.edit(id)
+          }
+        },
+        {
+          label: "Import from JSON...",
+          click: () => importer && importer.click()
+        }
+      ]
 
   const menu = usePopupMenu(template)
 
@@ -118,12 +131,15 @@ const filterQueriesByTag = (queriesRoot: Group, tag: string): Query[] => {
 }
 
 const TagsViewSelect = ({selected, tags, onSelect}) => {
-  const template = tags.map((t) => ({
-    label: t,
-    click: () => onSelect(t),
-    type: "checkbox",
-    checked: selected === t
-  }))
+  const template = tags.map((t) => {
+    if (t === "separator") return {type: "separator"}
+    return {
+      label: t,
+      click: () => onSelect(t),
+      type: "checkbox",
+      checked: selected === t
+    }
+  })
 
   template.unshift(
     ...[
@@ -148,11 +164,12 @@ type DragItem = {files: File[]; items: DataTransferItemList}
 function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const api = useBrimApi()
   const tree = useRef()
-  const dispatch = useDispatch()
-  const [selectedTag, setSelectedTag] = useState("All")
+  const dispatch = useDispatch<AppDispatch>()
+  const [selectedTag, setSelectedTag] = useState("All Local")
   const currentPool = useSelector(Current.getPool)
   const queriesRoot = useSelector(Queries.getRaw)
-  const [queries, setQueries] = useState(queriesRoot)
+  const remoteQueries = useSelector(RemoteQueries.get)
+  const [queries, setQueries] = useState<Group>(queriesRoot)
   const tags = useSelector(Queries.getTags)
   const [{isOver}, drop] = useDrop<DragItem, unknown, {isOver: boolean}>(
     () => ({
@@ -169,21 +186,36 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   )
 
   useEffect(() => {
-    setQueries(queriesRoot)
+    if (selectedTag !== "Remote") {
+      setQueries(queriesRoot)
+    }
   }, [queriesRoot])
+
+  useEffect(() => {
+    if (selectedTag === "Remote") {
+      setQueries(remoteQueries)
+    }
+  }, [remoteQueries])
+
+  const defaultRoot = {
+    id: "root",
+    name: "root",
+    isOpen: true,
+    items: null
+  }
 
   function onTagSelect(tag) {
     setSelectedTag(tag)
-    if (tag === "All") {
+    if (tag === "All Local") {
       setQueries(queriesRoot)
       return
     }
-    setQueries({
-      id: "root",
-      name: "root",
-      isOpen: true,
-      items: filterQueriesByTag(queriesRoot, tag)
-    })
+
+    if (tag === "Remote") {
+      dispatch(refreshRemoteQueries())
+      return
+    }
+    setQueries({...defaultRoot, items: filterQueriesByTag(queriesRoot, tag)})
   }
 
   const handleMove = (
@@ -192,16 +224,65 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     index: number
   ) => {
     // no reordering while a filter is on
-    if (selectedTag !== "All") return
+    if (selectedTag !== "All Local") return
     // no reordering if any one item is part of shipped brim lib
     if (dispatch(isBrimLib([...dragIds, parentId]))) return
     dispatch(Queries.moveItems(dragIds, parentId, index))
   }
 
-  const handleRename = (itemId: string, name: string) =>
+  const handleRename = (itemId: string, name: string) => {
+    if (selectedTag === "Remote") {
+      const q = find(queries.items, ["id", itemId]) as Query
+      if (!q) return console.error("cannot locate query with id " + itemId)
+      dispatch(setRemoteQueries([{...q, name}])).then(() => {
+        dispatch(refreshRemoteQueries())
+      })
+      return
+    }
     dispatch(Queries.editItem({name}, itemId))
+  }
 
   const {ref, width = 1, height = 1} = useResizeObserver<HTMLDivElement>()
+  const renderQueries = () => {
+    if (!currentPool)
+      return (
+        <EmptySection
+          icon={<MagnifyingGlass />}
+          message="You must have a pool selected to run queries."
+        />
+      )
+    if (!(queries?.items?.length > 0))
+      return (
+        <EmptySection
+          icon={<MagnifyingGlass />}
+          message="You have not created any queries yet."
+        />
+      )
+
+    return (
+      <Tree
+        ref={tree}
+        indent={12}
+        data={queries}
+        getChildren="items"
+        isOpen="isOpen"
+        disableDrag={(d) => !!dispatch(isBrimLib([d.id]))}
+        disableDrop={(d) => d.id === "brim"}
+        rowHeight={24}
+        width={width}
+        height={height}
+        hideRoot
+        openByDefault
+        onMove={handleMove}
+        onEdit={handleRename}
+        onToggle={(id, value) => {
+          dispatch(Queries.toggleGroup(id, value))
+        }}
+      >
+        {Item}
+      </Tree>
+    )
+  }
   return (
     <StyledSection style={style}>
       <DragAnchor {...resizeProps} />
@@ -214,10 +295,13 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           <>
             <TagsViewSelect
               selected={selectedTag}
-              tags={["All", ...tags]}
+              tags={["Remote", "separator", "All Local", ...tags]}
               onSelect={onTagSelect}
             />
-            <NewActionsDropdown tree={tree.current} />
+            <NewActionsDropdown
+              tree={tree.current}
+              isRemote={selectedTag === "Remote"}
+            />
           </>
         )}
       </SectionHeader>
@@ -227,34 +311,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           drop(r)
         }}
       >
-        {currentPool ? (
-          <Tree
-            ref={tree}
-            indent={12}
-            data={queries}
-            getChildren="items"
-            isOpen="isOpen"
-            disableDrag={(d) => !!dispatch(isBrimLib([d.id]))}
-            disableDrop={(d) => d.id === "brim"}
-            rowHeight={24}
-            width={width}
-            height={height}
-            hideRoot
-            openByDefault
-            onMove={handleMove}
-            onEdit={handleRename}
-            onToggle={(id, value) => {
-              dispatch(Queries.toggleGroup(id, value))
-            }}
-          >
-            {Item}
-          </Tree>
-        ) : (
-          <EmptySection
-            icon={<MagnifyingGlass />}
-            message="You must have a pool selected to run queries."
-          />
-        )}
+        {renderQueries()}
         <DropOverlay show={isOver}>Drop to import...</DropOverlay>
       </SectionContents>
     </StyledSection>

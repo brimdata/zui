@@ -56,6 +56,7 @@ export type State = {
   pluginStorage: PluginStorageState
   workspaceStatuses: WorkspaceStatusesState
   queries: QueriesState
+  remoteQueries: QueriesState
   systemTest: SystemTestState
   feature: FeatureState
   toolbars: ToolbarsState

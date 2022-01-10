@@ -8,10 +8,11 @@ import get from "lodash/get"
 const NewQueryModal = ({onClose}) => {
   const modalArgs = useSelector(Modal.getArgs)
   const value = get(modalArgs, "value", null)
+  const isRemote = get(modalArgs, "isRemote", false)
   return (
     <Content>
-      <SmallTitle>New Query</SmallTitle>
-      <QueryForm value={value} onClose={onClose} />
+      <SmallTitle>New {isRemote && "Remote "}Query</SmallTitle>
+      <QueryForm value={value} onClose={onClose} isRemote={isRemote} />
     </Content>
   )
 }
