@@ -8,7 +8,6 @@ beforeAll(async () => {
   system.mountApp()
   await system.importFile("ifconfig.zng")
   await system.runQuery("")
-  await screen.findAllByRole("cell")
   const view = await screen.findByRole("button", {name: "View"})
   await system.click(view)
   system.click(await screen.findByText("Right Pane"))
