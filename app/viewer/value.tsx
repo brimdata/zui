@@ -63,6 +63,7 @@ export function PrimitiveValue(props: ValueProps) {
   const format = useZedFormatter()
   return (
     <BG
+      role="cell"
       className={zedTypeClassName(props.value)}
       onContextMenu={() =>
         dispatch(

@@ -14,6 +14,7 @@ import SystemTest from "../../../src/js/state/SystemTest"
 import Tabs from "../../../src/js/state/Tabs"
 import {Dispatch, Thunk} from "../../../src/js/state/types"
 import {getZealot} from "../../../src/js/flows/getZealot"
+import Url from "src/js/state/Url"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
@@ -157,9 +158,11 @@ const setPool = (dispatch, tabId, workspaceId) => ({
   do({poolId}) {
     const url = lakePath(poolId, workspaceId)
     global.tabHistories.getOrCreate(tabId).push(url)
+    dispatch(Url.changed())
   },
   undo() {
     const url = workspacePath(workspaceId)
     global.tabHistories.getOrCreate(tabId).replace(url)
+    dispatch(Url.changed())
   }
 })

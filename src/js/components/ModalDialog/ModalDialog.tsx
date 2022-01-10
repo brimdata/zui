@@ -138,7 +138,7 @@ export function ModalDialog(props: Props) {
         onEntering={() => dispatch(SystemTest.hook("modal-entering"))}
         onEntered={() => dispatch(SystemTest.hook("modal-entered"))}
       >
-        <Background>{props.children({onClose})}</Background>
+        <Background role="dialog">{props.children({onClose})}</Background>
       </CSSTransition>
     </Overlay>,
     doc.id("modal-dialog-root")

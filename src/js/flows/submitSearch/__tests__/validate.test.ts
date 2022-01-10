@@ -34,7 +34,7 @@ test("Validates the zql", () => {
   expect(select(SearchBar.getSearchBarError)).toEqual(null)
 
   dispatch(SearchBar.changeSearchBarInput("_ath=="))
-  submit().catch((e) => e)
+  submit()
 
   expect(select(SearchBar.getSearchBarError)).toMatch(
     /Expected [\s\S]* found\./
@@ -45,7 +45,7 @@ test("Checks for parallel procs", () => {
   dispatch(
     SearchBar.changeSearchBarInput("files | split ( => count() => head 1 )")
   )
-  submit().catch((e) => e)
+  submit()
   expect(select(SearchBar.getSearchBarError)).toMatch(
     /Parallel procs are not yet supported in Brim./
   )

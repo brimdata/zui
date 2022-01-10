@@ -77,8 +77,14 @@ export class WindowManager {
   }
 
   confirmQuit(): Promise<boolean> {
-    return Promise.all(this.getAll().map((w: BrimWindow) => w.confirmClose()))
-      .then((oks) => oks.every((ok) => ok))
+    return Promise.all(
+      this.getAll().map(async (w: BrimWindow) => {
+        return w.confirmClose()
+      })
+    )
+      .then((oks) => {
+        return oks.every((ok) => ok)
+      })
       .catch((e) => {
         log.error(e)
         return true

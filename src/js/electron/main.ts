@@ -1,6 +1,5 @@
 import {appPathSetup} from "./appPathSetup"
 import userTasks from "./userTasks"
-
 // app path and log setup should happen before other imports.
 appPathSetup()
 
@@ -25,17 +24,24 @@ import secureWebContents from "./secure-web-contents"
 import env from "app/core/env"
 import {join} from "path"
 import requireAll from "./require-all"
+import isDev from "./isDev"
 require("@electron/remote/main").initialize()
 
-console.time("init")
+export const mainDefaults = () => ({
+  lakePort: 9867,
+  lakeRoot: join(app.getPath("userData"), "data", "lake"),
+  lakeLogs: app.getPath("logs"),
+  lake: true,
+  devtools: isDev,
+  appState: join(app.getPath("userData"), "appState.json"),
+  releaseNotes: true,
+  autoUpdater: true
+})
 
-function mainDefaults() {
-  return {
-    backend: true
-  }
-}
+export type MainArgs = ReturnType<typeof mainDefaults>
 
-export async function main(opts = mainDefaults()) {
+export async function main(args: Partial<MainArgs> = {}) {
+  const opts = {...mainDefaults(), ...args}
   requireAll(join(__dirname, "./initializers"))
   secureWebContents()
   if (handleSquirrelEvent(app)) return
@@ -44,7 +50,7 @@ export async function main(opts = mainDefaults()) {
     return
   }
   userTasks(app)
-  const brim = await BrimMain.boot()
+  const brim = await BrimMain.boot(opts)
   menu.setMenu(brim)
 
   windowsMainHandler(brim)
@@ -57,8 +63,12 @@ export async function main(opts = mainDefaults()) {
     return app.commandLine.getSwitchValue("feature-flags").split(",")
   })
 
+  ipcMain.handle("get-main-args", () => ({
+    ...opts
+  }))
+
   // autoUpdater should not run in dev, and will fail if the code has not been signed
-  if (!electronIsDev) {
+  if (!electronIsDev && opts.autoUpdater) {
     setupAutoUpdater().catch((err) => {
       log.error("Failed to initiate autoUpdater: " + err)
     })
@@ -88,7 +98,7 @@ export async function main(opts = mainDefaults()) {
     brim.openUrl(url)
   })
 
-  app.whenReady().then(() => brim.start(opts))
+  app.whenReady().then(() => brim.start())
   return brim
 }
 

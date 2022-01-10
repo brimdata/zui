@@ -44,12 +44,12 @@ some rough edges you may encounter as you work through the configurations
 described in this article.
 
 1. While **logs** can be imported from your local Brim app directly to a remote
-Workspace, **packet captures** currently cannot ([brim/1730](https://github.com/brimdata/brim/issues/1730)).
+   Workspace, **packet captures** currently cannot ([brim/1730](https://github.com/brimdata/brim/issues/1730)).
 
 2. While the configuration potentially allows multiple remote users to access
-the same centrally-stored data, there's currently no concept of user
-authentication, individual logins, or roles/permissions. Care should be taken
-to avoid the accidental exposure or loss of centrally-stored data.
+   the same centrally-stored data, there's currently no concept of user
+   authentication, individual logins, or roles/permissions. Care should be taken
+   to avoid the accidental exposure or loss of centrally-stored data.
 
 # Background: Brim & Zed Lakes
 
@@ -88,21 +88,21 @@ phil             37512   0.0  0.2  5042424  29300   ??  S    10:30AM   0:01.50 /
 Some useful information revealed in this command line:
 
 1. The inclusion of `localhost` in the option `-l localhost:9867` indicates
-this `zed serve` is prepared to accept _only_ connections that arrive from
-a client running on the same local host.
+   this `zed serve` is prepared to accept _only_ connections that arrive from
+   a client running on the same local host.
 
 1. The `-R` option points to the Data Directory, which is the default
-location for macOS in this case.
+   location for macOS in this case.
 
 1. The `-brimfd=3` is an option unique to when `zed serve` is launched by
-Brim. This helps ensure that if Brim is killed abruptly, the `zed` process will
-also be terminated (see [zed/1184](https://github.com/brimdata/zed/pull/1184)
-for details).
+   Brim. This helps ensure that if Brim is killed abruptly, the `zed` process will
+   also be terminated (see [zed/1184](https://github.com/brimdata/zed/pull/1184)
+   for details).
 
 1. We can see the full path to the `zed` binary that's packaged with Brim. This
-binary and other dependencies that are typically launched by Brim can be found
-in the `zdeps` directory under Brim's [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries)
-path.
+   binary and other dependencies that are typically launched by Brim can be found
+   in the `zdeps` directory under Brim's [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries)
+   path.
 
 Now that we know Brim is simply connecting to Zed locally, next we'll vary
 this approach to instead start a remote `zed serve` and connect to it to
@@ -163,11 +163,11 @@ Building on what we learned earlier, we've made two adjustments here compared
 to the command line Brim would have invoked:
 
 1. `localhost` was dropped from the `-l` option. By providing only the port
-`:9867` specification, `zed serve` is now prepared to accept remote
-connections as well.
+   `:9867` specification, `zed serve` is now prepared to accept remote
+   connections as well.
 
 2. The `-brimfd=3` was dropped, since we're controlling the start/stop of Zed
-rather than the Brim app.
+   rather than the Brim app.
 
 At this point `zed serve` is ready to accept remote connections. However,
 the network between clients and our remote Zed Lake needs to permit this
@@ -212,6 +212,7 @@ ubuntu# brimcap index -root ~/.config/Brim/data/brimcap-root -r wrccdc.2018-03-2
 While it's possible to import logs from the Brim app directly into a remote
 Zed Lake, we can also use `zed` on our Linux VM. Here we'll import the Zeek
 TSV logs from our [zed-sample-data](https://github.com/brimdata/zed-sample-data).
+
 ```
 ubuntu# git clone --quiet --depth=1 https://github.com/brimdata/zed-sample-data
 ubuntu# zed create zed-sample-data
@@ -263,7 +264,7 @@ macOS# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.0100
 macOS# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
 macOS# export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
 macOS# brimcap index -root "$HOME/Library/Application Support/Brim/data/brimcap-root" -r wrccdc.2018-03-23.010014000000000.pcap
-```	
+```
 
 ![Opening flow](media/Brimcap-Remote-Flow-Wireshark.png)
 
@@ -273,7 +274,7 @@ Zed Lake in the same manner as you've been doing locally.
 ![Importing logs to remote Zed Lake](media/Remote-Zed-Lake-Import.gif)
 
 Attempts to import a pcap directly to the remote Workspace will fail with an
-error message (see [brim/1730](https://github.com/brimdata/brim/issues/1730) 
+error message (see [brim/1730](https://github.com/brimdata/brim/issues/1730)
 for details).
 
 A connection to a remote Workspace can be removed by selecting the **Get Info**

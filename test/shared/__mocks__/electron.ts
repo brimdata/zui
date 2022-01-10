@@ -1,7 +1,7 @@
 import {join} from "path"
 import createIPCMock from "electron-mock-ipc"
 import EventEmitter from "events"
-
+import os from "os"
 const mockIpc = createIPCMock()
 // Remove these 3 lines once this is merged upstream:
 // https://github.com/h3poteto/electron-mock-ipc/pull/402
@@ -12,6 +12,10 @@ mockIpc.ipcMain.emitter.setMaxListeners(500)
 export const ipcMain = mockIpc.ipcMain
 export const ipcRenderer = mockIpc.ipcRenderer
 
+export const dialog = {
+  showSaveDialog: jest.fn()
+}
+
 class WebContents extends EventEmitter {
   send(channel, ...args) {
     ipcRenderer.emitter.emit("receive-from-main", channel, ...args)
@@ -19,6 +23,9 @@ class WebContents extends EventEmitter {
 }
 export class BrowserWindow {
   static getAllWindows = jest.fn(() => [])
+  static fromWebContents() {
+    return new BrowserWindow()
+  }
   webContents = new WebContents()
   isDestroyed = jest.fn(() => false)
   focus = jest.fn()
@@ -57,7 +64,8 @@ class MockApp {
   getName() {
     return "TestApp"
   }
-  getPath() {
+  getPath(name) {
+    if (name === "temp") return os.tmpdir()
     return join(__dirname, "../../../run/unit/data")
   }
   setPath() {}

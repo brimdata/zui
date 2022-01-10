@@ -72,7 +72,7 @@ function getNumberLocale(config) {
 }
 
 function replaceDecimal(string: string, replacement: string | undefined) {
-  return isString(replacement) ? string.replaceAll(".", replacement) : string
+  return isString(replacement) ? string.replace(/\./g, replacement) : string
 }
 
 function formatInt(string: number, config: Partial<FormatConfig> = {}) {

@@ -4,12 +4,13 @@ import {useDispatch, useSelector} from "react-redux"
 import brim from "../brim"
 import Chart from "../state/Chart"
 import Current from "../state/Current"
+import {AppDispatch} from "../state/types"
 import Url from "../state/Url"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 
 export default function SearchHeaderChart() {
   const location = useSelector(Current.getLocation)
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
   const {program, pins} = useSelector(Url.getSearchParams)
 
   const hasAnalytics = useMemo(
@@ -24,7 +25,7 @@ export default function SearchHeaderChart() {
 
   useLayoutEffect(() => {
     if (status === "INIT" || searchKey !== location.key) {
-      dispatch(histogramSearch())
+      dispatch(histogramSearch()).catch((e) => console.log(e))
     }
   }, [location.key])
 

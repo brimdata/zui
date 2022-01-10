@@ -1,21 +1,18 @@
-[![Brim CI](https://github.com/brimdata/brim/workflows/Brim%20CI/badge.svg)](https://github.com/brimdata/brim/actions?query=workflow%3A%22Brim+CI%22+branch%3Amain)
+
 # Brim Development
 
 Thank you for contributing to Brim!
 
-Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/Feel-Free-to-Ask#Feel-Free-to-Ask), please [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimdata.io/join-slack/) as well.
-
-Brim is early in its life cycle and will be expanding quickly. Please star and/or watch the repo so you can follow and track our progress.
-
-## Code Base Walkthrough
-
-Before you start, review the [Code Base Walkthrough](https://github.com/brimdata/brim/wiki/Code-Base-Walkthrough). This doc provides an overview of the directory structure, libraries used, and other useful details for new developers. A [YouTube video](https://www.youtube.com/watch?v=CPel0iu1pig) is also available that provides a detailed walk-through of the material.
+Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/Feel-Free-to-Ask#Feel-Free-to-Ask), please [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimdata.io/join-slack/) as well. 
 
 ## Setup
 
-You should have `node v12.12.0` and `git` installed. You can start a local instance of Brim via:
+Install these dependencies:
 
-[Install Node](https://nodejs.org/en/download/package-manager/)
+1. [Node](https://nodejs.org/en/download/package-manager/) - the version specified in the `.node-version` file at the root folder. 
+2. [Go](https://go.dev/doc/install) - to compile some Zed dependencies.
+
+Then clone the repo, install the node modules, and start the app.
 
 ```bash
 git clone https://github.com/brimdata/brim
@@ -24,70 +21,150 @@ npm install
 npm start
 ```
 
-`npm install` will download all required dependencies, including zqd and zeek. Running `npm start` will compile source files in the root directory to `./dist` and open the app (see babel.config.js for details on what get compiled). When a file is changed, it will recompile it and reload the app.
+When a file is changed, it will be recompiled it and reload the app.
 
-On subsequent updates, `git pull` then `npm install`.
+On subsequent updates, `git pull` and `npm install`.
 
-### zed lake
+## Libraries
 
-`zed lake`, from the [Zed](https://github.com/brimdata/zed) repository, is the daemon responsible for data ingestion and query execution. As an npm postinstall step, a`zqd`binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the zqd binary from`./zdeps` on application start and exit.
+Brim is a TypeScript, React, Electron app.
 
-When developing features that need a non-released zqd instance, you can:
+- [Electron](https://www.electronjs.org/docs) - it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/tutorial/quick-start#main-and-renderer-processes)
+- [TypeScript](https://www.typescriptlang.org/) 
+- [ESLint](https://eslint.org/) 
+- [Prettier](https://prettier.io/docs/en/index.html)
+- [React](https://reactjs.org/docs/getting-started.html)
+- [Styled Components](https://styled-components.com/) 
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Jest](https://jestjs.io/docs/en/getting-started)
+- [Playwright](https://playwright.dev/) 
 
-- change the `brimdata/zed` dependency in package.json to refer to a branch or git commit, either in `brimdata/zed` or some fork. If the dependency doesn't look like an official tagged Zed repository, the Brim npm postinstall step will try to build and use zqd from the specified commit.
-- Or, you can build zqd yourself, and make it accessible via PATH, then run `brim_zqd_from_path=1 npm start`.
+## Entry Points
 
-### zeek
+* Main process - `src/js/electron/main.ts`
+* Renderer process - `src/js/search.tsx`
 
+<<<<<<< HEAD
+## Directory Structure
+
+This directory structure is a work in progress. You will see many files not in the places described here. Please migrate what you can and follow this for any new code.
+
+```
+├── app (renderer code)
+│   ├── core (generic shared code)
+│   ├── features (larger app features)
+│   ├── initializers (code run on startup)
+│   ├── plugins (plugin code)
+│   ├── routes (entry points for each url)
+│   ├── state (ui state)
+│   ├── window-a.tsx (window entry points)
+│   └── window-b.tsx
+├── electron (main process code)
+└── ppl (licensed code)
+```
+=======
 Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimdata/zed/blob/main/docs/data-model/zng.md) format.
+>>>>>>> main
 
-As an npm postinstall step, a [zeek artifact](https://github.com/brimdata/zeek/releases) is downloaded and expanded into the `./zdeps/zeek` directory. This artifact contains a zeek binary and associated scripts, and a "zeek runner" script or command that is called by zqd. zqd is passed the full path to the zeek runner via the `-zeekrunner` command line option. When a pcap file is ingested, zqd runs the zeek runner with no arguments and its working directory set to an output directory for the zeek TSV logs, and then feeds the pcap data to the zeek runner via stdin. zqd then internally converts the zeek TSV logs into ZNG format.
 
-An alternate Zeek setup may be used by overriding the zeek runner location. This may be done either by launching Brim with the `BRIM_ZEEK_RUNNER` environment variable set to the absolute path of a zeek runner script or commmand, or by setting the "Zeek Runner" preference in the Brim UI. See the [Zeek Customization](https://github.com/brimdata/brim/wiki/Zeek-Customization) wiki article for additional details.
+**Import Rule**: Only import modules from `/core`, `/state`, or your own descendants. Components in `/routes` can import modules from `/features`.
 
-### suricata
 
-Brim uses [Suricata](https://suricata-ids.org) to extract Suricata alert logs from packet captures. These alerts are also transformed into ZNG and combined with the zeek logs. Overall this feature's operation and configuration are similar to those of the Zeek feature. Here, the runner is passed to zqd with the `-suricatarunner` option, and it can be overridden via the Brim UI or the environment variable `BRIM_SURICATA_RUNNER`.
+## Testing
 
-The Suricata rules are updated every time Brim is launched. The update itself is started by zqd by invoking a suricata-update runner that is passed to it as `-suricataupdater`. The default updater uses the default Emerging Threats Open rules, like vanilla Suricata. A custom updater can be used; to do so change the updater path via the Brim UI or the environment variable `BRIM_SURICATA_UPDATER`.
+We have a few different types of test suites.
 
-## Tests
+1. Unit test - `test/unit`
+2. API tests - `test/api`
+2. System tests - `test/system`
+3. Integration tests `test/playwright`
 
-Unit tests use [Jest](https://jestjs.io/) which has an [excellent cli](https://jestjs.io/docs/en/cli). Here are some examples you might use frequently.
+We use [Jest Projects](https://jestjs.io/docs/configuration#projects-arraystring--projectconfig) to organize the configuration for these.
 
-```bash
-npm test                                      # Run all the tests
-npx jest Client.test.js                       # Run a single test file
-npx jest Client.test.js -t "increment by one" # Run a single test by name
-npx jest --watch                              # Run all tests on every change
-```
+## Unit Tests
 
-**Snapshots**
+Unit tests go right next to file they are testing with a `.test.js` suffix.
 
-Some tests use `expect(result).toMatchSnapshot()`. The first time the test is run, it stores the result in a `.snap` file automatically. Later runs, compare their results to the snapshot. Snapshots can easily be updated with the `-u` command line option.
+There are several ways to run unit tests.
 
 ```bash
-npx jest -u # Updates all snapshots with results from this run
+# Run all
+npx jest --projects test/unit
+# Run by name
+npx jest --projects test/unit -- name-of-test
 ```
 
-You can selectively update snapshots by running a single file or test and appending the `-u` option.
+## System Tests
+
+System tests sit between unit tests and integration tests. To create one, instantiate a `SystemTest` class at the top level of any test file.
+
+```js
+const system = new SystemTest("name-of-test") 
+```
+
+This will run the electron main process entry point, `main.js`, which spins up a local zed lake. You then mount the root `<App />` component into the JSDOM testing environment and begin to simulate a user clicking buttons and asserting elements exist.  This is done with [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/).
+
+```js
+import {screen} from "@testing-library/react"
+import {SystemTest} from "test/system/system-test"
+
+const system = new SystemTest("my-test")
+
+test("click the button", async () => {
+  system.mountApp()
+  const button = screen.getByRole("button", {name: "Submit"})
+  system.click(button)
+  await screen.findByText("Complete!")
+})
+```
+
+All backend requests are made with Node and hit the local Zed lake. Any browser APIs that are not in JSDOM are mocked or polyfilled. The electron APIs are mocked as well. You can find them in `test/shared/__mocks__/electron`.
+
+The `SystemTest` class comes with a few helper methods for commonly performed actions in the Brim app like *.runQuery(q)*, *.ingestFile*(name), *.navTo(path)*, and *.render(jsx)*. It also re-exports some of the common [userEvent](https://testing-library.com/docs/ecosystem-user-event/) methods like *.click()* and *.rightClick()*
+
+They can be run like so:
 
 ```bash
-npx jest query.test.js -u # Only updates snapshots used in query.test.js
+# Run all
+npx jest --projects test/system
+# Run by name
+npx jest --projects test/system -- name-of-test
 ```
+
+
+## Styles
+
+Use the Styled Components library to style new components. Previously, we used scss files located in `src/css`. Many of the components are styled with scss, and class names, but we recently committed to Styled Components. We also have a "theme" that holds all the common colors and styles used in our UI.
+
+## Migrations
+
+Because we persist state on a user's computer, if they upgrade Brim and we've changed the expected state, we need to migrate the old state. If any of the reducers in `src/js/state` are changed, we need to write a migration. There is a tool we built to help with this. You can run, for example:
+
+```bash
+bin/gen migration addScrollPositionToViewer
+```
+
+This creates a file in `src/js/state/migrations` with a function that can manipulate the persisted state from the previous version.
+
+See the [[Adding Migrations]] page for a more detailed guide.
+
+### Zed
+
+The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for data ingestion and query execution. As an npm postinstall step, the `zed` binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the service when it starts and stops.
+
 
 ## Pull Requests
 
 Our CI server checks for code format diffs, type errors, eslint errors, unit test failures, and integration test failures. You can check all these things locally before pushing your branch.
 
 ```bash
-npm run format # Prettier formats and saves the project files
-npm run lint   # Check eslint
-npm run tsc    # Check the types
-npm test       # Unit tests with jest
+npm run format           # Prettier format
+npm run lint             # Check eslint
+npm run tsc              # Check the types
+npm test                 # Unit tests with jest
+npm test:api             # API tests
+npm test:system          # System Tests
 npm run test:playwright  # Integration tests with jest & playwright
-
-npm run check  # Runs all the above at once except for itests
 ```
 
 ## Installation Packaging
@@ -152,3 +229,7 @@ We believe users and developers should have access to the source code for our
 project, and we need a sustainable business model to continue funding our
 work. Using the source-available Polyform Perimeter license on portions
 of the source code lets us realize both.
+
+## Questions?
+
+We appreciate your interest in improving Brim. If you've got questions that aren't answered here or in the [video](#video), please join our [public Slack](https://www.brimdata.io/join-slack/) workspace and ask!

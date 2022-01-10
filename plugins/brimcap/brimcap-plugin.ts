@@ -134,7 +134,7 @@ export default class BrimcapPlugin {
           setButtonDetails(toolbarId, buttonId, !conn)
         })
         .catch((err) => {
-          console.error(err)
+          if (!env.isTest) console.error(err)
           setConn(null)
           setButtonDetails(toolbarId, buttonId, true)
         })
@@ -219,7 +219,7 @@ export default class BrimcapPlugin {
     const dur = log.try("duration") as zed.Duration
     const dest = join(
       this.api.getTempDir(),
-      `packets-${tsString}.pcap`.replaceAll(":", "_")
+      `packets-${tsString}.pcap`.replace(/:/g, "_")
     )
 
     return {
@@ -410,6 +410,8 @@ export default class BrimcapPlugin {
   }
 
   private async updateSuricata() {
+    /* To get better coverage we can mock the spawn call */
+    if (env.isTest) return
     const {zdepsDirectory} = this.api.getAppConfig()
     const cmdName = env.isWindows ? "suricataupdater.exe" : "suricataupdater"
     const cmdPath = path.join(zdepsDirectory, "suricata", cmdName)
@@ -419,7 +421,7 @@ export default class BrimcapPlugin {
     let err
     proc.on("error", (e) => (err = e))
 
-    await new Promise((res) =>
+    await new Promise<void>((res) =>
       proc.on("close", () => {
         delete this.processes[proc.pid]
         res()

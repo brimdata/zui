@@ -79,7 +79,7 @@ describe("success case", () => {
   })
 
   test("opening a pcap", async () => {
-    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getWebFile("sample.pcap")]))
 
     const state = store.getState()
     expect(Tab.getPoolName(state)).toEqual("sample.pcap.brim")
@@ -98,7 +98,7 @@ describe("success case", () => {
   })
 
   test("register a handler with a space id", async () => {
-    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getWebFile("sample.pcap")]))
 
     const handler = store
       .getActions()
@@ -123,7 +123,7 @@ describe("success case", () => {
     ])
 
     await expect(
-      store.dispatch(ingestFiles([data.getDOMFile("sample.tsv")]))
+      store.dispatch(ingestFiles([data.getWebFile("sample.tsv")]))
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
@@ -142,7 +142,7 @@ describe("error case", () => {
       }
     ])
     await expect(
-      store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
+      store.dispatch(ingestFiles([data.getWebFile("sample.pcap")]))
     ).rejects.toEqual(expect.any(Error))
 
     const state = store.getState()
@@ -162,7 +162,7 @@ describe("error case", () => {
       }
     ])
 
-    await store.dispatch(ingestFiles([data.getDOMFile("sample.pcap")]))
+    await store.dispatch(ingestFiles([data.getWebFile("sample.pcap")]))
 
     const state = store.getState()
     const wsId = Current.getWorkspaceId(state)

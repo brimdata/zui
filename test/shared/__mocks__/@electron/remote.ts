@@ -1,4 +1,4 @@
-import {app as mockApp} from "../electron"
+import {app as mockApp} from "electron"
 export const app = mockApp
 
 export const dialog = {

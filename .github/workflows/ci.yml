@@ -26,8 +26,9 @@ jobs:
       - run: npm run build
       - run: npm run lint
       - run: npm run tsc
-      - run: npm test -- --maxWorkers=2 --ci
+      - run: npm test --maxWorkers=2 --ci
       - run: npm run test:api
+      - run: npm run test:system
       - run: npm run generate-responses -- --silent
       - name: Build and install package
         if: runner.os == 'Linux'
@@ -45,9 +46,9 @@ jobs:
         env:
           DEBUG: pw:api
       - uses: actions/upload-artifact@v2
-        if: failure() && steps.playwright.outcome == 'failure'
+        if: failure()
         with:
           name: artifacts-${{ matrix.os }}
           path: |
-            run/playwright-itest
+            run
             !run/**/SS

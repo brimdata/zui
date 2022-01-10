@@ -214,19 +214,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
             loading: "Exporting Queries...",
             success: "Export Complete",
             error: "Error Exporting Queries"
-          },
-          {
-            loading: {
-              // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
-              // also, once https://github.com/timolins/react-hot-toast/pull/37 merges, we can set this to -1
-              duration: 2 ** 31 - 1
-            },
-            success: {
-              duration: 3000
-            },
-            error: {
-              duration: 5000
-            }
           }
         )
       }

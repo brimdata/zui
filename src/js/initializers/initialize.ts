@@ -18,10 +18,11 @@ export default async function initialize() {
   global.featureFlags = await ipcRenderer.invoke("get-feature-flags")
 
   initDOM()
-  initGlobals(store)
+  await initGlobals(store)
   initIpcListeners(store, pluginManager)
   initMenuActionListeners(store)
   initWorkspaceParams(store)
   initDebugGlobals(store)
+
   return {store, api, pluginManager}
 }

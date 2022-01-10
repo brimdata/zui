@@ -88,6 +88,7 @@ jobs:
       - run: npm run tsc
       - run: npm test -- --maxWorkers=2 --ci
       - run: npm run test:api
+      - run: npm run test:system
       - name: Playwright tests
         id: playwright
         uses: GabrielBB/xvfb-action@v1

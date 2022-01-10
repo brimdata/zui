@@ -1,20 +1,20 @@
+import {ipcRenderer} from "electron"
 import React, {ChangeEvent, useState} from "react"
+import {toast} from "react-hot-toast"
+import {useDispatch} from "react-redux"
 import styled from "styled-components"
+import ToolbarButton from "../../../app/toolbar/button"
+import {defaultModalButton} from "../../../test/playwright/helpers/locators"
+import {QueryFormat} from "../../../zealot-old"
+import exportResults from "../flows/exportResults"
+import {AppDispatch} from "../state/types"
+import InputLabel from "./common/forms/InputLabel"
 import {
   ButtonGroup,
   Content,
   Footer,
   SmallTitle
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "../../../app/toolbar/button"
-import exportResults from "../flows/exportResults"
-import {ipcRenderer} from "electron"
-import {useDispatch} from "react-redux"
-import {QueryFormat} from "../../../zealot-old"
-import InputLabel from "./common/forms/InputLabel"
-import {defaultModalButton} from "../../../test/playwright/helpers/locators"
-import {toast} from "react-hot-toast"
-import {AppDispatch} from "../state/types"
 
 const RadioButtons = styled.div`
   display: flex;
@@ -68,27 +68,11 @@ const ExportModal = ({onClose}) => {
     const {canceled, filePath} = await showDialog(format)
     if (canceled) return
 
-    toast.promise(
-      dispatch(exportResults(filePath, format as QueryFormat)),
-      {
-        loading: "Exporting...",
-        success: "Export Complete",
-        error: "Error Exporting"
-      },
-      {
-        loading: {
-          // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
-          // also, once https://github.com/timolins/react-hot-toast/pull/37 merges, we can set this to -1
-          duration: 2 ** 31 - 1
-        },
-        success: {
-          duration: 3000
-        },
-        error: {
-          duration: 5000
-        }
-      }
-    )
+    toast.promise(dispatch(exportResults(filePath, format as QueryFormat)), {
+      loading: "Exporting...",
+      success: "Export Complete",
+      error: "Error Exporting"
+    })
 
     onClose()
   }

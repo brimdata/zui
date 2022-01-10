@@ -14,7 +14,7 @@ let brim: BrimMain
 beforeEach(async () => {
   // @ts-ignore
   app.quit.mockClear()
-  brim = new BrimMain()
+  brim = await BrimMain.boot()
   jest.spyOn(brim.lake, "start").mockImplementation(() => {})
   jest.spyOn(brim.lake, "close").mockImplementation(() => Promise.resolve())
   jest

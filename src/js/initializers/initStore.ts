@@ -23,15 +23,15 @@ export default async (api: BrimApi) => {
   return configureStore({
     reducer: rootReducer,
     preloadedState: initialState,
-    middleware: (getDefaults) => [
-      ...getDefaults({
+    middleware: (getDefaults) => {
+      const defaults = getDefaults({
         thunk: {
           extraArgument: {createZealot, api}
         },
         serializableCheck: false,
         immutableCheck: false
-      }),
-      globalDispatchMiddleware
-    ]
+      })
+      return defaults.concat(globalDispatchMiddleware)
+    }
   })
 }

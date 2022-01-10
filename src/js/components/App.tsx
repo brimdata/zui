@@ -10,11 +10,11 @@ import {
 import AppWrapper from "app/routes/app-wrapper"
 import WorkspacesList from "app/workspaces/list"
 import WorkspaceShow from "app/workspaces/show"
-import {ipcRenderer} from "electron"
 import React, {useEffect} from "react"
 import {useDispatch} from "react-redux"
 import {Redirect, Route, Switch} from "react-router"
 import useStoreExport from "../../../app/core/hooks/useStoreExport"
+import {defaultWorkspace} from "../initializers/initWorkspaceParams"
 import Handlers from "../state/Handlers"
 import useSearchShortcuts from "./useSearchShortcuts"
 
@@ -23,7 +23,6 @@ export default function App() {
   const dispatch = useDispatch()
   useSearchShortcuts()
   useEffect(() => {
-    ipcRenderer.invoke("windows:ready")
     dispatch(maybeShowReleaseNotes())
     return () => {
       dispatch(Handlers.abortAll())
@@ -49,7 +48,7 @@ export default function App() {
           </AppWrapper>
         </Route>
         <Route path={root.path}>
-          <Redirect to="/workspaces/localhost:9867" />
+          <Redirect to={`/workspaces/${defaultWorkspace().id}`} />
         </Route>
       </Switch>
     </AppTabsRouter>

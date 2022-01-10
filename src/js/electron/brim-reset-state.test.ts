@@ -1,40 +1,17 @@
 import {app} from "electron"
-import {Lake} from "ppl/lake/lake"
 import {BrimMain} from "./brim"
-import tron from "./tron"
-import {WindowManager} from "./tron/window-manager"
 
-function mockLake() {
-  const lake = new Lake("test")
-  jest.spyOn(lake, "start").mockImplementation(() => {})
-  jest.spyOn(lake, "close").mockImplementation(() => Promise.resolve())
-  return lake
-}
-
-function mockSession() {
-  const session = tron.session()
-  jest.spyOn(session, "delete").mockImplementation(() => Promise.resolve())
-  jest.spyOn(session, "save").mockImplementation(() => Promise.resolve())
-  return session
-}
-
-function mockWindows() {
-  const windows = new WindowManager()
-  jest
-    .spyOn(windows, "confirmQuit")
-    .mockImplementation(() => Promise.resolve(true))
-  jest
-    .spyOn(windows, "prepareQuit")
-    .mockImplementation(() => Promise.resolve([]))
-  jest.spyOn(windows, "quit").mockImplementation(() => Promise.resolve())
-  return windows
-}
+jest.mock("./tron/session", () => {
+  return () => ({
+    load: jest.fn(() => Promise.resolve()),
+    delete: jest.fn(() => Promise.resolve()),
+    save: jest.fn(() => Promise.resolve())
+  })
+})
 
 test("reset state", async () => {
-  const brim = new BrimMain({
-    lake: mockLake(),
-    session: mockSession(),
-    windows: mockWindows()
+  const brim = await BrimMain.boot({
+    lake: false
   })
 
   await brim.start()

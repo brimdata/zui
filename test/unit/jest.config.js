@@ -11,7 +11,7 @@ module.exports = {
   setupFiles: ["./test/unit/setup/before-env.ts"],
   setupFilesAfterEnv: ["./test/unit/setup/after-env/index.ts"],
   testURL: "http://localhost/search.html",
-  roots: ["<rootDir>/test/unit", "<rootDir>"],
+  roots: ["<rootDir>/test/shared", "<rootDir>"],
   globalSetup: "./test/unit/setup/global.ts",
   transformIgnorePatterns: ["node_modules"],
   moduleDirectories: ["node_modules", "<rootDir>"],
@@ -19,6 +19,7 @@ module.exports = {
     "/node_modules/",
     "/itest/",
     "/dist/",
+    "/test/system/",
     "<rootDir>/test/api/",
     "<rootDir>/test/playwright/"
   ]

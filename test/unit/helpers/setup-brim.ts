@@ -40,7 +40,7 @@ const defaults = () => ({
 })
 
 async function bootBrim({page}: Args = defaults()) {
-  const brimMain = await main({backend: false})
+  const brimMain = await main({lake: false})
   onPage(page)
   const {store, pluginManager} = await initialize()
   return {store, main: brimMain, plugins: pluginManager}

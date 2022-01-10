@@ -1,8 +1,6 @@
-import log from "electron-log"
 import {BrowserWindow, dialog, ipcMain} from "electron"
+import log from "electron-log"
 import {BrimMain} from "../../brim"
-
-let started = false
 
 // Convert this file to the new ipc model
 export default function(brim: BrimMain) {
@@ -18,13 +16,6 @@ export default function(brim: BrimMain) {
 
   ipcMain.handle("windows:close", () => {
     brim.windows.closeWindow()
-  })
-
-  ipcMain.handle("windows:ready", () => {
-    if (!started) {
-      console.timeEnd("init")
-      started = true
-    }
   })
 
   ipcMain.handle("windows:newSearchTab", async (e, params) => {

@@ -1,3 +1,4 @@
+import env from "app/core/env"
 import React, {HTMLProps} from "react"
 
 function move(diff) {
@@ -76,6 +77,8 @@ export default class AnimateChildren extends React.Component<Props> {
 }
 
 function animate(el: Element, args) {
-  // @ts-ignore
-  el.animate(...args)
+  if (!env.isTest) {
+    // @ts-ignore
+    el.animate(...args)
+  }
 }

@@ -1,5 +1,5 @@
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
-import {search} from "src/js/flows/search/mod"
+import {search, SearchResult} from "src/js/flows/search/mod"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Columns from "src/js/state/Columns"
 import Current from "src/js/state/Current"
@@ -22,7 +22,7 @@ type Args = {
 
 const id = "Table"
 
-export function viewerSearch(args: Args): Thunk {
+export function viewerSearch(args: Args): Thunk<Promise<SearchResult>> {
   return (dispatch, getState) => {
     const {query, from, to, keep, append} = args
     const tabId = Tabs.getActive(getState())
@@ -31,7 +31,7 @@ export function viewerSearch(args: Args): Thunk {
       search({id, query, from, to, poolId, initial: !append})
     )
     dispatch(handle(response, tabId, keep, append))
-    return promise
+    return promise.catch((e) => e)
   }
 }
 

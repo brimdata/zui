@@ -1,7 +1,6 @@
 import {app} from "electron"
 import keytar from "keytar"
 import os from "os"
-import path from "path"
 import {Lake} from "ppl/lake/lake"
 import {Store} from "redux"
 import url from "url"
@@ -17,55 +16,41 @@ import {installExtensions} from "./extensions"
 import ipc from "./ipc"
 import sendTo from "./ipc/sendTo"
 import isDev from "./isDev"
+import {MainArgs, mainDefaults} from "./main"
 import tron, {Session} from "./tron"
 import formatSessionState from "./tron/formatSessionState"
-import {sessionStateFile} from "./tron/session"
 import {WindowManager} from "./tron/window-manager"
 
 type QuitOpts = {
   saveSession?: boolean
 }
 
-type BrimArgs = {
-  windows?: WindowManager
-  store?: Store
-  session?: Session
-  lake?: Lake
-}
-
 export class BrimMain {
-  readonly windows: WindowManager
-  readonly store: Store
-  readonly lake: Lake
-  readonly session: Session
   public isQuitting = false
 
-  static async boot(
-    sessionPath: string = sessionStateFile(),
-    createSession = tron.session
-  ) {
-    const session = createSession(sessionPath)
+  static async boot(params: Partial<MainArgs> = {}) {
+    const args = {...mainDefaults(), ...params}
+    const createSession = tron.session
+    const session = createSession(args.appState)
     const data = await session.load()
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
-    const lakeroot = path.join(app.getPath("userData"), "data", "lake")
-    const lake = new Lake(lakeroot)
-    return new BrimMain({session, windows, store, lake})
+    const lake = new Lake(args.lakeRoot, args.lakePort, args.lakeLogs)
+    return new BrimMain(lake, windows, store, session, args)
   }
 
-  constructor(args: BrimArgs = {}) {
-    this.windows = args.windows || new WindowManager()
-    this.store = args.store || createGlobalStore(undefined)
-    this.session = args.session || tron.session()
-    this.lake = args.lake || new Lake(null)
-  }
+  // Only call this from boot
+  constructor(
+    readonly lake: Lake,
+    readonly windows: WindowManager,
+    readonly store: Store,
+    readonly session: Session,
+    readonly args: MainArgs
+  ) {}
 
-  async start(opts = {backend: true}) {
-    if (opts.backend) {
-      this.lake.start()
-    }
-    if (this.isDev()) await installExtensions()
-
+  async start() {
+    if (this.args.lake) this.lake.start()
+    if (this.args.devtools) await installExtensions()
     await this.windows.init()
   }
 

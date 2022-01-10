@@ -77,6 +77,7 @@ export default function HeaderCell({column, tableId, sorts}: Props) {
         sorted
       })}
       style={{width: column.width || 200}}
+      role="columnheader"
     >
       {printColumnName(column.name)}
       {sorted === "desc" && <IconDesc />}

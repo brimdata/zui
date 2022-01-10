@@ -99,12 +99,12 @@ export default function SavedPoolsList({pools, workspaceStatus}: Props) {
     )
 
   return (
-    <menu className="saved-pools-list" ref={drop}>
+    <nav className="saved-pools-list" ref={drop} aria-label="pools">
       {pools
         .sort((a, b) => (a.name > b.name ? 1 : -1))
         .map((pool) => {
           return <PoolListItem key={pool.id} pool={pool} />
         })}
-    </menu>
+    </nav>
   )
 }

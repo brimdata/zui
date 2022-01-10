@@ -1,13 +1,11 @@
-import {app} from "electron"
 import log from "electron-log"
 import {get} from "lodash"
-import path from "path"
 import lib from "../../lib"
 import {isNumber} from "../../lib/is"
 import {SessionState} from "./formatSessionState"
 import {Migrations} from "./migrations"
 
-export default function session(path: string = sessionStateFile()) {
+export default function session(path) {
   let version = 0
 
   return {
@@ -48,12 +46,6 @@ export default function session(path: string = sessionStateFile()) {
       }
     }
   }
-}
-
-export function sessionStateFile() {
-  // This can't be a const because we adjust the
-  // userData path first thing inside main().
-  return path.join(app.getPath("userData"), "appState.json")
 }
 
 type VersionedState = {version: number; data: SessionState | null | undefined}

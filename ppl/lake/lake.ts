@@ -28,18 +28,6 @@ const platformDefs = {
   }
 }
 
-function zedlakeLogPath(): string {
-  const logDir = app.getPath("logs")
-  // @ts-ignore
-  mkdirpSync(logDir, {recursive: true, mode: 0o755})
-
-  const lakeLogFile = join(logDir, "zlake.log")
-
-  log.info("zed core log", lakeLogFile)
-
-  return lakeLogFile
-}
-
 function zedCommand(): string {
   const plat = platformDefs[process.platform]
   if (!plat) {
@@ -62,19 +50,14 @@ function zedCommand(): string {
 
 export class Lake {
   lake: ChildProcess
-  root: string
 
-  constructor(rootDir: string) {
-    this.root = rootDir
-  }
+  constructor(public root: string, public port: number, public logs: string) {}
 
   start() {
     // @ts-ignore
     mkdirpSync(this.root, {recursive: true, mode: 0o755})
-
-    const opts = {
-      stdio: ["inherit", "inherit", "inherit"]
-    }
+    // @ts-ignore
+    mkdirpSync(this.logs, {recursive: true, mode: 0o755})
 
     const args = [
       "serve",
@@ -85,9 +68,12 @@ export class Lake {
       "-log.level=info",
       "-log.filemode=rotate",
       "-log.path",
-      zedlakeLogPath()
+      join(this.logs, "zlake.log")
     ]
 
+    const opts = {
+      stdio: ["inherit", "inherit", "inherit"]
+    }
     // For unix systems, pass posix pipe read file descriptor into lake process.
     // In the event of Brim getting shutdown via `SIGKILL`, this will let lake
     // know that it has been orphaned and to shutdown.
@@ -110,7 +96,7 @@ export class Lake {
   // XXX Eventually we'll have the os choose a dynamic port. For now just
   // return static localhost:9867 as the lake address.
   addr(): string {
-    return "localhost:9867"
+    return `localhost:${this.port}`
   }
 
   async close(): Promise<void> {
@@ -120,9 +106,9 @@ export class Lake {
       setTimeout(() => {
         giveUp = true
       }, 5000)
-
       this.lake.kill("SIGTERM")
-      while (!giveUp && (await isUp())) {
+
+      while (!giveUp && (await this.isUp())) {
         await new Promise((res) => setTimeout(res, 500))
       }
 
@@ -133,14 +119,14 @@ export class Lake {
       }
     }
   }
-}
 
-async function isUp() {
-  try {
-    const response = await fetch("http://localhost:9867/status")
-    const text = await response.text()
-    return text === "ok"
-  } catch (e) {
-    return false
+  async isUp() {
+    try {
+      const response = await fetch(`http://${this.addr()}/status`)
+      const text = await response.text()
+      return text === "ok"
+    } catch (e) {
+      return false
+    }
   }
 }

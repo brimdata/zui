@@ -4,11 +4,14 @@ import {
   RecordCallbackRet
 } from "zealot-old/fetcher/records-callback"
 import {ZResponse} from "../../../../zealot-old/types"
+import {isEqual} from "lodash"
 import whenIdle from "../../lib/whenIdle"
 import {SearchResponse} from "./response"
 
 function abortError(e) {
-  return /user aborted/i.test(e.message)
+  return (
+    isEqual(e, {error: "context canceled"}) || /user aborted/i.test(e.message)
+  )
 }
 
 type HandleResult = {

@@ -46,6 +46,7 @@ export default function useIngestWatch() {
      * Each time more data comes in (snapshot increments), reload
      * the current location which will cause the tiles to update.
      */
+
     throttled()
   }, [wasIngesting, nowIngesting, JSON.stringify(pool.everythingSpan())])
 }
