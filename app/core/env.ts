@@ -1,5 +1,9 @@
 import {app as electronApp} from "electron"
-const app = electronApp
+
+const isPackaged = () =>
+  electronApp
+    ? electronApp.isPackaged
+    : require("@electron/remote")?.app?.isPackaged
 
 export default {
   get isCI() {
@@ -14,10 +18,10 @@ export default {
   get isDevelopment() {
     const isEnvSet = "ELECTRON_IS_DEV" in process.env
     const getFromEnv = parseInt(process.env.ELECTRON_IS_DEV, 10) === 1
-    return isEnvSet ? getFromEnv : app && !app.isPackaged
+    return isEnvSet ? getFromEnv : isPackaged()
   },
   get isRelease() {
-    return app.isPackaged
+    return isPackaged()
   },
   get isMac() {
     return process.platform === "darwin"
