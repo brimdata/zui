@@ -14,6 +14,11 @@ import useEventListener from "../hooks/useEventListener"
 import {Query} from "../../state/Queries/types"
 import Queries from "../../state/Queries"
 import {cssVar} from "../../lib/cssVar"
+import {
+  refreshRemoteQueries,
+  setRemoteQueries
+} from "../LeftPane/remote-queries"
+import {AppDispatch} from "../../state/types"
 
 const QueryFormWrapper = styled.div`
   width: 100%;
@@ -94,10 +99,11 @@ type Props = {
   query?: Query
   value?: string
   onClose: () => void
+  isRemote: boolean
 }
 
-const QueryForm = ({onClose, query, value}: Props) => {
-  const dispatch = useDispatch()
+const QueryForm = ({onClose, query, value, isRemote}: Props) => {
+  const dispatch = useDispatch<AppDispatch>()
   const [errors, setErrors] = useState([])
   const [formRef, setFormRef] = useCallbackRef<HTMLFormElement>()
   const queriesRoot = useSelector(Queries.getRaw)
@@ -116,12 +122,14 @@ const QueryForm = ({onClose, query, value}: Props) => {
     description: {
       name: "description",
       label: "Desc"
-    },
-    tags: {
+    }
+  }
+
+  if (!isRemote)
+    config["tags"] = {
       name: "tags",
       label: "Tags"
     }
-  }
 
   const onCancel = () => {
     setErrors([])
@@ -134,7 +142,7 @@ const QueryForm = ({onClose, query, value}: Props) => {
     const form = brim.form(formRef, config)
 
     if (await form.isValid()) {
-      const {value, name, description, tags} = form
+      const {value, name, description, tags = ""} = form
         .getFields()
         .reduce((obj, field) => {
           obj[field.name] = field.value
@@ -148,8 +156,14 @@ const QueryForm = ({onClose, query, value}: Props) => {
         description,
         tags: splitTags
       }
-      // editing query
-      if (query) {
+      if (isRemote) {
+        // editing or creating remote query
+        const id = query ? query.id : nanoid()
+        dispatch(setRemoteQueries([{id, ...newQuery}])).then(() => {
+          dispatch(refreshRemoteQueries())
+        })
+      } else if (query) {
+        // editing local query
         const {id} = query
         dispatch(
           Queries.editItem(
@@ -160,8 +174,8 @@ const QueryForm = ({onClose, query, value}: Props) => {
             id
           )
         )
-        // adding query
       } else {
+        // adding local query
         dispatch(
           Queries.addItem(
             {
@@ -225,13 +239,15 @@ const QueryForm = ({onClose, query, value}: Props) => {
               defaultValue={get(query, ["description"], "")}
             />
           </InputField>
-          <InputField>
-            <InputLabel>{config.tags.label}</InputLabel>
-            <StyledTextInput
-              name={config.tags.name}
-              defaultValue={get(query, ["tags"], []).join(", ")}
-            />
-          </InputField>
+          {config.tags && (
+            <InputField>
+              <InputLabel>{config.tags.label}</InputLabel>
+              <StyledTextInput
+                name={config.tags.name}
+                defaultValue={get(query, ["tags"], []).join(", ")}
+              />
+            </InputField>
+          )}
         </form>
       </QueryFormWrapper>
       <StyledFooter>

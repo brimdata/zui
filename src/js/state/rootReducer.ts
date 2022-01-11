@@ -21,6 +21,7 @@ import Configs from "./Configs"
 import ConfigPropValues from "./ConfigPropValues"
 import Launches from "./Launches"
 import Appearance from "./Appearance"
+import RemoteQueries from "./RemoteQueries"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -41,6 +42,7 @@ const rootReducer = combineReducers<any, any>({
   feature: Feature.reducer,
   workspaceStatuses: WorkspaceStatuses.reducer,
   queries: Queries.reducer,
+  remoteQueries: RemoteQueries.reducer,
   tabHistories: TabHistories.reducer,
   url: Url.reducer,
   toolbars: Toolbars.reducer

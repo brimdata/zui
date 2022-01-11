@@ -9,6 +9,7 @@ import Queries from "./Queries"
 import {QueriesState} from "./Queries/types"
 import Lakes from "./Lakes"
 import {LakesState} from "./Lakes/types"
+import RemoteQueries from "./RemoteQueries"
 
 export type GlobalState = {
   launches: LaunchesState
@@ -18,6 +19,7 @@ export type GlobalState = {
   configPropValues: ConfigPropValuesState
   pluginStorage: PluginStorageState
   queries: QueriesState
+  remoteQueries: QueriesState
 }
 
 export default combineReducers<any, any>({
@@ -27,5 +29,6 @@ export default combineReducers<any, any>({
   configs: Configs.reducer,
   configPropValues: ConfigPropValues.reducer,
   pluginStorage: PluginStorage.reducer,
-  queries: Queries.reducer
+  queries: Queries.reducer,
+  remoteQueries: RemoteQueries.reducer
 })

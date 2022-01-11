@@ -22,6 +22,8 @@ import exportQueryLib from "../../flows/exportQueryLib"
 import {AppDispatch} from "../../state/types"
 import {brimQueryLib} from "../../../../test/playwright/helpers/locators"
 import {showContextMenu} from "../../lib/System"
+import {isRemoteLib, setRemoteQueries} from "../LeftPane/remote-queries"
+import {Query} from "../../state/Queries/types"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -152,6 +154,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const hasMultiSelected = selected.length > 1
 
   const isBrimItem = dispatch(isBrimLib([id]))
+  const isRemoteItem = dispatch(isRemoteLib([id]))
   const hasBrimItemSelected = dispatch(isBrimLib(selected))
 
   const runQuery = (value) => {
@@ -228,7 +231,11 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       label: "Edit",
       enabled: !hasMultiSelected && !isBrimItem,
       visible: !isGroup,
-      click: () => dispatch(Modal.show("edit-query", {query: data}))
+      click: () => {
+        const modalArgs = {query: data, isRemote: false}
+        if (isRemoteItem) modalArgs.isRemote = true
+        dispatch(Modal.show("edit-query", modalArgs))
+      }
     },
     {type: "separator"},
     {
@@ -248,7 +255,21 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
             buttons: ["OK", "Cancel"]
           })
           .then(({response}) => {
-            if (response === 0) dispatch(Queries.removeItems(selected))
+            if (response === 0) {
+              if (isRemoteItem) {
+                const remoteQueries = selected.map<Query>((id) => ({
+                  id,
+                  value: "",
+                  name: "",
+                  description: "",
+                  tags: []
+                }))
+                dispatch(setRemoteQueries(remoteQueries, true))
+                return
+              }
+
+              dispatch(Queries.removeItems(selected))
+            }
           })
       }
     }
