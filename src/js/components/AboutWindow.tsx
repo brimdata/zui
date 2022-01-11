@@ -15,7 +15,8 @@ export default function AboutWindow() {
   if (electronIsDev) {
     try {
       appVersion = execSync("git describe --tags --dirty").toString()
-    } catch {
+    } catch (e) {
+      console.error(e)
       // swallow this catch and just use release version as is if no git
     }
   }
