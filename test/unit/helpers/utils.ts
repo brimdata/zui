@@ -3,5 +3,5 @@ export function onPage(name: string) {
 }
 
 export function flushPromises() {
-  return new Promise(setTimeout)
+  return new Promise((r) => setTimeout(r, 0))
 }

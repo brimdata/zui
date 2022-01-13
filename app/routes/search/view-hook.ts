@@ -24,13 +24,18 @@ export function useResultsView() {
   })
 
   useLayoutEffect(() => {
-    return api.searches.onDidFinish(({id, status, tabId, shapes, initial}) => {
-      if (id !== "Table") return
-      if (tabId !== currentTabId) return
-      if (status !== "SUCCESS") return
-      if (!initial) return
-      setView(shapes.length > 1 ? INSPECTOR : TABLE)
-    })
+    const cleanup = api.searches.onDidFinish(
+      ({id, status, tabId, shapes, initial}) => {
+        if (id !== "Table") return
+        if (tabId !== currentTabId) return
+        if (status !== "SUCCESS") return
+        if (!initial) return
+        setView(shapes.length > 1 ? INSPECTOR : TABLE)
+      }
+    )
+    return () => {
+      cleanup()
+    }
   }, [currentTabId])
 
   return {

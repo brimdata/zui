@@ -1,7 +1,7 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {isString, remove} from "lodash"
 
-export type Abortable<Meta extends any = any> = {
+export type Abortable<Meta = any> = {
   id: string
   tab?: string
   tag?: string

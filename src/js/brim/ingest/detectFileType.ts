@@ -27,6 +27,7 @@ async function isPcap(file: File) {
 
 function firstBytes(file: File, n) {
   return new Promise((res, rej) => {
+    // @ts-ignore
     const stream = toNodeReadable(file.stream().getReader())
     stream
       .on("readable", () => {

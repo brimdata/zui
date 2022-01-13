@@ -4,9 +4,17 @@ import {configure} from "@testing-library/react"
 import env from "app/core/env"
 
 global.window = {
+  // @ts-ignore
   location: {
     search: "",
-    pathname: "search.html"
+    pathname: "search.html",
+    hash: "",
+    host: "",
+    hostname: "",
+    href: "",
+    origin: "",
+    port: "",
+    protocol: ""
   }
 }
 

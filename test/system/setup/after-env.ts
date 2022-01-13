@@ -6,12 +6,15 @@ import log from "electron-log"
 
 import "web-streams-polyfill"
 
+// @ts-ignore
 global.DOMRectReadOnly = class DOMRectReadOnly {}
+// @ts-ignore
 global.ResizeObserver = class ResizeObserver {
   observe() {}
   unobserve() {}
   disconnect() {}
 }
+// @ts-ignore
 global.SVGElement.prototype.getTotalLength = () => 0
 document.execCommand = jest.fn()
 

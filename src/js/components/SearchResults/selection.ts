@@ -48,7 +48,9 @@ function useKeybindings(multi) {
       .bind("shift+up", throttle(onShiftUp, 25))
       .bind("meta+a", selectAll)
 
-    return () => bindings.reset()
+    return () => {
+      bindings.reset()
+    }
   }, [focusParent])
 
   return ref

@@ -9,6 +9,8 @@ export default function useIpcListener(
 ) {
   useEffect(() => {
     ipcRenderer.on(channel, func)
-    return () => ipcRenderer.removeListener(channel, func)
+    return () => {
+      ipcRenderer.removeListener(channel, func)
+    }
   }, deps)
 }

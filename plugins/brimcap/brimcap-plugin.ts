@@ -297,6 +297,7 @@ export default class BrimcapPlugin {
       const pcapPath = fileListData[0].file.path
       const pcapTotalSize = fileListData[0].file.size
       const pcapStream = toNodeReadable(
+        // @ts-ignore
         fileListData[0].file.stream().getReader()
       )
 

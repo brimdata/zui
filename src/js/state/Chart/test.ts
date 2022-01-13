@@ -1,3 +1,5 @@
+jest.mock("react-hot-toast", () => {})
+
 import {createRecord} from "test/shared/factories/zed-factory"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Tabs from "../Tabs"

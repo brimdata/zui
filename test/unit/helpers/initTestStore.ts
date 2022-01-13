@@ -12,6 +12,11 @@ export type TestStore = {
   clearActions: Function
 } & Store
 
+// Importing react-hot-toast leads to trying to access the document
+// object. That would make us need to run all the state tests in
+// a jsdom enviroment. Doing this let's us keep them in node.
+jest.mock("react-hot-toast", () => {})
+
 export default (zealot?: Zealot, api: BrimApi = new BrimApi()): TestStore => {
   const client = zealot || createZealotMock().zealot
   const createZealot = () => client

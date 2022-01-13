@@ -9,7 +9,7 @@ export default class MouseoverWatch {
   onExitCb: Callback
   state: StateEnum = "OUT"
   delay = 0
-  tid: number
+  tid: NodeJS.Timeout
 
   constructor() {
     this.isWithin = ([_x, _y]) => false

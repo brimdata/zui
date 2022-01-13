@@ -24,6 +24,7 @@ export const activate = (api: BrimApi) => {
           onProgressUpdate(readBytes / totalBytes)
         }
       })
+      // @ts-ignore
       const stream = file.stream().pipeThrough(progressUpdateTransformStream)
       const res = await zealot.pools.load(params.poolId, params.branch, {
         author: "brim",
