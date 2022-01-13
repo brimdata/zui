@@ -9,9 +9,6 @@
   "engines": {
     "npm": ">=7"
   },
-  "workspaces": [
-    "zealot"
-  ],
   "scripts": {
     "ci": "npm-run-all -p lint tsc test test:api test:system -s test:playwright -l --silent",
     "test:playwright": "jest --runInBand --projects test/playwright",
