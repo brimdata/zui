@@ -6,6 +6,9 @@
   "version": "0.28.0",
   "main": "dist/src/js/electron/main.js",
   "author": "Brim Security, Inc.",
+  "engines": {
+    "npm": ">=7"
+  },
   "scripts": {
     "ci": "npm-run-all -p lint tsc test test:api test:system -s test:playwright -l --silent",
     "test:playwright": "jest --runInBand --projects test/playwright",
@@ -68,7 +71,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
-    "brimcap": "brimdata/brimcap#v1.1.2",
+    "brimcap": "github:brimdata/brimcap#package-update",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
