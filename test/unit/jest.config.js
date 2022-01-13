@@ -21,6 +21,7 @@ module.exports = {
     "/dist/",
     "/test/system/",
     "<rootDir>/test/api/",
-    "<rootDir>/test/playwright/"
+    "<rootDir>/test/playwright/",
+    "<rootDir>/zealot"
   ]
 }

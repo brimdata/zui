@@ -20,6 +20,14 @@ module.exports = (api) => {
         }
       ]
     ],
-    ignore: ["./node_modules", "./dist", "./run", "./zdeps", "./docs", "./bin"]
+    ignore: [
+      "./node_modules",
+      "./dist",
+      "./run",
+      "./zdeps",
+      "./docs",
+      "./bin",
+      "./zealot"
+    ]
   }
 }

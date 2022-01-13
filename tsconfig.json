@@ -9,13 +9,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "baseUrl": "./",
-    "typeRoots": [
-      "src/js/@types",
-      "node_modules/@types"
-    ],
+    "typeRoots": ["src/js/@types", "node_modules/@types"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["scripts", "dist", "run"]
+  "exclude": ["scripts", "dist", "run", "zealot"]
 }
