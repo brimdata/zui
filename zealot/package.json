@@ -42,7 +42,8 @@
     "@types/events": "^3.0.0",
     "@types/node-fetch": "^2.5.12",
     "fkill": "7.2.1",
-    "rollup": "^2.59.0"
+    "rollup": "^2.59.0",
+    "ts-jest": "^27.1.2"
   },
   "dependencies": {
     "@js-joda/core": "^4.3.1",

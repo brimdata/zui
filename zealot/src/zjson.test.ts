@@ -3,19 +3,12 @@ import {TypeValue} from "./zed/index"
 import {ZedContext} from "./zed/context"
 
 function zq(q: string, file: string) {
-  const zed = "npx zed"
-  const cmd = `${zed} query -f zjson "${q}" ${file}`
+  const zed = "npx zq"
+  const cmd = `${zed} -f zjson "${q}" ${file}`
   return execSync(cmd, {encoding: "utf-8"})
     .trim()
     .split("\n")
-    .map((s) => {
-      try {
-        return JSON.parse(s)
-      } catch (e) {
-        console.log("WHAT IS THIS", s)
-        throw e
-      }
-    })
+    .map((s) => JSON.parse(s))
 }
 const file = "testdata/sample.zson" // data.getPath("sample.zson");
 

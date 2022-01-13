@@ -1,8 +1,8 @@
 import {execSync} from "child_process"
 
 export function toZJSON(zson: string) {
-  const zed = "npx zed"
-  const cmd = `${zed} query -f zjson -`
+  const zed = "npx zq"
+  const cmd = `${zed} -f zjson -`
   const result = execSync(cmd, {encoding: "utf-8", input: zson})
   return result
     .trim()
