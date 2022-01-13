@@ -22,6 +22,7 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
+      - run: npm install -g npm
       - run: npm install --no-audit
       - run: npm run build
       - run: npm run lint

@@ -81,6 +81,7 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
+      - run: npm install -g npm
       - run: npm install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
       - run: npm install --no-audit
       - run: npm run build
