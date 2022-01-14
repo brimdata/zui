@@ -29,7 +29,7 @@ jobs:
       - run: pnpm run build
       - run: pnpm run lint
       - run: pnpm run tsc
-      - run: pnpm test --maxWorkers=2 --ci
+      - run: pnpm test
       - run: pnpm run test:api
       - run: pnpm run test:system
       - run: pnpm run generate-responses -- --silent
