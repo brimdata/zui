@@ -24,7 +24,7 @@ jobs:
           cache: "npm"
           cache-dependency-path: "**/package-lock.json"
       - run: npm install -g npm@7
-      - run: npm cache verify
+      - run: npm install zed
       - run: npm install
       - run: npm run build
       - run: npm run lint
