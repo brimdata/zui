@@ -25,7 +25,7 @@ jobs:
         with:
           cache: pnpm
           node-version-file: .nvmrc
-      - run: pnpm install --no-audit
+      - run: pnpm install
       - run: pnpm run build
       - run: pnpm run lint
       - run: pnpm run tsc
