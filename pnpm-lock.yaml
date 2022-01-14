@@ -137,7 +137,7 @@ specifiers:
   web-streams-polyfill: ^3.2.0
   whatwg-fetch: ^3.2.0
   win-7zip: ^0.1.0
-  zed: git+https://github.com/brimdata/zed.git#8a88423b572730256fbb8d3951d4a65034312da8
+  zed: git+https://github.com/brimdata/zed.git#86c425d486bafe01776ba735ed3f654025afade7
 
 dependencies:
   '@brimdata/zealot': 0.0.17
@@ -200,7 +200,7 @@ dependencies:
   use-resize-observer: 8.0.0_react-dom@17.0.2+react@17.0.2
   valid-url: 1.0.9
   web-file-polyfill: 1.0.4
-  zed: github.com/brimdata/zed/8a88423b572730256fbb8d3951d4a65034312da8
+  zed: github.com/brimdata/zed/86c425d486bafe01776ba735ed3f654025afade7
 
 devDependencies:
   '@babel/cli': 7.10.5_@babel+core@7.16.5
@@ -12030,8 +12030,8 @@ packages:
     requiresBuild: true
     dev: true
 
-  github.com/brimdata/zed/8a88423b572730256fbb8d3951d4a65034312da8:
-    resolution: {tarball: https://codeload.github.com/brimdata/zed/tar.gz/8a88423b572730256fbb8d3951d4a65034312da8}
+  github.com/brimdata/zed/86c425d486bafe01776ba735ed3f654025afade7:
+    resolution: {tarball: https://codeload.github.com/brimdata/zed/tar.gz/86c425d486bafe01776ba735ed3f654025afade7}
     name: zed
     version: 0.33.0-dev
     hasBin: true
