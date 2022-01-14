@@ -169,10 +169,5 @@
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
     "zed": "git+https://github.com/brimdata/zed.git#8a88423b572730256fbb8d3951d4a65034312da8"
-  },
-  "optionalDependencies": {
-    "electron-installer-debian": "^3.0.0",
-    "electron-installer-redhat": "^3.0.0",
-    "node-pipe": "^0.1.1"
   }
 }
