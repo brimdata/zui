@@ -51,7 +51,7 @@ specifiers:
   babel-plugin-inline-react-svg: ^1.1.1
   babel-plugin-module-resolver: ^4.0.0
   base64-js: ^1.3.1
-  brimcap: brimdata/brimcap#v1.1.2
+  brimcap: brimdata/brimcap#f3e5bae4883e25a912fe2f7736d27078ef97f906
   chalk: ^4.1.0
   chrono-node: ^1.4.8
   classnames: ^2.2.6
@@ -253,7 +253,7 @@ devDependencies:
   babel-eslint: 10.1.0_eslint@7.8.1
   babel-plugin-inline-react-svg: 1.1.1_@babel+core@7.16.5
   babel-plugin-module-resolver: 4.0.0
-  brimcap: github.com/brimdata/brimcap/3ec2bc8001a58a4fc9c28a2c55ecaeae9914b620
+  brimcap: github.com/brimdata/brimcap/f3e5bae4883e25a912fe2f7736d27078ef97f906
   chalk: 4.1.2
   commander: 2.20.3
   cpx: 1.5.0
@@ -12122,9 +12122,12 @@ packages:
       buffer-crc32: 0.2.13
     dev: true
 
-  github.com/brimdata/brimcap/3ec2bc8001a58a4fc9c28a2c55ecaeae9914b620:
-    resolution: {tarball: https://codeload.github.com/brimdata/brimcap/tar.gz/3ec2bc8001a58a4fc9c28a2c55ecaeae9914b620}
+  github.com/brimdata/brimcap/f3e5bae4883e25a912fe2f7736d27078ef97f906:
+    resolution: {tarball: https://codeload.github.com/brimdata/brimcap/tar.gz/f3e5bae4883e25a912fe2f7736d27078ef97f906}
     name: brimcap
+    version: 1.1.2
+    prepare: true
+    requiresBuild: true
     dev: true
 
   github.com/brimdata/zed/8a88423b572730256fbb8d3951d4a65034312da8:
