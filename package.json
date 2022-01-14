@@ -129,6 +129,7 @@
     "extract-zip": "^1.6.7",
     "fs-extra": "^9.0.1",
     "got": "^10.7.0",
+    "history": "4.10.1",
     "immer": "8.0.1",
     "is-wsl": "^2.2.0",
     "jwt-decode": "^3.1.2",
@@ -169,5 +170,8 @@
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
     "zed": "git+https://github.com/brimdata/zed.git#86c425d486bafe01776ba735ed3f654025afade7"
+  },
+  "optionalDependencies": {
+    "node-pipe": "^0.1.1"
   }
 }

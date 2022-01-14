@@ -79,6 +79,7 @@ specifiers:
   fs-extra: ^9.0.1
   glob: ^7.1.6
   got: ^10.7.0
+  history: 4.10.1
   husky: ^7.0.4
   immer: 8.0.1
   is-wsl: ^2.2.0
@@ -97,6 +98,7 @@ specifiers:
   node-abort-controller: ^3.0.1
   node-addon-api: ^3.1.0
   node-fetch: ^2.6.1
+  node-pipe: ^0.1.1
   node-sass-chokidar: ^1.5.0
   npm-run-all: ^4.1.5
   on-idle: ^3.1.4
@@ -163,6 +165,7 @@ dependencies:
   extract-zip: 1.7.0
   fs-extra: 9.1.0
   got: 10.7.0
+  history: 4.10.1
   immer: 8.0.1
   is-wsl: 2.2.0
   jwt-decode: 3.1.2
@@ -203,6 +206,9 @@ dependencies:
   valid-url: 1.0.9
   web-file-polyfill: 1.0.4
   zed: github.com/brimdata/zed/86c425d486bafe01776ba735ed3f654025afade7
+
+optionalDependencies:
+  node-pipe: 0.1.1
 
 devDependencies:
   '@babel/cli': 7.10.5_@babel+core@7.16.5
@@ -8503,6 +8509,15 @@ packages:
     resolution: {integrity: sha1-jZ2+KJZKSsVxLpExZCEHxx6Q7EA=}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /node-pipe/0.1.1:
+    resolution: {integrity: sha512-1ZgBtyhV1CNYpJiXc82FqLzs3oe7m2DAq+XF/PBbVbXx8YSjTt2IGHvWP6W7WujPaIz4RnN95vWqQW7P9Ey4UA==}
+    os: [darwin, linux]
+    requiresBuild: true
+    dependencies:
+      node-addon-api: 3.1.0
+    dev: false
+    optional: true
 
   /node-preload/0.2.1:
     resolution: {integrity: sha512-RM5oyBy45cLEoHqCeh+MNuFAxO0vTFBLskvQbOKnEE7YTTSN4tbN8QWDIPQ6L+WvKsB/qLEGpYe2ZZ9d4W9OIQ==}
