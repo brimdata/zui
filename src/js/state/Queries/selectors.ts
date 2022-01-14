@@ -1,7 +1,7 @@
 import {Group, QueriesState} from "./types"
 import {State} from "../types"
 import TreeModel from "tree-model"
-import {createSelector} from "reselect"
+import {createSelector} from "@reduxjs/toolkit"
 
 export const getRaw = (state: State): QueriesState => state.queries
 

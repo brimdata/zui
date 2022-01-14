@@ -1,4 +1,4 @@
-import {createSelector} from "reselect"
+import {createSelector} from "@reduxjs/toolkit"
 import {ScrollPosition} from "src/js/types"
 import {SearchStatus} from "src/js/types/searches"
 import {zed} from "@brimdata/zealot"

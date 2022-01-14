@@ -1,4 +1,4 @@
-import {combineReducers} from "redux"
+import {combineReducers} from "@reduxjs/toolkit"
 import {reducer as inspector} from "src/js/state/Inspector/reducer"
 import brim from "../../brim"
 import chart from "../Chart/reducer"

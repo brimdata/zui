@@ -1,4 +1,4 @@
-import {createSelector} from "reselect"
+import {createSelector} from "@reduxjs/toolkit"
 import {SearchStatus} from "src/js/types/searches"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {TabState} from "../Tab/types"

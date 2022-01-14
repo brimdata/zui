@@ -1,5 +1,5 @@
 import {FormatConfig, getFormatConfig} from "app/core/format"
-import {createSelector} from "reselect"
+import {createSelector} from "@reduxjs/toolkit"
 import {zed} from "@brimdata/zealot"
 import TableColumns from "../../models/TableColumns"
 import activeTabSelect from "../Tab/activeTabSelect"

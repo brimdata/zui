@@ -2,7 +2,7 @@ import {app} from "electron"
 import keytar from "keytar"
 import os from "os"
 import {Lake} from "ppl/lake/lake"
-import {Store} from "redux"
+import {Store} from "@reduxjs/toolkit"
 import url from "url"
 import {
   deserializeState,

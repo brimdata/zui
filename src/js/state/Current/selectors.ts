@@ -1,5 +1,5 @@
 import {matchPath} from "react-router"
-import {createSelector} from "reselect"
+import {createSelector} from "@reduxjs/toolkit"
 import brim, {BrimPool, BrimWorkspace} from "../../brim"
 import Pools from "../Pools"
 import {PoolsState} from "../Pools/types"

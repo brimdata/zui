@@ -1,5 +1,5 @@
-import {Action as ReduxAction, Store as ReduxStore} from "redux"
-import {ThunkAction, ThunkDispatch} from "redux-thunk"
+import {Action as ReduxAction, Store as ReduxStore} from "@reduxjs/toolkit"
+import {ThunkAction, ThunkDispatch} from "@reduxjs/toolkit"
 import {createZealot, Zealot} from "zealot-old"
 import BrimApi from "../api"
 import {AppearanceState} from "./Appearance"

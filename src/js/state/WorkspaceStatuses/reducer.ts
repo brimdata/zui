@@ -1,20 +1,15 @@
-import produce from "immer"
-import {WorkspaceStatusesAction, WorkspaceStatusesState} from "./types"
+import {createReducer} from "@reduxjs/toolkit"
+import {
+  WorkspaceStatusesState,
+  WORKSPACE_STATUSES_REMOVE,
+  WORKSPACE_STATUSES_SET
+} from "./types"
 
-const init = (): WorkspaceStatusesState => {
-  return {}
-}
-
-export default produce(
-  (draft: WorkspaceStatusesState, action: WorkspaceStatusesAction) => {
-    switch (action.type) {
-      case "WORKSPACE_STATUSES_SET":
-        draft[action.workspaceId] = action.status
-        return
-      case "WORKSPACE_STATUSES_REMOVE":
-        delete draft[action.workspaceId]
-        return
-    }
+export default createReducer({} as WorkspaceStatusesState, {
+  WORKSPACE_STATUSES_SET: (state, action: WORKSPACE_STATUSES_SET) => {
+    state[action.workspaceId] = action.status
   },
-  init()
-)
+  WORKSPACE_STATUSES_REMOVE: (state, action: WORKSPACE_STATUSES_REMOVE) => {
+    delete state[action.workspaceId]
+  }
+})

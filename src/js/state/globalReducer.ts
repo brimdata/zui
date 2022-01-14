@@ -1,4 +1,4 @@
-import {combineReducers} from "redux"
+import {combineReducers} from "@reduxjs/toolkit"
 import ConfigPropValues, {ConfigPropValuesState} from "./ConfigPropValues"
 import Configs, {ConfigsState} from "./Configs"
 import Investigation from "./Investigation"

@@ -1,6 +1,6 @@
 import produce from "immer"
 import {isEmpty} from "lodash"
-import {AnyAction} from "redux"
+import {AnyAction} from "@reduxjs/toolkit"
 import lib from "../../lib"
 import {last} from "../../lib/Array"
 import tabReducer from "../Tab/reducer"

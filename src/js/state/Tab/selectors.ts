@@ -1,4 +1,4 @@
-import {createSelector} from "reselect"
+import {createSelector} from "@reduxjs/toolkit"
 import brim, {BrimPool, Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
 import Current from "../Current"

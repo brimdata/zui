@@ -1,4 +1,4 @@
-import {createSelector} from "reselect"
+import {createSelector} from "@reduxjs/toolkit"
 import {TabsState} from "../Tabs/types"
 import {State} from "../types"
 import {TabState} from "./types"
