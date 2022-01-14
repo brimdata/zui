@@ -6,6 +6,10 @@
   "version": "0.28.0",
   "main": "dist/src/js/electron/main.js",
   "author": "Brim Security, Inc.",
+  "engines": {
+    "node": "14",
+    "pnpm": ">=6"
+  },
   "scripts": {
     "ci": "npm-run-all -p lint tsc test test:api test:system -s test:playwright -l --silent",
     "test:playwright": "jest --runInBand --projects test/playwright",
