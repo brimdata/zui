@@ -2,7 +2,7 @@ import zeekLogInfo from "./logInfo"
 
 test("describe conn uid", () => {
   const path = zeekLogInfo("conn")
-  const {desc, type} = path.describeColumn({name: "uid", type: "bstring"})
+  const {desc, type} = path.describeColumn({name: "uid", type: "string"})
 
   expect(desc).toBe("A unique identifier of the connection.")
   expect(type).toBe("string")

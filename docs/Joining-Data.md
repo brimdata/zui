@@ -7,7 +7,7 @@
 
 # Summary
 
-Similar to the well-known [SQL construct](https://en.wikipedia.org/wiki/Join_(SQL)),
+Similar to the well-known [SQL construct](<https://en.wikipedia.org/wiki/Join_(SQL)>),
 the Zed language provides a `join` operator that can be used to combine data
 sources. This cookbook describes how it can be used with the Brim application
 and discusses its limitations.
@@ -151,7 +151,7 @@ instead using the Zeek `conn` records as our left-hand data source, since there
 are many non-SSL flows that would have bypassed the SPL-SPT package.
 
 ```
-$ cat join-uid-conn.zs 
+$ cat join-uid-conn.zs
 split (
   => filter _path=conn | sort uid
   => filter _path=spl | sort uid
@@ -184,7 +184,7 @@ $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
 {
     _path: "conn",
     ts: 2020-09-01T21:09:54.901635Z,
-    uid: "CGFVvl3LGf6Bw3lZBa" (bstring),
+    uid: "CGFVvl3LGf6Bw3lZBa",
     id: {
         orig_h: 10.9.1.101,
         orig_p: 54470 (port=(uint16)),
@@ -192,25 +192,25 @@ $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
         resp_p: 53 (port)
     } (=0),
     proto: "udp" (=zenum),
-    service: "dns" (bstring),
+    service: "dns",
     duration: 49.816ms,
     orig_bytes: 48 (uint64),
     resp_bytes: 157 (uint64),
-    conn_state: "SF" (bstring),
+    conn_state: "SF",
     local_orig: null (bool),
     local_resp: null (bool),
     missed_bytes: 0 (uint64),
-    history: "Dd" (bstring),
+    history: "Dd",
     orig_pkts: 1 (uint64),
     orig_ip_bytes: 76 (uint64),
     resp_pkts: 1 (uint64),
     resp_ip_bytes: 185 (uint64),
-    tunnel_parents: null (1=(|[bstring]|))
+    tunnel_parents: null (1=(|[string]|))
 } (=2)
 {
     _path: "conn",
     ts: 2020-09-01T21:09:54.95248Z,
-    uid: "Ch7yQn3PwSMC1WcdC5" (bstring),
+    uid: "Ch7yQn3PwSMC1WcdC5",
     id: {
         orig_h: 10.9.1.101,
         orig_p: 49885,
@@ -218,15 +218,15 @@ $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
         resp_p: 443
     } (0),
     proto: "tcp" (zenum),
-    service: "ssl" (bstring),
+    service: "ssl",
     duration: 376.681ms,
     orig_bytes: 3031 (uint64),
     resp_bytes: 6552 (uint64),
-    conn_state: "S1" (bstring),
+    conn_state: "S1",
     local_orig: null (bool),
     local_resp: null (bool),
     missed_bytes: 0 (uint64),
-    history: "ShADad" (bstring),
+    history: "ShADad",
     orig_pkts: 13 (uint64),
     orig_ip_bytes: 3563 (uint64),
     resp_pkts: 14 (uint64),
@@ -282,7 +282,7 @@ $ zq -z join-uid-conn-fused.zs -P conn.log spl.log > conn-plus-spl-fused.zng
 Now when the ZNG is loaded into Brim, we immediately see the column headers
 and can "scroll right" to confirm the SPL-SPT fields are where we expect to see
 them.
- 
+
 ![Joined Zeek conn events (fused)](media/Joined-Zeek-conn-fused.png)
 
 If we compare our two example events side-by-side again, we see a subtle
@@ -389,7 +389,7 @@ can look for this by querying for non-null instances of our expected SPL-SPT
 fields.
 
 ```
-$ zq -f table 'orig_spl!=null or resp_spl!=null or orig_spt!=null or resp_spt!= null | count() by _path' all-results.zng 
+$ zq -f table 'orig_spl!=null or resp_spl!=null or orig_spt!=null or resp_spt!= null | count() by _path' all-results.zng
 _PATH  COUNT
 notice 3
 spl    15
@@ -402,7 +402,7 @@ to SSL traffic and hence it makes sense that they'd contain the `uid` values
 that matched in our `join`.
 
 ```
-$ zq -f table 'orig_spl!=null _path=notice | count() by note' all-results.zng 
+$ zq -f table 'orig_spl!=null _path=notice | count() by note' all-results.zng
 NOTE                     COUNT
 SSL::Invalid_Server_Cert 3
 ```
