@@ -200,13 +200,15 @@ describe("#hasAnalytics()", () => {
   })
 
   test("every proc does contain analytics", () => {
-    expect(brim.program("* | every 1h count()").hasAnalytics()).toBe(true)
+    expect(brim.program("* | count() by every(1h)").hasAnalytics()).toBe(true)
   })
 
   test("parallel procs when one does have analytics", () => {
     expect(
       brim
-        .program("* | split ( => every 1h count() => count() by id.resp_h )")
+        .program(
+          "* | split ( => count() by every(1h) => count() by id.resp_h )"
+        )
         .hasAnalytics()
     ).toBe(true)
   })
