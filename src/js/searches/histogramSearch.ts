@@ -12,5 +12,7 @@ export function addEveryCountProc(program: string, span: DateSpan) {
   }
   const {number, unit} = histogramInterval(span)
 
-  return program + ` | every ${number}${BOOM_INTERVALS[unit]} count() by _path`
+  return (
+    program + ` | count() by every(${number}${BOOM_INTERVALS[unit]}), _path`
+  )
 }
