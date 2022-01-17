@@ -104,9 +104,9 @@ Object {
         },
         Object {
           "name": "uid",
-          "type": TypeOfBString {
+          "type": TypeOfString {
             "kind": "primitive",
-            "name": "bstring",
+            "name": "string",
           },
         },
         Object {
@@ -184,9 +184,9 @@ Object {
         },
         Object {
           "name": "query",
-          "type": TypeOfBString {
+          "type": TypeOfString {
             "kind": "primitive",
-            "name": "bstring",
+            "name": "string",
           },
         },
         Object {
@@ -198,9 +198,9 @@ Object {
         },
         Object {
           "name": "qclass_name",
-          "type": TypeOfBString {
+          "type": TypeOfString {
             "kind": "primitive",
-            "name": "bstring",
+            "name": "string",
           },
         },
         Object {
@@ -212,9 +212,9 @@ Object {
         },
         Object {
           "name": "qtype_name",
-          "type": TypeOfBString {
+          "type": TypeOfString {
             "kind": "primitive",
-            "name": "bstring",
+            "name": "string",
           },
         },
         Object {
@@ -226,9 +226,9 @@ Object {
         },
         Object {
           "name": "rcode_name",
-          "type": TypeOfBString {
+          "type": TypeOfString {
             "kind": "primitive",
-            "name": "bstring",
+            "name": "string",
           },
         },
         Object {
@@ -271,9 +271,9 @@ Object {
           "type": TypeArray {
             "id": 26,
             "kind": "array",
-            "type": TypeOfBString {
+            "type": TypeOfString {
               "kind": "primitive",
-              "name": "bstring",
+              "name": "string",
             },
           },
         },
