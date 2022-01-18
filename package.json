@@ -68,7 +68,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
-    "brimcap": "github:brimdata/brimcap#cd6c8d7d21d8237aedfc40fd27ae315cc893657e",
+    "brimcap": "github:brimdata/brimcap#ae1bd70dcec4933de7f9c7fb7376c37a92779a57",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
@@ -164,7 +164,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "git+https://github.com/brimdata/zed.git#080251227c9128f4a1e362eb8b974e5c79feae90"
+    "zed": "git+https://github.com/brimdata/zed.git#3d8f6d866247ea761cb671e4fd9e3acb0993eecf"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
