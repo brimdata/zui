@@ -3497,7 +3497,7 @@ __metadata:
     babel-plugin-inline-react-svg: ^1.1.1
     babel-plugin-module-resolver: ^4.0.0
     base64-js: ^1.3.1
-    brimcap: "github:brimdata/brimcap#8b4c38918f5ed66a033a061d1f97b5ebdcea9030"
+    brimcap: "github:brimdata/brimcap#cd6c8d7d21d8237aedfc40fd27ae315cc893657e"
     chalk: ^4.1.0
     chrono-node: ^1.4.8
     classnames: ^2.2.6
@@ -3586,7 +3586,7 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "git+https://github.com/brimdata/zed.git#1d67c18107d399c1f78af3812c4800f61b4a2628"
+    zed: "git+https://github.com/brimdata/zed.git#080251227c9128f4a1e362eb8b974e5c79feae90"
   dependenciesMeta:
     electron-installer-debian:
       optional: true
@@ -4737,10 +4737,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@github:brimdata/brimcap#8b4c38918f5ed66a033a061d1f97b5ebdcea9030":
+"brimcap@github:brimdata/brimcap#cd6c8d7d21d8237aedfc40fd27ae315cc893657e":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=8b4c38918f5ed66a033a061d1f97b5ebdcea9030"
-  checksum: cdbef3996facabd53c57265057a083c532984275d912f327ef6756eed9d29c3ed6ed5aba0e65c0cacd6fcbd898081fae4663e75fe3c32fac9018b3683af8cfcc
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=cd6c8d7d21d8237aedfc40fd27ae315cc893657e"
+  checksum: b281665ecef4a9aa93a17d0d830cd5dead8e31bcd99c7f8b4b0f8f8f06cd5c94a8c4bd14575c01202a105574e9fbac248939af36547cc5f338d191df10afba66
   languageName: node
   linkType: hard
 
@@ -17572,9 +17572,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@git+https://github.com/brimdata/zed.git#1d67c18107d399c1f78af3812c4800f61b4a2628":
+"zed@git+https://github.com/brimdata/zed.git#080251227c9128f4a1e362eb8b974e5c79feae90":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=1d67c18107d399c1f78af3812c4800f61b4a2628"
-  checksum: e1f2f6151c54a7a25e534dfab9b94a8f5263af2a549d2add0709a5d59f932835babb60a114dbca1dcfd0f948fcd03fe905a0c2d159983132a688781137b3ac48
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=080251227c9128f4a1e362eb8b974e5c79feae90"
+  checksum: cf718deecb208f4c8180441fc58729dace63f2a9fb48d453d55346ffd9543bb54c9014c3218e22973bc95b8d6514f705126964a6e1ab24c0057b1914f865f529
   languageName: node
   linkType: hard
