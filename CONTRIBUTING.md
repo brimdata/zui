@@ -1,15 +1,14 @@
-
 # Brim Development
 
 Thank you for contributing to Brim!
 
-Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/Feel-Free-to-Ask#Feel-Free-to-Ask), please [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimdata.io/join-slack/) as well. 
+Per [common practice](https://www.thinkful.com/learn/github-pull-request-tutorial/Feel-Free-to-Ask#Feel-Free-to-Ask), please [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimdata.io/join-slack/) as well.
 
 ## Setup
 
 Install these dependencies:
 
-1. [Node](https://nodejs.org/en/download/package-manager/) - the version specified in the `.node-version` file at the root folder. 
+1. [Node](https://nodejs.org/en/download/package-manager/) - the version specified in the `.node-version` file at the root folder.
 2. [Go](https://go.dev/doc/install) - to compile some Zed dependencies.
 
 Then clone the repo, install the node modules, and start the app.
@@ -17,34 +16,35 @@ Then clone the repo, install the node modules, and start the app.
 ```bash
 git clone https://github.com/brimdata/brim
 cd brim
-npm install
-npm start
+yarn
+yarn start
 ```
 
 When a file is changed, it will be recompiled it and reload the app.
 
-On subsequent updates, `git pull` and `npm install`.
+On subsequent updates, `git pull` and `yarn`.
 
 ## Libraries
 
 Brim is a TypeScript, React, Electron app.
 
 - [Electron](https://www.electronjs.org/docs) - it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/tutorial/quick-start#main-and-renderer-processes)
-- [TypeScript](https://www.typescriptlang.org/) 
-- [ESLint](https://eslint.org/) 
+- [TypeScript](https://www.typescriptlang.org/)
+- [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/docs/en/index.html)
 - [React](https://reactjs.org/docs/getting-started.html)
-- [Styled Components](https://styled-components.com/) 
+- [Styled Components](https://styled-components.com/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [Jest](https://jestjs.io/docs/en/getting-started)
-- [Playwright](https://playwright.dev/) 
+- [Playwright](https://playwright.dev/)
 
 ## Entry Points
 
-* Main process - `src/js/electron/main.ts`
-* Renderer process - `src/js/search.tsx`
+- Main process - `src/js/electron/main.ts`
+- Renderer process - `src/js/search.tsx`
 
 <<<<<<< HEAD
+
 ## Directory Structure
 
 This directory structure is a work in progress. You will see many files not in the places described here. Please migrate what you can and follow this for any new code.
@@ -62,13 +62,13 @@ This directory structure is a work in progress. You will see many files not in t
 ├── electron (main process code)
 └── ppl (licensed code)
 ```
+
 =======
 Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimdata/zed/blob/main/docs/data-model/zng.md) format.
->>>>>>> main
 
+> > > > > > > main
 
 **Import Rule**: Only import modules from `/core`, `/state`, or your own descendants. Components in `/routes` can import modules from `/features`.
-
 
 ## Testing
 
@@ -76,8 +76,8 @@ We have a few different types of test suites.
 
 1. Unit test - `test/unit`
 2. API tests - `test/api`
-2. System tests - `test/system`
-3. Integration tests `test/playwright`
+3. System tests - `test/system`
+4. Integration tests `test/playwright`
 
 We use [Jest Projects](https://jestjs.io/docs/configuration#projects-arraystring--projectconfig) to organize the configuration for these.
 
@@ -99,10 +99,10 @@ npx jest --projects test/unit -- name-of-test
 System tests sit between unit tests and integration tests. To create one, instantiate a `SystemTest` class at the top level of any test file.
 
 ```js
-const system = new SystemTest("name-of-test") 
+const system = new SystemTest("name-of-test")
 ```
 
-This will run the electron main process entry point, `main.js`, which spins up a local zed lake. You then mount the root `<App />` component into the JSDOM testing environment and begin to simulate a user clicking buttons and asserting elements exist.  This is done with [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/).
+This will run the electron main process entry point, `main.js`, which spins up a local zed lake. You then mount the root `<App />` component into the JSDOM testing environment and begin to simulate a user clicking buttons and asserting elements exist. This is done with [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/).
 
 ```js
 import {screen} from "@testing-library/react"
@@ -120,7 +120,7 @@ test("click the button", async () => {
 
 All backend requests are made with Node and hit the local Zed lake. Any browser APIs that are not in JSDOM are mocked or polyfilled. The electron APIs are mocked as well. You can find them in `test/shared/__mocks__/electron`.
 
-The `SystemTest` class comes with a few helper methods for commonly performed actions in the Brim app like *.runQuery(q)*, *.ingestFile*(name), *.navTo(path)*, and *.render(jsx)*. It also re-exports some of the common [userEvent](https://testing-library.com/docs/ecosystem-user-event/) methods like *.click()* and *.rightClick()*
+The `SystemTest` class comes with a few helper methods for commonly performed actions in the Brim app like _.runQuery(q)_, _.ingestFile_(name), _.navTo(path)_, and _.render(jsx)_. It also re-exports some of the common [userEvent](https://testing-library.com/docs/ecosystem-user-event/) methods like _.click()_ and _.rightClick()_
 
 They can be run like so:
 
@@ -130,7 +130,6 @@ npx jest --projects test/system
 # Run by name
 npx jest --projects test/system -- name-of-test
 ```
-
 
 ## Styles
 
@@ -150,21 +149,20 @@ See the [[Adding Migrations]] page for a more detailed guide.
 
 ### Zed
 
-The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for data ingestion and query execution. As an npm postinstall step, the `zed` binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the service when it starts and stops.
-
+The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for data ingestion and query execution. As an yarn postinstall step, the `zed` binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the service when it starts and stops.
 
 ## Pull Requests
 
 Our CI server checks for code format diffs, type errors, eslint errors, unit test failures, and integration test failures. You can check all these things locally before pushing your branch.
 
 ```bash
-npm run format           # Prettier format
-npm run lint             # Check eslint
-npm run tsc              # Check the types
-npm test                 # Unit tests with jest
-npm test:api             # API tests
-npm test:system          # System Tests
-npm run test:playwright  # Integration tests with jest & playwright
+yarn format           # Prettier format
+yarn lint             # Check eslint
+yarn tsc              # Check the types
+yarn test             # Unit tests with jest
+yarn test:api         # API tests
+yarn test:system      # System Tests
+yarn test:playwright  # Integration tests with jest & playwright
 ```
 
 ## Installation Packaging
@@ -172,7 +170,7 @@ npm run test:playwright  # Integration tests with jest & playwright
 You can create an installable artifact - like a disk image for MacOS - via:
 
 ```bash
-npm run release
+yarn release
 ```
 
 Any platform artifacts created will be found under `./dist/installers`.
@@ -184,7 +182,7 @@ MacOS releases are created automatically by our CI process when a Github
 release is created. The below is useful if you need to create one by hand.
 
 ```bash
-npm run build
+yarn build
 APPLE_ID=<user> APPLE_ID_PASSWORD=<app-specific-password> npx electron-builder --mac
 ```
 
@@ -206,7 +204,7 @@ If you make a contribution to this repository, whether to source code licensed
 under the BSD-3-Clause license or the Polyform Perimeter license, you agree
 that you are licensing your contribution under the terms of the BSD-3-Clause
 license found in LICENSE.txt, and you agree that you have the right to license
-your contribution under those license terms. 
+your contribution under those license terms.
 
 ### Why the two licenses?
 
@@ -219,10 +217,11 @@ settings.
 
 The use of the source-available Polyform Perimeter license prevents use
 cases like:
-* Marketing a work as a “as-a-service” style offering for server
+
+- Marketing a work as a “as-a-service” style offering for server
   components like zqd, while using material covered under the Polyform
   Perimeter license
-* Marketing a work as a replacement for the Brim desktop application,
+- Marketing a work as a replacement for the Brim desktop application,
   while using material covered under the Polyform Perimeter license
 
 We believe users and developers should have access to the source code for our

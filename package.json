@@ -3,7 +3,7 @@
   "description": "Brim Desktop App",
   "repository": "https://github.com/brimdata/brim",
   "license": "BSD-3-Clause",
-  "version": "0.28.0",
+  "version": "0.29.0-prerelease-.0",
   "main": "dist/src/js/electron/main.js",
   "author": "Brim Security, Inc.",
   "scripts": {
@@ -19,8 +19,8 @@
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "generate-responses": "node scripts/test/responses",
     "tsc": "tsc",
-    "release": "npx electron-builder --mac",
-    "prerelease": "npm run build",
+    "release": "electron-builder --mac",
+    "prerelease": "yarn run build",
     "postinstall": "node scripts/post-install",
     "watch": "node scripts/watch",
     "prepare": "husky install"

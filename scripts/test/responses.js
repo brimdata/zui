@@ -6,8 +6,8 @@
  * It will use the zqd bundled in zdeps.
  *
  * Before running this, run these commands once:
- *   1. npm install # to install the desired version of zqd
- *   2. npm run build # to build some test files we need
+ *   1. yarn # to install the desired version of zqd
+ *   2. yarn run build # to build some test files we need
  *
  *  Then run this script: node scripts/test/responses.js
  *  To save the responses, use the --save option
