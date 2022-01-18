@@ -23,6 +23,8 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
       - run: yarn
+        env:
+          YARN_CHECKSUM_BEHAVIOR: ignore
       - run: yarn run build
       - run: yarn run lint
       - run: yarn run tsc
