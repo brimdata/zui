@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Remove all pins and make a new current 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "filter": "c",
+              "finding": Object {
+                "search": Object {
+                  "pins": Array [
+                    "a",
+                    "b",
+                  ],
+                  "poolId": "defaultId",
+                  "poolName": "default",
+                  "program": "c",
+                  "spanArgs": Array [
+                    Object {
+                      "ns": 1000000,
+                      "sec": 0,
+                    },
+                    Object {
+                      "ns": 2000000,
+                      "sec": 0,
+                    },
+                  ],
+                  "target": "events",
+                },
+                "ts": Object {
+                  "ns": 0,
+                  "sec": 0,
+                },
+              },
+            },
+            Object {
+              "filter": "d",
+              "finding": Object {
+                "search": Object {
+                  "pins": Array [
+                    "a",
+                    "b",
+                  ],
+                  "poolId": "defaultId",
+                  "poolName": "default",
+                  "program": "d",
+                  "spanArgs": Array [
+                    Object {
+                      "ns": 1000000,
+                      "sec": 0,
+                    },
+                    Object {
+                      "ns": 2000000,
+                      "sec": 0,
+                    },
+                  ],
+                  "target": "events",
+                },
+                "ts": Object {
+                  "ns": 0,
+                  "sec": 0,
+                },
+              },
+            },
+          ],
+          "filter": "b",
+          "finding": Object {
+            "search": Object {
+              "pins": Array [
+                "a",
+                "b",
+              ],
+              "poolId": "defaultId",
+              "poolName": "default",
+              "program": "c",
+              "spanArgs": Array [
+                Object {
+                  "ns": 1000000,
+                  "sec": 0,
+                },
+                Object {
+                  "ns": 2000000,
+                  "sec": 0,
+                },
+              ],
+              "target": "events",
+            },
+            "ts": Object {
+              "ns": 0,
+              "sec": 0,
+            },
+          },
+        },
+        Object {
+          "filter": "d",
+          "finding": Object {
+            "search": Object {
+              "pins": Array [
+                "a",
+              ],
+              "poolId": "defaultId",
+              "poolName": "default",
+              "program": "d",
+              "spanArgs": Array [
+                Object {
+                  "ns": 1000000,
+                  "sec": 0,
+                },
+                Object {
+                  "ns": 2000000,
+                  "sec": 0,
+                },
+              ],
+              "target": "events",
+            },
+            "ts": Object {
+              "ns": 0,
+              "sec": 0,
+            },
+          },
+        },
+      ],
+      "filter": "a",
+      "finding": Object {
+        "search": Object {
+          "pins": Array [
+            "a",
+            "b",
+          ],
+          "poolId": "defaultId",
+          "poolName": "default",
+          "program": "c",
+          "spanArgs": Array [
+            Object {
+              "ns": 1000000,
+              "sec": 0,
+            },
+            Object {
+              "ns": 2000000,
+              "sec": 0,
+            },
+          ],
+          "target": "events",
+        },
+        "ts": Object {
+          "ns": 0,
+          "sec": 0,
+        },
+      },
+    },
+    Object {
+      "filter": "e",
+      "finding": Object {
+        "search": Object {
+          "pins": Array [],
+          "poolId": "defaultId",
+          "poolName": "default",
+          "program": "e",
+          "spanArgs": Array [
+            Object {
+              "ns": 1000000,
+              "sec": 0,
+            },
+            Object {
+              "ns": 2000000,
+              "sec": 0,
+            },
+          ],
+          "target": "events",
+        },
+        "ts": Object {
+          "ns": 0,
+          "sec": 0,
+        },
+      },
+    },
+  ],
+  "filter": "ROOT",
+  "finding": null,
+}
+`;

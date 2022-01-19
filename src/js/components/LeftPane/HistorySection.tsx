@@ -1,5 +1,4 @@
 import {useDispatch, useSelector} from "react-redux"
-import Layout from "../../state/Layout"
 import React from "react"
 import InvestigationLinear from "../Investigation/InvestigationLinear"
 import FilterTree from "../FilterTree"
@@ -16,6 +15,7 @@ import {
 import usePopupMenu from "../hooks/usePopupMenu"
 import {capitalize} from "lodash"
 import DropdownArrow from "../../icons/DropdownArrow"
+import Appearance from "src/js/state/Appearance"
 
 function InvestigationView({view}) {
   switch (view) {
@@ -34,16 +34,16 @@ function InvestigationTree() {
 
 const ViewSelect = () => {
   const dispatch = useDispatch()
-  const currentView = useSelector(Layout.getHistoryView)
+  const currentView = useSelector(Appearance.getHistoryView)
 
   const menu = usePopupMenu([
     {
       label: "Linear",
-      click: () => dispatch(Layout.setHistoryView("linear"))
+      click: () => dispatch(Appearance.setHistoryView("linear"))
     },
     {
       label: "Tree",
-      click: () => dispatch(Layout.setHistoryView("tree"))
+      click: () => dispatch(Appearance.setHistoryView("tree"))
     }
   ])
 
@@ -56,7 +56,7 @@ const ViewSelect = () => {
 }
 
 function HistorySection({isOpen, style, resizeProps, toggleProps}) {
-  const view = useSelector(Layout.getHistoryView)
+  const view = useSelector(Appearance.getHistoryView)
   return (
     <StyledSection style={style}>
       <DragAnchor {...resizeProps} />

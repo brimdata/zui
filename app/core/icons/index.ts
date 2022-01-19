@@ -16,6 +16,14 @@ import warning from "./warning.svg"
 import braces from "./braces.svg"
 import expand from "./expand.svg"
 import collapse from "./collapse.svg"
+import pool from "./pool.svg"
+import history from "./history.svg"
+import folder from "./folder.svg"
+import query from "./query.svg"
+import fileBorder from "./file-border.svg"
+import fileFilled from "./file-filled.svg"
+import docPlain from "./doc-plain.svg"
+import tag from "./tag.svg"
 
 export default {
   braces,
@@ -35,5 +43,13 @@ export default {
   "double-chevron-right": doubleChevronRight,
   "three-dots": threeDots,
   reload,
-  warning
+  warning,
+  history,
+  folder,
+  pool,
+  query,
+  "file-border": fileBorder,
+  "file-filled": fileFilled,
+  "doc-plain": docPlain,
+  tag
 }

@@ -3,13 +3,13 @@ import Pools from "../state/Pools"
 import {getZealot} from "./getZealot"
 
 export default (
-  workspaceId: string,
+  lakeId: string,
   poolId: string,
   name: string
 ): Thunk<Promise<void>> => (dispatch) => {
   const zealot = dispatch(getZealot())
 
   return zealot.pools.update(poolId, {name}).then(() => {
-    dispatch(Pools.rename(workspaceId, poolId, name))
+    dispatch(Pools.rename(lakeId, poolId, name))
   })
 }
