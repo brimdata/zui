@@ -82,11 +82,11 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
       - run: yarn install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
-      - run: yarn install --no-audit
+      - run: yarn
       - run: yarn run build
       - run: yarn run lint
       - run: yarn run tsc
-      - run: yarn test -- --maxWorkers=2 --ci
+      - run: yarn test --maxWorkers=2 --ci
       - run: yarn run test:api
       - run: yarn run test:system
       - name: Playwright tests
@@ -94,7 +94,7 @@ jobs:
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24
-          run: yarn run test:playwright -- --ci --forceExit
+          run: yarn run test:playwright --ci --forceExit
         env:
           DEBUG: pw:api
       - uses: actions/upload-artifact@v2
