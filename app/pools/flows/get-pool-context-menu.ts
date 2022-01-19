@@ -3,21 +3,14 @@ import toast from "react-hot-toast"
 import {BrimPool} from "src/js/brim"
 import deletePool from "src/js/flows/deletePool"
 import deletePools from "src/js/flows/deletePools"
-import {showContextMenu, showMessageBox} from "src/js/lib/System"
+import {showMessageBox} from "src/js/lib/System"
 import Current from "src/js/state/Current"
-import Modal from "src/js/state/Modal"
 import Pools from "src/js/state/Pools"
 
-const showPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
+const getPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
   const workspaceId = Current.getWorkspaceId(getState())
   const poolIds = Pools.ids(workspaceId)(getState())
-  const template = [
-    {
-      label: "Rename",
-      click: () => {
-        dispatch(Modal.show("pool", {workspaceId, poolId: pool.id}))
-      }
-    },
+  return [
     {
       label: "Delete",
       click: () => {
@@ -73,8 +66,6 @@ const showPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
       }
     }
   ] as MenuItemConstructorOptions[]
-
-  showContextMenu(template)
 }
 
-export default showPoolContextMenu
+export default getPoolContextMenu

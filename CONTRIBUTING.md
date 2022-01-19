@@ -2,7 +2,7 @@
 
 Thank you for contributing to Brim!
 
-Please [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimdata.io/join-slack/) as well.
+Per common practice, please [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimdata.io/join-slack/) as well.
 
 ## Setup
 
@@ -43,8 +43,6 @@ Brim is a TypeScript, React, Electron app.
 - Main process - `src/js/electron/main.ts`
 - Renderer process - `src/js/search.tsx`
 
-<<<<<<< HEAD
-
 ## Directory Structure
 
 This directory structure is a work in progress. You will see many files not in the places described here. Please migrate what you can and follow this for any new code.
@@ -62,11 +60,6 @@ This directory structure is a work in progress. You will see many files not in t
 ├── electron (main process code)
 └── ppl (licensed code)
 ```
-
-=======
-Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimdata/zed/blob/main/docs/data-model/zng.md) format.
-
-> > > > > > > main
 
 **Import Rule**: Only import modules from `/core`, `/state`, or your own descendants. Components in `/routes` can import modules from `/features`.
 
@@ -89,9 +82,9 @@ There are several ways to run unit tests.
 
 ```bash
 # Run all
-npx jest --projects test/unit
+yarn jest --projects test/unit
 # Run by name
-npx jest --projects test/unit -- name-of-test
+yarn jest --projects test/unit -- name-of-test
 ```
 
 ## System Tests
@@ -126,9 +119,9 @@ They can be run like so:
 
 ```bash
 # Run all
-npx jest --projects test/system
+yarn jest --projects test/system
 # Run by name
-npx jest --projects test/system -- name-of-test
+yarn jest --projects test/system -- name-of-test
 ```
 
 ## Styles
@@ -149,7 +142,7 @@ See the [[Adding Migrations]] page for a more detailed guide.
 
 ### Zed
 
-The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for data ingestion and query execution. As an yarn postinstall step, the `zed` binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the service when it starts and stops.
+The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for data ingestion and query execution. As an npm postinstall step, the `zed` binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the service when it starts and stops.
 
 ## Pull Requests
 
@@ -183,7 +176,7 @@ release is created. The below is useful if you need to create one by hand.
 
 ```bash
 yarn build
-APPLE_ID=<user> APPLE_ID_PASSWORD=<app-specific-password> npx electron-builder --mac
+APPLE_ID=<user> APPLE_ID_PASSWORD=<app-specific-password> yarn electron-builder --mac
 ```
 
 Where `APPLE_ID` is the apple ID user name, and `APPLE_ID_PASSWORD` is an app-specific password created for notarization (details [here](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow)). This will also sign the contents of the package, which requires a [Developer ID](https://developer.apple.com/developer-id/) certificate to be present in your keychain.
