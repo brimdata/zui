@@ -17,7 +17,7 @@ import StatusBar from "src/js/components/StatusBar"
 import TabBar from "src/js/components/TabBar/TabBar"
 import styled from "styled-components"
 import {FeatureFlag} from "../core/feature-flag"
-import {LeftSidebar} from "src/js/components/LeftSidebar"
+import {Sidebar} from "app/features/sidebar"
 
 const ColumnLayout = styled.div`
   display: flex;
@@ -62,7 +62,7 @@ export default function AppWrapper({children}) {
             <RowLayout>
               <FeatureFlag
                 name="query-flow"
-                on={<LeftSidebar />}
+                on={<Sidebar />}
                 off={<LeftPane />}
               />
               <ColumnLayout>{children}</ColumnLayout>

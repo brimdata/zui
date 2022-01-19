@@ -3,12 +3,12 @@ import React, {MouseEvent} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Appearance from "src/js/state/Appearance"
 import styled from "styled-components"
-import Current from "../../state/Current"
-import Pane from "./../Pane"
-import HistorySection from "./HistorySection"
+import Current from "src/js/state/Current"
+import Pane from "src/js/components/Pane"
+import HistorySection from "./history-section"
 import {XLeftPaneExpander} from "./left-pane-expander"
-import PoolsSection from "./PoolsSection"
-import QueriesSection from "./QueriesSection"
+import PoolsSection from "./pools-section"
+import QueriesSection from "./queries-section"
 import Icon from "app/core/Icon"
 import {ItemBG, Name, StyledItem} from "./common"
 import LakePicker from "./lake-picker"
@@ -37,13 +37,17 @@ const StyledListItem = styled(StyledItem)<{isSelected: boolean}>`
     isSelected &&
     `
   outline: none;
-  background-color: hsla(0 0% 0% / 0.03);
+  background-color: rgba(0, 0, 0, 0.08);
   `}
 
   svg {
     margin-right: 8px;
     width: 14px;
     height: 14px;
+
+    path {
+      fill: rgba(0, 0, 0, 0.5);
+    }
   }
 `
 
@@ -99,7 +103,7 @@ const sectionListItems = {
   ]
 }
 
-export function LeftSidebar() {
+export function Sidebar() {
   const dispatch = useDispatch()
   const isOpen = useSelector(Appearance.sidebarIsOpen)
   const width = useSelector(Appearance.sidebarWidth)

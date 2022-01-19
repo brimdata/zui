@@ -9,7 +9,7 @@ import Investigation from "src/js/state/Investigation"
 import Search from "src/js/state/Search"
 import Url from "src/js/state/Url"
 import {SearchRecord} from "src/js/types"
-import FilterNode from "./FilterNode"
+import FilterNode from "./filter-node"
 import {createInvestigationTree, InvestigationNode} from "./helpers"
 import usePopupMenu from "src/js/components/hooks/usePopupMenu"
 

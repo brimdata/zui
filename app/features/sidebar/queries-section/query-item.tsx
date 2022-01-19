@@ -18,9 +18,10 @@ const QueryIcon = styled(Icon).attrs({name: "doc-plain"})``
 
 const GroupArrow = styled(StyledArrow)`
   visibility: ${(props) => (props.isVisible ? "visible" : "hidden")};
-  margin: 0 6px;
-  width: 10px;
-  height: 10px;
+  margin: 0 6px 0 3px;
+  opacity: 1;
+  width: 8px;
+  height: 8px;
 `
 
 const StyledQueryItem = styled(StyledItem)<{isSelected: boolean}>`
@@ -30,19 +31,22 @@ const StyledQueryItem = styled(StyledItem)<{isSelected: boolean}>`
   outline: none;
   color: white;
   background: var(--havelock);
+  &:hover {
+    background: var(--havelock);
+    opacity: 0.85;
+  }
   `} 
   ${GroupArrow} {
-    margin: 0 3px 0 3px;
-    opacity: 1;
-    stroke: ${(p) => (p.isSelected ? "white" : "var(--slate)")};
+    stroke: ${(p) => (p.isSelected ? "white" : "rgba(0, 0, 0, 0.7)")};
   }
 
   ${FolderIcon} > svg, ${QueryIcon} > svg {
       margin-right: 8px;
       width: 14px;
       height: 14px;
-      fill: ${(p) => (p.isSelected ? "white" : "inherit")};
-      stroke: ${(p) => (p.isSelected ? "white" : "inherit")};
+      path {
+        fill: ${(p) => (p.isSelected ? "white" : "rgba(0, 0, 0, 0.5)")};
+      }
   }
 
   ${Name} {

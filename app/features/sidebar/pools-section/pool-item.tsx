@@ -24,14 +24,20 @@ const StyledPoolItem = styled(StyledItem)<{isSelected: boolean}>`
   outline: none;
   color: white;
   background: var(--havelock);
+  &:hover {
+    background: var(--havelock);
+    opacity: 0.85;
+  }
   `}
 
   ${PoolIcon} > svg {
     margin-right: 8px;
     width: 14px;
     height: 14px;
-    fill: ${(p) => (p.isSelected ? "white" : "inherit")};
-    stroke: ${(p) => (p.isSelected ? "white" : "inherit")};
+
+    path {
+      fill: ${(p) => (p.isSelected ? "white" : "inherit")};
+    }
   }
 
   ${Name} {

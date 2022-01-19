@@ -5,17 +5,17 @@ import {lakeImportPath} from "app/router/utils/paths"
 import {MenuItemConstructorOptions} from "electron"
 import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
-import DropdownArrow from "../../icons/DropdownArrow"
-import {showContextMenu} from "../../lib/System"
-import Current from "../../state/Current"
-import Modal from "../../state/Modal"
-import {AppDispatch} from "../../state/types"
-import Lakes from "../../state/Lakes"
-import {Lake} from "../../state/Lakes/types"
-import brim from "../../brim"
+import DropdownArrow from "src/js/icons/DropdownArrow"
+import {showContextMenu} from "src/js/lib/System"
+import Current from "src/js/state/Current"
+import Modal from "src/js/state/Modal"
+import {AppDispatch} from "src/js/state/types"
+import Lakes from "src/js/state/Lakes"
+import {Lake} from "src/js/state/Lakes/types"
+import brim from "src/js/brim"
 import {useHistory} from "react-router"
-import useCallbackRef from "../hooks/useCallbackRef"
-import {useBrimApi} from "../../../../app/core/context"
+import useCallbackRef from "src/js/components/hooks/useCallbackRef"
+import {useBrimApi} from "app/core/context"
 
 const LakePickerWrapper = styled.div`
   display: flex;
@@ -26,46 +26,52 @@ const LakePickerWrapper = styled.div`
 
 const LakeNameGroup = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 12px 16px;
-  user-select: none;
-
-  & > label {
-    ${(props) => props.theme.typography.labelSmall};
-    color: var(--lead);
-  }
-`
-
-const NameRow = styled.div`
-  display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+  margin: 12px 6px;
+  user-select: none;
+  width: 100%;
+  border-radius: 6px;
+  padding: 6px 10px;
 
-  label {
-    ${(props) => props.theme.typography.labelBold};
-    color: var(--aqua);
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
   }
 
   svg {
-    height: 11px;
-    width: 11px;
+    height: 8px;
+    width: 8px;
     stroke: var(--slate);
     margin-left: 6px;
   }
 `
 
+const NameColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  label {
+    ${(props) => props.theme.typography.labelBold};
+    color: var(--aqua);
+  }
+  label:last-child {
+    ${(props) => props.theme.typography.labelSmall};
+    color: var(--lead);
+  }
+`
+
 const StyledAddButton = styled.button`
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: 24px;
   height: 24px;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.08);
   border-radius: 50%;
   border-width: 0;
-  padding: 0 0 2px 0;
-  margin: 0 16px 0 0;
+  margin: 0 16px;
+  line-height: 20px;
   font-family: "system-ui", sans-serif;
   font-weight: 300;
   font-size: 20px;
@@ -152,11 +158,11 @@ export default function LakePicker() {
   return (
     <LakePickerWrapper>
       <LakeNameGroup onClick={() => dispatch(showLakeSelectMenu())}>
-        <NameRow>
+        <NameColumn>
           <label>{`${current?.name}`}</label>
-          <DropdownArrow />
-        </NameRow>
-        <label>{`${current?.getAddress()}`}</label>
+          <label>{`${current?.getAddress()}`}</label>
+        </NameColumn>
+        <DropdownArrow />
       </LakeNameGroup>
       <StyledAddButton onClick={() => showAddMenu()}>+</StyledAddButton>
       <input

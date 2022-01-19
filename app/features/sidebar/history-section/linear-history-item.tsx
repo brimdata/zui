@@ -1,9 +1,7 @@
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
-import BookIcon from "src/js/icons/BookSvgIcon"
 import Current from "src/js/state/Current"
-import EmptySection from "src/js/components/common/EmptySection"
-import {ItemBG, SectionContents, StyledItem, Name} from "../common"
+import {ItemBG, StyledItem, Name} from "../common"
 import classNames from "classnames"
 import styled from "styled-components"
 import Icon from "app/core/Icon"
@@ -15,8 +13,6 @@ import Investigation from "src/js/state/Investigation"
 import * as remote from "@electron/remote"
 import {showContextMenu} from "src/js/lib/System"
 import {MenuItemConstructorOptions} from "electron"
-import {useSectionTreeDefaults} from "../hooks"
-import {Tree} from "react-arborist"
 
 const HistoryIcon = styled(Icon).attrs({name: "query"})``
 const StyledHistoryItem = styled(StyledItem)`
@@ -58,7 +54,7 @@ const HistoryEntry = ({search}: Props) => {
   )
 }
 
-const HistoryItem = ({innerRef, styles, data: historyItem, state}) => {
+const LinearHistoryItem = ({innerRef, styles, data: historyItem, state}) => {
   const dispatch = useDispatch()
   const workspaceId = useSelector(Current.getWorkspaceId)
   const poolId = useSelector(Current.getPoolId)
@@ -113,23 +109,4 @@ const HistoryItem = ({innerRef, styles, data: historyItem, state}) => {
   )
 }
 
-const HistoryLinear = ({entries}) => {
-  const {resizeRef, defaults} = useSectionTreeDefaults()
-  if (entries.length === 0)
-    return (
-      <EmptySection
-        icon={<BookIcon />}
-        message="As you search through your data, your history will appear here."
-      />
-    )
-
-  return (
-    <SectionContents ref={resizeRef}>
-      <Tree {...defaults} data={{id: "root", items: entries}}>
-        {HistoryItem}
-      </Tree>
-    </SectionContents>
-  )
-}
-
-export default HistoryLinear
+export default LinearHistoryItem

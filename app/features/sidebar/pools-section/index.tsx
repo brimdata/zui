@@ -11,13 +11,13 @@ import {
   SectionToolbar,
   SectionSearch
 } from "../common"
-import EmptySection from "../../common/EmptySection"
-import FileFilled from "../../../icons/FileFilled"
+import EmptySection from "src/js/components/common/EmptySection"
+import FileFilled from "src/js/icons/FileFilled"
 import styled from "styled-components"
 import {Tree} from "react-arborist"
 import {useSectionTreeDefaults} from "../hooks"
 import PoolItem from "./pool-item"
-import renamePool from "../../../flows/renamePool"
+import renamePool from "src/js/flows/renamePool"
 import {Pool} from "src/js/state/Pools/types"
 
 const StyledEmptySection = styled(EmptySection).attrs({icon: <FileFilled />})``

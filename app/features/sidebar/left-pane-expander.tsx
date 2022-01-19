@@ -3,11 +3,11 @@ import ReactDOM from "react-dom"
 import {connect} from "react-redux"
 import {CSSTransition} from "react-transition-group"
 import Appearance from "src/js/state/Appearance"
-import lib from "../../lib"
-import dispatchToProps from "../../lib/dispatchToProps"
-import MouseoverWatch from "../../lib/MouseoverWatch"
-import {Dispatch} from "../../state/types"
-import CircleChevron from "../CircleChevron"
+import lib from "src/js/lib"
+import dispatchToProps from "src/js/lib/dispatchToProps"
+import MouseoverWatch from "src/js/lib/MouseoverWatch"
+import {Dispatch} from "src/js/state/types"
+import CircleChevron from "src/js/components/CircleChevron"
 
 type Props = {dispatch: Dispatch}
 type State = {show: boolean}
