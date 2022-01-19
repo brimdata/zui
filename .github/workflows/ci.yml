@@ -23,7 +23,7 @@ jobs:
         with:
           cache: yarn
           node-version-file: .nvmrc
-      - run: yarn
+      - run: yarn --inline-builds
       - run: yarn run build
       - run: yarn run lint
       - run: yarn run tsc
