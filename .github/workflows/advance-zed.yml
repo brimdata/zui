@@ -82,7 +82,7 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
       - run: yarn install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
-      - run: yarn
+      - run: yarn --inline-builds
       - run: yarn run build
       - run: yarn run lint
       - run: yarn run tsc
