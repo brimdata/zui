@@ -28,7 +28,7 @@ jobs:
         name: Set version string for ad hoc builds
         run: echo "ADHOC_VERSION_STRING=$(npm version preminor --no-git-tag-version --preid prerelease-${GITHUB_SHA:0:8})" >> $GITHUB_ENV
         shell: bash
-      - run: yarn
+      - run: yarn --inline-builds
       - run: yarn run build
       - name: Build Signed Release
         shell: bash
