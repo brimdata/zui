@@ -3,7 +3,7 @@
   "description": "Brim Desktop App",
   "repository": "https://github.com/brimdata/brim",
   "license": "BSD-3-Clause",
-  "version": "0.28.0",
+  "version": "0.29.0-prerelease-.0",
   "main": "dist/src/js/electron/main.js",
   "author": "Brim Security, Inc.",
   "scripts": {
@@ -19,8 +19,8 @@
     "format": "prettier **/*.{js,ts,tsx,scss} --write --loglevel warn",
     "generate-responses": "node scripts/test/responses",
     "tsc": "tsc",
-    "release": "npx electron-builder --mac",
-    "prerelease": "npm run build",
+    "release": "electron-builder --mac",
+    "prerelease": "yarn run build",
     "postinstall": "node scripts/post-install",
     "watch": "node scripts/watch",
     "prepare": "husky install"
@@ -68,7 +68,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
-    "brimcap": "brimdata/brimcap#d151b3a70fdfe2eaeabb963bc3e1486e0bf63203",
+    "brimcap": "github:brimdata/brimcap#1364e36be3f26fddb60f0de4d8063fcaeb31a709",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
@@ -170,5 +170,6 @@
     "electron-installer-debian": "^3.0.0",
     "electron-installer-redhat": "^3.0.0",
     "node-pipe": "^0.1.1"
-  }
+  },
+  "packageManager": "yarn@3.1.1"
 }

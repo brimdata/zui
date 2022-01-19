@@ -16,13 +16,13 @@ Then clone the repo, install the node modules, and start the app.
 ```bash
 git clone https://github.com/brimdata/brim
 cd brim
-npm install
-npm start
+yarn
+yarn start
 ```
 
 When a file is changed, it will be recompiled it and reload the app.
 
-On subsequent updates, `git pull` and `npm install`.
+On subsequent updates, `git pull` and `yarn`.
 
 ## Libraries
 
@@ -61,8 +61,6 @@ This directory structure is a work in progress. You will see many files not in t
 └── ppl (licensed code)
 ```
 
-Brim, via zqd, uses [Zeek](https://www.zeek.org) to convert packet captures into Zeek logs. These logs are then combined and stored in [ZNG](https://github.com/brimdata/zed/blob/main/docs/data-model/zng.md) format.
-
 **Import Rule**: Only import modules from `/core`, `/state`, or your own descendants. Components in `/routes` can import modules from `/features`.
 
 ## Testing
@@ -84,9 +82,9 @@ There are several ways to run unit tests.
 
 ```bash
 # Run all
-npx jest --projects test/unit
+yarn jest --projects test/unit
 # Run by name
-npx jest --projects test/unit -- name-of-test
+yarn jest --projects test/unit -- name-of-test
 ```
 
 ## System Tests
@@ -121,9 +119,9 @@ They can be run like so:
 
 ```bash
 # Run all
-npx jest --projects test/system
+yarn jest --projects test/system
 # Run by name
-npx jest --projects test/system -- name-of-test
+yarn jest --projects test/system -- name-of-test
 ```
 
 ## Styles
@@ -151,13 +149,13 @@ The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for
 Our CI server checks for code format diffs, type errors, eslint errors, unit test failures, and integration test failures. You can check all these things locally before pushing your branch.
 
 ```bash
-npm run format           # Prettier format
-npm run lint             # Check eslint
-npm run tsc              # Check the types
-npm test                 # Unit tests with jest
-npm test:api             # API tests
-npm test:system          # System Tests
-npm run test:playwright  # Integration tests with jest & playwright
+yarn format           # Prettier format
+yarn lint             # Check eslint
+yarn tsc              # Check the types
+yarn test             # Unit tests with jest
+yarn test:api         # API tests
+yarn test:system      # System Tests
+yarn test:playwright  # Integration tests with jest & playwright
 ```
 
 ## Installation Packaging
@@ -165,7 +163,7 @@ npm run test:playwright  # Integration tests with jest & playwright
 You can create an installable artifact - like a disk image for MacOS - via:
 
 ```bash
-npm run release
+yarn release
 ```
 
 Any platform artifacts created will be found under `./dist/installers`.
@@ -177,8 +175,8 @@ MacOS releases are created automatically by our CI process when a Github
 release is created. The below is useful if you need to create one by hand.
 
 ```bash
-npm run build
-APPLE_ID=<user> APPLE_ID_PASSWORD=<app-specific-password> npx electron-builder --mac
+yarn build
+APPLE_ID=<user> APPLE_ID_PASSWORD=<app-specific-password> yarn electron-builder --mac
 ```
 
 Where `APPLE_ID` is the apple ID user name, and `APPLE_ID_PASSWORD` is an app-specific password created for notarization (details [here](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow)). This will also sign the contents of the package, which requires a [Developer ID](https://developer.apple.com/developer-id/) certificate to be present in your keychain.

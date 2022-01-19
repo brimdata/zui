@@ -79,22 +79,22 @@ jobs:
           go-version: "1.16"
       - uses: actions/setup-node@v2
         with:
-          cache: npm
+          cache: yarn
           node-version-file: .nvmrc
-      - run: npm install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
-      - run: npm install --no-audit
-      - run: npm run build
-      - run: npm run lint
-      - run: npm run tsc
-      - run: npm test -- --maxWorkers=2 --ci
-      - run: npm run test:api
-      - run: npm run test:system
+      - run: yarn install https://github.com/brimdata/zed#${{ steps.zed_pr.outputs.sha }}
+      - run: yarn --inline-builds
+      - run: yarn run build
+      - run: yarn run lint
+      - run: yarn run tsc
+      - run: yarn test --maxWorkers=2 --ci
+      - run: yarn run test:api
+      - run: yarn run test:system
       - name: Playwright tests
         id: playwright
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24
-          run: npm run test:playwright -- --ci --forceExit
+          run: yarn run test:playwright --ci --forceExit
         env:
           DEBUG: pw:api
       - uses: actions/upload-artifact@v2
