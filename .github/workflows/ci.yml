@@ -32,11 +32,19 @@ jobs:
       - run: yarn run test:system
       - run: yarn run generate-responses --silent
       - name: Build and install package
-        if: runner.os == 'Linux'
+        if: runner.os != 'Windows'
         run: |
           set -x
-          npx electron-builder --linux=deb
-          sudo apt install -y --no-install-recommends ./dist/installers/*.deb
+          case ${{ runner.os }} in
+            Linux )
+              npx electron-builder --linux=deb
+              sudo apt install -y --no-install-recommends ./dist/installers/*.deb
+              ;;
+            macOS )
+              npx electron-builder --mac=dir
+              cp -r dist/installers/mac/Brim.app /Applications
+              ;;
+          esac
       - name: Playwright tests
         id: playwright
         if: runner.os != 'Windows'
