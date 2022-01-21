@@ -1,10 +1,10 @@
 import fetch from "cross-fetch"
 import nodeFetch from "node-fetch"
-import {decode} from "./encoder"
-import {parseContentType} from "./fetcher/contentType"
-import {eachLine} from "./ndjson/lines"
-import {QueryResultStream} from "./query-result-stream"
-import {createError} from "./util/error"
+import {decode} from "../encoder"
+import {parseContentType} from "../fetcher/contentType"
+import {eachLine} from "../ndjson/lines"
+import {QueryResultStream} from "../query-result-stream"
+import {createError} from "../util/error"
 
 type ResponseFormat = "zng" | "ndjson" | "csv" | "json" | "zjson"
 

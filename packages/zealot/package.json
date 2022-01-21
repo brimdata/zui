@@ -33,7 +33,7 @@
     "build": "npm-run-all 'build:**'",
     "build:cjs": "tsc",
     "build:es": "rollup -c rollup.config.js --silent",
-    "watch": "yarn build --watch",
+    "dev": "tsc --watch",
     "prepack": "yarn build"
   },
   "devDependencies": {
