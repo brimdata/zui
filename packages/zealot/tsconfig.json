@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "outDir": "dist/cjs",
+    "declaration": true
+  },
+  "include": ["src"],
+  "exclude": ["src/**/*.test.ts"]
+}
