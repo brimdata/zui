@@ -68,7 +68,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
-    "brimcap": "github:brimdata/brimcap#1364e36be3f26fddb60f0de4d8063fcaeb31a709",
+    "brimcap": "github:brimdata/brimcap#bc9f227522433e7124d788a66d42231e2a5bcb99",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
