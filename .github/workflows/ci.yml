@@ -37,11 +37,11 @@ jobs:
           set -x
           case ${{ runner.os }} in
             Linux )
-              npx electron-builder --linux=deb
+              yarn electron-builder --linux=deb
               sudo apt install -y --no-install-recommends ./dist/installers/*.deb
               ;;
             macOS )
-              npx electron-builder --mac=dir
+              yarn electron-builder --mac=dir
               cp -r dist/installers/mac/Brim.app /Applications
               ;;
           esac
