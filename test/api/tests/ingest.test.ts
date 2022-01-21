@@ -15,7 +15,7 @@ test("ingest ZNG logs", () => {
       data: logStream
     })
     ;({size} = await zealot.pools.stats(pool.id))
-    expect(size).toBe(5250)
+    expect(size).toBe(1148)
   })
 })
 
@@ -31,7 +31,7 @@ test("ingest TSV logs", () => {
       data: logStream
     })
     ;({size} = await zealot.pools.stats(pool.id))
-    expect(size).toBe(4084)
+    expect(size).toBe(3758)
   })
 })
 
@@ -47,6 +47,6 @@ test("ingest NDJSON logs", () => {
       data: logStream
     })
     ;({size} = await zealot.pools.stats(pool.id))
-    expect(size).toBe(4467)
+    expect(size).toBe(3754)
   })
 })

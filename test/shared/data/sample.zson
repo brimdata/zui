@@ -4,7 +4,7 @@
     uid: "C1zOivgBT6dBmknqk",
     id: {
         orig_h: 10.47.1.152,
-        orig_p: 49562 (port=(uint16)),
+        orig_p: 49562 (port=<uint16>),
         resp_h: 23.217.103.245,
         resp_p: 80 (port)
     } (=0),
@@ -87,21 +87,20 @@ uint64: 64 (uint64),
 int8: -8 (int8),
 int16: -16 (int16),
 int32: -32 (int32),
-int64: -64 (int64),
-duration: 10.1s (duration),
-time: 1937-01-01T12:00:27.87+00:20 (time),
+int64: -64,
+duration: 10.1s,
+time: 1937-01-01T12:00:27.87+00:20,
 // float16: 16.16 (float16),
-// float32: 32.32 (float32),
-float64: 64.64 (float64),
+float32: 32.32 (float32),
+float64: 64.64,
 // decimal: 10.00001 (decimal),
-bool: false (bool),
-bytes: 0xff (bytes),
-string: "Hello world" (string),
-ip: 10.10.10.10 (ip),
-net: 10.1.1.0/24 (net),
-type: (access_list=({info:string,nets:[net]})) (type),
-error: "fatal error" (error),
-null: null (null)
+bool: false,
+bytes: 0xff,
+string: "Hello world",
+ip: 10.10.10.10,
+net: 10.1.1.0/24,
+type: <access_list=<{info:string,nets:[net]}>>,
+null: null
 } (=every_primitive)
 
 // test when everything is null
