@@ -83,18 +83,14 @@ jobs:
           node-version-file: .nvmrc
       - run: yarn add zed@brimdata/zed#${{ steps.zed_pr.outputs.sha }}
       - run: yarn --inline-builds
-      - run: yarn run build
-      - run: yarn run lint
-      - run: yarn run tsc
-      - run: yarn test --maxWorkers=2 --ci
-      - run: yarn run test:api
-      - run: yarn run test:system
-      - name: Playwright tests
+      - run: yarn lint
+      - run: yarn test
+      - name: End to end tests
         id: playwright
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24
-          run: yarn run test:playwright --ci --forceExit
+          run: yarn build && yarn e2e --ci --forceExit
         env:
           DEBUG: pw:api
       - uses: actions/upload-artifact@v2

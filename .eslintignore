@@ -1,6 +1,5 @@
-/dist
-/node_modules
-/coverage
-/run
-/bin
-/test/api
+dist
+node_modules
+coverage
+run
+bin
