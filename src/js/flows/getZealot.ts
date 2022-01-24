@@ -1,11 +1,12 @@
-import {createFetcher, FetchArgs, Zealot} from "zealot-old"
+import {Client} from "@brimdata/zealot"
+import {createFetcher, FetchArgs} from "zealot-old"
 import {ZFetcher, ZResponse} from "../../../zealot-old/types"
 import {validateToken} from "../auth0/utils"
 import {BrimWorkspace} from "../brim"
 import ErrorFactory from "../models/ErrorFactory"
 import Current from "../state/Current"
-import {Thunk} from "../state/types"
 import Lakes from "../state/Lakes"
+import {Thunk} from "../state/types"
 import WorkspaceStatuses from "../state/WorkspaceStatuses"
 import {getAuthCredentials} from "./workspace/getAuthCredentials"
 
@@ -72,14 +73,12 @@ const createBrimFetcher = (dispatch, getState, workspace: BrimWorkspace) => {
   }
 }
 
-export const getZealot = (workspace?: BrimWorkspace): Thunk<Zealot> => (
+export const getZealot = (workspace?: BrimWorkspace): Thunk<Client> => (
   dispatch,
-  getState,
-  {createZealot}
+  getState
 ) => {
   const ws = workspace || Current.mustGetWorkspace(getState())
-
-  return createZealot(ws.getAddress(), {
-    fetcher: createBrimFetcher(dispatch, getState, ws)
-  })
+  createBrimFetcher(dispatch, getState, ws)
+  return new Client(ws.getAddress())
+  // Add auth to the client later
 }

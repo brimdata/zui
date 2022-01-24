@@ -1,3 +1,4 @@
+import {zed} from "@brimdata/zealot"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import {search, SearchResult} from "src/js/flows/search/mod"
 import ErrorFactory from "src/js/models/ErrorFactory"
@@ -9,7 +10,6 @@ import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
 import {SchemaMap} from "src/js/state/Viewer/types"
-import {zed} from "@brimdata/zealot"
 import {SearchResponse} from "../../../src/js/flows/search/response"
 
 type Args = {

@@ -52,10 +52,7 @@ type LoadOpts = {
 }
 
 export class Client {
-  baseURL: string
-  constructor(public address: string) {
-    this.baseURL = `http://${address}`
-  }
+  constructor(public baseURL: string) {}
 
   async version() {
     const resp = await fetch(this.baseURL + "/version")
@@ -114,6 +111,11 @@ export class Client {
     } else {
       return Promise.reject(createError(content))
     }
+  }
+
+  async getPools(): Promise<Pool[]> {
+    const resp = await this.query("from :pools")
+    return resp.js()
   }
 
   async load(data: string, opts: Partial<LoadOpts> = {}) {

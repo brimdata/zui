@@ -1,26 +1,62 @@
 import EventEmitter from "events"
-import {decode} from "."
+import {decode, zed} from "."
 import {Record} from "./zed"
 import {Type} from "./zed/types/types"
 import {RootRecord} from "./zjson"
 
+type TypeDefs = {[name: string]: Type}
+type Collector = (vals: {rows: zed.Value[]; shapes: TypeDefs}) => void
 class Channel extends EventEmitter {
   rows: Record[] = []
-  types: {[name: string]: Type} = {}
-  shapes: {[name: string]: Type} = {}
+  types: TypeDefs = {}
+  shapes: TypeDefs = {}
   done = false
+  buffer = false
 
-  consumed() {
+  get consumed() {
     if (this.done) return Promise.resolve()
-    return new Promise((r) => {
-      this.on("end", r)
+    return new Promise((resolve, reject) => {
+      this.on("end", resolve)
+      this.on("error", reject)
     })
+  }
+
+  addRow(row: zed.Record) {
+    this.rows.push(row)
+    this.emit("row", row)
+  }
+
+  addShape(name: string) {
+    const shape = this.types[name]
+    this.shapes[name] = shape
+    this.emit("shape", shape)
+  }
+
+  hasShape(name: string) {
+    return name in this.shapes
+  }
+
+  markDone() {
+    this.done = true
+    this.emit("end")
+  }
+
+  collect(collector: Collector) {
+    this.buffer = true
+    this.on("row", () => {
+      collector({rows: this.rows, shapes: this.shapes})
+    })
+    return this.consumed
   }
 }
 
 export class QueryResultStream {
   private currentChannelId: number | undefined
-  private channels = new Map<number, Channel>()
+  private channelsMap = new Map<number, Channel>()
+
+  get channels() {
+    return Array.from(this.channelsMap.values())
+  }
 
   handle(json: any) {
     switch (json.kind) {
@@ -32,39 +68,34 @@ export class QueryResultStream {
         var data = json.value as RootRecord
         var name = data.schema
         var row = decode(data, {typedefs: channel.types})
-        var type = channel.types[name]
-        if (!(name in channel.shapes)) {
-          channel.shapes[name] = type
-          channel.emit("shape", type)
-        }
-        channel.rows.push(row)
-        channel.emit("row", row, channel.rows)
+        if (!channel.hasShape(name)) channel.addShape(name)
+        channel.addRow(row)
         break
       case "QueryChannelEnd":
-        var chan = this.channel()
-        chan.done = true
-        chan.emit("end")
+        this.currentChannelId = json.value.channel_id
+        this.channel().markDone()
+        break
     }
   }
 
-  async js() {
+  async js(): Promise<any> {
     const channel = this.channel(0)
-    await channel.consumed()
+    await channel.consumed
     return channel.rows.map((r) => r.toJS())
   }
 
   async zed() {
     const channel = this.channel(0)
-    await channel.consumed()
+    await channel.consumed
     return channel.rows
   }
 
   channel(id: number | undefined = this.currentChannelId) {
     if (id === undefined) throw new Error("Current channel not set")
-    let channel = this.channels.get(id)
+    let channel = this.channelsMap.get(id)
     if (!channel) {
       channel = new Channel()
-      this.channels.set(id, channel)
+      this.channelsMap.set(id, channel)
     }
     return channel
   }
@@ -72,10 +103,14 @@ export class QueryResultStream {
   // Forward some of the commonly used channel 0 methods
   on(name: any, fn: any) {
     // TODO Add types for the events
-    this.channel(0).on(name, fn)
+    return this.channel(0).on(name, fn)
   }
 
   consumed() {
-    return this.channel(0).consumed()
+    return Promise.all(this.channels.map((c) => c.consumed))
+  }
+
+  collect(collector: Collector) {
+    return this.channel(0).collect(collector)
   }
 }

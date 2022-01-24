@@ -1,12 +1,11 @@
-import {createZealot} from "zealot-old"
-import {globalDispatchMiddleware} from "../state/GlobalContext"
-import getUrlSearchParams from "../lib/getUrlSearchParams"
-import invoke from "../electron/ipc/invoke"
-import ipc from "../electron/ipc"
-import rootReducer from "../state/rootReducer"
 import {configureStore} from "@reduxjs/toolkit"
-import BrimApi from "../api"
 import {enableMapSet} from "immer"
+import BrimApi from "../api"
+import ipc from "../electron/ipc"
+import invoke from "../electron/ipc/invoke"
+import getUrlSearchParams from "../lib/getUrlSearchParams"
+import {globalDispatchMiddleware} from "../state/GlobalContext"
+import rootReducer from "../state/rootReducer"
 
 enableMapSet()
 
@@ -26,7 +25,7 @@ export default async (api: BrimApi) => {
     middleware: (getDefaults) => {
       const defaults = getDefaults({
         thunk: {
-          extraArgument: {createZealot, api}
+          extraArgument: {api}
         },
         serializableCheck: false,
         immutableCheck: false

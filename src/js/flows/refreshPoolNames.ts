@@ -12,9 +12,9 @@ import {getZealot} from "./getZealot"
 export default function refreshPoolNames(
   ws?: BrimWorkspace
 ): Thunk<Promise<void>> {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const zealot = dispatch(getZealot(ws))
-    return zealot.pools.list().then((pools) => {
+    return zealot.getPools().then((pools) => {
       const id = ws?.id || Current.getWorkspaceId(getState())
       if (id) dispatch(Pools.setPools(id, pools))
     })
