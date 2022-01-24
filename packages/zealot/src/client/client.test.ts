@@ -2,24 +2,36 @@ import {Lake} from "../lake/lake"
 import path from "path"
 import {Client} from "./client"
 import {removeSync} from "fs-extra"
+import _ from "lodash"
 
 const root = path.join(__dirname, "..", "..", "run", "client.test.ts", "root")
 const logs = path.join(__dirname, "..", "..", "run", "client.test.ts", "logs")
 const lake = new Lake(root, 9000, logs)
+const client = new Client("http://localhost:9000")
 
 beforeAll(async () => {
   removeSync(root)
   removeSync(logs)
   await lake.start()
+  await client.createPool("my-pool")
+  await client.load('{name: "alice"}', {pool: "my-pool"})
 })
 
 afterAll(() => lake.stop())
 
 test("create a lake", async () => {
-  const client = new Client("localhost:9000")
+  const resp = await client.query("from 'my-pool' | alice")
+  expect(await resp.js()).toMatchInlineSnapshot(`
+    Array [
+      Object {
+        "name": "alice",
+      },
+    ]
+  `)
+})
 
-  console.log(await client.createPool("my-pool"))
-  console.log(await client.load('{name: "james"}', {pool: "my-pool"}))
-
-  console.log(await client.query("from 'my-pool' | james"))
+test("collect values", async () => {
+  // const resp = await client.query("from 'my-pool' | alice", {})
+  // every 30 events or 5.s
+  // await resp.collect(({rows, shapes}) => {})
 })

@@ -1,4 +1,4 @@
-import fetch from "cross-fetch"
+import "cross-fetch/polyfill"
 import nodeFetch from "node-fetch"
 import {decode} from "../encoder"
 import {parseContentType} from "../fetcher/contentType"
@@ -63,7 +63,6 @@ export class Client {
   async query(query: string, opts: Partial<QueryOpts> = {}) {
     const defaults: QueryOpts = {format: "zjson"}
     const options: QueryOpts = {...defaults, ...opts}
-
     const resp = await fetch(this.baseURL + "/query", {
       method: "POST",
       body: JSON.stringify({query}),

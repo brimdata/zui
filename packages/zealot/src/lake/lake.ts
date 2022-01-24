@@ -58,7 +58,6 @@ export class Lake {
   async stop(): Promise<boolean> {
     if (this.lake) {
       this.lake.kill("SIGTERM")
-
       return waitFor(() => this.isDown())
     } else {
       return true
