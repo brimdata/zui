@@ -102,7 +102,7 @@ export function createZealot(
       },
       create: async (args: PoolArgs): Promise<BranchMeta> => {
         let res = await promise(pools.create(args))
-        return res.value
+        return res
       },
       delete: (id: string) => {
         return promise(pools.delete(id))

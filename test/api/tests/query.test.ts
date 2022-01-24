@@ -93,10 +93,10 @@ test("search#callbacks record", () => {
 
     const args = recordCb.mock.calls[0][0]
     expect(Object.keys(args)).toEqual(["schema", "types", "values"])
-    expect(args.schema).toBe("27")
+    expect(args.schema).toBe("34")
     expect(Object.keys(args.values).length).toBe(19)
     expect(args.types).toEqual([
-      {kind: "typedef", name: "27", type: expect.any(Object)}
+      {kind: "typedef", name: "34", type: expect.any(Object)}
     ])
   })
 })
