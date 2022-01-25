@@ -1,12 +1,12 @@
-import {Thunk} from "../state/types"
-import Current from "../state/Current"
-import Pools from "../state/Pools"
-import {getZealot} from "./getZealot"
-import {Zealot} from "../../../zealot-old"
+import {Client} from "@brimdata/zealot"
 import {PoolConfig, PoolStats} from "../../../zealot-old/types"
 import interop from "../brim/interop"
-import Lakes from "../state/Lakes"
 import workspace from "../brim/workspace"
+import Current from "../state/Current"
+import Lakes from "../state/Lakes"
+import Pools from "../state/Pools"
+import {Thunk} from "../state/types"
+import {getZealot} from "./getZealot"
 
 type refreshPoolInfoArgs = {
   workspaceId: string
@@ -20,17 +20,17 @@ export default function refreshPoolInfo(
     const ws = refreshPoolInfoArgs?.workspaceId
       ? workspace(Lakes.id(refreshPoolInfoArgs.workspaceId)(getState()))
       : Current.getWorkspace(getState())
-    const zealot: Zealot = dispatch(getZealot(ws))
+    const zealot: Client = dispatch(getZealot(ws))
     const poolId = refreshPoolInfoArgs?.poolId || Current.getPoolId(getState())
     const workspaceId = ws.id
 
     let config: PoolConfig
     let stats: PoolStats
     return Promise.all([
-      zealot.pools.get(poolId).then((data: PoolConfig) => {
+      zealot.getPool(poolId).then((data: PoolConfig) => {
         config = data
       }),
-      zealot.pools.stats(poolId).then((data: PoolStats) => {
+      zealot.getPoolStats(poolId).then((data: PoolStats) => {
         stats = data
       })
     ]).then(() => {

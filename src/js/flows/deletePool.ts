@@ -27,7 +27,7 @@ const deletePool = (id: string): Thunk<Promise<void>> => async (
     return Promise.resolve()
   }
 
-  return zealot.pools.delete(id).then(() => {
+  return zealot.deletePool(id).then(() => {
     dispatch(Investigation.clearPoolInvestigation(workspaceId, id))
     dispatch(Pools.remove(workspaceId, id))
     dispatch(SystemTest.hook("pool-deleted"))

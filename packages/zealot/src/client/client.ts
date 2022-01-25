@@ -1,69 +1,39 @@
-import "cross-fetch/polyfill"
 import nodeFetch from "node-fetch"
 import {decode} from "../encoder"
 import {parseContentType} from "../fetcher/contentType"
-import {eachLine} from "../ndjson/lines"
-import {QueryResultStream} from "../query-result-stream"
+import {ResultStream} from "../query/result-stream"
+import {PoolStats} from "../types"
 import {createError} from "../util/error"
-
-type ResponseFormat = "zng" | "ndjson" | "csv" | "json" | "zjson"
-
-type QueryOpts = {
-  format: ResponseFormat
-  signal?: AbortSignal
-}
-
-type CreatePoolOpts = {
-  key: string | string[]
-  order: "asc" | "desc"
-}
-
-type Pool = {
-  id: string
-  name: string
-  threshold: bigint
-  ts: Date
-  layout: {
-    order: "desc" | "asc"
-    keys: string[][]
-  }
-}
-
-type Branch = {
-  ts: Date
-  name: string
-  commit: string
-}
-
-type CreatePoolResp = {
-  pool: Pool
-  branch: Branch
-}
-
-interface IdObj {
-  id: string
-}
-
-type LoadOpts = {
-  pool: string | IdObj
-  branch: string
-  signal: AbortSignal
-  message: object
-}
+import {
+  ClientOpts,
+  CreatePoolOpts,
+  CreatePoolResp,
+  CrossFetch,
+  LoadOpts,
+  Pool,
+  QueryOpts,
+  ResponseFormat
+} from "./types"
 
 export class Client {
-  constructor(public baseURL: string) {}
+  public fetch: CrossFetch
+
+  constructor(public baseURL: string, opts: Partial<ClientOpts> = {}) {
+    const defaults: ClientOpts = {env: getEnv()}
+    const options: ClientOpts = {...defaults, ...opts}
+    this.fetch = options.env === "node" ? nodeFetch : window.fetch
+  }
 
   async version() {
-    const resp = await fetch(this.baseURL + "/version")
+    const resp = await this.fetch(this.baseURL + "/version")
     const content = await parseContentType(resp)
     return resp.ok ? content : Promise.reject(createError(content))
   }
 
   async query(query: string, opts: Partial<QueryOpts> = {}) {
-    const defaults: QueryOpts = {format: "zjson"}
+    const defaults: QueryOpts = {format: "zjson", controlMessages: true}
     const options: QueryOpts = {...defaults, ...opts}
-    const resp = await fetch(this.baseURL + "/query", {
+    const resp = await this.fetch(this.baseURL + "/query", {
       method: "POST",
       body: JSON.stringify({query}),
       headers: {
@@ -73,14 +43,21 @@ export class Client {
       signal: options.signal
     })
 
-    const stream = new QueryResultStream()
     if (!resp.ok) {
       const content = await parseContentType(resp)
       return Promise.reject(createError(content))
     } else {
-      emit(resp.body, stream)
+      return new ResultStream(resp)
     }
-    return stream
+  }
+
+  curl(query: string, opts: Partial<QueryOpts> = {}) {
+    const defaults: QueryOpts = {format: "zjson", controlMessages: true}
+    const options: QueryOpts = {...defaults, ...opts}
+    return `curl -X POST -d '${JSON.stringify({query})}' \\
+  -H "Accept: ${getAcceptValue(options.format)}" \\
+  -H "Content-Type: application/json" \\
+  ${this.baseURL}/query`
   }
 
   async createPool(name: string, opts: Partial<CreatePoolOpts> = {}) {
@@ -89,7 +66,7 @@ export class Client {
       key: "ts"
     }
     const options: CreatePoolOpts = {...defaults, ...opts}
-    const resp = await fetch(this.baseURL + "/pool", {
+    const resp = await this.fetch(this.baseURL + "/pool", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -112,12 +89,77 @@ export class Client {
     }
   }
 
+  async deletePool(poolId: string) {
+    const resp = await this.fetch(this.baseURL + `/pool/${poolId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: getAcceptValue("zjson")
+      }
+    })
+    const content = await parseContentType(resp)
+    if (resp.ok && content !== null) {
+      const data = decode(content, {as: "js"})
+      console.log(data)
+      return data
+    } else {
+      return Promise.reject(createError(content))
+    }
+  }
+
   async getPools(): Promise<Pool[]> {
     const resp = await this.query("from :pools")
     return resp.js()
   }
 
-  async load(data: string, opts: Partial<LoadOpts> = {}) {
+  async getPool(nameOrId: string): Promise<Pool> {
+    const res = await this.query(
+      `from :pools | id == ${nameOrId} or name == "${nameOrId}"`
+    )
+    const values = await res.js()
+    if (!values || values.length == 0) throw new Error("pool not found")
+    return values[0]
+  }
+
+  async getPoolStats(poolId: string): Promise<PoolStats> {
+    const resp = await this.fetch(this.baseURL + `/pool/${poolId}/stats`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: getAcceptValue("zjson")
+      }
+    })
+    const content = await parseContentType(resp)
+    if (resp.ok && content !== null) {
+      const data = decode(content, {as: "js"}) as PoolStats
+      return data
+    } else {
+      return Promise.reject(createError(content))
+    }
+  }
+
+  async updatePool(poolId: string, args: Partial<Pool>) {
+    const resp = await this.fetch(this.baseURL + `/pool/${poolId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: getAcceptValue("zjson")
+      },
+      body: JSON.stringify(args)
+    })
+    const content = await parseContentType(resp)
+    if (resp.ok && content !== null) {
+      const data = decode(content, {as: "js"})
+      return data
+    } else {
+      return Promise.reject(createError(content))
+    }
+  }
+
+  async load(
+    data: string | NodeJS.ReadableStream,
+    opts: Partial<LoadOpts> = {}
+  ) {
     const {pool} = opts
     if (!pool) throw new Error("Missing required option 'pool'")
     const poolId = typeof pool === "string" ? pool : pool.id
@@ -151,7 +193,8 @@ function getAcceptValue(format: ResponseFormat) {
     ndjson: "application/x-ndjson",
     csv: "text/csv",
     json: "application/json",
-    zjson: "application/x-zjson"
+    zjson: "application/x-zjson",
+    zson: "application/x-zson"
   }
   const value = formats[format]
   if (!value) {
@@ -161,11 +204,4 @@ function getAcceptValue(format: ResponseFormat) {
   }
 }
 
-async function emit(
-  readable: ReadableStream | null,
-  stream: QueryResultStream
-) {
-  for await (let json of eachLine(readable)) {
-    stream.handle(json)
-  }
-}
+const getEnv = () => ("fetch" in globalThis ? "web" : "node")

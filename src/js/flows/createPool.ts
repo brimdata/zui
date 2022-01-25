@@ -15,13 +15,9 @@ export const createPool = ({name}: Props): Thunk<Promise<void>> => (
 ) => {
   const zealot = dispatch(getZealot())
   const workspaceId = Current.getWorkspaceId(getState())
-  return zealot.pools
-    .create({
-      name
-    })
-    .then((create) => {
-      dispatch(refreshPoolNames()).then(() =>
-        dispatch(tabHistory.push(lakePath(create.pool.id, workspaceId)))
-      )
-    })
+  return zealot.createPool(name).then((create) => {
+    dispatch(refreshPoolNames()).then(() =>
+      dispatch(tabHistory.push(lakePath(create.pool.id, workspaceId)))
+    )
+  })
 }

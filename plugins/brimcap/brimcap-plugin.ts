@@ -348,10 +348,13 @@ export default class BrimcapPlugin {
       // stream analyze output to pool
       const zealot = this.api.getZealot()
       try {
-        await zealot.pools.load(params.poolId, params.branch, {
-          author: "brim",
-          body: "automatic import with brimcap analyze",
-          data: analyzeP.stdout,
+        await zealot.load(analyzeP.stdout, {
+          pool: params.poolId,
+          branch: params.branch,
+          message: {
+            author: "brim",
+            body: "automatic import with brimcap analyze"
+          },
           signal
         })
       } catch (e) {

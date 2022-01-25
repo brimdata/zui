@@ -9,9 +9,8 @@ import SearchBar from "../state/SearchBar"
 import SystemTest from "../state/SystemTest"
 import Tab from "../state/Tab"
 import {Thunk} from "../state/types"
-import {getZealot} from "./getZealot"
+import {getNodeZealot} from "./getZealot"
 import {annotateQuery} from "./search/mod"
-import fetch from "node-fetch"
 
 const streamPipeline = util.promisify(pipeline)
 
@@ -37,7 +36,7 @@ export default (
   filePath: string,
   format: QueryFormat
 ): Thunk<Promise<string>> => async (dispatch, getState): Promise<string> => {
-  const zealot = dispatch(getZealot())
+  const zealot = dispatch(getNodeZealot())
   const poolId = Current.getPoolId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())
@@ -48,24 +47,16 @@ export default (
     .map((t) => t.toDate())
 
   dispatch(SystemTest.hook("export-start"))
-  const {body, path, method, headers} = zealot.inspect.query(
-    annotateQuery(program, {
-      from,
-      to,
-      poolId
-    }),
-    {
-      format,
-      controlMessages: false
-    }
-  )
-  const res = await fetch(zealot.url(path), {method, body, headers})
-  if (!res.ok) {
-    const err = await res.json()
-    throw new Error(err)
-  }
+  const query = annotateQuery(program, {from, to, poolId})
+  const res = await zealot.query(query, {
+    format,
+    controlMessages: false
+  })
   try {
-    await streamPipeline(res.body, fs.createWriteStream(filePath))
+    await streamPipeline(
+      res.body as NodeJS.ReadableStream,
+      fs.createWriteStream(filePath)
+    )
   } catch (e) {
     fs.unlink(filePath, () => {})
     throw e

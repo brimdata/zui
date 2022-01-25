@@ -9,7 +9,7 @@ export default (
 ): Thunk<Promise<void>> => (dispatch) => {
   const zealot = dispatch(getZealot())
 
-  return zealot.pools.update(poolId, {name}).then(() => {
+  return zealot.updatePool(poolId, {name}).then(() => {
     dispatch(Pools.rename(lakeId, poolId, name))
   })
 }

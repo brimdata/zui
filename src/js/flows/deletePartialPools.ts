@@ -20,7 +20,7 @@ export default (): Thunk<Promise<any[]>> => (dispatch, getState) => {
 
   return Promise.all(
     poolIds.map((id) => {
-      return zealot.pools.delete(id).catch((e) => {
+      return zealot.deletePool(id).catch((e) => {
         rpc.log(`Unable to delete pool: ${id}, reason: ${JSON.stringify(e)}`)
       })
     })

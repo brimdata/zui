@@ -82,3 +82,13 @@ export const getZealot = (workspace?: BrimWorkspace): Thunk<Client> => (
   return new Client(ws.getAddress())
   // Add auth to the client later
 }
+
+export const getNodeZealot = (workspace?: BrimWorkspace): Thunk<Client> => (
+  dispatch,
+  getState
+) => {
+  const ws = workspace || Current.mustGetWorkspace(getState())
+  createBrimFetcher(dispatch, getState, ws)
+  return new Client(ws.getAddress(), {env: "node"})
+  // Add auth to the client later
+}

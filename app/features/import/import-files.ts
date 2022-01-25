@@ -1,10 +1,12 @@
+import {Client} from "@brimdata/zealot"
 import {lakePath, workspacePath} from "app/router/utils/paths"
-import {Zealot} from "../../../zealot-old"
+import Url from "src/js/state/Url"
 import BrimApi from "../../../src/js/api"
 import brim from "../../../src/js/brim"
 import ingest from "../../../src/js/brim/ingest"
 import {IngestParams} from "../../../src/js/brim/ingest/getParams"
 import interop from "../../../src/js/brim/interop"
+import {getZealot} from "../../../src/js/flows/getZealot"
 import lib from "../../../src/js/lib"
 import Current from "../../../src/js/state/Current"
 import Handlers from "../../../src/js/state/Handlers"
@@ -13,8 +15,6 @@ import Pools from "../../../src/js/state/Pools"
 import SystemTest from "../../../src/js/state/SystemTest"
 import Tabs from "../../../src/js/state/Tabs"
 import {Dispatch, Thunk} from "../../../src/js/state/types"
-import {getZealot} from "../../../src/js/flows/getZealot"
-import Url from "src/js/state/Url"
 
 export default (files: File[]): Thunk<Promise<void>> => (
   dispatch,
@@ -60,9 +60,9 @@ const validateInput = (files: File[], poolNames) => ({
   }
 })
 
-const createPool = (client: Zealot, gDispatch, workspaceId) => ({
+const createPool = (client: Client, gDispatch, workspaceId) => ({
   async do(params: IngestParams) {
-    const {pool, branch} = await client.pools.create({name: params.name})
+    const {pool, branch} = await client.createPool(params.name)
     gDispatch(
       Pools.setDetail(workspaceId, {
         ...pool,
@@ -72,7 +72,7 @@ const createPool = (client: Zealot, gDispatch, workspaceId) => ({
     return {...params, poolId: pool.id, branch: branch.name}
   },
   async undo({poolId}: IngestParams & {poolId: string}) {
-    await client.pools.delete(poolId)
+    await client.deletePool(poolId)
     gDispatch(Pools.remove(workspaceId, poolId))
   }
 })
@@ -94,7 +94,7 @@ const unregisterHandler = (dispatch, id) => ({
 })
 
 const executeLoader = (
-  client: Zealot,
+  client: Client,
   dispatch: Dispatch,
   workspaceId: string,
   api: BrimApi,
@@ -110,7 +110,7 @@ const executeLoader = (
     }
     const onDetailUpdate = async (): Promise<void> => {
       const stats = interop.poolStatsPayloadToPool(
-        await client.pools.stats(poolId)
+        await client.getPoolStats(poolId)
       )
       dispatch(Pools.setDetail(workspaceId, {id: poolId, ...stats}))
     }

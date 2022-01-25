@@ -35,3 +35,12 @@ test("collect values", async () => {
   // every 30 events or 5.s
   // await resp.collect(({rows, shapes}) => {})
 })
+
+test("curl", () => {
+  expect(client.curl("* | count()")).toMatchInlineSnapshot(`
+    "curl -X POST -d '{\\"query\\":\\"* | count()\\"}' \\\\
+      -H \\"Accept: application/x-zjson\\" \\\\
+      -H \\"Content-Type: application/json\\" \\\\
+      http://localhost:9000/query"
+  `)
+})

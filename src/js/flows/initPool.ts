@@ -12,7 +12,7 @@ export const initPool = (poolId: string): Thunk<Promise<void>> => (
   if (!workspaceId) return
   const zealot = dispatch(getZealot())
 
-  return Promise.all([zealot.pools.get(poolId), zealot.pools.stats(poolId)])
+  return Promise.all([zealot.getPool(poolId), zealot.getPoolStats(poolId)])
     .then(([data, rawStats]) => {
       const stats = interop.poolStatsPayloadToPool(rawStats)
       dispatch(Pools.setDetail(workspaceId, {...data, ...stats}))

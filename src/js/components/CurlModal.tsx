@@ -20,7 +20,7 @@ import useEnterKey from "./hooks/useEnterKey"
 export default function CurlModalBox({onClose}) {
   useEnterKey(onClose)
   const dispatch = useDispatch<AppDispatch>()
-  const {search, host, program} = dispatch(inspectSearch())
+  const curl = dispatch(inspectSearch())
 
   function copyToClip(e) {
     clickFeedback(e.target, "Copied")
@@ -32,19 +32,9 @@ export default function CurlModalBox({onClose}) {
     <Content width={600} {...reactElementProps("curlModal")}>
       <Title>Curl Command</Title>
       <Scrollable>
-        {search && (
-          <Pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
-            curl -X {search.method} -d &apos;
-            {JSON.stringify(JSON.parse(search.body), null, 2)}
-            &apos; http://{host}
-            {search.path}
-          </Pre>
-        )}
-        {!search && (
-          <Pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
-            Invalid ZQL: &apos;{program}&apos;
-          </Pre>
-        )}
+        <Pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
+          {curl}
+        </Pre>
       </Scrollable>
       <Footer>
         <ButtonGroup>
