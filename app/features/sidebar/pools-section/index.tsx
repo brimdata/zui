@@ -57,7 +57,7 @@ const PoolsSection = () => {
       return <StyledEmptySection message="No pools match the search term." />
 
     const handleRename = (poolId: string, name: string) => {
-      dispatch(renamePool(id, poolId, name))
+      dispatch(renamePool(poolId, name))
     }
 
     return (

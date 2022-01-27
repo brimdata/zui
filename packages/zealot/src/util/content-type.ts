@@ -1,4 +1,3 @@
-import {Response} from "cross-fetch"
 import {Response as NodeResponse} from "node-fetch"
 
 export function parseContentType(resp: Response | NodeResponse) {

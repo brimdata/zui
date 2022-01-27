@@ -1,8 +1,8 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
 import nodeFetch from "node-fetch"
 import {decode} from "../encoder"
-import {parseContentType} from "../fetcher/contentType"
 import {ResultStream} from "../query/result-stream"
+import {parseContentType} from "../util/content-type"
 import {createError} from "../util/error"
 import {
   ClientOpts,
@@ -154,9 +154,9 @@ export class Client {
       body: JSON.stringify(args)
     })
     const content = await parseContentType(resp)
-    if (resp.ok && content !== null) {
-      const data = decode(content, {as: "js"})
-      return data
+    if (resp.ok) {
+      if (!content) return null
+      return decode(content, {as: "js"})
     } else {
       return Promise.reject(createError(content))
     }

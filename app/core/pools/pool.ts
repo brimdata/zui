@@ -2,6 +2,10 @@ import {PoolConfig, PoolStats} from "@brimdata/zealot"
 import brim, {Span} from "src/js/brim"
 
 export class Pool {
+  static from(opts: {data: PoolConfig; stats?: PoolStats}) {
+    return new Pool(opts.data, opts.stats)
+  }
+
   constructor(public data: PoolConfig, public stats?: PoolStats) {}
 
   get id() {

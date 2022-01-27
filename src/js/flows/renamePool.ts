@@ -2,14 +2,11 @@ import {syncPool} from "app/core/pools/sync-pool"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 
-export default (
-  lakeId: string,
-  poolId: string,
-  name: string
-): Thunk<Promise<void>> => (dispatch) => {
+export default (poolId: string, name: string): Thunk<Promise<void>> => async (
+  dispatch
+) => {
   const zealot = dispatch(getZealot())
-
-  return zealot.updatePool(poolId, {name}).then(() => {
-    return dispatch(syncPool(poolId))
-  })
+  await zealot.updatePool(poolId, {name})
+  await dispatch(syncPool(poolId))
+  console.log("sync pool")
 }
