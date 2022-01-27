@@ -4,7 +4,8 @@ import {
   decodeSearchParams,
   decodeSpanParams
 } from "app/search/utils/search-params"
-import {BrimPool, Span} from "src/js/brim"
+import {Span} from "src/js/brim"
+import {Pool} from "app/core/pools/pool"
 import {getLocation, mustGetPool} from "../Current/selectors"
 import {State} from "../types"
 import {LocationDescriptorObject} from "history"
@@ -21,11 +22,12 @@ export type SearchParams = {
 export const getSearchParams = createSelector<
   State,
   LocationDescriptorObject,
-  BrimPool,
+  Pool,
   SearchParams
 >(getLocation, mustGetPool, (location, pool) => {
   const params = decodeSearchParams(location.search)
   const spanArgs = mergeDefaultSpanArgs(params.spanArgs, pool)
+  console.log(params, spanArgs)
   const spanArgsFocus =
     params.spanArgsFocus[0] && params.spanArgsFocus[1]
       ? params.spanArgsFocus

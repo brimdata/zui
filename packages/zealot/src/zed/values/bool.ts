@@ -6,7 +6,7 @@ import {JSOptions} from "./types"
 export class Bool extends Primitive {
   type: typeof TypeBool = TypeBool
 
-  toJS(opts: JSOptions = {}) {
+  toJS() {
     if (isNull(this.value)) return null
     if (this.value === "true") return true
     return false

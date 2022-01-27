@@ -56,9 +56,6 @@ export function setupBrim(opts: Args = defaults()) {
     context.assign(props)
     if (opts.workspace) {
       context.dispatch(Lakes.add(opts.workspace))
-      if (opts.pool) {
-        context.dispatch(Pools.setDetail(opts.workspace.id, opts.pool))
-      }
     }
   })
 

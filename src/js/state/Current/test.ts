@@ -50,7 +50,8 @@ test("getting the actual pool", () => {
   }
   const state = store.dispatchAll([
     Lakes.add(ws),
-    Pools.setDetail("myws", pool)
+    Pools.setData({lakeId: "myws", data: pool.data}),
+    Pools.setStats({lakeId: "myws", poolId: pool.data.id, stats: pool.stats})
   ])
   store.dispatch(tabHistory.push(lakePath(pool.id, ws.id)))
 

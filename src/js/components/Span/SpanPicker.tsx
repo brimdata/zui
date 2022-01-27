@@ -1,10 +1,10 @@
+import useSelect from "app/core/hooks/use-select"
+import {syncPool} from "app/core/pools/sync-pool"
 import {useDispatch} from "react-redux"
-import React from "react"
-
+import Current from "src/js/state/Current"
+import ToolbarButton from "../../../../app/toolbar/button"
 import {reactElementProps} from "../../../../test/playwright/helpers/integration"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
-import ToolbarButton from "../../../../app/toolbar/button"
-import refreshPoolInfo from "../../flows/refreshPoolInfo"
 import useSpanPickerMenu from "../useSpanPickerMenu"
 
 type Props = {
@@ -14,9 +14,11 @@ type Props = {
 export default function SpanPicker({submit}: Props) {
   const menu = useSpanPickerMenu(submit)
   const dispatch = useDispatch()
+  const select = useSelect()
 
   function onClick() {
-    dispatch(refreshPoolInfo())
+    const poolId = select(Current.getPoolId)
+    dispatch(syncPool(poolId))
   }
 
   return (

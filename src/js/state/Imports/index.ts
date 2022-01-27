@@ -1,8 +1,8 @@
 import {actions, reducer} from "./reducer"
-import selectors from "./selectors"
+import * as selectors from "./selectors"
 
 export default {
-  ...actions,
+  reducer,
   ...selectors,
-  reducer
+  ...actions
 }

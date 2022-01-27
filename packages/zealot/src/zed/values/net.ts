@@ -5,7 +5,7 @@ import {JSOptions} from "./types"
 export class Net extends Primitive {
   type: typeof TypeNet = TypeNet
 
-  toJS(opts: JSOptions = {}) {
+  toJS() {
     return this.toString()
   }
 }

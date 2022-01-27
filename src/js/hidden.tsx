@@ -1,24 +1,22 @@
-import "regenerator-runtime/runtime"
-
-import {Provider, useDispatch, useSelector} from "react-redux"
-import React, {useEffect} from "react"
-import ReactDOM from "react-dom"
-
-import initialize from "./initializers/initialize"
-import lib from "./lib"
-import Lakes from "./state/Lakes"
-import {differenceWith, map} from "lodash"
+import {syncPool} from "app/core/pools/sync-pool"
+import syncPools from "app/core/pools/sync-pools"
 import log from "electron-log"
-import refreshPoolNames from "./flows/refreshPoolNames"
+import {differenceWith, map} from "lodash"
+import {useEffect} from "react"
+import ReactDOM from "react-dom"
+import {Provider, useDispatch, useSelector} from "react-redux"
+import "regenerator-runtime/runtime"
+import brim from "./brim"
 import workspace from "./brim/workspace"
-import {AppDispatch} from "./state/types"
-import {subscribeEvents} from "./flows/subscribeEvents"
-import refreshPoolInfo from "./flows/refreshPoolInfo"
 import {
   getRemotePoolForLake,
   refreshRemoteQueries
 } from "./components/LeftPane/remote-queries"
-import brim from "./brim"
+import {subscribeEvents} from "./flows/subscribeEvents"
+import initialize from "./initializers/initialize"
+import lib from "./lib"
+import Lakes from "./state/Lakes"
+import {AppDispatch} from "./state/types"
 
 initialize()
   .then(({store}) => {
@@ -52,15 +50,15 @@ const Hidden = () => {
         workspaceSourceMap[w.id] = wsSource
 
         wsSource.addEventListener("pool-new", (_e) => {
-          dispatch(refreshPoolNames(workspace(w)))
+          dispatch(syncPools(w.id))
         })
         wsSource.addEventListener("pool-update", (_e) => {
-          dispatch(refreshPoolNames(workspace(w))).catch((e) =>
+          dispatch(syncPools(w.id)).catch((e) =>
             log.error("refresh error: ", e)
           )
         })
         wsSource.addEventListener("pool-delete", (_e) => {
-          dispatch(refreshPoolNames(workspace(w)))
+          dispatch(syncPools(w.id))
         })
         wsSource.addEventListener("branch-commit", (e) => {
           let eventData
@@ -78,7 +76,7 @@ const Hidden = () => {
           const remotePool = dispatch(getRemotePoolForLake(w.id))
           if (poolId === remotePool?.id)
             dispatch(refreshRemoteQueries(brim.workspace(w)))
-          dispatch(refreshPoolInfo({workspaceId: w.id, poolId})).catch((e) => {
+          dispatch(syncPool(poolId, w.id)).catch((e) => {
             log.error("branch-commit update failed: ", e)
           })
         })

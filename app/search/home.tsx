@@ -1,6 +1,5 @@
 import useLakeId from "app/router/hooks/use-lake-id"
 import {Results} from "app/routes/search/results"
-import useIngestWatch from "app/search/hooks/use-ingest-watch"
 import useColumns from "app/toolbar/hooks/useColumns"
 import useExport from "app/toolbar/hooks/useExport"
 import useView from "app/toolbar/hooks/useView"
@@ -55,7 +54,6 @@ export function InitSearchParams({children}) {
 }
 
 export default function SearchHome() {
-  useIngestWatch()
   const dispatch = useDispatch()
   const view = useView()
   const exportAction = useExport()

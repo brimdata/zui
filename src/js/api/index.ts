@@ -5,7 +5,6 @@ import toast from "react-hot-toast"
 import ingestFiles from "../../../app/features/import/import-files"
 import errors from "../errors"
 import {getZealot} from "../flows/getZealot"
-import refreshPoolNames from "../flows/refreshPoolNames"
 import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
 import Queries from "../state/Queries"
@@ -24,6 +23,7 @@ import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
 import SearchBar from "src/js/state/SearchBar"
+import syncPools from "app/core/pools/sync-pools"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -90,7 +90,7 @@ export default class BrimApi {
         } else {
           this.dispatch(Notice.set(ErrorFactory.create(e.cause)))
         }
-        this.dispatch(refreshPoolNames()).catch((e) => e)
+        this.dispatch(syncPools()).catch((e) => e)
         console.error(e.message)
       })
   }

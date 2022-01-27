@@ -1,11 +1,9 @@
-import {BrimPool} from "src/js/brim"
+import {Pool} from "app/core/pools/pool"
 import {SpanArgs} from "src/js/state/Search/types"
 
 export function mergeDefaultSpanArgs(
-  spanArgs: Partial<SpanArgs>,
-  pool: BrimPool
+  _spanArgs: Partial<SpanArgs>,
+  pool: Pool
 ): SpanArgs {
-  const [from, to] = spanArgs
-  const [d1, d2] = pool.defaultSpanArgs() as SpanArgs
-  return [d1, d2]
+  return pool.defaultSpanArgs()
 }

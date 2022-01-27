@@ -90,6 +90,8 @@ export function search({
     const abort = () => ctl.abort()
     const tag = id
 
+    console.log(defaultFrom, defaultTo)
+
     poolId = poolId || defaultPoolId
     to = to || defaultTo
     from = from || defaultFrom

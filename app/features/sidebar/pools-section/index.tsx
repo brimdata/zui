@@ -18,7 +18,7 @@ import {Tree} from "react-arborist"
 import {useSectionTreeDefaults} from "../hooks"
 import PoolItem from "./pool-item"
 import renamePool from "src/js/flows/renamePool"
-import {Pool} from "src/js/state/Pools/types"
+import {Pool} from "app/core/pools/pool"
 
 const StyledEmptySection = styled(EmptySection).attrs({icon: <FileFilled />})``
 

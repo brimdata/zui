@@ -14,6 +14,8 @@ import Icon from "app/core/Icon"
 import classNames from "classnames"
 import {showContextMenu} from "src/js/lib/System"
 import {MenuItemConstructorOptions} from "electron"
+import {Pool} from "app/core/pools/pool"
+import Imports from "src/js/state/Imports"
 
 const PoolIcon = styled(Icon).attrs({name: "pool"})``
 
@@ -45,13 +47,15 @@ const StyledPoolItem = styled(StyledItem)<{isSelected: boolean}>`
   }
 `
 
-const PoolItem = ({innerRef, styles, data: pool, state, handlers}) => {
+// Is this duplicated somewhere?
+const PoolItem = ({innerRef, styles, data, state, handlers}) => {
+  const pool = data as Pool
   const dispatch = useDispatch<AppDispatch>()
   const workspaceId = useSelector(Current.getWorkspaceId)
   const currentPoolId = useSelector(Current.getPoolId)
+  const ingest = useSelector(Imports.get(currentPoolId))
   const history = useHistory()
   const {isEditing} = state
-  const p = brim.pool(pool)
   const ctxMenu: MenuItemConstructorOptions[] = [
     {
       label: "Rename",
@@ -59,24 +63,24 @@ const PoolItem = ({innerRef, styles, data: pool, state, handlers}) => {
         handlers.edit()
       }
     },
-    ...dispatch(getPoolContextMenu(p))
+    ...dispatch(getPoolContextMenu(pool))
   ]
 
   const onClick = (e) => {
     e.preventDefault()
     history.push(
-      lakeSearchPath(p.id, workspaceId, {
-        spanArgs: p.empty() ? undefined : p.defaultSpanArgs()
+      lakeSearchPath(pool.id, workspaceId, {
+        spanArgs: pool.empty() ? undefined : pool.defaultSpanArgs()
       })
     )
   }
 
-  const progress = p.ingesting() && (
+  const progress = ingest && ingest.progress < 1 && (
     <div className="small-progress-bar">
-      <ProgressIndicator percent={p.ingestProgress()} />
+      <ProgressIndicator percent={ingest.progress} />
     </div>
   )
-  const isCurrent = p.id === currentPoolId
+  const isCurrent = pool.id === currentPoolId
   const testProps = isCurrent ? currentPoolItem.props : poolItem.props
 
   return (

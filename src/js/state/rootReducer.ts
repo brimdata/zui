@@ -22,6 +22,7 @@ import ConfigPropValues from "./ConfigPropValues"
 import Launches from "./Launches"
 import Appearance from "./Appearance"
 import RemoteQueries from "./RemoteQueries"
+import Imports from "./Imports"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers<any, any>({
   investigation: Investigation.reducer,
   view: View.reducer,
   pools: Pools.reducer,
+  imports: Imports.reducer,
   pluginStorage: PluginStorage.reducer,
   systemTest: SystemTest.reducer,
   feature: Feature.reducer,

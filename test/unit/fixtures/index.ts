@@ -1,15 +1,22 @@
 import {Lake} from "../../../src/js/state/Lakes/types"
-import {Pool} from "../../../src/js/state/Pools/types"
+import {PoolState} from "../../../src/js/state/Pools/types"
 
-const pool1 = (): Pool => ({
-  id: "1",
-  name: "default",
-  size: 99,
-  span: {
-    ts: new Date(1425564900 * 1000),
-    dur: 1428917793 * 1000 + 7500
+const pool1 = (): PoolState => ({
+  data: {
+    id: "1",
+    name: "default",
+    layout: {
+      order: "asc",
+      keys: [["ts"]]
+    }
   },
-  ingest: {progress: null, warnings: []}
+  stats: {
+    size: 99,
+    span: {
+      ts: new Date(1425564900 * 1000),
+      dur: 1428917793 * 1000 + 7500
+    }
+  }
 })
 
 const workspace1 = (): Lake => ({

@@ -1,5 +1,6 @@
+import {Pool} from "app/core/pools/pool"
 import {createSelector} from "reselect"
-import brim, {BrimPool, Span} from "../../brim"
+import brim, {Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"
 import Current from "../Current"
 import {Lake} from "../Lakes/types"
@@ -31,7 +32,7 @@ const getSpanFocus = createSelector<State, TabState, Span | null | undefined>(
   (tab) => tab.search.spanFocus
 )
 
-const _getSpanArgs = createSelector<State, TabState, BrimPool, SpanArgs>(
+const _getSpanArgs = createSelector<State, TabState, Pool, SpanArgs>(
   Tabs.getActiveTab,
   Current.mustGetPool,
   (tab, pool) => {
@@ -50,8 +51,11 @@ const getComputedSpan = createSelector<State, SpanArgs, Span>(
   }
 )
 
-const getSpanAsDates = createSelector<State, Span, DateTuple>(getSpan, (span) =>
-  brim.span(span).toDateTuple()
+const getSpanAsDates = createSelector<State, Span, DateTuple>(
+  getSpan,
+  (span) => {
+    return brim.span(span).toDateTuple()
+  }
 )
 
 const getSpanFocusAsDates = createSelector<

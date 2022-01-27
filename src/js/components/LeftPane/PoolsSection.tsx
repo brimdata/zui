@@ -1,6 +1,5 @@
 import {useImportOnDrop} from "app/features/import/use-import-on-drop"
 import get from "lodash/get"
-import React from "react"
 import {useSelector} from "react-redux"
 import Current from "../../state/Current"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"

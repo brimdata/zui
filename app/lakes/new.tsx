@@ -2,7 +2,6 @@ import {useDispatch} from "react-redux"
 import React, {useState} from "react"
 import styled from "styled-components"
 
-import {createPool} from "../../src/js/flows/createPool"
 import ErrorFactory from "../../src/js/models/ErrorFactory"
 import InputField from "../../src/js/components/common/forms/InputField"
 import InputLabel from "../../src/js/components/common/forms/InputLabel"
@@ -10,6 +9,11 @@ import Notice from "../../src/js/state/Notice"
 import PrimaryButton from "../../src/js/components/common/buttons/PrimaryButton"
 import TextInput from "../../src/js/components/common/forms/TextInput"
 import {AppDispatch} from "../../src/js/state/types"
+import tabHistory from "app/router/tab-history"
+import {createPool} from "../core/pools/create-pool"
+import {lakePath} from "app/router/utils/paths"
+import Current from "src/js/state/Current"
+import useSelect from "app/core/hooks/use-select"
 
 const Wrap = styled.section`
   max-width: 460px;
@@ -32,12 +36,18 @@ const SubmitWrap = styled.div`
 export default function TabCreatePool() {
   const dispatch = useDispatch<AppDispatch>()
   const [name, setName] = useState("")
+  const select = useSelect()
 
   const onSubmit = (e) => {
-    dispatch(createPool({name})).catch((e) => {
-      dispatch(Notice.set(ErrorFactory.create(e)))
-    })
+    const lakeId = select(Current.getWorkspaceId)
     e.preventDefault()
+    dispatch(createPool({name}))
+      .then((id) => {
+        dispatch(tabHistory.push(lakePath(id, lakeId)))
+      })
+      .catch((e) => {
+        dispatch(Notice.set(ErrorFactory.create(e)))
+      })
   }
 
   return (

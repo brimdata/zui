@@ -118,16 +118,17 @@ export class Client {
     return resp.js()
   }
 
-  async getPool(nameOrId: string): Promise<Pool> {
+  async getPool(nameOrId: string): Promise<any> {
     const res = await this.query(
       `from :pools | id == ${nameOrId} or name == "${nameOrId}"`
     )
-    const values = await res.js()
+
+    const values = await res.zed()
     if (!values || values.length == 0) throw new Error("pool not found")
     return values[0]
   }
 
-  async getPoolStats(poolId: string): Promise<PoolStats> {
+  async getPoolStats(poolId: string): Promise<any> {
     const resp = await this.fetch(this.baseURL + `/pool/${poolId}/stats`, {
       method: "GET",
       headers: {
@@ -138,7 +139,7 @@ export class Client {
     const content = await parseContentType(resp)
     if (resp.ok && content !== null) {
       const zed = decode(content)
-      return zed.toJS() as PoolStats
+      return zed
     } else {
       return Promise.reject(createError(content))
     }

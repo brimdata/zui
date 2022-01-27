@@ -1,8 +1,15 @@
+import {PoolConfig, PoolStats} from "@brimdata/zealot"
+
+export type PoolState = {
+  data: PoolConfig
+  stats: PoolStats
+}
+
 export type PoolsState = {
   // workspaceId
   [key: string]: {
     // poolId
-    [key: string]: Pool
+    [key: string]: PoolState
   }
 }
 

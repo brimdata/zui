@@ -9,6 +9,7 @@ import {useHistory} from "react-router"
 import {SpanArgs} from "../state/Search/types"
 import {decodeSearchParams} from "../../../app/search/utils/search-params"
 import {Span} from "../brim"
+import Imports from "../state/Imports"
 
 export default function CommitNotification() {
   const dispatch = useDispatch()
@@ -16,7 +17,7 @@ export default function CommitNotification() {
   const size = pool.size
   const fullSpan = JSON.stringify(pool.everythingSpan())
   const history = useHistory()
-  const nowIngesting = pool.ingesting()
+  const nowIngesting = useSelector(Imports.isInProgress(pool.id))
   const [prevSize, setPrevSize] = useState(size)
   const [prevFullSpan, setPrevFullSpan] = useState(fullSpan)
   const [isStale, setIsStale] = useState(false)

@@ -1,6 +1,8 @@
 import {Thunk} from "../state/types"
 import Pools from "../state/Pools"
 import {getZealot} from "./getZealot"
+import syncPools from "app/core/pools/sync-pools"
+import {syncPool} from "app/core/pools/sync-pool"
 
 export default (
   lakeId: string,
@@ -10,6 +12,6 @@ export default (
   const zealot = dispatch(getZealot())
 
   return zealot.updatePool(poolId, {name}).then(() => {
-    dispatch(Pools.rename(lakeId, poolId, name))
+    return dispatch(syncPool(poolId))
   })
 }
