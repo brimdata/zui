@@ -1,7 +1,6 @@
 import {Client} from "@brimdata/zealot"
 import {createPool} from "app/core/pools/create-pool"
 import {syncPool} from "app/core/pools/sync-pool"
-import {lakePath, workspacePath} from "app/router/utils/paths"
 import Ingests from "src/js/state/Ingests"
 import Url from "src/js/state/Url"
 import BrimApi from "../../../src/js/api"
@@ -17,27 +16,29 @@ import Pools from "../../../src/js/state/Pools"
 import SystemTest from "../../../src/js/state/SystemTest"
 import Tabs from "../../../src/js/state/Tabs"
 import {Dispatch, Thunk} from "../../../src/js/state/types"
+import {lakePath, lakePoolPath, poolSearchPath} from "../../router/utils/paths"
+import {featureIsEnabled} from "app/core/feature-flag"
 
 export default (files: File[]): Thunk<Promise<void>> => async (
   dispatch,
   getState,
   {api}
 ) => {
-  const ws = Current.mustGetWorkspace(getState())
-  const workspaceId = ws.id
+  const l = Current.mustGetLake(getState())
+  const lakeId = l.id
   const zealot = await dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
-  const poolNames = Pools.getPoolNames(workspaceId)(getState())
+  const poolNames = Pools.getPoolNames(lakeId)(getState())
 
   dispatch(SystemTest.hook("import-start"))
   return lib
     .transaction([
       validateInput(files, poolNames),
-      newPool(zealot, dispatch, workspaceId),
+      newPool(zealot, dispatch, lakeId),
       registerIngest(dispatch, requestId),
-      setPool(dispatch, tabId, workspaceId),
-      executeLoader(zealot, dispatch, workspaceId, api, requestId),
+      setPool(dispatch, tabId, lakeId),
+      executeLoader(zealot, dispatch, lakeId, api, requestId),
       unregisterIngest(dispatch, requestId)
     ])
     .then(() => {
@@ -157,14 +158,16 @@ const executeLoader = (
   }
 })
 
-const setPool = (dispatch, tabId, workspaceId) => ({
+const setPool = (dispatch, tabId, lakeId) => ({
   do({poolId}) {
-    const url = lakePath(poolId, workspaceId)
+    const url = featureIsEnabled("query-flow")
+      ? lakePoolPath(poolId, lakeId)
+      : poolSearchPath(poolId, lakeId)
     global.tabHistories.getOrCreate(tabId).push(url)
     dispatch(Url.changed())
   },
   undo() {
-    const url = workspacePath(workspaceId)
+    const url = lakePath(lakeId)
     global.tabHistories.getOrCreate(tabId).replace(url)
     dispatch(Url.changed())
   }

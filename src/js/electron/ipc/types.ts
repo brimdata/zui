@@ -24,7 +24,7 @@ export type WindowsOpenMsg = {
 
 export type WindowsAuthCallbackMsg = {
   channel: "windows:authCallback"
-  workspaceId: string
+  lakeId: string
   code: string
 }
 

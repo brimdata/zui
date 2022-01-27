@@ -1,4 +1,4 @@
-import {PoolConfig, PoolStats} from "@brimdata/zealot"
+import {PoolConfig, PoolStats} from "packages/zealot/src/types"
 
 export type PoolState = {
   data: PoolConfig
@@ -6,7 +6,7 @@ export type PoolState = {
 }
 
 export type PoolsState = {
-  // workspaceId
+  // lakeId
   [key: string]: {
     // poolId
     [key: string]: PoolState
@@ -21,8 +21,7 @@ export type PoolsAction =
   | POOLS_INGEST_WARNING_APPEND
   | POOLS_INGEST_WARNING_CLEAR
   | POOLS_REMOVE
-  | POOLS_WORKSPACE_REMOVE
-
+  | POOLS_LAKE_REMOVE
 export type Pool = {
   name: string
   id: string
@@ -41,26 +40,26 @@ type PoolIngest = {
 
 export type POOLS_SET = {
   type: "$POOLS_SET"
-  workspaceId: string
+  lakeId: string
   pools: Partial<Pool>[]
 }
 
 export type POOLS_DETAIL = {
   type: "$POOLS_DETAIL"
-  workspaceId: string
+  lakeId: string
   pool: Partial<Pool>
 }
 
 export type POOLS_RENAME = {
   type: "$POOLS_RENAME"
-  workspaceId: string
+  lakeId: string
   poolId: string
   newName: string
 }
 
 export type POOLS_INGEST_PROGRESS = {
   type: "$POOLS_INGEST_PROGRESS"
-  workspaceId: string
+  lakeId: string
   poolId: string
   value: number | null
 }
@@ -69,22 +68,22 @@ export type POOLS_INGEST_WARNING_APPEND = {
   type: "$POOLS_INGEST_WARNING_APPEND"
   warning: string
   poolId: string
-  workspaceId: string
+  lakeId: string
 }
 
 export type POOLS_INGEST_WARNING_CLEAR = {
   type: "$POOLS_INGEST_WARNING_CLEAR"
   poolId: string
-  workspaceId: string
+  lakeId: string
 }
 
 export type POOLS_REMOVE = {
   type: "$POOLS_REMOVE"
-  workspaceId: string
+  lakeId: string
   poolId: string
 }
 
-export type POOLS_WORKSPACE_REMOVE = {
-  type: "$POOLS_WORKSPACE_REMOVE"
-  workspaceId: string
+export type POOLS_LAKE_REMOVE = {
+  type: "$POOLS_LAKE_REMOVE"
+  lakeId: string
 }

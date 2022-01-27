@@ -24,6 +24,8 @@ import fileBorder from "./file-border.svg"
 import fileFilled from "./file-filled.svg"
 import docPlain from "./doc-plain.svg"
 import tag from "./tag.svg"
+import run from "./run.svg"
+import pin from "./pin.svg"
 
 export default {
   braces,
@@ -48,8 +50,10 @@ export default {
   folder,
   pool,
   query,
+  run,
   "file-border": fileBorder,
   "file-filled": fileFilled,
   "doc-plain": docPlain,
-  tag
+  tag,
+  pin
 }

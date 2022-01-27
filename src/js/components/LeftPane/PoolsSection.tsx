@@ -3,7 +3,7 @@ import {useImportOnDrop} from "app/features/import/use-import-on-drop"
 import get from "lodash/get"
 import {useSelector} from "react-redux"
 import Current from "../../state/Current"
-import WorkspaceStatuses from "../../state/WorkspaceStatuses"
+import LakeStatuses from "../../state/LakeStatuses"
 import AddPoolButton from "../AddPoolButton"
 import SavedPoolsList from "../SavedPoolsList"
 import {
@@ -18,9 +18,9 @@ import {
 import {DropOverlay} from "./drop-overlay"
 
 function PoolsSection({isOpen, style, resizeProps, toggleProps}) {
-  const workspace = useSelector(Current.getWorkspace)
-  const id = get(workspace, ["id"], "")
-  const wsStatus = useSelector(WorkspaceStatuses.get(id))
+  const lake = useSelector(Current.getLake)
+  const id = get(lake, ["id"], "")
+  const wsStatus = useSelector(LakeStatuses.get(id))
   const pools = useSelector(Current.getPools)
   const [props, ref] = useImportOnDrop()
   return (
@@ -34,7 +34,7 @@ function PoolsSection({isOpen, style, resizeProps, toggleProps}) {
         <AddPoolButton />
       </SectionHeader>
       <SectionContents ref={ref}>
-        <SavedPoolsList pools={pools} workspaceStatus={wsStatus} />
+        <SavedPoolsList pools={pools} lakeStatus={wsStatus} />
         <DropOverlay show={props.canDrop && props.isOver}>
           Drop to import...
         </DropOverlay>

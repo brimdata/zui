@@ -1,0 +1,304 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`a normal response sets the Columns columns 1`] = `
+Object {
+  "AA,RA,RD,TC,TTLs,Z,_path,answers,id.orig_h,id.orig_p,id.resp_h,id.resp_p,proto,qclass,qclass_name,qtype,qtype_name,query,rcode,rcode_name,rejected,rtt,trans_id,ts,uid": Object {
+    "AA": Object {
+      "isVisible": true,
+    },
+    "RA": Object {
+      "isVisible": true,
+    },
+    "RD": Object {
+      "isVisible": true,
+    },
+    "TC": Object {
+      "isVisible": true,
+    },
+    "TTLs": Object {
+      "isVisible": true,
+    },
+    "Z": Object {
+      "isVisible": true,
+    },
+    "_path": Object {
+      "isVisible": true,
+    },
+    "answers": Object {
+      "isVisible": true,
+    },
+    "idorig_h": Object {
+      "isVisible": true,
+    },
+    "idorig_p": Object {
+      "isVisible": true,
+    },
+    "idresp_h": Object {
+      "isVisible": true,
+    },
+    "idresp_p": Object {
+      "isVisible": true,
+    },
+    "proto": Object {
+      "isVisible": true,
+    },
+    "qclass": Object {
+      "isVisible": true,
+    },
+    "qclass_name": Object {
+      "isVisible": true,
+    },
+    "qtype": Object {
+      "isVisible": true,
+    },
+    "qtype_name": Object {
+      "isVisible": true,
+    },
+    "query": Object {
+      "isVisible": true,
+    },
+    "rcode": Object {
+      "isVisible": true,
+    },
+    "rcode_name": Object {
+      "isVisible": true,
+    },
+    "rejected": Object {
+      "isVisible": true,
+    },
+    "rtt": Object {
+      "isVisible": true,
+    },
+    "trans_id": Object {
+      "isVisible": true,
+    },
+    "ts": Object {
+      "isVisible": true,
+    },
+    "uid": Object {
+      "isVisible": true,
+    },
+  },
+}
+`;
+
+exports[`a normal response sets the viewer columns 1`] = `
+Object {
+  "28": Schema {
+    "name": "28",
+    "type": TypeRecord {
+      "fields": Array [
+        Object {
+          "name": "_path",
+          "type": TypeOfString {
+            "kind": "primitive",
+            "name": "string",
+          },
+        },
+        Object {
+          "name": "ts",
+          "type": TypeOfTime {
+            "kind": "primitive",
+            "name": "time",
+          },
+        },
+        Object {
+          "name": "uid",
+          "type": TypeOfString {
+            "kind": "primitive",
+            "name": "string",
+          },
+        },
+        Object {
+          "name": "id",
+          "type": TypeRecord {
+            "fields": Array [
+              Object {
+                "name": "orig_h",
+                "type": TypeOfIp {
+                  "kind": "primitive",
+                  "name": "ip",
+                },
+              },
+              Object {
+                "name": "orig_p",
+                "type": TypeAlias {
+                  "id": 23,
+                  "kind": "alias",
+                  "name": "port",
+                  "type": TypeOfUint16 {
+                    "kind": "primitive",
+                    "name": "uint16",
+                  },
+                },
+              },
+              Object {
+                "name": "resp_h",
+                "type": TypeOfIp {
+                  "kind": "primitive",
+                  "name": "ip",
+                },
+              },
+              Object {
+                "name": "resp_p",
+                "type": TypeAlias {
+                  "id": 23,
+                  "kind": "alias",
+                  "name": "port",
+                  "type": TypeOfUint16 {
+                    "kind": "primitive",
+                    "name": "uint16",
+                  },
+                },
+              },
+            ],
+            "id": 24,
+            "kind": "record",
+          },
+        },
+        Object {
+          "name": "proto",
+          "type": TypeAlias {
+            "id": 25,
+            "kind": "alias",
+            "name": "zenum",
+            "type": TypeOfString {
+              "kind": "primitive",
+              "name": "string",
+            },
+          },
+        },
+        Object {
+          "name": "trans_id",
+          "type": TypeOfUint64 {
+            "kind": "primitive",
+            "name": "uint64",
+          },
+        },
+        Object {
+          "name": "rtt",
+          "type": TypeOfDuration {
+            "kind": "primitive",
+            "name": "duration",
+          },
+        },
+        Object {
+          "name": "query",
+          "type": TypeOfString {
+            "kind": "primitive",
+            "name": "string",
+          },
+        },
+        Object {
+          "name": "qclass",
+          "type": TypeOfUint64 {
+            "kind": "primitive",
+            "name": "uint64",
+          },
+        },
+        Object {
+          "name": "qclass_name",
+          "type": TypeOfString {
+            "kind": "primitive",
+            "name": "string",
+          },
+        },
+        Object {
+          "name": "qtype",
+          "type": TypeOfUint64 {
+            "kind": "primitive",
+            "name": "uint64",
+          },
+        },
+        Object {
+          "name": "qtype_name",
+          "type": TypeOfString {
+            "kind": "primitive",
+            "name": "string",
+          },
+        },
+        Object {
+          "name": "rcode",
+          "type": TypeOfUint64 {
+            "kind": "primitive",
+            "name": "uint64",
+          },
+        },
+        Object {
+          "name": "rcode_name",
+          "type": TypeOfString {
+            "kind": "primitive",
+            "name": "string",
+          },
+        },
+        Object {
+          "name": "AA",
+          "type": TypeOfBool {
+            "kind": "primitive",
+            "name": "bool",
+          },
+        },
+        Object {
+          "name": "TC",
+          "type": TypeOfBool {
+            "kind": "primitive",
+            "name": "bool",
+          },
+        },
+        Object {
+          "name": "RD",
+          "type": TypeOfBool {
+            "kind": "primitive",
+            "name": "bool",
+          },
+        },
+        Object {
+          "name": "RA",
+          "type": TypeOfBool {
+            "kind": "primitive",
+            "name": "bool",
+          },
+        },
+        Object {
+          "name": "Z",
+          "type": TypeOfUint64 {
+            "kind": "primitive",
+            "name": "uint64",
+          },
+        },
+        Object {
+          "name": "answers",
+          "type": TypeArray {
+            "id": 26,
+            "kind": "array",
+            "type": TypeOfString {
+              "kind": "primitive",
+              "name": "string",
+            },
+          },
+        },
+        Object {
+          "name": "TTLs",
+          "type": TypeArray {
+            "id": 27,
+            "kind": "array",
+            "type": TypeOfDuration {
+              "kind": "primitive",
+              "name": "duration",
+            },
+          },
+        },
+        Object {
+          "name": "rejected",
+          "type": TypeOfBool {
+            "kind": "primitive",
+            "name": "bool",
+          },
+        },
+      ],
+      "id": 28,
+      "kind": "record",
+    },
+  },
+}
+`;

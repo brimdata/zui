@@ -10,7 +10,7 @@ import {useFindings} from "./useFindings"
 
 export default React.memo<{}>(function InvestigationLinear() {
   const findings = useFindings()
-  const workspaceId = useSelector(Current.getWorkspaceId)
+  const lakeId = useSelector(Current.getLakeId)
   const poolId = useSelector(Current.getPoolId)
 
   const cards = []
@@ -20,7 +20,7 @@ export default React.memo<{}>(function InvestigationLinear() {
       <FindingCard
         key={getKey(f)}
         finding={f}
-        workspaceId={workspaceId}
+        lakeId={lakeId}
         poolId={poolId}
       />
     )

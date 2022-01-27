@@ -12,10 +12,10 @@ export default (): Thunk<Promise<void>> => (dispatch, getState) => {
   if (isEmpty(poolIds)) {
     return Promise.resolve()
   } else {
-    const workspaceId = Current.getWorkspaceId(getState())
-    if (!workspaceId) return Promise.reject()
+    const lakeId = Current.getLakeId(getState())
+    if (!lakeId) return Promise.reject()
     const names = poolIds.map((id) => {
-      const pool = Pools.get(workspaceId, id)(getState())
+      const pool = Pools.get(lakeId, id)(getState())
       if (pool) return pool.name
       else return id
     })

@@ -2,10 +2,10 @@ import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 
 export default function addAuthDefaultsToWorkspaces(state: any) {
   for (const s of getAllStates(state)) {
-    if (!s.workspaces) continue
-    Object.values(s.workspaces).forEach((ws) => {
+    if (!s.lakes) continue
+    Object.values(s.lakes).forEach((l) => {
       // @ts-ignore
-      if (!ws.authType) ws.authType = "none"
+      if (!l.authType) l.authType = "none"
     })
   }
 

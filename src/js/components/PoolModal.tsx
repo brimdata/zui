@@ -1,3 +1,4 @@
+import {Pool} from "@brimdata/zealot"
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import renamePool from "../flows/renamePool"
@@ -13,8 +14,8 @@ import ModalBox from "./ModalBox/ModalBox"
 
 export default function PoolModal() {
   const args = useSelector(Modal.getArgs) || {}
-  const {workspaceId, poolId} = args
-  const pool = useSelector(Pools.get(workspaceId, poolId))
+  const {lakeId, poolId} = args
+  const pool = useSelector(Pools.get(lakeId, poolId)) as Pool
   const name = (pool && pool.name) || ""
   const [nameInput, setNameInput] = useState(name)
   const [error, setError] = useState(null)
@@ -30,9 +31,7 @@ export default function PoolModal() {
       dispatch(Modal.hide())
       return
     }
-    const prom = dispatch(renamePool(poolId, nameInput))
-    console.log(prom)
-    prom
+    dispatch(renamePool(poolId, nameInput))
       .then(() => {
         dispatch(Modal.hide())
         return

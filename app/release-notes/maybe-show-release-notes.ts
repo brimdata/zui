@@ -21,7 +21,7 @@ export function maybeShowReleaseNotes() {
 
 export function showReleaseNotes() {
   return (dispatch, getState) => {
-    const id = Current.getWorkspaceId(getState())
+    const id = Current.getLakeId(getState())
     dispatch(Tabs.new(releaseNotesPath(id)))
   }
 }

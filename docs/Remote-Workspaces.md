@@ -1,4 +1,4 @@
-# Remote Workspaces
+# Remote Lakes
 
 - [Summary](#summary)
 - [About Cookbooks](#about-cookbooks)
@@ -6,15 +6,15 @@
 - [Background: Brim & Zed Lakes](#background-brim--zed-lakes)
 - [Starting a Remote Zed Lake](#starting-a-remote-zed-lake)
 - [Importing Data](#importing-data)
-- [Accessing Our Remote Workspace](#accessing-our-remote-workspace)
+- [Accessing Our Remote Lake](#accessing-our-remote-lake)
 - [Contact us!](#contact-us)
 
 # Summary
 
-By default, the Brim application connects to a Workspace on the system on which
-it is launched. This Workspace includes [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
+By default, the Brim application connects to a Lake on the system on which
+it is launched. This Lake includes [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
 storage on the local filesystem for holding imported data. However, Brim is
-capable of accessing data stored in a Zed Lake in a remote Workspace as well.
+capable of accessing data stored in a Zed Lake in a remote Lake as well.
 This cookbook describes the available options and current limitations.
 
 # About Cookbooks
@@ -44,7 +44,7 @@ some rough edges you may encounter as you work through the configurations
 described in this article.
 
 1. While **logs** can be imported from your local Brim app directly to a remote
-   Workspace, **packet captures** currently cannot ([brim/1730](https://github.com/brimdata/brim/issues/1730)).
+   Lake, **packet captures** currently cannot ([brim/1730](https://github.com/brimdata/brim/issues/1730)).
 
 2. While the configuration potentially allows multiple remote users to access
    the same centrally-stored data, there's currently no concept of user
@@ -233,22 +233,22 @@ wrccdc 1uMPHXonxiBH1gY6TCCFxBNS99Z key ts order desc
 zed-sample-data 1uMR6rGmrSBRHnB0yqOGnzhQb0b key ts order desc
 ```
 
-# Accessing Our Remote Workspace
+# Accessing Our Remote Lake
 
 Now that we've got data imported into our remote Zed Lake, we'll access it from
 the Brim app that's running on our Mac laptop.
 
 The option to initiate a remote connection is available by clicking the
 pull-down above the pools list in the left panel and selecting **Add
-Workspace**.
+Lake**.
 
-![Add Workspace](media/Add-Workspace.png)
+![Add Lake](media/Add-Lake.png)
 
 A window will pop up into which we can specify a name for our remote connection
 along with its hostname or IP address. An optional port specification may also
 be included if it's listening on a port other than the default `9867`.
 
-![Add Workspace window](media/Add-Workspace-window.png)
+![Add Lake window](media/Add-Lake-window.png)
 
 Now the pools in our remote Zed Lake will appear in the left panel just as we're
 accustomed to seeing when working with local data. We can now enter Zed queries
@@ -273,16 +273,16 @@ Zed Lake in the same manner as you've been doing locally.
 
 ![Importing logs to remote Zed Lake](media/Remote-Zed-Lake-Import.gif)
 
-Attempts to import a pcap directly to the remote Workspace will fail with an
+Attempts to import a pcap directly to the remote Lake will fail with an
 error message (see [brim/1730](https://github.com/brimdata/brim/issues/1730)
 for details).
 
-A connection to a remote Workspace can be removed by selecting the **Get Info**
+A connection to a remote Lake can be removed by selecting the **Get Info**
 option in the pull-down and clicking **Logout**. This only removes the config
-in your Brim app that references the remote Workspace. It does not shutdown the
+in your Brim app that references the remote Lake. It does not shutdown the
 remote `zed serve` nor does it delete any data stored there.
 
-![Get Workspace info](media/Workspace-Get-Info.png)
+![Get Lake info](media/Lake-Get-Info.png)
 
 # Contact us!
 

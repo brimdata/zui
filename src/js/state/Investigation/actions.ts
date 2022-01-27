@@ -2,7 +2,7 @@ import {
   FINDING_DELETE,
   INVESTIGATION_CLEAR,
   INVESTIGATION_PUSH,
-  INVESTIGATION_WORKSPACE_CLEAR
+  INVESTIGATION_LAKE_CLEAR
 } from "./types"
 import {SearchRecord} from "../../types"
 import {isArray} from "../../lib/is"
@@ -10,42 +10,40 @@ import brim, {Ts} from "../../brim"
 
 export default {
   push: (
-    workspaceId: string,
+    lakeId: string,
     poolId: string,
     record: SearchRecord,
     ts: Ts = brim.time().toTs()
   ): INVESTIGATION_PUSH => ({
     type: "$INVESTIGATION_PUSH",
-    workspaceId,
+    lakeId,
     poolId,
     entry: record,
     ts: ts
   }),
 
   deleteFindingByTs: (
-    workspaceId: string,
+    lakeId: string,
     poolId: string,
     ts: Ts[] | Ts
   ): FINDING_DELETE => ({
     type: "$FINDING_DELETE",
-    workspaceId,
+    lakeId,
     poolId,
     ts: isArray(ts) ? ts : [ts]
   }),
 
   clearPoolInvestigation: (
-    workspaceId: string,
+    lakeId: string,
     poolId: string
   ): INVESTIGATION_CLEAR => ({
     type: "$INVESTIGATION_CLEAR",
-    workspaceId,
+    lakeId,
     poolId
   }),
 
-  clearWorkspaceInvestigation: (
-    workspaceId: string
-  ): INVESTIGATION_WORKSPACE_CLEAR => ({
-    type: "$INVESTIGATION_WORKSPACE_CLEAR",
-    workspaceId
+  clearLakeInvestigation: (lakeId: string): INVESTIGATION_LAKE_CLEAR => ({
+    type: "$INVESTIGATION_LAKE_CLEAR",
+    lakeId
   })
 }

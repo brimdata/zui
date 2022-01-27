@@ -14,7 +14,7 @@
 
 **Cookbooks**
 
-- [[Remote Workspaces]]
+- [[Remote Lakes]]
 - [[Query Library Transfer]]
 - [[Joining Data]]
 

@@ -1,13 +1,16 @@
 export type QueriesState = Group
-
 export type Item = Query | Group
 
 export interface Query {
   id: string
   name: string
   value: string
-  description: string
-  tags: string[]
+  pins: {
+    from: string
+    filters: string[]
+  }
+  description?: string
+  tags?: string[]
 }
 
 export interface Group {

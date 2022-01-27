@@ -9,7 +9,7 @@ export type InvestigationState = {
 export type InvestigationAction =
   | FINDING_DELETE
   | INVESTIGATION_CLEAR
-  | INVESTIGATION_WORKSPACE_CLEAR
+  | INVESTIGATION_LAKE_CLEAR
   | INVESTIGATION_PUSH
 
 export type Finding = {
@@ -19,24 +19,24 @@ export type Finding = {
 
 export type FINDING_DELETE = {
   type: "$FINDING_DELETE"
-  workspaceId: string
+  lakeId: string
   poolId: string
   ts: Ts[]
 }
 export type INVESTIGATION_CLEAR = {
   type: "$INVESTIGATION_CLEAR"
-  workspaceId: string
+  lakeId: string
   poolId: string
 }
 
-export type INVESTIGATION_WORKSPACE_CLEAR = {
-  type: "$INVESTIGATION_WORKSPACE_CLEAR"
-  workspaceId: string
+export type INVESTIGATION_LAKE_CLEAR = {
+  type: "$INVESTIGATION_LAKE_CLEAR"
+  lakeId: string
 }
 
 export type INVESTIGATION_PUSH = {
   type: "$INVESTIGATION_PUSH"
-  workspaceId: string
+  lakeId: string
   poolId: string
   entry: SearchRecord
   ts: Ts

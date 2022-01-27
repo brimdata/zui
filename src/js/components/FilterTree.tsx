@@ -52,11 +52,11 @@ const reconstructSearch = (node: InvestigationNode): SearchRecord => {
 type Props = {
   node: InvestigationNode
   i: number
-  workspaceId: string
+  lakeId: string
   poolId: string
 }
 
-function NodeRow({node, i, workspaceId, poolId}: Props) {
+function NodeRow({node, i, lakeId, poolId}: Props) {
   const dispatch = useDispatch()
   const last = useSelector(Url.getSearchParams)
   const prevPins = last.pins
@@ -68,7 +68,7 @@ function NodeRow({node, i, workspaceId, poolId}: Props) {
         const multiTs = node
           .all(() => true)
           .map((node) => node.model.finding.ts)
-        dispatch(Investigation.deleteFindingByTs(workspaceId, poolId, multiTs))
+        dispatch(Investigation.deleteFindingByTs(lakeId, poolId, multiTs))
       }
     },
     {type: "separator"},
@@ -84,9 +84,7 @@ function NodeRow({node, i, workspaceId, poolId}: Props) {
           })
           .then(({response}) => {
             if (response === 0)
-              dispatch(
-                Investigation.clearPoolInvestigation(workspaceId, poolId)
-              )
+              dispatch(Investigation.clearPoolInvestigation(lakeId, poolId))
           })
     }
   ])
@@ -112,13 +110,7 @@ function NodeRow({node, i, workspaceId, poolId}: Props) {
       </div>
       <div className="filter-tree-children">
         {node.children.map((node, i) => (
-          <NodeRow
-            node={node}
-            workspaceId={workspaceId}
-            poolId={poolId}
-            i={i}
-            key={i}
-          />
+          <NodeRow node={node} lakeId={lakeId} poolId={poolId} i={i} key={i} />
         ))}
       </div>
     </div>
@@ -126,7 +118,7 @@ function NodeRow({node, i, workspaceId, poolId}: Props) {
 }
 
 export default function FilterTree() {
-  const currentWorkspaceId = useSelector(Current.getWorkspaceId)
+  const currentLakeId = useSelector(Current.getLakeId)
   const currentPoolId = useSelector(Current.getPoolId)
   const investigation = useSelector(Investigation.getCurrentHistory)
   const tree = createInvestigationTree(investigation)
@@ -143,7 +135,7 @@ export default function FilterTree() {
     <div className="filter-tree">
       {tree.children.map((node, i) => (
         <NodeRow
-          workspaceId={currentWorkspaceId}
+          lakeId={currentLakeId}
           poolId={currentPoolId}
           node={node}
           i={i}

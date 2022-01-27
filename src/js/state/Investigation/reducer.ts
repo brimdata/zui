@@ -11,32 +11,30 @@ const init = (): InvestigationState => ({})
 export default produce((draft, a: InvestigationAction) => {
   switch (a.type) {
     case "$INVESTIGATION_PUSH":
-      if (!draft[a.workspaceId]) draft[a.workspaceId] = {}
-      if (!draft[a.workspaceId][a.poolId]) draft[a.workspaceId][a.poolId] = []
+      if (!draft[a.lakeId]) draft[a.lakeId] = {}
+      if (!draft[a.lakeId][a.poolId]) draft[a.lakeId][a.poolId] = []
 
-      draft[a.workspaceId][a.poolId] = createFinding(
-        draft[a.workspaceId][a.poolId],
+      draft[a.lakeId][a.poolId] = createFinding(
+        draft[a.lakeId][a.poolId],
         a.entry,
         a.ts
       )
       return
     case "$FINDING_DELETE":
-      if (!draft[a.workspaceId] || !draft[a.workspaceId][a.poolId]) return
+      if (!draft[a.lakeId] || !draft[a.lakeId][a.poolId]) return
 
-      draft[a.workspaceId][a.poolId] = draft[a.workspaceId][a.poolId].filter(
-        (f) => {
-          for (const ts of a.ts) if (isEqual(ts, f.ts)) return false
-          return true
-        }
-      )
+      draft[a.lakeId][a.poolId] = draft[a.lakeId][a.poolId].filter((f) => {
+        for (const ts of a.ts) if (isEqual(ts, f.ts)) return false
+        return true
+      })
       return
     case "$INVESTIGATION_CLEAR":
-      if (!draft[a.workspaceId] || !draft[a.workspaceId][a.poolId]) return
+      if (!draft[a.lakeId] || !draft[a.lakeId][a.poolId]) return
 
-      delete draft[a.workspaceId][a.poolId]
+      delete draft[a.lakeId][a.poolId]
       return
-    case "$INVESTIGATION_WORKSPACE_CLEAR":
-      delete draft[a.workspaceId]
+    case "$INVESTIGATION_LAKE_CLEAR":
+      delete draft[a.lakeId]
       return
   }
 }, init())

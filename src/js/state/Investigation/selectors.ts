@@ -9,16 +9,14 @@ export const raw = (state: State) => state.investigation
 
 export const getCurrentHistory = createSelector(
   raw,
-  Current.getWorkspaceId,
+  Current.getLakeId,
   Current.getPoolId,
   (history, wsId, poolId) => {
     return (history[wsId] || {})[poolId] || []
   }
 )
 
-export const getCurrentFinding = (workspaceId: Id, poolId: Id) => (
-  state: State
-) => {
-  if (!workspaceId || !poolId) return null
-  return last(state.investigation[workspaceId][poolId])
+export const getCurrentFinding = (lakeId: Id, poolId: Id) => (state: State) => {
+  if (!lakeId || !poolId) return null
+  return last(state.investigation[lakeId][poolId])
 }
