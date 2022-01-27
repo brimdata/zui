@@ -3586,7 +3586,7 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "brimdata/zed#2c866af46f24873958a8bf632b0ee0852e0da97a"
+    zed: "brimdata/zed#87f7a5249637eb7df6c5c6a06b802e98ed13d5a4"
   dependenciesMeta:
     electron-installer-debian:
       optional: true
@@ -17572,9 +17572,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#2c866af46f24873958a8bf632b0ee0852e0da97a":
+"zed@brimdata/zed#87f7a5249637eb7df6c5c6a06b802e98ed13d5a4":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=2c866af46f24873958a8bf632b0ee0852e0da97a"
-  checksum: 7d15c7095b44ff599d9f85c68625974b3f831a29c301b3010ae2509a83678bf60958b30232866eb053f173fbabc4fa4322bac85d2a37a847a22f159ce31d1da2
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=87f7a5249637eb7df6c5c6a06b802e98ed13d5a4"
+  checksum: 4fe2489b03d039bf8ac91ea3aafc624f70f98798faa024c17e1ae4dc2f32b5380e33cb2aae2d5c47e83427dd1cc7f7bf2f0498e0fb0e678969808cea1474e152
   languageName: node
   linkType: hard
