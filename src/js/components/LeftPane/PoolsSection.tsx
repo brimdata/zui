@@ -1,3 +1,4 @@
+import React from "react"
 import {useImportOnDrop} from "app/features/import/use-import-on-drop"
 import get from "lodash/get"
 import {useSelector} from "react-redux"

@@ -9,7 +9,6 @@ import {
   currentPoolItem,
   poolItem
 } from "../../../test/playwright/helpers/locators"
-import brim from "../brim"
 import FileFilled from "../icons/FileFilled"
 import Current from "../state/Current"
 import {AppDispatch} from "../state/types"

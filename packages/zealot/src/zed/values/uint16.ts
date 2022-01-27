@@ -1,7 +1,6 @@
-import {isNull} from "../utils/is-null"
 import {TypeUint16} from "../types/type-uint16"
+import {isNull} from "../utils/is-null"
 import {Primitive} from "./primitive"
-import {JSOptions} from "./types"
 
 export class Uint16 extends Primitive {
   type: typeof TypeUint16 = TypeUint16
@@ -11,7 +10,7 @@ export class Uint16 extends Primitive {
     return parseInt(this.value)
   }
 
-  toJS(opts: JSOptions = {}) {
+  toJS() {
     return this.toInt()
   }
 }

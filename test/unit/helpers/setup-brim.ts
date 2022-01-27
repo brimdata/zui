@@ -1,15 +1,14 @@
+import "@testing-library/jest-dom"
 import {BrimMain} from "src/js/electron/brim"
 import {main} from "src/js/electron/main"
 import initialize from "src/js/initializers/initialize"
 import PluginManager from "src/js/initializers/pluginManager"
 import Current from "src/js/state/Current"
-import Pools from "src/js/state/Pools"
-import {Pool} from "src/js/state/Pools/types"
-import {Store} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
 import {Lake} from "src/js/state/Lakes/types"
+import {Pool} from "src/js/state/Pools/types"
+import {Store} from "src/js/state/types"
 import {onPage} from "./utils"
-import "@testing-library/jest-dom"
 
 class BrimTestContext {
   store: Store

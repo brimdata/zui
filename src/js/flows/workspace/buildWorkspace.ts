@@ -6,8 +6,8 @@ import {Client} from "@brimdata/zealot"
 
 export const buildWorkspace = (
   ws: Partial<Lake>,
-  signal: AbortSignal
-): Thunk<Promise<BrimWorkspace>> => async (dispatch, getState) => {
+  _signal: AbortSignal
+): Thunk<Promise<BrimWorkspace>> => async (_dispatch, _getState) => {
   if (!ws.host || !ws.id || !ws.name)
     throw new Error("must provide host, id, and name to build lake")
   const zealot = new Client(brim.workspace(ws as Lake).getAddress())

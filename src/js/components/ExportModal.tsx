@@ -1,3 +1,4 @@
+import React from "react"
 import {ResponseFormat} from "@brimdata/zealot"
 import {ipcRenderer} from "electron"
 import {ChangeEvent, useState} from "react"

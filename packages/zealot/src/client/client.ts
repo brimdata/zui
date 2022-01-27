@@ -3,7 +3,6 @@ import nodeFetch from "node-fetch"
 import {decode} from "../encoder"
 import {parseContentType} from "../fetcher/contentType"
 import {ResultStream} from "../query/result-stream"
-import {PoolStats} from "../types"
 import {createError} from "../util/error"
 import {
   ClientOpts,

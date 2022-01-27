@@ -11,7 +11,6 @@ import {
 import {TypeTime} from "../types/type-time"
 import {isNull} from "../utils/is-null"
 import {Primitive} from "./primitive"
-import {JSOptions} from "./types"
 
 export class Time extends Primitive {
   type: typeof TypeTime = TypeTime
@@ -48,7 +47,7 @@ export class Time extends Primitive {
     return BigInt(secs) * BigInt(1_000_000_000) + BigInt(this._time.nano())
   }
 
-  toJS(opts: JSOptions = {}) {
+  toJS() {
     return this.toDate()
   }
 }

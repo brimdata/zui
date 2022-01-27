@@ -1,3 +1,4 @@
+import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import ToolbarButton from "../../../app/toolbar/button"
 import Current from "../state/Current"
@@ -15,7 +16,6 @@ import {
 export default function IngestWarningsModal({onClose}) {
   const dispatch = useDispatch()
   useEnterKey(onClose)
-  const id = useSelector(Current.getWorkspaceId)
   const poolId = useSelector(Current.getPoolId)
   const ingest = useSelector(Imports.get(poolId))
   if (!ingest) return null

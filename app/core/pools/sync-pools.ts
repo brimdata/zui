@@ -3,7 +3,6 @@ import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
 import Pools from "src/js/state/Pools"
 import {Thunk} from "src/js/state/types"
-import {Pool} from "./pool"
 
 /**
  * This only gets the list of names from the server.

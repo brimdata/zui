@@ -1,7 +1,7 @@
 import * as remote from "@electron/remote"
 import syncPools from "app/core/pools/sync-pools"
 import {join} from "path"
-import {useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import toast from "react-hot-toast"
 import {useDispatch} from "react-redux"
 import Link from "src/js/components/common/Link"

@@ -2,7 +2,6 @@ import {viewLogDetail} from "../flows/viewLogDetail"
 import Current from "../state/Current"
 import LogDetails from "../state/LogDetails"
 import Search from "../state/Search/actions"
-import brim from "../brim"
 import initialize from "./initialize"
 
 export default async () => {

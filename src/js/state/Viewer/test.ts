@@ -1,5 +1,4 @@
 import {createRecord} from "test/shared/factories/zed-factory"
-import {zed} from "@brimdata/zealot"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
@@ -15,7 +14,6 @@ beforeEach(() => {
 const conn = createRecord({ts: new Date(1000)})
 const dns = createRecord({ts: new Date(2000)})
 const http = createRecord({ts: new Date(3000)})
-const type = new zed.TypeRecord([{name: "a", type: zed.TypeString}])
 
 test("adding logs to the viewer", () => {
   const state = store.dispatchAll([

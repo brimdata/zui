@@ -1,3 +1,4 @@
+import React from "react"
 import useSelect from "app/core/hooks/use-select"
 import {syncPool} from "app/core/pools/sync-pool"
 import {useDispatch} from "react-redux"

@@ -8,6 +8,7 @@ import Imports from "../state/Imports"
 import Modal from "../state/Modal"
 import Warning from "./icons/warning-sm.svg"
 import ProgressIndicator from "./ProgressIndicator"
+import React from "react"
 
 export default function StatusBar() {
   const dispatch = useDispatch()

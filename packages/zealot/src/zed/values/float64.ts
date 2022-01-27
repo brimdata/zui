@@ -1,7 +1,6 @@
 import {isNull} from "../utils/is-null"
 import {TypeFloat64} from "../types/type-float64"
 import {Primitive} from "./primitive"
-import {JSOptions} from "./types"
 
 export class Float64 extends Primitive {
   type: typeof TypeFloat64 = TypeFloat64
@@ -11,7 +10,7 @@ export class Float64 extends Primitive {
     return parseFloat(this.value)
   }
 
-  toJS(opts: JSOptions = {}) {
+  toJS() {
     return this.toFloat()
   }
 }

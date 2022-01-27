@@ -70,6 +70,7 @@ export class ResultStream {
     if (this._promise) return this._promise
 
     this.status = "pending"
+    // eslint-disable-next-line
     this._promise = new Promise(async (resolve, reject) => {
       try {
         for await (let json of eachLine(this.resp.body)) {

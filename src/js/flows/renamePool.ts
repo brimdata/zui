@@ -1,8 +1,6 @@
-import {Thunk} from "../state/types"
-import Pools from "../state/Pools"
-import {getZealot} from "./getZealot"
-import syncPools from "app/core/pools/sync-pools"
 import {syncPool} from "app/core/pools/sync-pool"
+import {Thunk} from "../state/types"
+import {getZealot} from "./getZealot"
 
 export default (
   lakeId: string,

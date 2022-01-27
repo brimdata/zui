@@ -1,3 +1,4 @@
+import React from "react"
 import {syncPool} from "app/core/pools/sync-pool"
 import syncPools from "app/core/pools/sync-pools"
 import log from "electron-log"
