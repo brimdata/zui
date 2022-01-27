@@ -13,10 +13,7 @@ import {SearchResult} from "src/js/flows/search/mod"
  * search which allows for the inifinite scroll behavior.
  */
 
-const initialViewerSearch = (): Thunk<Promise<SearchResult>> => (
-  dispatch,
-  getState
-) => {
+const initialViewerSearch = (): Thunk<any> => (dispatch, getState) => {
   const params = Url.getSearchParams(getState())
   const program = brim.program(params.program, params.pins)
   const perPage = program.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE

@@ -1985,9 +1985,11 @@ __metadata:
     "@rollup/plugin-commonjs": ^21.0.1
     "@rollup/plugin-node-resolve": ^13.0.6
     "@rollup/plugin-typescript": ^8.3.0
+    "@types/event-source-polyfill": ^1.0.0
     "@types/events": ^3.0.0
     "@types/node-fetch": 2
     cross-fetch: ^3.1.4
+    event-source-polyfill: ^1.0.25
     events: ^3.3.0
     fkill: 7.2.1
     jest: ^27.3.1
@@ -3291,6 +3293,13 @@ __metadata:
   version: 0.0.39
   resolution: "@types/estree@npm:0.0.39"
   checksum: 412fb5b9868f2c418126451821833414189b75cc6bf84361156feed733e3d92ec220b9d74a89e52722e03d5e241b2932732711b7497374a404fad49087adc248
+  languageName: node
+  linkType: hard
+
+"@types/event-source-polyfill@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@types/event-source-polyfill@npm:1.0.0"
+  checksum: 5b3eacace596ce8c1c3f877ea7967e9634922faa7187f9d4000fd3d7b765f84917603dbc95c98d28ff592e80cb7bc588166ec9ea841d262be0d919bf9ed79c14
   languageName: node
   linkType: hard
 

@@ -1,5 +1,3 @@
-import {Ts} from "../../brim"
-
 export type PoolsState = {
   // workspaceId
   [key: string]: {
@@ -17,13 +15,16 @@ export type PoolsAction =
   | POOLS_INGEST_WARNING_CLEAR
   | POOLS_REMOVE
   | POOLS_WORKSPACE_REMOVE
+
 export type Pool = {
   name: string
   id: string
-  min_time: Ts
-  max_time: Ts
   ingest: PoolIngest
   size: number
+  span: {
+    ts: Date
+    dur: number
+  }
 }
 
 type PoolIngest = {

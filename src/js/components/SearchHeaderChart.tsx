@@ -25,7 +25,7 @@ export default function SearchHeaderChart() {
 
   useLayoutEffect(() => {
     if (status === "INIT" || searchKey !== location.key) {
-      dispatch(histogramSearch()).catch((e) => console.log(e))
+      dispatch(histogramSearch())
     }
   }, [location.key])
 

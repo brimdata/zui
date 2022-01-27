@@ -7,5 +7,5 @@ export function mergeDefaultSpanArgs(
 ): SpanArgs {
   const [from, to] = spanArgs
   const [d1, d2] = pool.defaultSpanArgs() as SpanArgs
-  return [from || d1, to || d2]
+  return [d1, d2]
 }

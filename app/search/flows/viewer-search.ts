@@ -1,16 +1,12 @@
-import {zed} from "@brimdata/zealot"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
-import {search, SearchResult} from "src/js/flows/search/mod"
+import {search} from "src/js/flows/search/mod"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Columns from "src/js/state/Columns"
 import Current from "src/js/state/Current"
 import Notice from "src/js/state/Notice"
-import SearchBar from "src/js/state/SearchBar"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
-import {SchemaMap} from "src/js/state/Viewer/types"
-import {SearchResponse} from "../../../src/js/flows/search/response"
 
 type Args = {
   query: string
@@ -22,73 +18,42 @@ type Args = {
 
 const id = "Table"
 
-export function viewerSearch(args: Args): Thunk<Promise<SearchResult>> {
-  return (dispatch, getState) => {
-    const {query, from, to, keep, append} = args
+export function viewerSearch(args: Args): Thunk<void> {
+  return async (dispatch, getState) => {
     const tabId = Tabs.getActive(getState())
-    const poolId = Current.mustGetPool(getState()).id
-    const {response, promise} = dispatch(
-      search({id, query, from, to, poolId, initial: !append})
-    )
-    dispatch(handle(response, tabId, keep, append))
-    return promise.catch((e) => e)
-  }
-}
-
-function handle(
-  response: SearchResponse,
-  tabId: string,
-  keep = false,
-  append = false
-): Thunk {
-  return function(dispatch, getState) {
-    let allColumns: SchemaMap = {}
-    let allRecords: zed.Record[] = []
-    let count = 0
-
-    // preserve searchKey in case of clear
     const currentSearchKey = Viewer.getSearchKey(getState())
-    if (!keep && !append) {
+    if (!args.append) {
       dispatch(Viewer.clear(tabId))
       dispatch(Viewer.setSearchKey(tabId, currentSearchKey))
     }
 
+    const res = await dispatch(
+      search({
+        id,
+        query: args.query,
+        poolId: Current.mustGetPool(getState()).id,
+        from: args.from,
+        initial: !args.append
+      })
+    )
+
     dispatch(Viewer.setStatus(tabId, "FETCHING"))
     dispatch(Viewer.setEndStatus(tabId, "FETCHING"))
 
-    response
-      .status((status) => dispatch(Viewer.setStatus(tabId, status)))
-      .chan(0, ({rows, schemas}) => {
-        count = rows.length
-
-        if (keep) {
-          allColumns = schemas
-          allRecords = rows
-          return
-        }
-
-        if (append) {
-          dispatch(Viewer.appendRecords(tabId, rows))
-        } else {
-          dispatch(Viewer.setRecords(tabId, rows))
-        }
-        dispatch(Viewer.updateColumns(tabId, schemas))
-        dispatch(Columns.touch(schemas))
+    const prevRows = Viewer.getRecords(getState())
+    try {
+      await res.collect(({rows, shapesMap}) => {
+        dispatch(Viewer.setRecords(tabId, [...prevRows, ...rows]))
+        dispatch(Viewer.updateColumns(tabId, shapesMap))
+        dispatch(Columns.touch(shapesMap))
       })
-      .warning((warning) => dispatch(SearchBar.errorSearchBarParse(warning)))
-      .error((error) => {
-        dispatch(Notice.set(ErrorFactory.create(error)))
-      })
-      .end(() => {
-        if (keep) {
-          dispatch(Viewer.clear(tabId))
-          dispatch(Viewer.setSearchKey(tabId, currentSearchKey))
-          dispatch(Viewer.setRecords(tabId, allRecords))
-          dispatch(Viewer.setColumns(tabId, allColumns))
-          dispatch(Columns.touch(allColumns))
-        }
-        dispatch(Viewer.setEndStatus(tabId, endStatus(count)))
-      })
+    } catch (e) {
+      dispatch(Viewer.setStatus(tabId, "ERROR"))
+      dispatch(Notice.set(ErrorFactory.create(e)))
+    } finally {
+      dispatch(Viewer.setStatus(tabId, "SUCCESS"))
+      dispatch(Viewer.setEndStatus(tabId, endStatus(res.rows.length)))
+    }
   }
 }
 

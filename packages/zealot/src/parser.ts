@@ -4,4 +4,4 @@
 // @ts-ignore
 import parser from "zed/compiler/parser/parser"
 // @ts-ignore
-export const parse = parser.parse
+export const parseAst = parser.parse

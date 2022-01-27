@@ -1,7 +1,7 @@
 import {TypeIp} from "../types/type-ip"
 import {TypeMap} from "../types/type-map"
 import {isNull} from "../utils/is-null"
-import {Value} from "./types"
+import {JSOptions, Value} from "./types"
 
 export class ZedMap implements Value {
   constructor(public type: TypeMap, public value: Map<Value, Value> | null) {}
@@ -28,10 +28,13 @@ export class ZedMap implements Value {
     return isNull(this.value)
   }
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     if (isNull(this.value)) return null
     return new Map(
-      Array.from(this.value.entries()).map(([k, v]) => [k.toJS(), v.toJS()])
+      Array.from(this.value.entries()).map(([k, v]) => [
+        k.toJS(opts),
+        v.toJS(opts)
+      ])
     )
   }
 }

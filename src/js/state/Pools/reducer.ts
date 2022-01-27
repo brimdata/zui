@@ -15,9 +15,7 @@ const poolsReducer = produce((draft, action: PoolsAction): {
       }, {})
 
     case "$POOLS_DETAIL":
-      var {id} = action.pool // XXX adapter hack to support span payloads from zqd as well as min/max
-      // time. In the future brim.Span type should mimic the formatted
-      // transmitted over the wire.
+      var {id} = action.pool
 
       draft[id] = defaults(action.pool, draft[id])
       break

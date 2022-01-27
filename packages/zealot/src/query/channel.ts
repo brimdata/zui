@@ -4,21 +4,15 @@ import {Record} from "../zed"
 import {Type} from "../zed/types/types"
 
 export type TypeDefs = {[name: string]: Type}
-export type Collector = (vals: {rows: zed.Value[]; shapes: TypeDefs}) => void
+export type Collector = (vals: {rows: zed.Value[]; shapesMap: TypeDefs}) => void
 
 export class Channel extends EventEmitter {
   rows: Record[] = []
-  types: TypeDefs = {}
-  shapes: TypeDefs = {}
-  done = false
-  buffer = false
+  typesMap: TypeDefs = {}
+  shapesMap: TypeDefs = {}
 
-  get consumed() {
-    if (this.done) return Promise.resolve()
-    return new Promise((resolve, reject) => {
-      this.on("end", resolve)
-      this.on("error", reject)
-    })
+  get shapes() {
+    return Object.values(this.shapesMap)
   }
 
   addRow(row: zed.Record) {
@@ -27,25 +21,45 @@ export class Channel extends EventEmitter {
   }
 
   addShape(name: string) {
-    const shape = this.types[name]
-    this.shapes[name] = shape
+    const shape = this.typesMap[name]
+    this.shapesMap[name] = shape
     this.emit("shape", shape)
   }
 
   hasShape(name: string) {
-    return name in this.shapes
+    return name in this.shapesMap
   }
 
-  markDone() {
-    this.done = true
+  done() {
     this.emit("end")
   }
 
   collect(collector: Collector) {
-    this.buffer = true
+    let count = 0
+    let countThresh = 10
+    let timeThresh = 500
+    let timeId = 0
+
+    const flush = () => {
+      collector({rows: this.rows, shapesMap: this.shapesMap})
+      count = 0
+      clearTimeout(timeId)
+    }
+
+    const startTimer = () => {
+      timeId = setTimeout(() => {
+        if (count > 0) flush()
+        startTimer()
+      }, timeThresh)
+    }
+
     this.on("row", () => {
-      collector({rows: this.rows, shapes: this.shapes})
+      count += 1
+      if (count >= countThresh) flush()
     })
-    return this.consumed
+
+    this.on("end", () => flush())
+
+    startTimer()
   }
 }

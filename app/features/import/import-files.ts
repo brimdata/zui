@@ -5,7 +5,6 @@ import BrimApi from "../../../src/js/api"
 import brim from "../../../src/js/brim"
 import ingest from "../../../src/js/brim/ingest"
 import {IngestParams} from "../../../src/js/brim/ingest/getParams"
-import interop from "../../../src/js/brim/interop"
 import {getZealot} from "../../../src/js/flows/getZealot"
 import lib from "../../../src/js/lib"
 import Current from "../../../src/js/state/Current"
@@ -109,9 +108,7 @@ const executeLoader = (
       dispatch(space.setIngestProgress(value))
     }
     const onDetailUpdate = async (): Promise<void> => {
-      const stats = interop.poolStatsPayloadToPool(
-        await client.getPoolStats(poolId)
-      )
+      const stats = await client.getPoolStats(poolId)
       dispatch(Pools.setDetail(workspaceId, {id: poolId, ...stats}))
     }
     const onWarning = (warning: string): void => {

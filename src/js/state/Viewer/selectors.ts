@@ -1,12 +1,12 @@
 import {createSelector} from "reselect"
 import {ScrollPosition} from "src/js/types"
 import {SearchStatus} from "src/js/types/searches"
-import {zed} from "@brimdata/zealot"
+import {TypeDefs, zed} from "@brimdata/zealot"
 import {TabState} from "../Tab/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
 import {createSelection, ViewerSelection} from "./helpers/selection"
-import {SchemaMap, ViewerSelectionData, ViewerState} from "./types"
+import {ViewerSelectionData, ViewerState} from "./types"
 
 export const getViewer = createSelector<State, TabState, ViewerState>(
   Tabs.getActiveTab,
@@ -52,7 +52,7 @@ export const getEndStatus = createSelector<State, ViewerState, string>(
   (viewer) => viewer.endStatus
 )
 
-export const getShapes = createSelector<State, ViewerState, SchemaMap>(
+export const getShapes = createSelector<State, ViewerState, TypeDefs>(
   getViewer,
   (viewer) => viewer.columns
 )

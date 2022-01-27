@@ -21,13 +21,16 @@ describe("Handle Zed server events", () => {
       path.normalize(path.join(testDataDir(), "sample.ndjson"))
     ])
 
-    const poolId = (await app.zealot.pools.list())[0].id
+    const poolId = (await app.zealot.getPools())[0].id
     const data = new Readable()
     data._read = () => {}
-    const loadPromise = app.zealot.pools.load(poolId, "main", {
-      author: "itest author",
-      body: "itest body",
-      data
+    const loadPromise = app.zealot.load(data, {
+      pool: poolId,
+      branch: "main",
+      message: {
+        author: "itest author",
+        body: "itest body"
+      }
     })
     data.push(`{"testKey": "testValue"}`)
     data.push(null)
@@ -41,15 +44,15 @@ describe("Handle Zed server events", () => {
   test("pool-new/update/delete/commit", async () => {
     const {
       pool: {id}
-    } = await app.zealot.pools.create({name: "test-pool-new"})
+    } = await app.zealot.createPool("test-pool-new")
     await app.mainWin.waitForSelector(
       selectorWithText(poolItem.css, "test-pool-new")
     )
-    await app.zealot.pools.update(id, {name: "test-pool-update"})
+    await app.zealot.updatePool(id, {name: "test-pool-update"})
     await app.mainWin.waitForSelector(
       selectorWithText(poolItem.css, "test-pool-update")
     )
-    await app.zealot.pools.delete(id)
+    await app.zealot.deletePool(id)
     await app.mainWin.waitForSelector(poolItem.css, {state: "detached"})
   })
 })

@@ -1,6 +1,5 @@
 import {Action as ReduxAction, Store as ReduxStore} from "redux"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
-import {createZealot, Zealot} from "zealot-old"
 import BrimApi from "../api"
 import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
@@ -25,8 +24,6 @@ import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
-  zealot: Zealot
-  createZealot: typeof createZealot
   dispatch: AppDispatch
   api: BrimApi
 }

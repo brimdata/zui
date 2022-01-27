@@ -1,12 +1,12 @@
 import {isNull} from "lodash"
 import {zjson} from "../.."
 import {TypeError} from "../types/type-error"
-import {Value} from "./types"
+import {JSOptions, Value} from "./types"
 
 export class Error implements Value {
   constructor(public type: TypeError, public value: Value | null) {}
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     return new global.Error(this.toString())
   }
 

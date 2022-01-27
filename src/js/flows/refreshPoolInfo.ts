@@ -1,6 +1,4 @@
-import {Client} from "@brimdata/zealot"
-import {PoolConfig, PoolStats} from "../../../zealot-old/types"
-import interop from "../brim/interop"
+import {Client, PoolConfig, PoolStats} from "@brimdata/zealot"
 import workspace from "../brim/workspace"
 import Current from "../state/Current"
 import Lakes from "../state/Lakes"
@@ -13,6 +11,7 @@ type refreshPoolInfoArgs = {
   poolId: string
 }
 
+// Merge this with initPool.ts
 export default function refreshPoolInfo(
   refreshPoolInfoArgs?: refreshPoolInfoArgs
 ): Thunk<Promise<void>> {
@@ -24,8 +23,8 @@ export default function refreshPoolInfo(
     const poolId = refreshPoolInfoArgs?.poolId || Current.getPoolId(getState())
     const workspaceId = ws.id
 
-    let config: PoolConfig
-    let stats: PoolStats
+    let config: any
+    let stats: any
     return Promise.all([
       zealot.getPool(poolId).then((data: PoolConfig) => {
         config = data
@@ -38,7 +37,7 @@ export default function refreshPoolInfo(
       dispatch(
         Pools.setDetail(workspaceId, {
           ...config,
-          ...interop.poolStatsPayloadToPool(stats)
+          ...stats
         })
       )
     })

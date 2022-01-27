@@ -1,6 +1,6 @@
 import {TypeArray} from "../types/type-array"
 import {isNull} from "../utils/is-null"
-import {Value} from "./types"
+import {JSOptions, Value} from "./types"
 
 export class Array implements Value {
   constructor(public type: TypeArray, public items: Value[] | null) {}
@@ -30,8 +30,8 @@ export class Array implements Value {
     return isNull(this.items)
   }
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     if (isNull(this.items)) return null
-    return this.items.map((i) => i.toJS())
+    return this.items.map((i) => i.toJS(opts))
   }
 }

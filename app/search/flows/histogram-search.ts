@@ -1,6 +1,5 @@
 import brim from "src/js/brim"
-import {search, SearchResult} from "src/js/flows/search/mod"
-import {SearchResponse} from "src/js/flows/search/response"
+import {search} from "src/js/flows/search/mod"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import {addEveryCountProc} from "src/js/searches/histogramSearch"
 import Chart from "src/js/state/Chart"
@@ -12,7 +11,7 @@ import Url from "src/js/state/Url"
 
 const id = "Histogram"
 
-export function histogramSearch(): Thunk<Promise<SearchResult>> {
+export function histogramSearch(): Thunk<void> {
   return (dispatch, getState) => {
     const state = getState()
     const {program, pins} = Url.getSearchParams(state)
@@ -28,27 +27,27 @@ export function histogramSearch(): Thunk<Promise<SearchResult>> {
     const {key} = history.location
     dispatch(Chart.setSearchKey(tabId, key))
 
-    const {response, promise} = dispatch(search({id, query, from, to, poolId}))
-    dispatch(handle(response))
-    return promise.catch((e) => e)
+    return dispatch(search({id, query, from, to, poolId}))
+    // dispatch(handle(response))
+    // return promise.catch((e) => e)
   }
 }
 
-function handle(response: SearchResponse): Thunk {
-  return function(dispatch, getState) {
-    const tabId = Tabs.getActive(getState())
-    const params = Url.getSearchParams(getState())
+// function handle(response: SearchResponse): Thunk {
+//   return function(dispatch, getState) {
+//     const tabId = Tabs.getActive(getState())
+//     const params = Url.getSearchParams(getState())
 
-    if (!params.keep) {
-      const currentSearchKey = Chart.getSearchKey(getState())
-      dispatch(Chart.clear(tabId))
-      dispatch(Chart.setSearchKey(tabId, currentSearchKey))
-    }
-    dispatch(Chart.setStatus(tabId, "FETCHING"))
+//     if (!params.keep) {
+//       const currentSearchKey = Chart.getSearchKey(getState())
+//       dispatch(Chart.clear(tabId))
+//       dispatch(Chart.setSearchKey(tabId, currentSearchKey))
+//     }
+//     dispatch(Chart.setStatus(tabId, "FETCHING"))
 
-    response
-      .status((status) => dispatch(Chart.setStatus(tabId, status)))
-      .chan(0, ({rows}) => dispatch(Chart.appendRecords(tabId, rows)))
-      .error((error) => dispatch(Notice.set(ErrorFactory.create(error))))
-  }
-}
+//     response
+//       .status((status) => dispatch(Chart.setStatus(tabId, status)))
+//       .chan(0, ({rows}) => dispatch(Chart.appendRecords(tabId, rows)))
+//       .error((error) => dispatch(Notice.set(ErrorFactory.create(error))))
+//   }
+// }

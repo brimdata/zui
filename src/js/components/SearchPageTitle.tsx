@@ -36,9 +36,9 @@ const Stat = styled.span`
 
 export default function SearchPageTitle() {
   const pool = useSelector(Current.mustGetPool)
-  const {size, name, min_time, max_time} = pool
+  const {size, name} = pool
   const bytes = size ? formatBytes(size, 1) : ""
-  const span = brim.span([min_time, max_time])
+  const span = brim.span(pool.everythingSpan())
   const duration = span.getDuration() ? span.shortFormat() : ""
 
   return (

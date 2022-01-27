@@ -1,12 +1,10 @@
 import {uniqBy} from "lodash"
 import {toFieldPath} from "src/js/zql/toZql"
-import {zed} from "@brimdata/zealot"
+import {TypeDefs, zed} from "@brimdata/zealot"
 import {$Column, createColumn} from "./column"
 
-type Args = {[name: string]: zed.Schema}
-
-export function createColumnSet(schemaMap: Args) {
-  const byColumNames = fingerPrintSchemas(schemaMap)
+export function createColumnSet(shapeMap: TypeDefs) {
+  const byColumNames = fingerPrintSchemas(shapeMap)
 
   return {
     getName() {
@@ -21,25 +19,25 @@ export function createColumnSet(schemaMap: Args) {
     },
     getUniqColumns() {
       let allCols = []
-      for (const schema of Object.values(byColumNames)) {
-        allCols = [...allCols, ...schema.flatColumns()]
+      for (const shape of Object.values(byColumNames)) {
+        allCols = [...allCols, ...zed.flatColumns(shape)]
       }
       return uniqBy<$Column>(allCols.map(createColumn), "key")
     }
   }
 }
 
-function fingerPrintSchemas(map: Args): Args {
+function fingerPrintSchemas(map: TypeDefs): TypeDefs {
   return Object.values(map).reduce((obj, value) => {
     obj[fingerprint(value)] = value
     return obj
   }, {})
 }
 
-function fingerprint(schema: zed.Schema) {
-  return schema
-    .flatColumns()
+function fingerprint(shape: zed.Type) {
+  return zed
+    .flatColumns(shape)
     .map(toFieldPath)
-    .sort() // We want the schemas with the same columns regardless of order
+    .sort() // We want the shapes with the same columns regardless of order
     .join(",")
 }

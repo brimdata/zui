@@ -26,8 +26,9 @@ export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const [from, to] = span
   const append = true
 
-  dispatch(Viewer.splice(tabId, spliceIndex))
-  return dispatch(viewerSearch({query, from, to, append}))
+  // dispatch(Viewer.splice(tabId, spliceIndex))
+  // TODO
+  // return dispatch(viewerSearch({query, from, to, append}))
 }
 
 function nextPageArgs(

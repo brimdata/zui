@@ -8,10 +8,7 @@ type DecodeOpts = {
   typedefs?: TypeDefs
 }
 
-export function decode(
-  data: zjson.RootRecord[],
-  opts: DecodeOpts & {as: "js"}
-): object
+export function decode(data: zjson.RootRecord[], opts: DecodeOpts): object
 export function decode(data: zjson.RootRecord, opts?: DecodeOpts): zed.Record
 export function decode(
   data: zjson.RootRecord[],

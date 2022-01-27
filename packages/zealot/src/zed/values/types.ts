@@ -63,8 +63,12 @@ export type ZedInt =
   | Int32
   | Int64
 
+export type JSOptions = {
+  bigint?: boolean
+}
+
 export interface Value {
-  toJS(): any
+  toJS(opts?: JSOptions): any
   toString(): string
   serialize(): zjson.Value
   isUnset(): boolean

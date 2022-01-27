@@ -1,6 +1,7 @@
 import {isNull} from "../utils/is-null"
 import {TypeUint32} from "../types/type-uint32"
 import {Primitive} from "./primitive"
+import {JSOptions} from "./types"
 
 export class Uint32 extends Primitive {
   type: typeof TypeUint32 = TypeUint32
@@ -10,7 +11,7 @@ export class Uint32 extends Primitive {
     return parseInt(this.value)
   }
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     return this.toInt()
   }
 }

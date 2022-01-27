@@ -1,6 +1,6 @@
 import {TypeSet} from "../types/type-set"
 import {isNull} from "../utils/is-null"
-import {Value} from "./types"
+import {JSOptions, Value} from "./types"
 
 export class Set implements Value {
   constructor(public type: TypeSet, public items: Value[] | null) {}
@@ -30,8 +30,8 @@ export class Set implements Value {
     return isNull(this.items)
   }
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     if (isNull(this.items)) return null
-    return this.items.map((i) => i.toJS())
+    return this.items.map((i) => i.toJS(opts))
   }
 }

@@ -1,3 +1,4 @@
+import {EventSourcePolyfill} from "event-source-polyfill"
 import nodeFetch from "node-fetch"
 import {decode} from "../encoder"
 import {parseContentType} from "../fetcher/contentType"
@@ -21,13 +22,18 @@ export class Client {
   constructor(public baseURL: string, opts: Partial<ClientOpts> = {}) {
     const defaults: ClientOpts = {env: getEnv()}
     const options: ClientOpts = {...defaults, ...opts}
-    this.fetch = options.env === "node" ? nodeFetch : window.fetch
+    this.fetch = options.env === "node" ? nodeFetch : window.fetch.bind(window)
   }
 
   async version() {
     const resp = await this.fetch(this.baseURL + "/version")
     const content = await parseContentType(resp)
     return resp.ok ? content : Promise.reject(createError(content))
+  }
+
+  async authMethod() {
+    // TODO
+    return Promise.resolve({} as any)
   }
 
   async query(query: string, opts: Partial<QueryOpts> = {}) {
@@ -131,8 +137,8 @@ export class Client {
     })
     const content = await parseContentType(resp)
     if (resp.ok && content !== null) {
-      const data = decode(content, {as: "js"}) as PoolStats
-      return data
+      const zed = decode(content)
+      return zed.toJS() as PoolStats
     } else {
       return Promise.reject(createError(content))
     }
@@ -184,6 +190,14 @@ export class Client {
     } else {
       Promise.reject(createError(content))
     }
+  }
+
+  subscribe(): EventSource {
+    return new EventSourcePolyfill(this.baseURL + "/events", {
+      headers: {
+        Accept: "application/json"
+      }
+    })
   }
 }
 

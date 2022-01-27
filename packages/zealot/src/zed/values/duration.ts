@@ -1,6 +1,7 @@
 import {TypeDuration} from "../types/type-duration"
 import {isNull} from "../utils/is-null"
 import {Primitive} from "./primitive"
+import {JSOptions} from "./types"
 
 export class Duration extends Primitive {
   type: typeof TypeDuration = TypeDuration
@@ -30,7 +31,7 @@ export class Duration extends Primitive {
     return this._nanos
   }
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     return this.asMs()
   }
 }

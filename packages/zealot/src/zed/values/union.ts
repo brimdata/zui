@@ -1,7 +1,7 @@
 import {TypeUnion} from "../types/type-union"
 import {Type} from "../types/types"
 import {isNull} from "../utils/is-null"
-import {Value} from "./types"
+import {JSOptions, Value} from "./types"
 
 export class Union implements Value {
   constructor(
@@ -25,7 +25,7 @@ export class Union implements Value {
     return isNull(this.index) || isNull(this.value)
   }
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     if (this.isUnset()) return null
     return this.value?.toJS()
   }

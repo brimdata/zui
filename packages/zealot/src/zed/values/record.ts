@@ -6,7 +6,7 @@ import {ZedType} from "../types/types"
 import {flatColumns} from "../utils/flat-columns"
 import {trueType} from "../utils/true-type"
 import {Field} from "./field"
-import {ZedValue, Value} from "./types"
+import {ZedValue, Value, JSOptions} from "./types"
 
 type ColumnName = string | string[]
 
@@ -117,10 +117,10 @@ export class Record implements Value {
     return isNull(this.fields)
   }
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     if (isNull(this.fields)) return null
     return this.fields.reduce((obj, field) => {
-      obj[field.name] = field.value.toJS()
+      obj[field.name] = field.value.toJS(opts)
       return obj
     }, {} as {[key: string]: any})
   }

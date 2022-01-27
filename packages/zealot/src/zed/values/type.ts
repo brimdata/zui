@@ -2,7 +2,7 @@ import {TypeType} from "../types/type-type"
 import {Type} from "../types/types"
 import {isNull} from "../utils/is-null"
 import {typeId} from "../utils/type-id"
-import {Value} from "./types"
+import {JSOptions, Value} from "./types"
 
 export class TypeValue implements Value {
   type: typeof TypeType = TypeType
@@ -23,7 +23,7 @@ export class TypeValue implements Value {
     else return typeId(this.value)
   }
 
-  toJS() {
+  toJS(opts: JSOptions = {}) {
     if (isNull(this.value)) return null
     return this.toString()
   }

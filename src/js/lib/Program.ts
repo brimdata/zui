@@ -1,8 +1,8 @@
-import {parse as zParse} from "zealot-old"
 import {HEAD_PROC, TAIL_PROC} from "../brim/ast"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
 import brim from "../brim"
+import {parseAst} from "@brimdata/zealot"
 
 export type Program = string
 
@@ -10,7 +10,7 @@ export const parse = (string: Program) => {
   let ast = null
   let error = null
   try {
-    ast = zParse(string)
+    ast = parseAst(string)
   } catch (e) {
     error = e
   }

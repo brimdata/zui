@@ -13,13 +13,15 @@ export default function useSearch(query: string, deps?: any[]): R {
 
   useEffect(() => {
     setIsFetching(true)
-    const {response, abort} = dispatch(search({query}))
-    response.chan(0, ({rows}) => setRecords(rows))
-    response.status((status) => {
-      if (status === "ABORTED") return
-      setIsFetching(status === "FETCHING")
-    })
-    return abort
+    // TODO
+    // const res = dispatch(search({query}))
+
+    // response.chan(0, ({rows}) => setRecords(rows))
+    // response.status((status) => {
+    //   if (status === "ABORTED") return
+    //   setIsFetching(status === "FETCHING")
+    // })
+    // return abort
   }, deps)
 
   return [records, isFetching]

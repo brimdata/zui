@@ -20,7 +20,6 @@
     "lint:tsc": "tsc",
     "test": "npm-run-all 'test:**'",
     "test:unit": "jest --projects test/unit --ci --bail",
-    "test:api": "jest --projects test/api",
     "test:zealot": "yarn workspace @brimdata/zealot test",
     "test:system": "jest --projects test/system",
     "test:responses": "node scripts/test/responses",

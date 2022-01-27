@@ -69,21 +69,3 @@ test("results limited", () => {
 
   expect(Viewer.getEndStatus(state)).toBe("LIMIT")
 })
-
-test("update columns with same tds", () => {
-  const cols1 = {
-    "9d14c2039a78d76760aae879c7fd2c82": new zed.Schema("1", type)
-  }
-  const cols2 = {
-    "71f1b421963d31952e15edf7e3957a81": new zed.Schema("1", type)
-  }
-  const state = store.dispatchAll([
-    Viewer.updateColumns(tabId, cols1),
-    Viewer.updateColumns(tabId, cols2)
-  ])
-
-  expect(Viewer.getShapes(state)).toEqual({
-    "9d14c2039a78d76760aae879c7fd2c82": new zed.Schema("1", type),
-    "71f1b421963d31952e15edf7e3957a81": new zed.Schema("1", type)
-  })
-})

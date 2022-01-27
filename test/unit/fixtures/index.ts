@@ -5,13 +5,9 @@ const pool1 = (): Pool => ({
   id: "1",
   name: "default",
   size: 99,
-  min_time: {
-    sec: 1425564900,
-    ns: 0
-  },
-  max_time: {
-    sec: 1428917793,
-    ns: 750000000
+  span: {
+    ts: new Date(1425564900 * 1000),
+    dur: 1428917793 * 1000 + 7500
   },
   ingest: {progress: null, warnings: []}
 })

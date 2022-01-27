@@ -1,7 +1,6 @@
 import ast from "./ast"
 import dateTuple from "./dateTuple"
 import form from "./form"
-import interop from "./interop"
 import program from "./program"
 import randomHash from "./randomHash"
 import relTime from "./relTime"
@@ -22,6 +21,7 @@ export type BrimWorkspace = ReturnType<typeof workspace>
 
 export type Span = [Ts, Ts]
 
+// Please remove all this one day
 export default {
   program,
   ast,
@@ -32,7 +32,6 @@ export default {
   span,
   dateTuple,
   form,
-  interop,
   randomHash,
   tab,
   workspace

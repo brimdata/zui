@@ -1,18 +1,16 @@
-import Tabs from "src/js/state/Tabs"
-import {Thunk} from "../../state/types"
-import {getZealot} from "../getZealot"
-import {handle} from "./handler"
-import {SearchResponse} from "./response"
-import Current from "../../state/Current"
-import Tab from "../../state/Tab"
-import brim, {Ts} from "src/js/brim"
+import {ResultStream, zed} from "@brimdata/zealot"
 import {
   ChronoField,
   DateTimeFormatterBuilder,
   LocalDateTime
 } from "@js-joda/core"
-import {zed} from "@brimdata/zealot"
 import {isUndefined} from "lodash"
+import brim, {Ts} from "src/js/brim"
+import Tabs from "src/js/state/Tabs"
+import Current from "../../state/Current"
+import Tab from "../../state/Tab"
+import {Thunk} from "../../state/types"
+import {getZealot} from "../getZealot"
 
 type Args = {
   query: string
@@ -67,18 +65,12 @@ export const dateToNanoTs = (date: Date | Ts | bigint): string => {
   return LocalDateTime.parse(brim.time(date).format()).format(NanoFormat)
 }
 
-export type BrimSearch = {
-  response: SearchResponse
-  promise: Promise<SearchResult>
-  abort: () => void
-}
-
 export type SearchResult = {
   id: string
   tabId: string
   status: string
   initial: boolean
-  shapes: zed.Schema[]
+  shapes: zed.Type[]
 }
 
 export function search({
@@ -88,8 +80,8 @@ export function search({
   poolId,
   id,
   initial
-}: Args): Thunk<BrimSearch> {
-  return (dispatch, getState, {api}) => {
+}: Args): Thunk<Promise<ResultStream>> {
+  return async (dispatch, getState, {api}) => {
     const [defaultFrom, defaultTo] = Tab.getSpanAsDates(getState())
     const tab = Tabs.getActive(getState())
     const defaultPoolId = Current.getPoolId(getState())
@@ -102,30 +94,29 @@ export function search({
     to = to || defaultTo
     from = from || defaultFrom
     initial = isUndefined(initial) ? true : initial
-    const req = zealot.query(annotateQuery(query, {from, to, poolId}), {
+    const res = await zealot.query(annotateQuery(query, {from, to, poolId}), {
       signal: ctl.signal
     })
-
     api.abortables.abort({tab, tag})
     const aId = api.abortables.add({abort, tab, tag})
 
-    const {promise, response} = handle(req)
-    return {
-      response,
-      abort,
-      promise: promise
-        .then<SearchResult>(({status, shapes}) => {
-          const data = {
-            tabId: tab,
-            id,
-            shapes,
-            status,
-            initial
-          }
-          api.searches.emit("did-finish", data)
-          return data
+    res.promise
+      .then(() => {
+        api.searches.emit("did-finish", {
+          tabId: tab,
+          status: res.status,
+          shapes: res.shapes,
+          id,
+          initial
         })
-        .finally(() => api.abortables.remove(aId))
-    }
+      })
+      .catch((e) => {
+        console.error(e)
+      })
+      .finally(() => {
+        api.abortables.remove(aId)
+      })
+
+    return res
   }
 }

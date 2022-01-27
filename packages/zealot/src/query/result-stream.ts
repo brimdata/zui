@@ -1,14 +1,18 @@
+import {Response as NodeResponse} from "node-fetch"
 import {decode} from "../encoder"
 import {eachLine} from "../ndjson/lines"
+import {JSOptions} from "../zed/values/types"
 import {RootRecord} from "../zjson"
 import {Channel, Collector} from "./channel"
-import {Response as NodeResponse} from "node-fetch"
 
 type CrossResponse = Response | NodeResponse
 
 export class ResultStream {
+  public status: "idle" | "pending" | "error" | "aborted" | "success" = "idle"
+
   private currentChannelId: number | undefined
   private channelsMap = new Map<number, Channel>()
+  private _promise?: Promise<void>
 
   constructor(public resp: CrossResponse) {}
 
@@ -16,8 +20,20 @@ export class ResultStream {
     return this.resp.body
   }
 
+  get promise() {
+    return this.consume()
+  }
+
   get channels() {
     return Array.from(this.channelsMap.values())
+  }
+
+  get shapes() {
+    return this.channel(0).shapes
+  }
+
+  get rows() {
+    return this.channel(0).rows
   }
 
   channel(id: number | undefined = this.currentChannelId) {
@@ -30,30 +46,50 @@ export class ResultStream {
     return channel
   }
 
-  async js(): Promise<any> {
+  async js(opts: JSOptions = {}): Promise<any> {
     this.consume()
     const channel = this.channel(0)
-    await channel.consumed
-    return channel.rows.map((r) => r.toJS())
+    await this.promise
+    return channel.rows.map((r) => r.toJS(opts))
   }
 
   async zed() {
     this.consume()
     const channel = this.channel(0)
-    await channel.consumed
+    await this.promise
     return channel.rows
   }
 
   collect(collector: Collector) {
     this.consume()
-    return this.channel(0).collect(collector)
+    this.channel(0).collect(collector)
+    return this.promise
   }
 
-  async consume() {
-    for await (let json of eachLine(this.resp.body)) this.consumeLine(json)
+  private consume() {
+    if (this._promise) return this._promise
+
+    this.status = "pending"
+    this._promise = new Promise(async (resolve, reject) => {
+      try {
+        for await (let json of eachLine(this.resp.body)) {
+          this.consumeLine(json)
+        }
+        this.status = "success"
+        resolve()
+      } catch (e) {
+        if (e === "abort error" /* fix this */) {
+          this.status = "aborted"
+        } else {
+          this.status = "error"
+        }
+        reject(e)
+      }
+    })
+    return this._promise
   }
 
-  consumeLine(json: any) {
+  private consumeLine(json: any) {
     switch (json.kind) {
       case "QueryChannelSet":
         this.currentChannelId = json.value.channel_id
@@ -62,18 +98,15 @@ export class ResultStream {
         var channel = this.channel()
         var data = json.value as RootRecord
         var name = data.schema
-        var row = decode(data, {typedefs: channel.types})
+        var row = decode(data, {typedefs: channel.typesMap})
         if (!channel.hasShape(name)) channel.addShape(name)
         channel.addRow(row)
         break
       case "QueryChannelEnd":
         this.currentChannelId = json.value.channel_id
-        this.channel().markDone()
+        var channel = this.channel()
+        channel.done()
         break
     }
-  }
-
-  consumed() {
-    return Promise.all(this.channels.map((c) => c.consumed))
   }
 }

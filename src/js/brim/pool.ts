@@ -1,6 +1,6 @@
 import {isNumber} from "../lib/is"
 import {Pool} from "../state/Pools/types"
-import brim, {Span} from "./"
+import {Span} from "./"
 
 export default function pool(info: Pool) {
   return {
@@ -12,28 +12,16 @@ export default function pool(info: Pool) {
       return info.size !== undefined
     },
     empty() {
-      if (!info.min_time || !info.max_time) return true
-      return (
-        info.min_time.sec === 0 &&
-        info.min_time.ns === 0 &&
-        info.max_time.sec === 0 &&
-        info.max_time.ns === 0
-      )
+      return info.span.dur === 0
     },
-    minTs() {
-      return info.min_time
+    minTs(): Date {
+      return info.span.ts
     },
-    maxTs() {
-      return info.max_time
+    maxTs(): Date {
+      return new Date(this.minTs + info.span.dur)
     },
     everythingSpan(): Span {
-      const {min_time, max_time} = info
-      const from = brim.time(min_time).toTs()
-      const to = brim
-        .time(max_time)
-        .add(1, "ms")
-        .toTs()
-      return [from, to]
+      return [this.minTs(), this.maxTs()]
     },
     ingesting() {
       return isNumber(info.ingest.progress)

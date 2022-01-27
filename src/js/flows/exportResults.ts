@@ -1,7 +1,7 @@
+import {ResponseFormat} from "@brimdata/zealot"
 import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
-import {QueryFormat} from "zealot-old"
 import brim from "../brim"
 import Columns from "../state/Columns"
 import Current from "../state/Current"
@@ -34,7 +34,7 @@ export function prepareProgram(format, program, columns) {
 
 export default (
   filePath: string,
-  format: QueryFormat
+  format: ResponseFormat
 ): Thunk<Promise<string>> => async (dispatch, getState): Promise<string> => {
   const zealot = dispatch(getNodeZealot())
   const poolId = Current.getPoolId(getState())
