@@ -12,13 +12,11 @@ import HistogramTooltip from "../../HistogramTooltip"
 import LoadingMessage from "../../LoadingMessage"
 import barStacks from "../pens/barStacks"
 import brim from "../../../brim"
-import focusBar from "../pens/focusBar"
 import format from "./format"
 import hoverLine from "../pens/hoverLine"
 import reactComponent from "../pens/reactComponent"
 import search from "../../../state/Search"
 import tab from "../../../state/Tab"
-import time from "../../../brim/time"
 import useConst from "../../hooks/useConst"
 import xAxisBrush from "../pens/xAxisBrush"
 import xAxisTime from "../pens/xAxisTime"
@@ -41,23 +39,6 @@ export default function useMainHistogram(
     }
 
     function onSelection(span: DateTuple) {
-      dispatch(search.setSpanFocus(null))
-      dispatch(search.setSpanArgsFromDates(span))
-      dispatch(submitSearch())
-    }
-
-    function onFocus(dates: DateTuple) {
-      dispatch(search.setSpanFocus(time.convertToSpan(dates)))
-      dispatch(submitSearch({history: true, investigation: false}))
-    }
-
-    function onSelectionClear() {
-      dispatch(search.setSpanFocus(null))
-      dispatch(submitSearch({history: true, investigation: false}))
-    }
-
-    function onSelectionClick(span) {
-      dispatch(search.setSpanFocus(null))
       dispatch(search.setSpanArgsFromDates(span))
       dispatch(submitSearch())
     }
@@ -66,7 +47,7 @@ export default function useMainHistogram(
       xAxisTime({onDragEnd}),
       barStacks(),
       yAxisSingleTick(),
-      xAxisBrush({onSelection, onSelectionClear, onSelectionClick}),
+      xAxisBrush({onSelection}),
       hoverLine(),
       reactComponent((chart) => (
         <EmptyMessage show={!chart.state.isFetching && chart.state.isEmpty} />
@@ -74,7 +55,6 @@ export default function useMainHistogram(
       reactComponent((chart) => (
         <LoadingMessage show={chart.state.isFetching} message="Loading..." />
       )),
-      focusBar({onFocus}),
       xPositionTooltip({
         wrapperClassName: "histogram-tooltip-wrapper",
         render: HistogramTooltip

@@ -2,7 +2,6 @@ import {DateTuple} from "../../lib/TimeWindow"
 import {
   SEARCH_CLEAR,
   SEARCH_SPAN_ARGS_SET,
-  SEARCH_SPAN_FOCUS_SET,
   SEARCH_SPAN_SET,
   SpanArgs
 } from "./types"
@@ -18,9 +17,6 @@ export default {
   setSpanArgsFromDates(dates: DateTuple): SEARCH_SPAN_ARGS_SET {
     const spanArgs = brim.dateTuple(dates).toSpan()
     return {type: "SEARCH_SPAN_ARGS_SET", spanArgs}
-  },
-  setSpanFocus(spanFocus: Span | null | undefined): SEARCH_SPAN_FOCUS_SET {
-    return {type: "SEARCH_SPAN_FOCUS_SET", spanFocus}
   },
   clear(): SEARCH_CLEAR {
     return {type: "SEARCH_CLEAR"}

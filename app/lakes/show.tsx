@@ -9,11 +9,13 @@ import {Redirect, Route, Switch, useRouteMatch} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import SearchHome from "../search/home"
+import TabSearchLoading from "src/js/components/TabSearchLoading"
+import Imports from "src/js/state/Imports"
 
 export default function LakeShow() {
   const match = useRouteMatch()
   return (
-    <InitLake>
+    <InitPool>
       <Switch>
         <Route path={lakeSearch.path}>
           <SearchHome />
@@ -22,21 +24,29 @@ export default function LakeShow() {
           <Redirect to={`${match.url}/search`} />
         </Route>
       </Switch>
-    </InitLake>
+    </InitPool>
   )
 }
 
-function InitLake({children}) {
+function InitPool({children}) {
   const dispatch = useDispatch<AppDispatch>()
   const poolId = usePoolId()
   const lakeId = useLakeId()
   const pool = useSelector(Current.getPool)
+  const ingesting = useSelector(Imports.isInProgress(pool.id))
 
   useEffect(() => {
     if (poolId) dispatch(syncPool(poolId))
   }, [poolId])
 
-  if (!pool) return <Redirect to={workspacePath(lakeId)} />
-  if (pool && !pool.hasStats()) return null
-  return children
+  console.log(pool, ingesting)
+  if (!pool) {
+    return <Redirect to={workspacePath(lakeId)} />
+  } else {
+    if (ingesting || !pool.hasStats()) {
+      return <TabSearchLoading />
+    } else {
+      return children
+    }
+  }
 }

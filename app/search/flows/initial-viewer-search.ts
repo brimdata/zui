@@ -30,7 +30,7 @@ const initialViewerSearch = (): Thunk<any> => (dispatch, getState) => {
     from = f
     to = t
   }
-  return dispatch(viewerSearch({query, from, to, keep: params.keep}))
+  return dispatch(viewerSearch({query, from, to}))
 }
 
 export default initialViewerSearch

@@ -14,7 +14,6 @@ export default {
         })
       )
       dispatch(Search.setSpanArgs(record.spanArgs))
-      dispatch(Search.setSpanFocus(null))
     }
   }
 }

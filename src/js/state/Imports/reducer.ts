@@ -11,8 +11,8 @@ const slice = createSlice({
     [poolId: string]: Import
   },
   reducers: {
-    create: (state, action: PayloadAction<{poolId: string}>) => {
-      const {poolId} = action.payload
+    create: (state, action: PayloadAction<string>) => {
+      const poolId = action.payload
       state[poolId] = {progress: 0, warnings: []}
     },
 

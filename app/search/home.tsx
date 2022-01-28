@@ -18,29 +18,20 @@ import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 function setSearchParamsFromUrl() {
   return function(dispatch, getState) {
     const url = Url.getSearchParams(getState())
-    if (url.keep) {
-      // only update things that can be empty and have defaults
-      if (Url.getSpanParams(getState()).every((time) => !time)) {
-        dispatch(Search.setSpanArgs(url.spanArgs))
-      }
-    } else {
-      dispatch(Search.setSpanArgs(url.spanArgs))
-      dispatch(Search.setSpanFocus(url.spanArgsFocus))
-      dispatch(
-        SearchBarState.restoreSearchBar({
-          current: url.program || "",
-          pinned: url.pins,
-          error: null
-        })
-      )
-    }
+    dispatch(Search.setSpanArgs(url.spanArgs))
+    dispatch(
+      SearchBarState.restoreSearchBar({
+        current: url.program || "",
+        pinned: url.pins,
+        error: null
+      })
+    )
   }
 }
 
 export function InitSearchParams({children}) {
   const dispatch = useDispatch()
   const location = useSelector(Current.getLocation)
-
   useLayoutEffect(() => {
     /**
      * Each time the url changes, we update the ui components to reflect whats in the url,
@@ -58,7 +49,6 @@ export default function SearchHome() {
   const columns = useColumns()
   const pluginButtons = usePluginToolbarItems("search")
   const actions = [...pluginButtons, exportAction, columns, view]
-
   return (
     <InitSearchParams>
       <SearchPageHeader>

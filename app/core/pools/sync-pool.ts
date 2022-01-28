@@ -3,11 +3,12 @@ import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
 import Pools from "src/js/state/Pools"
 import {Thunk} from "src/js/state/types"
+import {Pool} from "./pool"
 
 export const syncPool = (
   poolId: string,
   lakeId?: string
-): Thunk<Promise<void>> => (dispatch, getState) => {
+): Thunk<Promise<Pool | null>> => (dispatch, getState) => {
   const lake = lakeId
     ? Lakes.id(lakeId)(getState())
     : Current.getWorkspace(getState())
@@ -18,8 +19,10 @@ export const syncPool = (
     .then(([data, stats]) => {
       dispatch(Pools.setData({lakeId: lake.id, data}))
       dispatch(Pools.setStats({lakeId: lake.id, poolId: data.id, stats}))
+      return new Pool(data, stats)
     })
     .catch((error) => {
       console.error(error)
+      return null
     })
 }

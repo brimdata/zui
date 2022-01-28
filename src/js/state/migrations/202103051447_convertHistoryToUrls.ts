@@ -1,4 +1,4 @@
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import {
   getAllStates,
   getAllTabs
@@ -10,7 +10,7 @@ import {parsePath} from "history"
  * because it was only ever localhost:9867. So we'll have to assume for sake
  * of this migration that all the search records are in localhost:9867.
  */
-const toUrl = (e) => parsePath(lakeSearchPath(e.spaceId, "localhost:9867", e))
+const toUrl = (e) => parsePath(poolSearchPath(e.spaceId, "localhost:9867", e))
 
 export default function convertHistoryToUrls(state: any) {
   for (const s of getAllStates(state)) {

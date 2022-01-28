@@ -18,8 +18,6 @@ export default function reducer(
       return {...state, span: action.span}
     case "SEARCH_SPAN_ARGS_SET":
       return {...state, spanArgs: action.spanArgs}
-    case "SEARCH_SPAN_FOCUS_SET":
-      return {...state, spanFocus: action.spanFocus}
     case "SEARCH_CLEAR":
       return {...initSearchState}
     default:

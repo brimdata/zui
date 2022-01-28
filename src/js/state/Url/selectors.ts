@@ -4,7 +4,6 @@ import {
   decodeSearchParams,
   decodeSpanParams
 } from "app/search/utils/search-params"
-import {Span} from "src/js/brim"
 import {Pool} from "app/core/pools/pool"
 import {getLocation, mustGetPool} from "../Current/selectors"
 import {State} from "../types"
@@ -15,8 +14,6 @@ export type SearchParams = {
   program: string
   pins: []
   spanArgs: SpanArgs
-  spanArgsFocus: Span | null
-  keep: boolean
 }
 
 export const getSearchParams = createSelector<
@@ -27,11 +24,7 @@ export const getSearchParams = createSelector<
 >(getLocation, mustGetPool, (location, pool) => {
   const params = decodeSearchParams(location.search)
   const spanArgs = mergeDefaultSpanArgs(params.spanArgs, pool)
-  const spanArgsFocus =
-    params.spanArgsFocus[0] && params.spanArgsFocus[1]
-      ? params.spanArgsFocus
-      : null
-  return {...params, spanArgs, spanArgsFocus} as SearchParams
+  return {...params, spanArgs} as SearchParams
 })
 
 export const getSpanParams = createSelector(getLocation, (location) => {

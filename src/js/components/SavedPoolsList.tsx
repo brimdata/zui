@@ -1,5 +1,5 @@
 import {useImportOnDrop} from "app/features/import/use-import-on-drop"
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import classNames from "classnames"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
@@ -22,6 +22,7 @@ import {showContextMenu} from "../lib/System"
 import getPoolContextMenu from "../../../app/pools/flows/get-pool-context-menu"
 import {Pool} from "app/core/pools/pool"
 import Imports from "../state/Imports"
+import {isNumber} from "lodash"
 
 type Props = {
   pools: Pool[]
@@ -39,15 +40,15 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
   const dispatch = useDispatch<AppDispatch>()
   const workspaceId = useSelector(Current.getWorkspaceId)
   const currentPoolId = useSelector(Current.getPoolId)
-  const ingest = useSelector(Imports.get(currentPoolId))
+  const ingest = useSelector(Imports.get(pool.id))
   const p = pool
   const history = useHistory()
   const onClick = (e) => {
     e.preventDefault()
-    history.push(lakeSearchPath(p.id, workspaceId))
+    history.push(poolSearchPath(p.id, workspaceId))
   }
 
-  const progress = ingest && ingest.progress < 0 && (
+  const progress = ingest && isNumber(ingest.progress) && (
     <div className="small-progress-bar">
       <ProgressIndicator percent={ingest.progress} />
     </div>

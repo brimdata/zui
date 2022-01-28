@@ -35,10 +35,10 @@ export default (files: File[]): Thunk<Promise<void>> => (
     .transaction([
       validateInput(files, poolNames),
       newPool(zealot, dispatch, workspaceId),
+      registerIngest(dispatch, requestId),
       setPool(dispatch, tabId, workspaceId),
-      registerHandler(dispatch, requestId),
       executeLoader(zealot, dispatch, workspaceId, api, requestId),
-      unregisterHandler(dispatch, requestId)
+      unregisterIngest(dispatch, requestId)
     ])
     .then(() => {
       dispatch(SystemTest.hook("import-complete"))
@@ -73,19 +73,22 @@ const newPool = (client: Client, dispatch, lakeId) => ({
   }
 })
 
-const registerHandler = (dispatch, id) => ({
+const registerIngest = (dispatch, id) => ({
   do({poolId}: IngestParams & {poolId: string}) {
     const handle: Handler = {type: "INGEST", poolId}
     dispatch(Handlers.register(id, handle))
+    dispatch(Imports.create(poolId))
   },
-  undo() {
+  undo({poolId}) {
     dispatch(Handlers.remove(id))
+    dispatch(Imports.remove(poolId))
   }
 })
 
-const unregisterHandler = (dispatch, id) => ({
-  do() {
+const unregisterIngest = (dispatch, id) => ({
+  do({poolId}) {
     dispatch(Handlers.remove(id))
+    dispatch(Imports.remove(poolId))
   }
 })
 

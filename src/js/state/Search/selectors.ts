@@ -1,4 +1,4 @@
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import brim from "../../brim"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "../../flows/config"
 import {addHeadProc} from "../../lib/Program"
@@ -42,7 +42,7 @@ export const createHref = (state) => {
   const record = getRecord(state)
   const workspaceId = Current.getWorkspaceId(state)
   const poolId = Current.getPoolId(state)
-  return lakeSearchPath(poolId, workspaceId, {...record})
+  return poolSearchPath(poolId, workspaceId, {...record})
 }
 
 function getArgsType(program): SearchType {

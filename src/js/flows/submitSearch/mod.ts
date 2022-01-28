@@ -1,5 +1,5 @@
 import tabHistory from "app/router/tab-history"
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import brim from "src/js/brim"
 import Investigation from "src/js/state/Investigation"
 import Current from "../../state/Current"
@@ -19,12 +19,12 @@ export function submitSearch(
     const record = Search.getRecord(getState())
     const workspaceId = Current.getWorkspaceId(getState())
     const poolId = Current.getPoolId(getState())
-
+    console.log(Current.getPool(getState()))
     dispatch(Tab.computeSpan(ts))
 
     if (!dispatch(SearchBar.validate())) return
 
-    const url = lakeSearchPath(poolId, workspaceId, {...record})
+    const url = poolSearchPath(poolId, workspaceId, {...record})
 
     if (save.investigation) {
       dispatch(

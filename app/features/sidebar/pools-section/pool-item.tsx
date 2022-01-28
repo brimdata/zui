@@ -1,5 +1,5 @@
 import getPoolContextMenu from "app/pools/flows/get-pool-context-menu"
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory} from "react-router"
@@ -68,7 +68,7 @@ const PoolItem = ({innerRef, styles, data, state, handlers}) => {
   const onClick = (e) => {
     e.preventDefault()
     history.push(
-      lakeSearchPath(pool.id, workspaceId, {
+      poolSearchPath(pool.id, workspaceId, {
         spanArgs: pool.empty() ? undefined : pool.defaultSpanArgs()
       })
     )

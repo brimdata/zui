@@ -104,10 +104,8 @@ export class Client {
       }
     })
     const content = await parseContentType(resp)
-    if (resp.ok && content !== null) {
-      const data = decode(content, {as: "js"})
-      console.log(data)
-      return data
+    if (resp.ok) {
+      return
     } else {
       return Promise.reject(createError(content))
     }
@@ -155,8 +153,7 @@ export class Client {
     })
     const content = await parseContentType(resp)
     if (resp.ok) {
-      if (!content) return null
-      return decode(content, {as: "js"})
+      return null
     } else {
       return Promise.reject(createError(content))
     }
@@ -188,7 +185,7 @@ export class Client {
     if (resp.ok && content !== null) {
       return decode(content, {as: "js"})
     } else {
-      Promise.reject(createError(content))
+      throw createError(content)
     }
   }
 

@@ -10,9 +10,7 @@ test("encode search path", () => {
         sec: 100
       },
       {ns: 0, sec: 200}
-    ],
-    spanArgsFocus: [null, null],
-    keep: true
+    ]
   })
   expect(path).toEqual(
     "q=_path%3Dconn&from=100.0&to=200.0&p0=191.0.1.2&keep=true"
