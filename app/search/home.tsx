@@ -1,4 +1,3 @@
-import useLakeId from "app/router/hooks/use-lake-id"
 import {Results} from "app/routes/search/results"
 import useColumns from "app/toolbar/hooks/useColumns"
 import useExport from "app/toolbar/hooks/useExport"
@@ -6,7 +5,6 @@ import useView from "app/toolbar/hooks/useView"
 import {Toolbar} from "app/toolbar/toolbar"
 import React, {useLayoutEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import CommitNotification from "src/js/components/CommitNotification"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchHeaderChart from "src/js/components/SearchHeaderChart"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
@@ -59,7 +57,6 @@ export default function SearchHome() {
   const exportAction = useExport()
   const columns = useColumns()
   const pluginButtons = usePluginToolbarItems("search")
-  const poolId = useLakeId()
   const actions = [...pluginButtons, exportAction, columns, view]
 
   return (
@@ -70,7 +67,6 @@ export default function SearchHome() {
         <SearchHeaderChart />
       </SearchPageHeader>
       <Results />
-      <CommitNotification key={poolId} />
     </InitSearchParams>
   )
 }

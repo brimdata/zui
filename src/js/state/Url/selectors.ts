@@ -27,7 +27,6 @@ export const getSearchParams = createSelector<
 >(getLocation, mustGetPool, (location, pool) => {
   const params = decodeSearchParams(location.search)
   const spanArgs = mergeDefaultSpanArgs(params.spanArgs, pool)
-  console.log(params, spanArgs)
   const spanArgsFocus =
     params.spanArgsFocus[0] && params.spanArgsFocus[1]
       ? params.spanArgsFocus

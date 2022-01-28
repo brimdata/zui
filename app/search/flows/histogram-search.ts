@@ -14,6 +14,7 @@ export function histogramSearch(): Thunk<void> {
     const state = getState()
     const {program, pins} = Url.getSearchParams(state)
     const span = Url.getSpanParamsWithDefaults(state)
+    if (!span) return
     const from = brim.time(span[0]).toDate()
     const to = brim.time(span[1]).toDate()
     const brimProgram = brim.program(program, pins)

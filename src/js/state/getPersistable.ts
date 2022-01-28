@@ -12,6 +12,7 @@ export function getGlobalPersistable(state: GlobalState) {
     }
 
     delete draft.configs
+    delete draft.pools
   })
 }
 

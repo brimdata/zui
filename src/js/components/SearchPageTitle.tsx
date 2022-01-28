@@ -38,8 +38,10 @@ export default function SearchPageTitle() {
   const pool = useSelector(Current.mustGetPool)
   const {size, name} = pool
   const bytes = size ? formatBytes(size, 1) : ""
-  const span = brim.span(pool.everythingSpan())
-  const duration = span.getDuration() ? span.shortFormat() : ""
+  let duration = ""
+  if (pool.hasSpan()) {
+    duration = brim.span(pool.everythingSpan()).shortFormat()
+  }
 
   return (
     <Wrap>

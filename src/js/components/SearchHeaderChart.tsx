@@ -9,6 +9,15 @@ import Url from "../state/Url"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
 
 export default function SearchHeaderChart() {
+  const pool = useSelector(Current.getPool)
+  if (pool.hasSpan()) {
+    return <ShowChart />
+  } else {
+    return null
+  }
+}
+
+function ShowChart() {
   const location = useSelector(Current.getLocation)
   const dispatch: AppDispatch = useDispatch()
   const {program, pins} = useSelector(Url.getSearchParams)

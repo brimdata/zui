@@ -23,19 +23,16 @@ const workspaceUrl = createSelector<State, Lake | null, string>(
 const getSpan = createSelector<State, SearchParams, Span>(
   Url.getSearchParams,
   ({spanArgs}) => {
+    if (!spanArgs) return null
     return brim.span(spanArgs).toSpan()
   }
-)
-
-const getSpanFocus = createSelector<State, TabState, Span | null | undefined>(
-  Tabs.getActiveTab,
-  (tab) => tab.search.spanFocus
 )
 
 const _getSpanArgs = createSelector<State, TabState, Pool, SpanArgs>(
   Tabs.getActiveTab,
   Current.mustGetPool,
   (tab, pool) => {
+    if (!pool.hasSpan() || !tab.search.spanArgs) return null
     const [from, to] = tab.search.spanArgs
     const [defaultFrom, defaultTo] = pool.defaultSpanArgs()
     return [from || defaultFrom, to || defaultTo]
@@ -47,6 +44,7 @@ const getSpanArgs = createIsEqualSelector(_getSpanArgs, (args) => args)
 const getComputedSpan = createSelector<State, SpanArgs, Span>(
   getSpanArgs,
   (args) => {
+    if (!args) return null
     return brim.span(args).toSpan()
   }
 )
@@ -54,22 +52,10 @@ const getComputedSpan = createSelector<State, SpanArgs, Span>(
 const getSpanAsDates = createSelector<State, Span, DateTuple>(
   getSpan,
   (span) => {
+    if (!span) return null
     return brim.span(span).toDateTuple()
   }
 )
-
-const getSpanFocusAsDates = createSelector<
-  State,
-  Span | null | undefined,
-  DateTuple | null | undefined
->(getSpanFocus, (focus) => {
-  if (focus) {
-    const [from, to] = focus
-    return [brim.time(from).toDate(), brim.time(to).toDate()]
-  } else {
-    return null
-  }
-})
 
 export default {
   workspaceUrl,
@@ -79,8 +65,6 @@ export default {
   },
   getSpan,
   getSpanAsDates,
-  getSpanFocus,
-  getSpanFocusAsDates,
   getSpanArgs,
   getComputedSpan
 }

@@ -1,6 +1,6 @@
 import {syncPool} from "app/core/pools/sync-pool"
+import usePoolId from "app/router/hooks/use-pool-id"
 import useLakeId from "app/router/hooks/use-lake-id"
-import useWorkspaceId from "app/router/hooks/use-workspace-id"
 import {lakeSearch} from "app/router/routes"
 import {workspacePath} from "app/router/utils/paths"
 import React, {useEffect} from "react"
@@ -28,15 +28,15 @@ export default function LakeShow() {
 
 function InitLake({children}) {
   const dispatch = useDispatch<AppDispatch>()
-  const poolId = useLakeId()
-  const workspaceId = useWorkspaceId()
+  const poolId = usePoolId()
+  const lakeId = useLakeId()
   const pool = useSelector(Current.getPool)
 
   useEffect(() => {
     if (poolId) dispatch(syncPool(poolId))
   }, [poolId])
 
-  if (!pool) return <Redirect to={workspacePath(workspaceId)} />
+  if (!pool) return <Redirect to={workspacePath(lakeId)} />
   if (pool && !pool.hasStats()) return null
   return children
 }

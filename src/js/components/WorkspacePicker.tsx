@@ -1,4 +1,4 @@
-import useWorkspaceId from "app/router/hooks/use-workspace-id"
+import useLakeId from "app/router/hooks/use-lake-id"
 import tabHistory from "app/router/tab-history"
 import {lakeImportPath} from "app/router/utils/paths"
 import {MenuItemConstructorOptions} from "electron"
@@ -71,7 +71,7 @@ const showWorkspaceMenu = () => (dispatch, getState) => {
 
 export default function WorkspacePicker() {
   const dispatch = useDispatch<AppDispatch>()
-  const workspaceId = useWorkspaceId()
+  const workspaceId = useLakeId()
   const current = useSelector(Lakes.id(workspaceId))
   return (
     <WorkspacePickerWrapper onClick={() => dispatch(showWorkspaceMenu())}>

@@ -29,24 +29,30 @@ export class Pool {
     return !!this.stats
   }
 
+  hasSpan() {
+    return this.hasStats() && this.stats.span !== null
+  }
+
   empty() {
-    if (this.stats) return this.stats.span.dur === 0
+    if (this.stats && this.stats.span) return this.stats.span.dur === 0
     else return true
   }
 
   minTime(): Date {
-    if (this.stats) return this.stats.span.ts
-    else throw new Error("No stats for this pool")
+    if (!this.stats) throw new Error("Pool has no stats")
+    if (!this.stats.span) throw new Error("Pool has no span")
+    return this.stats.span.ts
   }
 
   maxTime(): Date {
-    if (this.stats)
-      return new Date(this.minTime().getTime() + this.stats.span.dur)
-    else throw new Error("No stats for this pool")
+    if (!this.stats) throw new Error("Pool has no stats")
+    if (!this.stats.span) throw new Error("Pool has no span")
+    return new Date(this.minTime().getTime() + this.stats.span.dur)
   }
 
   everythingSpan(): Span {
-    if (this.stats) return brim.span([this.minTime(), this.maxTime()]).toSpan()
-    else throw new Error("No stats for this pool")
+    if (!this.stats.span) throw new Error("Pool has no span")
+    if (!this.stats) throw new Error("No stats for this pool")
+    return brim.span([this.minTime(), this.maxTime()]).toSpan()
   }
 }

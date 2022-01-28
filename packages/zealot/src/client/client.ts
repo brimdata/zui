@@ -1,5 +1,6 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
 import nodeFetch from "node-fetch"
+import {PoolConfig, PoolStats} from ".."
 import {decode} from "../encoder"
 import {ResultStream} from "../query/result-stream"
 import {parseContentType} from "../util/content-type"
@@ -117,17 +118,17 @@ export class Client {
     return resp.js()
   }
 
-  async getPool(nameOrId: string): Promise<any> {
+  async getPool(nameOrId: string): Promise<PoolConfig> {
     const res = await this.query(
       `from :pools | id == ${nameOrId} or name == "${nameOrId}"`
     )
 
-    const values = await res.zed()
+    const values = await res.js()
     if (!values || values.length == 0) throw new Error("pool not found")
     return values[0]
   }
 
-  async getPoolStats(poolId: string): Promise<any> {
+  async getPoolStats(poolId: string): Promise<PoolStats> {
     const resp = await this.fetch(this.baseURL + `/pool/${poolId}/stats`, {
       method: "GET",
       headers: {
@@ -137,8 +138,7 @@ export class Client {
     })
     const content = await parseContentType(resp)
     if (resp.ok && content !== null) {
-      const zed = decode(content)
-      return zed
+      return decode(content, {as: "js"}) as PoolStats
     } else {
       return Promise.reject(createError(content))
     }

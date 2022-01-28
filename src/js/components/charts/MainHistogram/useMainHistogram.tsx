@@ -25,11 +25,13 @@ import xAxisTime from "../pens/xAxisTime"
 import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 
-export default function(width: number, height: number): HistogramChart {
+export default function useMainHistogram(
+  width: number,
+  height: number
+): HistogramChart {
   const chartData = useSelector(Chart.getData)
   const status = useSelector(Chart.getStatus)
   const span = useSelector(tab.getSpanAsDates)
-  const innerSpan = useSelector(tab.getSpanFocusAsDates)
 
   const dispatch = useDispatch()
   const pens = useConst<Pen[]>([], () => {
@@ -101,7 +103,6 @@ export default function(width: number, height: number): HistogramChart {
       margins,
       state: {
         isFetching: status === "FETCHING",
-        selection: innerSpan,
         isEmpty: data.points.length === 0,
         isDragging: false
       },
@@ -115,5 +116,5 @@ export default function(width: number, height: number): HistogramChart {
         .domain(data.span),
       pens
     }
-  }, [chartData, status, span, innerSpan, width, height])
+  }, [chartData, status, span, width, height])
 }

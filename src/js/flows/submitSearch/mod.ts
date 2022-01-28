@@ -17,7 +17,6 @@ export function submitSearch(
   return function(dispatch, getState) {
     dispatch(Notice.dismiss())
     const record = Search.getRecord(getState())
-    const spanArgsFocus = Tab.getSpanFocus(getState())
     const workspaceId = Current.getWorkspaceId(getState())
     const poolId = Current.getPoolId(getState())
 
@@ -25,7 +24,7 @@ export function submitSearch(
 
     if (!dispatch(SearchBar.validate())) return
 
-    const url = lakeSearchPath(poolId, workspaceId, {...record, spanArgsFocus})
+    const url = lakeSearchPath(poolId, workspaceId, {...record})
 
     if (save.investigation) {
       dispatch(

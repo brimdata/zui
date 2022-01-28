@@ -11,7 +11,10 @@ export type HistogramDataPoint = {
   count: number
 }
 
-export default function(data: ChartData, span: DateTuple): HistogramData {
+export default function format(
+  data: ChartData,
+  span: DateTuple
+): HistogramData {
   const interval = histogramInterval(span)
 
   const defaults: {

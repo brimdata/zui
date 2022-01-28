@@ -10,8 +10,10 @@ import {QueriesState} from "./Queries/types"
 import Lakes from "./Lakes"
 import {LakesState} from "./Lakes/types"
 import RemoteQueries from "./RemoteQueries"
+import {PoolsState} from "./Pools/types"
 
 export type GlobalState = {
+  pools: PoolsState
   launches: LaunchesState
   workspaces: LakesState
   investigation: InvestigationState

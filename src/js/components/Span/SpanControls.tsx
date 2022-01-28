@@ -1,5 +1,5 @@
-import classNames from "classnames"
 import React from "react"
+import classNames from "classnames"
 import {useDispatch, useSelector} from "react-redux"
 import Url from "src/js/state/Url"
 import Label from "../../../../app/toolbar/label"
@@ -15,7 +15,16 @@ type Props = {
   submit: Function
 }
 
-export default function SpanControls({submit}: Props) {
+export default function SpanControls(props: Props) {
+  const args = useSelector(Tab.getSpanArgs)
+  if (args) {
+    return <Controls {...props} />
+  } else {
+    return null
+  }
+}
+
+function Controls({submit}: Props) {
   const dispatch = useDispatch()
   const args = useSelector(Tab.getSpanArgs)
   const prev = useSelector(Url.getSpanParamsWithDefaults)

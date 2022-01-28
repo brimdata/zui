@@ -23,7 +23,13 @@ const initialViewerSearch = (): Thunk<any> => (dispatch, getState) => {
   const {key} = history.location
   dispatch(Viewer.setSearchKey(tabId, key))
 
-  const [from, to] = brim.span(params.spanArgs).toDateTuple()
+  let from = null
+  let to = null
+  if (params.spanArgs) {
+    const [f, t] = brim.span(params.spanArgs).toDateTuple()
+    from = f
+    to = t
+  }
   return dispatch(viewerSearch({query, from, to, keep: params.keep}))
 }
 
