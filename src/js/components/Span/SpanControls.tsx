@@ -1,7 +1,6 @@
 import React from "react"
 import classNames from "classnames"
 import {useDispatch, useSelector} from "react-redux"
-import Url from "src/js/state/Url"
 import Label from "../../../../app/toolbar/label"
 import ClockIcon from "../../icons/ClockIcon"
 import {default as Tab, default as tab} from "../../state/Tab"
@@ -27,7 +26,7 @@ export default function SpanControls(props: Props) {
 function Controls({submit}: Props) {
   const dispatch = useDispatch()
   const args = useSelector(Tab.getSpanArgs)
-  const prev = useSelector(Url.getSpanParamsWithDefaults)
+  const prev = useSelector(Tab.getSpan)
   const [from, to] = args
 
   function fromChange(arg) {

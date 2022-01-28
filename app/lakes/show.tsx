@@ -39,7 +39,6 @@ function InitPool({children}) {
     if (poolId) dispatch(syncPool(poolId))
   }, [poolId])
 
-  console.log(pool, ingesting)
   if (!pool) {
     return <Redirect to={workspacePath(lakeId)} />
   } else {

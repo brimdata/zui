@@ -21,26 +21,11 @@ test("set search key", () => {
 })
 
 test("chart records append", () => {
-  const state = store.dispatchAll([
-    chart.appendRecords(tabId, [records[0]]),
-    chart.appendRecords(tabId, [records[1]])
-  ])
+  store.dispatch([chart.setRecords(tabId, records)])
 
-  expect(chart.getData(state)).toEqual({
+  expect(chart.getData(store.getState())).toEqual({
     keys: ["conn", "dns"],
     table: {"0": {conn: 500}, "100000": {dns: 300}}
-  })
-})
-
-test("chart records remains unique", () => {
-  const state = store.dispatchAll([
-    chart.appendRecords(tabId, [records[0]]),
-    chart.appendRecords(tabId, [records[0]])
-  ])
-
-  expect(chart.getData(state)).toEqual({
-    keys: ["conn"],
-    table: {"0": {conn: 500}}
   })
 })
 
@@ -52,7 +37,7 @@ test("chart records status", () => {
 
 test("chart records clear", () => {
   const state = store.dispatchAll([
-    chart.appendRecords(tabId, records),
+    chart.setRecords(tabId, records),
     chart.setStatus(tabId, "SUCCESS"),
     chart.clear(tabId)
   ])

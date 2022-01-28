@@ -5,9 +5,13 @@ export function mergeDefaultSpanArgs(
   spanArgs: Partial<SpanArgs>,
   pool: Pool
 ): SpanArgs {
-  if (pool.hasSpan()) {
-    return pool.defaultSpanArgs()
+  if (!pool.hasSpan()) return null
+  const defaults = pool.defaultSpanArgs()
+  if (!spanArgs) {
+    return defaults
   } else {
-    return null
+    const [a, b] = spanArgs
+    const [a1, b1] = defaults
+    return [a || a1, b || b1]
   }
 }

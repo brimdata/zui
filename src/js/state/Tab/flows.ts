@@ -12,6 +12,7 @@ export default {
         .span(args)
         .recompute(now)
         .toSpan()
+      console.log({args, span})
       dispatch(Search.setSpan(span))
     }
   },

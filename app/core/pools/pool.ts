@@ -1,4 +1,5 @@
 import {PoolConfig, PoolStats} from "@brimdata/zealot"
+import {isEqual} from "lodash"
 import brim, {Span} from "src/js/brim"
 
 export class Pool {
@@ -33,6 +34,10 @@ export class Pool {
     return this.hasStats() && this.stats.span !== null
   }
 
+  hasTsKey() {
+    return isEqual(this.data.layout.keys, [["ts"]])
+  }
+
   empty() {
     if (this.stats && this.stats.span) return this.stats.span.dur === 0
     else return true
@@ -41,13 +46,19 @@ export class Pool {
   minTime(): Date {
     if (!this.stats) throw new Error("Pool has no stats")
     if (!this.stats.span) throw new Error("Pool has no span")
-    return this.stats.span.ts
+    const date = this.stats.span.ts
+    if (isNaN(date.getTime())) throw new Error("Invalid Date")
+    return date
   }
 
   maxTime(): Date {
     if (!this.stats) throw new Error("Pool has no stats")
     if (!this.stats.span) throw new Error("Pool has no span")
-    return new Date(this.minTime().getTime() + this.stats.span.dur)
+    const date = new Date(
+      this.minTime().getTime() + Math.ceil(this.stats.span.dur / 1e6)
+    )
+    if (isNaN(date.getTime())) throw new Error("Invalid Date")
+    return date
   }
 
   everythingSpan(): Span {

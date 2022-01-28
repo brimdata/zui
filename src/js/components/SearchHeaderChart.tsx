@@ -10,7 +10,7 @@ import MainHistogramChart from "./charts/MainHistogram/Chart"
 
 export default function SearchHeaderChart() {
   const pool = useSelector(Current.getPool)
-  if (pool.hasSpan()) {
+  if (pool.hasSpan() && pool.hasTsKey()) {
     return <ShowChart />
   } else {
     return null

@@ -19,13 +19,12 @@ export function submitSearch(
     const record = Search.getRecord(getState())
     const workspaceId = Current.getWorkspaceId(getState())
     const poolId = Current.getPoolId(getState())
-    console.log(Current.getPool(getState()))
+
     dispatch(Tab.computeSpan(ts))
 
     if (!dispatch(SearchBar.validate())) return
 
     const url = poolSearchPath(poolId, workspaceId, {...record})
-
     if (save.investigation) {
       dispatch(
         Investigation.push(workspaceId, poolId, record, brim.time(ts).toTs())
