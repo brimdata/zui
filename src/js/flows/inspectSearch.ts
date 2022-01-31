@@ -5,8 +5,11 @@ import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 import {annotateQuery} from "./search/mod"
 
-export const inspectSearch = (): Thunk<string> => (dispatch, getState) => {
-  const zealot = dispatch(getZealot())
+export const inspectSearch = (): Thunk<Promise<string>> => async (
+  dispatch,
+  getState
+) => {
+  const zealot = await dispatch(getZealot())
   const program = SearchBar.getSearchProgram(getState())
   const [from, to] = Tab.getSpan(getState())
   const poolId = Current.getPoolId(getState())

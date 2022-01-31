@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react"
 import {toast} from "react-hot-toast"
 import {useDispatch} from "react-redux"
 import styled from "styled-components"
-import {BrimWorkspace} from "../brim"
+import {BrimLake} from "../brim"
 import {updateStatus} from "../flows/workspace/update-status"
 import {login} from "../flows/workspace/login"
 import {AppDispatch} from "../state/types"
@@ -36,7 +36,7 @@ const StyledButton = styled(ToolbarButton)`
 `
 
 type Props = {
-  workspace: BrimWorkspace
+  workspace: BrimLake
 }
 
 const Login = ({workspace}: Props) => {

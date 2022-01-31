@@ -11,7 +11,7 @@ const deletePool = (poolId: string): Thunk<Promise<void>> => async (
   getState,
   {api}
 ) => {
-  const zealot = dispatch(getZealot())
+  const zealot = await dispatch(getZealot())
   const lakeId = Current.getWorkspaceId(getState())
 
   const poolHandler = Object.entries(Handlers.get(getState()))

@@ -8,12 +8,12 @@ import {Pool} from "./pool"
 export const syncPool = (
   poolId: string,
   lakeId?: string
-): Thunk<Promise<Pool | null>> => (dispatch, getState) => {
+): Thunk<Promise<Pool | null>> => async (dispatch, getState) => {
   const lake = lakeId
     ? Lakes.id(lakeId)(getState())
     : Current.getWorkspace(getState())
 
-  const zealot = dispatch(getZealot(lake))
+  const zealot = await dispatch(getZealot(lake))
 
   return Promise.all([zealot.getPool(poolId), zealot.getPoolStats(poolId)])
     .then(([data, stats]) => {

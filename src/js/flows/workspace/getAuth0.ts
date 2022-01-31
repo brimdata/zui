@@ -1,9 +1,9 @@
 import Auth0Client from "../../auth0"
-import {BrimWorkspace} from "../../brim"
+import {BrimLake} from "../../brim"
 import Current from "../../state/Current"
 import {Thunk} from "../../state/types"
 
-export const getAuth0 = (ws?: BrimWorkspace): Thunk<Auth0Client> => (
+export const getAuth0 = (ws?: BrimLake): Thunk<Auth0Client> => (
   dispatch,
   getState
 ) => {

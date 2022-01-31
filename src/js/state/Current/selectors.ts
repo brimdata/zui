@@ -1,6 +1,6 @@
 import {matchPath} from "react-router"
 import {createSelector} from "reselect"
-import brim, {BrimWorkspace} from "../../brim"
+import brim, {BrimLake} from "../../brim"
 import Pools from "../Pools"
 import {PoolsState} from "../Pools/types"
 import Tabs from "../Tabs"
@@ -45,17 +45,16 @@ export const getWorkspaceId = (state: State = undefined) => {
   return match?.params?.workspaceId || null
 }
 
-export const mustGetWorkspace = createSelector<
-  State,
-  LakesState,
-  Id,
-  BrimWorkspace
->(Lakes.raw, getWorkspaceId, (workspaces, id) => {
-  if (!id) throw new Error("Current lake id is unset")
-  if (!workspaces[id]) throw new Error(`Missing lake id: ${id}`)
+export const mustGetWorkspace = createSelector<State, LakesState, Id, BrimLake>(
+  Lakes.raw,
+  getWorkspaceId,
+  (workspaces, id) => {
+    if (!id) throw new Error("Current lake id is unset")
+    if (!workspaces[id]) throw new Error(`Missing lake id: ${id}`)
 
-  return brim.workspace(workspaces[id])
-})
+    return brim.workspace(workspaces[id])
+  }
+)
 
 export const mustGetPool = createSelector<State, PoolsState, Id, Id, Pool>(
   Pools.raw,

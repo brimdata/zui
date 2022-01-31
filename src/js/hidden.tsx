@@ -8,7 +8,7 @@ import ReactDOM from "react-dom"
 import {Provider, useDispatch, useSelector} from "react-redux"
 import "regenerator-runtime/runtime"
 import brim from "./brim"
-import workspace from "./brim/workspace"
+import lake from "./brim/workspace"
 import {
   getRemotePoolForLake,
   refreshRemoteQueries
@@ -47,38 +47,41 @@ const Hidden = () => {
     workspaces.forEach((w) => {
       if (w.id in workspaceSourceMap) return
       try {
-        const wsSource = dispatch(subscribeEvents(workspace(w)))
-        workspaceSourceMap[w.id] = wsSource
+        dispatch(subscribeEvents(lake(w))).then((wsSource) => {
+          workspaceSourceMap[w.id] = wsSource
 
-        wsSource.addEventListener("pool-new", (_e) => {
-          dispatch(syncPools(w.id))
-        })
-        wsSource.addEventListener("pool-update", (_e) => {
-          dispatch(syncPools(w.id)).catch((e) =>
-            log.error("refresh error: ", e)
-          )
-        })
-        wsSource.addEventListener("pool-delete", (_e) => {
-          dispatch(syncPools(w.id))
-        })
-        wsSource.addEventListener("branch-commit", (e) => {
-          let eventData
-          try {
-            eventData = JSON.parse(e["data"])
-          } catch (e) {
-            return log.error(
-              new Error("Cannot parse branch-commit event data: " + e)
+          wsSource.addEventListener("pool-new", (_e) => {
+            dispatch(syncPools(w.id))
+          })
+          wsSource.addEventListener("pool-update", (_e) => {
+            dispatch(syncPools(w.id)).catch((e) =>
+              log.error("refresh error: ", e)
             )
-          }
-          const poolId = eventData && eventData["pool_id"]
-          if (!poolId)
-            return log.error(new Error("No 'pool_id' from branch-commit event"))
+          })
+          wsSource.addEventListener("pool-delete", (_e) => {
+            dispatch(syncPools(w.id))
+          })
+          wsSource.addEventListener("branch-commit", (e) => {
+            let eventData
+            try {
+              eventData = JSON.parse(e["data"])
+            } catch (e) {
+              return log.error(
+                new Error("Cannot parse branch-commit event data: " + e)
+              )
+            }
+            const poolId = eventData && eventData["pool_id"]
+            if (!poolId)
+              return log.error(
+                new Error("No 'pool_id' from branch-commit event")
+              )
 
-          const remotePool = dispatch(getRemotePoolForLake(w.id))
-          if (poolId === remotePool?.id)
-            dispatch(refreshRemoteQueries(brim.workspace(w)))
-          dispatch(syncPool(poolId, w.id)).catch((e) => {
-            log.error("branch-commit update failed: ", e)
+            const remotePool = dispatch(getRemotePoolForLake(w.id))
+            if (poolId === remotePool?.id)
+              dispatch(refreshRemoteQueries(brim.workspace(w)))
+            dispatch(syncPool(poolId, w.id)).catch((e) => {
+              log.error("branch-commit update failed: ", e)
+            })
           })
         })
       } catch (e) {

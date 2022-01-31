@@ -18,14 +18,14 @@ import SystemTest from "../../../src/js/state/SystemTest"
 import Tabs from "../../../src/js/state/Tabs"
 import {Dispatch, Thunk} from "../../../src/js/state/types"
 
-export default (files: File[]): Thunk<Promise<void>> => (
+export default (files: File[]): Thunk<Promise<void>> => async (
   dispatch,
   getState,
   {api}
 ) => {
   const ws = Current.mustGetWorkspace(getState())
   const workspaceId = ws.id
-  const zealot = dispatch(getZealot())
+  const zealot = await dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
   const poolNames = Pools.getPoolNames(workspaceId)(getState())

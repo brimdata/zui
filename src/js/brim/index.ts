@@ -8,14 +8,14 @@ import span from "./span"
 import syntax from "./syntax"
 import tab from "./brimTab"
 import time from "./time"
-import workspace from "./workspace"
+import lake from "./workspace"
 
 export type Ts = {
   ns: number
   sec: number
 }
 
-export type BrimWorkspace = ReturnType<typeof workspace>
+export type BrimLake = ReturnType<typeof lake>
 
 export type Span = [Ts, Ts]
 
@@ -31,5 +31,5 @@ export default {
   form,
   randomHash,
   tab,
-  workspace
+  workspace: lake
 }

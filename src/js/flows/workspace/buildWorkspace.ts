@@ -1,5 +1,5 @@
 import isEmpty from "lodash/isEmpty"
-import brim, {BrimWorkspace} from "../../brim"
+import brim, {BrimLake} from "../../brim"
 import {Thunk} from "../../state/types"
 import {Lake} from "../../state/Lakes/types"
 import {Client} from "@brimdata/zealot"
@@ -7,7 +7,7 @@ import {Client} from "@brimdata/zealot"
 export const buildWorkspace = (
   ws: Partial<Lake>,
   _signal: AbortSignal
-): Thunk<Promise<BrimWorkspace>> => async (_dispatch, _getState) => {
+): Thunk<Promise<BrimLake>> => async (_dispatch, _getState) => {
   if (!ws.host || !ws.id || !ws.name)
     throw new Error("must provide host, id, and name to build lake")
   const zealot = new Client(brim.workspace(ws as Lake).getAddress())

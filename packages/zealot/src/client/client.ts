@@ -18,10 +18,12 @@ import {
 
 export class Client {
   public fetch: CrossFetch
+  public auth: string | null
 
   constructor(public baseURL: string, opts: Partial<ClientOpts> = {}) {
-    const defaults: ClientOpts = {env: getEnv()}
+    const defaults: ClientOpts = {env: getEnv(), auth: null}
     const options: ClientOpts = {...defaults, ...opts}
+    this.auth = options.auth || null
     this.fetch = options.env === "node" ? nodeFetch : window.fetch.bind(window)
   }
 
@@ -48,9 +50,11 @@ export class Client {
     const resp = await this.fetch(this.baseURL + "/query", {
       method: "POST",
       body: JSON.stringify({query}),
+      // consolodate the creating of these fetch arguments
       headers: {
         Accept: getAcceptValue(options.format),
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.auth}`
       },
       signal: abort.signal
     })
@@ -64,6 +68,7 @@ export class Client {
   }
 
   curl(query: string, opts: Partial<QueryOpts> = {}) {
+    // add auth to this
     const defaults: QueryOpts = {format: "zjson", controlMessages: true}
     const options: QueryOpts = {...defaults, ...opts}
     return `curl -X POST -d '${JSON.stringify({query})}' \\

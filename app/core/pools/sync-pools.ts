@@ -13,7 +13,7 @@ export default function syncPools(lakeId?: string): Thunk<Promise<void>> {
       ? Lakes.id(lakeId)(getState())
       : Current.getWorkspace(getState())
 
-    const zealot = dispatch(getZealot(lake))
+    const zealot = await dispatch(getZealot(lake))
 
     return zealot.getPools().then((allData) => {
       dispatch(Pools.setAllData({lakeId: lake.id, allData}))

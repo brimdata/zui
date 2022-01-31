@@ -2,8 +2,8 @@ import {workspacePath} from "app/router/utils/paths"
 import React from "react"
 import {useSelector} from "react-redux"
 import {useHistory} from "react-router"
-import {BrimWorkspace} from "src/js/brim"
-import workspace from "src/js/brim/workspace"
+import {BrimLake} from "src/js/brim"
+import lake from "src/js/brim/workspace"
 import DataStoreIcon from "src/js/icons/DataStoreIcon"
 import Lakes from "src/js/state/Lakes"
 import styled from "styled-components"
@@ -41,7 +41,7 @@ const WorkspaceAddress = styled.div`
 `
 
 type Props = {
-  workspace: BrimWorkspace
+  workspace: BrimLake
   onClick: () => void
 }
 
@@ -86,7 +86,7 @@ const WorkspacesList = () => {
         {workspaces.map((w) => (
           <Workspace
             key={w.id}
-            workspace={workspace(w)}
+            workspace={lake(w)}
             onClick={() => history.push(workspacePath(w.id))}
           />
         ))}

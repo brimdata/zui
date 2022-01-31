@@ -86,7 +86,7 @@ export function search({
     const tabSpan = Tab.getSpanAsDates(getState())
     const tab = Tabs.getActive(getState())
     const defaultPoolId = Current.getPoolId(getState())
-    const zealot = dispatch(getZealot())
+    const zealot = await dispatch(getZealot())
     const ctl = new AbortController()
     const abort = () => ctl.abort()
     const tag = id

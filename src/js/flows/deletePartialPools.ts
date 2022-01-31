@@ -6,11 +6,11 @@ import Current from "../state/Current"
 import {workspacePath} from "app/router/utils/paths"
 import tabHistory from "app/router/tab-history"
 
-export default (): Thunk<Promise<any[]>> => (dispatch, getState) => {
+export default (): Thunk<Promise<any[]>> => async (dispatch, getState) => {
   const current = Current.getWorkspace(getState())
   if (!current) return
 
-  const zealot = dispatch(getZealot())
+  const zealot = await dispatch(getZealot())
   const poolIds = Handlers.getIngestPoolIds(getState())
 
   // if current pool id is among ingesting pools, clear it

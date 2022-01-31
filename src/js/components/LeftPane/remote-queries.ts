@@ -5,7 +5,7 @@ import Pools from "src/js/state/Pools"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Thunk} from "src/js/state/types"
 import {Readable} from "stream"
-import {BrimWorkspace} from "../../brim"
+import {BrimLake} from "../../brim"
 import {getZealot} from "../../flows/getZealot"
 import {Query} from "../../state/Queries/types"
 
@@ -26,11 +26,9 @@ export const getRemotePoolForLake = (lakeId: string): Thunk<Pool> => {
   }
 }
 
-export const refreshRemoteQueries = (
-  lake?: BrimWorkspace
-): Thunk<Promise<void>> => {
+export const refreshRemoteQueries = (lake?: BrimLake): Thunk<Promise<void>> => {
   return async (dispatch) => {
-    const zealot = dispatch(getZealot(lake))
+    const zealot = await dispatch(getZealot(lake))
     try {
       const queryReq = await zealot.query(
         `from '${remoteQueriesPoolName}'
@@ -65,7 +63,7 @@ export const setRemoteQueries = (
   shouldDelete?: boolean
 ): Thunk<Promise<void>> => {
   return async (dispatch, getState) => {
-    const zealot = dispatch(getZealot())
+    const zealot = await dispatch(getZealot())
     let rqPoolId = Pools.getByName(
       Current.getWorkspaceId(getState()),
       remoteQueriesPoolName

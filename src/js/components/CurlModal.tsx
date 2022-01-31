@@ -1,5 +1,5 @@
 import {useDispatch} from "react-redux"
-import React from "react"
+import React, {useEffect, useState} from "react"
 
 import {inspectSearch} from "../flows/inspectSearch"
 import {reactElementProps} from "../../../test/playwright/helpers/integration"
@@ -20,7 +20,13 @@ import useEnterKey from "./hooks/useEnterKey"
 export default function CurlModalBox({onClose}) {
   useEnterKey(onClose)
   const dispatch = useDispatch<AppDispatch>()
-  const curl = dispatch(inspectSearch())
+  const [curl, setCurl] = useState("")
+
+  useEffect(() => {
+    dispatch(inspectSearch()).then((command) => {
+      setCurl(command)
+    })
+  }, [])
 
   function copyToClip(e) {
     clickFeedback(e.target, "Copied")

@@ -13,7 +13,7 @@ export const activate = (api: BrimApi) => {
   ): Promise<void> => {
     const files = params.fileListData.map((f) => f.file)
     const totalBytes = files.reduce((sum, file) => sum + file.size, 0)
-    const zealot = api.getZealot()
+    const zealot = await api.getZealot()
     let readBytes = 0
     onProgressUpdate(0)
     for (const file of files) {

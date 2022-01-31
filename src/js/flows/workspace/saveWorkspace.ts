@@ -1,11 +1,11 @@
 import syncPools from "app/core/pools/sync-pools"
 import tabHistory from "app/router/tab-history"
-import {BrimWorkspace} from "../../brim"
+import {BrimLake} from "../../brim"
 import Lakes from "../../state/Lakes"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
 import {WorkspaceStatus} from "../../state/WorkspaceStatuses/types"
 
-export const saveWorkspace = (ws: BrimWorkspace, status: WorkspaceStatus) => (
+export const saveWorkspace = (ws: BrimLake, status: WorkspaceStatus) => (
   dispatch,
   _gs
 ): void => {

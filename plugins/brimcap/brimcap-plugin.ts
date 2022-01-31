@@ -346,7 +346,7 @@ export default class BrimcapPlugin {
       })
 
       // stream analyze output to pool
-      const zealot = this.api.getZealot()
+      const zealot = await this.api.getZealot()
       try {
         await zealot.load(analyzeP.stdout, {
           pool: params.poolId,

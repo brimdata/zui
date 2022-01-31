@@ -9,7 +9,7 @@ import SearchBar from "../state/SearchBar"
 import SystemTest from "../state/SystemTest"
 import Tab from "../state/Tab"
 import {Thunk} from "../state/types"
-import {getNodeZealot} from "./getZealot"
+import {getZealot} from "./getZealot"
 import {annotateQuery} from "./search/mod"
 
 const streamPipeline = util.promisify(pipeline)
@@ -36,7 +36,7 @@ export default (
   filePath: string,
   format: ResponseFormat
 ): Thunk<Promise<string>> => async (dispatch, getState): Promise<string> => {
-  const zealot = dispatch(getNodeZealot())
+  const zealot = await dispatch(getZealot(undefined, "node"))
   const poolId = Current.getPoolId(getState())
   const baseProgram = SearchBar.getSearchProgram(getState())
   const columns = Columns.getCurrentTableColumns(getState())
