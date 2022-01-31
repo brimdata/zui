@@ -31,20 +31,6 @@ export const getSpanParams = createSelector(getLocation, (location) => {
   return decodeSpanParams(location.search, "from", "to")
 })
 
-const getDefaultSpanArgs = createSelector(mustGetPool, (pool) => {
-  return pool.defaultSpanArgs()
-})
-
-export const getSpanParamsWithDefaults = createSelector(
-  getSpanParams,
-  getDefaultSpanArgs,
-  (params, defaults) => {
-    const [p1, p2] = params
-    const [d1, d2] = defaults
-    return [p1 || d1, p2 || d2]
-  }
-)
-
 export const getSearchProgram = createSelector(
   getSearchParams,
   (params) => params.program

@@ -1,5 +1,6 @@
 import {Pool} from "app/core/pools/pool"
-import {SpanArgs} from "src/js/state/Search/types"
+import brim from "src/js/brim"
+import {SpanArgs, TimeArg} from "src/js/state/Search/types"
 
 export function mergeDefaultSpanArgs(
   spanArgs: Partial<SpanArgs>,
@@ -12,6 +13,14 @@ export function mergeDefaultSpanArgs(
   } else {
     const [a, b] = spanArgs
     const [a1, b1] = defaults
-    return [a || a1, b || b1]
+    return [isValid(a) ? a : a1, isValid(b) ? b : b1]
+  }
+}
+
+function isValid(arg: TimeArg) {
+  try {
+    return brim.time(arg).isValid()
+  } catch {
+    return false
   }
 }

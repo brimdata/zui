@@ -15,7 +15,7 @@ export const workspacesList = {
   title: "Choose a Lake"
 }
 export const workspaceShow = {
-  title: "<workspace>",
+  title: "<lake>",
   path: "/workspaces/:workspaceId"
 }
 export const lakeImport = {

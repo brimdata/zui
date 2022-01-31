@@ -6,6 +6,7 @@ import {addEveryCountProc} from "src/js/searches/histogramSearch"
 import Chart from "src/js/state/Chart"
 import Current from "src/js/state/Current"
 import Notice from "src/js/state/Notice"
+import Tab from "src/js/state/Tab"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Url from "src/js/state/Url"
@@ -16,7 +17,7 @@ export function histogramSearch(): Thunk<Promise<void>> {
   return async (dispatch, getState) => {
     const state = getState()
     const {program, pins} = Url.getSearchParams(state)
-    const span = Url.getSpanParamsWithDefaults(state)
+    const span = Tab.getSpan(state)
     if (!span) return
     const from = brim.time(span[0]).toDate()
     const to = brim.time(span[1]).toDate()
