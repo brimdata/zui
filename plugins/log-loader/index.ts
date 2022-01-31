@@ -6,7 +6,7 @@ import {Readable} from "stream"
 export const activate = (api: BrimApi) => {
   const load = async (
     params: IngestParams & {poolId: string; branch: string},
-    onProgressUpdate: (value: number | null) => void,
+    onProgressUpdate: (value: number) => void,
     onWarning: (warning: string) => void,
     onDetailUpdate: () => Promise<void>,
     signal?: AbortSignal
@@ -39,7 +39,6 @@ export const activate = (api: BrimApi) => {
     }
     await onDetailUpdate()
     onProgressUpdate(1)
-    onProgressUpdate(null)
   }
 
   api.loaders.add({

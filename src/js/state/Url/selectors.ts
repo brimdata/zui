@@ -28,7 +28,6 @@ export const getSearchParams = createSelector<
 })
 
 export const getSpanParams = createSelector(getLocation, (location) => {
-  console.log(location.search)
   return decodeSpanParams(location.search, "from", "to")
 })
 

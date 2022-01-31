@@ -35,13 +35,21 @@ export class Channel extends EventEmitter {
   }
 
   collect(collector: Collector) {
+    /**
+     * The goal here is to get the first batch of results out
+     * to the collector as soon as possible. Then, only give
+     * updates every timeThres. This allows the UI to avoid
+     * frequent, expensive updates.
+     */
+    let first = true
     let count = 0
-    let countThresh = 10
+    let countThresh = 30
     let timeThresh = 500
     let timeId = 0
 
     const flush = () => {
       collector({rows: this.rows, shapesMap: this.shapesMap})
+      first = false
       count = 0
       clearTimeout(timeId)
     }
@@ -55,7 +63,7 @@ export class Channel extends EventEmitter {
 
     this.on("row", () => {
       count += 1
-      if (count >= countThresh) flush()
+      if (first && count >= countThresh) flush()
     })
 
     this.on("end", () => flush())

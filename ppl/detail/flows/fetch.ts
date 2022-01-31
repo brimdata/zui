@@ -7,21 +7,13 @@ function findConn(records) {
   return records.find((r) => r.try("_path")?.toString() === "conn")
 }
 
-const collect = ({response, promise}) => {
-  let records: zed.Record[] = []
-  response.chan(0, ({rows}) => {
-    records = rows
-  })
-  return promise.then(() => records)
-}
-
 export const fetchCorrelation = (
   record: zed.Record,
   id = "RELATED_EVENTS"
 ) => async (dispatch) => {
   const query = getCorrelationQuery(record)
   const {uid, cid} = new Correlation(record).getIds()
-  const run = () => collect(dispatch(search({query, id})))
+  const run = () => dispatch(search({query, id})).then((r) => r.zed())
 
   if (!uid && !cid) return []
   if (cid && uid) return run()

@@ -14,7 +14,7 @@ export class ResultStream {
   private channelsMap = new Map<number, Channel>()
   private _promise?: Promise<void>
 
-  constructor(public resp: CrossResponse) {}
+  constructor(public resp: CrossResponse, private ctl: AbortController) {}
 
   get body() {
     return this.resp.body
@@ -66,6 +66,10 @@ export class ResultStream {
     return this.promise
   }
 
+  abort() {
+    this.ctl.abort()
+  }
+
   private consume() {
     if (this._promise) return this._promise
 
@@ -79,12 +83,13 @@ export class ResultStream {
         this.status = "success"
         resolve()
       } catch (e) {
-        if (e === "abort error" /* fix this */) {
+        if (e instanceof DOMException && e.message.match(/user aborted/)) {
           this.status = "aborted"
+          resolve()
         } else {
           this.status = "error"
+          reject(e)
         }
-        reject(e)
       }
     })
     return this._promise

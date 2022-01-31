@@ -102,7 +102,7 @@ const executeLoader = (
   async do(params: IngestParams & {poolId: string; branch: string}) {
     const {poolId, fileListData = []} = params
 
-    const onProgressUpdate = (progress: number | null): void => {
+    const onProgressUpdate = (progress: number): void => {
       dispatch(Imports.setProgress({poolId, progress}))
     }
     const onDetailUpdate = async (): Promise<void> => {
@@ -138,6 +138,15 @@ const executeLoader = (
         onDetailUpdate,
         abortCtl.signal
       )
+      // Wait for the pool to have some data before we signal that
+      // the ingest is done.
+      let tries = 0
+      while (tries < 20) {
+        tries++
+        const pool = await dispatch(syncPool(poolId))
+        if (pool.hasStats() && pool.size > 0) break
+        await new Promise((r) => setTimeout(r, 300))
+      }
     } catch (e) {
       l.unload && (await l.unload(params))
       throw e

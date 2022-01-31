@@ -9,6 +9,7 @@ import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Url from "src/js/state/Url"
 import Viewer from "src/js/state/Viewer"
+import {viewerSearch} from "./viewer-search"
 
 /**
  * Called for the infinite scroll behavior in the viewer
@@ -25,9 +26,8 @@ export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const [from, to] = span
   const append = true
 
-  // dispatch(Viewer.splice(tabId, spliceIndex))
-  // TODO
-  // return dispatch(viewerSearch({query, from, to, append}))
+  dispatch(Viewer.splice(tabId, spliceIndex))
+  return dispatch(viewerSearch({query, from, to, append}))
 }
 
 function nextPageArgs(

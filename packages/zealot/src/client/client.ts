@@ -39,6 +39,12 @@ export class Client {
   async query(query: string, opts: Partial<QueryOpts> = {}) {
     const defaults: QueryOpts = {format: "zjson", controlMessages: true}
     const options: QueryOpts = {...defaults, ...opts}
+    // Wrap the supplied abort with our own
+    const abort = new AbortController()
+    options.signal?.addEventListener("abort", () => {
+      abort.abort()
+    })
+
     const resp = await this.fetch(this.baseURL + "/query", {
       method: "POST",
       body: JSON.stringify({query}),
@@ -46,14 +52,14 @@ export class Client {
         Accept: getAcceptValue(options.format),
         "Content-Type": "application/json"
       },
-      signal: options.signal
+      signal: abort.signal
     })
 
     if (!resp.ok) {
       const content = await parseContentType(resp)
       return Promise.reject(createError(content))
     } else {
-      return new ResultStream(resp)
+      return new ResultStream(resp, abort)
     }
   }
 

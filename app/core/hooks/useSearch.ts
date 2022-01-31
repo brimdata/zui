@@ -1,27 +1,33 @@
-import {zed} from "@brimdata/zealot"
+import {ResultStream, zed} from "@brimdata/zealot"
 import {useEffect, useState} from "react"
 import {useDispatch} from "react-redux"
+import {search} from "src/js/flows/search/mod"
 import {AppDispatch} from "src/js/state/types"
 
-type R = [zed.Record[], boolean]
+type R = [zed.Value[], boolean]
 
 export default function useSearch(query: string, deps?: any[]): R {
-  const _dispatch = useDispatch<AppDispatch>()
-  const [records, _setRecords] = useState<zed.Record[]>([])
+  const dispatch = useDispatch<AppDispatch>()
+  const [rows, setRows] = useState<zed.Value[]>([])
   const [isFetching, setIsFetching] = useState<boolean>(true)
 
   useEffect(() => {
     setIsFetching(true)
-    // TODO
-    // const res = dispatch(search({query}))
+    let res: ResultStream
 
-    // response.chan(0, ({rows}) => setRecords(rows))
-    // response.status((status) => {
-    //   if (status === "ABORTED") return
-    //   setIsFetching(status === "FETCHING")
-    // })
-    // return abort
+    dispatch(search({query}))
+      .then((r) => {
+        res = r
+        return res.collect(({rows}) => {
+          setRows(rows)
+        })
+      })
+      .finally(() => {
+        setIsFetching(false)
+      })
+
+    return () => res?.abort()
   }, deps)
 
-  return [records, isFetching]
+  return [rows, isFetching]
 }

@@ -276,7 +276,7 @@ export default class BrimcapPlugin {
   private setupLoader() {
     const load = async (
       params: IngestParams & {poolId: string; branch: string},
-      onProgressUpdate: (value: number | null) => void,
+      onProgressUpdate: (value: number) => void,
       onWarning: (warning: string) => void,
       onDetailUpdate: () => void,
       signal?: AbortSignal
@@ -380,7 +380,6 @@ export default class BrimcapPlugin {
 
       await onDetailUpdate()
       onProgressUpdate(1)
-      onProgressUpdate(null)
     }
 
     this.api.loaders.add({

@@ -15,6 +15,7 @@ import {showContextMenu} from "src/js/lib/System"
 import {MenuItemConstructorOptions} from "electron"
 import {Pool} from "app/core/pools/pool"
 import Imports from "src/js/state/Imports"
+import {isNumber} from "lodash"
 
 const PoolIcon = styled(Icon).attrs({name: "pool"})``
 
@@ -74,7 +75,7 @@ const PoolItem = ({innerRef, styles, data, state, handlers}) => {
     )
   }
 
-  const progress = ingest && ingest.progress < 1 && (
+  const progress = ingest && isNumber(ingest.progress) && (
     <div className="small-progress-bar">
       <ProgressIndicator percent={ingest.progress} />
     </div>

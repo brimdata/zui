@@ -27,20 +27,21 @@ export function viewerSearch(args: Args): Thunk<void> {
       dispatch(Viewer.setSearchKey(tabId, currentSearchKey))
     }
 
+    dispatch(Viewer.setStatus(tabId, "FETCHING"))
+    dispatch(Viewer.setEndStatus(tabId, "FETCHING"))
+
+    const prevRows = Viewer.getRecords(getState())
+
     const res = await dispatch(
       search({
         id,
         query: args.query,
         poolId: Current.mustGetPool(getState()).id,
         from: args.from,
+        to: args.to,
         initial: !args.append
       })
     )
-
-    dispatch(Viewer.setStatus(tabId, "FETCHING"))
-    dispatch(Viewer.setEndStatus(tabId, "FETCHING"))
-
-    const prevRows = Viewer.getRecords(getState())
     try {
       await res.collect(({rows, shapesMap}) => {
         dispatch(Viewer.setRecords(tabId, [...prevRows, ...rows]))

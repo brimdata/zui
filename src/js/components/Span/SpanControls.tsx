@@ -7,6 +7,7 @@ import {default as Tab, default as tab} from "../../state/Tab"
 import SpanDuration from "./SpanDuration"
 import SpanPicker from "./SpanPicker"
 import TimeButton from "./TimeButton"
+import Current from "src/js/state/Current"
 
 export const SPAN_TIME_FMT = "MMM DD, YYYY HH:mm:ss"
 
@@ -15,17 +16,17 @@ type Props = {
 }
 
 export default function SpanControls(props: Props) {
+  const pool = useSelector(Current.getPool)
   const args = useSelector(Tab.getSpanArgs)
-  if (args) {
-    return <Controls {...props} />
+  if (args && pool.hasSpan()) {
+    return <Controls {...props} args={args} />
   } else {
     return null
   }
 }
 
-function Controls({submit}: Props) {
+function Controls({submit, args}) {
   const dispatch = useDispatch()
-  const args = useSelector(Tab.getSpanArgs)
   const prev = useSelector(Tab.getSpan)
   const [from, to] = args
 

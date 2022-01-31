@@ -1,3 +1,4 @@
+import {ResultStream} from "@brimdata/zealot"
 import {search} from "src/js/flows/search/mod"
 import {parallelizeProcs} from "src/js/lib/Program"
 import {
@@ -12,7 +13,10 @@ import {Thunk} from "src/js/state/types"
 
 const id = "Md5"
 
-export const md5Search = (md5: string): Thunk<any> => (dispatch, getState) => {
+export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => (
+  dispatch,
+  getState
+) => {
   const poolId = Current.getPoolId(getState())
   if (!poolId) return
   const [from, to] = Tab.getSpanAsDates(getState())

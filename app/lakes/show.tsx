@@ -41,11 +41,11 @@ function InitPool({children}) {
 
   if (!pool) {
     return <Redirect to={workspacePath(lakeId)} />
+  } else if (ingesting) {
+    return <TabSearchLoading />
+  } else if (!pool.hasStats()) {
+    return null
   } else {
-    if (ingesting || !pool.hasStats()) {
-      return <TabSearchLoading />
-    } else {
-      return children
-    }
+    return children
   }
 }
