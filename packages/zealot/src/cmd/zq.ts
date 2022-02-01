@@ -1,14 +1,5 @@
 import {spawn} from "child_process"
-import os from "os"
-import {join} from "path"
-
-// This function should be in it's own package somewhere for all
-// to use.
-
-function zqBin() {
-  const bin = join(__dirname, "../../../../zdeps/zq")
-  return os.platform() === "win32" ? bin + ".exe" : bin
-}
+import {getPath} from "./paths"
 
 function execute(bin: string, opts: string[], input?: string) {
   return new Promise<string>((resolve, reject) => {
@@ -33,14 +24,14 @@ function parseNDJSON(input: string) {
     .map((s) => JSON.parse(s))
 }
 
-export async function zq(opts: {
+export default async function zq(opts: {
   query?: string
   file?: string
   input?: string
   format?: string
   bin?: string
 }): Promise<any> {
-  const bin = opts.bin || zqBin()
+  const bin = opts.bin || getPath("zq")
   const args = []
   if (opts.format) args.push("-f", opts.format)
   if (opts.query) args.push(opts.query)

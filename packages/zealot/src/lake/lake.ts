@@ -1,7 +1,7 @@
 import {ChildProcess, spawn} from "child_process"
 import {mkdirpSync} from "fs-extra"
 import {join} from "path"
-import {getPath} from "zed"
+import {getPath} from "../cmd/paths"
 import fetch from "cross-fetch"
 
 const zedCommand = getPath("zed")

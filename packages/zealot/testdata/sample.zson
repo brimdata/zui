@@ -4,7 +4,7 @@
     uid: "C1zOivgBT6dBmknqk",
     id: {
         orig_h: 10.47.1.152,
-        orig_p: 49562 (port=<uint16>),
+        orig_p: 49562 (port=uint16),
         resp_h: 23.217.103.245,
         resp_p: 80 (port)
     } (=0),
@@ -97,10 +97,9 @@ float64: 64.64 (float64),
 bool: false (bool),
 bytes: 0xff (bytes),
 string: "Hello world" (string),
-bstring: "Hello world 👋" (string),
 ip: 10.10.10.10 (ip),
 net: 10.1.1.0/24 (net),
-type: <access_list=<{info:string,nets:[net]}>> (type),
+type: <access_list={info:string,nets:[net]}> (type),
 error: error("fatal error"),
 null: null (null)
 } (=every_primitive)
@@ -122,7 +121,6 @@ float64:null,
 bool:null,
 bytes:null,
 string:null,
-bstring:null,
 ip:null,
 net:null,
 type:null,

@@ -2002,6 +2002,7 @@ __metadata:
     ts-jest: ^27.1.3
     tslib: ^2.3.1
     typescript: ^4.4.4
+    zed: "brimdata/zed#e16b1e16f33ba702956a997b8c4e5996c63be199"
   languageName: unknown
   linkType: soft
 
@@ -5167,7 +5168,7 @@ __metadata:
     babel-plugin-inline-react-svg: ^1.1.1
     babel-plugin-module-resolver: ^4.0.0
     base64-js: ^1.3.1
-    brimcap: "github:brimdata/brimcap#1364e36be3f26fddb60f0de4d8063fcaeb31a709"
+    brimcap: "file:../brimcap"
     chalk: ^4.1.0
     chrono-node: ^1.4.8
     classnames: ^2.2.6
@@ -5259,7 +5260,6 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "file:../zed"
   dependenciesMeta:
     electron-installer-debian:
       optional: true
@@ -5270,10 +5270,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"brimcap@github:brimdata/brimcap#1364e36be3f26fddb60f0de4d8063fcaeb31a709":
+"brimcap@file:../brimcap::locator=brim%40workspace%3A.":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=1364e36be3f26fddb60f0de4d8063fcaeb31a709"
-  checksum: a7c5cb01224220a521c076c59ece8dc62e0e00c9f1fb7e9e3cc9fc49edc572ee0e1e7dfe1afe1ef852f2a2257c6795c67e133c5ead62223a5cc59dfcf6aff11d
+  resolution: "brimcap@file:../brimcap#../brimcap::hash=3a3135&locator=brim%40workspace%3A."
+  checksum: 922a495a50b68c046cc741d8079d2680278957af376ba29d6f3ac183184ea2db1e0b30dfa872a2779c78fd104a32a587627ca3e242e3d75af05a1fd315abdb8e
   languageName: node
   linkType: hard
 
@@ -18890,9 +18890,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@file:../zed::locator=brim%40workspace%3A.":
+"zed@brimdata/zed#e16b1e16f33ba702956a997b8c4e5996c63be199":
   version: 0.33.0-dev
-  resolution: "zed@file:../zed#../zed::hash=16e42b&locator=brim%40workspace%3A."
-  checksum: 492b88c9698047ff34bbe74b5baf4d67e06bb443b196b4171447e19bb6dbae7335020b8fcafdc92b9dceaa7bbc1e8e271e78bddf12fd3bdc5a0959db3fe5a5d9
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=e16b1e16f33ba702956a997b8c4e5996c63be199"
+  checksum: 763c431af32687ffca185aa83c440071f997828962e771eea38c6bc84e7798a7ba9c58957b3739054e29ef6b644f85cdbc8ddd3aabcb94a49cd5adb7f735de2c
   languageName: node
   linkType: hard

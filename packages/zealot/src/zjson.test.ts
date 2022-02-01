@@ -1,4 +1,4 @@
-import {zq} from "./test/zq"
+import zq from "./cmd/zq"
 import {ZedContext} from "./zed/context"
 import {TypeValue} from "./zed/index"
 
