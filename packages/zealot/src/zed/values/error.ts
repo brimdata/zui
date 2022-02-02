@@ -1,5 +1,6 @@
 import {isNull} from "lodash"
 import {zjson} from "../.."
+import {EncodeStream} from "../encode-stream"
 import {TypeError} from "../types/type-error"
 import {Value} from "./types"
 
@@ -15,11 +16,11 @@ export class Error implements Value {
     return this.value.toString()
   }
 
-  serialize(): zjson.Value {
+  serialize(stream: EncodeStream): zjson.Value {
     if (isNull(this.value)) {
       return null
     } else {
-      return this.value!.serialize()
+      return stream.encodeValue(this.value!)
     }
   }
 

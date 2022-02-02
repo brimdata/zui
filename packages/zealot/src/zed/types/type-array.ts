@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-array-constructor */
 import * as zjson from "../../zjson"
-import {TypeDefs, ZedContext} from "../context"
+import {DecodeStream} from "../decode-stream"
+import {EncodeStream} from "../encode-stream"
 import {isNull} from "../utils/is-null"
-import {typeId} from "../utils/type-id"
 import {Array} from "../values/array"
-import {ContainerType, SerializeTypeDefs, Type} from "./types"
+import {Type} from "./types"
 
-export class TypeArray implements ContainerType {
+export class TypeArray implements Type {
   id?: number | string
   kind = "array"
   type: Type
@@ -16,36 +16,23 @@ export class TypeArray implements ContainerType {
   }
 
   static stringify(type: Type) {
-    return `[${typeId(type)}]`
+    return `[${type.toString()}]`
   }
 
-  create(values: zjson.ArrayValue | null, typedefs: TypeDefs) {
+  create(values: zjson.ArrayValue | null, stream: DecodeStream) {
     return new Array(
       this,
       isNull(values)
         ? null
-        : values.map((value) => this.type.create(value, typedefs))
+        : values.map((value) => this.type.create(value, stream))
     )
   }
 
-  serialize(typedefs: SerializeTypeDefs) {
+  serialize(stream: EncodeStream): zjson.NoId<zjson.ArrayType> {
     return {
       kind: "array",
-      type: this.type.serialize(typedefs)
-    } as zjson.ArrayType
-  }
-
-  hasTypeType(ctx: ZedContext) {
-    return ctx.hasTypeType(this.type)
-  }
-
-  walkTypeValues(
-    ctx: ZedContext,
-    value: zjson.ArrayValue,
-    visit: (name: string) => void
-  ) {
-    if (isNull(value)) return
-    value.map((v) => ctx.walkTypeValues(this.type, v, visit))
+      type: stream.encodeType(this.type)
+    }
   }
 
   toString() {

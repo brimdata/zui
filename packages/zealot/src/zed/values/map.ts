@@ -1,3 +1,4 @@
+import {EncodeStream} from "../encode-stream"
 import {TypeIp} from "../types/type-ip"
 import {TypeMap} from "../types/type-map"
 import {isNull} from "../utils/is-null"
@@ -17,10 +18,10 @@ export class ZedMap implements Value {
     return `|{${contents}}|`
   }
 
-  serialize() {
+  serialize(stream: EncodeStream) {
     if (isNull(this.value)) return null
     return Array.from(this.value.entries()).map(([k, v]) => {
-      return [k.serialize(), v.serialize()]
+      return [stream.encodeValue(k), stream.encodeValue(v)]
     })
   }
 

@@ -21,7 +21,7 @@ export type QueryRecordPayload = {
   kind: "Object"
   value: QueryRecordValue
 }
-export type QueryRecordValue = zjson.RootRecord
+export type QueryRecordValue = zjson.Object
 
 export type QueryWarningPayload = {
   kind: "QueryWarning"

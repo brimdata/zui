@@ -1,6 +1,8 @@
 type ID = string
 
-export type RecordFieldType = {
+export type NoId<T extends object> = Omit<T, "id">
+
+export type FieldType = {
   name: string
   type: Type
 }
@@ -11,22 +13,25 @@ export type PrimitiveType = {
 }
 
 export type RecordType = {
-  id?: string
+  id: number
   kind: "record"
-  fields: RecordFieldType[] | null
+  fields: FieldType[] | null
 }
 
 export type ArrayType = {
+  id: number
   kind: "array"
   type: Type
 }
 
 export type SetType = {
+  id: number
   kind: "set"
   type: Type
 }
 
 export type UnionType = {
+  id: number
   kind: "union"
   types: Type[]
 }
@@ -48,14 +53,22 @@ export type TypeDefType = {
   type: Type
 }
 
-export type TypeNameType = {
-  kind: "typename" | "alias"
-  name: ID
+export type NamedType = {
+  kind: "named"
+  name: string
+  id: number
+  type: Type
 }
 
 export type ErrorType = {
+  id: number
   kind: "error"
   type: Type
+}
+
+export type RefType = {
+  kind: "ref"
+  id: number
 }
 
 export type Type =
@@ -66,29 +79,50 @@ export type Type =
   | UnionType
   | EnumType
   | MapType
-  | TypeDefType
-  | TypeNameType
+  | RefType
+  | NamedType
   | ErrorType
 
-export type RootRecord = {
-  schema: ID
-  values: Value[]
-  types?: TypeDefType[]
-}
-
-export type TypeName = string
-
-export type Value = string | null | Value[]
-
+export type Value = string | null | Type | NoId<Type> | Value[]
 export type ArrayValue = Value[] | null
-
 export type SetValue = Value[] | null
-
 export type UnionValue = [string, Value]
-
-export type TypeContext = object
+export type RecordValue = Value[]
 
 export type EncodedField = {
-  record: RootRecord
+  record: Object
   path: string | string[]
 }
+
+export type Object = {
+  type: Type
+  value: Value
+}
+
+export type QueryChannelSet = {
+  type: "QueryChannelSet"
+  value: {channel_id: number}
+}
+
+export type QueryChannelEnd = {
+  type: "QueryChannelEnd"
+  value: {channel_id: number}
+}
+
+export type QueryStats = {
+  type: "QueryStats"
+  value: {
+    start_time: {sec: number; ns: number}
+    update_time: {sec: number; ns: number}
+    bytes_read: number
+    bytes_matched: number
+    records_read: number
+    recods_matched: number
+  }
+}
+
+export type QueryObject =
+  | QueryChannelSet
+  | QueryChannelEnd
+  | QueryStats
+  | Object

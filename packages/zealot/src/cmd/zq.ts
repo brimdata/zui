@@ -21,7 +21,13 @@ function parseNDJSON(input: string) {
   return input
     .trim()
     .split("\n")
-    .map((s) => JSON.parse(s))
+    .map((s) => {
+      try {
+        return JSON.parse(s)
+      } catch (_) {
+        throw new Error(s)
+      }
+    })
 }
 
 export default async function zq(opts: {

@@ -1988,6 +1988,7 @@ __metadata:
     "@types/event-source-polyfill": ^1.0.0
     "@types/events": ^3.0.0
     "@types/node-fetch": 2
+    abortcontroller-polyfill: ^1.7.3
     cross-fetch: ^3.1.4
     event-source-polyfill: ^1.0.25
     events: ^3.3.0
@@ -3969,6 +3970,13 @@ __metadata:
   dependencies:
     event-target-shim: ^5.0.0
   checksum: 170bdba9b47b7e65906a28c8ce4f38a7a369d78e2271706f020849c1bfe0ee2067d4261df8bbb66eb84f79208fd5b710df759d64191db58cfba7ce8ef9c54b75
+  languageName: node
+  linkType: hard
+
+"abortcontroller-polyfill@npm:^1.7.3":
+  version: 1.7.3
+  resolution: "abortcontroller-polyfill@npm:1.7.3"
+  checksum: 55739d7f0c9bd6afa2aabb3148778967c4dd4dcff91f6b9259df38da34f9882d3f7730b0954e9767a19cc16a8dd9a58915da4e8a50220300d45af3817d7557b1
   languageName: node
   linkType: hard
 

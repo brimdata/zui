@@ -1,49 +1,32 @@
 import * as zjson from "../../zjson"
-import {SetValue, Value} from "../../zjson"
-import {TypeDefs, ZedContext} from "../context"
+import {SetValue} from "../../zjson"
+import {DecodeStream} from "../decode-stream"
+import {EncodeStream} from "../encode-stream"
 import {isNull} from "../utils/is-null"
-import {typeId} from "../utils/type-id"
 import {Set} from "../values/set"
-import {ContainerType, SerializeTypeDefs, Type} from "./types"
+import {Type} from "./types"
 
-export class TypeSet implements ContainerType {
-  id?: string | number
+export class TypeSet implements Type {
   kind = "set"
-  type: Type
 
-  constructor(type: Type) {
-    this.type = type
-  }
+  constructor(public type: Type) {}
 
   static stringify(type: Type) {
-    return `|[${typeId(type)}]|`
+    return `|[${type.toString()}]|`
   }
 
-  create(values: SetValue, typedefs: TypeDefs) {
+  create(values: SetValue, stream: DecodeStream) {
     return new Set(
       this,
-      isNull(values) ? null : values.map((v) => this.type.create(v, typedefs))
+      isNull(values) ? null : values.map((v) => this.type.create(v, stream))
     )
   }
 
-  serialize(typedefs: SerializeTypeDefs): zjson.SetType {
+  serialize(stream: EncodeStream): zjson.NoId<zjson.SetType> {
     return {
       kind: "set",
-      type: this.type.serialize(typedefs)
+      type: stream.encodeType(this.type)
     }
-  }
-
-  hasTypeType(ctx: ZedContext) {
-    return ctx.hasTypeType(this.type)
-  }
-
-  walkTypeValues(
-    ctx: ZedContext,
-    value: Value[] | null,
-    visit: (name: string) => void
-  ) {
-    if (isNull(value)) return
-    value.forEach((v) => ctx.walkTypeValues(this.type, v, visit))
   }
 
   toString() {

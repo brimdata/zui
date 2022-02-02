@@ -1,3 +1,4 @@
+import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only"
 import {Lake} from "../lake/lake"
 import path from "path"
 import {Client} from "./client"

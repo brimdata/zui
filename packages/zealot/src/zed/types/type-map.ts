@@ -1,55 +1,39 @@
 import * as zjson from "../../zjson"
-import {TypeDefs, ZedContext} from "../context"
+import {DecodeStream} from "../decode-stream"
+import {EncodeStream} from "../encode-stream"
 import {isNull} from "../utils/is-null"
-import {typeId} from "../utils/type-id"
 import {ZedMap} from "../values/map"
-import {ContainerType, SerializeTypeDefs, Type} from "./types"
+import {Type} from "./types"
 
-export class TypeMap implements ContainerType {
+export class TypeMap implements Type {
   kind = "union"
-  id?: string | number
 
   constructor(public keyType: Type, public valType: Type) {}
 
   static stringify(keyType: Type, valType: Type) {
-    return `|{` + typeId(keyType) + ":" + typeId(valType) + "}|"
+    return `|{` + keyType.toString() + ":" + valType.toString() + "}|"
   }
 
-  create(value: [zjson.Value, zjson.Value][] | null, typedefs: TypeDefs) {
+  create(value: [zjson.Value, zjson.Value][] | null, stream: DecodeStream) {
     return new ZedMap(
       this,
       isNull(value)
         ? null
         : new Map(
             value.map((entry) => [
-              this.keyType.create(entry[0], typedefs),
-              this.valType.create(entry[1], typedefs)
+              this.keyType.create(entry[0], stream),
+              this.valType.create(entry[1], stream)
             ])
           )
     )
   }
 
-  serialize(typedefs: SerializeTypeDefs): zjson.MapType {
+  serialize(stream: EncodeStream): zjson.NoId<zjson.MapType> {
     return {
       kind: "map",
-      key_type: this.keyType.serialize(typedefs),
-      val_type: this.valType.serialize(typedefs)
+      key_type: stream.encodeType(this.keyType),
+      val_type: stream.encodeType(this.valType)
     }
-  }
-
-  hasTypeType(ctx: ZedContext) {
-    return ctx.hasTypeType(this.keyType) || ctx.hasTypeType(this.valType)
-  }
-
-  walkTypeValues(
-    ctx: ZedContext,
-    value: zjson.Value,
-    visit: (name: string) => void
-  ) {
-    if (isNull(value)) return
-    const [key, val] = value
-    ctx.walkTypeValues(this.keyType, key, visit)
-    ctx.walkTypeValues(this.valType, val, visit)
   }
 
   toString() {

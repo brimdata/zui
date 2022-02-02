@@ -1,6 +1,6 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
 import nodeFetch from "node-fetch"
-import {PoolConfig, PoolStats} from ".."
+import {PoolConfig, PoolStats, zjson} from ".."
 import {decode} from "../encoder"
 import {ResultStream} from "../query/result-stream"
 import {parseContentType} from "../util/content-type"
@@ -100,7 +100,7 @@ export class Client {
     })
     const content = await parseContentType(resp)
     if (resp.ok && content !== null) {
-      return decode(content, {as: "js"}) as CreatePoolResp
+      return decode(content as zjson.Object).toJS() as CreatePoolResp
     } else {
       return Promise.reject(createError(content))
     }
@@ -147,7 +147,7 @@ export class Client {
     })
     const content = await parseContentType(resp)
     if (resp.ok && content !== null) {
-      return decode(content, {as: "js"}) as PoolStats
+      return decode(content as zjson.Object).toJS() as PoolStats
     } else {
       return Promise.reject(createError(content))
     }
@@ -194,7 +194,7 @@ export class Client {
     })
     const content = await parseContentType(resp)
     if (resp.ok && content !== null) {
-      return decode(content, {as: "js"})
+      return decode(content as zjson.Object).toJS()
     } else {
       throw createError(content)
     }

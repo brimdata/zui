@@ -1,6 +1,7 @@
-import {Field} from "../index"
 import * as zjson from "../../zjson"
-import {TypeDefs, ZedContext} from "../context"
+import {DecodeStream} from "../decode-stream"
+import {EncodeStream} from "../encode-stream"
+import {Field} from "../index"
 import {Value} from "../values/types"
 import {TypeAlias} from "./type-alias"
 import {TypeArray} from "./type-array"
@@ -24,18 +25,7 @@ export type SerializeTypeDefs = {
 }
 
 export interface Type {
-  id?: string | number
-  name?: string
   toString(): string
-  serialize(typedefs: SerializeTypeDefs): zjson.Type
-  create(value: zjson.Value, typedefs: TypeDefs, parent?: Field): Value
-}
-
-export interface ContainerType extends Type {
-  hasTypeType(ctx: ZedContext): boolean
-  walkTypeValues(
-    context: ZedContext,
-    value: zjson.Value,
-    visit: (name: string) => void
-  ): void
+  serialize(stream: EncodeStream): zjson.NoId<zjson.Type> | zjson.PrimitiveType
+  create(value: zjson.Value, stream: DecodeStream, parent?: Field): Value
 }

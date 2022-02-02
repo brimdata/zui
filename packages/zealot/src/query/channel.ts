@@ -1,37 +1,44 @@
 import EventEmitter from "events"
-import {zed} from ".."
-import {Record} from "../zed"
+import {DefaultContext, zed, zjson} from ".."
+import {DecodeStream} from "../zed/decode-stream"
 import {Type} from "../zed/types/types"
 
 export type TypeDefs = {[name: string]: Type}
 export type Collector = (vals: {rows: zed.Value[]; shapesMap: TypeDefs}) => void
 
 export class Channel extends EventEmitter {
-  rows: Record[] = []
-  typesMap: TypeDefs = {}
+  rows: zed.Value[] = []
   shapesMap: TypeDefs = {}
+  stream = new DecodeStream(DefaultContext)
 
   get shapes() {
     return Object.values(this.shapesMap)
   }
 
-  addRow(row: zed.Record) {
+  addRow(row: zed.Value) {
     this.rows.push(row)
     this.emit("row", row)
   }
 
-  addShape(name: string) {
-    const shape = this.typesMap[name]
-    this.shapesMap[name] = shape
-    this.emit("shape", shape)
+  addShape(id: number, type: zed.Type) {
+    this.shapesMap[id] = type
+    this.emit("shape", type)
   }
 
-  hasShape(name: string) {
-    return name in this.shapesMap
+  hasShape(id: number) {
+    return id in this.shapesMap
   }
 
   done() {
     this.emit("end")
+  }
+
+  consume(json: zjson.Object) {
+    const value = this.stream.decode(json)
+    if ("id" in json.type && !this.hasShape(json.type.id)) {
+      this.addShape(json.type.id, value.type)
+    }
+    this.addRow(value)
   }
 
   collect(collector: Collector) {

@@ -1,3 +1,4 @@
+import {EncodeStream} from "../encode-stream"
 import {TypeSet} from "../types/type-set"
 import {isNull} from "../utils/is-null"
 import {JSOptions, Value} from "./types"
@@ -21,9 +22,9 @@ export class Set implements Value {
     return `|[${contents}]|`
   }
 
-  serialize() {
+  serialize(stream: EncodeStream) {
     if (isNull(this.items)) return null
-    return this.items.map((i) => i.serialize())
+    return this.items.map((i) => stream.encodeValue(i))
   }
 
   isUnset() {

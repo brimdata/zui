@@ -3,7 +3,7 @@ import {join} from "path"
 import {zjson} from "@brimdata/zealot"
 import os from "os"
 
-export function toZJSON(zson: string): zjson.RootRecord[] {
+export function toZJSON(zson: string): zjson.Object[] {
   let zq = join(__dirname, "../../zdeps/zq")
   if (os.platform() === "win32") zq += ".exe"
   const cmd = `${zq} -f zjson -`

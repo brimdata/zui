@@ -1,7 +1,7 @@
+import {EncodeStream} from "../encode-stream"
 import {TypeType} from "../types/type-type"
 import {Type} from "../types/types"
 import {isNull} from "../utils/is-null"
-import {typeId} from "../utils/type-id"
 import {Value} from "./types"
 
 export class TypeValue implements Value {
@@ -18,9 +18,12 @@ export class TypeValue implements Value {
     return this.value.toString()
   }
 
-  serialize() {
-    if (isNull(this.value)) return null
-    else return typeId(this.value)
+  serialize(stream: EncodeStream) {
+    if (isNull(this.value)) {
+      return null
+    } else {
+      return this.value.serialize(stream)
+    }
   }
 
   toJS() {

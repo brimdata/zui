@@ -45,7 +45,7 @@ function buildSearchActions() {
     detail: action({
       name: "search-cell-menu-detail",
       label: "Open details",
-      listener(dispatch, data: zjson.RootRecord) {
+      listener(dispatch, data: zjson.Object) {
         const record = decode(data)
         dispatch(Layout.showDetailPane())
         dispatch(viewLogDetail(record))
@@ -83,7 +83,7 @@ function buildSearchActions() {
     groupByDrillDown: action({
       name: "search-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
-      listener(dispatch, program: string, data: zjson.RootRecord) {
+      listener(dispatch, program: string, data: zjson.Object) {
         const record = decode(data)
         const newProgram = brim
           .program(program)
@@ -125,7 +125,7 @@ function buildSearchActions() {
       listener(
         dispatch,
         fieldData: zjson.EncodedField,
-        recordData: zjson.RootRecord
+        recordData: zjson.Object
       ) {
         const field = decode(fieldData)
         const record = decode(recordData)
@@ -162,7 +162,7 @@ function buildSearchActions() {
     logResult: action({
       name: "search-cell-menu-log-result",
       label: "Log result to console",
-      listener(_dispatch, field: zjson.EncodedField, log: zjson.RootRecord) {
+      listener(_dispatch, field: zjson.EncodedField, log: zjson.Object) {
         console.log(JSON.stringify(log))
         console.log(JSON.stringify(field))
       }

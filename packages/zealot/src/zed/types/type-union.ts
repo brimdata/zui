@@ -1,57 +1,36 @@
-import {Context} from "../index"
 import * as zjson from "../../zjson"
-import {TypeDefs} from "../context"
-import {isNull} from "../utils/is-null"
+import {DecodeStream} from "../decode-stream"
+import {EncodeStream} from "../encode-stream"
 import {Union} from "../values/union"
 import {TypeNull} from "./type-null"
-import {ContainerType, SerializeTypeDefs, Type} from "./types"
-import {typeId} from "../utils/type-id"
+import {Type} from "./types"
 
-type UnionValue = [string, zjson.Value] | null
-export class TypeUnion implements ContainerType {
+export class TypeUnion implements Type {
   kind = "union"
   id?: number | string
 
   constructor(public types: Type[]) {}
 
   static stringify(types: Type[]) {
-    return `(${types.map(typeId).join(",")})`
+    return `(${types.map((t) => t.toString()).join(",")})`
   }
 
-  create(value: zjson.UnionValue, typedefs: TypeDefs) {
+  create(value: zjson.UnionValue, stream: DecodeStream) {
     if (value === null) {
       return new Union(this, TypeNull, null, null)
     } else {
       const index = parseInt(value[0])
       const innerType = this.types[index]
-      const innerValue = innerType.create(value[1], typedefs)
+      const innerValue = innerType.create(value[1], stream)
       return new Union(this, innerType, index, innerValue)
     }
   }
 
-  serialize(typedefs: SerializeTypeDefs): zjson.UnionType {
+  serialize(stream: EncodeStream): zjson.NoId<zjson.UnionType> {
     return {
       kind: "union",
-      types: this.types.map((t) => t.serialize(typedefs))
+      types: this.types.map((t) => stream.encodeType(t))
     }
-  }
-
-  hasTypeType(ctx: Context) {
-    return this.types.some((t) => ctx.hasTypeType(t))
-  }
-
-  walkTypeValues(
-    ctx: Context,
-    value: UnionValue,
-    visit: (name: string) => void
-  ) {
-    if (isNull(value)) return
-
-    const index = parseInt(value[0])
-    const innerType = this.types[index] as Type
-    const innerValue = value[1]
-
-    if (value === null) ctx.walkTypeValues(innerType, innerValue, visit)
   }
 
   toString() {

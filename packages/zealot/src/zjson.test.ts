@@ -1,14 +1,51 @@
 import zq from "./cmd/zq"
-import {ZedContext} from "./zed/context"
-import {TypeValue} from "./zed/index"
+import {decode, encode, zed, zjson} from "./index"
 
 const file = "testdata/sample.zson" // data.getPath("sample.zson");
 
+test("super simple", async () => {
+  const input: zjson.Object[] = await zq({
+    input: '{hello: "world"}',
+    format: "zjson"
+  })
+  const decoded = decode(input)
+  const encoded = encode(decoded)
+  for (let i = 0; i < input.length; ++i) {
+    expect(encoded[i]).toEqual(input[i])
+  }
+})
+
+test("super simple 2 typedefs", async () => {
+  const input: zjson.Object[] = await zq({
+    input: '{hello: ["world"]}',
+    format: "zjson"
+  })
+
+  const decoded = decode(input)
+  const encoded = encode(decoded)
+  for (let i = 0; i < input.length; ++i) {
+    expect(encoded[i]).toEqual(input[i])
+  }
+})
+
+test("simply type value", async () => {
+  const input: zjson.Object[] = await zq({
+    input: "{hello: <string>}",
+    format: "zjson"
+  })
+
+  const decoded = decode(input)
+  const encoded = encode(decoded)
+  for (let i = 0; i < input.length; ++i) {
+    expect(encoded[i]).toEqual(input[i])
+  }
+})
+
 test("decode, then encode", async () => {
-  const input = await zq({file, format: "zjson"})
-  const ctx = new ZedContext()
-  const decoded = ctx.decode(input)
-  const encoded = ctx.encode(decoded)
+  const input: zjson.Object[] = await zq({file, format: "zjson"})
+
+  const decoded = decode(input)
+  const encoded = encode(decoded)
 
   for (let i = 0; i < input.length; ++i) {
     expect(encoded[i]).toEqual(input[i])
@@ -16,10 +53,10 @@ test("decode, then encode", async () => {
 })
 
 test("decode, then encode a fused input", async () => {
-  const input = await zq({query: "fuse", file, format: "zjson"})
-  const ctx = new ZedContext()
-  const decoded = ctx.decode(input)
-  const encoded = ctx.encode(decoded)
+  const input: zjson.Object[] = await zq({query: "fuse", file, format: "zjson"})
+
+  const decoded = decode(input)
+  const encoded = encode(decoded)
 
   for (let i = 0; i < input.length; ++i) {
     expect(encoded[i]).toEqual(input[i])
@@ -27,29 +64,27 @@ test("decode, then encode a fused input", async () => {
 })
 
 test("decode, encode with type values", async () => {
-  const input = await zq({
-    query: "* | count() by typeof(.) | sort count, typeof",
+  const input: zjson.Object[] = await zq({
+    query: "* | count() by typeof(this) | sort count, typeof",
     file,
     format: "zjson"
   })
-  const ctx = new ZedContext()
 
-  expect(ctx.encode(ctx.decode(input))).toEqual(input)
+  expect(encode(decode(input))).toEqual(input)
 })
 
 test("types from one search are the same", async () => {
-  const ctx = new ZedContext()
-  const groupBy = await zq({
-    query: "* | count() by typeof(.) | sort count, typeof",
+  const groupBy = (await zq({
+    query: "* | count() by typeof(this) | sort count, typeof",
     file,
     format: "zjson"
-  })
-  const list = await zq({file, format: "zjson"})
+  })) as zjson.Object[]
+  const list = (await zq({file, format: "zjson"})) as zjson.Object[]
 
-  const [row1] = ctx.decode(groupBy)
-  const accessType = row1.get<TypeValue>("typeof").value
+  const [row1] = decode(groupBy) as zed.Record[]
+  const accessType = row1.get<zed.TypeValue>("typeof").value
 
-  const rows = ctx.decode(list)
+  const rows = decode(list)
   const accessRecords = rows.filter((r) => r.type === accessType)
 
   expect(accessRecords.map((r) => r.toString())).toEqual([
@@ -58,15 +93,19 @@ test("types from one search are the same", async () => {
 })
 
 test("encode decode a field", async () => {
-  const input = await zq({query: "*", file, format: "zjson"})
-  const ctx = new ZedContext()
-  const records = ctx.decode(input)
-  expect.assertions(246)
+  const input: zjson.Object[] = (await zq({
+    query: "*",
+    file,
+    format: "zjson"
+  })) as zjson.Object[]
+
+  const records = decode(input) as zed.Record[]
+  expect.assertions(242)
 
   records.forEach((rec) => {
     rec.flatColumns.forEach((column) => {
       const field = rec.getField(column)
-      const after = ctx.decodeField(ctx.encodeField(field))
+      const after = decode(encode(field))
       expect(field).toEqual(after)
       expect(field.value.type === after.value.type).toBe(true)
     })
@@ -74,19 +113,19 @@ test("encode decode a field", async () => {
 })
 
 test("encode decode a typeof value", async () => {
-  const input = await zq({
+  const input: zjson.Object[] = (await zq({
     query: "count() by typeof(this) | sort typeof",
     file,
     format: "zjson"
-  })
-  const ctx = new ZedContext()
-  const records = ctx.decode(input)
+  })) as zjson.Object[]
+
+  const records = decode(input) as zed.Record[]
   expect.assertions(36)
 
   records.forEach((rec) => {
     rec.flatColumns.forEach((column) => {
       const field = rec.getField(column)
-      const after = ctx.decodeField(ctx.encodeField(field))
+      const after = decode(encode(field))
       expect(field).toEqual(after)
       expect(field.value.type === after.value.type).toBe(true)
     })

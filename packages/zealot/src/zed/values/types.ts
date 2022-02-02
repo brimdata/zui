@@ -1,4 +1,5 @@
 import * as zjson from "../../zjson"
+import {EncodeStream} from "../encode-stream"
 import {Type} from "../types/types"
 import {Array} from "./array"
 import {Bool} from "./bool"
@@ -19,7 +20,7 @@ import {Record} from "./record"
 import {Set} from "./set"
 import {String} from "./string"
 import {Time} from "./time"
-import {TypeValue} from "./type"
+import {TypeValue} from "./type-value"
 import {Uint16} from "./uint16"
 import {Uint32} from "./uint32"
 import {Uint64} from "./uint64"
@@ -70,7 +71,7 @@ export type JSOptions = {
 export interface Value {
   toJS(opts?: JSOptions): any
   toString(): string
-  serialize(): zjson.Value
+  serialize(stream: EncodeStream): zjson.Value
   isUnset(): boolean
   type: Type
 }

@@ -1,4 +1,5 @@
 import {isEmpty, isNull, isString} from "lodash"
+import {EncodeStream} from "../encode-stream"
 import {Null} from "../index"
 import {TypeAlias} from "../types/type-alias"
 import {TypeRecord} from "../types/type-record"
@@ -46,9 +47,9 @@ export class Record implements Value {
     return s
   }
 
-  serialize() {
+  serialize(stream: EncodeStream) {
     if (isNull(this.fields)) return null
-    return this.fields.map((f) => f.value.serialize())
+    return this.fields.map((f) => stream.encodeValue(f.value))
   }
 
   at(index: number) {

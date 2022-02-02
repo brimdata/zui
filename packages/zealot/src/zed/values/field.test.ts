@@ -1,6 +1,6 @@
+import zq from "../../cmd/zq"
+import {DefaultContext, zed} from "../../index"
 import {createRecord} from "../../test/factory"
-import {DefaultContext} from "../../index"
-import {zq} from "../../test/zq"
 
 test("field path", () => {
   const r = createRecord({id: {person: "alice"}})
@@ -16,7 +16,7 @@ test("field path with nested named types", async () => {
     input: '{a: {b: {c: "foo"}(=c)}(=b)}(=a)',
     format: "zjson"
   })
-  const rows = DefaultContext.decode(objects)
+  const rows = DefaultContext.decode(objects) as zed.Record[]
   const field = rows[0].getField(["a", "b", "c"])
   expect(field.path).toEqual(["a", "b", "c"])
   expect(field.rootRecord === rows[0]).toBe(true)
@@ -24,7 +24,7 @@ test("field path with nested named types", async () => {
 
 test("field path with nested unnamed types", async () => {
   const objects = await zq({input: '{a: {b: {c: "foo"}}}', format: "zjson"})
-  const rows = DefaultContext.decode(objects)
+  const rows = DefaultContext.decode(objects) as zed.Record[]
   const field = rows[0].getField(["a", "b", "c"])
   expect(field.path).toEqual(["a", "b", "c"])
   expect(field.rootRecord === rows[0]).toBe(true)

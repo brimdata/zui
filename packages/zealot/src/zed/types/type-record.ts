@@ -1,26 +1,22 @@
 import * as zjson from "../../zjson"
-import {TypeDefs, ZedContext} from "../context"
-import {Null} from "../values/null"
+import {DecodeStream} from "../decode-stream"
+import {EncodeStream} from "../encode-stream"
 import {isNull} from "../utils/is-null"
-import {Field} from "../values/field"
-import {Record} from "../values/record"
-import {ContainerType, SerializeTypeDefs, Type} from "./types"
-import {typeId} from "../utils/type-id"
 import {trueType} from "../utils/true-type"
+import {Field} from "../values/field"
+import {Null} from "../values/null"
+import {Record} from "../values/record"
+import {Type} from "./types"
 
 export type TypeField = {
   name: string
   type: Type
 }
 
-export class TypeRecord implements ContainerType {
+export class TypeRecord implements Type {
   kind = "record"
-  fields: TypeField[] | null
-  id?: string | number
 
-  constructor(fields: TypeField[] | null) {
-    this.fields = fields
-  }
+  constructor(public fields: TypeField[] | null) {}
 
   has(name: string) {
     return !!this.fields?.find((f) => f.name === name)
@@ -31,8 +27,7 @@ export class TypeRecord implements ContainerType {
     let s = "{"
     let sep = ""
     fields.forEach((f) => {
-      // XXX need to check if name has funny chars
-      s += sep + f.name + ":" + typeId(f.type)
+      s += sep + f.name + ":" + f.type.toString()
       sep = ","
     })
     s += "}"
@@ -51,7 +46,11 @@ export class TypeRecord implements ContainerType {
     return s
   }
 
-  create(values: zjson.Value, typedefs: TypeDefs, parent?: Field) {
+  create(
+    values: zjson.RecordValue | null,
+    stream: DecodeStream,
+    parent?: Field
+  ) {
     if (values === null || isNull(this.fields)) return new Record(this, null)
     const record = new Record(this, null /* temp */)
     // If a parent was passed in, then we are constructing a nested record
@@ -62,16 +61,16 @@ export class TypeRecord implements ContainerType {
     record.fields = this.fields.map((f, i) => {
       if (trueType(f.type) instanceof TypeRecord) {
         const field = new Field(f.name, new Null() /* temp */, progenitor)
-        field.value = f.type.create(values[i], typedefs, field)
+        field.value = f.type.create(values[i], stream, field)
         return field
       } else {
-        return new Field(f.name, f.type.create(values[i], typedefs), progenitor)
+        return new Field(f.name, f.type.create(values[i], stream), progenitor)
       }
     })
     return record
   }
 
-  serialize(typedefs: SerializeTypeDefs): zjson.RecordType {
+  serialize(stream: EncodeStream): zjson.NoId<zjson.RecordType> {
     return {
       kind: "record",
       fields: isNull(this.fields)
@@ -79,27 +78,9 @@ export class TypeRecord implements ContainerType {
         : this.fields.map((f) => {
             return {
               name: f.name,
-              type: f.type.serialize(typedefs)
-            }
+              type: stream.encodeType(f.type)
+            } as zjson.FieldType
           })
     }
-  }
-
-  hasTypeType(ctx: ZedContext) {
-    if (isNull(this.fields)) return false
-    return this.fields.some((f) => ctx.hasTypeType(f.type))
-  }
-
-  walkTypeValues(
-    ctx: ZedContext,
-    values: zjson.Value[] | null,
-    visit: (name: string) => void
-  ) {
-    if (isNull(values)) return
-    if (isNull(this.fields)) return
-
-    this.fields.forEach((f, i) => {
-      ctx.walkTypeValues(f.type, values[i], visit)
-    })
   }
 }

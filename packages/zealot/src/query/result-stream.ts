@@ -1,12 +1,11 @@
+import {isObject} from "lodash"
 import {Response as NodeResponse} from "node-fetch"
-import {decode} from "../encoder"
+import {zjson} from ".."
 import {eachLine} from "../ndjson/lines"
 import {JSOptions} from "../zed/values/types"
-import {RootRecord} from "../zjson"
 import {Channel, Collector} from "./channel"
 
 type CrossResponse = Response | NodeResponse
-
 export class ResultStream {
   public status: "idle" | "pending" | "error" | "aborted" | "success" = "idle"
 
@@ -95,24 +94,25 @@ export class ResultStream {
     return this._promise
   }
 
-  private consumeLine(json: any) {
-    switch (json.kind) {
+  private consumeLine(json: zjson.QueryObject) {
+    switch (json.type) {
       case "QueryChannelSet":
         this.currentChannelId = json.value.channel_id
-        break
-      case "Object":
-        var channel = this.channel()
-        var data = json.value as RootRecord
-        var name = data.schema
-        var row = decode(data, {typedefs: channel.typesMap})
-        if (!channel.hasShape(name)) channel.addShape(name)
-        channel.addRow(row)
         break
       case "QueryChannelEnd":
         this.currentChannelId = json.value.channel_id
         var channel = this.channel()
         channel.done()
         break
+      case "QueryStats":
+        // Do something with stats eventually
+        break
+      default:
+        if (isObject(json.type)) {
+          this.channel().consume(json)
+          break
+        }
+        console.error("Unknown zjson object", json)
     }
   }
 }

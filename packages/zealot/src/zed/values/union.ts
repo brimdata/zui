@@ -1,3 +1,5 @@
+import {zjson} from "../.."
+import {EncodeStream} from "../encode-stream"
 import {TypeUnion} from "../types/type-union"
 import {Type} from "../types/types"
 import {isNull} from "../utils/is-null"
@@ -16,9 +18,12 @@ export class Union implements Value {
     return this.value.toString()
   }
 
-  serialize() {
+  serialize(stream: EncodeStream) {
     if (isNull(this.index) || isNull(this.value)) return null
-    return [this.index.toString(), this.value.serialize()]
+    return [
+      this.index.toString(),
+      stream.encodeValue(this.value)
+    ] as zjson.UnionValue
   }
 
   isUnset() {
