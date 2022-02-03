@@ -60,7 +60,6 @@
     "event-source-polyfill": "^1.0.25",
     "events": "^3.3.0",
     "lodash": "^4.17.21",
-    "node-fetch": "2",
-    "zed": "brimdata/zed#e16b1e16f33ba702956a997b8c4e5996c63be199"
+    "node-fetch": "2"
   }
 }

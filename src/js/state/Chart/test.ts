@@ -21,7 +21,7 @@ test("set search key", () => {
 })
 
 test("chart records append", () => {
-  store.dispatch([chart.setRecords(tabId, records)])
+  store.dispatch(chart.setRecords(tabId, records))
 
   expect(chart.getData(store.getState())).toEqual({
     keys: ["conn", "dns"],

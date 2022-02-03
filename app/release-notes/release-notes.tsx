@@ -23,7 +23,6 @@ const BG = styled.div`
 
 export default function ReleaseNotes() {
   const {notes, version, fetching} = useReleaseNotes()
-
   if (fetching) return null
 
   return (

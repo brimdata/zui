@@ -169,7 +169,7 @@ export default class BrimcapPlugin {
       // the detail window's packets button will operate off of the 'current' record
       this.api.commands.add("data-detail:current", ([record]) => {
         if (!record) return
-        const data = decode(record)
+        const data = decode(record) as zed.Record
 
         updateButtonStatus(
           "detail",

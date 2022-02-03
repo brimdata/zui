@@ -48,7 +48,7 @@ function buildSearchActions() {
       listener(dispatch, data: zjson.Object) {
         const record = decode(data)
         dispatch(Layout.showDetailPane())
-        dispatch(viewLogDetail(record))
+        dispatch(viewLogDetail(record as zed.Record))
       }
     }),
     exclude: action({
@@ -87,7 +87,7 @@ function buildSearchActions() {
         const record = decode(data)
         const newProgram = brim
           .program(program)
-          .drillDown(record)
+          .drillDown(record as zed.Record)
           .string()
 
         if (newProgram) {
@@ -128,7 +128,7 @@ function buildSearchActions() {
         recordData: zjson.Object
       ) {
         const field = decode(fieldData)
-        const record = decode(recordData)
+        const record = decode(recordData) as zed.Record
         if (field.data instanceof zed.Time) {
           const brimTime = brim.time(field.data.toDate())
           dispatch(tab.setFrom(brimTime.subtract(1, "minutes").toTs()))

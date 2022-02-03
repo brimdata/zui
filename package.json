@@ -171,7 +171,8 @@
     "tree-model": "^1.0.7",
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
-    "web-file-polyfill": "^1.0.4"
+    "web-file-polyfill": "^1.0.4",
+    "zed": "brimdata/zed#06c8ed11da8d20fb8e5e0efc5f2d3dc5d5fe0d0a"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",

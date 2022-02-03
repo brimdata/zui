@@ -19,7 +19,7 @@ export function createRecord(object): zed.Record {
   const r = new zed.Record(type, fields)
   // This is necessary at the moment to add field parents,
   // and to match the codepath that runs in production.
-  return decode(encode(r))
+  return decode(encode(r)) as zed.Record
 }
 
 export function createField(name, value): zed.Field {

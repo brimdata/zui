@@ -22,7 +22,7 @@ const build = createSelector<State, LogDetailHistory, zed.Record | null>(
   (history) => {
     const entry = history.current()
     if (entry && entry.log) {
-      return decode(entry.log)
+      return decode(entry.log) as zed.Record
     } else {
       return null
     }
@@ -33,7 +33,7 @@ const getUidLogs = createSelector<State, LogDetailHistory, zed.Record[]>(
   getHistory,
   (history) => {
     const entry = history.current()
-    return entry ? decode(entry.uidLogs) : []
+    return entry ? (decode(entry.uidLogs) as zed.Record[]) : []
   }
 )
 
