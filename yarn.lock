@@ -5175,7 +5175,7 @@ __metadata:
     babel-plugin-inline-react-svg: ^1.1.1
     babel-plugin-module-resolver: ^4.0.0
     base64-js: ^1.3.1
-    brimcap: "file:../brimcap"
+    brimcap: "github:brimdata/brimcap#addca3febb2f022f0ff88b2af45d7d6f458b392b"
     chalk: ^4.1.0
     chrono-node: ^1.4.8
     classnames: ^2.2.6
@@ -5278,10 +5278,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"brimcap@file:../brimcap::locator=brim%40workspace%3A.":
+"brimcap@github:brimdata/brimcap#addca3febb2f022f0ff88b2af45d7d6f458b392b":
   version: 1.1.2
-  resolution: "brimcap@file:../brimcap#../brimcap::hash=3a3135&locator=brim%40workspace%3A."
-  checksum: 922a495a50b68c046cc741d8079d2680278957af376ba29d6f3ac183184ea2db1e0b30dfa872a2779c78fd104a32a587627ca3e242e3d75af05a1fd315abdb8e
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=addca3febb2f022f0ff88b2af45d7d6f458b392b"
+  checksum: 78ae2f8cc5ce7b2773e957f9483ff232a2639490158ac2c796c1e19c627f5273635870baf1deb914d875b1c0d7643b7c4467f5dccca6777a5ffdc3d25a2047cd
   languageName: node
   linkType: hard
 

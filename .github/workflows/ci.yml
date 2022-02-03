@@ -27,19 +27,30 @@ jobs:
       - run: yarn lint
       - run: yarn test
       - name: Build and install package
-        if: runner.os == 'Linux'
+        if: runner.os != 'Windows'
         run: |
           set -x
           yarn build
           yarn electron-builder --linux=deb
           sudo apt install -y --no-install-recommends ./dist/installers/*.deb
+      
+          case ${{ runner.os }} in
+            Linux )
+              yarn electron-builder --linux=deb
+              sudo apt install -y --no-install-recommends ./dist/installers/*.deb
+              ;;
+            macOS )
+              yarn electron-builder --mac=dir
+              cp -r dist/installers/mac/Brim.app /Applications
+              ;;
+          esac
       - name: End to end tests
         id: playwright
         if: runner.os != 'Windows'
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24
-          run: yarn build && yarn e2e --ci --forceExit
+          run: yarn e2e --ci --forceExit
         env:
           DEBUG: pw:api
       - uses: actions/upload-artifact@v2
