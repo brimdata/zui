@@ -31,9 +31,6 @@ jobs:
         run: |
           set -x
           yarn build
-          yarn electron-builder --linux=deb
-          sudo apt install -y --no-install-recommends ./dist/installers/*.deb
-      
           case ${{ runner.os }} in
             Linux )
               yarn electron-builder --linux=deb
