@@ -22,7 +22,6 @@
     "test:unit": "jest --projects test/unit --ci --bail",
     "test:zealot": "yarn workspace @brimdata/zealot test",
     "test:system": "jest --projects test/system",
-    "test:responses": "node scripts/test/responses",
     "e2e": "jest --runInBand --projects test/playwright",
     "format": "prettier '**/*.{js,ts,tsx,scss}' --write --loglevel warn",
     "prerelease": "yarn build",
