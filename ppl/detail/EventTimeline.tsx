@@ -102,9 +102,9 @@ export default memo(function EventTimeline({events, current}: Props) {
     if (e.getEndTime && e.getEndTime()) {
       const start = scale(e.getTime())
       const end = scale(e.getEndTime())
-      return {width: end - start || 0}
+      return {width: end - start || undefined}
     } else {
-      return {width: 0}
+      return {width: undefined}
     }
   }
 
