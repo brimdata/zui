@@ -177,7 +177,7 @@ laid out in columns with headers. However, this did not occur with our joined
 ZNG data.
 
 To understand why, it helps to look at our two example `conn` records in
-[ZSON](https://github.com/brimdata/zed/blob/main/docs/data-model/zson.md) format.
+[ZSON](https://github.com/brimdata/zed/blob/main/docs/formats/zson.md) format.
 
 ```
 $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
@@ -256,7 +256,7 @@ $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
 ```
 
 The presence of the separate
-[Type Definitions](https://github.com/brimdata/zed/blob/main/docs/data-model/zson.md#25-types)
+[Type Definitions](https://github.com/brimdata/zed/blob/main/docs/formats/zson.md#25-types)
 `(=2)` and `(=5)` shows us how separate schemas were generated for the two
 record variations produced by the `join`: The ones that matched on `uid` (and
 hence contained the additional SPL-SPT fields) and the ones that didn't.
