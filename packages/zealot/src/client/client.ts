@@ -133,7 +133,8 @@ export class Client {
     )
 
     const values = await res.js()
-    if (!values || values.length == 0) throw new Error("pool not found")
+    if (!values || values.length == 0)
+      throw new Error(`Pool Not Found: ${nameOrId}`)
     return values[0]
   }
 
