@@ -1,6 +1,5 @@
 import {BrimProvider} from "app/core/context"
 import {ipcRenderer} from "electron"
-import React from "react"
 import ReactDOM from "react-dom"
 import "regenerator-runtime/runtime"
 import App from "./components/App"
@@ -8,8 +7,9 @@ import StartupError from "./components/StartupError"
 import deletePartialPools from "./flows/deletePartialPools"
 import initialize from "./initializers/initialize"
 import lib from "./lib"
-import {getWindowPersistable} from "./state/getPersistable"
+import {getPersistedState} from "./state/getPersistable"
 import TabHistories from "./state/TabHistories"
+import React from "react"
 
 initialize()
   .then(({store, api, pluginManager}) => {
@@ -23,7 +23,7 @@ initialize()
       ipcRenderer.send(
         "windows:updateState",
         global.windowId,
-        getWindowPersistable(store.getState())
+        getPersistedState(store.getState())
       )
     }
     ReactDOM.render(

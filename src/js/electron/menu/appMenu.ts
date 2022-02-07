@@ -4,7 +4,7 @@ import {app, dialog, shell, MenuItemConstructorOptions} from "electron"
 import path from "path"
 
 import electronIsDev from "../isDev"
-import formatSessionState from "../tron/formatSessionState"
+import {encodeSessionState} from "../tron/session-state"
 import {BrimMain} from "../brim"
 import env from "app/core/env"
 
@@ -251,7 +251,7 @@ export default function(
           const root = app.getAppPath()
           const version = brim.session.getVersion()
           const file = path.join(root, `test/unit/states/${version}.json`)
-          const data = formatSessionState(
+          const data = encodeSessionState(
             await brim.windows.serialize(),
             brim.store.getState()
           )

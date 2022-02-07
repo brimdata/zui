@@ -10,7 +10,7 @@ import {
   toRefreshTokenKey
 } from "../auth0/utils"
 import createGlobalStore from "../state/createGlobalStore"
-import {getGlobalPersistable} from "../state/getPersistable"
+import {getPersistedState} from "../state/getPersistable"
 import Lakes from "../state/Lakes"
 import {installExtensions} from "./extensions"
 import ipc from "./ipc"
@@ -18,7 +18,7 @@ import sendTo from "./ipc/sendTo"
 import isDev from "./isDev"
 import {MainArgs, mainDefaults} from "./main"
 import tron, {Session} from "./tron"
-import formatSessionState from "./tron/formatSessionState"
+import {decodeSessionState, encodeSessionState} from "./tron/session-state"
 import {WindowManager} from "./tron/window-manager"
 
 type QuitOpts = {
@@ -32,7 +32,7 @@ export class BrimMain {
     const args = {...mainDefaults(), ...params}
     const createSession = tron.session
     const session = createSession(args.appState)
-    const data = await session.load()
+    const data = decodeSessionState(await session.load())
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
     const lake = new Lake(args.lakeRoot, args.lakePort, args.lakeLogs)
@@ -72,9 +72,9 @@ export class BrimMain {
 
   async saveSession() {
     const windowState = await this.windows.serialize()
-    const mainState = getGlobalPersistable(this.store.getState())
+    const mainState = getPersistedState(this.store.getState())
 
-    await this.session.save(formatSessionState(windowState, mainState))
+    await this.session.save(encodeSessionState(windowState, mainState))
   }
 
   async deleteSession() {

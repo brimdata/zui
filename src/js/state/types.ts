@@ -5,7 +5,6 @@ import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
 import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
-import {FeatureState} from "./Feature"
 import {HandlersState} from "./Handlers/types"
 import Imports from "./Imports"
 import {InvestigationState} from "./Investigation/types"
@@ -20,7 +19,6 @@ import {SystemTestState} from "./SystemTest"
 import {TabHistoriesState} from "./TabHistories/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
-import {ViewState} from "./View/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
 
 export type GetState = () => State
@@ -47,7 +45,6 @@ export type State = {
   errors: ErrorsState
   pools: PoolsState
   imports: ReturnType<typeof Imports.reducer>
-  view: ViewState
   investigation: InvestigationState
   modal: ModalState
   notice: NoticeState
@@ -57,6 +54,5 @@ export type State = {
   queries: QueriesState
   remoteQueries: QueriesState
   systemTest: SystemTestState
-  feature: FeatureState
   toolbars: ToolbarsState
 }

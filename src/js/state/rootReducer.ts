@@ -8,10 +8,8 @@ import Modal from "./Modal"
 import Notice from "./Notice"
 import Pools from "./Pools"
 import Tabs from "./Tabs"
-import View from "./View"
 import Queries from "./Queries"
 import SystemTest from "./SystemTest"
-import Feature from "./Feature"
 import WorkspaceStatuses from "./WorkspaceStatuses"
 import TabHistories from "./TabHistories"
 import Url from "./Url"
@@ -36,12 +34,10 @@ const rootReducer = combineReducers<any, any>({
   handlers: Handlers.reducer,
   tabs: Tabs.reducer,
   investigation: Investigation.reducer,
-  view: View.reducer,
   pools: Pools.reducer,
   imports: Imports.reducer,
   pluginStorage: PluginStorage.reducer,
   systemTest: SystemTest.reducer,
-  feature: Feature.reducer,
   workspaceStatuses: WorkspaceStatuses.reducer,
   queries: Queries.reducer,
   remoteQueries: RemoteQueries.reducer,

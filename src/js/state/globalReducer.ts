@@ -3,17 +3,15 @@ import ConfigPropValues, {ConfigPropValuesState} from "./ConfigPropValues"
 import Configs, {ConfigsState} from "./Configs"
 import Investigation from "./Investigation"
 import {InvestigationState} from "./Investigation/types"
+import Lakes from "./Lakes"
+import {LakesState} from "./Lakes/types"
 import Launches, {LaunchesState} from "./Launches"
 import PluginStorage, {PluginStorageState} from "./PluginStorage"
 import Queries from "./Queries"
 import {QueriesState} from "./Queries/types"
-import Lakes from "./Lakes"
-import {LakesState} from "./Lakes/types"
 import RemoteQueries from "./RemoteQueries"
-import {PoolsState} from "./Pools/types"
 
 export type GlobalState = {
-  pools: PoolsState
   launches: LaunchesState
   workspaces: LakesState
   investigation: InvestigationState
