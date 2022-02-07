@@ -13,7 +13,7 @@ export const createPool = ({name}: Props): Thunk<Promise<string>> => async (
 ) => {
   const zealot = await dispatch(getZealot())
   const lakeId = Current.getWorkspaceId(getState())
-  return zealot.createPool(name).then((create) => {
-    return dispatch(syncPool(create.pool.id, lakeId)).then(() => create.pool.id)
+  return zealot.createPool(name).then((res) => {
+    return dispatch(syncPool(res.pool.id, lakeId)).then(() => res.pool.id)
   })
 }
