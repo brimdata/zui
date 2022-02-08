@@ -98,7 +98,7 @@ test("#deletePool", async () => {
   } = await client.createPool("will-delete")
 
   const res = await client.deletePool(id)
-  expect(res).toBeUndefined()
+  expect(res).toBe(true)
 
   await expect(client.getPool(id)).rejects.toEqual(
     new Error(`Pool Not Found: ${id}`)
@@ -150,4 +150,18 @@ test("#load a stream", async () => {
     path.join(__dirname, "../../testdata/sample.zson")
   )
   await client.load(stream, {pool: id})
+})
+
+test("#timeout test", async () => {
+  jest.useFakeTimers()
+  client.fetch = jest.fn((url, opts = {}) => {
+    return new Promise((_, reject) => {
+      opts.signal?.addEventListener("abort", () =>
+        reject("ABORTED IN MOCK TEST")
+      )
+    })
+  })
+  const p = client.version()
+  jest.advanceTimersByTime(60_000)
+  await expect(p).rejects.toEqual("ABORTED IN MOCK TEST")
 })
