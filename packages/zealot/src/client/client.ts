@@ -4,7 +4,7 @@ import {PoolConfig, PoolStats} from ".."
 import {ResultStream} from "../query/result-stream"
 import {createError} from "../util/error"
 import * as Types from "./types"
-import {defaults, accept, getEnv, json, parseContent, toJS} from "./utils"
+import {accept, defaults, getEnv, json, parseContent, toJS} from "./utils"
 
 export class Client {
   public fetch: Types.CrossFetch
@@ -27,8 +27,11 @@ export class Client {
   }
 
   async authMethod() {
-    // TODO
-    return Promise.resolve({} as any)
+    const r = await this.send({
+      method: "GET",
+      path: "/auth/method"
+    })
+    return toJS(r)
   }
 
   async load(

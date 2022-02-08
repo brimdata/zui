@@ -84,7 +84,12 @@ test("#version", async () => {
 test("#authMethod", async () => {
   const res = await client.authMethod()
 
-  expect(res).toMatchInlineSnapshot(`Object {}`)
+  expect(res).toMatchInlineSnapshot(`
+    Object {
+      "auth0": null,
+      "kind": "",
+    }
+  `)
 })
 
 test("#createPool", async () => {
