@@ -4,7 +4,6 @@ import path from "path"
 import {Client} from "./client"
 import {removeSync} from "fs-extra"
 import fs from "fs"
-import data from "../../../../test/shared/data"
 
 const root = path.join(__dirname, "..", "..", "run", "client.test.ts", "root")
 const logs = path.join(__dirname, "..", "..", "run", "client.test.ts", "logs")
@@ -147,6 +146,8 @@ test("#load a stream", async () => {
   const {
     pool: {id}
   } = await client.createPool("load-with-stream")
-  const stream = fs.createReadStream(data.getPath("sample.tsv"))
+  const stream = fs.createReadStream(
+    path.join(__dirname, "../../testdata/sample.zson")
+  )
   await client.load(stream, {pool: id})
 })
