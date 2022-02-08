@@ -4,7 +4,15 @@ import {PoolConfig, PoolStats} from ".."
 import {ResultStream} from "../query/result-stream"
 import {createError} from "../util/error"
 import * as Types from "./types"
-import {accept, defaults, getEnv, json, parseContent, toJS} from "./utils"
+import {
+  accept,
+  defaults,
+  getEnv,
+  json,
+  parseContent,
+  toJS,
+  wrapAbort
+} from "./utils"
 
 export class Client {
   public fetch: Types.CrossFetch
@@ -56,12 +64,11 @@ export class Client {
   }
 
   async query(query: string, opts: Partial<Types.QueryOpts> = {}) {
-    const abortCtl = new AbortController()
     const options = defaults<Types.QueryOpts>(opts, {
       format: "zjson",
       controlMessages: true
     })
-    options.signal?.addEventListener("abort", () => abortCtl.abort())
+    const abortCtl = wrapAbort(options.signal)
     const result = await this.send({
       method: "POST",
       path: "/query",
@@ -153,8 +160,7 @@ export class Client {
     fetch?: Types.CrossFetch
     headers?: object
   }) {
-    const abortCtl = new AbortController()
-    opts.signal?.addEventListener("abort", () => abortCtl.abort())
+    const abortCtl = wrapAbort(opts.signal)
     const tid = setTimeout(() => abortCtl.abort(), this.timeout)
     const fetch = opts.fetch || this.fetch
     const resp = await fetch(this.baseURL + opts.path, {
@@ -162,6 +168,7 @@ export class Client {
       headers: {
         "Content-Type": "application/json",
         Accept: accept(opts.format || "zjson"),
+        ...this.authHeader,
         ...opts.headers
       },
       // @ts-ignore
@@ -174,5 +181,9 @@ export class Client {
     } else {
       return Promise.reject(createError(await parseContent(resp)))
     }
+  }
+
+  private get authHeader() {
+    return this.auth ? {Authorization: `Bearer ${this.auth}`} : undefined
   }
 }

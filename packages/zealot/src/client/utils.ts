@@ -56,3 +56,9 @@ export async function toJS(res: Response | NodeResponse) {
 export function json(obj: any) {
   return JSON.stringify(obj)
 }
+
+export function wrapAbort(signal?: AbortSignal) {
+  const ctl = new AbortController()
+  signal?.addEventListener("abort", () => ctl.abort())
+  return ctl
+}
