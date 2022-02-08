@@ -7,10 +7,6 @@ function hasOwnProperty<X extends {}, Y extends PropertyKey>(
   return Object.prototype.hasOwnProperty.call(obj, prop)
 }
 
-export function url(host: string, path: string) {
-  return `http://${host}${path}`
-}
-
 export function isObject(thing: unknown): thing is Object {
   return typeof thing === "object" && thing !== null
 }
@@ -43,14 +39,4 @@ export function isTs(thing: unknown): thing is Ts {
     hasOwnProperty(thing, "ns") &&
     isNumber(thing.ns)
   )
-}
-
-export function uniq(array: any[]) {
-  const u: any[] = []
-  for (const item of array) {
-    if (!u.includes(item)) {
-      u.push(item)
-    }
-  }
-  return u
 }
