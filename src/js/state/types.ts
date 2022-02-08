@@ -6,7 +6,7 @@ import {ConfigPropValuesState} from "./ConfigPropValues"
 import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
 import {HandlersState} from "./Handlers/types"
-import Imports from "./Imports"
+import Ingests from "./Ingests"
 import {InvestigationState} from "./Investigation/types"
 import {LakesState} from "./Lakes/types"
 import {LaunchesState} from "./Launches"
@@ -44,7 +44,7 @@ export type State = {
   workspaces: LakesState
   errors: ErrorsState
   pools: PoolsState
-  imports: ReturnType<typeof Imports.reducer>
+  ingests: ReturnType<typeof Ingests.reducer>
   investigation: InvestigationState
   modal: ModalState
   notice: NoticeState

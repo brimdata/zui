@@ -21,7 +21,7 @@ import Modal from "../state/Modal"
 import {showContextMenu} from "../lib/System"
 import getPoolContextMenu from "../../../app/pools/flows/get-pool-context-menu"
 import {Pool} from "app/core/pools/pool"
-import Imports from "../state/Imports"
+import Ingests from "../state/Ingests"
 import {isNumber} from "lodash"
 
 type Props = {
@@ -40,7 +40,7 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
   const dispatch = useDispatch<AppDispatch>()
   const workspaceId = useSelector(Current.getWorkspaceId)
   const currentPoolId = useSelector(Current.getPoolId)
-  const ingest = useSelector(Imports.get(pool.id))
+  const ingest = useSelector(Ingests.get(pool.id))
   const p = pool
   const history = useHistory()
   const onClick = (e) => {

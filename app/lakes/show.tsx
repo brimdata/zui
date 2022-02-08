@@ -10,7 +10,7 @@ import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import SearchHome from "../search/home"
 import TabSearchLoading from "src/js/components/TabSearchLoading"
-import Imports from "src/js/state/Imports"
+import Ingests from "src/js/state/Ingests"
 
 export default function LakeShow() {
   const match = useRouteMatch()
@@ -33,7 +33,7 @@ function InitPool({children}) {
   const poolId = usePoolId()
   const lakeId = useLakeId()
   const pool = useSelector(Current.getPool)
-  const ingesting = useSelector(Imports.isInProgress(pool.id))
+  const ingesting = useSelector(Ingests.isInProgress(pool.id))
 
   useEffect(() => {
     if (poolId) dispatch(syncPool(poolId))

@@ -1,4 +1,4 @@
-import syncPools from "app/core/pools/sync-pools"
+import {syncPoolsData} from "app/core/pools/sync-pools-data"
 import tabHistory from "app/router/tab-history"
 import {workspacePath} from "app/router/utils/paths"
 import Current from "../state/Current"
@@ -18,6 +18,6 @@ export function resetTab(): Thunk {
     const id = Current.getWorkspaceId(getState())
     dispatch(Tabs.clearActive())
     dispatch(tabHistory.push(workspacePath(id)))
-    dispatch(syncPools())
+    dispatch(syncPoolsData())
   }
 }

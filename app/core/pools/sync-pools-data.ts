@@ -7,7 +7,7 @@ import {Thunk} from "src/js/state/types"
 /**
  * This only gets the list of names from the server.
  */
-export default function syncPools(lakeId?: string): Thunk<Promise<void>> {
+export function syncPoolsData(lakeId?: string): Thunk<Promise<void>> {
   return async (dispatch, getState) => {
     const lake = lakeId
       ? Lakes.id(lakeId)(getState())

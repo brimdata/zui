@@ -23,7 +23,7 @@ import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
 import SearchBar from "src/js/state/SearchBar"
-import syncPools from "app/core/pools/sync-pools"
+import {syncPoolsData} from "app/core/pools/sync-pools-data"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -90,7 +90,7 @@ export default class BrimApi {
         } else {
           this.dispatch(Notice.set(ErrorFactory.create(e.cause)))
         }
-        this.dispatch(syncPools()).catch((e) => e)
+        this.dispatch(syncPoolsData()).catch((e) => e)
         console.error(e.message)
       })
   }

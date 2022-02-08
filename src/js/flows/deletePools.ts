@@ -1,4 +1,4 @@
-import syncPools from "app/core/pools/sync-pools"
+import {syncPoolsData} from "app/core/pools/sync-pools-data"
 import Notice from "../state/Notice"
 import {Thunk} from "../state/types"
 import deletePool from "./deletePool"
@@ -16,7 +16,7 @@ const deletePools = (ids: string[]): Thunk<Promise<void[] | void>> => (
         })
       )
     })
-    .finally(() => dispatch(syncPools()))
+    .finally(() => dispatch(syncPoolsData()))
 }
 
 export default deletePools

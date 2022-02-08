@@ -1,5 +1,5 @@
 import {Client} from "@brimdata/zealot"
-import syncPools from "app/core/pools/sync-pools"
+import {syncPoolsData} from "app/core/pools/sync-pools-data"
 import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
 import Lakes from "../../state/Lakes"
@@ -18,7 +18,7 @@ export const updateStatus = (workspaceId: string) => async (
   const zealot = new Client(ws.getAddress())
 
   const activate = async () => {
-    await dispatch(syncPools())
+    await dispatch(syncPoolsData())
     dispatch(WorkspaceStatuses.set(ws.id, "connected"))
   }
 

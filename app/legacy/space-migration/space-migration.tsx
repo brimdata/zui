@@ -1,5 +1,5 @@
 import * as remote from "@electron/remote"
-import syncPools from "app/core/pools/sync-pools"
+import {syncPoolsData} from "app/core/pools/sync-pools-data"
 import {join} from "path"
 import React, {useEffect, useState} from "react"
 import toast from "react-hot-toast"
@@ -83,7 +83,7 @@ function Modal({onClose}) {
 
     spaces
       .migrate(({total, count, space}) => {
-        dispatch(syncPools())
+        dispatch(syncPoolsData())
         toast.loading(
           <LoadingToast
             title="Migrating Spaces"

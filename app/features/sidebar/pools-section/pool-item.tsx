@@ -14,7 +14,7 @@ import classNames from "classnames"
 import {showContextMenu} from "src/js/lib/System"
 import {MenuItemConstructorOptions} from "electron"
 import {Pool} from "app/core/pools/pool"
-import Imports from "src/js/state/Imports"
+import Ingests from "src/js/state/Ingests"
 import {isNumber} from "lodash"
 
 const PoolIcon = styled(Icon).attrs({name: "pool"})``
@@ -47,13 +47,12 @@ const StyledPoolItem = styled(StyledItem)<{isSelected: boolean}>`
   }
 `
 
-// Is this duplicated somewhere?
 const PoolItem = ({innerRef, styles, data, state, handlers}) => {
   const pool = data as Pool
   const dispatch = useDispatch<AppDispatch>()
   const workspaceId = useSelector(Current.getWorkspaceId)
   const currentPoolId = useSelector(Current.getPoolId)
-  const ingest = useSelector(Imports.get(currentPoolId))
+  const ingest = useSelector(Ingests.get(currentPoolId))
   const history = useHistory()
   const {isEditing} = state
   const ctxMenu: MenuItemConstructorOptions[] = [

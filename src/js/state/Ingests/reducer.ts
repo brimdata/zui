@@ -1,14 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 
-export type Import = {
+export type Ingests = {
   progress: number
   warnings: string[]
 }
 
 const slice = createSlice({
-  name: "$IMPORTS",
+  name: "$INGESTS",
   initialState: {} as {
-    [poolId: string]: Import
+    [poolId: string]: Ingests
   },
   reducers: {
     create: (state, action: PayloadAction<string>) => {

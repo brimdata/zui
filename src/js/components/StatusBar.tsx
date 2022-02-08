@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import {ingestProgressBar} from "../../../test/playwright/helpers/locators"
 import Current from "../state/Current"
-import Imports from "../state/Imports"
+import Ingests from "../state/Ingests"
 import Modal from "../state/Modal"
 import Warning from "./icons/warning-sm.svg"
 import ProgressIndicator from "./ProgressIndicator"
@@ -13,10 +13,10 @@ import React from "react"
 export default function StatusBar() {
   const dispatch = useDispatch()
   const poolId = useSelector(Current.getPoolId)
-  const dataImport = useSelector(Imports.get(poolId))
+  const ingest = useSelector(Ingests.get(poolId))
 
-  if (!dataImport) return null
-  const {progress, warnings} = dataImport
+  if (!ingest) return null
+  const {progress, warnings} = ingest
 
   function onWarningsClick() {
     dispatch(Modal.show("ingest-warnings"))

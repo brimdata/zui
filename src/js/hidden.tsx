@@ -1,6 +1,6 @@
 import React from "react"
 import {syncPool} from "app/core/pools/sync-pool"
-import syncPools from "app/core/pools/sync-pools"
+import {syncPoolsData} from "app/core/pools/sync-pools-data"
 import log from "electron-log"
 import {differenceWith, map} from "lodash"
 import {useEffect} from "react"
@@ -51,15 +51,15 @@ const Hidden = () => {
           workspaceSourceMap[w.id] = wsSource
 
           wsSource.addEventListener("pool-new", (_e) => {
-            dispatch(syncPools(w.id))
+            dispatch(syncPoolsData(w.id))
           })
           wsSource.addEventListener("pool-update", (_e) => {
-            dispatch(syncPools(w.id)).catch((e) =>
+            dispatch(syncPoolsData(w.id)).catch((e) =>
               log.error("refresh error: ", e)
             )
           })
           wsSource.addEventListener("pool-delete", (_e) => {
-            dispatch(syncPools(w.id))
+            dispatch(syncPoolsData(w.id))
           })
           wsSource.addEventListener("branch-commit", (e) => {
             let eventData

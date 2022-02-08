@@ -2,7 +2,7 @@ import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import ToolbarButton from "../../../app/toolbar/button"
 import Current from "../state/Current"
-import Imports from "../state/Imports"
+import Ingests from "../state/Ingests"
 import useEnterKey from "./hooks/useEnterKey"
 import {
   ButtonGroup,
@@ -17,10 +17,10 @@ export default function IngestWarningsModal({onClose}) {
   const dispatch = useDispatch()
   useEnterKey(onClose)
   const poolId = useSelector(Current.getPoolId)
-  const ingest = useSelector(Imports.get(poolId))
+  const ingest = useSelector(Ingests.get(poolId))
   if (!ingest) return null
   const warnings = ingest.warnings
-  const onClear = () => dispatch(Imports.remove(poolId))
+  const onClear = () => dispatch(Ingests.remove(poolId))
 
   return (
     <Content width={800}>

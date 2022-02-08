@@ -2,7 +2,7 @@ import {Client} from "@brimdata/zealot"
 import {createPool} from "app/core/pools/create-pool"
 import {syncPool} from "app/core/pools/sync-pool"
 import {lakePath, workspacePath} from "app/router/utils/paths"
-import Imports from "src/js/state/Imports"
+import Ingests from "src/js/state/Ingests"
 import Url from "src/js/state/Url"
 import BrimApi from "../../../src/js/api"
 import brim from "../../../src/js/brim"
@@ -77,18 +77,18 @@ const registerIngest = (dispatch, id) => ({
   do({poolId}: IngestParams & {poolId: string}) {
     const handle: Handler = {type: "INGEST", poolId}
     dispatch(Handlers.register(id, handle))
-    dispatch(Imports.create(poolId))
+    dispatch(Ingests.create(poolId))
   },
   undo({poolId}) {
     dispatch(Handlers.remove(id))
-    dispatch(Imports.remove(poolId))
+    dispatch(Ingests.remove(poolId))
   }
 })
 
 const unregisterIngest = (dispatch, id) => ({
   do({poolId}) {
     dispatch(Handlers.remove(id))
-    dispatch(Imports.remove(poolId))
+    dispatch(Ingests.remove(poolId))
   }
 })
 
@@ -103,13 +103,13 @@ const executeLoader = (
     const {poolId, fileListData = []} = params
 
     const onProgressUpdate = (progress: number): void => {
-      dispatch(Imports.setProgress({poolId, progress}))
+      dispatch(Ingests.setProgress({poolId, progress}))
     }
     const onDetailUpdate = async (): Promise<void> => {
       dispatch(syncPool(poolId, lakeId))
     }
     const onWarning = (warning: string): void => {
-      dispatch(Imports.addWarning({poolId, warning}))
+      dispatch(Ingests.addWarning({poolId, warning}))
     }
 
     // for now, to find a loader match we will assume all files are the same
