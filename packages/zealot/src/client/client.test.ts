@@ -3,7 +3,8 @@ import {Lake} from "../lake/lake"
 import path from "path"
 import {Client} from "./client"
 import {removeSync} from "fs-extra"
-import _ from "lodash"
+import fs from "fs"
+import data from "../../../../test/shared/data"
 
 const root = path.join(__dirname, "..", "..", "run", "client.test.ts", "root")
 const logs = path.join(__dirname, "..", "..", "run", "client.test.ts", "logs")
@@ -131,4 +132,21 @@ test("#getPoolStats", async () => {
       ts: new Date("1970-01-01T00:00:00.000Z")
     }
   })
+})
+
+test("#updatePool", async () => {
+  const {
+    pool: {id}
+  } = await client.createPool("star war")
+  await client.updatePool(id, {name: "star peace"})
+  const {name} = await client.getPool(id)
+  expect(name).toEqual("star peace")
+})
+
+test("#load a stream", async () => {
+  const {
+    pool: {id}
+  } = await client.createPool("load-with-stream")
+  const stream = fs.createReadStream(data.getPath("sample.tsv"))
+  await client.load(stream, {pool: id})
 })
