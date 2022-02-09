@@ -7,6 +7,7 @@ export default {
   computeSpan(now: Date = new Date()): Thunk {
     return function(dispatch, getState) {
       const args = Tab.getSpanArgs(getState())
+      if (!args) return
       const span = brim
         .span(args)
         .recompute(now)

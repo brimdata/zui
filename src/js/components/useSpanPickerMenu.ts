@@ -31,10 +31,8 @@ export default function useSpanPickerMenu(submit: Function) {
       {click: () => setSpan(spanOfLast(30, "days")), label: "Last 30 days"}
     ]
 
-  const {min_time, max_time} = pool
-
-  const from = brim.time(min_time)
-  const to = brim.time(max_time).add(1, "ms")
+  const from = brim.time(pool.minTime())
+  const to = brim.time(pool.maxTime()).add(1, "ms")
   const poolSpan: SpanArgs = [from.toTs(), to.toTs()]
 
   return [

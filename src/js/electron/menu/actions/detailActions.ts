@@ -41,8 +41,8 @@ function buildDetailActions() {
     detail: action({
       name: "detail-cell-menu-detail",
       label: "View details",
-      listener(dispatch, log: zjson.RootRecord) {
-        dispatch(viewLogDetail(decode(log)))
+      listener(dispatch, log: zjson.Object) {
+        dispatch(viewLogDetail(decode(log) as zed.Record))
       }
     }),
     exclude: action({
@@ -80,10 +80,10 @@ function buildDetailActions() {
     groupByDrillDown: action({
       name: "detail-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
-      listener(dispatch, program, log: zjson.RootRecord) {
+      listener(dispatch, program, log: zjson.Object) {
         const newProgram = brim
           .program(program)
-          .drillDown(decode(log))
+          .drillDown(decode(log) as zed.Record)
           .string()
 
         if (newProgram) {

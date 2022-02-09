@@ -1,4 +1,4 @@
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import brim from "../../brim"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "../../flows/config"
 import {addHeadProc} from "../../lib/Program"
@@ -24,15 +24,14 @@ export const getRecord = (state: State): SearchRecord => {
 export const getArgs = (state: State): SearchArgs => {
   const program = SearchBar.getSearchProgram(state)
   const span = Tab.getSpanAsDates(state)
-  const spanFocus = Tab.getSpanFocusAsDates(state)
   const pool = Current.mustGetPool(state)
-  const type: SearchType = getArgsType(program, spanFocus)
+  const type: SearchType = getArgsType(program)
   const perPage = type === "analytics" ? ANALYTIC_MAX_RESULTS : PER_PAGE
 
   return {
     tableProgram: addHeadProc(program, perPage),
     chartProgram: addEveryCountProc(program, span),
-    span: spanFocus || span,
+    span: span,
     poolId: pool.id,
     poolName: pool.name,
     type
@@ -41,14 +40,12 @@ export const getArgs = (state: State): SearchArgs => {
 
 export const createHref = (state) => {
   const record = getRecord(state)
-  const spanArgsFocus = Tab.getSpanFocus(state)
   const workspaceId = Current.getWorkspaceId(state)
   const poolId = Current.getPoolId(state)
-  return lakeSearchPath(poolId, workspaceId, {...record, spanArgsFocus})
+  return poolSearchPath(poolId, workspaceId, {...record})
 }
 
-function getArgsType(program, spanFocus): SearchType {
+function getArgsType(program): SearchType {
   if (brim.program(program).hasAnalytics()) return "analytics"
-  else if (spanFocus) return "zoom"
   return "events"
 }

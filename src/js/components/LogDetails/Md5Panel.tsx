@@ -19,21 +19,21 @@ export const Md5Panel = ({record}: Props) => {
   const [rx, setRx] = useState([])
   const [md5, setMd5] = useState([])
   const [filenames, setFilenames] = useState([])
-  const [status, setStatus] = useState("INIT")
+  const [fetching, setFetching] = useState(false)
 
   useEffect(() => {
-    const {response, abort} = dispatch(md5Search(logMd5))
-    response
-      .status((status) => {
-        if (status === "ABORTED") return
-        setStatus(status)
+    setFetching(true)
+    dispatch(md5Search(logMd5))
+      .then((res) => {
+        res.channel(0).collect(({rows}) => setFilenames(rows))
+        res.channel(1).collect(({rows}) => setMd5(rows))
+        res.channel(2).collect(({rows}) => setRx(rows))
+        res.channel(3).collect(({rows}) => setTx(rows))
+        return res.promise
       })
-      .chan(0, ({rows}) => setFilenames(rows))
-      .chan(1, ({rows}) => setMd5(rows))
-      .chan(2, ({rows}) => setRx(rows))
-      .chan(3, ({rows}) => setTx(rows))
-
-    return abort
+      .finally(() => {
+        setFetching(false)
+      })
   }, [logMd5])
 
   function onRightClick(field, record) {
@@ -42,9 +42,7 @@ export const Md5Panel = ({record}: Props) => {
 
   return (
     <section className="hash-correlation detail-panel">
-      <PanelHeading isLoading={status === "FETCHING"}>
-        Md5 Correlation
-      </PanelHeading>
+      <PanelHeading isLoading={fetching}>Md5 Correlation</PanelHeading>
       <AsyncTable logs={md5} onRightClick={onRightClick} expect={1} />
       <AsyncTable logs={filenames} onRightClick={onRightClick} expect={1} />
       <div className="two-column">

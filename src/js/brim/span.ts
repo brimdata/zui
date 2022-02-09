@@ -4,12 +4,14 @@ import {DateTuple} from "../lib/TimeWindow"
 import {SpanArgs, TimeArg} from "../state/Search/types"
 import {isString} from "../lib/is"
 import brim, {Span, Ts} from "./"
+import {isDate} from "lodash"
 
-export default function span(args: SpanArgs | Span) {
+export default function span(args: SpanArgs | Span | [Date, Date]) {
   let computed = compute()
 
-  function computeArg(arg: TimeArg, now: Date = new Date()): Ts {
+  function computeArg(arg: TimeArg | Date, now: Date = new Date()): Ts {
     if (isString(arg)) return brim.relTime(arg, now).toTs()
+    else if (isDate(arg)) return brim.time(arg).toTs()
     else return arg
   }
 

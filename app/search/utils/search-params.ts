@@ -9,23 +9,17 @@ export type DecodedSearchParams = {
   program: string
   pins: string[]
   spanArgs: Partial<SpanArgs>
-  spanArgsFocus: Partial<SpanArgs>
-  keep: boolean
 }
 
 export const encodeSearchParams = ({
   program,
   pins,
-  spanArgs,
-  spanArgsFocus,
-  keep
+  spanArgs
 }: Partial<DecodedSearchParams>) => {
   const p = new URLSearchParams()
   if (program) p.append("q", program)
   encodeSpan(p, spanArgs, "from", "to")
-  encodeSpan(p, spanArgsFocus, "focusFrom", "focusTo")
   encodePins(p, pins || [])
-  encodeBool(p, keep, "keep")
   return p.toString()
 }
 
@@ -34,11 +28,7 @@ export const decodeSearchParams = (path: string): DecodedSearchParams => {
   return {
     program: url.get("q") || "",
     spanArgs: [url.get("from"), url.get("to")].map(decodeSpanArg) as SpanArgs,
-    spanArgsFocus: [url.get("focusFrom"), url.get("focusTo")].map(
-      decodeSpanArg
-    ) as SpanArgs,
-    pins: decodePins(url),
-    keep: decodeBool(url, "keep")
+    pins: decodePins(url)
   }
 }
 

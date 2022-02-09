@@ -3,6 +3,7 @@ import produce from "immer"
 import {ViewerAction, ViewerState} from "./types"
 import {concat, splice} from "../../lib/Array"
 import {createSelection} from "./helpers/selection"
+import {zed} from "@brimdata/zealot"
 
 const init = (): ViewerState => ({
   records: [],
@@ -27,7 +28,7 @@ export default function(
     case "VIEWER_RECORDS":
       return {...state, records: concat(state.records, action.records)}
     case "VIEWER_SET_RECORDS":
-      return {...state, records: action.records}
+      return {...state, records: action.records as zed.Record[]}
     case "VIEWER_SPLICE":
       return {...state, records: splice(state.records, action.index)}
     case "VIEWER_END_STATUS":

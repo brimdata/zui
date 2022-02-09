@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {TypeDefs, zed} from "@brimdata/zealot"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 
@@ -9,7 +9,6 @@ export type ViewerStatus =
   | "COMPLETE"
   | "LIMIT"
 
-export type SchemaMap = {[name: string]: zed.Schema}
 export type ViewerSelectionData = {
   rows: {
     [key: number]: boolean
@@ -18,7 +17,7 @@ export type ViewerSelectionData = {
 }
 export type ViewerState = {
   records: zed.Record[]
-  columns: SchemaMap
+  columns: TypeDefs
   endStatus: ViewerStatus
   status: SearchStatus
   searchKey: string
@@ -48,13 +47,13 @@ export type ViewerAction =
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS"
-  records: zed.Record[]
+  records: zed.Value[]
   tabId: string | null | undefined
 }
 
 export type VIEWER_SET_RECORDS = {
   type: "VIEWER_SET_RECORDS"
-  records: zed.Record[]
+  records: zed.Value[]
   tabId?: string
 }
 
@@ -83,13 +82,13 @@ export type VIEWER_STATUS = {
 
 export type VIEWER_COLUMNS = {
   type: "VIEWER_COLUMNS"
-  columns: SchemaMap
+  columns: TypeDefs
   tabId: string
 }
 
 export type VIEWER_SET_COLUMNS = {
   type: "VIEWER_SET_COLUMNS"
-  columns: SchemaMap
+  columns: TypeDefs
   tabId: string
 }
 

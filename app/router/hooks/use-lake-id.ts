@@ -1,6 +1,6 @@
 import {useParams} from "react-router"
 
 export default function useLakeId() {
-  const {lakeId} = useParams<{lakeId: string}>()
-  return lakeId
+  const {workspaceId} = useParams<{workspaceId: string}>()
+  return workspaceId
 }

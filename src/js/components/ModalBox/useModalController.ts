@@ -33,6 +33,7 @@ export default function useModalController(
       closeModal()
     }
     if (e.key === "Enter") {
+      console.log("hiiii")
       e.stopPropagation()
       e.preventDefault()
       const b = last(buttons)

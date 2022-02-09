@@ -4,12 +4,12 @@ import {
   toAccessTokenKey,
   toRefreshTokenKey
 } from "../../auth0/utils"
-import {BrimWorkspace} from "../../brim"
+import {BrimLake} from "../../brim"
 import ipc from "../../electron/ipc"
 import invoke from "../../electron/ipc/invoke"
 import {getAuth0} from "./getAuth0"
 
-export const login = (ws: BrimWorkspace, abortSignal: AbortSignal) => (
+export const login = (ws: BrimLake, abortSignal: AbortSignal) => (
   dispatch
 ): Promise<string> => {
   const client = dispatch(getAuth0(ws))

@@ -16,7 +16,7 @@ export default {
     status,
     tabId
   }),
-  appendRecords: (tabId: string, records: zed.Record[]): CHART_RECORDS => ({
+  setRecords: (tabId: string, records: zed.Record[]): CHART_RECORDS => ({
     type: "CHART_RECORDS",
     data: histogramFormat(records),
     tabId

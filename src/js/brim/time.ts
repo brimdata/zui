@@ -67,6 +67,11 @@ function time(val: Ts | bigint | Date | string = new Date()) {
       return moment(this.toDate())
         .tz(zone || "UTC")
         .format(fmt || "YYYY-MM-DDTHH:mm:ss.SSS")
+    },
+
+    isValid() {
+      let d = this.toDate()
+      return d instanceof Date && !isNaN(d.getTime())
     }
   }
 }

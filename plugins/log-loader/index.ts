@@ -6,14 +6,14 @@ import {Readable} from "stream"
 export const activate = (api: BrimApi) => {
   const load = async (
     params: IngestParams & {poolId: string; branch: string},
-    onProgressUpdate: (value: number | null) => void,
+    onProgressUpdate: (value: number) => void,
     onWarning: (warning: string) => void,
     onDetailUpdate: () => Promise<void>,
     signal?: AbortSignal
   ): Promise<void> => {
     const files = params.fileListData.map((f) => f.file)
     const totalBytes = files.reduce((sum, file) => sum + file.size, 0)
-    const zealot = api.getZealot()
+    const zealot = await api.getZealot()
     let readBytes = 0
     onProgressUpdate(0)
     for (const file of files) {
@@ -25,17 +25,20 @@ export const activate = (api: BrimApi) => {
         }
       })
       const stream = file.stream().pipeThrough(progressUpdateTransformStream)
-      const res = await zealot.pools.load(params.poolId, params.branch, {
-        author: "brim",
-        body: "automatic import of " + file.path,
-        data: nodeJSReadableStreamFromReadableStream(stream),
+      const data = nodeJSReadableStreamFromReadableStream(stream)
+      const res = await zealot.load(data, {
+        pool: params.poolId,
+        branch: params.branch,
+        message: {
+          author: "brim",
+          body: "automatic import of " + file.path
+        },
         signal
       })
       forEach(get(res, ["value", "warnings"], []), onWarning)
     }
     await onDetailUpdate()
     onProgressUpdate(1)
-    onProgressUpdate(null)
   }
 
   api.loaders.add({

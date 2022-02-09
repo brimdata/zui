@@ -1,6 +1,5 @@
-import {zed} from "@brimdata/zealot"
+import {parseAst, zed} from "@brimdata/zealot"
 import {isEqual} from "lodash"
-import {parse} from "zealot-old"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"
@@ -84,7 +83,7 @@ export default function(p = "", pins: string[] = []) {
     ast() {
       let tree
       try {
-        tree = parse(p)
+        tree = parseAst(p)
       } catch (error) {
         tree = {error}
       }

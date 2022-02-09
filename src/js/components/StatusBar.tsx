@@ -1,36 +1,25 @@
+import classNames from "classnames"
 import {isEmpty} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
-import classNames from "classnames"
-
-import {ingestProgressBar} from "../../../test/playwright/helpers/locators"
-import {isNumber} from "../lib/is"
 import {reactElementProps} from "../../../test/playwright/helpers/integration"
+import {ingestProgressBar} from "../../../test/playwright/helpers/locators"
 import Current from "../state/Current"
+import Ingests from "../state/Ingests"
 import Modal from "../state/Modal"
-import ProgressIndicator from "./ProgressIndicator"
-import Pools from "../state/Pools"
 import Warning from "./icons/warning-sm.svg"
-import brim from "../brim"
+import ProgressIndicator from "./ProgressIndicator"
+import React from "react"
 
 export default function StatusBar() {
   const dispatch = useDispatch()
-  const workspaceId = useSelector(Current.getWorkspaceId)
   const poolId = useSelector(Current.getPoolId)
-  const pool = useSelector(Current.getPool)
-  const value = useSelector(Pools.getIngestProgress(workspaceId, poolId))
-  const warnings = useSelector(Pools.getIngestWarnings(workspaceId, poolId))
-  if (!isNumber(value) && isEmpty(warnings)) return null
-  const s = brim.pool(pool)
+  const ingest = useSelector(Ingests.get(poolId))
+
+  if (!ingest) return null
+  const {progress, warnings} = ingest
 
   function onWarningsClick() {
     dispatch(Modal.show("ingest-warnings"))
-  }
-
-  function getMessage() {
-    if (s.queryable() && s.ingesting()) {
-      return "Partial data available while loading…"
-    }
   }
 
   return (
@@ -39,17 +28,14 @@ export default function StatusBar() {
         className="packet-post-progress"
         {...reactElementProps("ingestProgress")}
       >
-        <label>{getMessage()}</label>
         <div className="group">
-          {s.ingesting() && (
-            <ProgressIndicator {...ingestProgressBar.props} percent={value} />
-          )}
-          {!s.ingesting() && s.empty() && (
+          <ProgressIndicator {...ingestProgressBar.props} percent={progress} />
+          {progress === 1 && warnings.length > 0 && (
             <label>Ingest failed with warnings.</label>
           )}
           <div
             className={classNames("warnings", {
-              disabled: isEmpty(warnings) || !s.queryable()
+              disabled: isEmpty(warnings)
             })}
             onClick={onWarningsClick}
           >

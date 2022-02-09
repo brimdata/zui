@@ -1,44 +1,41 @@
-import produce from "immer"
+import {cloneDeep, pick} from "lodash"
+import {TabState} from "./Tab/types"
 import {State} from "./types"
-import {GlobalState} from "./globalReducer"
 
-export function getGlobalPersistable(state: GlobalState) {
-  return produce(state, (draft: GlobalState) => {
-    for (const ws of Object.values(draft.workspaces)) {
-      if (ws.authType === "auth0" && ws.authData) {
-        // accessToken only persists in native os keychain
-        delete ws.authData.accessToken
-      }
-    }
+type StateKey = keyof State
+type TabKey = keyof TabState
 
-    delete draft.configs
-  })
+const WINDOW_PERSIST: StateKey[] = [
+  "appearance",
+  "configPropValues",
+  "investigation",
+  "launches",
+  "pluginStorage",
+  "queries",
+  "tabHistories",
+  "tabs",
+  "workspaces"
+]
+
+const TAB_PERSIST: TabKey[] = ["id", "search", "searchBar", "columns", "layout"]
+
+function deleteAccessTokens(state: Partial<State>) {
+  if (!state.workspaces) return
+  for (const ws of Object.values(state.workspaces)) {
+    if (ws.authType === "auth0" && ws.authData) delete ws.authData.accessToken
+  }
 }
 
-export function getWindowPersistable(state: State) {
-  return produce(state, (draft: State) => {
-    delete draft.errors
-    delete draft.notice
-    delete draft.handlers
-    delete draft.systemTest
-    delete draft.workspaceStatuses
-    delete draft.toolbars
-    delete draft.configs
-    delete draft.modal
-    delete draft.remoteQueries
+export function getPersistedState(original: State) {
+  const clone = cloneDeep(original)
+  const state = pick(clone, WINDOW_PERSIST)
 
-    for (const tab of draft.tabs.data) {
-      delete tab.viewer
-      delete tab.chart
-      delete tab.logDetails
-      delete tab.inspector
-    }
+  if (state.tabs) {
+    state.tabs.data = state.tabs.data.map(
+      (tab) => pick(tab, TAB_PERSIST) as TabState
+    )
+  }
 
-    for (const ws of Object.values(draft.workspaces)) {
-      if (ws.authType === "auth0" && ws.authData) {
-        // accessToken only persists in native os keychain
-        delete ws.authData.accessToken
-      }
-    }
-  })
+  deleteAccessTokens(state)
+  return state
 }

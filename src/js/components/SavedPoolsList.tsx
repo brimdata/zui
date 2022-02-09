@@ -1,5 +1,5 @@
 import {useImportOnDrop} from "app/features/import/use-import-on-drop"
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import classNames from "classnames"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
@@ -9,10 +9,8 @@ import {
   currentPoolItem,
   poolItem
 } from "../../../test/playwright/helpers/locators"
-import brim from "../brim"
 import FileFilled from "../icons/FileFilled"
 import Current from "../state/Current"
-import {Pool} from "../state/Pools/types"
 import {AppDispatch} from "../state/types"
 import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
 import EmptySection from "./common/EmptySection"
@@ -22,6 +20,9 @@ import {remoteQueriesPoolName} from "./LeftPane/remote-queries"
 import Modal from "../state/Modal"
 import {showContextMenu} from "../lib/System"
 import getPoolContextMenu from "../../../app/pools/flows/get-pool-context-menu"
+import {Pool} from "app/core/pools/pool"
+import Ingests from "../state/Ingests"
+import {isNumber} from "lodash"
 
 type Props = {
   pools: Pool[]
@@ -39,21 +40,17 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
   const dispatch = useDispatch<AppDispatch>()
   const workspaceId = useSelector(Current.getWorkspaceId)
   const currentPoolId = useSelector(Current.getPoolId)
-
-  const p = brim.pool(pool)
+  const ingest = useSelector(Ingests.get(pool.id))
+  const p = pool
   const history = useHistory()
   const onClick = (e) => {
     e.preventDefault()
-    history.push(
-      lakeSearchPath(p.id, workspaceId, {
-        spanArgs: p.empty() ? undefined : p.defaultSpanArgs()
-      })
-    )
+    history.push(poolSearchPath(p.id, workspaceId))
   }
 
-  const progress = p.ingesting() && (
+  const progress = ingest && isNumber(ingest.progress) && (
     <div className="small-progress-bar">
-      <ProgressIndicator percent={p.ingestProgress()} />
+      <ProgressIndicator percent={ingest.progress} />
     </div>
   )
   const current = p.id === currentPoolId

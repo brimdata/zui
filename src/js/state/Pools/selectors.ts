@@ -1,59 +1,39 @@
+import {Pool} from "app/core/pools/pool"
 import {find, keys} from "lodash"
 import {State} from "../types"
-import {Pool} from "./types"
+import {PoolState} from "./types"
 
-const selectors = {
-  ids: (workspaceId: string) => (state: State) => {
-    return keys(getWorkspace(state, workspaceId))
-  },
-  get: (workspaceId: string, poolId: string) => (state: State) => {
-    return getWorkspace(state, workspaceId)[poolId]
-  },
-  getName: (workspaceId: string, poolId: string) => (state: State) => {
-    const pool = getWorkspace(state, workspaceId)[poolId]
-    return pool ? pool.name : ""
-  },
-  getByName: (workspaceId: string, name: string) => (state: State) => {
-    const wsPools = getWorkspace(state, workspaceId)
-    return find(wsPools, ["name", name])
-  },
-  raw: (state: State) => state.pools,
-  getPools: (workspaceId: string | null) => (state: State): Pool[] => {
-    const ws = getWorkspace(state, workspaceId)
-    return Object.keys(ws).map((key) => {
-      return {...ws[key]}
-    })
-  },
-  getPoolNames: (workspaceId: string) => (state: State): string[] => {
-    const ws = getWorkspace(state, workspaceId)
-    return Object.keys(ws).map((key) => ws[key].name)
-  },
-  getIngestProgress: (workspaceId: string, poolId: string) => (
-    state: State
-  ) => {
-    const ws = getWorkspace(state, workspaceId)
-    const pool = ws[poolId]
-    if (pool) return pool.ingest.progress
-    else return null
-  },
-  getIngestWarnings: (workspaceId: string, poolId: string) => (
-    state: State
-  ) => {
-    const ws = getWorkspace(state, workspaceId)
-    const pool = ws[poolId]
-    if (pool) return pool.ingest.warnings
-    else return []
-  }
+export const ids = (lakeId: string) => (state: State) => {
+  return keys(getLake(state, lakeId))
+}
+export const get = (lakeId: string, poolId: string) => (state: State) => {
+  const poolState = getLake(state, lakeId)[poolId]
+  if (!poolState) return null
+  return Pool.from(poolState)
 }
 
-function getWorkspace(
+export const raw = (state: State) => state.pools
+
+export const getPools = (lakeId: string | null) => (state: State): Pool[] => {
+  const ws = getLake(state, lakeId)
+  return Object.keys(ws).map((key) => Pool.from(ws[key]))
+}
+
+export const getPoolNames = (lakeId: string) => (state: State): string[] => {
+  const ws = getLake(state, lakeId)
+  return Object.keys(ws).map((key) => ws[key].data.name)
+}
+export const getByName = (lakeId: string, name: string) => (state: State) => {
+  const wsPools = getLake(state, lakeId)
+  return Pool.from(find(wsPools, ["name", name]))
+}
+
+function getLake(
   state,
   id
 ): {
-  [key: string]: Pool
+  [key: string]: PoolState
 } {
   if (!id) return {}
   return state.pools[id] || {}
 }
-
-export default selectors

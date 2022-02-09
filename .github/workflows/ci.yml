@@ -24,17 +24,13 @@ jobs:
           cache: yarn
           node-version-file: .nvmrc
       - run: yarn --inline-builds
-      - run: yarn run build
-      - run: yarn run lint
-      - run: yarn run tsc
-      - run: yarn test --maxWorkers=2 --ci
-      - run: yarn run test:api
-      - run: yarn run test:system
-      - run: yarn run generate-responses --silent
+      - run: yarn lint
+      - run: yarn test
       - name: Build and install package
         if: runner.os != 'Windows'
         run: |
           set -x
+          yarn build
           case ${{ runner.os }} in
             Linux )
               yarn electron-builder --linux=deb
@@ -45,13 +41,13 @@ jobs:
               cp -r dist/installers/mac/Brim.app /Applications
               ;;
           esac
-      - name: Playwright tests
+      - name: End to end tests
         id: playwright
         if: runner.os != 'Windows'
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24
-          run: yarn run test:playwright --ci --forceExit
+          run: yarn e2e --ci --forceExit
         env:
           DEBUG: pw:api
       - uses: actions/upload-artifact@v2

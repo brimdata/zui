@@ -4,7 +4,7 @@ import path from "path"
 import os from "os"
 
 import disableLogger from "../../../../test/unit/helpers/disableLogger"
-import formatSessionState from "./formatSessionState"
+import {encodeSessionState} from "./session-state"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import tron from "./"
 import states from "test/unit/states"
@@ -21,7 +21,7 @@ test("session loading with migrations", async () => {
   const state = initTestStore().getState()
   const migrations = await Migrations.init()
   const session = tron.session(file)
-  const data = formatSessionState([], state)
+  const data = encodeSessionState([], state)
 
   await session.save(data)
   await session.load()

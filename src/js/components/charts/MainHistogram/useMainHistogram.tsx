@@ -12,24 +12,24 @@ import HistogramTooltip from "../../HistogramTooltip"
 import LoadingMessage from "../../LoadingMessage"
 import barStacks from "../pens/barStacks"
 import brim from "../../../brim"
-import focusBar from "../pens/focusBar"
 import format from "./format"
 import hoverLine from "../pens/hoverLine"
 import reactComponent from "../pens/reactComponent"
 import search from "../../../state/Search"
 import tab from "../../../state/Tab"
-import time from "../../../brim/time"
 import useConst from "../../hooks/useConst"
 import xAxisBrush from "../pens/xAxisBrush"
 import xAxisTime from "../pens/xAxisTime"
 import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 
-export default function(width: number, height: number): HistogramChart {
+export default function useMainHistogram(
+  width: number,
+  height: number
+): HistogramChart {
   const chartData = useSelector(Chart.getData)
   const status = useSelector(Chart.getStatus)
   const span = useSelector(tab.getSpanAsDates)
-  const innerSpan = useSelector(tab.getSpanFocusAsDates)
 
   const dispatch = useDispatch()
   const pens = useConst<Pen[]>([], () => {
@@ -39,23 +39,6 @@ export default function(width: number, height: number): HistogramChart {
     }
 
     function onSelection(span: DateTuple) {
-      dispatch(search.setSpanFocus(null))
-      dispatch(search.setSpanArgsFromDates(span))
-      dispatch(submitSearch())
-    }
-
-    function onFocus(dates: DateTuple) {
-      dispatch(search.setSpanFocus(time.convertToSpan(dates)))
-      dispatch(submitSearch({history: true, investigation: false}))
-    }
-
-    function onSelectionClear() {
-      dispatch(search.setSpanFocus(null))
-      dispatch(submitSearch({history: true, investigation: false}))
-    }
-
-    function onSelectionClick(span) {
-      dispatch(search.setSpanFocus(null))
       dispatch(search.setSpanArgsFromDates(span))
       dispatch(submitSearch())
     }
@@ -64,7 +47,7 @@ export default function(width: number, height: number): HistogramChart {
       xAxisTime({onDragEnd}),
       barStacks(),
       yAxisSingleTick(),
-      xAxisBrush({onSelection, onSelectionClear, onSelectionClick}),
+      xAxisBrush({onSelection}),
       hoverLine(),
       reactComponent((chart) => (
         <EmptyMessage show={!chart.state.isFetching && chart.state.isEmpty} />
@@ -72,7 +55,6 @@ export default function(width: number, height: number): HistogramChart {
       reactComponent((chart) => (
         <LoadingMessage show={chart.state.isFetching} message="Loading..." />
       )),
-      focusBar({onFocus}),
       xPositionTooltip({
         wrapperClassName: "histogram-tooltip-wrapper",
         render: HistogramTooltip
@@ -101,7 +83,6 @@ export default function(width: number, height: number): HistogramChart {
       margins,
       state: {
         isFetching: status === "FETCHING",
-        selection: innerSpan,
         isEmpty: data.points.length === 0,
         isDragging: false
       },
@@ -115,5 +96,5 @@ export default function(width: number, height: number): HistogramChart {
         .domain(data.span),
       pens
     }
-  }, [chartData, status, span, innerSpan, width, height])
+  }, [chartData, status, span, width, height])
 }

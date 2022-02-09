@@ -1,10 +1,15 @@
-import {Ts} from "../../brim"
+import {PoolConfig, PoolStats} from "@brimdata/zealot"
+
+export type PoolState = {
+  data: PoolConfig
+  stats: PoolStats
+}
 
 export type PoolsState = {
   // workspaceId
   [key: string]: {
     // poolId
-    [key: string]: Pool
+    [key: string]: PoolState
   }
 }
 
@@ -17,13 +22,16 @@ export type PoolsAction =
   | POOLS_INGEST_WARNING_CLEAR
   | POOLS_REMOVE
   | POOLS_WORKSPACE_REMOVE
+
 export type Pool = {
   name: string
   id: string
-  min_time: Ts
-  max_time: Ts
   ingest: PoolIngest
   size: number
+  span: {
+    ts: Date
+    dur: number
+  }
 }
 
 type PoolIngest = {

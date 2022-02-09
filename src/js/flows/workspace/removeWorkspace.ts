@@ -23,7 +23,7 @@ const removeWorkspace = (ws: Lake): Thunk => (dispatch, _getState) => {
     invoke(ipc.secrets.deleteKey(toRefreshTokenKey(id)))
   }
   dispatch(Investigation.clearWorkspaceInvestigation(id))
-  dispatch(Pools.removeForWorkspace(id))
+  dispatch(Pools.removeAll(id))
   dispatch(WorkspaceStatuses.remove(id))
   dispatch(Lakes.remove(id))
 

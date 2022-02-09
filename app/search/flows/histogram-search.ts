@@ -1,22 +1,24 @@
+import {zed} from "@brimdata/zealot"
 import brim from "src/js/brim"
-import {search, SearchResult} from "src/js/flows/search/mod"
-import {SearchResponse} from "src/js/flows/search/response"
+import {search} from "src/js/flows/search/mod"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import {addEveryCountProc} from "src/js/searches/histogramSearch"
 import Chart from "src/js/state/Chart"
 import Current from "src/js/state/Current"
 import Notice from "src/js/state/Notice"
+import Tab from "src/js/state/Tab"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Url from "src/js/state/Url"
 
 const id = "Histogram"
 
-export function histogramSearch(): Thunk<Promise<SearchResult>> {
-  return (dispatch, getState) => {
+export function histogramSearch(): Thunk<Promise<void>> {
+  return async (dispatch, getState) => {
     const state = getState()
     const {program, pins} = Url.getSearchParams(state)
-    const span = Url.getSpanParamsWithDefaults(state)
+    const span = Tab.getSpan(state)
+    if (!span) return
     const from = brim.time(span[0]).toDate()
     const to = brim.time(span[1]).toDate()
     const brimProgram = brim.program(program, pins)
@@ -27,28 +29,18 @@ export function histogramSearch(): Thunk<Promise<SearchResult>> {
     const history = global.tabHistories.get(tabId)
     const {key} = history.location
     dispatch(Chart.setSearchKey(tabId, key))
-
-    const {response, promise} = dispatch(search({id, query, from, to, poolId}))
-    dispatch(handle(response))
-    return promise.catch((e) => e)
-  }
-}
-
-function handle(response: SearchResponse): Thunk {
-  return function(dispatch, getState) {
-    const tabId = Tabs.getActive(getState())
-    const params = Url.getSearchParams(getState())
-
-    if (!params.keep) {
-      const currentSearchKey = Chart.getSearchKey(getState())
-      dispatch(Chart.clear(tabId))
-      dispatch(Chart.setSearchKey(tabId, currentSearchKey))
-    }
     dispatch(Chart.setStatus(tabId, "FETCHING"))
+    dispatch(Chart.clear(tabId))
 
-    response
-      .status((status) => dispatch(Chart.setStatus(tabId, status)))
-      .chan(0, ({rows}) => dispatch(Chart.appendRecords(tabId, rows)))
-      .error((error) => dispatch(Notice.set(ErrorFactory.create(error))))
+    const resp = await dispatch(search({id, query, from, to, poolId}))
+    try {
+      await resp.collect(({rows}) => {
+        dispatch(Chart.setRecords(tabId, rows as zed.Record[]))
+      })
+      dispatch(Chart.setStatus(tabId, "SUCCESS"))
+    } catch (e) {
+      dispatch(Notice.set(ErrorFactory.create(e)))
+      dispatch(Chart.setStatus(tabId, "ERROR"))
+    }
   }
 }

@@ -1,4 +1,4 @@
-import useWorkspaceId from "app/router/hooks/use-workspace-id"
+import useLakeId from "app/router/hooks/use-lake-id"
 import {lakeImportPath} from "app/router/utils/paths"
 import React from "react"
 import {useHistory} from "react-router"
@@ -21,7 +21,7 @@ const StyledAnchor = styled.a`
 
 export default function AddPoolButton() {
   const history = useHistory()
-  const workspaceId = useWorkspaceId()
+  const workspaceId = useLakeId()
   const onClick = () => history.push(lakeImportPath(workspaceId))
 
   return (

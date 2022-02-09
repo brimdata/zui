@@ -45,10 +45,10 @@ function buildSearchActions() {
     detail: action({
       name: "search-cell-menu-detail",
       label: "Open details",
-      listener(dispatch, data: zjson.RootRecord) {
+      listener(dispatch, data: zjson.Object) {
         const record = decode(data)
         dispatch(Layout.showDetailPane())
-        dispatch(viewLogDetail(record))
+        dispatch(viewLogDetail(record as zed.Record))
       }
     }),
     exclude: action({
@@ -83,11 +83,11 @@ function buildSearchActions() {
     groupByDrillDown: action({
       name: "search-cell-menu-pivot-to-logs",
       label: "Pivot to logs",
-      listener(dispatch, program: string, data: zjson.RootRecord) {
+      listener(dispatch, program: string, data: zjson.Object) {
         const record = decode(data)
         const newProgram = brim
           .program(program)
-          .drillDown(record)
+          .drillDown(record as zed.Record)
           .string()
 
         if (newProgram) {
@@ -125,10 +125,10 @@ function buildSearchActions() {
       listener(
         dispatch,
         fieldData: zjson.EncodedField,
-        recordData: zjson.RootRecord
+        recordData: zjson.Object
       ) {
         const field = decode(fieldData)
-        const record = decode(recordData)
+        const record = decode(recordData) as zed.Record
         if (field.data instanceof zed.Time) {
           const brimTime = brim.time(field.data.toDate())
           dispatch(tab.setFrom(brimTime.subtract(1, "minutes").toTs()))
@@ -162,7 +162,7 @@ function buildSearchActions() {
     logResult: action({
       name: "search-cell-menu-log-result",
       label: "Log result to console",
-      listener(_dispatch, field: zjson.EncodedField, log: zjson.RootRecord) {
+      listener(_dispatch, field: zjson.EncodedField, log: zjson.Object) {
         console.log(JSON.stringify(log))
         console.log(JSON.stringify(field))
       }

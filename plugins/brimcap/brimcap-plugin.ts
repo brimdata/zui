@@ -169,7 +169,7 @@ export default class BrimcapPlugin {
       // the detail window's packets button will operate off of the 'current' record
       this.api.commands.add("data-detail:current", ([record]) => {
         if (!record) return
-        const data = decode(record)
+        const data = decode(record) as zed.Record
 
         updateButtonStatus(
           "detail",
@@ -276,7 +276,7 @@ export default class BrimcapPlugin {
   private setupLoader() {
     const load = async (
       params: IngestParams & {poolId: string; branch: string},
-      onProgressUpdate: (value: number | null) => void,
+      onProgressUpdate: (value: number) => void,
       onWarning: (warning: string) => void,
       onDetailUpdate: () => void,
       signal?: AbortSignal
@@ -346,16 +346,18 @@ export default class BrimcapPlugin {
       })
 
       // stream analyze output to pool
-      const zealot = this.api.getZealot()
+      const zealot = await this.api.getZealot()
       try {
-        await zealot.pools.load(params.poolId, params.branch, {
-          author: "brim",
-          body: "automatic import with brimcap analyze",
-          data: analyzeP.stdout,
+        await zealot.load(analyzeP.stdout, {
+          pool: params.poolId,
+          branch: params.branch,
+          message: {
+            author: "brim",
+            body: "automatic import with brimcap analyze"
+          },
           signal
         })
       } catch (e) {
-        console.error(e)
         // if load failed because analyze did, report the analyzeErr
         if (analyzeErr) throw errors.pcapIngest(analyzeErr)
         // otherwise report the loadErr
@@ -378,7 +380,6 @@ export default class BrimcapPlugin {
 
       await onDetailUpdate()
       onProgressUpdate(1)
-      onProgressUpdate(null)
     }
 
     this.api.loaders.add({

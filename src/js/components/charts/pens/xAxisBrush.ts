@@ -6,12 +6,10 @@ import {innerHeight, innerWidth} from "../dimens"
 
 type Props = {
   onSelection?: (arg0: DateSpan) => void
-  onSelectionClear?: () => void
-  onSelectionClick?: (arg0: DateSpan) => void
 }
 
 export default function(props: Props = {}): Pen {
-  const {onSelection, onSelectionClear, onSelectionClick} = props
+  const {onSelection} = props
   let brushG
 
   function mount(svg) {
@@ -36,19 +34,11 @@ export default function(props: Props = {}): Pen {
       }
 
       if (!selection) {
-        if (chart.state.selection) onSelectionClear && onSelectionClear()
         return
       }
 
       if (!isEqual(selection, prevSelection)) {
         onSelection && onSelection(selection.map(chart.xScale.invert))
-        return
-      }
-
-      const [start, end] = selection
-      const [x] = d3.mouse(this)
-      if (x >= start && x <= end) {
-        onSelectionClick(selection.map(chart.xScale.invert))
         return
       }
     }

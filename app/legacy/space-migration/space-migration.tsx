@@ -1,4 +1,5 @@
 import * as remote from "@electron/remote"
+import {syncPoolsData} from "app/core/pools/sync-pools-data"
 import {join} from "path"
 import React, {useEffect, useState} from "react"
 import toast from "react-hot-toast"
@@ -12,14 +13,13 @@ import {
   ModalDialog,
   Title
 } from "src/js/components/ModalDialog/ModalDialog"
-import refreshPoolNames from "src/js/flows/refreshPoolNames"
 import deletePool from "src/js/flows/deletePool"
 import ThreeDotsIcon from "src/js/icons/ThreeDotsIcon"
 import {showContextMenu} from "src/js/lib/System"
 import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
-import SpaceMigrator from "./space-migrator"
 import ToolbarButton from "../../toolbar/button"
+import SpaceMigrator from "./space-migrator"
 
 let src
 let dst
@@ -83,7 +83,7 @@ function Modal({onClose}) {
 
     spaces
       .migrate(({total, count, space}) => {
-        dispatch(refreshPoolNames())
+        dispatch(syncPoolsData())
         toast.loading(
           <LoadingToast
             title="Migrating Spaces"

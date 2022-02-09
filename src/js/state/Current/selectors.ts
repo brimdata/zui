@@ -1,6 +1,6 @@
 import {matchPath} from "react-router"
 import {createSelector} from "reselect"
-import brim, {BrimPool, BrimWorkspace} from "../../brim"
+import brim, {BrimLake} from "../../brim"
 import Pools from "../Pools"
 import {PoolsState} from "../Pools/types"
 import Tabs from "../Tabs"
@@ -8,6 +8,7 @@ import {State} from "../types"
 import Lakes from "../Lakes"
 import {LakesState} from "../Lakes/types"
 import {MemoryHistory} from "history"
+import {Pool} from "app/core/pools/pool"
 
 type Id = string | null
 
@@ -44,32 +45,31 @@ export const getWorkspaceId = (state: State = undefined) => {
   return match?.params?.workspaceId || null
 }
 
-export const mustGetWorkspace = createSelector<
-  State,
-  LakesState,
-  Id,
-  BrimWorkspace
->(Lakes.raw, getWorkspaceId, (workspaces, id) => {
-  if (!id) throw new Error("Current lake id is unset")
-  if (!workspaces[id]) throw new Error(`Missing lake id: ${id}`)
+export const mustGetWorkspace = createSelector<State, LakesState, Id, BrimLake>(
+  Lakes.raw,
+  getWorkspaceId,
+  (workspaces, id) => {
+    if (!id) throw new Error("Current lake id is unset")
+    if (!workspaces[id]) throw new Error(`Missing lake id: ${id}`)
 
-  return brim.workspace(workspaces[id])
-})
+    return brim.workspace(workspaces[id])
+  }
+)
 
-export const mustGetPool = createSelector<State, PoolsState, Id, Id, BrimPool>(
+export const mustGetPool = createSelector<State, PoolsState, Id, Id, Pool>(
   Pools.raw,
   getWorkspaceId,
   getPoolId,
-  (pools, workspaceId, poolId) => {
-    if (!workspaceId) throw new Error("Current lake id is unset")
+  (pools, lakeId, poolId) => {
+    if (!lakeId) throw new Error("Current lake id is unset")
     if (!poolId) throw new Error("Current pool id is unset")
-    if (!pools[workspaceId]) {
-      throw new Error(`No pools in lake id: ${workspaceId}`)
+    if (!pools[lakeId]) {
+      throw new Error(`No pools in lake id: ${lakeId}`)
     }
-    if (!pools[workspaceId][poolId])
-      throw new Error(`Missing pool id: ${poolId}`)
+    if (!pools[lakeId][poolId]) throw new Error(`Missing pool id: ${poolId}`)
 
-    return brim.pool(pools[workspaceId][poolId])
+    const {data, stats} = pools[lakeId][poolId]
+    return new Pool(data, stats)
   }
 )
 
@@ -93,5 +93,6 @@ export const getPools = createSelector(getWorkspace, Pools.raw, (ws, pools) => {
   const lakePools = pools[ws.id] || {}
   return Object.keys(lakePools)
     .map((id) => lakePools[id])
+    .map(({data, stats}) => new Pool(data, stats))
     .sort((a, b) => (a.name > b.name ? 1 : -1))
 })

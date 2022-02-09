@@ -1,13 +1,10 @@
-import useLakeId from "app/router/hooks/use-lake-id"
 import {Results} from "app/routes/search/results"
-import useIngestWatch from "app/search/hooks/use-ingest-watch"
 import useColumns from "app/toolbar/hooks/useColumns"
 import useExport from "app/toolbar/hooks/useExport"
 import useView from "app/toolbar/hooks/useView"
 import {Toolbar} from "app/toolbar/toolbar"
 import React, {useLayoutEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import CommitNotification from "src/js/components/CommitNotification"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchHeaderChart from "src/js/components/SearchHeaderChart"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
@@ -21,29 +18,20 @@ import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 function setSearchParamsFromUrl() {
   return function(dispatch, getState) {
     const url = Url.getSearchParams(getState())
-    if (url.keep) {
-      // only update things that can be empty and have defaults
-      if (Url.getSpanParams(getState()).every((time) => !time)) {
-        dispatch(Search.setSpanArgs(url.spanArgs))
-      }
-    } else {
-      dispatch(Search.setSpanArgs(url.spanArgs))
-      dispatch(Search.setSpanFocus(url.spanArgsFocus))
-      dispatch(
-        SearchBarState.restoreSearchBar({
-          current: url.program || "",
-          pinned: url.pins,
-          error: null
-        })
-      )
-    }
+    dispatch(Search.setSpanArgs(url.spanArgs))
+    dispatch(
+      SearchBarState.restoreSearchBar({
+        current: url.program || "",
+        pinned: url.pins,
+        error: null
+      })
+    )
   }
 }
 
 export function InitSearchParams({children}) {
   const dispatch = useDispatch()
   const location = useSelector(Current.getLocation)
-
   useLayoutEffect(() => {
     /**
      * Each time the url changes, we update the ui components to reflect whats in the url,
@@ -55,15 +43,12 @@ export function InitSearchParams({children}) {
 }
 
 export default function SearchHome() {
-  useIngestWatch()
   const dispatch = useDispatch()
   const view = useView()
   const exportAction = useExport()
   const columns = useColumns()
   const pluginButtons = usePluginToolbarItems("search")
-  const poolId = useLakeId()
   const actions = [...pluginButtons, exportAction, columns, view]
-
   return (
     <InitSearchParams>
       <SearchPageHeader>
@@ -72,7 +57,6 @@ export default function SearchHome() {
         <SearchHeaderChart />
       </SearchPageHeader>
       <Results />
-      <CommitNotification key={poolId} />
     </InitSearchParams>
   )
 }

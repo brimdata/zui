@@ -3,7 +3,7 @@ import moment from "moment"
 import {DateTuple} from "../lib/TimeWindow"
 import {Interval} from "../types"
 
-export default function([start, end]: DateTuple): Interval {
+export default function histogramInterval([start, end]: DateTuple): Interval {
   const duration = moment.duration(moment(end).diff(moment(start)))
 
   if (duration.asMinutes() <= 5)

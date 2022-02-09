@@ -1,5 +1,4 @@
 import {ChartActions, ChartState} from "./types"
-import {uniq} from "../../lib/Array"
 
 const init = (): ChartState => ({
   data: {keys: [], table: {}},
@@ -13,7 +12,7 @@ export default function reducer(
 ) {
   switch (action.type) {
     case "CHART_RECORDS":
-      return {...state, data: merge(state.data, action.data)}
+      return {...state, data: action.data}
     case "CHART_STATUS":
       return {...state, status: action.status}
     case "CHART_SET_SEARCH_KEY":
@@ -22,12 +21,5 @@ export default function reducer(
       return init()
     default:
       return state
-  }
-}
-
-function merge(a, b) {
-  return {
-    keys: uniq<string>(a.keys.concat(b.keys)),
-    table: {...a.table, ...b.table}
   }
 }

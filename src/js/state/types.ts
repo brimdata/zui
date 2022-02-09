@@ -1,14 +1,14 @@
 import {Action as ReduxAction, Store as ReduxStore} from "redux"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
-import {createZealot, Zealot} from "zealot-old"
 import BrimApi from "../api"
 import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
 import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
-import {FeatureState} from "./Feature"
 import {HandlersState} from "./Handlers/types"
+import Ingests from "./Ingests"
 import {InvestigationState} from "./Investigation/types"
+import {LakesState} from "./Lakes/types"
 import {LaunchesState} from "./Launches"
 import {ModalState} from "./Modal/types"
 import {NoticeState} from "./Notice/types"
@@ -19,14 +19,10 @@ import {SystemTestState} from "./SystemTest"
 import {TabHistoriesState} from "./TabHistories/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
-import {ViewState} from "./View/types"
-import {LakesState} from "./Lakes/types"
 import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
 
 export type GetState = () => State
 export type ThunkExtraArg = {
-  zealot: Zealot
-  createZealot: typeof createZealot
   dispatch: AppDispatch
   api: BrimApi
 }
@@ -48,7 +44,7 @@ export type State = {
   workspaces: LakesState
   errors: ErrorsState
   pools: PoolsState
-  view: ViewState
+  ingests: ReturnType<typeof Ingests.reducer>
   investigation: InvestigationState
   modal: ModalState
   notice: NoticeState
@@ -58,6 +54,5 @@ export type State = {
   queries: QueriesState
   remoteQueries: QueriesState
   systemTest: SystemTestState
-  feature: FeatureState
   toolbars: ToolbarsState
 }

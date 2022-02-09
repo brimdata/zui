@@ -1,5 +1,4 @@
 import {configureStore} from "@reduxjs/toolkit"
-import {createZealotMock, Zealot} from "zealot-old"
 import BrimApi from "../../../src/js/api"
 import initGlobals from "../../../src/js/initializers/initGlobals"
 import rootReducer from "../../../src/js/state/rootReducer"
@@ -12,24 +11,18 @@ export type TestStore = {
   clearActions: Function
 } & Store
 
-export default (zealot?: Zealot, api: BrimApi = new BrimApi()): TestStore => {
-  const client = zealot || createZealotMock().zealot
-  const createZealot = () => client
+export default (api: BrimApi = new BrimApi()): TestStore => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: {
-          extraArgument: {createZealot, api}
+          extraArgument: {api}
         },
         serializableCheck: false,
         immutableCheck: false
       }),
-    enhancers: (defaultEnhancers) => [
-      applyDispatchAll(),
-      ...defaultEnhancers,
-      applyActionHistory()
-    ]
+    enhancers: (defaultEnhancers) => [applyDispatchAll(), ...defaultEnhancers]
   }) as any
   initGlobals(store)
   return store
@@ -47,33 +40,6 @@ function applyDispatchAll() {
     return {
       ...store,
       dispatchAll
-    }
-  }
-}
-
-function applyActionHistory() {
-  let actions = []
-  return (createStore) => (...args) => {
-    const store = createStore(...args)
-
-    const dispatch = (...args) => {
-      actions.push(args[0])
-      return store.dispatch(...args)
-    }
-
-    const getActions = () => {
-      return actions
-    }
-
-    const clearActions = () => {
-      actions = []
-    }
-
-    return {
-      ...store,
-      dispatch,
-      getActions,
-      clearActions
     }
   }
 }

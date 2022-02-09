@@ -18,13 +18,13 @@ const workspace: Lake = {
 test("addWorkspace", () => {
   const state = store.dispatchAll([Lakes.add(workspace)])
 
-  expect(Lakes.id("123")(state)).toEqual(workspace)
+  expect(Lakes.id("123")(state).id).toEqual("123")
 })
 
 test("addWorkspace when it already exists", () => {
   const state = store.dispatchAll([Lakes.add(workspace), Lakes.add(workspace)])
 
-  expect(Lakes.all(state)).toEqual([workspace])
+  expect(Lakes.all(state).map((l) => l.id)).toEqual([workspace.id])
 })
 
 test("removeCluster", () => {

@@ -7,7 +7,7 @@ import sendTo from "../ipc/sendTo"
 import {NewTabSearchParams} from "../ipc/windows/messages"
 import {dimensFromSizePosition, stack} from "../window/dimens"
 import {SearchWindow} from "../window/SearchWindow"
-import {SessionState} from "./formatSessionState"
+import {SessionState} from "./session-state"
 import tron from "./index"
 import {WindowParams} from "./window"
 

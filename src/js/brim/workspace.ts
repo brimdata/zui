@@ -1,8 +1,8 @@
 import {Lake} from "../state/Lakes/types"
 
-export default function workspace(ws: Lake) {
+export default function lake(lake: Lake) {
   return {
-    ...ws,
+    ...lake,
     getAddress(): string {
       return this.port ? [this.host, this.port].join(":") : this.host
     },

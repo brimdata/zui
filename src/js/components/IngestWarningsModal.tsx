@@ -1,8 +1,8 @@
-import {useDispatch, useSelector} from "react-redux"
 import React from "react"
-
+import {useDispatch, useSelector} from "react-redux"
+import ToolbarButton from "../../../app/toolbar/button"
 import Current from "../state/Current"
-import Pools from "../state/Pools"
+import Ingests from "../state/Ingests"
 import useEnterKey from "./hooks/useEnterKey"
 import {
   ButtonGroup,
@@ -12,15 +12,15 @@ import {
   Scrollable,
   Title
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "../../../app/toolbar/button"
 
 export default function IngestWarningsModal({onClose}) {
   const dispatch = useDispatch()
   useEnterKey(onClose)
-  const id = useSelector(Current.getWorkspaceId)
   const poolId = useSelector(Current.getPoolId)
-  const warnings = useSelector(Pools.getIngestWarnings(id, poolId))
-  const onClear = () => dispatch(Pools.clearIngestWarnings(id, poolId))
+  const ingest = useSelector(Ingests.get(poolId))
+  if (!ingest) return null
+  const warnings = ingest.warnings
+  const onClear = () => dispatch(Ingests.remove(poolId))
 
   return (
     <Content width={800}>

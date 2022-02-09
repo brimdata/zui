@@ -1,11 +1,10 @@
 import {FormatConfig, getFormatConfig} from "app/core/format"
 import {createSelector} from "reselect"
-import {zed} from "@brimdata/zealot"
+import {TypeDefs, zed} from "@brimdata/zealot"
 import TableColumns from "../../models/TableColumns"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"
 import Viewer from "../Viewer"
-import {SchemaMap} from "../Viewer/types"
 import {createColumnSet} from "./models/columnSet"
 import {ColumnsState} from "./types"
 
@@ -13,7 +12,7 @@ const getColumns = activeTabSelect<ColumnsState>((tab) => tab.columns)
 
 const getCurrentTableColumns = createSelector<
   State,
-  SchemaMap,
+  TypeDefs,
   ColumnsState,
   zed.Record[],
   FormatConfig,

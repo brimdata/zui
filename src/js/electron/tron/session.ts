@@ -2,8 +2,8 @@ import log from "electron-log"
 import {get} from "lodash"
 import lib from "../../lib"
 import {isNumber} from "../../lib/is"
-import {SessionState} from "./formatSessionState"
 import {Migrations} from "./migrations"
+import {SessionState} from "./session-state"
 
 export default function session(path) {
   let version = 0

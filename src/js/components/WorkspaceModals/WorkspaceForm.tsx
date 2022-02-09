@@ -3,7 +3,7 @@ import {isEmpty} from "lodash"
 import React, {useEffect, useRef, useState} from "react"
 import {useDispatch} from "react-redux"
 import styled from "styled-components"
-import brim, {BrimWorkspace} from "../../brim"
+import brim, {BrimLake} from "../../brim"
 import {FormConfig} from "../../brim/form"
 import {buildAndAuthenticateWorkspace} from "../../flows/workspace/buildAndAuthenticateWorkspace"
 import {isDefaultWorkspace} from "../../initializers/initWorkspaceParams"
@@ -76,7 +76,7 @@ const StyledTextInput = styled(TextInput)`
 `
 
 type Props = {
-  workspace?: BrimWorkspace
+  workspace?: BrimLake
   onClose: () => void
 }
 

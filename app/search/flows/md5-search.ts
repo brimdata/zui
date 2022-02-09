@@ -1,4 +1,5 @@
-import {BrimSearch, search} from "src/js/flows/search/mod"
+import {ResultStream} from "@brimdata/zealot"
+import {search} from "src/js/flows/search/mod"
 import {parallelizeProcs} from "src/js/lib/Program"
 import {
   filenameCorrelation,
@@ -12,7 +13,7 @@ import {Thunk} from "src/js/state/types"
 
 const id = "Md5"
 
-export const md5Search = (md5: string): Thunk<BrimSearch> => (
+export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => (
   dispatch,
   getState
 ) => {

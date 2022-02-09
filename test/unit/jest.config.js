@@ -13,7 +13,7 @@ module.exports = {
   testURL: "http://localhost/search.html",
   roots: ["<rootDir>/test/shared", "<rootDir>"],
   globalSetup: "./test/unit/setup/global.ts",
-  transformIgnorePatterns: ["node_modules"],
+  transformIgnorePatterns: ["node_modules", "packages"],
   moduleDirectories: ["node_modules", "<rootDir>"],
   testPathIgnorePatterns: [
     "/node_modules/",
@@ -21,6 +21,7 @@ module.exports = {
     "/dist/",
     "/test/system/",
     "<rootDir>/test/api/",
-    "<rootDir>/test/playwright/"
+    "<rootDir>/test/playwright/",
+    "/packages/"
   ]
 }

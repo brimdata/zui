@@ -1,19 +1,18 @@
+import {releaseNotesPath} from "app/router/utils/paths"
 import {ipcRenderer} from "electron"
-
-import {AppDispatch, Store} from "../state/types"
+import confirmUnload from "../flows/confirmUnload"
+import deletePartialPools from "../flows/deletePartialPools"
+import Appearance from "../state/Appearance"
+import Current from "../state/Current"
+import {getPersistedState} from "../state/getPersistable"
 import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
-import Tabs from "../state/Tabs"
-import initNewSearchTab from "./initNewSearchTab"
-import confirmUnload from "../flows/confirmUnload"
-import deletePartialPools from "../flows/deletePartialPools"
-import {getWindowPersistable} from "../state/getPersistable"
 import TabHistories from "../state/TabHistories"
+import Tabs from "../state/Tabs"
+import {AppDispatch, Store} from "../state/types"
+import initNewSearchTab from "./initNewSearchTab"
 import PluginManager from "./pluginManager"
-import Current from "../state/Current"
-import {releaseNotesPath} from "app/router/utils/paths"
-import Appearance from "../state/Appearance"
 
 export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
@@ -59,7 +58,7 @@ export default (store: Store, pluginManager: PluginManager) => {
   })
 
   ipcRenderer.on("getState", (event, channel) => {
-    ipcRenderer.send(channel, getWindowPersistable(store.getState()))
+    ipcRenderer.send(channel, getPersistedState(store.getState()))
   })
 
   ipcRenderer.on("showPreferences", () => {

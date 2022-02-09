@@ -15,7 +15,7 @@ export default function PoolModal() {
   const args = useSelector(Modal.getArgs) || {}
   const {workspaceId, poolId} = args
   const pool = useSelector(Pools.get(workspaceId, poolId))
-  const {name} = pool || {name: ""}
+  const name = (pool && pool.name) || ""
   const [nameInput, setNameInput] = useState(name)
   const [error, setError] = useState(null)
   const dispatch = useDispatch<AppDispatch>()
@@ -30,11 +30,15 @@ export default function PoolModal() {
       dispatch(Modal.hide())
       return
     }
-    dispatch(renamePool(workspaceId, poolId, nameInput))
+    const prom = dispatch(renamePool(poolId, nameInput))
+    console.log(prom)
+    prom
       .then(() => {
         dispatch(Modal.hide())
+        return
       })
       .catch((e) => {
+        console.log(e)
         setError(e.error)
       })
   }

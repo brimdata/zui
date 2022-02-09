@@ -1,10 +1,9 @@
 import getPoolContextMenu from "app/pools/flows/get-pool-context-menu"
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory} from "react-router"
 import {currentPoolItem, poolItem} from "test/playwright/helpers/locators"
-import brim from "src/js/brim"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
@@ -14,6 +13,9 @@ import Icon from "app/core/Icon"
 import classNames from "classnames"
 import {showContextMenu} from "src/js/lib/System"
 import {MenuItemConstructorOptions} from "electron"
+import {Pool} from "app/core/pools/pool"
+import Ingests from "src/js/state/Ingests"
+import {isNumber} from "lodash"
 
 const PoolIcon = styled(Icon).attrs({name: "pool"})``
 
@@ -45,13 +47,14 @@ const StyledPoolItem = styled(StyledItem)<{isSelected: boolean}>`
   }
 `
 
-const PoolItem = ({innerRef, styles, data: pool, state, handlers}) => {
+const PoolItem = ({innerRef, styles, data, state, handlers}) => {
+  const pool = data as Pool
   const dispatch = useDispatch<AppDispatch>()
   const workspaceId = useSelector(Current.getWorkspaceId)
   const currentPoolId = useSelector(Current.getPoolId)
+  const ingest = useSelector(Ingests.get(currentPoolId))
   const history = useHistory()
   const {isEditing} = state
-  const p = brim.pool(pool)
   const ctxMenu: MenuItemConstructorOptions[] = [
     {
       label: "Rename",
@@ -59,24 +62,24 @@ const PoolItem = ({innerRef, styles, data: pool, state, handlers}) => {
         handlers.edit()
       }
     },
-    ...dispatch(getPoolContextMenu(p))
+    ...dispatch(getPoolContextMenu(pool))
   ]
 
   const onClick = (e) => {
     e.preventDefault()
     history.push(
-      lakeSearchPath(p.id, workspaceId, {
-        spanArgs: p.empty() ? undefined : p.defaultSpanArgs()
+      poolSearchPath(pool.id, workspaceId, {
+        spanArgs: pool.empty() ? undefined : pool.defaultSpanArgs()
       })
     )
   }
 
-  const progress = p.ingesting() && (
+  const progress = ingest && isNumber(ingest.progress) && (
     <div className="small-progress-bar">
-      <ProgressIndicator percent={p.ingestProgress()} />
+      <ProgressIndicator percent={ingest.progress} />
     </div>
   )
-  const isCurrent = p.id === currentPoolId
+  const isCurrent = pool.id === currentPoolId
   const testProps = isCurrent ? currentPoolItem.props : poolItem.props
 
   return (

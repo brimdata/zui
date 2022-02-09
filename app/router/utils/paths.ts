@@ -20,12 +20,12 @@ export function lakePath(id: string, workspaceId: string) {
 }
 
 type Params = Partial<DecodedSearchParams>
-export function lakeSearchPath(
+export function poolSearchPath(
   id: string,
-  workspaceId: string,
+  lakeId: string,
   params: Params = {}
 ) {
-  return `${lakePath(id, workspaceId)}/search?${encodeSearchParams(params)}`
+  return `${lakePath(id, lakeId)}/search?${encodeSearchParams(params)}`
 }
 
 export function releaseNotesPath(workspaceId) {

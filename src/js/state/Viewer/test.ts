@@ -1,5 +1,4 @@
 import {createRecord} from "test/shared/factories/zed-factory"
-import {zed} from "@brimdata/zealot"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
@@ -15,7 +14,6 @@ beforeEach(() => {
 const conn = createRecord({ts: new Date(1000)})
 const dns = createRecord({ts: new Date(2000)})
 const http = createRecord({ts: new Date(3000)})
-const type = new zed.TypeRecord([{name: "a", type: zed.TypeString}])
 
 test("adding logs to the viewer", () => {
   const state = store.dispatchAll([
@@ -68,22 +66,4 @@ test("results limited", () => {
   const state = store.dispatchAll([Viewer.setEndStatus(tabId, "LIMIT")])
 
   expect(Viewer.getEndStatus(state)).toBe("LIMIT")
-})
-
-test("update columns with same tds", () => {
-  const cols1 = {
-    "9d14c2039a78d76760aae879c7fd2c82": new zed.Schema("1", type)
-  }
-  const cols2 = {
-    "71f1b421963d31952e15edf7e3957a81": new zed.Schema("1", type)
-  }
-  const state = store.dispatchAll([
-    Viewer.updateColumns(tabId, cols1),
-    Viewer.updateColumns(tabId, cols2)
-  ])
-
-  expect(Viewer.getShapes(state)).toEqual({
-    "9d14c2039a78d76760aae879c7fd2c82": new zed.Schema("1", type),
-    "71f1b421963d31952e15edf7e3957a81": new zed.Schema("1", type)
-  })
 })

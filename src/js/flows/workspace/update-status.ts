@@ -1,8 +1,9 @@
+import {Client} from "@brimdata/zealot"
+import {syncPoolsData} from "app/core/pools/sync-pools-data"
 import {validateToken} from "../../auth0/utils"
 import brim from "../../brim"
 import Lakes from "../../state/Lakes"
 import WorkspaceStatuses from "../../state/WorkspaceStatuses"
-import refreshPoolNames from "../refreshPoolNames"
 import {getAuthCredentials} from "./getAuthCredentials"
 
 /**
@@ -11,14 +12,13 @@ import {getAuthCredentials} from "./getAuthCredentials"
  */
 export const updateStatus = (workspaceId: string) => async (
   dispatch,
-  getState,
-  {createZealot}
+  getState
 ): Promise<void> => {
   const ws = brim.workspace(Lakes.id(workspaceId)(getState()))
-  const zealot = createZealot(ws.getAddress())
+  const zealot = new Client(ws.getAddress())
 
   const activate = async () => {
-    await dispatch(refreshPoolNames())
+    await dispatch(syncPoolsData())
     dispatch(WorkspaceStatuses.set(ws.id, "connected"))
   }
 

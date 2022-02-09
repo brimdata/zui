@@ -1,13 +1,13 @@
+import {Pool} from "app/core/pools/pool"
 import {MenuItemConstructorOptions} from "electron/main"
 import toast from "react-hot-toast"
-import {BrimPool} from "src/js/brim"
 import deletePool from "src/js/flows/deletePool"
 import deletePools from "src/js/flows/deletePools"
 import {showMessageBox} from "src/js/lib/System"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 
-const getPoolContextMenu = (pool: BrimPool) => (dispatch, getState) => {
+const getPoolContextMenu = (pool: Pool) => (dispatch, getState) => {
   const workspaceId = Current.getWorkspaceId(getState())
   const poolIds = Pools.ids(workspaceId)(getState())
   return [

@@ -7,8 +7,8 @@ export type LogDetailsState = {
 }
 
 export type LogDetails = {
-  log: zjson.RootRecord
-  uidLogs: zjson.RootRecord[]
+  log: zjson.Object
+  uidLogs: zjson.Object[]
   uidStatus: SearchStatus
 }
 
@@ -21,7 +21,7 @@ export type LogDetailsAction =
 
 export type LOG_DETAIL_PUSH = {
   type: "LOG_DETAIL_PUSH"
-  record: zjson.RootRecord
+  record: zjson.Object
 }
 
 export type LOG_DETAIL_UPDATE = {

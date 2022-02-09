@@ -1,3 +1,4 @@
+import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only"
 import {
   _electron as electron,
   ElectronApplication,
@@ -10,17 +11,17 @@ import path from "path"
 import {itestDir} from "./env"
 import env from "../../../app/core/env"
 import {existsSync} from "fs"
-import {createZealot, Zealot} from "../../../zealot-old"
+import {Client} from "@brimdata/zealot"
 
 export default class TestApp {
   brim: ElectronApplication
-  zealot: Zealot
+  zealot: Client
   mainWin: Page
   testNdx = 1
   currentDataDir: string
 
   constructor(private name: string) {
-    this.zealot = createZealot("http://localhost:9867")
+    this.zealot = new Client("http://localhost:9867")
   }
 
   async init() {

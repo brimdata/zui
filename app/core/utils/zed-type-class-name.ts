@@ -11,10 +11,12 @@ export function zedTypeClassName(data: zed.Value | zed.Type) {
 
   if (data instanceof zed.Primitive) {
     const concrete = zed.trueType(data.type)
-    if (concrete !== data.type && "name" in concrete) {
-      return `zed-${data.type.name} zed-${concrete.name}`
-    } else {
-      return `zed-${data.type.name}`
+    const classes = []
+    if (concrete !== data.type && concrete instanceof zed.TypeAlias) {
+      classes.push(`zed-${concrete.name}`)
+    } else if (zed.isPrimitiveType(data.type)) {
+      classes.push(`zed-${data.type.name}`)
     }
+    return classes.join(" ")
   }
 }

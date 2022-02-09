@@ -1,30 +1,18 @@
+import {Pool} from "app/core/pools/pool"
+import {intersection} from "lodash"
+import Current from "src/js/state/Current"
+import Pools from "src/js/state/Pools"
+import RemoteQueries from "src/js/state/RemoteQueries"
 import {Thunk} from "src/js/state/types"
+import {Readable} from "stream"
+import {BrimLake} from "../../brim"
 import {getZealot} from "../../flows/getZealot"
 import {Query} from "../../state/Queries/types"
-import {zed} from "@brimdata/zealot"
-import Pools from "src/js/state/Pools"
-import Current from "src/js/state/Current"
-import {Readable} from "stream"
-import RemoteQueries from "src/js/state/RemoteQueries"
-import {intersection} from "lodash"
-import {Pool} from "src/js/state/Pools/types"
-import {BrimWorkspace} from "../../brim"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
-const recordToQuery = (r: zed.Record): Query => {
-  const id = r.get<zed.String>("id").toString()
-  const name = r.get<zed.String>("name").toString()
-  const description = r.get<zed.String>("description").toString()
-  const value = r.get<zed.String>("value").toString()
-
-  return {
-    description,
-    id,
-    name,
-    tags: [],
-    value
-  }
+const recordToQuery = (r: Query): Query => {
+  return {...r, tags: []}
 }
 
 export const isRemoteLib = (ids: string[]) => (_, getState) => {
@@ -38,11 +26,9 @@ export const getRemotePoolForLake = (lakeId: string): Thunk<Pool> => {
   }
 }
 
-export const refreshRemoteQueries = (
-  lake?: BrimWorkspace
-): Thunk<Promise<void>> => {
+export const refreshRemoteQueries = (lake?: BrimLake): Thunk<Promise<void>> => {
   return async (dispatch) => {
-    const zealot = dispatch(getZealot(lake))
+    const zealot = await dispatch(getZealot(lake))
     try {
       const queryReq = await zealot.query(
         `from '${remoteQueriesPoolName}'
@@ -54,7 +40,7 @@ export const refreshRemoteQueries = (
         | tombstone==false
         | cut name, value, description, id`
       )
-      const remoteRecords = await queryReq.records()
+      const remoteRecords = (await queryReq.js()) as Query[]
       dispatch(RemoteQueries.set(remoteRecords.map<Query>(recordToQuery)))
     } catch (e) {
       if (/pool not found/.test(e.message)) {
@@ -77,27 +63,28 @@ export const setRemoteQueries = (
   shouldDelete?: boolean
 ): Thunk<Promise<void>> => {
   return async (dispatch, getState) => {
-    const zealot = dispatch(getZealot())
+    const zealot = await dispatch(getZealot())
     let rqPoolId = Pools.getByName(
       Current.getWorkspaceId(getState()),
       remoteQueriesPoolName
     )(getState())?.id
     if (!rqPoolId) {
       // create remote-queries pool if it doesn't already exist
-      const createResp = await zealot.pools.create({
-        name: remoteQueriesPoolName
-      })
+      const createResp = await zealot.createPool(remoteQueriesPoolName)
       rqPoolId = createResp.pool.id
     }
 
     try {
       const data = new Readable()
-      const loadPromise = zealot.pools.load(rqPoolId, "main", {
-        author: "brim",
-        body:
-          "automatic remote query load for id(s): " +
-          queries.map((q) => q.id).join(", "),
-        data
+      const loadPromise = zealot.load(data, {
+        pool: rqPoolId,
+        branch: "main",
+        message: {
+          author: "brim",
+          body:
+            "automatic remote query load for id(s): " +
+            queries.map((q) => q.id).join(", ")
+        }
       })
       queriesToRemoteQueries(queries, shouldDelete).forEach((d) =>
         data.push(JSON.stringify(d))

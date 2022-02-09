@@ -30,10 +30,7 @@ function compileTitle(route, location, workspaces, pools) {
   let title = route.title
   const {workspaceId, lakeId} = route.match.params
   if (workspaceId) {
-    title = title.replace(
-      "<workspace>",
-      get(workspaces, [workspaceId, "name"], "")
-    )
+    title = title.replace("<lake>", get(workspaces, [workspaceId, "name"], ""))
     if (lakeId) {
       title = title.replace(
         "<lake>",

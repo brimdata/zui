@@ -1,4 +1,5 @@
 import {zed} from "@brimdata/zealot"
+import {TypeDefs} from "packages/zealot/src/query/channel"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 import {
@@ -19,7 +20,6 @@ import {
   VIEWER_SET_RECORDS,
   VIEWER_SPLICE,
   VIEWER_STATUS,
-  SchemaMap,
   ViewerStatus,
   VIEWER_SET_SEARCH_KEY
 } from "./types"
@@ -48,21 +48,21 @@ export const setEndStatus = (
 
 export const appendRecords = (
   tabId: string | null | undefined,
-  records: zed.Record[]
+  records: zed.Value[]
 ): VIEWER_RECORDS => {
   return {type: "VIEWER_RECORDS", records, tabId}
 }
 
 export const setRecords = (
   tabId: string | undefined,
-  records: zed.Record[]
+  records: zed.Value[]
 ): VIEWER_SET_RECORDS => {
   return {type: "VIEWER_SET_RECORDS", records, tabId}
 }
 
 export const updateColumns = (
   tabId: string,
-  columns: SchemaMap
+  columns: TypeDefs
 ): VIEWER_COLUMNS => {
   return {
     type: "VIEWER_COLUMNS",
@@ -73,7 +73,7 @@ export const updateColumns = (
 
 export const setColumns = (
   tabId: string,
-  columns: SchemaMap
+  columns: TypeDefs
 ): VIEWER_SET_COLUMNS => {
   return {
     type: "VIEWER_SET_COLUMNS",

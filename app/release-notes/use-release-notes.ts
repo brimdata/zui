@@ -1,5 +1,6 @@
 import {metaClient} from "app/ipc/meta"
 import {useEffect, useState} from "react"
+import fetch from "cross-fetch"
 
 async function fetchNotes(version) {
   const repo = await metaClient.repo()

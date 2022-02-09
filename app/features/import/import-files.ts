@@ -1,10 +1,14 @@
+import {Client} from "@brimdata/zealot"
+import {createPool} from "app/core/pools/create-pool"
+import {syncPool} from "app/core/pools/sync-pool"
 import {lakePath, workspacePath} from "app/router/utils/paths"
-import {Zealot} from "../../../zealot-old"
+import Ingests from "src/js/state/Ingests"
+import Url from "src/js/state/Url"
 import BrimApi from "../../../src/js/api"
 import brim from "../../../src/js/brim"
 import ingest from "../../../src/js/brim/ingest"
 import {IngestParams} from "../../../src/js/brim/ingest/getParams"
-import interop from "../../../src/js/brim/interop"
+import {getZealot} from "../../../src/js/flows/getZealot"
 import lib from "../../../src/js/lib"
 import Current from "../../../src/js/state/Current"
 import Handlers from "../../../src/js/state/Handlers"
@@ -13,17 +17,15 @@ import Pools from "../../../src/js/state/Pools"
 import SystemTest from "../../../src/js/state/SystemTest"
 import Tabs from "../../../src/js/state/Tabs"
 import {Dispatch, Thunk} from "../../../src/js/state/types"
-import {getZealot} from "../../../src/js/flows/getZealot"
-import Url from "src/js/state/Url"
 
-export default (files: File[]): Thunk<Promise<void>> => (
+export default (files: File[]): Thunk<Promise<void>> => async (
   dispatch,
   getState,
   {api}
 ) => {
   const ws = Current.mustGetWorkspace(getState())
   const workspaceId = ws.id
-  const zealot = dispatch(getZealot())
+  const zealot = await dispatch(getZealot())
   const tabId = Tabs.getActive(getState())
   const requestId = brim.randomHash()
   const poolNames = Pools.getPoolNames(workspaceId)(getState())
@@ -32,11 +34,11 @@ export default (files: File[]): Thunk<Promise<void>> => (
   return lib
     .transaction([
       validateInput(files, poolNames),
-      createPool(zealot, dispatch, workspaceId),
+      newPool(zealot, dispatch, workspaceId),
+      registerIngest(dispatch, requestId),
       setPool(dispatch, tabId, workspaceId),
-      registerHandler(dispatch, requestId),
       executeLoader(zealot, dispatch, workspaceId, api, requestId),
-      unregisterHandler(dispatch, requestId)
+      unregisterIngest(dispatch, requestId)
     ])
     .then(() => {
       dispatch(SystemTest.hook("import-complete"))
@@ -60,62 +62,54 @@ const validateInput = (files: File[], poolNames) => ({
   }
 })
 
-const createPool = (client: Zealot, gDispatch, workspaceId) => ({
+const newPool = (client: Client, dispatch, lakeId) => ({
   async do(params: IngestParams) {
-    const {pool, branch} = await client.pools.create({name: params.name})
-    gDispatch(
-      Pools.setDetail(workspaceId, {
-        ...pool,
-        ingest: {progress: 0, warnings: []}
-      })
-    )
-    return {...params, poolId: pool.id, branch: branch.name}
+    const id = await dispatch(createPool({name: params.name}))
+    return {...params, poolId: id, branch: "main"}
   },
   async undo({poolId}: IngestParams & {poolId: string}) {
-    await client.pools.delete(poolId)
-    gDispatch(Pools.remove(workspaceId, poolId))
+    await client.deletePool(poolId)
+    dispatch(Pools.remove({lakeId, poolId}))
   }
 })
 
-const registerHandler = (dispatch, id) => ({
+const registerIngest = (dispatch, id) => ({
   do({poolId}: IngestParams & {poolId: string}) {
     const handle: Handler = {type: "INGEST", poolId}
     dispatch(Handlers.register(id, handle))
+    dispatch(Ingests.create(poolId))
   },
-  undo() {
+  undo({poolId}) {
     dispatch(Handlers.remove(id))
+    dispatch(Ingests.remove(poolId))
   }
 })
 
-const unregisterHandler = (dispatch, id) => ({
-  do() {
+const unregisterIngest = (dispatch, id) => ({
+  do({poolId}) {
     dispatch(Handlers.remove(id))
+    dispatch(Ingests.remove(poolId))
   }
 })
 
 const executeLoader = (
-  client: Zealot,
+  client: Client,
   dispatch: Dispatch,
-  workspaceId: string,
+  lakeId: string,
   api: BrimApi,
   handlerId: string
 ) => ({
   async do(params: IngestParams & {poolId: string; branch: string}) {
     const {poolId, fileListData = []} = params
 
-    const space = Pools.actionsFor(workspaceId, poolId)
-
-    const onProgressUpdate = (value: number | null): void => {
-      dispatch(space.setIngestProgress(value))
+    const onProgressUpdate = (progress: number): void => {
+      dispatch(Ingests.setProgress({poolId, progress}))
     }
     const onDetailUpdate = async (): Promise<void> => {
-      const stats = interop.poolStatsPayloadToPool(
-        await client.pools.stats(poolId)
-      )
-      dispatch(Pools.setDetail(workspaceId, {id: poolId, ...stats}))
+      dispatch(syncPool(poolId, lakeId))
     }
     const onWarning = (warning: string): void => {
-      dispatch(space.appendIngestWarning(warning))
+      dispatch(Ingests.addWarning({poolId, warning}))
     }
 
     // for now, to find a loader match we will assume all files are the same
@@ -144,6 +138,15 @@ const executeLoader = (
         onDetailUpdate,
         abortCtl.signal
       )
+      // Wait for the pool to have some data before we signal that
+      // the ingest is done.
+      let tries = 0
+      while (tries < 20) {
+        tries++
+        const pool = await dispatch(syncPool(poolId))
+        if (pool.hasStats() && pool.size > 0) break
+        await new Promise((r) => setTimeout(r, 300))
+      }
     } catch (e) {
       l.unload && (await l.unload(params))
       throw e

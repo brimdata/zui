@@ -1,5 +1,5 @@
 import tabHistory from "app/router/tab-history"
-import {lakeSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "app/router/utils/paths"
 import brim from "src/js/brim"
 import Investigation from "src/js/state/Investigation"
 import Current from "../../state/Current"
@@ -17,7 +17,6 @@ export function submitSearch(
   return function(dispatch, getState) {
     dispatch(Notice.dismiss())
     const record = Search.getRecord(getState())
-    const spanArgsFocus = Tab.getSpanFocus(getState())
     const workspaceId = Current.getWorkspaceId(getState())
     const poolId = Current.getPoolId(getState())
 
@@ -25,8 +24,7 @@ export function submitSearch(
 
     if (!dispatch(SearchBar.validate())) return
 
-    const url = lakeSearchPath(poolId, workspaceId, {...record, spanArgsFocus})
-
+    const url = poolSearchPath(poolId, workspaceId, {...record})
     if (save.investigation) {
       dispatch(
         Investigation.push(workspaceId, poolId, record, brim.time(ts).toTs())
