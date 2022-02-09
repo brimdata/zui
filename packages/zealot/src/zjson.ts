@@ -121,7 +121,15 @@ export type QueryStats = {
   }
 }
 
+export type QueryError = {
+  type: "QueryError"
+  value: {
+    error: string
+  }
+}
+
 export type QueryObject =
+  | QueryError
   | QueryChannelSet
   | QueryChannelEnd
   | QueryStats
