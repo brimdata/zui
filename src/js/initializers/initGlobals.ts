@@ -8,7 +8,10 @@ import tabHistory from "app/router/tab-history"
 import {ipcRenderer} from "electron"
 
 export default async function initGlobals(store: Store) {
-  global.windowId = getUrlSearchParams().id
+  const id = getUrlSearchParams().id
+  if (id) {
+    global.windowId = id
+  }
   global.windowName = getWindowName()
   global.tabHistories = new Histories(TabHistories.selectAll(store.getState()))
   global.windowHistory = createMemoryHistory()

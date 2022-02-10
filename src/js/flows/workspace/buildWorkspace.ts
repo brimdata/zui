@@ -21,9 +21,8 @@ export const buildWorkspace = (
   // first time connection, need to determine auth type and set authData accordingly
   if (isEmpty(workspace.authType)) {
     const resp = await zealot.authMethod()
-    const authMethod = resp?.value
-    if (authMethod.kind === "auth0") {
-      const {client_id: clientId, domain} = authMethod.auth0
+    if (resp.kind === "auth0") {
+      const {client_id: clientId, domain} = resp.auth0
       workspace.authType = "auth0"
       workspace.authData = {
         clientId,

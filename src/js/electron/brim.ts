@@ -13,8 +13,6 @@ import createGlobalStore from "../state/createGlobalStore"
 import {getPersistedState} from "../state/getPersistable"
 import Lakes from "../state/Lakes"
 import {installExtensions} from "./extensions"
-import ipc from "./ipc"
-import sendTo from "./ipc/sendTo"
 import isDev from "./isDev"
 import {MainArgs, mainDefaults} from "./main"
 import tron, {Session} from "./tron"
@@ -96,16 +94,24 @@ export class BrimMain {
     }
   }
 
-  openUrl(uri) {
+  openUrl(uri: string) {
     const urlParts = url.parse(uri, true)
-    const code = urlParts.query.code as string
-    const state = urlParts.query.state as string
+    const {code, state, error, error_description} = urlParts.query as {
+      [key: string]: string
+    }
     const {workspaceId, windowId} = deserializeState(state)
     const win = this.windows.getWindow(windowId)
-
-    win.ref.focus()
-
-    sendTo(win.ref.webContents, ipc.windows.authCallback(workspaceId, code))
+    if (!win) {
+      console.error("No Window Found")
+    } else {
+      win.ref.focus()
+      win.ref.webContents.send("windows:authCallback", {
+        code,
+        workspaceId,
+        error,
+        errorDesc: error_description
+      })
+    }
   }
 
   isDev() {
