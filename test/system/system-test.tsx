@@ -99,14 +99,9 @@ export class SystemTest {
     opts = {...defaults(), ...opts}
 
     beforeAll(async () => {
-      // @ts-ignore
-      // github.com/prisma/prisma/issues/8558 very wierd
-      // msw uses setImmediate, but jest doesn't support it in this version
-      global.setImmediate = setTimeout
       this.network.listen({
         onUnhandledRequest: (req) => {
-          // Allow requests to a localhost server
-          if (req.url.host.startsWith("localhost:")) return
+          if (req.url.host.startsWith("localhost:")) return // Allow requests to a localhost server
           throw new Error(
             `Unhandled External Request: ${req.method} ${req.url.href}`
           )
