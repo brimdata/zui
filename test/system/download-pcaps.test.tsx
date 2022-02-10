@@ -1,3 +1,4 @@
+import React from "react"
 import {screen, waitFor, within} from "@testing-library/react"
 import {app} from "electron"
 import {readFileSync} from "fs"
@@ -6,11 +7,12 @@ import md5 from "md5"
 import path from "path"
 import open from "src/js/lib/open"
 import {SystemTest} from "./system-test"
+import App from "src/js/components/App"
 
 const system = new SystemTest("download-pcaps")
 
 beforeAll(async () => {
-  system.mountApp()
+  system.render(<App />)
   // This takes a while because it starts up zeek and suricata
   await system.importFile("sample.pcap")
 })

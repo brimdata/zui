@@ -1,16 +1,18 @@
+import React from "react"
 import {screen, waitForElementToBeRemoved, within} from "@testing-library/react"
 import fsExtra from "fs-extra"
 import os from "os"
 import path from "path"
 import {act} from "react-dom/test-utils"
 import {SystemTest} from "test/system/system-test"
+import App from "src/js/components/App"
 
 const filePath = path.join(os.tmpdir(), "results.zng")
 
 const system = new SystemTest("export-results")
 
 beforeAll(async () => {
-  system.mountApp()
+  system.render(<App />)
   await system.importFile("sample.tsv")
   await system.runQuery("")
 })
