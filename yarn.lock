@@ -5268,7 +5268,7 @@ __metadata:
     tee-1: ^0.2.0
     tmp: ^0.1.0
     tree-model: ^1.0.7
-    typescript: ^4.0.2
+    typescript: ^4.1.0
     use-resize-observer: ^8.0.0
     valid-url: ^1.0.9
     web-file-polyfill: ^1.0.4
@@ -17798,17 +17798,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.0.2":
-  version: 4.0.2
-  resolution: "typescript@npm:4.0.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 6cf7028c276551d86682bd5c484dbcbe97c129134ce0721fd33631c8866de578b45fdef77742d5fe0e783dc9de548e4502676afcbf266b895353dd7c0cf16f1d
-  languageName: node
-  linkType: hard
-
-"typescript@npm:^4.4.4":
+"typescript@npm:^4.1.0, typescript@npm:^4.4.4":
   version: 4.5.5
   resolution: "typescript@npm:4.5.5"
   bin:
@@ -17828,17 +17818,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.0.2#~builtin<compat/typescript>":
-  version: 4.0.2
-  resolution: "typescript@patch:typescript@npm%3A4.0.2#~builtin<compat/typescript>::version=4.0.2&hash=493e53"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: b5d4ab564a427541d01c9da37d1ce46d401f21209432c24daaa33b9d82811c1928d64e0b16ae0f9c6cde67be3eed8ab9a214aab63e1f0643684313487d9a6b11
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@^4.4.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.1.0#~builtin<compat/typescript>, typescript@patch:typescript@^4.4.4#~builtin<compat/typescript>":
   version: 4.5.5
   resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"
   bin:
