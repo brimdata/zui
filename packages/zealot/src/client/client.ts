@@ -58,7 +58,8 @@ export class Client {
       method: "POST",
       body: data,
       headers,
-      signal: opts.signal
+      signal: opts.signal,
+      fetch: nodeFetch
     })
     return toJS(res)
   }
