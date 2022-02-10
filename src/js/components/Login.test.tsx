@@ -10,6 +10,7 @@ import brim from "../brim"
 import {defaultWorkspace} from "../initializers/initWorkspaceParams"
 import Login from "./Login"
 import {rest} from "msw"
+import WorkspaceStatuses from "../state/WorkspaceStatuses"
 
 const system = new SystemTest("Login.test.ts")
 
@@ -42,7 +43,9 @@ test("login success", async () => {
   const state = await expectBrowserToOpen()
   system.main.openUrl(brimSuccessUrl(state))
 
-  expect(screen.queryByText("Please log in to continue")).toBe(null)
+  await waitFor(() =>
+    expect(system.select(WorkspaceStatuses.get(lake.id))).toBe("connected")
+  )
 })
 
 /**
