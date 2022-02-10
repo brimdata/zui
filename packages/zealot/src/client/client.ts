@@ -65,6 +65,7 @@ export class Client {
   }
 
   async query(query: string, opts: Partial<Types.QueryOpts> = {}) {
+    console.log("running query", query)
     const options = defaults<Types.QueryOpts>(opts, {
       format: "zjson",
       controlMessages: true

@@ -11,4 +11,5 @@ test("histogram deep inspection", async () => {
   await waitFor(() =>
     expect(histogram.querySelectorAll("rect").length).toBeGreaterThan(0)
   )
+  console.log("test is done")
 })
