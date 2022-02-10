@@ -1,11 +1,13 @@
+import React from "react"
 import {findAllByRole, screen} from "@testing-library/react"
 import {SystemTest} from "./system-test"
+import App from "src/js/components/App"
 
 const system = new SystemTest("context-menu-strings")
 
 describe("context menu tests", () => {
   beforeAll(async () => {
-    system.mountApp()
+    system.render(<App />)
     await system.importFile("types.tsv")
     await screen.findAllByRole("cell")
   })

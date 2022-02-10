@@ -3,6 +3,7 @@ import {configure} from "@testing-library/react"
 import env from "app/core/env"
 
 if (!("window" in global)) {
+  // @ts-ignore
   global.window = {
     location: {
       search: "",
