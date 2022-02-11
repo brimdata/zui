@@ -6,10 +6,25 @@ import fetch from "cross-fetch"
 
 const zedCommand = getPath("zed")
 
+type ConstructorOpts = {
+  root: string
+  logs: string
+  port?: number
+  bin?: string
+}
 export class Lake {
   lake?: ChildProcess
+  root: string
+  port: number
+  logs: string
+  bin: string
 
-  constructor(public root: string, public port: number, public logs: string) {}
+  constructor(opts: ConstructorOpts) {
+    this.root = opts.root
+    this.logs = opts.logs
+    this.port = opts.port || 9867
+    this.bin = opts.bin || zedCommand
+  }
 
   addr(): string {
     return `localhost:${this.port}`
@@ -47,7 +62,7 @@ export class Lake {
     }
 
     // @ts-ignore
-    this.lake = spawn(zedCommand, args, opts) as ChildProcess
+    this.lake = spawn(this.bin, args, opts) as ChildProcess
     this.lake.on("error", (err) => {
       console.error("lake spawn error", err)
     })

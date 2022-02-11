@@ -111,3 +111,7 @@ if (gotTheLock) {
 } else {
   app.quit()
 }
+
+process.on("unhandledRejection", (e) => {
+  log.error(e)
+})
