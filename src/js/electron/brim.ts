@@ -1,7 +1,7 @@
 import {app} from "electron"
 import keytar from "keytar"
 import os from "os"
-import {Lake} from "ppl/lake/lake"
+import {Lake} from "@brimdata/zealot/node"
 import {Store} from "redux"
 import url from "url"
 import {
@@ -87,7 +87,7 @@ export class BrimMain {
         await this.saveSession()
       }
       this.windows.quit()
-      await this.lake.close()
+      await this.lake.stop()
       app.quit()
     } else {
       this.isQuitting = false
