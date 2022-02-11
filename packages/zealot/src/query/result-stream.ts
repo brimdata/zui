@@ -87,9 +87,11 @@ export class ResultStream {
           resolve()
         } else {
           this.status = "error"
+          console.log("rejecting query")
           reject(e)
         }
       }
+      console.log("done with query")
     })
     return this._promise
   }
