@@ -1,6 +1,16 @@
+/**
+ * @jest-envrionment jsdom
+ */
+
 import {rest} from "msw"
 import {setupServer} from "msw/node"
 import {getLatestVersion} from "./autoUpdater"
+
+// @ts-ignore
+global.localStorage = {
+  getItem: jest.fn(),
+  setItem: jest.fn()
+}
 
 const server = setupServer(
   rest.get(

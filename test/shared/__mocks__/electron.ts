@@ -34,7 +34,18 @@ export class BrowserWindow {
   on() {
     return this
   }
-  loadFile() {}
+  loadFile(name: string, params: any = {}) {
+    if (name === "search.html" && params?.query) {
+      // We can't change the location with jest, so we just
+      // delete it and make it our own. https://remarkablemark.org/blog/2018/11/17/mock-window-location/
+      delete window.location
+      // @ts-ignore
+      window.location = {
+        pathname: "search.html",
+        search: new URLSearchParams(params.query).toString()
+      }
+    }
+  }
   setSize() {}
   getSize() {
     return [100, 100]
@@ -114,4 +125,8 @@ export const screen = {
 
 export const autoUpdater = {
   on: jest.fn()
+}
+
+export const shell = {
+  openExternal: jest.fn()
 }

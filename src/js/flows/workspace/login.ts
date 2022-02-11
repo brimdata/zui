@@ -14,11 +14,15 @@ export const login = (ws: BrimLake, abortSignal: AbortSignal) => (
 ): Promise<string> => {
   const client = dispatch(getAuth0(ws))
 
-  const handleAuth = (resolve, reject) => async (
-    event,
-    {workspaceId, code}
-  ) => {
-    if (!code) return reject("No code returned from login")
+  const handleAuth = (resolve, reject) => async (event, args) => {
+    const {workspaceId, code, error, errorDesc} = args
+    if (error) {
+      reject(new Error(`${error}, ${errorDesc}`))
+      return
+    }
+    if (!code) {
+      return reject(new Error("No code returned from login"))
+    }
     try {
       const {accessToken, refreshToken} = await client.exchangeCode(code)
 
@@ -36,12 +40,12 @@ export const login = (ws: BrimLake, abortSignal: AbortSignal) => (
   client.openLoginUrl(
     serializeState({workspaceId: ws.id, windowId: global.windowId})
   )
-  return new Promise<string>((res, rej) => {
+  return new Promise<string | null>((res, rej) => {
     const handleAuthCb = handleAuth(res, rej)
     ipcRenderer.once("windows:authCallback", handleAuthCb)
     abortSignal.addEventListener("abort", () => {
       ipcRenderer.removeListener("windows:authCallback", handleAuthCb)
-      res()
+      res(null)
     })
   })
 }

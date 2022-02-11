@@ -10,6 +10,7 @@ import Lakes from "../state/Lakes"
 
 import ToolbarButton from "../../../app/toolbar/button"
 import MacSpinner from "./MacSpinner"
+import {isString} from "lodash"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -42,11 +43,13 @@ type Props = {
 const Login = ({workspace}: Props) => {
   const dispatch = useDispatch<AppDispatch>()
   const [isFetching, setIsFetching] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const ctlRef = useRef(new AbortController())
 
   useEffect(() => () => ctlRef.current.abort(), [])
 
   const onClick = async () => {
+    setError(null)
     setIsFetching(true)
     try {
       ctlRef.current = new AbortController()
@@ -55,10 +58,13 @@ const Login = ({workspace}: Props) => {
       )
       dispatch(Lakes.setLakeToken(workspace.id, accessToken))
       await dispatch(updateStatus(workspace.id))
-    } catch {
+    } catch (e) {
+      if (e instanceof Error) setError(e.message)
+      if (isString(e)) setError(e)
+      console.error(e)
       toast.error("Login failed")
+      setIsFetching(false)
     }
-    setIsFetching(false)
   }
 
   const onCancel = () => {
@@ -70,8 +76,9 @@ const Login = ({workspace}: Props) => {
     <PageWrap>
       <StyledHeader>Login</StyledHeader>
       <StyledP>
-        {"This lake requires authentication. Please log in to continue."}
+        This lake requires authentication. Please log in to continue.
       </StyledP>
+      {error && <StyledP>Error: {error}</StyledP>}
       <StyledButton
         onClick={isFetching ? onCancel : onClick}
         text={isFetching ? "Cancel" : "Login"}

@@ -11,7 +11,14 @@ module.exports = {
   setupFiles: ["./test/unit/setup/before-env.ts"],
   setupFilesAfterEnv: ["./test/unit/setup/after-env/index.ts"],
   testURL: "http://localhost/search.html",
-  roots: ["<rootDir>/test/shared", "<rootDir>"],
+  roots: [
+    "<rootDir>/test/shared",
+    "<rootDir>/app",
+    "<rootDir>/plugins",
+    "<rootDir>/ppl",
+    "<rootDir>/src",
+    "<rootDir>/test"
+  ],
   globalSetup: "./test/unit/setup/global.ts",
   transformIgnorePatterns: ["node_modules", "packages"],
   moduleDirectories: ["node_modules", "<rootDir>"],

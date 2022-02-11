@@ -2,11 +2,11 @@ import * as tl from "@testing-library/react"
 import {fireEvent, waitFor} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {BrimProvider} from "app/core/context"
+import "cross-fetch/polyfill"
 import {dialog} from "electron"
 import fsExtra from "fs-extra"
 import React from "react"
 import BrimApi from "src/js/api"
-import App from "src/js/components/App"
 import {BrimMain} from "src/js/electron/brim"
 import {main} from "src/js/electron/main"
 import initialize from "src/js/initializers/initialize"
@@ -15,7 +15,9 @@ import PluginManager from "src/js/initializers/pluginManager"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
 import data from "test/shared/data"
+import "web-streams-polyfill"
 import {getPort} from "./port-service"
+import {setupServer} from "msw/node"
 
 const defaults = () => ({
   page: "search",
@@ -77,6 +79,7 @@ export class SystemTest {
   wrapper: React.ComponentType<any>
   click = userEvent.click
   rightClick = fireEvent.contextMenu
+  network = setupServer()
 
   assign(args: {
     store: Store
@@ -96,19 +99,26 @@ export class SystemTest {
     opts = {...defaults(), ...opts}
 
     beforeAll(async () => {
+      this.network.listen({
+        onUnhandledRequest: (req) => {
+          if (req.url.host.startsWith("localhost:")) return // Allow requests to a localhost server
+          throw new Error(
+            `Unhandled External Request: ${req.method} ${req.url.href}`
+          )
+        }
+      })
       this.assign(await bootBrim(name, opts))
       this.navTo(`/workspaces/${defaultWorkspace().id}`)
     })
+
+    afterEach(() => this.network.resetHandlers())
 
     afterAll(async () => {
       await this.plugins.deactivate()
       await this.main.quit()
       tl.cleanup()
+      this.network.close()
     })
-  }
-
-  mountApp() {
-    return this.render(<App />)
   }
 
   navTo(path: string) {
@@ -140,5 +150,13 @@ export class SystemTest {
       return Promise.resolve(result)
     })
     return save
+  }
+
+  select(selector: Function) {
+    return selector(this.store.getState())
+  }
+
+  silenceNext(method: "log" | "error") {
+    jest.spyOn(console, method).mockImplementationOnce(() => {})
   }
 }

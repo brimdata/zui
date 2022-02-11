@@ -1,6 +1,6 @@
 {
   "name": "@brimdata/zealot",
-  "version": "0.0.17",
+  "version": "1.0.1",
   "description": "The Javascript Client for Zed Lakes",
   "keywords": [
     "zed",

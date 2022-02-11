@@ -82,7 +82,10 @@ export class ResultStream {
         this.status = "success"
         resolve()
       } catch (e) {
-        if (e instanceof DOMException && e.message.match(/user aborted/)) {
+        if (
+          (e instanceof DOMException && e.message.match(/user aborted/)) ||
+          (e instanceof Error && e.message.match(/context canceled/))
+        ) {
           this.status = "aborted"
           resolve()
         } else {
@@ -107,6 +110,8 @@ export class ResultStream {
       case "QueryStats":
         // Do something with stats eventually
         break
+      case "QueryError":
+        throw new Error(json.value.error)
       default:
         if (isObject(json.type)) {
           this.channel().consume(json)
