@@ -61,7 +61,7 @@ export default function QueryItem({
   tree
 }) {
   const {isEditing, isSelected} = state
-  const {value, id} = data
+  const {id} = data
   const isGroup = "items" in data
   const ctxMenu = useQueryItemMenu(data, tree, handlers)
   const history = useHistory()

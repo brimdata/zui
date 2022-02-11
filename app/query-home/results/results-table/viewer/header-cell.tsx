@@ -4,13 +4,13 @@ import classNames from "classnames"
 
 import {TableColumn, ColumnUpdates} from "src/js/state/Columns/types"
 import {appendQuerySortBy} from "src/js/flows/searchBar/actions"
-import {submitSearch} from "../../../flows/submit-search"
 import Columns from "src/js/state/Columns"
 import IconAsc from "src/js/components/icons/icon-asc.svg"
 import IconDesc from "src/js/components/icons/icon-desc.svg"
 import columnKey from "src/js/lib/columnKey"
 import {toFieldPath} from "src/js/zql/toZql"
 import {printColumnName} from "src/js/state/Columns/models/column"
+import submitSearch from "app/query-home/flows/submit-search"
 
 let oldWidth = null
 let start = null

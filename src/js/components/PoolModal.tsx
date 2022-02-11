@@ -1,4 +1,3 @@
-import {Pool} from "@brimdata/zealot"
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import renamePool from "../flows/renamePool"
@@ -11,6 +10,7 @@ import InputLabel from "./common/forms/InputLabel"
 import InputLabelError from "./common/forms/InputLabelError"
 import TextInput from "./common/forms/TextInput"
 import ModalBox from "./ModalBox/ModalBox"
+import {Pool} from "app/core/pools/pool"
 
 export default function PoolModal() {
   const args = useSelector(Modal.getArgs) || {}

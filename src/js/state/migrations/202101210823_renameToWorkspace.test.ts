@@ -5,8 +5,8 @@ test("migrating 202101210823_renameToWorkspace", async () => {
   expect.assertions(16)
   const next = await migrate({state: "v0.21.1", to: "202101210823"})
 
-  expect(next.globalState.lakes).toBeDefined()
-  Object.values(next.globalState.lakes).forEach((c: any) => {
+  expect(next.globalState.workspaces).toBeDefined()
+  Object.values(next.globalState.workspaces).forEach((c: any) => {
     expect(c.password).toBeUndefined()
     expect(c.username).toBeUndefined()
   })
@@ -16,7 +16,7 @@ test("migrating 202101210823_renameToWorkspace", async () => {
     if (!state.tabs) continue
     state.tabs.data.forEach((t) => {
       expect(t.current.connectionId).toBeUndefined()
-      expect(t.current.lakeId).toBeDefined()
+      expect(t.current.workspaceId).toBeDefined()
     })
   }
 })

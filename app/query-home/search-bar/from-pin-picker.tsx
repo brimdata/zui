@@ -1,5 +1,4 @@
 import React from "react"
-import {useLocation} from "react-router"
 import {showContextMenu} from "src/js/lib/System"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"

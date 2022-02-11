@@ -6,9 +6,9 @@ test("migrating 202101291548_addAuthDefaultsToWorkspaces", async () => {
   const next = await migrate({state: "v0.23.0", to: "202101291548"})
 
   for (const state of getAllStates(next)) {
-    Object.values(state.lakes).forEach((l) =>
+    Object.values(state.workspaces).forEach((ws) =>
       // @ts-ignore
-      expect(l.authType).toBeDefined()
+      expect(ws.authType).toBeDefined()
     )
   }
 })

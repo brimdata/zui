@@ -61,7 +61,7 @@ export const allRoutes = [
 
 export function whichRoute(pathname: string) {
   for (const route of allRoutes) {
-    const match = matchPath(pathname, {path: route.path})
+    const match = matchPath(pathname, {path: route.path, exact: true})
     if (match) return {...route, match}
   }
   return null

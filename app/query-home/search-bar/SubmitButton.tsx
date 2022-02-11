@@ -2,10 +2,9 @@ import {darken} from "polished"
 import {useDispatch} from "react-redux"
 import React from "react"
 import styled from "styled-components"
-
-import submitSearch from "src/js/flows/submitSearch/mod"
 import MagnifyingGlass from "src/js/icons/MagnifyingGlass"
 import {submitButton} from "test/playwright/helpers/locators"
+import submitSearch from "../flows/submit-search"
 
 const start = "#6aa4e7"
 const end = "#4b91e2"

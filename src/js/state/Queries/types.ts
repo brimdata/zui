@@ -5,7 +5,7 @@ export interface Query {
   id: string
   name: string
   value: string
-  pins: {
+  pins?: {
     from: string
     filters: string[]
   }

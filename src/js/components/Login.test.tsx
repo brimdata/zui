@@ -7,16 +7,16 @@ import {shell} from "electron"
 import {SystemTest} from "test/system/system-test"
 import url from "url"
 import brim from "../brim"
-import {defaultWorkspace} from "../initializers/initWorkspaceParams"
+import {defaultLake} from "../initializers/initLakeParams"
 import Login from "./Login"
 import {rest} from "msw"
-import WorkspaceStatuses from "../state/WorkspaceStatuses"
+import LakeStatuses from "../state/LakeStatuses"
 
 const system = new SystemTest("Login.test.ts")
 
 test("login error", async () => {
   const lake = getLake()
-  system.render(<Login workspace={lake} />)
+  system.render(<Login lake={lake} />)
   const button = screen.getByRole("button", {name: "Login"})
   system.click(button)
 
@@ -36,7 +36,7 @@ test("login success", async () => {
   )
 
   const lake = getLake()
-  system.render(<Login workspace={lake} />)
+  system.render(<Login lake={lake} />)
   const button = screen.getByRole("button", {name: "Login"})
   system.click(button)
 
@@ -44,7 +44,7 @@ test("login success", async () => {
   system.main.openUrl(brimSuccessUrl(state))
 
   await waitFor(() =>
-    expect(system.select(WorkspaceStatuses.get(lake.id))).toBe("connected")
+    expect(system.select(LakeStatuses.get(lake.id))).toBe("connected")
   )
 })
 
@@ -59,8 +59,8 @@ const brimSuccessUrl = (state) =>
   `//brim://auth/auth0/callback?code=SemkqWmI3Tv_NWaI&state=${state}`
 
 function getLake() {
-  return brim.workspace({
-    ...defaultWorkspace(),
+  return brim.lake({
+    ...defaultLake(),
     authType: "auth0",
     authData: {domain: "http://test.com", accessToken: "test", clientId: "hi"}
   })

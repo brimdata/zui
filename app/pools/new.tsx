@@ -11,7 +11,7 @@ import TextInput from "../../src/js/components/common/forms/TextInput"
 import {AppDispatch} from "../../src/js/state/types"
 import tabHistory from "app/router/tab-history"
 import {createPool} from "../core/pools/create-pool"
-import {lakePath} from "app/router/utils/paths"
+import {lakePoolPath} from "app/router/utils/paths"
 import Current from "src/js/state/Current"
 import useSelect from "app/core/hooks/use-select"
 
@@ -43,7 +43,7 @@ export default function TabCreatePool() {
     e.preventDefault()
     dispatch(createPool({name}))
       .then((id) => {
-        dispatch(tabHistory.push(lakePath(id, lakeId)))
+        dispatch(tabHistory.push(lakePoolPath(id, lakeId)))
       })
       .catch((e) => {
         dispatch(Notice.set(ErrorFactory.create(e)))

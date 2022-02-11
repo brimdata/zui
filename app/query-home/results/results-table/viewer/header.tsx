@@ -1,6 +1,5 @@
 import React, {useMemo} from "react"
 import {useSelector} from "react-redux"
-import Url from "src/js/state/Url"
 import brim from "src/js/brim"
 import columnKey from "src/js/lib/columnKey"
 import TableColumns from "src/js/models/TableColumns"

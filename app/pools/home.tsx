@@ -1,5 +1,4 @@
 import {nanoid} from "@reduxjs/toolkit"
-import {Inspector} from "app/features/inspector/inspector"
 import {DRAFT_QUERY_NAME} from "app/query-home/utils/brim-query"
 import {lakeQueryPath} from "app/router/utils/paths"
 import {useDispatch, useSelector} from "react-redux"
@@ -7,9 +6,6 @@ import React from "react"
 import {useHistory} from "react-router"
 import {Query} from "src/js/state/Queries/types"
 import styled from "styled-components"
-
-import InputField from "src/js/components/common/forms/InputField"
-import InputLabel from "src/js/components/common/forms/InputLabel"
 import PrimaryButton from "src/js/components/common/buttons/PrimaryButton"
 import {AppDispatch} from "src/js/state/types"
 import Current from "src/js/state/Current"
@@ -51,7 +47,7 @@ const PoolHome = () => {
     history.push(lakeQueryPath(newDraft.id, lakeId, {isDraft: true}))
   }
 
-  const rawPoolData = Object.entries(pool).map(([key, value]) => (
+  const rawPoolData = Object.entries(pool.data).map(([key, value]) => (
     <div key={key}>
       <strong>{key}</strong>: {JSON.stringify(value) || "N/A"}
     </div>
