@@ -1,6 +1,6 @@
 import {syncPoolsData} from "app/core/pools/sync-pools-data"
 import tabHistory from "app/router/tab-history"
-import {workspacePath} from "app/router/utils/paths"
+import {lakePath} from "app/router/utils/paths"
 import Current from "../state/Current"
 import Tabs from "../state/Tabs"
 import {Thunk} from "../state/types"
@@ -15,9 +15,9 @@ export default (): Thunk => (dispatch, getState) => {
 
 export function resetTab(): Thunk {
   return (dispatch, getState) => {
-    const id = Current.getWorkspaceId(getState())
+    const id = Current.getLakeId(getState())
     dispatch(Tabs.clearActive())
-    dispatch(tabHistory.push(workspacePath(id)))
+    dispatch(tabHistory.push(lakePath(id)))
     dispatch(syncPoolsData())
   }
 }

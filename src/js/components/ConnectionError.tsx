@@ -32,10 +32,10 @@ const StyledButton = styled(ToolbarButton)`
 `
 
 type Props = {
-  workspace: Lake
+  lake: Lake
 }
 
-const ConnectionError = ({workspace}: Props) => {
+const ConnectionError = ({lake}: Props) => {
   const dispatch = useDispatch()
   const [isFetching, setIsFetching] = useState(false)
 
@@ -47,7 +47,7 @@ const ConnectionError = ({workspace}: Props) => {
     setIsFetching(false)
   }
 
-  const {host, port} = workspace
+  const {host, port} = lake
   const errorMsg = isFetching
     ? "Attempting to connect..."
     : `The service at ${host}:${port} could not be reached.`

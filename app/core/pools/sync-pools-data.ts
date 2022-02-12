@@ -1,3 +1,4 @@
+import brim from "src/js/brim"
 import {getZealot} from "src/js/flows/getZealot"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
@@ -10,8 +11,8 @@ import {Thunk} from "src/js/state/types"
 export function syncPoolsData(lakeId?: string): Thunk<Promise<void>> {
   return async (dispatch, getState) => {
     const lake = lakeId
-      ? Lakes.id(lakeId)(getState())
-      : Current.getWorkspace(getState())
+      ? brim.lake(Lakes.id(lakeId)(getState()))
+      : Current.getLake(getState())
 
     const zealot = await dispatch(getZealot(lake))
 

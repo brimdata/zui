@@ -1,9 +1,35 @@
-import {poolSearchPath} from "app/router/utils/paths"
 import {
   getAllStates,
   getAllTabs
 } from "src/js/state/migrations/utils/getTestState"
 import {parsePath} from "history"
+
+const poolSearchPath = (spaceId, workspaceId, params) =>
+  `/workspaces/${workspaceId}/lakes/${spaceId}/search?${encodeSearchParams(
+    params
+  )}`
+
+// copied from source at time of migration
+const encodeSearchParams = ({program, pins, spanArgs}: any) => {
+  const p = new URLSearchParams()
+  if (program) p.append("q", program)
+  encodeSpan(p, spanArgs, "from", "to")
+  encodePins(p, pins || [])
+  return p.toString()
+}
+const encodeSpan = (params, span, from, to) => {
+  if (span && span[0]) params.append(from, encodeSpanArg(span[0]))
+  if (span && span[1]) params.append(to, encodeSpanArg(span[1]))
+}
+const encodeSpanArg = (arg) => {
+  return typeof arg === "string" ? arg : `${arg.sec}.${arg.ns}`
+}
+const encodePins = (params, pins) => {
+  for (let i = 0; i < pins.length; ++i) {
+    params.append(pinKey(i), pins[i])
+  }
+}
+const pinKey = (i) => `p${i}`
 
 /**
  * We never stored the workspace id in the search records. This was probably

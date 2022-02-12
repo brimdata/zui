@@ -12,8 +12,8 @@ import {SearchParams} from "../Url/selectors"
 import {createIsEqualSelector} from "../utils"
 import {TabState} from "./types"
 
-const workspaceUrl = createSelector<State, Lake | null, string>(
-  Current.getWorkspace,
+const lakeUrl = createSelector<State, Lake | null, string>(
+  Current.getLake,
   (c) => {
     if (c) return c.host + ":" + c.port
     else return "localhost:9867"
@@ -58,7 +58,7 @@ const getSpanAsDates = createSelector<State, Span, DateTuple>(
 )
 
 export default {
-  workspaceUrl,
+  lakeUrl,
   getPoolName: (state: State) => {
     const s = Current.mustGetPool(state)
     return s ? s.name : ""

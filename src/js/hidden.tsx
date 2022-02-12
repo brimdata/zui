@@ -8,11 +8,11 @@ import ReactDOM from "react-dom"
 import {Provider, useDispatch, useSelector} from "react-redux"
 import "regenerator-runtime/runtime"
 import brim from "./brim"
-import lake from "./brim/workspace"
+import lake from "./brim/lake"
 import {
   getRemotePoolForLake,
   refreshRemoteQueries
-} from "./components/LeftPane/remote-queries"
+} from "app/features/sidebar/flows/remote-queries"
 import {subscribeEvents} from "./flows/subscribeEvents"
 import initialize from "./initializers/initialize"
 import lib from "./lib"
@@ -33,35 +33,35 @@ initialize()
     log.error(e)
   })
 
-type workspaceSourceMapType = {
-  [workspaceId: string]: EventSource
+type lakeSourceMapType = {
+  [lakeId: string]: EventSource
 }
 
-const workspaceSourceMap: workspaceSourceMapType = {}
+const lakeSourceMap: lakeSourceMapType = {}
 
 const Hidden = () => {
-  const workspaces = useSelector(Lakes.all)
+  const lakes = useSelector(Lakes.all)
   const dispatch = useDispatch() as AppDispatch
 
   useEffect(() => {
-    workspaces.forEach((w) => {
-      if (w.id in workspaceSourceMap) return
+    lakes.forEach((l) => {
+      if (l.id in lakeSourceMap) return
       try {
-        dispatch(subscribeEvents(lake(w))).then((wsSource) => {
-          workspaceSourceMap[w.id] = wsSource
+        dispatch(subscribeEvents(lake(l))).then((lSource) => {
+          lakeSourceMap[l.id] = lSource
 
-          wsSource.addEventListener("pool-new", (_e) => {
-            dispatch(syncPoolsData(w.id))
+          lSource.addEventListener("pool-new", (_e) => {
+            dispatch(syncPoolsData(l.id))
           })
-          wsSource.addEventListener("pool-update", (_e) => {
-            dispatch(syncPoolsData(w.id)).catch((e) =>
+          lSource.addEventListener("pool-update", (_e) => {
+            dispatch(syncPoolsData(l.id)).catch((e) =>
               log.error("refresh error: ", e)
             )
           })
-          wsSource.addEventListener("pool-delete", (_e) => {
-            dispatch(syncPoolsData(w.id))
+          lSource.addEventListener("pool-delete", (_e) => {
+            dispatch(syncPoolsData(l.id))
           })
-          wsSource.addEventListener("branch-commit", (e) => {
+          lSource.addEventListener("branch-commit", (e) => {
             let eventData
             try {
               eventData = JSON.parse(e["data"])
@@ -76,10 +76,10 @@ const Hidden = () => {
                 new Error("No 'pool_id' from branch-commit event")
               )
 
-            const remotePool = dispatch(getRemotePoolForLake(w.id))
+            const remotePool = dispatch(getRemotePoolForLake(l.id))
             if (poolId === remotePool?.id)
-              dispatch(refreshRemoteQueries(brim.workspace(w)))
-            dispatch(syncPool(poolId, w.id)).catch((e) => {
+              dispatch(refreshRemoteQueries(brim.lake(l)))
+            dispatch(syncPool(poolId, l.id)).catch((e) => {
               log.error("branch-commit update failed: ", e)
             })
           })
@@ -89,15 +89,15 @@ const Hidden = () => {
       }
     })
 
-    // finally, close event sources for workspaces that are no longer present
+    // finally, close event sources for lakes that are no longer present
     differenceWith(
-      map(workspaces, (w) => w.id),
-      Object.keys(workspaceSourceMap)
-    ).forEach((wsId) => {
-      workspaceSourceMap[wsId]?.close()
-      delete workspaceSourceMap[wsId]
+      map(lakes, (l) => l.id),
+      Object.keys(lakeSourceMap)
+    ).forEach((lId) => {
+      lakeSourceMap[lId]?.close()
+      delete lakeSourceMap[lId]
     })
-  }, [workspaces])
+  }, [lakes])
 
   // this component is non-visual, only used for the reactive effects above
   return null

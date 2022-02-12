@@ -1,20 +1,15 @@
+import LakeList from "app/lakes/list"
+import LakeRoot from "app/lakes/root"
 import {maybeShowReleaseNotes} from "app/release-notes/maybe-show-release-notes"
 import ReleaseNotes from "app/release-notes/release-notes"
 import AppTabsRouter from "app/router/app-tabs-router"
-import {
-  releaseNotes,
-  root,
-  workspaceShow,
-  workspacesList
-} from "app/router/routes"
+import {releaseNotes, root, lakeShow, lakeList} from "app/router/routes"
 import AppWrapper from "app/routes/app-wrapper"
-import WorkspacesList from "app/workspaces/list"
-import WorkspaceShow from "app/workspaces/show"
 import React, {useEffect} from "react"
 import {useDispatch} from "react-redux"
 import {Redirect, Route, Switch} from "react-router"
 import useStoreExport from "../../../app/core/hooks/useStoreExport"
-import {defaultWorkspace} from "../initializers/initWorkspaceParams"
+import {defaultLake} from "../initializers/initLakeParams"
 import Handlers from "../state/Handlers"
 import useSearchShortcuts from "./useSearchShortcuts"
 
@@ -32,14 +27,14 @@ export default function App() {
   return (
     <AppTabsRouter>
       <Switch>
-        <Route path={workspaceShow.path}>
+        <Route path={lakeShow.path}>
           <AppWrapper>
-            <WorkspaceShow />
+            <LakeRoot />
           </AppWrapper>
         </Route>
-        <Route path={workspacesList.path}>
+        <Route path={lakeList.path}>
           <AppWrapper>
-            <WorkspacesList />
+            <LakeList />
           </AppWrapper>
         </Route>
         <Route path={releaseNotes.path}>
@@ -48,7 +43,7 @@ export default function App() {
           </AppWrapper>
         </Route>
         <Route path={root.path}>
-          <Redirect to={`/workspaces/${defaultWorkspace().id}`} />
+          <Redirect to={`/lakes/${defaultLake().id}`} />
         </Route>
       </Switch>
     </AppTabsRouter>

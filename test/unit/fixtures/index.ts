@@ -19,7 +19,7 @@ const pool1 = (): PoolState => ({
   }
 })
 
-const workspace1 = (): Lake => ({
+const lake1 = (): Lake => ({
   id: "test:9867",
   name: "testName1",
   host: "test",
@@ -27,7 +27,7 @@ const workspace1 = (): Lake => ({
   authType: "none"
 })
 
-const workspace2 = (): Lake => ({
+const lake2 = (): Lake => ({
   id: "test:9868",
   name: "testName2",
   host: "test",
@@ -36,8 +36,8 @@ const workspace2 = (): Lake => ({
 })
 
 const fixtures = () => ({
-  workspace1: workspace1(),
-  workspace2: workspace2(),
+  lake1: lake1(),
+  lake2: lake2(),
   pool1: pool1()
 })
 

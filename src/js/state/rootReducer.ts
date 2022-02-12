@@ -10,7 +10,7 @@ import Pools from "./Pools"
 import Tabs from "./Tabs"
 import Queries from "./Queries"
 import SystemTest from "./SystemTest"
-import WorkspaceStatuses from "./WorkspaceStatuses"
+import LakeStatuses from "./LakeStatuses"
 import TabHistories from "./TabHistories"
 import Url from "./Url"
 import Toolbars from "./Toolbars"
@@ -21,6 +21,7 @@ import Launches from "./Launches"
 import Appearance from "./Appearance"
 import RemoteQueries from "./RemoteQueries"
 import Ingests from "./Ingests"
+import DraftQueries from "./DraftQueries"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -28,7 +29,7 @@ const rootReducer = combineReducers<any, any>({
   configs: Configs.reducer,
   configPropValues: ConfigPropValues.reducer,
   errors: Errors.reducer,
-  workspaces: Lakes.reducer,
+  lakes: Lakes.reducer,
   modal: Modal.reducer,
   notice: Notice.reducer,
   handlers: Handlers.reducer,
@@ -38,9 +39,10 @@ const rootReducer = combineReducers<any, any>({
   ingests: Ingests.reducer,
   pluginStorage: PluginStorage.reducer,
   systemTest: SystemTest.reducer,
-  workspaceStatuses: WorkspaceStatuses.reducer,
+  lakeStatuses: LakeStatuses.reducer,
   queries: Queries.reducer,
   remoteQueries: RemoteQueries.reducer,
+  draftQueries: DraftQueries.reducer,
   tabHistories: TabHistories.reducer,
   url: Url.reducer,
   toolbars: Toolbars.reducer

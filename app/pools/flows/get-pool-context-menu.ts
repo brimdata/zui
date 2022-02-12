@@ -8,8 +8,8 @@ import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 
 const getPoolContextMenu = (pool: Pool) => (dispatch, getState) => {
-  const workspaceId = Current.getWorkspaceId(getState())
-  const poolIds = Pools.ids(workspaceId)(getState())
+  const lakeId = Current.getLakeId(getState())
+  const poolIds = Pools.ids(lakeId)(getState())
   return [
     {
       label: "Delete",

@@ -14,15 +14,15 @@ const WINDOW_PERSIST: StateKey[] = [
   "queries",
   "tabHistories",
   "tabs",
-  "workspaces"
+  "lakes"
 ]
 
 const TAB_PERSIST: TabKey[] = ["id", "search", "searchBar", "columns", "layout"]
 
 function deleteAccessTokens(state: Partial<State>) {
-  if (!state.workspaces) return
-  for (const ws of Object.values(state.workspaces)) {
-    if (ws.authType === "auth0" && ws.authData) delete ws.authData.accessToken
+  if (!state.lakes) return
+  for (const l of Object.values(state.lakes)) {
+    if (l.authType === "auth0" && l.authData) delete l.authData.accessToken
   }
 }
 

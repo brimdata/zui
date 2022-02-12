@@ -1,9 +1,9 @@
 import tabHistory from "app/router/tab-history"
-import {lakePath, workspacePath} from "app/router/utils/paths"
 import initTestStore from "../../../../test/unit/helpers/initTestStore"
 import Lakes from "../Lakes"
 import {Lake} from "../Lakes/types"
 import Current from "./"
+import {lakePath, poolSearchPath} from "app/router/utils/paths"
 
 let store
 
@@ -12,27 +12,27 @@ beforeEach(() => {
 })
 
 test("setting the pool id", () => {
-  store.dispatch(tabHistory.push(lakePath("1", "1")))
+  store.dispatch(tabHistory.push(poolSearchPath("1", "1")))
 
   expect(Current.getPoolId(store.getState())).toBe("1")
 })
 
-test("setting the workspace id", () => {
-  store.dispatch(tabHistory.push(workspacePath("a")))
+test("setting the lake id", () => {
+  store.dispatch(tabHistory.push(lakePath("a")))
 
-  expect(Current.getWorkspaceId(store.getState())).toBe("a")
+  expect(Current.getLakeId(store.getState())).toBe("a")
 })
 
-test("getting the actual workspace", () => {
-  const ws: Lake = {
+test("getting the actual lake", () => {
+  const l: Lake = {
     id: "myws",
     name: "myws",
     host: "www.myws.com",
     port: "123",
     authType: "none"
   }
-  const state = store.dispatchAll([Lakes.add(ws)])
-  store.dispatch(tabHistory.push(workspacePath(ws.id)))
+  const state = store.dispatchAll([Lakes.add(l)])
+  store.dispatch(tabHistory.push(lakePath(l.id)))
 
-  expect(Current.mustGetWorkspace(state).serialize()).toEqual(ws)
+  expect(Current.mustGetLake(state).serialize()).toEqual(l)
 })

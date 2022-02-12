@@ -24,17 +24,17 @@ export const toRefreshTokenKey = (id: string): string =>
   [id, "RT", keytarServiceSuffix].join("-")
 
 interface StateArgs {
-  workspaceId: string
+  lakeId: string
   windowId: string
 }
 
 // utils for formatting data to go into the 'state' query param
-export const serializeState = ({workspaceId, windowId}: StateArgs): string => {
-  return [workspaceId, windowId].join(",")
+export const serializeState = ({lakeId, windowId}: StateArgs): string => {
+  return [lakeId, windowId].join(",")
 }
 export const deserializeState = (state: string): StateArgs => {
   const stateArr = state.split(",")
   if (stateArr.length < 2) return null
 
-  return {workspaceId: stateArr[0], windowId: stateArr[1]}
+  return {lakeId: stateArr[0], windowId: stateArr[1]}
 }

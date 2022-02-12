@@ -1,7 +1,9 @@
+import {useQueryIdNameMap} from "app/query-home/hooks/use-query-id-name-map"
 import React, {useEffect, useState} from "react"
 import {useSelector} from "react-redux"
 import {animated} from "react-spring"
 import Lakes from "src/js/state/Lakes"
+import {PoolsState} from "src/js/state/Pools/types"
 import brim from "../../brim"
 import lib from "../../lib"
 import Pools from "../../state/Pools"
@@ -17,8 +19,9 @@ const MAX_WIDTH = 240
 
 export default function TabBar() {
   const ids = useSelector(Tabs.getIds)
-  const pools = useSelector(Pools.raw)
-  const workspaces = useSelector(Lakes.raw)
+  const pools: PoolsState = useSelector(Pools.raw)
+  const lakes = useSelector(Lakes.raw)
+  const queryIdNameMap = useQueryIdNameMap()
   const count = ids.length
   const {ref, rect} = useResizeObserver()
   const [width, setWidth] = useState(0)
@@ -39,7 +42,7 @@ export default function TabBar() {
               onChange: (indices) => ctl.onTabMove(indices)
             })}
             key={id}
-            title={brim.tab(id, workspaces, pools).title()}
+            title={brim.tab(id, lakes, pools, queryIdNameMap).title()}
             style={layout.getStyle(id)}
             removeTab={(e) => ctl.onRemoveClick(e, id)}
             active={id === ctl.activeId}

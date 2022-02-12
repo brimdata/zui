@@ -1,4 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
+import {State} from "../types"
+import {Group, Query} from "../Queries/types"
+import TreeModel from "tree-model"
 
 const slice = createSlice({
   name: "$remoteQueries",
@@ -18,5 +21,15 @@ const slice = createSlice({
 export default {
   reducer: slice.reducer,
   ...slice.actions,
-  get: (s) => s.remoteQueries
+  raw: (s) => s.remoteQueries,
+  getQueryById: (queryId: string) => (state: State): Query => {
+    return new TreeModel({childrenPropertyName: "items"})
+      .parse(state.remoteQueries)
+      .first((n) => n.model.id === queryId && !("items" in n.model))?.model
+  },
+  getGroupById: (groupId: string) => (state: State): Group => {
+    return new TreeModel({childrenPropertyName: "items"})
+      .parse(state.remoteQueries)
+      .first((n) => n.model.id === groupId && "items" in n.model)?.model
+  }
 }

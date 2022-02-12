@@ -4,7 +4,7 @@ import onIdle from "on-idle"
 
 import Tabs from "../../state/Tabs"
 import {ipcRenderer} from "electron"
-import {lakeImportPath, workspacesPath} from "app/router/utils/paths"
+import {lakeImportPath, lakesPath} from "app/router/utils/paths"
 import useLakeId from "app/router/hooks/use-lake-id"
 
 export default function(count: number, calcWidths: Function) {
@@ -13,7 +13,7 @@ export default function(count: number, calcWidths: Function) {
   const [activeId, setActive] = useState(trueActiveId)
   const removedByClick = useRef(false)
   const dispatch = useDispatch()
-  const workspaceId = useLakeId()
+  const lakeId = useLakeId()
 
   useEffect(() => {
     if (!removedByClick.current) calcWidths()
@@ -27,7 +27,7 @@ export default function(count: number, calcWidths: Function) {
     activeId,
 
     onAddClick() {
-      const path = workspaceId ? lakeImportPath(workspaceId) : workspacesPath()
+      const path = lakeId ? lakeImportPath(lakeId) : lakesPath()
       dispatch(Tabs.new(path))
     },
 

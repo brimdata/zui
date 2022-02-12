@@ -1,5 +1,5 @@
 import getPoolContextMenu from "app/pools/flows/get-pool-context-menu"
-import {poolSearchPath} from "app/router/utils/paths"
+import {lakePoolPath} from "app/router/utils/paths"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory} from "react-router"
@@ -50,7 +50,7 @@ const StyledPoolItem = styled(StyledItem)<{isSelected: boolean}>`
 const PoolItem = ({innerRef, styles, data, state, handlers}) => {
   const pool = data as Pool
   const dispatch = useDispatch<AppDispatch>()
-  const workspaceId = useSelector(Current.getWorkspaceId)
+  const lakeId = useSelector(Current.getLakeId)
   const currentPoolId = useSelector(Current.getPoolId)
   const ingest = useSelector(Ingests.get(currentPoolId))
   const history = useHistory()
@@ -67,11 +67,7 @@ const PoolItem = ({innerRef, styles, data, state, handlers}) => {
 
   const onClick = (e) => {
     e.preventDefault()
-    history.push(
-      poolSearchPath(pool.id, workspaceId, {
-        spanArgs: pool.empty() ? undefined : pool.defaultSpanArgs()
-      })
-    )
+    history.push(lakePoolPath(pool.id, lakeId))
   }
 
   const progress = ingest && isNumber(ingest.progress) && (

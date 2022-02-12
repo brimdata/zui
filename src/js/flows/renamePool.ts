@@ -8,5 +8,4 @@ export default (poolId: string, name: string): Thunk<Promise<void>> => async (
   const zealot = await dispatch(getZealot())
   await zealot.updatePool(poolId, {name})
   await dispatch(syncPool(poolId))
-  console.log("sync pool")
 }
