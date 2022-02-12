@@ -1,17 +1,17 @@
-import BrimApi from "../../src/js/api"
-import {parseJSONLib} from "../../src/js/state/Queries/parsers"
+import {parseJSONLib} from "src/js/state/Queries/parsers"
 import path from "path"
+import BrimApi from "src/js/api"
 
 export const activate = (api: BrimApi) => {
+  // if lib already exists, do not re-import
+  if (api.queries.getGroup("brim")) return
+
   const brimLib = parseJSONLib(
     path.join(__dirname, "static", "brim-queries.json")
   )
   // give lib root a custom, fixed id so app can prevent it from being modified
   brimLib.id = "brim"
-  const existingLib = api.queries.get("brim")
-
-  // preserve open state if set, else default to open
-  brimLib.isOpen = existingLib ? !!existingLib.isOpen : true
+  brimLib.isOpen = true
 
   // updates lib every window startup
   api.queries.add(brimLib)

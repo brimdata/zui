@@ -21,13 +21,13 @@ effective use of the Brim desktop application and related tools.
 
 ## User Documentation
 
-- [[Migration of Spaces]] 
+- [[Migration of Spaces]]
 - [[Linux RPM Upgrade]]
 - [[Importing CSV, Parquet, and ZST]]
 
 ## Cookbooks
 
-- [[Remote Workspaces]]
+- [[Remote Lakes]]
 - [[Query Library Transfer]]
 - [[Joining Data]]
 

@@ -72,7 +72,7 @@ export default function file(p: string) {
     },
 
     write(data: string) {
-      return new Promise<any>((good, bad) => {
+      return new Promise<void>((good, bad) => {
         fs.writeFile(p, data, (err) => {
           if (err) bad(err)
           else good()
@@ -81,7 +81,7 @@ export default function file(p: string) {
     },
 
     remove() {
-      return new Promise<any>((good, bad) => {
+      return new Promise<void>((good, bad) => {
         fs.unlink(p, (err) => {
           if (err) bad(err)
           else good()

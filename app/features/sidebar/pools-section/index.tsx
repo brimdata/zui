@@ -3,7 +3,7 @@ import get from "lodash/get"
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Current from "src/js/state/Current"
-import WorkspaceStatuses from "src/js/state/WorkspaceStatuses"
+import LakeStatuses from "src/js/state/LakeStatuses"
 import {
   SectionContents,
   StyledSection,
@@ -32,9 +32,9 @@ const poolSearch = (term: string, items: Pool[]): Pool[] => {
 
 const PoolsSection = () => {
   const dispatch = useDispatch()
-  const workspace = useSelector(Current.getWorkspace)
-  const id = get(workspace, ["id"], "")
-  const lakeStatus = useSelector(WorkspaceStatuses.get(id))
+  const lake = useSelector(Current.getLake)
+  const id = get(lake, ["id"], "")
+  const lakeStatus = useSelector(LakeStatuses.get(id))
   const pools = useSelector(Current.getPools)
   const [filteredPools, setFilteredPools] = useState(pools)
   const [{isOver}, drop] = useImportOnDrop()

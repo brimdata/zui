@@ -3,13 +3,13 @@ import {toast} from "react-hot-toast"
 import {useDispatch} from "react-redux"
 import styled from "styled-components"
 import {BrimLake} from "../brim"
-import {updateStatus} from "../flows/workspace/update-status"
-import {login} from "../flows/workspace/login"
 import {AppDispatch} from "../state/types"
 import Lakes from "../state/Lakes"
-
 import ToolbarButton from "../../../app/toolbar/button"
 import MacSpinner from "./MacSpinner"
+import {isString} from "lodash"
+import {updateStatus} from "../flows/lake/update-status"
+import {login} from "../flows/lake/login"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -36,29 +36,32 @@ const StyledButton = styled(ToolbarButton)`
 `
 
 type Props = {
-  workspace: BrimLake
+  lake: BrimLake
 }
 
-const Login = ({workspace}: Props) => {
+const Login = ({lake}: Props) => {
   const dispatch = useDispatch<AppDispatch>()
   const [isFetching, setIsFetching] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const ctlRef = useRef(new AbortController())
 
   useEffect(() => () => ctlRef.current.abort(), [])
 
   const onClick = async () => {
+    setError(null)
     setIsFetching(true)
     try {
       ctlRef.current = new AbortController()
-      const accessToken = await dispatch(
-        login(workspace, ctlRef.current.signal)
-      )
-      dispatch(Lakes.setLakeToken(workspace.id, accessToken))
-      await dispatch(updateStatus(workspace.id))
-    } catch {
+      const accessToken = await dispatch(login(lake, ctlRef.current.signal))
+      dispatch(Lakes.setLakeToken(lake.id, accessToken))
+      await dispatch(updateStatus(lake.id))
+    } catch (e) {
+      if (e instanceof Error) setError(e.message)
+      if (isString(e)) setError(e)
+      console.error(e)
       toast.error("Login failed")
+      setIsFetching(false)
     }
-    setIsFetching(false)
   }
 
   const onCancel = () => {
@@ -70,8 +73,9 @@ const Login = ({workspace}: Props) => {
     <PageWrap>
       <StyledHeader>Login</StyledHeader>
       <StyledP>
-        {"This lake requires authentication. Please log in to continue."}
+        This lake requires authentication. Please log in to continue.
       </StyledP>
+      {error && <StyledP>Error: {error}</StyledP>}
       <StyledButton
         onClick={isFetching ? onCancel : onClick}
         text={isFetching ? "Cancel" : "Login"}

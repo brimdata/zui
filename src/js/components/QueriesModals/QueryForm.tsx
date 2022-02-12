@@ -106,7 +106,7 @@ const QueryForm = ({onClose, query, value, isRemote}: Props) => {
   const dispatch = useDispatch<AppDispatch>()
   const [errors, setErrors] = useState([])
   const [formRef, setFormRef] = useCallbackRef<HTMLFormElement>()
-  const queriesRoot = useSelector(Queries.getRaw)
+  const queriesRoot = useSelector(Queries.raw)
 
   const config: FormConfig = {
     value: {
@@ -142,19 +142,26 @@ const QueryForm = ({onClose, query, value, isRemote}: Props) => {
     const form = brim.form(formRef, config)
 
     if (await form.isValid()) {
-      const {value, name, description, tags = ""} = form
-        .getFields()
-        .reduce((obj, field) => {
-          obj[field.name] = field.value
-          return obj
-        }, {})
+      const {
+        value,
+        name,
+        description,
+        tags = "",
+        pins = [],
+        from = ""
+      } = form.getFields().reduce((obj, field) => {
+        obj[field.name] = field.value
+        return obj
+      }, {})
 
       const splitTags = tags ? tags.split(", ") : []
       const newQuery = {
         value,
         name,
         description,
-        tags: splitTags
+        tags: splitTags,
+        pins,
+        from
       }
       if (isRemote) {
         // editing or creating remote query

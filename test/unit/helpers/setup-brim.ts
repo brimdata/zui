@@ -29,12 +29,12 @@ class BrimTestContext {
 
 type Args = {
   page?: string
-  workspace?: Lake
+  lake?: Lake
   pool?: Pool
 }
 const defaults = () => ({
   page: "search",
-  workspace: null,
+  lake: null,
   pool: null
 })
 
@@ -53,8 +53,8 @@ export function setupBrim(opts: Args = defaults()) {
     // jest 27, this will fail the test as expected.
     const props = await bootBrim(opts)
     context.assign(props)
-    if (opts.workspace) {
-      context.dispatch(Lakes.add(opts.workspace))
+    if (opts.lake) {
+      context.dispatch(Lakes.add(opts.lake))
     }
   })
 

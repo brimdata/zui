@@ -7,7 +7,7 @@ beforeEach(() => {
   store = initTestStore()
 })
 
-const workspace: Lake = {
+const lake: Lake = {
   id: "123",
   name: "123",
   host: "boom.com",
@@ -15,20 +15,20 @@ const workspace: Lake = {
   authType: "none"
 }
 
-test("addWorkspace", () => {
-  const state = store.dispatchAll([Lakes.add(workspace)])
+test("addLake", () => {
+  const state = store.dispatchAll([Lakes.add(lake)])
 
   expect(Lakes.id("123")(state).id).toEqual("123")
 })
 
-test("addWorkspace when it already exists", () => {
-  const state = store.dispatchAll([Lakes.add(workspace), Lakes.add(workspace)])
+test("addLake when it already exists", () => {
+  const state = store.dispatchAll([Lakes.add(lake), Lakes.add(lake)])
 
-  expect(Lakes.all(state).map((l) => l.id)).toEqual([workspace.id])
+  expect(Lakes.all(state).map((l) => l.id)).toEqual([lake.id])
 })
 
 test("removeCluster", () => {
-  const state = store.dispatchAll([Lakes.add(workspace), Lakes.remove("123")])
+  const state = store.dispatchAll([Lakes.add(lake), Lakes.remove("123")])
 
   expect(Lakes.all(state)).toEqual([])
 })

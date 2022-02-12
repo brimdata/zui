@@ -1,5 +1,5 @@
-import {PoolConfig, PoolStats} from "@brimdata/zealot"
 import {isEqual} from "lodash"
+import {PoolConfig, PoolStats} from "packages/zealot/src"
 import brim, {Span} from "src/js/brim"
 
 export class Pool {
@@ -62,8 +62,8 @@ export class Pool {
   }
 
   everythingSpan(): Span {
-    if (!this.stats.span) throw new Error("Pool has no span")
     if (!this.stats) throw new Error("No stats for this pool")
+    if (!this.stats.span) throw new Error("Pool has no span")
     return brim.span([this.minTime(), this.maxTime()]).toSpan()
   }
 }

@@ -4,8 +4,8 @@ import React, {useEffect, useRef, useState} from "react"
 import {BrimError} from "../errors/types"
 import Notice from "../state/Notice"
 import Current from "../state/Current"
-import WorkspaceStatuses from "../state/WorkspaceStatuses"
-import {checkStatus} from "../flows/workspace/checkStatus"
+import LakeStatuses from "../state/LakeStatuses"
+import {checkStatus} from "../flows/lake/checkStatus"
 
 type Props = {
   error: BrimError
@@ -16,11 +16,11 @@ const MAX_BACKOFF = 128
 
 export default function NetworkErrorNotice({error}: Props) {
   const dispatch = useDispatch()
-  const workspaceId = useSelector(Current.getWorkspaceId)
-  const status = useSelector(WorkspaceStatuses.get(workspaceId))
+  const lakeId = useSelector(Current.getLakeId)
+  const status = useSelector(LakeStatuses.get(lakeId))
   const [count, setCount] = useState(0)
   const statusRef = useRef(status)
-  const wsRef = useRef(workspaceId)
+  const wsRef = useRef(lakeId)
 
   const retry = () => {
     setCount(0)
@@ -31,15 +31,15 @@ export default function NetworkErrorNotice({error}: Props) {
   }
 
   useEffect(() => {
-    if (workspaceId === wsRef.current) {
+    if (lakeId === wsRef.current) {
       statusRef.current = status
       if (status === "disconnected") dismiss()
     }
-  }, [status, workspaceId])
+  }, [status, lakeId])
 
   useEffect(() => {
-    wsRef.current = workspaceId
-    dispatch(WorkspaceStatuses.set(workspaceId, "retrying"))
+    wsRef.current = lakeId
+    dispatch(LakeStatuses.set(lakeId, "retrying"))
 
     let id = null
     let attempt = 0
@@ -61,7 +61,7 @@ export default function NetworkErrorNotice({error}: Props) {
     return () => {
       clearTimeout(id)
       if (statusRef.current === "retrying") {
-        dispatch(WorkspaceStatuses.set(wsRef.current, "disconnected"))
+        dispatch(LakeStatuses.set(wsRef.current, "disconnected"))
       }
     }
   }, [])

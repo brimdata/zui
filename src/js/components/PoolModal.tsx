@@ -10,11 +10,12 @@ import InputLabel from "./common/forms/InputLabel"
 import InputLabelError from "./common/forms/InputLabelError"
 import TextInput from "./common/forms/TextInput"
 import ModalBox from "./ModalBox/ModalBox"
+import {Pool} from "app/core/pools/pool"
 
 export default function PoolModal() {
   const args = useSelector(Modal.getArgs) || {}
-  const {workspaceId, poolId} = args
-  const pool = useSelector(Pools.get(workspaceId, poolId))
+  const {lakeId, poolId} = args
+  const pool = useSelector(Pools.get(lakeId, poolId)) as Pool
   const name = (pool && pool.name) || ""
   const [nameInput, setNameInput] = useState(name)
   const [error, setError] = useState(null)
@@ -30,9 +31,7 @@ export default function PoolModal() {
       dispatch(Modal.hide())
       return
     }
-    const prom = dispatch(renamePool(poolId, nameInput))
-    console.log(prom)
-    prom
+    dispatch(renamePool(poolId, nameInput))
       .then(() => {
         dispatch(Modal.hide())
         return

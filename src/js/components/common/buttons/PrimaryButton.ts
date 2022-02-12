@@ -13,9 +13,9 @@ const PrimaryButton = styled.button`
   color: white;
   background: linear-gradient(${bg}, ${bgGradient});
   border: none;
+  outline: none;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 0.5px ${bgBorder},
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.5), 0 0.5px 1px 0 rgba(0, 0, 0, 0.15),
+  box-shadow: inset 0 0 0 0.5px ${bgBorder}, 0 0.5px 1px 0 rgba(0, 0, 0, 0.15),
     0 2px 2px 0px rgba(0, 0, 0, 0.1);
 
   letter-spacing: 0.5px;

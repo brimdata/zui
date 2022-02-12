@@ -1,3 +1,4 @@
+import {featureIsEnabled} from "app/core/feature-flag"
 import tabHistory from "app/router/tab-history"
 import {poolSearchPath} from "app/router/utils/paths"
 import brim from "src/js/brim"
@@ -7,6 +8,7 @@ import Notice from "../../state/Notice"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
+import submitNewSearch from "app/query-home/flows/submit-search"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
@@ -14,21 +16,21 @@ export function submitSearch(
   save: SaveOpts = {history: true, investigation: true},
   ts: Date = new Date()
 ) {
+  if (featureIsEnabled("query-flow")) return submitNewSearch(save, ts)
+
   return function(dispatch, getState) {
     dispatch(Notice.dismiss())
     const record = Search.getRecord(getState())
-    const workspaceId = Current.getWorkspaceId(getState())
+    const lakeId = Current.getLakeId(getState())
     const poolId = Current.getPoolId(getState())
 
     dispatch(Tab.computeSpan(ts))
 
     if (!dispatch(SearchBar.validate())) return
 
-    const url = poolSearchPath(poolId, workspaceId, {...record})
+    const url = poolSearchPath(poolId, lakeId, {...record})
     if (save.investigation) {
-      dispatch(
-        Investigation.push(workspaceId, poolId, record, brim.time(ts).toTs())
-      )
+      dispatch(Investigation.push(lakeId, poolId, record, brim.time(ts).toTs()))
     }
 
     save.history

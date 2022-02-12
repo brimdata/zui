@@ -2,13 +2,11 @@ import {State} from "../../../state/types"
 import {WindowParams} from "../../tron/window"
 import {WindowName} from "../../tron/window-manager"
 import {
-  WindowsAuthCallbackMsg,
   WindowsInitialStateMsg,
   WindowsNewSearchTabMsg,
   WindowsOpenDirectorySelect,
   WindowsOpenMsg
 } from "../types"
-
 export type NewTabSearchParams = {
   href: string
   isNewWin?: boolean
@@ -42,13 +40,6 @@ export default {
   openDirectorySelect(): WindowsOpenDirectorySelect {
     return {
       channel: "windows:openDirectorySelect"
-    }
-  },
-  authCallback(workspaceId: string, code: string): WindowsAuthCallbackMsg {
-    return {
-      channel: "windows:authCallback",
-      workspaceId,
-      code
     }
   }
 }

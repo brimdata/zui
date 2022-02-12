@@ -1,53 +1,59 @@
 import {Pool} from "app/core/pools/pool"
 import {intersection} from "lodash"
-import {BrimLake} from "src/js/brim"
 import {getZealot} from "src/js/flows/getZealot"
-import Current from "src/js/state/Current"
-import Pools from "src/js/state/Pools"
 import {Query} from "src/js/state/Queries/types"
+import Pools from "src/js/state/Pools"
+import Current from "src/js/state/Current"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Thunk} from "src/js/state/types"
 import {Readable} from "stream"
+import {BrimLake} from "src/js/brim"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
-const recordToQuery = (r: Query): Query => {
-  return {...r, tags: []}
+const queriesToRemoteQueries = (qs: Query[], isTombstone = false) => {
+  return qs.map((q) => ({
+    ...q,
+    tombstone: isTombstone,
+    ts: Date.now()
+  }))
 }
 
-export const isRemoteLib = (ids: string[]) => (_, getState) => {
-  const remoteIds = RemoteQueries.get(getState())?.items.map((i) => i.id)
+export const isRemoteLib = (ids: string[]) => (_d, getState) => {
+  const remoteIds = RemoteQueries.raw(getState())?.items.map((i) => i.id)
   return intersection(ids, remoteIds).length > 0
 }
 
-export const getRemotePoolForLake = (lakeId: string): Thunk<Pool> => {
-  return (_d, getState) => {
-    return Pools.getByName(lakeId, remoteQueriesPoolName)(getState())
-  }
+export const getRemotePoolForLake = (lakeId: string): Thunk<Pool> => (
+  _d,
+  getState
+) => {
+  return Pools.getByName(lakeId, remoteQueriesPoolName)(getState())
 }
 
-export const refreshRemoteQueries = (lake?: BrimLake): Thunk<Promise<void>> => {
-  return async (dispatch) => {
-    const zealot = await dispatch(getZealot(lake))
-    try {
-      const queryReq = await zealot.query(
-        `from '${remoteQueriesPoolName}'
+export const refreshRemoteQueries = (
+  lake?: BrimLake
+): Thunk<Promise<void>> => async (dispatch) => {
+  const zealot = await dispatch(getZealot(lake))
+  try {
+    const queryReq = await zealot.query(
+      `from '${remoteQueriesPoolName}'
         | split (
           => query_id:={id:id,ts:ts} | sort query_id
           => ts:=max(ts) by id | sort this
         )
         | join on query_id=this
         | tombstone==false
-        | cut name, value, description, id`
-      )
-      const remoteRecords = (await queryReq.js()) as Query[]
-      dispatch(RemoteQueries.set(remoteRecords.map<Query>(recordToQuery)))
-    } catch (e) {
-      if (/pool not found/.test(e.message)) {
-        dispatch(RemoteQueries.set([]))
-        return
-      } else throw e
-    }
+        | cut name, value, description, id, pins`
+    )
+
+    const remoteRecords = (await queryReq.js()) as Query[]
+    dispatch(RemoteQueries.set(remoteRecords))
+  } catch (e) {
+    if (/pool not found/.test(e.message)) {
+      dispatch(RemoteQueries.set([]))
+      return
+    } else throw e
   }
 }
 
@@ -65,7 +71,7 @@ export const setRemoteQueries = (
   return async (dispatch, getState) => {
     const zealot = await dispatch(getZealot())
     let rqPoolId = Pools.getByName(
-      Current.getWorkspaceId(getState()),
+      Current.getLakeId(getState()),
       remoteQueriesPoolName
     )(getState())?.id
     if (!rqPoolId) {
@@ -91,15 +97,9 @@ export const setRemoteQueries = (
       )
       data.push(null)
       await loadPromise
+      await dispatch(refreshRemoteQueries())
     } catch (e) {
       throw new Error("error loading remote query: " + e)
     }
   }
 }
-
-const queriesToRemoteQueries = (qs: Query[], isTombstone = false) =>
-  qs.map((q) => ({
-    ...q,
-    tombstone: isTombstone,
-    ts: Date.now()
-  }))

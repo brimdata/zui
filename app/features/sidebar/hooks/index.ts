@@ -167,8 +167,7 @@ export const useQueryItemMenu = (data, tree, handlers) => {
                   id,
                   value: "",
                   name: "",
-                  description: "",
-                  tags: []
+                  pins: {from: "", filters: []}
                 }))
                 dispatch(setRemoteQueries(remoteQueries, true))
                 return

@@ -167,8 +167,8 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const dispatch = useDispatch<AppDispatch>()
   const [selectedTag, setSelectedTag] = useState("All Local")
   const currentPool = useSelector(Current.getPool)
-  const queriesRoot = useSelector(Queries.getRaw)
-  const remoteQueries = useSelector(RemoteQueries.get)
+  const queriesRoot = useSelector(Queries.raw)
+  const remoteQueries = useSelector(RemoteQueries.raw)
   const [queries, setQueries] = useState<Group>(queriesRoot)
   const tags = useSelector(Queries.getTags)
   const [{isOver}, drop] = useDrop<DragItem, unknown, {isOver: boolean}>(

@@ -1,17 +1,15 @@
 import classNames from "classnames"
 import React from "react"
-import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
-import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Current from "src/js/state/Current"
-import Notice from "src/js/state/Notice"
-import SearchBar from "src/js/state/SearchBar"
-import {AppDispatch} from "src/js/state/types"
 import {brimQueryLib} from "test/playwright/helpers/locators"
 import {showContextMenu} from "src/js/lib/System"
 import {StyledArrow, Name, ItemBG, Rename, StyledItem} from "../common"
 import Icon from "app/core/Icon"
 import {useQueryItemMenu} from "../hooks"
+import {lakeQueryPath} from "app/router/utils/paths"
+import {useHistory} from "react-router"
+import {useSelector} from "react-redux"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
 const QueryIcon = styled(Icon).attrs({name: "doc-plain"})``
@@ -62,12 +60,13 @@ export default function QueryItem({
   handlers,
   tree
 }) {
-  const dispatch = useDispatch<AppDispatch>()
-  const currentPool = useSelector(Current.getPool)
   const {isEditing, isSelected} = state
-  const {value, id} = data
+  const {id} = data
   const isGroup = "items" in data
   const ctxMenu = useQueryItemMenu(data, tree, handlers)
+  const history = useHistory()
+  const lakeId = useSelector(Current.getLakeId)
+  const query = useSelector(Current.getQuery)
 
   const onGroupClick = (e) => {
     e.stopPropagation()
@@ -75,17 +74,9 @@ export default function QueryItem({
   }
 
   const onItemClick = (e: React.MouseEvent) => {
-    if (!currentPool)
-      return dispatch(
-        Notice.set({type: "NoPoolError", message: "No Pool Selected"})
-      )
-
     handlers.select(e, false)
-    if (value && !e.metaKey && !e.shiftKey) {
-      dispatch(SearchBar.clearSearchBar())
-      dispatch(SearchBar.changeSearchBarInput(value))
-      dispatch(submitSearch())
-    }
+    if (!e.metaKey && !e.shiftKey)
+      history.push(lakeQueryPath(id, lakeId, {isDraft: false}))
   }
 
   const itemIcon = isGroup ? <FolderIcon /> : <QueryIcon />
@@ -101,7 +92,10 @@ export default function QueryItem({
       onContextMenu={() => showContextMenu(ctxMenu)}
       {...maybeBrimLibTestProps}
     >
-      <StyledQueryItem isSelected={isSelected} style={styles.indent}>
+      <StyledQueryItem
+        isSelected={isSelected || query?.id === id}
+        style={styles.indent}
+      >
         <GroupArrow
           isVisible={isGroup}
           show={data.isOpen}

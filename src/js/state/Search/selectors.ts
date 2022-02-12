@@ -40,9 +40,9 @@ export const getArgs = (state: State): SearchArgs => {
 
 export const createHref = (state) => {
   const record = getRecord(state)
-  const workspaceId = Current.getWorkspaceId(state)
+  const lakeId = Current.getLakeId(state)
   const poolId = Current.getPoolId(state)
-  return poolSearchPath(poolId, workspaceId, {...record})
+  return poolSearchPath(poolId, lakeId, {...record})
 }
 
 function getArgsType(program): SearchType {

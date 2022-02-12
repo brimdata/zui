@@ -8,11 +8,11 @@ import Icon from "app/core/Icon"
 import {isEmpty} from "lodash"
 import {SearchRecord} from "src/js/types"
 import Search from "src/js/state/Search"
-import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Investigation from "src/js/state/Investigation"
 import * as remote from "@electron/remote"
 import {showContextMenu} from "src/js/lib/System"
 import {MenuItemConstructorOptions} from "electron"
+import submitSearch from "app/query-home/flows/submit-search"
 
 const HistoryIcon = styled(Icon).attrs({name: "query"})``
 const StyledHistoryItem = styled(StyledItem)`
@@ -56,7 +56,7 @@ const HistoryEntry = ({search}: Props) => {
 
 const LinearHistoryItem = ({innerRef, styles, data: historyItem, state}) => {
   const dispatch = useDispatch()
-  const workspaceId = useSelector(Current.getWorkspaceId)
+  const lakeId = useSelector(Current.getLakeId)
   const poolId = useSelector(Current.getPoolId)
 
   function onClick() {
@@ -69,7 +69,7 @@ const LinearHistoryItem = ({innerRef, styles, data: historyItem, state}) => {
       label: "Delete",
       click: () =>
         dispatch(
-          Investigation.deleteFindingByTs(workspaceId, poolId, historyItem.ts)
+          Investigation.deleteFindingByTs(lakeId, poolId, historyItem.ts)
         )
     },
     {type: "separator"},
@@ -85,9 +85,7 @@ const LinearHistoryItem = ({innerRef, styles, data: historyItem, state}) => {
           })
           .then(({response}) => {
             if (response === 0)
-              dispatch(
-                Investigation.clearPoolInvestigation(workspaceId, poolId)
-              )
+              dispatch(Investigation.clearPoolInvestigation(lakeId, poolId))
           })
     }
   ]

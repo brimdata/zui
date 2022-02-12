@@ -1,6 +1,5 @@
 import React, {HTMLProps} from "react"
 import classNames from "classnames"
-
 import DragAnchor from "./DragAnchor"
 
 type Pass = HTMLProps<any>
@@ -31,7 +30,7 @@ type Props = {
   onDrag: Function
   children: any
   width: number
-  className: string
+  className?: string
   innerRef?: any
   "aria-label": string
 }
@@ -54,7 +53,7 @@ class Pane extends React.Component<Props> {
     return (
       <aside
         ref={innerRef}
-        className={`pane pane-${position} ${className}`}
+        className={classNames("pane", `pane-${position}`, className)}
         style={{width}}
         aria-label={ariaLabel}
       >

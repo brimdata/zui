@@ -3,7 +3,7 @@ import styled from "styled-components"
 import BrimTextLogo from "../../src/js/components/BrimTextLogo"
 import electronIsDev from "../../src/js/electron/isDev"
 import TabImport from "./import"
-import TabCreatePool from "./new"
+import TabCreatePool from "app/pools/new"
 
 const Nav = styled.nav`
   margin-top: auto;

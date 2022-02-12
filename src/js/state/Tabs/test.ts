@@ -19,10 +19,10 @@ test("add tab with no data", () => {
 
 test("add tab with data and activate", () => {
   const state = store.dispatchAll([
-    Tabs.add("1", "/workspaces/a"),
+    Tabs.add("1", "/lakes/a"),
     Tabs.activate("1")
   ])
-  expect(Current.getWorkspaceId(state)).toEqual("a")
+  expect(Current.getLakeId(state)).toEqual("a")
 })
 
 test("cannot activate tab that does not exist in data", () => {

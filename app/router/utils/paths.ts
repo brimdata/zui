@@ -2,35 +2,45 @@ import {
   DecodedSearchParams,
   encodeSearchParams
 } from "app/search/utils/search-params"
+import {encodeQueryParams} from "../../query-home/utils/query-params"
 
-export function workspacesPath() {
-  return "/workspaces"
+export const lakesPath = () => {
+  return "/lakes"
 }
 
-export function workspacePath(id: string) {
-  return `/workspaces/${id}`
+export const lakePath = (id: string) => {
+  return `${lakesPath()}/${id}`
 }
 
-export function lakeImportPath(workspaceId: string) {
-  return `${workspacePath(workspaceId)}/lakes/import`
+export const lakeImportPath = (lakeId: string) => {
+  return `${lakePath(lakeId)}/import`
 }
 
-export function lakePath(id: string, workspaceId: string) {
-  return `${workspacePath(workspaceId)}/lakes/${id}`
+export const lakePoolPath = (poolId: string, lakeId: string) => {
+  return `${lakePath(lakeId)}/pools/${poolId}`
 }
 
+// TODO: deprecate this when we remove 'query-flow' feature-flag
 type Params = Partial<DecodedSearchParams>
 export function poolSearchPath(
-  id: string,
+  poolId: string,
   lakeId: string,
   params: Params = {}
 ) {
-  return `${lakePath(id, lakeId)}/search?${encodeSearchParams(params)}`
+  return `${lakePoolPath(poolId, lakeId)}/search?${encodeSearchParams(params)}`
 }
 
-export function releaseNotesPath(workspaceId) {
-  if (workspaceId) {
-    return `${workspacePath(workspaceId)}/release-notes`
+export function lakeQueryPath(
+  queryId: string,
+  lakeId: string,
+  params: {isDraft?: boolean}
+) {
+  return `${lakePath(lakeId)}/queries/${queryId}?${encodeQueryParams(params)}`
+}
+
+export function releaseNotesPath(lakeId) {
+  if (lakeId) {
+    return `${lakePath(lakeId)}/release-notes`
   } else {
     return "/release-notes"
   }

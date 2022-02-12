@@ -23,7 +23,8 @@ export class Client {
     const defaults: Types.ClientOpts = {env: getEnv(), auth: null}
     const options: Types.ClientOpts = {...defaults, ...opts}
     this.auth = options.auth || null
-    this.fetch = options.env === "node" ? nodeFetch : window.fetch.bind(window)
+    this.fetch =
+      options.env === "node" ? nodeFetch : globalThis.fetch.bind(globalThis)
   }
 
   async version() {

@@ -46,7 +46,10 @@ export function defaults<T>(opts: Partial<T>, defs: T): T {
   return {...defs, ...opts}
 }
 
-export const getEnv = () => ("fetch" in globalThis ? "web" : "node")
+export const getEnv = () => {
+  // @ts-ignore
+  return "fetch" in globalThis && !globalThis.fetch.polyfill ? "web" : "node"
+}
 
 export async function toJS(res: Response | NodeResponse) {
   const j = await res.json()

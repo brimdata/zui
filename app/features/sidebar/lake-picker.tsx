@@ -82,26 +82,26 @@ const StyledAddButton = styled.button`
 `
 
 const showLakeSelectMenu = () => (dispatch, getState) => {
-  const workspaces = Lakes.all(getState())
-  const currentId = Current.getWorkspaceId(getState())
+  const lakes = Lakes.all(getState())
+  const currentId = Current.getLakeId(getState())
 
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Get Info",
-      click: () => dispatch(Modal.show("view-workspace"))
+      click: () => dispatch(Modal.show("view-lake"))
     },
     {type: "separator"}
   ]
 
-  workspaces.forEach((w: Lake) => {
-    const isCurrent = w.id === currentId
+  lakes.forEach((l: Lake) => {
+    const isCurrent = l.id === currentId
     template.push({
       type: "checkbox",
-      label: w.name,
+      label: l.name,
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
-        dispatch(tabHistory.push(lakeImportPath(w.id)))
+        dispatch(tabHistory.push(lakeImportPath(l.id)))
       }
     })
   })
@@ -112,21 +112,21 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
 export default function LakePicker() {
   const dispatch = useDispatch<AppDispatch>()
   const history = useHistory()
-  const workspaceId = useLakeId()
+  const lakeId = useLakeId()
   const api = useBrimApi()
   const [importer, ref] = useCallbackRef<HTMLButtonElement>()
-  const current = brim.workspace(useSelector(Lakes.id(workspaceId)))
+  const current = brim.lake(useSelector(Lakes.id(lakeId)))
 
   const showAddMenu = () => {
     const template: MenuItemConstructorOptions[] = [
       {
         label: "Add Lake...",
-        click: () => dispatch(Modal.show("new-workspace"))
+        click: () => dispatch(Modal.show("new-lake"))
       },
       {
         label: "Add Pool",
-        click: () => history.push(lakeImportPath(workspaceId)),
-        enabled: !!workspaceId
+        click: () => history.push(lakeImportPath(lakeId)),
+        enabled: !!lakeId
       },
       {type: "separator"},
       {
