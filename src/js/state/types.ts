@@ -19,9 +19,9 @@ import {SystemTestState} from "./SystemTest"
 import {TabHistoriesState} from "./TabHistories/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
-import {WorkspaceStatusesState} from "./WorkspaceStatuses/types"
+import {LakeStatusesState} from "./LakeStatuses/types"
+import {DraftQueriesState} from "./DraftQueries"
 
-export type GetState = () => State
 export type ThunkExtraArg = {
   dispatch: AppDispatch
   api: BrimApi
@@ -41,7 +41,7 @@ export type State = {
   configPropValues: ConfigPropValuesState
   tabHistories: TabHistoriesState
   handlers: HandlersState
-  workspaces: LakesState
+  lakes: LakesState
   errors: ErrorsState
   pools: PoolsState
   ingests: ReturnType<typeof Ingests.reducer>
@@ -50,9 +50,10 @@ export type State = {
   notice: NoticeState
   tabs: TabsState
   pluginStorage: PluginStorageState
-  workspaceStatuses: WorkspaceStatusesState
+  lakeStatuses: LakeStatusesState
   queries: QueriesState
   remoteQueries: QueriesState
+  draftQueries: DraftQueriesState
   systemTest: SystemTestState
   toolbars: ToolbarsState
 }

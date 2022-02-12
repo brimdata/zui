@@ -7,7 +7,7 @@ import initIpcListeners from "./initIpcListeners"
 import initMenuActionListeners from "./initMenuActionListeners"
 import initPlugins from "./initPlugins"
 import initStore from "./initStore"
-import initWorkspaceParams from "./initWorkspaceParams"
+import initLakeParams from "./initLakeParams"
 
 export default async function initialize() {
   const api = new BrimApi()
@@ -21,7 +21,7 @@ export default async function initialize() {
   await initGlobals(store)
   initIpcListeners(store, pluginManager)
   initMenuActionListeners(store)
-  initWorkspaceParams(store)
+  initLakeParams(store)
   initDebugGlobals(store)
 
   return {store, api, pluginManager}

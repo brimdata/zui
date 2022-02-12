@@ -5,7 +5,7 @@ import Appearance from "src/js/state/Appearance"
 import styled from "styled-components"
 import {Sectional} from "../../../pkg/sectional"
 import Current from "../../state/Current"
-import WorkspacePicker from "../WorkspacePicker"
+import LakePicker from "../LakePicker"
 import Pane from "./../Pane"
 import HistorySection from "./HistorySection"
 import {XLeftPaneExpander} from "./LeftPaneExpander"
@@ -30,8 +30,8 @@ export function LeftPane() {
     closedSize: 24
   }))
 
-  const ws = useSelector(Current.getWorkspace)
-  const id = get(ws, ["id"], "")
+  const l = useSelector(Current.getLake)
+  const id = get(l, ["id"], "")
   const setSections = (sections) =>
     dispatch(Appearance.updateSidebarSections(sections))
 
@@ -56,7 +56,7 @@ export function LeftPane() {
         <EmptyText>The lake previously on this tab has been removed.</EmptyText>
       ) : (
         <>
-          <WorkspacePicker />
+          <LakePicker />
           <Sectional sections={sections} onChange={setSections}>
             {(data, provided) => {
               if (data.id === "pools")

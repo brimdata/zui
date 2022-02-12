@@ -1,7 +1,7 @@
-import {PoolConfig, PoolStats} from "@brimdata/zealot"
 import {createSlice, PayloadAction as PA} from "@reduxjs/toolkit"
 import {Pool} from "app/core/pools/pool"
 import {get, set, unset} from "lodash"
+import {PoolConfig, PoolStats} from "packages/zealot/src"
 
 const slice = createSlice({
   initialState: {} as {[lakeId: string]: {[poolId: string]: Pool}},

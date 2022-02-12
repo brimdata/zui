@@ -58,10 +58,10 @@ export class BrimMain {
 
   async resetState() {
     // clear keys from secrets storage
-    Lakes.all(this.store.getState()).forEach((ws) => {
-      if (ws.authType !== "auth0") return
-      keytar.deletePassword(toRefreshTokenKey(ws.id), os.userInfo().username)
-      keytar.deletePassword(toAccessTokenKey(ws.id), os.userInfo().username)
+    Lakes.all(this.store.getState()).forEach((l) => {
+      if (l.authType !== "auth0") return
+      keytar.deletePassword(toRefreshTokenKey(l.id), os.userInfo().username)
+      keytar.deletePassword(toAccessTokenKey(l.id), os.userInfo().username)
     })
     await this.session.delete()
     app.relaunch()
@@ -99,7 +99,7 @@ export class BrimMain {
     const {code, state, error, error_description} = urlParts.query as {
       [key: string]: string
     }
-    const {workspaceId, windowId} = deserializeState(state)
+    const {lakeId, windowId} = deserializeState(state)
     const win = this.windows.getWindow(windowId)
     if (!win) {
       console.error("No Window Found")
@@ -107,7 +107,7 @@ export class BrimMain {
       win.ref.focus()
       win.ref.webContents.send("windows:authCallback", {
         code,
-        workspaceId,
+        lakeId,
         error,
         errorDesc: error_description
       })

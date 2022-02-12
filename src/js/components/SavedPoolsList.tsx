@@ -12,7 +12,7 @@ import {
 import FileFilled from "../icons/FileFilled"
 import Current from "../state/Current"
 import {AppDispatch} from "../state/types"
-import {WorkspaceStatus} from "../state/WorkspaceStatuses/types"
+import {LakeStatus} from "../state/LakeStatuses/types"
 import EmptySection from "./common/EmptySection"
 import PoolIcon from "./PoolIcon"
 import ProgressIndicator from "./ProgressIndicator"
@@ -26,7 +26,7 @@ import {isNumber} from "lodash"
 
 type Props = {
   pools: Pool[]
-  workspaceStatus: WorkspaceStatus
+  lakeStatus: LakeStatus
 }
 
 const NameWrap = styled.div`
@@ -38,14 +38,14 @@ const NameWrap = styled.div`
 
 const PoolListItem = ({pool}: {pool: Pool}) => {
   const dispatch = useDispatch<AppDispatch>()
-  const workspaceId = useSelector(Current.getWorkspaceId)
+  const lakeId = useSelector(Current.getLakeId)
   const currentPoolId = useSelector(Current.getPoolId)
   const ingest = useSelector(Ingests.get(pool.id))
   const p = pool
   const history = useHistory()
   const onClick = (e) => {
     e.preventDefault()
-    history.push(poolSearchPath(p.id, workspaceId))
+    history.push(poolSearchPath(p.id, lakeId))
   }
 
   const progress = ingest && isNumber(ingest.progress) && (
@@ -60,7 +60,7 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
     const renameMenuItem = {
       label: "Rename",
       click: () => {
-        dispatch(Modal.show("pool", {workspaceId, poolId: p.id}))
+        dispatch(Modal.show("pool", {lakeId, poolId: p.id}))
       }
     }
     const poolContextMenu = dispatch(getPoolContextMenu(p))
@@ -86,16 +86,16 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
   )
 }
 
-export default function SavedPoolsList({pools, workspaceStatus}: Props) {
+export default function SavedPoolsList({pools, lakeStatus}: Props) {
   const [, drop] = useImportOnDrop()
-  if (workspaceStatus === "disconnected")
+  if (lakeStatus === "disconnected")
     return (
       <EmptySection
         icon={<FileFilled />}
         message="Unable to connect to service."
       />
     )
-  if (workspaceStatus === "login-required")
+  if (lakeStatus === "login-required")
     return (
       <EmptySection
         icon={<FileFilled />}

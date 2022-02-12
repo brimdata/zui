@@ -21,8 +21,8 @@ const StyledAnchor = styled.a`
 
 export default function AddPoolButton() {
   const history = useHistory()
-  const workspaceId = useLakeId()
-  const onClick = () => history.push(lakeImportPath(workspaceId))
+  const lakeId = useLakeId()
+  const onClick = () => history.push(lakeImportPath(lakeId))
 
   return (
     <StyledAnchor className="add-pool" onClick={onClick}>

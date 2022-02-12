@@ -50,7 +50,7 @@ const querySearch = (term: string, items: Query[]): Query[] => {
 
 const RemoteQueriesView = ({toolbarButtons}) => {
   const dispatch = useDispatch<AppDispatch>()
-  const remoteQueries = useSelector(RemoteQueries.get)?.items
+  const remoteQueries = useSelector(RemoteQueries.raw)?.items
   const [filteredQueries, setFilteredQueries] = useState(remoteQueries)
   const {resizeRef: ref, defaults} = useSectionTreeDefaults()
 
@@ -119,7 +119,7 @@ const LocalQueriesView = ({toolbarButtons}) => {
   const dispatch = useDispatch()
   const {resizeRef: ref, defaults} = useSectionTreeDefaults()
   const [{isOver}, drop] = useQueryImportOnDrop()
-  const queries = useSelector(Queries.getRaw)
+  const queries = useSelector(Queries.raw)
   const [filteredQueries, setFilteredQueries] = useState(queries)
 
   const flatLib = flattenQueryTree(queries)

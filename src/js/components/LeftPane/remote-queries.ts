@@ -1,4 +1,4 @@
-import {Pool} from "app/core/pools/pool"
+import {featureIsEnabled} from "app/core/feature-flag"
 import {intersection} from "lodash"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
@@ -8,22 +8,13 @@ import {Readable} from "stream"
 import {BrimLake} from "../../brim"
 import {getZealot} from "../../flows/getZealot"
 import {Query} from "../../state/Queries/types"
+import {setRemoteQueries as newSetRemoteQueries} from "app/features/sidebar/flows/remote-queries"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
-const recordToQuery = (r: Query): Query => {
-  return {...r, tags: []}
-}
-
 export const isRemoteLib = (ids: string[]) => (_, getState) => {
-  const remoteIds = RemoteQueries.get(getState())?.items.map((i) => i.id)
+  const remoteIds = RemoteQueries.raw(getState())?.items.map((i) => i.id)
   return intersection(ids, remoteIds).length > 0
-}
-
-export const getRemotePoolForLake = (lakeId: string): Thunk<Pool> => {
-  return (_d, getState) => {
-    return Pools.getByName(lakeId, remoteQueriesPoolName)(getState())
-  }
 }
 
 export const refreshRemoteQueries = (lake?: BrimLake): Thunk<Promise<void>> => {
@@ -38,10 +29,10 @@ export const refreshRemoteQueries = (lake?: BrimLake): Thunk<Promise<void>> => {
         )
         | join on query_id=this
         | tombstone==false
-        | cut name, value, description, id`
+        | cut name, value, description, id, pins`
       )
       const remoteRecords = (await queryReq.js()) as Query[]
-      dispatch(RemoteQueries.set(remoteRecords.map<Query>(recordToQuery)))
+      dispatch(RemoteQueries.set(remoteRecords))
     } catch (e) {
       if (/pool not found/.test(e.message)) {
         dispatch(RemoteQueries.set([]))
@@ -62,10 +53,12 @@ export const setRemoteQueries = (
   queries: Query[],
   shouldDelete?: boolean
 ): Thunk<Promise<void>> => {
+  if (featureIsEnabled("query-flow"))
+    return newSetRemoteQueries(queries, shouldDelete)
   return async (dispatch, getState) => {
     const zealot = await dispatch(getZealot())
     let rqPoolId = Pools.getByName(
-      Current.getWorkspaceId(getState()),
+      Current.getLakeId(getState()),
       remoteQueriesPoolName
     )(getState())?.id
     if (!rqPoolId) {

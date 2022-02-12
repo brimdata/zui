@@ -103,15 +103,20 @@ const sectionListItems = {
   ]
 }
 
+const StyledPane = styled(Pane)`
+  background: var(--ivory);
+  overflow-x: unset;
+`
+
 export function Sidebar() {
   const dispatch = useDispatch()
   const isOpen = useSelector(Appearance.sidebarIsOpen)
   const width = useSelector(Appearance.sidebarWidth)
   const {resizeRef, defaults} = useSectionTreeDefaults()
   const currentSectionName = useSelector(Appearance.getCurrentSectionName)
-  const ws = useSelector(Current.getWorkspace)
+  const l = useSelector(Current.getLake)
 
-  const id = get(ws, ["id"], "")
+  const id = get(l, ["id"], "")
   function onDragPane(e: MouseEvent) {
     const width = e.clientX
     const max = window.innerWidth
@@ -121,12 +126,11 @@ export function Sidebar() {
   if (!isOpen) return <XLeftPaneExpander />
 
   return (
-    <Pane
+    <StyledPane
       isOpen={isOpen}
       position="left"
       width={width}
       onDrag={onDragPane}
-      className="history-pane"
       aria-label="sidebar"
     >
       {!id ? (
@@ -142,6 +146,6 @@ export function Sidebar() {
           <SectionContentSwitch sectionName={currentSectionName} />
         </>
       )}
-    </Pane>
+    </StyledPane>
   )
 }

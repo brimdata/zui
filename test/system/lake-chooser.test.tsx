@@ -6,7 +6,7 @@ import {SystemTest} from "./system-test"
 const system = new SystemTest("lake-chooser")
 
 test("visiting a lake that doesn't exist", async () => {
-  system.navTo("/workspaces/none")
+  system.navTo("/lakes/none")
   system.render(<App />)
-  await screen.findByRole("heading", {name: /Choose a Workspace/})
+  await screen.findByRole("heading", {name: /Choose a Lake/})
 })

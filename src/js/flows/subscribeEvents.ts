@@ -3,8 +3,9 @@ import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 
 export const subscribeEvents = (
-  workspace?: BrimLake
+  lake?: BrimLake
 ): Thunk<Promise<EventSource>> => async (dispatch) => {
-  const zealot = await dispatch(getZealot(workspace))
+  const zealot = await dispatch(getZealot(lake))
+
   return zealot.subscribe()
 }

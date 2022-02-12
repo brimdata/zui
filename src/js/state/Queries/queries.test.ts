@@ -70,7 +70,7 @@ const newGroup = {
 
 const getGroup = (path: number[]): Group => {
   return get(
-    Queries.getRaw(store.getState()),
+    Queries.raw(store.getState()),
     path.map((pathNdx) => `items[${pathNdx}]`).join(".")
   )
 }
@@ -80,7 +80,7 @@ test("set all", () => {
 
   const state = store.getState()
 
-  expect(Queries.getRaw(state)).toEqual(testLib)
+  expect(Queries.raw(state)).toEqual(testLib)
 })
 
 test("add query", () => {

@@ -10,7 +10,7 @@ import BrimApi from "src/js/api"
 import {BrimMain} from "src/js/electron/brim"
 import {main} from "src/js/electron/main"
 import initialize from "src/js/initializers/initialize"
-import {defaultWorkspace} from "src/js/initializers/initWorkspaceParams"
+import {defaultLake} from "src/js/initializers/initLakeParams"
 import PluginManager from "src/js/initializers/pluginManager"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
@@ -108,7 +108,7 @@ export class SystemTest {
         }
       })
       this.assign(await bootBrim(name, opts))
-      this.navTo(`/workspaces/${defaultWorkspace().id}`)
+      this.navTo(`/lakes/${defaultLake().id}`)
     })
 
     afterEach(() => this.network.resetHandlers())
