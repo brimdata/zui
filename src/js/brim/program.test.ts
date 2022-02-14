@@ -206,9 +206,7 @@ describe("#hasAnalytics()", () => {
   test("parallel procs when one does have analytics", () => {
     expect(
       brim
-        .program(
-          "* | split ( => count() by every(1h) => count() by id.resp_h )"
-        )
+        .program("* | fork ( => count() by every(1h) => count() by id.resp_h )")
         .hasAnalytics()
     ).toBe(true)
   })
@@ -234,7 +232,7 @@ describe("#hasAnalytics()", () => {
   test("for cut proc", () => {
     expect(
       brim
-        .program("* | split ( => cut uid, _path => cut uid ) | tail 1")
+        .program("* | fork ( => cut uid, _path => cut uid ) | tail 1")
         .hasAnalytics()
     ).toBe(true)
   })
@@ -274,7 +272,7 @@ describe("#getHeadCount", () => {
   })
 
   test("with many procs", () => {
-    expect(getHeadCount("* | split ( => head 1000 => count() )")).toBe(1000)
+    expect(getHeadCount("* | fork ( => head 1000 => count() )")).toBe(1000)
   })
 
   test("with no head", () => {
@@ -333,7 +331,7 @@ describe("Parallelizing multiple programs", () => {
 
   test("#parallelizeProcs when programs have same filter", () => {
     expect(parallelizeProcs([a, b, c])).toEqual(
-      'md5=="123" | split ( => count() => head 5 => count() by _path )'
+      'md5=="123" | fork ( => count() => head 5 => count() by _path )'
     )
   })
 
