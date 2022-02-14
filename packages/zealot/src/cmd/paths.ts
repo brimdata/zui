@@ -10,6 +10,5 @@ export function getPath(name: string) {
 
 function isBuilt() {
   const buildDir = path.normalize("dist/cjs/cmd")
-  const regex = new RegExp(`${buildDir}$`)
-  return regex.test(__dirname)
+  return __dirname.endsWith(buildDir)
 }
