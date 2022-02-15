@@ -3,6 +3,7 @@ import {isEmpty} from "lodash"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"
+import {ANALYTIC_PROCS} from "./ast"
 
 export default function(p = "", pins: string[] = []) {
   p = concatPins(p, pins)
@@ -110,7 +111,7 @@ export default function(p = "", pins: string[] = []) {
 
     hasAnalytics() {
       for (const proc of this.ast().getProcs()) {
-        if (["Summarize", "Call", "Cut"].includes(proc.kind)) return true
+        if (ANALYTIC_PROCS.includes(proc.kind)) return true
       }
       return false
     }
