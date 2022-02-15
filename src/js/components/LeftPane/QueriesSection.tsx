@@ -14,7 +14,7 @@ import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Current from "../../state/Current"
 import Modal from "../../state/Modal"
 import Queries from "../../state/Queries"
-import {isBrimLib} from "../../state/Queries/flows"
+import {isBrimLib, isChildOf} from "../../state/Queries/flows"
 import {Group, Query} from "../../state/Queries/types"
 import EmptySection from "../common/EmptySection"
 import useCallbackRef from "../hooks/useCallbackRef"
@@ -259,7 +259,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
         data={queries}
         getChildren="items"
         isOpen="isOpen"
-        disableDrag={(d) => !!dispatch(isBrimLib([d.id]))}
+        disableDrag={(d) => !!dispatch(isChildOf("brim", [d.id]))}
         disableDrop={(d) => d.id === "brim"}
         rowHeight={24}
         width={width}
