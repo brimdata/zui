@@ -1,9 +1,8 @@
 import {parseAst, zed} from "@brimdata/zealot"
-import {isEqual} from "lodash"
+import {isEmpty} from "lodash"
 import {trim} from "../lib/Str"
 import stdlib from "../stdlib"
 import brim from "./"
-import {EVERYTHING_FILTER, FILTER_PROC, TUPLE_PROCS} from "./ast"
 
 export default function(p = "", pins: string[] = []) {
   p = concatPins(p, pins)
@@ -91,15 +90,12 @@ export default function(p = "", pins: string[] = []) {
     },
 
     filter() {
-      const proc = this.ast().proc(FILTER_PROC)
-      if (
-        proc === undefined ||
-        (proc && isEqual(proc.filter, EVERYTHING_FILTER))
-      ) {
+      const [head, ...tail] = p.split("|")
+
+      if (isEmpty(tail) && this.hasAnalytics()) {
         return "*"
       } else {
-        const [f] = p.split("|")
-        return trim(f)
+        return trim(head)
       }
     },
 
@@ -114,7 +110,7 @@ export default function(p = "", pins: string[] = []) {
 
     hasAnalytics() {
       for (const proc of this.ast().getProcs()) {
-        if (!TUPLE_PROCS.includes(proc.kind)) return true
+        if (["Summarize", "Call", "Cut"].includes(proc.kind)) return true
       }
       return false
     }
