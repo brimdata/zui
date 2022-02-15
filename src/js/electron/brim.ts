@@ -1,7 +1,7 @@
 import {app} from "electron"
 import keytar from "keytar"
 import os from "os"
-import {Lake} from "ppl/lake/lake"
+import {Lake} from "@brimdata/zealot/node"
 import {Store} from "redux"
 import url from "url"
 import {
@@ -18,6 +18,7 @@ import {MainArgs, mainDefaults} from "./main"
 import tron, {Session} from "./tron"
 import {decodeSessionState, encodeSessionState} from "./tron/session-state"
 import {WindowManager} from "./tron/window-manager"
+import * as zdeps from "./zdeps"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -33,7 +34,12 @@ export class BrimMain {
     const data = decodeSessionState(await session.load())
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
-    const lake = new Lake(args.lakeRoot, args.lakePort, args.lakeLogs)
+    const lake = new Lake({
+      root: args.lakeRoot,
+      port: args.lakePort,
+      logs: args.lakeLogs,
+      bin: zdeps.zed
+    })
     return new BrimMain(lake, windows, store, session, args)
   }
 
@@ -87,7 +93,7 @@ export class BrimMain {
         await this.saveSession()
       }
       this.windows.quit()
-      await this.lake.close()
+      await this.lake.stop()
       app.quit()
     } else {
       this.isQuitting = false

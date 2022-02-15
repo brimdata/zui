@@ -1,4 +1,4 @@
-import zq from "./cmd/zq"
+import {zq} from "./cmd/zq"
 import {decode, encode, zed, zjson} from "./index"
 
 const file = "testdata/sample.zson" // data.getPath("sample.zson");

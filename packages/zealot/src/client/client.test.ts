@@ -7,7 +7,7 @@ import fs from "fs"
 
 const root = path.join(__dirname, "..", "..", "run", "client.test.ts", "root")
 const logs = path.join(__dirname, "..", "..", "run", "client.test.ts", "logs")
-const lake = new Lake(root, 9000, logs)
+const lake = new Lake({root, port: 9000, logs})
 const client = new Client("http://localhost:9000")
 const branchShape = {
   commit: expect.any(String),

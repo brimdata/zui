@@ -29,7 +29,7 @@ require("@electron/remote/main").initialize()
 
 export const mainDefaults = () => ({
   lakePort: 9867,
-  lakeRoot: join(app.getPath("userData"), "data", "lake"),
+  lakeRoot: join(app.getPath("userData"), "lake"),
   lakeLogs: app.getPath("logs"),
   lake: true,
   devtools: isDev,
@@ -111,3 +111,7 @@ if (gotTheLock) {
 } else {
   app.quit()
 }
+
+process.on("unhandledRejection", (e) => {
+  log.error(e)
+})

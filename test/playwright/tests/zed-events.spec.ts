@@ -2,13 +2,15 @@ import {selectorWithText} from "../helpers/helpers"
 import {poolItem} from "../helpers/locators"
 import TestApp from "../helpers/test-app"
 
-describe("Handle Zed server events", () => {
+import {test} from "@playwright/test"
+
+test.describe("Handle Zed server events", () => {
   const app = new TestApp("Zed Events")
 
-  beforeAll(async () => {
+  test.beforeAll(async () => {
     await app.init()
   })
-  afterAll(async () => {
+  test.afterAll(async () => {
     await app.shutdown()
   })
 

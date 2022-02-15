@@ -1,4 +1,4 @@
-import zq from "../../cmd/zq"
+import {zq} from "../../cmd/zq"
 import {DefaultContext, zed} from "../../index"
 import {createRecord} from "../../test/factory"
 

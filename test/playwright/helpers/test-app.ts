@@ -45,9 +45,8 @@ export default class TestApp {
     await this.brim.waitForEvent("window")
     this.mainWin = await this.getWindowByTitle("Brim")
     this.mainWin.setDefaultTimeout(60000)
-    await this.mainWin.reload({waitUntil: "load"})
     const hidden = await this.getWindowByTitle("Hidden Window")
-    await hidden.reload({waitUntil: "load"})
+    await hidden.waitForRequest("http://localhost:9867/events")
   }
 
   async shutdown() {

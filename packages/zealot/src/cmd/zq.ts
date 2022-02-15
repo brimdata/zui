@@ -30,7 +30,7 @@ function parseNDJSON(input: string) {
     })
 }
 
-export default async function zq(opts: {
+export async function zq(opts: {
   query?: string
   file?: string
   input?: string
