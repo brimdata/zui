@@ -244,13 +244,6 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
 
   const {ref, width = 1, height = 1} = useResizeObserver<HTMLDivElement>()
   const renderQueries = () => {
-    if (!currentPool)
-      return (
-        <EmptySection
-          icon={<MagnifyingGlass />}
-          message="You must have a pool selected to run queries."
-        />
-      )
     if (!(queries?.items?.length > 0))
       return (
         <EmptySection
