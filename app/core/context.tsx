@@ -1,4 +1,4 @@
-import React, {ReactElement, useContext} from "react"
+import React, {ReactElement, useContext, useEffect} from "react"
 import {DndProvider} from "react-dnd"
 import {HTML5Backend} from "react-dnd-html5-backend"
 import {Provider} from "react-redux"
@@ -21,6 +21,9 @@ export function BrimProvider(props: {
   api: BrimApi
   children: ReactElement
 }) {
+  useEffect(() => {
+    global.firstMount = true
+  }, [])
   return (
     <AppErrorBoundary>
       <DndProvider backend={HTML5Backend}>

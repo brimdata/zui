@@ -1,17 +1,18 @@
-import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only"
-import {
-  _electron as electron,
-  ElectronApplication,
-  Page
-} from "playwright-chromium"
-import {selectors} from "./integration"
-import {selectorWithText} from "./helpers"
-import {hookLogLocator, submitButton} from "./locators"
-import path from "path"
-import {itestDir} from "./env"
-import env from "../../../app/core/env"
-import {existsSync} from "fs"
 import {Client} from "@brimdata/zealot"
+import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only"
+import {existsSync} from "fs"
+import {reject} from "lodash"
+import path from "path"
+import {
+  ElectronApplication,
+  Page,
+  _electron as electron
+} from "playwright-chromium"
+import env from "../../../app/core/env"
+import {itestDir} from "./env"
+import {selectorWithText} from "./helpers"
+import {selectors} from "./integration"
+import {hookLogLocator, submitButton} from "./locators"
 
 export default class TestApp {
   brim: ElectronApplication
@@ -40,13 +41,13 @@ export default class TestApp {
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin
     this.brim = await electron.launch(launchOpts)
-    // wait for both 'Brim' and "Hidden Window' to load
-    await this.brim.firstWindow()
-    await this.brim.waitForEvent("window")
+    await waitForTrue(() => this.brim.windows().length === 2)
+    await Promise.all(
+      this.brim
+        .windows()
+        .map((page) => page.waitForFunction(() => global.firstMount))
+    )
     this.mainWin = await this.getWindowByTitle("Brim")
-    this.mainWin.setDefaultTimeout(60000)
-    const hidden = await this.getWindowByTitle("Hidden Window")
-    await hidden.waitForRequest("http://localhost:9867/events")
   }
 
   async shutdown() {
@@ -115,4 +116,19 @@ const getAppInfo = () => {
   }
 
   return {bin: null, entry: "."}
+}
+
+function waitForTrue(check: () => boolean) {
+  return new Promise<void>((resolve) => {
+    const id = setTimeout(() => reject("Gave up"), 30000)
+    const run = () => {
+      if (check()) {
+        clearTimeout(id)
+        resolve()
+      } else {
+        setTimeout(() => run(), 100)
+      }
+    }
+    run()
+  })
 }

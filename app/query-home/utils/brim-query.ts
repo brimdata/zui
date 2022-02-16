@@ -1,7 +1,7 @@
 import {Query} from "src/js/state/Queries/types"
 import {set} from "lodash"
 import brim from "src/js/brim"
-import {HEAD_PROC, TUPLE_PROCS} from "../../../src/js/brim/ast"
+import {ANALYTIC_PROCS, HEAD_PROC} from "../../../src/js/brim/ast"
 import {parseAst} from "@brimdata/zealot"
 import {trim} from "src/js/lib/Str"
 export type PinType = "from" | "filter"
@@ -60,7 +60,7 @@ export class BrimQuery {
 
   hasAnalytics() {
     for (const proc of this.ast().getProcs()) {
-      if (!TUPLE_PROCS.includes(proc.kind)) return true
+      if (ANALYTIC_PROCS.includes(proc.kind)) return true
     }
     return false
   }

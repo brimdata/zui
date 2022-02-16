@@ -20,6 +20,7 @@ declare global {
       navTo: (path: string) => void
       dev: DevGlobal
       mainArgs: MainArgs
+      firstMount: boolean
     }
   }
 }
