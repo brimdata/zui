@@ -43,9 +43,13 @@ export default class TestApp {
     this.brim = await electron.launch(launchOpts)
     await waitForTrue(() => this.brim.windows().length === 2)
     await Promise.all(
-      this.brim
-        .windows()
-        .map((page) => page.waitForFunction(() => global.firstMount))
+      this.brim.windows().map((page) => {
+        page.on("console", console.log)
+        return page.waitForFunction(() => {
+          console.log(global.firstMount)
+          return global.firstMount
+        })
+      })
     )
     this.mainWin = await this.getWindowByTitle("Brim")
   }
