@@ -11,10 +11,9 @@ import TreeModel from "tree-model"
 import useResizeObserver from "use-resize-observer"
 import DropdownArrow from "../../icons/DropdownArrow"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
-import Current from "../../state/Current"
 import Modal from "../../state/Modal"
 import Queries from "../../state/Queries"
-import {isBrimLib, isChildOf} from "../../state/Queries/flows"
+import {isChildOf} from "../../state/Queries/flows"
 import {Group, Query} from "../../state/Queries/types"
 import EmptySection from "../common/EmptySection"
 import useCallbackRef from "../hooks/useCallbackRef"
@@ -166,7 +165,6 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
   const tree = useRef()
   const dispatch = useDispatch<AppDispatch>()
   const [selectedTag, setSelectedTag] = useState("All Local")
-  const currentPool = useSelector(Current.getPool)
   const queriesRoot = useSelector(Queries.raw)
   const remoteQueries = useSelector(RemoteQueries.raw)
   const [queries, setQueries] = useState<Group>(queriesRoot)
@@ -226,7 +224,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     // no reordering while a filter is on
     if (selectedTag !== "All Local") return
     // no reordering if any one item is part of shipped brim lib
-    if (dispatch(isBrimLib([...dragIds, parentId]))) return
+    if (dispatch(isChildOf("brim", [...dragIds, parentId]))) return
     dispatch(Queries.moveItems(dragIds, parentId, index))
   }
 
@@ -284,19 +282,15 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
           <StyledArrow show={isOpen} />
           <Title>Queries</Title>
         </ClickRegion>
-        {currentPool && (
-          <>
-            <TagsViewSelect
-              selected={selectedTag}
-              tags={["Remote", "separator", "All Local", ...tags]}
-              onSelect={onTagSelect}
-            />
-            <NewActionsDropdown
-              tree={tree.current}
-              isRemote={selectedTag === "Remote"}
-            />
-          </>
-        )}
+        <TagsViewSelect
+          selected={selectedTag}
+          tags={["Remote", "separator", "All Local", ...tags]}
+          onSelect={onTagSelect}
+        />
+        <NewActionsDropdown
+          tree={tree.current}
+          isRemote={selectedTag === "Remote"}
+        />
       </SectionHeader>
       <SectionContents
         ref={(r) => {
