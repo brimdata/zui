@@ -1,4 +1,5 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
+import {isUndefined} from "lodash"
 import nodeFetch from "node-fetch"
 import {PoolConfig, PoolStats} from ".."
 import {ResultStream} from "../query/result-stream"
@@ -60,7 +61,8 @@ export class Client {
       body: data,
       headers,
       signal: opts.signal,
-      fetch: nodeFetch
+      fetch: nodeFetch,
+      timeout: Infinity
     })
     return toJS(res)
   }
@@ -161,9 +163,10 @@ export class Client {
     signal?: AbortSignal
     fetch?: Types.CrossFetch
     headers?: object
+    timeout?: number
   }) {
     const abortCtl = wrapAbort(opts.signal)
-    const tid = setTimeout(() => abortCtl.abort(), this.timeout)
+    const clearTimer = this.setTimeout(() => abortCtl.abort(), opts.timeout)
     const fetch = opts.fetch || this.fetch
     const resp = await fetch(this.baseURL + opts.path, {
       method: opts.method,
@@ -177,7 +180,7 @@ export class Client {
       body: opts.body,
       signal: abortCtl.signal
     })
-    clearTimeout(tid)
+    clearTimer()
     if (resp.ok) {
       return resp
     } else {
@@ -187,5 +190,12 @@ export class Client {
 
   private get authHeader() {
     return this.auth ? {Authorization: `Bearer ${this.auth}`} : undefined
+  }
+
+  private setTimeout(fn: () => void, ms?: number) {
+    if (ms === Infinity) return () => {}
+    if (isUndefined(ms)) ms = this.timeout
+    const id = setTimeout(fn, ms)
+    return () => clearTimeout(id)
   }
 }
