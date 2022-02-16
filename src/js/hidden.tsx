@@ -99,6 +99,10 @@ const Hidden = () => {
     })
   }, [lakes])
 
+  useEffect(() => {
+    global.firstMount = true
+  }, [])
+
   // this component is non-visual, only used for the reactive effects above
   return null
 }
