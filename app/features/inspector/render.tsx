@@ -51,6 +51,9 @@ export function renderOneValue(args: InspectArgs): ReactNode {
     className: zedTypeClassName(value),
     onContextMenu: (e: React.MouseEvent) => {
       ctx.props.onContextMenu(e, value, field)
+    },
+    onClick: (e: React.MouseEvent) => {
+      ctx.props.onClick(e, value, field)
     }
   }
 

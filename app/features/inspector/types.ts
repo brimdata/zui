@@ -8,7 +8,7 @@ export type SetExpanded = (payload: {
   isExpanded: boolean
 }) => void
 
-type OnContextMenu = (
+type InspectorMouseEvent = (
   e: MouseEvent,
   value: zed.Value | zed.Type,
   field: zed.Field
@@ -20,7 +20,8 @@ export type InspectorProps = {
   values: zed.Value[]
   isExpanded: IsExpanded
   setExpanded: SetExpanded
-  onContextMenu: OnContextMenu
+  onContextMenu: InspectorMouseEvent
+  onClick: InspectorMouseEvent
   loadMore?: Function
 }
 
