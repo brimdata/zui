@@ -44,16 +44,16 @@ export function renderAlias(type: zed.Type) {
 }
 
 export function renderOneValue(args: InspectArgs): ReactNode {
-  const {ctx, value, field} = args
+  const {ctx, value, field, index} = args
 
   const props = {
     key: field?.name + value.toString(),
     className: zedTypeClassName(value),
     onContextMenu: (e: React.MouseEvent) => {
-      ctx.props.onContextMenu(e, value, field)
+      ctx.props?.onContextMenu(e, value, field, index)
     },
     onClick: (e: React.MouseEvent) => {
-      ctx.props.onClick(e, value, field)
+      ctx.props?.onClick(e, value, field, index)
     }
   }
 
