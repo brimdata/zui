@@ -16,6 +16,7 @@ import {viewerSearch} from "./viewer-search"
  */
 export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const params = Url.getSearchParams(getState())
+  if (!params.spanArgs) return
   const program = brim.program(params.program, params.pins)
   const perPage = program.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
   const query = addHeadProc(program.string(), perPage)
