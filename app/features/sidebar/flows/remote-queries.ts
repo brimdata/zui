@@ -38,7 +38,7 @@ export const refreshRemoteQueries = (
   try {
     const queryReq = await zealot.query(
       `from '${remoteQueriesPoolName}'
-        | split (
+        | fork (
           => query_id:={id:id,ts:ts} | sort query_id
           => ts:=max(ts) by id | sort this
         )
