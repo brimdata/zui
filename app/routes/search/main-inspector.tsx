@@ -4,8 +4,10 @@ import {Inspector} from "app/features/inspector/inspector"
 import {InspectArgs} from "app/features/inspector/types"
 import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
 import searchFieldContextMenu from "ppl/menus/searchFieldContextMenu"
-import React, {useCallback} from "react"
+import React, {MouseEvent, useCallback} from "react"
 import {useDispatch, useSelector} from "react-redux"
+import {useRowSelection} from "src/js/components/SearchResults/selection"
+import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
 import Viewer from "src/js/state/Viewer"
 
@@ -18,6 +20,9 @@ export function MainInspector(props: {
   const dispatch = useDispatch()
   const expanded = useSelector(Slice.getExpanded)
   const defaultExpanded = useSelector(Slice.getDefaultExpanded)
+  const {parentRef, clicked} = useRowSelection({
+    multi: false
+  })
 
   function setExpanded(payload: {args: InspectArgs; isExpanded: boolean}) {
     dispatch(Slice.setExpanded(payload))
@@ -38,7 +43,7 @@ export function MainInspector(props: {
     dispatch(nextPageViewerSearch())
   }
 
-  function onContextMenu(e, value: zed.Value, field: zed.Field) {
+  function onContextMenu(e: MouseEvent, value: zed.Value, field: zed.Field) {
     dispatch(
       searchFieldContextMenu({
         value,
@@ -48,12 +53,24 @@ export function MainInspector(props: {
     )
   }
 
+  function onClick(
+    e: MouseEvent,
+    value: zed.Value,
+    field: zed.Field,
+    index: number
+  ) {
+    dispatch(viewLogDetail(field.rootRecord))
+    clicked(e, index)
+  }
+
   return (
     <Inspector
+      innerRef={parentRef}
       isExpanded={useCallback(isExpanded, [expanded, defaultExpanded])}
       setExpanded={useCallback(setExpanded, [])}
       loadMore={useCallback(loadMore, [])}
       onContextMenu={useCallback(onContextMenu, [])}
+      onClick={useCallback(onClick, [])}
       {...props}
     />
   )
