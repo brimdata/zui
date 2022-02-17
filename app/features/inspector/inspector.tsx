@@ -11,6 +11,7 @@ export function Inspector(props: InspectorProps) {
 
   return (
     <List
+      innerRef={props.innerRef}
       height={props.height}
       width={props.width}
       itemCount={list.count}

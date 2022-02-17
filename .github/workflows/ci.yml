@@ -36,14 +36,10 @@ jobs:
               yarn electron-builder --linux=deb
               sudo apt install -y --no-install-recommends ./dist/installers/*.deb
               ;;
-            macOS )
-              yarn electron-builder --mac=dir
-              cp -r dist/installers/mac/Brim.app /Applications
-              ;;
           esac
       - name: End to end tests
         id: playwright
-        if: runner.os != 'Windows'
+        if: runner.os == 'Linux'
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24

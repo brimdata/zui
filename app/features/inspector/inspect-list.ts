@@ -40,12 +40,12 @@ export class InspectList {
       const rowIndex = this.valueToRow[index]
       const value = this.props.values[index]
       if (this.rows[rowIndex]) continue
-      const newRows = this.inspect(value)
+      const newRows = this.inspect(value, index)
       this.rows.splice(rowIndex, newRows.length, ...newRows)
     }
   }
 
-  inspect(value: zed.Value) {
+  inspect(value: zed.Value, index: number) {
     const ctx = new InspectContext(this.props)
     inspect({
       ctx,
@@ -53,7 +53,8 @@ export class InspectList {
       field: null,
       key: null,
       last: true,
-      type: value.type
+      type: value.type,
+      index
     })
     return ctx.rows
   }
