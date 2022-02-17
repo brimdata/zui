@@ -5666,7 +5666,7 @@ __metadata:
     node-sass-chokidar: ^1.5.0
     npm-run-all: ^4.1.5
     on-idle: ^3.1.4
-    playwright-chromium: ^1.17.1
+    playwright-chromium: 1.19.1
     polished: ^3.6.5
     prettier: ^1.19.1
     prettier-eslint: ^8.8.2
@@ -6673,7 +6673,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:8.3.0, commander@npm:^8.2.0, commander@npm:^8.3.0":
+"commander@npm:8.3.0, commander@npm:^8.3.0":
   version: 8.3.0
   resolution: "commander@npm:8.3.0"
   checksum: 0f82321821fc27b83bd409510bb9deeebcfa799ff0bf5d102128b500b7af22872c0c92cb6a0ebc5a4cf19c6b550fba9cedfa7329d18c6442a625f851377bacf0
@@ -8907,7 +8907,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extract-zip@npm:2.0.1, extract-zip@npm:^2.0.1":
+"extract-zip@npm:2.0.1":
   version: 2.0.1
   resolution: "extract-zip@npm:2.0.1"
   dependencies:
@@ -12288,7 +12288,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jpeg-js@npm:0.4.3, jpeg-js@npm:^0.4.2":
+"jpeg-js@npm:0.4.3":
   version: 0.4.3
   resolution: "jpeg-js@npm:0.4.3"
   checksum: 9e5bacc9135efa7da340b62e81fa56fab0c8516ef617228758132af5b7d31b516cc6e1500cdffb82d3161629be341be980099f2b37eb76b81e26db6e3e848c77
@@ -13381,7 +13381,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime@npm:^2.4.6, mime@npm:^2.5.2":
+"mime@npm:^2.5.2":
   version: 2.5.2
   resolution: "mime@npm:2.5.2"
   bin:
@@ -14953,14 +14953,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-chromium@npm:^1.17.1":
-  version: 1.17.1
-  resolution: "playwright-chromium@npm:1.17.1"
+"playwright-chromium@npm:1.19.1":
+  version: 1.19.1
+  resolution: "playwright-chromium@npm:1.19.1"
   dependencies:
-    playwright-core: =1.17.1
+    playwright-core: 1.19.1
   bin:
     playwright: cli.js
-  checksum: 44a37c6452a982f77a6136ac27d201e31ca84c2381a52be466068079fe2eec3b131b1585550cfba2b0432c15c0059ab1dc8cfbdc777c957c2569ceeb3e717e68
+  checksum: 4186020819a6d5b57034574207d53817d7865f0773339efd01141a8a98b6302468e7f297cfd20c95bcc4450b5fbad0d3d6c3ac3b5d06825cbb04479416a1ad71
   languageName: node
   linkType: hard
 
@@ -14990,29 +14990,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:=1.17.1":
-  version: 1.17.1
-  resolution: "playwright-core@npm:1.17.1"
+"playwright-core@npm:1.19.1":
+  version: 1.19.1
+  resolution: "playwright-core@npm:1.19.1"
   dependencies:
-    commander: ^8.2.0
-    debug: ^4.1.1
-    extract-zip: ^2.0.1
-    https-proxy-agent: ^5.0.0
-    jpeg-js: ^0.4.2
-    mime: ^2.4.6
-    pngjs: ^5.0.0
-    progress: ^2.0.3
-    proper-lockfile: ^4.1.1
-    proxy-from-env: ^1.1.0
-    rimraf: ^3.0.2
-    socks-proxy-agent: ^6.1.0
-    stack-utils: ^2.0.3
-    ws: ^7.4.6
-    yauzl: ^2.10.0
-    yazl: ^2.5.1
+    commander: 8.3.0
+    debug: 4.3.3
+    extract-zip: 2.0.1
+    https-proxy-agent: 5.0.0
+    jpeg-js: 0.4.3
+    mime: 3.0.0
+    pngjs: 6.0.0
+    progress: 2.0.3
+    proper-lockfile: 4.1.2
+    proxy-from-env: 1.1.0
+    rimraf: 3.0.2
+    socks-proxy-agent: 6.1.1
+    stack-utils: 2.0.5
+    ws: 8.4.2
+    yauzl: 2.10.0
+    yazl: 2.5.1
   bin:
     playwright: cli.js
-  checksum: 916da00f06b159cc8d238f109c298ee49f660b132e60ca43c5fcd3a86626a186ac224c3ac257d26e37fa45ba10fa4b0092eaed09560e4e130cae4f452cc7eec2
+  checksum: a88b055d1180b128bc073b58dd63aff29d1f996711e8f72cae4df03ecc8c133822caf04a9f6838b4bd3f6473b9c58661274f39e9db3b4570b18bbe0a3eef1fb6
   languageName: node
   linkType: hard
 
@@ -15044,13 +15044,6 @@ __metadata:
   version: 4.0.1
   resolution: "pngjs@npm:4.0.1"
   checksum: 9497e08a6c2d850630ba7c8d3738fd36c9db1af7ee8b8c2d4b664e450807a280936dfa1489deb60e6943b968bedd58c9aa93def25a765579d745ea44467fc47f
-  languageName: node
-  linkType: hard
-
-"pngjs@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "pngjs@npm:5.0.0"
-  checksum: 04e912cc45fb9601564e2284efaf0c5d20d131d9b596244f8a6789fc6cdb6b18d2975a6bbf7a001858d7e159d5c5c5dd7b11592e97629b7137f7f5cef05904c8
   languageName: node
   linkType: hard
 
@@ -15302,7 +15295,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proper-lockfile@npm:4.1.2, proper-lockfile@npm:^4.1.1":
+"proper-lockfile@npm:4.1.2":
   version: 4.1.2
   resolution: "proper-lockfile@npm:4.1.2"
   dependencies:
@@ -15329,7 +15322,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-from-env@npm:1.1.0, proxy-from-env@npm:^1.1.0":
+"proxy-from-env@npm:1.1.0":
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
@@ -16995,17 +16988,6 @@ __metadata:
     debug: ^4.3.1
     socks: ^2.6.1
   checksum: 9a8a4f791bba0060315cf7291ca6f9db37d6fc280fd0860d73d8887d3efe4c22e823aa25a8d5375f6079279f8dc91b50c075345179bf832bfe3c7c26d3582e3c
-  languageName: node
-  linkType: hard
-
-"socks-proxy-agent@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "socks-proxy-agent@npm:6.1.0"
-  dependencies:
-    agent-base: ^6.0.2
-    debug: ^4.3.1
-    socks: ^2.6.1
-  checksum: 32ea0d62c848b5c246955e8d6c34832fe6cd8c5f3b66f5ace3a9bd7387bafae3e67d96474d41291723ba7135e2da46d65e008a8a35a793dfa5cb0f4ac05429df
   languageName: node
   linkType: hard
 
@@ -19377,7 +19359,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yazl@npm:2.5.1, yazl@npm:^2.5.1":
+"yazl@npm:2.5.1":
   version: 2.5.1
   resolution: "yazl@npm:2.5.1"
   dependencies:
