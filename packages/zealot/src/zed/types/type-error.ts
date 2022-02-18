@@ -26,4 +26,8 @@ export class TypeError implements Type {
       type: stream.encodeType(this.type)
     }
   }
+
+  toString(): string {
+    return TypeError.stringify(this.type)
+  }
 }
