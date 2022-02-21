@@ -32,17 +32,18 @@ export function viewerSearch(args: Args): Thunk<void> {
 
     const prevRows = Viewer.getRecords(getState())
 
-    const res = await dispatch(
-      search({
-        id,
-        query: args.query,
-        poolId: Current.mustGetPool(getState()).id,
-        from: args.from,
-        to: args.to,
-        initial: !args.append
-      })
-    )
+    let res
     try {
+      res = await dispatch(
+        search({
+          id,
+          query: args.query,
+          poolId: Current.mustGetPool(getState()).id,
+          from: args.from,
+          to: args.to,
+          initial: !args.append
+        })
+      )
       await res.collect(({rows, shapesMap}) => {
         dispatch(Viewer.setRecords(tabId, [...prevRows, ...rows]))
         dispatch(Viewer.updateColumns(tabId, shapesMap))
