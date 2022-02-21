@@ -28,9 +28,9 @@ export function histogramSearch(): Thunk<Promise<void>> {
     const tabId = Tabs.getActive(getState())
     const history = global.tabHistories.get(tabId)
     const {key} = history.location
+    dispatch(Chart.clear(tabId))
     dispatch(Chart.setSearchKey(tabId, key))
     dispatch(Chart.setStatus(tabId, "FETCHING"))
-    dispatch(Chart.clear(tabId))
 
     const resp = await dispatch(search({id, query, from, to, poolId}))
     try {
