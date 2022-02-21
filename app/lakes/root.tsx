@@ -27,11 +27,12 @@ function InitLake({children}) {
   const dispatch = useDispatch()
   const lake = useSelector(Current.getLake)
   const status = useSelector(LakeStatuses.get(lake?.id))
-  if (!lake) return <Redirect to="/lakes" />
 
   useLayoutEffect(() => {
-    dispatch(updateStatus(lake.id))
-  }, [lake.id])
+    if (lake) dispatch(updateStatus(lake.id))
+  }, [lake?.id])
+
+  if (!lake) return <Redirect to="/lakes" />
 
   switch (status) {
     case "disconnected":

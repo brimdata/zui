@@ -95,6 +95,7 @@ export async function main(args: Partial<MainArgs> = {}) {
   app.on("open-url", (event, url) => {
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()
+    log.info("Opening url:", url)
     brim.openUrl(url)
   })
 
