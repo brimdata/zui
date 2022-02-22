@@ -2,8 +2,8 @@ import React, {HTMLProps} from "react"
 import classNames from "classnames"
 
 import CloseButton from "../CloseButton"
-import RampLeft from "../../icons/ramp-left.svg"
-import RampRight from "../../icons/ramp-right.svg"
+import RampLeft from "../../icons/ramp-left"
+import RampRight from "../../icons/ramp-right"
 
 type Props = {
   title: string

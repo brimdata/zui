@@ -1,6 +1,6 @@
 import React from "react"
-import Back from "../icons/back-arrow.svg"
-import Forward from "../icons/forward-arrow.svg"
+import Back from "../icons/back-arrow"
+import Forward from "../icons/forward-arrow"
 
 type Props = {
   prevExists: boolean

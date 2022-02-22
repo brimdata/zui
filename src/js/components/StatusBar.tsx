@@ -6,7 +6,7 @@ import {ingestProgressBar} from "../../../test/playwright/helpers/locators"
 import Current from "../state/Current"
 import Ingests from "../state/Ingests"
 import Modal from "../state/Modal"
-import Warning from "./icons/warning-sm.svg"
+import Warning from "./icons/warning-sm"
 import ProgressIndicator from "./ProgressIndicator"
 import React from "react"
 

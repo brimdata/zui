@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 
-import Back from "../icons/back-arrow.svg"
+import Back from "../icons/back-arrow"
 import Button from "./Button"
-import Forward from "../icons/forward-arrow.svg"
+import Forward from "../icons/forward-arrow"
 import {useHistory} from "react-router"
 import TabHistory from "app/router/tab-history"
 import {useDispatch} from "react-redux"

@@ -1,8 +1,8 @@
 import React from "react"
 
 import Animate from "../Animate"
-import CarrotDown from "../icons/carrot-down.svg"
-import CarrotUp from "../icons/carrot-up.svg"
+import CarrotDown from "../icons/carrot-down"
+import CarrotUp from "../icons/carrot-up"
 
 type Props = {
   show: boolean
