@@ -97,6 +97,8 @@ export function renderOneValue(args: InspectArgs): ReactNode {
       )
     } else if (value instanceof zed.TypeUnion) {
       return <span {...props}>{`Union(${value.types.length})`}</span>
+    } else if (value instanceof zed.TypeError) {
+      return <span {...props}>{`Error(${value.type.toString()})`}</span>
     } else {
       return null
     }
@@ -134,6 +136,17 @@ export function renderOneValue(args: InspectArgs): ReactNode {
     return renderOneValue({...args, value: value.value})
   }
 
+  if (value instanceof zed.Error) {
+    return (
+      <span {...props}>
+        Error
+        <span className="zed-syntax">(</span>
+        {renderOneValue({...args, value: value.value})}
+        <span className="zed-syntax">)</span>
+      </span>
+    )
+  }
+
   return <span {...props}>{value.toString()}</span>
 }
 
@@ -164,30 +177,27 @@ export function renderContainer(
         key="arrow"
         size={16}
       />
-
       <span
         key="name"
         className={classNames("zed-container", {
-          "zed-type": zed.isType(args.value)
+          "zed-type": zed.isType(args.value),
+          "zed-error": args.value instanceof zed.Error
         })}
       >
-        {container}{" "}
+        {container}
       </span>
-
+      <span> </span>
       {openToken ? (
         <span key="open-token" className="zed-syntax">
           {openToken}
         </span>
       ) : null}
-
       {nodes}
-
       {closeToken ? (
         <span key="close-token" className="zed-syntax">
           {closeToken}
         </span>
       ) : null}
-
       {closeToken && renderAlias(args.type)}
     </a>
   )

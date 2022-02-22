@@ -21,6 +21,10 @@ export function getRowCount(value: zed.Value | zed.Type, isExpanded) {
         return sum + getRowCount(type, isExpanded)
       }, 2)
     }
+    if (value instanceof zed.TypeError) {
+      if (!isExpanded(value)) return 1
+      return getRowCount(value.type, isExpanded) + 2
+    }
     return 1
   } else {
     if (value.isUnset()) return 1
@@ -55,6 +59,10 @@ export function getRowCount(value: zed.Value | zed.Type, isExpanded) {
     }
     if (value instanceof zed.TypeValue) {
       return getRowCount(value.value, isExpanded)
+    }
+    if (value instanceof zed.Error) {
+      if (!isExpanded(value)) return 1
+      return getRowCount(value.value, isExpanded) + 2
     }
     return 1
   }

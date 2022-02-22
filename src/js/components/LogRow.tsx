@@ -58,7 +58,9 @@ const LogRow = (props: Props) => {
       onClick={onClick}
       onDoubleClick={onDoubleClick}
     >
-      {columns.getVisible().map(renderCell)}
+      {log instanceof zed.Record
+        ? columns.getVisible().map(renderCell)
+        : "The table view can only render records at the moment."}
     </div>
   )
 }
