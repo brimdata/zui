@@ -11,7 +11,6 @@ module.exports = (api) => {
       "@babel/plugin-proposal-object-rest-spread",
       "@babel/plugin-proposal-class-properties",
       "@babel/plugin-proposal-numeric-separator",
-      "inline-react-svg",
       [
         "module-resolver",
         {

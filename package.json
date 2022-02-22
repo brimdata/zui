@@ -70,7 +70,6 @@
     "abort-controller": "^3.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
-    "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "brimcap": "github:brimdata/brimcap#addca3febb2f022f0ff88b2af45d7d6f458b392b",
     "chalk": "^4.1.0",
