@@ -1,5 +1,3 @@
-import {useZedFormatter} from "src/app/core/format"
-import Icon from "src/app/core/Icon"
 import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import {transparentize} from "polished"
 import searchFieldContextMenu from "src/ppl/menus/searchFieldContextMenu"
@@ -10,6 +8,7 @@ import {useDispatch} from "react-redux"
 import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
 import {zed} from "@brimdata/zealot"
+import {useZedFormatter} from "../core/format"
 
 const havelock = cssVar("--havelock")
 const transHavelock = transparentize(0.75, havelock as string)
@@ -53,6 +52,8 @@ export default function Value(props: ValueProps) {
     return <SetValue {...props} />
   } else if (props.value instanceof zed.Array) {
     return <ArrayValue {...props} />
+  } else if (props.value instanceof zed.Error) {
+    return <ErrorValue {...props} />
   } else {
     return <PrimitiveValue {...props} />
   }
@@ -82,37 +83,7 @@ export function PrimitiveValue(props: ValueProps) {
   )
 }
 
-const StyledErrorField = styled.div`
-  display: inline-flex;
-  background-color: var(--alert-1);
-  border-radius: 3px;
-  color: white;
-  height: 17px;
-  justify-content: center;
-  align-items: center;
-  padding: 0 9px;
-
-  svg {
-    margin-right: 8px;
-    margin-top: 1px;
-    fill: white;
-    opacity: 0.6;
-    width: 11px;
-    height: 11px;
-  }
-`
-
-const ErrorField = (props) => {
-  return (
-    <StyledErrorField>
-      <Icon name="warning" />
-      <span>{props.field.value.toString()}</span>
-    </StyledErrorField>
-  )
-}
-
 function renderValue(props, format) {
-  if (props.field?.data instanceof zed.Error) return <ErrorField {...props} />
   if (isPath(props.field.name, props.field.value))
     return <ZeekPath {...props} />
   if (isEventType(props.field.name, props.field.value))
@@ -164,6 +135,24 @@ export function ArrayValue(props: ValueProps) {
         </Fragment>
       ))}
       <Syntax>]</Syntax>
+      {pad(props.padBefore)}
+    </>
+  )
+}
+
+export function ErrorValue(props: ValueProps) {
+  const error = props.value as zed.Error
+  return (
+    <>
+      <span className="zed-error">Error</span>
+      <Syntax>(</Syntax>
+      <Value
+        {...props}
+        value={error.value}
+        padAfter={false}
+        padBefore={false}
+      />
+      <Syntax>)</Syntax>
       {pad(props.padBefore)}
     </>
   )

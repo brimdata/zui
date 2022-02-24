@@ -27,6 +27,8 @@ function inspectType(args: InspectArgs & {value: zed.Type}) {
     inspectUnionType({...args, value})
   } else if (value instanceof zed.TypeAlias) {
     inspectType({...args, value: value.type, type: value})
+  } else if (value instanceof zed.TypeError) {
+    inspectErrorType({...args, value: value})
   } else {
     console.log("No Way To Inpsect: " + value.constructor.name)
   }
@@ -49,6 +51,8 @@ function inspectValue(args: InspectArgs & {value: zed.Value}) {
     inspect({...args, value: value.value})
   } else if (value instanceof zed.TypeValue) {
     inspect({...args, value: value.value})
+  } else if (value instanceof zed.Error) {
+    inspectError({...args, value})
   } else {
     console.log("No Way To Inpsect: " + value.constructor.name)
   }
@@ -124,6 +128,34 @@ export const inspectMap = createContainer<zed.Map>(
         key: key
       }
       i++
+    }
+  }
+)
+
+export const inspectError = createContainer<zed.Error>(
+  "Error",
+  "(",
+  ")",
+  function* iterateError(args: InspectArgs & {value: zed.Error}) {
+    yield {
+      ...args,
+      value: args.value.value,
+      key: 0,
+      last: true
+    }
+  }
+)
+
+export const inspectErrorType = createContainer<zed.TypeError>(
+  "Error",
+  "(",
+  ")",
+  function* iterateError(args: InspectArgs & {value: zed.TypeError}) {
+    yield {
+      ...args,
+      value: args.value.type,
+      key: 0,
+      last: true
     }
   }
 )

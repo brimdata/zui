@@ -13,7 +13,7 @@ export class Error implements Value {
 
   toString(): string {
     if (isNull(this.value)) return "null"
-    return this.value.toString()
+    return `Error(${this.value.toString()})`
   }
 
   serialize(stream: EncodeStream): zjson.Value {
