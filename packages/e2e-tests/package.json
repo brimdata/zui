@@ -1,0 +1,13 @@
+{
+  "name": "e2e-tests",
+  "private": true,
+  "packageManager": "yarn@3.1.1",
+  "scripts": {
+    "test": "playwright test -c playwright.config.js"
+  },
+  "devDependencies": {
+    "@playwright-testing-library/test": "^4.2.0",
+    "@playwright/test": "^1.19.2",
+    "playwright-chromium": "^1.19.2"
+  }
+}
