@@ -4,13 +4,12 @@ import renamePool from "../flows/renamePool"
 import Modal from "../state/Modal"
 import Pools from "../state/Pools"
 import {AppDispatch} from "../state/types"
-import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import InputField from "./common/forms/InputField"
 import InputLabel from "./common/forms/InputLabel"
 import InputLabelError from "./common/forms/InputLabelError"
 import TextInput from "./common/forms/TextInput"
 import ModalBox from "./ModalBox/ModalBox"
-import {Pool} from "app/core/pools/pool"
+import {Pool} from "src/app/core/pools/pool"
 
 export default function PoolModal() {
   const args = useSelector(Modal.getArgs) || {}
@@ -48,7 +47,6 @@ export default function PoolModal() {
       title=""
       buttons={[{label: "OK", click: onSubmit}]}
       className="pool-modal"
-      {...reactElementProps("poolModal")}
     >
       <PoolModalContents
         value={nameInput}

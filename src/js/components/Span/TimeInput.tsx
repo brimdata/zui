@@ -1,4 +1,4 @@
-import {useTimeZone} from "app/core/format"
+import {useTimeZone} from "src/app/core/format"
 import React, {useEffect, useRef, useState} from "react"
 import brim from "../../brim"
 import lib from "../../lib"

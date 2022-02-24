@@ -1,4 +1,4 @@
-import initTestStore from "../../../../test/unit/helpers/initTestStore"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 import LakeStatuses from "./"
 
 let store

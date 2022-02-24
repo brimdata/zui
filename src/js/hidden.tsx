@@ -1,6 +1,6 @@
 import React from "react"
-import {syncPool} from "app/core/pools/sync-pool"
-import {syncPoolsData} from "app/core/pools/sync-pools-data"
+import {syncPool} from "src/app/core/pools/sync-pool"
+import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 import log from "electron-log"
 import {differenceWith, map} from "lodash"
 import {useEffect} from "react"
@@ -12,7 +12,7 @@ import lake from "./brim/lake"
 import {
   getRemotePoolForLake,
   refreshRemoteQueries
-} from "app/features/sidebar/flows/remote-queries"
+} from "src/app/features/sidebar/flows/remote-queries"
 import {subscribeEvents} from "./flows/subscribeEvents"
 import initialize from "./initializers/initialize"
 import lib from "./lib"

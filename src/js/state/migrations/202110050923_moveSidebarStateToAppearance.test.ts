@@ -1,4 +1,4 @@
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 import moveSidebarStateToAppearance from "./202110050923_moveSidebarStateToAppearance"
 import {getAllStates, getAllTabs} from "./utils/getTestState"
 

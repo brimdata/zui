@@ -1,4 +1,4 @@
-import nextPageViewerSearch from "app/search/flows/next-page-viewer-search"
+import nextPageViewerSearch from "src/app/search/flows/next-page-viewer-search"
 import {isEmpty} from "lodash"
 import React, {useEffect, useMemo} from "react"
 import {useDispatch, useSelector} from "react-redux"

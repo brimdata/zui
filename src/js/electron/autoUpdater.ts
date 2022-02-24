@@ -1,5 +1,5 @@
-import env from "app/core/env"
-import {meta} from "app/ipc/meta"
+import env from "src/app/core/env"
+import {meta} from "src/app/ipc/meta"
 import {app, dialog} from "electron"
 import log from "electron-log"
 import {autoUpdater} from "electron-updater"

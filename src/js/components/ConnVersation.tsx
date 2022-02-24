@@ -1,4 +1,4 @@
-import contextMenu from "app/detail/flows/contextMenu"
+import contextMenu from "src/app/detail/flows/contextMenu"
 import {every} from "lodash"
 import React from "react"
 import {useDispatch} from "react-redux"

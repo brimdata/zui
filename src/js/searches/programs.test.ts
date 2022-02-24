@@ -1,4 +1,4 @@
-import {createRecord} from "test/shared/factories/zed-factory"
+import {createRecord} from "src/test/shared/factories/zed-factory"
 import {zed} from "@brimdata/zealot"
 import {connCorrelation} from "./programs"
 

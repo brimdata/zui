@@ -1,10 +1,9 @@
 import React from "react"
-import useSelect from "app/core/hooks/use-select"
-import {syncPool} from "app/core/pools/sync-pool"
+import useSelect from "src/app/core/hooks/use-select"
+import {syncPool} from "src/app/core/pools/sync-pool"
 import {useDispatch} from "react-redux"
 import Current from "src/js/state/Current"
-import ToolbarButton from "../../../../app/toolbar/button"
-import {reactElementProps} from "../../../../test/playwright/helpers/integration"
+import ToolbarButton from "src/app/toolbar/button"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
 import useSpanPickerMenu from "../useSpanPickerMenu"
 
@@ -23,18 +22,9 @@ export default function SpanPicker({submit}: Props) {
   }
 
   return (
-    <PopMenuPointy
-      template={menu}
-      position="bottom right"
-      {...reactElementProps("span_menu")}
-    >
+    <PopMenuPointy template={menu} position="bottom right">
       <div title="Choose a preset time span">
-        <ToolbarButton
-          className="time-span-menu"
-          dropdown
-          onClick={onClick}
-          {...reactElementProps("span_button")}
-        />
+        <ToolbarButton className="time-span-menu" dropdown onClick={onClick} />
       </div>
     </PopMenuPointy>
   )

@@ -1,7 +1,7 @@
 import Current from "../Current"
 import Search from "../Search"
 import Tabs from "./"
-import initTestStore from "../../../../test/unit/helpers/initTestStore"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 
 let store
 beforeEach(() => {

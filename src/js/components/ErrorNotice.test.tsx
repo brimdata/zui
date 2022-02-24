@@ -8,8 +8,8 @@ import Notice from "../state/Notice"
 import ErrorFactory from "../models/ErrorFactory"
 import ErrorNotice from "./ErrorNotice"
 import {screen} from "@testing-library/react"
-import {setupBrim} from "../../../test/unit/helpers/setup-brim"
-import {render} from "../../../test/unit/helpers"
+import {setupBrim} from "src/test/unit/helpers/setup-brim"
+import {render} from "src/test/unit/helpers"
 
 const brim = setupBrim()
 

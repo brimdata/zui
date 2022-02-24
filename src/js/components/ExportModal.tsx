@@ -5,8 +5,7 @@ import {ChangeEvent, useState} from "react"
 import {toast} from "react-hot-toast"
 import {useDispatch} from "react-redux"
 import styled from "styled-components"
-import ToolbarButton from "../../../app/toolbar/button"
-import {defaultModalButton} from "../../../test/playwright/helpers/locators"
+import ToolbarButton from "src/app/toolbar/button"
 import exportResults from "../flows/exportResults"
 import {AppDispatch} from "../state/types"
 import InputLabel from "./common/forms/InputLabel"
@@ -111,12 +110,7 @@ const ExportModal = ({onClose}) => {
       <StyledFooter>
         <ButtonGroup>
           <ToolbarButton text="Close" onClick={onClose} />
-          <ToolbarButton
-            {...defaultModalButton.props}
-            isPrimary
-            text={"Export"}
-            onClick={onExport}
-          />
+          <ToolbarButton isPrimary text={"Export"} onClick={onExport} />
         </ButtonGroup>
       </StyledFooter>
     </Content>

@@ -1,9 +1,8 @@
 import React, {MouseEvent} from "react"
 
 import {ModalButton} from "./types"
-import {defaultModalButton} from "../../../../test/playwright/helpers/locators"
 import ButtonRow from "../ButtonRow"
-import ToolbarButton from "../../../../app/toolbar/button"
+import ToolbarButton from "src/app/toolbar/button"
 
 type Props = {
   template: ModalButton[]
@@ -46,7 +45,6 @@ function ButtonItem({
   if (isLast) {
     return (
       <ToolbarButton
-        {...defaultModalButton.props}
         text={text}
         icon={icon}
         disabled={disabled}

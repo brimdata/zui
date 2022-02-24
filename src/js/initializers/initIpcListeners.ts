@@ -1,4 +1,4 @@
-import {releaseNotesPath} from "app/router/utils/paths"
+import {releaseNotesPath} from "src/app/router/utils/paths"
 import {ipcRenderer} from "electron"
 import confirmUnload from "../flows/confirmUnload"
 import deletePartialPools from "../flows/deletePartialPools"

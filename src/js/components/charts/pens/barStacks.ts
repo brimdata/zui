@@ -1,10 +1,6 @@
 import * as d3 from "d3"
 
 import {Pen} from "../types"
-import {
-  d3ElementAttr,
-  itestLocator
-} from "../../../../../test/playwright/helpers/integration"
 import {innerHeight, innerWidth} from "../dimens"
 import brim from "../../../brim"
 
@@ -15,7 +11,6 @@ export default function(): Pen {
       .select(svg)
       .append("g")
       .attr("class", "chart")
-      .attr(itestLocator, d3ElementAttr("histogram"))
   }
 
   function draw(chart) {

@@ -1,4 +1,4 @@
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202202170834_resetInvestigationsAndTabHistories", async () => {
   const next = await migrate({state: "v0.27.0", to: "202202170834"})

@@ -1,4 +1,4 @@
-import tabHistory from "app/router/tab-history"
+import tabHistory from "src/app/router/tab-history"
 import brim from "../../brim"
 import {PARALLEL_PROC} from "../../brim/ast"
 import {parse} from "../../lib/Program"

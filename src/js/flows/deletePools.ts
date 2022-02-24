@@ -1,4 +1,4 @@
-import {syncPoolsData} from "app/core/pools/sync-pools-data"
+import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 import Notice from "../state/Notice"
 import {Thunk} from "../state/types"
 import deletePool from "./deletePool"

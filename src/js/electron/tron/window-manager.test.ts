@@ -1,5 +1,5 @@
 import initIpcListeners from "src/js/initializers/initIpcListeners"
-import initTestStore from "test/unit/helpers/initTestStore"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 import {WindowManager} from "./window-manager"
 
 let store = initTestStore()

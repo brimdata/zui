@@ -2,7 +2,6 @@ import {useSelector} from "react-redux"
 import React from "react"
 import {join} from "path"
 
-import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import SearchBar from "../state/SearchBar"
 import Tab from "../state/Tab"
 import clickFeedback from "./clickFeedback"
@@ -15,7 +14,7 @@ import {
   Pre,
   Scrollable
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "../../../app/toolbar/button"
+import ToolbarButton from "src/app/toolbar/button"
 import styled from "styled-components"
 import useEnterKey from "./hooks/useEnterKey"
 
@@ -38,7 +37,7 @@ export default function ZQModal({onClose}) {
   }
 
   return (
-    <Content width={600} {...reactElementProps("zqModal")}>
+    <Content width={600}>
       <Title>Zq Command</Title>
       <Scrollable>
         <Command id="zq-code">{cmd}</Command>

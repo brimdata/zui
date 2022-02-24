@@ -1,5 +1,5 @@
 import {nanoid} from "@reduxjs/toolkit"
-import {useBrimApi} from "app/core/context"
+import {useBrimApi} from "src/app/core/context"
 import {find, includes} from "lodash"
 import React, {ChangeEvent, useEffect, useRef, useState} from "react"
 import {Tree, TreeApi} from "react-arborist"

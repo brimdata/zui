@@ -1,5 +1,5 @@
-import Histories from "app/core/models/histories"
-import initTestStore from "test/unit/helpers/initTestStore"
+import Histories from "src/app/core/models/histories"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 import TabHistories from "./index"
 
 let store

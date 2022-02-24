@@ -17,10 +17,9 @@ import {isBrimLib} from "../../state/Queries/flows"
 import SearchBar from "../../state/SearchBar"
 import useOutsideClick from "../hooks/useOutsideClick"
 import {StyledArrow} from "../LeftPane/common"
-import {useBrimApi} from "../../../../app/core/context"
+import {useBrimApi} from "src/app/core/context"
 import exportQueryLib from "../../flows/exportQueryLib"
 import {AppDispatch} from "../../state/types"
-import {brimQueryLib} from "../../../../test/playwright/helpers/locators"
 import {showContextMenu} from "../../lib/System"
 import {isRemoteLib, setRemoteQueries} from "../LeftPane/remote-queries"
 import {Query} from "../../state/Queries/types"
@@ -277,8 +276,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
 
   const itemIcon = isGroup ? <Folder /> : <StarNoFillIcon />
 
-  const maybeBrimLibTestProps = id === "brim" && brimQueryLib.props
-
   return (
     <BG
       tabIndex={0}
@@ -287,7 +284,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       className={classNames(state)}
       onClick={onItemClick}
       onContextMenu={() => showContextMenu(template)}
-      {...maybeBrimLibTestProps}
     >
       <StyledItem isSelected={isSelected} style={styles.indent}>
         <GroupArrow

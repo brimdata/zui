@@ -1,10 +1,10 @@
-import contextMenu from "app/detail/flows/contextMenu"
-import PanelHeading from "app/detail/PanelHeading"
+import contextMenu from "src/app/detail/flows/contextMenu"
+import PanelHeading from "src/app/detail/PanelHeading"
 import React, {useEffect, useState} from "react"
 import {useDispatch} from "react-redux"
 import {AppDispatch} from "src/js/state/types"
 import {zed} from "@brimdata/zealot"
-import {md5Search} from "../../../../app/search/flows/md5-search"
+import {md5Search} from "src/app/search/flows/md5-search"
 import InlineTableLoading from "../InlineTableLoading"
 import HorizontalTable from "../Tables/HorizontalTable"
 

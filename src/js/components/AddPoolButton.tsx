@@ -1,5 +1,5 @@
-import useLakeId from "app/router/hooks/use-lake-id"
-import {lakeImportPath} from "app/router/utils/paths"
+import useLakeId from "src/app/router/hooks/use-lake-id"
+import {lakeImportPath} from "src/app/router/utils/paths"
 import React from "react"
 import {useHistory} from "react-router"
 import styled from "styled-components"

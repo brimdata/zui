@@ -1,6 +1,6 @@
-import {featureIsEnabled} from "app/core/feature-flag"
-import tabHistory from "app/router/tab-history"
-import {poolSearchPath} from "app/router/utils/paths"
+import {featureIsEnabled} from "src/app/core/feature-flag"
+import tabHistory from "src/app/router/tab-history"
+import {poolSearchPath} from "src/app/router/utils/paths"
 import brim from "src/js/brim"
 import Investigation from "src/js/state/Investigation"
 import Current from "../../state/Current"
@@ -8,7 +8,7 @@ import Notice from "../../state/Notice"
 import Search from "../../state/Search"
 import SearchBar from "../../state/SearchBar"
 import Tab from "../../state/Tab"
-import submitNewSearch from "app/query-home/flows/submit-search"
+import submitNewSearch from "src/app/query-home/flows/submit-search"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 

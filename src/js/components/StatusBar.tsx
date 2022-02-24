@@ -1,8 +1,6 @@
 import classNames from "classnames"
 import {isEmpty} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
-import {reactElementProps} from "../../../test/playwright/helpers/integration"
-import {ingestProgressBar} from "../../../test/playwright/helpers/locators"
 import Current from "../state/Current"
 import Ingests from "../state/Ingests"
 import Modal from "../state/Modal"
@@ -24,12 +22,9 @@ export default function StatusBar() {
 
   return (
     <div className="status-bar">
-      <div
-        className="packet-post-progress"
-        {...reactElementProps("ingestProgress")}
-      >
+      <div className="packet-post-progress">
         <div className="group">
-          <ProgressIndicator {...ingestProgressBar.props} percent={progress} />
+          <ProgressIndicator percent={progress} />
           {progress === 1 && warnings.length > 0 && (
             <label>Ingest failed with warnings.</label>
           )}

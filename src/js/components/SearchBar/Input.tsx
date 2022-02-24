@@ -3,10 +3,9 @@ import React, {useRef} from "react"
 import styled from "styled-components"
 
 import {cssVar} from "../../lib/cssVar"
-import {reactElementProps} from "../../../../test/playwright/helpers/integration"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import SearchBar from "../../state/SearchBar"
-import CmdHistory from "app/core/models/cmd-history"
+import CmdHistory from "src/app/core/models/cmd-history"
 
 const StyledInput = styled.input`
   display: block;
@@ -67,7 +66,6 @@ export default function Input() {
       spellCheck={false}
       autoFocus={true}
       autoComplete="off"
-      {...reactElementProps("search_input")}
     />
   )
 }

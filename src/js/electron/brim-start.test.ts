@@ -5,7 +5,7 @@ jest.mock("./extensions", () => ({
   installExtensions: jest.fn()
 }))
 
-jest.mock("@brimdata/zealot/node")
+jest.mock("@brimdata/zealot")
 
 test("start is called in zed lake", async () => {
   const brim = await BrimMain.boot({devtools: false, autoUpdater: false})

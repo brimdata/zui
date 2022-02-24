@@ -6,7 +6,7 @@ import path from "path"
 import electronIsDev from "../isDev"
 import {encodeSessionState} from "../tron/session-state"
 import {BrimMain} from "../brim"
-import env from "app/core/env"
+import env from "src/app/core/env"
 
 export default function(
   send: Function,

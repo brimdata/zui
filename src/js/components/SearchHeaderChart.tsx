@@ -1,4 +1,4 @@
-import {histogramSearch} from "app/search/flows/histogram-search"
+import {histogramSearch} from "src/app/search/flows/histogram-search"
 import React, {useLayoutEffect, useMemo} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import brim from "../brim"

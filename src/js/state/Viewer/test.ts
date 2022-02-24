@@ -1,5 +1,5 @@
-import {createRecord} from "test/shared/factories/zed-factory"
-import initTestStore from "../../../../test/unit/helpers/initTestStore"
+import {createRecord} from "src/test/shared/factories/zed-factory"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 import Tabs from "../Tabs"
 import Viewer from "../Viewer"
 

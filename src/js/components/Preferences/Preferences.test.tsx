@@ -2,18 +2,18 @@
  * @jest-environment jsdom
  */
 
-import Fields from "app/detail/Fields"
+import Fields from "src/app/detail/Fields"
 import React from "react"
 import Modal from "src/js/state/Modal"
-import {createRecord} from "test/shared/factories/zed-factory"
+import {createRecord} from "src/test/shared/factories/zed-factory"
 import {
   cleanup,
   fireEvent,
   render,
   screen,
   waitForElementToBeRemoved
-} from "test/unit/helpers"
-import {setupBrim} from "test/unit/helpers/setup-brim"
+} from "src/test/unit/helpers"
+import {setupBrim} from "src/test/unit/helpers/setup-brim"
 import Preferences from "./Preferences"
 
 const brim = setupBrim()

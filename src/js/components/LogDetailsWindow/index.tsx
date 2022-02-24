@@ -1,14 +1,14 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
-import useStoreExport from "../../../../app/core/hooks/useStoreExport"
-import usePluginToolbarItems from "../../../../app/toolbar/hooks/usePluginToolbarItems"
+import useStoreExport from "src/app/core/hooks/useStoreExport"
+import usePluginToolbarItems from "src/app/toolbar/hooks/usePluginToolbarItems"
 
 import {Center, Left, PaneHeader, PaneTitle, Right} from "../Pane"
 import Current from "../../state/Current"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
-import DetailPane from "app/detail/Pane"
-import ToolbarAction from "app/toolbar/action-button"
+import DetailPane from "src/app/detail/Pane"
+import ToolbarAction from "src/app/toolbar/action-button"
 
 export default function LogDetailsWindow() {
   useStoreExport()

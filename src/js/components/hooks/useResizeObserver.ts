@@ -1,4 +1,4 @@
-import env from "app/core/env"
+import env from "src/app/core/env"
 import {useLayoutEffect, useRef, useState} from "react"
 
 export type Rect = {width: number; height: number; x: number; y: number}

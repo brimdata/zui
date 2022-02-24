@@ -1,4 +1,4 @@
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202009121941_refactorInvestigations", async () => {
   const next = await migrate({state: "v0.17.0", to: "202009121941"})

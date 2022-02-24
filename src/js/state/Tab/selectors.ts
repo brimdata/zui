@@ -1,4 +1,4 @@
-import {Pool} from "app/core/pools/pool"
+import {Pool} from "src/app/core/pools/pool"
 import {createSelector} from "reselect"
 import brim, {Span} from "../../brim"
 import {DateTuple} from "../../lib/TimeWindow"

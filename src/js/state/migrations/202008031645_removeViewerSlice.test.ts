@@ -1,4 +1,4 @@
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202008031645_removeViewerSlice", async () => {
   const next = await migrate({state: "v0.14.0", to: "202008031645"})

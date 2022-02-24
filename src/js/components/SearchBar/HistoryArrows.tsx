@@ -5,7 +5,7 @@ import Back from "../icons/back-arrow"
 import Button from "./Button"
 import Forward from "../icons/forward-arrow"
 import {useHistory} from "react-router"
-import TabHistory from "app/router/tab-history"
+import TabHistory from "src/app/router/tab-history"
 import {useDispatch} from "react-redux"
 
 const Wrap = styled.div`

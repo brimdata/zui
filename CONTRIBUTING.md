@@ -99,7 +99,7 @@ This will run the electron main process entry point, `main.js`, which spins up a
 
 ```js
 import {screen} from "@testing-library/react"
-import {SystemTest} from "test/system/system-test"
+import {SystemTest} from "src/test/system/system-test"
 
 const system = new SystemTest("my-test")
 

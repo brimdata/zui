@@ -1,4 +1,4 @@
-import Histories from "app/core/models/histories"
+import Histories from "src/app/core/models/histories"
 import {FeatureName} from "../state/Feature"
 import {BrowserHistory} from "history"
 import {MainArgs} from "../electron/main"

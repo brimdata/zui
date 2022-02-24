@@ -1,4 +1,4 @@
-import env from "app/core/env"
+import env from "src/app/core/env"
 import {app} from "electron"
 import {BrimMain} from "./brim"
 
