@@ -1,5 +1,7 @@
 import {Client} from "./client/client"
+import {zq} from "./cmd/zq"
 import {decode, encode} from "./encoder"
+import {Lake} from "./lake/lake"
 import {parseAst} from "./parser"
 import {ResultStream} from "./query/result-stream"
 import {DefaultContext, TypeDefs} from "./zed/context"
@@ -17,5 +19,7 @@ export {
   zed,
   DefaultContext,
   TypeDefs,
-  parseAst
+  parseAst,
+  Lake,
+  zq
 }

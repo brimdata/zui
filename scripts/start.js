@@ -12,11 +12,11 @@ async function start() {
     console.log(bold("Skipping build step"))
   }
 
-  run("npx", `${JS} --watch --skip-initial-build`)
-  run("npx", `${SCSS} --watch --skip-initial`)
-  run("npx", `${STATIC} --watch`)
-  run("npx", "livereload dist", {desc: "Watching dist for changes"})
-  run("npx", `electron . ${electronArgs}`, {
+  run("yarn", `${JS} --watch`)
+  run("yarn", `${SCSS} --watch --skip-initial`)
+  run("yarn", `${STATIC} --watch`)
+  run("yarn", "livereload dist", {desc: "Watching dist for changes"})
+  run("yarn", `electron . ${electronArgs}`, {
     desc: `Starting electron ${electronArgs}`
   })
 }

@@ -5,10 +5,10 @@ const {JS, SCSS, STATIC, HTML} = require("./util/commands")
 async function watch() {
   console.log(bold("Watching for changes"))
 
-  run("npx", `${JS} --watch --skip-initial-build`)
-  run("npx", `${SCSS} --watch --skip-initial`)
-  run("npx", `${STATIC} --watch`)
-  run("npx", `${HTML} --watch`)
+  run("yarn", `${JS} --watch`)
+  run("yarn", `${SCSS} --watch --skip-initial`)
+  run("yarn", `${STATIC} --watch`)
+  run("yarn", `${HTML} --watch`)
 }
 
 process.on("SIGINT", () => process.exit(0))
