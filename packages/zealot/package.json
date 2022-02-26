@@ -35,16 +35,16 @@
   ],
   "scripts": {
     "test": "jest",
-    "build": "npm-run-all 'build:**'",
-    "build:cjs": "tsc",
-    "build:es": "rollup -c rollup.config.js --silent",
-    "dev": "tsc --watch",
+    "build": "swc src -d dist/cjs",
+    "dev": "yarn build --watch",
     "prepack": "yarn build"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@rollup/plugin-typescript": "^8.3.0",
+    "@swc/cli": "^0.1.55",
+    "@swc/core": "^1.2.145",
     "@types/event-source-polyfill": "^1.0.0",
     "@types/events": "^3.0.0",
     "@types/node-fetch": "2",

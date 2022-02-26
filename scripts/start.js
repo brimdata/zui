@@ -1,24 +1,22 @@
-const {bold} = require("chalk")
-const run = require("./util/run")
-const flags = require("./util/flags")
-const {JS, SCSS, STATIC} = require("./util/commands")
+const {JS, SCSS} = require("./util/commands")
+const sub = require("./util/sub")
+
+const log = (...args) => {
+  console.log("‣", ...args)
+}
 
 async function start() {
   const electronArgs = process.argv.splice(2).join(" ")
-
-  if (!flags.noBuild) {
-    await run("node", "scripts/build")
-  } else {
-    console.log(bold("Skipping build step"))
-  }
-
-  run("yarn", `${JS} --watch`)
-  run("yarn", `${SCSS} --watch --skip-initial`)
-  run("yarn", `${STATIC} --watch`)
-  run("yarn", "livereload dist", {desc: "Watching dist for changes"})
-  run("yarn", `electron . ${electronArgs}`, {
-    desc: `Starting electron ${electronArgs}`
-  })
+  log("Compiling...")
+  const js = sub("yarn", `${JS} --watch`)
+  const css = sub("yarn", `${SCSS} --watch`)
+  await Promise.all([
+    css.waitForOutput(/Wrote CSS/),
+    js.waitForOutput(/Watching for file changes/)
+  ])
+  log("Launching...")
+  sub("yarn", `electron . ${electronArgs}`)
+  sub("yarn", "livereload dist")
 }
 
 process.on("SIGINT", () => process.exit(0))
