@@ -1,9 +1,9 @@
-import tabHistory from "app/router/tab-history"
-import initTestStore from "../../../../test/unit/helpers/initTestStore"
+import tabHistory from "src/app/router/tab-history"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 import Lakes from "../Lakes"
 import {Lake} from "../Lakes/types"
 import Current from "./"
-import {lakePath, poolSearchPath} from "app/router/utils/paths"
+import {lakePath, poolSearchPath} from "src/app/router/utils/paths"
 
 let store
 

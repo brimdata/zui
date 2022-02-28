@@ -1,5 +1,5 @@
-import tabHistory from "app/router/tab-history"
-import {lakeImportPath} from "app/router/utils/paths"
+import tabHistory from "src/app/router/tab-history"
+import {lakeImportPath} from "src/app/router/utils/paths"
 import {MenuItemConstructorOptions} from "electron"
 import React, {ComponentType} from "react"
 import {useDispatch, useSelector} from "react-redux"
@@ -11,7 +11,7 @@ import Modal from "../state/Modal"
 import {AppDispatch} from "../state/types"
 import Lakes from "../state/Lakes"
 import {Lake} from "../state/Lakes/types"
-import useLakeId from "app/router/hooks/use-lake-id"
+import useLakeId from "src/app/router/hooks/use-lake-id"
 
 const LakePickerWrapper = styled.div`
   display: flex;

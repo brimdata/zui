@@ -1,8 +1,8 @@
-import {Abortables} from "app/core/models/abortables"
+import {Abortables} from "src/app/core/models/abortables"
 import * as remote from "@electron/remote"
 import path from "path"
 import toast from "react-hot-toast"
-import ingestFiles from "../../../app/features/import/import-files"
+import ingestFiles from "src/app/features/import/import-files"
 import errors from "../errors"
 import {getZealot} from "../flows/getZealot"
 import ErrorFactory from "../models/ErrorFactory"
@@ -23,7 +23,7 @@ import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
 import SearchBar from "src/js/state/SearchBar"
-import {syncPoolsData} from "app/core/pools/sync-pools-data"
+import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 
 export default class BrimApi {
   public abortables = new Abortables()

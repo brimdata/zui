@@ -1,5 +1,5 @@
 import {getAllTabs} from "src/js/state/migrations/utils/getTestState"
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202103051447_convertHistoryToUrls", async () => {
   const next = await migrate({state: "v0.24.0", to: "202103051447"})

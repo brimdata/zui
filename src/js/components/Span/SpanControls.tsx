@@ -1,7 +1,7 @@
 import React from "react"
 import classNames from "classnames"
 import {useDispatch, useSelector} from "react-redux"
-import Label from "../../../../app/toolbar/label"
+import Label from "src/app/toolbar/label"
 import ClockIcon from "../../icons/ClockIcon"
 import {default as Tab, default as tab} from "../../state/Tab"
 import SpanDuration from "./SpanDuration"

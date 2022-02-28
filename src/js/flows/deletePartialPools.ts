@@ -3,8 +3,8 @@ import Handlers from "../state/Handlers"
 import rpc from "../electron/rpc"
 import {getZealot} from "./getZealot"
 import Current from "../state/Current"
-import {lakePath} from "app/router/utils/paths"
-import tabHistory from "app/router/tab-history"
+import {lakePath} from "src/app/router/utils/paths"
+import tabHistory from "src/app/router/tab-history"
 
 export default (): Thunk<Promise<any[]>> => async (dispatch, getState) => {
   const current = Current.getLake(getState())

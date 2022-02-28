@@ -3,7 +3,6 @@ import get from "lodash/get"
 import React, {useCallback, useState} from "react"
 import {useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
-import {reactElementProps} from "../../../../test/playwright/helpers/integration"
 import brim from "../../brim"
 import form, {FormConfig} from "../../brim/form"
 import FileInput from "../common/forms/FileInput"
@@ -139,7 +138,6 @@ export default function Preferences() {
       title="Preferences"
       buttons={[{label: "OK", click: onSubmit}]}
       className="settings-modal"
-      {...reactElementProps("settingsModal")}
     >
       <TextContent>
         <FormErrors errors={errors} />

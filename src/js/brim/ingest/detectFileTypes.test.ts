@@ -3,7 +3,7 @@
  */
 
 import ingest from "./"
-import data from "test/shared/data"
+import data from "src/test/shared/data"
 
 const json = data.getWebFile("sample.ndjson")
 const pcap = data.getWebFile("sample.pcap")

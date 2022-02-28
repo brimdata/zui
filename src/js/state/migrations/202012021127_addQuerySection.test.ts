@@ -1,4 +1,4 @@
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202012021127_addQuerySection", async () => {
   const next = await migrate({state: "v0.20.0", to: "202012021127"})

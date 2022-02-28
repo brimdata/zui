@@ -1,4 +1,4 @@
-import {FormatConfig, getFormatConfig} from "app/core/format"
+import {FormatConfig, getFormatConfig} from "src/app/core/format"
 import {createSelector} from "reselect"
 import {TypeDefs, zed} from "@brimdata/zealot"
 import TableColumns from "../../models/TableColumns"

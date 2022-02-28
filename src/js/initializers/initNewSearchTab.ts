@@ -1,4 +1,4 @@
-import tabHistory from "app/router/tab-history"
+import tabHistory from "src/app/router/tab-history"
 import {NewTabSearchParams} from "../electron/ipc/windows/messages"
 import Tabs from "../state/Tabs"
 import {Store} from "../state/types"

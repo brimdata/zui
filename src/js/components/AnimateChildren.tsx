@@ -1,4 +1,4 @@
-import env from "app/core/env"
+import env from "src/app/core/env"
 import React, {HTMLProps} from "react"
 
 function move(diff) {

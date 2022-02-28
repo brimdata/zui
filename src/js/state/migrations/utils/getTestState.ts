@@ -1,5 +1,5 @@
 import compact from "lodash/compact"
-import states from "test/unit/states"
+import states from "src/test/unit/states"
 import {SessionState} from "../../../electron/tron/session-state"
 import lib from "../../../lib"
 

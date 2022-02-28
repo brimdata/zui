@@ -1,5 +1,5 @@
-import {FormatConfig} from "app/core/format"
-import {estimateCellWidth, estimateHeaderWidth} from "app/viewer/measure"
+import {FormatConfig} from "src/app/core/format"
+import {estimateCellWidth, estimateHeaderWidth} from "src/app/viewer/measure"
 import {zed} from "@brimdata/zealot"
 import columnOrder from "../lib/columnOrder"
 import {$Column, printColumnName} from "../state/Columns/models/column"

@@ -1,4 +1,4 @@
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 
 test("migrating 202101291548_addAuthDefaultsToWorkspaces", async () => {

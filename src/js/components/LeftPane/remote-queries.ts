@@ -1,4 +1,4 @@
-import {featureIsEnabled} from "app/core/feature-flag"
+import {featureIsEnabled} from "src/app/core/feature-flag"
 import {intersection} from "lodash"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
@@ -8,7 +8,7 @@ import {Readable} from "stream"
 import {BrimLake} from "../../brim"
 import {getZealot} from "../../flows/getZealot"
 import {Query} from "../../state/Queries/types"
-import {setRemoteQueries as newSetRemoteQueries} from "app/features/sidebar/flows/remote-queries"
+import {setRemoteQueries as newSetRemoteQueries} from "src/app/features/sidebar/flows/remote-queries"
 
 export const remoteQueriesPoolName = "_remote-queries"
 

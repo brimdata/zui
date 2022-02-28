@@ -1,4 +1,4 @@
-import {Pool} from "app/core/pools/pool"
+import {Pool} from "src/app/core/pools/pool"
 import {find, keys} from "lodash"
 import {State} from "../types"
 import {PoolsState, PoolState} from "./types"

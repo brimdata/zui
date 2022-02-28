@@ -1,5 +1,5 @@
-import {syncPoolsData} from "app/core/pools/sync-pools-data"
-import tabHistory from "app/router/tab-history"
+import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
+import tabHistory from "src/app/router/tab-history"
 import {BrimLake} from "../../brim"
 import Lakes from "../../state/Lakes"
 import LakeStatuses from "../../state/LakeStatuses"

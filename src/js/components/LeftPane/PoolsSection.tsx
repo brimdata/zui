@@ -1,5 +1,5 @@
 import React from "react"
-import {useImportOnDrop} from "app/features/import/use-import-on-drop"
+import {useImportOnDrop} from "src/app/features/import/use-import-on-drop"
 import get from "lodash/get"
 import {useSelector} from "react-redux"
 import Current from "../../state/Current"

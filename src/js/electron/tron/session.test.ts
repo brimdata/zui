@@ -3,11 +3,11 @@ import fsExtra from "fs-extra"
 import path from "path"
 import os from "os"
 
-import disableLogger from "../../../../test/unit/helpers/disableLogger"
+import disableLogger from "src/test/unit/helpers/disableLogger"
 import {encodeSessionState} from "./session-state"
-import initTestStore from "../../../../test/unit/helpers/initTestStore"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 import tron from "./"
-import states from "test/unit/states"
+import states from "src/test/unit/states"
 import {Migrations} from "./migrations"
 
 const dir = path.join(os.tmpdir(), "session.test.ts")

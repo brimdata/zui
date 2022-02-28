@@ -1,9 +1,9 @@
-import {whichRoute} from "app/router/routes"
-import {decodeSearchParams} from "app/search/utils/search-params"
+import {whichRoute} from "src/app/router/routes"
+import {decodeSearchParams} from "src/app/search/utils/search-params"
 import get from "lodash/get"
 import {PoolsState} from "../state/Pools/types"
 import {LakesState} from "../state/Lakes/types"
-import {DRAFT_QUERY_NAME} from "app/query-home/utils/brim-query"
+import {DRAFT_QUERY_NAME} from "src/app/query-home/utils/brim-query"
 
 export default function(
   tabId: string,

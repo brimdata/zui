@@ -3,7 +3,7 @@ import React from "react"
 import styled from "styled-components"
 
 import SearchBar from "../../state/SearchBar"
-import Warning from "../icons/warning-sm.svg"
+import Warning from "../icons/warning-sm"
 
 const Wrap = styled.div`
   display: flex;

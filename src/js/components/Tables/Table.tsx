@@ -1,4 +1,4 @@
-import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
+import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import React from "react"
 import {zed} from "@brimdata/zealot"
 import FieldCell from "../FieldCell"

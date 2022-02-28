@@ -2,7 +2,7 @@ import React, {useState} from "react"
 
 import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
-import ToolbarButton from "../../../app/toolbar/button"
+import ToolbarButton from "src/app/toolbar/button"
 import {useDispatch} from "react-redux"
 import {initCurrentTab} from "../flows/initCurrentTab"
 import {Lake} from "../state/Lakes/types"

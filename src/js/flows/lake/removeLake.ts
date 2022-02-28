@@ -1,5 +1,5 @@
-import tabHistory from "app/router/tab-history"
-import {lakesPath} from "app/router/utils/paths"
+import tabHistory from "src/app/router/tab-history"
+import {lakesPath} from "src/app/router/utils/paths"
 import toast from "react-hot-toast"
 import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0/utils"
 import ipc from "../../electron/ipc"

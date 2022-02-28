@@ -1,4 +1,4 @@
-import env from "app/core/env"
+import env from "src/app/core/env"
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
   REDUX_DEVTOOLS

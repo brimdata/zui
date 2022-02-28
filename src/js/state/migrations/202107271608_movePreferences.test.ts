@@ -1,4 +1,4 @@
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 import {getAllStates} from "./utils/getTestState"
 
 test("migrating 202107271608_movePreferences", async () => {

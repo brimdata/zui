@@ -1,0 +1,779 @@
+{
+  "version": 202101051511,
+  "data": {
+    "order": ["f4cf0f7228", "ffb4963b96"],
+    "windows": {
+      "f4cf0f7228": {
+        "name": "search",
+        "state": {
+          "clusters": {
+            "localhost:9867": {
+              "host": "localhost",
+              "id": "localhost:9867",
+              "name": "localhost:9867",
+              "password": "",
+              "port": "9867",
+              "username": "",
+              "version": "b928e53"
+            }
+          },
+          "modal": {"name": "", "args": {}},
+          "tabs": {
+            "active": "7c76738fd5",
+            "data": [
+              {
+                "id": "7c76738fd5",
+                "current": {
+                  "spaceId": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                  "connectionId": "localhost:9867"
+                },
+                "search": {
+                  "span": [
+                    {"sec": 1583768523, "ns": 826851000},
+                    {"sec": 1583774873, "ns": 693000000}
+                  ],
+                  "spanArgs": [
+                    {"sec": 1583768523, "ns": 826851000},
+                    {"sec": 1583774873, "ns": 693000000}
+                  ],
+                  "spanFocus": null
+                },
+                "searchBar": {
+                  "current": "added query A",
+                  "previous": "",
+                  "pinned": [],
+                  "editing": null,
+                  "error": null,
+                  "target": "events"
+                },
+                "columns": {
+                  "temp": {
+                    "_path:string": {"isVisible": true},
+                    "ts:time": {"isVisible": true},
+                    "ts_delta:interval": {"isVisible": true},
+                    "peer:string": {"isVisible": true},
+                    "gaps:count": {"isVisible": true},
+                    "acks:count": {"isVisible": true},
+                    "percent_lost:double": {"isVisible": true},
+                    "mem:count": {"isVisible": true},
+                    "pkts_proc:count": {"isVisible": true},
+                    "bytes_recv:count": {"isVisible": true},
+                    "pkts_dropped:count": {"isVisible": true},
+                    "pkts_link:count": {"isVisible": true},
+                    "pkt_lag:interval": {"isVisible": true},
+                    "events_proc:count": {"isVisible": true},
+                    "events_queued:count": {"isVisible": true},
+                    "active_tcp_conns:count": {"isVisible": true},
+                    "active_udp_conns:count": {"isVisible": true},
+                    "active_icmp_conns:count": {"isVisible": true},
+                    "tcp_conns:count": {"isVisible": true},
+                    "udp_conns:count": {"isVisible": true},
+                    "icmp_conns:count": {"isVisible": true},
+                    "timers:count": {"isVisible": true},
+                    "active_timers:count": {"isVisible": true},
+                    "files:count": {"isVisible": true},
+                    "active_files:count": {"isVisible": true},
+                    "dns_requests:count": {"isVisible": true},
+                    "active_dns_requests:count": {"isVisible": true},
+                    "reassem_tcp_size:count": {"isVisible": true},
+                    "reassem_file_size:count": {"isVisible": true},
+                    "reassem_frag_size:count": {"isVisible": true},
+                    "reassem_unknown_size:count": {"isVisible": true},
+                    "fuid:string": {"isVisible": true},
+                    "tx_hosts:set": {"isVisible": true},
+                    "rx_hosts:set": {"isVisible": true},
+                    "conn_uids:set": {"isVisible": true},
+                    "source:string": {"isVisible": true},
+                    "depth:count": {"isVisible": true},
+                    "analyzers:set": {"isVisible": true},
+                    "mime_type:string": {"isVisible": true},
+                    "filename:string": {"isVisible": true},
+                    "duration:interval": {"isVisible": true},
+                    "local_orig:bool": {"isVisible": true},
+                    "is_orig:bool": {"isVisible": true},
+                    "seen_bytes:count": {"isVisible": true},
+                    "total_bytes:count": {"isVisible": true},
+                    "missing_bytes:count": {"isVisible": true},
+                    "overflow_bytes:count": {"isVisible": true},
+                    "timedout:bool": {"isVisible": true},
+                    "parent_fuid:string": {"isVisible": true},
+                    "md5:string": {"isVisible": true},
+                    "sha1:string": {"isVisible": true},
+                    "sha256:string": {"isVisible": true},
+                    "extracted:string": {"isVisible": true},
+                    "extracted_cutoff:bool": {"isVisible": true},
+                    "extracted_size:count": {"isVisible": true},
+                    "id:string": {"isVisible": true},
+                    "certificate.version:count": {"isVisible": true},
+                    "certificate.serial:string": {"isVisible": true},
+                    "certificate.subject:string": {"isVisible": true},
+                    "certificate.issuer:string": {"isVisible": true},
+                    "certificate.not_valid_before:time": {"isVisible": true},
+                    "certificate.not_valid_after:time": {"isVisible": true},
+                    "certificate.key_alg:string": {"isVisible": true},
+                    "certificate.sig_alg:string": {"isVisible": true},
+                    "certificate.key_type:string": {"isVisible": true},
+                    "certificate.key_length:count": {"isVisible": true},
+                    "certificate.exponent:string": {"isVisible": true},
+                    "certificate.curve:string": {"isVisible": true},
+                    "san.dns:array": {"isVisible": true},
+                    "san.uri:array": {"isVisible": true},
+                    "san.email:array": {"isVisible": true},
+                    "san.ip:array": {"isVisible": true},
+                    "basic_constraints.ca:bool": {"isVisible": true},
+                    "basic_constraints.path_len:count": {"isVisible": true},
+                    "uid:string": {"isVisible": true},
+                    "id.orig_h:addr": {"isVisible": true},
+                    "id.orig_p:port": {"isVisible": true},
+                    "id.resp_h:addr": {"isVisible": true},
+                    "id.resp_p:port": {"isVisible": true},
+                    "version:string": {"isVisible": true},
+                    "cipher:string": {"isVisible": true},
+                    "curve:string": {"isVisible": true},
+                    "server_name:string": {"isVisible": true},
+                    "resumed:bool": {"isVisible": true},
+                    "last_alert:string": {"isVisible": true},
+                    "next_protocol:string": {"isVisible": true},
+                    "established:bool": {"isVisible": true},
+                    "cert_chain_fuids:array": {"isVisible": true},
+                    "client_cert_chain_fuids:array": {"isVisible": true},
+                    "subject:string": {"isVisible": true},
+                    "issuer:string": {"isVisible": true},
+                    "client_subject:string": {"isVisible": true},
+                    "client_issuer:string": {"isVisible": true},
+                    "validation_status:string": {"isVisible": true},
+                    "ja3:string": {"isVisible": true},
+                    "ja3s:string": {"isVisible": true},
+                    "proto:enum": {"isVisible": true},
+                    "service:string": {"isVisible": true},
+                    "orig_bytes:count": {"isVisible": true},
+                    "resp_bytes:count": {"isVisible": true},
+                    "conn_state:string": {"isVisible": true},
+                    "local_resp:bool": {"isVisible": true},
+                    "missed_bytes:count": {"isVisible": true},
+                    "history:string": {"isVisible": true},
+                    "orig_pkts:count": {"isVisible": true},
+                    "orig_ip_bytes:count": {"isVisible": true},
+                    "resp_pkts:count": {"isVisible": true},
+                    "resp_ip_bytes:count": {"isVisible": true},
+                    "tunnel_parents:set": {"isVisible": true},
+                    "geo.orig.country_code:string": {"isVisible": true},
+                    "geo.orig.region:string": {"isVisible": true},
+                    "geo.orig.city:string": {"isVisible": true},
+                    "geo.orig.latitude:double": {"isVisible": true},
+                    "geo.orig.longitude:double": {"isVisible": true},
+                    "geo.resp.country_code:string": {"isVisible": true},
+                    "geo.resp.region:string": {"isVisible": true},
+                    "geo.resp.city:string": {"isVisible": true},
+                    "geo.resp.latitude:double": {"isVisible": true},
+                    "geo.resp.longitude:double": {"isVisible": true},
+                    "community_id:string": {"isVisible": true}
+                  }
+                },
+                "history": {
+                  "position": 0,
+                  "entries": [
+                    {
+                      "program": "",
+                      "pins": [],
+                      "spanArgs": [
+                        {"sec": 1583768523, "ns": 826851000},
+                        {"sec": 1583774873, "ns": 693000000}
+                      ],
+                      "spaceName": "hello.pcapng",
+                      "spaceId": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                      "target": "events"
+                    }
+                  ]
+                },
+                "layout": {
+                  "rightSidebarIsOpen": false,
+                  "rightSidebarWidth": 450,
+                  "leftSidebarIsOpen": true,
+                  "leftSidebarWidth": 230,
+                  "investigationView": "linear",
+                  "columnHeadersView": "AUTO",
+                  "sidebarSections": [
+                    {
+                      "id": "spaces",
+                      "size": 223,
+                      "min": 100,
+                      "isOpen": true,
+                      "closedSize": 24
+                    },
+                    {
+                      "id": "queries",
+                      "size": 223,
+                      "min": 100,
+                      "isOpen": true,
+                      "closedSize": 24
+                    },
+                    {
+                      "id": "history",
+                      "size": 223,
+                      "min": 100,
+                      "isOpen": true,
+                      "closedSize": 24
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "investigation": {
+            "localhost:9867": {
+              "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW": [
+                {
+                  "ts": {"sec": 1611169469, "ns": 798000000},
+                  "search": {
+                    "program": "",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1583768523, "ns": 826851000},
+                      {"sec": 1583774873, "ns": 693000000}
+                    ],
+                    "spaceName": "hello.pcapng",
+                    "spaceId": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                    "target": "events"
+                  }
+                }
+              ]
+            }
+          },
+          "view": {"downloadsIsOpen": false, "timeZone": "UTC"},
+          "spaces": {
+            "localhost:9867": {
+              "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW": {
+                "min_time": {"sec": 1583768523, "ns": 826851000},
+                "max_time": {"sec": 1583774873, "ns": 692766001},
+                "id": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                "name": "hello.pcapng",
+                "data_path": "file:///Users/masonfish/go/src/github.com/brimdata/brim/run/data/spaces/sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                "storage_kind": "filestore",
+                "size": 3121,
+                "pcap_support": true,
+                "pcap_size": 12400,
+                "pcap_path": "file:///Users/masonfish/Downloads/Work/hello.pcapng",
+                "ingest": {"progress": null, "warnings": [], "snapshot": 4}
+              }
+            }
+          },
+          "packets": [],
+          "prefs": {
+            "jsonTypeConfig": "",
+            "timeFormat": "",
+            "suricataRunner": "",
+            "suricataUpdater": "",
+            "zeekRunner": "",
+            "dataDir": ""
+          },
+          "queries": {
+            "id": "root",
+            "name": "root",
+            "items": [
+              {
+                "id": "1",
+                "name": "Activity Overview",
+                "value": "count() by _path | sort -r",
+                "description": "This query shows a list of all Zeek streams in the data set, with a count of associated records",
+                "tags": ["zeek", "initial exploration"]
+              },
+              {
+                "id": "2",
+                "name": "Unique DNS Queries",
+                "value": "_path=dns | count() by query | sort -r",
+                "description": "Shows all unique DNS queries contained in the data set with count",
+                "tags": ["dns", "initial exploration"]
+              },
+              {
+                "id": "3",
+                "name": "Windows Networking Activity",
+                "value": "_path=~smb* OR _path=dce_rpc",
+                "description": "Filters and displays smb_files, smb_mapping and DCE_RPC activity",
+                "tags": ["windows", "smb", "malware"]
+              },
+              {
+                "id": "4",
+                "name": "HTTP Requests",
+                "value": "_path=http | cut id.orig_h, id.resp_h, id.resp_p, method,host, uri | uniq -c",
+                "description": "Displays a list of the count unique HTTP requests including source and destination",
+                "tags": ["http", "initial exploration", "malware"]
+              },
+              {
+                "id": "5",
+                "name": "Unique Network Connections",
+                "value": "_path=conn | cut id.orig_h, id.resp_p, id.resp_h | sort | uniq",
+                "description": "Displays a table showing all unique source:port:destination connections pairings",
+                "tags": ["network", "initial exploration"]
+              },
+              {
+                "id": "6",
+                "name": "Connection Received Data",
+                "value": "_path=conn | put total_bytes = orig_bytes + resp_bytes | sort -r total_bytes | cut uid, id, orig_bytes, resp_bytes, total_bytes",
+                "description": "Shows the connections between hosts, sorted by data received",
+                "tags": ["network"]
+              },
+              {
+                "id": "7",
+                "name": "File Activity",
+                "value": "filename!=null | cut _path, tx_hosts, rx_hosts, conn_uids, mime_type, filename, md5, sha1",
+                "description": "Displays a curated view of file data including md5 and sha1 for complete file transfers",
+                "tags": ["files", "malware"]
+              },
+              {
+                "id": "8",
+                "name": "HTTP Post Requests",
+                "value": "method=POST | cut ts, uid, id, method, uri, status_code",
+                "description": "Displays all HTTP Post requests including the URI and HTTP status code",
+                "tags": ["http", "malware"]
+              },
+              {
+                "id": "9",
+                "name": "Show IP Subnets",
+                "value": "_path=conn | put classnet=network_of(id.resp_h) | cut classnet | count() by classnet | sort -r",
+                "description": "Enumerates the associated IP subclasses for all destination IP-addresses including count of connections",
+                "tags": ["network"]
+              },
+              {
+                "id": "10",
+                "name": "Suricata Alerts by Category",
+                "value": "event_type=alert | count() by alert.severity,alert.category | sort count",
+                "description": "Shows all suricata alert counts by category and severity",
+                "tags": ["suricata", "malware"]
+              },
+              {
+                "id": "11",
+                "name": "Suricata Alerts by Source and Destination",
+                "value": "event_type=alert | alerts=union(alert.category) by src_ip, dest_ip",
+                "description": "Shows all suricata alerts in a list by unique source and destination IP addresses",
+                "tags": ["suricata", "malware"]
+              },
+              {
+                "id": "12",
+                "name": "Suricata Alerts by Subnet",
+                "value": "event_type=alert | alerts=union(alert.category) by network_of(dest_ip)",
+                "description": "Displays a list of Suricata Alerts by CIDR IP Subnets",
+                "tags": ["suricata", "malware"]
+              },
+              {
+                "id": "dd6381e231",
+                "value": "added query A",
+                "name": "added query A",
+                "description": "",
+                "tags": []
+              }
+            ]
+          }
+        },
+        "size": [1250, 750],
+        "position": [120, 100]
+      },
+      "ffb4963b96": {
+        "name": "search",
+        "state": {
+          "clusters": {
+            "localhost:9867": {
+              "host": "localhost",
+              "id": "localhost:9867",
+              "name": "localhost:9867",
+              "password": "",
+              "port": "9867",
+              "username": "",
+              "version": "b928e53"
+            }
+          },
+          "modal": {"name": "", "args": {}},
+          "tabs": {
+            "active": "323d6bac22",
+            "data": [
+              {
+                "id": "323d6bac22",
+                "current": {
+                  "spaceId": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                  "connectionId": "localhost:9867"
+                },
+                "search": {
+                  "span": [
+                    {"sec": 1583768523, "ns": 826851000},
+                    {"sec": 1583774873, "ns": 693000000}
+                  ],
+                  "spanArgs": [
+                    {"sec": 1583768523, "ns": 826851000},
+                    {"sec": 1583774873, "ns": 693000000}
+                  ],
+                  "spanFocus": null
+                },
+                "searchBar": {
+                  "current": "added query B",
+                  "previous": "",
+                  "pinned": [],
+                  "editing": null,
+                  "error": null,
+                  "target": "events"
+                },
+                "columns": {
+                  "temp": {
+                    "_path:string": {"isVisible": true},
+                    "ts:time": {"isVisible": true},
+                    "ts_delta:interval": {"isVisible": true},
+                    "peer:string": {"isVisible": true},
+                    "gaps:count": {"isVisible": true},
+                    "acks:count": {"isVisible": true},
+                    "percent_lost:double": {"isVisible": true},
+                    "mem:count": {"isVisible": true},
+                    "pkts_proc:count": {"isVisible": true},
+                    "bytes_recv:count": {"isVisible": true},
+                    "pkts_dropped:count": {"isVisible": true},
+                    "pkts_link:count": {"isVisible": true},
+                    "pkt_lag:interval": {"isVisible": true},
+                    "events_proc:count": {"isVisible": true},
+                    "events_queued:count": {"isVisible": true},
+                    "active_tcp_conns:count": {"isVisible": true},
+                    "active_udp_conns:count": {"isVisible": true},
+                    "active_icmp_conns:count": {"isVisible": true},
+                    "tcp_conns:count": {"isVisible": true},
+                    "udp_conns:count": {"isVisible": true},
+                    "icmp_conns:count": {"isVisible": true},
+                    "timers:count": {"isVisible": true},
+                    "active_timers:count": {"isVisible": true},
+                    "files:count": {"isVisible": true},
+                    "active_files:count": {"isVisible": true},
+                    "dns_requests:count": {"isVisible": true},
+                    "active_dns_requests:count": {"isVisible": true},
+                    "reassem_tcp_size:count": {"isVisible": true},
+                    "reassem_file_size:count": {"isVisible": true},
+                    "reassem_frag_size:count": {"isVisible": true},
+                    "reassem_unknown_size:count": {"isVisible": true},
+                    "fuid:string": {"isVisible": true},
+                    "tx_hosts:set": {"isVisible": true},
+                    "rx_hosts:set": {"isVisible": true},
+                    "conn_uids:set": {"isVisible": true},
+                    "source:string": {"isVisible": true},
+                    "depth:count": {"isVisible": true},
+                    "analyzers:set": {"isVisible": true},
+                    "mime_type:string": {"isVisible": true},
+                    "filename:string": {"isVisible": true},
+                    "duration:interval": {"isVisible": true},
+                    "local_orig:bool": {"isVisible": true},
+                    "is_orig:bool": {"isVisible": true},
+                    "seen_bytes:count": {"isVisible": true},
+                    "total_bytes:count": {"isVisible": true},
+                    "missing_bytes:count": {"isVisible": true},
+                    "overflow_bytes:count": {"isVisible": true},
+                    "timedout:bool": {"isVisible": true},
+                    "parent_fuid:string": {"isVisible": true},
+                    "md5:string": {"isVisible": true},
+                    "sha1:string": {"isVisible": true},
+                    "sha256:string": {"isVisible": true},
+                    "extracted:string": {"isVisible": true},
+                    "extracted_cutoff:bool": {"isVisible": true},
+                    "extracted_size:count": {"isVisible": true},
+                    "id:string": {"isVisible": true},
+                    "certificate.version:count": {"isVisible": true},
+                    "certificate.serial:string": {"isVisible": true},
+                    "certificate.subject:string": {"isVisible": true},
+                    "certificate.issuer:string": {"isVisible": true},
+                    "certificate.not_valid_before:time": {"isVisible": true},
+                    "certificate.not_valid_after:time": {"isVisible": true},
+                    "certificate.key_alg:string": {"isVisible": true},
+                    "certificate.sig_alg:string": {"isVisible": true},
+                    "certificate.key_type:string": {"isVisible": true},
+                    "certificate.key_length:count": {"isVisible": true},
+                    "certificate.exponent:string": {"isVisible": true},
+                    "certificate.curve:string": {"isVisible": true},
+                    "san.dns:array": {"isVisible": true},
+                    "san.uri:array": {"isVisible": true},
+                    "san.email:array": {"isVisible": true},
+                    "san.ip:array": {"isVisible": true},
+                    "basic_constraints.ca:bool": {"isVisible": true},
+                    "basic_constraints.path_len:count": {"isVisible": true},
+                    "uid:string": {"isVisible": true},
+                    "id.orig_h:addr": {"isVisible": true},
+                    "id.orig_p:port": {"isVisible": true},
+                    "id.resp_h:addr": {"isVisible": true},
+                    "id.resp_p:port": {"isVisible": true},
+                    "version:string": {"isVisible": true},
+                    "cipher:string": {"isVisible": true},
+                    "curve:string": {"isVisible": true},
+                    "server_name:string": {"isVisible": true},
+                    "resumed:bool": {"isVisible": true},
+                    "last_alert:string": {"isVisible": true},
+                    "next_protocol:string": {"isVisible": true},
+                    "established:bool": {"isVisible": true},
+                    "cert_chain_fuids:array": {"isVisible": true},
+                    "client_cert_chain_fuids:array": {"isVisible": true},
+                    "subject:string": {"isVisible": true},
+                    "issuer:string": {"isVisible": true},
+                    "client_subject:string": {"isVisible": true},
+                    "client_issuer:string": {"isVisible": true},
+                    "validation_status:string": {"isVisible": true},
+                    "ja3:string": {"isVisible": true},
+                    "ja3s:string": {"isVisible": true},
+                    "proto:enum": {"isVisible": true},
+                    "service:string": {"isVisible": true},
+                    "orig_bytes:count": {"isVisible": true},
+                    "resp_bytes:count": {"isVisible": true},
+                    "conn_state:string": {"isVisible": true},
+                    "local_resp:bool": {"isVisible": true},
+                    "missed_bytes:count": {"isVisible": true},
+                    "history:string": {"isVisible": true},
+                    "orig_pkts:count": {"isVisible": true},
+                    "orig_ip_bytes:count": {"isVisible": true},
+                    "resp_pkts:count": {"isVisible": true},
+                    "resp_ip_bytes:count": {"isVisible": true},
+                    "tunnel_parents:set": {"isVisible": true},
+                    "geo.orig.country_code:string": {"isVisible": true},
+                    "geo.orig.region:string": {"isVisible": true},
+                    "geo.orig.city:string": {"isVisible": true},
+                    "geo.orig.latitude:double": {"isVisible": true},
+                    "geo.orig.longitude:double": {"isVisible": true},
+                    "geo.resp.country_code:string": {"isVisible": true},
+                    "geo.resp.region:string": {"isVisible": true},
+                    "geo.resp.city:string": {"isVisible": true},
+                    "geo.resp.latitude:double": {"isVisible": true},
+                    "geo.resp.longitude:double": {"isVisible": true},
+                    "community_id:string": {"isVisible": true}
+                  }
+                },
+                "history": {
+                  "position": 0,
+                  "entries": [
+                    {
+                      "program": "",
+                      "pins": [],
+                      "spanArgs": [
+                        {"sec": 1583768523, "ns": 826851000},
+                        {"sec": 1583774873, "ns": 693000000}
+                      ],
+                      "spaceName": "hello.pcapng",
+                      "spaceId": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                      "target": "events"
+                    }
+                  ]
+                },
+                "layout": {
+                  "rightSidebarIsOpen": false,
+                  "rightSidebarWidth": 450,
+                  "leftSidebarIsOpen": true,
+                  "leftSidebarWidth": 230,
+                  "investigationView": "linear",
+                  "columnHeadersView": "AUTO",
+                  "sidebarSections": [
+                    {
+                      "id": "spaces",
+                      "size": 223,
+                      "min": 100,
+                      "isOpen": true,
+                      "closedSize": 24
+                    },
+                    {
+                      "id": "queries",
+                      "size": 223,
+                      "min": 100,
+                      "isOpen": true,
+                      "closedSize": 24
+                    },
+                    {
+                      "id": "history",
+                      "size": 223,
+                      "min": 100,
+                      "isOpen": true,
+                      "closedSize": 24
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "investigation": {
+            "localhost:9867": {
+              "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW": [
+                {
+                  "ts": {"sec": 1611169469, "ns": 798000000},
+                  "search": {
+                    "program": "",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1583768523, "ns": 826851000},
+                      {"sec": 1583774873, "ns": 693000000}
+                    ],
+                    "spaceName": "hello.pcapng",
+                    "spaceId": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                    "target": "events"
+                  }
+                }
+              ]
+            }
+          },
+          "view": {"downloadsIsOpen": false, "timeZone": "UTC"},
+          "spaces": {
+            "localhost:9867": {
+              "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW": {
+                "min_time": {"sec": 1583768523, "ns": 826851000},
+                "max_time": {"sec": 1583774873, "ns": 692766001},
+                "id": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                "name": "hello.pcapng",
+                "data_path": "file:///Users/masonfish/go/src/github.com/brimdata/brim/run/data/spaces/sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                "storage_kind": "filestore",
+                "ingest": {"progress": null, "warnings": [], "snapshot": 4},
+                "size": 3121,
+                "pcap_support": true,
+                "pcap_size": 12400,
+                "pcap_path": "file:///Users/masonfish/Downloads/Work/hello.pcapng"
+              }
+            }
+          },
+          "packets": [],
+          "prefs": {
+            "jsonTypeConfig": "",
+            "timeFormat": "",
+            "suricataRunner": "",
+            "suricataUpdater": "",
+            "zeekRunner": "",
+            "dataDir": ""
+          },
+          "queries": {
+            "id": "root",
+            "name": "root",
+            "items": [
+              {
+                "id": "1",
+                "name": "Activity Overview",
+                "value": "count() by _path | sort -r",
+                "description": "This query shows a list of all Zeek streams in the data set, with a count of associated records",
+                "tags": ["zeek", "initial exploration"]
+              },
+              {
+                "id": "2",
+                "name": "Unique DNS Queries",
+                "value": "_path=dns | count() by query | sort -r",
+                "description": "Shows all unique DNS queries contained in the data set with count",
+                "tags": ["dns", "initial exploration"]
+              },
+              {
+                "id": "3",
+                "name": "Windows Networking Activity",
+                "value": "_path=~smb* OR _path=dce_rpc",
+                "description": "Filters and displays smb_files, smb_mapping and DCE_RPC activity",
+                "tags": ["windows", "smb", "malware"]
+              },
+              {
+                "id": "4",
+                "name": "HTTP Requests",
+                "value": "_path=http | cut id.orig_h, id.resp_h, id.resp_p, method,host, uri | uniq -c",
+                "description": "Displays a list of the count unique HTTP requests including source and destination",
+                "tags": ["http", "initial exploration", "malware"]
+              },
+              {
+                "id": "5",
+                "name": "Unique Network Connections",
+                "value": "_path=conn | cut id.orig_h, id.resp_p, id.resp_h | sort | uniq",
+                "description": "Displays a table showing all unique source:port:destination connections pairings",
+                "tags": ["network", "initial exploration"]
+              },
+              {
+                "id": "6",
+                "name": "Connection Received Data",
+                "value": "_path=conn | put total_bytes = orig_bytes + resp_bytes | sort -r total_bytes | cut uid, id, orig_bytes, resp_bytes, total_bytes",
+                "description": "Shows the connections between hosts, sorted by data received",
+                "tags": ["network"]
+              },
+              {
+                "id": "7",
+                "name": "File Activity",
+                "value": "filename!=null | cut _path, tx_hosts, rx_hosts, conn_uids, mime_type, filename, md5, sha1",
+                "description": "Displays a curated view of file data including md5 and sha1 for complete file transfers",
+                "tags": ["files", "malware"]
+              },
+              {
+                "id": "8",
+                "name": "HTTP Post Requests",
+                "value": "method=POST | cut ts, uid, id, method, uri, status_code",
+                "description": "Displays all HTTP Post requests including the URI and HTTP status code",
+                "tags": ["http", "malware"]
+              },
+              {
+                "id": "9",
+                "name": "Show IP Subnets",
+                "value": "_path=conn | put classnet=network_of(id.resp_h) | cut classnet | count() by classnet | sort -r",
+                "description": "Enumerates the associated IP subclasses for all destination IP-addresses including count of connections",
+                "tags": ["network"]
+              },
+              {
+                "id": "10",
+                "name": "Suricata Alerts by Category",
+                "value": "event_type=alert | count() by alert.severity,alert.category | sort count",
+                "description": "Shows all suricata alert counts by category and severity",
+                "tags": ["suricata", "malware"]
+              },
+              {
+                "id": "11",
+                "name": "Suricata Alerts by Source and Destination",
+                "value": "event_type=alert | alerts=union(alert.category) by src_ip, dest_ip",
+                "description": "Shows all suricata alerts in a list by unique source and destination IP addresses",
+                "tags": ["suricata", "malware"]
+              },
+              {
+                "id": "12",
+                "name": "Suricata Alerts by Subnet",
+                "value": "event_type=alert | alerts=union(alert.category) by network_of(dest_ip)",
+                "description": "Displays a list of Suricata Alerts by CIDR IP Subnets",
+                "tags": ["suricata", "malware"]
+              },
+              {
+                "id": "ddea06acc0",
+                "value": "added query B",
+                "name": "added query B",
+                "description": "",
+                "tags": []
+              }
+            ]
+          }
+        },
+        "size": [1250, 750],
+        "position": [95, 75]
+      }
+    },
+    "globalState": {
+      "clusters": {
+        "localhost:9867": {
+          "host": "localhost",
+          "id": "localhost:9867",
+          "name": "localhost:9867",
+          "password": "",
+          "port": "9867",
+          "username": "",
+          "version": "b928e53"
+        }
+      },
+      "investigation": {
+        "localhost:9867": {
+          "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW": [
+            {
+              "ts": {"sec": 1611169469, "ns": 798000000},
+              "search": {
+                "program": "",
+                "pins": [],
+                "spanArgs": [
+                  {"sec": 1583768523, "ns": 826851000},
+                  {"sec": 1583774873, "ns": 693000000}
+                ],
+                "spaceName": "hello.pcapng",
+                "spaceId": "sp_1nLVgOREKvgKVJxkgqNK0I0zhHW",
+                "target": "events"
+              }
+            }
+          ]
+        }
+      },
+      "prefs": {
+        "jsonTypeConfig": "",
+        "timeFormat": "",
+        "suricataRunner": "",
+        "suricataUpdater": "",
+        "zeekRunner": "",
+        "dataDir": ""
+      }
+    }
+  }
+}

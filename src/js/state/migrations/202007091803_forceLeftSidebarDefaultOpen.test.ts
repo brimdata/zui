@@ -1,4 +1,4 @@
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202007091803_forceLeftSidebarDefaultOpen", async () => {
   const next = await migrate({state: "v0.12.0", to: "202007091803"})

@@ -1,0 +1,1721 @@
+{
+  "version": 202110150837,
+  "data": {
+    "order": ["54236e5004", "1e7cfbc3c2"],
+    "windows": {
+      "54236e5004": {
+        "name": "search",
+        "state": {
+          "appearance": {
+            "sidebarIsOpen": true,
+            "sidebarWidth": 230,
+            "sidebarSections": [
+              {
+                "id": "pools",
+                "size": 223,
+                "min": 100,
+                "isOpen": true,
+                "closedSize": 24
+              },
+              {
+                "id": "queries",
+                "size": 223,
+                "min": 100,
+                "isOpen": true,
+                "closedSize": 24
+              },
+              {
+                "id": "history",
+                "size": 223,
+                "min": 100,
+                "isOpen": true,
+                "closedSize": 24
+              }
+            ]
+          },
+          "launches": {"0.27.0": "2021-11-12T18:01:24.724Z"},
+          "configPropValues": {
+            "brimcap": {"yamlConfigPath": ""},
+            "display": {
+              "timeZone": "UTC",
+              "timeFormat": "",
+              "thousandsSeparator": ",",
+              "decimal": "."
+            }
+          },
+          "workspaces": {
+            "localhost:9867": {
+              "host": "localhost",
+              "id": "localhost:9867",
+              "name": "localhost:9867",
+              "port": "9867",
+              "version": "72ba089",
+              "authType": "none"
+            }
+          },
+          "modal": {"name": "", "args": {}},
+          "tabs": {
+            "active": "b71c0e137f",
+            "data": [
+              {
+                "id": "b71c0e137f",
+                "search": {
+                  "span": [
+                    {"sec": 0, "ns": 0},
+                    {"sec": 1, "ns": 0}
+                  ],
+                  "spanArgs": [
+                    {"sec": 1585245809, "ns": 506571000},
+                    {"sec": 1585245809, "ns": 995000000}
+                  ],
+                  "spanFocus": null
+                },
+                "searchBar": {"current": "", "pinned": [], "error": null},
+                "columns": {
+                  "temp": {
+                    "_path": {"isVisible": true},
+                    "ts": {"isVisible": true},
+                    "ts_delta": {"isVisible": true},
+                    "peer": {"isVisible": true},
+                    "gaps": {"isVisible": true},
+                    "acks": {"isVisible": true},
+                    "percent_lost": {"isVisible": true},
+                    "mem": {"isVisible": true},
+                    "pkts_proc": {"isVisible": true},
+                    "bytes_recv": {"isVisible": true},
+                    "pkts_dropped": {"isVisible": true},
+                    "pkts_link": {"isVisible": true},
+                    "pkt_lag": {"isVisible": true},
+                    "events_proc": {"isVisible": true},
+                    "events_queued": {"isVisible": true},
+                    "active_tcp_conns": {"isVisible": true},
+                    "active_udp_conns": {"isVisible": true},
+                    "active_icmp_conns": {"isVisible": true},
+                    "tcp_conns": {"isVisible": true},
+                    "udp_conns": {"isVisible": true},
+                    "icmp_conns": {"isVisible": true},
+                    "timers": {"isVisible": true},
+                    "active_timers": {"isVisible": true},
+                    "files": {"isVisible": true},
+                    "active_files": {"isVisible": true},
+                    "dns_requests": {"isVisible": true},
+                    "active_dns_requests": {"isVisible": true},
+                    "reassem_tcp_size": {"isVisible": true},
+                    "reassem_file_size": {"isVisible": true},
+                    "reassem_frag_size": {"isVisible": true},
+                    "reassem_unknown_size": {"isVisible": true},
+                    "event_type": {"isVisible": true},
+                    "src_ip": {"isVisible": true},
+                    "src_port": {"isVisible": true},
+                    "dest_ip": {"isVisible": true},
+                    "dest_port": {"isVisible": true},
+                    "vlan": {"isVisible": true},
+                    "proto": {"isVisible": true},
+                    "app_proto": {"isVisible": true},
+                    "alertseverity": {"isVisible": true},
+                    "alertsignature": {"isVisible": true},
+                    "alertcategory": {"isVisible": true},
+                    "alertaction": {"isVisible": true},
+                    "alertsignature_id": {"isVisible": true},
+                    "alertgid": {"isVisible": true},
+                    "alertrev": {"isVisible": true},
+                    "alertmetadatasignature_severity": {"isVisible": true},
+                    "alertmetadataformer_category": {"isVisible": true},
+                    "alertmetadataattack_target": {"isVisible": true},
+                    "alertmetadatadeployment": {"isVisible": true},
+                    "alertmetadataaffected_product": {"isVisible": true},
+                    "alertmetadatacreated_at": {"isVisible": true},
+                    "alertmetadataperformance_impact": {"isVisible": true},
+                    "alertmetadataupdated_at": {"isVisible": true},
+                    "alertmetadatamalware_family": {"isVisible": true},
+                    "alertmetadatatag": {"isVisible": true},
+                    "flow_id": {"isVisible": true},
+                    "pcap_cnt": {"isVisible": true},
+                    "tx_id": {"isVisible": true},
+                    "icmp_code": {"isVisible": true},
+                    "icmp_type": {"isVisible": true},
+                    "tunnelsrc_ip": {"isVisible": true},
+                    "tunnelsrc_port": {"isVisible": true},
+                    "tunneldest_ip": {"isVisible": true},
+                    "tunneldest_port": {"isVisible": true},
+                    "tunnelproto": {"isVisible": true},
+                    "tunneldepth": {"isVisible": true},
+                    "community_id": {"isVisible": true},
+                    "fuid": {"isVisible": true},
+                    "tx_hosts": {"isVisible": true},
+                    "rx_hosts": {"isVisible": true},
+                    "conn_uids": {"isVisible": true},
+                    "source": {"isVisible": true},
+                    "depth": {"isVisible": true},
+                    "analyzers": {"isVisible": true},
+                    "mime_type": {"isVisible": true},
+                    "filename": {"isVisible": true},
+                    "duration": {"isVisible": true},
+                    "local_orig": {"isVisible": true},
+                    "is_orig": {"isVisible": true},
+                    "seen_bytes": {"isVisible": true},
+                    "total_bytes": {"isVisible": true},
+                    "missing_bytes": {"isVisible": true},
+                    "overflow_bytes": {"isVisible": true},
+                    "timedout": {"isVisible": true},
+                    "parent_fuid": {"isVisible": true},
+                    "md5": {"isVisible": true},
+                    "sha1": {"isVisible": true},
+                    "sha256": {"isVisible": true},
+                    "extracted": {"isVisible": true},
+                    "extracted_cutoff": {"isVisible": true},
+                    "extracted_size": {"isVisible": true},
+                    "uid": {"isVisible": true},
+                    "idorig_h": {"isVisible": true},
+                    "idorig_p": {"isVisible": true},
+                    "idresp_h": {"isVisible": true},
+                    "idresp_p": {"isVisible": true},
+                    "trans_depth": {"isVisible": true},
+                    "method": {"isVisible": true},
+                    "host": {"isVisible": true},
+                    "uri": {"isVisible": true},
+                    "referrer": {"isVisible": true},
+                    "version": {"isVisible": true},
+                    "user_agent": {"isVisible": true},
+                    "origin": {"isVisible": true},
+                    "request_body_len": {"isVisible": true},
+                    "response_body_len": {"isVisible": true},
+                    "status_code": {"isVisible": true},
+                    "status_msg": {"isVisible": true},
+                    "info_code": {"isVisible": true},
+                    "info_msg": {"isVisible": true},
+                    "tags": {"isVisible": true},
+                    "username": {"isVisible": true},
+                    "password": {"isVisible": true},
+                    "proxied": {"isVisible": true},
+                    "orig_fuids": {"isVisible": true},
+                    "orig_filenames": {"isVisible": true},
+                    "orig_mime_types": {"isVisible": true},
+                    "resp_fuids": {"isVisible": true},
+                    "resp_filenames": {"isVisible": true},
+                    "resp_mime_types": {"isVisible": true},
+                    "service": {"isVisible": true},
+                    "orig_bytes": {"isVisible": true},
+                    "resp_bytes": {"isVisible": true},
+                    "conn_state": {"isVisible": true},
+                    "local_resp": {"isVisible": true},
+                    "missed_bytes": {"isVisible": true},
+                    "history": {"isVisible": true},
+                    "orig_pkts": {"isVisible": true},
+                    "orig_ip_bytes": {"isVisible": true},
+                    "resp_pkts": {"isVisible": true},
+                    "resp_ip_bytes": {"isVisible": true},
+                    "tunnel_parents": {"isVisible": true},
+                    "geoorigcountry_code": {"isVisible": true},
+                    "geoorigregion": {"isVisible": true},
+                    "geoorigcity": {"isVisible": true},
+                    "geooriglatitude": {"isVisible": true},
+                    "geooriglongitude": {"isVisible": true},
+                    "georespcountry_code": {"isVisible": true},
+                    "georespregion": {"isVisible": true},
+                    "georespcity": {"isVisible": true},
+                    "georesplatitude": {"isVisible": true},
+                    "georesplongitude": {"isVisible": true}
+                  }
+                },
+                "layout": {
+                  "rightSidebarIsOpen": false,
+                  "rightSidebarWidth": 260,
+                  "investigationView": "linear",
+                  "columnHeadersView": "AUTO"
+                }
+              }
+            ]
+          },
+          "investigation": {
+            "localhost:9867": {
+              "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8": [
+                {
+                  "ts": {"sec": 1636740277, "ns": 120000000},
+                  "search": {
+                    "program": "_path matches smb* OR _path==\"dce_rpc\"",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1585245809, "ns": 506571000},
+                      {"sec": 1585245809, "ns": 995000000}
+                    ],
+                    "poolName": "hello.pcapng",
+                    "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+                  }
+                },
+                {
+                  "ts": {"sec": 1636740279, "ns": 365000000},
+                  "search": {
+                    "program": "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method, host, uri | uniq -c",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1585245809, "ns": 506571000},
+                      {"sec": 1585245809, "ns": 995000000}
+                    ],
+                    "poolName": "hello.pcapng",
+                    "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+                  }
+                },
+                {
+                  "ts": {"sec": 1636740284, "ns": 26000000},
+                  "search": {
+                    "program": "filename!=null | cut _path, tx_hosts, rx_hosts, conn_uids, mime_type, filename, md5, sha1",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1585245809, "ns": 506571000},
+                      {"sec": 1585245809, "ns": 995000000}
+                    ],
+                    "poolName": "hello.pcapng",
+                    "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+                  }
+                },
+                {
+                  "ts": {"sec": 1636740286, "ns": 176000000},
+                  "search": {
+                    "program": "count() by _path | sort -r",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1585245809, "ns": 506571000},
+                      {"sec": 1585245809, "ns": 995000000}
+                    ],
+                    "poolName": "hello.pcapng",
+                    "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+                  }
+                }
+              ]
+            }
+          },
+          "view": {"downloadsIsOpen": false},
+          "pools": {
+            "localhost:9867": {
+              "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8": {
+                "min_time": {"sec": 1585245809, "ns": 506571000},
+                "max_time": {"sec": 1585245809, "ns": 994157001},
+                "name": "hello.pcapng",
+                "id": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8",
+                "layout": {"order": "desc", "keys": [["ts"]]},
+                "ingest": {"progress": null, "warnings": []},
+                "size": 2501
+              }
+            }
+          },
+          "pluginStorage": {"ids": [], "entities": {}},
+          "feature": {},
+          "queries": {
+            "id": "root",
+            "name": "root",
+            "isOpen": true,
+            "items": [
+              {
+                "name": "Brim",
+                "items": [
+                  {
+                    "name": "Activity Overview",
+                    "value": "count() by _path | sort -r",
+                    "description": "Shows a list of all Zeek streams in the data set, with a count of associated records",
+                    "tags": ["zeek", "initial exploration"],
+                    "id": "vS6G85vJ2X3pCa-ZPCNmN"
+                  },
+                  {
+                    "name": "Unique DNS Queries",
+                    "value": "_path==\"dns\" | count() by query | sort -r",
+                    "description": "Shows all unique DNS queries in the data set with count",
+                    "tags": ["dns", "initial exploration"],
+                    "id": "HnGcgJNrkCXqBSmIRXdfQ"
+                  },
+                  {
+                    "name": "Windows Networking Activity",
+                    "value": "_path matches smb* OR _path==\"dce_rpc\"",
+                    "description": "Filters and displays smb_files, smb_mapping and DCE_RPC activity",
+                    "tags": ["windows", "smb", "malware"],
+                    "id": "qM-p5Qxs71qWTX48Nxbsv"
+                  },
+                  {
+                    "name": "HTTP Requests",
+                    "value": "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method, host, uri | uniq -c",
+                    "description": "Displays a list of the count of unique HTTP requests including source and destination",
+                    "tags": ["http", "initial exploration", "malware"],
+                    "id": "TVj39c-yg2tevGDH6unnu"
+                  },
+                  {
+                    "name": "Unique Network Connections",
+                    "value": "_path==\"conn\" | cut id.orig_h, id.resp_p, id.resp_h | sort | uniq",
+                    "description": "Displays a table showing all unique source:port:destination connections pairings",
+                    "tags": ["network", "initial exploration"],
+                    "id": "2MvDkS55PQ8_EwyiTCuWf"
+                  },
+                  {
+                    "name": "Connection Received Data",
+                    "value": "_path==\"conn\" | put total_bytes := orig_bytes + resp_bytes | sort -r total_bytes | cut uid, id, orig_bytes, resp_bytes, total_bytes",
+                    "description": "Shows the connections between hosts, sorted by data received",
+                    "tags": ["network"],
+                    "id": "ZJamRQRpANjSQS7jDAKED"
+                  },
+                  {
+                    "name": "File Activity",
+                    "value": "filename!=null | cut _path, tx_hosts, rx_hosts, conn_uids, mime_type, filename, md5, sha1",
+                    "description": "Displays a curated view of file data including md5 and sha1 for complete file transfers",
+                    "tags": ["files", "malware"],
+                    "id": "KKwJCOfW9VcMQIJvGgXa8"
+                  },
+                  {
+                    "name": "HTTP Post Requests",
+                    "value": "method==\"POST\" | cut ts, uid, id, method, uri, status_code",
+                    "description": "Displays all HTTP Post requests including the URI and HTTP status code",
+                    "tags": ["http", "malware"],
+                    "id": "bEjKVflgSMh1wHdueM62Q"
+                  },
+                  {
+                    "name": "Show IP Subnets",
+                    "value": "_path==\"conn\" | put classnet := network_of(id.resp_h) | cut classnet | count() by classnet | sort -r",
+                    "description": "Enumerates the classful networks for all destination IP addresses including count of connections",
+                    "tags": ["network"],
+                    "id": "nKmfWQPRhdQhyT2nQEzVE"
+                  },
+                  {
+                    "name": "Suricata Alerts by Category",
+                    "value": "event_type==\"alert\" | count() by alert.severity,alert.category | sort count",
+                    "description": "Shows all Suricata alert counts by category and severity",
+                    "tags": ["suricata", "malware"],
+                    "id": "evf677OV1bRiN3J4XaZSQ"
+                  },
+                  {
+                    "name": "Suricata Alerts by Source and Destination",
+                    "value": "event_type==\"alert\" | alerts := union(alert.category) by src_ip, dest_ip",
+                    "description": "Shows all Suricata alerts in a list by unique source and destination IP addresses",
+                    "tags": ["suricata", "malware"],
+                    "id": "AKCDdS3CxEbAiMl5RjE41"
+                  },
+                  {
+                    "name": "Suricata Alerts by Subnet",
+                    "value": "event_type==\"alert\" | alerts := union(alert.category) by network_of(dest_ip)",
+                    "description": "Displays a list of Suricata alerts by CIDR network",
+                    "tags": ["suricata", "malware"],
+                    "id": "i-qYrWtLw5JFNPuG4iO9x"
+                  }
+                ],
+                "id": "brim",
+                "isOpen": true
+              }
+            ]
+          },
+          "tabHistories": {"ids": [], "entities": {}},
+          "url": {"num": 2}
+        },
+        "size": [1250, 750],
+        "position": [120, 100]
+      },
+      "1e7cfbc3c2": {
+        "name": "search",
+        "state": {
+          "appearance": {
+            "sidebarIsOpen": true,
+            "sidebarWidth": 230,
+            "sidebarSections": [
+              {
+                "id": "pools",
+                "size": 223,
+                "min": 100,
+                "isOpen": true,
+                "closedSize": 24
+              },
+              {
+                "id": "queries",
+                "size": 223,
+                "min": 100,
+                "isOpen": true,
+                "closedSize": 24
+              },
+              {
+                "id": "history",
+                "size": 223,
+                "min": 100,
+                "isOpen": true,
+                "closedSize": 24
+              }
+            ]
+          },
+          "launches": {"0.27.0": "2021-11-12T18:01:24.724Z"},
+          "configPropValues": {
+            "brimcap": {"yamlConfigPath": ""},
+            "display": {
+              "timeZone": "UTC",
+              "timeFormat": "",
+              "thousandsSeparator": ",",
+              "decimal": "."
+            }
+          },
+          "workspaces": {
+            "localhost:9867": {
+              "host": "localhost",
+              "id": "localhost:9867",
+              "name": "localhost:9867",
+              "port": "9867",
+              "version": "72ba089",
+              "authType": "none"
+            }
+          },
+          "modal": {"name": "", "args": {}},
+          "tabs": {
+            "active": "d5fd74dca0",
+            "data": [
+              {
+                "id": "36b828fe90",
+                "search": {
+                  "span": [
+                    {"sec": 0, "ns": 0},
+                    {"sec": 1, "ns": 0}
+                  ],
+                  "spanArgs": [null, null],
+                  "spanFocus": null
+                },
+                "searchBar": {"current": "", "pinned": [], "error": null},
+                "columns": {},
+                "layout": {
+                  "rightSidebarIsOpen": false,
+                  "rightSidebarWidth": 260,
+                  "investigationView": "linear",
+                  "columnHeadersView": "AUTO"
+                }
+              },
+              {
+                "id": "d5fd74dca0",
+                "search": {
+                  "span": [
+                    {"sec": 1585245809, "ns": 506571000},
+                    {"sec": 1585245809, "ns": 995000000}
+                  ],
+                  "spanArgs": [
+                    {"sec": 1585245809, "ns": 506571000},
+                    {"sec": 1585245809, "ns": 995000000}
+                  ],
+                  "spanFocus": null
+                },
+                "searchBar": {
+                  "current": "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method, host, uri | uniq -c",
+                  "pinned": [],
+                  "error": null
+                },
+                "columns": {
+                  "none": {},
+                  "temp": {
+                    "_path": {"isVisible": true},
+                    "ts": {"isVisible": true},
+                    "ts_delta": {"isVisible": true},
+                    "peer": {"isVisible": true},
+                    "gaps": {"isVisible": true},
+                    "acks": {"isVisible": true},
+                    "percent_lost": {"isVisible": true},
+                    "mem": {"isVisible": true},
+                    "pkts_proc": {"isVisible": true},
+                    "bytes_recv": {"isVisible": true},
+                    "pkts_dropped": {"isVisible": true},
+                    "pkts_link": {"isVisible": true},
+                    "pkt_lag": {"isVisible": true},
+                    "events_proc": {"isVisible": true},
+                    "events_queued": {"isVisible": true},
+                    "active_tcp_conns": {"isVisible": true},
+                    "active_udp_conns": {"isVisible": true},
+                    "active_icmp_conns": {"isVisible": true},
+                    "tcp_conns": {"isVisible": true},
+                    "udp_conns": {"isVisible": true},
+                    "icmp_conns": {"isVisible": true},
+                    "timers": {"isVisible": true},
+                    "active_timers": {"isVisible": true},
+                    "files": {"isVisible": true},
+                    "active_files": {"isVisible": true},
+                    "dns_requests": {"isVisible": true},
+                    "active_dns_requests": {"isVisible": true},
+                    "reassem_tcp_size": {"isVisible": true},
+                    "reassem_file_size": {"isVisible": true},
+                    "reassem_frag_size": {"isVisible": true},
+                    "reassem_unknown_size": {"isVisible": true},
+                    "event_type": {"isVisible": true},
+                    "src_ip": {"isVisible": true},
+                    "src_port": {"isVisible": true},
+                    "dest_ip": {"isVisible": true},
+                    "dest_port": {"isVisible": true},
+                    "vlan": {"isVisible": true},
+                    "proto": {"isVisible": true},
+                    "app_proto": {"isVisible": true},
+                    "alertseverity": {"isVisible": true},
+                    "alertsignature": {"isVisible": true},
+                    "alertcategory": {"isVisible": true},
+                    "alertaction": {"isVisible": true},
+                    "alertsignature_id": {"isVisible": true},
+                    "alertgid": {"isVisible": true},
+                    "alertrev": {"isVisible": true},
+                    "alertmetadatasignature_severity": {"isVisible": true},
+                    "alertmetadataformer_category": {"isVisible": true},
+                    "alertmetadataattack_target": {"isVisible": true},
+                    "alertmetadatadeployment": {"isVisible": true},
+                    "alertmetadataaffected_product": {"isVisible": true},
+                    "alertmetadatacreated_at": {"isVisible": true},
+                    "alertmetadataperformance_impact": {"isVisible": true},
+                    "alertmetadataupdated_at": {"isVisible": true},
+                    "alertmetadatamalware_family": {"isVisible": true},
+                    "alertmetadatatag": {"isVisible": true},
+                    "flow_id": {"isVisible": true},
+                    "pcap_cnt": {"isVisible": true},
+                    "tx_id": {"isVisible": true},
+                    "icmp_code": {"isVisible": true},
+                    "icmp_type": {"isVisible": true},
+                    "tunnelsrc_ip": {"isVisible": true},
+                    "tunnelsrc_port": {"isVisible": true},
+                    "tunneldest_ip": {"isVisible": true},
+                    "tunneldest_port": {"isVisible": true},
+                    "tunnelproto": {"isVisible": true},
+                    "tunneldepth": {"isVisible": true},
+                    "community_id": {"isVisible": true},
+                    "fuid": {"isVisible": true},
+                    "tx_hosts": {"isVisible": true},
+                    "rx_hosts": {"isVisible": true},
+                    "conn_uids": {"isVisible": true},
+                    "source": {"isVisible": true},
+                    "depth": {"isVisible": true},
+                    "analyzers": {"isVisible": true},
+                    "mime_type": {"isVisible": true},
+                    "filename": {"isVisible": true},
+                    "duration": {"isVisible": true},
+                    "local_orig": {"isVisible": true},
+                    "is_orig": {"isVisible": true},
+                    "seen_bytes": {"isVisible": true},
+                    "total_bytes": {"isVisible": true},
+                    "missing_bytes": {"isVisible": true},
+                    "overflow_bytes": {"isVisible": true},
+                    "timedout": {"isVisible": true},
+                    "parent_fuid": {"isVisible": true},
+                    "md5": {"isVisible": true},
+                    "sha1": {"isVisible": true},
+                    "sha256": {"isVisible": true},
+                    "extracted": {"isVisible": true},
+                    "extracted_cutoff": {"isVisible": true},
+                    "extracted_size": {"isVisible": true},
+                    "uid": {"isVisible": true},
+                    "idorig_h": {"isVisible": true},
+                    "idorig_p": {"isVisible": true},
+                    "idresp_h": {"isVisible": true},
+                    "idresp_p": {"isVisible": true},
+                    "trans_depth": {"isVisible": true},
+                    "method": {"isVisible": true},
+                    "host": {"isVisible": true},
+                    "uri": {"isVisible": true},
+                    "referrer": {"isVisible": true},
+                    "version": {"isVisible": true},
+                    "user_agent": {"isVisible": true},
+                    "origin": {"isVisible": true},
+                    "request_body_len": {"isVisible": true},
+                    "response_body_len": {"isVisible": true},
+                    "status_code": {"isVisible": true},
+                    "status_msg": {"isVisible": true},
+                    "info_code": {"isVisible": true},
+                    "info_msg": {"isVisible": true},
+                    "tags": {"isVisible": true},
+                    "username": {"isVisible": true},
+                    "password": {"isVisible": true},
+                    "proxied": {"isVisible": true},
+                    "orig_fuids": {"isVisible": true},
+                    "orig_filenames": {"isVisible": true},
+                    "orig_mime_types": {"isVisible": true},
+                    "resp_fuids": {"isVisible": true},
+                    "resp_filenames": {"isVisible": true},
+                    "resp_mime_types": {"isVisible": true},
+                    "service": {"isVisible": true},
+                    "orig_bytes": {"isVisible": true},
+                    "resp_bytes": {"isVisible": true},
+                    "conn_state": {"isVisible": true},
+                    "local_resp": {"isVisible": true},
+                    "missed_bytes": {"isVisible": true},
+                    "history": {"isVisible": true},
+                    "orig_pkts": {"isVisible": true},
+                    "orig_ip_bytes": {"isVisible": true},
+                    "resp_pkts": {"isVisible": true},
+                    "resp_ip_bytes": {"isVisible": true},
+                    "tunnel_parents": {"isVisible": true},
+                    "geoorigcountry_code": {"isVisible": true},
+                    "geoorigregion": {"isVisible": true},
+                    "geoorigcity": {"isVisible": true},
+                    "geooriglatitude": {"isVisible": true},
+                    "geooriglongitude": {"isVisible": true},
+                    "georespcountry_code": {"isVisible": true},
+                    "georespregion": {"isVisible": true},
+                    "georespcity": {"isVisible": true},
+                    "georesplatitude": {"isVisible": true},
+                    "georesplongitude": {"isVisible": true}
+                  },
+                  "_uniq,host,id.orig_h,id.resp_h,id.resp_p,method,uri": {
+                    "idorig_h": {"isVisible": true},
+                    "idresp_h": {"isVisible": true},
+                    "idresp_p": {"isVisible": true},
+                    "method": {"isVisible": true},
+                    "host": {"isVisible": true},
+                    "uri": {"isVisible": true},
+                    "_uniq": {"isVisible": true}
+                  },
+                  "_path,count": {
+                    "_path": {"isVisible": true},
+                    "count": {"isVisible": true}
+                  }
+                },
+                "layout": {
+                  "rightSidebarIsOpen": false,
+                  "rightSidebarWidth": 260,
+                  "investigationView": "linear",
+                  "columnHeadersView": "AUTO"
+                }
+              }
+            ]
+          },
+          "investigation": {
+            "localhost:9867": {
+              "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8": [
+                {
+                  "ts": {"sec": 1636740277, "ns": 120000000},
+                  "search": {
+                    "program": "_path matches smb* OR _path==\"dce_rpc\"",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1585245809, "ns": 506571000},
+                      {"sec": 1585245809, "ns": 995000000}
+                    ],
+                    "poolName": "hello.pcapng",
+                    "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+                  }
+                },
+                {
+                  "ts": {"sec": 1636740279, "ns": 365000000},
+                  "search": {
+                    "program": "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method, host, uri | uniq -c",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1585245809, "ns": 506571000},
+                      {"sec": 1585245809, "ns": 995000000}
+                    ],
+                    "poolName": "hello.pcapng",
+                    "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+                  }
+                },
+                {
+                  "ts": {"sec": 1636740284, "ns": 26000000},
+                  "search": {
+                    "program": "filename!=null | cut _path, tx_hosts, rx_hosts, conn_uids, mime_type, filename, md5, sha1",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1585245809, "ns": 506571000},
+                      {"sec": 1585245809, "ns": 995000000}
+                    ],
+                    "poolName": "hello.pcapng",
+                    "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+                  }
+                },
+                {
+                  "ts": {"sec": 1636740286, "ns": 176000000},
+                  "search": {
+                    "program": "count() by _path | sort -r",
+                    "pins": [],
+                    "spanArgs": [
+                      {"sec": 1585245809, "ns": 506571000},
+                      {"sec": 1585245809, "ns": 995000000}
+                    ],
+                    "poolName": "hello.pcapng",
+                    "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+                  }
+                }
+              ]
+            }
+          },
+          "view": {"downloadsIsOpen": false},
+          "pools": {
+            "localhost:9867": {
+              "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8": {
+                "min_time": {"sec": 1585245809, "ns": 506571000},
+                "max_time": {"sec": 1585245809, "ns": 994157001},
+                "id": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8",
+                "layout": {"order": "desc", "keys": [["ts"]]},
+                "name": "hello.pcapng",
+                "threshold": 524288000,
+                "ts": "2021-11-12T18:03:18.550789Z",
+                "ingest": {"progress": null, "warnings": []},
+                "size": 2501
+              }
+            }
+          },
+          "pluginStorage": {"ids": [], "entities": {}},
+          "feature": {},
+          "queries": {
+            "id": "root",
+            "name": "root",
+            "isOpen": true,
+            "items": [
+              {
+                "name": "Brim",
+                "items": [
+                  {
+                    "name": "Activity Overview",
+                    "value": "count() by _path | sort -r",
+                    "description": "Shows a list of all Zeek streams in the data set, with a count of associated records",
+                    "tags": ["zeek", "initial exploration"],
+                    "id": "vS6G85vJ2X3pCa-ZPCNmN"
+                  },
+                  {
+                    "name": "Unique DNS Queries",
+                    "value": "_path==\"dns\" | count() by query | sort -r",
+                    "description": "Shows all unique DNS queries in the data set with count",
+                    "tags": ["dns", "initial exploration"],
+                    "id": "HnGcgJNrkCXqBSmIRXdfQ"
+                  },
+                  {
+                    "name": "Windows Networking Activity",
+                    "value": "_path matches smb* OR _path==\"dce_rpc\"",
+                    "description": "Filters and displays smb_files, smb_mapping and DCE_RPC activity",
+                    "tags": ["windows", "smb", "malware"],
+                    "id": "qM-p5Qxs71qWTX48Nxbsv"
+                  },
+                  {
+                    "name": "HTTP Requests",
+                    "value": "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method, host, uri | uniq -c",
+                    "description": "Displays a list of the count of unique HTTP requests including source and destination",
+                    "tags": ["http", "initial exploration", "malware"],
+                    "id": "TVj39c-yg2tevGDH6unnu"
+                  },
+                  {
+                    "name": "Unique Network Connections",
+                    "value": "_path==\"conn\" | cut id.orig_h, id.resp_p, id.resp_h | sort | uniq",
+                    "description": "Displays a table showing all unique source:port:destination connections pairings",
+                    "tags": ["network", "initial exploration"],
+                    "id": "2MvDkS55PQ8_EwyiTCuWf"
+                  },
+                  {
+                    "name": "Connection Received Data",
+                    "value": "_path==\"conn\" | put total_bytes := orig_bytes + resp_bytes | sort -r total_bytes | cut uid, id, orig_bytes, resp_bytes, total_bytes",
+                    "description": "Shows the connections between hosts, sorted by data received",
+                    "tags": ["network"],
+                    "id": "ZJamRQRpANjSQS7jDAKED"
+                  },
+                  {
+                    "name": "File Activity",
+                    "value": "filename!=null | cut _path, tx_hosts, rx_hosts, conn_uids, mime_type, filename, md5, sha1",
+                    "description": "Displays a curated view of file data including md5 and sha1 for complete file transfers",
+                    "tags": ["files", "malware"],
+                    "id": "KKwJCOfW9VcMQIJvGgXa8"
+                  },
+                  {
+                    "name": "HTTP Post Requests",
+                    "value": "method==\"POST\" | cut ts, uid, id, method, uri, status_code",
+                    "description": "Displays all HTTP Post requests including the URI and HTTP status code",
+                    "tags": ["http", "malware"],
+                    "id": "bEjKVflgSMh1wHdueM62Q"
+                  },
+                  {
+                    "name": "Show IP Subnets",
+                    "value": "_path==\"conn\" | put classnet := network_of(id.resp_h) | cut classnet | count() by classnet | sort -r",
+                    "description": "Enumerates the classful networks for all destination IP addresses including count of connections",
+                    "tags": ["network"],
+                    "id": "nKmfWQPRhdQhyT2nQEzVE"
+                  },
+                  {
+                    "name": "Suricata Alerts by Category",
+                    "value": "event_type==\"alert\" | count() by alert.severity,alert.category | sort count",
+                    "description": "Shows all Suricata alert counts by category and severity",
+                    "tags": ["suricata", "malware"],
+                    "id": "evf677OV1bRiN3J4XaZSQ"
+                  },
+                  {
+                    "name": "Suricata Alerts by Source and Destination",
+                    "value": "event_type==\"alert\" | alerts := union(alert.category) by src_ip, dest_ip",
+                    "description": "Shows all Suricata alerts in a list by unique source and destination IP addresses",
+                    "tags": ["suricata", "malware"],
+                    "id": "AKCDdS3CxEbAiMl5RjE41"
+                  },
+                  {
+                    "name": "Suricata Alerts by Subnet",
+                    "value": "event_type==\"alert\" | alerts := union(alert.category) by network_of(dest_ip)",
+                    "description": "Displays a list of Suricata alerts by CIDR network",
+                    "tags": ["suricata", "malware"],
+                    "id": "i-qYrWtLw5JFNPuG4iO9x"
+                  }
+                ],
+                "id": "brim",
+                "isOpen": true
+              }
+            ]
+          },
+          "tabHistories": {
+            "ids": ["36b828fe90", "d5fd74dca0"],
+            "entities": {
+              "36b828fe90": {
+                "id": "36b828fe90",
+                "entries": [
+                  {
+                    "pathname": "/workspaces/localhost:9867",
+                    "search": "",
+                    "hash": "",
+                    "key": "4mi15i"
+                  }
+                ],
+                "index": 0
+              },
+              "d5fd74dca0": {
+                "id": "d5fd74dca0",
+                "entries": [
+                  {
+                    "pathname": "/workspaces/localhost:9867/release-notes",
+                    "search": "",
+                    "hash": "",
+                    "key": "0207da"
+                  },
+                  {
+                    "pathname": "/workspaces/localhost:9867/lakes/import",
+                    "search": "",
+                    "hash": "",
+                    "key": "k2yrbc"
+                  },
+                  {
+                    "pathname": "/workspaces/localhost:9867/lakes/0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8/search",
+                    "search": "?keep=true",
+                    "hash": "",
+                    "key": "3r74lk"
+                  }
+                ],
+                "index": 2
+              }
+            }
+          },
+          "url": {"num": 12}
+        },
+        "size": [1250, 750],
+        "position": [55, 74]
+      }
+    },
+    "globalState": {
+      "launches": {"0.27.0": "2021-11-12T18:01:24.724Z"},
+      "workspaces": {
+        "localhost:9867": {
+          "host": "localhost",
+          "id": "localhost:9867",
+          "name": "localhost:9867",
+          "port": "9867",
+          "version": "72ba089",
+          "authType": "none"
+        }
+      },
+      "investigation": {
+        "localhost:9867": {
+          "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8": [
+            {
+              "ts": {"sec": 1636740277, "ns": 120000000},
+              "search": {
+                "program": "_path matches smb* OR _path==\"dce_rpc\"",
+                "pins": [],
+                "spanArgs": [
+                  {"sec": 1585245809, "ns": 506571000},
+                  {"sec": 1585245809, "ns": 995000000}
+                ],
+                "poolName": "hello.pcapng",
+                "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+              }
+            },
+            {
+              "ts": {"sec": 1636740279, "ns": 365000000},
+              "search": {
+                "program": "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method, host, uri | uniq -c",
+                "pins": [],
+                "spanArgs": [
+                  {"sec": 1585245809, "ns": 506571000},
+                  {"sec": 1585245809, "ns": 995000000}
+                ],
+                "poolName": "hello.pcapng",
+                "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+              }
+            },
+            {
+              "ts": {"sec": 1636740284, "ns": 26000000},
+              "search": {
+                "program": "filename!=null | cut _path, tx_hosts, rx_hosts, conn_uids, mime_type, filename, md5, sha1",
+                "pins": [],
+                "spanArgs": [
+                  {"sec": 1585245809, "ns": 506571000},
+                  {"sec": 1585245809, "ns": 995000000}
+                ],
+                "poolName": "hello.pcapng",
+                "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+              }
+            },
+            {
+              "ts": {"sec": 1636740286, "ns": 176000000},
+              "search": {
+                "program": "count() by _path | sort -r",
+                "pins": [],
+                "spanArgs": [
+                  {"sec": 1585245809, "ns": 506571000},
+                  {"sec": 1585245809, "ns": 995000000}
+                ],
+                "poolName": "hello.pcapng",
+                "poolId": "0x0e1c5e668e4e0f2c245ab308da35a7faa67bf3c8"
+              }
+            }
+          ]
+        }
+      },
+      "configs": {
+        "ids": ["brimcap", "display"],
+        "entities": {
+          "brimcap": {
+            "name": "brimcap",
+            "title": "Brimcap Settings",
+            "properties": {
+              "yamlConfigPath": {
+                "name": "yamlConfigPath",
+                "type": "file",
+                "label": "Brimcap YAML Config File",
+                "defaultValue": "",
+                "helpLink": {
+                  "label": "docs",
+                  "url": "https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config"
+                }
+              }
+            }
+          },
+          "display": {
+            "name": "display",
+            "title": "Display",
+            "properties": {
+              "timeZone": {
+                "name": "timeZone",
+                "label": "Timezone",
+                "type": "string",
+                "defaultValue": "UTC",
+                "enum": [
+                  "Africa/Abidjan",
+                  "Africa/Accra",
+                  "Africa/Addis_Ababa",
+                  "Africa/Algiers",
+                  "Africa/Asmara",
+                  "Africa/Asmera",
+                  "Africa/Bamako",
+                  "Africa/Bangui",
+                  "Africa/Banjul",
+                  "Africa/Bissau",
+                  "Africa/Blantyre",
+                  "Africa/Brazzaville",
+                  "Africa/Bujumbura",
+                  "Africa/Cairo",
+                  "Africa/Casablanca",
+                  "Africa/Ceuta",
+                  "Africa/Conakry",
+                  "Africa/Dakar",
+                  "Africa/Dar_es_Salaam",
+                  "Africa/Djibouti",
+                  "Africa/Douala",
+                  "Africa/El_Aaiun",
+                  "Africa/Freetown",
+                  "Africa/Gaborone",
+                  "Africa/Harare",
+                  "Africa/Johannesburg",
+                  "Africa/Juba",
+                  "Africa/Kampala",
+                  "Africa/Khartoum",
+                  "Africa/Kigali",
+                  "Africa/Kinshasa",
+                  "Africa/Lagos",
+                  "Africa/Libreville",
+                  "Africa/Lome",
+                  "Africa/Luanda",
+                  "Africa/Lubumbashi",
+                  "Africa/Lusaka",
+                  "Africa/Malabo",
+                  "Africa/Maputo",
+                  "Africa/Maseru",
+                  "Africa/Mbabane",
+                  "Africa/Mogadishu",
+                  "Africa/Monrovia",
+                  "Africa/Nairobi",
+                  "Africa/Ndjamena",
+                  "Africa/Niamey",
+                  "Africa/Nouakchott",
+                  "Africa/Ouagadougou",
+                  "Africa/Porto-Novo",
+                  "Africa/Sao_Tome",
+                  "Africa/Timbuktu",
+                  "Africa/Tripoli",
+                  "Africa/Tunis",
+                  "Africa/Windhoek",
+                  "America/Adak",
+                  "America/Anchorage",
+                  "America/Anguilla",
+                  "America/Antigua",
+                  "America/Araguaina",
+                  "America/Argentina/Buenos_Aires",
+                  "America/Argentina/Catamarca",
+                  "America/Argentina/ComodRivadavia",
+                  "America/Argentina/Cordoba",
+                  "America/Argentina/Jujuy",
+                  "America/Argentina/La_Rioja",
+                  "America/Argentina/Mendoza",
+                  "America/Argentina/Rio_Gallegos",
+                  "America/Argentina/Salta",
+                  "America/Argentina/San_Juan",
+                  "America/Argentina/San_Luis",
+                  "America/Argentina/Tucuman",
+                  "America/Argentina/Ushuaia",
+                  "America/Aruba",
+                  "America/Asuncion",
+                  "America/Atikokan",
+                  "America/Atka",
+                  "America/Bahia",
+                  "America/Bahia_Banderas",
+                  "America/Barbados",
+                  "America/Belem",
+                  "America/Belize",
+                  "America/Blanc-Sablon",
+                  "America/Boa_Vista",
+                  "America/Bogota",
+                  "America/Boise",
+                  "America/Buenos_Aires",
+                  "America/Cambridge_Bay",
+                  "America/Campo_Grande",
+                  "America/Cancun",
+                  "America/Caracas",
+                  "America/Catamarca",
+                  "America/Cayenne",
+                  "America/Cayman",
+                  "America/Chicago",
+                  "America/Chihuahua",
+                  "America/Coral_Harbour",
+                  "America/Cordoba",
+                  "America/Costa_Rica",
+                  "America/Creston",
+                  "America/Cuiaba",
+                  "America/Curacao",
+                  "America/Danmarkshavn",
+                  "America/Dawson",
+                  "America/Dawson_Creek",
+                  "America/Denver",
+                  "America/Detroit",
+                  "America/Dominica",
+                  "America/Edmonton",
+                  "America/Eirunepe",
+                  "America/El_Salvador",
+                  "America/Ensenada",
+                  "America/Fort_Nelson",
+                  "America/Fort_Wayne",
+                  "America/Fortaleza",
+                  "America/Glace_Bay",
+                  "America/Godthab",
+                  "America/Goose_Bay",
+                  "America/Grand_Turk",
+                  "America/Grenada",
+                  "America/Guadeloupe",
+                  "America/Guatemala",
+                  "America/Guayaquil",
+                  "America/Guyana",
+                  "America/Halifax",
+                  "America/Havana",
+                  "America/Hermosillo",
+                  "America/Indiana/Indianapolis",
+                  "America/Indiana/Knox",
+                  "America/Indiana/Marengo",
+                  "America/Indiana/Petersburg",
+                  "America/Indiana/Tell_City",
+                  "America/Indiana/Vevay",
+                  "America/Indiana/Vincennes",
+                  "America/Indiana/Winamac",
+                  "America/Indianapolis",
+                  "America/Inuvik",
+                  "America/Iqaluit",
+                  "America/Jamaica",
+                  "America/Jujuy",
+                  "America/Juneau",
+                  "America/Kentucky/Louisville",
+                  "America/Kentucky/Monticello",
+                  "America/Knox_IN",
+                  "America/Kralendijk",
+                  "America/La_Paz",
+                  "America/Lima",
+                  "America/Los_Angeles",
+                  "America/Louisville",
+                  "America/Lower_Princes",
+                  "America/Maceio",
+                  "America/Managua",
+                  "America/Manaus",
+                  "America/Marigot",
+                  "America/Martinique",
+                  "America/Matamoros",
+                  "America/Mazatlan",
+                  "America/Mendoza",
+                  "America/Menominee",
+                  "America/Merida",
+                  "America/Metlakatla",
+                  "America/Mexico_City",
+                  "America/Miquelon",
+                  "America/Moncton",
+                  "America/Monterrey",
+                  "America/Montevideo",
+                  "America/Montreal",
+                  "America/Montserrat",
+                  "America/Nassau",
+                  "America/New_York",
+                  "America/Nipigon",
+                  "America/Nome",
+                  "America/Noronha",
+                  "America/North_Dakota/Beulah",
+                  "America/North_Dakota/Center",
+                  "America/North_Dakota/New_Salem",
+                  "America/Nuuk",
+                  "America/Ojinaga",
+                  "America/Panama",
+                  "America/Pangnirtung",
+                  "America/Paramaribo",
+                  "America/Phoenix",
+                  "America/Port-au-Prince",
+                  "America/Port_of_Spain",
+                  "America/Porto_Acre",
+                  "America/Porto_Velho",
+                  "America/Puerto_Rico",
+                  "America/Punta_Arenas",
+                  "America/Rainy_River",
+                  "America/Rankin_Inlet",
+                  "America/Recife",
+                  "America/Regina",
+                  "America/Resolute",
+                  "America/Rio_Branco",
+                  "America/Rosario",
+                  "America/Santa_Isabel",
+                  "America/Santarem",
+                  "America/Santiago",
+                  "America/Santo_Domingo",
+                  "America/Sao_Paulo",
+                  "America/Scoresbysund",
+                  "America/Shiprock",
+                  "America/Sitka",
+                  "America/St_Barthelemy",
+                  "America/St_Johns",
+                  "America/St_Kitts",
+                  "America/St_Lucia",
+                  "America/St_Thomas",
+                  "America/St_Vincent",
+                  "America/Swift_Current",
+                  "America/Tegucigalpa",
+                  "America/Thule",
+                  "America/Thunder_Bay",
+                  "America/Tijuana",
+                  "America/Toronto",
+                  "America/Tortola",
+                  "America/Vancouver",
+                  "America/Virgin",
+                  "America/Whitehorse",
+                  "America/Winnipeg",
+                  "America/Yakutat",
+                  "America/Yellowknife",
+                  "Antarctica/Casey",
+                  "Antarctica/Davis",
+                  "Antarctica/DumontDUrville",
+                  "Antarctica/Macquarie",
+                  "Antarctica/Mawson",
+                  "Antarctica/McMurdo",
+                  "Antarctica/Palmer",
+                  "Antarctica/Rothera",
+                  "Antarctica/South_Pole",
+                  "Antarctica/Syowa",
+                  "Antarctica/Troll",
+                  "Antarctica/Vostok",
+                  "Arctic/Longyearbyen",
+                  "Asia/Aden",
+                  "Asia/Almaty",
+                  "Asia/Amman",
+                  "Asia/Anadyr",
+                  "Asia/Aqtau",
+                  "Asia/Aqtobe",
+                  "Asia/Ashgabat",
+                  "Asia/Ashkhabad",
+                  "Asia/Atyrau",
+                  "Asia/Baghdad",
+                  "Asia/Bahrain",
+                  "Asia/Baku",
+                  "Asia/Bangkok",
+                  "Asia/Barnaul",
+                  "Asia/Beirut",
+                  "Asia/Bishkek",
+                  "Asia/Brunei",
+                  "Asia/Calcutta",
+                  "Asia/Chita",
+                  "Asia/Choibalsan",
+                  "Asia/Chongqing",
+                  "Asia/Chungking",
+                  "Asia/Colombo",
+                  "Asia/Dacca",
+                  "Asia/Damascus",
+                  "Asia/Dhaka",
+                  "Asia/Dili",
+                  "Asia/Dubai",
+                  "Asia/Dushanbe",
+                  "Asia/Famagusta",
+                  "Asia/Gaza",
+                  "Asia/Harbin",
+                  "Asia/Hebron",
+                  "Asia/Ho_Chi_Minh",
+                  "Asia/Hong_Kong",
+                  "Asia/Hovd",
+                  "Asia/Irkutsk",
+                  "Asia/Istanbul",
+                  "Asia/Jakarta",
+                  "Asia/Jayapura",
+                  "Asia/Jerusalem",
+                  "Asia/Kabul",
+                  "Asia/Kamchatka",
+                  "Asia/Karachi",
+                  "Asia/Kashgar",
+                  "Asia/Kathmandu",
+                  "Asia/Katmandu",
+                  "Asia/Khandyga",
+                  "Asia/Kolkata",
+                  "Asia/Krasnoyarsk",
+                  "Asia/Kuala_Lumpur",
+                  "Asia/Kuching",
+                  "Asia/Kuwait",
+                  "Asia/Macao",
+                  "Asia/Macau",
+                  "Asia/Magadan",
+                  "Asia/Makassar",
+                  "Asia/Manila",
+                  "Asia/Muscat",
+                  "Asia/Nicosia",
+                  "Asia/Novokuznetsk",
+                  "Asia/Novosibirsk",
+                  "Asia/Omsk",
+                  "Asia/Oral",
+                  "Asia/Phnom_Penh",
+                  "Asia/Pontianak",
+                  "Asia/Pyongyang",
+                  "Asia/Qatar",
+                  "Asia/Qostanay",
+                  "Asia/Qyzylorda",
+                  "Asia/Rangoon",
+                  "Asia/Riyadh",
+                  "Asia/Saigon",
+                  "Asia/Sakhalin",
+                  "Asia/Samarkand",
+                  "Asia/Seoul",
+                  "Asia/Shanghai",
+                  "Asia/Singapore",
+                  "Asia/Srednekolymsk",
+                  "Asia/Taipei",
+                  "Asia/Tashkent",
+                  "Asia/Tbilisi",
+                  "Asia/Tehran",
+                  "Asia/Tel_Aviv",
+                  "Asia/Thimbu",
+                  "Asia/Thimphu",
+                  "Asia/Tokyo",
+                  "Asia/Tomsk",
+                  "Asia/Ujung_Pandang",
+                  "Asia/Ulaanbaatar",
+                  "Asia/Ulan_Bator",
+                  "Asia/Urumqi",
+                  "Asia/Ust-Nera",
+                  "Asia/Vientiane",
+                  "Asia/Vladivostok",
+                  "Asia/Yakutsk",
+                  "Asia/Yangon",
+                  "Asia/Yekaterinburg",
+                  "Asia/Yerevan",
+                  "Atlantic/Azores",
+                  "Atlantic/Bermuda",
+                  "Atlantic/Canary",
+                  "Atlantic/Cape_Verde",
+                  "Atlantic/Faeroe",
+                  "Atlantic/Faroe",
+                  "Atlantic/Jan_Mayen",
+                  "Atlantic/Madeira",
+                  "Atlantic/Reykjavik",
+                  "Atlantic/South_Georgia",
+                  "Atlantic/St_Helena",
+                  "Atlantic/Stanley",
+                  "Australia/ACT",
+                  "Australia/Adelaide",
+                  "Australia/Brisbane",
+                  "Australia/Broken_Hill",
+                  "Australia/Canberra",
+                  "Australia/Currie",
+                  "Australia/Darwin",
+                  "Australia/Eucla",
+                  "Australia/Hobart",
+                  "Australia/LHI",
+                  "Australia/Lindeman",
+                  "Australia/Lord_Howe",
+                  "Australia/Melbourne",
+                  "Australia/NSW",
+                  "Australia/North",
+                  "Australia/Perth",
+                  "Australia/Queensland",
+                  "Australia/South",
+                  "Australia/Sydney",
+                  "Australia/Tasmania",
+                  "Australia/Victoria",
+                  "Australia/West",
+                  "Australia/Yancowinna",
+                  "Brazil/Acre",
+                  "Brazil/DeNoronha",
+                  "Brazil/East",
+                  "Brazil/West",
+                  "CET",
+                  "CST6CDT",
+                  "Canada/Atlantic",
+                  "Canada/Central",
+                  "Canada/Eastern",
+                  "Canada/Mountain",
+                  "Canada/Newfoundland",
+                  "Canada/Pacific",
+                  "Canada/Saskatchewan",
+                  "Canada/Yukon",
+                  "Chile/Continental",
+                  "Chile/EasterIsland",
+                  "Cuba",
+                  "EET",
+                  "EST",
+                  "EST5EDT",
+                  "Egypt",
+                  "Eire",
+                  "Etc/GMT",
+                  "Etc/GMT+0",
+                  "Etc/GMT+1",
+                  "Etc/GMT+10",
+                  "Etc/GMT+11",
+                  "Etc/GMT+12",
+                  "Etc/GMT+2",
+                  "Etc/GMT+3",
+                  "Etc/GMT+4",
+                  "Etc/GMT+5",
+                  "Etc/GMT+6",
+                  "Etc/GMT+7",
+                  "Etc/GMT+8",
+                  "Etc/GMT+9",
+                  "Etc/GMT-0",
+                  "Etc/GMT-1",
+                  "Etc/GMT-10",
+                  "Etc/GMT-11",
+                  "Etc/GMT-12",
+                  "Etc/GMT-13",
+                  "Etc/GMT-14",
+                  "Etc/GMT-2",
+                  "Etc/GMT-3",
+                  "Etc/GMT-4",
+                  "Etc/GMT-5",
+                  "Etc/GMT-6",
+                  "Etc/GMT-7",
+                  "Etc/GMT-8",
+                  "Etc/GMT-9",
+                  "Etc/GMT0",
+                  "Etc/Greenwich",
+                  "Etc/UCT",
+                  "Etc/UTC",
+                  "Etc/Universal",
+                  "Etc/Zulu",
+                  "Europe/Amsterdam",
+                  "Europe/Andorra",
+                  "Europe/Astrakhan",
+                  "Europe/Athens",
+                  "Europe/Belfast",
+                  "Europe/Belgrade",
+                  "Europe/Berlin",
+                  "Europe/Bratislava",
+                  "Europe/Brussels",
+                  "Europe/Bucharest",
+                  "Europe/Budapest",
+                  "Europe/Busingen",
+                  "Europe/Chisinau",
+                  "Europe/Copenhagen",
+                  "Europe/Dublin",
+                  "Europe/Gibraltar",
+                  "Europe/Guernsey",
+                  "Europe/Helsinki",
+                  "Europe/Isle_of_Man",
+                  "Europe/Istanbul",
+                  "Europe/Jersey",
+                  "Europe/Kaliningrad",
+                  "Europe/Kiev",
+                  "Europe/Kirov",
+                  "Europe/Lisbon",
+                  "Europe/Ljubljana",
+                  "Europe/London",
+                  "Europe/Luxembourg",
+                  "Europe/Madrid",
+                  "Europe/Malta",
+                  "Europe/Mariehamn",
+                  "Europe/Minsk",
+                  "Europe/Monaco",
+                  "Europe/Moscow",
+                  "Europe/Nicosia",
+                  "Europe/Oslo",
+                  "Europe/Paris",
+                  "Europe/Podgorica",
+                  "Europe/Prague",
+                  "Europe/Riga",
+                  "Europe/Rome",
+                  "Europe/Samara",
+                  "Europe/San_Marino",
+                  "Europe/Sarajevo",
+                  "Europe/Saratov",
+                  "Europe/Simferopol",
+                  "Europe/Skopje",
+                  "Europe/Sofia",
+                  "Europe/Stockholm",
+                  "Europe/Tallinn",
+                  "Europe/Tirane",
+                  "Europe/Tiraspol",
+                  "Europe/Ulyanovsk",
+                  "Europe/Uzhgorod",
+                  "Europe/Vaduz",
+                  "Europe/Vatican",
+                  "Europe/Vienna",
+                  "Europe/Vilnius",
+                  "Europe/Volgograd",
+                  "Europe/Warsaw",
+                  "Europe/Zagreb",
+                  "Europe/Zaporozhye",
+                  "Europe/Zurich",
+                  "GB",
+                  "GB-Eire",
+                  "GMT",
+                  "GMT+0",
+                  "GMT-0",
+                  "GMT0",
+                  "Greenwich",
+                  "HST",
+                  "Hongkong",
+                  "Iceland",
+                  "Indian/Antananarivo",
+                  "Indian/Chagos",
+                  "Indian/Christmas",
+                  "Indian/Cocos",
+                  "Indian/Comoro",
+                  "Indian/Kerguelen",
+                  "Indian/Mahe",
+                  "Indian/Maldives",
+                  "Indian/Mauritius",
+                  "Indian/Mayotte",
+                  "Indian/Reunion",
+                  "Iran",
+                  "Israel",
+                  "Jamaica",
+                  "Japan",
+                  "Kwajalein",
+                  "Libya",
+                  "MET",
+                  "MST",
+                  "MST7MDT",
+                  "Mexico/BajaNorte",
+                  "Mexico/BajaSur",
+                  "Mexico/General",
+                  "NZ",
+                  "NZ-CHAT",
+                  "Navajo",
+                  "PRC",
+                  "PST8PDT",
+                  "Pacific/Apia",
+                  "Pacific/Auckland",
+                  "Pacific/Bougainville",
+                  "Pacific/Chatham",
+                  "Pacific/Chuuk",
+                  "Pacific/Easter",
+                  "Pacific/Efate",
+                  "Pacific/Enderbury",
+                  "Pacific/Fakaofo",
+                  "Pacific/Fiji",
+                  "Pacific/Funafuti",
+                  "Pacific/Galapagos",
+                  "Pacific/Gambier",
+                  "Pacific/Guadalcanal",
+                  "Pacific/Guam",
+                  "Pacific/Honolulu",
+                  "Pacific/Johnston",
+                  "Pacific/Kiritimati",
+                  "Pacific/Kosrae",
+                  "Pacific/Kwajalein",
+                  "Pacific/Majuro",
+                  "Pacific/Marquesas",
+                  "Pacific/Midway",
+                  "Pacific/Nauru",
+                  "Pacific/Niue",
+                  "Pacific/Norfolk",
+                  "Pacific/Noumea",
+                  "Pacific/Pago_Pago",
+                  "Pacific/Palau",
+                  "Pacific/Pitcairn",
+                  "Pacific/Pohnpei",
+                  "Pacific/Ponape",
+                  "Pacific/Port_Moresby",
+                  "Pacific/Rarotonga",
+                  "Pacific/Saipan",
+                  "Pacific/Samoa",
+                  "Pacific/Tahiti",
+                  "Pacific/Tarawa",
+                  "Pacific/Tongatapu",
+                  "Pacific/Truk",
+                  "Pacific/Wake",
+                  "Pacific/Wallis",
+                  "Pacific/Yap",
+                  "Poland",
+                  "Portugal",
+                  "ROC",
+                  "ROK",
+                  "Singapore",
+                  "Turkey",
+                  "UCT",
+                  "US/Alaska",
+                  "US/Aleutian",
+                  "US/Arizona",
+                  "US/Central",
+                  "US/East-Indiana",
+                  "US/Eastern",
+                  "US/Hawaii",
+                  "US/Indiana-Starke",
+                  "US/Michigan",
+                  "US/Mountain",
+                  "US/Pacific",
+                  "US/Pacific-New",
+                  "US/Samoa",
+                  "UTC",
+                  "Universal",
+                  "W-SU",
+                  "WET",
+                  "Zulu"
+                ]
+              },
+              "timeFormat": {
+                "name": "timeFormat",
+                "label": "Time Format",
+                "type": "string",
+                "defaultValue": "",
+                "helpLink": {
+                  "label": "docs",
+                  "url": "https://momentjs.com/docs/#/displaying/format/"
+                }
+              },
+              "thousandsSeparator": {
+                "name": "thousandsSeparator",
+                "label": "Thousands Separator",
+                "type": "string",
+                "defaultValue": ","
+              },
+              "decimal": {
+                "name": "decimal",
+                "label": "Decimal",
+                "type": "string",
+                "defaultValue": "."
+              }
+            }
+          }
+        }
+      },
+      "configPropValues": {
+        "brimcap": {"yamlConfigPath": ""},
+        "display": {
+          "timeZone": "UTC",
+          "timeFormat": "",
+          "thousandsSeparator": ",",
+          "decimal": "."
+        }
+      },
+      "pluginStorage": {"ids": [], "entities": {}},
+      "queries": {
+        "id": "root",
+        "name": "root",
+        "isOpen": true,
+        "items": [
+          {
+            "name": "Brim",
+            "items": [
+              {
+                "name": "Activity Overview",
+                "value": "count() by _path | sort -r",
+                "description": "Shows a list of all Zeek streams in the data set, with a count of associated records",
+                "tags": ["zeek", "initial exploration"],
+                "id": "vS6G85vJ2X3pCa-ZPCNmN"
+              },
+              {
+                "name": "Unique DNS Queries",
+                "value": "_path==\"dns\" | count() by query | sort -r",
+                "description": "Shows all unique DNS queries in the data set with count",
+                "tags": ["dns", "initial exploration"],
+                "id": "HnGcgJNrkCXqBSmIRXdfQ"
+              },
+              {
+                "name": "Windows Networking Activity",
+                "value": "_path matches smb* OR _path==\"dce_rpc\"",
+                "description": "Filters and displays smb_files, smb_mapping and DCE_RPC activity",
+                "tags": ["windows", "smb", "malware"],
+                "id": "qM-p5Qxs71qWTX48Nxbsv"
+              },
+              {
+                "name": "HTTP Requests",
+                "value": "_path==\"http\" | cut id.orig_h, id.resp_h, id.resp_p, method, host, uri | uniq -c",
+                "description": "Displays a list of the count of unique HTTP requests including source and destination",
+                "tags": ["http", "initial exploration", "malware"],
+                "id": "TVj39c-yg2tevGDH6unnu"
+              },
+              {
+                "name": "Unique Network Connections",
+                "value": "_path==\"conn\" | cut id.orig_h, id.resp_p, id.resp_h | sort | uniq",
+                "description": "Displays a table showing all unique source:port:destination connections pairings",
+                "tags": ["network", "initial exploration"],
+                "id": "2MvDkS55PQ8_EwyiTCuWf"
+              },
+              {
+                "name": "Connection Received Data",
+                "value": "_path==\"conn\" | put total_bytes := orig_bytes + resp_bytes | sort -r total_bytes | cut uid, id, orig_bytes, resp_bytes, total_bytes",
+                "description": "Shows the connections between hosts, sorted by data received",
+                "tags": ["network"],
+                "id": "ZJamRQRpANjSQS7jDAKED"
+              },
+              {
+                "name": "File Activity",
+                "value": "filename!=null | cut _path, tx_hosts, rx_hosts, conn_uids, mime_type, filename, md5, sha1",
+                "description": "Displays a curated view of file data including md5 and sha1 for complete file transfers",
+                "tags": ["files", "malware"],
+                "id": "KKwJCOfW9VcMQIJvGgXa8"
+              },
+              {
+                "name": "HTTP Post Requests",
+                "value": "method==\"POST\" | cut ts, uid, id, method, uri, status_code",
+                "description": "Displays all HTTP Post requests including the URI and HTTP status code",
+                "tags": ["http", "malware"],
+                "id": "bEjKVflgSMh1wHdueM62Q"
+              },
+              {
+                "name": "Show IP Subnets",
+                "value": "_path==\"conn\" | put classnet := network_of(id.resp_h) | cut classnet | count() by classnet | sort -r",
+                "description": "Enumerates the classful networks for all destination IP addresses including count of connections",
+                "tags": ["network"],
+                "id": "nKmfWQPRhdQhyT2nQEzVE"
+              },
+              {
+                "name": "Suricata Alerts by Category",
+                "value": "event_type==\"alert\" | count() by alert.severity,alert.category | sort count",
+                "description": "Shows all Suricata alert counts by category and severity",
+                "tags": ["suricata", "malware"],
+                "id": "evf677OV1bRiN3J4XaZSQ"
+              },
+              {
+                "name": "Suricata Alerts by Source and Destination",
+                "value": "event_type==\"alert\" | alerts := union(alert.category) by src_ip, dest_ip",
+                "description": "Shows all Suricata alerts in a list by unique source and destination IP addresses",
+                "tags": ["suricata", "malware"],
+                "id": "AKCDdS3CxEbAiMl5RjE41"
+              },
+              {
+                "name": "Suricata Alerts by Subnet",
+                "value": "event_type==\"alert\" | alerts := union(alert.category) by network_of(dest_ip)",
+                "description": "Displays a list of Suricata alerts by CIDR network",
+                "tags": ["suricata", "malware"],
+                "id": "i-qYrWtLw5JFNPuG4iO9x"
+              }
+            ],
+            "id": "brim",
+            "isOpen": true
+          }
+        ]
+      }
+    }
+  }
+}

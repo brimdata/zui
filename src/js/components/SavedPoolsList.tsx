@@ -1,14 +1,10 @@
-import {useImportOnDrop} from "app/features/import/use-import-on-drop"
-import {poolSearchPath} from "app/router/utils/paths"
+import {useImportOnDrop} from "src/app/features/import/use-import-on-drop"
+import {poolSearchPath} from "src/app/router/utils/paths"
 import classNames from "classnames"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useHistory} from "react-router"
 import styled from "styled-components"
-import {
-  currentPoolItem,
-  poolItem
-} from "../../../test/playwright/helpers/locators"
 import FileFilled from "../icons/FileFilled"
 import Current from "../state/Current"
 import {AppDispatch} from "../state/types"
@@ -19,8 +15,8 @@ import ProgressIndicator from "./ProgressIndicator"
 import {remoteQueriesPoolName} from "./LeftPane/remote-queries"
 import Modal from "../state/Modal"
 import {showContextMenu} from "../lib/System"
-import getPoolContextMenu from "../../../app/pools/flows/get-pool-context-menu"
-import {Pool} from "app/core/pools/pool"
+import getPoolContextMenu from "src/app/pools/flows/get-pool-context-menu"
+import {Pool} from "src/app/core/pools/pool"
 import Ingests from "../state/Ingests"
 import {isNumber} from "lodash"
 
@@ -54,7 +50,6 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
     </div>
   )
   const current = p.id === currentPoolId
-  const testProps = current ? currentPoolItem.props : poolItem.props
 
   const showPoolContextMenu = () => {
     const renameMenuItem = {
@@ -74,7 +69,6 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
         onClick={onClick}
         onContextMenu={() => showPoolContextMenu()}
         className={classNames("pool-link", {"current-pool-link": current})}
-        {...testProps}
       >
         <NameWrap>
           <PoolIcon className="pool-icon" />

@@ -1,5 +1,5 @@
-import {useZedFormatter} from "app/core/format"
-import {zedTypeClassName} from "app/core/utils/zed-type-class-name"
+import {useZedFormatter} from "src/app/core/format"
+import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import classNames from "classnames"
 import React from "react"
 import {zed} from "@brimdata/zealot"

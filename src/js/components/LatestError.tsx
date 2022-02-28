@@ -4,7 +4,6 @@ import React from "react"
 import {BrimError} from "../errors/types"
 import {State} from "../state/types"
 import {first} from "../lib/Array"
-import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import Errors from "../state/Errors"
 
 type Props = {error: BrimError}
@@ -12,11 +11,7 @@ type Props = {error: BrimError}
 export function LatestError({error}: Props) {
   const message = error ? `${error.type}: ${error.message}` : ""
 
-  return (
-    <div className="latest-error" {...reactElementProps("notification")}>
-      {message}
-    </div>
-  )
+  return <div className="latest-error">{message}</div>
 }
 
 function stateToProps(state: State): Props {

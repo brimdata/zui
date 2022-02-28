@@ -1,4 +1,4 @@
-import {syncPool} from "app/core/pools/sync-pool"
+import {syncPool} from "src/app/core/pools/sync-pool"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 

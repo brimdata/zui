@@ -1,4 +1,4 @@
-import {BrimProvider} from "app/core/context"
+import {BrimProvider} from "src/app/core/context"
 import {ipcRenderer} from "electron"
 import ReactDOM from "react-dom"
 import "regenerator-runtime/runtime"

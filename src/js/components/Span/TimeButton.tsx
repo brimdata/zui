@@ -1,4 +1,4 @@
-import {useTimeZone} from "app/core/format"
+import {useTimeZone} from "src/app/core/format"
 import {isEqual} from "lodash"
 import * as React from "react"
 import {useState} from "react"

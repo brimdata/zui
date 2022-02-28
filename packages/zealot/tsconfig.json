@@ -10,7 +10,8 @@
     "esModuleInterop": true,
     "outDir": "dist/cjs",
     "rootDir": "src",
-    "declaration": true
+    "declaration": true,
+    "emitDeclarationOnly": true
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts"]

@@ -3,7 +3,6 @@ import {zed} from "@brimdata/zealot"
 import lib from "../../lib"
 import ScrollHooks from "../../lib/ScrollHooks"
 import TableColumns from "../../models/TableColumns"
-import {reactElementProps} from "../../../../test/playwright/helpers/integration"
 import {RowRenderer, ScrollPosition, ViewerDimens} from "../../types"
 import useConst from "../hooks/useConst"
 import Chunk from "./Chunk"
@@ -78,7 +77,6 @@ export default function Viewer(props: Props) {
         columns={props.tableColumns}
         dimens={props.dimens}
         scrollLeft={scrollLeft}
-        {...reactElementProps("viewer_header")}
       />
       <div
         className="view"
@@ -104,7 +102,6 @@ const List = React.memo<ListProps>(function List(props) {
     <div
       className="list"
       style={Styler.list(props.dimens)}
-      {...reactElementProps("viewer_results")}
       role="table"
       aria-label="results"
     >

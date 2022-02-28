@@ -1,4 +1,4 @@
-import zeekLogInfo from "ppl/zeek/logInfo"
+import zeekLogInfo from "src/ppl/zeek/logInfo"
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import open from "../../lib/open"

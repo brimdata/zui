@@ -1,4 +1,4 @@
-import sampleQueries from "test/shared/sample-queries"
+import sampleQueries from "src/test/shared/sample-queries"
 import brim from "./"
 
 test("run all ast methods on sample queries", () => {

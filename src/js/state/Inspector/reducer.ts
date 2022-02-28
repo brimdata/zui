@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {InspectArgs, RowData} from "app/features/inspector/types"
+import {InspectArgs, RowData} from "src/app/features/inspector/types"
 
 const slice = createSlice({
   name: "TAB_INSPECTOR",

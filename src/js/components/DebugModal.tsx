@@ -1,8 +1,6 @@
 import {useSelector} from "react-redux"
 import Prism from "prismjs"
 import React, {useState} from "react"
-
-import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import InputField from "./common/forms/InputField"
 import InputLabel from "./common/forms/InputLabel"
 import SearchBar from "../state/SearchBar"
@@ -15,7 +13,7 @@ import {
   Scrollable,
   Title
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "../../../app/toolbar/button"
+import ToolbarButton from "src/app/toolbar/button"
 import useEnterKey from "./hooks/useEnterKey"
 
 export function DebugModal({onClose}) {
@@ -36,14 +34,12 @@ export function DebugModal({onClose}) {
           autoFocus
           value={program}
           onChange={(e) => setProgram(e.target.value)}
-          {...reactElementProps("debugProgram")}
         />
       </InputField>
       <Scrollable>
         <Pre
           className="language-js"
           dangerouslySetInnerHTML={{__html: formatAst(program)}}
-          {...reactElementProps("debugAst")}
         />
       </Scrollable>
       <Footer>

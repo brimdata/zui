@@ -1,7 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
-import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import lib from "../lib"
 
 type Props = {children: any}
@@ -9,9 +8,7 @@ type Props = {children: any}
 export default function InfoNotice({children}: Props) {
   return ReactDOM.createPortal(
     <div className="info-notice-wrapper">
-      <div className="info-notice" {...reactElementProps("infoNotice")}>
-        {children}
-      </div>
+      <div className="info-notice">{children}</div>
     </div>,
     lib.doc.id("tooltip-root")
   )

@@ -1,6 +1,6 @@
 "use strict"
 
-import env from "app/core/env"
+import env from "src/app/core/env"
 
 require("regenerator-runtime/runtime")
 

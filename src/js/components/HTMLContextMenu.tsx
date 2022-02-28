@@ -18,8 +18,7 @@ import {ipcRenderer} from "electron"
 import lib from "../lib"
 import useEventListener from "./hooks/useEventListener"
 
-import {reactElementProps} from "../../../test/playwright/helpers/integration"
-import env from "app/core/env"
+import env from "src/app/core/env"
 
 export default function HTMLContextMenu() {
   const [template, setTemplate] = useState(null)
@@ -29,11 +28,7 @@ export default function HTMLContextMenu() {
 
   if (!template) return null
   return ReactDOM.createPortal(
-    <div
-      className="html-context-menu"
-      {...reactElementProps("contextMenu")}
-      onClick={() => setTemplate(null)}
-    >
+    <div className="html-context-menu" onClick={() => setTemplate(null)}>
       <ul>
         {template.map((item, i) => (
           <HTMLMenuItem item={item} key={i} />

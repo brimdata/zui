@@ -1,7 +1,7 @@
 import React from "react"
 import classNames from "classnames"
 
-import X from "./icons/x-md.svg"
+import X from "./icons/x-md"
 
 type Props = {
   light?: boolean

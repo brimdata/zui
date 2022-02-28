@@ -1,4 +1,4 @@
-import env from "app/core/env"
+import env from "src/app/core/env"
 import {MenuItemConstructorOptions, PopupOptions} from "electron"
 import * as remote from "@electron/remote"
 

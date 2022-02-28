@@ -1,9 +1,8 @@
-import {useBrimApi} from "app/core/context"
+import {useBrimApi} from "src/app/core/context"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Tabs from "src/js/state/Tabs"
 import Viewer from "src/js/state/Viewer"
-import {reactElementProps} from "../../../../test/playwright/helpers/integration"
 import ThreeDotsIcon from "../../icons/ThreeDotsIcon"
 import open from "../../lib/open"
 import Modal from "../../state/Modal"
@@ -33,7 +32,7 @@ export default function MenuAction() {
   ]
 
   return (
-    <PopMenuPointy template={menu} {...reactElementProps("optionsMenu")}>
+    <PopMenuPointy template={menu}>
       <InputAction>
         <ThreeDotsIcon />
       </InputAction>

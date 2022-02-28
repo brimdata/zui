@@ -1,7 +1,6 @@
 import React from "react"
-
 import {cssVar} from "../lib/cssVar"
-import FileBorderSvg from "../../static/icons/file-border.svg"
+import FileBorderSvg from "../../static/icons/file-border"
 
 const blue = cssVar("--azure")
 

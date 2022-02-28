@@ -2,7 +2,7 @@ import {
   getAllStates,
   getAllTabs
 } from "src/js/state/migrations/utils/getTestState"
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202008191031_changeZqdClusterIdToHostPort", async () => {
   const next = await migrate({state: "v0.15.1", to: "202008191031"})

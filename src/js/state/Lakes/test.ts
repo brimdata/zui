@@ -1,5 +1,5 @@
 import Lakes from "./"
-import initTestStore from "../../../../test/unit/helpers/initTestStore"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 import {Lake} from "./types"
 
 let store

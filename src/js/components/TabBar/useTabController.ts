@@ -4,8 +4,8 @@ import onIdle from "on-idle"
 
 import Tabs from "../../state/Tabs"
 import {ipcRenderer} from "electron"
-import {lakeImportPath, lakesPath} from "app/router/utils/paths"
-import useLakeId from "app/router/hooks/use-lake-id"
+import {lakeImportPath, lakesPath} from "src/app/router/utils/paths"
+import useLakeId from "src/app/router/hooks/use-lake-id"
 
 export default function(count: number, calcWidths: Function) {
   const trueActiveId = useSelector(Tabs.getActive)

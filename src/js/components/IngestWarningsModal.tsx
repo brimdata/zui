@@ -1,6 +1,6 @@
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
-import ToolbarButton from "../../../app/toolbar/button"
+import ToolbarButton from "src/app/toolbar/button"
 import Current from "../state/Current"
 import Ingests from "../state/Ingests"
 import useEnterKey from "./hooks/useEnterKey"

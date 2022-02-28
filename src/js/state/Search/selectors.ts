@@ -1,4 +1,4 @@
-import {poolSearchPath} from "app/router/utils/paths"
+import {poolSearchPath} from "src/app/router/utils/paths"
 import brim from "../../brim"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "../../flows/config"
 import {addHeadProc} from "../../lib/Program"

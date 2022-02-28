@@ -1,5 +1,5 @@
 import getTestState from "src/js/state/migrations/utils/getTestState"
-import {migrate} from "test/unit/helpers/migrate"
+import {migrate} from "src/test/unit/helpers/migrate"
 import moveQueriesStateToGlobal from "./202101201109_moveQueriesStateToGlobal"
 
 test("when there are no windows", () => {

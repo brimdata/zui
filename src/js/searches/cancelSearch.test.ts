@@ -1,6 +1,6 @@
 import Handlers from "../state/Handlers"
 import {SearchHandler} from "../state/Handlers/types"
-import initTestStore from "../../../test/unit/helpers/initTestStore"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 
 describe("Handlers reducer", () => {
   let store

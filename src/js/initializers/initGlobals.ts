@@ -1,10 +1,10 @@
-import Histories from "app/core/models/histories"
+import Histories from "src/app/core/models/histories"
 import path from "path"
 import getUrlSearchParams from "../lib/getUrlSearchParams"
 import TabHistories from "../state/TabHistories"
 import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
-import tabHistory from "app/router/tab-history"
+import tabHistory from "src/app/router/tab-history"
 import {ipcRenderer} from "electron"
 
 export default async function initGlobals(store: Store) {

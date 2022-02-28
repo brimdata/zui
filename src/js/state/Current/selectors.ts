@@ -8,12 +8,12 @@ import {State} from "../types"
 import Lakes from "../Lakes"
 import {LakesState} from "../Lakes/types"
 import {MemoryHistory} from "history"
-import {Pool} from "app/core/pools/pool"
+import {Pool} from "src/app/core/pools/pool"
 import DraftQueries from "../DraftQueries"
 import RemoteQueries from "../RemoteQueries"
 import Queries from "../Queries"
-import {BrimQuery} from "app/query-home/utils/brim-query"
-import {decodeQueryParams} from "../../../../app/query-home/utils/query-params"
+import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {decodeQueryParams} from "src/app/query-home/utils/query-params"
 
 type Id = string | null
 

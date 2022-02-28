@@ -1,5 +1,5 @@
-import {BrimProvider} from "app/core/context"
-import AppWindowRouter from "app/router/app-window-router"
+import {BrimProvider} from "src/app/core/context"
+import AppWindowRouter from "src/app/router/app-window-router"
 import React from "react"
 import ReactDOM from "react-dom"
 import "regenerator-runtime/runtime"

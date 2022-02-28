@@ -2,7 +2,6 @@ import {useDispatch} from "react-redux"
 import React, {useEffect, useState} from "react"
 
 import {inspectSearch} from "../flows/inspectSearch"
-import {reactElementProps} from "../../../test/playwright/helpers/integration"
 import clickFeedback from "./clickFeedback"
 import lib from "../lib"
 import {AppDispatch} from "../state/types"
@@ -14,7 +13,7 @@ import {
   Scrollable,
   Title
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "../../../app/toolbar/button"
+import ToolbarButton from "src/app/toolbar/button"
 import useEnterKey from "./hooks/useEnterKey"
 
 export default function CurlModalBox({onClose}) {
@@ -35,12 +34,10 @@ export default function CurlModalBox({onClose}) {
   }
 
   return (
-    <Content width={600} {...reactElementProps("curlModal")}>
+    <Content width={600}>
       <Title>Curl Command</Title>
       <Scrollable>
-        <Pre id="copy-to-curl-code" {...reactElementProps("curlCommand")}>
-          {curl}
-        </Pre>
+        <Pre id="copy-to-curl-code">{curl}</Pre>
       </Scrollable>
       <Footer>
         <ButtonGroup>

@@ -1,4 +1,4 @@
-import {useQueryIdNameMap} from "app/query-home/hooks/use-query-id-name-map"
+import {useQueryIdNameMap} from "src/app/query-home/hooks/use-query-id-name-map"
 import React, {useEffect, useState} from "react"
 import {useSelector} from "react-redux"
 import {animated} from "react-spring"

@@ -26,7 +26,7 @@ export default function ${name}(state: any) {
 }
 
 function testContents(title, version) {
-  return `import {migrate} from "test/unit/helpers/migrate"
+  return `import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating ${title}", async () => {
   const next = await migrate({state: "v${lastVersion}", to: "${version}"})
