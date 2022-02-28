@@ -5,7 +5,7 @@ const flags = require("./util/flags")
 
 console.log(bold("Cleaning built files"))
 if (!flags.keepDist) {
-  fs.removeSync("zealot/dist")
+  fs.removeSync("packages/zealot/dist")
   fs.removeSync("dist")
 } else {
   console.log(bold("Keeping dist directories"))

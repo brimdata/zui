@@ -21,6 +21,12 @@
       ]
     }
   },
+  "scripts": {
+    "test": "jest",
+    "build": "swc src -d dist/cjs",
+    "dev": "yarn build --watch",
+    "prepack": "yarn build"
+  },
   "license": "MIT",
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
@@ -33,12 +39,6 @@
     "dist",
     "src"
   ],
-  "scripts": {
-    "test": "jest",
-    "build": "swc src -d dist/cjs",
-    "dev": "yarn build --watch",
-    "prepack": "yarn build"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",

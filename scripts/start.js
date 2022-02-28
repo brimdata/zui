@@ -1,4 +1,3 @@
-const {JS, SCSS} = require("./util/commands")
 const sub = require("./util/sub")
 
 const log = (...args) => {
@@ -8,8 +7,8 @@ const log = (...args) => {
 async function start() {
   const electronArgs = process.argv.splice(2).join(" ")
   log("Compiling...")
-  const js = sub("yarn", `${JS} --watch`)
-  const css = sub("yarn", `${SCSS} --watch`)
+  const js = sub("yarn", `build:js --watch`)
+  const css = sub("yarn", `build:css --watch`)
   await Promise.all([
     css.waitForOutput(/Wrote CSS/),
     js.waitForOutput(/Watching for file changes/)
