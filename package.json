@@ -134,7 +134,7 @@
     "node-fetch": "^2.6.1",
     "on-idle": "^3.1.4",
     "polished": "^3.6.5",
-    "prismjs": "^1.25.0",
+    "prismjs": "^1.27.0",
     "react": "^17.0.2",
     "react-arborist": "^0.1.14",
     "react-dnd": "^14.0.4",
