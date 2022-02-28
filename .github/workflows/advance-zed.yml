@@ -85,12 +85,13 @@ jobs:
       - run: yarn --inline-builds
       - run: yarn lint
       - run: yarn test
+      - run: yarn build
       - name: End to end tests
         id: playwright
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24
-          run: yarn build && yarn e2e
+          run: yarn e2e
         env:
           DEBUG: pw:api
       - uses: actions/upload-artifact@v2
