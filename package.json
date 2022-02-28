@@ -18,7 +18,7 @@
     "watch": "node scripts/watch",
     "lint": "npm-run-all 'lint:**'",
     "lint:eslint": "eslint . --cache --color",
-    "lint:tsc": "tsc",
+    "lint:tsc": "tsc -b",
     "test": "npm-run-all 'test:**'",
     "test:unit": "jest",
     "test:zealot": "yarn workspace @brimdata/zealot test",
