@@ -12,7 +12,7 @@
 # Summary
 
 By default, the Brim application connects to a Lake on the system on which
-it is launched. This Lake includes [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
+it is launched. This Lake includes [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/zed/README.md)
 storage on the local filesystem for holding imported data. However, Brim is
 capable of accessing data stored in a Zed Lake in a remote Lake as well.
 This cookbook describes the available options and current limitations.
@@ -59,7 +59,7 @@ However, the overall app experience is powered by a distributed "backend"
 architecture that includes multiple components.
 
 One essential component is the Zed Lake which is accessed via a
-[`zed serve`](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
+[`zed serve`](https://github.com/brimdata/zed/blob/main/docs/zed/README.md)
 process that manages the storage and querying of imported data. Operations on
 the Zed Lake are invoked via a [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
 that's utilized by a "client", such as the Brim app. The

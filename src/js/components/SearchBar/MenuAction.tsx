@@ -8,6 +8,7 @@ import open from "../../lib/open"
 import Modal from "../../state/Modal"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
 import InputAction from "./InputAction"
+import links from "src/app/core/links"
 
 export default function MenuAction() {
   const dispatch = useDispatch()
@@ -21,8 +22,7 @@ export default function MenuAction() {
     {label: "Copy for zq", click: () => dispatch(Modal.show("zq"))},
     {
       label: "Syntax docs",
-      click: () =>
-        open("https://github.com/brimdata/zed/tree/main/docs/language")
+      click: () => open(links.ZED_DOCS_LANGUAGE)
     },
     {
       label: "Kill search",

@@ -35,9 +35,9 @@ shy!
 # Example Usage
 
 By its nature, a join operation requires two inputs that will
-ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#join)
+ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tree/main/docs/zq/operators/join.md)
 show examples with the [Zed CLI tools](https://github.com/brimdata/zed#quick-start)
-that specify these inputs as named files or pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/lake/README.md).
+that specify these inputs as named files or pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/zed/README.md).
 
 Brim release `v0.25.0` introduced initial support for storing data in Zed Lakes.
 However, due to a current limitation ([brim/1618](https://github.com/brimdata/brim/issues/1618)),
@@ -45,6 +45,7 @@ Zed queries issued from within Brim cannot yet access multiple pools
 simultaneously. Instead such queries are currently limited to accessing the
 data from whichever pool is currently selected from the **Pools** list.
 
+// TODO 
 Because of this limitation, the [streamed input example](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#example-5---streamed-input)
 is the only one shown that can currently be executed as is from within Brim.
 If the example `fruit.ndjson` and `people.ndjson` are already present in a
@@ -63,7 +64,7 @@ you can execute all the other examples shown while accessing data from multiple
 pools. The joined results can be sent into yet another pool for further query
 from within Brim, if desired.
 
-To illustrate this, we'll walk through the [example that shows inputs from pools](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#example-4---inputs-from-pools).
+To illustrate this, we'll walk through the [example that shows inputs from pools](https://github.com/brimdata/zed/blob/main/docs/zq/operators/from.md).
 To ensure API-compatibility with the Zed backend, we'll use the `zed` binary
 found in the `zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
 path, specifically on macOS in this case.
@@ -111,13 +112,13 @@ the split, the multiple branches are _merged_ back into a single stream before
 `join` operates on them.
 
 The first argument to `join` is a Zed
-[expression](https://github.com/brimdata/zed/blob/main/docs/language/expressions.md)
+[expression](https://github.com/brimdata/zed/blob/main/docs/zq/language.md#6-expressions)
 that references fields in the respective left/right data sources to determine
 if a pair of records from each should be joined. In this case, since the field
 we're joining on is named `uid` in both data sources, the simple expression
 `uid=uid` suffices. The next argument is a comma-separated list of field names
 or assignments, similar to how the
-[`cut`](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#cut)
+[`cut`](https://github.com/brimdata/zed/tree/main/docs/zq/operators/cut.md)
 operator is used.
 
 To apply this using `zq`, we employ its `-P` option that allows us to specify
@@ -265,7 +266,7 @@ predicated on query results all falling under a single schema, since the
 headers need to reflect all fields expected in the output.
 
 Now that we're recognized this, we can make a small change to our Zed to address
-it. By adding the [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#fuse)
+it. By adding the [`fuse`](https://github.com/brimdata/zed/tree/main/docs/zq/operators/fuse.md)
 operator, we can ensure all the data is captured under a single, unified
 schema.
 

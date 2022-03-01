@@ -3,7 +3,7 @@
 Starting with GA Brim release `v0.25.0`, imported data is now stored in
 pools in a Zed Lake rather than in file-based Spaces as they were previously.
 
-The [Zed Lake README](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
+The [Zed Lake README](https://github.com/brimdata/zed/blob/main/docs/zed/README.md)
 provides a thorough overview of pools and how they work. In brief, the use of
 pools ultimately enables new functionality that was not previously available in
 Brim, including:

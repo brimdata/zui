@@ -51,7 +51,7 @@ $ /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/zq -i csv te
 ```
 
 > **Note:** You may want to perform other preprocessing at this phase, such as
-> invoking [`fuse`](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#fuse).
+> invoking [`fuse`](https://github.com/brimdata/zed/blob/main/docs/zq/operators/fuse.md).
 
 Now our `testxlsx_converted.zng` can be imported into Brim.
 
