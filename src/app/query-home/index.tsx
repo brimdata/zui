@@ -57,7 +57,7 @@ export function useSearchParamLocationSync() {
 const QueryPageHeader = styled.div`
   background: white;
   z-index: 1;
-  padding: 10px;
+  padding: 10px 16px;
   user-select: none;
 `
 

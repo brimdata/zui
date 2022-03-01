@@ -27,10 +27,9 @@ const StyledQueryItem = styled(StyledItem)<{isSelected: boolean}>`
     `
   outline: none;
   color: white;
-  background: var(--havelock);
+  background: var(--primary-color);
   &:hover {
-    background: var(--havelock);
-    opacity: 0.85;
+    background: var(--primary-color);
   }
   `} 
   ${GroupArrow} {

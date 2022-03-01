@@ -37,7 +37,10 @@ const StyledListItem = styled(StyledItem)<{isSelected: boolean}>`
     isSelected &&
     `
   outline: none;
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: var(--sidebar-item-active);
+  &:hover {
+    background-color: var(--sidebar-item-active);
+  }
   `}
 
   svg {
@@ -104,7 +107,7 @@ const sectionListItems = {
 }
 
 const StyledPane = styled(Pane)`
-  background: var(--ivory);
+  background: var(--sidebar-background);
   overflow-x: unset;
 `
 
