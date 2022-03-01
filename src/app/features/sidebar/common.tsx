@@ -58,7 +58,11 @@ export const StyledItem = styled.a`
   padding: 6px 26px 6px 16px;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background: var(--sidebar-item-hover);
+  }
+
+  &:active {
+    background: var(--sidebar-item-active);
   }
 `
 
@@ -203,17 +207,17 @@ export const SectionToolbar = styled.div`
 const StyledButtonRow = styled.div`
   background: rgba(0, 0, 0, 0.08);
   margin-bottom: 12px;
-  border-radius: 3px;
+  border-radius: 5px;
 `
 const StyledButton = styled.button<{isSelected: boolean}>`
   ${(p) => p.theme.typography.labelNormal}
   background: ${(p) => (p.isSelected ? "var(--havelock)" : "transparent")};
   color: ${(p) => (p.isSelected ? "white" : "rgba(0, 0, 0, 0.7)")};
   border: none;
-  border-radius: 3px;
-  min-width: 65px;
-  min-height: 18px;
+  border-radius: 5px;
+  min-width: 60px;
   padding: 2px 12px;
+  height: 22px;
 
   &:hover {
   ${({isSelected}) =>
@@ -252,9 +256,9 @@ const SectionSearchWrapper = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  border-radius: 12px;
+  border-radius: 5px;
   border: none;
-  background: rgba(0, 0, 0, 0.03);
+  background: var(--input-background);
   padding: 2px 12px;
 
   svg {
@@ -262,6 +266,7 @@ const SectionSearchWrapper = styled.div`
     height: 16px;
     fill: rgba(0, 0, 0, 0.2);
     margin-right: 8px;
+    opacity: 0.2;
   }
 `
 

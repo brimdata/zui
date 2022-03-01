@@ -11,12 +11,11 @@ export const BG = styled.div`
 
 export const Toolbar = styled.header`
   background: white;
-  border-bottom: 1px solid var(--pane-border);
   border-top: none;
   flex: 0 0 25px;
   display: flex;
   align-items: center;
-  padding: 0 6px;
+  padding: 6px 16px 10px 16px;
   justify-content: flex-end;
 `
 export const Body = styled.div`
@@ -35,27 +34,32 @@ export const Button = styled.button`
 
   &:hover {
     opacity: 1;
+    background: var(--control-hover);
   }
 
   span {
-    padding: 3px 0;
     border-bottom: 2px solid transparent;
+    min-width: 48px;
   }
 
-  &[aria-pressed="true"],
-  &:active {
+  &[aria-pressed="true"] {
     opacity: 1;
     span {
       border-color: var(--havelock);
     }
   }
+  &:active {
+    opacity: 1;
+    background: var(--control-active);
+  }
 `
 
 export const ButtonSwitch = styled.nav`
   border-radius: 5px;
-  background: rgba(0, 0, 0, 0.08);
+  background: var(--control-background);
   display: flex;
-  margin: 6px 4px 12px;
+  margin: 0;
+  height: 22px;
 `
 
 export const Group = styled.div`

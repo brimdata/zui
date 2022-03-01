@@ -44,7 +44,7 @@ const Text = styled.span`
 `
 
 const StyledButton = styled.button<{isPrimary: boolean; disabled: boolean}>`
-  background: var(--ivory);
+  background: var(--control-background);
   &:active:not(:disabled) {
     background: linear-gradient(#fefefe, 0.5px, #f3f3f3 2px);
   }
@@ -64,7 +64,7 @@ const StyledButton = styled.button<{isPrimary: boolean; disabled: boolean}>`
   }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.2;
     cursor: not-allowed;
   }
 
@@ -79,6 +79,12 @@ const StyledButton = styled.button<{isPrimary: boolean; disabled: boolean}>`
     background: var(--azure);
   } 
   `}
+  &:hover:not(:disabled) {
+    background: var(--control-hover);
+  }
+  &:active:not(:disabled) {
+    background: var(--control-active);
+  }
 `
 
 const ToolbarButton = ({

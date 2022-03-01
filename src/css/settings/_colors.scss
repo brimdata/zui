@@ -15,7 +15,7 @@
   // shades of gray
   --snow: #fcfcfd;
   --coconut: #f7f7f8;
-  --ivory: #f0f2f5;
+  --ivory: #f3f3f4;
   --cloudy: #e2e6e9;
   --lead: #abadaf;
   --slate: #717375;
@@ -33,4 +33,17 @@
 
   // borders
   --pane-border: var(--cloudy);
+
+  // Colors by name
+  --control-background: hsl(240, 4%, 95%);
+  --control-hover: hsl(240, 4%, 93%);
+  --control-active: hsl(240, 4%, 90%);
+
+  --input-background: hsl(240, 15%, 92%);
+
+  --sidebar-background: hsl(216, 20%, 95%);
+  --sidebar-item-hover: hsl(220, 15%, 92%);
+  --sidebar-item-active: hsl(214, 12%, 88%);
+
+  --primary-color: hsl(212, 72%, 59%);
 }

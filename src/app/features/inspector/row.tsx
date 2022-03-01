@@ -8,7 +8,7 @@ export const Row: ComponentType<ListChildComponentProps> = React.memo(
   function Row({style, index, data}) {
     if (!data[index]) return null
     const {render, indent}: RowData = data[index]
-    const innerStyle = {paddingLeft: 12 * (indent + 1)}
+    const innerStyle = {paddingLeft: 16 * (indent + 1)}
 
     return (
       <div className="inspector-row" style={{...style, ...innerStyle}}>

@@ -10,6 +10,7 @@ const BG = styled.div<{size: number}>`
   overflow: hidden;
   justify-content: flex-end;
   width: ${(p) => p.size}px;
+  padding-right: 8px;
 
   & > * {
     margin-right: ${GUTTER}px;
