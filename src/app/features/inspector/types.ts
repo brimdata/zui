@@ -2,11 +2,8 @@ import {zed} from "@brimdata/zealot"
 import React, {MouseEvent, ReactNode} from "react"
 import {InspectContext} from "./inspect-list"
 
-export type IsExpanded = (v: zed.Value | zed.Type) => boolean
-export type SetExpanded = (payload: {
-  args: InspectArgs
-  isExpanded: boolean
-}) => void
+export type IsExpanded = (key: string) => boolean
+export type SetExpanded = (key: string, value: boolean) => void
 
 type InspectorMouseEvent = (
   e: MouseEvent,
@@ -32,9 +29,13 @@ export type InspectArgs = {
   value: zed.Value | zed.Type
   field: zed.Field | null
   type: zed.Type
+  // This is the visual name of the key,
+  // the field name for records,
+  // an array index for arrays,
+  // and the key type for a map
   key: string | null
   last: boolean
-  index: number
+  indexPath: number[]
 }
 
 export type RowData = {

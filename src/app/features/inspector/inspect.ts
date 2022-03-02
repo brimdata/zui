@@ -72,7 +72,8 @@ export const inspectRecord = createContainer<zed.Record>(
         field,
         last: i === value.fields.length - 1,
         key: field.name,
-        type: field.value.type
+        type: field.value.type,
+        indexPath: [...args.indexPath, i]
       }
     }
   }
@@ -85,11 +86,13 @@ export const inspectArray = createContainer<zed.Array>(
   function* iterateArray(args: InspectArgs & {value: zed.Array}) {
     const {ctx, value} = args
     for (let i = 0; i < value.items.length; ++i) {
+      const indexPath = [...args.indexPath, i]
       yield {
         ...args,
         value: value.items[i],
         last: i === value.items.length - 1,
-        key: ctx.props.isExpanded(value) ? i.toString() : null
+        key: ctx.props.isExpanded(indexPath.join(",")) ? i.toString() : null,
+        indexPath
       }
     }
   }
@@ -102,11 +105,13 @@ export const inspectSet = createContainer<zed.Set>(
   function* iterateSet(args: InspectArgs & {value: zed.Array}) {
     const {ctx, value} = args
     for (let i = 0; i < value.items.length; ++i) {
+      const indexPath = [...args.indexPath, i]
       yield {
         ...args,
         value: value.items[i],
         last: i === value.items.length - 1,
-        key: ctx.props.isExpanded(value) ? i.toString() : null
+        key: ctx.props.isExpanded(indexPath.join(",")) ? i.toString() : null,
+        indexPath
       }
     }
   }
@@ -125,7 +130,8 @@ export const inspectMap = createContainer<zed.Map>(
         ...args,
         value: map.get(key),
         last: i === map.size - 1,
-        key: key
+        key: key,
+        indexPath: [...args.indexPath, i]
       }
       i++
     }
@@ -141,7 +147,8 @@ export const inspectError = createContainer<zed.Error>(
       ...args,
       value: args.value.value,
       key: 0,
-      last: true
+      last: true,
+      indexPath: [...args.indexPath, 0]
     }
   }
 )
@@ -155,7 +162,8 @@ export const inspectErrorType = createContainer<zed.TypeError>(
       ...args,
       value: args.value.type,
       key: 0,
-      last: true
+      last: true,
+      indexPath: [...args.indexPath, 0]
     }
   }
 )
@@ -173,7 +181,8 @@ export const inspectRecordType = createContainer<zed.TypeRecord>(
         key: field.name,
         value: field.type,
         type: field.type,
-        last: i === value.fields.length - 1
+        last: i === value.fields.length - 1,
+        indexPath: [...args.indexPath, i]
       }
     }
   }
@@ -187,12 +196,14 @@ export const inspectUnionType = createContainer<zed.TypeUnion>(
     const {ctx, value} = args
     for (let i = 0; i < value.types.length; i++) {
       const type = value.types[i]
+      const indexPath = [...args.indexPath, i]
       yield {
         ...args,
-        key: ctx.props.isExpanded(value) ? i.toString() : null,
+        key: ctx.props.isExpanded(indexPath.join(",")) ? i.toString() : null,
         value: type,
         type: type,
-        last: i === value.types.length - 1
+        last: i === value.types.length - 1,
+        indexPath
       }
     }
   }

@@ -54,7 +54,7 @@ export class InspectList {
       key: null,
       last: true,
       type: value.type,
-      index
+      indexPath: [index]
     })
     return ctx.rows
   }

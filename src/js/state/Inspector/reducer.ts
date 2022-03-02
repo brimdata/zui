@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {InspectArgs, RowData} from "src/app/features/inspector/types"
+import {RowData} from "src/app/features/inspector/types"
 
 const slice = createSlice({
   name: "TAB_INSPECTOR",
@@ -17,9 +17,9 @@ const slice = createSlice({
     appendRows: (s, a: PayloadAction<RowData[]>) => {
       s.rows = s.rows.concat(a.payload)
     },
-    setExpanded(s, a: PayloadAction<{args: InspectArgs; isExpanded: boolean}>) {
-      const {value} = a.payload.args
-      s.expanded.set(value, a.payload.isExpanded)
+    setExpanded(s, a: PayloadAction<{key: string; isExpanded: boolean}>) {
+      const {key, isExpanded} = a.payload
+      s.expanded.set(key, isExpanded)
     },
     spliceRows: (s, a: PayloadAction<number>) => {
       s.rows.splice(a.payload)

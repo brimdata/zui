@@ -44,16 +44,16 @@ export function renderAlias(type: zed.Type) {
 }
 
 export function renderOneValue(args: InspectArgs): ReactNode {
-  const {ctx, value, field, index} = args
+  const {ctx, value, field, indexPath} = args
 
   const props = {
     key: field?.name + value.toString(),
     className: zedTypeClassName(value),
     onContextMenu: (e: React.MouseEvent) => {
-      ctx.props?.onContextMenu(e, value, field, index)
+      ctx.props?.onContextMenu(e, value, field, indexPath[0])
     },
     onClick: (e: React.MouseEvent) => {
-      ctx.props?.onClick(e, value, field, index)
+      ctx.props?.onClick(e, value, field, indexPath[0])
     }
   }
 
@@ -157,8 +157,8 @@ export function renderContainer(
   nodes: ReactNode = null,
   closeToken: string = null
 ) {
-  const {ctx, value, key} = args
-  const isExpanded = ctx.props.isExpanded(value)
+  const {ctx, indexPath, key} = args
+  const isExpanded = ctx.props.isExpanded(indexPath.join(","))
   const row = []
   if (key) {
     row.push(
@@ -170,7 +170,7 @@ export function renderContainer(
   row.push(
     <a
       key="handle"
-      onClick={() => ctx.props.setExpanded({args, isExpanded: !isExpanded})}
+      onClick={() => ctx.props.setExpanded(indexPath.join(","), !isExpanded)}
     >
       <Icon
         name={isExpanded ? "chevron-down" : "chevron-right"}

@@ -1,7 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import useSelect from "src/app/core/hooks/use-select"
 import {Inspector} from "src/app/features/inspector/inspector"
-import {InspectArgs} from "src/app/features/inspector/types"
 import searchFieldContextMenu from "src/ppl/menus/searchFieldContextMenu"
 import React, {useCallback, MouseEvent} from "react"
 import {useDispatch, useSelector} from "react-redux"
@@ -24,13 +23,13 @@ export function MainInspector(props: {
     multi: false
   })
 
-  function setExpanded(payload: {args: InspectArgs; isExpanded: boolean}) {
-    dispatch(Slice.setExpanded(payload))
+  function setExpanded(key: string, isExpanded: boolean) {
+    dispatch(Slice.setExpanded({key, isExpanded}))
   }
 
-  function isExpanded(value: zed.Value | zed.Type) {
-    if (expanded.has(value)) {
-      return expanded.get(value)
+  function isExpanded(key: string) {
+    if (expanded.has(key)) {
+      return expanded.get(key)
     } else {
       return defaultExpanded
     }
