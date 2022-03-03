@@ -7,5 +7,6 @@ module.exports = {
   testURL: "http://localhost/search.html",
   globalSetup: "./src/test/unit/setup/global.ts",
   modulePaths: ["<rootDir>"],
-  roots: ["./src"]
+  roots: ["./src"],
+  maxWorkers: 4
 }
