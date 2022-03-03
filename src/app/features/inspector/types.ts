@@ -8,7 +8,7 @@ export type SetExpanded = (key: string, value: boolean) => void
 type InspectorMouseEvent = (
   e: MouseEvent,
   value: zed.Value | zed.Type,
-  field: zed.Field,
+  field: zed.Field | zed.TypeField,
   index: number
 ) => void
 
@@ -27,13 +27,13 @@ export type InspectorProps = {
 export type InspectArgs = {
   ctx: InspectContext
   value: zed.Value | zed.Type
-  field: zed.Field | null
+  field: zed.Field | zed.TypeField | null
   type: zed.Type
   // This is the visual name of the key,
   // the field name for records,
   // an array index for arrays,
   // and the key type for a map
-  key: string | null
+  key: string | null | zed.Any
   last: boolean
   indexPath: number[]
 }

@@ -1,3 +1,6 @@
+import {Type} from "./types/types"
+import {Value} from "./values/types"
+export type Any = Type | Value
 export {ZedContext as Context} from "./context"
 export {TypeAlias} from "./types/type-alias"
 export {TypeArray} from "./types/type-array"

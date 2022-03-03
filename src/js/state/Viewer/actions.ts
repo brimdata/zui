@@ -1,5 +1,5 @@
 import {zed} from "@brimdata/zealot"
-import {TypeDefs} from "packages/zealot/src/query/channel"
+import {TypeDefs} from "@brimdata/zealot/query/channel"
 import {ScrollPosition} from "../../types"
 import {SearchStatus} from "../../types/searches"
 import {

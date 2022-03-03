@@ -10,6 +10,7 @@
   --zed-key: hsl(212, 17%, 55%);
   --zed-number: #e65835;
   --zed-syntax: hsl(212, 17%, 55%);
+  --zed-note: hsl(212, 17%, 80%);
 }
 
 .zed-syntax {
@@ -69,4 +70,9 @@
 .zed-annotation {
   color: var(--zed-type);
   font-weight: bold;
+}
+
+.zed-note {
+  color: var(--zed-note);
+  font-style: italic;
 }

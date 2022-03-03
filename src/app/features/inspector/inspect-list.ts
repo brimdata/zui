@@ -1,9 +1,8 @@
 import {zed} from "@brimdata/zealot"
 import {isNumber} from "lodash"
 import {ReactNode} from "react"
-import {getRowCount} from "./count"
-import {inspect} from "./inspect"
 import {InspectorProps, RowData} from "./types"
+import {createView} from "./views/create"
 
 /**
  * Not sure about this name. This class makes the inspector render
@@ -22,9 +21,18 @@ export class InspectList {
   valueToRow: number[] = []
 
   constructor(public props: InspectorProps) {
-    props.values.forEach((v, valIndex) => {
-      const rowCount = getRowCount(v, props.isExpanded)
-      this.rowToValue = this.rowToValue.concat(Array(rowCount).fill(valIndex))
+    const ctx = new InspectContext(this.props)
+    props.values.forEach((value, index) => {
+      const rowCount = createView({
+        ctx,
+        value,
+        field: null,
+        key: null,
+        last: true,
+        type: value.type,
+        indexPath: [index]
+      }).rowCount()
+      this.rowToValue = this.rowToValue.concat(Array(rowCount).fill(index))
       this.valueToRow.push(this.count)
       this.count += rowCount
     })
@@ -47,7 +55,7 @@ export class InspectList {
 
   inspect(value: zed.Value, index: number) {
     const ctx = new InspectContext(this.props)
-    inspect({
+    createView({
       ctx,
       value,
       field: null,
@@ -55,7 +63,7 @@ export class InspectList {
       last: true,
       type: value.type,
       indexPath: [index]
-    })
+    }).inspect()
     return ctx.rows
   }
 }
