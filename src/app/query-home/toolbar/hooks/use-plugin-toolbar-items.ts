@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux"
 import Toolbars from "src/js/state/Toolbars"
-import {IconName} from "src/app/core/icon"
+import {IconName} from "src/app/core/icon-temp"
 import {ActionButtonProps} from "../action-button"
 import {executeCommand} from "src/js/flows/executeCommand"
 

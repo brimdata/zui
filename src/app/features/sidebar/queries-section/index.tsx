@@ -23,7 +23,7 @@ import {refreshRemoteQueries, setRemoteQueries} from "../flows/remote-queries"
 import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
 import EmptySection from "src/js/components/common/EmptySection"
-import Icon from "src/app/core/icon"
+import Icon from "src/app/core/icon-temp"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />
