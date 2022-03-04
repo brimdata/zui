@@ -1,5 +1,5 @@
 import {zed} from "@brimdata/zealot"
-import Icon from "src/app/core/Icon"
+import Icon from "src/app/core/icon"
 import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import classNames from "classnames"
 import React, {ReactNode} from "react"

@@ -8,7 +8,7 @@ import {AppDispatch} from "src/js/state/types"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
 import {ItemBG, Rename, Name, StyledItem} from "../common"
 import styled from "styled-components"
-import Icon from "src/app/core/Icon"
+import Icon from "src/app/core/icon"
 import classNames from "classnames"
 import {showContextMenu} from "src/js/lib/System"
 import {MenuItemConstructorOptions} from "electron"
@@ -27,7 +27,6 @@ const StyledPoolItem = styled(StyledItem)<{isSelected: boolean}>`
   background: var(--havelock);
   &:hover {
     background: var(--havelock);
-    opacity: 0.85;
   }
   `}
 

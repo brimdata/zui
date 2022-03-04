@@ -1,4 +1,4 @@
-import Icon from "src/app/core/Icon"
+import Icon from "src/app/core/icon"
 import React from "react"
 import {showContextMenu} from "src/js/lib/System"
 import styled from "styled-components"

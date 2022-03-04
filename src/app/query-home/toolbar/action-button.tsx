@@ -1,4 +1,4 @@
-import Icon, {IconName} from "src/app/core/Icon"
+import Icon, {IconName} from "src/app/core/icon"
 import {MenuItemConstructorOptions} from "electron/main"
 import React from "react"
 import Button from "./button"

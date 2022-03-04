@@ -12,15 +12,17 @@ import {
   SectionSearch
 } from "../common"
 import EmptySection from "src/js/components/common/EmptySection"
-import FileFilled from "src/js/icons/FileFilled"
 import styled from "styled-components"
 import {Tree} from "react-arborist"
 import {useSectionTreeDefaults} from "../hooks"
 import PoolItem from "./pool-item"
 import renamePool from "src/js/flows/renamePool"
 import {Pool} from "src/app/core/pools/pool"
+import Icon from "src/app/core/icon"
 
-const StyledEmptySection = styled(EmptySection).attrs({icon: <FileFilled />})``
+const StyledEmptySection = styled(EmptySection).attrs({
+  icon: <Icon name="pool" />
+})``
 
 const poolSearch = (term: string, items: Pool[]): Pool[] => {
   return items.filter(({name}) =>
