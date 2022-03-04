@@ -1,4 +1,4 @@
-import Icon from "src/app/core/icon"
+import Icon from "src/app/core/icon-temp"
 import React, {ComponentProps} from "react"
 import styled from "styled-components"
 

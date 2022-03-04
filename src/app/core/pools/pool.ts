@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import {PoolConfig, PoolStats} from "packages/zealot/src"
+import {PoolConfig, PoolStats} from "@brimdata/zealot"
 import brim, {Span} from "src/js/brim"
 
 export class Pool {

@@ -3,7 +3,7 @@ import DropdownArrow from "src/js/icons/DropdownArrow"
 import {cssVar, transparentize} from "polished"
 import styled, {keyframes} from "styled-components"
 import useOutsideClick from "src/js/components/hooks/useOutsideClick"
-import Icon from "src/app/core/icon"
+import Icon from "src/app/core/icon-temp"
 
 export const StyledSection = styled.section`
   position: relative;

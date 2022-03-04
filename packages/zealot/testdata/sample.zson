@@ -9,7 +9,7 @@
         resp_p: 80 (port)
     } (=0),
     proto: "tcp" (=zenum),
-    service: null (string),
+    service: null ((string, uint64)),
     duration: 9.698493s (duration),
     orig_bytes: 0 (uint64),
     resp_bytes: 90453565 (uint64),
