@@ -4,7 +4,7 @@ import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import styled from "styled-components"
 import {useDispatch, useSelector} from "react-redux"
-import Icon from "src/app/core/Icon"
+import Icon from "src/app/core/icon"
 import {cssVar} from "polished"
 import {updateQuery} from "../flows/update-query"
 

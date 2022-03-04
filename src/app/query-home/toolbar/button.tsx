@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import Icon from "src/app/core/Icon"
+import Icon from "src/app/core/icon"
 import styled from "styled-components"
 
 type Props = {

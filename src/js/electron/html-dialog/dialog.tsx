@@ -1,6 +1,6 @@
 import Markdown from "src/app/core/components/markdown"
 import useKeybinding from "src/app/core/hooks/use-keybinding"
-import Icon from "src/app/core/Icon"
+import Icon from "src/app/core/icon"
 import parseSearchParams from "src/app/core/utils/parse-search-params"
 import ToolbarButton from "src/app/toolbar/button"
 import {ipcRenderer} from "electron"

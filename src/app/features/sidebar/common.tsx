@@ -3,7 +3,7 @@ import DropdownArrow from "src/js/icons/DropdownArrow"
 import {cssVar, transparentize} from "polished"
 import styled, {keyframes} from "styled-components"
 import useOutsideClick from "src/js/components/hooks/useOutsideClick"
-import Icon from "src/app/core/Icon"
+import Icon from "src/app/core/icon"
 
 export const StyledSection = styled.section`
   position: relative;
@@ -276,4 +276,7 @@ const SearchInput = styled.input`
   border: none;
   background: transparent;
   outline: none;
+  &:focus {
+    outline: none;
+  }
 `
