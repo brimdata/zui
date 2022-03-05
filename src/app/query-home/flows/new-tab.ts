@@ -12,7 +12,6 @@ import {newQuery} from "./new-query"
 export const newTab = (): Thunk => (dispatch, getState) => {
   const lakeId = Current.getLakeId(getState())
   const poolIds = Pools.ids(lakeId)(getState())
-  console.log(poolIds)
   let url: string
   if (!lakeId) {
     url = lakesPath()
