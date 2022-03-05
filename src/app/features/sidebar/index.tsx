@@ -15,6 +15,7 @@ import LakePicker from "./lake-picker"
 import {useSectionTreeDefaults} from "./hooks"
 import classNames from "classnames"
 import {Tree} from "react-arborist"
+import Header from "./header"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -140,7 +141,7 @@ export function Sidebar() {
         <EmptyText>The lake previously on this tab has been removed.</EmptyText>
       ) : (
         <>
-          <LakePicker />
+          <Header />
           <StyledMenu ref={resizeRef}>
             <Tree {...defaults} data={sectionListItems}>
               {SidebarItem}

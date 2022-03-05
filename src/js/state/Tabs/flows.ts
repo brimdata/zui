@@ -8,8 +8,21 @@ export default {
     const id = brim.randomHash()
     dispatch(Tabs.add(id, url))
     dispatch(Tabs.activate(id))
+    // this should go somewhere else
     const el = document.getElementById("main-search-input")
     if (el) el.focus()
+  },
+
+  activateByUrl: (url: string): Thunk => (dispatch, getState) => {
+    const tabs = Tabs.getData(getState())
+    const tab = tabs.find(
+      (tab) => global.tabHistories.getOrCreate(tab.id).location.pathname === url
+    )
+    if (tab) {
+      dispatch(Tabs.activate(tab.id))
+    } else {
+      dispatch(Tabs.new(url))
+    }
   },
 
   closeActive: (): Thunk => (dispatch, getState) => {

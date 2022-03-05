@@ -35,7 +35,13 @@ export function lakeQueryPath(
   lakeId: string,
   params: {isDraft?: boolean}
 ) {
-  return `${lakePath(lakeId)}/queries/${queryId}?${encodeQueryParams(params)}`
+  const pathname = `${lakePath(lakeId)}/queries/${queryId}`
+  const search = encodeQueryParams(params)
+  if (search.length) {
+    return pathname + "?" + search
+  } else {
+    return pathname
+  }
 }
 
 export function releaseNotesPath(lakeId) {
