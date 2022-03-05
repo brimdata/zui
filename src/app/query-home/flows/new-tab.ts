@@ -1,3 +1,4 @@
+import {featureIsEnabled} from "src/app/core/feature-flag"
 import {
   lakeImportPath,
   lakeQueryPath,
@@ -10,6 +11,10 @@ import {Thunk} from "src/js/state/types"
 import {newQuery} from "./new-query"
 
 export const newTab = (): Thunk => (dispatch, getState) => {
+  if (!featureIsEnabled("query-flow")) {
+    return legacyNewTab(dispatch, getState)
+  }
+
   const lakeId = Current.getLakeId(getState())
   const poolIds = Pools.ids(lakeId)(getState())
   let url: string
@@ -21,4 +26,10 @@ export const newTab = (): Thunk => (dispatch, getState) => {
     url = lakeQueryPath(dispatch(newQuery()).id, lakeId, {isDraft: true})
   }
   dispatch(Tabs.new(url))
+}
+
+function legacyNewTab(dispatch, getState) {
+  const lakeId = Current.getLakeId(getState())
+  const path = lakeId ? lakeImportPath(lakeId) : lakesPath()
+  dispatch(Tabs.new(path))
 }
