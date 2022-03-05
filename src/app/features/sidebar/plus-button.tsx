@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "React"
+import React, {ChangeEvent} from "react"
 import styled from "styled-components"
 
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
