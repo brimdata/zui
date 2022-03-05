@@ -159,7 +159,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#da51db515fa96532ac90917d4c1e6a3dd74c0d25"
+    "zed": "brimdata/zed#d885b80d62147f458afd468051308f818964afe3"
   },
   "optionalDependencies": {
     "electron-installer-debian": "^3.0.0",
