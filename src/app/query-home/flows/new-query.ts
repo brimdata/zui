@@ -13,7 +13,6 @@ export const newQuery = (attrs: Partial<Query> = {}): Thunk<Query> => (
     value: "",
     ...attrs
   }
-  console.log(query)
   dispatch(DraftQueries.set(query))
   return query
 }
