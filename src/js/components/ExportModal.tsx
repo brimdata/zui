@@ -68,11 +68,15 @@ const ExportModal = ({onClose}) => {
     const {canceled, filePath} = await showDialog(format)
     if (canceled) return
 
-    toast.promise(dispatch(exportResults(filePath, format as ResponseFormat)), {
-      loading: "Exporting...",
-      success: "Export Complete",
-      error: "Error Exporting"
-    })
+    toast
+      .promise(dispatch(exportResults(filePath, format as ResponseFormat)), {
+        loading: "Exporting...",
+        success: "Export Complete",
+        error: "Error Exporting"
+      })
+      .catch((e) => {
+        console.error(e)
+      })
 
     onClose()
   }

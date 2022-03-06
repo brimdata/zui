@@ -42,9 +42,14 @@ export default (
   const columns = Columns.getCurrentTableColumns(getState())
   const program = prepareProgram(format, baseProgram, columns)
 
-  const [from, to] = Tab.getSpan(getState())
-    .map(brim.time)
-    .map((t) => t.toDate())
+  let from = null
+  let to = null
+  const span = Tab.getSpan(getState())
+  if (span) {
+    const dates = span.map(brim.time).map((t) => t.toDate())
+    from = dates[0]
+    to = dates[1]
+  }
 
   dispatch(SystemTest.hook("export-start"))
   const query = annotateQuery(program, {from, to, poolId})
