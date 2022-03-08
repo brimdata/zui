@@ -7,7 +7,6 @@ import React from "react"
 import Modal from "src/js/state/Modal"
 import {createRecord} from "src/test/shared/factories/zed-factory"
 import {
-  cleanup,
   fireEvent,
   render,
   screen,
@@ -46,21 +45,6 @@ const $ = {
 beforeEach(() => {
   brim.dispatch(Modal.show("settings"))
   render(<Preferences />, {store: brim.store})
-})
-
-test("change time zone", async () => {
-  const record = createRecord({ts: new Date(2019, 9, 1, 8)})
-  render(<Fields record={record} />, {store: brim.store})
-  expect($.dd.textContent).toBe("2019-10-01T15:00:00.000")
-  cleanup()
-
-  render(<Preferences />, {store: brim.store})
-  fireEvent.change($.timeZone, {target: {value: "US/Central"}})
-  fireEvent.click($.ok)
-  await waitForElementToBeRemoved($.modal)
-
-  render(<Fields record={record} />, {store: brim.store})
-  expect($.dd.textContent).toBe("2019-10-01T10:00:00.000")
 })
 
 test("change time format", async () => {
