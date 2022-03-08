@@ -1,5 +1,6 @@
 import {ResultStream} from "@brimdata/zealot"
 import {search} from "src/js/flows/search/mod"
+import querySearch from "src/app/query-home/flows/search"
 import {parallelizeProcs} from "src/js/lib/Program"
 import {
   filenameCorrelation,
@@ -10,6 +11,8 @@ import {
 import Current from "src/js/state/Current"
 import Tab from "src/js/state/Tab"
 import {Thunk} from "src/js/state/types"
+import {featureIsEnabled} from "../../core/feature-flag"
+import {BrimQuery} from "../../query-home/utils/brim-query"
 
 const id = "Md5"
 
@@ -17,9 +20,12 @@ export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => (
   dispatch,
   getState
 ) => {
-  const poolId = Current.getPoolId(getState())
+  const isQueryFlow = featureIsEnabled("query-flow")
+  const poolId = isQueryFlow
+    ? Current.getQueryPool(getState())?.id
+    : Current.getPoolId(getState())
   if (!poolId) return
-  const [from, to] = Tab.getSpanAsDates(getState())
+  const [from, to] = isQueryFlow ? [null, null] : Tab.getSpanAsDates(getState())
   const q = parallelizeProcs([
     filenameCorrelation(md5),
     md5Correlation(md5),
@@ -27,5 +33,16 @@ export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => (
     txHostsCorrelation(md5)
   ])
 
-  return dispatch(search({id, query: q, from, to, poolId}))
+  return isQueryFlow
+    ? dispatch(
+        querySearch({
+          query: new BrimQuery({
+            id: "",
+            name: "",
+            value: q,
+            pins: {from: poolId, filters: []}
+          })
+        })
+      )
+    : dispatch(search({id, query: q, from, to, poolId}))
 }

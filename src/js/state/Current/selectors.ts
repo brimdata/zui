@@ -14,6 +14,7 @@ import RemoteQueries from "../RemoteQueries"
 import Queries from "../Queries"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 import {decodeQueryParams} from "src/app/query-home/utils/query-params"
+import {featureIsEnabled} from "../../../app/core/feature-flag"
 
 type Id = string | null
 

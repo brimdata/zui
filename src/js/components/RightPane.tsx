@@ -22,6 +22,7 @@ import Pane, {
   Right
 } from "./Pane"
 import {XRightPaneExpander} from "./RightPaneExpander"
+import {featureIsEnabled} from "../../app/core/feature-flag"
 
 type StateProps = {
   currentLog: zed.Record
@@ -96,13 +97,16 @@ export default class RightPane extends React.Component<Props, S> {
 }
 
 const stateToProps = (state) => {
+  const pool = featureIsEnabled("query-flow")
+    ? Current.getQueryPool(state)
+    : Current.getPool(state)
   return {
     isOpen: Layout.getDetailPaneIsOpen(state),
     width: Layout.getDetailPaneWidth(state),
     prevExists: LogDetails.getHistory(state).canGoBack(),
     nextExists: LogDetails.getHistory(state).canGoForward(),
     currentLog: LogDetails.build(state),
-    pool: Current.getPool(state)
+    pool: pool
   }
 }
 

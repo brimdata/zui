@@ -7,7 +7,7 @@ import initialize from "./initialize"
 export default async () => {
   const {store, api, pluginManager} = await initialize()
   // Set the span to everything
-  const pool = Current.mustGetPool(store.getState())
+  const pool = Current.getPool(store.getState())
   pool?.hasSpan() && store.dispatch(Search.setSpan(pool.everythingSpan()))
 
   // View the latest log and clear log detail history
