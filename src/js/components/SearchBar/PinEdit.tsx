@@ -31,7 +31,7 @@ export default function PinEdit({onSubmit, onBlur, onCancel, defaultValue}) {
         display: "inline-flex",
         marginBottom: "3px"
       }}
-      inputStyle={{fontSize: "9px", fontFamily: "Cartograph"}}
+      inputStyle={{fontSize: "9px", fontFamily: "var(--mono-font)"}}
     />
   )
 }

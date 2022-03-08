@@ -1,7 +1,7 @@
 .table {
   border-collapse: collapse;
   width: 100%;
-  font-family: $data-font;
+  font-family: var(--mono-font);
 
   tbody tr:nth-child(odd) {
     background: var(--table-stripe-bg);

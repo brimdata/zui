@@ -1,7 +1,7 @@
 .tool-tip {
   position: fixed;
   background: var(--cello-transparent);
-  font-family: $data-font;
+  font-family: var(--mono-font);
   color: white;
   font-size: 12px;
   line-height: 18px;

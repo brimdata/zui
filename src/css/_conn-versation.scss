@@ -27,7 +27,7 @@
     font-size: 12px;
     text-align: center;
     line-height: 20px;
-    font-family: $mono-font;
+    font-family: var(--mono-font);
     user-select: all;
   }
 
@@ -61,7 +61,7 @@
 
     span {
       font-weight: bold;
-      font-family: $mono-font;
+      font-family: var(--mono-font);
       text-transform: uppercase;
       font-size: 12px;
       padding: 1px 6px;

@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 export const List = styled(FixedSizeList)`
   font-size: 13px;
-  font-family: "Cartograph", sans-serif;
+  font-family: var(--mono-font), sans-serif;
   line-height: 20px;
 
   .inspector-row {

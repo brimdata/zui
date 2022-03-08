@@ -9,7 +9,7 @@ https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javasc
 code[class*="language-"],
 pre[class*="language-"] {
   color: black;
-  font-family: $mono-font, Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
+  font-family: var(--mono-font), Consolas, Monaco, "Andale Mono", "Ubuntu Mono",
     monospace;
   text-align: left;
   white-space: pre;

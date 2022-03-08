@@ -1,8 +1,14 @@
-$heading-font: "system-ui", sans-serif;
-$body-font: "system-ui", sans-serif;
-$menu-font: "system-ui", sans-serif;
-$data-font: "Cartograph", sans-serif;
-$mono-font: "Cartograph", monospace;
+@font-face {
+  font-family: "Recursive";
+  src: url(../static/fonts/Recursive.woff2) format("woff2-variations");
+  font-style: oblique 0deg 15deg;
+  font-weight: 300 1000;
+  font-display: swap;
+}
+
+$heading-font: "Recursive", sans-serif;
+$body-font: "Recursive", sans-serif;
+$menu-font: "Recursive", sans-serif;
 
 $font-size-1: 0.7rem;
 $font-size-2: 0.85rem;
@@ -12,117 +18,21 @@ $font-size-4: 1.25rem;
 $line-height-2: 1.125rem;
 
 :root {
-  --mono-font: "Cartograph", monospace;
-}
+  --mono-font: "Recursive";
+  --body-font: "Recursive";
 
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-Thin.otf);
-  font-weight: 100;
-  font-style: normal;
-}
+  /* Recursive settings */
+  --mono: "MONO" 1;
+  /* Monospace: Sans (natural-width) or Mono (fixed-width) */
 
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-ThinItalic.otf);
-  font-weight: 100;
-  font-style: italic;
-}
+  --casl: "CASL" 0;
+  /* Casual: Linear to Casual */
+  --slnt: "slnt" 0;
 
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-ExtraLight.otf);
-  font-weight: 200;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-ExtraLightItalic.otf);
-  font-weight: 200;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-Light.otf);
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-LightItalic.otf);
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-Regular.otf);
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-RegularItalic.otf);
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-DemiBold.otf);
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-DemiBoldItalic.otf);
-  font-weight: 500;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-Bold.otf);
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-BoldItalic.otf);
-  font-weight: 700;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-ExtraBold.otf);
-  font-weight: 800;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-ExtraBoldItalic.otf);
-  font-weight: 800;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-Heavy.otf);
-  font-weight: 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Cartograph";
-  src: url(../static/fonts/CartographCF-HeavyItalic.otf);
-  font-weight: 900;
-  font-style: italic;
+  /* Slant: 0 to -15 degrees, auto cursive at -14 */
+  --CRSV: "CRSV" 0.5;
+  // off  auto  on
+  /* Cursive: always roman, auto substitution, or always cursive */
+  font-variation-settings: var(--mono), var(--casl), var(--wght), var(--slnt),
+    var(--CRSV);
 }
