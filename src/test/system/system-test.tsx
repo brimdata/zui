@@ -1,75 +1,21 @@
-import * as tl from "@testing-library/react"
-import {fireEvent, waitFor} from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import {BrimProvider} from "src/app/core/context"
+import "web-streams-polyfill"
 import "cross-fetch/polyfill"
+import * as tl from "@testing-library/react"
+import {fireEvent} from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import {dialog} from "electron"
-import fsExtra from "fs-extra"
 import React from "react"
 import BrimApi from "src/js/api"
 import {BrimMain} from "src/js/electron/brim"
-import {main} from "src/js/electron/main"
-import initialize from "src/js/initializers/initialize"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import PluginManager from "src/js/initializers/pluginManager"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
 import data from "src/test/shared/data"
-import "web-streams-polyfill"
-import {getPort} from "./port-service"
 import {setupServer} from "msw/node"
+import {BootArgs, bootBrim} from "./boot-brim"
 
-const defaults = () => ({
-  page: "search",
-  port: null as null | number
-})
-
-type Args = ReturnType<typeof defaults>
-
-export function onPage(name: string) {
-  window.history.replaceState(null, `Testing Page: ${name}`, `${name}.html`)
-}
-
-function createWrapper(store: Store, api: BrimApi): React.ComponentType<any> {
-  return function Wrapper({children}) {
-    return (
-      <BrimProvider store={store} api={api}>
-        {children}
-      </BrimProvider>
-    )
-  }
-}
-
-async function bootBrim(name: string, args: Partial<Args> = {}) {
-  args = {...defaults(), ...args}
-  const lakeRoot = `./run/system/${name}/root`
-  const lakeLogs = `./run/system/${name}/logs`
-  const lakePort = args.port || (await getPort())
-  const appState = `./run/system/${name}/appState.json`
-  onPage(args.page)
-  fsExtra.removeSync(lakeRoot)
-  fsExtra.removeSync(lakeLogs)
-  fsExtra.removeSync(appState)
-  const brimMain = await main({
-    lakePort,
-    lakeRoot,
-    lakeLogs,
-    appState,
-    releaseNotes: false,
-    autoUpdater: false
-  })
-
-  await waitFor(() => fetch(`http://localhost:${lakePort}/version`))
-
-  const brimRenderer = await initialize()
-  return {
-    main: brimMain,
-    store: brimRenderer.store,
-    plugins: brimRenderer.pluginManager,
-    api: brimRenderer.api,
-    wrapper: createWrapper(brimRenderer.store, brimRenderer.api)
-  }
-}
+jest.setTimeout(20_000)
 
 export class SystemTest {
   store: Store
@@ -80,6 +26,7 @@ export class SystemTest {
   click = userEvent.click
   rightClick = fireEvent.contextMenu
   network = setupServer()
+  initialized = false
 
   assign(args: {
     store: Store
@@ -93,11 +40,10 @@ export class SystemTest {
     this.main = args.main
     this.api = args.api
     this.wrapper = args.wrapper
+    this.initialized = true
   }
 
-  constructor(name: string, opts: Partial<Args> = {}) {
-    opts = {...defaults(), ...opts}
-
+  constructor(name: string, opts: Partial<BootArgs> = {}) {
     beforeAll(async () => {
       this.network.listen({
         onUnhandledRequest: (req) => {
@@ -114,10 +60,12 @@ export class SystemTest {
     afterEach(() => this.network.resetHandlers())
 
     afterAll(async () => {
-      await this.plugins.deactivate()
-      await this.main.quit()
-      tl.cleanup()
-      this.network.close()
+      if (this.initialized) {
+        await this.plugins.deactivate()
+        await this.main.quit()
+        tl.cleanup()
+        this.network.close()
+      }
     })
   }
 

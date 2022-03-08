@@ -77,7 +77,7 @@ class MockApp {
   }
   getPath(name) {
     if (name === "temp") return os.tmpdir()
-    return join(__dirname, "../../../run/unit/data")
+    return join(__dirname, "../../../../run/unit/data")
   }
   setPath() {}
   getVersion() {
