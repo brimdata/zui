@@ -16,16 +16,13 @@ import {BrimQuery} from "../../query-home/utils/brim-query"
 
 const id = "Md5"
 
-export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => (
+const legacyMd5Search = (md5: string): Thunk<Promise<ResultStream>> => (
   dispatch,
   getState
 ) => {
-  const isQueryFlow = featureIsEnabled("query-flow")
-  const poolId = isQueryFlow
-    ? Current.getQueryPool(getState())?.id
-    : Current.getPoolId(getState())
+  const poolId = Current.getPoolId(getState())
   if (!poolId) return
-  const [from, to] = isQueryFlow ? [null, null] : Tab.getSpanAsDates(getState())
+  const [from, to] = Tab.getSpanAsDates(getState())
   const q = parallelizeProcs([
     filenameCorrelation(md5),
     md5Correlation(md5),
@@ -33,16 +30,30 @@ export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => (
     txHostsCorrelation(md5)
   ])
 
-  return isQueryFlow
-    ? dispatch(
-        querySearch({
-          query: new BrimQuery({
-            id: "",
-            name: "",
-            value: q,
-            pins: {from: poolId, filters: []}
-          })
+  return dispatch(search({id, query: q, from, to, poolId}))
+}
+
+export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => {
+  if (!featureIsEnabled("query-flow")) return legacyMd5Search(md5)
+  return (dispatch, getState) => {
+    const poolId = Current.getQueryPool(getState())?.id
+    if (!poolId) return
+    const q = parallelizeProcs([
+      filenameCorrelation(md5),
+      md5Correlation(md5),
+      rxHostsCorrelation(md5),
+      txHostsCorrelation(md5)
+    ])
+
+    return dispatch(
+      querySearch({
+        query: new BrimQuery({
+          id: "",
+          name: "",
+          value: q,
+          pins: {from: poolId, filters: []}
         })
-      )
-    : dispatch(search({id, query: q, from, to, poolId}))
+      })
+    )
+  }
 }
