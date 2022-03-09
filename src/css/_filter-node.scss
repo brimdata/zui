@@ -10,7 +10,7 @@
   transition: all 50ms;
 
   p {
-    font-family: $mono-font;
+    font-family: var(--mono-font);
     color: white;
     font-size: 9px;
     line-height: 13px;

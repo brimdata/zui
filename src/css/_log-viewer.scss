@@ -27,7 +27,7 @@
   white-space: nowrap;
   contain: layout style;
   display: flex;
-  font-family: $mono-font;
+  font-family: var(--mono-font);
   font-size: 12px;
   white-space: nowrap;
   min-height: 25px;
