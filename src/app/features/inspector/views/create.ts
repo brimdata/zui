@@ -38,6 +38,10 @@ export function createView(args: InspectArgs) {
 
   // * type record
   if (args.value instanceof zed.TypeRecord) return new TypeRecordView(args)
+
+  if (args.value instanceof zed.TypeAlias)
+    return createView({...args, value: args.value.type, type: args.value})
+
   // * type union
   // * type alias
   // * type error

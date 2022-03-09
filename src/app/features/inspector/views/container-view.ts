@@ -24,26 +24,37 @@ export abstract class ContainerView<T extends zed.Any = zed.Any> extends View<
   inspect() {
     const {ctx} = this.args
 
-    const line = []
-    if (this.args.key) {
-      line.push(key(this))
-    }
-    line.push(container.icon(this))
-    line.push(container.name(this))
-    line.push(space())
-    line.push(container.open(this))
-
     if (this.isExpanded()) {
-      ctx.push(container.anchor(this, line))
+      ctx.push(container.anchor(this, opening(this)))
       ctx.nest()
       for (let view of this.iterate()) view.inspect()
       ctx.unnest()
-      ctx.push(container.close(this))
+      ctx.push(closing(this))
     } else {
+      let line = opening(this)
       for (let view of this.iterate()) line.push(field(view))
-      line.push(container.close(this))
-      if (zed.isTypeAlias(this.args.type)) line.push(typename(this))
+      line = line.concat(closing(this))
       ctx.push(container.anchor(this, line))
     }
   }
+}
+
+function closing(view: ContainerView) {
+  let nodes = []
+  nodes.push(container.close(view))
+  if (zed.isTypeAlias(view.args.type)) nodes.push(typename(view))
+  if (!view.args.last) nodes.push(",")
+  return nodes
+}
+
+function opening(view: ContainerView) {
+  const nodes = []
+  if (view.args.key) {
+    nodes.push(key(view))
+  }
+  nodes.push(container.icon(view))
+  nodes.push(container.name(view))
+  nodes.push(space())
+  nodes.push(container.open(view))
+  return nodes
 }

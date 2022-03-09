@@ -47,7 +47,7 @@
     box-shadow: $box-shadow;
     pointer-events: none;
     transition: all 100ms;
-    font-family: $mono-font;
+    font-family: var(--mono-font);
 
     span.path {
       display: inline-block;
@@ -81,13 +81,13 @@
   }
 
   text {
-    font-family: $data-font;
+    font-family: var(--mono-font);
     fill: var(--lead);
     font-size: 9px;
   }
 }
 
 .chart-tooltip {
-  font-family: $mono-font;
+  font-family: var(--mono-font);
   opacity: 0;
 }

@@ -64,7 +64,7 @@
 }
 
 .mono {
-  font-family: $mono-font;
+  font-family: var(--mono-font);
   font-weight: normal;
   font-size: 12px;
   line-height: 16px;
@@ -73,7 +73,7 @@
 
 .code {
   display: inline-block;
-  font-family: $mono-font;
+  font-family: var(--mono-font);
   font-size: 12px;
   line-height: 14px;
   padding: 3px 6px;
@@ -107,7 +107,7 @@
 }
 
 .stats {
-  font-family: $data-font;
+  font-family: var(--mono-font);
   font-size: 12px;
   font-weight: normal;
   line-height: 12px;
