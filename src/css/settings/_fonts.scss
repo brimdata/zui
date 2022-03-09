@@ -6,20 +6,20 @@
   font-display: swap;
 }
 
-$heading-font: "Recursive", sans-serif;
-$body-font: "Recursive", sans-serif;
-$menu-font: "Recursive", sans-serif;
+$heading-font: system-ui, sans-serif;
+$body-font: system-ui, sans-serif;
+$menu-font: system-ui, sans-serif;
 
+// Don't use these anymore
 $font-size-1: 0.7rem;
 $font-size-2: 0.85rem;
 $font-size-3: 1rem;
 $font-size-4: 1.25rem;
-
 $line-height-2: 1.125rem;
 
 :root {
   --mono-font: "Recursive";
-  --body-font: "Recursive";
+  --body-font: "system-ui";
 
   /* Recursive settings */
   --mono: "MONO" 1;
