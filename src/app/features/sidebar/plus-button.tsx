@@ -54,6 +54,10 @@ export default function PlusButton() {
         }
       },
       {
+        label: "New Remote Query",
+        click: () => dispatch(Modal.show("new-query", {isRemote: true}))
+      },
+      {
         label: "New Pool",
         click: () => dispatch(Tabs.new(lakeImportPath(lakeId))),
         enabled: !!lakeId
