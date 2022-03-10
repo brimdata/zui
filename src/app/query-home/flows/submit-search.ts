@@ -11,7 +11,6 @@ const submitSearch = (
   _ts: Date = new Date()
 ) => async (dispatch, getState) => {
   dispatch(Notice.dismiss())
-  // TODO: Mason - set filter pins here too?
   const input = SearchBar.getSearchBarInputValue(getState())
   const query = Current.getQuery(getState())
   query.value = input
