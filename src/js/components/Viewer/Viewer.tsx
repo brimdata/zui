@@ -19,6 +19,7 @@ type Props = {
   onLastChunk?: Function
   renderEnd: () => any
   scrollPos: ScrollPosition
+  onScroll?: (props: {left: number; top: number}) => void
   innerRef: any
 }
 
@@ -44,6 +45,9 @@ export default function Viewer(props: Props) {
     scrollHooks && scrollHooks()
     const view = ref.current
     if (view) {
+      const top = view.scrollTop
+      const left = view.scrollLeft
+      props.onScroll({top, left})
       updateChunks(view.scrollTop)
       setScrollLeft(view.scrollLeft)
     }

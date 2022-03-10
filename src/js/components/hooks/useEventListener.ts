@@ -1,5 +1,6 @@
 import {useEffect} from "react"
 
+// DO NOT USE use useListener instead
 export default function useEventListener(
   el: EventTarget,
   name: string,
