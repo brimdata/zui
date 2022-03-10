@@ -6,6 +6,7 @@ import Current from "../state/Current"
 import LogDetails from "../state/LogDetails"
 import Notice from "../state/Notice"
 import {Thunk} from "../state/types"
+import {featureIsEnabled} from "../../app/core/feature-flag"
 
 export const viewLogDetail = (record: zed.Record): Thunk => (
   dispatch,
@@ -15,7 +16,8 @@ export const viewLogDetail = (record: zed.Record): Thunk => (
   if (record && !isEqual(record, current)) {
     dispatch(LogDetails.push(record))
 
-    if (!Current.getPoolId(getState())) return // It is possible for this code to be called without a pool
+    if (!featureIsEnabled("query-flow") && !Current.getPoolId(getState()))
+      return // It is possible for this code to be called without a pool
 
     dispatch(LogDetails.updateUidStatus("FETCHING"))
     dispatch(fetchCorrelation(record))

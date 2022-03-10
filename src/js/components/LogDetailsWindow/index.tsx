@@ -9,13 +9,16 @@ import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "src/app/detail/Pane"
 import ToolbarAction from "src/app/toolbar/action-button"
+import {featureIsEnabled} from "../../../app/core/feature-flag"
 
 export default function LogDetailsWindow() {
   useStoreExport()
   const dispatch = useDispatch()
   const prevExists = useSelector(LogDetails.getHistory).canGoBack()
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()
-  const pool = useSelector(Current.mustGetPool)
+  const searchPool = useSelector(Current.getPool)
+  const queryPool = useSelector(Current.getQueryPool)
+  const pool = featureIsEnabled("query-flow") ? queryPool : searchPool
   const pluginButtons = usePluginToolbarItems("detail").map((button, i) => (
     <ToolbarAction key={button.label || i} {...button} />
   ))
