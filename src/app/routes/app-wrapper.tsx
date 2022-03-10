@@ -46,7 +46,6 @@ const SearchPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  animation: fadein 300ms;
 `
 
 export default function AppWrapper({children}) {

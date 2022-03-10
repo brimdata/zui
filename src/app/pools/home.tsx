@@ -1,15 +1,12 @@
-import {nanoid} from "@reduxjs/toolkit"
-import {DRAFT_QUERY_NAME} from "src/app/query-home/utils/brim-query"
-import {lakeQueryPath} from "src/app/router/utils/paths"
-import {useDispatch, useSelector} from "react-redux"
 import React from "react"
-import {useHistory} from "react-router"
-import {Query} from "src/js/state/Queries/types"
-import styled from "styled-components"
+import {useDispatch, useSelector} from "react-redux"
+import {lakeQueryPath} from "src/app/router/utils/paths"
 import PrimaryButton from "src/js/components/common/buttons/PrimaryButton"
-import {AppDispatch} from "src/js/state/types"
 import Current from "src/js/state/Current"
-import DraftQueries from "src/js/state/DraftQueries"
+import Tabs from "src/js/state/Tabs"
+import {AppDispatch} from "src/js/state/types"
+import styled from "styled-components"
+import {newQuery} from "../query-home/flows/new-query"
 
 const Wrap = styled.section`
   display: flex;
@@ -29,22 +26,12 @@ const SubmitWrap = styled.div`
 `
 const PoolHome = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const history = useHistory()
   const pool = useSelector(Current.mustGetPool)
   const lakeId = useSelector(Current.getLakeId)
 
   const openNewDraftQuery = () => {
-    const newDraft: Query = {
-      id: nanoid(),
-      name: DRAFT_QUERY_NAME,
-      value: "",
-      pins: {
-        from: pool.id,
-        filters: []
-      }
-    }
-    dispatch(DraftQueries.set(newDraft))
-    history.push(lakeQueryPath(newDraft.id, lakeId, {isDraft: true}))
+    const query = dispatch(newQuery({pins: {from: pool.id, filters: []}}))
+    dispatch(Tabs.new(lakeQueryPath(query.id, lakeId, {isDraft: true})))
   }
 
   const rawPoolData = Object.entries(pool.data).map(([key, value]) => (

@@ -4,6 +4,7 @@ import Mousetrap from "mousetrap"
 
 import Modal from "../state/Modal"
 import Tabs from "../state/Tabs"
+import {newTab} from "src/app/query-home/flows/new-tab"
 
 export default function() {
   const dispatch = useDispatch()
@@ -11,7 +12,7 @@ export default function() {
     const el = document.documentElement
     if (!el) throw new Error("No Document Element")
     const bindings = new Mousetrap(el)
-      .bind("mod+t", () => dispatch(Tabs.new()))
+      .bind("mod+t", () => dispatch(newTab()))
       .bind("mod+w", (e) => {
         e.preventDefault()
         dispatch(Tabs.closeActive())

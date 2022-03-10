@@ -36,7 +36,6 @@ const QueryPageTitle = () => {
   const dispatch = useDispatch()
   const query = useSelector(Current.getQuery)
   const querySource = dispatch(getQuerySource(query?.id))
-
   return (
     <TitleHeader>
       <Title>{query?.name}</Title>

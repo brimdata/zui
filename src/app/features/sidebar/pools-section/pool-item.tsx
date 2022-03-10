@@ -2,7 +2,6 @@ import getPoolContextMenu from "src/app/pools/flows/get-pool-context-menu"
 import {lakePoolPath} from "src/app/router/utils/paths"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {useHistory} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
@@ -15,6 +14,7 @@ import {MenuItemConstructorOptions} from "electron"
 import {Pool} from "src/app/core/pools/pool"
 import Ingests from "src/js/state/Ingests"
 import {isNumber} from "lodash"
+import Tabs from "src/js/state/Tabs"
 
 const PoolIcon = styled(Icon).attrs({name: "pool"})``
 
@@ -51,7 +51,6 @@ const PoolItem = ({innerRef, styles, data, state, handlers}) => {
   const lakeId = useSelector(Current.getLakeId)
   const currentPoolId = useSelector(Current.getPoolId)
   const ingest = useSelector(Ingests.get(currentPoolId))
-  const history = useHistory()
   const {isEditing} = state
   const ctxMenu: MenuItemConstructorOptions[] = [
     {
@@ -65,7 +64,7 @@ const PoolItem = ({innerRef, styles, data, state, handlers}) => {
 
   const onClick = (e) => {
     e.preventDefault()
-    history.push(lakePoolPath(pool.id, lakeId))
+    dispatch(Tabs.activateByUrl(lakePoolPath(pool.id, lakeId)))
   }
 
   const progress = ingest && isNumber(ingest.progress) && (

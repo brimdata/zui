@@ -7,8 +7,9 @@ import {StyledArrow, Name, ItemBG, Rename, StyledItem} from "../common"
 import Icon from "src/app/core/icon-temp"
 import {useQueryItemMenu} from "../hooks"
 import {lakeQueryPath} from "src/app/router/utils/paths"
-import {useHistory} from "react-router"
 import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
+import Tabs from "src/js/state/Tabs"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
 const QueryIcon = styled(Icon).attrs({name: "doc-plain"})``
@@ -62,10 +63,9 @@ export default function QueryItem({
   const {id} = data
   const isGroup = "items" in data
   const ctxMenu = useQueryItemMenu(data, tree, handlers)
-  const history = useHistory()
+  const dispatch = useDispatch()
   const lakeId = useSelector(Current.getLakeId)
   const query = useSelector(Current.getQuery)
-
   const onGroupClick = (e) => {
     e.stopPropagation()
     handlers.toggle(e)
@@ -73,8 +73,9 @@ export default function QueryItem({
 
   const onItemClick = (e: React.MouseEvent) => {
     handlers.select(e, false)
-    if (!e.metaKey && !e.shiftKey)
-      history.push(lakeQueryPath(id, lakeId, {isDraft: false}))
+    if (!e.metaKey && !e.shiftKey) {
+      dispatch(Tabs.activateByUrl(lakeQueryPath(id, lakeId, {isDraft: false})))
+    }
   }
 
   const itemIcon = isGroup ? <FolderIcon /> : <QueryIcon />
