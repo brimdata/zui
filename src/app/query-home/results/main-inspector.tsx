@@ -2,13 +2,14 @@ import {zed} from "@brimdata/zealot"
 import useSelect from "src/app/core/hooks/use-select"
 import {Inspector} from "src/app/features/inspector/inspector"
 import searchFieldContextMenu from "src/ppl/menus/searchFieldContextMenu"
-import React, {useCallback, MouseEvent} from "react"
+import React, {useCallback, MouseEvent, useMemo} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
 import Viewer from "src/js/state/Viewer"
 import nextPageViewerSearch from "../flows/next-page-viewer-search"
 import {useRowSelection} from "./results-table/hooks/use-row-selection"
+import {debounce} from "lodash"
 
 export function MainInspector(props: {
   height: number
@@ -62,8 +63,24 @@ export function MainInspector(props: {
     clicked(e, index)
   }
 
+  function onScroll({top, left}) {
+    dispatch(Slice.setScrollPosition({top, left}))
+  }
+
+  const safeOnScroll = useMemo(
+    () => debounce(onScroll, 250, {trailing: true, leading: false}),
+    []
+  )
+
+  const initialScrollPosition = useMemo(
+    () => select(Slice.getScrollPosition),
+    []
+  )
+
   return (
     <Inspector
+      initialScrollPosition={initialScrollPosition}
+      onScroll={safeOnScroll}
       innerRef={parentRef}
       isExpanded={useCallback(isExpanded, [expanded, defaultExpanded])}
       setExpanded={useCallback(setExpanded, [])}

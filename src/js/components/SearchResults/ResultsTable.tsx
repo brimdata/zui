@@ -97,15 +97,6 @@ export default function ResultsTable(props: Props) {
     }
   }
 
-  function onScroll({top, left}) {
-    dispatch(Viewer.setScroll({y: top, x: left}))
-  }
-
-  const safeOnScroll = useMemo(
-    () => debounce(onScroll, 250, {trailing: true, leading: false}),
-    []
-  )
-
   function renderEnd() {
     if (isIncomplete || isFetching) return null
     else
@@ -116,6 +107,15 @@ export default function ResultsTable(props: Props) {
         </p>
       )
   }
+
+  function onScroll({top, left}) {
+    dispatch(Viewer.setScroll({y: top, x: left}))
+  }
+
+  const safeOnScroll = useMemo(
+    () => debounce(onScroll, 250, {trailing: true, leading: false}),
+    []
+  )
 
   if (isEmpty(logs) && isFetching) return null
   if (isEmpty(logs)) return <NoResults width={props.width} />

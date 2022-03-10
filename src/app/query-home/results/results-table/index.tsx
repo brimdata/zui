@@ -1,4 +1,4 @@
-import {isEmpty} from "lodash"
+import {debounce, isEmpty} from "lodash"
 import React, {useEffect, useMemo} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
@@ -107,11 +107,21 @@ const ResultsTable = (props: Props) => {
       )
   }
 
+  function onScroll({top, left}) {
+    dispatch(Viewer.setScroll({y: top, x: left}))
+  }
+
+  const safeOnScroll = useMemo(
+    () => debounce(onScroll, 250, {trailing: true, leading: false}),
+    []
+  )
+
   if (isEmpty(logs) && isFetching) return null
   if (isEmpty(logs)) return <NoResults width={props.width} />
 
   return (
     <ViewerComponent
+      onScroll={safeOnScroll}
       innerRef={parentRef}
       logs={logs}
       renderRow={renderRow}

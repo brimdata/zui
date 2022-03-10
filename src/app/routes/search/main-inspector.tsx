@@ -80,13 +80,13 @@ export function MainInspector(props: {
   return (
     <Inspector
       initialScrollPosition={initialScrollPosition}
+      onScroll={safeOnScroll}
       innerRef={parentRef}
       isExpanded={useCallback(isExpanded, [expanded, defaultExpanded])}
       setExpanded={useCallback(setExpanded, [])}
       loadMore={useCallback(loadMore, [])}
       onContextMenu={useCallback(onContextMenu, [])}
       onClick={useCallback(onClick, [])}
-      onScroll={safeOnScroll}
       {...props}
     />
   )
