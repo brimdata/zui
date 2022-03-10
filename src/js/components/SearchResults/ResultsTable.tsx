@@ -103,7 +103,6 @@ export default function ResultsTable(props: Props) {
       return (
         <p className="end-message" style={endMessage(dimens)}>
           {getEndMessage(program, logs.length)}
-          message
         </p>
       )
   }
