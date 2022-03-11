@@ -93,10 +93,6 @@ const PoolHome = () => {
           <dt>Timestamp </dt>
           <dd>{pool.data.ts.toLocaleString()}</dd>
         </dl>
-        <dl>
-          <dt>Branches </dt>
-          <dd>main</dd>
-        </dl>
         <p></p>
       </Body>
     </div>
