@@ -5,6 +5,7 @@ const pool1 = (): PoolState => ({
   data: {
     id: "1",
     name: "default",
+    ts: new Date(0),
     layout: {
       order: "asc",
       keys: [["ts"]]

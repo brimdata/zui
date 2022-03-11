@@ -3,6 +3,7 @@ import {MenuItemConstructorOptions} from "electron/main"
 import React from "react"
 import Button from "./button"
 import Label from "./label"
+import styled from "styled-components"
 
 export function toMenu(
   actions: ActionButtonProps[]
@@ -25,9 +26,16 @@ export type ActionButtonProps = {
   buttonProps?: object
 }
 
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 0;
+`
+
 const ActionButton = (props: ActionButtonProps) => {
   return (
-    <div title={props.title}>
+    <Wrap title={props.title}>
       <Button
         aria-label={props.label}
         onClick={props.click}
@@ -37,7 +45,7 @@ const ActionButton = (props: ActionButtonProps) => {
         {...props.buttonProps}
       />
       {props.label && <Label isDisabled={props.disabled}>{props.label}</Label>}
-    </div>
+    </Wrap>
   )
 }
 
