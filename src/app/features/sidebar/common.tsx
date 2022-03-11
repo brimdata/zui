@@ -1,8 +1,6 @@
-import React, {useLayoutEffect, useRef} from "react"
-import DropdownArrow from "src/js/icons/DropdownArrow"
+import React from "react"
 import {cssVar, transparentize} from "polished"
 import styled, {keyframes} from "styled-components"
-import useOutsideClick from "src/js/components/hooks/useOutsideClick"
 import Icon from "src/app/core/icon-temp"
 
 export const StyledSection = styled.section`
@@ -29,40 +27,6 @@ export const SectionContents = styled.div`
     height: 1px;
     box-shadow: inset 0 0.5px 0 0 var(--aqua);
     opacity: 0.12;
-  }
-`
-
-export const StyledArrow = styled(DropdownArrow)`
-  stroke: var(--aqua);
-  opacity: 0.3;
-  width: 8px;
-  height: 8px;
-  display: block;
-  margin-left: 12px;
-  transform: ${(props) => (props.show ? `rotate(0deg)` : "rotate(-90deg)")};
-`
-
-export const StyledItem = styled.a`
-  ${(p) => p.theme.typography.labelNormal}
-  line-height: 16px;
-  -webkit-user-drag: none;
-  color: var(--aqua);
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  flex: 1;
-  width: 100%;
-  cursor: default;
-  border-radius: 6px;
-  margin: 0 10px;
-  padding: 6px 26px 6px 16px;
-
-  &:hover {
-    background: var(--sidebar-item-hover);
-  }
-
-  &:active {
-    background: var(--sidebar-item-active);
   }
 `
 
@@ -94,54 +58,6 @@ const DropBG = styled.div`
   ${(p) => p.theme.typography.headingSection}
 `
 
-export const ItemBG = styled.div`
-  height: 24px;
-  font-family: system-ui;
-  font-weight: 400;
-  font-size: 11px;
-  line-height: 24px;
-  color: var(--aqua);
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  cursor: default;
-  user-select: none;
-  outline: none;
-
-  &.isOverFolder {
-    background-color: hsla(0 0% 0% / 0.06);
-  }
-
-  &.isDragging:not(.isSelected) {
-    background-color: inherit;
-  }
-`
-
-export const Name = styled.p`
-  margin: 0;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  user-select: none;
-  flex: 1;
-`
-
-export const Input = styled.input`
-  font-size: 11px;
-  font-family: system-ui;
-  font-weight: 400;
-  line-height: 24px;
-  color: var(--aqua);
-  padding: 0 3px;
-  border: 1px solid var(--havelock);
-  height: 19px;
-  outline: none;
-  border-radius: 2px;
-  margin: 0 2px 0 -4px;
-  width: 100%;
-  flex: 1;
-`
-
 const DropMessage = styled.p`
   animation: updown 1200ms ease-in-out infinite alternate;
 `
@@ -159,26 +75,6 @@ export const DropOverlay = (props: {
   } else {
     return null
   }
-}
-
-export const Rename = ({item, onSubmit}) => {
-  const input = useRef(null)
-  useLayoutEffect(() => input.current && input.current.select(), [])
-  useOutsideClick(input, () => onSubmit(input.current.value))
-  const onKey = (e) => {
-    if (e.key === "Enter") onSubmit(input.current.value)
-    else if (e.key === "Escape") onSubmit(item.name)
-  }
-
-  return (
-    <Input
-      ref={input}
-      onKeyDown={onKey}
-      type="text"
-      autoFocus
-      defaultValue={item.name}
-    />
-  )
 }
 
 export const SectionToolbar = styled.div`

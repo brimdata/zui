@@ -1,60 +1,19 @@
 import React from "react"
-import {useDispatch, useSelector} from "react-redux"
-import Current from "src/js/state/Current"
-import {ItemBG, StyledItem, Name} from "../common"
-import classNames from "classnames"
-import styled from "styled-components"
-import Icon from "src/app/core/icon-temp"
-import {isEmpty} from "lodash"
-import {SearchRecord} from "src/js/types"
-import Search from "src/js/state/Search"
-import Investigation from "src/js/state/Investigation"
 import * as remote from "@electron/remote"
-import {showContextMenu} from "src/js/lib/System"
 import {MenuItemConstructorOptions} from "electron"
+import {useDispatch, useSelector} from "react-redux"
+import Icon from "src/app/core/icon-temp"
 import submitSearch from "src/app/query-home/flows/submit-search"
+import {showContextMenu} from "src/js/lib/System"
+import Current from "src/js/state/Current"
+import Investigation from "src/js/state/Investigation"
+import Search from "src/js/state/Search"
+import styled from "styled-components"
+import {Item} from "../item"
 
 const HistoryIcon = styled(Icon).attrs({name: "query"})``
-const StyledHistoryItem = styled(StyledItem)`
-  text-overflow: ellipsis;
-  ${HistoryIcon} > svg {
-    margin-right: 8px;
-    width: 14px;
-    height: 14px;
-    fill: var(--slate)};
-  }
-`
 
-type Props = {search: SearchRecord}
-
-const Pin = styled.span`
-  color: white;
-  background: var(--green);
-  border-radius: 3px;
-  flex-shrink: 0;
-  margin-right: 6px;
-  padding: 2px 6px;
-`
-
-const StyledName = styled(Name)`
-  overflow: inherit;
-  overflow-x: ${"clip"};
-`
-
-const HistoryEntry = ({search}: Props) => {
-  if (isEmpty(search.pins) && isEmpty(search.program)) return <p>*</p>
-
-  return (
-    <StyledName>
-      {search.pins.map((text, i) => (
-        <Pin key={i}>{text}</Pin>
-      ))}
-      <span>{search.program}</span>
-    </StyledName>
-  )
-}
-
-const LinearHistoryItem = ({innerRef, styles, data: historyItem, state}) => {
+const LinearHistoryItem = ({styles, data: historyItem}) => {
   const dispatch = useDispatch()
   const lakeId = useSelector(Current.getLakeId)
   const poolId = useSelector(Current.getPoolId)
@@ -91,19 +50,13 @@ const LinearHistoryItem = ({innerRef, styles, data: historyItem, state}) => {
   ]
 
   return (
-    <ItemBG
-      tabIndex={0}
-      ref={innerRef}
+    <Item
       style={styles.row}
-      className={classNames(state)}
+      text={historyItem.search.program}
+      icon={<HistoryIcon />}
       onClick={onClick}
       onContextMenu={() => showContextMenu(ctxMenu)}
-    >
-      <StyledHistoryItem>
-        <HistoryIcon />
-        <HistoryEntry search={historyItem.search} />
-      </StyledHistoryItem>
-    </ItemBG>
+    />
   )
 }
 

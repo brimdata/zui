@@ -26,10 +26,12 @@ function detectInputType() {
     el.classList.add("using-mouse")
     el.classList.remove("using-keyboard")
   })
-  document.addEventListener("keydown", () => {
+  document.addEventListener("keydown", (e) => {
     const el = document.body
     if (!el) return
-    el.classList.add("using-keyboard")
-    el.classList.remove("using-mouse")
+    if (e.key === "Tab") {
+      el.classList.add("using-keyboard")
+      el.classList.remove("using-mouse")
+    }
   })
 }

@@ -9,12 +9,8 @@ import HistorySection from "./history-section"
 import {XLeftPaneExpander} from "./left-pane-expander"
 import PoolsSection from "./pools-section"
 import QueriesSection from "./queries-section"
-import Icon from "src/app/core/icon-temp"
-import {ItemBG, Name, StyledItem} from "./common"
-import {useSectionTreeDefaults} from "./hooks"
-import classNames from "classnames"
-import {Tree} from "react-arborist"
 import Header from "./header"
+import {Menu} from "./menu"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -25,55 +21,9 @@ const EmptyText = styled.div`
 `
 
 export const StyledMenu = styled.menu`
-  height: 110px;
   margin: 0 0 6px;
   padding: 0;
 `
-
-const StyledListItem = styled(StyledItem)<{isSelected: boolean}>`
-  text-transform: capitalize;
-  user-select: none;
-  ${({isSelected}) =>
-    isSelected &&
-    `
-  outline: none;
-  background-color: var(--sidebar-item-active);
-  &:hover {
-    background-color: var(--sidebar-item-active);
-  }
-  `}
-
-  svg {
-    margin-right: 8px;
-    width: 14px;
-    height: 14px;
-
-    path {
-      fill: rgba(0, 0, 0, 0.5);
-    }
-  }
-`
-
-const SidebarItem = ({innerRef, styles, data, state}) => {
-  const dispatch = useDispatch()
-  const currentSectionName = useSelector(Appearance.getCurrentSectionName)
-  const {icon, name} = data
-  const isCurrent = name === currentSectionName
-  return (
-    <ItemBG
-      tabIndex={0}
-      ref={innerRef}
-      style={styles.row}
-      className={classNames(state)}
-      onClick={() => dispatch(Appearance.setCurrentSectionName(name))}
-    >
-      <StyledListItem isSelected={isCurrent}>
-        {icon}
-        <Name>{name}</Name>
-      </StyledListItem>
-    </ItemBG>
-  )
-}
 
 const SectionContentSwitch = ({sectionName}) => {
   switch (sectionName) {
@@ -88,24 +38,6 @@ const SectionContentSwitch = ({sectionName}) => {
   }
 }
 
-const sectionListItems = {
-  id: "root",
-  items: [
-    {
-      name: "pools",
-      icon: <Icon name="pool" />
-    },
-    {
-      name: "queries",
-      icon: <Icon name="doc-plain" />
-    },
-    {
-      name: "history",
-      icon: <Icon name="history" />
-    }
-  ]
-}
-
 const StyledPane = styled(Pane)`
   background: var(--sidebar-background);
   overflow-x: unset;
@@ -115,7 +47,6 @@ export function Sidebar() {
   const dispatch = useDispatch()
   const isOpen = useSelector(Appearance.sidebarIsOpen)
   const width = useSelector(Appearance.sidebarWidth)
-  const {resizeRef, defaults} = useSectionTreeDefaults()
   const currentSectionName = useSelector(Appearance.getCurrentSectionName)
   const l = useSelector(Current.getLake)
 
@@ -141,11 +72,7 @@ export function Sidebar() {
       ) : (
         <>
           <Header />
-          <StyledMenu ref={resizeRef}>
-            <Tree {...defaults} data={sectionListItems}>
-              {SidebarItem}
-            </Tree>
-          </StyledMenu>
+          <Menu />
           <SectionContentSwitch sectionName={currentSectionName} />
         </>
       )}
