@@ -6,7 +6,10 @@ import {zed} from "@brimdata/zealot"
 
 export function open(view: ContainerView) {
   return (
-    <span key="open-token" className="zed-syntax">
+    <span
+      key={"open-token-" + view.args.indexPath.join(",")}
+      className="zed-syntax"
+    >
       {view.openToken()}
     </span>
   )
@@ -14,7 +17,10 @@ export function open(view: ContainerView) {
 
 export function close(view: ContainerView) {
   return (
-    <span key="close-token" className="zed-syntax">
+    <span
+      key={"close-token-" + view.args.indexPath.join(",")}
+      className="zed-syntax"
+    >
       {view.closeToken()}
     </span>
   )
@@ -39,7 +45,7 @@ export function anchor(view: ContainerView, children: ReactElement[]) {
 export function name(view: ContainerView) {
   return (
     <span
-      key="name"
+      key={"view" + view.name()}
       className={classNames("zed-container", {
         "zed-type": zed.isType(view.args.value),
         "zed-error": view.args.value instanceof zed.Error

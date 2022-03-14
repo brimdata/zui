@@ -5,15 +5,11 @@ const slice = createSlice({
   name: "TAB_INSPECTOR",
   initialState: {
     rows: [] as RowData[],
-    scrollTop: 0,
-    maxVisibleRowIndex: 0,
-    expanded: new Map<any, any>(),
-    defaultExpanded: false
+    expanded: new Map<string, boolean>(),
+    defaultExpanded: false,
+    scrollPosition: {top: 0, left: 0}
   },
   reducers: {
-    setMaxVisibleRowIndex: (s, a: PayloadAction<number>) => {
-      s.maxVisibleRowIndex = a.payload
-    },
     appendRows: (s, a: PayloadAction<RowData[]>) => {
       s.rows = s.rows.concat(a.payload)
     },
@@ -29,16 +25,14 @@ const slice = createSlice({
       s.defaultExpanded = a.payload
       s.rows = []
     },
-    setScrollTop: (s, a: PayloadAction<number>) => {
-      s.scrollTop = a.payload
+    setScrollPosition: (s, a: PayloadAction<{top: number; left: number}>) => {
+      s.scrollPosition = a.payload
     }
   },
   extraReducers: (builder) => {
     builder.addCase("VIEWER_CLEAR", (s) => {
       s.rows = []
-      s.maxVisibleRowIndex = 0
-      s.scrollTop = 0
-      s.expanded = new Map<any, any>()
+      s.expanded = new Map<string, boolean>()
     })
   }
 })

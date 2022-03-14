@@ -3,12 +3,13 @@ import useSelect from "src/app/core/hooks/use-select"
 import {Inspector} from "src/app/features/inspector/inspector"
 import nextPageViewerSearch from "src/app/search/flows/next-page-viewer-search"
 import searchFieldContextMenu from "src/ppl/menus/searchFieldContextMenu"
-import React, {MouseEvent, useCallback} from "react"
+import React, {MouseEvent, useCallback, useMemo} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {useRowSelection} from "src/js/components/SearchResults/selection"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
 import Viewer from "src/js/state/Viewer"
+import {debounce} from "lodash"
 
 export function MainInspector(props: {
   height: number
@@ -62,8 +63,24 @@ export function MainInspector(props: {
     clicked(e, index)
   }
 
+  function onScroll({top, left}) {
+    dispatch(Slice.setScrollPosition({top, left}))
+  }
+
+  const safeOnScroll = useMemo(
+    () => debounce(onScroll, 250, {trailing: true, leading: false}),
+    []
+  )
+
+  const initialScrollPosition = useMemo(
+    () => select(Slice.getScrollPosition),
+    []
+  )
+
   return (
     <Inspector
+      initialScrollPosition={initialScrollPosition}
+      onScroll={safeOnScroll}
       innerRef={parentRef}
       isExpanded={useCallback(isExpanded, [expanded, defaultExpanded])}
       setExpanded={useCallback(setExpanded, [])}

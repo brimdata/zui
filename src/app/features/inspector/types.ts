@@ -22,6 +22,8 @@ export type InspectorProps = {
   onClick?: InspectorMouseEvent
   loadMore?: Function
   innerRef?: React.Ref<any>
+  onScroll?: (props: {top: number; left: number}) => void
+  initialScrollPosition?: {top: number; left: number}
 }
 
 export type InspectArgs = {
