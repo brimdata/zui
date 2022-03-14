@@ -26,7 +26,6 @@ const Subtitle = styled.p`
   font-size: 13px;
   opacity: 0.5;
   margin: 0;
-  font-family: var(--mono-font);
 `
 
 const Body = styled.section`
