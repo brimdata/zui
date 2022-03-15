@@ -39,18 +39,15 @@ ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tr
 show examples with the [Zed CLI tools](https://github.com/brimdata/zed#quick-start)
 that specify these inputs as named files or pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/zed/README.md).
 
-Brim release `v0.25.0` introduced initial support for storing data in Zed Lakes.
-However, due to a current limitation ([brim/1618](https://github.com/brimdata/brim/issues/1618)),
-Zed queries issued from within Brim cannot yet access multiple pools
-simultaneously. Instead such queries are currently limited to accessing the
-data from whichever pool is currently selected from the **Pools** list.
+The `join` operator is still experimental and has somewhat hard-to-use syntax,
+though this should be improved soon in a subsequent release.
+The easiest way to join data within Brim is to join two subsets of data
+from the same pool using `switch` to define the parent streams for
+input into the join.
 
-// TODO 
-Because of this limitation, the [streamed input example](https://github.com/brimdata/zed/tree/main/docs/language/operators.md#example-5---streamed-input)
-is the only one shown that can currently be executed as is from within Brim.
-If the example `fruit.ndjson` and `people.ndjson` are already present in a
+In this example, `fruit.ndjson` and `people.ndjson` are already present in a
 single pool (such as if concatenated into a single file and dragged into the
-app), we can see the same query output as shown in the doc.
+app), and we can see the same query output as shown in the doc:
 
 ![Streamed Join Example](media/Join-Streamed.png)
 
