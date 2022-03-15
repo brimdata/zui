@@ -20,6 +20,7 @@ import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
 import ToolbarButton from "../../toolbar/button"
 import SpaceMigrator from "./space-migrator"
+import links from "src/app/core/links"
 
 let src
 let dst
@@ -130,11 +131,7 @@ function Modal({onClose}) {
         <Link href="https://github.com/brimdata/brim/wiki/Migration-of-Spaces">
           migration tool
         </Link>{" "}
-        and the{" "}
-        <Link href="https://github.com/brimdata/zed/blob/main/docs/lake/README.md">
-          Zed Lake design
-        </Link>
-        .
+        and the <Link href={links.ZED_DOCS_ROOT}>Zed Lake design</Link>.
       </p>
       <Footer>
         <ButtonGroup>

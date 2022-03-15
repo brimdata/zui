@@ -19,4 +19,4 @@ the "More Info" link in the SmartScreen popup and verify that the installer is
 signed by `Brim Security, Inc.`.
 
 We recommend this blog post if you'd like more info on Windows code signing:
-https://support.sectigo.com/Com_KnowledgeDetailPageFaq?Id=kA01N000000zFJx
+https://sectigo.com/faqs/detail/MS-SmartScreen-and-Application-Reputation/kA01N000000zFJx

@@ -7,6 +7,7 @@ import electronIsDev from "../isDev"
 import {encodeSessionState} from "../tron/session-state"
 import {BrimMain} from "../brim"
 import env from "src/app/core/env"
+import links from "src/app/core/links"
 
 export default function(
   send: Function,
@@ -203,9 +204,7 @@ export default function(
       {
         label: "Zed Syntax Docs",
         click() {
-          shell.openExternal(
-            "https://github.com/brimdata/zed/tree/main/docs/language"
-          )
+          shell.openExternal(links.ZED_DOCS_LANGUAGE)
         }
       },
       {

@@ -45,12 +45,12 @@ As you can see below, there've been many changes since the last Brim GA release!
   introduction of Zed lakes causes no immediate change to your favorite Brim
   workflows, they unlock powerful new functionality that will be revealed in
   Brim going forward, including Git-like branching. See the
-  [Zed lake README](https://github.com/brimdata/zed/blob/main/docs/lake/README.md)
+  [Zed lake README](https://github.com/brimdata/zed/blob/main/docs/zed/README.md)
   for details.
 * Enhancements have been made to the Zed language to unify search and
   expression syntax, introduce new operators and functions for data
   exploration and shaping, and more! Review the
-  [Zed language docs](https://github.com/brimdata/zed/blob/main/docs/language/README.md)
+  [Zed language docs](https://github.com/brimdata/zed/blob/main/docs/zq/language.md)
   for details.
 * pcap processing is now handled by a separate, new component
   called Brimcap. Your favorite pcap workflows in Brim have not changed, but
@@ -94,7 +94,7 @@ particular we'd like to bring to your attention first.
   saved custom entries to the Query Library, you'll need to change these
   yourself. Some key changes include `:=` now being used for assignment, `==`
   for equality comparisons, and string values
-  must now be quoted in [field/value](https://github.com/brimdata/zed/tree/main/docs/language/search-syntax.md#fieldvalue-match) matches.
+  must now be quoted in [field/value](https://github.com/brimdata/zed/blob/main/docs/zq/language.md#search-expressions) matches.
 
 The exhaustive set of changes is listed below. Come talk to us on
 [Slack](https://www.brimdata.io/join-slack/) if you have additional
@@ -325,7 +325,7 @@ as usual.
 * Fix an issue where opening/closing a Log Detail window during pcap import canceled the import (#1015)
 * Sort field names in the column chooser alphabetically (#1012)
 * Add a search tool in the column chooser to find field names (#1012)
-* Fix an issue where clicking a link to [ZQL docs](https://github.com/brimdata/zed/tree/main/docs/language) opened an unusable window (#1030)
+* Fix an issue where clicking a link to [ZQL docs](https://github.com/brimdata/zed/blob/main/docs/zq/language.md) opened an unusable window (#1030)
 * Expand the [wiki docs](https://github.com/brimdata/brim/wiki/Troubleshooting#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open) for troubleshooting pcap extraction issues (#1020)
 * Fix an issue where the Packets button was not activating after scrolling down in the main events view (#1027)
 * Add the ability to connect Brim to a remote `zqd` (#1007)
