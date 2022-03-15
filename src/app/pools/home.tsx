@@ -35,8 +35,6 @@ const Body = styled.section`
     margin-bottom: 6px;
     opacity: 0.6;
   }
-  dl {
-  }
   dt {
     font-weight: bold;
   }
@@ -92,7 +90,6 @@ const PoolHome = () => {
           <dt>Timestamp </dt>
           <dd>{pool.data.ts.toLocaleString()}</dd>
         </dl>
-        <p></p>
       </Body>
     </div>
   )

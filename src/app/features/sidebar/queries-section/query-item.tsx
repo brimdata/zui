@@ -1,64 +1,26 @@
-import classNames from "classnames"
 import React from "react"
 import styled from "styled-components"
 import Current from "src/js/state/Current"
 import {showContextMenu} from "src/js/lib/System"
-import {StyledArrow, Name, ItemBG, Rename, StyledItem} from "../common"
 import Icon from "src/app/core/icon-temp"
 import {useQueryItemMenu} from "../hooks"
 import {lakeQueryPath} from "src/app/router/utils/paths"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Tabs from "src/js/state/Tabs"
+import {Item} from "../item"
+import {NodeRendererProps} from "react-arborist/dist/lib/types"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
 const QueryIcon = styled(Icon).attrs({name: "doc-plain"})``
 
-const GroupArrow = styled(StyledArrow)`
-  visibility: ${(props) => (props.isVisible ? "visible" : "hidden")};
-  margin: 0 6px 0 3px;
-  opacity: 1;
-  width: 8px;
-  height: 8px;
-`
-
-const StyledQueryItem = styled(StyledItem)<{isSelected: boolean}>`
-  ${({isSelected}) =>
-    isSelected &&
-    `
-  outline: none;
-  color: white;
-  background: var(--primary-color);
-  &:hover {
-    background: var(--primary-color);
-  }
-  `} 
-  ${GroupArrow} {
-    stroke: ${(p) => (p.isSelected ? "white" : "rgba(0, 0, 0, 0.7)")};
-  }
-
-  ${FolderIcon} > svg, ${QueryIcon} > svg {
-      margin-right: 8px;
-      width: 14px;
-      height: 14px;
-      path {
-        fill: ${(p) => (p.isSelected ? "white" : "rgba(0, 0, 0, 0.5)")};
-      }
-  }
-
-  ${Name} {
-    color: ${(p) => (p.isSelected ? "white" : "black")};
-  }
-`
-
 export default function QueryItem({
-  innerRef,
   styles,
   data,
   state,
   handlers,
   tree
-}) {
+}: NodeRendererProps<any>) {
   const {isEditing, isSelected} = state
   const {id} = data
   const isGroup = "items" in data
@@ -72,7 +34,7 @@ export default function QueryItem({
   }
 
   const onItemClick = (e: React.MouseEvent) => {
-    handlers.select(e, false)
+    handlers.select(e, true)
     if (!e.metaKey && !e.shiftKey) {
       dispatch(Tabs.activateByUrl(lakeQueryPath(id, lakeId, {isDraft: false})))
     }
@@ -81,30 +43,19 @@ export default function QueryItem({
   const itemIcon = isGroup ? <FolderIcon /> : <QueryIcon />
 
   return (
-    <ItemBG
-      tabIndex={0}
-      ref={innerRef}
-      style={styles.row}
-      className={classNames(state)}
-      onClick={onItemClick}
+    <Item
+      icon={itemIcon}
+      text={data.name}
+      onClick={isGroup ? onGroupClick : onItemClick}
       onContextMenu={() => showContextMenu(ctxMenu)}
-    >
-      <StyledQueryItem
-        isSelected={isSelected || query?.id === id}
-        style={styles.indent}
-      >
-        <GroupArrow
-          isVisible={isGroup}
-          show={data.isOpen}
-          onClick={onGroupClick}
-        />
-        {itemIcon}
-        {isEditing ? (
-          <Rename item={data} onSubmit={handlers.submit} />
-        ) : (
-          <Name>{data.name}</Name>
-        )}
-      </StyledQueryItem>
-    </ItemBG>
+      style={styles.row}
+      indentStyle={styles.indent}
+      isSelected={isSelected || query?.id == id}
+      isSelectedStart={state.isFirstOfSelected}
+      isSelectedEnd={state.isLastOfSelected}
+      isFolder={isGroup}
+      isOpen={state.isOpen}
+      isEditing={isEditing}
+    />
   )
 }
