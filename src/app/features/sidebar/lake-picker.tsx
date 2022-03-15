@@ -27,12 +27,17 @@ const LakeNameGroup = styled.div`
 
   &:hover {
     background: rgba(0, 0, 0, 0.04);
+
+    svg {
+      opacity: 0.5;
+    }
   }
 
   svg {
+    opacity: 0;
     height: 8px;
     width: 8px;
-    stroke: var(--slate);
+    stroke: var(--foreground-color);
     margin-left: 6px;
   }
 `
@@ -44,12 +49,14 @@ const NameColumn = styled.div`
   justify-content: space-between;
 
   label {
-    ${(props) => props.theme.typography.labelBold};
-    color: var(--aqua);
+    font-size: 14px;
+    font-weight: bold;
   }
   label:last-child {
-    ${(props) => props.theme.typography.labelSmall};
-    color: var(--lead);
+    font-size: 13px;
+    font-weight: normal;
+    font-family: var(--moo-font);
+    opacity: 0.5;
   }
 `
 

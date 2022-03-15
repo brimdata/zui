@@ -41,6 +41,7 @@ export interface PoolConfig {
   name: string
   id: string
   layout: Layout
+  ts: Date
 }
 
 export interface PoolStats {

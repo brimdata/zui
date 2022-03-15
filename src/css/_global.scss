@@ -1,27 +1,35 @@
-* {
+*, *::before, *::after {
   box-sizing: border-box;
+}
+
+* {
+  margin: 0;
 }
 
 html,
 body {
-  font-family: $body-font;
-  color: var(--aqua);
-  margin: 0;
   height: 100%;
   width: 100%;
-  background-color: white;
-  font-feature-settings: "ss03";
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: $heading-font;
-  margin-top: 0;
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--body-font);
+  color: var(--foreground-color);
+  background-color: var(--background-color);
+  font-size: 13px;
 }
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+
 
 pre,
 code {
