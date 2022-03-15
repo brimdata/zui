@@ -1,5 +1,5 @@
 import React from "react"
-import QueryPageTitle from "./query-page-title"
+import QueryPageHeader from "./query-page-header"
 import styled from "styled-components"
 import {ActionButtonProps} from "./action-button"
 import {GUTTER} from "./action-buttons"
@@ -16,16 +16,15 @@ const Row = styled.div`
 `
 
 const Left = styled.div`
-  overflow: hidden;
-  min-width: 150px;
+  min-width: 200px;
   flex: 1 1 0;
   margin-right: 12px;
   align-items: center;
 `
 
 const Right = styled.div`
-  padding-top: 2px; // for the outline state to not get clipped
   overflow: hidden;
+  padding-top: 2px; // for the outline state to not get clipped
   display: flex;
   flex: 0 1 auto;
   width: min-content;
@@ -47,7 +46,7 @@ const Toolbar = ({actions}: Props) => {
     <Wrap>
       <Row>
         <Left>
-          <QueryPageTitle />
+          <QueryPageHeader />
         </Left>
         <Right>
           <Actions actions={actions} />
