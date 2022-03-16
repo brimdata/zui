@@ -9,18 +9,19 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Tabs from "src/js/state/Tabs"
 import {Item} from "../item"
-import {NodeRendererProps} from "react-arborist/dist/lib/types"
+import {NodeRenderer} from "react-arborist"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
 const QueryIcon = styled(Icon).attrs({name: "doc-plain"})``
 
-export default function QueryItem({
+const QueryItem: NodeRenderer<any> = ({
+  innerRef,
   styles,
   data,
   state,
   handlers,
   tree
-}: NodeRendererProps<any>) {
+}) => {
   const {isEditing, isSelected} = state
   const {id} = data
   const isGroup = "items" in data
@@ -44,6 +45,7 @@ export default function QueryItem({
 
   return (
     <Item
+      innerRef={innerRef}
       icon={itemIcon}
       text={data.name}
       onClick={isGroup ? onGroupClick : onItemClick}
@@ -59,3 +61,5 @@ export default function QueryItem({
     />
   )
 }
+
+export default QueryItem

@@ -3,6 +3,7 @@ import {isNumber, isUndefined} from "lodash"
 import React, {
   MouseEventHandler,
   ReactNode,
+  Ref,
   useLayoutEffect,
   useRef
 } from "react"
@@ -196,11 +197,12 @@ type ItemProps = {
   isFolder?: boolean
   isOpen?: boolean
   isEditing?: boolean
+  innerRef?: Ref<HTMLDivElement>
 }
 
 export function Item(props: ItemProps) {
   return (
-    <Container tabIndex={0} style={props.style}>
+    <Container tabIndex={0} style={props.style} ref={props.innerRef}>
       <BG
         aria-selected={props.isSelected}
         className={getClassNames(props)}
