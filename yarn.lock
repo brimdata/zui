@@ -3394,12 +3394,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^16.9.8":
-  version: 16.9.8
-  resolution: "@types/react-dom@npm:16.9.8"
+"@types/react-dom@npm:^17.0.2":
+  version: 17.0.13
+  resolution: "@types/react-dom@npm:17.0.13"
   dependencies:
     "@types/react": "*"
-  checksum: eef9f4ef0c297dd621fc4ab9aa7100ad7d7ccb4a1b8ec04170779b131aa9ea50d76a9ee9cd052cba6ef8389da7e8e8ab718e29fb6662a37d74862794a42094ec
+  checksum: 62c42a54ac8961c23a0e74b9cdd8b0a78563757e462b1ab665b2aa365bfd8b86a73d3f6eafc09a4a80fb08659321db168f012aa597c41c0df36f645a94e9266b
   languageName: node
   linkType: hard
 
@@ -3464,13 +3464,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^16.9.49":
+"@types/react@npm:*":
   version: 16.9.49
   resolution: "@types/react@npm:16.9.49"
   dependencies:
     "@types/prop-types": "*"
     csstype: ^3.0.2
   checksum: e69493838c7395c2d8af70c307dc2571d603153095d7406a71282352f561c6c50403a32140d41eb1f03bedc0716f55f120d826b3fd621a4e2f0d47a3e55541ff
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:^17.0.2":
+  version: 17.0.40
+  resolution: "@types/react@npm:17.0.40"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 24d1b210b5bf3c7d49f9a7fe5490db02e005a1d989045a2d67528347557dd0bcb0d7bcf96088152697e97521ac4c9506d1357ee48a2b7d4e701c70d838dc7284
   languageName: node
   linkType: hard
 
@@ -3489,6 +3500,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: e99fc7cc6265407987b30deda54c1c24bb1478803faf6037557a774b2f034c5b097ffd65847daa87e82a61a250d919f35c3588654b0fdaa816906650f596d1b0
+  languageName: node
+  linkType: hard
+
+"@types/scheduler@npm:*":
+  version: 0.16.2
+  resolution: "@types/scheduler@npm:0.16.2"
+  checksum: b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
   languageName: node
   linkType: hard
 
@@ -4977,9 +4995,9 @@ __metadata:
     "@types/mousetrap": ^1.6.3
     "@types/node-fetch": ^3.0.3
     "@types/prismjs": ^1.16.1
-    "@types/react": ^16.9.49
+    "@types/react": ^17.0.2
     "@types/react-beautiful-dnd": ^13.0.0
-    "@types/react-dom": ^16.9.8
+    "@types/react-dom": ^17.0.2
     "@types/react-redux": ^7.1.9
     "@types/react-router": ^5.1.11
     "@types/react-transition-group": ^4.4.0
@@ -5054,7 +5072,7 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^17.0.2
-    react-arborist: ^0.2.0
+    react-arborist: ^1.0.0
     react-dnd: ^14.0.4
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^17.0.2
@@ -14498,9 +14516,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "react-arborist@npm:0.2.0"
+"react-arborist@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "react-arborist@npm:1.0.0"
   dependencies:
     memoize-one: ^6.0.0
     react-dnd: ^14.0.3
@@ -14509,7 +14527,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: 24f2c8b175774dc812856f911177ba32647781457ff9923d6894329549935f1b6b9d0584b5e061d299b08347291aa81cf8346c1ad9c28a28ce27d5f9b5f6a8f8
+  checksum: 9d677f57272dc6519442330fb9fd6f3db33c4e11c72760e796b8dc08a6bf60384c11fba84d0557aeff34d0a96219af1c0ae089b402b1c2bc39064f5398e1d7ad
   languageName: node
   linkType: hard
 

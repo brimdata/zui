@@ -26,7 +26,10 @@ const MenuItem = (props: {
       onClick={() => dispatch(Appearance.setCurrentSectionName(name))}
       icon={icon}
       text={text}
-      isSelected={isCurrent}
+      // @ts-ignore
+      state={{isSelected: isCurrent}}
+      // @ts-ignore
+      styles={{}}
     />
   )
 }

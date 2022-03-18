@@ -27,7 +27,7 @@ export const useSectionTreeDefaults = () => {
   return {
     resizeRef: ref,
     defaults: {
-      indent: 8,
+      indent: 16,
       getChildren: "items",
       isOpen: "isOpen",
       rowHeight: 28,

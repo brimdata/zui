@@ -14,7 +14,7 @@ export default {
     type: "$QUERIES_SET_ALL",
     rootGroup
   }),
-  addItem: (item: Item, parentGroupId: string): QUERIES_ADD_ITEM => ({
+  addItem: (item: Item, parentGroupId = "root"): QUERIES_ADD_ITEM => ({
     type: "$QUERIES_ADD_ITEM",
     item,
     parentGroupId
