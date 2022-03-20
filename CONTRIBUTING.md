@@ -9,7 +9,8 @@ Per common practice, please [open an issue](https://github.com/brimdata/brim/wik
 Install these dependencies:
 
 1. [Node](https://nodejs.org/en/download/package-manager/) - the version specified in the `.node-version` file at the root folder.
-2. [Go](https://go.dev/doc/install) - to compile some Zed dependencies.
+2. [Yarn](https://yarnpkg.com/) - a package manager for installing dependencies and starting Brim in dev mode.
+3. [Go](https://go.dev/doc/install) - to compile some Zed dependencies.
 
 Then clone the repo, install the node modules, and start the app.
 
@@ -76,7 +77,7 @@ We use [Jest Projects](https://jestjs.io/docs/configuration#projects-arraystring
 
 ## Unit Tests
 
-Unit tests go right next to file they are testing with a `.test.js` suffix.
+Unit tests go right next to the file they are testing with a `.test.js` suffix.
 
 There are several ways to run unit tests.
 
@@ -95,7 +96,7 @@ System tests sit between unit tests and integration tests. To create one, instan
 const system = new SystemTest("name-of-test")
 ```
 
-This will run the electron main process entry point, `main.js`, which spins up a local zed lake. You then mount the root `<App />` component into the JSDOM testing environment and begin to simulate a user clicking buttons and asserting elements exist. This is done with [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/).
+This will run the electron main process entry point, `main.js`, which spins up a local Zed lake. You then mount the root `<App />` component into the JSDOM testing environment and begin to simulate a user clicking buttons and asserting elements exist. This is done with [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/).
 
 ```js
 import {screen} from "@testing-library/react"
@@ -142,7 +143,7 @@ See the [[Adding Migrations]] page for a more detailed guide.
 
 ### Zed
 
-The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for data ingestion and query execution. As an npm postinstall step, the `zed` binary is downloaded and stored in the`./zdeps`directory. Brim will automatically execute and terminate the service when it starts and stops.
+The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for data ingestion and query execution. As a postinstall step, the `zed` binary is downloaded and stored in the `./zdeps` directory. Brim will automatically execute and terminate the service when it starts and stops.
 
 ## Pull Requests
 
@@ -171,7 +172,7 @@ Any platform artifacts created will be found under `./dist/installers`.
 ### MacOS Notarization
 
 [Notarized](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution)
-MacOS releases are created automatically by our CI process when a Github
+MacOS releases are created automatically by our CI process when a GitHub
 release is created. The below is useful if you need to create one by hand.
 
 ```bash
@@ -204,15 +205,15 @@ your contribution under those license terms.
 We want to prevent technology giants from using the Polyform Perimeter license
 covered code to create replacement offerings of our projects.
 
-The overwhelming majority of Brim or zqd users and developers will not be
-restricted by this license, including those using Brim or zqd in commercial
+The overwhelming majority of Brim or Zed users and developers will not be
+restricted by this license, including those using Brim or Zed in commercial
 settings.
 
 The use of the source-available Polyform Perimeter license prevents use
 cases like:
 
 - Marketing a work as a “as-a-service” style offering for server
-  components like zqd, while using material covered under the Polyform
+  components like Zed, while using material covered under the Polyform
   Perimeter license
 - Marketing a work as a replacement for the Brim desktop application,
   while using material covered under the Polyform Perimeter license
