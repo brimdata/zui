@@ -74,7 +74,7 @@ const cases = [
 
 describe("go test library", () => {
   for (const [input, expected] of cases) {
-    test(input, () => {
+    test("input: " + input, () => {
       expect(new Duration(input).asNanos()).toEqual(expected)
     })
   }

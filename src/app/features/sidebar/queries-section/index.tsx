@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react"
-import {Tree} from "react-arborist"
+import React, {useEffect, useRef, useState} from "react"
+import {Tree, TreeApi} from "react-arborist"
 import {useDispatch, useSelector} from "react-redux"
 import Queries from "src/js/state/Queries"
 import {isBrimLib} from "src/js/state/Queries/flows"
@@ -24,6 +24,8 @@ import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
 import EmptySection from "src/js/components/common/EmptySection"
 import Icon from "src/app/core/icon-temp"
+import {listContextMenu} from "./list-context-menu"
+import Current from "src/js/state/Current"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />
@@ -126,6 +128,18 @@ const LocalQueriesView = ({toolbarButtons}) => {
   const flatQueries = flatLib.filter((n) => !("items" in n))
   const filteredQueriesCount = flattenQueryTree(filteredQueries, false)?.length
   const isFiltered = flatQueries?.length !== filteredQueriesCount
+  const tree = useRef<TreeApi<any> | null>(null)
+
+  const query = useSelector(Current.getQuery)
+
+  useEffect(() => {
+    if (!query?.id) {
+      tree.current.select(null, false, false)
+    } else if (!tree.current.getSelectedIds().includes(query.id)) {
+      tree.current.scrollToId(query.id)
+      tree.current.selectById(query.id)
+    }
+  }, [query?.id])
 
   useEffect(() => {
     setFilteredQueries(queries)
@@ -155,8 +169,9 @@ const LocalQueriesView = ({toolbarButtons}) => {
     dispatch(Queries.moveItems(dragIds, parentId, index))
   }
 
-  const handleRename = (itemId: string, name: string) =>
+  const handleRename = (itemId: string, name: string) => {
     dispatch(Queries.editItem({name}, itemId))
+  }
 
   const renderContents = () => {
     if (!flatLib.length)
@@ -165,8 +180,10 @@ const LocalQueriesView = ({toolbarButtons}) => {
       )
     if (!filteredQueriesCount)
       return <StyledEmptySection message="No queries match the search term." />
+
     return (
       <Tree
+        ref={tree}
         {...defaults}
         data={filteredQueries}
         disableDrag={(d) => !!dispatch(isBrimLib([d.id]))}
@@ -176,6 +193,7 @@ const LocalQueriesView = ({toolbarButtons}) => {
         onToggle={(id, value) => {
           dispatch(Queries.toggleGroup(id, value))
         }}
+        onContextMenu={() => dispatch(listContextMenu(tree.current))}
       >
         {QueryItem}
       </Tree>

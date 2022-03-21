@@ -1,4 +1,4 @@
-import React, {MouseEvent, FocusEvent} from "react"
+import React, {MouseEvent} from "react"
 import styled from "styled-components"
 import {CircleCloseButton} from "src/js/components/CircleCloseButton"
 
@@ -8,7 +8,7 @@ type Props = {
   pending?: boolean
   onClick?: (e: MouseEvent) => void
   onRemoveClick?: (e: MouseEvent) => void
-  onFocus?: (e: FocusEvent) => void
+  onFocus?: (e: any) => void
 }
 
 const ButtonWrap = styled.div`

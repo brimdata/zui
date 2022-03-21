@@ -9,7 +9,7 @@ test("tab histories create / remove", () => {
   expect(histories.count()).toBe(0)
 })
 
-test("tab histories get ", () => {
+test("tab histories get", () => {
   const histories = new Histories()
   histories.create("tab-id-1")
 

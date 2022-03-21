@@ -91,7 +91,7 @@ describe("#toFront", () => {
     expect(newArray).toEqual([1, 2, 3, 4, 5])
   })
 
-  test("first item ", () => {
+  test("first item", () => {
     const newArray = toFront(array, (item) => item === 1)
 
     expect(newArray).toEqual([1, 2, 3, 4, 5])

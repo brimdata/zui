@@ -26,6 +26,8 @@ export default function() {
       .bind("mod+9", () => dispatch(Tabs.activateLast()))
       .bind("mod+,", () => dispatch(Modal.show("settings")))
 
-    return () => bindings.reset()
+    return () => {
+      bindings.reset()
+    }
   }, [])
 }

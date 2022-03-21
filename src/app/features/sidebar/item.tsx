@@ -3,9 +3,11 @@ import {isNumber, isUndefined} from "lodash"
 import React, {
   MouseEventHandler,
   ReactNode,
+  Ref,
   useLayoutEffect,
   useRef
 } from "react"
+import {NodeState} from "react-arborist"
 import Icon from "src/app/core/icon-temp"
 import useOutsideClick from "src/js/components/hooks/useOutsideClick"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
@@ -44,11 +46,15 @@ const BG = styled.div`
   height: 100%;
   border-radius: 6px;
 
-  &:hover {
+  &:hover:not(.dragging) {
     background: var(--sidebar-item-hover);
   }
 
-  &:active {
+  &:active:not(.dragging) {
+    background: var(--sidebar-item-active);
+  }
+
+  &.droppable {
     background: var(--sidebar-item-active);
   }
 
@@ -127,20 +133,22 @@ function Toggle(props: ItemProps) {
   if (!props.isFolder) return null
   return (
     <ToggleLink>
-      <Icon name={`chevron-${props.isOpen ? "down" : "right"}`} />
+      <Icon name={`chevron-${props.state.isOpen ? "down" : "right"}`} />
     </ToggleLink>
   )
 }
 
 function getClassNames(props: ItemProps) {
   const oneSelection =
-    isUndefined(props.isSelectedStart) &&
-    isUndefined(props.isSelectedEnd) &&
-    props.isSelected
+    isUndefined(props.state.isSelectedStart) &&
+    isUndefined(props.state.isSelectedEnd) &&
+    props.state.isSelected
 
   return classNames({
-    "selected-start": oneSelection || props.isSelectedStart,
-    "selected-end": oneSelection || props.isSelectedEnd
+    "selected-start": oneSelection || props.state.isSelectedStart,
+    "selected-end": oneSelection || props.state.isSelectedEnd,
+    droppable: props.state.isHoveringOverChild,
+    dragging: props.state.isDragging
   })
 }
 
@@ -165,7 +173,7 @@ const Rename = ({defaultValue, onSubmit}) => {
 }
 
 function Content(props: ItemProps) {
-  if (props.isEditing) {
+  if (props.state.isEditing) {
     return <Rename defaultValue={props.text} onSubmit={props.onSubmit} />
   } else {
     return <Name>{props.text}</Name>
@@ -183,30 +191,26 @@ function Progress(props: ItemProps) {
 
 type ItemProps = {
   text: string
+  styles: {indent: CSSProperties; row: CSSProperties}
   icon?: ReactNode
   progress?: number
   onClick?: MouseEventHandler
   onContextMenu?: MouseEventHandler
   onSubmit?: (text: string) => void
-  style?: CSSProperties
-  indentStyle?: CSSProperties
-  isSelected?: boolean
-  isSelectedStart?: boolean
-  isSelectedEnd?: boolean
+  state?: NodeState
+  innerRef?: Ref<HTMLDivElement>
   isFolder?: boolean
-  isOpen?: boolean
-  isEditing?: boolean
 }
 
 export function Item(props: ItemProps) {
   return (
-    <Container tabIndex={0} style={props.style}>
+    <Container tabIndex={0} style={props.styles.row} ref={props.innerRef}>
       <BG
-        aria-selected={props.isSelected}
+        aria-selected={props.state.isSelected}
         className={getClassNames(props)}
+        style={props.styles.indent}
         onClick={props.onClick}
         onContextMenu={props.onContextMenu}
-        style={props.indentStyle}
       >
         <Toggle {...props} />
         <ItemIcon {...props} />

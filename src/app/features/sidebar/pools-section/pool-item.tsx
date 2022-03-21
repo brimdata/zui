@@ -16,7 +16,6 @@ const PoolItem = ({styles, data, state, handlers}) => {
   const pool = data as Pool
   const dispatch = useDispatch<AppDispatch>()
   const lakeId = useSelector(Current.getLakeId)
-  const currentPoolId = useSelector(Current.getPoolId)
   const ingest = useSelector(Ingests.get(pool.id))
   const ctxMenu: MenuItemConstructorOptions[] = [
     {
@@ -37,12 +36,10 @@ const PoolItem = ({styles, data, state, handlers}) => {
     <Item
       text={pool.name}
       icon={<Icon name="pool" />}
-      isSelected={pool.id === currentPoolId}
-      style={styles.row}
-      indentStyle={styles.indent}
+      state={state}
+      styles={styles}
       onClick={onClick}
       onContextMenu={() => showContextMenu(ctxMenu)}
-      isEditing={state.isEditing}
       onSubmit={handlers.submit}
       progress={ingest?.progress}
     />
