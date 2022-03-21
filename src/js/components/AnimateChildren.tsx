@@ -39,6 +39,7 @@ export default class AnimateChildren extends React.Component<Props> {
 
     React.Children.forEach(children, (child, i) => {
       const el = parent.children[i]
+      // @ts-ignore
       const key = child.key
       cache[key] = el.getBoundingClientRect()
     })
@@ -53,6 +54,7 @@ export default class AnimateChildren extends React.Component<Props> {
 
     React.Children.forEach(children, (child, i) => {
       const el = parent.children[i]
+      // @ts-ignore
       const key = child.key
       const curr = el.getBoundingClientRect()
       const prev = cache[key]

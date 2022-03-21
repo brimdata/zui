@@ -191,13 +191,13 @@ function Progress(props: ItemProps) {
 
 type ItemProps = {
   text: string
+  styles: {indent: CSSProperties; row: CSSProperties}
   icon?: ReactNode
   progress?: number
   onClick?: MouseEventHandler
   onContextMenu?: MouseEventHandler
   onSubmit?: (text: string) => void
-  state: NodeState
-  styles: {indent: CSSProperties; row: CSSProperties}
+  state?: NodeState
   innerRef?: Ref<HTMLDivElement>
   isFolder?: boolean
 }

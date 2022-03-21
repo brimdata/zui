@@ -18,6 +18,8 @@ export class SearchesApi {
 
   private listenTo(name: string, cb: any) {
     this.emitter.addListener(name, cb)
-    return () => this.emitter.removeListener(name, cb)
+    return () => {
+      this.emitter.removeListener(name, cb)
+    }
   }
 }

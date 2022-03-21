@@ -78,9 +78,11 @@ export default class BrimApi {
     }
   }
 
-  import(files: File[]) {
+  import(files: File[]): Promise<void> {
     return this.dispatch(ingestFiles(files))
-      .then(() => toast.success("Import complete."))
+      .then(() => {
+        toast.success("Import complete.")
+      })
       .catch((e) => {
         const cause = e.cause
         if (/(Failed to fetch)|(network error)/.test(cause.message)) {

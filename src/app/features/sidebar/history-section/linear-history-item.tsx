@@ -51,7 +51,7 @@ const LinearHistoryItem = ({styles, data: historyItem}) => {
 
   return (
     <Item
-      style={styles.row}
+      styles={styles}
       text={historyItem.search.program}
       icon={<HistoryIcon />}
       onClick={onClick}
