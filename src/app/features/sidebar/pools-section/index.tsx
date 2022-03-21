@@ -19,7 +19,6 @@ import PoolItem from "./pool-item"
 import renamePool from "src/js/flows/renamePool"
 import {Pool} from "src/app/core/pools/pool"
 import Icon from "src/app/core/icon-temp"
-import {showContextMenu} from "src/js/lib/System"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="pool" />

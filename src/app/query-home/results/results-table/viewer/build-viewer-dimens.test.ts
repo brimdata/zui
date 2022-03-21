@@ -10,7 +10,7 @@ describe("AutoLayout", () => {
     sumColumnWidths: 0
   })
 
-  test("#viewHeight ", () => {
+  test("#viewHeight", () => {
     expect(autoLayout.viewHeight).toBe(500)
   })
 
@@ -58,7 +58,7 @@ describe("FixedLayout", () => {
     expect(fixedLayout.rowWidth).toBe(121)
   })
 
-  test("#listWidth ", () => {
+  test("#listWidth", () => {
     const fixedLayout = buildViewerDimens({
       type: "fixed",
       height: 500,

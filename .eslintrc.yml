@@ -57,3 +57,9 @@ rules:
     - off
   "@typescript-eslint/ban-types":
     - off
+  jest/no-conditional-expect:
+    - off
+  jest/expect-expect:
+    - off
+  jest/no-done-callback:
+    - off
