@@ -61,7 +61,7 @@ const PoolsSection = () => {
     const handleRename = (poolId: string, name: string) => {
       dispatch(renamePool(poolId, name))
     }
-    console.log("Pools doawg")
+
     return (
       <Tree
         {...defaults}

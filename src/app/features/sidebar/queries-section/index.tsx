@@ -138,10 +138,6 @@ const LocalQueriesView = ({toolbarButtons}) => {
     } else if (!tree.current.getSelectedIds().includes(query.id)) {
       tree.current.scrollToId(query.id)
       tree.current.selectById(query.id)
-      setTimeout(() => {
-        const i = tree.current.idToIndex[query.id]
-        tree.current.select(i, false, false)
-      })
     }
   }, [query?.id])
 
