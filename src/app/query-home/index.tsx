@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import SearchBarState from "src/js/state/SearchBar"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
-import SearchBar from "./search-bar"
+import SearchBar from "./search-area"
 import Toolbar from "./toolbar"
 import styled from "styled-components"
 import useRun from "./toolbar/hooks/use-run"
@@ -24,6 +24,8 @@ import {AppDispatch} from "../../js/state/types"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import {getQuerySource} from "./flows/get-query-source"
+import BrimEditor from "../core/components/brim-editor"
+import SearchArea from "./search-area"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -177,7 +179,7 @@ const QueryHome = () => {
     <>
       <QueryPageHeader>
         <Toolbar actions={actions} />
-        <SearchBar />
+        <SearchArea />
       </QueryPageHeader>
       <Results />
     </>

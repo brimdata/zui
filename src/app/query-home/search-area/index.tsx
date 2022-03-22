@@ -14,15 +14,12 @@ const Group = styled.div<{flex: number}>`
   flex-direction: column;
 `
 
-export default function SearchBar() {
+export default function SearchArea() {
   return (
     <>
       <FromPinPicker />
       <Group flex={1}>
-        <InputBackdrop>
-          <Input />
-          <Spinner />
-        </InputBackdrop>
+        <Input />
         <Error />
         <Pins />
       </Group>

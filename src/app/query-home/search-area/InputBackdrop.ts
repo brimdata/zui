@@ -1,10 +1,13 @@
 import styled from "styled-components"
 
-const Input = styled.div`
+const Input = styled.div<{isVisible: boolean}>`
+  ${(p) =>
+    p.isVisible &&
+    `
   display: flex;
   outline: none;
   border: none;
-  padding: 0;
+  padding: 0 0 0 8px;
   border-radius: 15px;
   height: 28px;
   line-height: 24px;
@@ -15,6 +18,7 @@ const Input = styled.div`
   position: relative;
   background: var(--coconut);
   align-items: center;
+  `};
 `
 
 export default Input
