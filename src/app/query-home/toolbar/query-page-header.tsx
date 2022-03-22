@@ -55,7 +55,7 @@ const StyledTitle = styled.h2`
     background-color: var(--hover-light-bg);
   }
 `
-const SubTitle = styled.div`
+const SubTitle = styled.div<{isEnabled: boolean}>`
   ${(props) => props.theme.typography.labelNormal}
   display: flex;
   padding: 1px 6px;
@@ -63,11 +63,14 @@ const SubTitle = styled.div`
   margin-top: -1px;
   color: rgba(0, 0, 0, 0.5);
   text-transform: capitalize;
-
+  ${({isEnabled}) =>
+    isEnabled &&
+    `
   &:hover {
     border-radius: 3px;
     background-color: var(--hover-light-bg);
   }
+  `}
 `
 
 const StyledAnchor = styled.a<{isPrimary?: boolean; isIndented?: boolean}>`
@@ -285,7 +288,10 @@ const QueryPageHeader = () => {
           </BrimTooltip>
         </>
       )}
-      <SubTitle onClick={openMenu}>
+      <SubTitle
+        isEnabled={querySource !== "draft" && !isEditing}
+        onClick={openMenu}
+      >
         {querySource} &mdash;&nbsp;{renderQueryStatus()}
       </SubTitle>
     </TitleHeader>
