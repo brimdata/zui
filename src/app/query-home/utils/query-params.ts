@@ -1,29 +1,11 @@
-export type DecodedQueryParams = {
-  isDraft?: boolean
-}
-
-export const encodeQueryParams = ({
-  isDraft = false
-}: Partial<DecodedQueryParams>) => {
+export const encodeQueryParams = () => {
   const p = new URLSearchParams()
-  encodeBool(p, isDraft, "isDraft")
   return p.toString()
 }
 
-export const decodeQueryParams = (path: string): DecodedQueryParams => {
-  const url = new URLSearchParams(path)
-  return {
-    isDraft: decodeBool(url, "isDraft")
-  }
-}
-
-const encodeBool = (params, value, name) => {
-  if (value) {
-    params.set(name, "true")
-  }
-}
-
-const decodeBool = (params, name) => {
-  const value = params.get(name)
-  return value === "true"
+// Will begin using this again when we start to encode ?version= in the url
+export type DecodedQueryParams = {}
+export const decodeQueryParams = (_path: string): DecodedQueryParams => {
+  // const url = new URLSearchParams(path)
+  return {}
 }

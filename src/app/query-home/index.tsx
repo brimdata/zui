@@ -23,11 +23,13 @@ import {newQuery} from "./flows/new-query"
 import {AppDispatch} from "../../js/state/types"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
+import {getQuerySource} from "./flows/get-query-source"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
-  const {queryId, isDraft} = Current.getQueryLocationData(getState())
+  const {queryId} = Current.getQueryLocationData(getState())
   const lakeId = Current.getLakeId(getState())
   const query = Current.getQuery(getState())
+  const isDraft = dispatch(getQuerySource(queryId)) === "draft"
   const pool = Current.getQueryPool(getState())
   if (pool && !pool.hasSpan()) dispatch(syncPool(pool.id, lakeId))
   if (!query && queryId && isDraft) {
@@ -164,9 +166,7 @@ const QueryHome = () => {
         <ToolbarButton
           onClick={() => {
             const {id} = dispatch(newQuery())
-            dispatch(
-              tabHistory.replace(lakeQueryPath(id, lakeId, {isDraft: true}))
-            )
+            dispatch(tabHistory.replace(lakeQueryPath(id, lakeId)))
           }}
           text={"New Draft"}
         />

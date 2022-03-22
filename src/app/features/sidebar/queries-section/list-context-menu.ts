@@ -24,9 +24,7 @@ export const listContextMenu = (tree: TreeApi<any>): Thunk => (
           const {cancelled} = await tree.edit(id)
           if (!cancelled) {
             tree.selectById(id)
-            dispatch(
-              Tabs.activateByUrl(lakeQueryPath(id, lakeId, {isDraft: false}))
-            )
+            dispatch(Tabs.activateByUrl(lakeQueryPath(id, lakeId)))
           }
         })
       }

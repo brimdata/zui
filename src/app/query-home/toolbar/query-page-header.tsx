@@ -170,9 +170,7 @@ const QueryPageHeader = () => {
       if (querySource === "draft") {
         dispatch(Queries.addItem(query.serialize(), "root"))
         dispatch(DraftQueries.remove({id: query.id}))
-        dispatch(
-          tabHistory.replace(lakeQueryPath(query.id, lakeId, {isDraft: false}))
-        )
+        dispatch(tabHistory.replace(lakeQueryPath(query.id, lakeId)))
       } else {
         dispatch(updateQuery(query))
       }
@@ -241,11 +239,13 @@ const QueryPageHeader = () => {
         dupeQ.name += "-copy"
         if (querySource === "local") {
           dispatch(Queries.addItem(dupeQ, "root"))
+          dispatch(Tabs.new(lakeQueryPath(dupeQ.id, lakeId)))
         }
         if (querySource === "remote") {
-          dispatch(setRemoteQueries([dupeQ]))
+          dispatch(setRemoteQueries([dupeQ])).then(() => {
+            dispatch(Tabs.new(lakeQueryPath(dupeQ.id, lakeId)))
+          })
         }
-        dispatch(Tabs.new(lakeQueryPath(dupeQ.id, lakeId, {isDraft: false})))
       }
     },
     {
