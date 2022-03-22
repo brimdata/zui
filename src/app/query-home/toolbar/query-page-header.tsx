@@ -239,7 +239,7 @@ const QueryPageHeader = () => {
       click: () => {
         const dupeQ = query.serialize()
         dupeQ.id = nanoid()
-        dupeQ.name += "-copy"
+        dupeQ.name += " (copy)"
         if (querySource === "local") {
           dispatch(Queries.addItem(dupeQ, "root"))
           dispatch(Tabs.new(lakeQueryPath(dupeQ.id, lakeId)))
