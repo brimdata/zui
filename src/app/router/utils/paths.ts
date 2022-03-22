@@ -2,7 +2,6 @@ import {
   DecodedSearchParams,
   encodeSearchParams
 } from "src/app/search/utils/search-params"
-import {encodeQueryParams} from "../../query-home/utils/query-params"
 
 export const lakesPath = () => {
   return "/lakes"
@@ -30,18 +29,8 @@ export function poolSearchPath(
   return `${lakePoolPath(poolId, lakeId)}/search?${encodeSearchParams(params)}`
 }
 
-export function lakeQueryPath(
-  queryId: string,
-  lakeId: string,
-  params: {isDraft?: boolean}
-) {
-  const pathname = `${lakePath(lakeId)}/queries/${queryId}`
-  const search = encodeQueryParams(params)
-  if (search.length) {
-    return pathname + "?" + search
-  } else {
-    return pathname
-  }
+export function lakeQueryPath(queryId: string, lakeId: string) {
+  return `${lakePath(lakeId)}/queries/${queryId}`
 }
 
 export function releaseNotesPath(lakeId) {

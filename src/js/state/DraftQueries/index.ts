@@ -11,6 +11,9 @@ const slice = createSlice({
   reducers: {
     set(s, a) {
       s[a.payload.id] = a.payload
+    },
+    remove(s, a) {
+      delete s[a.payload.id]
     }
   }
 })

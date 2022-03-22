@@ -50,7 +50,7 @@ export default function PlusButton() {
         label: "New Query",
         click: () => {
           const query = dispatch(newQuery())
-          dispatch(Tabs.new(lakeQueryPath(query.id, lakeId, {isDraft: true})))
+          dispatch(Tabs.new(lakeQueryPath(query.id, lakeId)))
         }
       },
       {

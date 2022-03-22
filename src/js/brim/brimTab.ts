@@ -3,7 +3,6 @@ import {decodeSearchParams} from "src/app/search/utils/search-params"
 import get from "lodash/get"
 import {PoolsState} from "../state/Pools/types"
 import {LakesState} from "../state/Lakes/types"
-import {DRAFT_QUERY_NAME} from "src/app/query-home/utils/brim-query"
 
 export default function(
   tabId: string,
@@ -45,10 +44,7 @@ function compileTitle(route, location, lakes, pools, queryIdNameMap) {
     )
   }
   if (queryId) {
-    title = title.replace(
-      "<query>",
-      queryIdNameMap[queryId] || DRAFT_QUERY_NAME
-    )
+    title = title.replace("<query>", queryIdNameMap[queryId] || "Query Page")
   }
   const {program} = decodeSearchParams(location.search)
   title = title.replace("<program>", program || "Search")

@@ -18,11 +18,18 @@ import useColumns from "./toolbar/hooks/use-columns"
 import DraftQueries from "src/js/state/DraftQueries"
 import SearchBarActions from "src/js/state/SearchBar"
 import {syncPool} from "../core/pools/sync-pool"
+import ToolbarButton from "./toolbar/button"
+import {newQuery} from "./flows/new-query"
+import {AppDispatch} from "../../js/state/types"
+import tabHistory from "../router/tab-history"
+import {lakeQueryPath} from "../router/utils/paths"
+import {getQuerySource} from "./flows/get-query-source"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
-  const {queryId, isDraft} = Current.getQueryLocationData(getState())
+  const {queryId} = Current.getQueryLocationData(getState())
   const lakeId = Current.getLakeId(getState())
   const query = Current.getQuery(getState())
+  const isDraft = dispatch(getQuerySource(queryId)) === "draft"
   const pool = Current.getQueryPool(getState())
   if (pool && !pool.hasSpan()) dispatch(syncPool(pool.id, lakeId))
   if (!query && queryId && isDraft) {
@@ -100,8 +107,38 @@ const usePin = (): ActionButtonProps => {
   }
 }
 
+const PageWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: scroll;
+
+  button > span {
+    ${(p) => p.theme.typography.labelNormal}
+    color: black;
+  }
+`
+
+const StyledHeader = styled.h1`
+  margin: 96px 0 0 0;
+  color: var(--aqua);
+  ${(p) => p.theme.typography.headingPage}
+`
+
+const StyledSubHeader = styled.h2`
+  margin: 18px 0;
+  width: 500px;
+  color: var(--aqua);
+  ${(p) => p.theme.typography.labelNormal}
+`
+
 const QueryHome = () => {
   useSearchParamLocationSync()
+  const query = useSelector(Current.getQuery)
+  const lakeId = useSelector(Current.getLakeId)
+  const dispatch = useDispatch<AppDispatch>()
   const exportAction = useExport()
   const columns = useColumns()
   const run = useRun()
@@ -117,6 +154,24 @@ const QueryHome = () => {
     pin,
     run
   ]
+
+  if (!query)
+    return (
+      <PageWrap>
+        <StyledHeader>Query Removed</StyledHeader>
+        <StyledSubHeader>
+          The query this tab was previously viewing has been removed. Use the
+          left sidebar to open an existing query, or begin a new draft.
+        </StyledSubHeader>
+        <ToolbarButton
+          onClick={() => {
+            const {id} = dispatch(newQuery())
+            dispatch(tabHistory.replace(lakeQueryPath(id, lakeId)))
+          }}
+          text={"New Draft"}
+        />
+      </PageWrap>
+    )
 
   return (
     <>

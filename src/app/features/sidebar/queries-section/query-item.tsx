@@ -37,7 +37,7 @@ const QueryItem: NodeRenderer<any> = ({
   const onItemClick = (e: React.MouseEvent) => {
     handlers.select(e, {selectOnClick: true})
     if (!e.metaKey && !e.shiftKey) {
-      dispatch(Tabs.activateByUrl(lakeQueryPath(id, lakeId, {isDraft: false})))
+      dispatch(Tabs.activateByUrl(lakeQueryPath(id, lakeId)))
     }
   }
 

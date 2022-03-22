@@ -23,7 +23,7 @@ export const newTab = (): Thunk => (dispatch, getState) => {
   } else if (poolIds.length === 0) {
     url = lakeImportPath(lakeId)
   } else {
-    url = lakeQueryPath(dispatch(newQuery()).id, lakeId, {isDraft: true})
+    url = lakeQueryPath(dispatch(newQuery()).id, lakeId)
   }
   dispatch(Tabs.new(url))
 }
