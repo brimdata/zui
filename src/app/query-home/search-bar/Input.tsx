@@ -14,9 +14,7 @@ const StyledInput = styled.input`
   padding: 0 8px 0 12px;
   font-family: ${cssVar("--mono-font")};
   height: 28px;
-  line-height: 28px;
-  font-size: 12px;
-  letter-spacing: 0px;
+
   width: 100%;
   background: transparent;
 
