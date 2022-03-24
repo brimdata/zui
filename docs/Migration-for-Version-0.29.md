@@ -1,0 +1,41 @@
+# Pool Migration for Version 0.29
+
+1. Install the latest version of Brim.
+2. Download the [migration script](./scripts/migration-22.sh).
+3. Change permissions so that it can be executed. `chmod +x ./migration-22.sh`
+4. Run it. `./migration-22.sh`
+5. Open the app and see your pools.
+
+> **Windows Users**: See the section below titled "How do I run this on Windows?".
+
+## Will it delete anything?
+
+No.
+
+## Do I absolutely need to migrate?
+
+No. Only run the steps above if you care to keep your old pool data. If you prefer a fresh start, you can delete your old pools by following the steps below.
+
+## What does the script do?
+
+The zed lake service that powers Brim made breaking changes to it's data storage format in this release. Your pools are currently stored in `<os-apps-dir>/Brim/data/lake`. The new version expects the pools to be in `<os-apps-dir>/Brim/lake`.  The script will read in the old data and write it to the new location. The script does not attempt to delete anything on your system. If you want to delete the old pools after this script finishes, see below.
+
+## How do I delete the old pools?
+
+You can remove the old pools by deleting the directory `<os-apps-dir>/Brim/data/lake/`.
+
+|**OS Platform**|**Location**                                          |
+|---------------|------------------------------------------------------|
+| **Windows**   | `%APPDATA%\Brim\data\lake`                           |
+| **macOS**     | `$HOME/Library/Application Support/Brim/data/lake`   |
+| **Linux**     | `$HOME/.config/Brim/data/lake`                       |
+
+## How do I run this on Windows?
+
+The script must be run in a Windows `sh` variant like `BusyBox`, `Cygwin`, or `MSYS2`. If you do not have any of these already setup, we recommend downloading [busybox.exe](https://frippery.org/files/busybox/busybox.exe) as it seems to be the easiest. Once downloaded, start the shell. [Busy Box Documentation](https://frippery.org/busybox/).
+
+```
+C:\path\to\busybox.exe sh -l
+```
+
+This will drop you into a sh environment where you can execute steps 3 and 4.
