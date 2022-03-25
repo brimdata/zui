@@ -10,8 +10,8 @@ case $(uname -s) in
         brim_dir=$HOME/.config/Brim
         ;;
     * ) # Windows
-        PATH=$HOME/AppData/Local/Programs/Brim/resources/app.asar.unpacked/zdeps:$PATH
-        brim_dir=$HOME/AppData/Roaming/Brim
+        PATH=$LOCALAPPDATA/Programs/Brim/resources/app.asar.unpacked/zdeps:$PATH
+        brim_dir=$APPDATA/Brim
         ;;
 esac
 
@@ -25,15 +25,15 @@ fi
 set -e
 
 echo "migrating lake at '$brim_dir/data/lake' to '$brim_dir/lake'"
-cd "$brim_dir"
+cd "$brim_dir/data/lake"
+export ZED_LAKE=$brim_dir/lake
 
 # Sort these by decreasing modification time so we can use
 # 'entry.id==... | head 1 | yield entry.name' below to determine current
 # pool names.  (We can't use entry.ts for that because it reflects pool
 # creation time rather than modification time.)
-pools_zngs=$(ls -t data/lake/pools/*.zng)
+pools_zngs=$(ls -t pools/*.zng)
 
-export ZED_LAKE=$PWD/lake
 if [ -e "$ZED_LAKE" ]; then
     if ! stderr=$(zed ls 2>&1 >/dev/null); then
         exec "fatal error: 'zed ls' failed with this output: '$stderr'" >&2
@@ -44,11 +44,10 @@ else
 fi
 
 ksuid_glob='???????????????????????????'
-for pool_dir in data/lake/$ksuid_glob; do
-    pool_ksuid=${pool_dir##*/}
+for pool_ksuid in $ksuid_glob; do
     pool_name=$(zq -f text "entry.id==ksuid('$pool_ksuid') | head 1 | yield entry.name" $pools_zngs)
 
-    branch_count=$(zq -f text 'yield entry.name | sort | uniq | count()' $pool_dir/branches/*.zng)
+    branch_count=$(zq -f text 'yield entry.name | sort | uniq | count()' $pool_ksuid/branches/*.zng)
     if [ "$branch_count" != 1 ]; then
         # Handling multiple branches without zed v0.33.0 is impractical.
         echo "skipping '$pool_name' ($pool_ksuid): found multiple ($branch_count) branches"
@@ -60,7 +59,7 @@ for pool_dir in data/lake/$ksuid_glob; do
         continue
     fi
 
-    echo "migrating '$pool_name' ($pool_ksuid)"
+    echo "migrating pool '$pool_name' ($pool_ksuid)"
     zed create -q -orderby ts:desc "$pool_name"
-    zed load -q -use "$pool_name"@main $pool_dir/data/$ksuid_glob.zng
+    zed load -q -use "$pool_name" $pool_ksuid/data/$ksuid_glob.zng
 done
