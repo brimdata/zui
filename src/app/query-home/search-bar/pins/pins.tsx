@@ -2,14 +2,14 @@ import classNames from "classnames"
 import {MenuItemConstructorOptions} from "electron/main"
 import {isString} from "lodash"
 import {cssVar, darken, transparentize} from "polished"
-import React, {useEffect, useReducer, useRef} from "react"
+import React, {useEffect, useReducer} from "react"
 import Icon from "src/app/core/icon-temp"
 import {useDispatch} from "src/app/core/state"
-import useListener from "src/js/components/hooks/useListener"
 import {showContextMenu} from "src/js/lib/System"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import styled from "styled-components"
+import {GenericPinDialog} from "./generic-pin-dialog"
 import PinsUI, {QueryPin} from "./reducer"
 
 const primary = cssVar("--primary-color") as string
@@ -76,40 +76,6 @@ const Container = styled.section`
       flex-basis: 13px;
       margin-left: 4px;
     }
-
-    dialog {
-      z-index: 999;
-      top: 24px;
-      border: none;
-      box-shadow: var(--shadow-elevation-high);
-      border-radius: 5px;
-      padding: 0;
-      text-align: left;
-
-      textarea {
-        font-family: var(--mono-font);
-        border-radius: 5px 5px 0 0;
-        padding: 16px;
-        width: 300px;
-        height: 50px;
-        border: none;
-        background: var(--input-background);
-        border: 2px solid white;
-      }
-
-      .actions {
-        padding: 6px;
-        display: flex;
-        justify-content: right;
-        button {
-          margin-left: 6px;
-          border: none;
-          background: var(--control-background);
-          padding: 6px 10px;
-          border-radius: 5px;
-        }
-      }
-    }
   }
 `
 
@@ -166,35 +132,15 @@ function pinSwitch(pin: QueryPin, index: number, dispatch, state) {
 }
 
 function GenericPin(props) {
-  const dialog = useRef<HTMLDialogElement>()
-  useEffect(() => {
-    const d = dialog.current
-    if (!d) return
-    if (props.isEditing) {
-      d.show()
-    }
-  }, [props.isEditing])
-
-  useListener(dialog.current, "close", () => {
-    if (dialog.current.returnValue === "ok") {
-      props.dispatch(PinsUI.submit({value: "my new value"}))
-    } else {
-      props.dispatch(PinsUI.reset())
-    }
-  })
-
   return (
     <>
       <span className="pin-label">{props.pin.label || props.pin.value}</span>
-      <dialog ref={dialog}>
-        <form method="dialog">
-          <textarea autoFocus>{props.pin.value}</textarea>
-          <div className="actions">
-            <button value="cancel">Cancel</button>
-            <button value="ok">OK</button>
-          </div>
-        </form>
-      </dialog>
+      <GenericPinDialog
+        open={true}
+        pin={props.pin}
+        onSubmit={(data) => PinsUI.submit(data)}
+        onReset={() => PinsUI.reset()}
+      />
     </>
   )
 }
