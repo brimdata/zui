@@ -3395,15 +3395,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-beautiful-dnd@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "@types/react-beautiful-dnd@npm:13.0.0"
-  dependencies:
-    "@types/react": "*"
-  checksum: 1ce6fef10bd7e33bbf2a983bd28dd9ed80ac74b32294ec24c44560aac2e8f83f0a95088b962356ca773a94ce2bce8a8ce6403cfe8935802a2bf791256d3d023f
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:^17.0.2":
   version: 17.0.13
   resolution: "@types/react-dom@npm:17.0.13"
@@ -4967,7 +4958,6 @@ __metadata:
     "@types/node-fetch": ^3.0.3
     "@types/prismjs": ^1.16.1
     "@types/react": ^17.0.2
-    "@types/react-beautiful-dnd": ^13.0.0
     "@types/react-dom": ^17.0.2
     "@types/react-redux": ^7.1.9
     "@types/react-router": ^5.1.11
