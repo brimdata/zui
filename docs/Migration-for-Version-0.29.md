@@ -6,7 +6,7 @@
 4. Open the app and see your pools.
 
 The migration script can be executed while Brim v0.29 is already open. Click **View > Reload** from the Brim pull-down menu to see your migrated pools after the script completes.
-> **Windows Users**: See the section below titled "How do I run this on Windows?".
+> **Windows Users**: See the section below titled "[How do I run this on Windows?](/#how-do-i-run-this-on-windows)".
 
 ## Will it delete anything?
 
@@ -14,7 +14,7 @@ No.
 
 ## Do I absolutely need to migrate?
 
-No. Only run the steps above if you care to keep your old pool data. If you prefer a fresh start, you can delete your old pools by following the steps below.
+No. Only run the steps above if you care to keep your old pool data. If you prefer a fresh start, you can delete your old pools by following the steps [below](#how-do-i-delete-the-old-pools).
 
 ## What does the script do?
 
@@ -22,7 +22,7 @@ The Zed lake service that powers Brim made breaking changes to its data storage 
 
 ## How do I delete the old pools?
 
-You can remove the old pools by deleting the directory `<os-apps-dir>/Brim/data/lake/`.
+You can remove the old pools by deleting the directory shown in the table below for your OS.
 
 |**OS Platform**|**Location**                                          |
 |---------------|------------------------------------------------------|
@@ -38,4 +38,4 @@ The script must be run in a Windows `sh` variant like `BusyBox`, `Cygwin`, or `M
 C:\path\to\busybox.exe sh -l
 ```
 
-This will drop you into a sh environment where you can execute steps 3 and 4.
+This will drop you into a `sh` environment where you can execute [step 3](#pool-migration-for-version-029).
