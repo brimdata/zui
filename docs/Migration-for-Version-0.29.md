@@ -33,7 +33,7 @@ You can remove the old pools by deleting the directory `<os-apps-dir>/Brim/data/
 
 ## How do I run this on Windows?
 
-The script must be run in a Windows `sh` variant like `BusyBox`, `Cygwin`, or `MSYS2`. If you do not have any of these already setup, we recommend downloading [busybox.exe](https://frippery.org/files/busybox/busybox.exe) as it seems to be the easiest. Once downloaded, start the shell. [Busy Box Documentation](https://frippery.org/busybox/).
+The script must be run in a Windows `sh` variant like `BusyBox`, `Cygwin`, or `MSYS2`. If you do not have any of these already setup, we recommend downloading [busybox.exe](https://frippery.org/files/busybox/busybox.exe) as it seems to be the easiest. Once downloaded, start the shell. See the [Busy Box documentation](https://frippery.org/busybox/) for more detail.
 
 ```
 C:\path\to\busybox.exe sh -l
