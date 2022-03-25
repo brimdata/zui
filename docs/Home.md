@@ -34,5 +34,4 @@ effective use of the Brim desktop application and related tools.
 
 ## Developer Resources
 
-- [[Code Base Walkthrough]]
 - [[Adding Migrations]]
