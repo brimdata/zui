@@ -24,9 +24,6 @@ export const List = styled(FixedSizeList)`
     margin-left: -3px;
   }
 
-  span {
-  }
-
   i {
     display: inline-flex;
     align-items: center;
