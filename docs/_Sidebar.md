@@ -21,5 +21,4 @@
 
 **Developer Resources**
 
-- [[Code Base Walkthrough]]
 - [[Adding Migrations]]
