@@ -2,9 +2,8 @@
 
 1. Install the latest version of Brim.
 2. Download the [migration script](./scripts/migration-22.sh).
-3. Change permissions so that it can be executed. `chmod +x ./migration-22.sh`
-4. Run it. `./migration-22.sh`
-5. Open the app and see your pools.
+3. Run it. `sh migration-22.sh`
+4. Open the app and see your pools.
 
 The migration script can be executed while Brim v0.29 is already open. Click **View > Reload** from the Brim pull-down menu to see your migrated pools after the script completes.
 > **Windows Users**: See the section below titled "How do I run this on Windows?".
