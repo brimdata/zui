@@ -1,8 +1,8 @@
 # Pool Migration for Version 0.29
 
 1. Install the latest version of Brim.
-2. Download the [migration script](https://raw.githubusercontent.com/brimdata/brim/06fef264a93fa65b3ea17317dfca4ce70f8d6602/scripts/util/migration-22.sh).
-3. Run it. `sh migration-22.sh`
+2. Download the [migration script](https://raw.githubusercontent.com/brimdata/brim/7494d08f6927be811ea99d89b5ba64234a862d63/scripts/util/migration-v0.29.sh).
+3. Run it. `sh migration-v0.29`
 4. Open the app and see your pools.
 
 The migration script can be executed while Brim v0.29 is already open. Click **View > Reload** from the Brim pull-down menu to see your migrated pools after the script completes.
