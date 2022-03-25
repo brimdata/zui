@@ -18,7 +18,7 @@ No. Only run the steps above if you care to keep your old pool data. If you pref
 
 ## What does the script do?
 
-The zed lake service that powers Brim made breaking changes to it's data storage format in this release. Your pools are currently stored in `<os-apps-dir>/Brim/data/lake`. The new version expects the pools to be in `<os-apps-dir>/Brim/lake`.  The script will read in the old data and write it to the new location. The script does not attempt to delete anything on your system. If you want to delete the old pools after this script finishes, see below.
+The Zed lake service that powers Brim made breaking changes to its data storage format in this release. Your pools are currently stored in a `data/lake/` subdirectory under the Brim [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data) path. The new version expects the pools to be in a `lake/` subdirectory (i.e., one level higher) under the user data path. The script will read in the old data and write it to the new location. The script does not attempt to delete anything on your system. If you want to delete the old pools after this script finishes, see [below](#how-do-i-delete-the-old-pools).
 
 ## How do I delete the old pools?
 
