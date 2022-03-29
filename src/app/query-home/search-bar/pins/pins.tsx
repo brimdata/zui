@@ -2,14 +2,18 @@ import classNames from "classnames"
 import {MenuItemConstructorOptions} from "electron/main"
 import {isString} from "lodash"
 import {cssVar, darken, transparentize} from "polished"
-import React, {useEffect, useReducer} from "react"
+import React, {MutableRefObject, useEffect, useReducer} from "react"
 import Icon from "src/app/core/icon-temp"
 import {useDispatch} from "src/app/core/state"
+import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {showContextMenu} from "src/js/lib/System"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import styled from "styled-components"
+import {Dialog} from "./dialog"
 import {GenericPinDialog} from "./generic-pin-dialog"
+import {GenericPinForm} from "./generic-pin-form"
+import {Pin} from "./pin"
 import PinsUI, {QueryPin} from "./reducer"
 
 const primary = cssVar("--primary-color") as string
@@ -90,7 +94,6 @@ export function Pins() {
     dispatch(
       PinsUI.add({type: "generic", value: "has(ts)", label: "Has a timestamp"})
     )
-    dispatch(PinsUI.edit(1))
   }, [])
 
   return (
@@ -110,16 +113,17 @@ function pinSwitch(pin: QueryPin, index: number, dispatch, state) {
     pin,
     index,
     onClick,
-    menu: pinMenu,
     isEditing: state.editing === index,
-    dispatch
+    dispatch,
+    menu: () => [] as MenuItemConstructorOptions[],
+    dialog: GenericPinForm
   }
 
   switch (pin.type) {
     case "generic":
       return (
         <Pin {...props}>
-          <GenericPin {...props} />
+          <span className="pin-label">{pin.label || pin.value}</span>
         </Pin>
       )
     case "from":
@@ -129,20 +133,6 @@ function pinSwitch(pin: QueryPin, index: number, dispatch, state) {
         </Pin>
       )
   }
-}
-
-function GenericPin(props) {
-  return (
-    <>
-      <span className="pin-label">{props.pin.label || props.pin.value}</span>
-      <GenericPinDialog
-        open={true}
-        pin={props.pin}
-        onSubmit={(data) => PinsUI.submit(data)}
-        onReset={() => PinsUI.reset()}
-      />
-    </>
-  )
 }
 
 function FromPin(props) {
@@ -164,36 +154,6 @@ function FromPin(props) {
       <Icon name="chevron-down" />
     </>
   )
-}
-
-function Pin(props: {
-  pin: QueryPin
-  index: number
-  menu: () => MenuItemConstructorOptions[]
-  onClick: () => void
-  children: any
-  isEditing: boolean
-}) {
-  return (
-    <button
-      key={props.index}
-      onContextMenu={() => showContextMenu(pinMenu())}
-      onClick={props.onClick}
-      className={classNames("pin-button", {editing: props.isEditing})}
-    >
-      {props.children}
-    </button>
-  )
-}
-
-function pinMenu() {
-  return [
-    {label: "Disable"},
-    {label: "Remove"},
-    {label: "Edit"},
-    {label: "Label"},
-    {label: "Copy Value"}
-  ]
 }
 
 const showPoolMenu = () => (dispatch, getState) => {
