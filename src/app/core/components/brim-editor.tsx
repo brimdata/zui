@@ -19,9 +19,8 @@ import {foldGutter, foldKeymap} from "@codemirror/fold"
 import {lineNumbers, highlightActiveLineGutter} from "@codemirror/gutter"
 import {bracketMatching} from "@codemirror/matchbrackets"
 import {closeBrackets, closeBracketsKeymap} from "@codemirror/closebrackets"
-import {searchKeymap, highlightSelectionMatches} from "@codemirror/search"
+import {highlightSelectionMatches} from "@codemirror/search"
 import {autocompletion, completionKeymap} from "@codemirror/autocomplete"
-import {commentKeymap} from "@codemirror/comment"
 import {rectangularSelection} from "@codemirror/rectangular-selection"
 import {defaultHighlightStyle} from "@codemirror/highlight"
 
@@ -69,6 +68,7 @@ const BrimEditor = () => {
   const ref = useRef<HTMLDivElement>()
   const [view, setView] = useState<EditorView>(null)
   const inputValue = useSelector(SearchBar.getSearchBarInputValue)
+  const [currentEditorValue, setCurrentEditorValue] = useState("")
   const isMultiLineMode = hasNewLine(inputValue)
   const dispatch = useDispatch()
 
@@ -78,15 +78,16 @@ const BrimEditor = () => {
 
   const onChangeUpdater = EditorView.updateListener.of((viewUpdate) => {
     if (!viewUpdate.docChanged) return
-    dispatch(SearchBar.changeSearchBarInput(viewUpdate.state.doc.toString()))
+    const viewContents = viewUpdate.state.doc.toString()
+    setCurrentEditorValue(viewContents)
+    dispatch(SearchBar.changeSearchBarInput(viewContents))
   })
   const extensions = [editorTheme, onChangeUpdater]
   if (isMultiLineMode) extensions.push(baseEditorSetup)
 
   useEffect(() => {
     if (!view) return
-    // TODO: this policy of re-rendering the whole editor contents on change needs
-    // a more efficient solution
+    if (inputValue === currentEditorValue) return
     view.dispatch(
       view.state.update({
         changes: {from: 0, to: view.state.doc.length, insert: inputValue}

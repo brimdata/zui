@@ -1,9 +1,9 @@
 import React from "react"
-import QueryPageHeader from "./query-page-header"
 import styled from "styled-components"
 import {ActionButtonProps} from "./action-button"
 import {GUTTER} from "./action-buttons"
 import Actions from "./actions"
+import QueryHeader from "./query-header"
 
 const Wrap = styled.div`
   margin-bottom: 6px;
@@ -46,7 +46,7 @@ const Toolbar = ({actions}: Props) => {
     <Wrap>
       <Row>
         <Left>
-          <QueryPageHeader />
+          <QueryHeader />
         </Left>
         <Right>
           <Actions actions={actions} />

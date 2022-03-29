@@ -1,10 +1,11 @@
 import styled from "styled-components"
 
 const Input = styled.div<{isVisible: boolean}>`
-  ${(p) =>
-    p.isVisible &&
-    `
   display: flex;
+  ${(p) =>
+    p.isVisible
+      ? `
+  flex-direction: row;
   outline: none;
   border: none;
   padding: 0 0 0 8px;
@@ -18,6 +19,9 @@ const Input = styled.div<{isVisible: boolean}>`
   position: relative;
   background: var(--coconut);
   align-items: center;
+  `
+      : `
+  flex-direction: column;
   `};
 `
 

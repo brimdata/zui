@@ -11,6 +11,7 @@ const Wrap = styled.div`
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+  margin-right: 3px;
   .mac-spinner {
     transform: scale(0.6);
   }

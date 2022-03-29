@@ -4,8 +4,6 @@ import styled from "styled-components"
 import Pins from "./Pins"
 import Error from "./Error"
 import Input from "./Input"
-import InputBackdrop from "./InputBackdrop"
-import Spinner from "./Spinner"
 import FromPinPicker from "./from-pin-picker"
 
 const Group = styled.div<{flex: number}>`
