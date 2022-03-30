@@ -47,7 +47,9 @@ const editorTheme = EditorView.theme(
     ".cm-gutters": {
       margin: 0,
       border: "none",
-      background: "inherit"
+      background: "inherit",
+      color: cssVar("--aqua"),
+      opacity: 0.2
     },
     ".cm-activeLine": {
       background: cssVar("--hawkes-blue")

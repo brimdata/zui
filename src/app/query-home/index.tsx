@@ -23,7 +23,6 @@ import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import {getQuerySource} from "./flows/get-query-source"
 import SearchArea from "./search-area"
-import FromPinPicker from "./search-area/from-pin-picker"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
