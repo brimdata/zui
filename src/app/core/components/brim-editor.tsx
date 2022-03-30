@@ -23,18 +23,37 @@ import {highlightSelectionMatches} from "@codemirror/search"
 import {autocompletion, completionKeymap} from "@codemirror/autocomplete"
 import {rectangularSelection} from "@codemirror/rectangular-selection"
 import {defaultHighlightStyle} from "@codemirror/highlight"
+import {cssVar} from "src/js/lib/cssVar"
 
-const EditorWrap = styled.div`
+const EditorWrap = styled.div<{isMultiLine: boolean}>`
   width: 100%;
-  margin: 8px 0;
-  max-height: 58px;
-  overflow: scroll;
+  margin: 0;
+  max-height: 150px;
+  overflow: auto;
 `
 
 const editorTheme = EditorView.theme(
   {
+    ".cm-content": {
+      fontFamily: cssVar("--mono-font"),
+      letterSpacing: "0.8px"
+    },
+    ".cm-line": {
+      padding: 0
+    },
     ".cm-scroller": {
       overflow: "hidden"
+    },
+    ".cm-gutters": {
+      margin: 0,
+      border: "none",
+      background: "inherit"
+    },
+    ".cm-activeLine": {
+      background: cssVar("--hawkes-blue")
+    },
+    ".cm-activeLineGutter": {
+      background: cssVar("--hawkes-blue")
     }
   },
   {dark: false}
@@ -112,9 +131,11 @@ const BrimEditor = () => {
     })
     setView(newView)
     newView.focus()
-  }, [ref])
+  }, [])
 
-  return <EditorWrap ref={ref} onKeyDown={onKeyDown} />
+  return (
+    <EditorWrap isMultiLine={isMultiLineMode} ref={ref} onKeyDown={onKeyDown} />
+  )
 }
 
 export default BrimEditor

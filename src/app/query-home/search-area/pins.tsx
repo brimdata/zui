@@ -1,10 +1,10 @@
 import {updateQuery} from "src/app/query-home/flows/update-query"
 import React, {useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {submitSearch} from "src/js/flows/submitSearch/mod"
+import submitSearch from "src/app/query-home/flows/submit-search"
 import SearchBar from "src/js/state/SearchBar"
 import FilterNode from "src/js/components/FilterNode"
-import PinEdit from "./PinEdit"
+import PinEdit from "./pin-edit"
 import Current from "src/js/state/Current"
 
 function Pin({index, value}) {

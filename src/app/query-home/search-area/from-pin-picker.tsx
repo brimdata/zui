@@ -19,9 +19,9 @@ const PickerWrapper = styled.button`
   justify-content: center;
   background: var(--hawkes-blue);
   border-radius: 10px;
-  padding: 2px 12px 4px;
+  padding: 3px 12px 3px 14px;
   border: none;
-  margin: 7px 0 6px;
+  margin: 0 3px 6px 16px;
   
   ${DropdownIcon} > svg {
     stroke: var(--cello-transparent);
@@ -67,7 +67,6 @@ const FromPinPicker = () => {
   const dispatch = useDispatch()
   const currentPool = useSelector(Current.getQueryPool)
 
-  // TODO: Mason - need designs for empty state and pin (from & filter) creator flow
   return (
     <PickerWrapper onClick={() => dispatch(showPoolMenu())}>
       <From>from</From>

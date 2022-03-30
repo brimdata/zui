@@ -6,7 +6,7 @@ import Actions from "./actions"
 import QueryHeader from "./query-header"
 
 const Wrap = styled.div`
-  margin-bottom: 6px;
+  padding: 10px 16px;
 `
 
 const Row = styled.div`

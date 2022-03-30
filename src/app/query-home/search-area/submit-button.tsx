@@ -2,8 +2,8 @@ import {darken} from "polished"
 import {useDispatch} from "react-redux"
 import React from "react"
 import styled from "styled-components"
-import submitSearch from "../flows/submit-search"
-import Icon from "../../core/icon-temp"
+import submitSearch from "src/app/query-home/flows/submit-search"
+import Icon from "src/app/core/icon-temp"
 
 const start = "#6aa4e7"
 const end = "#4b91e2"
@@ -11,13 +11,14 @@ const bg = `linear-gradient(${start}, ${end})`
 const bgHover = `linear-gradient(${darken(0.03, start)}, ${darken(0.03, end)})`
 const bgActive = darken(0.05, end)
 
-const Button = styled.button<{isSquare: boolean}>`
+const Button = styled.button<{isMultiLine: boolean}>`
   background: ${bg};
   box-shadow: inset 0 0 0 1px var(--havelock);
   border: none;
   height: 26px;
-  border-radius: ${(p) => (p.isSquare ? "4px" : "4px 13px 13px 4px")};
-  margin-right: ${(p) => (p.isSquare ? "0" : "1px")};
+  border-radius: ${(p) => (p.isMultiLine ? "4px" : "4px 13px 13px 4px")};
+  margin-right: ${(p) => (p.isMultiLine ? "16px" : "1px")};
+  margin-bottom: ${(p) => (p.isMultiLine ? "5px" : "0")};
   width: 42px;
   display: flex;
   justify-content: center;
@@ -30,7 +31,7 @@ const Button = styled.button<{isSquare: boolean}>`
     }
     width: 16px;
     height: 16px;
-    margin-right: ${(p) => (p.isSquare ? "0" : "3px")};
+    margin-right: ${(p) => (p.isMultiLine ? "0" : "3px")};
   }
 
   &:hover {
@@ -48,7 +49,7 @@ const Button = styled.button<{isSquare: boolean}>`
 export default function SubmitButton({isMultiLine}: {isMultiLine: boolean}) {
   const dispatch = useDispatch()
   return (
-    <Button isSquare={isMultiLine} onClick={() => dispatch(submitSearch())}>
+    <Button isMultiLine={isMultiLine} onClick={() => dispatch(submitSearch())}>
       <Icon name="run" />
     </Button>
   )

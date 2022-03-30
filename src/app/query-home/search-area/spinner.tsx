@@ -1,7 +1,6 @@
 import {useSelector} from "react-redux"
 import React from "react"
 import styled from "styled-components"
-
 import MacSpinner from "src/js/components/MacSpinner"
 import useDelayedMount from "src/js/components/hooks/useDelayedMount"
 import Viewer from "src/js/state/Viewer"
