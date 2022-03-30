@@ -87,7 +87,10 @@ const BrimEditor = () => {
   const dispatch = useDispatch()
 
   const onKeyDown = (e) => {
-    if (e.key === "Enter" && e.metaKey) dispatch(submitSearch())
+    if (e.key === "Enter" && !e.shiftKey) {
+      dispatch(submitSearch())
+      e.preventDefault()
+    }
   }
 
   const onChangeUpdater = EditorView.updateListener.of((viewUpdate) => {
