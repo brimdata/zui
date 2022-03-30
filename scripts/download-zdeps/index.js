@@ -5,26 +5,28 @@ const fs = require("fs-extra")
 const got = require("got")
 const path = require("path")
 const tmp = require("tmp")
-const extract = require("extract-zip")
 const brimPackage = require("../../package.json")
-
+const decompress = require("decompress")
 const zdepsPath = path.resolve("zdeps")
 
 const platformDefs = {
   darwin: {
     zqBin: "zq",
     zedBin: "zed",
-    osarch: "darwin-amd64"
+    osarch: "darwin-amd64",
+    ext: "tar.gz"
   },
   linux: {
     zqBin: "zq",
     zedBin: "zed",
-    osarch: "linux-amd64"
+    osarch: "linux-amd64",
+    ext: "tar.gz"
   },
   win32: {
     zqBin: "zq.exe",
     zedBin: "zed.exe",
-    osarch: "windows-amd64"
+    osarch: "windows-amd64",
+    ext: "zip"
   }
 }
 
@@ -47,28 +49,18 @@ async function download(url, targetfile) {
 
 async function unzipTo(zipfile, dir) {
   await fs.mkdirp(dir)
-  return new Promise((resolve, reject) => {
-    extract(zipfile, {dir: dir}, (err) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve()
-      }
-    })
-  })
+  await decompress(zipfile, dir)
 }
 
 function zedArtifactPaths(version) {
   const plat = platformDefs[process.platform]
 
-  const artifactFile = `zed-${version}.${plat.osarch}.zip`
+  const artifactFile = `zed-${version}.${plat.osarch}.${plat.ext}`
   const artifactUrl = `https://github.com/brimdata/zed/releases/download/${version}/${artifactFile}`
-  const internalTopDir = `zed-${version}.${plat.osarch}`
 
   return {
     artifactFile,
-    artifactUrl,
-    internalTopDir
+    artifactUrl
   }
 }
 
@@ -83,15 +75,13 @@ async function zedArtifactsDownload(version, destPath) {
     const destArchive = path.join(tmpdir.name, paths.artifactFile)
     await download(paths.artifactUrl, destArchive)
     await unzipTo(destArchive, tmpdir.name)
-
+    console.log("Download and unzip success")
     fs.mkdirpSync(destPath)
 
     for (let f of [plat.zqBin, plat.zedBin]) {
-      fs.moveSync(
-        path.join(tmpdir.name, paths.internalTopDir, f),
-        path.join(destPath, f),
-        {overwrite: true}
-      )
+      fs.moveSync(path.join(tmpdir.name, f), path.join(destPath, f), {
+        overwrite: true
+      })
     }
   } finally {
     tmpdir.removeCallback()

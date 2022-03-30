@@ -1,3 +1,45 @@
+## v0.29.0
+### Where are my pools?
+
+Your pools are still here! But you need to run a migration script to convert them to the new Zed lake data format. 
+
+**[How to migrate](https://github.com/brimdata/brim/wiki/Migration-for-Version-0.29)**
+
+If you don't care to keep the old data, no need to run the migration. The app will work fine. Click the link above to learn how to remove the old pools if you desire.
+
+### New Features
+
+This release includes exciting new features we hope you'll find very useful. However, most of the work for this release was focused on the Zed backend that powers Brim. Zed 1.0 is here! Check out the [release notes for Zed 1.0](https://github.com/brimdata/zed/blob/v1.0.0/CHANGELOG.md#v100)
+
+### Inspector View
+
+The largest new feature you'll notice is the addition of the inspector view. The inspector lets you clearly see the shape of nested data structures. You can expand or collapse data containers like records and arrays. 
+
+You can toggle back and forth between this view and the familiar table view.
+
+The buttons on the right of the results header will expand and collapse all the nested data structures.
+### New Font
+
+Brim now uses the excellent, open source [Recursive](https://www.recursive.design/) font family to display your data. 
+### Other Interesting Changes
+
+* Update Zed to [v1.0.0](https://github.com/brimdata/zed/releases/tag/v1.0.0)
+* Save the scroll position when switching between table and inspector (#2271)
+* Add a JSON export format (#2269)
+* Use Recursive Mono as our data font (#2259)
+* Allow the default Brim query folder to be moved (#2178)
+* Always show queries section in the sidebar (#2177)
+* Move to a new Zed Root Directory (#2158)
+* Big upgrade to Zealot, the JavaScript Zed client (#2124, #1983)
+* Use yarn instead of npm (#2059)
+* Add ability to save queries in the lake (#2036)
+* Set BRIM_SURICATA_USER_DIR in the brimcap plugin (#1964)
+* Introduce the Zed Inspector (#1981)
+* Make our type checking stricter (#1984)
+* Upgrade Electron to v14 and replace Spectron with Playwright (#1985)
+* New Zealot (zed, zjson) (#1983)
+* Autofocus the query name when saving a query (#1979)
+
 ## v0.28.0
 
 * Update Zed to [v0.33.0](https://github.com/brimdata/zed/releases/tag/v0.33.0)
