@@ -19,6 +19,20 @@ const BG = styled.div`
     border: none;
     border-top: 1px solid var(--cloudy);
   }
+
+  * {
+    margin: 0.5em 0;
+  }
+
+  li {
+    margin: 0.1em 0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 `
 
 export default function ReleaseNotes() {
