@@ -36,17 +36,13 @@ const editorTheme = EditorView.theme(
   {
     ".cm-content": {
       fontFamily: cssVar("--mono-font"),
-      letterSpacing: "0.8px"
-    },
-    ".cm-line": {
-      padding: 0
+      lineHeight: 1.6
     },
     ".cm-gutters": {
       margin: 0,
       border: "none",
-      background: "inherit",
-      color: cssVar("--aqua"),
-      opacity: 0.2
+      color: cssVar("--aqua-transparent"),
+      background: cssVar("--editor-background")
     },
     ".cm-activeLine": {
       background: cssVar("--hawkes-blue")

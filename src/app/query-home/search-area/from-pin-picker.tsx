@@ -19,7 +19,7 @@ const PickerWrapper = styled.button`
   justify-content: center;
   background: var(--hawkes-blue);
   border-radius: 10px;
-  padding: 3px 12px 3px 14px;
+  padding: 3px 18px;
   border: none;
   margin: 0 3px 6px 16px;
   

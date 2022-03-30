@@ -21,12 +21,10 @@ const InputBackdrop = styled.div<{isVisible: boolean}>`
   outline: none;
   border: none;
   padding: 0 0 0 14px;
-  margin-top: -1px;
   border-radius: 15px;
   height: 28px;
   line-height: 24px;
   font-size: 13px;
-  letter-spacing: 0.8px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 0 1px 0 rgba(0, 0, 0, 0.77);
   width: 100%;
   position: relative;
