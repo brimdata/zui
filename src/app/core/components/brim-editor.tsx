@@ -41,9 +41,6 @@ const editorTheme = EditorView.theme(
     ".cm-line": {
       padding: 0
     },
-    ".cm-scroller": {
-      overflow: "hidden"
-    },
     ".cm-gutters": {
       margin: 0,
       border: "none",
