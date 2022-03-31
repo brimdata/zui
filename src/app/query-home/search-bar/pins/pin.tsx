@@ -33,7 +33,7 @@ export function Pin(props: {
         origin="bottom left"
         top={10}
         left={0}
-        width={260}
+        width={360}
       >
         {<props.dialog {...props} />}
       </Dialog>
