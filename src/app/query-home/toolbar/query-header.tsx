@@ -13,15 +13,11 @@ import {lakeQueryPath} from "../../router/utils/paths"
 import tabHistory from "../../router/tab-history"
 import Icon from "../../core/icon-temp"
 import SearchBar from "src/js/state/SearchBar"
-import usePopupMenu from "../../../js/components/hooks/usePopupMenu"
-import {setRemoteQueries} from "src/app/features/sidebar/flows/remote-queries"
-import Tabs from "../../../js/state/Tabs"
-import {refreshRemoteQueries} from "../../../js/components/LeftPane/remote-queries"
-import {nanoid} from "@reduxjs/toolkit"
 import AutosizeInput from "react-input-autosize"
 import {cssVar} from "../../../js/lib/cssVar"
 import BrimTooltip from "src/js/components/BrimTooltip"
-import {toast} from "react-hot-toast"
+import {showContextMenu} from "../../../js/lib/System"
+import getQueryHeaderMenu from "./flows/get-query-header-menu"
 
 const Row = styled.div`
   display: flex;
@@ -36,7 +32,7 @@ const TitleHeader = styled(Row)`
   width: 100%;
 `
 
-const StyledTitle = styled.h2`
+const StyledTitle = styled.h2<{hover: boolean}>`
   ${(props) => props.theme.typography.labelBold}
   margin: 0 0 3px 0;
   max-width: 100%;
@@ -50,10 +46,14 @@ const StyledTitle = styled.h2`
   margin-top: -2px;
   margin-bottom: 1px;
 
-  &:hover {
-    border-radius: 3px;
-    background-color: var(--hover-light-bg);
-  }
+  ${(p) =>
+    p.hover &&
+    `
+    &:hover {
+      border-radius: 3px;
+      background-color: var(--hover-light-bg);
+    }
+  `}
 `
 const SubTitle = styled.div<{isEnabled: boolean}>`
   ${(props) => props.theme.typography.labelNormal}
@@ -89,6 +89,17 @@ const StyledTitleWrapper = styled.div`
 const IconChevronDown = styled(Icon).attrs({name: "chevron-down"})`
   width: 12px;
   height: 12px;
+`
+
+const StyledStatus = styled.span`
+  display: flex;
+  align-items: center;
+  svg {
+    width: 9px;
+    height: 9px;
+    opacity: 0.5;
+    margin-right: 3px;
+  }
 `
 
 const TitleInput = ({onCancel, onSubmit}) => {
@@ -190,81 +201,24 @@ const QueryHeader = () => {
     let status = "Saved"
     if (isModified) status = "Modified"
     if (isEditing) status = "Renaming"
+    if (query.isReadOnly) status = "Readonly"
+
     return (
       <>
-        <span>{status}</span>
+        <StyledStatus>
+          {query.isReadOnly && <Icon name="lock" />}
+          {status}
+        </StyledStatus>
         {!isEditing && <IconChevronDown />}
       </>
     )
   }
 
-  const menu = usePopupMenu([
-    {
-      label: `Move to ${querySource === "local" ? "Remote" : "Local"}`,
-      click: () => {
-        if (querySource === "local") {
-          dispatch(setRemoteQueries([query.serialize()])).then(() => {
-            dispatch(refreshRemoteQueries())
-          })
-          dispatch(Queries.removeItems([query.id]))
-        } else {
-          dispatch(Queries.addItem(query.serialize(), "root"))
-          dispatch(setRemoteQueries([query.serialize()], true))
-        }
-      }
-    },
-    {
-      label: `Copy to ${querySource === "local" ? "Remote" : "Local"}`,
-      click: () => {
-        try {
-          const queryCopy = query.serialize()
-          queryCopy.id = nanoid()
-          if (querySource === "local") {
-            dispatch(setRemoteQueries([queryCopy]))
-          } else {
-            dispatch(Queries.addItem(queryCopy, "root"))
-          }
-          toast.success("Query Copied")
-        } catch (e) {
-          toast.error(`Copy Failed: ${e}`)
-        }
-      }
-    },
-    {
-      label: "Rename",
-      click: () => setIsEditing(true)
-    },
-    {
-      label: "Duplicate",
-      click: () => {
-        const dupeQ = query.serialize()
-        dupeQ.id = nanoid()
-        dupeQ.name += " (copy)"
-        if (querySource === "local") {
-          dispatch(Queries.addItem(dupeQ, "root"))
-          dispatch(Tabs.new(lakeQueryPath(dupeQ.id, lakeId)))
-        }
-        if (querySource === "remote") {
-          dispatch(setRemoteQueries([dupeQ])).then(() => {
-            dispatch(Tabs.new(lakeQueryPath(dupeQ.id, lakeId)))
-          })
-        }
-      }
-    },
-    {
-      label: "Delete",
-      click: () => {
-        if (querySource === "local")
-          return dispatch(Queries.removeItems([query.id]))
-        if (querySource === "remote")
-          return dispatch(setRemoteQueries([query.serialize()], true))
-      }
-    }
-  ])
-
-  const openMenu = (e) => {
+  const openMenu = () => {
     if (isEditing || querySource === "draft") return
-    menu.onClick(e)
+    showContextMenu(
+      dispatch(getQueryHeaderMenu({handleRename: () => setIsEditing(true)}))
+    )
   }
 
   return (
@@ -279,7 +233,8 @@ const QueryHeader = () => {
             data-place="bottom"
             data-effect="solid"
             data-delay-show={500}
-            onClick={() => setIsEditing(true)}
+            onClick={() => !query.isReadOnly && setIsEditing(true)}
+            hover={!query.isReadOnly}
           >
             {query?.name}
           </StyledTitle>

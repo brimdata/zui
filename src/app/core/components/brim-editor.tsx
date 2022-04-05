@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
 import styled from "styled-components"
-import {useSelector} from "react-redux"
 import SearchBar from "../../../js/state/SearchBar"
 import submitSearch from "../../query-home/flows/submit-search"
 import {useDispatch} from "../state"
@@ -25,11 +24,17 @@ import {rectangularSelection} from "@codemirror/rectangular-selection"
 import {defaultHighlightStyle} from "@codemirror/highlight"
 import {cssVar} from "src/js/lib/cssVar"
 
-const EditorWrap = styled.div<{isMultiLine: boolean}>`
+const EditorWrap = styled.div<{isDisabled?: boolean}>`
   width: 100%;
   margin: 0;
   max-height: 150px;
   overflow: auto;
+
+  ${(p) =>
+    p.isDisabled &&
+    `
+    cursor: not-allowed;
+  `}
 `
 
 const editorTheme = EditorView.theme(
@@ -78,12 +83,16 @@ const baseEditorSetup: Extension = [
   ])
 ]
 
-const BrimEditor = () => {
+type Props = {
+  value: string
+  isDisabled?: boolean
+}
+
+const BrimEditor = ({value, isDisabled}: Props) => {
   const ref = useRef<HTMLDivElement>()
   const [view, setView] = useState<EditorView>(null)
-  const inputValue = useSelector(SearchBar.getSearchBarInputValue)
   const [currentEditorValue, setCurrentEditorValue] = useState("")
-  const isMultiLineMode = hasNewLine(inputValue)
+  const isMultiLineMode = hasNewLine(value)
   const dispatch = useDispatch()
 
   const onKeyDown = (e) => {
@@ -101,16 +110,17 @@ const BrimEditor = () => {
   })
   const extensions = [editorTheme, onChangeUpdater]
   if (isMultiLineMode) extensions.push(baseEditorSetup)
+  if (isDisabled) extensions.push(EditorView.editable.of(false))
 
   useEffect(() => {
     if (!view) return
-    if (inputValue === currentEditorValue) return
+    if (value === currentEditorValue) return
     view.dispatch(
       view.state.update({
-        changes: {from: 0, to: view.state.doc.length, insert: inputValue}
+        changes: {from: 0, to: view.state.doc.length, insert: value}
       })
     )
-  }, [inputValue])
+  }, [value])
   useEffect(() => {
     if (!view) return
     view.dispatch({
@@ -121,7 +131,7 @@ const BrimEditor = () => {
     if (!ref.current) return
     const state = EditorState.create({
       extensions,
-      doc: inputValue
+      doc: value
     })
     const newView = new EditorView({
       state,
@@ -131,9 +141,7 @@ const BrimEditor = () => {
     newView.focus()
   }, [])
 
-  return (
-    <EditorWrap isMultiLine={isMultiLineMode} ref={ref} onKeyDown={onKeyDown} />
-  )
+  return <EditorWrap isDisabled={isDisabled} ref={ref} onKeyDown={onKeyDown} />
 }
 
 export default BrimEditor

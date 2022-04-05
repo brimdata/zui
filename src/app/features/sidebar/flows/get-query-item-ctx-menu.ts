@@ -16,7 +16,7 @@ const getQueryItemCtxMenu = ({data, tree, handlers, lakeId}) => (
   getState,
   {api}
 ) => {
-  const {value, id} = data
+  const {value, id, isReadOnly} = data
   const isGroup = "items" in data
   const hasMultiSelected =
     tree.getSelectedIds().length > 1 &&
@@ -109,7 +109,7 @@ const getQueryItemCtxMenu = ({data, tree, handlers, lakeId}) => (
     {type: "separator"},
     {
       label: "Rename",
-      enabled: !hasBrimItemSelected,
+      enabled: !isReadOnly && !hasBrimItemSelected,
       click: () => handlers.edit()
     },
     {type: "separator"},
