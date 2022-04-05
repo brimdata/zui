@@ -12,6 +12,8 @@ export default function TabImport() {
         <footer>
           <p>
             <b>Accepted formats:</b>{" "}
+            <Link href="https://tools.ietf.org/html/rfc4180">CSV</Link>,{" "}
+            <Link href="https://www.json.org/json-en.html">JSON</Link>,{" "}
             <Link href="http://ndjson.org/">NDJSON</Link>,{" "}
             <Link href="https://docs.zeek.org/en/current/log-formats.html#zeek-tsv-format-logs">
               Zeek TSV
@@ -20,12 +22,11 @@ export default function TabImport() {
             <Link href={links.ZED_DOCS_FORMATS_ZSON}>ZSON</Link>
           </p>
           See{" "}
-          <Link href="https://github.com/brimdata/brim/wiki/Importing-CSV%2C-Parquet%2C-and-ZST">
+          <Link href="https://github.com/brimdata/brim/wiki/Importing-Parquet-and-ZST">
             docs
           </Link>{" "}
           for Zed platform support for{" "}
-          <Link href="https://tools.ietf.org/html/rfc4180">CSV</Link>,{" "}
-          <Link href="https://parquet.apache.org/">Parquet</Link>, and{" "}
+          <Link href="https://parquet.apache.org/">Parquet</Link> and{" "}
           <Link href={links.ZED_DOCS_FORMATS_ZST}>ZST</Link> formats.
         </footer>
       </section>
