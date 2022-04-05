@@ -9,10 +9,8 @@ import {useDispatch, useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import SearchBarState from "src/js/state/SearchBar"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
-import SearchBar from "./search-bar"
 import Toolbar from "./toolbar"
 import styled from "styled-components"
-import useRun from "./toolbar/hooks/use-run"
 import useExport from "./toolbar/hooks/use-export"
 import useColumns from "./toolbar/hooks/use-columns"
 import DraftQueries from "src/js/state/DraftQueries"
@@ -24,6 +22,7 @@ import {AppDispatch} from "../../js/state/types"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import {getQuerySource} from "./flows/get-query-source"
+import SearchArea from "./search-area"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -64,7 +63,6 @@ export function useSearchParamLocationSync() {
 const QueryPageHeader = styled.div`
   background: white;
   z-index: 1;
-  padding: 10px 16px;
   user-select: none;
 `
 
@@ -92,17 +90,20 @@ const useInspectorButtons = (): ActionButtonProps[] => {
 }
 const usePin = (): ActionButtonProps => {
   const dispatch = useDispatch()
-  const query = useSelector(Current.getQuery)
-  const searchTerm = useSelector(SearchBarActions.getSearchBarInputValue)
   return {
     label: "Pin",
     title: "Pin current search term",
     icon: "pin",
     click: () => {
-      query.addFilterPin(searchTerm)
-      query.value = ""
-      dispatch(updateQuery(query))
-      dispatch(SearchBarActions.pinSearchBar())
+      dispatch((d, getState) => {
+        const state = getState()
+        const query = Current.getQuery(state)
+        const searchTerm = SearchBarActions.getSearchBarInputValue(state)
+        query.addFilterPin(searchTerm)
+        query.value = ""
+        d(updateQuery(query))
+        d(SearchBarActions.pinSearchBar())
+      })
     }
   }
 }
@@ -141,7 +142,6 @@ const QueryHome = () => {
   const dispatch = useDispatch<AppDispatch>()
   const exportAction = useExport()
   const columns = useColumns()
-  const run = useRun()
   const pin = usePin()
   const pluginButtons = usePluginToolbarItems("search")
   const [expandButton, collapseButton] = useInspectorButtons()
@@ -151,8 +151,7 @@ const QueryHome = () => {
     collapseButton,
     exportAction,
     columns,
-    pin,
-    run
+    pin
   ]
 
   if (!query)
@@ -177,7 +176,7 @@ const QueryHome = () => {
     <>
       <QueryPageHeader>
         <Toolbar actions={actions} />
-        <SearchBar />
+        <SearchArea />
       </QueryPageHeader>
       <Results />
     </>

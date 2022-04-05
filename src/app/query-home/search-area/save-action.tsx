@@ -3,7 +3,7 @@ import {useDispatch, useStore} from "react-redux"
 import StarNoFillIcon from "src/js/icons/StarNoFillIcon"
 import Modal from "src/js/state/Modal"
 import SearchBar from "src/js/state/SearchBar"
-import InputAction from "./InputAction"
+import InputAction from "./input-action"
 
 export default function SaveAction() {
   const dispatch = useDispatch()

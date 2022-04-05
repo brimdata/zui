@@ -1,6 +1,5 @@
 import {darken} from "polished"
 import styled from "styled-components"
-
 import {cssVar} from "src/js/lib/cssVar"
 
 const InputAction = styled.button`
