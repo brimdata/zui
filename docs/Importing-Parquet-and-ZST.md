@@ -11,16 +11,16 @@ depends on the backend [Zed](https://github.com/brimdata/zed) platform's
 ability to "auto-detect" these formats. While several formats are covered by
 the current auto-detection implementation,
 [Parquet](https://parquet.apache.org/) and
-[ZST](https://github.com/brimdata/zed/blob/main/docs/formats/zst.md) are not
+[ZST](https://zed.brimdata.io/docs/formats/zst/) are not
 yet (see [zed/2517](https://github.com/brimdata/zed/issues/2517)).
 
 This article shows how the Zed CLI tools can be used to preprocess data of
-these formats into [ZNG](https://github.com/brimdata/zed/blob/main/docs/formats/zng.md)
+these formats into [ZNG](https://zed.brimdata.io/docs/formats/zng/)
 that can be easily imported into Brim.
 
 # Example
 
-Preprocessing can be performed with the [`zq`](https://github.com/brimdata/zed/blob/main/docs/zq/README.md)
+Preprocessing can be performed with the [`zq`](https://zed.brimdata.io/docs/commands/zq/)
 CLI tool. These Zed CLI tools are included with Brim and can be found in the
 `zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
 path.
