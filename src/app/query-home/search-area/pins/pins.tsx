@@ -110,6 +110,7 @@ function pinSwitch(pin: QueryPin, index: number, dispatch, state) {
     pin,
     index,
     onClick,
+    onReset: () => dispatch(PinsUI.reset()),
     isEditing: state.editing === index,
     dispatch,
     menu: () => [] as MenuItemConstructorOptions[],

@@ -1,12 +1,11 @@
 import React from "react"
 import styled from "styled-components"
 
-import Pins from "./pins"
 import Error from "./error"
 import Input, {hasNewLine} from "./Input"
-import FromPinPicker from "./from-pin-picker"
 import {useSelector} from "react-redux"
 import SearchBar from "src/js/state/SearchBar"
+import {Pins} from "./pins/pins"
 
 const Group = styled.div<{flex: number; isMultiLine: boolean}>`
   display: flex;
@@ -20,11 +19,10 @@ export default function SearchArea() {
   const isMultiLine = hasNewLine(inputValue)
   return (
     <>
-      <FromPinPicker />
+      <Pins />
       <Group isMultiLine={isMultiLine} flex={1}>
         <Input isMultiLine={isMultiLine} />
         <Error />
-        <Pins />
       </Group>
     </>
   )

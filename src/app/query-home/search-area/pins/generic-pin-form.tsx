@@ -92,8 +92,12 @@ export function GenericPinForm(props: {pin: GenericQueryPin}) {
       </Field>
 
       <Actions>
-        <Button value="cancel">Cancel</Button>
-        <PrimaryButton value="ok">OK</PrimaryButton>
+        <Button onClick={() => props.onReset()} value="cancel">
+          Cancel
+        </Button>
+        <PrimaryButton value="ok" onClick={() => props.onReset()}>
+          OK
+        </PrimaryButton>
       </Actions>
     </form>
   )

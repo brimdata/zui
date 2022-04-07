@@ -1,5 +1,6 @@
 import React, {MutableRefObject, useLayoutEffect, useRef, useState} from "react"
 import {createPortal} from "react-dom"
+import useListener from "src/js/components/hooks/useListener"
 import styled from "styled-components"
 
 export type DialogProps = {
@@ -40,29 +41,58 @@ function useDialogPosition(
     width: props.width
   })
 
-  useLayoutEffect(() => {
+  const run = () => {
     if (!props.open) return
-    if (props.anchor) {
-      let left = 10
-      let top = 10
-      const widthLimit = document.documentElement.clientWidth
-      const heightLimit = document.documentElement.clientHeight
-      const anchor = props.anchor.getBoundingClientRect()
-      if (props.origin.includes("left")) left = anchor.left
-      if (props.origin.includes("right")) left = anchor.left + anchor.width
-      if (props.origin.includes("top")) top = anchor.top
-      if (props.origin.includes("bottom")) top = anchor.top + anchor.height
-      if (props.top) top += props.top
-      if (props.left) left += props.left
+    if (!ref.current) return
+    if (!props.anchor) return
+    const {width, height} = ref.current.getBoundingClientRect()
 
-      // If you overflow it to the right, back up
-      // then If you overflow to the left, set at left limit
-      // If you overflow on the bottom, back up
-      // then If you overflow on the top, set at top limit
+    let left = 10
+    let top = 10
+    const leftMin = 10
+    const leftMax = document.documentElement.clientWidth - leftMin
+    const topMin = 10
+    const topMax = document.documentElement.clientHeight - topMin
 
-      setPosition((s) => ({...s, left, top}))
+    const anchor = props.anchor.getBoundingClientRect()
+    if (props.origin.includes("left")) left = anchor.left
+    if (props.origin.includes("right")) left = anchor.left + anchor.width
+    if (props.origin.includes("top")) top = anchor.top
+    if (props.origin.includes("bottom")) top = anchor.top + anchor.height
+    if (props.top) top += props.top
+    if (props.left) left += props.left
+
+    // If you overflow it to the right, back up
+    if (left + width > leftMax) {
+      const diff = left + props.width - leftMax
+      left -= diff
     }
-  }, [props.anchor, props.origin, props.open, props.top, props.left])
+    // then If you overflow to the left, set at left limit
+    if (left < leftMin) {
+      left = leftMin
+    }
+    // If you overflow on the bottom, back up
+    if (top + height > topMax) {
+      const diff = top + height - topMax
+      top -= diff
+    }
+    // then If you overflow on the top, set at top limit
+    if (top < topMin) {
+      top = topMin
+    }
+
+    setPosition((s) => ({...s, left, top}))
+  }
+
+  useLayoutEffect(run, [
+    props.anchor,
+    props.origin,
+    props.open,
+    props.top,
+    props.left
+  ])
+
+  useListener(global.window, "resize", run)
 
   return position
 }
