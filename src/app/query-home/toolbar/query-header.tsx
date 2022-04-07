@@ -151,7 +151,7 @@ const TitleInput = ({onCancel, onSubmit}) => {
   )
 }
 
-const QueryPageHeader = () => {
+const QueryHeader = () => {
   const dispatch = useDispatch<AppDispatch>()
   const query = useSelector(Current.getQuery)
   const lakeId = useSelector(Current.getLakeId)
@@ -298,4 +298,4 @@ const QueryPageHeader = () => {
   )
 }
 
-export default QueryPageHeader
+export default QueryHeader

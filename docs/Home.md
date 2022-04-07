@@ -21,9 +21,10 @@ effective use of the Brim desktop application and related tools.
 
 ## User Documentation
 
-- [[Migration of Spaces]] 
+- [[Migration for Version 0.29]]
 - [[Linux RPM Upgrade]]
-- [[Importing CSV, Parquet, and ZST]]
+- [[Importing Parquet and ZST]]
+- [[Migration of Spaces]]
 
 ## Cookbooks
 
@@ -33,5 +34,4 @@ effective use of the Brim desktop application and related tools.
 
 ## Developer Resources
 
-- [[Code Base Walkthrough]]
 - [[Adding Migrations]]

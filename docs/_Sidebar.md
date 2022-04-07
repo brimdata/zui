@@ -8,9 +8,10 @@
 
 **User Documentation**
 
-- [[Migration of Spaces]]
+- [[Migration for Version 0.29]]
 - [[Linux RPM Upgrade]]
-- [[Importing CSV, Parquet, and ZST]]
+- [[Importing Parquet and ZST]]
+- [[Migration of Spaces]]
 
 **Cookbooks**
 
@@ -20,5 +21,4 @@
 
 **Developer Resources**
 
-- [[Code Base Walkthrough]]
 - [[Adding Migrations]]

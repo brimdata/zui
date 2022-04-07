@@ -3,6 +3,7 @@ import randomHash from "../../brim/randomHash"
 import {BrimWindow, WindowName} from "../tron/window-manager"
 import {Dimens, getWindowDimens} from "./dimens"
 import {enable} from "@electron/remote/main"
+import env from "src/app/core/env"
 
 const DEFAULT_DIMENS = {
   x: undefined,
@@ -34,7 +35,7 @@ export class SearchWindow implements BrimWindow {
     this.touchLastFocused()
     this.ref = new BrowserWindow({
       ...getWindowDimens(dimens, DEFAULT_DIMENS, screens),
-      titleBarStyle: "hidden",
+      titleBarStyle: env.isMac ? "hidden" : undefined,
       resizable: true,
       minWidth: 480,
       minHeight: 100,

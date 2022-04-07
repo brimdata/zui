@@ -1,7 +1,6 @@
 import {useSelector} from "react-redux"
 import React from "react"
 import styled from "styled-components"
-
 import MacSpinner from "src/js/components/MacSpinner"
 import useDelayedMount from "src/js/components/hooks/useDelayedMount"
 import Viewer from "src/js/state/Viewer"
@@ -11,6 +10,7 @@ const Wrap = styled.div`
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+  margin-right: 3px;
   .mac-spinner {
     transform: scale(0.6);
   }

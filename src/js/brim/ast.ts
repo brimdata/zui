@@ -16,13 +16,13 @@ export default function ast(tree: any) {
       return keys.map((k) => fieldExprToName(k.lhs || k.rhs))
     },
     proc(name: string) {
-      return getProcs(tree).find((p) => p.kind === name)
+      return getOps(tree).find((p) => p.kind === name)
     },
     procs(name: string): any[] {
-      return getProcs(tree).filter((p) => p.kind === name)
+      return getOps(tree).filter((p) => p.kind === name)
     },
     getProcs() {
-      return getProcs(tree)
+      return getOps(tree)
     },
     self() {
       return tree
@@ -69,19 +69,19 @@ function _fieldExprToName(expr): string | string[] {
   }
 }
 
-function getProcs(ast) {
+function getOps(ast) {
   if (!ast || ast.error) return []
   const list = []
-  collectProcs(ast, list)
+  collectOps(ast, list)
   return list
 }
 
-function collectProcs(proc, list) {
-  list.push(proc)
-  if (COMPOUND_PROCS.includes(proc.kind)) {
-    for (const p of proc.procs) collectProcs(p, list)
-  } else if (proc.kind === OP_EXPR_PROC) {
-    collectProcs(proc.expr, list)
+function collectOps(op, list) {
+  list.push(op)
+  if (COMPOUND_PROCS.includes(op.kind)) {
+    for (const p of op.ops) collectOps(p, list)
+  } else if (op.kind === OP_EXPR_PROC) {
+    collectOps(op.expr, list)
   }
 }
 

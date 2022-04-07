@@ -1,4 +1,4 @@
-# Importing CSV, Parquet, and ZST
+# Importing Parquet and ZST
 
 - [Summary](#summary)
 - [Example](#example)
@@ -10,18 +10,17 @@ Brim's ability to import data of diverse file formats via simple drag & drop
 depends on the backend [Zed](https://github.com/brimdata/zed) platform's
 ability to "auto-detect" these formats. While several formats are covered by
 the current auto-detection implementation,
-[CSV](https://tools.ietf.org/html/rfc4180),
-[Parquet](https://parquet.apache.org/), and
-[ZST](https://github.com/brimdata/zed/blob/main/docs/formats/zst.md) are not
+[Parquet](https://parquet.apache.org/) and
+[ZST](https://zed.brimdata.io/docs/formats/zst/) are not
 yet (see [zed/2517](https://github.com/brimdata/zed/issues/2517)).
 
 This article shows how the Zed CLI tools can be used to preprocess data of
-these formats into [ZNG](https://github.com/brimdata/zed/blob/main/docs/formats/zng.md)
+these formats into [ZNG](https://zed.brimdata.io/docs/formats/zng/)
 that can be easily imported into Brim.
 
 # Example
 
-Preprocessing can be performed with the [`zq`](https://github.com/brimdata/zed/tree/main/cmd/zq)
+Preprocessing can be performed with the [`zq`](https://zed.brimdata.io/docs/commands/zq/)
 CLI tool. These Zed CLI tools are included with Brim and can be found in the
 `zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
 path.
@@ -31,31 +30,28 @@ Input file format can be specified via the `-i` option.
 ```
 $ zq -h
 NAME
-    zed query - apply zed queries to data files or streams
+    zq - process data with Zed queries
 
 USAGE
-    query [ options ] [ zed-query ] file [ file ... ]
+    zq [ options ] [ zed-query ] file [ file ... ]
 
 OPTIONS
 ...
-    -i format of input data [auto,zng,zst,json,ndjson,zeek,zjson,csv,tzng,parquet] (default "auto")
+    -i format of input data [auto,zng,zst,json,zeek,zjson,csv,parquet] (default "auto")
 ...
 ```
 
 Here's an example `zq` command line on macOS to preprocess the test data
-from [testxlsx_converted.csv](https://raw.githubusercontent.com/wireservice/csvkit/master/examples/testxlsx_converted.csv)
+from [userdata1.parquet](https://github.com/Teradata/kylo/raw/master/samples/sample-data/parquet/userdata1.parquet)
 into ZNG.
 
 ```
-$ /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/zq -i csv testxlsx_converted.csv > testxlsx_converted.zng
+$ /Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps/zq -i parquet userdata1.parquet > userdata1.zng
 ```
 
-> **Note:** You may want to perform other preprocessing at this phase, such as
-> invoking [`fuse`](https://github.com/brimdata/zed/blob/main/docs/zq/operators/fuse.md).
+Now our `userdata1.zng` can be imported into Brim.
 
-Now our `testxlsx_converted.zng` can be imported into Brim.
-
-![Imported CSV](media/Imported-CSV.png)
+![Imported Parquet](media/Imported-Parquet.png)
 
 # Contact us!
 
