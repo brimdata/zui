@@ -1,5 +1,5 @@
 import {cssVar, lighten, darken} from "polished"
-import React from "react"
+import React, {useRef} from "react"
 import styled from "styled-components"
 import {GenericQueryPin} from "./reducer"
 
@@ -73,8 +73,9 @@ const PrimaryButton = styled(Button)`
 `
 
 export function GenericPinForm(props: {pin: GenericQueryPin}) {
+  const form = useRef()
   return (
-    <form method="dialog">
+    <form method="dialog" ref={form}>
       <Field>
         <label htmlFor="value">Value</label>
         <textarea autoFocus name="value">
@@ -95,7 +96,14 @@ export function GenericPinForm(props: {pin: GenericQueryPin}) {
         <Button onClick={() => props.onReset()} value="cancel">
           Cancel
         </Button>
-        <PrimaryButton value="ok" onClick={() => props.onReset()}>
+        <PrimaryButton
+          value="ok"
+          onClick={() => {
+            props.onSubmit(
+              Object.fromEntries(new FormData(form.current).entries())
+            )
+          }}
+        >
           OK
         </PrimaryButton>
       </Actions>
