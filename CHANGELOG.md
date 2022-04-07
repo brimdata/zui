@@ -106,9 +106,7 @@ particular we'd like to bring to your attention first.
 
 * You will be prompted upon first launch of Brim `v0.25.0` to allow
   auto-migration of saved data from your `v0.24.0` Spaces to pools in Zed
-  lakes. See the
-  [Space Migration](https://github.com/brimdata/brim/wiki/Migration-of-Spaces)
-  article in the Brim wiki for details.
+  lakes.
 
 * Brim `v0.25.0` includes a new installer that will make upgrades to future
   versions more seamless. However, when making the jump from `v0.24.0` to the
@@ -163,7 +161,7 @@ questions.
 * Brim now invokes [Brimcap](https://github.com/brimdata/brimcap) to generate logs from imported pcaps and to extract flows when **Packets** is clicked, rather than relying on `zqd` (#1584, #1573, #1591, #1590, #1598, #1614, #1617, #1637, #1651, #1664, #1668, #1705, #1731, #1735, #1748, #1747, #1781, #1789, #1810, #1816, #1829, #1833)
 * Use pools in Zed lakes for backend storage rather than Spaces (#1589, #1601, #1633, #1676, #1696, #1710, #1712, #1772, #1822)
 * Implement the full Zed type system in JavaScript, which allows for improved presentation of array and set types, and also fixes an issue where named types were rejected at import (#1603, #1623, #1663, #1732)
-* Offer the option to migrate Spaces to pools when new Brim launches ([wiki article](https://github.com/brimdata/brim/wiki/Migration-of-Spaces)) (#1621, #1587, #1636, #1641, #1640, #1657, #1671, #1682, #1762)
+* Offer the option to migrate Spaces to pools when new Brim launches (#1621, #1587, #1636, #1641, #1640, #1657, #1671, #1682, #1762)
 * Automatically append `| fuse` to the Zed pipeline if the user is exporting data in CSV format (#1622)
 * Notify a Windows user if they've launched new Brim while old Brim is still installed (#1627, #1751)
 * Update default **Query Library** entries to reflect newer Zed language syntax (#1489, #1645)
