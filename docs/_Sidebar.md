@@ -11,7 +11,6 @@
 - [[Migration for Version 0.29]]
 - [[Linux RPM Upgrade]]
 - [[Importing Parquet and ZST]]
-- [[Migration of Spaces]]
 
 **Cookbooks**
 
