@@ -13,43 +13,61 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
+
       - name: Extract branch name
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+
       - name: install rpm
         run: sudo apt-get install -y rpm
+
       - uses: actions/setup-go@v2
         with:
           go-version: "1.16"
+
       - uses: actions/setup-node@v2
         with:
           cache: yarn
           node-version-file: .nvmrc
+
       - if: ${{ !startsWith(steps.extract_branch.outputs.branch, 'rc-v') }}
         name: Set version string for ad hoc builds
         run: echo "ADHOC_VERSION_STRING=$(npm version preminor --no-git-tag-version --preid prerelease-${GITHUB_SHA:0:8})" >> $GITHUB_ENV
+
       - run: yarn --inline-builds
+
       - run: yarn run build
+
       - name: build packages
         run: yarn electron-builder --linux
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}'
+
       - name: Setup Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0
         with:
           version: "290.0.1"
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}
+
       - if: ${{ startsWith(steps.extract_branch.outputs.branch, 'rc-v') }}
         name: "Set bucket path (if this is a release candidate)"
         run: echo "BUCKET_PATH=gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ steps.extract_branch.outputs.branch }}/linux" >> $GITHUB_ENV
+
       - if: ${{ !startsWith(steps.extract_branch.outputs.branch, 'rc-v') }}
         name: "Set bucket path (if this is an ad hoc build)"
         run: echo "BUCKET_PATH=gs://${{ secrets.GCLOUD_BUCKET_RELEASES }}/brim/${{ env.ADHOC_VERSION_STRING }}/linux" >> $GITHUB_ENV
+
       - name: "Set publicly-available bucket path"
         run: echo "PUBLIC_BUCKET_PATH=${BUCKET_PATH/gs:\/\//https://storage.googleapis.com/}" >> $GITHUB_ENV
+
       - name: Upload release artifacts to Google Cloud Storage bucket
         run: |
           gsutil rm -rf ${{ env.BUCKET_PATH }} || true
           gsutil cp dist/installers/Brim-* ${{ env.BUCKET_PATH }}
+
       - name: Assemble Slack message that points to multiple artifacts
         run: |
           echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV
@@ -59,6 +77,7 @@ jobs:
             echo "\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>" >> $GITHUB_ENV
           done
           echo "EOF" >> $GITHUB_ENV
+
       - name: Inform Slack users at Brim HQ of the new artifact
         uses: tiloio/slack-webhook-action@v1.1.2
         with:
