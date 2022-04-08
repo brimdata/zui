@@ -88,7 +88,7 @@ and details to [brim/1490](https://github.com/brimdata/brim/issues/1490).
 In all other cases, please [open a new issue](#opening-an-issue).
 
 To begin troubleshooting this, it helps to understand the "backend" of Brim.
-One essential component is a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/zed/README.md),
+One essential component is a [Zed Lake](https://zed.brimdata.io/docs/commands/zed/#1-the-lake-model),
 a server-style process that manages the storage and querying of imported data.
 Operations in the pools of a Zed Lake are invoked via a [REST
 API](https://en.wikipedia.org/wiki/Representational_state_transfer) that's

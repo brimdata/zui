@@ -81,9 +81,9 @@ Brim and the bundled Zed/Brimcap tools often make use of temporary storage.
 Some examples:
 
 * The **Zed** backend may use temporary storage to "spill to disk" when
-performing [`sort`](https://github.com/brimdata/zed/blob/main/docs/zq/operators/sort.md),
-[`fuse`](https://github.com/brimdata/zed/tree/main/docs/zq/operators/fuse.md),
-or [aggregations](https://github.com/brimdata/zed/blob/main/docs/zq/reference.md#aggregate-functions) on data sets that cannot fit into allocated system
+performing [`sort`](https://zed.brimdata.io/docs/language/operators/sort/),
+[`fuse`](https://zed.brimdata.io/docs/language/operators/fuse/),
+or [aggregations](https://zed.brimdata.io/docs/language/aggregates/) on data sets that cannot fit into allocated system
 memory. For this, Zed uses a directory with a name that starts with
 `zed-spill-`. The directory is automatically deleted when the operation
 finishes.
