@@ -190,7 +190,7 @@ questions.
 * Update zq to [v0.29.0](https://github.com/brimdata/zed/releases/tag/v0.29.0)
 * Consolidate the colors used in Brim (#1405)
 * Fix an issue where the arrows in the sidebar were incorrectly pointed (#1414)
-* Add a [wiki doc](https://github.com/brimdata/brim/wiki/Query-Library-Transfer) and script showing how to transfer contents of the Query Library (#1415)
+* Add a wiki doc and script showing how to transfer contents of the Query Library (#1415)
 * Fix an issue where data exports continued long after the "Exporting..." pop-up went away (#1424)
 * Hide the archive index search dropdown (#1417)
 * Fix an issue where invoking a right-click "Whois" lookup in a Log Detail window caused a stack dump (#1418)

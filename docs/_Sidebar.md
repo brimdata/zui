@@ -15,7 +15,6 @@
 **Cookbooks**
 
 - [[Remote Lakes]]
-- [[Query Library Transfer]]
 - [[Joining Data]]
 
 **Developer Resources**
