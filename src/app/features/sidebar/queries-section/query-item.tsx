@@ -3,13 +3,13 @@ import styled from "styled-components"
 import Current from "src/js/state/Current"
 import {showContextMenu} from "src/js/lib/System"
 import Icon from "src/app/core/icon-temp"
-import {useQueryItemMenu} from "../hooks"
 import {lakeQueryPath} from "src/app/router/utils/paths"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Tabs from "src/js/state/Tabs"
 import {Item} from "../item"
 import {NodeRenderer} from "react-arborist"
+import getQueryItemCtxMenu from "../flows/get-query-item-ctx-menu"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
 const QueryIcon = styled(Icon).attrs({name: "doc-plain"})``
@@ -24,9 +24,8 @@ const QueryItem: NodeRenderer<any> = ({
 }) => {
   const {id} = data
   const isGroup = "items" in data
-  const ctxMenu = useQueryItemMenu(data, tree, handlers)
-  const dispatch = useDispatch()
   const lakeId = useSelector(Current.getLakeId)
+  const dispatch = useDispatch()
   const itemIcon = isGroup ? <FolderIcon /> : <QueryIcon />
 
   const onGroupClick = (e) => {
@@ -50,7 +49,11 @@ const QueryItem: NodeRenderer<any> = ({
       styles={styles}
       onClick={isGroup ? onGroupClick : onItemClick}
       isFolder={isGroup}
-      onContextMenu={() => showContextMenu(ctxMenu)}
+      onContextMenu={() => {
+        showContextMenu(
+          dispatch(getQueryItemCtxMenu({data, tree, handlers, lakeId}))
+        )
+      }}
       onSubmit={handlers.submit}
     />
   )
