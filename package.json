@@ -65,7 +65,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
-    "brimcap": "github:brimdata/brimcap#addca3febb2f022f0ff88b2af45d7d6f458b392b",
+    "brimcap": "github:brimdata/brimcap#0fa6e708c1d57abb5eea7e4106bc52c1b02ceea1",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
