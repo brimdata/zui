@@ -10,7 +10,7 @@ import {updateQuery} from "../flows/update-query"
 
 const DropdownIcon = styled(Icon).attrs({name: "chevron-down"})``
 
-const PickerWrapper = styled.button`
+const PickerWrapper = styled.button<{isDisabled?: boolean}>`
   ${(p) => p.theme.typography.labelSmall}
   font-family: ${cssVar("--mono-font")};
   font-size: 12px;
@@ -22,6 +22,12 @@ const PickerWrapper = styled.button`
   padding: 3px 18px;
   border: none;
   margin: 0 3px 6px 16px;
+  
+  ${(p) =>
+    p.isDisabled &&
+    `
+    cursor: not-allowed;
+  `}
   
   ${DropdownIcon} > svg {
     stroke: var(--cello-transparent);
@@ -63,12 +69,19 @@ const showPoolMenu = () => (dispatch, getState) => {
   showContextMenu(template)
 }
 
-const FromPinPicker = () => {
+type Props = {
+  isDisabled?: boolean
+}
+
+const FromPinPicker = ({isDisabled}: Props) => {
   const dispatch = useDispatch()
   const currentPool = useSelector(Current.getQueryPool)
 
   return (
-    <PickerWrapper onClick={() => dispatch(showPoolMenu())}>
+    <PickerWrapper
+      isDisabled={isDisabled}
+      onClick={() => !isDisabled && dispatch(showPoolMenu())}
+    >
       <From>from</From>
       <PoolName>{currentPool?.name || "<none>"}</PoolName>
       <DropdownIcon />

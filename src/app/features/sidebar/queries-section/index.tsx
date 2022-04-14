@@ -67,6 +67,7 @@ const RemoteQueriesView = ({toolbarButtons}) => {
   const handleRename = (itemId: string, name: string) => {
     const q = find(remoteQueries, ["id", itemId]) as Query
     if (!q) return console.error("cannot locate remote query with id " + itemId)
+    if (q.isReadOnly) return
     dispatch(setRemoteQueries([{...q, name}])).then(() => {
       dispatch(refreshRemoteQueries())
     })
@@ -119,6 +120,7 @@ const flattenQueryTree = (root, includeFolders = true) => {
 
 const LocalQueriesView = ({toolbarButtons}) => {
   const dispatch = useDispatch()
+  const tree = useRef<TreeApi<any> | null>(null)
   const {resizeRef: ref, defaults} = useSectionTreeDefaults()
   const [{isOver}, drop] = useQueryImportOnDrop()
   const queries = useSelector(Queries.raw)
@@ -126,9 +128,9 @@ const LocalQueriesView = ({toolbarButtons}) => {
 
   const flatLib = flattenQueryTree(queries)
   const flatQueries = flatLib.filter((n) => !("items" in n))
+
   const filteredQueriesCount = flattenQueryTree(filteredQueries, false)?.length
   const isFiltered = flatQueries?.length !== filteredQueriesCount
-  const tree = useRef<TreeApi<any> | null>(null)
 
   const query = useSelector(Current.getQuery)
 

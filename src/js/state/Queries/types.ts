@@ -11,6 +11,7 @@ export interface Query {
   }
   description?: string
   tags?: string[]
+  isReadOnly?: boolean
 }
 
 export interface Group {
@@ -18,6 +19,7 @@ export interface Group {
   name: string
   items: (Group | Query)[]
   isOpen?: boolean
+  isReadOnly?: boolean
 }
 
 export type QueriesAction =

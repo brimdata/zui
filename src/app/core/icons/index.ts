@@ -26,6 +26,7 @@ import docPlain from "./doc-plain"
 import tag from "./tag"
 import run from "./run"
 import pin from "./pin"
+import lock from "./lock"
 
 export default {
   braces,
@@ -34,6 +35,7 @@ export default {
   chart,
   grid,
   list,
+  lock,
   view,
   sharkfin,
   export: exportIcon,
