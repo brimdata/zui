@@ -23,6 +23,8 @@ import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import {getQuerySource} from "./flows/get-query-source"
 import SearchArea from "./search-area"
+import {FeatureFlag} from "../core/feature-flag"
+import RightPane from "../features/right-pane"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -138,6 +140,19 @@ const StyledSubHeader = styled.h2`
   ${(p) => p.theme.typography.labelNormal}
 `
 
+const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`
+
+const ContentWrap = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+`
+
 const QueryHome = () => {
   useSearchParamLocationSync()
   const query = useSelector(Current.getQuery)
@@ -179,9 +194,14 @@ const QueryHome = () => {
     <>
       <QueryPageHeader>
         <Toolbar actions={actions} />
-        <SearchArea />
       </QueryPageHeader>
-      <Results />
+      <ContentWrap>
+        <MainContent>
+          <SearchArea />
+          <Results />
+        </MainContent>
+        <FeatureFlag name="query-flow" on={<RightPane />} off={null} />
+      </ContentWrap>
     </>
   )
 }

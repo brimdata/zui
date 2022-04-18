@@ -16,6 +16,7 @@ const PickerWrapper = styled.button<{isDisabled?: boolean}>`
   ${(p) => p.theme.typography.labelSmall}
   font-family: ${cssVar("--mono-font")};
   font-size: 12px;
+  width: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;

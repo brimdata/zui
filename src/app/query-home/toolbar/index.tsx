@@ -7,6 +7,7 @@ import QueryHeader from "./query-header"
 
 const Wrap = styled.div`
   padding: 10px 16px;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.11);
 `
 
 const Row = styled.div`
