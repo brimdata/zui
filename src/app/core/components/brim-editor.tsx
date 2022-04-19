@@ -113,8 +113,7 @@ const BrimEditor = ({value, isDisabled}: Props) => {
   if (isDisabled) extensions.push(EditorView.editable.of(false))
 
   useEffect(() => {
-    if (!view) return
-    if (value === currentEditorValue) return
+    if (!view || value === currentEditorValue || value === null) return
     view.dispatch(
       view.state.update({
         changes: {from: 0, to: view.state.doc.length, insert: value}
@@ -126,7 +125,7 @@ const BrimEditor = ({value, isDisabled}: Props) => {
     view.dispatch({
       effects: StateEffect.reconfigure.of(extensions)
     })
-  }, [isMultiLineMode])
+  }, [isMultiLineMode, isDisabled])
   useEffect(() => {
     if (!ref.current) return
     const state = EditorState.create({

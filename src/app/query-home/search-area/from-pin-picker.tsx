@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Icon from "src/app/core/icon-temp"
 import {cssVar} from "polished"
 import {updateQuery} from "../flows/update-query"
+import {MenuItemConstructorOptions} from "electron"
 
 const DropdownIcon = styled(Icon).attrs({name: "chevron-down"})``
 
@@ -52,13 +53,25 @@ const showPoolMenu = () => (dispatch, getState) => {
   const pools = Pools.getPools(lakeId)(s)
 
   const template = pools
-    ? pools.map((p) => ({
-        label: p.name,
-        click: () => {
-          query.setFromPin(p.id)
-          dispatch(updateQuery(query))
-        }
-      }))
+    ? [
+        {
+          label: "Unselect Pool",
+          click: () => {
+            query.setFromPin("")
+            dispatch(updateQuery(query))
+          }
+        },
+        {
+          type: "separator"
+        } as MenuItemConstructorOptions,
+        ...pools.map((p) => ({
+          label: p.name,
+          click: () => {
+            query.setFromPin(p.id)
+            dispatch(updateQuery(query))
+          }
+        }))
+      ]
     : [
         {
           label: "No pools in lake",
