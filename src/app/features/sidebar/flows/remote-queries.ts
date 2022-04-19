@@ -44,7 +44,7 @@ export const refreshRemoteQueries = (
         )
         | join on query_id=this
         | tombstone==false
-        | cut name, value, description, id, pins, isReadOnly`
+        | cut name, value, description, id, pins, quiet(isReadOnly)`
     )
 
     const remoteRecords = (await queryReq.js()) as Query[]

@@ -49,7 +49,7 @@ export class BrimQuery {
   }
 
   get isReadOnly() {
-    return this.q.isReadOnly
+    return !!this.q.isReadOnly
   }
   toggleLock() {
     this.q.isReadOnly = !this.q.isReadOnly
