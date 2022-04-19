@@ -7,8 +7,8 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Icon from "src/app/core/icon-temp"
 import {cssVar} from "polished"
-import {updateQuery} from "../flows/update-query"
 import {MenuItemConstructorOptions} from "electron"
+import {newQueryVersion} from "../flows/new-query-version"
 
 const DropdownIcon = styled(Icon).attrs({name: "chevron-down"})``
 
@@ -58,9 +58,13 @@ const showPoolMenu = () => (dispatch, getState) => {
     ? [
         {
           label: "Unselect Pool",
-          click: () => {
-            query.setFromPin("")
-            dispatch(updateQuery(query))
+          click: async () => {
+            await dispatch(
+              newQueryVersion(query.id, {
+                ...query.currentVersion(),
+                pins: {from: "", filters: query.getFilterPins()},
+              })
+            )
           },
         },
         {
@@ -68,9 +72,16 @@ const showPoolMenu = () => (dispatch, getState) => {
         } as MenuItemConstructorOptions,
         ...pools.map((p) => ({
           label: p.name,
-          click: () => {
-            query.setFromPin(p.id)
-            dispatch(updateQuery(query))
+          click: async () => {
+            // TODO: for pins 2.0, lets just store the new from-pin in searchbar state here.
+            //  Creation of the new version can happen when user decides to actually execute
+            //  the search (submit-search() will then handle this)
+            await dispatch(
+              newQueryVersion(query.id, {
+                ...query.currentVersion(),
+                pins: {from: p.id, filters: query.getFilterPins()},
+              })
+            )
           },
         })),
       ]

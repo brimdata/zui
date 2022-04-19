@@ -46,12 +46,7 @@ export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => {
 
     return dispatch(
       querySearch({
-        query: new BrimQuery({
-          id: "",
-          name: "",
-          value: q,
-          pins: {from: poolId, filters: []},
-        }),
+        query: `from ${poolId} | ${q}`,
       })
     )
   }

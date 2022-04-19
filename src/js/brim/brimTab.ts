@@ -35,7 +35,7 @@ export default function (
  */
 function compileTitle(route, location, lakes, pools, queryIdNameMap) {
   let title = route.title
-  const {lakeId, queryId, poolId} = route.match.params
+  const {lakeId, queryId, poolId, version} = route.match.params
   title = title.replace("<lake>", get(lakes, [lakeId, "name"], ""))
   if (poolId) {
     title = title.replace(
@@ -45,6 +45,9 @@ function compileTitle(route, location, lakes, pools, queryIdNameMap) {
   }
   if (queryId) {
     title = title.replace("<query>", queryIdNameMap[queryId] || "Query Page")
+  }
+  if (version) {
+    title = title.replace("<version>", version)
   }
   const {program} = decodeSearchParams(location.search)
   title = title.replace("<program>", program || "Search")

@@ -12,7 +12,7 @@ import {getZealot} from "src/js/flows/getZealot"
 import {BrimQuery} from "../utils/brim-query"
 
 type Args = {
-  query: BrimQuery
+  query: string
   id?: string
   initial?: boolean
 }
@@ -37,7 +37,7 @@ const search =
     const tag = id
 
     initial = isUndefined(initial) ? true : initial
-    const res = await zealot.query(query.format(), {
+    const res = await zealot.query(query, {
       signal: ctl.signal,
     })
     api.abortables.abort({tab, tag})

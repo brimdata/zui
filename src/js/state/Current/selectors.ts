@@ -13,7 +13,8 @@ import DraftQueries from "../DraftQueries"
 import RemoteQueries from "../RemoteQueries"
 import Queries from "../Queries"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
-import {Query} from "../Queries/types"
+import QueryVersions from "../QueryVersions"
+import {query, queryVersion} from "src/app/router/routes"
 
 type Id = string | null
 
@@ -34,17 +35,19 @@ export const getLocation = (state: State) => {
 
 export const getQueryLocationData = (
   state: State
-): {queryId: string | null} => {
-  type Params = {queryId?: string}
+): {queryId: string | null; version: string | null} => {
+  type Params = {queryId?: string; version?: string}
   const match = matchPath<Params>(getLocation(state).pathname, [
-    "/lakes/:lakeId/queries/:queryId",
+    queryVersion.path,
+    query.path,
   ])
   const queryId = match?.params?.queryId
-  return {queryId}
+  const version = match?.params?.version
+  return {queryId, version}
 }
 
-const getRawQuery = (state: State): Query | null => {
-  const {queryId} = getQueryLocationData(state)
+export const getQuery = (state: State): BrimQuery | null => {
+  const {queryId, version} = getQueryLocationData(state)
   if (!queryId) return null
   // query lookup policy is to search drafts first, then local, and finally remote
   const query =
@@ -52,16 +55,14 @@ const getRawQuery = (state: State): Query | null => {
     Queries.getQueryById(queryId)(state) ||
     RemoteQueries.getQueryById(queryId)(state)
   if (!query) return null
-  return query
-}
 
-export const getQuery = createSelector<State, Query | null, BrimQuery>(
-  getRawQuery,
-  (query) => {
-    if (!query) return null
-    return new BrimQuery(query)
+  const versions = QueryVersions.getByQueryId(queryId)(state) || {
+    ids: [],
+    entities: {},
   }
-)
+
+  return new BrimQuery(query, versions, version)
+}
 
 export const getPoolId = (state) => {
   type Params = {poolId?: string}

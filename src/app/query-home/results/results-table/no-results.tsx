@@ -1,10 +1,8 @@
 import React from "react"
 
-type Props = {width: number}
-
-export default function NoResults({width}: Props) {
+export default function NoResults() {
   return (
-    <div className="no-results" style={{width}}>
+    <div className="no-results">
       <p>No Result Data</p>
     </div>
   )

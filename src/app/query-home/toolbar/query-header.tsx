@@ -18,6 +18,7 @@ import {cssVar} from "../../../js/lib/cssVar"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import {showContextMenu} from "../../../js/lib/System"
 import getQueryHeaderMenu from "./flows/get-query-header-menu"
+import {serialize} from "@electron/remote/dist/src/common/type-utils"
 
 const Row = styled.div`
   display: flex;
@@ -179,14 +180,14 @@ const QueryHeader = () => {
 
   const onSubmit = (newTitle) => {
     setIsEditing(false)
+    const newQuery = {...query.serialize(), name: newTitle}
     if (newTitle !== "") {
-      query.name = newTitle
       if (querySource === "draft") {
-        dispatch(Queries.addItem(query.serialize(), "root"))
+        dispatch(Queries.addItem(newQuery, "root"))
         dispatch(DraftQueries.remove({id: query.id}))
         dispatch(tabHistory.replace(lakeQueryPath(query.id, lakeId)))
       } else {
-        dispatch(updateQuery(query))
+        dispatch(updateQuery(query, newQuery))
       }
     }
   }

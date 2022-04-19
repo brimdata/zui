@@ -19,7 +19,6 @@ import {FeatureFlag} from "../core/feature-flag"
 import {Sidebar} from "src/app/features/sidebar"
 import Tabs from "src/js/state/Tabs"
 import {useDispatch} from "../core/state"
-import RightPane from "../features/right-pane"
 
 const ColumnLayout = styled.div`
   display: flex;
@@ -84,7 +83,6 @@ export default function AppWrapper({children}) {
                 {children}
               </ColumnLayout>
               <FeatureFlag name="query-flow" on={null} off={<XRightPane />} />
-              <XRightPane />
             </RowLayout>
             <StatusBar />
           </ColumnLayout>

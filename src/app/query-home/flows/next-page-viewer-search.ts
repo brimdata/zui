@@ -16,9 +16,10 @@ import Current from "src/js/state/Current"
 export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const query = Current.getQuery(getState())
   if (!query) return
+  let queryVal = query.format()
 
   const perPage = query.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
-  if (!query.hasHeadFilter()) query.addFilterPin(`| head ${perPage}`)
+  if (!query.hasHeadFilter()) queryVal += `| head ${perPage}`
   const currentPool = Current.getQueryPool(getState())
   if (!currentPool) return
   const origSpan = brim.span(currentPool.everythingSpan()).toDateTuple()
@@ -27,12 +28,12 @@ export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const [spliceIndex, span] = nextPageArgs(logs, origSpan)
   const [from, to] = span
   // in the future this needs to use ast inspection/manipulation and not assume ts
-  query.addFilterPin(`| ts >= '${from}'`)
-  query.addFilterPin(`| ts < '${to}'`)
+  queryVal += `| ts >= '${from}'`
+  queryVal += `| ts < '${to}'`
   const append = true
 
   dispatch(Viewer.splice(tabId, spliceIndex))
-  return dispatch(viewerSearch({query, append}))
+  return dispatch(viewerSearch({query: queryVal, append}))
 }
 
 function nextPageArgs(

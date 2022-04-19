@@ -1,47 +1,43 @@
 import {Query} from "src/js/state/Queries/types"
-import {set} from "lodash"
 import brim from "src/js/brim"
 import {ANALYTIC_PROCS, HEAD_PROC} from "src/js/brim/ast"
 import {parseAst} from "@brimdata/zealot"
 import {trim} from "src/js/lib/Str"
+import {QueryVersion, VersionsState} from "src/js/state/QueryVersions"
+import {last} from "lodash"
 export type PinType = "from" | "filter"
 export const DRAFT_QUERY_NAME = "Draft Query"
 
 export class BrimQuery {
-  private q: Query
-  constructor(raw: Query) {
-    this.q = {
-      ...raw,
-      pins: {
-        from: raw.pins?.from || "",
-        filters: [],
-      },
-    }
-
-    if (raw.pins?.filters) this.q.pins.filters.push(...raw.pins.filters)
+  readonly head: string | number
+  constructor(
+    readonly query: Query,
+    readonly versions: VersionsState,
+    head?: string
+  ) {
+    // default head to latest version if none supplied
+    if (!head) this.head = versions.ids[versions.ids.length - 1]
+    else this.head = head
   }
 
-  setFromPin(value: string) {
-    set(this.q, ["pins", "from"], value)
+  currentVersion(): QueryVersion {
+    return this.versions.entities[this.head]
   }
+
+  allVersions(): QueryVersion[] {
+    return this.versions.ids.map((id) => this.versions.entities[id])
+  }
+
+  latestVersion(): QueryVersion {
+    return this.versions.entities[last(this.versions.ids)]
+  }
+
   getFromPin(): string {
-    return this.q.pins?.from
+    return this.currentVersion()?.pins?.from || ""
   }
 
   getFilterPins(): string[] {
-    return this.q.pins?.filters
-  }
-  updateFilterPinByNdx(index: number, value: string) {
-    if (!this.q.pins?.filters[index])
-      return console.error(`filter pin at index '${index}' not found`)
-    set(this.q, ["pins", "filters", index], value)
-  }
-  removeFilterPinByNdx(index: number) {
-    this.q.pins?.filters?.splice(index, 1)
-  }
-  addFilterPin(value: string) {
-    if (!this.q.pins?.filters) set(this.q, ["pins", "filters"], [value])
-    else this.q.pins.filters.push(value)
+    return this.currentVersion()?.pins?.filters || []
   }
 
   hasHeadFilter() {
@@ -49,10 +45,7 @@ export class BrimQuery {
   }
 
   get isReadOnly() {
-    return !!this.q.isReadOnly
-  }
-  toggleLock() {
-    this.q.isReadOnly = !this.q.isReadOnly
+    return !!this.query.isReadOnly
   }
 
   private ast() {
@@ -73,7 +66,7 @@ export class BrimQuery {
   }
 
   serialize(): Query {
-    return {...this.q}
+    return {...this.query}
   }
 
   toString(): string {
@@ -92,20 +85,14 @@ export class BrimQuery {
   }
 
   get value() {
-    return this.q.value
-  }
-  set value(val: string) {
-    this.q.value = val
+    return this.currentVersion()?.value || ""
   }
 
   get id() {
-    return this.q.id
+    return this.query.id
   }
 
   get name() {
-    return this.q.name
-  }
-  set name(n: string) {
-    this.q.name = n
+    return this.query.name
   }
 }

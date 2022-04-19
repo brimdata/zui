@@ -118,7 +118,7 @@ const ResultsTable = (props: Props) => {
   )
 
   if (isEmpty(logs) && isFetching) return null
-  if (isEmpty(logs)) return <NoResults width={props.width} />
+  if (isEmpty(logs)) return <NoResults />
 
   return (
     <ViewerComponent

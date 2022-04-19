@@ -38,6 +38,10 @@ export const query = {
   title: "<query>",
   path: `${lakeShow.path}/queries/:queryId`,
 }
+export const queryVersion = {
+  title: "<query>@<version>",
+  path: `${lakeShow.path}/queries/:queryId/versions/:version`,
+}
 export const lakeReleaseNotes = {
   title: "Release Notes",
   path: `${lakeShow.path}/release-notes`,
@@ -55,6 +59,7 @@ export const allRoutes = [
   lakeList,
   poolShow,
   query,
+  queryVersion,
   releaseNotes,
   root,
 ]

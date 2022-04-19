@@ -8,10 +8,22 @@ import Appearance from "src/js/state/Appearance"
 import PoolsSection from "../sidebar/pools-section"
 import QueriesSection from "../sidebar/queries-section"
 import HistorySection from "../sidebar/history-section"
+import {XRightPaneExpander} from "../../../js/components/RightPaneExpander"
+import Layout from "../../../js/state/Layout"
+import Pane, {PaneBody} from "../../../js/components/Pane"
+import VersionsSection from "./versions-section"
+import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 
 const BG = styled.div`
   display: flex;
   padding: 0 6px;
+  align-items: center;
+  box-shadow: 0 1px 0px var(--cloudy);
+  height: 28px;
+  //
+  flex-shrink: 0;
+  user-select: none;
+  position: relative;
 
   button {
     background: none;
@@ -23,12 +35,12 @@ const BG = styled.div`
     text-transform: uppercase;
 
     span {
-      height: 22px;
+      height: 100%;
       display: flex;
       align-items: center;
       font-weight: 500;
       border-bottom: 2px solid transparent;
-      padding: 4px;
+      padding: 5px 4px;
       font-size: 11px;
       opacity: 0.5;
     }
@@ -60,8 +72,7 @@ const PaneContentSwitch = ({paneName}) => {
     case "detail":
       return <DetailSection />
     case "versions":
-      return <div>versions!</div>
-    // return <VersionsSection />
+      return <VersionsSection />
     default:
       return null
   }
@@ -90,15 +101,31 @@ export function Menu() {
 }
 
 const RightPane = () => {
+  const dispatch = useDispatch()
   const currentPaneName = useSelector(Appearance.getCurrentPaneName)
+  const isOpen = useSelector(Layout.getDetailPaneIsOpen)
+  const width = useSelector(Layout.getDetailPaneWidth)
 
+  const onDrag = (e: MouseEvent) => {
+    const width = window.innerWidth - e.clientX
+    const max = window.innerWidth
+    dispatch(Layout.setDetailPaneWidth(Math.min(width, max)))
+  }
+
+  if (!isOpen) return <XRightPaneExpander />
   return (
-    <Wrap>
+    <Pane
+      isOpen={isOpen}
+      onDrag={onDrag}
+      position="right"
+      width={width}
+      className="right-pane"
+      aria-label="details"
+    >
       <Menu />
       <PaneContentSwitch paneName={currentPaneName} />
-    </Wrap>
+    </Pane>
   )
-  return <DetailSection />
 }
 
 export default RightPane

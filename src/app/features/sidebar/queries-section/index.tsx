@@ -43,8 +43,8 @@ const QueriesSectionSwitch = ({view, toolbarButtons}) => {
 }
 
 const querySearch = (term: string, items: Query[]): Query[] => {
-  return items?.filter(({name, value, description}) =>
-    JSON.stringify({name, value, description})
+  return items?.filter(({name, description}) =>
+    JSON.stringify({name, description})
       .toLowerCase()
       .includes(term.toLowerCase())
   )

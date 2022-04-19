@@ -45,7 +45,7 @@ export const activateUrl =
     } else {
       dispatch(Tabs.create(url))
     }
-    if (tab.id === previewId) {
+    if (tab?.id === previewId) {
       dispatch(Tabs.preview(null))
     }
   }

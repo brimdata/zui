@@ -18,13 +18,14 @@ import DraftQueries from "src/js/state/DraftQueries"
 import SearchBarActions from "src/js/state/SearchBar"
 import {syncPool} from "../core/pools/sync-pool"
 import ToolbarButton from "./toolbar/button"
-import {newQuery} from "./flows/new-query"
+import {newDraftQuery} from "./flows/new-draft-query"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import {getQuerySource} from "./flows/get-query-source"
 import SearchArea from "./search-area"
 import {FeatureFlag} from "../core/feature-flag"
 import RightPane from "../features/right-pane"
+import {newQueryVersion} from "./flows/new-query-version"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -99,14 +100,19 @@ const usePin = (): ActionButtonProps => {
     label: "Pin",
     title: "Pin current search term",
     icon: "pin",
-    click: () => {
-      dispatch((d, getState) => {
+    click: async () => {
+      await dispatch(async (d, getState) => {
         const state = getState()
         const query = Current.getQuery(state)
         const searchTerm = SearchBarActions.getSearchBarInputValue(state)
-        query.addFilterPin(searchTerm)
-        query.value = ""
-        d(updateQuery(query))
+        const version = {
+          value: "",
+          pins: {
+            from: query.getFromPin(),
+            filters: [...query.getFilterPins(), searchTerm],
+          },
+        }
+        await d(newQueryVersion(query.id, version))
         d(SearchBarActions.pinSearchBar())
       })
     },
@@ -182,7 +188,7 @@ const QueryHome = () => {
         </StyledSubHeader>
         <ToolbarButton
           onClick={() => {
-            const {id} = dispatch(newQuery())
+            const {id} = dispatch(newDraftQuery())
             dispatch(tabHistory.replace(lakeQueryPath(id, lakeId)))
           }}
           text={"New Draft"}

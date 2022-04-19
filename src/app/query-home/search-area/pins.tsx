@@ -1,4 +1,3 @@
-import {updateQuery} from "src/app/query-home/flows/update-query"
 import React, {useState} from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
@@ -6,12 +5,10 @@ import submitSearch from "src/app/query-home/flows/submit-search"
 import SearchBar from "src/js/state/SearchBar"
 import FilterNode from "src/js/components/FilterNode"
 import PinEdit from "./pin-edit"
-import Current from "src/js/state/Current"
 
 function Pin({index, value}) {
   const dispatch = useDispatch()
   const [isEditing, setIsEditing] = useState(false)
-  const query = useSelector(Current.getQuery)
 
   function onEdit() {
     setIsEditing(true)
@@ -23,9 +20,7 @@ function Pin({index, value}) {
 
   function onRemove(e) {
     e.stopPropagation()
-    dispatch(SearchBar.removeSearchBarPin(index))
-    query.removeFilterPinByNdx(index)
-    dispatch(updateQuery(query))
+    // TODO re-implement this in pins 2.0
   }
 
   function onSubmit(value) {

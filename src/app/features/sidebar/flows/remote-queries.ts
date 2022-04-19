@@ -1,5 +1,5 @@
 import {Pool} from "src/app/core/pools/pool"
-import {intersection} from "lodash"
+import {compact, forEach, intersection} from "lodash"
 import {getZealot} from "src/js/flows/getZealot"
 import {Query} from "src/js/state/Queries/types"
 import Pools from "src/js/state/Pools"
@@ -8,15 +8,58 @@ import RemoteQueries from "src/js/state/RemoteQueries"
 import {Thunk} from "src/js/state/types"
 import {Readable} from "stream"
 import {BrimLake} from "src/js/brim"
+import QueryVersions, {QueryVersion} from "src/js/state/QueryVersions"
+import {parseISO} from "date-fns"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
-const queriesToRemoteQueries = (qs: Query[], isTombstone = false) => {
+type RemoteQueryRecord = Query & QueryVersion & {tombstone?: boolean}
+
+const queriesToRemoteQueries = (
+  qs: (Query & QueryVersion)[],
+  isTombstone = false
+): RemoteQueryRecord[] => {
   return qs.map((q) => ({
     ...q,
     tombstone: isTombstone,
-    ts: Date.now(),
   }))
+}
+
+/*
+remoteQueriesToQueries groups an array of raw query records into
+an array of Query metadata and a map of QueryVersion arrays, keyed
+by the queryId. It does not include queries if their most recent entry
+has a tombstone, and if there are duplicate entries with the same version
+then only the most recent will be used. To manage this, the provided array
+of raw records must already be sorted by ts.
+ */
+const remoteQueriesToQueries = (
+  remoteRecords: (Query & QueryVersion & {tombstone?: boolean})[]
+): {queries: Query[]; versions: {[queryId: string]: QueryVersion[]}} => {
+  const seenQuerySet = new Set()
+  const versions = {}
+  const queries = compact(
+    remoteRecords.map((r) => {
+      if (seenQuerySet.has(r.id)) return
+      seenQuerySet.add(r.id)
+      if (r.tombstone) return
+      versions[r.id] = []
+      const {id, name, description = "", isReadOnly = false} = r
+      return {id, name, description, isReadOnly}
+    })
+  )
+
+  const seenVersionSet = new Set()
+  remoteRecords.forEach((r) => {
+    if (!versions[r.id]) return
+    if (seenVersionSet.has(r.version)) return
+    seenVersionSet.add(r.version)
+    const {version, value, pins = {}} = r
+    const ts = typeof r.ts === "string" ? parseISO(r.ts) : r.ts
+    versions[r.id].push({version, ts, value, pins})
+  })
+
+  return {queries, versions}
 }
 
 export const isRemoteLib = (ids: string[]) => (_d, getState) => {
@@ -37,17 +80,19 @@ export const refreshRemoteQueries =
     try {
       const queryReq = await zealot.query(
         `from '${remoteQueriesPoolName}'
-        | fork (
-          => query_id:={id:id,ts:ts} | sort query_id
-          => ts:=max(ts) by id | sort this
-        )
-        | join on query_id=this
-        | tombstone==false
-        | cut name, value, description, id, pins, quiet(isReadOnly)`
+        | sort -r ts
+        | cut name, tombstone, value, description, id, ts, version, pins, quiet(isReadOnly)`
       )
 
-      const remoteRecords = (await queryReq.js()) as Query[]
-      dispatch(RemoteQueries.set(remoteRecords))
+      const remoteRecords = (await queryReq.js()) as (Query &
+        QueryVersion & {tombstone?: boolean})[]
+
+      const {queries, versions} = remoteQueriesToQueries(remoteRecords)
+
+      dispatch(RemoteQueries.set(queries))
+      forEach(versions, (versions, queryId) => {
+        dispatch(QueryVersions.set({queryId, versions}))
+      })
     } catch (e) {
       if (/pool not found/.test(e.message)) {
         dispatch(RemoteQueries.set([]))
@@ -57,28 +102,23 @@ export const refreshRemoteQueries =
   }
 
 /*
- setRemoteQuery will create, update, or delete (by setting a 'tombstone' record)
- a remote query by id . Remote queries are stored in a special pool defined in
+ setRemoteQuery will create, update, or  Remote queries are stored in a special pool defined in
  the 'remoteQueriesPoolName' constant, and this function will create that pool
  if it does not exist. To determine that existence, we rely on redux's list of
  existing pools which means that this thunk depends on that state being populated
  */
-export const setRemoteQueries = (
-  queries: Query[],
-  shouldDelete?: boolean
-): Thunk<Promise<void>> => {
-  return async (dispatch, getState) => {
-    const zealot = await dispatch(getZealot())
-    let rqPoolId = Pools.getByName(
-      Current.getLakeId(getState()),
-      remoteQueriesPoolName
-    )(getState())?.id
-    if (!rqPoolId) {
-      // create remote-queries pool if it doesn't already exist
-      const createResp = await zealot.createPool(remoteQueriesPoolName)
-      rqPoolId = createResp.pool.id
-    }
+export const setRemoteQueries =
+  (queries: (Query & QueryVersion)[]): Thunk<Promise<void>> =>
+  async (dispatch) => {
+    await dispatch(loadRemoteQueries(queriesToRemoteQueries(queries)))
+    await dispatch(refreshRemoteQueries())
+  }
 
+const loadRemoteQueries =
+  (queries: RemoteQueryRecord[]): Thunk<Promise<void>> =>
+  async (dispatch) => {
+    const zealot = await dispatch(getZealot())
+    const rqPoolId = await dispatch(getOrCreateRemotePoolId())
     try {
       const data = new Readable()
       const loadPromise = zealot.load(data, {
@@ -91,14 +131,45 @@ export const setRemoteQueries = (
             queries.map((q) => q.id).join(", "),
         },
       })
-      queriesToRemoteQueries(queries, shouldDelete).forEach((d) =>
-        data.push(JSON.stringify(d))
-      )
+      queries.forEach((d) => data.push(JSON.stringify(d)))
       data.push(null)
       await loadPromise
-      await dispatch(refreshRemoteQueries())
     } catch (e) {
-      throw new Error("error loading remote query: " + e)
+      throw new Error("error loading remote queries: " + e)
     }
   }
-}
+
+const getOrCreateRemotePoolId =
+  (): Thunk<Promise<string>> => async (dispatch, getState) => {
+    const zealot = await dispatch(getZealot())
+    let rqPoolId = Pools.getByName(
+      Current.getLakeId(getState()),
+      remoteQueriesPoolName
+    )(getState())?.id
+    if (!rqPoolId) {
+      // create remote-queries pool if it doesn't already exist
+      const createResp = await zealot.createPool(remoteQueriesPoolName)
+      rqPoolId = createResp.pool.id
+    }
+
+    return rqPoolId
+  }
+
+/*
+deleteRemoteQueries handles deletion by flipping a 'tombstone' boolean column
+for a given query's record. Since the intent is to delete the query, the value
+and metadata for this tombstone record will be empty
+ */
+export const deleteRemoteQueries =
+  (queryIds: string[]): Thunk<Promise<void>> =>
+  async (dispatch, getState) => {
+    const queryDefaults = {
+      name: "",
+      version: "",
+      ts: new Date(),
+      value: "",
+    }
+    const queries = queryIds.map((id) => ({...queryDefaults, id}))
+    await dispatch(loadRemoteQueries(queriesToRemoteQueries(queries, true)))
+    await dispatch(refreshRemoteQueries())
+  }

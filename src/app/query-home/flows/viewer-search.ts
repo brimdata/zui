@@ -9,7 +9,7 @@ import search from "./search"
 import {BrimQuery} from "../utils/brim-query"
 
 type Args = {
-  query: BrimQuery
+  query: string
   keep?: boolean
   append?: boolean
 }

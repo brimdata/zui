@@ -1,4 +1,8 @@
-import {isRemoteLib, setRemoteQueries} from "./remote-queries"
+import {
+  deleteRemoteQueries,
+  isRemoteLib,
+  setRemoteQueries,
+} from "./remote-queries"
 import {isBrimLib} from "../../../../js/state/Queries/flows"
 import Tabs from "../../../../js/state/Tabs"
 import {lakeQueryPath} from "../../../router/utils/paths"
@@ -10,17 +14,22 @@ import exportQueryLib from "../../../../js/flows/exportQueryLib"
 import * as remote from "@electron/remote"
 import {Query} from "../../../../js/state/Queries/types"
 import Queries from "../../../../js/state/Queries"
+import QueryVersions from "src/js/state/QueryVersions"
+import {BrimQuery} from "../../../query-home/utils/brim-query"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers, lakeId}) =>
   (dispatch, getState, {api}) => {
-    const {value, id, isReadOnly} = data
+    const {id, isReadOnly} = data
     const isGroup = "items" in data
     const hasMultiSelected =
       tree.getSelectedIds().length > 1 &&
       !!tree.getSelectedIds().find((id) => id === data.id)
     const selected = hasMultiSelected ? tree.getSelectedIds() : [id]
     const isRemoteItem = dispatch(isRemoteLib([id]))
+    const latestVersion = QueryVersions.getLatestByQueryId({
+      queryId: id,
+    })(getState())
     const hasBrimItemSelected = dispatch(isBrimLib(selected))
 
     const runQuery = () => {
@@ -41,18 +50,11 @@ const getQueryItemCtxMenu =
         })
         .then(({response}) => {
           if (response === 0) {
-            if (isRemoteItem) {
-              const remoteQueries = selected.map<Query>((id) => ({
-                id,
-                value: "",
-                name: "",
-                pins: {from: "", filters: []},
-              }))
-              dispatch(setRemoteQueries(remoteQueries, true))
-              return
-            }
-
-            dispatch(Queries.removeItems(selected))
+            selected.forEach((id) =>
+              dispatch(QueryVersions.clear({queryId: id}))
+            )
+            if (isRemoteItem) dispatch(deleteRemoteQueries(selected))
+            else dispatch(Queries.removeItems(selected))
           }
         })
     }
@@ -72,11 +74,11 @@ const getQueryItemCtxMenu =
         click: () => runQuery(),
       },
       {
-        label: "Copy Query",
+        label: "Copy Query Value",
         visible: !isGroup,
         click: () => {
-          lib.doc.copyToClipboard(value)
-          toast("Query copied to clipboard")
+          lib.doc.copyToClipboard(latestVersion?.value)
+          toast("Query value copied to clipboard")
         },
       },
       {
@@ -95,6 +97,7 @@ const getQueryItemCtxMenu =
           )
           if (canceled) return
           toast.promise(
+            // TODO: Mason
             dispatch(exportQueryLib(filePath, api.exportQueries(id))),
             {
               loading: "Exporting Queries...",

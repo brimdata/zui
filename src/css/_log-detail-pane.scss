@@ -43,6 +43,31 @@
 
 .log-detail-pane {
   background: var(--snow);
+  background: white;
+  min-width: 280px;
+
+  .log-detail-center {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .pane-header {
+    background: var(--ivory);
+    box-shadow: 0 0.5px 0px var(--cloudy);
+  }
+
+  .close-button {
+    svg {
+      height: 10px;
+      width: 10px;
+    }
+  }
+}
+
+.right-pane {
+  background: white;
   min-width: 280px;
 
   .log-detail-center {

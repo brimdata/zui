@@ -29,8 +29,13 @@ export function poolSearchPath(
   return `${lakePoolPath(poolId, lakeId)}/search?${encodeSearchParams(params)}`
 }
 
-export function lakeQueryPath(queryId: string, lakeId: string) {
-  return `${lakePath(lakeId)}/queries/${queryId}`
+export function lakeQueryPath(
+  queryId: string,
+  lakeId: string,
+  version?: string
+) {
+  const path = `${lakePath(lakeId)}/queries/${queryId}`
+  return version ? `${path}/versions/${version}` : path
 }
 
 export function releaseNotesPath(lakeId) {

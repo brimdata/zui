@@ -31,8 +31,8 @@ const QueryEditor = ({value, disabled}: Props) => {
   )
   const onKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      dispatch(submitSearch())
       e.preventDefault()
+      dispatch(submitSearch())
     }
   }
   const ref = useEditorView({value, disabled, onChange})
