@@ -1,7 +1,7 @@
 import {BrimProvider} from "src/app/core/context"
 import AppWindowRouter from "src/app/router/app-window-router"
 import React from "react"
-import ReactDOM from "react-dom"
+import {createRoot} from "react-dom/client"
 import "regenerator-runtime/runtime"
 import BrimTooltip from "./components/BrimTooltip"
 import LogDetailsWindow from "./components/LogDetailsWindow"
@@ -16,7 +16,9 @@ initDetail()
       api.abortables.abortAll()
       pluginManager.deactivate()
     }
-    ReactDOM.render(
+    const container = lib.doc.id("app-root")
+    const root = createRoot(container!)
+    root.render(
       <BrimProvider store={store} api={api}>
         <AppWindowRouter>
           <div id="modal-dialog-root" />
@@ -24,10 +26,11 @@ initDetail()
           <Modals />
           <BrimTooltip />
         </AppWindowRouter>
-      </BrimProvider>,
-      lib.doc.id("app-root")
+      </BrimProvider>
     )
   })
   .catch((e) => {
-    ReactDOM.render(<StartupError error={e} />, lib.doc.id("app-root"))
+    const container = lib.doc.id("app-root")
+    const root = createRoot(container!)
+    root.render(<StartupError error={e} />)
   })

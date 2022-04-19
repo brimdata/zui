@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import AppError from "../../models/AppError"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import notice from "./"
@@ -19,7 +23,7 @@ test("set an app error", () => {
   const brimError = {
     type: "AppError",
     message: "Unknown error",
-    details: []
+    details: [],
   }
   expect(notice.getError(state)).toEqual(brimError)
   expect(notice.getVisible(state)).toBe(true)
@@ -29,7 +33,7 @@ test("set a brim error", () => {
   const brimError = {
     type: "IngestError",
     message: "Pcap is too large to ingest",
-    details: ["sort limit reached (10)"]
+    details: ["sort limit reached (10)"],
   }
   const state = store.dispatchAll([notice.set(brimError)])
   expect(notice.getError(state)).toEqual(brimError)
@@ -50,7 +54,7 @@ test("dismiss", () => {
   const brimError = {
     type: "AppError",
     message: "Unknown error",
-    details: []
+    details: [],
   }
   expect(notice.getError(state)).toEqual(brimError)
   expect(notice.getVisible(state)).toBe(false)

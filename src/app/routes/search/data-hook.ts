@@ -1,6 +1,7 @@
 import initialViewerSearch from "src/app/search/flows/initial-viewer-search"
 import {useLayoutEffect} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Current from "src/js/state/Current"
 import Viewer from "src/js/state/Viewer"
 
@@ -18,6 +19,6 @@ export function useResultsData() {
   }, [location.key])
 
   return {
-    values
+    values,
   }
 }

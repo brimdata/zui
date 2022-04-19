@@ -1,7 +1,9 @@
 import React from "react"
-import ReactDOM from "react-dom"
 
 import AboutWindow from "./components/AboutWindow"
 import lib from "./lib"
+import {createRoot} from "react-dom/client"
 
-ReactDOM.render(<AboutWindow />, lib.doc.id("about-root"))
+const container = lib.doc.id("app-root")
+const root = createRoot(container!)
+root.render(<AboutWindow />)

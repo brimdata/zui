@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Handlers from "../state/Handlers"
 import {SearchHandler} from "../state/Handlers/types"
 import initTestStore from "src/test/unit/helpers/initTestStore"
@@ -12,7 +16,7 @@ describe("Handlers reducer", () => {
   function createHandler(abortFn): SearchHandler {
     return {
       type: "SEARCH",
-      abort: abortFn
+      abort: abortFn,
     }
   }
 
@@ -22,7 +26,7 @@ describe("Handlers reducer", () => {
     store.dispatchAll([
       Handlers.register("Histogram", createHandler(killFunc)),
       Handlers.register("Logs", createHandler(killFunc)),
-      Handlers.abortAll()
+      Handlers.abortAll(),
     ])
 
     expect(killFunc).toHaveBeenCalledTimes(2)
@@ -34,7 +38,7 @@ describe("Handlers reducer", () => {
     store.dispatchAll([
       Handlers.register("Histogram", createHandler(killFunc)),
       Handlers.register("Logs", createHandler(killFunc)),
-      Handlers.abort("Histogram")
+      Handlers.abort("Histogram"),
     ])
 
     expect(killFunc).toHaveBeenCalledTimes(1)

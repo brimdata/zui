@@ -116,7 +116,7 @@ export default function Preferences() {
   const onClose = () => setErrors([])
 
   const onSubmit = useCallback(
-    async (closeModal) => {
+    async (closeModal: any) => {
       if (!f) return
       const form = brim.form(f, configsForm)
 

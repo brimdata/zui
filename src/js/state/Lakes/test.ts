@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Lakes from "./"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import {Lake} from "./types"
@@ -12,7 +16,7 @@ const lake: Lake = {
   name: "123",
   host: "boom.com",
   port: "9867",
-  authType: "none"
+  authType: "none",
 }
 
 test("addLake", () => {

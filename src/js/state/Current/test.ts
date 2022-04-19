@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import tabHistory from "src/app/router/tab-history"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import Lakes from "../Lakes"
@@ -29,7 +33,7 @@ test("getting the actual lake", () => {
     name: "myws",
     host: "www.myws.com",
     port: "123",
-    authType: "none"
+    authType: "none",
   }
   const state = store.dispatchAll([Lakes.add(l)])
   store.dispatch(tabHistory.push(lakePath(l.id)))

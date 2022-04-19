@@ -1,4 +1,5 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Toolbars from "src/js/state/Toolbars"
 import {IconName} from "src/app/core/icon-temp"
 import {ActionButtonProps} from "../action-button"
@@ -15,7 +16,7 @@ const usePluginToolbarItems = (toolbarId: string): ActionButtonProps[] => {
       icon: icon as IconName,
       title: tooltip,
       click: () => dispatch(executeCommand(command)),
-      buttonProps
+      buttonProps,
     }
   })
 }

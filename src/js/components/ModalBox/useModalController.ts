@@ -48,6 +48,6 @@ export default function useModalController(
 
   return {
     closeModal,
-    buttons
+    buttons,
   }
 }

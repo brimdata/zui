@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import ConfigPropValues from "./index"
 
@@ -7,7 +11,7 @@ const configProperty1 = "testproperty1"
 const configProperty2 = "testproperty2"
 
 const data1 = {
-  test: "test"
+  test: "test",
 }
 
 const data2 = "test2"
@@ -25,7 +29,7 @@ test("Create or Update (Upsert)", () => {
     ConfigPropValues.set({
       configName: configName1,
       propName: configProperty1,
-      value: data1
+      value: data1,
     })
   )
 
@@ -42,7 +46,7 @@ test("Create or Update (Upsert)", () => {
     ConfigPropValues.set({
       configName: configName1,
       propName: configProperty2,
-      value: data2
+      value: data2,
     })
   )
 
@@ -59,7 +63,7 @@ test("Create or Update (Upsert)", () => {
     ConfigPropValues.set({
       configName: configName2,
       propName: configProperty1,
-      value: data2
+      value: data2,
     })
   )
 
@@ -76,7 +80,7 @@ test("Create or Update (Upsert)", () => {
     ConfigPropValues.set({
       configName: configName1,
       propName: configProperty1,
-      value: data2
+      value: data2,
     })
   )
   all = select(ConfigPropValues.all)
@@ -93,14 +97,14 @@ test("Delete", () => {
     ConfigPropValues.set({
       configName: configName1,
       propName: configProperty1,
-      value: data1
+      value: data1,
     })
   )
 
   dispatch(
     ConfigPropValues.delete({
       configName: configName1,
-      propName: configProperty1
+      propName: configProperty1,
     })
   )
 

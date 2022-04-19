@@ -1,6 +1,7 @@
 import {debounce, isEmpty} from "lodash"
 import React, {useEffect, useMemo} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
@@ -36,7 +37,7 @@ const ResultsTable = (props: Props) => {
   const dispatch = useDispatch()
   const displayConfig = useSelector(ConfigPropValues.get("display"))
   const {parentRef, selection, clicked} = useRowSelection({
-    multi: props.multiSelect
+    multi: props.multiSelect,
   })
 
   let type
@@ -54,7 +55,7 @@ const ResultsTable = (props: Props) => {
         width: props.width,
         size: logs.length,
         rowHeight: 25,
-        sumColumnWidths: tableColumns.sumWidths()
+        sumColumnWidths: tableColumns.sumWidths(),
       }),
     [type, props.height, props.width, logs.length, tableColumns]
   )
@@ -64,7 +65,7 @@ const ResultsTable = (props: Props) => {
     height: props.height,
     rowHeight: 25,
     chunkSize: 5,
-    overScan: 1
+    overScan: 1,
   })
 
   useEffect(() => {

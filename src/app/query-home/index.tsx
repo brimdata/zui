@@ -5,7 +5,8 @@ import {ActionButtonProps} from "src/app/toolbar/action-button"
 import Layout from "src/js/state/Layout"
 import Results from "./results"
 import React, {useLayoutEffect} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Current from "src/js/state/Current"
 import SearchBarState from "src/js/state/SearchBar"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
@@ -18,7 +19,6 @@ import SearchBarActions from "src/js/state/SearchBar"
 import {syncPool} from "../core/pools/sync-pool"
 import ToolbarButton from "./toolbar/button"
 import {newQuery} from "./flows/new-query"
-import {AppDispatch} from "../../js/state/types"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import {getQuerySource} from "./flows/get-query-source"
@@ -38,7 +38,7 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
         id: queryId,
         name: DRAFT_QUERY_NAME,
         value: "",
-        pins: {}
+        pins: {},
       })
     )
   }
@@ -46,7 +46,7 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
     SearchBarState.restoreSearchBar({
       current: query?.value || "",
       pinned: query?.getFilterPins()?.map((p) => p.toString()) || [],
-      error: null
+      error: null,
     })
   )
 }
@@ -77,15 +77,15 @@ const useInspectorButtons = (): ActionButtonProps[] => {
       title: "Expand all inspector view entries",
       icon: "expand",
       disabled,
-      click: () => expandAll()
+      click: () => expandAll(),
     },
     {
       label: "Collapse",
       title: "Collapse all inspector view entries",
       icon: "collapse",
       disabled,
-      click: () => collapseAll()
-    }
+      click: () => collapseAll(),
+    },
   ]
 }
 const usePin = (): ActionButtonProps => {
@@ -104,7 +104,7 @@ const usePin = (): ActionButtonProps => {
         d(updateQuery(query))
         d(SearchBarActions.pinSearchBar())
       })
-    }
+    },
   }
 }
 
@@ -139,7 +139,7 @@ const QueryHome = () => {
   useSearchParamLocationSync()
   const query = useSelector(Current.getQuery)
   const lakeId = useSelector(Current.getLakeId)
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch()
   const exportAction = useExport()
   const columns = useColumns()
   const pin = usePin()
@@ -151,7 +151,7 @@ const QueryHome = () => {
     collapseButton,
     exportAction,
     columns,
-    pin
+    pin,
   ]
 
   if (!query)

@@ -14,8 +14,8 @@ export class BrimQuery {
       ...raw,
       pins: {
         from: raw.pins?.from || "",
-        filters: []
-      }
+        filters: [],
+      },
     }
 
     if (raw.pins?.filters) this.q.pins.filters.push(...raw.pins.filters)

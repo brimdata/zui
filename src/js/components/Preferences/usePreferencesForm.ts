@@ -1,4 +1,5 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import Configs from "src/js/state/Configs"
 import {FormConfig} from "../../brim/form"
@@ -28,7 +29,7 @@ export const useConfigsForm = (): FormConfig => {
           ConfigPropValues.set({
             configName: config.name,
             propName: prop.name,
-            value
+            value,
           })
         )
       }
@@ -54,7 +55,7 @@ export const useConfigsForm = (): FormConfig => {
         enum: prop.enum,
         submit,
         check,
-        helpLink
+        helpLink,
       }
     })
   })

@@ -1,4 +1,4 @@
-import {render} from "react-dom"
+import {createRoot} from "react-dom/client"
 
 import {Pen} from "../types"
 
@@ -6,14 +6,15 @@ export default function reactComponent(renderComponent: any): Pen {
   let root
 
   function mount(el) {
-    root = document.createElement("div")
+    const container = document.createElement("div")
+    root = createRoot(container)
     if (el.parentNode) {
-      el.parentNode.appendChild(root)
+      el.parentNode.appendChild(container)
     }
   }
 
   function draw(chart) {
-    render(renderComponent(chart), root)
+    root.render(renderComponent(chart))
   }
 
   return {draw, mount}

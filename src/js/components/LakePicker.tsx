@@ -31,7 +31,7 @@ const LakePickerWrapper = styled.div`
     stroke: var(--slate);
     margin-left: 6px;
   }
-` as ComponentType<any>
+` as ComponentType<React.PropsWithChildren<any>>
 
 const showLakeMenu = () => (dispatch, getState) => {
   const lakes = Lakes.all(getState())
@@ -40,9 +40,9 @@ const showLakeMenu = () => (dispatch, getState) => {
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Get Info",
-      click: () => dispatch(Modal.show("view-lake"))
+      click: () => dispatch(Modal.show("view-lake")),
     },
-    {type: "separator"}
+    {type: "separator"},
   ]
 
   lakes.forEach((l: Lake) => {
@@ -54,7 +54,7 @@ const showLakeMenu = () => (dispatch, getState) => {
       click: () => {
         if (isCurrent) return
         dispatch(tabHistory.push(lakeImportPath(l.id)))
-      }
+      },
     })
   })
 
@@ -62,7 +62,7 @@ const showLakeMenu = () => (dispatch, getState) => {
     {type: "separator"},
     {
       label: "Add Lake...",
-      click: () => dispatch(Modal.show("new-lake"))
+      click: () => dispatch(Modal.show("new-lake")),
     }
   )
 

@@ -1,6 +1,5 @@
 import {BrimProvider} from "src/app/core/context"
 import {ipcRenderer} from "electron"
-import ReactDOM from "react-dom"
 import "regenerator-runtime/runtime"
 import App from "./components/App"
 import StartupError from "./components/StartupError"
@@ -10,6 +9,7 @@ import lib from "./lib"
 import {getPersistedState} from "./state/getPersistable"
 import TabHistories from "./state/TabHistories"
 import React from "react"
+import {createRoot} from "react-dom/client"
 
 initialize()
   .then(({store, api, pluginManager}) => {
@@ -26,14 +26,17 @@ initialize()
         getPersistedState(store.getState())
       )
     }
-    ReactDOM.render(
+    const container = lib.doc.id("app-root")
+    const root = createRoot(container!)
+    root.render(
       <BrimProvider store={store} api={api}>
         <App />
-      </BrimProvider>,
-      lib.doc.id("app-root")
+      </BrimProvider>
     )
   })
   .catch((e) => {
     console.error(e)
-    ReactDOM.render(<StartupError error={e} />, lib.doc.id("app-root"))
+    const container = lib.doc.id("app-root")
+    const root = createRoot(container!)
+    root.render(<StartupError error={e} />)
   })

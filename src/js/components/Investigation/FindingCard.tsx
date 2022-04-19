@@ -1,4 +1,3 @@
-import {useDispatch} from "react-redux"
 import React from "react"
 import classNames from "classnames"
 import styled from "styled-components"
@@ -11,6 +10,7 @@ import MagnifyingGlass from "../../icons/MagnifyingGlass"
 import Search from "../../state/Search"
 import usePopupMenu from "../hooks/usePopupMenu"
 import * as remote from "@electron/remote"
+import {useDispatch} from "src/app/core/state"
 
 const StyledMagnifyingGlass = styled(MagnifyingGlass)`
   fill: var(--lead);
@@ -25,7 +25,7 @@ type Props = {finding: Finding; lakeId: string; poolId: string}
 export default React.memo<Props>(function FindingCard({
   finding,
   lakeId,
-  poolId
+  poolId,
 }: Props) {
   const dispatch = useDispatch()
 
@@ -38,7 +38,7 @@ export default React.memo<Props>(function FindingCard({
     {
       label: "Delete",
       click: () =>
-        dispatch(Investigation.deleteFindingByTs(lakeId, poolId, finding.ts))
+        dispatch(Investigation.deleteFindingByTs(lakeId, poolId, finding.ts)),
     },
     {type: "separator"},
     {
@@ -49,13 +49,13 @@ export default React.memo<Props>(function FindingCard({
             type: "warning",
             title: "Delete All History",
             message: `Are you sure you want to delete all history entries for this pool?`,
-            buttons: ["OK", "Cancel"]
+            buttons: ["OK", "Cancel"],
           })
           .then(({response}) => {
             if (response === 0)
               dispatch(Investigation.clearPoolInvestigation(lakeId, poolId))
-          })
-    }
+          }),
+    },
   ])
 
   return (

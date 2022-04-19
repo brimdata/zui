@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import fsExtra from "fs-extra"
 
 import path from "path"
@@ -33,7 +37,7 @@ test("loading state from release 0.8.0 resets state", async () => {
   const v8 = {
     order: [],
     windows: {},
-    globalState: {investigation: [], pools: {zqd: {}}, version: "6"}
+    globalState: {investigation: [], pools: {zqd: {}}, version: "6"},
   }
   fsExtra.writeJSONSync(file, v8)
 
@@ -53,7 +57,7 @@ test("loading state from a 0.9.1 release migrates", () => {
   return expect(session.load()).resolves.toEqual({
     globalState: expect.any(Object),
     order: expect.any(Array),
-    windows: expect.any(Object)
+    windows: expect.any(Object),
   })
 })
 

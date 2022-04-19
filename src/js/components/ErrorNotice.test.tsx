@@ -7,9 +7,10 @@ import React from "react"
 import Notice from "../state/Notice"
 import ErrorFactory from "../models/ErrorFactory"
 import ErrorNotice from "./ErrorNotice"
-import {screen} from "@testing-library/react"
+// import {screen} from "@testing-library/react"
 import {setupBrim} from "src/test/unit/helpers/setup-brim"
-import {render} from "src/test/unit/helpers"
+import {render, screen} from "src/test/unit/helpers"
+import {act} from "react-dom/test-utils"
 
 const brim = setupBrim()
 
@@ -18,41 +19,47 @@ beforeEach(() => {
 })
 
 test("renders Error notice with no details", async () => {
-  brim.store.dispatch(
-    Notice.set(
-      ErrorFactory.create({
-        type: "Bad",
-        message: "Test error message"
-      })
+  act(() => {
+    brim.store.dispatch(
+      Notice.set(
+        ErrorFactory.create({
+          type: "Bad",
+          message: "Test error message",
+        })
+      )
     )
-  )
+  })
   expect(screen.getByRole("alert")).toHaveTextContent("Test error message")
 })
 
 test("renders Error notice with detail string", async () => {
-  brim.store.dispatch(
-    Notice.set(
-      ErrorFactory.create({
-        type: "Bad",
-        message: "Test error message",
-        details: "Test detail"
-      })
+  act(() => {
+    brim.store.dispatch(
+      Notice.set(
+        ErrorFactory.create({
+          type: "Bad",
+          message: "Test error message",
+          details: "Test detail",
+        })
+      )
     )
-  )
+  })
   expect(screen.getByRole("alert")).toHaveTextContent("Test error message")
   expect(screen.getByRole("alert")).toHaveTextContent("Test detail")
 })
 
 test("renders Error notice with detail array", async () => {
-  brim.store.dispatch(
-    Notice.set(
-      ErrorFactory.create({
-        type: "Bad",
-        message: "Test error message",
-        details: ["Test detail 1", "Test detail 2"]
-      })
+  act(() => {
+    brim.store.dispatch(
+      Notice.set(
+        ErrorFactory.create({
+          type: "Bad",
+          message: "Test error message",
+          details: ["Test detail 1", "Test detail 2"],
+        })
+      )
     )
-  )
+  })
   expect(screen.getByRole("alert")).toHaveTextContent("Test error message")
   expect(screen.getByRole("alert")).toHaveTextContent("Test detail 1")
   expect(screen.getByRole("alert")).toHaveTextContent("Test detail 2")

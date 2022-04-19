@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Errors from "./"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 
@@ -12,7 +16,7 @@ test("ERROR_CREATE", () => {
   expect(Errors.getErrors(state)[0]).toEqual({
     type: "AppError",
     message: "Bug",
-    details: []
+    details: [],
   })
 })
 
@@ -20,7 +24,7 @@ test("ERRORS_CLEAR", () => {
   const state = store.dispatchAll([
     Errors.createError("Bug"),
     Errors.createError("Bug2"),
-    Errors.clearErrors()
+    Errors.clearErrors(),
   ])
 
   expect(Errors.getErrors(state)).toEqual([])

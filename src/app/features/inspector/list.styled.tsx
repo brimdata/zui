@@ -1,7 +1,10 @@
 import {FixedSizeList} from "react-window"
 import styled from "styled-components"
+import {ComponentType, PropsWithChildren} from "react"
 
-export const List = styled(FixedSizeList)`
+export const List: ComponentType<PropsWithChildren<any>> = styled(
+  FixedSizeList
+)`
   font-size: 13px;
   font-family: var(--mono-font), sans-serif;
   line-height: 20px;

@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react"
 import {Tree, TreeApi} from "react-arborist"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Queries from "src/js/state/Queries"
 import {isBrimLib} from "src/js/state/Queries/flows"
 import {
@@ -9,7 +10,7 @@ import {
   DropOverlay,
   SectionToolbar,
   ButtonRow,
-  SectionSearch
+  SectionSearch,
 } from "../common"
 import QueryItem from "./query-item"
 import {useQueryImportOnDrop, useSectionTreeDefaults} from "../hooks"
@@ -20,7 +21,6 @@ import TreeModel from "tree-model"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Query} from "src/js/state/Queries/types"
 import {refreshRemoteQueries, setRemoteQueries} from "../flows/remote-queries"
-import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
 import EmptySection from "src/js/components/common/EmptySection"
 import Icon from "src/app/core/icon-temp"
@@ -28,7 +28,7 @@ import {listContextMenu} from "./list-context-menu"
 import Current from "src/js/state/Current"
 
 const StyledEmptySection = styled(EmptySection).attrs({
-  icon: <Icon name="query" />
+  icon: <Icon name="query" />,
 })``
 
 const QueriesSectionSwitch = ({view, toolbarButtons}) => {
@@ -51,7 +51,7 @@ const querySearch = (term: string, items: Query[]): Query[] => {
 }
 
 const RemoteQueriesView = ({toolbarButtons}) => {
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch()
   const remoteQueries = useSelector(RemoteQueries.raw)?.items
   const [filteredQueries, setFilteredQueries] = useState(remoteQueries)
   const {resizeRef: ref, defaults} = useSectionTreeDefaults()
@@ -157,7 +157,7 @@ const LocalQueriesView = ({toolbarButtons}) => {
     setFilteredQueries({
       id: "root",
       name: "root",
-      items: querySearch(searchTerm, queryModels)
+      items: querySearch(searchTerm, queryModels),
     })
   }
 
@@ -231,7 +231,7 @@ function QueriesSection() {
   const toolbarButtons = ["local", "remote"].map((view: QueriesView) => ({
     label: capitalize(view),
     onClick: () => dispatch(Appearance.setQueriesView(view)),
-    isSelected: view === queriesView
+    isSelected: view === queriesView,
   }))
 
   return (

@@ -1,5 +1,6 @@
 import React, {useState} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
 import SearchBar from "../../state/SearchBar"
 import FilterNode from "../FilterNode"

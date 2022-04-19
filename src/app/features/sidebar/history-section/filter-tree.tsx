@@ -2,7 +2,8 @@ import classNames from "classnames"
 import * as remote from "@electron/remote"
 import {initial, isEqual, map, tail, take} from "lodash"
 import React from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Current from "src/js/state/Current"
 import Investigation from "src/js/state/Investigation"
@@ -43,7 +44,7 @@ const reconstructSearch = (node: InvestigationNode): SearchRecord => {
   return {
     ...node.model.finding.search,
     program: node.model.filter,
-    pins: getPins(node)
+    pins: getPins(node),
   }
 }
 
@@ -67,7 +68,7 @@ function NodeRow({node, i, lakeId, poolId}: Props) {
           .all(() => true)
           .map((node) => node.model.finding.ts)
         dispatch(Investigation.deleteFindingByTs(lakeId, poolId, multiTs))
-      }
+      },
     },
     {type: "separator"},
     {
@@ -78,13 +79,13 @@ function NodeRow({node, i, lakeId, poolId}: Props) {
             type: "warning",
             title: "Delete All History",
             message: `Are you sure you want to delete all history entries for this pool?`,
-            buttons: ["OK", "Cancel"]
+            buttons: ["OK", "Cancel"],
           })
           .then(({response}) => {
             if (response === 0)
               dispatch(Investigation.clearPoolInvestigation(lakeId, poolId))
-          })
-    }
+          }),
+    },
   ])
 
   function onNodeClick() {
@@ -94,7 +95,7 @@ function NodeRow({node, i, lakeId, poolId}: Props) {
 
   const className = classNames("filter-tree-node", {
     pinned: nodeIsActivePin(node, prevPins),
-    active: nodeIsActive(node, prevPins, prevProgram)
+    active: nodeIsActive(node, prevPins, prevProgram),
   })
 
   return (

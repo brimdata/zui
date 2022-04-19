@@ -3,7 +3,8 @@ import {showContextMenu} from "src/js/lib/System"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import styled from "styled-components"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Icon from "src/app/core/icon-temp"
 import {cssVar} from "polished"
 import {updateQuery} from "../flows/update-query"
@@ -23,13 +24,13 @@ const PickerWrapper = styled.button<{isDisabled?: boolean}>`
   padding: 3px 18px;
   border: none;
   margin: 0 3px 6px 16px;
-  
+
   ${(p) =>
     p.isDisabled &&
     `
     cursor: not-allowed;
   `}
-  
+
   ${DropdownIcon} > svg {
     stroke: var(--cello-transparent);
     fill: var(--cello-transparent);
@@ -59,24 +60,24 @@ const showPoolMenu = () => (dispatch, getState) => {
           click: () => {
             query.setFromPin("")
             dispatch(updateQuery(query))
-          }
+          },
         },
         {
-          type: "separator"
+          type: "separator",
         } as MenuItemConstructorOptions,
         ...pools.map((p) => ({
           label: p.name,
           click: () => {
             query.setFromPin(p.id)
             dispatch(updateQuery(query))
-          }
-        }))
+          },
+        })),
       ]
     : [
         {
           label: "No pools in lake",
-          enabled: false
-        }
+          enabled: false,
+        },
       ]
 
   showContextMenu(template)

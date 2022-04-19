@@ -3,7 +3,8 @@ import useSelect from "src/app/core/hooks/use-select"
 import {Inspector} from "src/app/features/inspector/inspector"
 import searchFieldContextMenu from "src/ppl/menus/searchFieldContextMenu"
 import React, {useCallback, MouseEvent, useMemo} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
 import Viewer from "src/js/state/Viewer"
@@ -21,7 +22,7 @@ export function MainInspector(props: {
   const expanded = useSelector(Slice.getExpanded)
   const defaultExpanded = useSelector(Slice.getDefaultExpanded)
   const {parentRef, clicked} = useRowSelection({
-    multi: false
+    multi: false,
   })
 
   function setExpanded(key: string, isExpanded: boolean) {
@@ -48,7 +49,7 @@ export function MainInspector(props: {
       searchFieldContextMenu({
         value,
         field,
-        record: field.rootRecord
+        record: field.rootRecord,
       })
     )
   }

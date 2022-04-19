@@ -1,7 +1,8 @@
 import React from "react"
 import * as remote from "@electron/remote"
 import {MenuItemConstructorOptions} from "electron"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Icon from "src/app/core/icon-temp"
 import submitSearch from "src/app/query-home/flows/submit-search"
 import {showContextMenu} from "src/js/lib/System"
@@ -29,7 +30,7 @@ const LinearHistoryItem = ({styles, data: historyItem}) => {
       click: () =>
         dispatch(
           Investigation.deleteFindingByTs(lakeId, poolId, historyItem.ts)
-        )
+        ),
     },
     {type: "separator"},
     {
@@ -40,13 +41,13 @@ const LinearHistoryItem = ({styles, data: historyItem}) => {
             type: "warning",
             title: "Delete All History",
             message: `Are you sure you want to delete all history entries for this pool?`,
-            buttons: ["OK", "Cancel"]
+            buttons: ["OK", "Cancel"],
           })
           .then(({response}) => {
             if (response === 0)
               dispatch(Investigation.clearPoolInvestigation(lakeId, poolId))
-          })
-    }
+          }),
+    },
   ]
 
   return (

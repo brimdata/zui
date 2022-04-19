@@ -4,7 +4,8 @@ import useExport from "src/app/toolbar/hooks/useExport"
 import useView from "src/app/toolbar/hooks/useView"
 import {Toolbar} from "src/app/toolbar/toolbar"
 import React, {useLayoutEffect} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import {SearchBar} from "src/js/components/SearchBar/mod"
 import SearchHeaderChart from "src/js/components/SearchHeaderChart"
 import SearchPageHeader from "src/js/components/SearchPageHeader"
@@ -16,14 +17,14 @@ import Url from "src/js/state/Url"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 
 function setSearchParamsFromUrl() {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     const url = Url.getSearchParams(getState())
     dispatch(Search.setSpanArgs(url.spanArgs))
     dispatch(
       SearchBarState.restoreSearchBar({
         current: url.program || "",
         pinned: url.pins,
-        error: null
+        error: null,
       })
     )
   }

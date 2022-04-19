@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import Queries from "./"
 import {Group} from "./types"
@@ -24,7 +28,7 @@ const testLib = {
           name: "testName2",
           description: "testDescription2",
           value: "testValue2",
-          tags: ["testTag1", "testTag2"]
+          tags: ["testTag1", "testTag2"],
         },
         {
           // .items[0].items[1]
@@ -37,9 +41,9 @@ const testLib = {
               name: "testName4",
               description: "testDescription4",
               value: "testValue4",
-              tags: ["testTag2"]
-            }
-          ]
+              tags: ["testTag2"],
+            },
+          ],
         },
         {
           // .items[0].items[2]
@@ -47,11 +51,11 @@ const testLib = {
           name: "testName5",
           description: "testDescription5",
           value: "testValue5",
-          tags: ["testTag1"]
-        }
-      ]
-    }
-  ]
+          tags: ["testTag1"],
+        },
+      ],
+    },
+  ],
 }
 
 const newQuery = {
@@ -59,13 +63,13 @@ const newQuery = {
   name: "newQueryName",
   description: "newQueryDescription",
   value: "newQueryValue",
-  tags: []
+  tags: [],
 }
 
 const newGroup = {
   id: "newGroupId",
   name: "newGroupName",
-  items: []
+  items: [],
 }
 
 const getGroup = (path: number[]): Group => {
@@ -158,7 +162,7 @@ test("move query, same group, different group same depth", () => {
 
   expect(getGroup([0]).items).toEqual([
     ...testName1Group.items.slice(1),
-    testName2Query
+    testName2Query,
   ])
 
   // move back to beginning
@@ -208,7 +212,7 @@ test("move query, different group", () => {
   expect(newTestName1Group.items[0].id).toEqual(testName1Group.items[1].id)
   expect(newTestName3Group.items).toEqual([
     testName2Query,
-    ...testName3Group.items
+    ...testName3Group.items,
   ])
 })
 

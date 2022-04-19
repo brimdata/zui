@@ -1,7 +1,7 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import React, {useRef} from "react"
 import styled from "styled-components"
-
 import {cssVar} from "../../lib/cssVar"
 import {submitSearch} from "../../flows/submitSearch/mod"
 import SearchBar from "../../state/SearchBar"

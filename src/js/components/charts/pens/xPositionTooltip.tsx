@@ -1,21 +1,22 @@
 import {isEqual} from "lodash"
-import {render} from "react-dom"
 import {select, mouse, ContainerElement} from "d3"
 import React from "react"
 
 import {HistogramDataPoint} from "../MainHistogram/format"
 import {Pen} from "../types"
 import {getPointAt} from "../getPointAt"
+import {createRoot} from "react-dom/client"
 
 type Args = {
   wrapperClassName: string
   render: any
 }
 
-export default function({wrapperClassName, render: Component}: Args): Pen {
+export default function ({wrapperClassName, render: Component}: Args): Pen {
   let div
   let svg
   let lastPoint
+  let root
 
   function hide() {
     div.style.opacity = "0"
@@ -24,12 +25,11 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
   function mount(el) {
     svg = el
     div = document.createElement("div")
+    root = createRoot(div)
+
     div.classList.add(wrapperClassName)
     if (svg.parentNode) svg.parentNode.appendChild(div)
-
-    select(svg)
-      .select(".brush")
-      .on("mousedown.tooltip", hide)
+    select(svg).select(".brush").on("mousedown.tooltip", hide)
   }
 
   function draw(chart) {
@@ -42,7 +42,7 @@ export default function({wrapperClassName, render: Component}: Args): Pen {
       if (point && point.count) {
         positionTooltip(div, svg, 30)
         if (!isEqual(lastPoint, point)) {
-          render(<Component {...getProps(point)} />, div)
+          root.render(<Component {...getProps(point)} />)
         }
         lastPoint = point
       } else {
