@@ -57,7 +57,7 @@ on releases older than Windows 8.1.
 
 Brim's [test automation](#automated-testing) runs on Catalina 10.15 and
 therefore this is the macOS version on which we are best able to ensure quality
-and prevent regressions. Several Brim developers also run macOS Big Sur 11.0
+and prevent regressions. Several Brim developers also run macOS Monterey 12.3
 and regularly perform ad hoc testing with it to reproduce reported issues.
 
 Basic [smoke testing](#smoke-testing) has also validated that Brim appears to
@@ -92,10 +92,11 @@ builds ([brim/1266](https://github.com/brimdata/brim/issues/1266)).
 ## Linux
 
 Brim's [test automation](#automated-testing) runs on Ubuntu 18.04 (`.deb`
-package) and CentOS 8 (`.rpm` package) and therefore these are the platforms
-on which we are best able to ensure quality and prevent regressions.
+package) and therefore this is the Linux distribution on which we are best able
+to ensure quality and prevent regressions. 
 
-The [CentOS FAQ](https://wiki.centos.org/FAQ/General) explains that CentOS
+An `.rpm` package is also provided that is periodically [smoke tested](https://github.com/brimdata/brim/wiki/Supported-Platforms#smoke-testing)
+on CentOS 8. The [CentOS FAQ](https://wiki.centos.org/FAQ/General) explains that CentOS
 "aims to be functionally compatible with Red Hat Enterprise Linux" ([RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)).
 Therefore the CentOS versions listed in this article provide the basis of the
 Brim supportability expectation for the equivalent RHEL version.
