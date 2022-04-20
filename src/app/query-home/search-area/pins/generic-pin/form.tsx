@@ -1,7 +1,7 @@
 import {cssVar, lighten, darken} from "polished"
 import React, {useRef} from "react"
+import {GenericQueryPin} from "src/js/state/Editor/types"
 import styled from "styled-components"
-import {GenericQueryPin} from "./reducer"
 
 const Field = styled.div`
   margin-bottom: 10px;
@@ -72,7 +72,11 @@ const PrimaryButton = styled(Button)`
   }
 `
 
-export function GenericPinForm(props: {pin: GenericQueryPin}) {
+export function Form(props: {
+  pin: GenericQueryPin
+  onSubmit: (pin: GenericQueryPin) => void
+  onReset: () => void
+}) {
   const form = useRef()
   return (
     <form method="dialog" ref={form}>
@@ -100,7 +104,9 @@ export function GenericPinForm(props: {pin: GenericQueryPin}) {
           value="ok"
           onClick={() => {
             props.onSubmit(
-              Object.fromEntries(new FormData(form.current).entries())
+              Object.fromEntries(
+                new FormData(form.current).entries()
+              ) as GenericQueryPin
             )
           }}
         >
