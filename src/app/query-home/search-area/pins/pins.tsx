@@ -18,9 +18,9 @@ const Container = styled.section`
 function renderPin(pin: QueryPin, index: number) {
   switch (pin.type) {
     case "from":
-      return <FromPin pin={pin} index={index} />
+      return <FromPin pin={pin} index={index} key={index} />
     case "generic":
-      return <GenericPin pin={pin} index={index} />
+      return <GenericPin pin={pin} index={index} key={index} />
   }
 }
 

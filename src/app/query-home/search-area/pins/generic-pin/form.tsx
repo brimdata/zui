@@ -1,7 +1,8 @@
 import {cssVar, lighten, darken} from "polished"
-import React, {useRef} from "react"
+import React from "react"
 import {GenericQueryPin} from "src/js/state/Editor/types"
 import styled from "styled-components"
+import {useDialog} from "../dialog"
 
 const Field = styled.div`
   margin-bottom: 10px;
@@ -77,16 +78,18 @@ export function Form(props: {
   onSubmit: (pin: GenericQueryPin) => void
   onReset: () => void
 }) {
-  const form = useRef()
+  useDialog({onCancel: props.onReset})
+
   return (
-    <form method="dialog" ref={form}>
+    <form
+      method="dialog"
+      onSubmit={(e) => props.onSubmit(getFormData(e))}
+      onReset={props.onReset}
+    >
       <Field>
         <label htmlFor="value">Value</label>
-        <textarea autoFocus name="value">
-          {props.pin.value}
-        </textarea>
+        <textarea autoFocus name="value" defaultValue={props.pin.value} />
       </Field>
-
       <Field>
         <label htmlFor="label">Label</label>
         <input
@@ -95,24 +98,15 @@ export function Form(props: {
           defaultValue={props.pin.label}
         />
       </Field>
-
       <Actions>
-        <Button onClick={() => props.onReset()} value="cancel">
-          Cancel
-        </Button>
-        <PrimaryButton
-          value="ok"
-          onClick={() => {
-            props.onSubmit(
-              Object.fromEntries(
-                new FormData(form.current).entries()
-              ) as GenericQueryPin
-            )
-          }}
-        >
-          OK
-        </PrimaryButton>
+        <Button type="reset">Cancel</Button>
+        <PrimaryButton type="submit">OK</PrimaryButton>
       </Actions>
     </form>
   )
+}
+
+function getFormData(e) {
+  const form = e.target
+  return Object.fromEntries(new FormData(form).entries()) as GenericQueryPin
 }

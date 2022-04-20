@@ -1,5 +1,6 @@
-import React, {MutableRefObject, useLayoutEffect, useRef, useState} from "react"
+import React, {useEffect, useLayoutEffect, useState} from "react"
 import {createPortal} from "react-dom"
+import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import useListener from "src/js/components/hooks/useListener"
 import styled from "styled-components"
 
@@ -17,24 +18,44 @@ const BG = styled.dialog`
   border: none;
   box-shadow: var(--shadow-elevation-medium);
   border-radius: 10px;
+  &::backdrop {
+    opacity: 0;
+  }
 `
 
+const DialogContext = React.createContext(null)
+
+export function useDialog(props: {onCancel?: any; onClose?: any}) {
+  const el = React.useContext(DialogContext)
+  useListener(el, "cancel", props.onCancel)
+  useListener(el, "close", props.onClose)
+  return el
+}
+
 export function Dialog(props: DialogProps) {
-  const ref = useRef()
-  const style = useDialogPosition(ref, props)
+  const [node, setNode] = useCallbackRef<any>()
+  const style = useDialogPosition(node, props)
+
+  useEffect(() => {
+    if (!node) return
+    if (props.open) {
+      node.showModal()
+    } else {
+      node.close()
+    }
+  }, [props.open])
 
   return createPortal(
-    <BG open={props.open} style={style} ref={ref}>
-      {props.children}
-    </BG>,
+    <DialogContext.Provider value={node}>
+      <BG style={style} ref={setNode}>
+        {props.children}
+      </BG>
+    </DialogContext.Provider>,
     document.getElementById("modal-root")
   )
 }
 
-function useDialogPosition(
-  ref: MutableRefObject<HTMLDialogElement>,
-  props: DialogProps
-) {
+function useDialogPosition(node: HTMLDialogElement, props: DialogProps) {
   const [position, setPosition] = useState({
     top: 10,
     left: 10,
@@ -43,9 +64,9 @@ function useDialogPosition(
 
   const run = () => {
     if (!props.open) return
-    if (!ref.current) return
+    if (!node) return
     if (!props.anchor) return
-    const {width, height} = ref.current.getBoundingClientRect()
+    const {width, height} = node.getBoundingClientRect()
 
     let left = 10
     let top = 10
