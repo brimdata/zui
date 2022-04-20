@@ -87,12 +87,12 @@ As you can see below, there've been many changes since the last Brim GA release!
   introduction of Zed lakes causes no immediate change to your favorite Brim
   workflows, they unlock powerful new functionality that will be revealed in
   Brim going forward, including Git-like branching. See the
-  [Zed lake README](https://github.com/brimdata/zed/blob/main/docs/zed/README.md)
+  [Zed lake README](https://github.com/brimdata/zed/blob/v0.30.0/docs/lake/README.md)
   for details.
 * Enhancements have been made to the Zed language to unify search and
   expression syntax, introduce new operators and functions for data
   exploration and shaping, and more! Review the
-  [Zed language docs](https://github.com/brimdata/zed/blob/main/docs/zq/language.md)
+  [Zed language docs](https://github.com/brimdata/zed/blob/v0.30.0/docs/language/README.md)
   for details.
 * pcap processing is now handled by a separate, new component
   called Brimcap. Your favorite pcap workflows in Brim have not changed, but
@@ -106,9 +106,7 @@ particular we'd like to bring to your attention first.
 
 * You will be prompted upon first launch of Brim `v0.25.0` to allow
   auto-migration of saved data from your `v0.24.0` Spaces to pools in Zed
-  lakes. See the
-  [Space Migration](https://github.com/brimdata/brim/wiki/Migration-of-Spaces)
-  article in the Brim wiki for details.
+  lakes.
 
 * Brim `v0.25.0` includes a new installer that will make upgrades to future
   versions more seamless. However, when making the jump from `v0.24.0` to the
@@ -136,7 +134,7 @@ particular we'd like to bring to your attention first.
   saved custom entries to the Query Library, you'll need to change these
   yourself. Some key changes include `:=` now being used for assignment, `==`
   for equality comparisons, and string values
-  must now be quoted in [field/value](https://github.com/brimdata/zed/blob/main/docs/zq/language.md#search-expressions) matches.
+  must now be quoted in [field/value](https://github.com/brimdata/zed/blob/v0.30.0/docs/language/search-syntax/README.md) matches.
 
 The exhaustive set of changes is listed below. Come talk to us on
 [Slack](https://www.brimdata.io/join-slack/) if you have additional
@@ -159,11 +157,11 @@ questions.
 * Adjust the guidance on the **Import Files** page and add a [wiki article](https://github.com/brimdata/brim/wiki/Importing-CSV%2C-Parquet%2C-and-ZST) with more detail (#1548, #1625, #1626, #1635)
 * Brim is now packaged using [electron-builder](https://www.electron.build/), which streamlines installation and auto-update (#1508)
 * Fix an issue where importing an NDJSON record containing an empty object caused a "Cannot read property 'map' of null" pop-up error (#1581)
-* Remove the legacy approach for applying Zed types to NDJSON input, as this is now done via Zed shapers ([docs](https://github.com/brimdata/zed/blob/main/zeek/Shaping-Zeek-NDJSON.md)) (#1580, #1582)
+* Remove the legacy approach for applying Zed types to NDJSON input, as this is now done via Zed shapers ([docs](https://github.com/brimdata/zed/blob/v0.30.0/zeek/Shaping-Zeek-NDJSON.md)) (#1580, #1582)
 * Brim now invokes [Brimcap](https://github.com/brimdata/brimcap) to generate logs from imported pcaps and to extract flows when **Packets** is clicked, rather than relying on `zqd` (#1584, #1573, #1591, #1590, #1598, #1614, #1617, #1637, #1651, #1664, #1668, #1705, #1731, #1735, #1748, #1747, #1781, #1789, #1810, #1816, #1829, #1833)
 * Use pools in Zed lakes for backend storage rather than Spaces (#1589, #1601, #1633, #1676, #1696, #1710, #1712, #1772, #1822)
 * Implement the full Zed type system in JavaScript, which allows for improved presentation of array and set types, and also fixes an issue where named types were rejected at import (#1603, #1623, #1663, #1732)
-* Offer the option to migrate Spaces to pools when new Brim launches ([wiki article](https://github.com/brimdata/brim/wiki/Migration-of-Spaces)) (#1621, #1587, #1636, #1641, #1640, #1657, #1671, #1682, #1762)
+* Offer the option to migrate Spaces to pools when new Brim launches (#1621, #1587, #1636, #1641, #1640, #1657, #1671, #1682, #1762)
 * Automatically append `| fuse` to the Zed pipeline if the user is exporting data in CSV format (#1622)
 * Notify a Windows user if they've launched new Brim while old Brim is still installed (#1627, #1751)
 * Update default **Query Library** entries to reflect newer Zed language syntax (#1489, #1645)
@@ -192,7 +190,7 @@ questions.
 * Update zq to [v0.29.0](https://github.com/brimdata/zed/releases/tag/v0.29.0)
 * Consolidate the colors used in Brim (#1405)
 * Fix an issue where the arrows in the sidebar were incorrectly pointed (#1414)
-* Add a [wiki doc](https://github.com/brimdata/brim/wiki/Query-Library-Transfer) and script showing how to transfer contents of the Query Library (#1415)
+* Add a wiki doc and script showing how to transfer contents of the Query Library (#1415)
 * Fix an issue where data exports continued long after the "Exporting..." pop-up went away (#1424)
 * Hide the archive index search dropdown (#1417)
 * Fix an issue where invoking a right-click "Whois" lookup in a Log Detail window caused a stack dump (#1418)
@@ -367,7 +365,7 @@ as usual.
 * Fix an issue where opening/closing a Log Detail window during pcap import canceled the import (#1015)
 * Sort field names in the column chooser alphabetically (#1012)
 * Add a search tool in the column chooser to find field names (#1012)
-* Fix an issue where clicking a link to [ZQL docs](https://github.com/brimdata/zed/blob/main/docs/zq/language.md) opened an unusable window (#1030)
+* Fix an issue where clicking a link to [ZQL docs](https://github.com/brimdata/zed/blob/v0.20.0/zql/docs/README.md) opened an unusable window (#1030)
 * Expand the [wiki docs](https://github.com/brimdata/brim/wiki/Troubleshooting#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open) for troubleshooting pcap extraction issues (#1020)
 * Fix an issue where the Packets button was not activating after scrolling down in the main events view (#1027)
 * Add the ability to connect Brim to a remote `zqd` (#1007)

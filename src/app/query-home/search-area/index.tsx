@@ -6,6 +6,7 @@ import Input, {hasNewLine} from "./Input"
 import {useSelector} from "react-redux"
 import SearchBar from "src/js/state/SearchBar"
 import {Pins} from "./pins/pins"
+import Current from "src/js/state/Current"
 
 const Group = styled.div<{flex: number; isMultiLine: boolean}>`
   display: flex;
@@ -17,11 +18,17 @@ const Group = styled.div<{flex: number; isMultiLine: boolean}>`
 export default function SearchArea() {
   const inputValue = useSelector(SearchBar.getSearchBarInputValue)
   const isMultiLine = hasNewLine(inputValue)
+  const query = useSelector(Current.getQuery)
+
   return (
     <>
       <Pins />
       <Group isMultiLine={isMultiLine} flex={1}>
-        <Input isMultiLine={isMultiLine} />
+        <Input
+          inputValue={inputValue}
+          isMultiLine={isMultiLine}
+          isDisabled={query.isReadOnly}
+        />
         <Error />
       </Group>
     </>

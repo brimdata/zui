@@ -5222,7 +5222,7 @@ __metadata:
     babel-eslint: ^10.1.0
     babel-plugin-module-resolver: ^4.0.0
     base64-js: ^1.3.1
-    brimcap: "github:brimdata/brimcap#addca3febb2f022f0ff88b2af45d7d6f458b392b"
+    brimcap: "github:brimdata/brimcap#0fa6e708c1d57abb5eea7e4106bc52c1b02ceea1"
     chalk: ^4.1.0
     chrono-node: ^1.4.8
     classnames: ^2.2.6
@@ -5309,7 +5309,7 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "brimdata/zed#a00b05ec2cb7e5a5a454880cd1e717d73ad13953"
+    zed: "brimdata/zed#c7f79e2b7a8b7ffb4b6515dd82498a912a3c57b6"
   dependenciesMeta:
     electron-installer-debian:
       optional: true
@@ -5320,10 +5320,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"brimcap@github:brimdata/brimcap#addca3febb2f022f0ff88b2af45d7d6f458b392b":
+"brimcap@github:brimdata/brimcap#0fa6e708c1d57abb5eea7e4106bc52c1b02ceea1":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=addca3febb2f022f0ff88b2af45d7d6f458b392b"
-  checksum: 78ae2f8cc5ce7b2773e957f9483ff232a2639490158ac2c796c1e19c627f5273635870baf1deb914d875b1c0d7643b7c4467f5dccca6777a5ffdc3d25a2047cd
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=0fa6e708c1d57abb5eea7e4106bc52c1b02ceea1"
+  checksum: c2fec9045a106e412694a91c65c559899cf9bb5ecd5f4ba5c70f4ead5cbc3df4935d9ec8cd3086c5a1540ec523a179da833c526fc8fa2c377b4a7f90377a709d
   languageName: node
   linkType: hard
 
@@ -5355,6 +5355,13 @@ __metadata:
   dependencies:
     node-int64: ^0.4.0
   checksum: 9ba4dc58ce86300c862bffc3ae91f00b2a03b01ee07f3564beeeaf82aa243b8b03ba53f123b0b842c190d4399b94697970c8e7cf7b1ea44b61aa28c3526a4449
+  languageName: node
+  linkType: hard
+
+"bson@npm:~1.0.4":
+  version: 1.0.9
+  resolution: "bson@npm:1.0.9"
+  checksum: 3614a3bd8158abcac8544613a4cda239f74e9371b2c0e9bc41b2a2770b3ea7df992ba6f16bb764dec1807078051383a80a1027c9ffc6b06adc60bc33e6b7d6dc
   languageName: node
   linkType: hard
 
@@ -5400,6 +5407,13 @@ __metadata:
   version: 1.1.1
   resolution: "buffer-from@npm:1.1.1"
   checksum: ccc53b69736008bff764497367c4d24879ba7122bc619ee499ff47eef3a5b885ca496e87272e7ebffa0bec3804c83f84041c616f6e3318f40624e27c1d80f045
+  languageName: node
+  linkType: hard
+
+"buffer-shims@npm:~1.0.0":
+  version: 1.0.0
+  resolution: "buffer-shims@npm:1.0.0"
+  checksum: 4defd1ffc9b270708ea39c17cac75c91c520c8e2f1d28a4d0ec74dc77445cbf8fc162003f0530fd1f81340347e9a26863d5aa27cd3cc351ec1d0361777d15ace
   languageName: node
   linkType: hard
 
@@ -7815,6 +7829,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"es6-promise@npm:3.2.1":
+  version: 3.2.1
+  resolution: "es6-promise@npm:3.2.1"
+  checksum: ef02b46d74d5a5f3d6fcd0e8378f60c27c2c521927efc7a6126f20018b11bd100608e8ade70daea4bb3b2703dd355a304400665a3d659026d8bc5e441b52ab60
+  languageName: node
+  linkType: hard
+
 "escalade@npm:^3.1.1":
   version: 3.1.1
   resolution: "escalade@npm:3.1.1"
@@ -9913,7 +9934,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"inherits@npm:^2.0.4":
+"inherits@npm:^2.0.4, inherits@npm:~2.0.1":
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 4a48a733847879d6cf6691860a6b1e3f0f4754176e4d71494c41f3475553768b10f84b5ce1d40fbd0e34e6bfbb864ee35858ad4dd2cf31e02fc4a154b724d7f1
@@ -13100,6 +13121,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mongodb-core@npm:2.1.20":
+  version: 2.1.20
+  resolution: "mongodb-core@npm:2.1.20"
+  dependencies:
+    bson: ~1.0.4
+    require_optional: ~1.0.0
+  checksum: 6491e66d82f3f40e4f1ddf37a6374f019ac0113b2da097d97db34209ee8576938644726fa871c65833253c1ea07a9d099e363b2db48176828b7dfdbddafd59f7
+  languageName: node
+  linkType: hard
+
+"mongodb@npm:^2.2.27":
+  version: 2.2.36
+  resolution: "mongodb@npm:2.2.36"
+  dependencies:
+    es6-promise: 3.2.1
+    mongodb-core: 2.1.20
+    readable-stream: 2.2.7
+  checksum: 238b6c7eba7584d69822db2f9fa168e687dec9658e7ea4aa517b652f90c26632ed99269f83e7091ee18785d2d44e2d765946ca214a44ea90bf49a3104d9c7679
+  languageName: node
+  linkType: hard
+
 "mousetrap@npm:^1.6.5":
   version: 1.6.5
   resolution: "mousetrap@npm:1.6.5"
@@ -14624,6 +14666,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"process-nextick-args@npm:~1.0.6":
+  version: 1.0.7
+  resolution: "process-nextick-args@npm:1.0.7"
+  checksum: 41224fbc803ac6c96907461d4dfc20942efa3ca75f2d521bcf7cf0e89f8dec127fb3fb5d76746b8fb468a232ea02d84824fae08e027aec185fd29049c66d49f8
+  languageName: node
+  linkType: hard
+
 "process-nextick-args@npm:~2.0.0":
   version: 2.0.0
   resolution: "process-nextick-args@npm:2.0.0"
@@ -15157,6 +15206,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"readable-stream@npm:2.2.7":
+  version: 2.2.7
+  resolution: "readable-stream@npm:2.2.7"
+  dependencies:
+    buffer-shims: ~1.0.0
+    core-util-is: ~1.0.0
+    inherits: ~2.0.1
+    isarray: ~1.0.0
+    process-nextick-args: ~1.0.6
+    string_decoder: ~1.0.0
+    util-deprecate: ~1.0.1
+  checksum: 7be1334daa728ad9e4440c35ca5cb3e67b9529e80ce82f9da2a3f7b4ba27875634e75b87c5232c8d478dfe617001119addf1c51a4f7bdcdbdcf3308fc7383c84
+  languageName: node
+  linkType: hard
+
 "readable-stream@npm:^2.0.1, readable-stream@npm:^2.0.2, readable-stream@npm:^2.0.6, readable-stream@npm:^2.2.2, readable-stream@npm:~2.3.6":
   version: 2.3.6
   resolution: "readable-stream@npm:2.3.6"
@@ -15490,6 +15554,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"require_optional@npm:~1.0.0":
+  version: 1.0.1
+  resolution: "require_optional@npm:1.0.1"
+  dependencies:
+    resolve-from: ^2.0.0
+    semver: ^5.1.0
+  checksum: 64aed45ccff138e3e8abfa104de6f9bd324d27408228dbe0902049f586a2a80caf885e162b4724ee9dd5a2a0369987e8b5c5db86f5eb48a98a9f7c7d00b5c5a5
+  languageName: node
+  linkType: hard
+
 "reselect@npm:^4.0.0":
   version: 4.0.0
   resolution: "reselect@npm:4.0.0"
@@ -15510,6 +15584,13 @@ __metadata:
   version: 1.0.1
   resolution: "resolve-from@npm:1.0.1"
   checksum: 10134654dd6e758d4a4ad60acf69a90731673058a1a96068afc5f2ee84ac373df4d0237e0f052b5c81cc076273213ed50d228fc09723e0840c5c61ea37eb8854
+  languageName: node
+  linkType: hard
+
+"resolve-from@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "resolve-from@npm:2.0.0"
+  checksum: 02db4c30fecddef0efafbafb2d66b96c4a80f91d103d9850be3b85d1feb65b6af6c818d137dc546cea7d0288c21e13aa0fb4580af9af34b08052b3516690c5f3
   languageName: node
   linkType: hard
 
@@ -15992,7 +16073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:2 || 3 || 4 || 5, semver@npm:^5.3.0, semver@npm:^5.4.1, semver@npm:^5.5.0":
+"semver@npm:2 || 3 || 4 || 5, semver@npm:^5.1.0, semver@npm:^5.3.0, semver@npm:^5.4.1, semver@npm:^5.5.0":
   version: 5.7.1
   resolution: "semver@npm:5.7.1"
   bin:
@@ -16747,6 +16828,15 @@ __metadata:
   dependencies:
     safe-buffer: ~5.1.0
   checksum: 9ab7e56f9d60a28f2be697419917c50cac19f3e8e6c28ef26ed5f4852289fe0de5d6997d29becf59028556f2c62983790c1d9ba1e2a3cc401768ca12d5183a5b
+  languageName: node
+  linkType: hard
+
+"string_decoder@npm:~1.0.0":
+  version: 1.0.3
+  resolution: "string_decoder@npm:1.0.3"
+  dependencies:
+    safe-buffer: ~5.1.0
+  checksum: 57ef02a148fd1ff2f20fe1accd944505ed3703e78bb28d302d940b2ad3dfb469508f79dcd0275ba1960d9675aa206452f76b2416059a6d0b0200bd7e9f552cdb
   languageName: node
   linkType: hard
 
@@ -18632,9 +18722,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#a00b05ec2cb7e5a5a454880cd1e717d73ad13953":
+"zealot@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "zealot@npm:0.2.0"
+  dependencies:
+    mongodb: ^2.2.27
+  checksum: 74e9f0a30d7ec86d588d08c15823bda054ca835bd77e07e283fbf7e12a60de0277a7751ae965e31db7bf413baca96e34bbb39d9fcb3651b8fb3790d0d5bb119d
+  languageName: node
+  linkType: hard
+
+"zed@brimdata/zed#c7f79e2b7a8b7ffb4b6515dd82498a912a3c57b6":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=a00b05ec2cb7e5a5a454880cd1e717d73ad13953"
-  checksum: 0a46e341360884061bfdcad42bb47b4ce5c7409811959ca12248e91df923960f2c7b8044a5806125d456437a1224c95105464adffe3558dc120f7cf652074bd2
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=c7f79e2b7a8b7ffb4b6515dd82498a912a3c57b6"
+  dependencies:
+    zealot: ^0.2.0
+  checksum: e061ca20732c115ecf2a40fc4f0f0b65ca796d261ca08079f3b5e8b8e399b89ab6acce17669652ba426bc7df21036f505a3af6be10ec24632931661c6998043c
   languageName: node
   linkType: hard

@@ -48,6 +48,13 @@ export class BrimQuery {
     return !!this.ast().proc(HEAD_PROC)
   }
 
+  get isReadOnly() {
+    return !!this.q.isReadOnly
+  }
+  toggleLock() {
+    this.q.isReadOnly = !this.q.isReadOnly
+  }
+
   private ast() {
     let tree
     try {

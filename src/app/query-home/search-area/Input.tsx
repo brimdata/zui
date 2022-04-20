@@ -37,10 +37,16 @@ const InputBackdrop = styled.div<{isVisible: boolean}>`
   `};
 `
 
-export default function Input({isMultiLine}: {isMultiLine: boolean}) {
+type Props = {
+  inputValue: string
+  isMultiLine?: boolean
+  isDisabled?: boolean
+}
+
+export default function Input({inputValue, isMultiLine, isDisabled}: Props) {
   return (
     <InputBackdrop isVisible={!isMultiLine}>
-      <BrimEditor />
+      <BrimEditor value={inputValue} isDisabled={isDisabled} />
       <InputButtonRow>
         <Spinner />
         <SubmitButton isMultiLine={isMultiLine} />

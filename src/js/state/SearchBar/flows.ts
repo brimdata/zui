@@ -31,6 +31,8 @@ export default {
       )
       return false
     }
+
+    dispatch(SearchBar.errorSearchBarParse(""))
     return true
   },
   focus: () => () => {

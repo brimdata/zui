@@ -28,29 +28,38 @@ export const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 12px;
+  padding: 0 6px;
   border-radius: 5px;
-  opacity: 0.4;
-
-  &:hover {
-    opacity: 1;
-    background: var(--control-hover);
-  }
 
   span {
+    opacity: 0.5;
+    border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
-    min-width: 48px;
+    min-width: 60px;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 0 6px;
+  }
+
+  &:hover {
+    span {
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+  }
+
+  &:active {
+    span {
+      opacity: 0.8;
+    }
   }
 
   &[aria-pressed="true"] {
-    opacity: 1;
     span {
-      border-color: var(--havelock);
+      opacity: 1;
+      border-bottom-color: var(--havelock);
     }
-  }
-  &:active {
-    opacity: 1;
-    background: var(--control-active);
   }
 `
 

@@ -1,6 +1,5 @@
 import ColumnsModal from "src/app/columns/columns-modal"
 import env from "src/app/core/env"
-import SpaceMigration from "src/app/legacy/space-migration/space-migration"
 import HookLog from "src/app/system-test/HookLog"
 import React from "react"
 import BrimToaster from "src/js/components/BrimToaster"
@@ -81,7 +80,6 @@ export default function AppWrapper({children}) {
       <HTMLContextMenu />
       <BrimToaster />
       <BrimTooltip />
-      <SpaceMigration />
 
       {env.isIntegrationTest && <HookLog />}
     </div>

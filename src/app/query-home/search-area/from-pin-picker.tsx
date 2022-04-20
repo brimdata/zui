@@ -7,10 +7,11 @@ import {useDispatch, useSelector} from "react-redux"
 import Icon from "src/app/core/icon-temp"
 import {cssVar} from "polished"
 import {updateQuery} from "../flows/update-query"
+import {MenuItemConstructorOptions} from "electron"
 
 const DropdownIcon = styled(Icon).attrs({name: "chevron-down"})``
 
-const PickerWrapper = styled.button`
+const PickerWrapper = styled.button<{isDisabled?: boolean}>`
   ${(p) => p.theme.typography.labelSmall}
   font-family: ${cssVar("--mono-font")};
   font-size: 12px;
@@ -22,6 +23,12 @@ const PickerWrapper = styled.button`
   padding: 3px 18px;
   border: none;
   margin: 0 3px 6px 16px;
+  
+  ${(p) =>
+    p.isDisabled &&
+    `
+    cursor: not-allowed;
+  `}
   
   ${DropdownIcon} > svg {
     stroke: var(--cello-transparent);
@@ -46,13 +53,25 @@ const showPoolMenu = () => (dispatch, getState) => {
   const pools = Pools.getPools(lakeId)(s)
 
   const template = pools
-    ? pools.map((p) => ({
-        label: p.name,
-        click: () => {
-          query.setFromPin(p.id)
-          dispatch(updateQuery(query))
-        }
-      }))
+    ? [
+        {
+          label: "Unselect Pool",
+          click: () => {
+            query.setFromPin("")
+            dispatch(updateQuery(query))
+          }
+        },
+        {
+          type: "separator"
+        } as MenuItemConstructorOptions,
+        ...pools.map((p) => ({
+          label: p.name,
+          click: () => {
+            query.setFromPin(p.id)
+            dispatch(updateQuery(query))
+          }
+        }))
+      ]
     : [
         {
           label: "No pools in lake",
@@ -63,12 +82,19 @@ const showPoolMenu = () => (dispatch, getState) => {
   showContextMenu(template)
 }
 
-const FromPinPicker = () => {
+type Props = {
+  isDisabled?: boolean
+}
+
+const FromPinPicker = ({isDisabled}: Props) => {
   const dispatch = useDispatch()
   const currentPool = useSelector(Current.getQueryPool)
 
   return (
-    <PickerWrapper onClick={() => dispatch(showPoolMenu())}>
+    <PickerWrapper
+      isDisabled={isDisabled}
+      onClick={() => !isDisabled && dispatch(showPoolMenu())}
+    >
       <From>from</From>
       <PoolName>{currentPool?.name || "<none>"}</PoolName>
       <DropdownIcon />

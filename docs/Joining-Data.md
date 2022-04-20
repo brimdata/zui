@@ -35,9 +35,9 @@ shy!
 # Example Usage
 
 By its nature, a join operation requires two inputs that will
-ultimately be combined. The Zed [`join` docs](https://github.com/brimdata/zed/tree/main/docs/zq/operators/join.md)
+ultimately be combined. The Zed [`join` docs](https://zed.brimdata.io/docs/language/operators/join/)
 show examples with the [Zed CLI tools](https://github.com/brimdata/zed#quick-start)
-that specify these inputs as named files or pools in a [Zed Lake](https://github.com/brimdata/zed/blob/main/docs/zed/README.md).
+that specify these inputs as named files or pools in a [Zed Lake](https://zed.brimdata.io/docs/commands/zed/#1-the-lake-model).
 
 The `join` operator is still experimental and has somewhat hard-to-use syntax,
 though this should be improved soon in a subsequent release.
@@ -61,7 +61,7 @@ you can execute all the other examples shown while accessing data from multiple
 pools. The joined results can be sent into yet another pool for further query
 from within Brim, if desired.
 
-To illustrate this, we'll walk through the [example that shows inputs from pools](https://github.com/brimdata/zed/blob/main/docs/zq/operators/from.md).
+To illustrate this, we'll walk through the [example that shows inputs from pools](https://zed.brimdata.io/docs/language/operators/from/).
 To ensure API-compatibility with the Zed backend, we'll use the `zed` binary
 found in the `zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
 path, specifically on macOS in this case.
@@ -109,13 +109,13 @@ the split, the multiple branches are _merged_ back into a single stream before
 `join` operates on them.
 
 The first argument to `join` is a Zed
-[expression](https://github.com/brimdata/zed/blob/main/docs/zq/language.md#6-expressions)
+[expression](https://zed.brimdata.io/docs/language/#6-expressions)
 that references fields in the respective left/right data sources to determine
 if a pair of records from each should be joined. In this case, since the field
 we're joining on is named `uid` in both data sources, the simple expression
 `uid=uid` suffices. The next argument is a comma-separated list of field names
 or assignments, similar to how the
-[`cut`](https://github.com/brimdata/zed/tree/main/docs/zq/operators/cut.md)
+[`cut`](https://zed.brimdata.io/docs/language/operators/cut/)
 operator is used.
 
 To apply this using `zq`, we employ its `-P` option that allows us to specify
@@ -175,7 +175,7 @@ laid out in columns with headers. However, this did not occur with our joined
 ZNG data.
 
 To understand why, it helps to look at our two example `conn` records in
-[ZSON](https://github.com/brimdata/zed/blob/main/docs/formats/zson.md) format.
+[ZSON](https://zed.brimdata.io/docs/formats/zson/) format.
 
 ```
 $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
@@ -254,7 +254,7 @@ $ zq -f zson 'id.orig_p=49885 or id.orig_p=54470' conn-plus-spl.zng
 ```
 
 The presence of the separate
-[Type Definitions](https://github.com/brimdata/zed/blob/main/docs/formats/zson.md#25-types)
+[Type Definitions](https://zed.brimdata.io/docs/formats/zson/#25-types)
 `(=2)` and `(=5)` shows us how separate schemas were generated for the two
 record variations produced by the `join`: The ones that matched on `uid` (and
 hence contained the additional SPL-SPT fields) and the ones that didn't.
@@ -263,7 +263,7 @@ predicated on query results all falling under a single schema, since the
 headers need to reflect all fields expected in the output.
 
 Now that we're recognized this, we can make a small change to our Zed to address
-it. By adding the [`fuse`](https://github.com/brimdata/zed/tree/main/docs/zq/operators/fuse.md)
+it. By adding the [`fuse`](https://zed.brimdata.io/docs/language/operators/fuse/)
 operator, we can ensure all the data is captured under a single, unified
 schema.
 
