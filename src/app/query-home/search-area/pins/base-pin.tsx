@@ -19,7 +19,8 @@ const Button = styled.button`
   font-family: var(--mono-font);
   position: relative;
   margin-right: 4px;
-  max-width: 300px;
+  margin-bottom: 4px;
+  max-width: 100%;
   height: 20px;
   white-space: nowrap;
   line-height: 1;

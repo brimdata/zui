@@ -27,8 +27,8 @@ const DialogContext = React.createContext(null)
 
 export function useDialog(props: {onCancel?: any; onClose?: any}) {
   const el = React.useContext(DialogContext)
-  useListener(el, "cancel", props.onCancel)
-  useListener(el, "close", props.onClose)
+  useListener(el, "cancel", props.onCancel || (() => {}))
+  useListener(el, "close", props.onClose || (() => {}))
   return el
 }
 

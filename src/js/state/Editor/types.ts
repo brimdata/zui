@@ -9,4 +9,10 @@ export type FromQueryPin = {
   value: string
 }
 
-export type QueryPin = GenericQueryPin | FromQueryPin
+export type TimeRangeQueryPin = {
+  type: "time-range"
+  from: Date
+  to: Date
+}
+
+export type QueryPin = GenericQueryPin | FromQueryPin | TimeRangeQueryPin
