@@ -7,6 +7,9 @@ import {Dialog} from "./dialog"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Editor from "src/js/state/Editor"
+import pinContextMenu from "./pin-context-menu"
+import classNames from "classnames"
+import mergeRefs from "src/app/core/utils/merge-refs"
 
 const primary = cssVar("--primary-color") as string
 const buttonColor = transparentize(0.8, primary)
@@ -39,6 +42,10 @@ const Button = styled.button`
   }
   &:active {
     background: ${buttonActiveColor};
+  }
+
+  &.disabled {
+    text-decoration: line-through;
   }
 `
 
@@ -74,6 +81,7 @@ export type PinProps = {
   prefix?: string
   showMenu?: () => void
   form?: ReactNode
+  disabled?: boolean
 }
 
 /**
@@ -81,11 +89,16 @@ export type PinProps = {
  * in a dialog when editing. If you pass a showMenu function
  * to it, it will call it when editing.
  */
-export function BasePin(props: PinProps) {
+export const BasePin = React.forwardRef(function BasePin(
+  props: PinProps,
+  forwardedRef
+) {
   const ref = useRef()
   const dispatch = useDispatch()
   const isEditing = useSelector(Editor.getPinEditIndex) === props.index
   const onClick = () => dispatch(Editor.editPin(props.index))
+  const onContextMenu = () => dispatch(pinContextMenu(props.index))
+  const className = classNames({disabled: props.disabled})
 
   useEffect(() => {
     if (props.showMenu && isEditing) props.showMenu()
@@ -93,7 +106,12 @@ export function BasePin(props: PinProps) {
 
   return (
     <>
-      <Button onClick={onClick} ref={ref}>
+      <Button
+        onClick={onClick}
+        onContextMenu={onContextMenu}
+        ref={mergeRefs(forwardedRef, ref)}
+        className={className}
+      >
         {props.prefix && <Prefix>{props.prefix}</Prefix>}
         <Label>{props.label}</Label>
         <Dropdown />
@@ -112,4 +130,4 @@ export function BasePin(props: PinProps) {
       )}
     </>
   )
-}
+})

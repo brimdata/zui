@@ -23,6 +23,7 @@ import {autocompletion, completionKeymap} from "@codemirror/autocomplete"
 import {rectangularSelection} from "@codemirror/rectangular-selection"
 import {defaultHighlightStyle} from "@codemirror/highlight"
 import {cssVar} from "src/js/lib/cssVar"
+import Editor from "src/js/state/Editor"
 
 const EditorWrap = styled.div<{isDisabled?: boolean}>`
   width: 100%;
@@ -106,7 +107,7 @@ const BrimEditor = ({value, isDisabled}: Props) => {
     if (!viewUpdate.docChanged) return
     const viewContents = viewUpdate.state.doc.toString()
     setCurrentEditorValue(viewContents)
-    dispatch(SearchBar.changeSearchBarInput(viewContents))
+    dispatch(Editor.setValue(viewContents))
   })
   const extensions = [editorTheme, onChangeUpdater]
   if (isMultiLineMode) extensions.push(baseEditorSetup)

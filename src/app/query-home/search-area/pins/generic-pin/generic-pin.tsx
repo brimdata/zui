@@ -12,8 +12,9 @@ export default function GenericPin(props: {
   const dispatch = useDispatch()
   return (
     <BasePin
+      disabled={props.pin.disabled}
       index={props.index}
-      label={props.pin.label || props.pin.value}
+      label={props.pin.label || props.pin.value || "New Generic Pin"}
       form={
         <Form
           pin={props.pin}

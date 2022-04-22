@@ -8,6 +8,7 @@ import {QueryPin} from "src/js/state/Editor/types"
 import FromPin from "./from-pin/from-pin"
 import GenericPin from "./generic-pin/generic-pin"
 import TimeRangePin from "./time-range-pin/time-range-pin"
+import NewPin from "./new-pin"
 
 const Container = styled.section`
   margin-top: 16px;
@@ -50,15 +51,10 @@ export function Pins() {
     )
   }, [])
 
-  return <Container>{pins.map(renderPin)}</Container>
+  return (
+    <Container>
+      {pins.map(renderPin)}
+      <NewPin />
+    </Container>
+  )
 }
-
-// function pinMenu() {
-//   return [
-//     {label: "Disable"},
-//     {label: "Remove"},
-//     {label: "Edit"},
-//     {label: "Label"},
-//     {label: "Copy Value"}
-//   ]
-// }

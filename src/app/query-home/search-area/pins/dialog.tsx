@@ -1,8 +1,10 @@
-import React, {useEffect, useLayoutEffect, useState} from "react"
+import React, {useEffect, useLayoutEffect, useRef, useState} from "react"
 import {createPortal} from "react-dom"
+import mergeRefs from "src/app/core/utils/merge-refs"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import useListener from "src/js/components/hooks/useListener"
 import styled from "styled-components"
+import useOutsideClick from "src/js/components/hooks/useOutsideClick"
 
 export type DialogProps = {
   anchor: HTMLElement | null
@@ -35,6 +37,7 @@ export function useDialog(props: {onCancel?: any; onClose?: any}) {
 export function Dialog(props: DialogProps) {
   const [node, setNode] = useCallbackRef<any>()
   const style = useDialogPosition(node, props)
+  const ref = useRef()
 
   useEffect(() => {
     if (!node) return
@@ -47,7 +50,7 @@ export function Dialog(props: DialogProps) {
 
   return createPortal(
     <DialogContext.Provider value={node}>
-      <BG style={style} ref={setNode}>
+      <BG style={style} ref={mergeRefs(ref, setNode)}>
         {props.children}
       </BG>
     </DialogContext.Provider>,

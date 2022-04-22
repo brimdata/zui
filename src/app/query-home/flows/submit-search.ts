@@ -3,6 +3,7 @@ import Notice from "src/js/state/Notice"
 import SearchBar from "src/js/state/SearchBar"
 import {updateQuery} from "./update-query"
 import initialViewerSearch from "./initial-viewer-search"
+import Editor from "src/js/state/Editor"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
@@ -10,6 +11,7 @@ const submitSearch = (
   _save: SaveOpts = {history: true, investigation: true},
   _ts: Date = new Date()
 ) => async (dispatch, getState) => {
+  const q = Editor.getQuery(getState())
   dispatch(Notice.dismiss())
   const input = SearchBar.getSearchBarInputValue(getState())
   const query = Current.getQuery(getState())

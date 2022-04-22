@@ -4,9 +4,9 @@ import styled from "styled-components"
 import Error from "./error"
 import Input, {hasNewLine} from "./Input"
 import {useSelector} from "react-redux"
-import SearchBar from "src/js/state/SearchBar"
 import {Pins} from "./pins/pins"
 import Current from "src/js/state/Current"
+import Editor from "src/js/state/Editor"
 
 const Group = styled.div<{flex: number; isMultiLine: boolean}>`
   display: flex;
@@ -16,7 +16,7 @@ const Group = styled.div<{flex: number; isMultiLine: boolean}>`
 `
 
 export default function SearchArea() {
-  const inputValue = useSelector(SearchBar.getSearchBarInputValue)
+  const inputValue = useSelector(Editor.getValue)
   const isMultiLine = hasNewLine(inputValue)
   const query = useSelector(Current.getQuery)
 

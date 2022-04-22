@@ -20,6 +20,7 @@ export const Input = styled.input`
   line-height: 1.5;
   padding: 0 6px;
   width: 100%;
+  height: 26px;
 `
 
 export const TextArea = styled.textarea`

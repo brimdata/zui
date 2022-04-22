@@ -4,6 +4,7 @@ import Tabs from "src/js/state/Tabs"
 import {viewerSearch} from "./viewer-search"
 import {Thunk} from "src/js/state/types"
 import Current from "src/js/state/Current"
+import Editor from "src/js/state/Editor"
 
 /**
  * Initial search to fill the viewer, as opposed to the "next-page"
@@ -19,7 +20,7 @@ const initialViewerSearch = (): Thunk<any> => (dispatch, getState) => {
   const history = global.tabHistories.get(tabId)
   const {key} = history.location
   dispatch(Viewer.setSearchKey(tabId, key))
-
+  console.log(Editor.getQuery(getState()))
   return dispatch(viewerSearch({query}))
 }
 

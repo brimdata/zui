@@ -35,6 +35,7 @@ export function Form(props: {
           name="label"
           placeholder="Same as value"
           defaultValue={props.pin.label}
+          style={{width: "66%"}}
         />
       </Field>
       <Actions>
