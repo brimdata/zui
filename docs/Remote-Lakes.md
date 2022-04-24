@@ -5,7 +5,6 @@
 - [Limitations](#limitations)
 - [Background: Brim & Zed Lakes](#background-brim--zed-lakes)
 - [Starting a Remote Zed Lake](#starting-a-remote-zed-lake)
-- [Importing Data](#importing-data)
 - [Accessing Our Remote Lake](#accessing-our-remote-lake)
 - [Contact us!](#contact-us)
 
@@ -13,7 +12,7 @@
 
 By default, the Brim application connects to a [Zed lake](https://zed.brimdata.io/docs/commands/zed/#1-the-lake-model)
 on the system on which it is launched. However, Brim is capable of accessing
-data stored in a Zed lake on a remove system. This cookbook describes the
+data stored in a Zed lake on a remote system. This cookbook describes the
 available options and current limitations.
 
 # About Cookbooks
@@ -42,8 +41,9 @@ Before diving into the specifics of what's possible, here's an overview of
 some rough edges you may encounter as you work through the configurations
 described in this article.
 
-1. Packet captures cannot currently be imported with Brim directly to a remote
-   Zed lake ([brim/1730](https://github.com/brimdata/brim/issues/1730)).
+1. If a user imports a packet capture while connected to a remote lake, the
+   generated logs are stored remotely but the pcap file and corresponding
+   index for flow extraction remain local to the user's workstation.
 
 2. While the configuration potentially allows multiple remote users to access
    the same centrally-stored data, there's currently no concept of user
@@ -88,7 +88,7 @@ Some useful information revealed in this command line:
    this `zed serve` is prepared to accept _only_ connections that arrive from
    a client running on the same local host.
 
-1. The `-R` option points to the `lake` user data subdirectory for macOS.
+1. The `-lake` option points to the `lake` user data subdirectory for macOS.
 
 1. The `-brimfd=3` is an option unique to when `zed serve` is launched by
    Brim. This helps ensure that if Brim is killed abruptly, the `zed` process will
@@ -175,68 +175,10 @@ IP address.
 
 ![Security Group](media/Security-Group.png)
 
-# Importing Data
-
-As mentioned in the [Limitations](#limitations) above, it's not possible for
-remote Brim clients to import packet capture data directly to a remote Zed
-lake. However we can use the bundled `zed` command line tool to create a pool
-in the Zed lake for our data and then use the bundled `brimcap` to load data
-into it.
-
-As sample packet data, we'll import and index a [wrccdc pcap](https://wrccdc.org/)
-from a separate shell on our Linux VM:
-
-```
-ubuntu# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
-
-ubuntu# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
-
-ubuntu# export PATH="/opt/Brim/resources/app.asar.unpacked/zdeps:$PATH"
-
-# Set ZED_LAKE env so zed knows to talk to the local zed service instance.
-ubuntu# export ZED_LAKE=http://localhost:9867
-
-ubuntu# zed create wrccdc
-pool created: wrccdc 1xu2rXQ7D6ayTxrJE7XDVDS3mm8
-
-ubuntu# zed use wrccdc
-Switched to branch "main" on pool "wrccdc"
-
-ubuntu# brimcap analyze wrccdc.2018-03-23.010014000000000.pcap | zed load -
-1ulxiph6bNX4ZgubZFeCIIDaozj committed
-
-ubuntu# brimcap index -root ~/.config/Brim/data/brimcap-root -r wrccdc.2018-03-23.010014000000000.pcap
-```
-
-While it's possible to import logs from the Brim app directly into a remote
-Zed lake, we can also use `zed` on our Linux VM. Here we'll import the Zeek
-TSV logs from our [zed-sample-data](https://github.com/brimdata/zed-sample-data).
-
-```
-ubuntu# git clone --quiet --depth=1 https://github.com/brimdata/zed-sample-data
-
-ubuntu# zed create zed-sample-data
-pool created: zed-sample-data 1xu3fug3iq1y17RMQYRiCtORLMC
-
-ubuntu# zed use zed-sample-data
-Switched to branch "main" on pool "zed-sample-data"
-
-ubuntu# zed load zed-sample-data/zeek-default/*
-1uMRE9bZnbNAIY8tEOfIXOa8c2w committed
-```
-
-To see our imported data as pools in the Zed lake:
-
-```
-ubuntu# zed ls
-wrccdc 1uMPHXonxiBH1gY6TCCFxBNS99Z key ts order desc
-zed-sample-data 1uMR6rGmrSBRHnB0yqOGnzhQb0b key ts order desc
-```
-
 # Accessing Our Remote Lake
 
-Now that we've got data imported into our remote Zed lake, we'll access it from
-the Brim app that's running on our Mac laptop.
+Now that our remote Zed lake is running, we'll access it from the Brim app
+that's running on our Mac laptop.
 
 The option to initiate a remote connection is available by clicking the
 pull-down above the pools list in the left panel and selecting **Add
@@ -250,32 +192,36 @@ be included if it's listening on a port other than the default `9867`.
 
 ![Add Lake window](media/Add-Lake-window.png)
 
-Now the pools in our remote Zed lake will appear in the left panel just as we're
+Existing pools in our remote Zed lake will appear in the left panel just as we're
 accustomed to seeing when working with local data. We can now enter Zed queries
 and perform normal workflows.
 
-For our pool that was based on the imported packet capture, we'll only be able
-to extract flows into Wireshark via the **Packets** button if we maintain a
-copy of the same pcap locally and add it to the index in our local Brimcap root
-(see [brimcap/105](https://github.com/brimdata/brimcap/issues/105) for details).
-
-```
-macOS# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
-macOS# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
-macOS# export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
-macOS# brimcap index -root "$HOME/Library/Application Support/Brim/data/brimcap-root" -r wrccdc.2018-03-23.010014000000000.pcap
-```
-
-![Opening flow](media/Brimcap-Remote-Flow-Wireshark.png)
-
-You can import logs (but not pcaps) directly from your Brim app to the remote
-Zed lake in the same manner as you've been doing locally.
+You can import data (such as the logs shown below) directly from your Brim app to
+the remote Zed lake in the same manner as you've been doing locally.
 
 ![Importing logs to remote Zed lake](media/Remote-Zed-Lake-Import.gif)
 
-Attempts to import a pcap directly to the remote lake will fail with an
-error message (see [brim/1730](https://github.com/brimdata/brim/issues/1730)
-for details).
+When a packet capture is imported, only the generated logs are stored remotely,
+while the pcap file and corresponding index for flow extraction remain local to
+your workstation. This maintains the common workflow of clicking the **Packets**
+button to extract flows for selected network logs.
+
+![pcap import remote lake](media/Remote-Flow-Wireshark.gif)
+
+Because only your local pcap index was populated, another user remotely
+accessing the same pool would be able to query the logs, but in order to
+successfully extract flows from it, they would need to obtain and locally index
+the same pcap file. The following commands could be executed by such a user on
+their Mac workstation to index the same
+[sample pcap](https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz)
+shown above. See [brimcap/105](https://github.com/brimdata/brimcap/issues/105) for more details.
+
+```
+Another_User_macOS# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
+Another_User_macOS# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
+Another_User_macOS# export PATH="/Applications/Brim.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
+Another_User_macOS# brimcap index -root "$HOME/Library/Application Support/Brim/data/brimcap-root" -r wrccdc.2018-03-23.010014000000000.pcap
+```
 
 A connection to a remote lake can be removed by selecting the **Get Info**
 option in the pull-down and clicking **Logout**. This only removes the config
