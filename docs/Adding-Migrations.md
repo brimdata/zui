@@ -2,7 +2,7 @@ Because we persist state on a user's computer, we must migrate that state each t
 
 ### Creating a Migration
 
-Let's say we've added a property called `nickname` to each zqd connection in the app. We'll use the migration generator tool to create the necessary files. From the root directory, run `bin/gen migration <name>`. For example:
+Let's say we've added a property called `nickname` to each lake connection in the app. We'll use the migration generator tool to create the necessary files. From the root directory, run `bin/gen migration <name>`. For example:
 
 ```bash
 bin/gen migration addNicknameToConnection
