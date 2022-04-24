@@ -168,7 +168,7 @@ questions.
 * Fix an issue where timestamps in **Log Detail** were not displayed with full precision and did not reflect current **Preferences** settings (#1643)
 * Fix an issue where selecting **File > New Window** on a freshly-installed app triggered a crash (#1654)
 * Show Release Notes for the currently-installed Brim version in a tab (#1655, #1670, #1679, #1680)
-* Add a [wiki article](https://github.com/brimdata/brim/blob/v0.25.0/docs/Linux-RPM-Upgrade-(v0.25.0%2B).md) to inform Linux RPM users that their old Brim will need to be manually uninstalled before the new Brim will install (#1683)
+* Add a [wiki article](https://github.com/brimdata/brim/wiki/Linux-RPM-Upgrade) to inform Linux RPM users that their old Brim will need to be manually uninstalled before the new Brim will install (#1683)
 * Fix an issue where viewing Suricata alerts in Brim could trigger a "TypeError: Cannot read property 'startsWith' of undefined" error (#1706)
 * Ensure pool updates made from outside the app are reflected automatically in Brim (#1702, #1709, #1711, #1713, #1722, #1733, #1734)
 * The [Brim wiki](https://github.com/brimdata/brim/wiki) now has articles for changes specific to the `v0.25.0` release, with parallel articles remaining for older Brim where functionality has changed significantly (#1723)
