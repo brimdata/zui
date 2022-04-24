@@ -142,7 +142,7 @@ appropriate for your platform.
 
 **Windows (Task Manager)**
 
-![Healthy Brim in Task Manager](media/Brim-Task-Manager-v0.25.0.png)
+![Healthy Brim in Task Manager](media/Brim-Task-Manager.png)
 
 **Linux [`pstree`](https://man7.org/linux/man-pages/man1/pstree.1.html)**
 
