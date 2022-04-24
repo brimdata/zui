@@ -139,8 +139,7 @@ be followed.
 The most extensive testing of Brim is provided via automation that is run on
 [GitHub Actions](https://github.com/features/actions). Specific platform
 versions of
-[Runners](https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners)
-are referenced in the automation for Brim's
+hosted runners are referenced in the automation for Brim's
 [Continuous Integration tests](https://github.com/brimdata/brim/blob/main/.github/workflows/ci.yml)
 and build workflows for
 [Windows](https://github.com/brimdata/brim/blob/main/.github/workflows/win-release-candidate.yml),
