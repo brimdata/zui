@@ -74,7 +74,7 @@ categories of interest include:
 Generally you should not need to directly access the saved user data, though
 it may prove necessary during [[Troubleshooting]] or if you use
 [`zed`](https://zed.brimdata.io/docs/commands/zed/)
-or [`brimcap`](https://github.com/brimdata/brimcap/blob/main/README.md) CLI tools
+or [`brimcap`](https://github.com/brimdata/brimcap) CLI tools
 to perform scripted operations from outside the app against data that's stored
 behind Brim.
 
