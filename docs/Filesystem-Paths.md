@@ -27,7 +27,7 @@ you'll typically not need to access the application binaries directly. One
 exception is if you wish to make use of the command line binaries that are
 bundled with the app, such as [`zq`](https://zed.brimdata.io/docs/commands/zq/),
 [`zed`](https://zed.brimdata.io/docs/commands/zed/),
-[`brimcap`](https://github.com/brimdata/brimcap/blob/main/README.md), and so forth. These can be
+[`brimcap`](https://github.com/brimdata/brimcap), and so forth. These can be
 found in the `zdeps` subdirectory as follows:
 
 |**OS Platform**|**Location**|
