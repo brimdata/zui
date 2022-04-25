@@ -88,23 +88,23 @@ and details to [brim/1490](https://github.com/brimdata/brim/issues/1490).
 In all other cases, please [open a new issue](#opening-an-issue).
 
 To begin troubleshooting this, it helps to understand the "backend" of Brim.
-One essential component is a [Zed Lake](https://zed.brimdata.io/docs/commands/zed/#1-the-lake-model),
+One essential component is a [Zed lake](https://zed.brimdata.io/docs/commands/zed/#1-the-lake-model),
 a server-style process that manages the storage and querying of imported data.
-Operations in the pools of a Zed Lake are invoked via a [REST
-API](https://en.wikipedia.org/wiki/Representational_state_transfer) that's
+Operations in the pools of a Zed lake are invoked via a [REST
+API](https://zed.brimdata.io/docs/lake/api/) that's
 utilized by a "client", such as the Brim app. When run on your desktop,
 `zed serve` is launched at startup by Brim and then listens for such API
 connections on local TCP port `9867`.
 
-![Brim connecting to zed serve on 9867](media/Brim-zed-lake-serve-9867.png)
+![Brim connecting to zed serve on 9867](media/Brim-zed-serve-9867.png)
 
 Therefore, this particular error message indicates that for some reason Brim
 was not able to successfully communicate with a `zed serve` process via
 `localhost:9867`. In brief, the root cause is likely one of the following:
 
-1. [A `zed serve` crash](#a-zed-lake-serve-crash)
-2. [A failure to launch `zed serve`](#a-failure-to-launch-zed-lake-serve)
-3. [No local communications between Brim and `zed serve`](#no-local-communications-between-brim-and-zed-lake-serve)
+1. [A `zed serve` crash](#a-zed-serve-crash)
+2. [A failure to launch `zed serve`](#a-failure-to-launch-zed-serve)
+3. [No local communications between Brim and `zed serve`](#no-local-communications-between-brim-and-zed-serve)
 
 In all cases, you should plan to [open an issue](#opening-an-issue) with
 Brim/Zed logs attached, as these may include crash/failure details. However,
@@ -142,7 +142,7 @@ appropriate for your platform.
 
 **Windows (Task Manager)**
 
-![Healthy Brim in Task Manager](media/Brim-Task-Manager-v0.25.0.png)
+![Healthy Brim in Task Manager](media/Brim-Task-Manager.png)
 
 **Linux [`pstree`](https://man7.org/linux/man-pages/man1/pstree.1.html)**
 

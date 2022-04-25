@@ -8,8 +8,7 @@ and double-click to launch the installer.
 The notes and short videos below show how to successfully install on each
 platform.
 
-   * [Windows Installation (v0.25.0+)](#windows-installation-v0250)
-   * [Windows Installation (v0.24.0 and older)](#windows-installation-v0240-and-older)
+   * [Windows Installation](#windows-installation)
    * [macOS Installation](#macos-installation)
    * [Linux Installation](#linux-installation)
 
@@ -32,50 +31,18 @@ If you run into any problems, you may want to browse the
 [[Troubleshooting]]. If you get stuck, [join our public Slack](https://www.brimdata.io/join-slack/)
 and we'll be happy to help.
 
-## Windows Installation (v0.25.0+)
-
-Installation steps are similar as for [`v0.24.0` and older](#windows-installation-v0240-and-older),
-with the exception that releases `v0.25.0` and newer include a new installer
-that presents a more traditional confirmation prompt and progress bar instead
-of the green animation that was shown in older releases.
-
-![Windows Installation v0.25.0+ Prompt](media/Windows-installation-Prompt-v0.25.0+.png)
-
-![Windows Installation v0.25.0+ Progress Bar](media/Windows-installation-Progress-Bar-v0.25.0+.png)
-
-Also, due to this new installer, `v0.25.0+` will successfully install
-alongside an existing Brim `v0.24.0` or older, rather than replacing it.
-Therefore the older release must be manually uninstalled before the newer Brim
-will successfully launch. If you attempt to launch the newer Brim release while
-the older Brim release is still installed, a pop up will inform you of the need
-to uninstall, then the new version will immediately exit.
-
-![Windows Installation v0.25.0+ Prior Version Detected](media/Windows-installation-Prior-Version-Detected-v0.25.0+.png)
-
-The older version of Brim will be easy to spot among the list of currently-installed Windows programs by its icon and version string.
-
-![Windows Uninstall v0.24.0](media/Windows-Uninstall-v0.24.0.png)
-
-As Windows releases newer than `v0.25.0` are published, Brim will automatically
-download them and pop up a notification offering to restart the app to apply
-the update.
-
-## Windows Installation (v0.24.0 and older)
+## Windows Installation
 
 * Download the Brim installer via the Windows link at the [Brim download](https://www.brimdata.io/download/) page
 * Launch the downloaded `.exe` file to begin installation
-* Click through the "unrecognized app" pop-up, if presented (see [[Microsoft Windows beta limitations]]) for details)
-* A small green animation will play while installation is completing
+* When prompted, click "I Agree" to accept the terms of the license agreement
 * Brim will start automatically when install completes
 * Click the Brim icon on the Desktop or Start menu to relaunch in the future
 
 ![Windows Installation](media/Windows-installation.gif)
 
-Due to the different installer used in Brim `v0.25.0` and newer, `v0.24.0`
-Windows users will _not_ be automatically prompted to update to newer releases.
-When you're ready to move to a release `v0.25.0` or newer, follow the steps
-[above](#windows-installation-v0250) to manually install the new release and
-uninstall the old one.
+As newer Windows releases are published, Brim will automatically download them
+and pop up a notification offering to restart the app to apply the update.
 
 ## macOS Installation
 
@@ -92,16 +59,15 @@ and pop up a notification offering to restart the app to apply the update.
 
 ## Linux Installation
 
+* Uninstall any currently-installed Brim release, using a tool like `yum`,
+   `dnf`, or `apt` (saved data and settings will not be disturbed by uninstall,
+   as these are stored under a
+   [user data](https://github.com/brimdata/brim/wiki/Filesystem-Paths#user-data)
+   path that's separate from the
+   [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries))
 * Download either the `.deb` or `.rpm` Brim installer at the
   [Brim download](https://www.brimdata.io/download/) page, as appropriate
   for your Linux distribution
-
-> **Note:** If an RPM-based Brim `v0.24.0` or older is already installed, it
-> must be manually uninstalled (such as via `yum` or `dnf`) before a release
-> `v0.25.0` or newer will successfully install. Manual uninstall of older
-> releases is _not_ required for DEB-based Brim installs. See
-> [[Linux RPM Upgrade (v0.25.0+)]] for more details.
-
 * Open the downloaded `.deb` or `.rpm` file in the Software Install utility and click "Install"
 * Enter administration credentials, if prompted
 * Click the Brim icon in the applications menu to start the app now and in the future
