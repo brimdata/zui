@@ -5,5 +5,5 @@ import * as selectors from "./selectors"
 export default {
   ...selectors,
   ...actions,
-  reducer
+  reducer,
 }

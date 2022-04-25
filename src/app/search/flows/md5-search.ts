@@ -6,7 +6,7 @@ import {
   filenameCorrelation,
   md5Correlation,
   rxHostsCorrelation,
-  txHostsCorrelation
+  txHostsCorrelation,
 } from "src/js/searches/programs"
 import Current from "src/js/state/Current"
 import Tab from "src/js/state/Tab"
@@ -16,22 +16,21 @@ import {BrimQuery} from "../../query-home/utils/brim-query"
 
 const id = "Md5"
 
-const legacyMd5Search = (md5: string): Thunk<Promise<ResultStream>> => (
-  dispatch,
-  getState
-) => {
-  const poolId = Current.getPoolId(getState())
-  if (!poolId) return
-  const [from, to] = Tab.getSpanAsDates(getState())
-  const q = parallelizeProcs([
-    filenameCorrelation(md5),
-    md5Correlation(md5),
-    rxHostsCorrelation(md5),
-    txHostsCorrelation(md5)
-  ])
+const legacyMd5Search =
+  (md5: string): Thunk<Promise<ResultStream>> =>
+  (dispatch, getState) => {
+    const poolId = Current.getPoolId(getState())
+    if (!poolId) return
+    const [from, to] = Tab.getSpanAsDates(getState())
+    const q = parallelizeProcs([
+      filenameCorrelation(md5),
+      md5Correlation(md5),
+      rxHostsCorrelation(md5),
+      txHostsCorrelation(md5),
+    ])
 
-  return dispatch(search({id, query: q, from, to, poolId}))
-}
+    return dispatch(search({id, query: q, from, to, poolId}))
+  }
 
 export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => {
   if (!featureIsEnabled("query-flow")) return legacyMd5Search(md5)
@@ -42,7 +41,7 @@ export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => {
       filenameCorrelation(md5),
       md5Correlation(md5),
       rxHostsCorrelation(md5),
-      txHostsCorrelation(md5)
+      txHostsCorrelation(md5),
     ])
 
     return dispatch(
@@ -51,8 +50,8 @@ export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => {
           id: "",
           name: "",
           value: q,
-          pins: {from: poolId, filters: []}
-        })
+          pins: {from: poolId, filters: []},
+        }),
       })
     )
   }

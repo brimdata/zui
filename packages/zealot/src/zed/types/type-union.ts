@@ -29,7 +29,7 @@ export class TypeUnion implements Type {
   serialize(stream: EncodeStream): zjson.NoId<zjson.UnionType> {
     return {
       kind: "union",
-      types: this.types.map((t) => stream.encodeType(t))
+      types: this.types.map((t) => stream.encodeType(t)),
     }
   }
 

@@ -6,7 +6,7 @@ import {
   SectionContents,
   SectionToolbar,
   SectionSearch,
-  StyledSection
+  StyledSection,
 } from "../common"
 import {useSearchHistory, useSectionTreeDefaults} from "../hooks"
 import Appearance from "src/js/state/Appearance"
@@ -23,9 +23,7 @@ const StyledEmptySection = styled(EmptySection).attrs({icon: <BookIcon />})``
 
 const historySearch = (term: string, items: Finding[]): Finding[] => {
   return items.filter(({search: {program, pins}}) =>
-    JSON.stringify({program, pins})
-      .toLowerCase()
-      .includes(term.toLowerCase())
+    JSON.stringify({program, pins}).toLowerCase().includes(term.toLowerCase())
   )
 }
 
@@ -46,7 +44,7 @@ const HistorySection = () => {
       setFilteredEntries(entries)
       dispatch(Appearance.setHistoryView(view))
     },
-    isSelected: view === historyView
+    isSelected: view === historyView,
   }))
 
   const onHistorySearch = (e) => {

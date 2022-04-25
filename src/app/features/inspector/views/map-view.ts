@@ -42,7 +42,7 @@ export class MapView extends ContainerView<zed.Map> {
         value: map.get(key),
         last,
         key: key,
-        indexPath: [...this.args.indexPath, i]
+        indexPath: [...this.args.indexPath, i],
       })
       if (last) break
       i++

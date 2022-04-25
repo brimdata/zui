@@ -76,8 +76,8 @@ export const setRemoteQueries = (
           author: "brim",
           body:
             "automatic remote query load for id(s): " +
-            queries.map((q) => q.id).join(", ")
-        }
+            queries.map((q) => q.id).join(", "),
+        },
       })
       queriesToRemoteQueries(queries, shouldDelete).forEach((d) =>
         data.push(JSON.stringify(d))
@@ -94,5 +94,5 @@ const queriesToRemoteQueries = (qs: Query[], isTombstone = false) =>
   qs.map((q) => ({
     ...q,
     tombstone: isTombstone,
-    ts: Date.now()
+    ts: Date.now(),
   }))

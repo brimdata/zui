@@ -44,6 +44,6 @@ export default function animation(el: HTMLElement | null, opts: unknown) {
       ani.restart()
       ani.seek(ani.duration)
       return this
-    }
+    },
   }
 }

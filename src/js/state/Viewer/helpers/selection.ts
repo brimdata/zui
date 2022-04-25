@@ -21,6 +21,6 @@ export function createSelection(data: ViewerSelectionData): ViewerSelection {
 
     includes(row: number) {
       return data.rows[row] === true
-    }
+    },
   }
 }

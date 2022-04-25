@@ -1,7 +1,7 @@
 import {
   cidCorrelation,
   connCorrelation,
-  uidCorrelation
+  uidCorrelation,
 } from "src/js/searches/programs"
 import {createRecord} from "src/test/shared/factories/zed-factory"
 import {zed} from "@brimdata/zealot"
@@ -11,7 +11,7 @@ test("returns uid query if ts and duration are missing", () => {
   const record = createRecord({
     _path: "conn",
     uid: "CHem0e2rJqHiwjhgq7",
-    community_id: "1:NYgcI8mLerCC20GwJVV5AftL0uY="
+    community_id: "1:NYgcI8mLerCC20GwJVV5AftL0uY=",
   })
 
   expect(getCorrelationQuery(record)).toBe(
@@ -25,7 +25,7 @@ test("returns conn query if ts and duration are present", () => {
     uid: "CHem0e2rJqHiwjhgq7",
     community_id: "1:NYgcI8mLerCC20GwJVV5AftL0uY=",
     ts: new Date(1585852166.003543 * 1000),
-    duration: new zed.Duration("0")
+    duration: new zed.Duration("0"),
   })
   expect(getCorrelationQuery(record)).toBe(
     connCorrelation(
@@ -42,7 +42,7 @@ test("returns cid query if only cid present", () => {
     _path: "conn",
     community_id: "1:NYgcI8mLerCC20GwJVV5AftL0uY=",
     ts: new Date(1585852166.003543 * 1000),
-    duration: new zed.Duration("0")
+    duration: new zed.Duration("0"),
   })
 
   expect(getCorrelationQuery(record)).toBe(
@@ -54,7 +54,7 @@ test("returns null if no cid or uid", () => {
   const record = createRecord({
     _path: "conn",
     ts: new Date(1585852166.003543 * 1000),
-    duration: new zed.Duration("0")
+    duration: new zed.Duration("0"),
   })
 
   expect(getCorrelationQuery(record)).toBe(null)

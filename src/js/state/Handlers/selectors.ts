@@ -5,7 +5,7 @@ export default {
   getIngestPoolIds: (state: State): string[] => {
     return getIngestHandlers(state).map((i) => i.poolId)
   },
-  get: (state: State): HandlersState => state.handlers
+  get: (state: State): HandlersState => state.handlers,
 }
 
 function getIngestHandlers(state: State): IngestHandler[] {

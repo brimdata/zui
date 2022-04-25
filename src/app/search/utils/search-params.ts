@@ -14,7 +14,7 @@ export type DecodedSearchParams = {
 export const encodeSearchParams = ({
   program,
   pins,
-  spanArgs
+  spanArgs,
 }: Partial<DecodedSearchParams>) => {
   const p = new URLSearchParams()
   if (program) p.append("q", program)
@@ -28,7 +28,7 @@ export const decodeSearchParams = (path: string): DecodedSearchParams => {
   return {
     program: url.get("q") || "",
     spanArgs: [url.get("from"), url.get("to")].map(decodeSpanArg) as SpanArgs,
-    pins: decodePins(url)
+    pins: decodePins(url),
   }
 }
 

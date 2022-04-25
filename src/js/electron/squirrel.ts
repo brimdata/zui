@@ -11,7 +11,7 @@ export function handleSquirrelEvent(app: any) {
   const updateDotExe = path.resolve(path.join(rootAtomFolder, "Update.exe"))
   const exeName = path.basename(process.execPath)
 
-  const spawn = function(command, args) {
+  const spawn = function (command, args) {
     let spawnedProcess
 
     try {
@@ -23,7 +23,7 @@ export function handleSquirrelEvent(app: any) {
     return spawnedProcess
   }
 
-  const spawnUpdate = function(args) {
+  const spawnUpdate = function (args) {
     return spawn(updateDotExe, args)
   }
 

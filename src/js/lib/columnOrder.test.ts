@@ -30,7 +30,7 @@ test("ts, event_path", () => {
     event_type,
     b,
     a,
-    c
+    c,
   ])
 })
 
@@ -41,6 +41,6 @@ test("ts, event_path, path", () => {
     event_type,
     b,
     a,
-    c
+    c,
   ])
 })

@@ -17,7 +17,7 @@ type Args = {
 export default function searchFieldContextMenu({
   field,
   record,
-  value
+  value,
 }: Args): Thunk {
   return (_, getState, {api}) => {
     const columns = Columns.getCurrentTableColumns(getState())
@@ -45,7 +45,7 @@ export default function searchFieldContextMenu({
       "sha1",
       "sha256",
       "server_name",
-      "query"
+      "query",
     ].includes(field.name)
 
     const searchMenuActions = menu.actions.search
@@ -58,22 +58,22 @@ export default function searchFieldContextMenu({
     showContextMenu([
       searchMenuActions.include.menuItem([fieldData], {
         enabled: hasCol,
-        visible: isPrimitive
+        visible: isPrimitive,
       }),
       searchMenuActions.exclude.menuItem([fieldData], {
         enabled: hasCol,
-        visible: isPrimitive
+        visible: isPrimitive,
       }),
       searchMenuActions.in.menuItem([fieldData, index], {
-        visible: isArrayish
+        visible: isArrayish,
       }),
       searchMenuActions.notIn.menuItem([fieldData, index], {
-        visible: isArrayish
+        visible: isArrayish,
       }),
       searchMenuActions.freshInclude.menuItem([fieldData], {enabled: true}),
       menu.separator(),
       searchMenuActions.groupByDrillDown.menuItem([program, recordData], {
-        enabled: isGroupBy && sameCols
+        enabled: isGroupBy && sameCols,
       }),
       searchMenuActions.countBy.menuItem([fieldData], {enabled: !isGroupBy}),
       menu.separator(),
@@ -85,20 +85,20 @@ export default function searchFieldContextMenu({
       searchMenuActions.fromTime.menuItem([fieldData], {enabled: isTime}),
       searchMenuActions.toTime.menuItem([fieldData], {enabled: isTime}),
       searchMenuActions.jumpToTime.menuItem([fieldData, recordData], {
-        enabled: isTime
+        enabled: isTime,
       }),
       menu.separator(),
       searchMenuActions.detail.menuItem([recordData], {enabled: true}),
       menu.separator(),
       searchMenuActions.whoisRightclick.menuItem([fieldData], {enabled: isIp}),
       searchMenuActions.virusTotalRightclick.menuItem([fieldData], {
-        enabled: virusTotal || isIp
+        enabled: virusTotal || isIp,
       }),
       menu.separator(),
       searchMenuActions.logResult.menuItem([fieldData, recordData], {
-        enabled: true
+        enabled: true,
       }),
-      ...pluginMenuItems
+      ...pluginMenuItems,
     ])
   }
 }

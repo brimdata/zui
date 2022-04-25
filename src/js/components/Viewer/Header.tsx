@@ -16,14 +16,7 @@ type Props = {
 
 export default function Header({dimens, scrollLeft, columns, ...rest}: Props) {
   const program = useSelector(Url.getSearchProgram)
-  const sorts = useMemo(
-    () =>
-      brim
-        .program(program)
-        .ast()
-        .sorts(),
-    [program]
-  )
+  const sorts = useMemo(() => brim.program(program).ast().sorts(), [program])
 
   if (dimens.rowWidth === "auto") return null
 

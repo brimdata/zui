@@ -23,29 +23,29 @@ test("migrating 202103051447_convertHistoryToUrls", async () => {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pELx46A58E7CQIEEFn6rWSZ6iS/search",
             search: "?from=0.0&to=0.1000000",
-            hash: ""
+            hash: "",
           },
           {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pELx46A58E7CQIEEFn6rWSZ6iS/search",
             search: "?from=1585846170.901824000&to=1585852169.492000000",
-            hash: ""
+            hash: "",
           },
           {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pELx46A58E7CQIEEFn6rWSZ6iS/search",
             search:
               "?q=tab+0&from=1585846170.901824000&to=1585852169.492000000",
-            hash: ""
+            hash: "",
           },
           {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pELx46A58E7CQIEEFn6rWSZ6iS/search",
             search:
               "?q=tab+0+history+2&from=1585846170.901824000&to=1585852169.492000000",
-            hash: ""
-          }
-        ]
+            hash: "",
+          },
+        ],
       },
       "7f1a3e37ed": {
         id: "7f1a3e37ed",
@@ -55,44 +55,44 @@ test("migrating 202103051447_convertHistoryToUrls", async () => {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pDv4pfSflu9NpIQ9NXjV5Lw0jm/search",
             search: "?from=0.0&to=0.1000000",
-            hash: ""
+            hash: "",
           },
           {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pDv4pfSflu9NpIQ9NXjV5Lw0jm/search",
             search: "?from=1585846170.901824000&to=1585852169.492000000",
-            hash: ""
+            hash: "",
           },
           {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pDv4pfSflu9NpIQ9NXjV5Lw0jm/search",
             search:
               "?q=history+entry+1&from=1585846170.901824000&to=1585852169.492000000",
-            hash: ""
+            hash: "",
           },
           {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pDv4pfSflu9NpIQ9NXjV5Lw0jm/search",
             search:
               "?q=history+entry+2&from=1585846170.901824000&to=1585852169.492000000",
-            hash: ""
+            hash: "",
           },
           {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pDv4pfSflu9NpIQ9NXjV5Lw0jm/search",
             search:
               "?q=history+entry+3&from=1585846170.901824000&to=1585852169.492000000",
-            hash: ""
+            hash: "",
           },
           {
             pathname:
               "/workspaces/localhost:9867/lakes/sp_1pDv4pfSflu9NpIQ9NXjV5Lw0jm/search",
             search:
               "?q=history+entry+with+pins&from=1585846170.901824000&to=1585852169.492000000&p0=james&p1=kerr&p2=pins",
-            hash: ""
-          }
-        ]
-      }
-    }
+            hash: "",
+          },
+        ],
+      },
+    },
   })
 })

@@ -7,10 +7,10 @@ test("encode search path", () => {
     spanArgs: [
       {
         ns: 0,
-        sec: 100
+        sec: 100,
       },
-      {ns: 0, sec: 200}
-    ]
+      {ns: 0, sec: 200},
+    ],
   })
   expect(path).toEqual("q=_path%3Dconn&from=100.0&to=200.0&p0=191.0.1.2")
 })
@@ -23,9 +23,9 @@ test("decode search path", () => {
     program: "_path=conn",
     spanArgs: [
       {sec: 100, ns: 0},
-      {sec: 200, ns: 0}
+      {sec: 200, ns: 0},
     ],
-    pins: ["191.0.1.2"]
+    pins: ["191.0.1.2"],
   })
 })
 
@@ -35,6 +35,6 @@ test("decode with negative time", () => {
 
   expect(record.spanArgs).toEqual([
     {sec: -1800, ns: 1000000},
-    {sec: 0, ns: 1000000}
+    {sec: 0, ns: 1000000},
   ])
 })

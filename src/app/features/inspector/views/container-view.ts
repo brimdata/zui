@@ -6,9 +6,9 @@ import {space} from "../templates/space"
 import {typename} from "../templates/typename"
 import {View} from "./view"
 
-export abstract class ContainerView<T extends zed.Any = zed.Any> extends View<
-  T
-> {
+export abstract class ContainerView<
+  T extends zed.Any = zed.Any
+> extends View<T> {
   abstract name(): string
   abstract openToken(): string
   abstract closeToken(): string

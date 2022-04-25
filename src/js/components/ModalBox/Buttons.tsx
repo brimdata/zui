@@ -40,7 +40,7 @@ function ButtonItem({
   onClick,
   isLast,
   disabled = false,
-  icon = null
+  icon = null,
 }: ButtonItemProps) {
   if (isLast) {
     return (

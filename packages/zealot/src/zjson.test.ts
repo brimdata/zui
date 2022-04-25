@@ -6,7 +6,7 @@ const file = "testdata/sample.zson" // data.getPath("sample.zson");
 test("super simple", async () => {
   const input: zjson.Object[] = await zq({
     input: '{hello: "world"}',
-    format: "zjson"
+    format: "zjson",
   })
   const decoded = decode(input)
   const encoded = encode(decoded)
@@ -18,7 +18,7 @@ test("super simple", async () => {
 test("super simple 2 typedefs", async () => {
   const input: zjson.Object[] = await zq({
     input: '{hello: ["world"]}',
-    format: "zjson"
+    format: "zjson",
   })
 
   const decoded = decode(input)
@@ -31,7 +31,7 @@ test("super simple 2 typedefs", async () => {
 test("simply type value", async () => {
   const input: zjson.Object[] = await zq({
     input: "{hello: <string>}",
-    format: "zjson"
+    format: "zjson",
   })
 
   const decoded = decode(input)
@@ -67,7 +67,7 @@ test("decode, encode with type values", async () => {
   const input: zjson.Object[] = await zq({
     query: "* | count() by typeof(this) | sort count, typeof",
     file,
-    format: "zjson"
+    format: "zjson",
   })
 
   expect(encode(decode(input))).toEqual(input)
@@ -77,7 +77,7 @@ test("types from one search are the same", async () => {
   const groupBy = (await zq({
     query: "* | count() by typeof(this) | sort count, typeof",
     file,
-    format: "zjson"
+    format: "zjson",
   })) as zjson.Object[]
   const list = (await zq({file, format: "zjson"})) as zjson.Object[]
 
@@ -88,7 +88,7 @@ test("types from one search are the same", async () => {
   const accessRecords = rows.filter((r) => r.type === accessType)
 
   expect(accessRecords.map((r) => r.toString())).toEqual([
-    "{info:Access List Example,nets:[10.1.1.0/24,10.1.2.0/24]}"
+    "{info:Access List Example,nets:[10.1.1.0/24,10.1.2.0/24]}",
   ])
 })
 
@@ -96,7 +96,7 @@ test("encode decode a field", async () => {
   const input: zjson.Object[] = (await zq({
     query: "*",
     file,
-    format: "zjson"
+    format: "zjson",
   })) as zjson.Object[]
 
   const records = decode(input) as zed.Record[]
@@ -116,7 +116,7 @@ test("encode decode a typeof value", async () => {
   const input: zjson.Object[] = (await zq({
     query: "count() by typeof(this) | sort typeof",
     file,
-    format: "zjson"
+    format: "zjson",
   })) as zjson.Object[]
 
   const records = decode(input) as zed.Record[]

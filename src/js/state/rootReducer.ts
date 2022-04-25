@@ -45,7 +45,7 @@ const rootReducer = combineReducers<any, any>({
   draftQueries: DraftQueries.reducer,
   tabHistories: TabHistories.reducer,
   url: Url.reducer,
-  toolbars: Toolbars.reducer
+  toolbars: Toolbars.reducer,
 })
 
 // A proof of concept. This would be a much nicer way to go

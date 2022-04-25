@@ -3,7 +3,7 @@ import log from "electron-log"
 import {BrimMain} from "../../brim"
 
 // Convert this file to the new ipc model
-export default function(brim: BrimMain) {
+export default function (brim: BrimMain) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
     const window = brim.windows.getWindow(id)
     if (!window) return undefined
@@ -29,7 +29,7 @@ export default function(brim: BrimMain) {
   ipcMain.handle("windows:openDirectorySelect", async (e) => {
     const win = BrowserWindow.fromWebContents(e.sender)
     return await dialog.showOpenDialog(win, {
-      properties: ["openDirectory"]
+      properties: ["openDirectory"],
     })
   })
 

@@ -5,13 +5,13 @@ jest.mock("./tron/session", () => {
   return () => ({
     load: jest.fn(() => Promise.resolve()),
     delete: jest.fn(() => Promise.resolve()),
-    save: jest.fn(() => Promise.resolve())
+    save: jest.fn(() => Promise.resolve()),
   })
 })
 
 test("reset state", async () => {
   const brim = await BrimMain.boot({
-    lake: false
+    lake: false,
   })
 
   await brim.start()

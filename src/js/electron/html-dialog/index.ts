@@ -23,14 +23,14 @@ class HTMLDialog {
         backgroundColor: "#F5F5F5",
         webPreferences: {
           nodeIntegration: true,
-          contextIsolation: false
-        }
+          contextIsolation: false,
+        },
       })
       // This will remove the menu bar on windows and linux from the top of the window.
       Menu.setApplicationMenu(null)
 
       win.loadFile(join(__dirname, "dialog.html"), {
-        query: {title, content, id}
+        query: {title, content, id},
       })
 
       ipcMain.once(closeChannel(id), () => {

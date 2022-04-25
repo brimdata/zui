@@ -1,6 +1,6 @@
 import {
   getAllStates,
-  getAllTabs
+  getAllTabs,
 } from "src/js/state/migrations/utils/getTestState"
 
 export default function dropSpaces(state: any) {

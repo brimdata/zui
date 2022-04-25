@@ -4,7 +4,7 @@ import {
   COLUMNS_HIDE_ALL,
   COLUMNS_SHOW_ALL,
   COLUMNS_UPDATE,
-  ColumnUpdates
+  ColumnUpdates,
 } from "./types"
 
 function updateColumns(
@@ -14,35 +14,35 @@ function updateColumns(
   return {
     type: "COLUMNS_UPDATE",
     tableId,
-    updates
+    updates,
   }
 }
 
 const hideColumn = (tableId: string, column: ColumnName): COLUMNS_UPDATE =>
   updateColumns(tableId, {
     [columnKey(column)]: {
-      isVisible: false
-    }
+      isVisible: false,
+    },
   })
 
 const showColumn = (tableId: string, column: ColumnName): COLUMNS_UPDATE =>
   updateColumns(tableId, {
     [columnKey(column)]: {
-      isVisible: true
-    }
+      isVisible: true,
+    },
   })
 
 const showAllColumns = (tableId: string): COLUMNS_SHOW_ALL => {
   return {
     type: "COLUMNS_SHOW_ALL",
-    tableId
+    tableId,
   }
 }
 
 const hideAllColumns = (tableId: string): COLUMNS_HIDE_ALL => {
   return {
     type: "COLUMNS_HIDE_ALL",
-    tableId
+    tableId,
   }
 }
 
@@ -51,5 +51,5 @@ export default {
   hideColumn,
   showColumn,
   showAllColumns,
-  hideAllColumns
+  hideAllColumns,
 }

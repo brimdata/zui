@@ -5,5 +5,5 @@ import selectors from "./selectors"
 export default {
   reducer,
   ...actions,
-  ...selectors
+  ...selectors,
 }

@@ -6,8 +6,8 @@ const data = {
     {id: "1", min: 24},
     {id: "2", min: 24},
     {id: "3", min: 24},
-    {id: "4", min: 24}
-  ]
+    {id: "4", min: 24},
+  ],
 }
 
 test("constructor", () => {
@@ -22,8 +22,8 @@ test("distribute positive beyond max", () => {
       {id: "1", min: 24, max: 100},
       {id: "2", min: 24, max: 100},
       {id: "3", min: 24, max: 100},
-      {id: "4", min: 24}
-    ]
+      {id: "4", min: 24},
+    ],
   }
   const views = Controller.parse(data)
 
@@ -40,8 +40,8 @@ test("distribute a fractional amount", () => {
       {id: "1", min: 24, max: 100},
       {id: "2", min: 24, max: 100},
       {id: "3", min: 24, max: 100},
-      {id: "4", min: 24}
-    ]
+      {id: "4", min: 24},
+    ],
   }
   const views = Controller.parse(data)
 
@@ -58,8 +58,8 @@ test("resize", () => {
       {id: "1", min: 24, size: 200},
       {id: "2", min: 24, size: 200},
       {id: "3", min: 24, size: 200},
-      {id: "4", min: 24, size: 200}
-    ]
+      {id: "4", min: 24, size: 200},
+    ],
   }
   const views = Controller.parse(data)
   views.drag(1, -100)
@@ -75,8 +75,8 @@ test("resize super small", () => {
       {id: "1", min: 24, size: 200},
       {id: "2", min: 24, size: 200},
       {id: "3", min: 24, size: 200},
-      {id: "4", min: 24, size: 200}
-    ]
+      {id: "4", min: 24, size: 200},
+    ],
   }
   const views = Controller.parse(data)
   views.drag(3, 2000)
@@ -90,8 +90,8 @@ test("resize super big", () => {
       {id: "1", min: 24, size: 200},
       {id: "2", min: 24, size: 200},
       {id: "3", min: 24, size: 200},
-      {id: "4", min: 24, size: 200}
-    ]
+      {id: "4", min: 24, size: 200},
+    ],
   }
   const views = Controller.parse(data)
   views.drag(1, -2000)
@@ -105,8 +105,8 @@ test("resize number 1", () => {
       {id: "1", min: 24, size: 200},
       {id: "2", min: 24, size: 200},
       {id: "3", min: 24, size: 200},
-      {id: "4", min: 24, size: 200}
-    ]
+      {id: "4", min: 24, size: 200},
+    ],
   }
   const views = Controller.parse(data)
   views.drag(0, -2000)
@@ -120,8 +120,8 @@ test("resize number 1 positive", () => {
       {id: "1", min: 24, size: 200},
       {id: "2", min: 24, size: 200},
       {id: "3", min: 24, size: 200},
-      {id: "4", min: 24, size: 200}
-    ]
+      {id: "4", min: 24, size: 200},
+    ],
   }
   const views = Controller.parse(data)
   views.drag(0, 2000)

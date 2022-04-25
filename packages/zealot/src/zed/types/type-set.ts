@@ -25,7 +25,7 @@ export class TypeSet implements Type {
   serialize(stream: EncodeStream): zjson.NoId<zjson.SetType> {
     return {
       kind: "set",
-      type: stream.encodeType(this.type)
+      type: stream.encodeType(this.type),
     }
   }
 

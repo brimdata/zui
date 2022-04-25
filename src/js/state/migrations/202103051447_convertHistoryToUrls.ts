@@ -1,6 +1,6 @@
 import {
   getAllStates,
-  getAllTabs
+  getAllTabs,
 } from "src/js/state/migrations/utils/getTestState"
 import {parsePath} from "history"
 
@@ -48,7 +48,7 @@ export default function convertHistoryToUrls(state: any) {
     const tabHistories = s.tabs.data.map((tab) => ({
       id: tab.id,
       index: tab.history.position,
-      entries: tab.history.entries.map(toUrl)
+      entries: tab.history.entries.map(toUrl),
     }))
     const ids = tabHistories.map((e) => e.id)
     const entities = tabHistories.reduce((a, e) => ({...a, [e.id]: e}), {})

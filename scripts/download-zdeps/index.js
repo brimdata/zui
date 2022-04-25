@@ -14,20 +14,20 @@ const platformDefs = {
     zqBin: "zq",
     zedBin: "zed",
     osarch: "darwin-amd64",
-    ext: "tar.gz"
+    ext: "tar.gz",
   },
   linux: {
     zqBin: "zq",
     zedBin: "zed",
     osarch: "linux-amd64",
-    ext: "tar.gz"
+    ext: "tar.gz",
   },
   win32: {
     zqBin: "zq.exe",
     zedBin: "zed.exe",
     osarch: "windows-amd64",
-    ext: "zip"
-  }
+    ext: "zip",
+  },
 }
 
 async function download(url, targetfile) {
@@ -60,7 +60,7 @@ function zedArtifactPaths(version) {
 
   return {
     artifactFile,
-    artifactUrl
+    artifactUrl,
   }
 }
 
@@ -80,7 +80,7 @@ async function zedArtifactsDownload(version, destPath) {
 
     for (let f of [plat.zqBin, plat.zedBin]) {
       fs.moveSync(path.join(tmpdir.name, f), path.join(destPath, f), {
-        overwrite: true
+        overwrite: true,
       })
     }
   } finally {

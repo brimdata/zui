@@ -9,7 +9,7 @@ test("migrating 202012011232_sidebarSections", async () => {
     for (const tab of state.tabs.data) {
       expect(tab.layout.sidebarSections).toEqual([
         {id: "spaces", isOpen: true},
-        {id: "history", isOpen: true}
+        {id: "history", isOpen: true},
       ])
       expect(tab.layout.spacesIsOpen).toBe(undefined)
       expect(tab.layout.historyIsOpen).toBe(undefined)

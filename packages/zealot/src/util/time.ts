@@ -35,8 +35,8 @@ export function createTime(val: TimeArg = new Date()) {
       const restNs = ns - sec * BigInt(1e9)
       return {
         sec: Number(sec),
-        ns: Number(restNs)
+        ns: Number(restNs),
       }
-    }
+    },
   }
 }

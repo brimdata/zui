@@ -14,6 +14,6 @@ export function typename(view: View) {
     </span>,
     <span key="alias-3" className="zed-syntax">
       )
-    </span>
+    </span>,
   ]
 }

@@ -19,14 +19,14 @@ export type ToolbarItem = {
 export type ToolbarState = ReturnType<typeof slice.reducer>
 
 const adapter = createEntityAdapter<ToolbarItem>({
-  sortComparer: (a, b) => a.order - b.order
+  sortComparer: (a, b) => a.order - b.order,
 })
 
 const slice = createSlice({
   name: "toolbars",
   initialState: {
     search: adapter.getInitialState(),
-    detail: adapter.getInitialState()
+    detail: adapter.getInitialState(),
   },
   reducers: {
     createItem(
@@ -46,8 +46,8 @@ const slice = createSlice({
     ) {
       const {toolbarId, itemId, item} = action.payload
       adapter.updateOne(state[toolbarId], {id: itemId, changes: item})
-    }
-  }
+    },
+  },
 })
 
 const selectors = adapter.getSelectors()
@@ -58,5 +58,5 @@ export default {
   getToolbarItem: (toolbarId: string, itemId: string) => (state: State) =>
     selectors.selectById(state.toolbars[toolbarId], itemId),
   allToolbarItems: (toolbarId: string) => (state: State) =>
-    selectors.selectAll(state.toolbars[toolbarId])
+    selectors.selectAll(state.toolbars[toolbarId]),
 }

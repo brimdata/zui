@@ -5,7 +5,7 @@ import {
   Millisecond,
   Minute,
   Nanosecond,
-  Second
+  Second,
 } from "./duration"
 
 const cases = [
@@ -45,11 +45,11 @@ const cases = [
       3n * Second +
       4n * Millisecond +
       5n * Microsecond +
-      6n * Nanosecond
+      6n * Nanosecond,
   ],
   [
     "39h9m14.425s",
-    39n * Hour + 9n * Minute + 14n * Second + 425n * Millisecond
+    39n * Hour + 9n * Minute + 14n * Second + 425n * Millisecond,
   ],
   // large value
   ["52763797000ns", 52763797000n * Nanosecond],
@@ -68,8 +68,8 @@ const cases = [
   // This value tests the first overflow check in leadingFraction.
   [
     "0.830103483285477580700h",
-    49n * Minute + 48n * Second + 372539827n * Nanosecond
-  ]
+    49n * Minute + 48n * Second + 372539827n * Nanosecond,
+  ],
 ] as [string, bigint][]
 
 describe("go test library", () => {

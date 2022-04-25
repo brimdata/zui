@@ -14,7 +14,7 @@ const init = () => ({
   id: "root",
   name: "root",
   isOpen: true,
-  items: []
+  items: [],
 })
 
 const upsertItem = (parent: TreeModel.Node<Item>, item: Item) => {

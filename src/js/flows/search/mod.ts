@@ -2,7 +2,7 @@ import {ResultStream, zed} from "@brimdata/zealot"
 import {
   ChronoField,
   DateTimeFormatterBuilder,
-  LocalDateTime
+  LocalDateTime,
 } from "@js-joda/core"
 import {isUndefined} from "lodash"
 import brim, {Ts} from "src/js/brim"
@@ -33,7 +33,7 @@ export const annotateQuery = (query: string, args: annotateArgs) => {
   let {
     poolId,
     from = new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000), // 30 days
-    to = new Date()
+    to = new Date(),
   } = args
 
   const annotated = [`from '${poolId}'`]
@@ -80,7 +80,7 @@ export function search({
   to,
   poolId,
   id,
-  initial
+  initial,
 }: Args): Thunk<Promise<ResultStream>> {
   return async (dispatch, getState, {api}) => {
     const tabSpan = Tab.getSpanAsDates(getState())
@@ -97,7 +97,7 @@ export function search({
     initial = isUndefined(initial) ? true : initial
     // Move annotate query into a selector
     const res = await zealot.query(annotateQuery(query, {from, to, poolId}), {
-      signal: ctl.signal
+      signal: ctl.signal,
     })
     api.abortables.abort({tab, tag})
     const aId = api.abortables.add({abort, tab, tag})
@@ -109,7 +109,7 @@ export function search({
           status: res.status,
           shapes: res.shapes,
           id,
-          initial
+          initial,
         })
       })
       .catch((e) => {

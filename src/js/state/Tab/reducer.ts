@@ -18,7 +18,7 @@ const tabReducer = combineReducers({
   columns,
   logDetails,
   layout,
-  inspector
+  inspector,
 })
 
 export type TabReducer = typeof tabReducer

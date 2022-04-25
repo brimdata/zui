@@ -12,7 +12,7 @@ enableMapSet()
 function getInitialState(windowId) {
   return Promise.all([
     invoke(ipc.windows.initialState(windowId)),
-    invoke(ipc.globalStore.init()).then(({initialState}) => initialState)
+    invoke(ipc.globalStore.init()).then(({initialState}) => initialState),
   ]).then(([winState, globalState]) => ({...winState, ...globalState}))
 }
 
@@ -25,12 +25,12 @@ export default async (api: BrimApi) => {
     middleware: (getDefaults) => {
       const defaults = getDefaults({
         thunk: {
-          extraArgument: {api}
+          extraArgument: {api},
         },
         serializableCheck: false,
-        immutableCheck: false
+        immutableCheck: false,
       })
       return defaults.concat(globalDispatchMiddleware)
-    }
+    },
   })
 }

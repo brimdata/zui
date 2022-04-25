@@ -30,7 +30,7 @@ export default function StatusBar() {
           )}
           <div
             className={classNames("warnings", {
-              disabled: isEmpty(warnings)
+              disabled: isEmpty(warnings),
             })}
             onClick={onWarningsClick}
           >

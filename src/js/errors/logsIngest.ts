@@ -1,10 +1,10 @@
 import {BrimError} from "./types"
 
-export default function(err: string): BrimError {
+export default function (err: string): BrimError {
   return {
     type: "LogsIngestError",
     message: "Unable to load these logs",
-    details: getDetails(err)
+    details: getDetails(err),
   }
 }
 

@@ -24,6 +24,6 @@ export function createColumnPrefs(p: ColumnSettingsMap = {}) {
         if (!this.exists(c.key)) defaults[c.key] = {isVisible}
       }
       return defaults
-    }
+    },
   }
 }

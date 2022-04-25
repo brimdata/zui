@@ -10,7 +10,7 @@ import {
   Footer,
   Pre,
   Scrollable,
-  Title
+  Title,
 } from "./ModalDialog/ModalDialog"
 
 export default function IngestWarningsModal({onClose}) {

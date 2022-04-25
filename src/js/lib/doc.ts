@@ -16,5 +16,5 @@ export default {
     el.select()
     document.execCommand("copy")
     body.removeChild(el)
-  }
+  },
 }

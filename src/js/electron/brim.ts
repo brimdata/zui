@@ -7,7 +7,7 @@ import url from "url"
 import {
   deserializeState,
   toAccessTokenKey,
-  toRefreshTokenKey
+  toRefreshTokenKey,
 } from "../auth0/utils"
 import createGlobalStore from "../state/createGlobalStore"
 import {getPersistedState} from "../state/getPersistable"
@@ -38,7 +38,7 @@ export class BrimMain {
       root: args.lakeRoot,
       port: args.lakePort,
       logs: args.lakeLogs,
-      bin: zdeps.zed
+      bin: zdeps.zed,
     })
     return new BrimMain(lake, windows, store, session, args)
   }
@@ -115,7 +115,7 @@ export class BrimMain {
         code,
         lakeId,
         error,
-        errorDesc: error_description
+        errorDesc: error_description,
       })
     }
   }

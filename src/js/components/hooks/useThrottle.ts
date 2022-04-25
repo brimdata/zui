@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react"
 
-export default function(value: any, wait: number) {
+export default function (value: any, wait: number) {
   const [state, setState] = useState(value)
   const timeout = useRef(null)
   const pending = useRef(false)

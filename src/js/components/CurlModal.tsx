@@ -11,7 +11,7 @@ import {
   Footer,
   Pre,
   Scrollable,
-  Title
+  Title,
 } from "./ModalDialog/ModalDialog"
 import ToolbarButton from "src/app/toolbar/button"
 import useEnterKey from "./hooks/useEnterKey"

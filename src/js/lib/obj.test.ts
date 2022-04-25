@@ -28,11 +28,11 @@ test("sameKeys same number of keys but different", () => {
 test("sameKeys nested and the same", () => {
   const a = {
     name: "james",
-    address: {street: {line1: "123 Apple", line2: "Apart A"}, state: "CA"}
+    address: {street: {line1: "123 Apple", line2: "Apart A"}, state: "CA"},
   }
   const b = {
     name: "billy",
-    address: {street: {line1: "982 Bottle", line2: "Apart B"}, state: "NV"}
+    address: {street: {line1: "982 Bottle", line2: "Apart B"}, state: "NV"},
   }
 
   expect(lib.obj(a).sameKeys(b)).toBe(true)
@@ -41,11 +41,11 @@ test("sameKeys nested and the same", () => {
 test("sameKeys nested and different", () => {
   const a = {
     name: "james",
-    address: {street: {line1: "123 Apple", line2: "Apart A"}, state: "CA"}
+    address: {street: {line1: "123 Apple", line2: "Apart A"}, state: "CA"},
   }
   const b = {
     name: "billy",
-    address: {street: {line1: "982 Bottle"}, state: "NV"}
+    address: {street: {line1: "982 Bottle"}, state: "NV"},
   }
 
   expect(lib.obj(a).sameKeys(b)).toBe(false)

@@ -3,5 +3,5 @@ import buildDetailActions from "./detailActions"
 
 export default {
   search: buildSearchActions,
-  detail: buildDetailActions
+  detail: buildDetailActions,
 }

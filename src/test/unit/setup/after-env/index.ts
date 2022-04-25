@@ -7,8 +7,8 @@ if (!("window" in global)) {
   global.window = {
     location: {
       search: "",
-      pathname: "search.html"
-    }
+      pathname: "search.html",
+    },
   }
 }
 

@@ -9,7 +9,7 @@ function forEachCol(draft, tableId, fn) {
   for (const key in draft[tableId]) fn(draft[tableId][key])
 }
 
-export default function(state: ColumnsState = init, action: ColumnsAction) {
+export default function (state: ColumnsState = init, action: ColumnsAction) {
   switch (action.type) {
     case "COLUMNS_SHOW_ALL":
       return produce(state, (draft) => {

@@ -7,5 +7,5 @@ export default {
   ...actions,
   ...selectors,
   touch,
-  reducer
+  reducer,
 }

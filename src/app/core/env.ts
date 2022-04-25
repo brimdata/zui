@@ -31,5 +31,5 @@ export default {
   },
   get isLinux() {
     return process.platform === "linux"
-  }
+  },
 }

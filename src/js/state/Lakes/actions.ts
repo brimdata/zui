@@ -9,5 +9,5 @@ export default {
   },
   remove(id: string): LAKE_REMOVE {
     return {type: "$LAKE_REMOVE", id}
-  }
+  },
 }

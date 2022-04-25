@@ -5,33 +5,27 @@ test("date to ts", () => {
 
   expect(ts).toEqual({
     ns: 1000000,
-    sec: 0
+    sec: 0,
   })
 
   expect(brim.time(ts).toDate()).toEqual(new Date(1))
 })
 
 test("add", () => {
-  const ts = brim
-    .time(new Date(1))
-    .add(1, "ms")
-    .toTs()
+  const ts = brim.time(new Date(1)).add(1, "ms").toTs()
 
   expect(ts).toEqual({
     ns: 2000000,
-    sec: 0
+    sec: 0,
   })
 })
 
 test("subtract", () => {
-  const ts = brim
-    .time(new Date(1))
-    .subtract(1, "second")
-    .toTs()
+  const ts = brim.time(new Date(1)).subtract(1, "second").toTs()
 
   expect(ts).toEqual({
     ns: 1000000,
-    sec: -1
+    sec: -1,
   })
 })
 
@@ -40,6 +34,6 @@ test("relative time", () => {
 
   expect(ts).toEqual({
     ns: expect.any(Number),
-    sec: expect.any(Number)
+    sec: expect.any(Number),
   })
 })

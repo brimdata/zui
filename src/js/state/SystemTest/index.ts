@@ -30,5 +30,5 @@ function getHooks(state): SystemTestState {
 export default {
   reducer: env.isIntegrationTest ? reducer : (s = []) => s,
   hook,
-  getHooks
+  getHooks,
 }

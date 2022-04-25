@@ -8,7 +8,7 @@ import {
   appendQueryIn,
   appendQueryInclude,
   appendQueryNotIn,
-  appendQuerySortBy
+  appendQuerySortBy,
 } from "../../../flows/searchBar/actions"
 import {viewLogDetail} from "../../../flows/viewLogDetail"
 import lib from "../../../lib"
@@ -27,7 +27,7 @@ function buildDetailActions() {
       listener(_dispatch, data: zjson.EncodedField) {
         const f = decode(data)
         lib.doc.copyToClipboard(f.data.toString())
-      }
+      },
     }),
     countBy: action({
       name: "detail-cell-menu-count-by",
@@ -36,14 +36,14 @@ function buildDetailActions() {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryCountBy(decode(data)))
         dispatch(openNewSearchTab())
-      }
+      },
     }),
     detail: action({
       name: "detail-cell-menu-detail",
       label: "View details",
       listener(dispatch, log: zjson.Object) {
         dispatch(viewLogDetail(decode(log) as zed.Record))
-      }
+      },
     }),
     exclude: action({
       name: "detail-cell-menu-exclude",
@@ -52,7 +52,7 @@ function buildDetailActions() {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryExclude(decode(field)))
         dispatch(openNewSearchTab())
-      }
+      },
     }),
     freshInclude: action({
       name: "detail-cell-menu-fresh-include",
@@ -62,7 +62,7 @@ function buildDetailActions() {
         dispatch(SearchBar.clearSearchBar())
         dispatch(SearchBar.changeSearchBarInput(toZql(f.value)))
         dispatch(openNewSearchTab())
-      }
+      },
     }),
     fromTime: action({
       name: "detail-cell-menu-from-time",
@@ -75,7 +75,7 @@ function buildDetailActions() {
           dispatch(tab.setFrom(brim.time(data.toDate()).toTs()))
           dispatch(openNewSearchTab())
         }
-      }
+      },
     }),
     groupByDrillDown: action({
       name: "detail-cell-menu-pivot-to-logs",
@@ -91,7 +91,7 @@ function buildDetailActions() {
           dispatch(SearchBar.changeSearchBarInput(newProgram))
           dispatch(openNewSearchTab())
         }
-      }
+      },
     }),
     include: action({
       name: "detail-cell-menu-include",
@@ -100,7 +100,7 @@ function buildDetailActions() {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQueryInclude(decode(field)))
         dispatch(openNewSearchTab())
-      }
+      },
     }),
     in: action({
       name: "detail-cell-menu-in",
@@ -115,7 +115,7 @@ function buildDetailActions() {
             dispatch(openNewSearchTab())
           }
         }
-      }
+      },
     }),
     notIn: action({
       name: "detail-cell-menu-not-in",
@@ -130,7 +130,7 @@ function buildDetailActions() {
             dispatch(openNewSearchTab())
           }
         }
-      }
+      },
     }),
     logResult: action({
       name: "detail-cell-menu-log-result",
@@ -138,7 +138,7 @@ function buildDetailActions() {
       listener(_dispatch, field, log) {
         console.log(JSON.stringify(log))
         console.log(JSON.stringify(field))
-      }
+      },
     }),
     sortAsc: action({
       name: "detail-cell-menu-sort-asc",
@@ -148,7 +148,7 @@ function buildDetailActions() {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(f.name, "asc"))
         dispatch(openNewSearchTab())
-      }
+      },
     }),
     sortDesc: action({
       name: "detail-cell-menu-sort-desc",
@@ -158,7 +158,7 @@ function buildDetailActions() {
         dispatch(SearchBar.clearSearchBar())
         dispatch(appendQuerySortBy(f.name, "desc"))
         dispatch(openNewSearchTab())
-      }
+      },
     }),
     toTime: action({
       name: "detail-cell-menu-to-time",
@@ -168,16 +168,11 @@ function buildDetailActions() {
         if (field.data instanceof zed.Time) {
           dispatch(SearchBar.clearSearchBar())
           dispatch(
-            tab.setTo(
-              brim
-                .time(field.data.toDate())
-                .add(1, "ms")
-                .toTs()
-            )
+            tab.setTo(brim.time(field.data.toDate()).add(1, "ms").toTs())
           )
           dispatch(openNewSearchTab())
         }
-      }
+      },
     }),
     virusTotalRightclick: action({
       name: "detail-cell-menu-virus-total",
@@ -185,7 +180,7 @@ function buildDetailActions() {
       listener(_dispatch, data: zjson.EncodedField) {
         const field = decode(data)
         open(virusTotal.url(field.data.toString()))
-      }
+      },
     }),
     whoisRightclick: action({
       name: "detail-cell-menu-who-is",
@@ -193,8 +188,8 @@ function buildDetailActions() {
       listener(dispatch, data: zjson.EncodedField) {
         const field = decode(data)
         dispatch(Modal.show("whois", {addr: field.data.toString()}))
-      }
-    })
+      },
+    }),
   }
 }
 

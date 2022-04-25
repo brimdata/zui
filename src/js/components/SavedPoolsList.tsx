@@ -56,7 +56,7 @@ const PoolListItem = ({pool}: {pool: Pool}) => {
       label: "Rename",
       click: () => {
         dispatch(Modal.show("pool", {lakeId, poolId: p.id}))
-      }
+      },
     }
     const poolContextMenu = dispatch(getPoolContextMenu(p))
     showContextMenu([renameMenuItem, ...poolContextMenu])

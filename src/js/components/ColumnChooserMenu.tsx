@@ -65,7 +65,7 @@ export default class ColumnChooserMenu extends React.Component<
   LocalState
 > {
   state: LocalState = {
-    searchValue: ""
+    searchValue: "",
   }
 
   tableId() {
@@ -189,7 +189,7 @@ export default class ColumnChooserMenu extends React.Component<
 
 const stateToProps = (state: State) => ({
   tableColumns: Columns.getCurrentTableColumns(state),
-  columnHeadersView: Layout.getColumnsView(state)
+  columnHeadersView: Layout.getColumnsView(state),
 })
 
 export const XColumnChooserMenu = connect<

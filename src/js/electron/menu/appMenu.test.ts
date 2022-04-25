@@ -8,7 +8,7 @@ test("app menu mac", async () => {
   const brim = await BrimMain.boot({
     lake: false,
     devtools: false,
-    autoUpdater: false
+    autoUpdater: false,
   })
   const menu = appMenu(mockSend, brim)
 
@@ -20,7 +20,7 @@ test("app menu windows", async () => {
   const brim = await BrimMain.boot({
     lake: false,
     devtools: false,
-    autoUpdater: false
+    autoUpdater: false,
   })
   const menu = appMenu(mockSend, brim)
 

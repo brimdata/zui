@@ -10,7 +10,7 @@ import {
   StyledArrow,
   StyledSection,
   StyledViewSelect,
-  Title
+  Title,
 } from "./common"
 import usePopupMenu from "../hooks/usePopupMenu"
 import {capitalize} from "lodash"
@@ -39,12 +39,12 @@ const ViewSelect = () => {
   const menu = usePopupMenu([
     {
       label: "Linear",
-      click: () => dispatch(Appearance.setHistoryView("linear"))
+      click: () => dispatch(Appearance.setHistoryView("linear")),
     },
     {
       label: "Tree",
-      click: () => dispatch(Appearance.setHistoryView("tree"))
-    }
+      click: () => dispatch(Appearance.setHistoryView("tree")),
+    },
   ])
 
   return (

@@ -214,9 +214,9 @@ export class WindowManager {
             lastFocused: this.lastFocused,
             state: "Fill this in later",
             position: ref.getPosition() as [number, number],
-            size: ref.getSize() as [number, number]
+            size: ref.getSize() as [number, number],
           }
-        }
+        },
       }
       this.windows[id] = win
       return win
@@ -308,6 +308,6 @@ function defaultWindowParams(
     position,
     id: brim.randomHash(),
     query: {},
-    ...params
+    ...params,
   }
 }

@@ -12,11 +12,7 @@ test("run all ast methods on sample queries", () => {
 })
 
 describe("#sorts", () => {
-  const getSorts = (program) =>
-    brim
-      .program(program)
-      .ast()
-      .sorts()
+  const getSorts = (program) => brim.program(program).ast().sorts()
 
   test("no sort", () => {
     expect(getSorts("*")).toEqual({})
@@ -32,43 +28,39 @@ describe("#sorts", () => {
 
   test("field", () => {
     expect(getSorts("* | sort _path")).toEqual({
-      _path: "asc"
+      _path: "asc",
     })
   })
 
   test("field reverse", () => {
     expect(getSorts("* | sort -r query")).toEqual({
-      query: "desc"
+      query: "desc",
     })
   })
 
   test("multiple", () => {
     expect(getSorts("* | sort query, duration")).toEqual({
       query: "asc",
-      duration: "asc"
+      duration: "asc",
     })
   })
 
   test("multiple reverse", () => {
     expect(getSorts("* | sort -r query, duration")).toEqual({
       query: "desc",
-      duration: "desc"
+      duration: "desc",
     })
   })
 
   test("sort this", () => {
     expect(getSorts("* | sort this")).toEqual({
-      this: "asc"
+      this: "asc",
     })
   })
 })
 
 describe("#groupByKeys", () => {
-  const getGroupByKeys = (string) =>
-    brim
-      .program(string)
-      .ast()
-      .groupByKeys()
+  const getGroupByKeys = (string) => brim.program(string).ast().groupByKeys()
 
   test("no group by", () => {
     expect(getGroupByKeys("_path==conn")).toEqual([])
@@ -76,32 +68,32 @@ describe("#groupByKeys", () => {
 
   test("one key", () => {
     expect(getGroupByKeys("_path==conn | count() by duration")).toEqual([
-      "duration"
+      "duration",
     ])
   })
 
   test("several keys", () => {
     expect(getGroupByKeys("_path==conn | count() by duration, uid")).toEqual([
       "duration",
-      "uid"
+      "uid",
     ])
   })
 
   test("nested records", () => {
     expect(getGroupByKeys("* | count() by id.orig_h")).toEqual([
-      ["id", "orig_h"]
+      ["id", "orig_h"],
     ])
   })
 
   test("nested records with weird characters", () => {
     expect(getGroupByKeys("* | count() by this['myfield is here']")).toEqual([
-      ["myfield is here"]
+      ["myfield is here"],
     ])
   })
 
   test("group by keys when grouping by a function", () => {
     expect(getGroupByKeys("count() by typeof(this['my fav field'])")).toEqual([
-      'typeof(this["my fav field"])'
+      'typeof(this["my fav field"])',
     ])
   })
 })

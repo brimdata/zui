@@ -17,7 +17,7 @@ export const getRecord = (state: State): SearchRecord => {
     pins: SearchBar.getSearchBar(state).pinned,
     spanArgs: Tab.getSpanArgs(state),
     poolName: pool.name,
-    poolId: pool.id
+    poolId: pool.id,
   }
 }
 
@@ -34,7 +34,7 @@ export const getArgs = (state: State): SearchArgs => {
     span: span,
     poolId: pool.id,
     poolName: pool.name,
-    type
+    type,
   }
 }
 

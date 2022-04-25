@@ -21,5 +21,5 @@ export {
   TypeDefs,
   parseAst,
   Lake,
-  zq
+  zq,
 }

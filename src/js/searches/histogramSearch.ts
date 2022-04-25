@@ -8,7 +8,7 @@ export function addEveryCountProc(program: string, span: DateSpan) {
     hour: "h",
     day: "d",
     week: "w",
-    year: "y"
+    year: "y",
   }
   const {number, unit} = histogramInterval(span)
 

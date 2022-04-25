@@ -3,10 +3,10 @@ import stream from "stream"
 
 export function toNodeReadable(reader) {
   return new stream.Readable({
-    read: async function() {
+    read: async function () {
       const {done, value} = await reader.read()
       this.push(done ? null : value)
-    }
+    },
   })
 }
 

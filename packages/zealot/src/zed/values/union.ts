@@ -22,7 +22,7 @@ export class Union implements Value {
     if (isNull(this.index) || isNull(this.value)) return null
     return [
       this.index.toString(),
-      stream.encodeValue(this.value)
+      stream.encodeValue(this.value),
     ] as zjson.UnionValue
   }
 

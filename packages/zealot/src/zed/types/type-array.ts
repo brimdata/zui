@@ -31,7 +31,7 @@ export class TypeArray implements Type {
   serialize(stream: EncodeStream): zjson.NoId<zjson.ArrayType> {
     return {
       kind: "array",
-      type: stream.encodeType(this.type)
+      type: stream.encodeType(this.type),
     }
   }
 

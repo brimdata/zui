@@ -37,6 +37,6 @@ export function useResultsView() {
     isTable: view === TABLE,
     isInspector: view === INSPECTOR,
     setTable: () => setView(TABLE),
-    setInspector: () => setView(INSPECTOR)
+    setInspector: () => setView(INSPECTOR),
   }
 }

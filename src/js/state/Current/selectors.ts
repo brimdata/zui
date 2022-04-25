@@ -37,7 +37,7 @@ export const getQueryLocationData = (
 ): {queryId: string | null} => {
   type Params = {queryId?: string}
   const match = matchPath<Params>(getLocation(state).pathname, [
-    "/lakes/:lakeId/queries/:queryId"
+    "/lakes/:lakeId/queries/:queryId",
   ])
   const queryId = match?.params?.queryId
   return {queryId}
@@ -66,7 +66,7 @@ export const getQuery = createSelector<State, Query | null, BrimQuery>(
 export const getPoolId = (state) => {
   type Params = {poolId?: string}
   const match = matchPath<Params>(getLocation(state).pathname, [
-    "/lakes/:lakeId/pools/:poolId"
+    "/lakes/:lakeId/pools/:poolId",
   ])
   return match?.params?.poolId || null
 }

@@ -32,10 +32,10 @@ function string(s = "") {
 
     self() {
       return s
-    }
+    },
   }
 }
 
 export default {
-  string
+  string,
 }

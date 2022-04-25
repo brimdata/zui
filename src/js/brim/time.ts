@@ -36,20 +36,12 @@ function time(val: Ts | bigint | Date | string = new Date()) {
     },
 
     add(amount: number, unit: TimeUnit) {
-      const ts = dateToTs(
-        moment(this.toDate())
-          .add(amount, unit)
-          .toDate()
-      )
+      const ts = dateToTs(moment(this.toDate()).add(amount, unit).toDate())
       return brim.time(ts)
     },
 
     subtract(amount: number, unit: TimeUnit) {
-      const ts = dateToTs(
-        moment(this.toDate())
-          .subtract(amount, unit)
-          .toDate()
-      )
+      const ts = dateToTs(moment(this.toDate()).subtract(amount, unit).toDate())
       return brim.time(ts)
     },
 
@@ -72,7 +64,7 @@ function time(val: Ts | bigint | Date | string = new Date()) {
     isValid() {
       let d = this.toDate()
       return d instanceof Date && !isNaN(d.getTime())
-    }
+    },
   }
 }
 
@@ -89,19 +81,19 @@ function dateToTs(date: Date): Ts {
   const ns = Math.round((secFloat - sec) * 1e3) * 1e6
   return {
     sec,
-    ns
+    ns,
   }
 }
 
-time.setZone = function(name: string) {
+time.setZone = function (name: string) {
   moment.tz.setDefault(name)
 }
 
-time.getZoneNames = function() {
+time.getZoneNames = function () {
   return moment.tz.names()
 }
 
-time.setDefaultFormat = function(format = "") {
+time.setDefaultFormat = function (format = "") {
   if (format) {
     moment.defaultFormat = format
     moment.defaultFormatUtc = format
@@ -112,7 +104,7 @@ time.setDefaultFormat = function(format = "") {
 }
 
 // Remove or move this later
-time.convertToSpan = function(tw: DateTuple | null | undefined): Span | null {
+time.convertToSpan = function (tw: DateTuple | null | undefined): Span | null {
   if (tw) {
     const [from, to] = tw
     return [brim.time(from).toTs(), brim.time(to).toTs()]

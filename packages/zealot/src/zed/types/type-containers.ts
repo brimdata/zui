@@ -13,7 +13,7 @@ const containers = {
   union: TypeUnion,
   map: TypeMap,
   alias: TypeAlias,
-  error: TypeError
+  error: TypeError,
 } as const
 
 export function isContainerType(value: unknown): value is ContainerType {

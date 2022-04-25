@@ -22,13 +22,13 @@ export default function MenuAction() {
     {label: "Copy for zq", click: () => dispatch(Modal.show("zq"))},
     {
       label: "Syntax docs",
-      click: () => open(links.ZED_DOCS_LANGUAGE)
+      click: () => open(links.ZED_DOCS_LANGUAGE),
     },
     {
       label: "Kill search",
       click: () => api.abortables.abort({tab}),
-      disabled: !isFetching
-    }
+      disabled: !isFetching,
+    },
   ]
 
   return (

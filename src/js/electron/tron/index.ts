@@ -5,5 +5,5 @@ export type Session = ReturnType<typeof session>
 
 export default {
   window,
-  session
+  session,
 }

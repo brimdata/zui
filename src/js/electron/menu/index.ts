@@ -19,5 +19,5 @@ function setMenu(brim: BrimMain) {
 export default {
   setMenu,
   actions,
-  separator: (): MenuItemConstructorOptions => ({type: "separator"})
+  separator: (): MenuItemConstructorOptions => ({type: "separator"}),
 }

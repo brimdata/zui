@@ -10,7 +10,7 @@ import {TabActions, TabsState} from "./types"
 const firstTab = tabReducer(undefined, {type: "INIT"})
 const init = {
   active: firstTab.id,
-  data: [firstTab]
+  data: [firstTab],
 }
 
 export default function reducer(state: TabsState = init, action: TabActions) {
@@ -22,7 +22,7 @@ export default function reducer(state: TabsState = init, action: TabActions) {
       if (state.data.map((t) => t.id).includes(action.id)) {
         return {
           ...state,
-          active: action.id
+          active: action.id,
         }
       } else {
         return state
@@ -33,14 +33,14 @@ export default function reducer(state: TabsState = init, action: TabActions) {
     case "TABS_ADD":
       return {
         active: state.active,
-        data: addTabData(state.data, action)
+        data: addTabData(state.data, action),
       }
     case "TABS_MOVE":
       return moveTab(state, action)
     case "TABS_ORDER":
       return {
         ...state,
-        data: orderTabs(state.data, action.indices)
+        data: orderTabs(state.data, action.indices),
       }
     case "TABS_ACTIVE_CLEAR":
       var index = state.data.findIndex((t) => t.id === state.active)
@@ -48,7 +48,7 @@ export default function reducer(state: TabsState = init, action: TabActions) {
       tabs[index] = tabReducer({id: state.active} as TabState, {type: "@INIT"})
       return {
         ...state,
-        data: tabs
+        data: tabs,
       }
 
     default:
@@ -82,7 +82,7 @@ function moveTab(state, action) {
   if (index === action.index) return state
   return {
     ...state,
-    data: lib.move<TabState>(state.data, index, action.index)
+    data: lib.move<TabState>(state.data, index, action.index),
   }
 }
 
@@ -116,7 +116,7 @@ function forwardToTab(state, action: AnyAction) {
   newData[index] = tabReducer(tab, action)
   return {
     active,
-    data: newData
+    data: newData,
   }
 }
 
@@ -135,6 +135,6 @@ function reduxAction(action) {
 function forwardToAllTabs(state, action) {
   return {
     ...state,
-    data: state.data.map((tabState) => tabReducer(tabState, action))
+    data: state.data.map((tabState) => tabReducer(tabState, action)),
   }
 }

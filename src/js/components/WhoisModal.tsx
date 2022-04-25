@@ -8,7 +8,7 @@ import {
   Footer,
   Pre,
   Scrollable,
-  Title
+  Title,
 } from "./ModalDialog/ModalDialog"
 import ToolbarButton from "src/app/toolbar/button"
 import useEnterKey from "./hooks/useEnterKey"
@@ -20,9 +20,7 @@ export default function WhoisModal({onClose}) {
 
   useEffect(() => {
     setTimeout(() => {
-      whois(addr)
-        .then(setText)
-        .catch(setText)
+      whois(addr).then(setText).catch(setText)
     }, 250)
   }, [])
 

@@ -57,5 +57,5 @@ export default {
   "file-filled": fileFilled,
   "doc-plain": docPlain,
   tag,
-  pin
+  pin,
 }

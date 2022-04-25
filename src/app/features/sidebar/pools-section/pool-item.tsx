@@ -22,9 +22,9 @@ const PoolItem = ({styles, data, state, handlers}) => {
       label: "Rename",
       click: () => {
         handlers.edit()
-      }
+      },
     },
-    ...dispatch(getPoolContextMenu(pool))
+    ...dispatch(getPoolContextMenu(pool)),
   ]
 
   const onClick = (e) => {

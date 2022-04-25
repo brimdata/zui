@@ -2,14 +2,14 @@ import {center, dimensFromSizePosition, getWindowDimens, stack} from "./dimens"
 
 const screens = [
   {x: 0, y: 23, width: 1680, height: 1027},
-  {x: -80, y: -1057, width: 1920, height: 1057}
+  {x: -80, y: -1057, width: 1920, height: 1057},
 ]
 
 const defaults = {
   x: undefined,
   y: undefined,
   width: 1250,
-  height: 750
+  height: 750,
 }
 
 const get = (saved) => getWindowDimens(saved, defaults, screens)
@@ -47,7 +47,7 @@ test("all undefined", () => {
     x: undefined,
     y: undefined,
     width: undefined,
-    height: undefined
+    height: undefined,
   }
   const screens = [{x: 0, y: 23, width: 1920, height: 1057}]
   const result = getWindowDimens(input, defaults, screens)
@@ -61,7 +61,7 @@ test("conversion", () => {
     x: 10,
     y: 20,
     width: 300,
-    height: 600
+    height: 600,
   })
 })
 
@@ -72,7 +72,7 @@ test("conversion when position gone", () => {
     x: undefined,
     y: undefined,
     width: 300,
-    height: 600
+    height: 600,
   })
 })
 
@@ -86,7 +86,7 @@ test("center easy case", () => {
     x: 250,
     y: 200,
     width: 200,
-    height: 100
+    height: 100,
   })
 })
 
@@ -100,7 +100,7 @@ test("center when inner much bigger", () => {
     y: 0,
     x: 0,
     width: 700,
-    height: 500
+    height: 500,
   })
 })
 
@@ -114,7 +114,7 @@ test("center when negative x y", () => {
     x: -750,
     y: -800,
     width: 200,
-    height: 100
+    height: 100,
   })
 })
 
@@ -128,7 +128,7 @@ test("center when positive x y", () => {
     x: 1250,
     y: 1200,
     width: 200,
-    height: 100
+    height: 100,
   })
 })
 
@@ -142,7 +142,7 @@ test("center only producers integers", () => {
     x: 1250,
     y: 1200,
     width: 200,
-    height: 100
+    height: 100,
   })
 })
 
@@ -156,7 +156,7 @@ test("stack easy", () => {
     x: 25,
     y: 25,
     width: 400,
-    height: 300
+    height: 300,
   })
 })
 
@@ -170,7 +170,7 @@ test("stack when x will go over", () => {
     x: 25,
     y: 125,
     width: 400,
-    height: 300
+    height: 300,
   })
 })
 
@@ -184,7 +184,7 @@ test("stack when y will go over", () => {
     x: 525,
     y: 25,
     width: 400,
-    height: 300
+    height: 300,
   })
 })
 
@@ -198,7 +198,7 @@ test("when both will go over", () => {
     x: 25,
     y: 25,
     width: 400,
-    height: 300
+    height: 300,
   })
 })
 
@@ -212,7 +212,7 @@ test("when window is bigger than screen", () => {
     x: 0,
     y: 0,
     width: 1000,
-    height: 800
+    height: 800,
   })
 })
 
@@ -246,7 +246,7 @@ test("stacking windows that overflow in positive pool", () => {
     x: 1025,
     y: 1025,
     width: 800,
-    height: 800
+    height: 800,
   })
 })
 
@@ -258,6 +258,6 @@ test("stacking windows that overflow in negative pool", () => {
     x: -975,
     y: -975,
     width: 800,
-    height: 800
+    height: 800,
   })
 })

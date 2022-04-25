@@ -31,5 +31,5 @@ export default {
   form,
   randomHash,
   tab,
-  lake
+  lake,
 }

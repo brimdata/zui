@@ -66,5 +66,5 @@ export default {
   getSpan,
   getSpanAsDates,
   getSpanArgs,
-  getComputedSpan
+  getComputedSpan,
 }

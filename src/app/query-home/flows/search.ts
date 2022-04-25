@@ -2,7 +2,7 @@ import {ResultStream} from "@brimdata/zealot"
 import {
   ChronoField,
   DateTimeFormatterBuilder,
-  LocalDateTime
+  LocalDateTime,
 } from "@js-joda/core"
 import {isUndefined} from "lodash"
 import brim, {Ts} from "src/js/brim"
@@ -27,41 +27,39 @@ export const dateToNanoTs = (date: Date | Ts | bigint): string => {
   return LocalDateTime.parse(brim.time(date).format()).format(NanoFormat)
 }
 
-const search = ({
-  query,
-  id,
-  initial
-}: Args): Thunk<Promise<ResultStream>> => async (dispatch, getState, {api}) => {
-  const tab = Tabs.getActive(getState())
-  const zealot = await dispatch(getZealot())
-  const ctl = new AbortController()
-  const abort = () => ctl.abort()
-  const tag = id
+const search =
+  ({query, id, initial}: Args): Thunk<Promise<ResultStream>> =>
+  async (dispatch, getState, {api}) => {
+    const tab = Tabs.getActive(getState())
+    const zealot = await dispatch(getZealot())
+    const ctl = new AbortController()
+    const abort = () => ctl.abort()
+    const tag = id
 
-  initial = isUndefined(initial) ? true : initial
-  const res = await zealot.query(query.format(), {
-    signal: ctl.signal
-  })
-  api.abortables.abort({tab, tag})
-  const aId = api.abortables.add({abort, tab, tag})
+    initial = isUndefined(initial) ? true : initial
+    const res = await zealot.query(query.format(), {
+      signal: ctl.signal,
+    })
+    api.abortables.abort({tab, tag})
+    const aId = api.abortables.add({abort, tab, tag})
 
-  res.promise
-    .then(() => {
-      api.searches.emit("did-finish", {
-        tabId: tab,
-        status: res.status,
-        shapes: res.shapes,
-        id,
-        initial
+    res.promise
+      .then(() => {
+        api.searches.emit("did-finish", {
+          tabId: tab,
+          status: res.status,
+          shapes: res.shapes,
+          id,
+          initial,
+        })
       })
-    })
-    .catch((e) => {
-      console.error(e)
-    })
-    .finally(() => {
-      api.abortables.remove(aId)
-    })
+      .catch((e) => {
+        console.error(e)
+      })
+      .finally(() => {
+        api.abortables.remove(aId)
+      })
 
-  return res
-}
+    return res
+  }
 export default search

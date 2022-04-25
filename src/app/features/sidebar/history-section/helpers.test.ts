@@ -11,8 +11,8 @@ function search(pins, program): Finding {
       poolId: "defaultId",
       program,
       spanArgs: brim.dateTuple([new Date(1), new Date(2)]).toSpan(),
-      target: "events"
-    }
+      target: "events",
+    },
   }
 }
 
@@ -22,7 +22,7 @@ test("Remove all pins and make a new current", () => {
     search(["a", "b"], "d"),
     search(["a", "b"], "d"),
     search(["a"], "d"),
-    search([], "e")
+    search([], "e"),
   ])
 
   expect(tree.model).toMatchSnapshot()

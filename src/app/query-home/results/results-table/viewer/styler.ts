@@ -2,28 +2,28 @@ import {ViewerDimens} from "src/js/types"
 
 export const viewer = (dimens: ViewerDimens) => {
   return {
-    width: dimens.viewWidth
+    width: dimens.viewWidth,
   }
 }
 
 export const view = (dimens: ViewerDimens) => {
   return {
     height: dimens.viewHeight,
-    width: dimens.viewWidth
+    width: dimens.viewWidth,
   }
 }
 
 export const header = (dimens: ViewerDimens, scrollLeft: number) => {
   return {
     width: dimens.listWidth,
-    transform: `translateX(${scrollLeft * -1}px)`
+    transform: `translateX(${scrollLeft * -1}px)`,
   }
 }
 
 export const list = (dimens: ViewerDimens) => {
   return {
     height: dimens.listHeight,
-    width: dimens.listWidth
+    width: dimens.listWidth,
   }
 }
 
@@ -35,14 +35,14 @@ export const chunk = (
   return {
     width: dimens.rowWidth,
     transform: `translateY(${index * dimens.rowHeight}px)`,
-    height: dimens.rowHeight * chunkSize
+    height: dimens.rowHeight * chunkSize,
   }
 }
 
 export const row = (dimens: ViewerDimens) => {
   return {
     width: dimens.rowWidth,
-    height: dimens.rowHeight
+    height: dimens.rowHeight,
   }
 }
 
@@ -50,6 +50,6 @@ export const endMessage = (dimens: ViewerDimens) => {
   return {
     height: dimens.rowHeight * 4,
     transform: `translateY(${dimens.listHeight}px)`,
-    width: dimens.viewWidth
+    width: dimens.viewWidth,
   }
 }

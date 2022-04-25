@@ -35,7 +35,7 @@ export function viewerSearch(args: Args): Thunk<void> {
         search({
           id,
           query: args.query,
-          initial: !args.append
+          initial: !args.append,
         })
       )
       await res.collect(({rows, shapesMap}) => {

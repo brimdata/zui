@@ -35,7 +35,7 @@ export const mainDefaults = () => ({
   devtools: isDev,
   appState: join(app.getPath("userData"), "appState.json"),
   releaseNotes: true,
-  autoUpdater: true
+  autoUpdater: true,
 })
 
 export type MainArgs = ReturnType<typeof mainDefaults>
@@ -64,7 +64,7 @@ export async function main(args: Partial<MainArgs> = {}) {
   })
 
   ipcMain.handle("get-main-args", () => ({
-    ...opts
+    ...opts,
   }))
 
   // autoUpdater should not run in dev, and will fail if the code has not been signed

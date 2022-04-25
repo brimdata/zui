@@ -10,7 +10,7 @@ export const defaultLake = (): Lake => {
     port,
     id: `localhost:${port}`,
     name: "Local Lake",
-    authType: "none"
+    authType: "none",
   }
 }
 
@@ -24,7 +24,7 @@ export const isDefaultLake = (l: Lake): boolean => {
   return id === d.id && host === d.host && port === d.port
 }
 
-export default function(store: Store) {
+export default function (store: Store) {
   const existingLake = Current.getLake(store.getState())
   if (!existingLake) {
     store.dispatch(setupDefaultLake())

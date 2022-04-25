@@ -137,7 +137,7 @@ const TitleInput = ({onCancel, onSubmit}) => {
           minWidth: "120px",
           borderRadius: "3px",
           padding: "2px 6px",
-          margin: "-2px 0 1px -6px"
+          margin: "-2px 0 1px -6px",
         }}
         inputStyle={{
           background: "transparent",
@@ -149,7 +149,7 @@ const TitleInput = ({onCancel, onSubmit}) => {
           lineHeight: "16px",
           display: "block",
           outline: "none",
-          border: "none"
+          border: "none",
         }}
       />
       <StyledAnchor isPrimary isIndented onClick={handleEdit}>

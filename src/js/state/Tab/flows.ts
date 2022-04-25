@@ -5,28 +5,25 @@ import brim, {Ts} from "../../brim"
 
 export default {
   computeSpan(now: Date = new Date()): Thunk {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
       const args = Tab.getSpanArgs(getState())
       if (!args) return
-      const span = brim
-        .span(args)
-        .recompute(now)
-        .toSpan()
+      const span = brim.span(args).recompute(now).toSpan()
       dispatch(Search.setSpan(span))
     }
   },
 
   setFrom(ts: Ts): Thunk {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
       const [_, to] = Tab.getSpanArgs(getState())
       dispatch(Search.setSpanArgs([ts, to]))
     }
   },
 
   setTo(ts: Ts): Thunk {
-    return function(dispatch, getState) {
+    return function (dispatch, getState) {
       const [from, _] = Tab.getSpanArgs(getState())
       dispatch(Search.setSpanArgs([from, ts]))
     }
-  }
+  },
 }

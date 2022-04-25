@@ -7,13 +7,12 @@ type Props = {
   name: string
 }
 
-export const createPool = ({name}: Props): Thunk<Promise<string>> => async (
-  dispatch,
-  getState
-) => {
-  const zealot = await dispatch(getZealot())
-  const lakeId = Current.getLakeId(getState())
-  return zealot.createPool(name).then((res) => {
-    return dispatch(syncPool(res.pool.id, lakeId)).then(() => res.pool.id)
-  })
-}
+export const createPool =
+  ({name}: Props): Thunk<Promise<string>> =>
+  async (dispatch, getState) => {
+    const zealot = await dispatch(getZealot())
+    const lakeId = Current.getLakeId(getState())
+    return zealot.createPool(name).then((res) => {
+      return dispatch(syncPool(res.pool.id, lakeId)).then(() => res.pool.id)
+    })
+  }

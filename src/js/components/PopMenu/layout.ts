@@ -15,7 +15,7 @@ export function layoutPopMenu(
   const truePosition = getPopMenuPosition(position, {
     ...styles.wrapper,
     width: mRect.width,
-    height: mRect.height
+    height: mRect.height,
   })
 
   styles = getPopMenuStyles(truePosition, aRect, mRect, pad)
@@ -23,6 +23,6 @@ export function layoutPopMenu(
   return {
     wrapperStyle: styles.wrapper,
     pointerStyle: styles.pointer,
-    animate: () => animatePopMenu(menu, truePosition)
+    animate: () => animatePopMenu(menu, truePosition),
   }
 }

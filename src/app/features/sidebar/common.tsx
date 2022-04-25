@@ -116,12 +116,12 @@ const StyledButton = styled.button<{isSelected: boolean}>`
   height: 22px;
 
   &:hover {
-  ${({isSelected}) =>
-    isSelected
-      ? `
+    ${({isSelected}) =>
+      isSelected
+        ? `
   opacity: 0.85
   `
-      : `
+        : `
   background: rgba(0, 0, 0, 0.04);
   `}
   }

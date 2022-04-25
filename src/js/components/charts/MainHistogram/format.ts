@@ -29,9 +29,9 @@ export default function format(
       ts,
       paths: {
         ...defaults,
-        ...data.table[ms]
+        ...data.table[ms],
       },
-      count: Object.values(data.table[ms]).reduce((c, sum) => sum + c, 0)
+      count: Object.values(data.table[ms]).reduce((c, sum) => sum + c, 0),
     })
     return epochTs
   })
@@ -40,6 +40,6 @@ export default function format(
     interval,
     span: [spanStart, span[1]],
     points: bins,
-    keys: data.keys
+    keys: data.keys,
   }
 }

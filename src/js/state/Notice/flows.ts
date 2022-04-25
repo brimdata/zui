@@ -10,5 +10,5 @@ export default {
   clearSearchError: (): Thunk => (dispatch, getState) => {
     const e = Notice.getError(getState())
     if (e instanceof SearchError) dispatch(Notice.dismiss())
-  }
+  },
 }

@@ -11,6 +11,6 @@ export function createSpan(from: TimeArg, to: TimeArg) {
   const t = createTime(to)
   return {
     ts: f.toTs(),
-    dur: createTime(t.toNs() - f.toNs()).toTs()
+    dur: createTime(t.toNs() - f.toNs()).toTs(),
   }
 }

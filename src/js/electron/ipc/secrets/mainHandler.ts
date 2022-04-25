@@ -2,7 +2,7 @@ import {ipcMain} from "electron"
 import keytar from "keytar"
 import * as os from "os"
 
-export default function() {
+export default function () {
   ipcMain.handle("secrets:setKey", (e, {key, val}) => {
     return keytar.setPassword(key, os.userInfo().username, val)
   })

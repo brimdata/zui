@@ -13,7 +13,7 @@ import {
   SectionHeader,
   StyledArrow,
   StyledSection,
-  Title
+  Title,
 } from "./common"
 import {DropOverlay} from "./drop-overlay"
 

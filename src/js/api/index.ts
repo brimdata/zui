@@ -16,7 +16,7 @@ import {
   ContextMenuRegistry,
   DetailCtxItemBuilder,
   LoaderRegistry,
-  SearchCtxItemBuilder
+  SearchCtxItemBuilder,
 } from "./registries"
 import {SearchesApi} from "./searches"
 import {StorageApi} from "./storage"
@@ -31,7 +31,7 @@ export default class BrimApi {
   public loaders = new LoaderRegistry()
   public contextMenus = {
     search: new ContextMenuRegistry<SearchCtxItemBuilder>(),
-    detail: new ContextMenuRegistry<DetailCtxItemBuilder>()
+    detail: new ContextMenuRegistry<DetailCtxItemBuilder>(),
   }
   public toolbar: ToolbarApi
   public configs: ConfigsApi
@@ -74,7 +74,7 @@ export default class BrimApi {
       zdepsDirectory: path.join(
         remote.app.getAppPath().replace("app.asar", "app.asar.unpacked"),
         "zdeps"
-      )
+      ),
     }
   }
 

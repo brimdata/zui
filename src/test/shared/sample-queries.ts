@@ -12,5 +12,5 @@ export default [
   "* | sort this",
   "* | sort",
   "*",
-  "count() by typeof(this['my fav field'])"
+  "count() by typeof(this['my fav field'])",
 ]

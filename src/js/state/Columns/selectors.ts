@@ -38,5 +38,5 @@ const getCurrentTableColumns = createSelector<
 
 export default {
   getCurrentTableColumns,
-  getColumns
+  getColumns,
 }

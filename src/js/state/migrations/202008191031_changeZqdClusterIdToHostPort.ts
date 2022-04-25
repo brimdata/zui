@@ -12,7 +12,7 @@ export default function changeZqdClusterIdToHostPort(state: any) {
     s.clusters[newId] = {
       id: newId,
       host: newHost,
-      port: newPort
+      port: newPort,
     }
     delete s.clusters[oldId]
 

@@ -13,22 +13,22 @@ test("migrating 202005181158_spacesStateId", () => {
         ingest: {
           progress: null,
           snapshot: 0,
-          warnings: []
+          warnings: [],
         },
         max_time: {
           ns: 140103001,
-          sec: 1428917565
+          sec: 1428917565,
         },
         min_time: {
           ns: 47800000,
-          sec: 1425567042
+          sec: 1425567042,
         },
         name: "pcaps.brim",
         packet_path: "",
         packet_size: 0,
         pcap_support: false,
-        size: 50281455
-      }
-    }
+        size: 50281455,
+      },
+    },
   })
 })

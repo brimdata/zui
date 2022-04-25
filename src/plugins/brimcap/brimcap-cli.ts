@@ -66,7 +66,7 @@ const OPTION_NAME_MAP = {
   skewThresh: "skewtresh",
   dir: "d",
   out: "o",
-  pcap: "r"
+  pcap: "r",
 }
 
 const toCliOpts = (

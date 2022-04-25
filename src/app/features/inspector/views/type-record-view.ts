@@ -44,7 +44,7 @@ export class TypeRecordView extends ContainerView<zed.TypeRecord> {
         last,
         key: field.name,
         type: field.type,
-        indexPath: [...this.args.indexPath, i]
+        indexPath: [...this.args.indexPath, i],
       })
       if (last) break
     }

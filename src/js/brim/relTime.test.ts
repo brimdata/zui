@@ -8,7 +8,7 @@ const validResults = {
   "now -0h": {op: "-", amount: 0, unit: "h"},
   " now-45d ": {op: "-", amount: 45, unit: "d"},
   " now-6w ": {op: "-", amount: 6, unit: "w"},
-  "now -  12 y ": {op: "-", amount: 12, unit: "y"}
+  "now -  12 y ": {op: "-", amount: 12, unit: "y"},
 }
 
 for (const [string, expectedAst] of Object.entries(validResults)) {
@@ -27,7 +27,7 @@ test("case insensitivity", () => {
     expect(ast).toEqual({
       op: null,
       amount: 0,
-      unit: "s"
+      unit: "s",
     })
   })
 })
