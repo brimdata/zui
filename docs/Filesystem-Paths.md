@@ -58,11 +58,10 @@ each supported platform is:
 Particular categories of saved data are held under this path. Specific
 categories of interest include:
 
-   * `lake` (subdirectory) - Storage for the local Zed lake that holds data you
-     may have imported into Brim.
-
    * `data` (subdirectory) - Storage used by tools bundled with Brim, such as
-      [Brimcap](https://github.com/brimdata/brimcap).
+     [Brimcap](https://github.com/brimdata/brimcap).
+
+   * `lake` (subdirectory) - Storage for the local Zed lake that holds data imported into Brim.
 
    * `logs` (subdirectory) - Logs for the running Brim app and the Zed backend
      that it launches for data storage and query.
