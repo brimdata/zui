@@ -9,7 +9,7 @@ export default function showIngestWarning(pools: string[]) {
       detail: `This will delete the partial generated data for: ${pools.join(
         ", "
       )}`,
-      buttons: ["OK", "Cancel"]
+      buttons: ["OK", "Cancel"],
     })
     .then(({response}) => {
       if (response === 0) return

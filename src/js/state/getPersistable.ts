@@ -14,7 +14,7 @@ const WINDOW_PERSIST: StateKey[] = [
   "queries",
   "tabHistories",
   "tabs",
-  "lakes"
+  "lakes",
 ]
 
 const TAB_PERSIST: TabKey[] = ["id", "search", "searchBar", "columns", "layout"]

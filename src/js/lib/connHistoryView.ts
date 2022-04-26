@@ -32,7 +32,7 @@ const TEXT_MAP = {
   d: "data",
   h: "syn ack",
   a: "ack",
-  s: "syn"
+  s: "syn",
 }
 
 type Flag = {
@@ -46,7 +46,7 @@ export default function connHistoryView(historyString: string): Flag[] {
     .filter(hasView)
     .map((char) => ({
       text: getText(char),
-      direction: getDirection(char)
+      direction: getDirection(char),
     }))
 }
 

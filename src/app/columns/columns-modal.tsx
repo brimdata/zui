@@ -15,7 +15,7 @@ export default function ColumnsModal() {
   const style = {
     right: 0,
     top: 0,
-    height: lib.win.getHeight()
+    height: lib.win.getHeight(),
   }
   return ReactDOM.createPortal(
     <CSSTransition

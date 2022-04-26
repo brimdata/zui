@@ -9,5 +9,5 @@ export default {
   },
   deletePassword: (key, username) => {
     map.delete(key + username)
-  }
+  },
 }

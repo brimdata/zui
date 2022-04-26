@@ -19,5 +19,5 @@ export default {
       selection.removeAllRanges()
       selection.addRange(range)
     }
-  }
+  },
 }

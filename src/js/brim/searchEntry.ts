@@ -6,6 +6,6 @@ export function createSearchEntry(data: SearchRecord) {
     ...data,
     getDuration() {
       return brimSpan(data.spanArgs).getDuration()
-    }
+    },
   }
 }

@@ -3,7 +3,7 @@ const {spawn} = require("child_process")
 class Sub {
   constructor(bin, args) {
     this.p = spawn(bin, [args], {
-      shell: true
+      shell: true,
     })
     this.p.stdout.on("data", (data) => {
       if (this.waiting) return

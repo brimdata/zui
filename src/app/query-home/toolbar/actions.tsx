@@ -9,9 +9,8 @@ import useVisibleActions from "./hooks/use-visible-actions"
  * to set correct flex basis. This is the "fullWidth" var you see below.
  */
 const Actions = ({actions}) => {
-  const {visible, hidden, fullWidth, setMeasure, setParent} = useVisibleActions(
-    actions
-  )
+  const {visible, hidden, fullWidth, setMeasure, setParent} =
+    useVisibleActions(actions)
 
   return (
     <>

@@ -4,33 +4,33 @@ import {
   TABS_ADD,
   TABS_MOVE,
   TABS_ORDER,
-  TABS_REMOVE
+  TABS_REMOVE,
 } from "./types"
 
 export default {
   add: (id: string, url: string): TABS_ADD => ({
     type: "TABS_ADD",
     id,
-    url
+    url,
   }),
   remove: (id: string): TABS_REMOVE => ({
     type: "TABS_REMOVE",
-    id
+    id,
   }),
   activate: (id: string): TABS_ACTIVATE => ({
     type: "TABS_ACTIVATE",
-    id
+    id,
   }),
   move: (id: string, index: number): TABS_MOVE => ({
     type: "TABS_MOVE",
     id,
-    index
+    index,
   }),
   order: (indices: number[]): TABS_ORDER => ({
     type: "TABS_ORDER",
-    indices
+    indices,
   }),
   clearActive: (): TABS_ACTIVE_CLEAR => ({
-    type: "TABS_ACTIVE_CLEAR"
-  })
+    type: "TABS_ACTIVE_CLEAR",
+  }),
 }

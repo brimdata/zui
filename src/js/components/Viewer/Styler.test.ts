@@ -7,7 +7,7 @@ const dimens = buildViewerDimens({
   rowHeight: 10,
   height: 300,
   width: 400,
-  sumColumnWidths: 22 + 33 + 44 + 44
+  sumColumnWidths: 22 + 33 + 44 + 44,
 })
 
 test("#viewer", () => {
@@ -21,7 +21,7 @@ test("#view when fixed subtracts for header", () => {
 test("#header", () => {
   expect(Styler.header(dimens, 20)).toEqual({
     transform: "translateX(-20px)",
-    width: 400
+    width: 400,
   })
 })
 
@@ -32,6 +32,6 @@ test("#list", () => {
 test("#row", () => {
   expect(Styler.row(dimens)).toEqual({
     height: 10,
-    width: 400
+    width: 400,
   })
 })

@@ -4,7 +4,7 @@ import get from "lodash/get"
 import {PoolsState} from "../state/Pools/types"
 import {LakesState} from "../state/Lakes/types"
 
-export default function(
+export default function (
   tabId: string,
   lakes: LakesState,
   pools: PoolsState,
@@ -25,7 +25,7 @@ export default function(
       } else {
         return "Brim"
       }
-    }
+    },
   }
 }
 

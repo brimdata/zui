@@ -11,7 +11,7 @@ export default function refactorInvestigations(state: any) {
     })
 
     s.investigation = {
-      "localhost:9867": newState
+      "localhost:9867": newState,
     }
   }
 

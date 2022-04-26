@@ -4,7 +4,7 @@ import React, {HTMLProps} from "react"
 function move(diff) {
   return [
     [{transform: `translateY(${diff}px)`}, {transform: "translateY(0px)"}],
-    {duration: 300, easing: "ease"}
+    {duration: 300, easing: "ease"},
   ]
 }
 
@@ -15,8 +15,8 @@ function enter() {
       duration: 300,
       delay: 300,
       fill: "backwards",
-      easing: "ease"
-    }
+      easing: "ease",
+    },
   ]
 }
 

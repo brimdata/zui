@@ -29,7 +29,7 @@ export default function PinEdit({onSubmit, onBlur, onCancel, defaultValue}) {
         minHeight: "17px",
         marginRight: "12px",
         display: "inline-flex",
-        marginBottom: "3px"
+        marginBottom: "3px",
       }}
       inputStyle={{fontSize: "9px", fontFamily: "var(--mono-font)"}}
     />

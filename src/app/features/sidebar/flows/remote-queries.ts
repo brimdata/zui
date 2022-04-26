@@ -15,7 +15,7 @@ const queriesToRemoteQueries = (qs: Query[], isTombstone = false) => {
   return qs.map((q) => ({
     ...q,
     tombstone: isTombstone,
-    ts: Date.now()
+    ts: Date.now(),
   }))
 }
 
@@ -24,20 +24,19 @@ export const isRemoteLib = (ids: string[]) => (_d, getState) => {
   return intersection(ids, remoteIds).length > 0
 }
 
-export const getRemotePoolForLake = (lakeId: string): Thunk<Pool> => (
-  _d,
-  getState
-) => {
-  return Pools.getByName(lakeId, remoteQueriesPoolName)(getState())
-}
+export const getRemotePoolForLake =
+  (lakeId: string): Thunk<Pool> =>
+  (_d, getState) => {
+    return Pools.getByName(lakeId, remoteQueriesPoolName)(getState())
+  }
 
-export const refreshRemoteQueries = (
-  lake?: BrimLake
-): Thunk<Promise<void>> => async (dispatch) => {
-  const zealot = await dispatch(getZealot(lake))
-  try {
-    const queryReq = await zealot.query(
-      `from '${remoteQueriesPoolName}'
+export const refreshRemoteQueries =
+  (lake?: BrimLake): Thunk<Promise<void>> =>
+  async (dispatch) => {
+    const zealot = await dispatch(getZealot(lake))
+    try {
+      const queryReq = await zealot.query(
+        `from '${remoteQueriesPoolName}'
         | fork (
           => query_id:={id:id,ts:ts} | sort query_id
           => ts:=max(ts) by id | sort this
@@ -45,17 +44,17 @@ export const refreshRemoteQueries = (
         | join on query_id=this
         | tombstone==false
         | cut name, value, description, id, pins, quiet(isReadOnly)`
-    )
+      )
 
-    const remoteRecords = (await queryReq.js()) as Query[]
-    dispatch(RemoteQueries.set(remoteRecords))
-  } catch (e) {
-    if (/pool not found/.test(e.message)) {
-      dispatch(RemoteQueries.set([]))
-      return
-    } else throw e
+      const remoteRecords = (await queryReq.js()) as Query[]
+      dispatch(RemoteQueries.set(remoteRecords))
+    } catch (e) {
+      if (/pool not found/.test(e.message)) {
+        dispatch(RemoteQueries.set([]))
+        return
+      } else throw e
+    }
   }
-}
 
 /*
  setRemoteQuery will create, update, or delete (by setting a 'tombstone' record)
@@ -89,8 +88,8 @@ export const setRemoteQueries = (
           author: "brim",
           body:
             "automatic remote query load for id(s): " +
-            queries.map((q) => q.id).join(", ")
-        }
+            queries.map((q) => q.id).join(", "),
+        },
       })
       queriesToRemoteQueries(queries, shouldDelete).forEach((d) =>
         data.push(JSON.stringify(d))

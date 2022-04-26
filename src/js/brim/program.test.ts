@@ -5,7 +5,7 @@ import {
   hasHeadOrTailProc,
   joinParts,
   parallelizeProcs,
-  splitParts
+  splitParts,
 } from "../lib/Program"
 import brim from "./"
 
@@ -13,10 +13,7 @@ describe("excluding and including", () => {
   const field = createField("uid", "123")
 
   test("excluding a field", () => {
-    const program = brim
-      .program('_path=="weird"')
-      .exclude(field)
-      .string()
+    const program = brim.program('_path=="weird"').exclude(field).string()
 
     expect(program).toEqual('_path=="weird" uid!="123"')
   })
@@ -59,7 +56,7 @@ describe("drill down", () => {
     "i d": {"orig h": "192.168.0.54"},
     proto: "udp",
     query: "WPAD",
-    count: 24
+    count: 24,
   })
 
   test("when there is no leading filter", () => {
@@ -114,7 +111,7 @@ describe("drill down", () => {
   test("filter query", () => {
     const result = createRecord({
       md5: "9f51ef98c42df4430a978e4157c43dd5",
-      count: 21
+      count: 21,
     })
 
     const program = brim
@@ -133,20 +130,14 @@ describe("drill down", () => {
 describe("count by", () => {
   test("empty program", () => {
     const field = createField("_path", "heyo")
-    const program = brim
-      .program()
-      .countBy(field)
-      .string()
+    const program = brim.program().countBy(field).string()
 
     expect(program).toBe("| count() by _path")
   })
 
   test("append a count to an existing query", () => {
     const field = createField("query", "heyo")
-    const program = brim
-      .program("dns")
-      .countBy(field)
-      .string()
+    const program = brim.program("dns").countBy(field).string()
 
     expect(program).toBe("dns | count() by query")
   })
@@ -380,11 +371,8 @@ describe("extracting the first filter", () => {
 
 describe("cut", () => {
   test("cut some fields", () => {
-    expect(
-      brim
-        .program("my filter")
-        .cut("ts", "_path")
-        .string()
-    ).toBe("my filter | cut ts, _path")
+    expect(brim.program("my filter").cut("ts", "_path").string()).toBe(
+      "my filter | cut ts, _path"
+    )
   })
 })

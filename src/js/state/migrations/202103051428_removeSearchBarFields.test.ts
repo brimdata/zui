@@ -9,12 +9,12 @@ test("migrating 202103051428_removeSearchBarFields", async () => {
   expect(tabs[0].searchBar).toEqual({
     current: "tab 0 history 2",
     error: null,
-    pinned: []
+    pinned: [],
   })
 
   expect(tabs[1].searchBar).toEqual({
     current: "history entry with pins",
     error: null,
-    pinned: ["james", "kerr", "pins"]
+    pinned: ["james", "kerr", "pins"],
   })
 })

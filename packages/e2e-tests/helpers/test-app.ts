@@ -6,7 +6,7 @@ import path from "path"
 import {
   ElectronApplication,
   Page,
-  _electron as electron
+  _electron as electron,
 } from "playwright-chromium"
 import env from "../../../src/app/core/env"
 import {itestDir} from "./env"
@@ -32,7 +32,7 @@ export default class TestApp {
     const launchOpts = {
       args: [`--user-data-dir=${userDataDir}`, entry],
       bypassCSP: true,
-      timeout: 60000
+      timeout: 60000,
     }
 
     // @ts-ignore
@@ -69,13 +69,17 @@ const getAppInfo = () => {
   if (env.isCI && env.isMac && existsSync(macInstallPath)) {
     return {
       bin: macInstallPath,
-      entry: path.join(macInstallPath, "Contents/Resources", packagedEntryPoint)
+      entry: path.join(
+        macInstallPath,
+        "Contents/Resources",
+        packagedEntryPoint
+      ),
     }
   }
   if (env.isCI && env.isLinux && existsSync(linuxInstallPath)) {
     return {
       bin: linuxInstallPath,
-      entry: path.join(linuxInstallPath, "resources", packagedEntryPoint)
+      entry: path.join(linuxInstallPath, "resources", packagedEntryPoint),
     }
   }
 

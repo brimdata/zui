@@ -12,7 +12,7 @@ import {
   ButtonGroup,
   Title,
   Pre,
-  Scrollable
+  Scrollable,
 } from "./ModalDialog/ModalDialog"
 import ToolbarButton from "src/app/toolbar/button"
 import styled from "styled-components"

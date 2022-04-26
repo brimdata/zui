@@ -46,7 +46,7 @@ class Pane extends React.Component<Props> {
       width,
       className,
       innerRef,
-      "aria-label": ariaLabel
+      "aria-label": ariaLabel,
     } = this.props
     const anchorPos = position === "left" ? "right" : "left"
 

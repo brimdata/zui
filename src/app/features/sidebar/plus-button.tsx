@@ -51,26 +51,26 @@ export default function PlusButton() {
         click: () => {
           const query = dispatch(newQuery())
           dispatch(Tabs.new(lakeQueryPath(query.id, lakeId)))
-        }
+        },
       },
       {
         label: "New Remote Query",
-        click: () => dispatch(Modal.show("new-query", {isRemote: true}))
+        click: () => dispatch(Modal.show("new-query", {isRemote: true})),
       },
       {
         label: "New Pool",
         click: () => dispatch(Tabs.new(lakeImportPath(lakeId))),
-        enabled: !!lakeId
+        enabled: !!lakeId,
       },
       {type: "separator"},
       {
         label: "Add Lake...",
-        click: () => dispatch(Modal.show("new-lake"))
+        click: () => dispatch(Modal.show("new-lake")),
       },
       {
         label: "Import Queries...",
-        click: () => importer && importer.click()
-      }
+        click: () => importer && importer.click(),
+      },
     ]
 
     showContextMenu(template)

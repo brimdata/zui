@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {createRecord} from "src/test/shared/factories/zed-factory"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import LogDetails from "./"
@@ -21,7 +25,7 @@ test("viewing a log detail", () => {
 test("viewing 2 logs", () => {
   const state = store.dispatchAll([
     LogDetails.push(record),
-    LogDetails.push(record2)
+    LogDetails.push(record2),
   ])
 
   const log = LogDetails.build(state)
@@ -32,7 +36,7 @@ test("going back to the first log", () => {
   const state = store.dispatchAll([
     LogDetails.push(record),
     LogDetails.push(record2),
-    LogDetails.back()
+    LogDetails.back(),
   ])
 
   const log = LogDetails.build(state)
@@ -44,7 +48,7 @@ test("going back and then forward", () => {
     LogDetails.push(record),
     LogDetails.push(record2),
     LogDetails.back(),
-    LogDetails.forward()
+    LogDetails.forward(),
   ])
 
   const log = LogDetails.build(state)
@@ -57,20 +61,16 @@ test("going back, then push, then back", () => {
     LogDetails.push(record2),
     LogDetails.back(),
     LogDetails.push(record3),
-    LogDetails.back()
+    LogDetails.back(),
   ])
 
-  expect(
-    LogDetails.build(state)
-      .get("letter")
-      .toString()
-  ).toBe("a")
+  expect(LogDetails.build(state).get("letter").toString()).toBe("a")
 })
 
 test("updating the current log detail", () => {
   const state = store.dispatchAll([
     LogDetails.push(record),
-    LogDetails.updateUidLogs([record, record2])
+    LogDetails.updateUidLogs([record, record2]),
   ])
 
   expect(LogDetails.getUidLogs(state)).toEqual([record, record2])

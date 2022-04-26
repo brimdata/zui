@@ -67,9 +67,9 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
   const template: MenuItemConstructorOptions[] = [
     {
       label: "Get Info",
-      click: () => dispatch(Modal.show("view-lake"))
+      click: () => dispatch(Modal.show("view-lake")),
     },
-    {type: "separator"}
+    {type: "separator"},
   ]
 
   lakes.forEach((l: Lake) => {
@@ -81,7 +81,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
       click: () => {
         if (isCurrent) return
         dispatch(tabHistory.push(lakeImportPath(l.id)))
-      }
+      },
     })
   })
 

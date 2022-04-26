@@ -9,7 +9,7 @@ const DEFAULT_DIMENS = {
   x: undefined,
   y: undefined,
   width: 1250,
-  height: 750
+  height: 750,
 }
 
 const getDisplays = () => screen.getAllDisplays().map((s) => s.workArea)
@@ -42,8 +42,8 @@ export class SearchWindow implements BrimWindow {
       webPreferences: {
         nodeIntegration: true,
         experimentalFeatures: true,
-        contextIsolation: false
-      }
+        contextIsolation: false,
+      },
     })
     enable(this.ref.webContents)
     this.ref.on("focus", () => {
@@ -60,7 +60,7 @@ export class SearchWindow implements BrimWindow {
 
   async load() {
     await this.ref.loadFile("search.html", {
-      query: {...this.query, id: this.id}
+      query: {...this.query, id: this.id},
     })
   }
 
@@ -82,7 +82,7 @@ export class SearchWindow implements BrimWindow {
       lastFocused: this.lastFocused,
       position: this.ref.getPosition() as [number, number],
       size: this.ref.getSize() as [number, number],
-      state: this.initialState
+      state: this.initialState,
     }
   }
 

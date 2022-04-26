@@ -1,7 +1,7 @@
 import log from "electron-log"
 import {app} from "electron"
 
-export default function() {
+export default function () {
   app.on("web-contents-created", (event, contents) => {
     contents.on("will-attach-webview", (e) => {
       e.preventDefault()

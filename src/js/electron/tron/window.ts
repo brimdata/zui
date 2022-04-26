@@ -32,8 +32,8 @@ async function aboutWindow() {
     height: 360,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+    },
   })
   enable(win.webContents)
   win.setMenu(null)
@@ -47,8 +47,8 @@ async function hiddenWindow() {
     show: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+    },
   })
   enable(win.webContents)
   win.setMenu(null)
@@ -65,8 +65,8 @@ async function detailWindow(params) {
     minWidth: 500,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
-    }
+      contextIsolation: false,
+    },
   })
   enable(win.webContents)
   if (size) {

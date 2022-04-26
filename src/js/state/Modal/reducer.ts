@@ -3,7 +3,7 @@ import produce from "immer"
 
 const init = (): ModalState => ({
   name: "",
-  args: {}
+  args: {},
 })
 
 export default produce((draft: ModalState, action: ModalAction) => {

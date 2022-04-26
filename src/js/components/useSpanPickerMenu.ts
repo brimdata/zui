@@ -24,11 +24,11 @@ export default function useSpanPickerMenu(submit: Function) {
     return [
       {
         click: () => setSpan(spanOfLast(30, "minutes")),
-        label: "Last 30 minutes"
+        label: "Last 30 minutes",
       },
       {click: () => setSpan(spanOfLast(24, "hours")), label: "Last 24 hours"},
       {click: () => setSpan(spanOfLast(7, "days")), label: "Last 7 days"},
-      {click: () => setSpan(spanOfLast(30, "days")), label: "Last 30 days"}
+      {click: () => setSpan(spanOfLast(30, "days")), label: "Last 30 days"},
     ]
 
   const from = brim.time(pool.minTime())
@@ -39,19 +39,19 @@ export default function useSpanPickerMenu(submit: Function) {
     {click: () => setSpanFromTs(poolSpan), label: "Whole Pool"},
     {
       click: () => setSpan(spanOfLast(30, "minutes", to.toDate())),
-      label: "Last 30 minutes of pool"
+      label: "Last 30 minutes of pool",
     },
     {
       click: () => setSpan(spanOfLast(24, "hours", to.toDate())),
-      label: "Last 24 hours of pool"
+      label: "Last 24 hours of pool",
     },
     {
       click: () => setSpan(spanOfLast(7, "days", to.toDate())),
-      label: "Last 7 days of pool"
+      label: "Last 7 days of pool",
     },
     {
       click: () => setSpan(spanOfLast(30, "days", to.toDate())),
-      label: "Last 30 days of pool"
-    }
+      label: "Last 30 days of pool",
+    },
   ]
 }

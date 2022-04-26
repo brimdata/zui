@@ -5,7 +5,7 @@ test("#indexOfLastChange", () => {
     new Date("2018-1-1 10:00"),
     new Date("2018-1-1 11:00"),
     new Date("2018-1-1 12:00"),
-    new Date("2018-1-1 13:00")
+    new Date("2018-1-1 13:00"),
   ]
 
   const index = indexOfLastChange(logsTs)
@@ -17,7 +17,7 @@ test("#indexOfLastChange with accessor", () => {
     {ts: new Date("2018-1-1 10:00")},
     {ts: new Date("2018-1-1 11:00")},
     {ts: new Date("2018-1-1 13:00")},
-    {ts: new Date("2018-1-1 13:00")}
+    {ts: new Date("2018-1-1 13:00")},
   ]
 
   const index = indexOfLastChange(logsTs, (obj) => obj.ts)
@@ -39,7 +39,7 @@ test("#indexOfLastChange when all same with accessor", () => {
     {ts: new Date("2018-1-1 10:00")},
     {ts: new Date("2018-1-1 10:00")},
     {ts: new Date("2018-1-1 10:00")},
-    {ts: new Date("2018-1-1 10:00")}
+    {ts: new Date("2018-1-1 10:00")},
   ]
 
   const index = indexOfLastChange(logsTs, (obj) => obj.ts)

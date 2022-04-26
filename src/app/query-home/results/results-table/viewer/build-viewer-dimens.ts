@@ -15,7 +15,7 @@ export default ({
   sumColumnWidths,
   height,
   rowHeight,
-  size
+  size,
 }: Args): ViewerDimens => {
   if (type === "fixed") {
     return {
@@ -24,7 +24,7 @@ export default ({
       listWidth: Math.max(sumColumnWidths, width),
       listHeight: rowHeight * size,
       rowWidth: Math.max(sumColumnWidths, width),
-      rowHeight
+      rowHeight,
     }
   } else {
     return {
@@ -33,7 +33,7 @@ export default ({
       listWidth: "auto",
       listHeight: rowHeight * size,
       rowWidth: "auto",
-      rowHeight
+      rowHeight,
     }
   }
 }

@@ -8,15 +8,12 @@ type Props = {
   onSelection?: (arg0: DateSpan) => void
 }
 
-export default function(props: Props = {}): Pen {
+export default function (props: Props = {}): Pen {
   const {onSelection} = props
   let brushG
 
   function mount(svg) {
-    brushG = d3
-      .select(svg)
-      .append("g")
-      .attr("class", "brush")
+    brushG = d3.select(svg).append("g").attr("class", "brush")
   }
 
   function draw(chart) {
@@ -51,8 +48,8 @@ export default function(props: Props = {}): Pen {
       [0, 0],
       [
         innerWidth(chart.width, chart.margins),
-        innerHeight(chart.height, chart.margins)
-      ]
+        innerHeight(chart.height, chart.margins),
+      ],
     ])
 
     brushG.call(brush)

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Histories from "src/app/core/models/histories"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import TabHistories from "./index"
@@ -19,17 +23,17 @@ test("save and select", () => {
     {
       id: "1",
       entries: [{pathname: "/", search: "", hash: "", key: expect.any(String)}],
-      index: 0
+      index: 0,
     },
     {
       id: "2",
       entries: [{pathname: "/", search: "", hash: "", key: expect.any(String)}],
-      index: 0
+      index: 0,
     },
     {
       id: "3",
       entries: [{pathname: "/", search: "", hash: "", key: expect.any(String)}],
-      index: 0
-    }
+      index: 0,
+    },
   ])
 })

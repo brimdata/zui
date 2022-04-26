@@ -11,7 +11,7 @@ export function activate(api: BrimApi) {
         label: "Timezone",
         type: "string",
         defaultValue: "UTC",
-        enum: brim.time.getZoneNames()
+        enum: brim.time.getZoneNames(),
       },
       timeFormat: {
         name: "timeFormat",
@@ -20,22 +20,22 @@ export function activate(api: BrimApi) {
         defaultValue: "",
         helpLink: {
           label: "docs",
-          url: "https://momentjs.com/docs/#/displaying/format/"
-        }
+          url: "https://momentjs.com/docs/#/displaying/format/",
+        },
       },
       thousandsSeparator: {
         name: "thousandsSeparator",
         label: "Thousands Separator",
         type: "string",
-        defaultValue: ","
+        defaultValue: ",",
       },
       decimal: {
         name: "decimal",
         label: "Decimal",
         type: "string",
-        defaultValue: "."
-      }
-    }
+        defaultValue: ".",
+      },
+    },
   })
 }
 

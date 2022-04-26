@@ -9,7 +9,7 @@ test("packageJSON", () => {
     expect.objectContaining({
       name: expect.any(String),
       repository: expect.any(String),
-      version: expect.any(String)
+      version: expect.any(String),
     })
   )
 })

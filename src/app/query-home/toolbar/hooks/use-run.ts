@@ -1,5 +1,5 @@
 import submitSearch from "src/app/query-home/flows/submit-search"
-import {useDispatch} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import {ActionButtonProps} from "../action-button"
 
 export default function useRun(): ActionButtonProps {
@@ -9,6 +9,6 @@ export default function useRun(): ActionButtonProps {
     label: "Run",
     title: "Execute query",
     icon: "run",
-    click: () => dispatch(submitSearch())
+    click: () => dispatch(submitSearch()),
   }
 }

@@ -3,11 +3,12 @@ import {
   lakeReleaseNotes,
   lakeImport,
   query,
-  poolShow
+  poolShow,
 } from "src/app/router/routes"
 import {lakeImportPath} from "src/app/router/utils/paths"
 import React, {useLayoutEffect} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import {Redirect, Route, Switch, useRouteMatch} from "react-router"
 import ConnectionError from "src/js/components/ConnectionError"
 import Login from "src/js/components/Login"

@@ -11,8 +11,8 @@ const slice = createSlice({
   reducers: {
     touchVersion: (state, action: PayloadAction<string>) => {
       state[action.payload] = new Date().toISOString()
-    }
-  }
+    },
+  },
 })
 
 function firstRunOfVersion(state: State, version: string) {
@@ -27,5 +27,5 @@ export default {
   reducer: slice.reducer,
   ...slice.actions,
   all,
-  firstRunOfVersion
+  firstRunOfVersion,
 }

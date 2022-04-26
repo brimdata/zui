@@ -7,5 +7,5 @@ export default {
 
   getArgs(state: State): any {
     return state.modal.args
-  }
+  },
 }

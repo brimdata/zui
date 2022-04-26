@@ -8,7 +8,7 @@ function run(program, args, opts = {}) {
     const subprocess = spawn(program, [args], {
       shell: true,
       stdio: "inherit",
-      cwd: opts.cwd
+      cwd: opts.cwd,
     })
     subprocess.on("exit", (code) => {
       if (code !== 0) process.exit(code)

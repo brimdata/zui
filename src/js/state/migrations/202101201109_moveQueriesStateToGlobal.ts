@@ -28,7 +28,7 @@ export default function moveQueriesStateToGlobal(state: any) {
     state.globalState.queries = {
       id: "root",
       name: "root",
-      items: mergedQueryItems
+      items: mergedQueryItems,
     }
 
   return state

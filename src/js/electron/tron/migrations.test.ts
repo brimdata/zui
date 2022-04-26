@@ -29,12 +29,12 @@ test("run pending", async () => {
 test("only migration march migrations", async () => {
   const migrations = await Migrations.init({
     from: "202010191355",
-    to: "202011141515"
+    to: "202011141515",
   })
   expect(migrations.getPending()).toHaveLength(3)
   expect(migrations.getPending().map((m) => m.version)).toEqual([
     202011060944, // remove cluster status
     202011141515, // add suricata runner
-    202011141515 // add suricata updater
+    202011141515, // add suricata updater
   ])
 })

@@ -32,5 +32,5 @@ export default combineReducers<any, any>({
   configPropValues: ConfigPropValues.reducer,
   pluginStorage: PluginStorage.reducer,
   queries: Queries.reducer,
-  remoteQueries: RemoteQueries.reducer
+  remoteQueries: RemoteQueries.reducer,
 })

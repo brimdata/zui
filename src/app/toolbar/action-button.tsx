@@ -11,7 +11,7 @@ export function toMenu(
     label,
     click,
     submenu,
-    enabled: !disabled
+    enabled: !disabled,
   }))
 }
 

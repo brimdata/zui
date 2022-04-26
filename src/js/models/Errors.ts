@@ -114,5 +114,5 @@ export const KNOWN_ERRORS = [
   NoPoolsError,
   PoolNotFoundError,
   NotFoundError,
-  InternalServerError
+  InternalServerError,
 ]

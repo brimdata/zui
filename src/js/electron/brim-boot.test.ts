@@ -5,7 +5,7 @@ const file = `tmp-boot-test/appState.json`
 
 test("boot starts lake with defaults", async () => {
   const createSession = () => ({
-    load: () => Promise.resolve(undefined)
+    load: () => Promise.resolve(undefined),
   })
   // @ts-ignore
   const brim = await BrimMain.boot(file, createSession)

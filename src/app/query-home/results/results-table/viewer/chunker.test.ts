@@ -7,7 +7,7 @@ beforeEach(() => {
     height: 50,
     rowHeight: 10,
     chunkSize: 5,
-    overScan: 1
+    overScan: 1,
   })
 })
 
@@ -57,7 +57,7 @@ test("#visibleChunks when in the middle", () => {
   expect([
     ...chunker.rows(22),
     ...chunker.rows(23),
-    ...chunker.rows(24)
+    ...chunker.rows(24),
   ]).toEqual([44, 45, 46, 47, 48, 49])
 })
 

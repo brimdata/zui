@@ -52,7 +52,7 @@ export class DecodeStream {
             ? null
             : obj.fields.map(({name, type}) => ({
                 name,
-                type: this.decodeType(type)
+                type: this.decodeType(type),
               }))
         )
       default:

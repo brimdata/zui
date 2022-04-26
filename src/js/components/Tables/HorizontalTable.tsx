@@ -11,7 +11,7 @@ type Props = {
 export default function HorizontalTable({
   descriptor,
   logs,
-  onRightClick
+  onRightClick,
 }: Props) {
   return (
     <Table className="horizontal-table">

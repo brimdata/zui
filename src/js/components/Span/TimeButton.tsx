@@ -21,7 +21,7 @@ export default function TimeButton({
   timeArg,
   prevTimeArg,
   onChange,
-  icon
+  icon,
 }: Props) {
   const [editing, setEditing] = useState(false)
   const dirty = !!prevTimeArg && !isEqual(timeArg, prevTimeArg)

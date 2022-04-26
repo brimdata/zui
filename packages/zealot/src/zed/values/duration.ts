@@ -55,7 +55,7 @@ const scale = {
   h: Hour,
   d: Day,
   w: Week,
-  y: Year
+  y: Year,
 }
 type UnitName = keyof typeof scale
 

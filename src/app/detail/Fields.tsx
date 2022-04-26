@@ -2,7 +2,7 @@ import {Data, Name, Value} from "src/app/core/Data"
 import {useZedFormatter} from "src/app/core/format"
 import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import React, {memo, useCallback, useMemo, useState} from "react"
-import {useDispatch} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
 import {printColumnName} from "src/js/state/Columns/models/column"
@@ -26,7 +26,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
   fields,
   onRightClick,
   onHover,
-  format
+  format,
 }: DTProps) {
   return (
     <Panel>
@@ -76,12 +76,12 @@ export default memo(function Fields({record}: Props) {
   const dispatch = useDispatch()
   const [hovered, setHovered] = useState({name: "", type: ""})
   const format = useZedFormatter()
-  const onHover = useCallback((field) => {
+  const onHover = useCallback((field: any) => {
     setHovered(field)
   }, [])
 
   const onRightClick = useCallback(
-    (field) => dispatch(contextMenu(field, record)),
+    (field: any) => dispatch(contextMenu(field, record)),
     [record]
   )
 

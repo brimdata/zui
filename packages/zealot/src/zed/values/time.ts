@@ -6,7 +6,7 @@ import {
   nativeJs,
   ZonedDateTime,
   ZoneId,
-  ZoneOffset
+  ZoneOffset,
 } from "@js-joda/core"
 import {TypeTime} from "../types/type-time"
 import {isNull} from "../utils/is-null"

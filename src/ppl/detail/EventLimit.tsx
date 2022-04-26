@@ -1,6 +1,6 @@
 import {Caption} from "src/app/detail/Shared"
 import React, {memo, useCallback} from "react"
-import {useDispatch} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Link from "src/js/components/common/Link"
 import {openNewSearchTab} from "src/js/flows/openNewSearchWindow"
 import {submitSearch} from "src/js/flows/submitSearch/mod"

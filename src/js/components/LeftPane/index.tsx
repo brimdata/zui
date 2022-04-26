@@ -27,7 +27,7 @@ export function LeftPane() {
   const sections = useSelector(Appearance.sidebarSections).map((s) => ({
     ...s,
     min: 100,
-    closedSize: 24
+    closedSize: 24,
   }))
 
   const l = useSelector(Current.getLake)

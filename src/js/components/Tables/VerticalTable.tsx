@@ -14,7 +14,7 @@ export default function VerticalTable({
   descriptor,
   record,
   onRightClick,
-  light
+  light,
 }: Props) {
   return (
     <Table className={classNames("vertical-table", {light})}>

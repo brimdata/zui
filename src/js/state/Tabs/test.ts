@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Current from "../Current"
 import Search from "../Search"
 import Tabs from "./"
@@ -20,7 +24,7 @@ test("add tab with no data", () => {
 test("add tab with data and activate", () => {
   const state = store.dispatchAll([
     Tabs.add("1", "/lakes/a"),
-    Tabs.activate("1")
+    Tabs.activate("1"),
   ])
   expect(Current.getLakeId(state)).toEqual("a")
 })
@@ -29,7 +33,7 @@ test("cannot activate tab that does not exist in data", () => {
   const state = store.dispatchAll([
     Tabs.add("1", "/"),
     Tabs.activate("1"),
-    Tabs.activate("does-not-exist")
+    Tabs.activate("does-not-exist"),
   ])
   const tab = Tabs.getActiveTab(state)
   expect(tab.id).toBe("1")
@@ -51,7 +55,7 @@ test("remove last, active tab", () => {
     Tabs.add("1", "/"),
     Tabs.add("2", "/"),
     Tabs.activate("2"),
-    Tabs.remove("2")
+    Tabs.remove("2"),
   ])
   expect(Tabs.getActive(state)).toBe("1")
 })
@@ -63,7 +67,7 @@ test("remove middle, active tab", () => {
     Tabs.add("3", "/"),
     Tabs.add("4", "/"),
     Tabs.activate("2"),
-    Tabs.remove("2")
+    Tabs.remove("2"),
   ])
   expect(Tabs.getActive(state)).toBe("3")
 })
@@ -75,7 +79,7 @@ test("remove first, active tab", () => {
     Tabs.add("2", "/"),
     Tabs.add("3", "/"),
     Tabs.add("3", "/"),
-    Tabs.remove(first)
+    Tabs.remove(first),
   ])
   expect(Tabs.getActive(state)).toBe("1")
 })
@@ -85,7 +89,7 @@ test("remove non-active tab before active tab", () => {
     Tabs.add("1", "/"),
     Tabs.add("2", "/"),
     Tabs.activate("2"),
-    Tabs.remove("1")
+    Tabs.remove("1"),
   ])
   expect(Tabs.getActive(state)).toBe("2")
 })
@@ -95,7 +99,7 @@ test("remove non-active tab after active tab", () => {
     Tabs.add("1", "/"),
     Tabs.add("2", "/"),
     Tabs.activate("1"),
-    Tabs.remove("2")
+    Tabs.remove("2"),
   ])
   expect(Tabs.getActive(state)).toBe("1")
 })
@@ -113,7 +117,7 @@ test("moving a tab to destination index", () => {
     Tabs.add("2", "/"),
     Tabs.add("3", "/"),
     Tabs.add("4", "/"),
-    Tabs.move("3", 0)
+    Tabs.move("3", 0),
   ])
   const ids = Tabs.getData(state).map((t) => t.id)
 
@@ -128,7 +132,7 @@ test("reorder tabs", () => {
     Tabs.add("a", "/"),
     Tabs.add("b", "/"),
     Tabs.add("c", "/"),
-    Tabs.order([3, 1, 2, 0])
+    Tabs.order([3, 1, 2, 0]),
   ])
 
   expect(Tabs.getData(state).map((t) => t.id)).toEqual(["c", "a", "b", first])
@@ -141,7 +145,7 @@ test("reorder tabs does not throw error if invalid", () => {
     Tabs.add("a", "/"),
     Tabs.add("b", "/"),
     Tabs.add("c", "/"),
-    Tabs.order([0, 0, 0, 0])
+    Tabs.order([0, 0, 0, 0]),
   ])
 
   expect(Tabs.getData(state).map((t) => t.id)).toEqual([first])

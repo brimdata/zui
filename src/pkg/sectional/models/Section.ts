@@ -46,7 +46,7 @@ export default class Section {
 
   getStyle() {
     return {
-      height: this.getSize()
+      height: this.getSize(),
     }
   }
 
@@ -71,7 +71,7 @@ export default class Section {
       min: this.min,
       max: this.max === Infinity ? undefined : this.max,
       isOpen: this.isOpen,
-      closedSize: this.closedSize
+      closedSize: this.closedSize,
     }
   }
 

@@ -1,7 +1,6 @@
-import {useDispatch} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import React, {useState} from "react"
 import classNames from "classnames"
-
 import {TableColumn, ColumnUpdates} from "src/js/state/Columns/types"
 import {appendQuerySortBy} from "src/js/flows/searchBar/actions"
 import Columns from "src/js/state/Columns"
@@ -40,7 +39,7 @@ const HeaderCell = ({column, tableId, sorts}: Props) => {
     if (start !== null) {
       const moved = e.clientX - start
       const update: ColumnUpdates = {
-        [columnKey(column.name)]: {width: oldWidth + moved}
+        [columnKey(column.name)]: {width: oldWidth + moved},
       }
       dispatch(Columns.updateColumns(tableId, update))
     }
@@ -74,7 +73,7 @@ const HeaderCell = ({column, tableId, sorts}: Props) => {
       onClick={onClick}
       className={classNames("header-cell", {
         active,
-        sorted
+        sorted,
       })}
       style={{width: column.width || 200}}
       role="columnheader"

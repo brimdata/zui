@@ -8,13 +8,13 @@ import {
   SEARCH_BAR_PINS_SET,
   SEARCH_BAR_PIN_EDIT,
   SEARCH_BAR_PIN_REMOVE,
-  SEARCH_BAR_RESTORE
+  SEARCH_BAR_RESTORE,
 } from "./types"
 
 const init: SearchBarState = {
   current: null,
   pinned: [],
-  error: null
+  error: null,
 }
 
 const reducer = createReducer(init, (builder) => {

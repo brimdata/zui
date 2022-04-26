@@ -7,26 +7,26 @@ import {
   CHART_CLEAR,
   CHART_RECORDS,
   CHART_SET_SEARCH_KEY,
-  CHART_STATUS
+  CHART_STATUS,
 } from "./types"
 
 export default {
   setStatus: (tabId: string, status: SearchStatus): CHART_STATUS => ({
     type: "CHART_STATUS",
     status,
-    tabId
+    tabId,
   }),
   setRecords: (tabId: string, records: zed.Record[]): CHART_RECORDS => ({
     type: "CHART_RECORDS",
     data: histogramFormat(records),
-    tabId
+    tabId,
   }),
   clear: (tabId?: string): CHART_CLEAR => ({type: "CHART_CLEAR", tabId}),
   setSearchKey: (tabId: string, key: string): CHART_SET_SEARCH_KEY => ({
     type: "CHART_SET_SEARCH_KEY",
     tabId,
-    key
-  })
+    key,
+  }),
 }
 
 function histogramFormat(records: zed.Record[]): ChartData {
@@ -54,6 +54,6 @@ function histogramFormat(records: zed.Record[]): ChartData {
 
   return {
     table: table.toJSON(),
-    keys: paths.toArray()
+    keys: paths.toArray(),
   }
 }

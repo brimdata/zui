@@ -17,11 +17,7 @@ type Props = {
 const Header = ({dimens, scrollLeft, columns, ...rest}: Props) => {
   const queryValue = useSelector(Current.getQuery)?.value
   const sorts = useMemo(
-    () =>
-      brim
-        .program(queryValue)
-        .ast()
-        .sorts(),
+    () => brim.program(queryValue).ast().sorts(),
     [queryValue]
   )
 

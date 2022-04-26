@@ -7,7 +7,7 @@ const slice = createSlice({
     rightSidebarIsOpen: false,
     rightSidebarWidth: 260,
     columnHeadersView: "AUTO" as ColumnHeadersViewState,
-    resultsView: "TABLE" as ResultsView
+    resultsView: "TABLE" as ResultsView,
   },
   reducers: {
     showDetailPane: (s) => {
@@ -27,8 +27,8 @@ const slice = createSlice({
     },
     setResultsView: (s, a: PayloadAction<ResultsView>) => {
       s.resultsView = a.payload
-    }
-  }
+    },
+  },
 })
 
 export const reducer = slice.reducer

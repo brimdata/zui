@@ -14,11 +14,11 @@ const init = (): ViewerState => ({
   scrollPos: {x: 0, y: 0},
   selection: {
     rows: {},
-    currentRange: [0, 0]
-  }
+    currentRange: [0, 0],
+  },
 })
 
-export default function(
+export default function (
   state: ViewerState = init(),
   action: ViewerAction
 ): ViewerState {

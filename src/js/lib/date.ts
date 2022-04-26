@@ -11,10 +11,8 @@ function date(d: Date, zone = "UTC") {
     },
 
     format(fmt: string) {
-      return moment(d)
-        .tz(zone)
-        .format(fmt)
-    }
+      return moment(d).tz(zone).format(fmt)
+    },
   }
 }
 
@@ -31,9 +29,7 @@ date.parseInZone = (string, zone, ref?) => {
     const mins = pad(tmp.getMinutes())
     const secs = pad(tmp.getSeconds())
     const ms = (tmp.getMilliseconds() / 1000).toFixed(3).slice(2, 5)
-    const offset = moment(tmp)
-      .tz(zone)
-      .format("Z")
+    const offset = moment(tmp).tz(zone).format("Z")
 
     const str = [year, month, date, hour, mins, secs, ms, offset].join(" ")
     const fmt = "YYYY MM DD HH mm ss SSS Z"
@@ -52,7 +48,7 @@ date.parseInZone = (string, zone, ref?) => {
   }
 }
 
-date.zoneNames = function() {
+date.zoneNames = function () {
   return moment.tz.names()
 }
 

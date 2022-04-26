@@ -39,7 +39,7 @@ export default function TabBar() {
             {...layout.dragBinding({
               id,
               onDown: () => ctl.onTabClick(id),
-              onChange: (indices) => ctl.onTabMove(indices)
+              onChange: (indices) => ctl.onTabMove(indices),
             })}
             key={id}
             title={brim.tab(id, lakes, pools, queryIdNameMap).title()}

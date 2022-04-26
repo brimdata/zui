@@ -47,10 +47,7 @@ function nextPageArgs(
       const ts = logs[index].try<zed.Time>("ts")
       if (ts instanceof zed.Time) {
         const prevTs = ts.toDate()
-        nextSpan[1] = brim
-          .time(prevTs)
-          .add(1, "ms")
-          .toDate()
+        nextSpan[1] = brim.time(prevTs).add(1, "ms").toDate()
         spliceIndex = index
       }
     }

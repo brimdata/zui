@@ -1,10 +1,10 @@
 import {BrimError} from "./types"
 
-export default function(err: string): BrimError {
+export default function (err: string): BrimError {
   return {
     type: "PCAPIngestError",
     message: "Unable to generate full summary logs from PCAP",
-    details: getDetails(err)
+    details: getDetails(err),
   }
 }
 

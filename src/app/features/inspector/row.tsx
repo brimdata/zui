@@ -1,10 +1,11 @@
 import {isEqual} from "lodash"
 import React from "react"
-import {ComponentType} from "react"
 import {ListChildComponentProps} from "react-window"
 import {RowData} from "./types"
 
-export const Row: ComponentType<ListChildComponentProps> = React.memo(
+export const Row: React.ComponentType<
+  React.PropsWithChildren<ListChildComponentProps>
+> = React.memo(
   function Row({style, index, data}) {
     if (!data[index]) return null
     const {render, indent}: RowData = data[index]

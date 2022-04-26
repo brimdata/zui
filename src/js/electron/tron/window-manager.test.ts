@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initIpcListeners from "src/js/initializers/initIpcListeners"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import {WindowManager} from "./window-manager"
@@ -20,8 +24,8 @@ test("serialize each window", async () => {
       name: "search",
       position: [0, 0],
       size: [100, 100],
-      state: expect.objectContaining({tabs: expect.any(Object)})
-    }
+      state: expect.objectContaining({tabs: expect.any(Object)}),
+    },
   ])
 })
 

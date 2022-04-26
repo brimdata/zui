@@ -2,7 +2,7 @@ import {
   BrowserWindow,
   ipcRenderer,
   MenuItem,
-  MenuItemConstructorOptions
+  MenuItemConstructorOptions,
 } from "electron"
 
 import {Dispatch} from "../../../state/types"
@@ -27,12 +27,12 @@ export default function action({name, label, listener}: Props) {
         click(menuItem: MenuItem, win: BrowserWindow) {
           win.webContents.send(name, ...args)
         },
-        ...options
+        ...options,
       }
     },
     // To be called in the render process
     listen(dispatch: Dispatch) {
       return ipcRenderer.on(name, (e, ...args) => listener(dispatch, ...args))
-    }
+    },
   }
 }

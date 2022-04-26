@@ -23,7 +23,7 @@ export class SystemTest {
   plugins: PluginManager
   main: BrimMain
   api: BrimApi
-  wrapper: React.ComponentType<any>
+  wrapper: React.ComponentType<React.PropsWithChildren<any>>
   click = userEvent.click
   rightClick = fireEvent.contextMenu
   network = setupServer()
@@ -34,7 +34,7 @@ export class SystemTest {
     plugins: PluginManager
     main: BrimMain
     api: BrimApi
-    wrapper: React.ComponentType<any>
+    wrapper: React.ComponentType<React.PropsWithChildren<any>>
   }) {
     this.store = args.store
     this.plugins = args.plugins
@@ -52,7 +52,7 @@ export class SystemTest {
           throw new Error(
             `Unhandled External Request: ${req.method} ${req.url.href}`
           )
-        }
+        },
       })
       this.assign(await bootBrim(name, opts))
       this.navTo(`/lakes/${defaultLake().id}`)

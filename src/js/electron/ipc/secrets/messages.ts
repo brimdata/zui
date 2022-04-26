@@ -5,19 +5,19 @@ export default {
     return {
       channel: "secrets:setKey",
       key,
-      val
+      val,
     }
   },
   getKey(key: string): SecretsGetKeyMsg {
     return {
       channel: "secrets:getKey",
-      key
+      key,
     }
   },
   deleteKey(key: string): SecretsDeleteKeyMsg {
     return {
       channel: "secrets:deleteKey",
-      key
+      key,
     }
-  }
+  },
 }

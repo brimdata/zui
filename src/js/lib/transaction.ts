@@ -23,7 +23,7 @@ errors it collected.
 */
 
 type Step = {do: Function; undo?: Function}
-export default async function(steps: Step[]) {
+export default async function (steps: Step[]) {
   let ctx
   const undoErrs = []
 

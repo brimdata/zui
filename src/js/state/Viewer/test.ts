@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {createRecord} from "src/test/shared/factories/zed-factory"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import Tabs from "../Tabs"
@@ -18,7 +22,7 @@ const http = createRecord({ts: new Date(3000)})
 test("adding logs to the viewer", () => {
   const state = store.dispatchAll([
     Viewer.appendRecords(tabId, [conn, dns]),
-    Viewer.appendRecords(tabId, [http])
+    Viewer.appendRecords(tabId, [http]),
   ])
 
   expect(Viewer.getLogs(state).length).toEqual(3)
@@ -27,7 +31,7 @@ test("adding logs to the viewer", () => {
 test("clear results", () => {
   const state = store.dispatchAll([
     Viewer.appendRecords(tabId, [http]),
-    Viewer.clear(tabId)
+    Viewer.clear(tabId),
   ])
 
   expect(Viewer.getLogs(state)).toEqual([])
@@ -38,7 +42,7 @@ test("splice results", () => {
     Viewer.appendRecords(tabId, [http]),
     Viewer.appendRecords(tabId, [http]),
     Viewer.appendRecords(tabId, [http]),
-    Viewer.splice(tabId, 1)
+    Viewer.splice(tabId, 1),
   ])
 
   expect(Viewer.getLogs(state).length).toEqual(1)

@@ -18,7 +18,7 @@ export function submitSearch(
 ) {
   if (featureIsEnabled("query-flow")) return submitNewSearch(save, ts)
 
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch(Notice.dismiss())
     const record = Search.getRecord(getState())
     const lakeId = Current.getLakeId(getState())

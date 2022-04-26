@@ -41,7 +41,7 @@ export function viewerSearch(args: Args): Thunk<void> {
           poolId: Current.mustGetPool(getState()).id,
           from: args.from,
           to: args.to,
-          initial: !args.append
+          initial: !args.append,
         })
       )
       await res.collect(({rows, shapesMap}) => {

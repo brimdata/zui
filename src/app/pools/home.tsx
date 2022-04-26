@@ -68,8 +68,9 @@ const PoolHome = () => {
               label: "Query Pool",
               icon: "query",
               click: openNewDraftQuery,
-              title: "Open a new draft query with this pool as the from clause."
-            }
+              title:
+                "Open a new draft query with this pool as the from clause.",
+            },
           ]}
         />
       </Header>

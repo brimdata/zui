@@ -90,9 +90,9 @@ const theme = {
     labelSmall,
     labelNormal,
     labelBold,
-    typeStyles
+    typeStyles,
   },
-  hoverQuiet
+  hoverQuiet,
 }
 
 export default theme

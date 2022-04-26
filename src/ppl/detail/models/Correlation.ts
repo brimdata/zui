@@ -3,7 +3,7 @@ import {zed} from "@brimdata/zealot"
 
 const specialUids = {
   files: "conn_uids",
-  dhcp: "uids"
+  dhcp: "uids",
 }
 
 export class Correlation {

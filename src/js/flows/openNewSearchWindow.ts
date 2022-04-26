@@ -25,7 +25,7 @@ export const openNewSearchTab = (): Thunk => {
     )
     invoke(
       ipc.windows.newSearchTab({
-        href: lakeQueryPath(query.id, lakeId)
+        href: lakeQueryPath(query.id, lakeId),
       })
     )
   }

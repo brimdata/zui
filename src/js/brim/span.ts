@@ -59,6 +59,6 @@ export default function span(args: SpanArgs | Span | [Date, Date]) {
     isValid() {
       const [from, to] = this.toDateTuple()
       return to > from
-    }
+    },
   }
 }

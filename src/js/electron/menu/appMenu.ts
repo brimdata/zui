@@ -9,7 +9,7 @@ import {BrimMain} from "../brim"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
 
-export default function(
+export default function (
   send: Function,
   brim: BrimMain
 ): MenuItemConstructorOptions[] {
@@ -19,35 +19,35 @@ export default function(
   const newWindow: MenuItemConstructorOptions = {
     label: "New Window",
     accelerator: "CmdOrCtrl+N",
-    click: () => brim.windows.openWindow("search", {})
+    click: () => brim.windows.openWindow("search", {}),
   }
 
   const exit: MenuItemConstructorOptions = {
     label: "Exit",
-    click: () => app.quit()
+    click: () => app.quit(),
   }
 
   const aboutBrim: MenuItemConstructorOptions = {
     label: "About Brim",
     click() {
       brim.windows.openAbout()
-    }
+    },
   }
 
   const closeWindow: MenuItemConstructorOptions = {
     label: "Close Window",
-    click: () => brim.windows.closeWindow()
+    click: () => brim.windows.closeWindow(),
   }
 
   const closeTab: MenuItemConstructorOptions = {
     label: "Close Tab",
-    click: () => send("closeTab")
+    click: () => send("closeTab"),
   }
 
   const preferences: MenuItemConstructorOptions = {
     id: "preferences",
     label: env.isMac ? "Preferences..." : "Settings",
-    click: () => brim.windows.openPreferences()
+    click: () => brim.windows.openPreferences(),
   }
 
   const resetState: MenuItemConstructorOptions = {
@@ -56,15 +56,15 @@ export default function(
       const {response} = await dialog.showMessageBox({
         message: "Are you sure?",
         detail: "This will reset local app state but retain lake data.",
-        buttons: ["OK", "Cancel"]
+        buttons: ["OK", "Cancel"],
       })
       if (response === 0) await brim.resetState()
-    }
+    },
   }
 
   const exportResults: MenuItemConstructorOptions = {
     label: "Export Results As...",
-    click: () => send("showExportResults")
+    click: () => send("showExportResults"),
   }
 
   const brimMenu: MenuItemConstructorOptions = {
@@ -79,8 +79,8 @@ export default function(
       {role: "hideOthers"},
       {role: "unhide"},
       __,
-      {role: "quit"}
-    ]
+      {role: "quit"},
+    ],
   }
 
   function fileSubmenu(): MenuItemConstructorOptions[] {
@@ -96,7 +96,7 @@ export default function(
         __,
         closeTab,
         closeWindow,
-        exit
+        exit,
       ]
     }
   }
@@ -111,12 +111,12 @@ export default function(
       {role: "paste"},
       {role: "pasteAndMatchStyle"},
       {role: "delete"},
-      {role: "selectAll"}
+      {role: "selectAll"},
     ]
     if (mac) {
       submenu.push(__, {
         label: "Speech",
-        submenu: [{role: "startSpeaking"}, {role: "stopSpeaking"}]
+        submenu: [{role: "startSpeaking"}, {role: "stopSpeaking"}],
       })
     }
     return submenu
@@ -125,11 +125,11 @@ export default function(
   function windowSubmenu(): MenuItemConstructorOptions[] {
     const submenu = [
       {role: "minimize"} as MenuItemConstructorOptions,
-      resetState
+      resetState,
     ]
     if (mac) {
       submenu.push({role: "close"}, {role: "minimize"}, {role: "zoom"}, __, {
-        role: "front"
+        role: "front",
       })
     }
     return submenu
@@ -140,29 +140,29 @@ export default function(
       {
         label: "Pin Search",
         accelerator: "CmdOrCtrl+K",
-        click: () => send("pinSearch")
+        click: () => send("pinSearch"),
       },
       {
         label: "Clear Pins",
         accelerator: "CmdOrCtrl+Shift+K",
-        click: () => send("clearPins")
+        click: () => send("clearPins"),
       },
       {
         label: "Focus Search Bar",
         accelerator: "CmdOrCtrl+L",
-        click: () => send("focusSearchBar")
+        click: () => send("focusSearchBar"),
       },
       __,
       {
         label: "Back",
         accelerator: "CmdOrCtrl+Left",
-        click: () => send("back")
+        click: () => send("back"),
       },
       {
         label: "Forward",
         accelerator: "CmdOrCtrl+Right",
-        click: () => send("forward")
-      }
+        click: () => send("forward"),
+      },
     ]
   }
 
@@ -180,16 +180,16 @@ export default function(
         id: "toggle-left-pane",
         label: "Toggle Left Pane",
         accelerator: "CmdOrCtrl+[",
-        click: () => send("toggleLeftSidebar")
+        click: () => send("toggleLeftSidebar"),
       },
       {
         id: "toggle-right-pane",
         label: "Toggle Right Pane",
         accelerator: "CmdOrCtrl+]",
-        click: () => send("toggleRightSidebar")
+        click: () => send("toggleRightSidebar"),
       },
       __,
-      {role: "togglefullscreen"}
+      {role: "togglefullscreen"},
     ]
   }
 
@@ -199,25 +199,25 @@ export default function(
         label: "Release Notes",
         click() {
           brim.windows.openReleaseNotes()
-        }
+        },
       },
       {
         label: "Zed Syntax Docs",
         click() {
           shell.openExternal(links.ZED_DOCS_LANGUAGE)
-        }
+        },
       },
       {
         label: "Slack Support Channel",
         click() {
           shell.openExternal("https://www.brimdata.io/join-slack/")
-        }
+        },
       },
       {
         label: "Github Repository",
         click() {
           shell.openExternal("https://github.com/brimdata/brim")
-        }
+        },
       },
       {
         label: "Submit Issue...",
@@ -225,8 +225,8 @@ export default function(
           shell.openExternal(
             "https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue"
           )
-        }
-      }
+        },
+      },
     ]
 
     if (!mac) {
@@ -242,7 +242,7 @@ export default function(
         label: "Save Session Now",
         async click() {
           await brim.saveSession()
-        }
+        },
       },
       {
         label: "Save Session for Testing Migrations",
@@ -257,11 +257,11 @@ export default function(
           await brim.session.save(data, file)
           dialog.showMessageBox({
             message: `Session has been saved`,
-            detail: file
+            detail: file,
           })
-        }
-      }
-    ]
+        },
+      },
+    ],
   }
 
   const template: MenuItemConstructorOptions[] = [
@@ -270,7 +270,7 @@ export default function(
     {label: "Query", submenu: querySubmenu()},
     {label: "View", submenu: viewSubmenu()},
     {role: "window", submenu: windowSubmenu()},
-    {role: "help", submenu: helpSubmenu()}
+    {role: "help", submenu: helpSubmenu()},
   ]
   if (mac) template.unshift(brimMenu)
   if (electronIsDev) template.push(developerMenu)

@@ -3,7 +3,7 @@ import * as d3 from "d3"
 import {Pen} from "../types"
 import {innerHeight} from "../dimens"
 
-export default function(): Pen {
+export default function (): Pen {
   let line
   const overflow = 10
   let svg

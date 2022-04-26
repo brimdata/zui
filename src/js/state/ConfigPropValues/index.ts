@@ -25,19 +25,19 @@ const slice = createSlice({
       if (!state[configName]) return
       delete state[configName][propName]
       if (Object.keys(state[configName]).length === 0) delete state[configName]
-    }
-  }
+    },
+  },
 })
 
 export default {
   reducer: slice.reducer,
   ...slice.actions,
-  get: (configName: string, propName?: string) => ({
-    configPropValues: state
-  }) => {
-    if (!state[configName]) return undefined
-    if (!propName) return state[configName]
-    return state[configName][propName]
-  },
-  all: (state) => state.configPropValues
+  get:
+    (configName: string, propName?: string) =>
+    ({configPropValues: state}) => {
+      if (!state[configName]) return undefined
+      if (!propName) return state[configName]
+      return state[configName][propName]
+    },
+  all: (state) => state.configPropValues,
 }

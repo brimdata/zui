@@ -26,7 +26,7 @@ const search1: SearchRecord = {
   spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpan(),
   poolId: "defaultId",
   poolName: "defaultName",
-  target: "events"
+  target: "events",
 }
 
 const search2: SearchRecord = {
@@ -35,7 +35,7 @@ const search2: SearchRecord = {
   spanArgs: brim.dateTuple([new Date(0), new Date(5)]).toSpan(),
   poolId: "defaultId",
   poolName: "defaultName",
-  target: "events"
+  target: "events",
 }
 
 test("when a new search is recorded", () => {
@@ -67,9 +67,9 @@ test("when a search is different", () => {
   ).toEqual({
     ts: {
       ns: expect.any(Number),
-      sec: expect.any(Number)
+      sec: expect.any(Number),
     },
-    search: search2
+    search: search2,
   })
 })
 
@@ -95,9 +95,9 @@ test("delete a single finding by ts", () => {
   expect(get()[0]).toEqual({
     ts: {
       ns: expect.any(Number),
-      sec: expect.any(Number)
+      sec: expect.any(Number),
     },
-    search: search1
+    search: search1,
   })
 })
 

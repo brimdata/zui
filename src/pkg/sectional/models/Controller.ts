@@ -49,7 +49,7 @@ export default class Controller {
   serialize() {
     return {
       size: this.size,
-      sections: this.map((c) => c.serialize())
+      sections: this.map((c) => c.serialize()),
     }
   }
 

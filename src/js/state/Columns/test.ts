@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Columns from "./"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 
@@ -18,30 +22,30 @@ describe("Columns", () => {
         "_path:string": {
           width: 22,
           isVisible: true,
-          position: 0
+          position: 0,
         },
         "ts:time": {
           width: 200,
           isVisible: false,
-          position: 1
-        }
+          position: 1,
+        },
       }),
       Columns.updateColumns(tableId, {
-        "_path:string": {isVisible: true, width: 100}
-      })
+        "_path:string": {isVisible: true, width: 100},
+      }),
     ])
 
     expect(Columns.getColumns(state)[tableId]).toEqual({
       "_path:string": {
         width: 100,
         isVisible: true,
-        position: 0
+        position: 0,
       },
       "ts:time": {
         width: 200,
         isVisible: false,
-        position: 1
-      }
+        position: 1,
+      },
     })
   })
 
@@ -56,7 +60,7 @@ describe("Columns", () => {
   test("show one column", () => {
     const state = store.dispatchAll([
       Columns.hideColumn(tableId, "a"),
-      Columns.showColumn(tableId, "a")
+      Columns.showColumn(tableId, "a"),
     ])
 
     const table = Columns.getColumns(state)[tableId]
@@ -69,7 +73,7 @@ describe("Columns", () => {
       Columns.updateColumns(tableId, {
         a: {isVisible: false},
         "b:string": {isVisible: false},
-        "c:string": {isVisible: false}
+        "c:string": {isVisible: false},
       })
     )
 
@@ -87,7 +91,7 @@ describe("Columns", () => {
       Columns.updateColumns(tableId, {
         a: {isVisible: true},
         "b:string": {isVisible: true},
-        "c:string": {isVisible: false}
+        "c:string": {isVisible: false},
       })
     )
 

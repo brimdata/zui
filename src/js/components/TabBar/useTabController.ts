@@ -1,12 +1,13 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import {useEffect, useRef, useState} from "react"
 import onIdle from "on-idle"
 
 import Tabs from "../../state/Tabs"
 import {ipcRenderer} from "electron"
 import {newTab} from "src/app/query-home/flows/new-tab"
+import {useDispatch} from "src/app/core/state"
 
-export default function(count: number, calcWidths: Function) {
+export default function (count: number, calcWidths: Function) {
   const trueActiveId = useSelector(Tabs.getActive)
   const tabCount = useSelector(Tabs.getCount)
   const [activeId, setActive] = useState(trueActiveId)
@@ -52,6 +53,6 @@ export default function(count: number, calcWidths: Function) {
 
     onTabMove(indices: number[]) {
       dispatch(Tabs.order(indices))
-    }
+    },
   }
 }

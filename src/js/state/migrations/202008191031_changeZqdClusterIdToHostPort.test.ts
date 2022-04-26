@@ -1,6 +1,6 @@
 import {
   getAllStates,
-  getAllTabs
+  getAllTabs,
 } from "src/js/state/migrations/utils/getTestState"
 import {migrate} from "src/test/unit/helpers/migrate"
 
@@ -13,7 +13,7 @@ test("migrating 202008191031_changeZqdClusterIdToHostPort", async () => {
   const newValue = {
     id: newId,
     host: "localhost",
-    port: "9867"
+    port: "9867",
   }
 
   // @ts-ignore

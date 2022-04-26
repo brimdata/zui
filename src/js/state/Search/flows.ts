@@ -5,15 +5,15 @@ import SearchBar from "../SearchBar"
 
 export default {
   restore(record: SearchRecord): Thunk {
-    return function(dispatch) {
+    return function (dispatch) {
       dispatch(
         SearchBar.restoreSearchBar({
           current: record.program,
           pinned: record.pins,
-          error: null
+          error: null,
         })
       )
       dispatch(Search.setSpanArgs(record.spanArgs))
     }
-  }
+  },
 }

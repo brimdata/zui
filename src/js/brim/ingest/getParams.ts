@@ -35,7 +35,7 @@ export default function getParams(
 
   return {
     name: getPoolName(),
-    fileListData: data
+    fileListData: data,
   }
 }
 

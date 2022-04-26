@@ -13,7 +13,7 @@ export function item(view: View) {
     },
     onClick: (e: React.MouseEvent) => {
       ctx.props?.onClick(e, value, field, indexPath[0])
-    }
+    },
   }
   return <span {...props}>{view.render()}</span>
 }

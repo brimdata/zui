@@ -14,7 +14,7 @@ test("field path", () => {
 test("field path with nested named types", async () => {
   const objects = await zq({
     input: '{a: {b: {c: "foo"}(=c)}(=b)}(=a)',
-    format: "zjson"
+    format: "zjson",
   })
   const rows = DefaultContext.decode(objects) as zed.Record[]
   const field = rows[0].getField(["a", "b", "c"])

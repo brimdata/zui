@@ -19,7 +19,7 @@ import Pane, {
   PaneBody,
   PaneHeader,
   PaneTitle,
-  Right
+  Right,
 } from "./Pane"
 import {XRightPaneExpander} from "./RightPaneExpander"
 import {featureIsEnabled} from "../../app/core/feature-flag"
@@ -106,7 +106,7 @@ const stateToProps = (state) => {
     prevExists: LogDetails.getHistory(state).canGoBack(),
     nextExists: LogDetails.getHistory(state).canGoForward(),
     currentLog: LogDetails.build(state),
-    pool: pool
+    pool: pool,
   }
 }
 

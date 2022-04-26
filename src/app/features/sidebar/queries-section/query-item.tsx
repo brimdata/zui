@@ -20,7 +20,7 @@ const QueryItem: NodeRenderer<any> = ({
   data,
   state,
   handlers,
-  tree
+  tree,
 }) => {
   const {id} = data
   const isGroup = "items" in data

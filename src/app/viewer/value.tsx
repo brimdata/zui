@@ -4,7 +4,7 @@ import searchFieldContextMenu from "src/ppl/menus/searchFieldContextMenu"
 import {isEventType, SuricataEventType} from "src/ppl/suricata/suricata-plugin"
 import {isPath, ZeekPath} from "src/ppl/zeek/zeek-plugin"
 import React, {Fragment} from "react"
-import {useDispatch} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
 import {zed} from "@brimdata/zealot"
@@ -71,7 +71,7 @@ export function PrimitiveValue(props: ValueProps) {
           searchFieldContextMenu({
             field: props.field,
             record: props.record,
-            value: props.value
+            value: props.value,
           })
         )
       }

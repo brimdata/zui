@@ -41,8 +41,8 @@ const slice = createSlice({
 
     removeAll: (state, action: PA<string>) => {
       state[action.payload] = {}
-    }
-  }
+    },
+  },
 })
 
 export const reducer = slice.reducer

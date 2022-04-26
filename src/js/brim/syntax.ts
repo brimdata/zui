@@ -23,5 +23,5 @@ export default {
     else {
       return `sort -r ${toFieldPath(name)}`
     }
-  }
+  },
 }

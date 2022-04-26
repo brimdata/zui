@@ -23,7 +23,7 @@ export function createColumnSet(shapeMap: TypeDefs) {
         allCols = [...allCols, ...zed.flatColumns(shape)]
       }
       return uniqBy<$Column>(allCols.map(createColumn), "key")
-    }
+    },
   }
 }
 

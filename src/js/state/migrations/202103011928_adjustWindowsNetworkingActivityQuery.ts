@@ -8,7 +8,7 @@ export default function adjustWindowsNetworkingActivityQuery(state: any) {
     value: "_path=~smb* OR _path=dce_rpc",
     description:
       "Filters and displays smb_files, smb_mapping and DCE_RPC activity",
-    tags: ["windows", "smb", "malware"]
+    tags: ["windows", "smb", "malware"],
   }
 
   for (const s of getAllStates(state)) {

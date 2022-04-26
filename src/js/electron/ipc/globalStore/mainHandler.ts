@@ -3,10 +3,10 @@ import ipc from ".."
 import sendTo from "../sendTo"
 import {BrimMain} from "../../brim"
 
-export default function(brim: BrimMain) {
+export default function (brim: BrimMain) {
   ipcMain.handle("globalStore:init", () => {
     return {
-      initialState: brim.store.getState()
+      initialState: brim.store.getState(),
     }
   })
 

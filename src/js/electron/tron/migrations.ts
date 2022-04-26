@@ -75,12 +75,9 @@ function onlyMigrations(file) {
 
 function build(file): Migration {
   const migrate = require(path.join(dir, file)).default
-  const [version] = file
-    .replace(".js", "")
-    .replace(".ts", "")
-    .split("_")
+  const [version] = file.replace(".js", "").replace(".ts", "").split("_")
   return {
     migrate,
-    version: parseInt(version)
+    version: parseInt(version),
   }
 }

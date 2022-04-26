@@ -1,6 +1,7 @@
 import {updateQuery} from "src/app/query-home/flows/update-query"
 import React, {useState} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import submitSearch from "src/app/query-home/flows/submit-search"
 import SearchBar from "src/js/state/SearchBar"
 import FilterNode from "src/js/components/FilterNode"

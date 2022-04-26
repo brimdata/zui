@@ -5,6 +5,6 @@ export function useResultsData() {
   const values = useSelector(Viewer.getLogs)
 
   return {
-    values
+    values,
   }
 }

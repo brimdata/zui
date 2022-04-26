@@ -18,7 +18,7 @@ const getPoolContextMenu = (pool: Pool) => (dispatch, getState) => {
           type: "warning",
           title: "Delete Pool",
           message: `Are you sure you want to delete ${pool.name}?`,
-          buttons: ["OK", "Cancel"]
+          buttons: ["OK", "Cancel"],
         }).then(({response}) => {
           if (response === 0)
             toast.promise(
@@ -29,24 +29,24 @@ const getPoolContextMenu = (pool: Pool) => (dispatch, getState) => {
                 error: (err) => {
                   console.error(err)
                   return "Error deleting pool: " + err.message
-                }
+                },
               },
               {
                 loading: {
                   // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
                   // also, once https://github.com/timolins/react-hot-toast/pull/37 merges, we can set this to -1
-                  duration: 2 ** 31 - 1
+                  duration: 2 ** 31 - 1,
                 },
                 success: {
-                  duration: 3000
+                  duration: 3000,
                 },
                 error: {
-                  duration: 5000
-                }
+                  duration: 5000,
+                },
               }
             )
         })
-      }
+      },
     },
     {type: "separator"},
     {
@@ -56,15 +56,15 @@ const getPoolContextMenu = (pool: Pool) => (dispatch, getState) => {
           type: "warning",
           title: "Delete All Pools",
           message: `Are you sure you want to delete all pools in this lake?`,
-          buttons: ["OK", "Cancel"]
+          buttons: ["OK", "Cancel"],
         }).then(({response}) => {
           if (response === 0)
             dispatch(deletePools(poolIds)).then(() => {
               toast("Deleted all pools")
             })
         })
-      }
-    }
+      },
+    },
   ] as MenuItemConstructorOptions[]
 }
 

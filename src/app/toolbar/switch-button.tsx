@@ -73,7 +73,7 @@ export default function SwitchButton({value, onChange, children}: Props) {
         return React.cloneElement(child, {
           onClick: () => {
             child.props.value !== value && onChange(child.props.value)
-          }
+          },
         })
       })}
     </BG>

@@ -14,13 +14,16 @@ const slice = createSlice({
     },
     remove(s, a) {
       delete s[a.payload.id]
-    }
-  }
+    },
+  },
 })
 
 export default {
   reducer: slice.reducer,
   ...slice.actions,
   raw: (s) => s.draftQueries,
-  getById: (id: string) => (s): Query => s.draftQueries[id]
+  getById:
+    (id: string) =>
+    (s): Query =>
+      s.draftQueries[id],
 }

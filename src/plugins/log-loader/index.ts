@@ -22,7 +22,7 @@ export const activate = (api: BrimApi) => {
           ctrl.enqueue(chunk)
           readBytes += chunk.byteLength
           onProgressUpdate(readBytes / totalBytes)
-        }
+        },
       })
       const stream = file.stream().pipeThrough(progressUpdateTransformStream)
       const data = nodeJSReadableStreamFromReadableStream(stream)
@@ -31,9 +31,9 @@ export const activate = (api: BrimApi) => {
         branch: params.branch,
         message: {
           author: "brim",
-          body: "automatic import of " + file.path
+          body: "automatic import of " + file.path,
         },
-        signal
+        signal,
       })
       forEach(get(res, ["value", "warnings"], []), onWarning)
     }
@@ -43,7 +43,7 @@ export const activate = (api: BrimApi) => {
 
   api.loaders.add({
     load,
-    match: "log"
+    match: "log",
   })
 }
 
@@ -56,7 +56,7 @@ function nodeJSReadableStreamFromReadableStream(
       reader.read().then(({done, value}) => {
         this.push(done ? null : value)
       })
-    }
+    },
   })
 }
 

@@ -6,5 +6,5 @@ export default {
   },
   remove(lakeId: string) {
     return {type: "LAKE_STATUSES_REMOVE", lakeId}
-  }
+  },
 }

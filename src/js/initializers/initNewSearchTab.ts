@@ -5,7 +5,7 @@ import {Store} from "../state/types"
 import {featureIsEnabled} from "../../app/core/feature-flag"
 import submitSearch from "../../app/query-home/flows/submit-search"
 
-export default function(store: Store, params: NewTabSearchParams) {
+export default function (store: Store, params: NewTabSearchParams) {
   const {href, isNewWin} = params
   if (!isNewWin) {
     store.dispatch(Tabs.new(href))

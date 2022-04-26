@@ -17,7 +17,7 @@ type Args = {
 export default function detailFieldContextMenu({
   field,
   record,
-  value
+  value,
 }: Args): Thunk {
   return (_, getState, {api}) => {
     const columns = Columns.getCurrentTableColumns(getState())
@@ -44,7 +44,7 @@ export default function detailFieldContextMenu({
       "sha1",
       "sha256",
       "server_name",
-      "query"
+      "query",
     ].includes(field.name)
 
     const detailMenuActions = menu.actions.detail
@@ -57,22 +57,22 @@ export default function detailFieldContextMenu({
     showContextMenu([
       detailMenuActions.include.menuItem([fieldData], {
         enabled: hasCol,
-        visible: isPrimitive
+        visible: isPrimitive,
       }),
       detailMenuActions.exclude.menuItem([fieldData], {
         enabled: hasCol,
-        visible: isPrimitive
+        visible: isPrimitive,
       }),
       detailMenuActions.in.menuItem([fieldData, index], {
-        visible: isArrayish
+        visible: isArrayish,
       }),
       detailMenuActions.notIn.menuItem([fieldData, index], {
-        visible: isArrayish
+        visible: isArrayish,
       }),
       detailMenuActions.freshInclude.menuItem([fieldData], {enabled: true}),
       menu.separator(),
       detailMenuActions.groupByDrillDown.menuItem([program, recordData], {
-        enabled: isGroupBy && sameCols
+        enabled: isGroupBy && sameCols,
       }),
       detailMenuActions.countBy.menuItem([fieldData], {enabled: !isGroupBy}),
       menu.separator(),
@@ -88,13 +88,13 @@ export default function detailFieldContextMenu({
       menu.separator(),
       detailMenuActions.whoisRightclick.menuItem([fieldData], {enabled: isIp}),
       detailMenuActions.virusTotalRightclick.menuItem([fieldData], {
-        enabled: virusTotal || isIp
+        enabled: virusTotal || isIp,
       }),
       menu.separator(),
       detailMenuActions.logResult.menuItem([fieldData, recordData], {
-        enabled: true
+        enabled: true,
       }),
-      ...pluginMenuItems
+      ...pluginMenuItems,
     ])
   }
 }

@@ -14,7 +14,7 @@ export default function useDrag(handler: Function) {
         args,
         dx: 0,
         dy: 0,
-        type: "down"
+        type: "down",
       })
       on("mousemove", onMove)
       on("mouseup", onUp)
@@ -26,7 +26,7 @@ export default function useDrag(handler: Function) {
         args,
         dx: event.clientX - startX,
         dy: event.clientY - startY,
-        type: "move"
+        type: "move",
       })
       if (res === false) {
         off("mousemove", onMove)
@@ -40,14 +40,14 @@ export default function useDrag(handler: Function) {
         args,
         dx: event.clientX - startX,
         dy: event.clientY - startY,
-        type: "up"
+        type: "up",
       })
       off("mousemove", onMove)
       off("mouseup", onUp)
     }
 
     return {
-      onMouseDown
+      onMouseDown,
     }
   }
 }

@@ -1,7 +1,7 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import React, {useMemo} from "react"
 import * as d3 from "d3"
-
 import {DateTuple} from "../../../lib/TimeWindow"
 import {Pen, HistogramChart} from "../types"
 import {innerHeight, innerWidth} from "../dimens"
@@ -57,8 +57,8 @@ export default function useMainHistogram(
       )),
       xPositionTooltip({
         wrapperClassName: "histogram-tooltip-wrapper",
-        render: HistogramTooltip
-      })
+        render: HistogramTooltip,
+      }),
     ]
   })
 
@@ -73,7 +73,7 @@ export default function useMainHistogram(
       left: Math.max(minWidth, yAxisWidth + 8),
       right: 8,
       top: 3,
-      bottom: 16
+      bottom: 16,
     }
 
     return {
@@ -84,7 +84,7 @@ export default function useMainHistogram(
       state: {
         isFetching: status === "FETCHING",
         isEmpty: data.points.length === 0,
-        isDragging: false
+        isDragging: false,
       },
       yScale: d3
         .scaleLinear()
@@ -94,7 +94,7 @@ export default function useMainHistogram(
         .scaleUtc()
         .range([0, innerWidth(width, margins)])
         .domain(data.span),
-      pens
+      pens,
     }
   }, [chartData, status, span, width, height])
 }

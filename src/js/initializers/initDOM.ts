@@ -1,4 +1,4 @@
-export default function() {
+export default function () {
   appendDivId("app-root")
   appendDivId("notification-root")
   appendDivId("modal-root")

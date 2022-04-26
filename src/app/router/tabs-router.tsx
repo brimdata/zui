@@ -4,7 +4,7 @@ import React from "react"
 import {
   // @ts-ignore
   __HistoryContext as HistoryContext,
-  __RouterContext as RouterContext
+  __RouterContext as RouterContext,
 } from "react-router"
 
 type Props = {
@@ -12,6 +12,7 @@ type Props = {
   histories: Histories
   staticContext?: any
   listen: (location: Location) => void
+  children?: React.ReactNode
 }
 
 type State = {
@@ -33,7 +34,7 @@ export default class TabsRouter extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      location: this.getHistory().location
+      location: this.getHistory().location,
     }
 
     // This is a bit of a hack. We have to start listening for location
@@ -91,7 +92,7 @@ export default class TabsRouter extends React.Component<Props, State> {
           history,
           location,
           match: TabsRouter.computeRootMatch(location.pathname),
-          staticContext: this.props.staticContext
+          staticContext: this.props.staticContext,
         }}
       >
         <HistoryContext.Provider value={this.getHistory()}>

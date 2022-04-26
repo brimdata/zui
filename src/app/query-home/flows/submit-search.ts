@@ -6,21 +6,23 @@ import initialViewerSearch from "./initial-viewer-search"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
-const submitSearch = (
-  _save: SaveOpts = {history: true, investigation: true},
-  _ts: Date = new Date()
-) => async (dispatch, getState) => {
-  dispatch(Notice.dismiss())
-  const input = SearchBar.getSearchBarInputValue(getState())
-  const query = Current.getQuery(getState())
-  query.value = input
-  await dispatch(updateQuery(query))
-  if (!dispatch(SearchBar.validate())) return
-  // TODO: Mason - refactor history to use query copies
-  // if (save.investigation) {
-  //   dispatch(Investigation.push(lakeId, poolId, record, brim.time(ts).toTs()))
-  // }
-  dispatch(initialViewerSearch())
-}
+const submitSearch =
+  (
+    _save: SaveOpts = {history: true, investigation: true},
+    _ts: Date = new Date()
+  ) =>
+  async (dispatch, getState) => {
+    dispatch(Notice.dismiss())
+    const input = SearchBar.getSearchBarInputValue(getState())
+    const query = Current.getQuery(getState())
+    query.value = input
+    await dispatch(updateQuery(query))
+    if (!dispatch(SearchBar.validate())) return
+    // TODO: Mason - refactor history to use query copies
+    // if (save.investigation) {
+    //   dispatch(Investigation.push(lakeId, poolId, record, brim.time(ts).toTs()))
+    // }
+    dispatch(initialViewerSearch())
+  }
 
 export default submitSearch

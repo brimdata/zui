@@ -5,7 +5,7 @@ import stdlib from "../stdlib"
 import brim from "./"
 import {ANALYTIC_PROCS} from "./ast"
 
-export default function(p = "", pins: string[] = []) {
+export default function (p = "", pins: string[] = []) {
   p = concatPins(p, pins)
 
   return {
@@ -49,12 +49,7 @@ export default function(p = "", pins: string[] = []) {
       if (/\s*\*\s*/.test(filter)) filter = ""
       if (newFilters.includes(filter)) filter = ""
 
-      p = stdlib
-        .string(filter)
-        .append(" ")
-        .append(newFilters)
-        .trim()
-        .self()
+      p = stdlib.string(filter).append(" ").append(newFilters).trim().self()
 
       return this
     },
@@ -114,7 +109,7 @@ export default function(p = "", pins: string[] = []) {
         if (ANALYTIC_PROCS.includes(proc.kind)) return true
       }
       return false
-    }
+    },
   }
 }
 

@@ -27,7 +27,7 @@ import {
   StyledArrow,
   StyledSection,
   StyledViewSelect,
-  Title
+  Title,
 } from "./common"
 import {DropOverlay} from "./drop-overlay"
 import {refreshRemoteQueries, setRemoteQueries} from "./remote-queries"
@@ -59,13 +59,13 @@ const NewActionsDropdown = (props: {
     ? [
         {
           label: "New Remote Query",
-          click: () => dispatch(Modal.show("new-query", {isRemote: true}))
-        }
+          click: () => dispatch(Modal.show("new-query", {isRemote: true})),
+        },
       ]
     : [
         {
           label: "New Query",
-          click: () => dispatch(Modal.show("new-query"))
+          click: () => dispatch(Modal.show("new-query")),
         },
         {
           label: "New Folder",
@@ -77,19 +77,19 @@ const NewActionsDropdown = (props: {
                   isOpen: true,
                   items: [],
                   name: "New Folder",
-                  id
+                  id,
                 },
                 "root"
               )
             )
             tree?.scrollToId(id)
             tree?.edit(id)
-          }
+          },
         },
         {
           label: "Import from JSON...",
-          click: () => importer && importer.click()
-        }
+          click: () => importer && importer.click(),
+        },
       ]
 
   const menu = usePopupMenu(template)
@@ -136,7 +136,7 @@ const TagsViewSelect = ({selected, tags, onSelect}) => {
       label: t,
       click: () => onSelect(t),
       type: "checkbox",
-      checked: selected === t
+      checked: selected === t,
     }
   })
 
@@ -144,9 +144,9 @@ const TagsViewSelect = ({selected, tags, onSelect}) => {
     ...[
       {
         label: "Filter by tag",
-        enabled: false
+        enabled: false,
       },
-      {type: "separator"}
+      {type: "separator"},
     ]
   )
 
@@ -178,8 +178,8 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
         }
       },
       collect: (m) => ({
-        isOver: m.isOver()
-      })
+        isOver: m.isOver(),
+      }),
     })
   )
 
@@ -199,7 +199,7 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     id: "root",
     name: "root",
     isOpen: true,
-    items: null
+    items: null,
   }
 
   function onTagSelect(tag) {

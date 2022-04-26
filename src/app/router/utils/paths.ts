@@ -1,6 +1,6 @@
 import {
   DecodedSearchParams,
-  encodeSearchParams
+  encodeSearchParams,
 } from "src/app/search/utils/search-params"
 
 export const lakesPath = () => {

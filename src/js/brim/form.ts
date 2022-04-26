@@ -51,7 +51,7 @@ export default function form(element: HTMLFormElement, config: FormConfig) {
     },
     getFields() {
       return fields()
-    }
+    },
   }
 }
 
@@ -73,7 +73,7 @@ function getFields(el, config) {
       check: () => safeCheck(value),
       submit: () => safeSubmit(value),
 
-      buildError: (message): FormError => ({label, message, input})
+      buildError: (message): FormError => ({label, message, input}),
     })
   }
   return fields

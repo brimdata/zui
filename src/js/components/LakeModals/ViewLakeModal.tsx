@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Content, Title} from "../ModalDialog/ModalDialog"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import Current from "../../state/Current"
 import Pools from "../../state/Pools"
 import ToolbarButton from "src/app/toolbar/button"
@@ -14,6 +14,7 @@ import Link from "../common/Link"
 import ErrorFactory from "../../models/ErrorFactory"
 import Notice from "../../state/Notice"
 import removeLake from "../../flows/lake/removeLake"
+import {useDispatch} from "src/app/core/state"
 
 const StyledContent = styled(Content)`
   padding-top: 24px;
@@ -136,7 +137,7 @@ const ViewLake = ({onClose, onEdit}) => {
         type: "warning",
         title: "Lake Logout",
         message: `Are you sure you want to log out of ${name}?`,
-        buttons: ["OK", "Cancel"]
+        buttons: ["OK", "Cancel"],
       })
       .then(({response}) => {
         if (response === 0) {

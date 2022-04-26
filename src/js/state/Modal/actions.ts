@@ -4,10 +4,10 @@ export default {
   show: (name: ModalName, args: any = {}): MODAL_SHOW => ({
     type: "MODAL_SHOW",
     name,
-    args
+    args,
   }),
 
   hide: (): MODAL_HIDE => ({
-    type: "MODAL_HIDE"
-  })
+    type: "MODAL_HIDE",
+  }),
 }

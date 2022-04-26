@@ -10,14 +10,14 @@ const BrimToaster = () => {
         className: "brim-toast",
         duration: env.isTest ? 2 ** 31 - 1 : undefined,
         success: {
-          duration: env.isTest ? 2 ** 31 - 1 : undefined
+          duration: env.isTest ? 2 ** 31 - 1 : undefined,
         },
         loading: {
-          duration: env.isTest ? 2 ** 31 - 1 : undefined
+          duration: env.isTest ? 2 ** 31 - 1 : undefined,
         },
         error: {
-          duration: env.isTest ? 2 ** 31 - 1 : undefined
-        }
+          duration: env.isTest ? 2 ** 31 - 1 : undefined,
+        },
       }}
     />
   )

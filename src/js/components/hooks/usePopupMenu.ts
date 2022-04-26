@@ -40,6 +40,6 @@ export default function usePopupMenu(
   return {
     open,
     onClick,
-    isOpen
+    isOpen,
   }
 }

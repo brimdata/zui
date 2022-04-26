@@ -2,14 +2,11 @@ import * as d3 from "d3"
 
 import {Pen} from "../types"
 
-export default function(): Pen {
+export default function (): Pen {
   let yaxis
 
   function mount(svg) {
-    yaxis = d3
-      .select(svg)
-      .append("g")
-      .attr("class", "y-axis-single-tick")
+    yaxis = d3.select(svg).append("g").attr("class", "y-axis-single-tick")
   }
 
   function draw(chart) {

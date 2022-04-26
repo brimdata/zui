@@ -22,8 +22,8 @@ export const useSectionTreeDefaults = () => {
       hideRoot: true,
       disableDrag: true,
       disableDrop: true,
-      openByDefault: true
-    }
+      openByDefault: true,
+    },
   }
 }
 
@@ -38,8 +38,8 @@ export const useQueryImportOnDrop = () => {
     },
     collect: (m) => ({
       isOver: m.isOver(),
-      canDrop: m.canDrop()
-    })
+      canDrop: m.canDrop(),
+    }),
   }))
 }
 

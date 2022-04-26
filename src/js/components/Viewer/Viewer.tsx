@@ -87,7 +87,7 @@ export default function Viewer(props: Props) {
         onScroll={onScroll}
         style={{
           width: props.dimens.viewWidth,
-          height: props.dimens.viewHeight
+          height: props.dimens.viewHeight,
         }}
         ref={ref}
       >

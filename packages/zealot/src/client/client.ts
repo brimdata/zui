@@ -12,7 +12,7 @@ import {
   json,
   parseContent,
   toJS,
-  wrapAbort
+  wrapAbort,
 } from "./utils"
 
 export class Client {
@@ -31,7 +31,7 @@ export class Client {
   async version() {
     const r = await this.send({
       method: "GET",
-      path: "/version"
+      path: "/version",
     })
     return await r.json()
   }
@@ -39,7 +39,7 @@ export class Client {
   async authMethod() {
     const r = await this.send({
       method: "GET",
-      path: "/auth/method"
+      path: "/auth/method",
     })
     return toJS(r)
   }
@@ -62,7 +62,7 @@ export class Client {
       headers,
       signal: opts.signal,
       fetch: nodeFetch,
-      timeout: Infinity
+      timeout: Infinity,
     })
     return toJS(res)
   }
@@ -70,7 +70,7 @@ export class Client {
   async query(query: string, opts: Partial<Types.QueryOpts> = {}) {
     const options = defaults<Types.QueryOpts>(opts, {
       format: "zjson",
-      controlMessages: true
+      controlMessages: true,
     })
     const abortCtl = wrapAbort(options.signal)
     const result = await this.send({
@@ -78,7 +78,7 @@ export class Client {
       path: "/query",
       body: json({query}),
       format: options.format,
-      signal: abortCtl.signal
+      signal: abortCtl.signal,
     })
     return new ResultStream(result, abortCtl)
   }
@@ -86,7 +86,7 @@ export class Client {
   async createPool(name: string, opts: Partial<Types.CreatePoolOpts> = {}) {
     const options = defaults<Types.CreatePoolOpts>(opts, {
       order: "desc",
-      key: "ts"
+      key: "ts",
     })
     // @ts-ignore
     const keys = [[].concat(options.key)]
@@ -94,14 +94,14 @@ export class Client {
     return this.send({
       method: "POST",
       path: "/pool",
-      body: json({name, layout})
+      body: json({name, layout}),
     }).then(toJS)
   }
 
   async deletePool(poolId: string) {
     await this.send({
       method: "DELETE",
-      path: `/pool/${poolId}`
+      path: `/pool/${poolId}`,
     })
     return true
   }
@@ -124,7 +124,7 @@ export class Client {
   async getPoolStats(poolId: string): Promise<PoolStats> {
     const res = await this.send({
       method: "GET",
-      path: `/pool/${poolId}/stats`
+      path: `/pool/${poolId}/stats`,
     })
     return toJS(res)
   }
@@ -133,21 +133,21 @@ export class Client {
     await this.send({
       method: "PUT",
       path: `/pool/${poolId}`,
-      body: json(args)
+      body: json(args),
     })
     return true
   }
 
   subscribe(): EventSource {
     return new EventSourcePolyfill(this.baseURL + "/events", {
-      headers: {Accept: "application/json"}
+      headers: {Accept: "application/json"},
     })
   }
 
   curl(query: string, opts: Partial<Types.QueryOpts> = {}) {
     const options = defaults<Types.QueryOpts>(opts, {
       format: "zjson",
-      controlMessages: true
+      controlMessages: true,
     })
     return `curl -X POST -d '${JSON.stringify({query})}' \\
   -H "Accept: ${accept(options.format)}" \\
@@ -174,11 +174,11 @@ export class Client {
         "Content-Type": "application/json",
         Accept: accept(opts.format || "zjson"),
         ...this.authHeader,
-        ...opts.headers
+        ...opts.headers,
       },
       // @ts-ignore
       body: opts.body,
-      signal: abortCtl.signal
+      signal: abortCtl.signal,
     })
     clearTimer()
     if (resp.ok) {

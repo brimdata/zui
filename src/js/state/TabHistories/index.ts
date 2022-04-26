@@ -9,7 +9,7 @@ const slice = createSlice({
   name: "tabHistories",
   initialState: adapter.getInitialState(),
   reducers: {
-    save: adapter.setAll
+    save: adapter.setAll,
   },
   extraReducers: {
     TABS_ADD: (state, action: TABS_ADD) => {
@@ -19,12 +19,12 @@ const slice = createSlice({
     TABS_REMOVE: (state, action: TABS_REMOVE) => {
       global.tabHistories.delete(action.id)
       return state
-    }
-  }
+    },
+  },
 })
 
 export default {
   reducer: slice.reducer,
   ...slice.actions,
-  ...adapter.getSelectors((s: State) => s.tabHistories)
+  ...adapter.getSelectors((s: State) => s.tabHistories),
 }

@@ -32,7 +32,7 @@ export function accept(format: ResponseFormat) {
     csv: "text/csv",
     json: "application/json",
     zjson: "application/x-zjson",
-    zson: "application/x-zson"
+    zson: "application/x-zson",
   }
   const value = formats[format]
   if (!value) {

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Tabs from "../../Tabs"
 import Viewer from ".."
 import initTestStore from "src/test/unit/helpers/initTestStore"

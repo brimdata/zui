@@ -34,6 +34,6 @@ export default function useFuzzyHover(enterDelay: number, exitDelay: number) {
   return {
     mouseEnter,
     mouseLeave,
-    hovering
+    hovering,
   }
 }

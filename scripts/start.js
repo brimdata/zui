@@ -13,7 +13,7 @@ async function start() {
   await Promise.all([
     css.waitForOutput(/Wrote CSS/),
     js.waitForOutput(/Watching for file changes/),
-    zealot.waitForOutput(/Watching for file changes/)
+    zealot.waitForOutput(/Watching for file changes/),
   ])
   log("Launching...")
   sub("yarn", `electron . ${electronArgs}`)

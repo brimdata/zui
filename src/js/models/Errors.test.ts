@@ -4,7 +4,7 @@ const TEST_CASES = {
   UnauthorizedError: [
     new Error("Need boom credentials"),
     "anything with unauthorized in it",
-    {type: "UNAUTHORIZED", error: "unauthorized"}
+    {type: "UNAUTHORIZED", error: "unauthorized"},
   ],
 
   InternalServerError: [{type: "INTERNAL_ERROR", error: "Fun Time"}],
@@ -19,7 +19,7 @@ const TEST_CASES = {
 
   InvalidUrlError: ["Failed to parse URL"],
 
-  SearchError: [{type: "SEARCH_ERROR"}]
+  SearchError: [{type: "SEARCH_ERROR"}],
 }
 
 describe("ErrorFactory#create", () => {

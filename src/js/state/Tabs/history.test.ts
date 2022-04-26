@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import tabHistory from "src/app/router/tab-history"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import Current from "../Current"

@@ -6,7 +6,7 @@ export default {
       Promise.resolve({
         name: "dataPool",
         min_time: {ns: 0, sec: 0},
-        max_time: {ns: 1, sec: 1}
-      })
-  }
+        max_time: {ns: 1, sec: 1},
+      }),
+  },
 }
