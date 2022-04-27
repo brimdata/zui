@@ -17,7 +17,7 @@ export function Form(props: {
   onSubmit: (pin: GenericQueryPin) => void
   onReset: () => void
 }) {
-  useDialog({onCancel: props.onReset})
+  useDialog({onCancel: props.onReset, onClose: props.onReset})
 
   return (
     <form

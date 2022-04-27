@@ -39,6 +39,19 @@ export function Dialog(props: DialogProps) {
   const style = useDialogPosition(node, props)
   const ref = useRef()
 
+  useListener<PointerEvent>(node, "click", (e) => {
+    const dialog = e.currentTarget as HTMLElement
+    var rect = dialog.getBoundingClientRect()
+    var isInDialog =
+      rect.top <= e.clientY &&
+      e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX &&
+      e.clientX <= rect.left + rect.width
+    if (!isInDialog) {
+      node.close()
+    }
+  })
+
   useEffect(() => {
     if (!node) return
     if (props.open) {
@@ -67,12 +80,12 @@ function useDialogPosition(node: HTMLDialogElement, props: DialogProps) {
 
   const run = () => {
     if (!props.open) return
-    if (!node) return
     if (!props.anchor) return
+    if (!node) return
     const {width, height} = node.getBoundingClientRect()
-
     let left = 10
     let top = 10
+
     const leftMin = 10
     const leftMax = document.documentElement.clientWidth - leftMin
     const topMin = 10
@@ -108,7 +121,12 @@ function useDialogPosition(node: HTMLDialogElement, props: DialogProps) {
     setPosition((s) => ({...s, left, top}))
   }
 
-  useLayoutEffect(run, [
+  useLayoutEffect(() => {
+    run()
+  }, [
+    node,
+    // @ts-ignore
+    node?.open,
     props.anchor,
     props.origin,
     props.open,
