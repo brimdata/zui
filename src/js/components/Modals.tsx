@@ -23,7 +23,7 @@ const MODALS = {
   "view-lake": ViewLakeModal,
   "new-query": NewQueryModal,
   export: ExportModal,
-  "edit-query": EditQueryModal
+  "edit-query": EditQueryModal,
 }
 
 export function Modals() {

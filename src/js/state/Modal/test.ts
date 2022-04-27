@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import Modal from "./"
 
@@ -18,7 +22,7 @@ test("show modal", () => {
 test("hide Modal", () => {
   const state = store.dispatchAll([
     Modal.show("whois", {addr: "129.3.2.1"}),
-    Modal.hide()
+    Modal.hide(),
   ])
 
   expect(Modal.getName(state)).toBe("")

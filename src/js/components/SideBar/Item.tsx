@@ -184,7 +184,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       label: "Run Query",
       enabled: !hasMultiSelected && !!currentPool,
       visible: !isGroup,
-      click: () => runQuery(value)
+      click: () => runQuery(value),
     },
     {
       label: "Copy Query",
@@ -193,7 +193,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
       click: () => {
         lib.doc.copyToClipboard(value)
         toast("Query copied to clipboard")
-      }
+      },
     },
     {
       label: "Export Folder as JSON",
@@ -206,7 +206,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
             buttonLabel: "Export",
             defaultPath: `${data.name}.json`,
             properties: ["createDirectory"],
-            showsTagField: false
+            showsTagField: false,
           }
         )
         if (canceled) return
@@ -215,16 +215,16 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
           {
             loading: "Exporting Queries...",
             success: "Export Complete",
-            error: "Error Exporting Queries"
+            error: "Error Exporting Queries",
           }
         )
-      }
+      },
     },
     {type: "separator"},
     {
       label: "Rename",
       enabled: !isBrimItem,
-      click: () => handlers.edit()
+      click: () => handlers.edit(),
     },
     {
       label: "Edit",
@@ -234,7 +234,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
         const modalArgs = {query: data, isRemote: false}
         if (isRemoteItem) modalArgs.isRemote = true
         dispatch(Modal.show("edit-query", modalArgs))
-      }
+      },
     },
     {type: "separator"},
     {
@@ -251,7 +251,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
             message: `Are you sure you want to delete the ${
               selected.length > 1 ? selected.length : ""
             } selected item${selected.length > 1 ? "s" : ""}?`,
-            buttons: ["OK", "Cancel"]
+            buttons: ["OK", "Cancel"],
           })
           .then(({response}) => {
             if (response === 0) {
@@ -261,7 +261,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
                   value: "",
                   name: "",
                   description: "",
-                  tags: []
+                  tags: [],
                 }))
                 dispatch(setRemoteQueries(remoteQueries, true))
                 return
@@ -270,8 +270,8 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
               dispatch(Queries.removeItems(selected))
             }
           })
-      }
-    }
+      },
+    },
   ]
 
   const itemIcon = isGroup ? <Folder /> : <StarNoFillIcon />

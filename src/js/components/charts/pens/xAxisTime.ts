@@ -9,17 +9,14 @@ type Props = {
   onDragEnd: (arg0: DateSpan) => void
 }
 
-export default function({onDragEnd}: Props): Pen {
+export default function ({onDragEnd}: Props): Pen {
   let startSpan = null
   let startPos = null
   let xAxis
   let dragArea
 
   function mount(svg) {
-    xAxis = d3
-      .select(svg)
-      .append("g")
-      .attr("class", "x-axis")
+    xAxis = d3.select(svg).append("g").attr("class", "x-axis")
 
     // Make the invisible rect the size of the x axis to listen for the drag
     dragArea = xAxis
@@ -34,15 +31,11 @@ export default function({onDragEnd}: Props): Pen {
     }
 
     function addListeners() {
-      d3.select("body")
-        .on("mousemove", drag, true)
-        .on("mouseup", dragEnd)
+      d3.select("body").on("mousemove", drag, true).on("mouseup", dragEnd)
     }
 
     function removeListeners() {
-      d3.select("body")
-        .on("mousemove", null)
-        .on("mouseup", null)
+      d3.select("body").on("mousemove", null).on("mouseup", null)
     }
 
     function draggedSpan(chart, _startX, startSpan): DateSpan {

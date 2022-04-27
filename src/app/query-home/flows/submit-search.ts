@@ -1,6 +1,5 @@
 import Current from "src/js/state/Current"
 import Notice from "src/js/state/Notice"
-import SearchBar from "src/js/state/SearchBar"
 import {updateQuery} from "./update-query"
 import initialViewerSearch from "./initial-viewer-search"
 import Editor from "src/js/state/Editor"

@@ -10,7 +10,7 @@ import {
   highlightSpecialChars,
   drawSelection,
   highlightActiveLine,
-  dropCursor
+  dropCursor,
 } from "@codemirror/view"
 import {Extension, EditorState, StateEffect} from "@codemirror/state"
 import {history, historyKeymap} from "@codemirror/history"
@@ -42,20 +42,20 @@ const editorTheme = EditorView.theme(
   {
     ".cm-content": {
       fontFamily: cssVar("--mono-font"),
-      lineHeight: 1.6
+      lineHeight: 1.6,
     },
     ".cm-gutters": {
       margin: 0,
       border: "none",
       color: cssVar("--aqua-transparent"),
-      background: cssVar("--editor-background")
+      background: cssVar("--editor-background"),
     },
     ".cm-activeLine": {
-      background: cssVar("--hawkes-blue")
+      background: cssVar("--hawkes-blue"),
     },
     ".cm-activeLineGutter": {
-      background: cssVar("--hawkes-blue")
-    }
+      background: cssVar("--hawkes-blue"),
+    },
   },
   {dark: false}
 )
@@ -80,8 +80,8 @@ const baseEditorSetup: Extension = [
     ...closeBracketsKeymap,
     ...historyKeymap,
     ...completionKeymap,
-    ...foldKeymap
-  ])
+    ...foldKeymap,
+  ]),
 ]
 
 type Props = {
@@ -117,25 +117,25 @@ const BrimEditor = ({value, isDisabled}: Props) => {
     if (!view || value === currentEditorValue || value === null) return
     view.dispatch(
       view.state.update({
-        changes: {from: 0, to: view.state.doc.length, insert: value}
+        changes: {from: 0, to: view.state.doc.length, insert: value},
       })
     )
   }, [value])
   useEffect(() => {
     if (!view) return
     view.dispatch({
-      effects: StateEffect.reconfigure.of(extensions)
+      effects: StateEffect.reconfigure.of(extensions),
     })
   }, [isMultiLineMode, isDisabled])
   useEffect(() => {
     if (!ref.current) return
     const state = EditorState.create({
       extensions,
-      doc: value
+      doc: value,
     })
     const newView = new EditorView({
       state,
-      parent: ref.current
+      parent: ref.current,
     })
     setView(newView)
     newView.focus()

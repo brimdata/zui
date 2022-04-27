@@ -30,7 +30,7 @@ export class InspectList {
         key: null,
         last: true,
         type: value.type,
-        indexPath: [index]
+        indexPath: [index],
       }).rowCount()
       this.rowToValue = this.rowToValue.concat(Array(rowCount).fill(index))
       this.valueToRow.push(this.count)
@@ -62,7 +62,7 @@ export class InspectList {
       key: null,
       last: true,
       type: value.type,
-      indexPath: [index]
+      indexPath: [index],
     }).inspect()
     return ctx.rows
   }
@@ -84,7 +84,7 @@ export class InspectContext {
   push(render: ReactNode) {
     this.rows.push({
       render,
-      indent: this.indent
+      indent: this.indent,
     })
   }
 }

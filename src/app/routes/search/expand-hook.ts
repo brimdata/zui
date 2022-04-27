@@ -10,6 +10,6 @@ export function useExpandState() {
     },
     collapseAll() {
       dispatch(Inspector.setAllExpanded(false))
-    }
+    },
   }
 }

@@ -13,7 +13,7 @@ import {
   ButtonGroup,
   Content,
   Footer,
-  SmallTitle
+  SmallTitle,
 } from "./ModalDialog/ModalDialog"
 
 const RadioButtons = styled.div`
@@ -56,7 +56,7 @@ const showDialog = (format) => {
     buttonLabel: "Export",
     defaultPath: `results.${format}`,
     properties: ["createDirectory"],
-    showsTagField: false
+    showsTagField: false,
   })
 }
 
@@ -72,7 +72,7 @@ const ExportModal = ({onClose}) => {
       .promise(dispatch(exportResults(filePath, format as ResponseFormat)), {
         loading: "Exporting...",
         success: "Export Complete",
-        error: "Error Exporting"
+        error: "Error Exporting",
       })
       .catch((e) => {
         console.error(e)

@@ -17,29 +17,30 @@ export default (api: BrimApi = new BrimApi()): TestStore => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         thunk: {
-          extraArgument: {api}
+          extraArgument: {api},
         },
         serializableCheck: false,
-        immutableCheck: false
+        immutableCheck: false,
       }),
-    enhancers: (defaultEnhancers) => [applyDispatchAll(), ...defaultEnhancers]
+    enhancers: (defaultEnhancers) => [applyDispatchAll(), ...defaultEnhancers],
   }) as any
   initGlobals(store)
   return store
 }
 
 function applyDispatchAll() {
-  return (createStore) => (...args) => {
-    const store = createStore(...args)
+  return (createStore) =>
+    (...args) => {
+      const store = createStore(...args)
 
-    const dispatchAll = (actions: Action[]): State => {
-      actions.forEach(store.dispatch)
-      return store.getState()
-    }
+      const dispatchAll = (actions: Action[]): State => {
+        actions.forEach(store.dispatch)
+        return store.getState()
+      }
 
-    return {
-      ...store,
-      dispatchAll
+      return {
+        ...store,
+        dispatchAll,
+      }
     }
-  }
 }

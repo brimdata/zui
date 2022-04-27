@@ -34,7 +34,7 @@ export default memo(function RelatedAlerts({record}: Props) {
     ["Count", events.length],
     ["First ts", first ? brim.time(first.getTime()).format() : "Not available"],
     ["Last ts", last ? brim.time(last.getTime()).format() : "Not available"],
-    ["Duration", formatDur(first?.getTime(), last?.getTime())]
+    ["Duration", formatDur(first?.getTime(), last?.getTime())],
   ]
 
   const onContextMenu = useCallback(() => {

@@ -56,7 +56,7 @@ export default class History<Entry> {
   serialize() {
     return {
       entries: this.array,
-      position: this.index
+      position: this.index,
     }
   }
 }

@@ -25,7 +25,7 @@ export type Config = {
 export type ConfigsState = ReturnType<typeof slice.reducer>
 
 const adapter = createEntityAdapter<Config>({
-  selectId: (config) => config.name
+  selectId: (config) => config.name,
 })
 
 const slice = createSlice({
@@ -37,8 +37,8 @@ const slice = createSlice({
     },
     delete(state, action) {
       adapter.removeOne(state, action.payload)
-    }
-  }
+    },
+  },
 })
 
 const selectors = adapter.getSelectors((state: State) => state.configs)
@@ -47,5 +47,5 @@ export default {
   reducer: slice.reducer,
   ...slice.actions,
   get: (name) => (state) => selectors.selectById(state, name),
-  all: selectors.selectAll
+  all: selectors.selectAll,
 }

@@ -22,7 +22,7 @@ that can be easily imported into Brim.
 
 Preprocessing can be performed with the [`zq`](https://zed.brimdata.io/docs/commands/zq/)
 CLI tool. These Zed CLI tools are included with Brim and can be found in the
-`zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries-v0250)
+`zdeps` directory under the Brim [application binaries](https://github.com/brimdata/brim/wiki/Filesystem-Paths#application-binaries)
 path.
 
 Input file format can be specified via the `-i` option.

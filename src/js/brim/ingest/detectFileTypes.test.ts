@@ -21,6 +21,6 @@ test("add file types", async () => {
     {type: "pcap", file: pcapng},
     {type: "log", file: zeek},
     {type: "log", file: json},
-    {type: "log", file: unknown}
+    {type: "log", file: unknown},
   ])
 })

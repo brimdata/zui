@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import PluginStorage from "./index"
 
@@ -5,7 +9,7 @@ const pluginName1 = "testplugin1"
 const pluginName2 = "testplugin2"
 
 const data1 = {
-  test: "test"
+  test: "test",
 }
 
 const data2 = "test2"

@@ -9,7 +9,7 @@ import {getLatestVersion} from "./autoUpdater"
 // @ts-ignore
 global.localStorage = {
   getItem: jest.fn(),
-  setItem: jest.fn()
+  setItem: jest.fn(),
 }
 
 const server = setupServer(

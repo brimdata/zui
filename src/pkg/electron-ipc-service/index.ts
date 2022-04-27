@@ -38,7 +38,7 @@ export function createClient<T extends Klass>(
     if (method === "constructor") return client
     const channel = getChannel(klass.name, method)
     Object.defineProperty(client, method, {
-      value: (...args) => ipcRenderer.invoke(channel, ...args)
+      value: (...args) => ipcRenderer.invoke(channel, ...args),
     })
     return client
   }, {} as PromisifyMethods<InstanceType<T>>)

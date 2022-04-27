@@ -13,5 +13,5 @@ export default {
 
   getColumnsView: activeTabSelect((state) => state.layout.columnHeadersView),
 
-  getResultsView: activeTabSelect((s) => s.layout.resultsView)
+  getResultsView: activeTabSelect((s) => s.layout.resultsView),
 }

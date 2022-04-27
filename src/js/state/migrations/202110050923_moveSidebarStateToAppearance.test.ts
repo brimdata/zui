@@ -21,23 +21,23 @@ test("migrating 202110050923_moveSidebarStateToAppearance", async () => {
           id: "pools",
           isOpen: true,
           min: 100,
-          size: 223
+          size: 223,
         },
         {
           closedSize: 24,
           id: "queries",
           isOpen: true,
           min: 100,
-          size: 223
+          size: 223,
         },
         {
           closedSize: 24,
           id: "history",
           isOpen: true,
           min: 100,
-          size: 223
-        }
-      ]
+          size: 223,
+        },
+      ],
     })
   }
 })

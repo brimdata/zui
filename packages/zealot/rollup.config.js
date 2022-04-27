@@ -6,7 +6,7 @@ export default {
   input: "dist/cjs/index.js",
   output: {
     file: "dist/es/index.js",
-    format: "es"
+    format: "es",
   },
-  plugins: [resolve({preferBuiltins: false, browser: true}), commonjs()]
+  plugins: [resolve({preferBuiltins: false, browser: true}), commonjs()],
 }

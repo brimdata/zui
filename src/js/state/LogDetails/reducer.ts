@@ -3,7 +3,7 @@ import History from "src/app/core/models/history"
 
 const init = (): LogDetailsState => ({
   entries: [],
-  position: 0
+  position: 0,
 })
 
 export default function reducer(
@@ -17,7 +17,7 @@ export default function reducer(
       history.push({
         log: action.record,
         uidLogs: [],
-        uidStatus: "INIT"
+        uidStatus: "INIT",
       })
       return history.serialize()
     case "LOG_DETAIL_UPDATE":
@@ -46,7 +46,7 @@ export default function reducer(
 export type LogDetailHistory = History<LogDetails>
 export const toHistory = ({
   entries,
-  position
+  position,
 }: LogDetailsState): LogDetailHistory => {
   return new History<LogDetails>([...entries], position)
 }

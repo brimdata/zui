@@ -30,5 +30,7 @@ export function render(ui: ReactElement, {store}) {
     )
   }
 
-  return rtlRender(ui, {wrapper: Wrapper as ComponentType})
+  return rtlRender(ui, {
+    wrapper: Wrapper as ComponentType<React.PropsWithChildren<unknown>>,
+  })
 }

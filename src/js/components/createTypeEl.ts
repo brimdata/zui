@@ -50,7 +50,7 @@ const VARIATIONS = [
   "gray-6",
   "gray-7",
   "gray-8",
-  "gray-9"
+  "gray-9",
 ]
 
 export default function createTypeEl(tag: string, name: string) {

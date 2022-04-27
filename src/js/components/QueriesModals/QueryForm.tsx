@@ -16,7 +16,7 @@ import Queries from "../../state/Queries"
 import {cssVar} from "../../lib/cssVar"
 import {
   refreshRemoteQueries,
-  setRemoteQueries
+  setRemoteQueries,
 } from "../LeftPane/remote-queries"
 import {AppDispatch} from "../../state/types"
 
@@ -112,23 +112,23 @@ const QueryForm = ({onClose, query, value, isRemote}: Props) => {
     value: {
       name: "value",
       label: "",
-      check: (value) => [!isEmpty(value), "must not be blank"]
+      check: (value) => [!isEmpty(value), "must not be blank"],
     },
     name: {
       name: "name",
       label: "Name",
-      check: (value) => [!isEmpty(value), "must not be blank"]
+      check: (value) => [!isEmpty(value), "must not be blank"],
     },
     description: {
       name: "description",
-      label: "Desc"
-    }
+      label: "Desc",
+    },
   }
 
   if (!isRemote)
     config["tags"] = {
       name: "tags",
-      label: "Tags"
+      label: "Tags",
     }
 
   const onCancel = () => {
@@ -148,7 +148,7 @@ const QueryForm = ({onClose, query, value, isRemote}: Props) => {
         description,
         tags = "",
         pins = [],
-        from = ""
+        from = "",
       } = form.getFields().reduce((obj, field) => {
         obj[field.name] = field.value
         return obj
@@ -161,7 +161,7 @@ const QueryForm = ({onClose, query, value, isRemote}: Props) => {
         description,
         tags: splitTags,
         pins,
-        from
+        from,
       }
       if (isRemote) {
         // editing or creating remote query
@@ -176,7 +176,7 @@ const QueryForm = ({onClose, query, value, isRemote}: Props) => {
           Queries.editItem(
             {
               id,
-              ...newQuery
+              ...newQuery,
             },
             id
           )
@@ -187,7 +187,7 @@ const QueryForm = ({onClose, query, value, isRemote}: Props) => {
           Queries.addItem(
             {
               id: nanoid(),
-              ...newQuery
+              ...newQuery,
             },
             queriesRoot.id
           )

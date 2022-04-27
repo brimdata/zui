@@ -12,18 +12,18 @@ const client = new Client("http://localhost:9000")
 const branchShape = {
   commit: expect.any(String),
   name: expect.any(String),
-  ts: expect.any(Date)
+  ts: expect.any(Date),
 }
 const poolShape = {
   id: expect.any(String),
   layout: {
     keys: [[expect.any(String)]],
-    order: expect.stringMatching(/asc|desc/)
+    order: expect.stringMatching(/asc|desc/),
   },
   name: expect.any(String),
   seek_stride: expect.any(Number),
   threshold: expect.any(Number),
-  ts: expect.any(Date)
+  ts: expect.any(Date),
 }
 
 beforeAll(async () => {
@@ -77,7 +77,7 @@ test("#version", async () => {
   const res = await client.version()
 
   expect(res).toEqual({
-    version: expect.any(String)
+    version: expect.any(String),
   })
 })
 
@@ -99,7 +99,7 @@ test("#createPool", async () => {
 
 test("#deletePool", async () => {
   const {
-    pool: {id}
+    pool: {id},
   } = await client.createPool("will-delete")
 
   const res = await client.deletePool(id)
@@ -126,21 +126,21 @@ test("#getPool", async () => {
 test("#getPoolStats", async () => {
   await client.createPool("pool with span")
   await client.load(`{ts: ${new Date(0).toISOString()}}`, {
-    pool: "pool with span"
+    pool: "pool with span",
   })
   const res = await client.getPoolStats("pool with span")
   expect(res).toEqual({
     size: 14,
     span: {
       dur: 1,
-      ts: new Date("1970-01-01T00:00:00.000Z")
-    }
+      ts: new Date("1970-01-01T00:00:00.000Z"),
+    },
   })
 })
 
 test("#updatePool", async () => {
   const {
-    pool: {id}
+    pool: {id},
   } = await client.createPool("star war")
   await client.updatePool(id, {name: "star peace"})
   const {name} = await client.getPool(id)
@@ -149,7 +149,7 @@ test("#updatePool", async () => {
 
 test("#load a stream", async () => {
   const {
-    pool: {id}
+    pool: {id},
   } = await client.createPool("load-with-stream")
   const stream = fs.createReadStream(
     path.join(__dirname, "../../testdata/sample.zson")

@@ -9,6 +9,6 @@ export default function useColumns(): ActionButtonProps {
     label: "Columns",
     title: "Show or hide columns in the table",
     icon: "columns",
-    click: () => dispatch(Modal.show("columns"))
+    click: () => dispatch(Modal.show("columns")),
   }
 }

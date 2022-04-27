@@ -108,13 +108,13 @@ const LakeForm = ({onClose, lake}: Props) => {
           isValid = value === host || value === [host, port].join(":")
         }
         return [isValid, "cannot change URL of default lake"]
-      }
+      },
     },
     name: {
       name: "name",
       label: "Name",
-      check: (value) => [!isEmpty(value), "must not be blank"]
-    }
+      check: (value) => [!isEmpty(value), "must not be blank"],
+    },
   }
 
   const setFields = ({hostPort, name}, l?: Lake): Partial<Lake> => {
@@ -152,7 +152,7 @@ const LakeForm = ({onClose, lake}: Props) => {
     const newWs = setFields(
       {
         hostPort: host,
-        name
+        name,
       },
       lake
     )

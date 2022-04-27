@@ -93,7 +93,7 @@ const ToolbarButton = ({
   disabled,
   dropdown,
   isPrimary,
-  onClick
+  onClick,
 }: Props) => {
   return (
     <StyledButton isPrimary={isPrimary} disabled={disabled} onClick={onClick}>

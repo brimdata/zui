@@ -21,18 +21,18 @@ test("migrating 202110150837_querylibFolders", async () => {
             value: '_path=="dns" | count() by query | sort -r',
             description:
               "Shows all unique DNS queries contained in the data set with count",
-            tags: ["dns", "initial exploration"]
+            tags: ["dns", "initial exploration"],
           },
           {
             id: expect.any(String),
             value: "count() by alert.signature",
             name: "Custom alert signature counts",
             description: "count of alert signatures",
-            tags: ["security"]
-          }
-        ]
-      }
-    ]
+            tags: ["security"],
+          },
+        ],
+      },
+    ],
   }
 
   for (const state of getAllStates(next)) {

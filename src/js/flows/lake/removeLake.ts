@@ -12,23 +12,25 @@ import Lakes from "../../state/Lakes"
 import {Lake} from "../../state/Lakes/types"
 import LakeStatuses from "../../state/LakeStatuses"
 
-const removeLake = (l: Lake): Thunk => (dispatch, _getState) => {
-  const {name, id, authType} = l
+const removeLake =
+  (l: Lake): Thunk =>
+  (dispatch, _getState) => {
+    const {name, id, authType} = l
 
-  if (isDefaultLake(l)) throw new Error("Cannot remove the default lake")
+    if (isDefaultLake(l)) throw new Error("Cannot remove the default lake")
 
-  // remove creds from keychain
-  if (authType === "auth0") {
-    invoke(ipc.secrets.deleteKey(toAccessTokenKey(id)))
-    invoke(ipc.secrets.deleteKey(toRefreshTokenKey(id)))
+    // remove creds from keychain
+    if (authType === "auth0") {
+      invoke(ipc.secrets.deleteKey(toAccessTokenKey(id)))
+      invoke(ipc.secrets.deleteKey(toRefreshTokenKey(id)))
+    }
+    dispatch(Investigation.clearLakeInvestigation(id))
+    dispatch(Pools.removeAll(id))
+    dispatch(LakeStatuses.remove(id))
+    dispatch(Lakes.remove(id))
+
+    dispatch(tabHistory.push(lakesPath()))
+    toast(`Removed lake "${name}"`)
   }
-  dispatch(Investigation.clearLakeInvestigation(id))
-  dispatch(Pools.removeAll(id))
-  dispatch(LakeStatuses.remove(id))
-  dispatch(Lakes.remove(id))
-
-  dispatch(tabHistory.push(lakesPath()))
-  toast(`Removed lake "${name}"`)
-}
 
 export default removeLake

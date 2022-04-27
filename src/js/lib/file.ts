@@ -95,6 +95,6 @@ export default function file(p: string) {
 
     fileName(): string {
       return path.basename(p)
-    }
+    },
   }
 }

@@ -20,7 +20,7 @@ type Props = {height: number; width: number}
 
 const MainHistogramSvg = React.memo(function MainHistogramSvg({
   width,
-  height
+  height,
 }: Props) {
   const chart = useMainHistogram(width, height)
   return <ChartSVG chart={chart} />

@@ -29,7 +29,7 @@ export function encodeSessionState(
 ): SessionState {
   const groupById = (all, window) => ({
     ...all,
-    [window.id]: getWindowData(window)
+    [window.id]: getWindowData(window),
   })
 
   const order = getWindowOrder(windows)
@@ -37,7 +37,7 @@ export function encodeSessionState(
   return {
     order,
     windows: windows.reduce(groupById, {}),
-    globalState
+    globalState,
   }
 }
 

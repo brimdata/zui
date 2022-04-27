@@ -16,7 +16,7 @@ const array = {
     if (isArray(item)) return item
     if (isEmpty(item)) return []
     return [item]
-  }
+  },
 }
 
 export default {
@@ -39,7 +39,7 @@ export default {
     copy.splice(dest, 0, copy.splice(src, 1)[0])
     return copy
   },
-  sleep: (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
+  sleep: (ms: number) => new Promise<void>((r) => setTimeout(r, ms)),
 }
 
 export type TimeUnit =

@@ -1,11 +1,11 @@
-import {updateQuery} from "src/app/query-home/flows/update-query"
 import {useExpandState} from "src/app/query-home/results/expand-hook"
 import {DRAFT_QUERY_NAME} from "src/app/query-home/utils/brim-query"
 import {ActionButtonProps} from "src/app/toolbar/action-button"
 import Layout from "src/js/state/Layout"
 import Results from "./results"
 import React, {useLayoutEffect} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Current from "src/js/state/Current"
 import SearchBarState from "src/js/state/SearchBar"
 import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
@@ -14,11 +14,9 @@ import styled from "styled-components"
 import useExport from "./toolbar/hooks/use-export"
 import useColumns from "./toolbar/hooks/use-columns"
 import DraftQueries from "src/js/state/DraftQueries"
-import SearchBarActions from "src/js/state/SearchBar"
 import {syncPool} from "../core/pools/sync-pool"
 import ToolbarButton from "./toolbar/button"
 import {newQuery} from "./flows/new-query"
-import {AppDispatch} from "../../js/state/types"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import {getQuerySource} from "./flows/get-query-source"
@@ -44,9 +42,17 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
       })
     )
   }
+
   if (query) {
     dispatch(Editor.setValue(query.value))
     dispatch(Editor.setPins(query.pins))
+    dispatch(
+      SearchBarState.restoreSearchBar({
+        current: query?.value || "",
+        pinned: [],
+        error: null
+      })
+    )
   }
 }
 
@@ -119,7 +125,7 @@ const QueryHome = () => {
   useSearchParamLocationSync()
   const query = useSelector(Current.getQuery)
   const lakeId = useSelector(Current.getLakeId)
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch()
   const exportAction = useExport()
   const columns = useColumns()
   const pin = usePins()

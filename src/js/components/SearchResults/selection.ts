@@ -76,6 +76,6 @@ export function useRowSelection({multi}: Args) {
   return {
     parentRef,
     selection,
-    clicked
+    clicked,
   }
 }

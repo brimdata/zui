@@ -1,5 +1,5 @@
 import getTestState, {
-  getAllStates
+  getAllStates,
 } from "src/js/state/migrations/utils/getTestState"
 import migrate from "./202005151706_addZeekRunnerPref"
 

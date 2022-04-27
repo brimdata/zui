@@ -18,6 +18,6 @@ export class DevGlobal {
   }
 }
 
-export default function(store) {
+export default function (store) {
   global.dev = new DevGlobal(store)
 }

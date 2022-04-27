@@ -18,7 +18,7 @@ export default function moveSidebarStateToAppearance(state: any) {
     appearance = {
       sidebarIsOpen: firstActiveTab.layout.leftSidebarIsOpen,
       sidebarWidth: firstActiveTab.layout.leftSidebarWidth,
-      sidebarSections: firstActiveTab.layout.sidebarSections
+      sidebarSections: firstActiveTab.layout.sidebarSections,
     }
   }
 

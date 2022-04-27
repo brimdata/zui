@@ -1,6 +1,6 @@
 module.exports = {
   transform: {
-    "^.+\\.(t|j)sx?$": ["@swc/jest"]
+    "^.+\\.(t|j)sx?$": ["@swc/jest"],
   },
   setupFiles: ["./src/test/unit/setup/before-env.ts"],
   setupFilesAfterEnv: ["./src/test/unit/setup/after-env/index.ts"],
@@ -8,5 +8,5 @@ module.exports = {
   globalSetup: "./src/test/unit/setup/global.ts",
   modulePaths: ["<rootDir>"],
   roots: ["./src"],
-  maxWorkers: 4
+  maxWorkers: 4,
 }

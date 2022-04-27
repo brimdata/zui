@@ -11,7 +11,7 @@ export class EncodeStream {
   encode(value: Value): zjson.Object {
     return {
       type: this.encodeType(value.type) as zjson.Type,
-      value: this.encodeValue(value)
+      value: this.encodeValue(value),
     }
   }
 

@@ -37,14 +37,14 @@ export default class BrimcapPlugin {
     loading: {
       // setTimeout's maximum value is a 32-bit int, so we explicitly specify here
       // also, once https://github.com/timolins/react-hot-toast/pull/37 merges, we can set this to -1
-      duration: 2 ** 31 - 1
+      duration: 2 ** 31 - 1,
     },
     success: {
-      duration: 3000
+      duration: 3000,
     },
     error: {
-      duration: 5000
-    }
+      duration: 5000,
+    },
   }
 
   constructor(private api: BrimApi) {
@@ -102,7 +102,7 @@ export default class BrimcapPlugin {
       icon: "sharkfin", // TODO: enable plugins to provide their own assets
       disabled: true,
       tooltip: "No connection record found.",
-      order: 0
+      order: 0,
     }
 
     const setButtonDetails = (
@@ -114,7 +114,7 @@ export default class BrimcapPlugin {
         disabled: isDisabled,
         tooltip: isDisabled
           ? "No connection record found."
-          : "Open packets from this connection."
+          : "Open packets from this connection.",
       })
     }
 
@@ -144,13 +144,13 @@ export default class BrimcapPlugin {
     this.api.toolbar.add("search", {
       ...itemOptions,
       id: searchButtonId,
-      command: brimcapDownloadSelectedCmd
+      command: brimcapDownloadSelectedCmd,
     })
     this.api.toolbar.add("detail", {
       ...itemOptions,
       id: detailButtonId,
       command: brimcapDownloadCurrentCmd,
-      label: undefined
+      label: undefined,
     })
 
     // add click handlers for button's emitted commands
@@ -204,7 +204,7 @@ export default class BrimcapPlugin {
           this.downloadPcap(record)
         },
         enabled: isConn,
-        label: "Download packets"
+        label: "Download packets",
       }
     }
 
@@ -231,7 +231,7 @@ export default class BrimcapPlugin {
       srcIp: log.get(["id", "orig_h"]).toString(),
       srcPort: log.get(["id", "orig_p"]).toString(),
       ts: tsString,
-      write: dest
+      write: dest,
     }
   }
 
@@ -267,7 +267,7 @@ export default class BrimcapPlugin {
         error: (err) => {
           console.error(err)
           return "Error preparing pcap: " + err.message
-        }
+        },
       },
       this.toastConfig
     )
@@ -286,7 +286,7 @@ export default class BrimcapPlugin {
         throw new Error("Only one pcap can be opened at a time.")
 
       const cliOpts: analyzeOptions = {
-        json: true
+        json: true,
       }
       const yamlConfig = this.api.configs.get(
         this.pluginNamespace,
@@ -353,9 +353,9 @@ export default class BrimcapPlugin {
           branch: params.branch,
           message: {
             author: "brim",
-            body: "automatic import with brimcap analyze"
+            body: "automatic import with brimcap analyze",
           },
-          signal
+          signal,
         })
       } catch (e) {
         // if load failed because analyze did, report the analyzeErr
@@ -370,7 +370,7 @@ export default class BrimcapPlugin {
         try {
           this.cli.index({
             root: this.brimcapDataRoot,
-            pcap: pcapPath
+            pcap: pcapPath,
           })
         } catch (e) {
           console.error(e)
@@ -384,7 +384,7 @@ export default class BrimcapPlugin {
 
     this.api.loaders.add({
       load,
-      match: "pcap"
+      match: "pcap",
     })
   }
 
@@ -400,11 +400,10 @@ export default class BrimcapPlugin {
           defaultValue: "",
           helpLink: {
             label: "docs",
-            url:
-              "https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config"
-          }
-        }
-      }
+            url: "https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config",
+          },
+        },
+      },
     }
 
     this.api.configs.add(brimcapConfig)

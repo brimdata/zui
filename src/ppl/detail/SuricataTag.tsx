@@ -30,7 +30,7 @@ const Severity = styled.span`
 const colors = {
   3: cssVar("--alert-3"),
   2: cssVar("--alert-2"),
-  1: cssVar("--alert-1")
+  1: cssVar("--alert-1"),
 }
 
 export default function SuricataTag({event, ...rest}) {

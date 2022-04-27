@@ -11,7 +11,7 @@ export function createRecord(object): zed.Record {
   }
   const typeFields: zed.TypeField[] = fields.map((f) => ({
     name: f.name,
-    type: f.value.type
+    type: f.value.type,
   }))
 
   // This could be more efficient

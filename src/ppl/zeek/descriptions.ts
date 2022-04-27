@@ -2,2153 +2,2049 @@ export default {
   netcontrol_drop_log: [
     {
       name: "_path",
-      type: "netcontrol_drop"
+      type: "netcontrol_drop",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time at which the recorded activity occurred."
+      desc: "Time at which the recorded activity occurred.",
     },
     {
       name: "rule_id",
       type: "string",
-      desc: "ID of the rule; unique during each Zeek run."
+      desc: "ID of the rule; unique during each Zeek run.",
     },
     {
       name: "orig_h",
       type: "addr",
-      desc: "The originator's IP address."
+      desc: "The originator's IP address.",
     },
     {
       name: "orig_p",
       type: "port",
-      desc: "The originator's port number."
+      desc: "The originator's port number.",
     },
     {
       name: "resp_h",
       type: "addr",
-      desc: "The responder's IP address."
+      desc: "The responder's IP address.",
     },
     {
       name: "resp_p",
       type: "port",
-      desc: "The responder's port number."
+      desc: "The responder's port number.",
     },
     {
       name: "expire",
       type: "interval",
-      desc: "Expiry time of the shunt."
+      desc: "Expiry time of the shunt.",
     },
     {
       name: "location",
       type: "string",
-      desc: "Location where the underlying action was triggered."
-    }
+      desc: "Location where the underlying action was triggered.",
+    },
   ],
   radius_log: [
     {
       name: "_path",
-      type: "radius"
+      type: "radius",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the event happened."
+      desc: "Timestamp for when the event happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "username",
       type: "string",
-      desc: "The username, if present."
+      desc: "The username, if present.",
     },
     {
       name: "mac",
       type: "string",
-      desc: "MAC address, if present."
+      desc: "MAC address, if present.",
     },
     {
       name: "framed_addr",
       type: "addr",
-      desc:
-        "The address given to the network access server, if present.  This is only a hint from the RADIUS server and the network access server is not required to honor  the address."
+      desc: "The address given to the network access server, if present.  This is only a hint from the RADIUS server and the network access server is not required to honor  the address.",
     },
     {
       name: "tunnel_client",
       type: "string",
-      desc:
-        "Address (IPv4, IPv6, or FQDN) of the initiator end of the tunnel, if present.  This is collected from the Tunnel-Client-Endpoint attribute."
+      desc: "Address (IPv4, IPv6, or FQDN) of the initiator end of the tunnel, if present.  This is collected from the Tunnel-Client-Endpoint attribute.",
     },
     {
       name: "connect_info",
       type: "string",
-      desc: "Connect info, if present."
+      desc: "Connect info, if present.",
     },
     {
       name: "reply_msg",
       type: "string",
-      desc:
-        "Reply message from the server challenge. This is  frequently shown to the user authenticating."
+      desc: "Reply message from the server challenge. This is  frequently shown to the user authenticating.",
     },
     {
       name: "result",
       type: "string",
-      desc: "Successful or failed authentication."
+      desc: "Successful or failed authentication.",
     },
     {
       name: "ttl",
       type: "interval",
-      desc:
-        'The duration between the first request and either the "Access-Accept" message or an error. If the field is empty, it means that either the request or response was not seen.'
-    }
+      desc: 'The duration between the first request and either the "Access-Accept" message or an error. If the field is empty, it means that either the request or response was not seen.',
+    },
   ],
   software_log: [
     {
       name: "_path",
-      type: "software"
+      type: "software",
     },
     {
       name: "ts",
       type: "time",
-      desc: "The time at which the software was detected."
+      desc: "The time at which the software was detected.",
     },
     {
       name: "host",
       type: "addr",
-      desc: "The IP address detected running the software."
+      desc: "The IP address detected running the software.",
     },
     {
       name: "host_p",
       type: "port",
-      desc:
-        "The port on which the software is running. Only sensible for server software."
+      desc: "The port on which the software is running. Only sensible for server software.",
     },
     {
       name: "software_type",
       type: "enum",
-      desc: "The type of software detected (e.g. :zeek:enum:`HTTP::SERVER`)."
+      desc: "The type of software detected (e.g. :zeek:enum:`HTTP::SERVER`).",
     },
     {
       name: "name",
       type: "string",
-      desc: "Name of the software (e.g. Apache)."
+      desc: "Name of the software (e.g. Apache).",
     },
     {
       name: "version",
       type: "record Software::Version",
-      desc: "Version of the software."
+      desc: "Version of the software.",
     },
     {
       name: "unparsed_version",
       type: "string",
-      desc:
-        "The full unparsed version string found because the version parsing doesn't always work reliably in all cases and this acts as a fallback in the logs."
-    }
+      desc: "The full unparsed version string found because the version parsing doesn't always work reliably in all cases and this acts as a fallback in the logs.",
+    },
   ],
   ssh_log: [
     {
       name: "_path",
-      type: "ssh"
+      type: "ssh",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time when the SSH connection began."
+      desc: "Time when the SSH connection began.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "version",
       type: "count",
-      desc: "SSH major version (1 or 2)"
+      desc: "SSH major version (1 or 2)",
     },
     {
       name: "auth_success",
       type: "bool",
-      desc: "Authentication result (T=success, F=failure, unset=unknown)"
+      desc: "Authentication result (T=success, F=failure, unset=unknown)",
     },
     {
       name: "auth_attempts",
       type: "count",
-      desc:
-        "The number of authentication attemps we observed. There's always at least one, since some servers might support no authentication at all. It's important to note that not all of these are failures, since some servers require two-factor auth (e.g. password AND pubkey)"
+      desc: "The number of authentication attemps we observed. There's always at least one, since some servers might support no authentication at all. It's important to note that not all of these are failures, since some servers require two-factor auth (e.g. password AND pubkey)",
     },
     {
       name: "direction",
       type: "enum",
-      desc:
-        "Direction of the connection. If the client was a local host logging into an external host, this would be OUTBOUND. INBOUND would be set for the opposite situation."
+      desc: "Direction of the connection. If the client was a local host logging into an external host, this would be OUTBOUND. INBOUND would be set for the opposite situation.",
     },
     {
       name: "client",
       type: "string",
-      desc: "The client's version string"
+      desc: "The client's version string",
     },
     {
       name: "server",
       type: "string",
-      desc: "The server's version string"
+      desc: "The server's version string",
     },
     {
       name: "cipher_alg",
       type: "string",
-      desc: "The encryption algorithm in use"
+      desc: "The encryption algorithm in use",
     },
     {
       name: "mac_alg",
       type: "string",
-      desc: "The signing (MAC) algorithm in use"
+      desc: "The signing (MAC) algorithm in use",
     },
     {
       name: "compression_alg",
       type: "string",
-      desc: "The compression algorithm in use"
+      desc: "The compression algorithm in use",
     },
     {
       name: "kex_alg",
       type: "string",
-      desc: "The key exchange algorithm in use"
+      desc: "The key exchange algorithm in use",
     },
     {
       name: "host_key_alg",
       type: "string",
-      desc: "The server host key's algorithm"
+      desc: "The server host key's algorithm",
     },
     {
       name: "host_key",
       type: "string",
-      desc: "The server's key fingerprint"
-    }
+      desc: "The server's key fingerprint",
+    },
   ],
   files_log: [
     {
       name: "_path",
-      type: "files"
+      type: "files",
     },
     {
       name: "ts",
       type: "time",
-      desc: "The time when the file was first seen."
+      desc: "The time when the file was first seen.",
     },
     {
       name: "fuid",
       type: "string",
-      desc: "An identifier associated with a single file."
+      desc: "An identifier associated with a single file.",
     },
     {
       name: "tx_hosts",
       type: "table",
-      desc:
-        "If this file was transferred over a network connection this should show the host or hosts that the data sourced from."
+      desc: "If this file was transferred over a network connection this should show the host or hosts that the data sourced from.",
     },
     {
       name: "rx_hosts",
       type: "table",
-      desc:
-        "If this file was transferred over a network connection this should show the host or hosts that the data traveled to."
+      desc: "If this file was transferred over a network connection this should show the host or hosts that the data traveled to.",
     },
     {
       name: "conn_uids",
       type: "table",
-      desc: "Connection UIDs over which the file was transferred."
+      desc: "Connection UIDs over which the file was transferred.",
     },
     {
       name: "source",
       type: "string",
-      desc:
-        "An identification of the source of the file data.  E.g. it may be a network protocol over which it was transferred, or a local file path which was read, or some other input source."
+      desc: "An identification of the source of the file data.  E.g. it may be a network protocol over which it was transferred, or a local file path which was read, or some other input source.",
     },
     {
       name: "depth",
       type: "count",
-      desc:
-        "A value to represent the depth of this file in relation to its source.  In SMTP, it is the depth of the MIME attachment on the message.  In HTTP, it is the depth of the request within the TCP connection."
+      desc: "A value to represent the depth of this file in relation to its source.  In SMTP, it is the depth of the MIME attachment on the message.  In HTTP, it is the depth of the request within the TCP connection.",
     },
     {
       name: "analyzers",
       type: "table",
-      desc: "A set of analysis types done during the file analysis."
+      desc: "A set of analysis types done during the file analysis.",
     },
     {
       name: "mime_type",
       type: "string",
-      desc:
-        "A mime type provided by the strongest file magic signature match against the *bof_buffer* field of :zeek:see:`fa_file`, or in the cases where no buffering of the beginning of file occurs, an initial guess of the mime type based on the first data seen."
+      desc: "A mime type provided by the strongest file magic signature match against the *bof_buffer* field of :zeek:see:`fa_file`, or in the cases where no buffering of the beginning of file occurs, an initial guess of the mime type based on the first data seen.",
     },
     {
       name: "filename",
       type: "string",
-      desc:
-        'A filename for the file if one is available from the source for the file.  These will frequently come from "Content-Disposition" headers in network protocols.'
+      desc: 'A filename for the file if one is available from the source for the file.  These will frequently come from "Content-Disposition" headers in network protocols.',
     },
     {
       name: "duration",
       type: "interval",
-      desc: "The duration the file was analyzed for."
+      desc: "The duration the file was analyzed for.",
     },
     {
       name: "local_orig",
       type: "bool",
-      desc:
-        "If the source of this file is a network connection, this field indicates if the data originated from the local network or not as determined by the configured :zeek:see:`Site::local_nets`."
+      desc: "If the source of this file is a network connection, this field indicates if the data originated from the local network or not as determined by the configured :zeek:see:`Site::local_nets`.",
     },
     {
       name: "is_orig",
       type: "bool",
-      desc:
-        "If the source of this file is a network connection, this field indicates if the file is being sent by the originator of the connection or the responder."
+      desc: "If the source of this file is a network connection, this field indicates if the file is being sent by the originator of the connection or the responder.",
     },
     {
       name: "seen_bytes",
       type: "count",
-      desc: "Number of bytes provided to the file analysis engine for the file."
+      desc: "Number of bytes provided to the file analysis engine for the file.",
     },
     {
       name: "total_bytes",
       type: "count",
-      desc: "Total number of bytes that are supposed to comprise the full file."
+      desc: "Total number of bytes that are supposed to comprise the full file.",
     },
     {
       name: "missing_bytes",
       type: "count",
-      desc:
-        "The number of bytes in the file stream that were completely missed during the process of analysis e.g. due to dropped packets."
+      desc: "The number of bytes in the file stream that were completely missed during the process of analysis e.g. due to dropped packets.",
     },
     {
       name: "overflow_bytes",
       type: "count",
-      desc:
-        "The number of bytes in the file stream that were not delivered to stream file analyzers.  This could be overlapping bytes or  bytes that couldn't be reassembled."
+      desc: "The number of bytes in the file stream that were not delivered to stream file analyzers.  This could be overlapping bytes or  bytes that couldn't be reassembled.",
     },
     {
       name: "timedout",
       type: "bool",
-      desc: "Whether the file analysis timed out at least once for the file."
+      desc: "Whether the file analysis timed out at least once for the file.",
     },
     {
       name: "parent_fuid",
       type: "string",
-      desc:
-        "Identifier associated with a container file from which this one was extracted as part of the file analysis."
+      desc: "Identifier associated with a container file from which this one was extracted as part of the file analysis.",
     },
     {
       name: "md5",
       type: "string",
-      desc: "An MD5 digest of the file contents."
+      desc: "An MD5 digest of the file contents.",
     },
     {
       name: "sha1",
       type: "string",
-      desc: "A SHA1 digest of the file contents."
+      desc: "A SHA1 digest of the file contents.",
     },
     {
       name: "sha256",
       type: "string",
-      desc: "A SHA256 digest of the file contents."
+      desc: "A SHA256 digest of the file contents.",
     },
     {
       name: "extracted",
       type: "string",
-      desc: "Local filename of extracted file."
+      desc: "Local filename of extracted file.",
     },
     {
       name: "extracted_cutoff",
       type: "bool",
-      desc:
-        "Set to true if the file being extracted was cut off so the whole file was not logged."
+      desc: "Set to true if the file being extracted was cut off so the whole file was not logged.",
     },
     {
       name: "extracted_size",
       type: "count",
-      desc: "The number of bytes extracted to disk."
-    }
+      desc: "The number of bytes extracted to disk.",
+    },
   ],
   http_log: [
     {
       name: "_path",
-      type: "http"
+      type: "http",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the request happened."
+      desc: "Timestamp for when the request happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "trans_depth",
       type: "count",
-      desc:
-        "Represents the pipelined depth into the connection of this request/response transaction."
+      desc: "Represents the pipelined depth into the connection of this request/response transaction.",
     },
     {
       name: "method",
       type: "string",
-      desc: "Verb used in the HTTP request (GET, POST, HEAD, etc.)."
+      desc: "Verb used in the HTTP request (GET, POST, HEAD, etc.).",
     },
     {
       name: "host",
       type: "string",
-      desc: "Value of the HOST header."
+      desc: "Value of the HOST header.",
     },
     {
       name: "uri",
       type: "string",
-      desc: "URI used in the request."
+      desc: "URI used in the request.",
     },
     {
       name: "referrer",
       type: "string",
-      desc:
-        'Value of the "referer" header.  The comment is deliberately misspelled like the standard declares, but the name used here is "referrer" spelled correctly.'
+      desc: 'Value of the "referer" header.  The comment is deliberately misspelled like the standard declares, but the name used here is "referrer" spelled correctly.',
     },
     {
       name: "version",
       type: "string",
-      desc: "Value of the version portion of the request."
+      desc: "Value of the version portion of the request.",
     },
     {
       name: "user_agent",
       type: "string",
-      desc: "Value of the User-Agent header from the client."
+      desc: "Value of the User-Agent header from the client.",
     },
     {
       name: "origin",
       type: "string",
-      desc: "Value of the Origin header from the client."
+      desc: "Value of the Origin header from the client.",
     },
     {
       name: "request_body_len",
       type: "count",
-      desc:
-        "Actual uncompressed content size of the data transferred from the client."
+      desc: "Actual uncompressed content size of the data transferred from the client.",
     },
     {
       name: "response_body_len",
       type: "count",
-      desc:
-        "Actual uncompressed content size of the data transferred from the server."
+      desc: "Actual uncompressed content size of the data transferred from the server.",
     },
     {
       name: "status_code",
       type: "count",
-      desc: "Status code returned by the server."
+      desc: "Status code returned by the server.",
     },
     {
       name: "status_msg",
       type: "string",
-      desc: "Status message returned by the server."
+      desc: "Status message returned by the server.",
     },
     {
       name: "info_code",
       type: "count",
-      desc: "Last seen 1xx informational reply code returned by the server."
+      desc: "Last seen 1xx informational reply code returned by the server.",
     },
     {
       name: "info_msg",
       type: "string",
-      desc: "Last seen 1xx informational reply message returned by the server."
+      desc: "Last seen 1xx informational reply message returned by the server.",
     },
     {
       name: "tags",
       type: "table",
-      desc:
-        "A set of indicators of various attributes discovered and related to a particular request/response pair."
+      desc: "A set of indicators of various attributes discovered and related to a particular request/response pair.",
     },
     {
       name: "username",
       type: "string",
-      desc: "Username if basic-auth is performed for the request."
+      desc: "Username if basic-auth is performed for the request.",
     },
     {
       name: "password",
       type: "string",
-      desc: "Password if basic-auth is performed for the request."
+      desc: "Password if basic-auth is performed for the request.",
     },
     {
       name: "proxied",
       type: "table",
-      desc: "All of the headers that may indicate if the request was proxied."
+      desc: "All of the headers that may indicate if the request was proxied.",
     },
     {
       name: "orig_fuids",
       type: "vector",
-      desc:
-        "An ordered vector of file unique IDs. Limited to :zeek:see:`HTTP::max_files_orig` entries."
+      desc: "An ordered vector of file unique IDs. Limited to :zeek:see:`HTTP::max_files_orig` entries.",
     },
     {
       name: "orig_filenames",
       type: "vector",
-      desc:
-        "An ordered vector of filenames from the client. Limited to :zeek:see:`HTTP::max_files_orig` entries."
+      desc: "An ordered vector of filenames from the client. Limited to :zeek:see:`HTTP::max_files_orig` entries.",
     },
     {
       name: "orig_mime_types",
       type: "vector",
-      desc:
-        "An ordered vector of mime types. Limited to :zeek:see:`HTTP::max_files_orig` entries."
+      desc: "An ordered vector of mime types. Limited to :zeek:see:`HTTP::max_files_orig` entries.",
     },
     {
       name: "resp_fuids",
       type: "vector",
-      desc:
-        "An ordered vector of file unique IDs. Limited to :zeek:see:`HTTP::max_files_resp` entries."
+      desc: "An ordered vector of file unique IDs. Limited to :zeek:see:`HTTP::max_files_resp` entries.",
     },
     {
       name: "resp_filenames",
       type: "vector",
-      desc:
-        "An ordered vector of filenames from the server. Limited to :zeek:see:`HTTP::max_files_resp` entries."
+      desc: "An ordered vector of filenames from the server. Limited to :zeek:see:`HTTP::max_files_resp` entries.",
     },
     {
       name: "resp_mime_types",
       type: "vector",
-      desc:
-        "An ordered vector of mime types. Limited to :zeek:see:`HTTP::max_files_resp` entries."
-    }
+      desc: "An ordered vector of mime types. Limited to :zeek:see:`HTTP::max_files_resp` entries.",
+    },
   ],
   kerberos_log: [
     {
       name: "_path",
-      type: "kerberos"
+      type: "kerberos",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the event happened."
+      desc: "Timestamp for when the event happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "request_type",
       type: "string",
-      desc:
-        'Request type - Authentication Service ("AS") or Ticket Granting Service ("TGS")'
+      desc: 'Request type - Authentication Service ("AS") or Ticket Granting Service ("TGS")',
     },
     {
       name: "client",
       type: "string",
-      desc: "Client"
+      desc: "Client",
     },
     {
       name: "service",
       type: "string",
-      desc: "Service"
+      desc: "Service",
     },
     {
       name: "success",
       type: "bool",
-      desc: "Request result"
+      desc: "Request result",
     },
     {
       name: "error_msg",
       type: "string",
-      desc: "Error message"
+      desc: "Error message",
     },
     {
       name: "from",
       type: "time",
-      desc: "Ticket valid from"
+      desc: "Ticket valid from",
     },
     {
       name: "till",
       type: "time",
-      desc: "Ticket valid till"
+      desc: "Ticket valid till",
     },
     {
       name: "cipher",
       type: "string",
-      desc: "Ticket encryption type"
+      desc: "Ticket encryption type",
     },
     {
       name: "forwardable",
       type: "bool",
-      desc: "Forwardable ticket requested"
+      desc: "Forwardable ticket requested",
     },
     {
       name: "renewable",
       type: "bool",
-      desc: "Renewable ticket requested"
+      desc: "Renewable ticket requested",
     },
     {
       name: "client_cert_subject",
       type: "string",
-      desc: "Subject of client certificate, if any"
+      desc: "Subject of client certificate, if any",
     },
     {
       name: "client_cert_fuid",
       type: "string",
-      desc: "File unique ID of client cert, if any"
+      desc: "File unique ID of client cert, if any",
     },
     {
       name: "server_cert_subject",
       type: "string",
-      desc: "Subject of server certificate, if any"
+      desc: "Subject of server certificate, if any",
     },
     {
       name: "server_cert_fuid",
       type: "string",
-      desc: "File unique ID of server cert, if any"
-    }
+      desc: "File unique ID of server cert, if any",
+    },
   ],
   mysql_log: [
     {
       name: "_path",
-      type: "mysql"
+      type: "mysql",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the event happened."
+      desc: "Timestamp for when the event happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "cmd",
       type: "string",
-      desc: "The command that was issued"
+      desc: "The command that was issued",
     },
     {
       name: "arg",
       type: "string",
-      desc: "The argument issued to the command"
+      desc: "The argument issued to the command",
     },
     {
       name: "success",
       type: "bool",
-      desc: "Did the server tell us that the command succeeded?"
+      desc: "Did the server tell us that the command succeeded?",
     },
     {
       name: "rows",
       type: "count",
-      desc: "The number of affected rows, if any"
+      desc: "The number of affected rows, if any",
     },
     {
       name: "response",
       type: "string",
-      desc: "Server message, if any"
-    }
+      desc: "Server message, if any",
+    },
   ],
   ntlm_log: [
     {
       name: "_path",
-      type: "ntlm"
+      type: "ntlm",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the event happened."
+      desc: "Timestamp for when the event happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "username",
       type: "string",
-      desc: "Username given by the client."
+      desc: "Username given by the client.",
     },
     {
       name: "hostname",
       type: "string",
-      desc: "Hostname given by the client."
+      desc: "Hostname given by the client.",
     },
     {
       name: "domainname",
       type: "string",
-      desc: "Domainname given by the client."
+      desc: "Domainname given by the client.",
     },
     {
       name: "server_nb_computer_name",
       type: "string",
-      desc: "NetBIOS name given by the server in a CHALLENGE."
+      desc: "NetBIOS name given by the server in a CHALLENGE.",
     },
     {
       name: "server_dns_computer_name",
       type: "string",
-      desc: "DNS name given by the server in a CHALLENGE."
+      desc: "DNS name given by the server in a CHALLENGE.",
     },
     {
       name: "server_tree_name",
       type: "string",
-      desc: "Tree name given by the server in a CHALLENGE."
+      desc: "Tree name given by the server in a CHALLENGE.",
     },
     {
       name: "success",
       type: "bool",
-      desc: "Indicate whether or not the authentication was successful."
-    }
+      desc: "Indicate whether or not the authentication was successful.",
+    },
   ],
   pe_log: [
     {
       name: "_path",
-      type: "pe"
+      type: "pe",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Current timestamp."
+      desc: "Current timestamp.",
     },
     {
       name: "id",
       type: "string",
-      desc: "File id of this portable executable file."
+      desc: "File id of this portable executable file.",
     },
     {
       name: "machine",
       type: "string",
-      desc: "The target machine that the file was compiled for."
+      desc: "The target machine that the file was compiled for.",
     },
     {
       name: "compile_ts",
       type: "time",
-      desc: "The time that the file was created at."
+      desc: "The time that the file was created at.",
     },
     {
       name: "os",
       type: "string",
-      desc: "The required operating system."
+      desc: "The required operating system.",
     },
     {
       name: "subsystem",
       type: "string",
-      desc: "The subsystem that is required to run this file."
+      desc: "The subsystem that is required to run this file.",
     },
     {
       name: "is_exe",
       type: "bool",
-      desc: "Is the file an executable, or just an object file?"
+      desc: "Is the file an executable, or just an object file?",
     },
     {
       name: "is_64bit",
       type: "bool",
-      desc: "Is the file a 64-bit executable?"
+      desc: "Is the file a 64-bit executable?",
     },
     {
       name: "uses_aslr",
       type: "bool",
-      desc: "Does the file support Address Space Layout Randomization?"
+      desc: "Does the file support Address Space Layout Randomization?",
     },
     {
       name: "uses_dep",
       type: "bool",
-      desc: "Does the file support Data Execution Prevention?"
+      desc: "Does the file support Data Execution Prevention?",
     },
     {
       name: "uses_code_integrity",
       type: "bool",
-      desc: "Does the file enforce code integrity checks?"
+      desc: "Does the file enforce code integrity checks?",
     },
     {
       name: "uses_seh",
       type: "bool",
-      desc: "Does the file use structured exception handing?"
+      desc: "Does the file use structured exception handing?",
     },
     {
       name: "has_import_table",
       type: "bool",
-      desc: "Does the file have an import table?"
+      desc: "Does the file have an import table?",
     },
     {
       name: "has_export_table",
       type: "bool",
-      desc: "Does the file have an export table?"
+      desc: "Does the file have an export table?",
     },
     {
       name: "has_cert_table",
       type: "bool",
-      desc: "Does the file have an attribute certificate table?"
+      desc: "Does the file have an attribute certificate table?",
     },
     {
       name: "has_debug_data",
       type: "bool",
-      desc: "Does the file have a debug table?"
+      desc: "Does the file have a debug table?",
     },
     {
       name: "section_names",
       type: "vector",
-      desc: "The names of the sections, in order."
-    }
+      desc: "The names of the sections, in order.",
+    },
   ],
   signatures_log: [
     {
       name: "_path",
-      type: "signatures"
+      type: "signatures",
     },
     {
       name: "ts",
       type: "time",
-      desc:
-        "The network time at which a signature matching type of event to be logged has occurred."
+      desc: "The network time at which a signature matching type of event to be logged has occurred.",
     },
     {
       name: "uid",
       type: "string",
-      desc:
-        "A unique identifier of the connection which triggered the signature match event."
+      desc: "A unique identifier of the connection which triggered the signature match event.",
     },
     {
       name: "src_addr",
       type: "addr",
-      desc: "The host which triggered the signature match event."
+      desc: "The host which triggered the signature match event.",
     },
     {
       name: "src_port",
       type: "port",
-      desc: "The host port on which the signature-matching activity occurred."
+      desc: "The host port on which the signature-matching activity occurred.",
     },
     {
       name: "dst_addr",
       type: "addr",
-      desc:
-        "The destination host which was sent the payload that triggered the signature match."
+      desc: "The destination host which was sent the payload that triggered the signature match.",
     },
     {
       name: "dst_port",
       type: "port",
-      desc:
-        "The destination host port which was sent the payload that triggered the signature match."
+      desc: "The destination host port which was sent the payload that triggered the signature match.",
     },
     {
       name: "note",
       type: "enum",
-      desc: "Notice associated with signature event."
+      desc: "Notice associated with signature event.",
     },
     {
       name: "sig_id",
       type: "string",
-      desc: "The name of the signature that matched."
+      desc: "The name of the signature that matched.",
     },
     {
       name: "event_msg",
       type: "string",
-      desc: "A more descriptive message of the signature-matching event."
+      desc: "A more descriptive message of the signature-matching event.",
     },
     {
       name: "sub_msg",
       type: "string",
-      desc: "Extracted payload data or extra message."
+      desc: "Extracted payload data or extra message.",
     },
     {
       name: "sig_count",
       type: "count",
-      desc: "Number of sigs, usually from summary count."
+      desc: "Number of sigs, usually from summary count.",
     },
     {
       name: "host_count",
       type: "count",
-      desc: "Number of hosts, from a summary count."
-    }
+      desc: "Number of hosts, from a summary count.",
+    },
   ],
   ssl_log: [
     {
       name: "_path",
-      type: "ssl"
+      type: "ssl",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time when the SSL connection was first detected."
+      desc: "Time when the SSL connection was first detected.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "version",
       type: "string",
-      desc: "SSL/TLS version that the server chose."
+      desc: "SSL/TLS version that the server chose.",
     },
     {
       name: "cipher",
       type: "string",
-      desc: "SSL/TLS cipher suite that the server chose."
+      desc: "SSL/TLS cipher suite that the server chose.",
     },
     {
       name: "curve",
       type: "string",
-      desc: "Elliptic curve the server chose when using ECDH/ECDHE."
+      desc: "Elliptic curve the server chose when using ECDH/ECDHE.",
     },
     {
       name: "server_name",
       type: "string",
-      desc:
-        "Value of the Server Name Indicator SSL/TLS extension.  It indicates the server name that the client was requesting."
+      desc: "Value of the Server Name Indicator SSL/TLS extension.  It indicates the server name that the client was requesting.",
     },
     {
       name: "resumed",
       type: "bool",
-      desc:
-        "Flag to indicate if the session was resumed reusing the key material exchanged in an earlier connection."
+      desc: "Flag to indicate if the session was resumed reusing the key material exchanged in an earlier connection.",
     },
     {
       name: "last_alert",
       type: "string",
-      desc: "Last alert that was seen during the connection."
+      desc: "Last alert that was seen during the connection.",
     },
     {
       name: "next_protocol",
       type: "string",
-      desc:
-        "Next protocol the server chose using the application layer next protocol extension, if present."
+      desc: "Next protocol the server chose using the application layer next protocol extension, if present.",
     },
     {
       name: "established",
       type: "bool",
-      desc:
-        "Flag to indicate if this ssl session has been established successfully, or if it was aborted during the handshake."
+      desc: "Flag to indicate if this ssl session has been established successfully, or if it was aborted during the handshake.",
     },
     {
       name: "cert_chain_fuids",
       type: "vector",
-      desc:
-        "An ordered vector of all certificate file unique IDs for the certificates offered by the server."
+      desc: "An ordered vector of all certificate file unique IDs for the certificates offered by the server.",
     },
     {
       name: "client_cert_chain_fuids",
       type: "vector",
-      desc:
-        "An ordered vector of all certificate file unique IDs for the certificates offered by the client."
+      desc: "An ordered vector of all certificate file unique IDs for the certificates offered by the client.",
     },
     {
       name: "subject",
       type: "string",
-      desc: "Subject of the X.509 certificate offered by the server."
+      desc: "Subject of the X.509 certificate offered by the server.",
     },
     {
       name: "issuer",
       type: "string",
-      desc:
-        "Subject of the signer of the X.509 certificate offered by the server."
+      desc: "Subject of the signer of the X.509 certificate offered by the server.",
     },
     {
       name: "client_subject",
       type: "string",
-      desc: "Subject of the X.509 certificate offered by the client."
+      desc: "Subject of the X.509 certificate offered by the client.",
     },
     {
       name: "client_issuer",
       type: "string",
-      desc:
-        "Subject of the signer of the X.509 certificate offered by the client."
-    }
+      desc: "Subject of the signer of the X.509 certificate offered by the client.",
+    },
   ],
   intel_log: [
     {
       name: "_path",
-      type: "intel"
+      type: "intel",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp when the data was discovered."
+      desc: "Timestamp when the data was discovered.",
     },
     {
       name: "uid",
       type: "string",
-      desc:
-        "If a connection was associated with this intelligence hit, this is the uid for the connection"
+      desc: "If a connection was associated with this intelligence hit, this is the uid for the connection",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc:
-        "If a connection was associated with this intelligence hit, this is the conn_id for the connection."
+      desc: "If a connection was associated with this intelligence hit, this is the conn_id for the connection.",
     },
     {
       name: "seen",
       type: "record Intel::Seen",
-      desc: "Where the data was seen."
+      desc: "Where the data was seen.",
     },
     {
       name: "matched",
       type: "table",
-      desc: "Which indicator types matched."
+      desc: "Which indicator types matched.",
     },
     {
       name: "sources",
       type: "table",
-      desc: "Sources which supplied data that resulted in this match."
+      desc: "Sources which supplied data that resulted in this match.",
     },
     {
       name: "fuid",
       type: "string",
-      desc:
-        "If a file was associated with this intelligence hit, this is the uid for the file."
+      desc: "If a file was associated with this intelligence hit, this is the uid for the file.",
     },
     {
       name: "file_mime_type",
       type: "string",
-      desc:
-        "A mime type if the intelligence hit is related to a file. If the $f field is provided this will be automatically filled out."
+      desc: "A mime type if the intelligence hit is related to a file. If the $f field is provided this will be automatically filled out.",
     },
     {
       name: "file_desc",
       type: "string",
-      desc:
-        'Frequently files can be "described" to give a bit more context. If the $f field is provided this field will be automatically filled out.'
-    }
+      desc: 'Frequently files can be "described" to give a bit more context. If the $f field is provided this field will be automatically filled out.',
+    },
   ],
   openflow_log: [
     {
       name: "_path",
-      type: "openflow"
+      type: "openflow",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Network time."
+      desc: "Network time.",
     },
     {
       name: "dpid",
       type: "count",
-      desc: "OpenFlow switch datapath id."
+      desc: "OpenFlow switch datapath id.",
     },
     {
       name: "match",
       type: "record OpenFlow::ofp_match",
-      desc: "OpenFlow match fields."
+      desc: "OpenFlow match fields.",
     },
     {
       name: "flow_mod",
       type: "record OpenFlow::ofp_flow_mod",
-      desc: "OpenFlow modify flow entry message."
-    }
+      desc: "OpenFlow modify flow entry message.",
+    },
   ],
   modbus_log: [
     {
       name: "_path",
-      type: "modbus"
+      type: "modbus",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time of the request."
+      desc: "Time of the request.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique identifier for the connection."
+      desc: "Unique identifier for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "Identifier for the connection."
+      desc: "Identifier for the connection.",
     },
     {
       name: "func",
       type: "string",
-      desc: "The name of the function message that was sent."
+      desc: "The name of the function message that was sent.",
     },
     {
       name: "exception",
       type: "string",
-      desc: "The exception if the response was a failure."
-    }
+      desc: "The exception if the response was a failure.",
+    },
   ],
   rdp_log: [
     {
       name: "_path",
-      type: "rdp"
+      type: "rdp",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the event happened."
+      desc: "Timestamp for when the event happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "cookie",
       type: "string",
-      desc:
-        "Cookie value used by the client machine. This is typically a username."
+      desc: "Cookie value used by the client machine. This is typically a username.",
     },
     {
       name: "result",
       type: "string",
-      desc:
-        "Status result for the connection.  It's a mix between RDP negotation failure messages and GCC server create response messages."
+      desc: "Status result for the connection.  It's a mix between RDP negotation failure messages and GCC server create response messages.",
     },
     {
       name: "security_protocol",
       type: "string",
-      desc: "Security protocol chosen by the server."
+      desc: "Security protocol chosen by the server.",
     },
     {
       name: "client_channels",
       type: "vector",
-      desc: "The channels requested by the client"
+      desc: "The channels requested by the client",
     },
     {
       name: "keyboard_layout",
       type: "string",
-      desc: "Keyboard layout (language) of the client machine."
+      desc: "Keyboard layout (language) of the client machine.",
     },
     {
       name: "client_build",
       type: "string",
-      desc: "RDP client version used by the client machine."
+      desc: "RDP client version used by the client machine.",
     },
     {
       name: "client_name",
       type: "string",
-      desc: "Name of the client machine."
+      desc: "Name of the client machine.",
     },
     {
       name: "client_dig_product_id",
       type: "string",
-      desc: "Product ID of the client machine."
+      desc: "Product ID of the client machine.",
     },
     {
       name: "desktop_width",
       type: "count",
-      desc: "Desktop width of the client machine."
+      desc: "Desktop width of the client machine.",
     },
     {
       name: "desktop_height",
       type: "count",
-      desc: "Desktop height of the client machine."
+      desc: "Desktop height of the client machine.",
     },
     {
       name: "requested_color_depth",
       type: "string",
-      desc:
-        "The color depth requested by the client in  the high_color_depth field."
+      desc: "The color depth requested by the client in  the high_color_depth field.",
     },
     {
       name: "cert_type",
       type: "string",
-      desc:
-        "If the connection is being encrypted with native RDP encryption, this is the type of cert  being used."
+      desc: "If the connection is being encrypted with native RDP encryption, this is the type of cert  being used.",
     },
     {
       name: "cert_count",
       type: "count",
-      desc:
-        "The number of certs seen.  X.509 can transfer an  entire certificate chain."
+      desc: "The number of certs seen.  X.509 can transfer an  entire certificate chain.",
     },
     {
       name: "cert_permanent",
       type: "bool",
-      desc:
-        "Indicates if the provided certificate or certificate chain is permanent or temporary."
+      desc: "Indicates if the provided certificate or certificate chain is permanent or temporary.",
     },
     {
       name: "encryption_level",
       type: "string",
-      desc: "Encryption level of the connection."
+      desc: "Encryption level of the connection.",
     },
     {
       name: "encryption_method",
       type: "string",
-      desc: "Encryption method of the connection. "
-    }
+      desc: "Encryption method of the connection. ",
+    },
   ],
   smb_files_log: [
     {
       name: "_path",
-      type: "smb_files"
+      type: "smb_files",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time when the file was first discovered."
+      desc: "Time when the file was first discovered.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID of the connection the file was sent over."
+      desc: "Unique ID of the connection the file was sent over.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "ID of the connection the file was sent over."
+      desc: "ID of the connection the file was sent over.",
     },
     {
       name: "fuid",
       type: "string",
-      desc: "Unique ID of the file."
+      desc: "Unique ID of the file.",
     },
     {
       name: "action",
       type: "enum",
-      desc: "Action this log record represents."
+      desc: "Action this log record represents.",
     },
     {
       name: "path",
       type: "string",
-      desc: "Path pulled from the tree this file was transferred to or from."
+      desc: "Path pulled from the tree this file was transferred to or from.",
     },
     {
       name: "name",
       type: "string",
-      desc: "Filename if one was seen."
+      desc: "Filename if one was seen.",
     },
     {
       name: "size",
       type: "count",
-      desc: "Total size of the file."
+      desc: "Total size of the file.",
     },
     {
       name: "prev_name",
       type: "string",
-      desc:
-        "If the rename action was seen, this will be the file's previous name."
+      desc: "If the rename action was seen, this will be the file's previous name.",
     },
     {
       name: "times",
       type: "record SMB::MACTimes",
-      desc: "Last time this file was modified."
-    }
+      desc: "Last time this file was modified.",
+    },
   ],
   snmp_log: [
     {
       name: "_path",
-      type: "snmp"
+      type: "snmp",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp of first packet belonging to the SNMP session."
+      desc: "Timestamp of first packet belonging to the SNMP session.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "The unique ID for the connection."
+      desc: "The unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc:
-        "The connection's 5-tuple of addresses/ports (ports inherently include transport protocol information)"
+      desc: "The connection's 5-tuple of addresses/ports (ports inherently include transport protocol information)",
     },
     {
       name: "duration",
       type: "interval",
-      desc:
-        "The amount of time between the first packet beloning to the SNMP session and the latest one seen."
+      desc: "The amount of time between the first packet beloning to the SNMP session and the latest one seen.",
     },
     {
       name: "version",
       type: "string",
-      desc: "The version of SNMP being used."
+      desc: "The version of SNMP being used.",
     },
     {
       name: "community",
       type: "string",
-      desc:
-        "The community string of the first SNMP packet associated with the session.  This is used as part of SNMP's (v1 and v2c) administrative/security framework.  See :rfc:`1157` or :rfc:`1901`."
+      desc: "The community string of the first SNMP packet associated with the session.  This is used as part of SNMP's (v1 and v2c) administrative/security framework.  See :rfc:`1157` or :rfc:`1901`.",
     },
     {
       name: "get_requests",
       type: "count",
-      desc:
-        "The number of variable bindings in GetRequest/GetNextRequest PDUs seen for the session."
+      desc: "The number of variable bindings in GetRequest/GetNextRequest PDUs seen for the session.",
     },
     {
       name: "get_bulk_requests",
       type: "count",
-      desc:
-        "The number of variable bindings in GetBulkRequest PDUs seen for the session."
+      desc: "The number of variable bindings in GetBulkRequest PDUs seen for the session.",
     },
     {
       name: "get_responses",
       type: "count",
-      desc:
-        "The number of variable bindings in GetResponse/Response PDUs seen for the session."
+      desc: "The number of variable bindings in GetResponse/Response PDUs seen for the session.",
     },
     {
       name: "set_requests",
       type: "count",
-      desc:
-        "The number of variable bindings in SetRequest PDUs seen for the session."
+      desc: "The number of variable bindings in SetRequest PDUs seen for the session.",
     },
     {
       name: "display_string",
       type: "string",
-      desc: "A system description of the SNMP responder endpoint."
+      desc: "A system description of the SNMP responder endpoint.",
     },
     {
       name: "up_since",
       type: "time",
-      desc:
-        "The time at which the SNMP responder endpoint claims it's been up since."
-    }
+      desc: "The time at which the SNMP responder endpoint claims it's been up since.",
+    },
   ],
   broker_log: [
     {
       name: "_path",
-      type: "broker"
+      type: "broker",
     },
     {
       name: "ts",
       type: "time",
-      desc: "The network time at which a Broker event occurred."
+      desc: "The network time at which a Broker event occurred.",
     },
     {
       name: "ty",
       type: "enum",
-      desc: "The type of the Broker event."
+      desc: "The type of the Broker event.",
     },
     {
       name: "ev",
       type: "string",
-      desc: "The event being logged."
+      desc: "The event being logged.",
     },
     {
       name: "peer",
       type: "record Broker::NetworkInfo",
-      desc: "The peer (if any) with which a Broker event is concerned."
+      desc: "The peer (if any) with which a Broker event is concerned.",
     },
     {
       name: "message",
       type: "string",
-      desc: "An optional message describing the Broker event in more detail"
-    }
+      desc: "An optional message describing the Broker event in more detail",
+    },
   ],
   smb_mapping_log: [
     {
       name: "_path",
-      type: "smb_mapping"
+      type: "smb_mapping",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time when the tree was mapped."
+      desc: "Time when the tree was mapped.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID of the connection the tree was mapped over."
+      desc: "Unique ID of the connection the tree was mapped over.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "ID of the connection the tree was mapped over."
+      desc: "ID of the connection the tree was mapped over.",
     },
     {
       name: "path",
       type: "string",
-      desc: "Name of the tree path."
+      desc: "Name of the tree path.",
     },
     {
       name: "service",
       type: "string",
-      desc:
-        "The type of resource of the tree (disk share, printer share, named pipe, etc.)."
+      desc: "The type of resource of the tree (disk share, printer share, named pipe, etc.).",
     },
     {
       name: "native_file_system",
       type: "string",
-      desc: "File system of the tree."
+      desc: "File system of the tree.",
     },
     {
       name: "share_type",
       type: "string",
-      desc:
-        "If this is SMB2, a share type will be included.  For SMB1, the type of share will be deduced and included as well."
-    }
+      desc: "If this is SMB2, a share type will be included.  For SMB1, the type of share will be deduced and included as well.",
+    },
   ],
   config_log: [
     {
       name: "_path",
-      type: "config"
+      type: "config",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp at which the configuration change occured."
+      desc: "Timestamp at which the configuration change occured.",
     },
     {
       name: "id",
       type: "string",
-      desc: "ID of the value that was changed."
+      desc: "ID of the value that was changed.",
     },
     {
       name: "old_value",
       type: "string",
-      desc: "Value before the change."
+      desc: "Value before the change.",
     },
     {
       name: "new_value",
       type: "string",
-      desc: "Value after the change."
+      desc: "Value after the change.",
     },
     {
       name: "location",
       type: "string",
-      desc: "Optional location that triggered the change."
-    }
+      desc: "Optional location that triggered the change.",
+    },
   ],
   ftp_log: [
     {
       name: "_path",
-      type: "ftp"
+      type: "ftp",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time when the command was sent."
+      desc: "Time when the command was sent.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "user",
       type: "string",
-      desc: "User name for the current FTP session."
+      desc: "User name for the current FTP session.",
     },
     {
       name: "password",
       type: "string",
-      desc: "Password for the current FTP session if captured."
+      desc: "Password for the current FTP session if captured.",
     },
     {
       name: "command",
       type: "string",
-      desc: "Command given by the client."
+      desc: "Command given by the client.",
     },
     {
       name: "arg",
       type: "string",
-      desc: "Argument for the command if one is given."
+      desc: "Argument for the command if one is given.",
     },
     {
       name: "mime_type",
       type: "string",
-      desc: "Sniffed mime type of file."
+      desc: "Sniffed mime type of file.",
     },
     {
       name: "file_size",
       type: "count",
-      desc: "Size of the file if the command indicates a file transfer."
+      desc: "Size of the file if the command indicates a file transfer.",
     },
     {
       name: "reply_code",
       type: "count",
-      desc: "Reply code from the server in response to the command."
+      desc: "Reply code from the server in response to the command.",
     },
     {
       name: "reply_msg",
       type: "string",
-      desc: "Reply message from the server in response to the command."
+      desc: "Reply message from the server in response to the command.",
     },
     {
       name: "data_channel",
       type: "record FTP::ExpectedDataChannel",
-      desc: "Expected FTP data channel."
+      desc: "Expected FTP data channel.",
     },
     {
       name: "fuid",
       type: "string",
-      desc: "File unique ID."
-    }
+      desc: "File unique ID.",
+    },
   ],
   dhcp_log: [
     {
       name: "_path",
-      type: "dhcp"
+      type: "dhcp",
     },
     {
       name: "ts",
       type: "time",
-      desc:
-        "The earliest time at which a DHCP message over the associated connection is observed."
+      desc: "The earliest time at which a DHCP message over the associated connection is observed.",
     },
     {
       name: "uids",
       type: "table",
-      desc:
-        "A series of unique identifiers of the connections over which DHCP is occurring.  This behavior with multiple connections is unique to DHCP because of the way it uses broadcast packets on local networks."
+      desc: "A series of unique identifiers of the connections over which DHCP is occurring.  This behavior with multiple connections is unique to DHCP because of the way it uses broadcast packets on local networks.",
     },
     {
       name: "client_addr",
       type: "addr",
-      desc:
-        "IP address of the client.  If a transaction is only a client sending INFORM messages then there is no lease information exchanged so this is helpful to know who sent the messages. Getting an address in this field does require that the client sources at least one DHCP message using a non-broadcast address."
+      desc: "IP address of the client.  If a transaction is only a client sending INFORM messages then there is no lease information exchanged so this is helpful to know who sent the messages. Getting an address in this field does require that the client sources at least one DHCP message using a non-broadcast address.",
     },
     {
       name: "server_addr",
       type: "addr",
-      desc:
-        "IP address of the server involved in actually handing out the lease.  There could be other servers replying with OFFER messages which won't be represented here.  Getting an address in this field also requires that the server handing out the lease also sources packets from a non-broadcast IP address."
+      desc: "IP address of the server involved in actually handing out the lease.  There could be other servers replying with OFFER messages which won't be represented here.  Getting an address in this field also requires that the server handing out the lease also sources packets from a non-broadcast IP address.",
     },
     {
       name: "mac",
       type: "string",
-      desc: "Client's hardware address."
+      desc: "Client's hardware address.",
     },
     {
       name: "host_name",
       type: "string",
-      desc: "Name given by client in Hostname option 12."
+      desc: "Name given by client in Hostname option 12.",
     },
     {
       name: "client_fqdn",
       type: "string",
-      desc: "FQDN given by client in Client FQDN option 81."
+      desc: "FQDN given by client in Client FQDN option 81.",
     },
     {
       name: "domain",
       type: "string",
-      desc: "Domain given by the server in option 15."
+      desc: "Domain given by the server in option 15.",
     },
     {
       name: "requested_addr",
       type: "addr",
-      desc: "IP address requested by the client."
+      desc: "IP address requested by the client.",
     },
     {
       name: "assigned_addr",
       type: "addr",
-      desc: "IP address assigned by the server."
+      desc: "IP address assigned by the server.",
     },
     {
       name: "lease_time",
       type: "interval",
-      desc: "IP address lease interval."
+      desc: "IP address lease interval.",
     },
     {
       name: "client_message",
       type: "string",
-      desc:
-        "Message typically accompanied with a DHCP_DECLINE so the client can tell the server why it rejected an address."
+      desc: "Message typically accompanied with a DHCP_DECLINE so the client can tell the server why it rejected an address.",
     },
     {
       name: "server_message",
       type: "string",
-      desc:
-        "Message typically accompanied with a DHCP_NAK to let the client know why it rejected the request."
+      desc: "Message typically accompanied with a DHCP_NAK to let the client know why it rejected the request.",
     },
     {
       name: "msg_types",
       type: "vector",
-      desc: "The DHCP message types seen by this DHCP transaction"
+      desc: "The DHCP message types seen by this DHCP transaction",
     },
     {
       name: "duration",
       type: "interval",
-      desc:
-        'Duration of the DHCP "session" representing the  time from the first message to the last.'
-    }
+      desc: 'Duration of the DHCP "session" representing the  time from the first message to the last.',
+    },
   ],
   dpd_log: [
     {
       name: "_path",
-      type: "dpd"
+      type: "dpd",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when protocol analysis failed."
+      desc: "Timestamp for when protocol analysis failed.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Connection unique ID."
+      desc: "Connection unique ID.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "Connection ID containing the 4-tuple which identifies endpoints."
+      desc: "Connection ID containing the 4-tuple which identifies endpoints.",
     },
     {
       name: "proto",
       type: "enum",
-      desc: "Transport protocol for the violation."
+      desc: "Transport protocol for the violation.",
     },
     {
       name: "analyzer",
       type: "string",
-      desc: "The analyzer that generated the violation."
+      desc: "The analyzer that generated the violation.",
     },
     {
       name: "failure_reason",
       type: "string",
-      desc: "The textual reason for the analysis failure."
-    }
+      desc: "The textual reason for the analysis failure.",
+    },
   ],
   notice_log: [
     {
       name: "_path",
-      type: "notice"
+      type: "notice",
     },
     {
       name: "ts",
       type: "time",
-      desc:
-        "An absolute time indicating when the notice occurred, defaults to the current network time."
+      desc: "An absolute time indicating when the notice occurred, defaults to the current network time.",
     },
     {
       name: "uid",
       type: "string",
-      desc:
-        "A connection UID which uniquely identifies the endpoints concerned with the notice."
+      desc: "A connection UID which uniquely identifies the endpoints concerned with the notice.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc:
-        "A connection 4-tuple identifying the endpoints concerned with the notice."
+      desc: "A connection 4-tuple identifying the endpoints concerned with the notice.",
     },
     {
       name: "fuid",
       type: "string",
-      desc:
-        "A file unique ID if this notice is related to a file.  If the *f* field is provided, this will be automatically filled out."
+      desc: "A file unique ID if this notice is related to a file.  If the *f* field is provided, this will be automatically filled out.",
     },
     {
       name: "file_mime_type",
       type: "string",
-      desc:
-        "A mime type if the notice is related to a file.  If the *f* field is provided, this will be automatically filled out."
+      desc: "A mime type if the notice is related to a file.  If the *f* field is provided, this will be automatically filled out.",
     },
     {
       name: "file_desc",
       type: "string",
-      desc:
-        'Frequently files can be "described" to give a bit more context.  This field will typically be automatically filled out from an fa_file record.  For example, if a notice was related to a file over HTTP, the URL of the request would be shown.'
+      desc: 'Frequently files can be "described" to give a bit more context.  This field will typically be automatically filled out from an fa_file record.  For example, if a notice was related to a file over HTTP, the URL of the request would be shown.',
     },
     {
       name: "proto",
       type: "enum",
-      desc:
-        "The transport protocol. Filled automatically when either *conn*, *iconn* or *p* is specified."
+      desc: "The transport protocol. Filled automatically when either *conn*, *iconn* or *p* is specified.",
     },
     {
       name: "note",
       type: "enum",
-      desc: "The :zeek:type:`Notice::Type` of the notice."
+      desc: "The :zeek:type:`Notice::Type` of the notice.",
     },
     {
       name: "msg",
       type: "string",
-      desc: "The human readable message for the notice."
+      desc: "The human readable message for the notice.",
     },
     {
       name: "sub",
       type: "string",
-      desc: "The human readable sub-message."
+      desc: "The human readable sub-message.",
     },
     {
       name: "src",
       type: "addr",
-      desc: "Source address, if we don't have a :zeek:type:`conn_id`."
+      desc: "Source address, if we don't have a :zeek:type:`conn_id`.",
     },
     {
       name: "dst",
       type: "addr",
-      desc: "Destination address."
+      desc: "Destination address.",
     },
     {
       name: "p",
       type: "port",
-      desc: "Associated port, if we don't have a :zeek:type:`conn_id`."
+      desc: "Associated port, if we don't have a :zeek:type:`conn_id`.",
     },
     {
       name: "n",
       type: "count",
-      desc: "Associated count, or perhaps a status code."
+      desc: "Associated count, or perhaps a status code.",
     },
     {
       name: "peer_descr",
       type: "string",
-      desc:
-        "Textual description for the peer that raised this notice, including name, host address and port."
+      desc: "Textual description for the peer that raised this notice, including name, host address and port.",
     },
     {
       name: "actions",
       type: "table",
-      desc: "The actions which have been applied to this notice."
+      desc: "The actions which have been applied to this notice.",
     },
     {
       name: "suppress_for",
       type: "interval",
-      desc:
-        "This field indicates the length of time that this unique notice should be suppressed."
+      desc: "This field indicates the length of time that this unique notice should be suppressed.",
     },
     {
       name: "remote_location",
       type: "record geo_location",
-      desc:
-        "If GeoIP support is built in, notices can have geographic information attached to them."
-    }
+      desc: "If GeoIP support is built in, notices can have geographic information attached to them.",
+    },
   ],
   weird_log: [
     {
       name: "_path",
-      type: "weird"
+      type: "weird",
     },
     {
       name: "ts",
       type: "time",
-      desc: "The time when the weird occurred."
+      desc: "The time when the weird occurred.",
     },
     {
       name: "uid",
       type: "string",
-      desc:
-        "If a connection is associated with this weird, this will be the connection's unique ID."
+      desc: "If a connection is associated with this weird, this will be the connection's unique ID.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "conn_id for the optional connection."
+      desc: "conn_id for the optional connection.",
     },
     {
       name: "name",
       type: "string",
-      desc: "The name of the weird that occurred."
+      desc: "The name of the weird that occurred.",
     },
     {
       name: "addl",
       type: "string",
-      desc: "Additional information accompanying the weird if any."
+      desc: "Additional information accompanying the weird if any.",
     },
     {
       name: "notice",
       type: "bool",
-      desc: "Indicate if this weird was also turned into a notice."
+      desc: "Indicate if this weird was also turned into a notice.",
     },
     {
       name: "peer",
       type: "string",
-      desc:
-        "The peer that originated this weird.  This is helpful in cluster deployments if a particular cluster node is having trouble to help identify which node is having trouble."
-    }
+      desc: "The peer that originated this weird.  This is helpful in cluster deployments if a particular cluster node is having trouble to help identify which node is having trouble.",
+    },
   ],
   netcontrol_shunt_log: [
     {
       name: "_path",
-      type: "netcontrol_shunt"
+      type: "netcontrol_shunt",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time at which the recorded activity occurred."
+      desc: "Time at which the recorded activity occurred.",
     },
     {
       name: "rule_id",
       type: "string",
-      desc: "ID of the rule; unique during each Zeek run."
+      desc: "ID of the rule; unique during each Zeek run.",
     },
     {
       name: "f",
       type: "record flow_id",
-      desc: "Flow ID of the shunted flow."
+      desc: "Flow ID of the shunted flow.",
     },
     {
       name: "expire",
       type: "interval",
-      desc: "Expiry time of the shunt."
+      desc: "Expiry time of the shunt.",
     },
     {
       name: "location",
       type: "string",
-      desc: "Location where the underlying action was triggered."
-    }
+      desc: "Location where the underlying action was triggered.",
+    },
   ],
   reporter_log: [
     {
       name: "_path",
-      type: "reporter"
+      type: "reporter",
     },
     {
       name: "ts",
       type: "time",
-      desc: "The network time at which the reporter event was generated."
+      desc: "The network time at which the reporter event was generated.",
     },
     {
       name: "level",
       type: "enum",
-      desc:
-        "The severity of the reporter message. Levels are INFO for informational messages, not needing specific attention; WARNING for warning of a potential problem, and ERROR for a non-fatal error that should be addressed, but doesn't terminate program execution."
+      desc: "The severity of the reporter message. Levels are INFO for informational messages, not needing specific attention; WARNING for warning of a potential problem, and ERROR for a non-fatal error that should be addressed, but doesn't terminate program execution.",
     },
     {
       name: "message",
       type: "string",
-      desc:
-        "An info/warning/error message that could have either been generated from the internal Zeek core or at the scripting-layer."
+      desc: "An info/warning/error message that could have either been generated from the internal Zeek core or at the scripting-layer.",
     },
     {
       name: "location",
       type: "string",
-      desc:
-        "This is the location in a Zeek script where the message originated. Not all reporter messages will have locations in them though."
-    }
+      desc: "This is the location in a Zeek script where the message originated. Not all reporter messages will have locations in them though.",
+    },
   ],
   tunnel_log: [
     {
       name: "_path",
-      type: "tunnel"
+      type: "tunnel",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time at which some tunnel activity occurred."
+      desc: "Time at which some tunnel activity occurred.",
     },
     {
       name: "uid",
       type: "string",
-      desc:
-        "The unique identifier for the tunnel, which may correspond to a :zeek:type:`connection`'s *uid* field for non-IP-in-IP tunnels. This is optional because there could be numerous connections for payload proxies like SOCKS but we should treat it as a single tunnel."
+      desc: "The unique identifier for the tunnel, which may correspond to a :zeek:type:`connection`'s *uid* field for non-IP-in-IP tunnels. This is optional because there could be numerous connections for payload proxies like SOCKS but we should treat it as a single tunnel.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc:
-        'The tunnel "connection" 4-tuple of endpoint addresses/ports. For an IP tunnel, the ports will be 0.'
+      desc: 'The tunnel "connection" 4-tuple of endpoint addresses/ports. For an IP tunnel, the ports will be 0.',
     },
     {
       name: "tunnel_type",
       type: "enum",
-      desc: "The type of tunnel."
+      desc: "The type of tunnel.",
     },
     {
       name: "action",
       type: "enum",
-      desc: "The type of activity that occurred."
-    }
+      desc: "The type of activity that occurred.",
+    },
   ],
   dnp3_log: [
     {
       name: "_path",
-      type: "dnp3"
+      type: "dnp3",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time of the request."
+      desc: "Time of the request.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique identifier for the connection."
+      desc: "Unique identifier for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "Identifier for the connection."
+      desc: "Identifier for the connection.",
     },
     {
       name: "fc_request",
       type: "string",
-      desc: "The name of the function message in the request."
+      desc: "The name of the function message in the request.",
     },
     {
       name: "fc_reply",
       type: "string",
-      desc: "The name of the function message in the reply."
+      desc: "The name of the function message in the reply.",
     },
     {
       name: "iin",
       type: "count",
-      desc: 'The response\'s "internal indication number".'
-    }
+      desc: 'The response\'s "internal indication number".',
+    },
   ],
   netcontrol_log: [
     {
       name: "_path",
-      type: "netcontrol"
+      type: "netcontrol",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time at which the recorded activity occurred."
+      desc: "Time at which the recorded activity occurred.",
     },
     {
       name: "rule_id",
       type: "string",
-      desc: "ID of the rule; unique during each Zeek run."
+      desc: "ID of the rule; unique during each Zeek run.",
     },
     {
       name: "category",
       type: "enum",
-      desc: "Type of the log entry."
+      desc: "Type of the log entry.",
     },
     {
       name: "cmd",
       type: "string",
-      desc: "The command the log entry is about."
+      desc: "The command the log entry is about.",
     },
     {
       name: "state",
       type: "enum",
-      desc: "State the log entry reflects."
+      desc: "State the log entry reflects.",
     },
     {
       name: "action",
       type: "string",
-      desc: "String describing an action the entry is about."
+      desc: "String describing an action the entry is about.",
     },
     {
       name: "target",
       type: "enum",
-      desc: "The target type of the action."
+      desc: "The target type of the action.",
     },
     {
       name: "entity_type",
       type: "string",
-      desc: "Type of the entity the log entry is about."
+      desc: "Type of the entity the log entry is about.",
     },
     {
       name: "entity",
       type: "string",
-      desc: "String describing the entity the log entry is about."
+      desc: "String describing the entity the log entry is about.",
     },
     {
       name: "mod",
       type: "string",
-      desc:
-        "String describing the optional modification of the entry (e.h. redirect)"
+      desc: "String describing the optional modification of the entry (e.h. redirect)",
     },
     {
       name: "msg",
       type: "string",
-      desc: "String with an additional message."
+      desc: "String with an additional message.",
     },
     {
       name: "priority",
       type: "int",
-      desc: "Number describing the priority of the log entry."
+      desc: "Number describing the priority of the log entry.",
     },
     {
       name: "expire",
       type: "interval",
-      desc: "Expiry time of the log entry."
+      desc: "Expiry time of the log entry.",
     },
     {
       name: "location",
       type: "string",
-      desc: "Location where the underlying action was triggered."
+      desc: "Location where the underlying action was triggered.",
     },
     {
       name: "plugin",
       type: "string",
-      desc: "Plugin triggering the log entry."
-    }
+      desc: "Plugin triggering the log entry.",
+    },
   ],
   notice_alarm_log: [
     {
       name: "_path",
-      type: "notice_alarm"
+      type: "notice_alarm",
     },
     {
       name: "ts",
       type: "time",
-      desc:
-        "An absolute time indicating when the notice occurred, defaults to the current network time."
+      desc: "An absolute time indicating when the notice occurred, defaults to the current network time.",
     },
     {
       name: "uid",
       type: "string",
-      desc:
-        "A connection UID which uniquely identifies the endpoints concerned with the notice."
+      desc: "A connection UID which uniquely identifies the endpoints concerned with the notice.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc:
-        "A connection 4-tuple identifying the endpoints concerned with the notice."
+      desc: "A connection 4-tuple identifying the endpoints concerned with the notice.",
     },
     {
       name: "fuid",
       type: "string",
-      desc:
-        "A file unique ID if this notice is related to a file.  If the *f* field is provided, this will be automatically filled out."
+      desc: "A file unique ID if this notice is related to a file.  If the *f* field is provided, this will be automatically filled out.",
     },
     {
       name: "file_mime_type",
       type: "string",
-      desc:
-        "A mime type if the notice is related to a file.  If the *f* field is provided, this will be automatically filled out."
+      desc: "A mime type if the notice is related to a file.  If the *f* field is provided, this will be automatically filled out.",
     },
     {
       name: "file_desc",
       type: "string",
-      desc:
-        'Frequently files can be "described" to give a bit more context.  This field will typically be automatically filled out from an fa_file record.  For example, if a notice was related to a file over HTTP, the URL of the request would be shown.'
+      desc: 'Frequently files can be "described" to give a bit more context.  This field will typically be automatically filled out from an fa_file record.  For example, if a notice was related to a file over HTTP, the URL of the request would be shown.',
     },
     {
       name: "proto",
       type: "enum",
-      desc:
-        "The transport protocol. Filled automatically when either *conn*, *iconn* or *p* is specified."
+      desc: "The transport protocol. Filled automatically when either *conn*, *iconn* or *p* is specified.",
     },
     {
       name: "note",
       type: "enum",
-      desc: "The :zeek:type:`Notice::Type` of the notice."
+      desc: "The :zeek:type:`Notice::Type` of the notice.",
     },
     {
       name: "msg",
       type: "string",
-      desc: "The human readable message for the notice."
+      desc: "The human readable message for the notice.",
     },
     {
       name: "sub",
       type: "string",
-      desc: "The human readable sub-message."
+      desc: "The human readable sub-message.",
     },
     {
       name: "src",
       type: "addr",
-      desc: "Source address, if we don't have a :zeek:type:`conn_id`."
+      desc: "Source address, if we don't have a :zeek:type:`conn_id`.",
     },
     {
       name: "dst",
       type: "addr",
-      desc: "Destination address."
+      desc: "Destination address.",
     },
     {
       name: "p",
       type: "port",
-      desc: "Associated port, if we don't have a :zeek:type:`conn_id`."
+      desc: "Associated port, if we don't have a :zeek:type:`conn_id`.",
     },
     {
       name: "n",
       type: "count",
-      desc: "Associated count, or perhaps a status code."
+      desc: "Associated count, or perhaps a status code.",
     },
     {
       name: "peer_descr",
       type: "string",
-      desc:
-        "Textual description for the peer that raised this notice, including name, host address and port."
+      desc: "Textual description for the peer that raised this notice, including name, host address and port.",
     },
     {
       name: "actions",
       type: "table",
-      desc: "The actions which have been applied to this notice."
+      desc: "The actions which have been applied to this notice.",
     },
     {
       name: "suppress_for",
       type: "interval",
-      desc:
-        "This field indicates the length of time that this unique notice should be suppressed."
+      desc: "This field indicates the length of time that this unique notice should be suppressed.",
     },
     {
       name: "remote_location",
       type: "record geo_location",
-      desc:
-        "If GeoIP support is built in, notices can have geographic information attached to them."
-    }
+      desc: "If GeoIP support is built in, notices can have geographic information attached to them.",
+    },
   ],
   conn_log: [
     {
       name: "_path",
-      type: "conn"
+      type: "conn",
     },
     {
       name: "ts",
       type: "time",
-      desc: "This is the time of the first packet."
+      desc: "This is the time of the first packet.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "A unique identifier of the connection."
+      desc: "A unique identifier of the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "proto",
       type: "enum",
-      desc: "The transport layer protocol of the connection."
+      desc: "The transport layer protocol of the connection.",
     },
     {
       name: "service",
       type: "string",
-      desc:
-        "An identification of an application protocol being sent over the connection."
+      desc: "An identification of an application protocol being sent over the connection.",
     },
     {
       name: "duration",
       type: "interval",
-      desc:
-        "How long the connection lasted.  For 3-way or 4-way connection tear-downs, this will not include the final ACK."
+      desc: "How long the connection lasted.  For 3-way or 4-way connection tear-downs, this will not include the final ACK.",
     },
     {
       name: "orig_bytes",
       type: "count",
-      desc:
-        "The number of payload bytes the originator sent. For TCP this is taken from sequence numbers and might be inaccurate (e.g., due to large connections)."
+      desc: "The number of payload bytes the originator sent. For TCP this is taken from sequence numbers and might be inaccurate (e.g., due to large connections).",
     },
     {
       name: "resp_bytes",
       type: "count",
-      desc: "The number of payload bytes the responder sent. See *orig_bytes*."
+      desc: "The number of payload bytes the responder sent. See *orig_bytes*.",
     },
     {
       name: "conn_state",
@@ -2167,25 +2063,22 @@ export default {
 * RSTRH: Responder sent a SYN ACK followed by a RST, we never saw a   SYN from the (purported) originator.
 * SH: Originator sent a SYN followed by a FIN, we never saw a   SYN ACK from the responder (hence the connection was "half" open).
 * SHR: Responder sent a SYN ACK followed by a FIN, we never saw a   SYN from the originator.
-* OTH: No SYN seen, just midstream traffic (a "partial connection"   that was not later closed).`
+* OTH: No SYN seen, just midstream traffic (a "partial connection"   that was not later closed).`,
     },
     {
       name: "local_orig",
       type: "bool",
-      desc:
-        "If the connection is originated locally, this value will be T. If it was originated remotely it will be F.  In the case that the :zeek:id:`Site::local_nets` variable is undefined, this field will be left empty at all times."
+      desc: "If the connection is originated locally, this value will be T. If it was originated remotely it will be F.  In the case that the :zeek:id:`Site::local_nets` variable is undefined, this field will be left empty at all times.",
     },
     {
       name: "local_resp",
       type: "bool",
-      desc:
-        "If the connection is responded to locally, this value will be T. If it was responded to remotely it will be F.  In the case that the :zeek:id:`Site::local_nets` variable is undefined, this field will be left empty at all times."
+      desc: "If the connection is responded to locally, this value will be T. If it was responded to remotely it will be F.  In the case that the :zeek:id:`Site::local_nets` variable is undefined, this field will be left empty at all times.",
     },
     {
       name: "missed_bytes",
       type: "count",
-      desc:
-        "Indicates the number of bytes missed in content gaps, which is representative of packet loss.  A value other than zero will normally cause protocol analysis to fail but some analysis may have been completed prior to the packet loss."
+      desc: "Indicates the number of bytes missed in content gaps, which is representative of packet loss.  A value other than zero will normally cause protocol analysis to fail but some analysis may have been completed prior to the packet loss.",
     },
     {
       name: "history",
@@ -2206,776 +2099,753 @@ export default {
 * "q": multi-flag packet (SYN+FIN or SYN+RST bits set)
 * "^": connection direction was flipped by Zeek's heuristic
 
-If the event comes from the originator, the letter is in upper-case; if it comes from the responder, it's in lower-case.  The 'a', 'd', 'i' and 'q' flags are recorded a maximum of one time in either direction regardless of how many are actually seen.  'f', 'h', 'r' and 's' can be recorded multiple times for either direction if the associated sequence number differs from the last-seen packet of the same flag type. 'c', 'g', 't' and 'w' are recorded in a logarithmic fashion: the second instance represents that the event was seen (at least) 10 times; the third instance, 100 times; etc.`
+If the event comes from the originator, the letter is in upper-case; if it comes from the responder, it's in lower-case.  The 'a', 'd', 'i' and 'q' flags are recorded a maximum of one time in either direction regardless of how many are actually seen.  'f', 'h', 'r' and 's' can be recorded multiple times for either direction if the associated sequence number differs from the last-seen packet of the same flag type. 'c', 'g', 't' and 'w' are recorded in a logarithmic fashion: the second instance represents that the event was seen (at least) 10 times; the third instance, 100 times; etc.`,
     },
     {
       name: "orig_pkts",
       type: "count",
-      desc:
-        "Number of packets that the originator sent. Only set if :zeek:id:`use_conn_size_analyzer` = T."
+      desc: "Number of packets that the originator sent. Only set if :zeek:id:`use_conn_size_analyzer` = T.",
     },
     {
       name: "orig_ip_bytes",
       type: "count",
-      desc:
-        "Number of IP level bytes that the originator sent (as seen on the wire, taken from the IP total_length header field). Only set if :zeek:id:`use_conn_size_analyzer` = T."
+      desc: "Number of IP level bytes that the originator sent (as seen on the wire, taken from the IP total_length header field). Only set if :zeek:id:`use_conn_size_analyzer` = T.",
     },
     {
       name: "resp_pkts",
       type: "count",
-      desc:
-        "Number of packets that the responder sent. Only set if :zeek:id:`use_conn_size_analyzer` = T."
+      desc: "Number of packets that the responder sent. Only set if :zeek:id:`use_conn_size_analyzer` = T.",
     },
     {
       name: "resp_ip_bytes",
       type: "count",
-      desc:
-        "Number of IP level bytes that the responder sent (as seen on the wire, taken from the IP total_length header field). Only set if :zeek:id:`use_conn_size_analyzer` = T."
+      desc: "Number of IP level bytes that the responder sent (as seen on the wire, taken from the IP total_length header field). Only set if :zeek:id:`use_conn_size_analyzer` = T.",
     },
     {
       name: "tunnel_parents",
       type: "table",
-      desc:
-        "If this connection was over a tunnel, indicate the *uid* values for any encapsulating parent connections used over the lifetime of this inner connection."
-    }
+      desc: "If this connection was over a tunnel, indicate the *uid* values for any encapsulating parent connections used over the lifetime of this inner connection.",
+    },
   ],
   dns_log: [
     {
       name: "_path",
-      type: "dns"
+      type: "dns",
     },
     {
       name: "ts",
       type: "time",
-      desc:
-        "The earliest time at which a DNS protocol message over the associated connection is observed."
+      desc: "The earliest time at which a DNS protocol message over the associated connection is observed.",
     },
     {
       name: "uid",
       type: "string",
-      desc:
-        "A unique identifier of the connection over which DNS messages are being transferred."
+      desc: "A unique identifier of the connection over which DNS messages are being transferred.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "proto",
       type: "enum",
-      desc: "The transport layer protocol of the connection."
+      desc: "The transport layer protocol of the connection.",
     },
     {
       name: "trans_id",
       type: "count",
-      desc:
-        "A 16-bit identifier assigned by the program that generated the DNS query.  Also used in responses to match up replies to outstanding queries."
+      desc: "A 16-bit identifier assigned by the program that generated the DNS query.  Also used in responses to match up replies to outstanding queries.",
     },
     {
       name: "rtt",
       type: "interval",
-      desc:
-        "Round trip time for the query and response. This indicates the delay between when the request was seen until the answer started."
+      desc: "Round trip time for the query and response. This indicates the delay between when the request was seen until the answer started.",
     },
     {
       name: "query",
       type: "string",
-      desc: "The domain name that is the subject of the DNS query."
+      desc: "The domain name that is the subject of the DNS query.",
     },
     {
       name: "qclass",
       type: "count",
-      desc: "The QCLASS value specifying the class of the query."
+      desc: "The QCLASS value specifying the class of the query.",
     },
     {
       name: "qclass_name",
       type: "string",
-      desc: "A descriptive name for the class of the query."
+      desc: "A descriptive name for the class of the query.",
     },
     {
       name: "qtype",
       type: "count",
-      desc: "A QTYPE value specifying the type of the query."
+      desc: "A QTYPE value specifying the type of the query.",
     },
     {
       name: "qtype_name",
       type: "string",
-      desc: "A descriptive name for the type of the query."
+      desc: "A descriptive name for the type of the query.",
     },
     {
       name: "rcode",
       type: "count",
-      desc: "The response code value in DNS response messages."
+      desc: "The response code value in DNS response messages.",
     },
     {
       name: "rcode_name",
       type: "string",
-      desc: "A descriptive name for the response code value."
+      desc: "A descriptive name for the response code value.",
     },
     {
       name: "AA",
       type: "bool",
-      desc:
-        "The Authoritative Answer bit for response messages specifies that the responding name server is an authority for the domain name in the question section."
+      desc: "The Authoritative Answer bit for response messages specifies that the responding name server is an authority for the domain name in the question section.",
     },
     {
       name: "TC",
       type: "bool",
-      desc: "The Truncation bit specifies that the message was truncated."
+      desc: "The Truncation bit specifies that the message was truncated.",
     },
     {
       name: "RD",
       type: "bool",
-      desc:
-        "The Recursion Desired bit in a request message indicates that the client wants recursive service for this query."
+      desc: "The Recursion Desired bit in a request message indicates that the client wants recursive service for this query.",
     },
     {
       name: "RA",
       type: "bool",
-      desc:
-        "The Recursion Available bit in a response message indicates that the name server supports recursive queries."
+      desc: "The Recursion Available bit in a response message indicates that the name server supports recursive queries.",
     },
     {
       name: "Z",
       type: "count",
-      desc: "A reserved field that is usually zero in queries and responses."
+      desc: "A reserved field that is usually zero in queries and responses.",
     },
     {
       name: "answers",
       type: "vector",
-      desc: "The set of resource descriptions in the query answer."
+      desc: "The set of resource descriptions in the query answer.",
     },
     {
       name: "TTLs",
       type: "vector",
-      desc:
-        "The caching intervals of the associated RRs described by the *answers* field."
+      desc: "The caching intervals of the associated RRs described by the *answers* field.",
     },
     {
       name: "rejected",
       type: "bool",
-      desc: "The DNS query was rejected by the server."
-    }
+      desc: "The DNS query was rejected by the server.",
+    },
   ],
   smtp_log: [
     {
       name: "_path",
-      type: "smtp"
+      type: "smtp",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time when the message was first seen."
+      desc: "Time when the message was first seen.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "trans_depth",
       type: "count",
-      desc:
-        "A count to represent the depth of this message transaction in a single connection where multiple messages were transferred."
+      desc: "A count to represent the depth of this message transaction in a single connection where multiple messages were transferred.",
     },
     {
       name: "helo",
       type: "string",
-      desc: "Contents of the Helo header."
+      desc: "Contents of the Helo header.",
     },
     {
       name: "mailfrom",
       type: "string",
-      desc: "Email addresses found in the From header."
+      desc: "Email addresses found in the From header.",
     },
     {
       name: "rcptto",
       type: "table",
-      desc: "Email addresses found in the Rcpt header."
+      desc: "Email addresses found in the Rcpt header.",
     },
     {
       name: "date",
       type: "string",
-      desc: "Contents of the Date header."
+      desc: "Contents of the Date header.",
     },
     {
       name: "from",
       type: "string",
-      desc: "Contents of the From header."
+      desc: "Contents of the From header.",
     },
     {
       name: "to",
       type: "table",
-      desc: "Contents of the To header."
+      desc: "Contents of the To header.",
     },
     {
       name: "cc",
       type: "table",
-      desc: "Contents of the CC header."
+      desc: "Contents of the CC header.",
     },
     {
       name: "reply_to",
       type: "string",
-      desc: "Contents of the ReplyTo header."
+      desc: "Contents of the ReplyTo header.",
     },
     {
       name: "msg_id",
       type: "string",
-      desc: "Contents of the MsgID header."
+      desc: "Contents of the MsgID header.",
     },
     {
       name: "in_reply_to",
       type: "string",
-      desc: "Contents of the In-Reply-To header."
+      desc: "Contents of the In-Reply-To header.",
     },
     {
       name: "subject",
       type: "string",
-      desc: "Contents of the Subject header."
+      desc: "Contents of the Subject header.",
     },
     {
       name: "x_originating_ip",
       type: "addr",
-      desc: "Contents of the X-Originating-IP header."
+      desc: "Contents of the X-Originating-IP header.",
     },
     {
       name: "first_received",
       type: "string",
-      desc: "Contents of the first Received header."
+      desc: "Contents of the first Received header.",
     },
     {
       name: "second_received",
       type: "string",
-      desc: "Contents of the second Received header."
+      desc: "Contents of the second Received header.",
     },
     {
       name: "last_reply",
       type: "string",
-      desc: "The last message that the server sent to the client."
+      desc: "The last message that the server sent to the client.",
     },
     {
       name: "path",
       type: "vector",
-      desc: "The message transmission path, as extracted from the headers."
+      desc: "The message transmission path, as extracted from the headers.",
     },
     {
       name: "user_agent",
       type: "string",
-      desc: "Value of the User-Agent header from the client."
+      desc: "Value of the User-Agent header from the client.",
     },
     {
       name: "tls",
       type: "bool",
-      desc: "Indicates that the connection has switched to using TLS."
+      desc: "Indicates that the connection has switched to using TLS.",
     },
     {
       name: "fuids",
       type: "vector",
-      desc: "An ordered vector of file unique IDs seen attached to the message."
-    }
+      desc: "An ordered vector of file unique IDs seen attached to the message.",
+    },
   ],
   socks_log: [
     {
       name: "_path",
-      type: "socks"
+      type: "socks",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Time when the proxy connection was first detected."
+      desc: "Time when the proxy connection was first detected.",
     },
     {
       name: "uid",
       type: "string",
-      desc:
-        "Unique ID for the tunnel - may correspond to connection uid or be non-existent."
+      desc: "Unique ID for the tunnel - may correspond to connection uid or be non-existent.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "version",
       type: "count",
-      desc: "Protocol version of SOCKS."
+      desc: "Protocol version of SOCKS.",
     },
     {
       name: "user",
       type: "string",
-      desc: "Username used to request a login to the proxy."
+      desc: "Username used to request a login to the proxy.",
     },
     {
       name: "password",
       type: "string",
-      desc: "Password used to request a login to the proxy."
+      desc: "Password used to request a login to the proxy.",
     },
     {
       name: "status",
       type: "string",
-      desc: "Server status for the attempt at using the proxy."
+      desc: "Server status for the attempt at using the proxy.",
     },
     {
       name: "request",
       type: "record SOCKS::Address",
-      desc:
-        "Client requested SOCKS address. Could be an address, a name or both."
+      desc: "Client requested SOCKS address. Could be an address, a name or both.",
     },
     {
       name: "request_p",
       type: "port",
-      desc: "Client requested port."
+      desc: "Client requested port.",
     },
     {
       name: "bound",
       type: "record SOCKS::Address",
-      desc: "Server bound address. Could be an address, a name or both."
+      desc: "Server bound address. Could be an address, a name or both.",
     },
     {
       name: "bound_p",
       type: "port",
-      desc: "Server bound port."
-    }
+      desc: "Server bound port.",
+    },
   ],
   syslog_log: [
     {
       name: "_path",
-      type: "syslog"
+      type: "syslog",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp when the syslog message was seen."
+      desc: "Timestamp when the syslog message was seen.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "proto",
       type: "enum",
-      desc: "Protocol over which the message was seen."
+      desc: "Protocol over which the message was seen.",
     },
     {
       name: "facility",
       type: "string",
-      desc: "Syslog facility for the message."
+      desc: "Syslog facility for the message.",
     },
     {
       name: "severity",
       type: "string",
-      desc: "Syslog severity for the message."
+      desc: "Syslog severity for the message.",
     },
     {
       name: "message",
       type: "string",
-      desc: "The plain text message."
-    }
+      desc: "The plain text message.",
+    },
   ],
   irc_log: [
     {
       name: "_path",
-      type: "irc"
+      type: "irc",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp when the command was seen."
+      desc: "Timestamp when the command was seen.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "nick",
       type: "string",
-      desc: "Nickname given for the connection."
+      desc: "Nickname given for the connection.",
     },
     {
       name: "user",
       type: "string",
-      desc: "Username given for the connection."
+      desc: "Username given for the connection.",
     },
     {
       name: "command",
       type: "string",
-      desc: "Command given by the client."
+      desc: "Command given by the client.",
     },
     {
       name: "value",
       type: "string",
-      desc: "Value for the command given by the client."
+      desc: "Value for the command given by the client.",
     },
     {
       name: "addl",
       type: "string",
-      desc: "Any additional data for the command."
+      desc: "Any additional data for the command.",
     },
     {
       name: "dcc_file_name",
       type: "string",
-      desc: "DCC filename requested."
+      desc: "DCC filename requested.",
     },
     {
       name: "dcc_file_size",
       type: "count",
-      desc: "Size of the DCC transfer as indicated by the sender."
+      desc: "Size of the DCC transfer as indicated by the sender.",
     },
     {
       name: "dcc_mime_type",
       type: "string",
-      desc: "Sniffed mime type of the file."
+      desc: "Sniffed mime type of the file.",
     },
     {
       name: "fuid",
       type: "string",
-      desc: "File unique ID."
-    }
+      desc: "File unique ID.",
+    },
   ],
   sip_log: [
     {
       name: "_path",
-      type: "sip"
+      type: "sip",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the request happened."
+      desc: "Timestamp for when the request happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "trans_depth",
       type: "count",
-      desc:
-        "Represents the pipelined depth into the connection of this request/response transaction."
+      desc: "Represents the pipelined depth into the connection of this request/response transaction.",
     },
     {
       name: "method",
       type: "string",
-      desc: "Verb used in the SIP request (INVITE, REGISTER etc.)."
+      desc: "Verb used in the SIP request (INVITE, REGISTER etc.).",
     },
     {
       name: "uri",
       type: "string",
-      desc: "URI used in the request."
+      desc: "URI used in the request.",
     },
     {
       name: "date",
       type: "string",
-      desc: "Contents of the Date: header from the client"
+      desc: "Contents of the Date: header from the client",
     },
     {
       name: "request_from",
       type: "string",
-      desc:
-        "Contents of the request From: header Note: The tag= value that's usually appended to the sender is stripped off and not logged."
+      desc: "Contents of the request From: header Note: The tag= value that's usually appended to the sender is stripped off and not logged.",
     },
     {
       name: "request_to",
       type: "string",
-      desc: "Contents of the To: header"
+      desc: "Contents of the To: header",
     },
     {
       name: "response_from",
       type: "string",
-      desc:
-        "Contents of the response From: header Note: The ``tag=`` value that's usually appended to the sender is stripped off and not logged."
+      desc: "Contents of the response From: header Note: The ``tag=`` value that's usually appended to the sender is stripped off and not logged.",
     },
     {
       name: "response_to",
       type: "string",
-      desc: "Contents of the response To: header"
+      desc: "Contents of the response To: header",
     },
     {
       name: "reply_to",
       type: "string",
-      desc: "Contents of the Reply-To: header"
+      desc: "Contents of the Reply-To: header",
     },
     {
       name: "call_id",
       type: "string",
-      desc: "Contents of the Call-ID: header from the client"
+      desc: "Contents of the Call-ID: header from the client",
     },
     {
       name: "seq",
       type: "string",
-      desc: "Contents of the CSeq: header from the client"
+      desc: "Contents of the CSeq: header from the client",
     },
     {
       name: "subject",
       type: "string",
-      desc: "Contents of the Subject: header from the client"
+      desc: "Contents of the Subject: header from the client",
     },
     {
       name: "request_path",
       type: "vector",
-      desc:
-        "The client message transmission path, as extracted from the headers."
+      desc: "The client message transmission path, as extracted from the headers.",
     },
     {
       name: "response_path",
       type: "vector",
-      desc:
-        "The server message transmission path, as extracted from the headers."
+      desc: "The server message transmission path, as extracted from the headers.",
     },
     {
       name: "user_agent",
       type: "string",
-      desc: "Contents of the User-Agent: header from the client"
+      desc: "Contents of the User-Agent: header from the client",
     },
     {
       name: "status_code",
       type: "count",
-      desc: "Status code returned by the server."
+      desc: "Status code returned by the server.",
     },
     {
       name: "status_msg",
       type: "string",
-      desc: "Status message returned by the server."
+      desc: "Status message returned by the server.",
     },
     {
       name: "warning",
       type: "string",
-      desc: "Contents of the Warning: header"
+      desc: "Contents of the Warning: header",
     },
     {
       name: "request_body_len",
       type: "count",
-      desc: "Contents of the Content-Length: header from the client"
+      desc: "Contents of the Content-Length: header from the client",
     },
     {
       name: "response_body_len",
       type: "count",
-      desc: "Contents of the Content-Length: header from the server"
+      desc: "Contents of the Content-Length: header from the server",
     },
     {
       name: "content_type",
       type: "string",
-      desc: "Contents of the Content-Type: header from the server"
-    }
+      desc: "Contents of the Content-Type: header from the server",
+    },
   ],
   packet_filter_log: [
     {
       name: "_path",
-      type: "packet_filter"
+      type: "packet_filter",
     },
     {
       name: "ts",
       type: "time",
-      desc: "The time at which the packet filter installation attempt was made."
+      desc: "The time at which the packet filter installation attempt was made.",
     },
     {
       name: "node",
       type: "string",
-      desc:
-        "This is a string representation of the node that applied this packet filter.  It's mostly useful in the context of dynamically changing filters on clusters."
+      desc: "This is a string representation of the node that applied this packet filter.  It's mostly useful in the context of dynamically changing filters on clusters.",
     },
     {
       name: "filter",
       type: "string",
-      desc: "The packet filter that is being set."
+      desc: "The packet filter that is being set.",
     },
     {
       name: "init",
       type: "bool",
-      desc: "Indicate if this is the filter set during initialization."
+      desc: "Indicate if this is the filter set during initialization.",
     },
     {
       name: "success",
       type: "bool",
-      desc: "Indicate if the filter was applied successfully."
-    }
+      desc: "Indicate if the filter was applied successfully.",
+    },
   ],
   x509_log: [
     {
       name: "_path",
-      type: "x509"
+      type: "x509",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Current timestamp."
+      desc: "Current timestamp.",
     },
     {
       name: "id",
       type: "string",
-      desc: "File id of this certificate."
+      desc: "File id of this certificate.",
     },
     {
       name: "certificate",
       type: "record X509::Certificate",
-      desc: "Basic information about the certificate."
+      desc: "Basic information about the certificate.",
     },
     {
       name: "san",
       type: "record X509::SubjectAlternativeName",
-      desc: "Subject alternative name extension of the certificate."
+      desc: "Subject alternative name extension of the certificate.",
     },
     {
       name: "basic_constraints",
       type: "record X509::BasicConstraints",
-      desc: "Basic constraints extension of the certificate."
-    }
+      desc: "Basic constraints extension of the certificate.",
+    },
   ],
   cluster_log: [
     {
       name: "_path",
-      type: "cluster"
+      type: "cluster",
     },
     {
       name: "ts",
       type: "time",
-      desc: "The time at which a cluster message was generated."
+      desc: "The time at which a cluster message was generated.",
     },
     {
       name: "node",
       type: "string",
-      desc: "The name of the node that is creating the log record."
+      desc: "The name of the node that is creating the log record.",
     },
     {
       name: "message",
       type: "string",
-      desc: "A message indicating information about the cluster's operation."
-    }
+      desc: "A message indicating information about the cluster's operation.",
+    },
   ],
   dce_rpc_log: [
     {
       name: "_path",
-      type: "dce_rpc"
+      type: "dce_rpc",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the event happened."
+      desc: "Timestamp for when the event happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "rtt",
       type: "interval",
-      desc:
-        "Round trip time from the request to the response. If either the request or response wasn't seen,  this will be null."
+      desc: "Round trip time from the request to the response. If either the request or response wasn't seen,  this will be null.",
     },
     {
       name: "named_pipe",
       type: "string",
-      desc: "Remote pipe name."
+      desc: "Remote pipe name.",
     },
     {
       name: "endpoint",
       type: "string",
-      desc: "Endpoint name looked up from the uuid."
+      desc: "Endpoint name looked up from the uuid.",
     },
     {
       name: "operation",
       type: "string",
-      desc: "Operation seen in the call."
-    }
+      desc: "Operation seen in the call.",
+    },
   ],
   rfb_log: [
     {
       name: "_path",
-      type: "rfb"
+      type: "rfb",
     },
     {
       name: "ts",
       type: "time",
-      desc: "Timestamp for when the event happened."
+      desc: "Timestamp for when the event happened.",
     },
     {
       name: "uid",
       type: "string",
-      desc: "Unique ID for the connection."
+      desc: "Unique ID for the connection.",
     },
     {
       name: "id",
       type: "record conn_id",
-      desc: "The connection's 4-tuple of endpoint addresses/ports."
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "client_major_version",
       type: "string",
-      desc: "Major version of the client."
+      desc: "Major version of the client.",
     },
     {
       name: "client_minor_version",
       type: "string",
-      desc: "Minor version of the client."
+      desc: "Minor version of the client.",
     },
     {
       name: "server_major_version",
       type: "string",
-      desc: "Major version of the server."
+      desc: "Major version of the server.",
     },
     {
       name: "server_minor_version",
       type: "string",
-      desc: "Minor version of the server."
+      desc: "Minor version of the server.",
     },
     {
       name: "authentication_method",
       type: "string",
-      desc: "Identifier of authentication method used."
+      desc: "Identifier of authentication method used.",
     },
     {
       name: "auth",
       type: "bool",
-      desc: "Whether or not authentication was successful."
+      desc: "Whether or not authentication was successful.",
     },
     {
       name: "share_flag",
       type: "bool",
-      desc: "Whether the client has an exclusive or a shared session."
+      desc: "Whether the client has an exclusive or a shared session.",
     },
     {
       name: "desktop_name",
       type: "string",
-      desc: "Name of the screen that is being shared."
+      desc: "Name of the screen that is being shared.",
     },
     {
       name: "width",
       type: "count",
-      desc: "Width of the screen that is being shared."
+      desc: "Width of the screen that is being shared.",
     },
     {
       name: "height",
       type: "count",
-      desc: "Height of the screen that is being shared."
-    }
-  ]
+      desc: "Height of the screen that is being shared.",
+    },
+  ],
 }

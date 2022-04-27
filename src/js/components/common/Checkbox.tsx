@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 
 const HiddenCheckbox = styled.input.attrs({
-  type: "checkbox"
+  type: "checkbox",
 })`
   border: 0;
   clip: rect(0 0 0 0);

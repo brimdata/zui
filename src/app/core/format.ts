@@ -24,7 +24,7 @@ export const getFormatConfig = createSelector<State, any, FormatConfig>(
     thousands: values.thousandsSeparator,
     timeZone: values.timeZone,
     timeFormat: values.timeFormat,
-    decimal: values.decimal
+    decimal: values.decimal,
   })
 )
 
@@ -67,7 +67,7 @@ function getNumberLocale(config) {
     thousands: config.thousands === undefined ? "," : config.thousands,
     grouping: [3],
     currency: ["", "$"],
-    percent: "\u202f%"
+    percent: "\u202f%",
   })
 }
 

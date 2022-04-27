@@ -6,7 +6,7 @@ export default function useCallbackRef<T = Element>(): [
 ] {
   const [node, setNode] = useState(null)
 
-  const cb = useCallback((node) => {
+  const cb = useCallback((node: any) => {
     if (node !== null) setNode(node)
     return node
   }, [])

@@ -2,7 +2,7 @@ import {
   createMemoryHistory,
   LocationListener,
   MemoryHistory,
-  UnregisterCallback
+  UnregisterCallback,
 } from "history"
 import {isEmpty} from "lodash"
 import {SerializedHistory} from "src/js/state/TabHistories/types"
@@ -55,7 +55,7 @@ export default class Histories {
     return array.map(([id, {entries, index}]) => ({
       id,
       entries,
-      index
+      index,
     }))
   }
 

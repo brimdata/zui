@@ -9,7 +9,7 @@ const init = () => ({
   sidebarSections: [{id: "pools"}, {id: "queries"}, {id: "history"}],
   currentSectionName: "pools" as SectionName,
   queriesView: "local" as QueriesView,
-  historyView: "linear" as HistoryView
+  historyView: "linear" as HistoryView,
 })
 
 const select = {
@@ -18,7 +18,7 @@ const select = {
   sidebarSections: (state: State) => state.appearance.sidebarSections,
   getCurrentSectionName: (state: State) => state.appearance.currentSectionName,
   getQueriesView: (state: State) => state.appearance.queriesView,
-  getHistoryView: (state: State) => state.appearance.historyView
+  getHistoryView: (state: State) => state.appearance.historyView,
 }
 
 const slice = createSlice({
@@ -42,14 +42,14 @@ const slice = createSlice({
     },
     setHistoryView: (s, a: PayloadAction<HistoryView>) => {
       s.historyView = a.payload
-    }
-  }
+    },
+  },
 })
 
 export default {
   reducer: slice.reducer,
   ...slice.actions,
-  ...select
+  ...select,
 }
 
 export type AppearanceState = ReturnType<typeof slice.reducer>

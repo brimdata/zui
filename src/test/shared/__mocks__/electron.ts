@@ -13,7 +13,7 @@ export const ipcMain = mockIpc.ipcMain
 export const ipcRenderer = mockIpc.ipcRenderer
 
 export const dialog = {
-  showSaveDialog: jest.fn()
+  showSaveDialog: jest.fn(),
 }
 
 class WebContents extends EventEmitter {
@@ -42,7 +42,7 @@ export class BrowserWindow {
       // @ts-ignore
       window.location = {
         pathname: "search.html",
-        search: new URLSearchParams(params.query).toString()
+        search: new URLSearchParams(params.query).toString(),
       }
     }
   }
@@ -69,7 +69,7 @@ class MockApp {
   commandLine = {
     getSwitchValue() {
       return ""
-    }
+    },
   }
 
   getName() {
@@ -91,12 +91,12 @@ class MockApp {
 export const app = new MockApp()
 
 export const getCurrentWebContents = jest.fn(() => ({
-  send: jest.fn()
+  send: jest.fn(),
 }))
 
 export const Menu = {
   buildFromTemplate: jest.fn(),
-  setApplicationMenu: jest.fn()
+  setApplicationMenu: jest.fn(),
 }
 
 export const screen = {
@@ -117,16 +117,16 @@ export const screen = {
         scaleFactor: 2,
         rotation: 0,
         internal: false,
-        touchSupport: "unknown"
-      }
+        touchSupport: "unknown",
+      },
     ]
-  }
+  },
 }
 
 export const autoUpdater = {
-  on: jest.fn()
+  on: jest.fn(),
 }
 
 export const shell = {
-  openExternal: jest.fn()
+  openExternal: jest.fn(),
 }

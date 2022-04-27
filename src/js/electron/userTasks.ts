@@ -1,7 +1,7 @@
 import electronIsDev from "./isDev"
 import path from "path"
 
-export default function(app: any) {
+export default function (app: any) {
   if (app.setUserTasks) {
     app.setUserTasks([
       {
@@ -10,7 +10,7 @@ export default function(app: any) {
         iconPath: process.execPath,
         iconIndex: 0,
         title: "New Window",
-        description: "Create a new window"
+        description: "Create a new window",
       },
       {
         program: process.execPath,
@@ -18,8 +18,8 @@ export default function(app: any) {
         iconPath: process.execPath,
         iconIndex: 0,
         title: "Move Brim to Current Display",
-        description: "Move Brim windows to the current display"
-      }
+        description: "Move Brim windows to the current display",
+      },
     ])
   }
 }

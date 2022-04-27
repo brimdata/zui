@@ -2,7 +2,7 @@ import {createSelector} from "@reduxjs/toolkit"
 import {mergeDefaultSpanArgs} from "src/app/search/utils/default-params"
 import {
   decodeSearchParams,
-  decodeSpanParams
+  decodeSpanParams,
 } from "src/app/search/utils/search-params"
 import {Pool} from "src/app/core/pools/pool"
 import {getLocation, mustGetPool} from "../Current/selectors"

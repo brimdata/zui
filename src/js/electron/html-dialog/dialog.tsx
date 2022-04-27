@@ -5,11 +5,11 @@ import parseSearchParams from "src/app/core/utils/parse-search-params"
 import ToolbarButton from "src/app/toolbar/button"
 import {ipcRenderer} from "electron"
 import React, {useEffect} from "react"
-import {render} from "react-dom"
 import theme from "src/js/style-theme"
 import {ThemeProvider} from "styled-components"
 import {BG} from "./dialog.style"
 import {closeChannel, readyChannel} from "./index"
+import {createRoot} from "react-dom/client"
 
 const ROOT_ID = "root"
 /**
@@ -49,4 +49,4 @@ function ErrorDialog() {
   )
 }
 
-render(<ErrorDialog />, document.getElementById(ROOT_ID))
+createRoot(document.getElementById(ROOT_ID)).render(<ErrorDialog />)

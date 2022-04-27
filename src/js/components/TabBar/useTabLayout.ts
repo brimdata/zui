@@ -6,7 +6,7 @@ import useFirst from "../hooks/useFirst"
 
 const config = {
   tension: 500,
-  friction: 50
+  friction: 50,
 }
 
 function getHoverIndex(startIndex, width, dx) {
@@ -17,7 +17,7 @@ function getHoverIndex(startIndex, width, dx) {
 
 const interpolate = ({x, width}) => ({
   transform: x.interpolate((x) => `translateX(${x}px)`),
-  width
+  width,
 })
 
 function mapToSprings(ids) {
@@ -31,35 +31,37 @@ function mapToSprings(ids) {
 }
 
 // The are the update function for when not dragging
-const idle = (springOrder: number[], width: number, first: boolean) => (
-  springIndex: number
-) => {
-  if (springOrder.includes(springIndex)) {
-    const visibleIndex = springOrder.indexOf(springIndex)
-    return {x: visibleIndex * width, config, immediate: first, width}
-  } else {
-    // We don't know of this spring yet, the next time useEffects run, then the
-    // spring will be registered.
-    return {}
+const idle =
+  (springOrder: number[], width: number, first: boolean) =>
+  (springIndex: number) => {
+    if (springOrder.includes(springIndex)) {
+      const visibleIndex = springOrder.indexOf(springIndex)
+      return {x: visibleIndex * width, config, immediate: first, width}
+    } else {
+      // We don't know of this spring yet, the next time useEffects run, then the
+      // spring will be registered.
+      return {}
+    }
   }
-}
 
 // The update function for when use is dragging
-const dragging = (
-  springOrder: number[],
-  dragSpringIndex: number,
-  dragIndex: number,
-  width: number,
-  dx: number
-) => (springIndex: number) => {
-  if (dragSpringIndex === springIndex) {
-    const x = dragIndex * width + dx
-    return {x, width, immediate: true}
-  } else {
-    const x = springOrder.indexOf(springIndex) * width
-    return {x, width, config, immediate: false}
+const dragging =
+  (
+    springOrder: number[],
+    dragSpringIndex: number,
+    dragIndex: number,
+    width: number,
+    dx: number
+  ) =>
+  (springIndex: number) => {
+    if (dragSpringIndex === springIndex) {
+      const x = dragIndex * width + dx
+      return {x, width, immediate: true}
+    } else {
+      const x = springOrder.indexOf(springIndex) * width
+      return {x, width, config, immediate: false}
+    }
   }
-}
 
 // Take the order the tabs are visibly in, then get the index of the springs
 // that correspond to those tabs.
@@ -70,7 +72,7 @@ function orderSprings(
   return orderedIds.map<number>((id) => map.get(id))
 }
 
-export default function(tabIds: string[], width: number) {
+export default function (tabIds: string[], width: number) {
   const first = useFirst(width === 0) // The first renders are when the with === 0
   const ids = useRef(tabIds)
   const map = useRef(mapToSprings(ids.current))
@@ -134,6 +136,6 @@ export default function(tabIds: string[], width: number) {
       const spring = springs[map.current.get(id)]
       return spring ? interpolate(spring) : {}
     },
-    dragBinding
+    dragBinding,
   }
 }

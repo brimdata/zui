@@ -48,7 +48,7 @@ export function name(view: ContainerView) {
       key={"view" + view.name()}
       className={classNames("zed-container", {
         "zed-type": zed.isType(view.args.value),
-        "zed-error": view.args.value instanceof zed.Error
+        "zed-error": view.args.value instanceof zed.Error,
       })}
     >
       {view.name()}

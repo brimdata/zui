@@ -10,9 +10,8 @@ import {ActionButtonProps} from "./action-button"
  * to set correct flex basis. This is the "fullWidth" var you see below.
  */
 export default function Actions({actions}: {actions: ActionButtonProps[]}) {
-  const {visible, hidden, fullWidth, setMeasure, setParent} = useVisibleActions(
-    actions
-  )
+  const {visible, hidden, fullWidth, setMeasure, setParent} =
+    useVisibleActions(actions)
 
   return (
     <>

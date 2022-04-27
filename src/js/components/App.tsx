@@ -6,12 +6,12 @@ import AppTabsRouter from "src/app/router/app-tabs-router"
 import {releaseNotes, root, lakeShow, lakeList} from "src/app/router/routes"
 import AppWrapper from "src/app/routes/app-wrapper"
 import React, {useEffect} from "react"
-import {useDispatch} from "react-redux"
 import {Redirect, Route, Switch} from "react-router"
 import useStoreExport from "src/app/core/hooks/useStoreExport"
 import {defaultLake} from "../initializers/initLakeParams"
 import Handlers from "../state/Handlers"
 import useSearchShortcuts from "./useSearchShortcuts"
+import {useDispatch} from "src/app/core/state"
 
 export default function App() {
   useStoreExport()

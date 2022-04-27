@@ -7,7 +7,7 @@ describe("AutoLayout", () => {
     size: 200,
     rowHeight: 10,
     type: "auto",
-    sumColumnWidths: 0
+    sumColumnWidths: 0,
   })
 
   test("#viewHeight", () => {
@@ -38,7 +38,7 @@ describe("FixedLayout", () => {
     width: 100,
     rowHeight: 10,
     sumColumnWidths: 22 + 44 + 55,
-    size: 200
+    size: 200,
   })
 
   test("#viewHeight", () => {
@@ -52,7 +52,7 @@ describe("FixedLayout", () => {
       width: 10,
       rowHeight: 10,
       sumColumnWidths: 22 + 44 + 55,
-      size: 200
+      size: 200,
     })
     expect(fixedLayout.listWidth).toBe(121)
     expect(fixedLayout.rowWidth).toBe(121)
@@ -65,7 +65,7 @@ describe("FixedLayout", () => {
       width: 500,
       rowHeight: 10,
       sumColumnWidths: 22 + 44 + 55,
-      size: 200
+      size: 200,
     })
     expect(fixedLayout.listWidth).toBe(500)
     expect(fixedLayout.rowWidth).toBe(500)
@@ -78,7 +78,7 @@ describe("FixedLayout", () => {
       width: 100,
       rowHeight: 10,
       sumColumnWidths: 22 + 44 + 55,
-      size: 200
+      size: 200,
     })
     expect(fixedLayout.rowWidth).toBe(121)
   })

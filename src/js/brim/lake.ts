@@ -14,8 +14,8 @@ export default function lake(lake: Lake) {
         port: this.port,
         version: this.version,
         authType: this.authType,
-        authData: this.authData
+        authData: this.authData,
       }
-    }
+    },
   }
 }

@@ -33,7 +33,7 @@ export class ConfigsApi {
           ConfigPropValues.set({
             configName: config.name,
             propName: name,
-            value: prop.defaultValue
+            value: prop.defaultValue,
           })
         )
       }

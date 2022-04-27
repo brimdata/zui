@@ -78,9 +78,9 @@ export class TypeRecord implements Type {
         : this.fields.map((f) => {
             return {
               name: f.name,
-              type: stream.encodeType(f.type)
+              type: stream.encodeType(f.type),
             } as zjson.FieldType
-          })
+          }),
     }
   }
 }

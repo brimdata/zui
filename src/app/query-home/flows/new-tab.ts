@@ -2,7 +2,7 @@ import {featureIsEnabled} from "src/app/core/feature-flag"
 import {
   lakeImportPath,
   lakeQueryPath,
-  lakesPath
+  lakesPath,
 } from "src/app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"

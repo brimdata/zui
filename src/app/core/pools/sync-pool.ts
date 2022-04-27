@@ -6,24 +6,23 @@ import Pools from "src/js/state/Pools"
 import {Thunk} from "src/js/state/types"
 import {Pool} from "./pool"
 
-export const syncPool = (
-  poolId: string,
-  lakeId?: string
-): Thunk<Promise<Pool | null>> => async (dispatch, getState) => {
-  const lake = lakeId
-    ? brim.lake(Lakes.id(lakeId)(getState()))
-    : Current.getLake(getState())
+export const syncPool =
+  (poolId: string, lakeId?: string): Thunk<Promise<Pool | null>> =>
+  async (dispatch, getState) => {
+    const lake = lakeId
+      ? brim.lake(Lakes.id(lakeId)(getState()))
+      : Current.getLake(getState())
 
-  const zealot = await dispatch(getZealot(lake))
+    const zealot = await dispatch(getZealot(lake))
 
-  return Promise.all([zealot.getPool(poolId), zealot.getPoolStats(poolId)])
-    .then(([data, stats]) => {
-      dispatch(Pools.setData({lakeId: lake.id, data}))
-      dispatch(Pools.setStats({lakeId: lake.id, poolId: data.id, stats}))
-      return new Pool(data, stats)
-    })
-    .catch((error) => {
-      console.error(error)
-      return null
-    })
-}
+    return Promise.all([zealot.getPool(poolId), zealot.getPoolStats(poolId)])
+      .then(([data, stats]) => {
+        dispatch(Pools.setData({lakeId: lake.id, data}))
+        dispatch(Pools.setStats({lakeId: lake.id, poolId: data.id, stats}))
+        return new Pool(data, stats)
+      })
+      .catch((error) => {
+        console.error(error)
+        return null
+      })
+  }

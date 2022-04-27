@@ -4,28 +4,29 @@ import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 import log from "electron-log"
 import {differenceWith, map} from "lodash"
 import {useEffect} from "react"
-import ReactDOM from "react-dom"
 import {Provider, useDispatch, useSelector} from "react-redux"
 import "regenerator-runtime/runtime"
 import brim from "./brim"
 import lake from "./brim/lake"
 import {
   getRemotePoolForLake,
-  refreshRemoteQueries
+  refreshRemoteQueries,
 } from "src/app/features/sidebar/flows/remote-queries"
 import {subscribeEvents} from "./flows/subscribeEvents"
 import initialize from "./initializers/initialize"
 import lib from "./lib"
 import Lakes from "./state/Lakes"
 import {AppDispatch} from "./state/types"
+import {createRoot} from "react-dom/client"
 
 initialize()
   .then(({store}) => {
-    ReactDOM.render(
+    const container = lib.doc.id("app-root")
+    const root = createRoot(container!)
+    root.render(
       <Provider store={store}>
         <Hidden />
-      </Provider>,
-      lib.doc.id("app-root")
+      </Provider>
     )
   })
   .catch((e) => {

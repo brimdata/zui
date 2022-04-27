@@ -1,5 +1,5 @@
 import {darken} from "polished"
-import {useDispatch} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import React from "react"
 import styled from "styled-components"
 import submitSearch from "src/app/query-home/flows/submit-search"

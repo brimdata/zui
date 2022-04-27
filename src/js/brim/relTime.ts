@@ -62,12 +62,12 @@ export default function relTime(expr: string, now: Date = new Date()) {
         d: "day",
         w: "week",
         M: "month",
-        y: "year"
+        y: "year",
       }
       let fullUnit = map[unit] || "?"
       if (amount > 1) fullUnit += "s"
 
       return `${amount} ${fullUnit} ago`
-    }
+    },
   }
 }

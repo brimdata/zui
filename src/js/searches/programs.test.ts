@@ -7,7 +7,7 @@ test("conn correlation", () => {
     ts: new Date(1425568032.998178 * 1000),
     uid: "CbOjYpkXn9LfqV51c",
     duration: new zed.Duration("0.70995s"),
-    community_id: "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU="
+    community_id: "1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=",
   })
   expect(
     connCorrelation(

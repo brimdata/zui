@@ -2,13 +2,7 @@ import brim, {Span} from "./"
 
 function spanOf(num, unit) {
   const from = brim.time({ns: 0, sec: 0}).toTs()
-  return brim.span([
-    from,
-    brim
-      .time(from)
-      .add(num, unit)
-      .toTs()
-  ] as Span)
+  return brim.span([from, brim.time(from).add(num, unit).toTs()] as Span)
 }
 test("999 ms", () => {
   const span = spanOf(999, "ms")

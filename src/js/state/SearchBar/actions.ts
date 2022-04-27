@@ -8,7 +8,7 @@ import {
   SEARCH_BAR_PIN_REMOVE,
   SEARCH_BAR_PIN_REMOVE_ALL,
   SEARCH_BAR_RESTORE,
-  SearchBarState
+  SearchBarState,
 } from "./types"
 
 export default {
@@ -18,42 +18,42 @@ export default {
 
   restoreSearchBar: (value: Partial<SearchBarState>): SEARCH_BAR_RESTORE => ({
     type: "SEARCH_BAR_RESTORE",
-    value
+    value,
   }),
 
   changeSearchBarInput: (value: string): SEARCH_BAR_INPUT_CHANGE => {
     return {
       type: "SEARCH_BAR_INPUT_CHANGE",
-      value: value || ""
+      value: value || "",
     }
   },
 
   pinSearchBar: (): SEARCH_BAR_PIN => ({
-    type: "SEARCH_BAR_PIN"
+    type: "SEARCH_BAR_PIN",
   }),
 
   editSearchBarPin: (index: number, value: string): SEARCH_BAR_PIN_EDIT => ({
     type: "SEARCH_BAR_PIN_EDIT",
     index,
-    value
+    value,
   }),
 
   removeSearchBarPin: (index: number): SEARCH_BAR_PIN_REMOVE => ({
     type: "SEARCH_BAR_PIN_REMOVE",
-    index
+    index,
   }),
 
   removeAllSearchBarPins: (): SEARCH_BAR_PIN_REMOVE_ALL => ({
-    type: "SEARCH_BAR_PIN_REMOVE_ALL"
+    type: "SEARCH_BAR_PIN_REMOVE_ALL",
   }),
 
   setSearchBarPins: (pinned: string[]): SEARCH_BAR_PINS_SET => ({
     type: "SEARCH_BAR_PINS_SET",
-    pinned
+    pinned,
   }),
 
   errorSearchBarParse: (error: string): SEARCH_BAR_PARSE_ERROR => ({
     type: "SEARCH_BAR_PARSE_ERROR",
-    error
-  })
+    error,
+  }),
 }

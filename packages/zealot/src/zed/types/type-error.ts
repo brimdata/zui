@@ -23,7 +23,7 @@ export class TypeError implements Type {
   serialize(stream: EncodeStream): zjson.NoId<zjson.ErrorType> {
     return {
       kind: "error",
-      type: stream.encodeType(this.type)
+      type: stream.encodeType(this.type),
     }
   }
 

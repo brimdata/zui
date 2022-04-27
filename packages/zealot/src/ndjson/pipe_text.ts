@@ -70,8 +70,8 @@ function nodePipeText(
         })
       }
     },
-    [Symbol.asyncIterator]: function() {
+    [Symbol.asyncIterator]: function () {
       return this
-    }
+    },
   }
 }

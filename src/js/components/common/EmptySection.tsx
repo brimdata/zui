@@ -20,7 +20,7 @@ const EmptyWrapper = styled.div`
     text-align: center;
     margin: 16px 14px 0;
   }
-` as ComponentType<any>
+` as ComponentType<React.PropsWithChildren<any>>
 
 type EmptySectionProps = {
   icon?: any

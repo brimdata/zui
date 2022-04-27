@@ -12,7 +12,7 @@ export default class LoadingMessage extends React.Component<Props> {
     return (
       <div
         className={classNames("loading-message", this.props.className, {
-          visible: this.props.show
+          visible: this.props.show,
         })}
       >
         {this.props.message || "Loading"}

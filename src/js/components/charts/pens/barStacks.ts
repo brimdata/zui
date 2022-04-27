@@ -4,13 +4,10 @@ import {Pen} from "../types"
 import {innerHeight, innerWidth} from "../dimens"
 import brim from "../../../brim"
 
-export default function(): Pen {
+export default function (): Pen {
   let chartG
   function mount(svg) {
-    chartG = d3
-      .select(svg)
-      .append("g")
-      .attr("class", "chart")
+    chartG = d3.select(svg).append("g").attr("class", "chart")
   }
 
   function draw(chart) {
@@ -29,10 +26,7 @@ export default function(): Pen {
 
     const t = d3.transition().duration(100)
     const innerH = innerHeight(chart.height, chart.margins)
-    barGroups
-      .exit()
-      .selectAll("rect")
-      .remove()
+    barGroups.exit().selectAll("rect").remove()
 
     const bars = barGroups
       .enter()
@@ -42,24 +36,14 @@ export default function(): Pen {
       .selectAll("rect")
       .data((d) => d)
 
-    bars
-      .exit()
-      .attr("opacity", 1)
-      .attr("y", innerH)
-      .attr("opacity", 0)
-      .remove()
+    bars.exit().attr("opacity", 1).attr("y", innerH).attr("opacity", 0).remove()
 
     let width = 0
     if (chart.data.points[0]) {
       const ts = chart.data.points[0].ts
       const {number, unit} = chart.data.interval
       const a = chart.xScale(ts)
-      const b = chart.xScale(
-        brim
-          .time(ts)
-          .add(number, unit)
-          .toDate()
-      )
+      const b = chart.xScale(brim.time(ts).add(number, unit).toDate())
       width = Math.max(Math.floor(b - a), 1)
     }
 

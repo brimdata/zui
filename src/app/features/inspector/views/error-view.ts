@@ -24,7 +24,7 @@ export class ErrorView extends ContainerView<zed.Error> {
       value: this.value.value,
       key: null,
       last: true,
-      indexPath: [...this.args.indexPath, 0]
+      indexPath: [...this.args.indexPath, 0],
     })
   }
 }

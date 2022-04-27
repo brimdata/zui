@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Launches from "./index"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 
@@ -19,7 +23,7 @@ test("touch version", () => {
   const store = initTestStore()
   store.dispatch(Launches.touchVersion("v1.0.0"))
   expect(Launches.all(store.getState())).toEqual({
-    "v1.0.0": "2020-08-20T00:12:00.000Z"
+    "v1.0.0": "2020-08-20T00:12:00.000Z",
   })
 })
 

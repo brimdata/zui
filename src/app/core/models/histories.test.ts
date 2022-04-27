@@ -43,17 +43,17 @@ test("serialize", () => {
           key: expect.any(String),
           pathname: "/",
           search: "",
-          state: undefined
+          state: undefined,
         },
         {
           hash: "",
           key: expect.any(String),
           pathname: "/home",
           search: "",
-          state: undefined
-        }
+          state: undefined,
+        },
       ],
-      index: 1
+      index: 1,
     },
     {
       id: "tab-id-2",
@@ -63,17 +63,17 @@ test("serialize", () => {
           key: expect.any(String),
           pathname: "/",
           search: "",
-          state: undefined
+          state: undefined,
         },
         {
           hash: "",
           key: expect.any(String),
           pathname: "/run",
           search: "",
-          state: undefined
-        }
+          state: undefined,
+        },
       ],
-      index: 1
-    }
+      index: 1,
+    },
   ])
 })

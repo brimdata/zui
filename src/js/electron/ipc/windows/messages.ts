@@ -5,7 +5,7 @@ import {
   WindowsInitialStateMsg,
   WindowsNewSearchTabMsg,
   WindowsOpenDirectorySelect,
-  WindowsOpenMsg
+  WindowsOpenMsg,
 } from "../types"
 export type NewTabSearchParams = {
   href: string
@@ -22,24 +22,24 @@ export default {
       channel: "windows:open",
       name,
       params,
-      state
+      state,
     }
   },
   newSearchTab(params: NewTabSearchParams): WindowsNewSearchTabMsg {
     return {
       channel: "windows:newSearchTab",
-      params
+      params,
     }
   },
   initialState(id: string): WindowsInitialStateMsg {
     return {
       channel: "windows:initialState",
-      id
+      id,
     }
   },
   openDirectorySelect(): WindowsOpenDirectorySelect {
     return {
-      channel: "windows:openDirectorySelect"
+      channel: "windows:openDirectorySelect",
     }
-  }
+  },
 }

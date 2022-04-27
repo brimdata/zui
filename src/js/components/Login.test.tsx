@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import React from "react"
-import {screen, waitFor} from "@testing-library/react"
+import {act, screen, waitFor} from "@testing-library/react"
 import {shell} from "electron"
 import {SystemTest} from "src/test/system/system-test"
 import url from "url"
@@ -38,7 +38,9 @@ test("login success", async () => {
   const lake = getLake()
   system.render(<Login lake={lake} />)
   const button = screen.getByRole("button", {name: "Login"})
-  system.click(button)
+  await act(async () => {
+    await system.click(button)
+  })
 
   const state = await expectBrowserToOpen()
   system.main.openUrl(brimSuccessUrl(state))
@@ -62,7 +64,7 @@ function getLake() {
   return brim.lake({
     ...defaultLake(),
     authType: "auth0",
-    authData: {domain: "http://test.com", accessToken: "test", clientId: "hi"}
+    authData: {domain: "http://test.com", accessToken: "test", clientId: "hi"},
   })
 }
 

@@ -8,16 +8,16 @@ const pool1 = (): PoolState => ({
     ts: new Date(0),
     layout: {
       order: "asc",
-      keys: [["ts"]]
-    }
+      keys: [["ts"]],
+    },
   },
   stats: {
     size: 99,
     span: {
       ts: new Date(1425564900 * 1000),
-      dur: 1428917793 * 1000 + 7500
-    }
-  }
+      dur: 1428917793 * 1000 + 7500,
+    },
+  },
 })
 
 const lake1 = (): Lake => ({
@@ -25,7 +25,7 @@ const lake1 = (): Lake => ({
   name: "testName1",
   host: "test",
   port: "9867",
-  authType: "none"
+  authType: "none",
 })
 
 const lake2 = (): Lake => ({
@@ -33,16 +33,16 @@ const lake2 = (): Lake => ({
   name: "testName2",
   host: "test",
   port: "9868",
-  authType: "none"
+  authType: "none",
 })
 
 const fixtures = () => ({
   lake1: lake1(),
   lake2: lake2(),
-  pool1: pool1()
+  pool1: pool1(),
 })
 
-export default function(name: string) {
+export default function (name: string) {
   const f = fixtures()
   if (name in f) {
     return f[name]

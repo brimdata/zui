@@ -2,7 +2,7 @@ import {BrimMain} from "./brim"
 import {installExtensions} from "./extensions"
 
 jest.mock("./extensions", () => ({
-  installExtensions: jest.fn()
+  installExtensions: jest.fn(),
 }))
 
 jest.mock("@brimdata/zealot")
@@ -17,7 +17,7 @@ test("activate when zero windows open", async () => {
   const brim = await BrimMain.boot({
     devtools: false,
     autoUpdater: false,
-    lake: false
+    lake: false,
   })
   expect(brim.windows.count()).toBe(0)
   await brim.activate()
@@ -29,7 +29,7 @@ test("activate when one or more windows open", async () => {
   const brim = await BrimMain.boot({
     devtools: false,
     autoUpdater: false,
-    lake: false
+    lake: false,
   })
   await brim.activate()
   expect(brim.windows.count()).toBe(2)
@@ -41,7 +41,7 @@ test("start opens default windows and in correct focus order", async () => {
   const brim = await BrimMain.boot({
     devtools: false,
     autoUpdater: false,
-    lake: false
+    lake: false,
   })
   await brim.start()
   expect(brim.windows.count()).toBe(2)
@@ -60,7 +60,7 @@ test("start installs dev extensions if is dev", async () => {
   const brim = await BrimMain.boot({
     lake: false,
     devtools: true,
-    autoUpdater: false
+    autoUpdater: false,
   })
   await brim.start()
   expect(installExtensions).toHaveBeenCalled()
@@ -72,7 +72,7 @@ test("start does not install dev extensions if not dev", async () => {
   const brim = await BrimMain.boot({
     lake: false,
     devtools: false,
-    autoUpdater: false
+    autoUpdater: false,
   })
   await brim.start()
   expect(installExtensions).not.toHaveBeenCalled()

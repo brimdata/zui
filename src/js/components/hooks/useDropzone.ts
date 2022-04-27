@@ -41,8 +41,8 @@ export default function useDropzone(dropCallback: Function): ReturnValue {
       onDragOver,
       onDrop,
       onDragEnter,
-      onDragLeave
+      onDragLeave,
     }),
-    dragging
+    dragging,
   ]
 }

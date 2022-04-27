@@ -4,26 +4,31 @@ import {Thunk} from "../types"
 import Tabs from "./"
 
 export default {
-  new: (url = "/"): Thunk => (dispatch) => {
-    const id = brim.randomHash()
-    dispatch(Tabs.add(id, url))
-    dispatch(Tabs.activate(id))
-    // this should go somewhere else
-    const el = document.getElementById("main-search-input")
-    if (el) el.focus()
-  },
+  new:
+    (url = "/"): Thunk =>
+    (dispatch) => {
+      const id = brim.randomHash()
+      dispatch(Tabs.add(id, url))
+      dispatch(Tabs.activate(id))
+      // this should go somewhere else
+      const el = document.getElementById("main-search-input")
+      if (el) el.focus()
+    },
 
-  activateByUrl: (url: string): Thunk => (dispatch, getState) => {
-    const tabs = Tabs.getData(getState())
-    const tab = tabs.find(
-      (tab) => global.tabHistories.getOrCreate(tab.id).location.pathname === url
-    )
-    if (tab) {
-      dispatch(Tabs.activate(tab.id))
-    } else {
-      dispatch(Tabs.new(url))
-    }
-  },
+  activateByUrl:
+    (url: string): Thunk =>
+    (dispatch, getState) => {
+      const tabs = Tabs.getData(getState())
+      const tab = tabs.find(
+        (tab) =>
+          global.tabHistories.getOrCreate(tab.id).location.pathname === url
+      )
+      if (tab) {
+        dispatch(Tabs.activate(tab.id))
+      } else {
+        dispatch(Tabs.new(url))
+      }
+    },
 
   closeActive: (): Thunk => (dispatch, getState) => {
     const tabs = Tabs.getData(getState())
@@ -51,15 +56,17 @@ export default {
     dispatch(Tabs.activate(next.id))
   },
 
-  activateByIndex: (index: number): Thunk => (dispatch, getState) => {
-    const tabs = Tabs.getData(getState())
-    const tab = tabs[index]
-    if (tab) dispatch(Tabs.activate(tab.id))
-  },
+  activateByIndex:
+    (index: number): Thunk =>
+    (dispatch, getState) => {
+      const tabs = Tabs.getData(getState())
+      const tab = tabs[index]
+      if (tab) dispatch(Tabs.activate(tab.id))
+    },
 
   activateLast: (): Thunk => (dispatch, getState) => {
     const tabs = Tabs.getData(getState())
     const tab = tabs[tabs.length - 1]
     if (tab) dispatch(Tabs.activate(tab.id))
-  }
+  },
 }

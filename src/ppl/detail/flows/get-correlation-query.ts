@@ -1,7 +1,7 @@
 import {
   cidCorrelation,
   connCorrelation,
-  uidCorrelation
+  uidCorrelation,
 } from "src/js/searches/programs"
 import {zed} from "@brimdata/zealot"
 import {Correlation} from "../models/Correlation"

@@ -7,5 +7,5 @@ import ErrorFactory from "../../models/ErrorFactory"
 export default {
   getErrors(state: State): BrimError[] {
     return map(state.errors, (err) => ErrorFactory.create(err))
-  }
+  },
 }

@@ -19,32 +19,29 @@ import {Dispatch, Thunk} from "src/js/state/types"
 import {lakePath, lakePoolPath, poolSearchPath} from "../../router/utils/paths"
 import {featureIsEnabled} from "src/app/core/feature-flag"
 
-export default (files: File[]): Thunk<Promise<void>> => async (
-  dispatch,
-  getState,
-  {api}
-) => {
-  const l = Current.mustGetLake(getState())
-  const lakeId = l.id
-  const zealot = await dispatch(getZealot())
-  const tabId = Tabs.getActive(getState())
-  const requestId = brim.randomHash()
-  const poolNames = Pools.getPoolNames(lakeId)(getState())
+export default (files: File[]): Thunk<Promise<void>> =>
+  async (dispatch, getState, {api}) => {
+    const l = Current.mustGetLake(getState())
+    const lakeId = l.id
+    const zealot = await dispatch(getZealot())
+    const tabId = Tabs.getActive(getState())
+    const requestId = brim.randomHash()
+    const poolNames = Pools.getPoolNames(lakeId)(getState())
 
-  dispatch(SystemTest.hook("import-start"))
-  return lib
-    .transaction([
-      validateInput(files, poolNames),
-      newPool(zealot, dispatch, lakeId),
-      registerIngest(dispatch, requestId),
-      setPool(dispatch, tabId, lakeId),
-      executeLoader(zealot, dispatch, lakeId, api, requestId),
-      unregisterIngest(dispatch, requestId)
-    ])
-    .then(() => {
-      dispatch(SystemTest.hook("import-complete"))
-    })
-}
+    dispatch(SystemTest.hook("import-start"))
+    return lib
+      .transaction([
+        validateInput(files, poolNames),
+        newPool(zealot, dispatch, lakeId),
+        registerIngest(dispatch, requestId),
+        setPool(dispatch, tabId, lakeId),
+        executeLoader(zealot, dispatch, lakeId, api, requestId),
+        unregisterIngest(dispatch, requestId),
+      ])
+      .then(() => {
+        dispatch(SystemTest.hook("import-complete"))
+      })
+  }
 
 const validateInput = (files: File[], poolNames) => ({
   async do() {
@@ -60,7 +57,7 @@ const validateInput = (files: File[], poolNames) => ({
       })
     if ("error" in params) throw new Error(params.error)
     return params
-  }
+  },
 })
 
 const newPool = (client: Client, dispatch, lakeId) => ({
@@ -71,7 +68,7 @@ const newPool = (client: Client, dispatch, lakeId) => ({
   async undo({poolId}: IngestParams & {poolId: string}) {
     await client.deletePool(poolId)
     dispatch(Pools.remove({lakeId, poolId}))
-  }
+  },
 })
 
 const registerIngest = (dispatch, id) => ({
@@ -83,14 +80,14 @@ const registerIngest = (dispatch, id) => ({
   undo({poolId}) {
     dispatch(Handlers.remove(id))
     dispatch(Ingests.remove(poolId))
-  }
+  },
 })
 
 const unregisterIngest = (dispatch, id) => ({
   do({poolId}) {
     dispatch(Handlers.remove(id))
     dispatch(Ingests.remove(poolId))
-  }
+  },
 })
 
 const executeLoader = (
@@ -155,7 +152,7 @@ const executeLoader = (
       if (abortCtl.signal.aborted) api.loaders.didAbort(handlerId)
       cleanup()
     }
-  }
+  },
 })
 
 const setPool = (dispatch, tabId, lakeId) => ({
@@ -170,5 +167,5 @@ const setPool = (dispatch, tabId, lakeId) => ({
     const url = lakePath(lakeId)
     global.tabHistories.getOrCreate(tabId).replace(url)
     dispatch(Url.changed())
-  }
+  },
 })

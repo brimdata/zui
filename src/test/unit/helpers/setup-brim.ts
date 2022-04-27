@@ -35,7 +35,7 @@ type Args = {
 const defaults = () => ({
   page: "search",
   lake: null,
-  pool: null
+  pool: null,
 })
 
 async function bootBrim({page}: Args = defaults()) {

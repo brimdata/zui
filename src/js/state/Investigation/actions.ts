@@ -2,7 +2,7 @@ import {
   FINDING_DELETE,
   INVESTIGATION_CLEAR,
   INVESTIGATION_PUSH,
-  INVESTIGATION_LAKE_CLEAR
+  INVESTIGATION_LAKE_CLEAR,
 } from "./types"
 import {SearchRecord} from "../../types"
 import {isArray} from "../../lib/is"
@@ -19,7 +19,7 @@ export default {
     lakeId,
     poolId,
     entry: record,
-    ts: ts
+    ts: ts,
   }),
 
   deleteFindingByTs: (
@@ -30,7 +30,7 @@ export default {
     type: "$FINDING_DELETE",
     lakeId,
     poolId,
-    ts: isArray(ts) ? ts : [ts]
+    ts: isArray(ts) ? ts : [ts],
   }),
 
   clearPoolInvestigation: (
@@ -39,11 +39,11 @@ export default {
   ): INVESTIGATION_CLEAR => ({
     type: "$INVESTIGATION_CLEAR",
     lakeId,
-    poolId
+    poolId,
   }),
 
   clearLakeInvestigation: (lakeId: string): INVESTIGATION_LAKE_CLEAR => ({
     type: "$INVESTIGATION_LAKE_CLEAR",
-    lakeId
-  })
+    lakeId,
+  }),
 }

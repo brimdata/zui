@@ -49,7 +49,7 @@ export default class AppError {
   getJSON(): Object {
     return {
       raw: this.raw,
-      ts: this.ts.toJSON()
+      ts: this.ts.toJSON(),
     }
   }
 
@@ -61,7 +61,7 @@ export default class AppError {
     return {
       type: this.constructor.name,
       message: this.message(),
-      details: this.details()
+      details: this.details(),
     }
   }
 }

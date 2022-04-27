@@ -51,7 +51,7 @@ export function Sectional({sections, children, onChange}: Props) {
   function getStyle(index: number) {
     return {
       ...ctl.at(index).getStyle(),
-      transition: animate ? "height 300ms" : "none"
+      transition: animate ? "height 300ms" : "none",
     }
   }
 
@@ -64,7 +64,7 @@ export function Sectional({sections, children, onChange}: Props) {
         children(data, {
           style: getStyle(index),
           toggleProps: {
-            onClick: () => toggle(index)
+            onClick: () => toggle(index),
           },
           resizeProps: {
             onMouseDown: (e: MouseEvent) => {
@@ -72,9 +72,9 @@ export function Sectional({sections, children, onChange}: Props) {
               bindDrag(e)
             },
             style: {
-              cursor: ctl.getCursor(index)
-            }
-          }
+              cursor: ctl.getCursor(index),
+            },
+          },
         })
       )}
     </div>

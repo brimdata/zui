@@ -23,7 +23,7 @@ export class Node {
     const child = new Node({
       data,
       parent: this,
-      children: []
+      children: [],
     })
 
     this.children.push(child)
@@ -46,7 +46,7 @@ export class Node {
   toJSON(): Object {
     return {
       data: this.data,
-      children: this.children.map((c) => c.toJSON())
+      children: this.children.map((c) => c.toJSON()),
     }
   }
 

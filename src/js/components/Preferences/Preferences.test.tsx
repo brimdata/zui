@@ -10,10 +10,11 @@ import {
   fireEvent,
   render,
   screen,
-  waitForElementToBeRemoved
+  waitForElementToBeRemoved,
 } from "src/test/unit/helpers"
 import {setupBrim} from "src/test/unit/helpers/setup-brim"
 import Preferences from "./Preferences"
+import {act} from "react-dom/test-utils"
 
 const brim = setupBrim()
 const $ = {
@@ -39,7 +40,7 @@ const $ = {
   },
   get thousandsSeparator() {
     return screen.getByLabelText("Thousands Separator") as HTMLInputElement
-  }
+  },
 }
 
 beforeEach(() => {
@@ -48,8 +49,10 @@ beforeEach(() => {
 })
 
 test("change time format", async () => {
-  fireEvent.change($.timeFormat, {target: {value: "YYYY"}})
-  fireEvent.click($.ok)
+  act(() => {
+    fireEvent.change($.timeFormat, {target: {value: "YYYY"}})
+    fireEvent.click($.ok)
+  })
   await waitForElementToBeRemoved($.modal)
 
   const record = createRecord({ts: new Date(2019, 9, 1, 8)})
@@ -58,10 +61,14 @@ test("change time format", async () => {
 })
 
 test("Brimcap YAML Config File docs", async () => {
-  fireEvent.change($.brimcapConfig, {target: {value: __filename}})
-  fireEvent.click($.ok)
+  act(() => {
+    fireEvent.change($.brimcapConfig, {target: {value: __filename}})
+    fireEvent.click($.ok)
+  })
   await waitForElementToBeRemoved($.modal)
 
-  brim.dispatch(Modal.show("settings"))
+  act(() => {
+    brim.dispatch(Modal.show("settings"))
+  })
   expect($.brimcapConfig.value).toBe(__filename)
 })

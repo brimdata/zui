@@ -30,7 +30,7 @@ test("r packet with RST bit set", () => {
 
 test("c packet with a bad checksum", () => {
   expect(connHistoryView("c")).toEqual([
-    {text: "bad chksum", direction: "left"}
+    {text: "bad chksum", direction: "left"},
   ])
 })
 
@@ -40,7 +40,7 @@ test("t packet with retransmitted payload", () => {
 
 test("i inconsistent packet (e.g. FIN+RST bits set)", () => {
   expect(connHistoryView("i")).toEqual([
-    {text: "inconsistent", direction: "left"}
+    {text: "inconsistent", direction: "left"},
   ])
 })
 
@@ -58,6 +58,6 @@ test("complex history", () => {
     {text: "multi", direction: "left"},
     {text: "inconsistent", direction: "right"},
     {text: "retrans", direction: "right"},
-    {text: "bad chksum", direction: "left"}
+    {text: "bad chksum", direction: "left"},
   ])
 })

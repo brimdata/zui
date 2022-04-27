@@ -7,21 +7,21 @@ const sampleConfig = (): FormConfig => ({
     name: "username",
     defaultValue: "joe",
     check: jest.fn((_) => [true, "no error"]),
-    submit: jest.fn()
-  }
+    submit: jest.fn(),
+  },
 })
 
 const sampleFormElement = (): HTMLFormElement => {
   const elements = {
     username: {
-      value: "joeshmoe"
-    }
+      value: "joeshmoe",
+    },
   }
   return {
     // @ts-ignore
     elements: {
-      namedItem: (name) => elements[name]
-    }
+      namedItem: (name) => elements[name],
+    },
   }
 }
 
@@ -44,8 +44,8 @@ test("isValid when false", async () => {
     {
       input: {value: "joeshmoe"},
       label: "Username",
-      message: "Value is not ME"
-    }
+      message: "Value is not ME",
+    },
   ])
 })
 

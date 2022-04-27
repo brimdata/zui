@@ -10,7 +10,7 @@ import BrimApi from "src/js/api"
 
 const defaults = () => ({
   page: "search",
-  port: null as null | number
+  port: null as null | number,
 })
 
 export type BootArgs = ReturnType<typeof defaults>
@@ -19,7 +19,10 @@ export function onPage(name: string) {
   window.history.replaceState(null, `Testing Page: ${name}`, `${name}.html`)
 }
 
-function createWrapper(store: Store, api: BrimApi): React.ComponentType<any> {
+function createWrapper(
+  store: Store,
+  api: BrimApi
+): React.ComponentType<React.PropsWithChildren<any>> {
   return function Wrapper({children}) {
     return (
       <BrimProvider store={store} api={api}>
@@ -45,10 +48,10 @@ export async function bootBrim(name: string, args: Partial<BootArgs> = {}) {
     lakeLogs,
     appState,
     releaseNotes: false,
-    autoUpdater: false
+    autoUpdater: false,
   })
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
-    timeout: 20_000
+    timeout: 20_000,
   })
   const brimRenderer = await initialize()
   return {
@@ -56,6 +59,6 @@ export async function bootBrim(name: string, args: Partial<BootArgs> = {}) {
     store: brimRenderer.store,
     plugins: brimRenderer.pluginManager,
     api: brimRenderer.api,
-    wrapper: createWrapper(brimRenderer.store, brimRenderer.api)
+    wrapper: createWrapper(brimRenderer.store, brimRenderer.api),
   }
 }

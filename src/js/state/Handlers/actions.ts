@@ -3,7 +3,7 @@ import {
   HANDLERS_ABORT_ALL,
   HANDLERS_REGISTER,
   HANDLERS_REMOVE,
-  Handler
+  Handler,
 } from "./types"
 
 export default {
@@ -21,5 +21,5 @@ export default {
 
   abortAll(emit = true): HANDLERS_ABORT_ALL {
     return {type: "HANDLERS_ABORT_ALL", emit}
-  }
+  },
 }

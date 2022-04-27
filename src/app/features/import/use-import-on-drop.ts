@@ -16,7 +16,7 @@ export function useImportOnDrop() {
     },
     collect: (m) => ({
       isOver: m.isOver(),
-      canDrop: m.canDrop()
-    })
+      canDrop: m.canDrop(),
+    }),
   }))
 }

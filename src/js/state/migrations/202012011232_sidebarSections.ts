@@ -6,7 +6,7 @@ export default function sidebarSections(state: any) {
     for (const tab of s.tabs.data) {
       tab.layout.sidebarSections = [
         {id: "spaces", isOpen: tab.layout.spacesIsOpen},
-        {id: "history", isOpen: tab.layout.historyIsOpen}
+        {id: "history", isOpen: tab.layout.historyIsOpen},
       ]
       delete tab.layout.spacesIsOpen
       delete tab.layout.spacesHeight

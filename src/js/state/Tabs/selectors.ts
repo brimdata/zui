@@ -28,5 +28,5 @@ export default {
   getActive,
   getCount,
   getActiveTab,
-  getIds
+  getIds,
 }

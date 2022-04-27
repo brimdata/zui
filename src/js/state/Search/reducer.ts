@@ -3,10 +3,10 @@ import {SearchActions, SearchState} from "./types"
 export const initSearchState: SearchState = {
   span: [
     {sec: 0, ns: 0},
-    {sec: 1, ns: 0}
+    {sec: 1, ns: 0},
   ],
   spanArgs: [null, null],
-  spanFocus: null
+  spanFocus: null,
 }
 
 export default function reducer(

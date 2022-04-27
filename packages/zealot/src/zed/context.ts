@@ -53,7 +53,7 @@ export class ZedContext {
     if (!root) throw new Error("Unable to encode field, no root record")
     return {
       record: this.encodeOne(root),
-      path: field.path
+      path: field.path,
     }
   }
 

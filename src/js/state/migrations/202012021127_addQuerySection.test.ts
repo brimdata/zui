@@ -9,7 +9,7 @@ test("migrating 202012021127_addQuerySection", async () => {
       expect(tab.layout.sidebarSections.map((s) => s.id)).toEqual([
         "spaces",
         "queries",
-        "history"
+        "history",
       ])
     }
   }

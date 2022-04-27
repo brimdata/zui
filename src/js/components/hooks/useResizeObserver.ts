@@ -9,7 +9,7 @@ export function useResizeObserver() {
     width: env.isTest ? 1000 : 0,
     height: env.isTest ? 1000 : 0,
     x: 0,
-    y: 0
+    y: 0,
   })
 
   function onResize(entries) {

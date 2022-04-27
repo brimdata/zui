@@ -21,7 +21,7 @@ import {
   VIEWER_SPLICE,
   VIEWER_STATUS,
   ViewerStatus,
-  VIEWER_SET_SEARCH_KEY
+  VIEWER_SET_SEARCH_KEY,
 } from "./types"
 
 export const clear = (tabId?: string): VIEWER_CLEAR => {
@@ -67,7 +67,7 @@ export const updateColumns = (
   return {
     type: "VIEWER_COLUMNS",
     columns,
-    tabId
+    tabId,
   }
 }
 
@@ -78,7 +78,7 @@ export const setColumns = (
   return {
     type: "VIEWER_SET_COLUMNS",
     columns,
-    tabId
+    tabId,
   }
 }
 
@@ -89,7 +89,7 @@ export const setSearchKey = (
   return {
     type: "VIEWER_SET_SEARCH_KEY",
     tabId,
-    key
+    key,
   }
 }
 
@@ -110,21 +110,21 @@ export const selectRange = (index: number): VIEWER_SELECT_RANGE => {
 }
 
 export const selectRangeNext = (): VIEWER_SELECT_RANGE_NEXT => ({
-  type: "VIEWER_SELECT_RANGE_NEXT"
+  type: "VIEWER_SELECT_RANGE_NEXT",
 })
 
 export const selectRangePrev = (): VIEWER_SELECT_RANGE_PREV => ({
-  type: "VIEWER_SELECT_RANGE_PREV"
+  type: "VIEWER_SELECT_RANGE_PREV",
 })
 
 export const selectNext = (): VIEWER_SELECT_NEXT => ({
-  type: "VIEWER_SELECT_NEXT"
+  type: "VIEWER_SELECT_NEXT",
 })
 
 export const selectPrev = (): VIEWER_SELECT_PREV => ({
-  type: "VIEWER_SELECT_PREV"
+  type: "VIEWER_SELECT_PREV",
 })
 
 export const selectAll = (): VIEWER_SELECT_ALL => ({
-  type: "VIEWER_SELECT_ALL"
+  type: "VIEWER_SELECT_ALL",
 })

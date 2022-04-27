@@ -34,7 +34,7 @@ export default function ast(tree: any) {
         })
         return sorts
       }, {})
-    }
+    },
   }
 }
 

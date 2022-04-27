@@ -3,7 +3,7 @@ import {
   SEARCH_CLEAR,
   SEARCH_SPAN_ARGS_SET,
   SEARCH_SPAN_SET,
-  SpanArgs
+  SpanArgs,
 } from "./types"
 import brim, {Span} from "../../brim"
 
@@ -20,5 +20,5 @@ export default {
   },
   clear(): SEARCH_CLEAR {
     return {type: "SEARCH_CLEAR"}
-  }
+  },
 }

@@ -22,5 +22,5 @@ export default {
 
   goForward: () => (dispatch, getState) => {
     Current.getHistory(getState()).goForward()
-  }
+  },
 }

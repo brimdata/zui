@@ -3,7 +3,7 @@ import {ChartActions, ChartState} from "./types"
 const init = (): ChartState => ({
   data: {keys: [], table: {}},
   status: "INIT",
-  searchKey: ""
+  searchKey: "",
 })
 
 export default function reducer(

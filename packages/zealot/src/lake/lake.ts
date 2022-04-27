@@ -45,11 +45,11 @@ export class Lake {
       "-log.level=info",
       "-log.filemode=rotate",
       "-log.path",
-      join(this.logs, "zlake.log")
+      join(this.logs, "zlake.log"),
     ]
 
     const opts = {
-      stdio: ["inherit", "inherit", "inherit"]
+      stdio: ["inherit", "inherit", "inherit"],
     }
     // For unix systems, pass posix pipe read file descriptor into lake process.
     // In the event of Brim getting shutdown via `SIGKILL`, this will let lake

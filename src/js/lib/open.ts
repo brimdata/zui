@@ -38,7 +38,7 @@ export default async function open(target: string, options?: Opts) {
   options = {
     wait: false,
     newWindow: false,
-    ...options
+    ...options,
   }
 
   let command

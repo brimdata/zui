@@ -41,7 +41,7 @@ export const getPrimitives = () => {
     int32: TypeInt32 as typeof TypeInt32,
     bool: TypeBool as typeof TypeBool,
     bytes: TypeBytes as typeof TypeBytes,
-    type: TypeType as typeof TypeType
+    type: TypeType as typeof TypeType,
   }
 }
 

@@ -41,7 +41,7 @@ export class SetView extends ContainerView<zed.Set> {
         value: items[i],
         last,
         key: this.isExpanded() ? i.toString() : null,
-        indexPath: [...this.args.indexPath, i]
+        indexPath: [...this.args.indexPath, i],
       })
       if (last) break
     }

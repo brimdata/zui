@@ -1,7 +1,8 @@
 import {useImportOnDrop} from "src/app/features/import/use-import-on-drop"
 import get from "lodash/get"
 import React, {useEffect, useState} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import Current from "src/js/state/Current"
 import LakeStatuses from "src/js/state/LakeStatuses"
 import {
@@ -9,7 +10,7 @@ import {
   StyledSection,
   DropOverlay,
   SectionToolbar,
-  SectionSearch
+  SectionSearch,
 } from "../common"
 import EmptySection from "src/js/components/common/EmptySection"
 import styled from "styled-components"
@@ -21,14 +22,12 @@ import {Pool} from "src/app/core/pools/pool"
 import Icon from "src/app/core/icon-temp"
 
 const StyledEmptySection = styled(EmptySection).attrs({
-  icon: <Icon name="pool" />
+  icon: <Icon name="pool" />,
 })``
 
 const poolSearch = (term: string, items: Pool[]): Pool[] => {
   return items.filter(({name}) =>
-    JSON.stringify({name})
-      .toLowerCase()
-      .includes(term.toLowerCase())
+    JSON.stringify({name}).toLowerCase().includes(term.toLowerCase())
   )
 }
 
@@ -67,7 +66,7 @@ const PoolsSection = () => {
         {...defaults}
         data={{
           id: "root",
-          items: filteredPools.sort((a, b) => (a.name > b.name ? 1 : -1))
+          items: filteredPools.sort((a, b) => (a.name > b.name ? 1 : -1)),
         }}
         onEdit={handleRename}
       >

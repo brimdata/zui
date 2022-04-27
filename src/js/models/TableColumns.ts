@@ -22,7 +22,7 @@ export default class TableColumns {
       .map(
         ({name, key}, index): TableColumn => ({
           ...{name, position: index},
-          ...tableSetting[key]
+          ...tableSetting[key],
         })
       )
       .sort((a, b) => (a.position > b.position ? 1 : -1))

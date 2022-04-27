@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initMenuActionListeners from "./initMenuActionListeners"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 

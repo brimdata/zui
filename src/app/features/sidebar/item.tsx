@@ -5,7 +5,7 @@ import React, {
   ReactNode,
   Ref,
   useLayoutEffect,
-  useRef
+  useRef,
 } from "react"
 import {NodeState} from "react-arborist"
 import Icon from "src/app/core/icon-temp"
@@ -148,7 +148,7 @@ function getClassNames(props: ItemProps) {
     "selected-start": oneSelection || props.state.isSelectedStart,
     "selected-end": oneSelection || props.state.isSelectedEnd,
     droppable: props.state.isHoveringOverChild,
-    dragging: props.state.isDragging
+    dragging: props.state.isDragging,
   })
 }
 

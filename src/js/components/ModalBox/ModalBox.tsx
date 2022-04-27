@@ -12,22 +12,22 @@ export default function ModalBox({name, children, ...props}: ModalBoxProps) {
   function enter(anime, el) {
     return anime
       .timeline({
-        duration: 150
+        duration: 150,
       })
       .add({
         targets: document.querySelector(".modal-overlay"),
         backgroundColor: ["rgba(38,37,36,0.0)", "rgba(38,37,36,0.15)"],
-        easing: "linear"
+        easing: "linear",
       })
       .add(
         {
           targets: el.querySelector(".modal-contents"),
           opacity: {
             value: [0, 1],
-            easing: "easeInOutSine"
+            easing: "easeInOutSine",
           },
           scale: [0.8, 1],
-          easing: "easeInOutSine"
+          easing: "easeInOutSine",
         },
         0
       )

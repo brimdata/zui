@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import Configs, {Config, ConfigItem} from "./index"
 
@@ -6,7 +10,7 @@ const testProperty1: ConfigItem = {
   type: "string",
   label: "Test Property 1",
   defaultValue: "test initial value",
-  command: "testCommand1"
+  command: "testCommand1",
 }
 
 const testProperty2: ConfigItem = {
@@ -14,22 +18,22 @@ const testProperty2: ConfigItem = {
   type: "string",
   label: "Test Property 2",
   defaultValue: "test initial value 2",
-  command: "testCommand2"
+  command: "testCommand2",
 }
 
 const testConfig1: Config = {
   name: "testConfig1",
   title: "Test Config 1",
   properties: {
-    testProperty1
-  }
+    testProperty1,
+  },
 }
 const testConfig2: Config = {
   name: "testConfig2",
   title: "Test Config 2",
   properties: {
-    testProperty2
-  }
+    testProperty2,
+  },
 }
 
 let select, dispatch, store

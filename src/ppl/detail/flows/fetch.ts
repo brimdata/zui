@@ -11,25 +11,24 @@ function findConn(records) {
   return records.find((r) => r.try("_path")?.toString() === "conn")
 }
 
-const legacyFetchCorrelation = (
-  record: zed.Record,
-  id = "RELATED_EVENTS"
-) => async (dispatch) => {
-  const query = getCorrelationQuery(record)
-  const {uid, cid} = new Correlation(record).getIds()
-  const run = () => dispatch(search({query, id})).then((r) => r.zed())
+const legacyFetchCorrelation =
+  (record: zed.Record, id = "RELATED_EVENTS") =>
+  async (dispatch) => {
+    const query = getCorrelationQuery(record)
+    const {uid, cid} = new Correlation(record).getIds()
+    const run = () => dispatch(search({query, id})).then((r) => r.zed())
 
-  if (!uid && !cid) return []
-  if (cid && uid) return run()
-  if (cid) return run()
+    if (!uid && !cid) return []
+    if (cid && uid) return run()
+    if (cid) return run()
 
-  // If there is only a uid and not a cid
-  const records = await run()
-  const conn = findConn(records)
-  if (conn && conn.has("community_id"))
-    return dispatch(fetchCorrelation(conn, id))
-  else return records
-}
+    // If there is only a uid and not a cid
+    const records = await run()
+    const conn = findConn(records)
+    if (conn && conn.has("community_id"))
+      return dispatch(fetchCorrelation(conn, id))
+    else return records
+  }
 
 export const fetchCorrelation = (record: zed.Record, id = "RELATED_EVENTS") => {
   if (!featureIsEnabled("query-flow")) return legacyFetchCorrelation(record, id)
@@ -42,7 +41,7 @@ export const fetchCorrelation = (record: zed.Record, id = "RELATED_EVENTS") => {
         id: "",
         name: "",
         value: query,
-        pins: {from: poolId, filters: []}
+        pins: {from: poolId, filters: []},
       })
       return dispatch(querySearch({query: q, id})).then((r) => r.zed())
     }

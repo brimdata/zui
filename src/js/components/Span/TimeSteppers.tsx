@@ -16,32 +16,32 @@ export default function TimeSteppers({show, onUp, onDown, style}: Props) {
     anime
       .timeline({
         easing: "easeOutExpo",
-        duration: 400
+        duration: 400,
       })
       .add({
         targets: el.querySelector(".step-up"),
         translateY: [0, "-100%"],
-        opacity: 1
+        opacity: 1,
       })
       .add(
         {
           targets: el.querySelector(".step-down"),
           translateY: [0, "100%"],
-          opacity: 1
+          opacity: 1,
         },
         75
       )
       .add(
         {
           targets: el.querySelector(".step-up svg"),
-          opacity: [0, 1]
+          opacity: [0, 1],
         },
         200
       )
       .add(
         {
           targets: el.querySelector(".step-down svg"),
-          opacity: [0, 1]
+          opacity: [0, 1],
         },
         200 + 75
       )
@@ -51,12 +51,12 @@ export default function TimeSteppers({show, onUp, onDown, style}: Props) {
       .timeline({duration: 100, easing: "linear"})
       .add({
         targets: el.querySelector(".step-down"),
-        opacity: 0
+        opacity: 0,
       })
       .add(
         {
           targets: el.querySelector(".step-up"),
-          opacity: 0
+          opacity: 0,
         },
         0
       )

@@ -9,6 +9,6 @@ export default function useExport(): ActionButtonProps {
     label: "Export",
     title: "Export search results to file",
     icon: "export",
-    click: () => dispatch(Modal.show("export"))
+    click: () => dispatch(Modal.show("export")),
   }
 }

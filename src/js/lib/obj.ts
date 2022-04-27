@@ -23,7 +23,7 @@ export default function obj(o: Object) {
 
     isEmpty() {
       return Object.entries(o).length === 0 && o.constructor === Object
-    }
+    },
   }
 }
 

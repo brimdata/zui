@@ -37,14 +37,14 @@ export default class Auth0Client {
       const refreshOptions = {
         grant_type: "refresh_token",
         client_id: this.clientId,
-        refresh_token: refreshToken
+        refresh_token: refreshToken,
       }
       const res = await fetch(this.getTokenURL(), {
         method: "POST",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
         },
-        body: JSON.stringify(refreshOptions)
+        body: JSON.stringify(refreshOptions),
       })
       const body = await res.json()
 
@@ -61,16 +61,16 @@ export default class Auth0Client {
       grant_type: "authorization_code",
       client_id: this.clientId,
       code,
-      redirect_uri: this.redirectUri
+      redirect_uri: this.redirectUri,
     }
 
     try {
       const res = await fetch(this.getTokenURL(), {
         method: "POST",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
         },
-        body: JSON.stringify(exchangeOptions)
+        body: JSON.stringify(exchangeOptions),
       })
 
       const body: Auth0Response = await res.json()

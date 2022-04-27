@@ -9,7 +9,7 @@ export default class LoadingBurst extends React.Component<Props> {
       <div
         data-test-id="loading-burst"
         className={classNames("loading-burst", {
-          visible: this.props.show
+          visible: this.props.show,
         })}
       >
         <div className="burst-1 burst" />

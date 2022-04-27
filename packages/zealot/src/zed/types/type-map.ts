@@ -22,7 +22,7 @@ export class TypeMap implements Type {
         : new Map(
             value.map((entry) => [
               this.keyType.create(entry[0], stream),
-              this.valType.create(entry[1], stream)
+              this.valType.create(entry[1], stream),
             ])
           )
     )
@@ -32,7 +32,7 @@ export class TypeMap implements Type {
     return {
       kind: "map",
       key_type: stream.encodeType(this.keyType),
-      val_type: stream.encodeType(this.valType)
+      val_type: stream.encodeType(this.valType),
     }
   }
 

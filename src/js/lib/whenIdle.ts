@@ -8,7 +8,7 @@ interface IdleFunc {
 export default function whenIdle(func: Function): IdleFunc {
   let _cancel = () => {}
 
-  const lazy = function(...args: any) {
+  const lazy = function (...args: any) {
     _cancel()
     _cancel = onIdle(() => func(...args))
   }

@@ -34,8 +34,8 @@ const slice = createSlice({
 
     remove: (state, action: PayloadAction<string>) => {
       delete state[action.payload]
-    }
-  }
+    },
+  },
 })
 
 export const reducer = slice.reducer

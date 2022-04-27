@@ -14,14 +14,14 @@ export default function useView(): ActionButtonProps {
       label: "Left Pane",
       type: "checkbox",
       checked: leftIsOpen,
-      click: () => dispatch(Appearance.toggleSidebar())
+      click: () => dispatch(Appearance.toggleSidebar()),
     },
     {
       label: "Right Pane",
       type: "checkbox",
       checked: rightIsOpen,
-      click: () => dispatch(Layout.toggleDetailPane())
-    }
+      click: () => dispatch(Layout.toggleDetailPane()),
+    },
   ] as MenuItemConstructorOptions[]
 
   return {
@@ -31,6 +31,6 @@ export default function useView(): ActionButtonProps {
     submenu,
     click() {
       showContextMenu(submenu)
-    }
+    },
   }
 }

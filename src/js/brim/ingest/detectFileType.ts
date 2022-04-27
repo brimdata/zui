@@ -8,7 +8,7 @@ const PCAP_HEXES = [PCAP_1_HEX, PCAP_2_HEX, PCAPNG_HEX, PCAPNANO_HEX]
 
 export type IngestFileType = "pcap" | "log"
 
-export default async function(file: File): Promise<IngestFileType> {
+export default async function (file: File): Promise<IngestFileType> {
   if (await isPcap(file)) {
     return "pcap"
   } else {

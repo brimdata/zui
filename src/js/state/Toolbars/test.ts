@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import Toolbars from "./index"
 import {ToolbarItem} from "./index"
@@ -8,7 +12,7 @@ const item1: ToolbarItem = {
   id: "item1",
   disabled: false,
   label: "testLabel1",
-  order: 0
+  order: 0,
 }
 
 let select, dispatch, store
@@ -22,7 +26,7 @@ test("Adding items", () => {
   const item2 = {
     ...item1,
     id: "item2",
-    order: 1
+    order: 1,
   }
 
   // add one to search
@@ -45,19 +49,19 @@ test("Updating an item", () => {
 
   const itemChanges = {
     disabled: true,
-    icon: "newIcon"
+    icon: "newIcon",
   }
 
   dispatch(
     Toolbars.updateItem({
       toolbarId: "search",
       itemId: item1.id,
-      item: itemChanges
+      item: itemChanges,
     })
   )
   expect(select(Toolbars.allToolbarItems("search"))).toHaveLength(1)
   expect(select(Toolbars.getToolbarItem("search", item1.id))).toEqual({
     ...item1,
-    ...itemChanges
+    ...itemChanges,
   })
 })

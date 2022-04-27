@@ -17,7 +17,7 @@ export default function session(path) {
       return lib.file(p).write(JSON.stringify({version, data}))
     },
 
-    load: async function(): Promise<SessionState | null | undefined> {
+    load: async function (): Promise<SessionState | null | undefined> {
       const migrator = await Migrations.init()
       const file = lib.file(path)
 
@@ -44,7 +44,7 @@ export default function session(path) {
       if (await file.exists()) {
         return file.remove()
       }
-    }
+    },
   }
 }
 
@@ -84,7 +84,7 @@ function ensureVersioned(state) {
   else
     return {
       version: 0,
-      data: state
+      data: state,
     }
 }
 

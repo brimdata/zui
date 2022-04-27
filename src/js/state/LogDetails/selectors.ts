@@ -57,5 +57,5 @@ export default {
   getUidStatus,
   getUidLogs,
   build,
-  getHistory
+  getHistory,
 }

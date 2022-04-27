@@ -7,7 +7,7 @@ const slice = createSlice({
     rows: [] as RowData[],
     expanded: new Map<string, boolean>(),
     defaultExpanded: false,
-    scrollPosition: {top: 0, left: 0}
+    scrollPosition: {top: 0, left: 0},
   },
   reducers: {
     appendRows: (s, a: PayloadAction<RowData[]>) => {
@@ -27,14 +27,14 @@ const slice = createSlice({
     },
     setScrollPosition: (s, a: PayloadAction<{top: number; left: number}>) => {
       s.scrollPosition = a.payload
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase("VIEWER_CLEAR", (s) => {
       s.rows = []
       s.expanded = new Map<string, boolean>()
     })
-  }
+  },
 })
 
 export const reducer = slice.reducer

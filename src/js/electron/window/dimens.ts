@@ -17,7 +17,7 @@ export function dimensFromSizePosition(
     x: position && position[0],
     y: position && position[1],
     width: size && size[0],
-    height: size && size[1]
+    height: size && size[1],
   }
 }
 
@@ -34,7 +34,7 @@ export function getWindowDimens(
       x: saved.x,
       y: saved.y,
       width: Math.min(saved.width, bounds.width),
-      height: Math.min(saved.height, bounds.height)
+      height: Math.min(saved.height, bounds.height),
     }
   } else {
     return defaults
@@ -46,7 +46,7 @@ function pad(rect, padding) {
     x: rect.x + padding,
     y: rect.y + padding,
     width: rect.width - padding * 2,
-    height: rect.height - padding * 2
+    height: rect.height - padding * 2,
   }
 }
 
@@ -66,7 +66,7 @@ export function center(inner: Rectangle, outer: Rectangle): Rectangle {
       Math.max(outer.y + (outer.height - inner.height) / 2, outer.y)
     ),
     height: Math.min(inner.height, outer.height),
-    width: Math.min(inner.width, outer.width)
+    width: Math.min(inner.width, outer.width),
   }
 }
 
@@ -84,6 +84,6 @@ export function stack(prev: Rectangle, screen: Rectangle, distance: number) {
     x: moveCoord(prev.x - screen.x, width, screen.width) + screen.x,
     y: moveCoord(prev.y - screen.y, height, screen.height) + screen.y,
     width,
-    height
+    height,
   }
 }

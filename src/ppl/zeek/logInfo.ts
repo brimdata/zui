@@ -11,8 +11,7 @@ const specialUrls = {
     "https://docs.zeek.org/en/current/scripts/base/frameworks/tunnels/main.zeek.html#type-Tunnel::Info",
   reporter:
     "https://docs.zeek.org/en/current/scripts/base/frameworks/reporter/main.zeek.html#type-Reporter::Info",
-  x509:
-    "https://docs.zeek.org/en/current/scripts/base/files/x509/main.zeek.html#type-X509::Info",
+  x509: "https://docs.zeek.org/en/current/scripts/base/files/x509/main.zeek.html#type-X509::Info",
   netcontrol_shunt:
     "https://docs.zeek.org/en/current/scripts/base/frameworks/netcontrol/shunt.zeek.html#type-NetControl::ShuntInfo",
   dce_rpc:
@@ -23,8 +22,7 @@ const specialUrls = {
     "https://docs.zeek.org/en/current/scripts/base/frameworks/signatures/main.zeek.html#type-Signatures::Info",
   openflow:
     "https://docs.zeek.org/en/current/scripts/base/frameworks/openflow/plugins/log.zeek.html#type-OpenFlow::Info",
-  pe:
-    "https://docs.zeek.org/en/current/scripts/base/files/pe/main.zeek.html#type-PE::Info",
+  pe: "https://docs.zeek.org/en/current/scripts/base/files/pe/main.zeek.html#type-PE::Info",
   files:
     "https://docs.zeek.org/en/current/scripts/base/frameworks/files/main.zeek.html#type-Files::Info",
   weird:
@@ -37,8 +35,7 @@ const specialUrls = {
     "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html#type-Notice::Info",
   intel:
     "https://docs.zeek.org/en/current/scripts/base/frameworks/intel/main.zeek.html#type-Intel::Info",
-  dpd:
-    "https://docs.zeek.org/en/current/scripts/base/frameworks/dpd/main.zeek.html#type-DPD::Info",
+  dpd: "https://docs.zeek.org/en/current/scripts/base/frameworks/dpd/main.zeek.html#type-DPD::Info",
   software:
     "https://docs.zeek.org/en/current/scripts/base/frameworks/software/main.zeek.html#type-Software::Info",
   packet_filter:
@@ -48,7 +45,7 @@ const specialUrls = {
   netcontrol:
     "https://docs.zeek.org/en/current/scripts/base/frameworks/netcontrol/main.zeek.html#type-NetControl::Info",
   smb_files:
-    "https://docs.zeek.org/en/current/scripts/base/protocols/smb/main.zeek.html#type-SMB::FileInfo"
+    "https://docs.zeek.org/en/current/scripts/base/protocols/smb/main.zeek.html#type-SMB::FileInfo",
 }
 
 type ZeekLogInfoClass = ReturnType<typeof knownPath>
@@ -75,13 +72,13 @@ function knownPath(path: string, info: ZeekInfo) {
       const firstPartOfName = col.name.split(".")[0]
       const field = info.find((f) => f.name === firstPartOfName) || {
         desc: undefined,
-        type: undefined
+        type: undefined,
       }
       return {
         desc: field.desc || "No description found.",
-        type: field.type || col.type
+        type: field.type || col.type,
       }
-    }
+    },
   }
 }
 
@@ -91,7 +88,7 @@ function unknownPath(): ZeekLogInfoClass {
     docsUrl: () => "",
     describeColumn: (col: {name: string; type: string}) => ({
       desc: `No docs for ${col.name}.`,
-      type: col.type
-    })
+      type: col.type,
+    }),
   }
 }

@@ -17,21 +17,13 @@ export const humanDuration = ([from, to]: DateTuple) =>
 
 export const inSameUnit = ([from, to]: DateTuple, unit: TimeUnit) =>
   isEqual(
-    moment(from)
-      .startOf(unit)
-      .toDate(),
-    moment(to)
-      .startOf(unit)
-      .toDate()
+    moment(from).startOf(unit).toDate(),
+    moment(to).startOf(unit).toDate()
   )
 
 export const floorAndCeil = ([from, to]: DateTuple, unit: TimeUnit) => [
-  moment(from)
-    .startOf(unit)
-    .toDate(),
-  moment(to)
-    .endOf(unit)
-    .toDate()
+  moment(from).startOf(unit).toDate(),
+  moment(to).endOf(unit).toDate(),
 ]
 
 export const shift = (
@@ -40,14 +32,8 @@ export const shift = (
   unit: TimeUnit = "ms"
 ): DateTuple => {
   return [
-    brim
-      .time(from)
-      .add(amount, unit)
-      .toDate(),
-    brim
-      .time(to)
-      .add(amount, unit)
-      .toDate()
+    brim.time(from).add(amount, unit).toDate(),
+    brim.time(to).add(amount, unit).toDate(),
   ]
 }
 
@@ -56,11 +42,5 @@ export const spanOfLast = (
   unit: TimeUnit,
   now: Date = new Date()
 ): DateTuple => {
-  return [
-    brim
-      .time(now)
-      .subtract(number, unit)
-      .toDate(),
-    now
-  ]
+  return [brim.time(now).subtract(number, unit).toDate(), now]
 }
