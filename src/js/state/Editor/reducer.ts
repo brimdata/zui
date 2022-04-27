@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
+import {original} from "immer"
 import buildPin from "./models/build-pin"
 import {QueryPin} from "./types"
 
@@ -7,7 +8,8 @@ const slice = createSlice({
   initialState: {
     value: "",
     pins: [] as QueryPin[],
-    pinEditIndex: null as null | number
+    pinEditIndex: null as null | number,
+    pinHoverIndex: null as null | number
   },
   reducers: {
     setValue(s, a: PayloadAction<string>) {
@@ -35,6 +37,17 @@ const slice = createSlice({
     deletePin(s, a: PayloadAction<number>) {
       delete s.pins[a.payload]
     },
+    hoverOverPin(s, a: PayloadAction<number>) {
+      s.pinHoverIndex = a.payload
+    },
+    dropPin(s, a: PayloadAction<number>) {
+      const dropIndex = a.payload
+      const pin = s.pins[dropIndex]
+      s.pins.splice(dropIndex, 1)
+      s.pins.splice(s.pinHoverIndex, 0, pin)
+      s.pinHoverIndex = null
+    },
+
     updatePin(s, a: PayloadAction<Partial<QueryPin>>) {
       const pin = s.pins[s.pinEditIndex]
       if (!pin) return

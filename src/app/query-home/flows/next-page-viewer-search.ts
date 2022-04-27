@@ -17,8 +17,10 @@ export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const query = Current.getQuery(getState())
   if (!query) return
 
-  const perPage = query.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
-  if (!query.hasHeadFilter()) query.addFilterPin(`| head ${perPage}`)
+  if (!query.hasHeadFilter()) {
+    query.head = query.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
+  }
+
   const currentPool = Current.getQueryPool(getState())
   if (!currentPool) return
   const origSpan = brim.span(currentPool.everythingSpan()).toDateTuple()
@@ -27,8 +29,8 @@ export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const [spliceIndex, span] = nextPageArgs(logs, origSpan)
   const [from, to] = span
   // in the future this needs to use ast inspection/manipulation and not assume ts
-  query.addFilterPin(`| ts >= '${from}'`)
-  query.addFilterPin(`| ts < '${to}'`)
+  // query.addFilterPin(`| ts >= '${from}'`)
+  // query.addFilterPin(`| ts < '${to}'`)
   const append = true
 
   dispatch(Viewer.splice(tabId, spliceIndex))
@@ -47,7 +49,10 @@ function nextPageArgs(
       const ts = logs[index].try<zed.Time>("ts")
       if (ts instanceof zed.Time) {
         const prevTs = ts.toDate()
-        nextSpan[1] = brim.time(prevTs).add(1, "ms").toDate()
+        nextSpan[1] = brim
+          .time(prevTs)
+          .add(1, "ms")
+          .toDate()
         spliceIndex = index
       }
     }

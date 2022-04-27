@@ -10,6 +10,7 @@ import Editor from "src/js/state/Editor"
 import pinContextMenu from "./pin-context-menu"
 import classNames from "classnames"
 import mergeRefs from "src/app/core/utils/merge-refs"
+import usePinDnd from "./use-pin-dnd"
 
 const primary = cssVar("--primary-color") as string
 const buttonColor = transparentize(0.8, primary)
@@ -75,6 +76,16 @@ const Dropdown = styled(Icon).attrs({name: "chevron-down"})`
   }
 `
 
+const DropCursor = styled.div`
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 2px;
+  height: calc(100% + 8px);
+  border-radius: 1px;
+  background: var(--primary-color);
+`
+
 export type PinProps = {
   index: number
   label: ReactNode
@@ -93,6 +104,8 @@ export const BasePin = React.forwardRef(function BasePin(
   props: PinProps,
   forwardedRef
 ) {
+  const dndRef = usePinDnd(props.index)
+  const isHovering = useSelector(Editor.getPinHoverIndex) === props.index
   const ref = useRef()
   const dispatch = useDispatch()
   const isEditing = useSelector(Editor.getPinEditIndex) === props.index
@@ -109,12 +122,13 @@ export const BasePin = React.forwardRef(function BasePin(
       <Button
         onClick={onClick}
         onContextMenu={onContextMenu}
-        ref={mergeRefs(forwardedRef, ref)}
+        ref={mergeRefs(forwardedRef, ref, dndRef)}
         className={className}
       >
         {props.prefix && <Prefix>{props.prefix}</Prefix>}
         <Label>{props.label}</Label>
         <Dropdown />
+        {isHovering && <DropCursor />}
       </Button>
       {props.form && (
         <Dialog
