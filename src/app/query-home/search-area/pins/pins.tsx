@@ -1,13 +1,11 @@
-import React, {useEffect} from "react"
+import React from "react"
 import styled from "styled-components"
 import Editor from "src/js/state/Editor"
 import {useSelector} from "react-redux"
-import {GenericQueryPin, QueryPin} from "src/js/state/Editor/types"
+import {QueryPin} from "src/js/state/Editor/types"
 import FromPin from "./from-pin/from-pin"
 import GenericPin from "./generic-pin/generic-pin"
 import TimeRangePin from "./time-range-pin/time-range-pin"
-import {useDispatch} from "src/app/core/state"
-import {useDrop} from "react-dnd"
 
 const Container = styled.section`
   margin-top: 16px;
@@ -30,15 +28,6 @@ function renderPin(pin: QueryPin, index: number) {
 
 export function Pins() {
   const pins = useSelector(Editor.getPins)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(Editor.addPin({type: "generic", value: "ABC"} as GenericQueryPin))
-    dispatch(Editor.addPin({type: "generic", value: "DEF"} as GenericQueryPin))
-    dispatch(Editor.addPin({type: "generic", value: "GHI"} as GenericQueryPin))
-    dispatch(Editor.addPin({type: "generic", value: "JKL"} as GenericQueryPin))
-    dispatch(Editor.addPin({type: "generic", value: "MNO"} as GenericQueryPin))
-  }, [])
 
   return <Container>{pins.map(renderPin)}</Container>
 }
