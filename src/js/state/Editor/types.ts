@@ -14,6 +14,7 @@ export type FromQueryPin = {
 export type TimeRangeQueryPin = {
   type: "time-range"
   disabled?: boolean
+  field: string
   from: Date
   to: Date
 }

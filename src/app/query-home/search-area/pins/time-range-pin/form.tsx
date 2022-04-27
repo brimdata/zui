@@ -26,6 +26,15 @@ export default function Form(props: {
       }}
     >
       <Field>
+        <Label htmlFor="field">Time Field</Label>
+        <Input
+          style={{width: "66%"}}
+          name="field"
+          defaultValue={props.pin.field}
+          type="string"
+        />
+      </Field>
+      <Field>
         <Label htmlFor="from">From</Label>
         <Input
           name="from"
@@ -62,6 +71,7 @@ function decodeDate(string) {
 function decodeFormData(e) {
   const raw = getFormData(e)
   return {
+    field: raw.field,
     from: decodeDate(raw.from),
     to: decodeDate(raw.to)
   } as TimeRangeQueryPin
