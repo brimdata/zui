@@ -14,13 +14,12 @@ import Editor from "src/js/state/Editor"
 const initialViewerSearch = (): Thunk<any> => (dispatch, getState) => {
   const query = Current.getQuery(getState())
   if (!query) return
-  const perPage = query.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
-  if (!query.hasHeadFilter) query.addFilterPin(`| head ${perPage}`)
+  query.head = query.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
   const tabId = Tabs.getActive(getState())
   const history = global.tabHistories.get(tabId)
   const {key} = history.location
   dispatch(Viewer.setSearchKey(tabId, key))
-  console.log(Editor.getQuery(getState()))
+  console.log(query.toString())
   return dispatch(viewerSearch({query}))
 }
 

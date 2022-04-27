@@ -23,6 +23,8 @@ import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import {getQuerySource} from "./flows/get-query-source"
 import SearchArea from "./search-area"
+import usePins from "./toolbar/hooks/use-pins"
+import Editor from "src/js/state/Editor"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -42,13 +44,10 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
       })
     )
   }
-  dispatch(
-    SearchBarState.restoreSearchBar({
-      current: query?.value || "",
-      pinned: query?.getFilterPins()?.map((p) => p.toString()) || [],
-      error: null
-    })
-  )
+  if (query) {
+    dispatch(Editor.setValue(query.value))
+    dispatch(Editor.setPins(query.pins))
+  }
 }
 
 export function useSearchParamLocationSync() {
@@ -88,25 +87,6 @@ const useInspectorButtons = (): ActionButtonProps[] => {
     }
   ]
 }
-const usePin = (): ActionButtonProps => {
-  const dispatch = useDispatch()
-  return {
-    label: "Pin",
-    title: "Pin current search term",
-    icon: "pin",
-    click: () => {
-      dispatch((d, getState) => {
-        const state = getState()
-        const query = Current.getQuery(state)
-        const searchTerm = SearchBarActions.getSearchBarInputValue(state)
-        query.addFilterPin(searchTerm)
-        query.value = ""
-        d(updateQuery(query))
-        d(SearchBarActions.pinSearchBar())
-      })
-    }
-  }
-}
 
 const PageWrap = styled.div`
   width: 100%;
@@ -142,7 +122,7 @@ const QueryHome = () => {
   const dispatch = useDispatch<AppDispatch>()
   const exportAction = useExport()
   const columns = useColumns()
-  const pin = usePin()
+  const pin = usePins()
   const pluginButtons = usePluginToolbarItems("search")
   const [expandButton, collapseButton] = useInspectorButtons()
   const actions = [

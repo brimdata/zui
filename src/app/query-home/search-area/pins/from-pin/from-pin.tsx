@@ -15,7 +15,7 @@ export default function FromPin(props: {pin: FromQueryPin; index: number}) {
       disabled={props.pin.disabled}
       index={props.index}
       prefix="from"
-      label={props.pin.value || "Select source"}
+      label={props.pin.value || "Select pool"}
       showMenu={() => {
         if (!ref.current) return
         dispatch(showMenu(ref.current)).then((value: string) => {

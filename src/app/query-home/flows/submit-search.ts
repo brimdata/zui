@@ -4,6 +4,7 @@ import SearchBar from "src/js/state/SearchBar"
 import {updateQuery} from "./update-query"
 import initialViewerSearch from "./initial-viewer-search"
 import Editor from "src/js/state/Editor"
+import {BrimQuery} from "../utils/brim-query"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
@@ -13,11 +14,15 @@ const submitSearch = (
 ) => async (dispatch, getState) => {
   const q = Editor.getQuery(getState())
   dispatch(Notice.dismiss())
-  const input = SearchBar.getSearchBarInputValue(getState())
-  const query = Current.getQuery(getState())
-  query.value = input
+  const value = Editor.getValue(getState())
+  const pins = Editor.getPins(getState())
+  const prev = Current.getQuery(getState())
+  const query = new BrimQuery({
+    ...prev.serialize(),
+    value,
+    pins
+  })
   await dispatch(updateQuery(query))
-  if (!dispatch(SearchBar.validate())) return
   // TODO: Mason - refactor history to use query copies
   // if (save.investigation) {
   //   dispatch(Investigation.push(lakeId, poolId, record, brim.time(ts).toTs()))

@@ -1,6 +1,6 @@
 import Icon, {IconName} from "src/app/core/icon-temp"
 import {MenuItemConstructorOptions} from "electron/main"
-import React from "react"
+import React, {MouseEvent} from "react"
 import Button from "./button"
 import Label from "./label"
 import styled from "styled-components"
@@ -18,7 +18,7 @@ export function toMenu(
 
 export type ActionButtonProps = {
   label: string
-  click: () => void
+  click: (e: MouseEvent) => void
   title: string
   icon: IconName
   disabled?: boolean

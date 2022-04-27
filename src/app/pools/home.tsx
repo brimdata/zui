@@ -50,7 +50,7 @@ const PoolHome = () => {
   const lakeId = useSelector(Current.getLakeId)
 
   const openNewDraftQuery = () => {
-    const query = dispatch(newQuery({pins: {from: pool.id, filters: []}}))
+    const query = dispatch(newQuery({pins: [{type: "from", value: pool.name}]}))
     dispatch(Tabs.new(lakeQueryPath(query.id, lakeId)))
   }
   const keys = pool.data.layout.keys.map((k) => k.join("."))

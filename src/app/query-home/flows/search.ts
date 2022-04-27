@@ -39,7 +39,7 @@ const search = ({
   const tag = id
 
   initial = isUndefined(initial) ? true : initial
-  const res = await zealot.query(query.format(), {
+  const res = await zealot.query(query.toString(), {
     signal: ctl.signal
   })
   api.abortables.abort({tab, tag})

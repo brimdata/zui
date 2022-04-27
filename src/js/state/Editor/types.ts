@@ -19,3 +19,7 @@ export type TimeRangeQueryPin = {
 }
 
 export type QueryPin = GenericQueryPin | FromQueryPin | TimeRangeQueryPin
+export interface QueryPinInterface {
+  empty(): boolean
+  toZed(): string
+}
