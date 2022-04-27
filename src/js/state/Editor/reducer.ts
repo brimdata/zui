@@ -31,11 +31,29 @@ const slice = createSlice({
     disablePin(s, a: PayloadAction<number>) {
       s.pins[a.payload].disabled = true
     },
+    disableOtherPins(s, a: PayloadAction<number>) {
+      s.pins.forEach((p, i) => {
+        if (i === a.payload) return
+        p.disabled = true
+      })
+    },
+    enableOtherPins(s, a: PayloadAction<number>) {
+      s.pins.forEach((p, i) => {
+        if (i === a.payload) return
+        p.disabled = false
+      })
+    },
     enablePin(s, a: PayloadAction<number>) {
       s.pins[a.payload].disabled = false
     },
     deletePin(s, a: PayloadAction<number>) {
       delete s.pins[a.payload]
+    },
+    deletePinsToTheRight(s, a: PayloadAction<number>) {
+      s.pins.splice(a.payload + 1)
+    },
+    deleteAllPins(s, a: PayloadAction<number>) {
+      s.pins = []
     },
     hoverOverPin(s, a: PayloadAction<number>) {
       s.pinHoverIndex = a.payload

@@ -12,20 +12,40 @@ export default function pinContextMenu(index: number) {
         label: "Edit",
         click: () => dispatch(Editor.editPin(index))
       },
+      {type: "separator"},
       {
         label: "Disable",
-        visible: !pin.disabled,
+        enabled: !pin.disabled,
         click: () => dispatch(Editor.disablePin(index))
       },
       {
+        label: "Disable Others",
+        enabled: pins.some((p) => !p.disabled),
+        click: () => dispatch(Editor.disableOtherPins(index))
+      },
+      {type: "separator"},
+      {
         label: "Enable",
-        visible: !!pin.disabled,
+        enabled: !!pin.disabled,
         click: () => dispatch(Editor.enablePin(index))
+      },
+      {
+        label: "Enable Others",
+        enabled: pins.some((p) => p.disabled),
+        click: () => dispatch(Editor.enableOtherPins(index))
       },
       {type: "separator"},
       {
         label: "Delete",
         click: () => dispatch(Editor.deletePin(index))
+      },
+      {
+        label: "Delete to the Right",
+        click: () => dispatch(Editor.deletePinsToTheRight(index))
+      },
+      {
+        label: "Delete All",
+        click: () => dispatch(Editor.deleteAllPins())
       }
     ] as MenuItemConstructorOptions[])
   }
