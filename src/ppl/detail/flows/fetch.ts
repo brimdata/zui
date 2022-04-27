@@ -41,7 +41,7 @@ export const fetchCorrelation = (record: zed.Record, id = "RELATED_EVENTS") => {
         id: "",
         name: "",
         value: query,
-        pins: {from: poolId, filters: []},
+        pins: [{type: "from", value: poolId}],
       })
       return dispatch(querySearch({query: q, id})).then((r) => r.zed())
     }

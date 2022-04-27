@@ -1,4 +1,4 @@
-import {useDispatch} from "react-redux"
+import {useDispatch} from "src/app/core/state"
 import {showContextMenu} from "src/js/lib/System"
 import Editor from "src/js/state/Editor"
 import popupPosition from "../../search-area/popup-position"
@@ -8,21 +8,21 @@ const showPinsMenu = (anchor) => (dispatch, getState) => {
   const pins = Editor.getPins(getState())
   const pinCurrent = {
     label: "Pin Editor Value",
-    click: () => dispatch(Editor.pinValue())
+    click: () => dispatch(Editor.pinValue()),
   }
   const newGeneric = {
     label: "New 'Generic' Pin",
     click: () => {
       dispatch(Editor.addPin({type: "generic", value: ""}))
       dispatch(Editor.editPin(pins.length))
-    }
+    },
   }
   const newFrom = {
     label: "New 'From' Pin",
     click: () => {
       dispatch(Editor.addPin({type: "from", value: ""}))
       dispatch(Editor.editPin(pins.length))
-    }
+    },
   }
   const newTimeRange = {
     label: "New 'Time Range' Pin",
@@ -32,11 +32,11 @@ const showPinsMenu = (anchor) => (dispatch, getState) => {
           type: "time-range",
           field: "ts",
           from: new Date(),
-          to: new Date()
+          to: new Date(),
         })
       )
       dispatch(Editor.editPin(pins.length))
-    }
+    },
   }
   showContextMenu(
     [pinCurrent, {type: "separator"}, newGeneric, newFrom, newTimeRange],
@@ -52,8 +52,8 @@ const usePins = (): ActionButtonProps => {
     icon: "pin",
     submenu: [],
     click: (e) => {
-      dispatch(showPinsMenu(e.target))
-    }
+      dispatch(showPinsMenu(e?.target))
+    },
   }
 }
 

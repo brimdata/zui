@@ -50,7 +50,7 @@ export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => {
           id: "",
           name: "",
           value: q,
-          pins: {from: poolId, filters: []},
+          pins: [{type: "from", value: poolId}],
         }),
       })
     )

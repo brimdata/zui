@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import React, {useRef} from "react"
 import styled from "styled-components"
 
@@ -6,6 +6,7 @@ import {cssVar} from "src/js/lib/cssVar"
 import SearchBar from "src/js/state/SearchBar"
 import CmdHistory from "src/app/core/models/cmd-history"
 import submitSearch from "../flows/submit-search"
+import {useDispatch} from "src/app/core/state"
 
 const StyledInput = styled.input`
   display: block;
