@@ -15,3 +15,7 @@ export const getValue = activeTabSelect((tab) => {
 export const getPinHoverIndex = activeTabSelect((tab) => {
   return tab.editor.pinHoverIndex
 })
+
+export const getPinCount = activeTabSelect((tab) => {
+  return tab.editor.pins.length
+})

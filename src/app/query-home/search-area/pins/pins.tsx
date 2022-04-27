@@ -7,6 +7,7 @@ import FromPin from "./from-pin/from-pin"
 import GenericPin from "./generic-pin/generic-pin"
 import TimeRangePin from "./time-range-pin/time-range-pin"
 import {useDispatch} from "src/app/core/state"
+import {useDrop} from "react-dnd"
 
 const Container = styled.section`
   margin-top: 16px;

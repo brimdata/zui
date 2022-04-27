@@ -42,9 +42,13 @@ const slice = createSlice({
     },
     dropPin(s, a: PayloadAction<number>) {
       const dropIndex = a.payload
+      let insertIndex = s.pinHoverIndex
+      // We dropped an item to it's right, messing with the array indexes
+      if (insertIndex > dropIndex) insertIndex -= 1
+
       const pin = s.pins[dropIndex]
       s.pins.splice(dropIndex, 1)
-      s.pins.splice(s.pinHoverIndex, 0, pin)
+      s.pins.splice(insertIndex, 0, pin)
       s.pinHoverIndex = null
     },
 

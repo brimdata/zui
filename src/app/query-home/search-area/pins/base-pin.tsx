@@ -86,6 +86,11 @@ const DropCursor = styled.div`
   background: var(--primary-color);
 `
 
+const DropCursorRight = styled(DropCursor)`
+  left: initial;
+  right: -4px;
+`
+
 export type PinProps = {
   index: number
   label: ReactNode
@@ -104,9 +109,13 @@ export const BasePin = React.forwardRef(function BasePin(
   props: PinProps,
   forwardedRef
 ) {
-  const dndRef = usePinDnd(props.index)
-  const isHovering = useSelector(Editor.getPinHoverIndex) === props.index
   const ref = useRef()
+  const dndRef = usePinDnd(props.index)
+  const pinCount = useSelector(Editor.getPinCount)
+  const hoverIndex = useSelector(Editor.getPinHoverIndex)
+  const lastPin = props.index + 1 === pinCount
+  const isHovering = hoverIndex === props.index
+  const isHoveringLastItem = lastPin && hoverIndex === pinCount
   const dispatch = useDispatch()
   const isEditing = useSelector(Editor.getPinEditIndex) === props.index
   const onClick = () => dispatch(Editor.editPin(props.index))
@@ -129,6 +138,7 @@ export const BasePin = React.forwardRef(function BasePin(
         <Label>{props.label}</Label>
         <Dropdown />
         {isHovering && <DropCursor />}
+        {isHoveringLastItem && <DropCursorRight />}
       </Button>
       {props.form && (
         <Dialog

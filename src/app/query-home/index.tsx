@@ -23,6 +23,7 @@ import {getQuerySource} from "./flows/get-query-source"
 import SearchArea from "./search-area"
 import usePins from "./toolbar/hooks/use-pins"
 import Editor from "src/js/state/Editor"
+import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -125,6 +126,7 @@ const QueryHome = () => {
   useSearchParamLocationSync()
   const query = useSelector(Current.getQuery)
   const lakeId = useSelector(Current.getLakeId)
+  const drop = usePinContainerDnd()
   const dispatch = useDispatch()
   const exportAction = useExport()
   const columns = useColumns()
@@ -160,7 +162,7 @@ const QueryHome = () => {
 
   return (
     <>
-      <QueryPageHeader>
+      <QueryPageHeader ref={drop}>
         <Toolbar actions={actions} />
         <SearchArea />
       </QueryPageHeader>
