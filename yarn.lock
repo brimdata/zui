@@ -5436,8 +5436,8 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^18.0.0
-    react-arborist: ^1.0.0
-    react-dnd: 14.0.5
+    react-arborist: ^1.0.3
+    react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0
     react-hot-toast: ^1.0.1
@@ -15065,9 +15065,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "react-arborist@npm:1.0.0"
+"react-arborist@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "react-arborist@npm:1.0.3"
   dependencies:
     memoize-one: ^6.0.0
     react-dnd: ^14.0.3
@@ -15076,11 +15076,20 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: 9d677f57272dc6519442330fb9fd6f3db33c4e11c72760e796b8dc08a6bf60384c11fba84d0557aeff34d0a96219af1c0ae089b402b1c2bc39064f5398e1d7ad
+  checksum: af1abc02a2fd4d313d46bac7297535f19b63b76b25f6cd821dec669fd474dfd489445f869c79f0ad0562d07ae6c5b2d7046455c60d489a4c7a122f3b8da16710
   languageName: node
   linkType: hard
 
-"react-dnd-html5-backend@npm:^14.0.1, react-dnd-html5-backend@npm:^14.0.2":
+"react-dnd-html5-backend@npm:^14.0.1":
+  version: 14.1.0
+  resolution: "react-dnd-html5-backend@npm:14.1.0"
+  dependencies:
+    dnd-core: 14.0.1
+  checksum: 6aa8d62c6b2288893b3f216d476d2f84495b40d33578ba9e3a5051dc093a71dc59700e6927ed7ac596ff8d7aa3b3f29404f7d173f844bd6144ed633403dd8e96
+  languageName: node
+  linkType: hard
+
+"react-dnd-html5-backend@npm:^14.0.2":
   version: 14.0.2
   resolution: "react-dnd-html5-backend@npm:14.0.2"
   dependencies:
@@ -15089,7 +15098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dnd@npm:14.0.5":
+"react-dnd@npm:^14.0.3, react-dnd@npm:^14.0.5":
   version: 14.0.5
   resolution: "react-dnd@npm:14.0.5"
   dependencies:
@@ -15111,31 +15120,6 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 464e231de8c2b79546049a1600b67b1df0b7f762f23c688d3e9aeddbf334b1e64931ef91d0129df3c8be255f0af76e89426729dbcbefe4bdc09b0f665d2da368
-  languageName: node
-  linkType: hard
-
-"react-dnd@npm:^14.0.3":
-  version: 14.0.4
-  resolution: "react-dnd@npm:14.0.4"
-  dependencies:
-    "@react-dnd/invariant": ^2.0.0
-    "@react-dnd/shallowequal": ^2.0.0
-    dnd-core: 14.0.1
-    fast-deep-equal: ^3.1.3
-    hoist-non-react-statics: ^3.3.2
-  peerDependencies:
-    "@types/hoist-non-react-statics": ">= 3.3.1"
-    "@types/node": ">= 12"
-    "@types/react": ">= 16"
-    react: ">= 16.14"
-  peerDependenciesMeta:
-    "@types/hoist-non-react-statics":
-      optional: true
-    "@types/node":
-      optional: true
-    "@types/react":
-      optional: true
-  checksum: bcd6d87694b32ba49408c01a648790bf213a94a40a1f3e5c96d754753e1cb30dc7c276aab851c1b42f432bad8155cb8c3cc7053641f8e175fb042bf1e2027c93
   languageName: node
   linkType: hard
 
@@ -15336,20 +15320,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-window@npm:^1.8.6":
-  version: 1.8.6
-  resolution: "react-window@npm:1.8.6"
-  dependencies:
-    "@babel/runtime": ^7.0.0
-    memoize-one: ">=3.1.1 <6"
-  peerDependencies:
-    react: ^15.0.0 || ^16.0.0 || ^17.0.0
-    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: 54ccf2b16c921a1acfadbe6de5dc19fe0981d84c5a913e4607afbf24448b96e938020704bf5125ec528e43a710643fc05e86fc117219fc4936e231ecd19be0b2
-  languageName: node
-  linkType: hard
-
-"react-window@npm:^1.8.7":
+"react-window@npm:^1.8.6, react-window@npm:^1.8.7":
   version: 1.8.7
   resolution: "react-window@npm:1.8.7"
   dependencies:
