@@ -1,5 +1,10 @@
-import React from "react"
+import {isDate} from "date-fns"
+import React, {useState} from "react"
+import {useTimeZone} from "src/app/core/format"
+import time from "src/js/brim/time"
+import date from "src/js/lib/date"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
+import styled from "styled-components"
 import {useDialog} from "../dialog"
 import {
   Actions,
@@ -8,16 +13,32 @@ import {
   getFormData,
   Input,
   Label,
-  PrimaryButton
+  PrimaryButton,
 } from "../form-helpers"
+
+const Preview = styled.time`
+  display: block;
+  opacity: 0.6;
+  line-height: 1.5;
+  whitespace: nowrap;
+`
+
+function getDatePreview(value: string, zone: string) {
+  const result = date.parseInZone(value, zone)
+  if (result === null) return "Error parsing date"
+  if (typeof result === "string") return result
+  if (typeof result === "object") return time(result).toDate().toISOString()
+}
 
 export default function Form(props: {
   pin: TimeRangeQueryPin
   onSubmit: (pin: TimeRangeQueryPin) => void
   onReset: () => void
 }) {
-  useDialog({onCancel: props.onReset})
-
+  useDialog({onCancel: props.onReset, onClose: props.onReset})
+  const zone = useTimeZone()
+  const [fromValue, setFromValue] = useState(props.pin.from)
+  const [toValue, setToValue] = useState(props.pin.to)
   return (
     <form
       action="dialog"
@@ -38,19 +59,26 @@ export default function Form(props: {
         <Label htmlFor="from">From</Label>
         <Input
           name="from"
-          defaultValue={encodeDate(props.pin.from)}
-          type="datetime-local"
-          step="1"
+          type="string"
+          value={fromValue}
+          onChange={(e) => setFromValue(e.target.value)}
         />
       </Field>
       <Field>
         <Label htmlFor="to">To</Label>
         <Input
           name="to"
-          defaultValue={encodeDate(props.pin.to)}
-          type="datetime-local"
-          step="1"
+          type="string"
+          value={toValue}
+          onChange={(e) => setToValue(e.target.value)}
         />
+      </Field>
+      <Field>
+        <Label>Preview</Label>
+        <Preview>
+          {getDatePreview(fromValue, zone)}
+          {getDatePreview(toValue, zone)}
+        </Preview>
       </Field>
       <Actions>
         <Button type="reset">Cancel</Button>
@@ -73,6 +101,6 @@ function decodeFormData(e) {
   return {
     field: raw.field,
     from: decodeDate(raw.from),
-    to: decodeDate(raw.to)
+    to: decodeDate(raw.to),
   } as TimeRangeQueryPin
 }

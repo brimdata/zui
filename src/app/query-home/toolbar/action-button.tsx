@@ -38,7 +38,7 @@ const ActionButton = (props: ActionButtonProps) => {
     <Wrap title={props.title}>
       <Button
         aria-label={props.label}
-        onClick={() => props.click()}
+        onClick={(e) => props.click(e)}
         icon={<Icon name={props.icon} />}
         disabled={props.disabled}
         dropdown={!!props.submenu}

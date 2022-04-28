@@ -15,8 +15,8 @@ export type TimeRangeQueryPin = {
   type: "time-range"
   disabled?: boolean
   field: string
-  from: Date
-  to: Date
+  from: string
+  to: string
 }
 
 export type QueryPin = GenericQueryPin | FromQueryPin | TimeRangeQueryPin

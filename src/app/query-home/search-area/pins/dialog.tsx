@@ -59,7 +59,7 @@ export function Dialog(props: DialogProps) {
     } else {
       node.close()
     }
-  }, [props.open])
+  }, [node, props.open])
 
   return createPortal(
     <DialogContext.Provider value={node}>
@@ -75,10 +75,11 @@ function useDialogPosition(node: HTMLDialogElement, props: DialogProps) {
   const [position, setPosition] = useState({
     top: 10,
     left: 10,
-    width: props.width
+    width: props.width,
   })
 
   const run = () => {
+    console.log(props)
     if (!props.open) return
     if (!props.anchor) return
     if (!node) return
@@ -131,7 +132,7 @@ function useDialogPosition(node: HTMLDialogElement, props: DialogProps) {
     props.origin,
     props.open,
     props.top,
-    props.left
+    props.left,
   ])
 
   useListener(global.window, "resize", run)

@@ -11,6 +11,7 @@ import pinContextMenu from "./pin-context-menu"
 import classNames from "classnames"
 import mergeRefs from "src/app/core/utils/merge-refs"
 import usePinDnd from "./use-pin-dnd"
+import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 
 const primary = cssVar("--primary-color") as string
 const buttonColor = transparentize(0.8, primary)
@@ -109,7 +110,7 @@ export const BasePin = React.forwardRef(function BasePin(
   props: PinProps,
   forwardedRef
 ) {
-  const ref = useRef()
+  const [button, setButton] = useCallbackRef()
   const dndRef = usePinDnd(props.index)
   const pinCount = useSelector(Editor.getPinCount)
   const hoverIndex = useSelector(Editor.getPinHoverIndex)
@@ -131,8 +132,13 @@ export const BasePin = React.forwardRef(function BasePin(
       <Button
         onClick={onClick}
         onContextMenu={onContextMenu}
-        ref={mergeRefs(forwardedRef, ref, dndRef)}
+        ref={mergeRefs(forwardedRef, setButton, dndRef)}
         className={className}
+        onKeyUp={(e) => {
+          if (e.key === "Backspace") {
+            dispatch(Editor.deletePin(props.index))
+          }
+        }}
       >
         {props.prefix && <Prefix>{props.prefix}</Prefix>}
         <Label>{props.label}</Label>
@@ -143,7 +149,7 @@ export const BasePin = React.forwardRef(function BasePin(
       {props.form && (
         <Dialog
           open={isEditing}
-          anchor={ref.current}
+          anchor={button}
           origin="bottom left"
           top={10}
           left={0}

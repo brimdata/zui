@@ -6,8 +6,10 @@ import {ActionButtonProps} from "../action-button"
 
 const showPinsMenu = (anchor) => (dispatch, getState) => {
   const pins = Editor.getPins(getState())
+  const value = Editor.getValue(getState())
   const pinCurrent = {
     label: "Pin Editor Value",
+    enabled: !!value.trim(),
     click: () => dispatch(Editor.pinValue()),
   }
   const newGeneric = {

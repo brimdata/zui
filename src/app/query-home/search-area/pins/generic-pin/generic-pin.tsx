@@ -14,7 +14,7 @@ export default function GenericPin(props: {
     <BasePin
       disabled={props.pin.disabled}
       index={props.index}
-      label={props.pin.label || props.pin.value || "New pin..."}
+      label={props.pin.label || props.pin.value || "Empty pin..."}
       form={
         <Form
           pin={props.pin}

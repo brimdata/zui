@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import styled from "styled-components"
 import Editor from "src/js/state/Editor"
 import {useSelector} from "react-redux"
@@ -6,6 +6,7 @@ import {QueryPin} from "src/js/state/Editor/types"
 import FromPin from "./from-pin/from-pin"
 import GenericPin from "./generic-pin/generic-pin"
 import TimeRangePin from "./time-range-pin/time-range-pin"
+import {useDispatch} from "src/app/core/state"
 
 const Container = styled.section`
   margin-top: 16px;
@@ -28,6 +29,17 @@ function renderPin(pin: QueryPin, index: number) {
 
 export function Pins() {
   const pins = useSelector(Editor.getPins)
-
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(
+      Editor.addPin({
+        type: "time-range",
+        field: "ts",
+        from: "now - 10m",
+        to: "now",
+      })
+    )
+    dispatch(Editor.editPin(1))
+  }, [])
   return <Container>{pins.map(renderPin)}</Container>
 }
