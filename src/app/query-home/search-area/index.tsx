@@ -9,26 +9,26 @@ import {useSelector} from "react-redux"
 import SearchBar from "src/js/state/SearchBar"
 import Current from "src/js/state/Current"
 
-const Group = styled.div<{flex: number; isMultiLine: boolean}>`
+const Group = styled.div<{flex: number; multiline: boolean}>`
   display: flex;
   flex: ${(p) => p.flex || "initial"};
   flex-direction: column;
-  padding: ${(p) => (p.isMultiLine ? "0" : "0 16px 10px")};
+  padding: ${(p) => (p.multiline ? "0" : "0 16px 10px")};
 `
 
 export default function SearchArea() {
-  const inputValue = useSelector(SearchBar.getSearchBarInputValue)
-  const isMultiLine = hasNewLine(inputValue)
+  const value = useSelector(SearchBar.getSearchBarInputValue)
+  const multiline = hasNewLine(value)
   const query = useSelector(Current.getQuery)
 
   return (
     <>
       <FromPinPicker isDisabled={query.isReadOnly} />
-      <Group isMultiLine={isMultiLine} flex={1}>
+      <Group multiline={multiline} flex={1}>
         <Input
-          inputValue={inputValue}
-          isMultiLine={isMultiLine}
-          isDisabled={query.isReadOnly}
+          value={value}
+          multiline={multiline}
+          disabled={query.isReadOnly}
         />
         <Error />
         <Pins />

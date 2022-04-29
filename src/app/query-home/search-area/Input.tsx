@@ -1,8 +1,8 @@
 import React from "react"
-import BrimEditor from "../../core/components/brim-editor"
 import Spinner from "./spinner"
 import SubmitButton from "./submit-button"
 import styled from "styled-components"
+import QueryEditor from "./editor/query-editor"
 
 export const hasNewLine = (str) => /\n/.test(str)
 
@@ -38,18 +38,18 @@ const InputBackdrop = styled.div<{isVisible: boolean}>`
 `
 
 type Props = {
-  inputValue: string
-  isMultiLine?: boolean
-  isDisabled?: boolean
+  value: string
+  multiline?: boolean
+  disabled?: boolean
 }
 
-export default function Input({inputValue, isMultiLine, isDisabled}: Props) {
+export default function Input({value, multiline, disabled}: Props) {
   return (
-    <InputBackdrop isVisible={!isMultiLine}>
-      <BrimEditor value={inputValue} isDisabled={isDisabled} />
+    <InputBackdrop isVisible={!multiline}>
+      <QueryEditor value={value} disabled={disabled} />
       <InputButtonRow>
         <Spinner />
-        <SubmitButton isMultiLine={isMultiLine} />
+        <SubmitButton isMultiLine={multiline} />
       </InputButtonRow>
     </InputBackdrop>
   )
