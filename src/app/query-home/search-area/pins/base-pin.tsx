@@ -50,6 +50,7 @@ const Button = styled.button`
 
   &.disabled {
     text-decoration: line-through;
+    opacity: 0.5;
   }
 `
 
