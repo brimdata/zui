@@ -10,23 +10,25 @@ export const showMenu = (anchor: HTMLElement) => (dispatch, getState) => {
 
   let selected = null
   const template = pools
-    ? pools.map((p) => ({
-        label: p.name,
-        click: () => {
-          selected = p.name
-        }
-      }))
+    ? pools
+        .sort((a, b) => (a.name > b.name ? 1 : -1))
+        .map((p) => ({
+          label: p.name,
+          click: () => {
+            selected = p.name
+          },
+        }))
     : [
         {
           label: "No pools in lake",
-          enabled: false
-        }
+          enabled: false,
+        },
       ]
 
   return new Promise((resolve) => {
     showContextMenu(template, {
       callback: () => resolve(selected),
-      ...popupPosition(anchor)
+      ...popupPosition(anchor),
     })
   })
 }
