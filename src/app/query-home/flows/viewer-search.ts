@@ -1,7 +1,6 @@
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Columns from "src/js/state/Columns"
-import Notice from "src/js/state/Notice"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import Viewer from "src/js/state/Viewer"
@@ -48,7 +47,7 @@ export function viewerSearch(args: Args): Thunk<void> {
     } catch (e) {
       dispatch(Viewer.setStatus(tabId, "ERROR"))
       dispatch(Viewer.setEndStatus(tabId, endStatus(0)))
-      dispatch(Notice.set(ErrorFactory.create(e)))
+      dispatch(Viewer.setError(ErrorFactory.create(e).message, tabId))
     }
   }
 }

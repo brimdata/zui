@@ -9,7 +9,7 @@ const slice = createSlice({
     value: "",
     pins: [] as QueryPin[],
     pinEditIndex: null as null | number,
-    pinHoverIndex: null as null | number
+    pinHoverIndex: null as null | number,
   },
   reducers: {
     setValue(s, a: PayloadAction<string>) {
@@ -84,8 +84,15 @@ const slice = createSlice({
     },
     cancelPinEdit(s) {
       s.pinEditIndex = null
-    }
-  }
+    },
+  },
+
+  extraReducers: {
+    // Remove this when we remove search bar
+    SEARCH_BAR_INPUT_CHANGE: (s, a) => {
+      s.value = a.value
+    },
+  },
 })
 
 export const reducer = slice.reducer

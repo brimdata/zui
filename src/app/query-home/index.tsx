@@ -24,6 +24,8 @@ import SearchArea from "./search-area"
 import usePins from "./toolbar/hooks/use-pins"
 import Editor from "src/js/state/Editor"
 import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
+import Viewer from "src/js/state/Viewer"
+import submitSearch from "./flows/submit-search"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -55,6 +57,9 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
     )
     dispatch(Editor.setValue(query?.value || ""))
     dispatch(Editor.setPins(query?.pins || []))
+    if (Viewer.getStatus(getState()) === "INIT") {
+      dispatch(submitSearch())
+    }
   })
 }
 

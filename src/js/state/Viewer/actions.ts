@@ -22,6 +22,7 @@ import {
   VIEWER_STATUS,
   ViewerStatus,
   VIEWER_SET_SEARCH_KEY,
+  VIEWER_ERROR,
 } from "./types"
 
 export const clear = (tabId?: string): VIEWER_CLEAR => {
@@ -127,4 +128,13 @@ export const selectPrev = (): VIEWER_SELECT_PREV => ({
 
 export const selectAll = (): VIEWER_SELECT_ALL => ({
   type: "VIEWER_SELECT_ALL",
+})
+
+export const setError = (
+  error: string | null,
+  tabId?: string
+): VIEWER_ERROR => ({
+  type: "VIEWER_ERROR",
+  tabId,
+  payload: error,
 })

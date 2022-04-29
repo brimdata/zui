@@ -1,7 +1,10 @@
 import React from "react"
+import {useSelector} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
+import Viewer from "src/js/state/Viewer"
 import {useResultsData} from "./data-hook"
 import {MainInspector} from "./main-inspector"
+import {ResultsError} from "./results-error"
 import ResultsTable from "./results-table"
 import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
@@ -10,7 +13,7 @@ const Results = () => {
   const data = useResultsData()
   const view = useResultsView()
   const {ref, rect} = useResizeObserver()
-
+  const error = useSelector(Viewer.getError)
   return (
     <Styled.BG>
       <Styled.Toolbar>
@@ -28,13 +31,15 @@ const Results = () => {
         </Styled.Group>
       </Styled.Toolbar>
       <Styled.Body ref={ref} data-test-locator="viewer_results">
-        {view.isTable ? (
+        {error && <ResultsError error={error} />}
+        {!error && view.isTable && (
           <ResultsTable
             height={rect.height}
             width={rect.width}
             multiSelect={false}
           />
-        ) : (
+        )}
+        {!error && view.isInspector && (
           <div style={{height: 0, width: 0, overflow: "visible"}}>
             <MainInspector
               height={rect.height}

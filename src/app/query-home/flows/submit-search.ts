@@ -4,6 +4,8 @@ import {updateQuery} from "./update-query"
 import initialViewerSearch from "./initial-viewer-search"
 import Editor from "src/js/state/Editor"
 import {BrimQuery} from "../utils/brim-query"
+import Viewer from "src/js/state/Viewer"
+import Tabs from "src/js/state/Tabs"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
@@ -14,6 +16,7 @@ const submitSearch =
   ) =>
   async (dispatch, getState) => {
     dispatch(Notice.dismiss())
+    dispatch(Viewer.setError(null))
     const value = Editor.getValue(getState())
     const pins = Editor.getPins(getState())
     const prev = Current.getQuery(getState())
@@ -22,6 +25,11 @@ const submitSearch =
       value,
       pins,
     })
+    const error = query.checkSyntax()
+    if (error) {
+      dispatch(Viewer.setError(error))
+      return
+    }
     await dispatch(updateQuery(query))
     // TODO: Mason - refactor history to use query copies
     // if (save.investigation) {

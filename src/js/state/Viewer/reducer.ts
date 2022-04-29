@@ -10,6 +10,7 @@ const init = (): ViewerState => ({
   endStatus: "INIT",
   status: "INIT",
   searchKey: "",
+  error: null,
   columns: {},
   scrollPos: {x: 0, y: 0},
   selection: {
@@ -23,6 +24,8 @@ export default function (
   action: ViewerAction
 ): ViewerState {
   switch (action.type) {
+    case "VIEWER_ERROR":
+      return {...state, error: action.payload}
     case "VIEWER_CLEAR":
       return {...init()}
     case "VIEWER_RECORDS":

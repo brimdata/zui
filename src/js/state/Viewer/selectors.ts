@@ -7,6 +7,7 @@ import Tabs from "../Tabs"
 import {State} from "../types"
 import {createSelection, ViewerSelection} from "./helpers/selection"
 import {ViewerSelectionData, ViewerState} from "./types"
+import activeTabSelect from "../Tab/activeTabSelect"
 
 export const getViewer = createSelector<State, TabState, ViewerState>(
   Tabs.getActiveTab,
@@ -82,3 +83,7 @@ export const getSelectedRecords = createSelector<
 >(getSelection, getRecords, (selection, records) =>
   selection.getIndices().map((index) => records[index])
 )
+
+export const getError = activeTabSelect((t) => {
+  return t.viewer.error
+})

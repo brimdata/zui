@@ -16,6 +16,7 @@ export type ViewerSelectionData = {
   currentRange: [number, number]
 }
 export type ViewerState = {
+  error: null | string
   records: zed.Record[]
   columns: TypeDefs
   endStatus: ViewerStatus
@@ -44,6 +45,7 @@ export type ViewerAction =
   | VIEWER_SELECT_RANGE_NEXT
   | VIEWER_SELECT_RANGE_PREV
   | VIEWER_SELECT_ALL
+  | VIEWER_ERROR
 
 export type VIEWER_RECORDS = {
   type: "VIEWER_RECORDS"
@@ -136,4 +138,10 @@ export type VIEWER_SET_SEARCH_KEY = {
   type: "VIEWER_SET_SEARCH_KEY"
   tabId: string
   key: string
+}
+
+export type VIEWER_ERROR = {
+  type: "VIEWER_ERROR"
+  tabId: string
+  payload: string
 }

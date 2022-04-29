@@ -52,6 +52,16 @@ export class BrimQuery implements Query {
     return brim.ast(tree)
   }
 
+  checkSyntax() {
+    let error = null
+    try {
+      parseAst(this.toString())
+    } catch (e) {
+      error = e
+    }
+    return error
+  }
+
   hasAnalytics() {
     for (const proc of this.ast().getProcs()) {
       if (ANALYTIC_PROCS.includes(proc.kind)) return true
@@ -67,7 +77,7 @@ export class BrimQuery implements Query {
       pins: this.pins,
       description: this.description,
       tags: this.tags,
-      isReadOnly: this.isReadOnly
+      isReadOnly: this.isReadOnly,
     }
   }
 

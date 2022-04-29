@@ -19,7 +19,6 @@ const initialViewerSearch = (): Thunk<any> => (dispatch, getState) => {
   const history = global.tabHistories.get(tabId)
   const {key} = history.location
   dispatch(Viewer.setSearchKey(tabId, key))
-  console.log(query.toString())
   return dispatch(viewerSearch({query}))
 }
 
