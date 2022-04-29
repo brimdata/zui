@@ -11,8 +11,8 @@ export default function FromPin(props: {pin: FromQueryPin; index: number}) {
   const ref = useRef()
   return (
     <BasePin
+      pin={props.pin}
       ref={ref}
-      disabled={props.pin.disabled}
       index={props.index}
       prefix="from"
       label={props.pin.value || "Select pool"}

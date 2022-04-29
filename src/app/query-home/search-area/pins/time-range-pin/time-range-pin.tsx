@@ -35,7 +35,7 @@ export default function TimeRangePin(props: {
   )
   return (
     <BasePin
-      disabled={props.pin.disabled}
+      pin={props.pin}
       prefix="range"
       label={label}
       index={props.index}

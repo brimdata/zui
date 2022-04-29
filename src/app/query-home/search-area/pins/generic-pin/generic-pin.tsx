@@ -12,7 +12,7 @@ export default function GenericPin(props: {
   const dispatch = useDispatch()
   return (
     <BasePin
-      disabled={props.pin.disabled}
+      pin={props.pin}
       index={props.index}
       label={props.pin.label || props.pin.value || "Empty pin..."}
       form={

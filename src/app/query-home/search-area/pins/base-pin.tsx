@@ -12,6 +12,8 @@ import classNames from "classnames"
 import mergeRefs from "src/app/core/utils/merge-refs"
 import usePinDnd from "./use-pin-dnd"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
+import {QueryPin} from "src/js/state/Editor/types"
+import buildPin from "src/js/state/Editor/models/build-pin"
 
 const primary = cssVar("--primary-color") as string
 const buttonColor = transparentize(0.8, primary)
@@ -95,10 +97,10 @@ const DropCursorRight = styled(DropCursor)`
 export type PinProps = {
   index: number
   label: ReactNode
+  pin: QueryPin
   prefix?: string
   showMenu?: () => void
   form?: ReactNode
-  disabled?: boolean
 }
 
 /**
@@ -121,7 +123,7 @@ export const BasePin = React.forwardRef(function BasePin(
   const isEditing = useSelector(Editor.getPinEditIndex) === props.index
   const onClick = () => dispatch(Editor.editPin(props.index))
   const onContextMenu = () => dispatch(pinContextMenu(props.index))
-  const className = classNames({disabled: props.disabled})
+  const className = classNames({disabled: props.pin.disabled})
 
   useEffect(() => {
     if (props.showMenu && isEditing) props.showMenu()
@@ -130,6 +132,7 @@ export const BasePin = React.forwardRef(function BasePin(
   return (
     <>
       <Button
+        title={buildPin(props.pin).toZed()}
         onClick={onClick}
         onContextMenu={onContextMenu}
         ref={mergeRefs(forwardedRef, setButton, dndRef)}
