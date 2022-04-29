@@ -1,4 +1,10 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from "react"
+import React, {
+  MouseEvent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react"
 import {createPortal} from "react-dom"
 import mergeRefs from "src/app/core/utils/merge-refs"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
@@ -34,22 +40,33 @@ export function useDialog(props: {onCancel?: any; onClose?: any}) {
   return el
 }
 
+function withinNode(node: HTMLElement, e: MouseEvent) {
+  if (!e) return false
+  var rect = node.getBoundingClientRect()
+
+  return (
+    rect.top <= e.clientY &&
+    e.clientY <= rect.top + rect.height &&
+    rect.left <= e.clientX &&
+    e.clientX <= rect.left + rect.width
+  )
+}
+
 export function Dialog(props: DialogProps) {
   const [node, setNode] = useCallbackRef<any>()
   const style = useDialogPosition(node, props)
   const ref = useRef()
+  const mouseDownEvent = useRef<MouseEvent | null>(null)
 
-  useListener<PointerEvent>(node, "click", (e) => {
+  useListener<MouseEvent>(node, "mousedown", (e) => {
+    mouseDownEvent.current = e
+  })
+
+  useListener<MouseEvent>(node, "mouseup", (e) => {
     const dialog = e.currentTarget as HTMLElement
-    var rect = dialog.getBoundingClientRect()
-    var isInDialog =
-      rect.top <= e.clientY &&
-      e.clientY <= rect.top + rect.height &&
-      rect.left <= e.clientX &&
-      e.clientX <= rect.left + rect.width
-    if (!isInDialog) {
-      node.close()
-    }
+    const startedOut = !withinNode(dialog, mouseDownEvent.current)
+    const finishedOut = !withinNode(dialog, e)
+    if (startedOut && finishedOut) node.close()
   })
 
   useEffect(() => {
@@ -79,7 +96,6 @@ function useDialogPosition(node: HTMLDialogElement, props: DialogProps) {
   })
 
   const run = () => {
-    console.log(props)
     if (!props.open) return
     if (!props.anchor) return
     if (!node) return

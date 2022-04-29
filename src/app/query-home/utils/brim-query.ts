@@ -29,9 +29,17 @@ export class BrimQuery implements Query {
   }
 
   getFromPin() {
-    const pin = this.pins.find((p) => p.type === "from") as FromQueryPin
-    if (pin) return pin.value
-    return null
+    const from = this.ast().proc("From")
+    if (!from) return null
+    const trunk = from.trunks.find((t) => t.source.kind === "Pool")
+    if (!trunk) return null
+    const name = trunk.source.spec.pool
+    if (!name) return null
+    return name
+  }
+
+  getPoolName() {
+    return this.getFromPin()
   }
 
   hasHeadFilter() {
@@ -93,6 +101,7 @@ export class BrimQuery implements Query {
 
     if (s === "") s = "*"
     if (isNumber(this.head)) s += ` | head ${this.head}`
+
     return s
   }
 }

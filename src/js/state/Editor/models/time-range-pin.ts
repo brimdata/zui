@@ -8,8 +8,6 @@ export default class TimeRangePin {
   }
 
   toZed() {
-    return `'${this.pin.field}' >= ${this.pin.from.toISOString()} and '${
-      this.pin.field
-    }' < ${this.pin.to.toISOString()}`
+    return `${this.pin.field} >= ${this.pin.from} and ${this.pin.field} < ${this.pin.to}`
   }
 }

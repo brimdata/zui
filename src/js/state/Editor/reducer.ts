@@ -86,7 +86,6 @@ const slice = createSlice({
       s.pinEditIndex = null
     },
   },
-
   extraReducers: {
     // Remove this when we remove search bar
     SEARCH_BAR_INPUT_CHANGE: (s, a) => {

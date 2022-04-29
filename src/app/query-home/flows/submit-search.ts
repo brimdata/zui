@@ -21,7 +21,7 @@ const submitSearch =
     const pins = Editor.getPins(getState())
     const prev = Current.getQuery(getState())
     const query = new BrimQuery({
-      ...prev.serialize(),
+      ...prev?.serialize(),
       value,
       pins,
     })
@@ -30,6 +30,7 @@ const submitSearch =
       dispatch(Viewer.setError(error))
       return
     }
+    console.log(query.toString())
     await dispatch(updateQuery(query))
     // TODO: Mason - refactor history to use query copies
     // if (save.investigation) {

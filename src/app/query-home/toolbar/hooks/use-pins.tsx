@@ -33,8 +33,8 @@ const showPinsMenu = (anchor) => (dispatch, getState) => {
         Editor.addPin({
           type: "time-range",
           field: "ts",
-          from: new Date(),
-          to: new Date(),
+          from: new Date(new Date().getTime() - 30 * 1000 * 60).toISOString(),
+          to: new Date().toISOString(),
         })
       )
       dispatch(Editor.editPin(pins.length))

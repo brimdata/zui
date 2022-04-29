@@ -30,16 +30,6 @@ function renderPin(pin: QueryPin, index: number) {
 export function Pins() {
   const pins = useSelector(Editor.getPins)
   const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(
-      Editor.addPin({
-        type: "time-range",
-        field: "ts",
-        from: "now - 10m",
-        to: "now",
-      })
-    )
-    dispatch(Editor.editPin(1))
-  }, [])
+  useEffect(() => {}, [])
   return <Container>{pins.map(renderPin)}</Container>
 }

@@ -1,11 +1,12 @@
 import React from "react"
-import Pin from "src/app/core/icons/pin"
+import {useTimeZone} from "src/app/core/format"
 import {useDispatch} from "src/app/core/state"
 import Editor from "src/js/state/Editor"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import styled from "styled-components"
 import {BasePin} from "../base-pin"
 import Form from "./form"
+import {getTimeString} from "./get-time-preview"
 
 const Sep = styled.span`
   padding: 0 10px;
@@ -17,6 +18,7 @@ export default function TimeRangePin(props: {
   index: number
 }) {
   const dispatch = useDispatch()
+  const zone = useTimeZone()
   const form = (
     <Form
       pin={props.pin}
@@ -26,9 +28,9 @@ export default function TimeRangePin(props: {
   )
   const label = (
     <>
-      {formatDate(props.pin.from)}
+      {props.pin.from}
       <Sep>—</Sep>
-      {formatDate(props.pin.to)}
+      {props.pin.to}
     </>
   )
   return (
@@ -40,8 +42,4 @@ export default function TimeRangePin(props: {
       form={form}
     />
   )
-}
-
-function formatDate(date: Date) {
-  return date.toLocaleString()
 }

@@ -1,8 +1,5 @@
-import {isDate} from "date-fns"
 import React, {useState} from "react"
 import {useTimeZone} from "src/app/core/format"
-import time from "src/js/brim/time"
-import date from "src/js/lib/date"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import styled from "styled-components"
 import {useDialog} from "../dialog"
@@ -15,6 +12,7 @@ import {
   Label,
   PrimaryButton,
 } from "../form-helpers"
+import {getTimeString} from "./get-time-preview"
 
 const Preview = styled.time`
   display: block;
@@ -22,13 +20,6 @@ const Preview = styled.time`
   line-height: 1.5;
   whitespace: nowrap;
 `
-
-function getDatePreview(value: string, zone: string) {
-  const result = date.parseInZone(value, zone)
-  if (result === null) return "Error parsing date"
-  if (typeof result === "string") return result
-  if (typeof result === "object") return time(result).toDate().toISOString()
-}
 
 export default function Form(props: {
   pin: TimeRangeQueryPin
@@ -43,8 +34,14 @@ export default function Form(props: {
     <form
       action="dialog"
       onSubmit={(e) => {
-        props.onSubmit(decodeFormData(e))
+        const raw = getFormData(e)
+        props.onSubmit({
+          ...raw,
+          from: getTimeString(raw.from, zone),
+          to: getTimeString(raw.to, zone),
+        })
       }}
+      onReset={props.onReset}
     >
       <Field>
         <Label htmlFor="field">Time Field</Label>
@@ -75,10 +72,8 @@ export default function Form(props: {
       </Field>
       <Field>
         <Label>Preview</Label>
-        <Preview>
-          {getDatePreview(fromValue, zone)}
-          {getDatePreview(toValue, zone)}
-        </Preview>
+        <Preview>{getTimeString(fromValue, zone)}</Preview>
+        <Preview>{getTimeString(toValue, zone)}</Preview>
       </Field>
       <Actions>
         <Button type="reset">Cancel</Button>
@@ -86,21 +81,4 @@ export default function Form(props: {
       </Actions>
     </form>
   )
-}
-
-export function encodeDate(date) {
-  return date.toISOString().slice(0, 19)
-}
-
-function decodeDate(string) {
-  return new Date(string)
-}
-
-function decodeFormData(e) {
-  const raw = getFormData(e)
-  return {
-    field: raw.field,
-    from: decodeDate(raw.from),
-    to: decodeDate(raw.to),
-  } as TimeRangeQueryPin
 }
