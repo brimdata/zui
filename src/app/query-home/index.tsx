@@ -39,22 +39,23 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
         id: queryId,
         name: DRAFT_QUERY_NAME,
         value: "",
-        pins: {}
+        pins: {},
       })
     )
   }
 
-  if (query) {
-    dispatch(Editor.setValue(query.value))
-    dispatch(Editor.setPins(query.pins))
+  // Give codemirror a chance to update by scheduling this update
+  setTimeout(() => {
     dispatch(
       SearchBarState.restoreSearchBar({
         current: query?.value || "",
-        pinned: [],
-        error: null
+        pinned: query?.pins?.map((p) => p.toString()) || [],
+        error: null,
       })
     )
-  }
+    dispatch(Editor.setValue(query?.value || ""))
+    dispatch(Editor.setPins(query?.pins || []))
+  })
 }
 
 export function useSearchParamLocationSync() {
@@ -83,15 +84,15 @@ const useInspectorButtons = (): ActionButtonProps[] => {
       title: "Expand all inspector view entries",
       icon: "expand",
       disabled,
-      click: () => expandAll()
+      click: () => expandAll(),
     },
     {
       label: "Collapse",
       title: "Collapse all inspector view entries",
       icon: "collapse",
       disabled,
-      click: () => collapseAll()
-    }
+      click: () => collapseAll(),
+    },
   ]
 }
 
@@ -139,7 +140,7 @@ const QueryHome = () => {
     collapseButton,
     exportAction,
     columns,
-    pin
+    pin,
   ]
 
   if (!query)
