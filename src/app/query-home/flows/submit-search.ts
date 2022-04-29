@@ -5,7 +5,6 @@ import initialViewerSearch from "./initial-viewer-search"
 import Editor from "src/js/state/Editor"
 import {BrimQuery} from "../utils/brim-query"
 import Viewer from "src/js/state/Viewer"
-import Tabs from "src/js/state/Tabs"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 

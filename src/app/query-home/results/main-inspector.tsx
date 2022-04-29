@@ -11,6 +11,7 @@ import Viewer from "src/js/state/Viewer"
 import nextPageViewerSearch from "../flows/next-page-viewer-search"
 import {useRowSelection} from "./results-table/hooks/use-row-selection"
 import {debounce} from "lodash"
+import {showResultsContextMenu} from "./context-menu/context-menu"
 
 export function MainInspector(props: {
   height: number
@@ -46,7 +47,7 @@ export function MainInspector(props: {
 
   function onContextMenu(e, value: zed.Value, field: zed.Field) {
     dispatch(
-      searchFieldContextMenu({
+      showResultsContextMenu({
         value,
         field,
         record: field.rootRecord,
