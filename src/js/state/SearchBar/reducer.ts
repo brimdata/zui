@@ -12,7 +12,7 @@ import {
 } from "./types"
 
 const init: SearchBarState = {
-  current: null,
+  current: "",
   pinned: [],
   error: null,
 }

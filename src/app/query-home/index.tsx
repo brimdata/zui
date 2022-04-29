@@ -42,13 +42,16 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
       })
     )
   }
-  dispatch(
-    SearchBarState.restoreSearchBar({
-      current: query?.value || "",
-      pinned: query?.getFilterPins()?.map((p) => p.toString()) || [],
-      error: null,
-    })
-  )
+  // Give codemirror a chance to update by scheduling this update
+  setTimeout(() => {
+    dispatch(
+      SearchBarState.restoreSearchBar({
+        current: query?.value || "",
+        pinned: query?.getFilterPins()?.map((p) => p.toString()) || [],
+        error: null,
+      })
+    )
+  })
 }
 
 export function useSearchParamLocationSync() {
