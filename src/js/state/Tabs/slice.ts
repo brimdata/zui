@@ -1,5 +1,4 @@
 import {createSlice, Draft, PayloadAction} from "@reduxjs/toolkit"
-import {tab} from "@testing-library/user-event/dist/types/convenience"
 import {original} from "immer"
 import {isEmpty, last} from "lodash"
 import lib from "src/js/lib"
@@ -88,6 +87,7 @@ const slice = createSlice({
     builder.addMatcher(isTabAction, (s, a) => {
       const id = a.tabId || s.active
       if (!findTab(s, id)) return
+
       const index = findTabIndex(s, id)
       const tab = s.data[index]
       // @ts-ignore
