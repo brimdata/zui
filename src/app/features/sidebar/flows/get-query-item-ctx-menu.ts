@@ -24,7 +24,7 @@ const getQueryItemCtxMenu =
     const hasBrimItemSelected = dispatch(isBrimLib(selected))
 
     const runQuery = () => {
-      dispatch(Tabs.activateByUrl(lakeQueryPath(id, lakeId)))
+      dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
       dispatch(submitSearch())
     }
 

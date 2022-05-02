@@ -95,6 +95,6 @@ export default (store: Store, pluginManager: PluginManager) => {
 
   ipcRenderer.on("showReleaseNotes", () => {
     const id = Current.getLakeId(store.getState())
-    store.dispatch(Tabs.new(releaseNotesPath(id)))
+    store.dispatch(Tabs.create(releaseNotesPath(id)))
   })
 }

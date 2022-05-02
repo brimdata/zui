@@ -50,7 +50,7 @@ export default function PlusButton() {
         label: "New Query",
         click: () => {
           const query = dispatch(newQuery())
-          dispatch(Tabs.new(lakeQueryPath(query.id, lakeId)))
+          dispatch(Tabs.create(lakeQueryPath(query.id, lakeId)))
         },
       },
       {
@@ -59,7 +59,7 @@ export default function PlusButton() {
       },
       {
         label: "New Pool",
-        click: () => dispatch(Tabs.new(lakeImportPath(lakeId))),
+        click: () => dispatch(Tabs.create(lakeImportPath(lakeId))),
         enabled: !!lakeId,
       },
       {type: "separator"},

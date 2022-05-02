@@ -8,7 +8,7 @@ import submitSearch from "../../app/query-home/flows/submit-search"
 export default function (store: Store, params: NewTabSearchParams) {
   const {href, isNewWin} = params
   if (!isNewWin) {
-    store.dispatch(Tabs.new(href))
+    store.dispatch(Tabs.create(href))
   } else {
     store.dispatch(tabHistory.replace(href))
   }

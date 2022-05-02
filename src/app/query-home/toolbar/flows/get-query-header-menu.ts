@@ -73,11 +73,11 @@ const getQueryHeaderMenu =
           dupeQ.name += " (copy)"
           if (querySource === "local") {
             dispatch(Queries.addItem(dupeQ, "root"))
-            dispatch(Tabs.new(lakeQueryPath(dupeQ.id, lakeId)))
+            dispatch(Tabs.create(lakeQueryPath(dupeQ.id, lakeId)))
           }
           if (querySource === "remote") {
             dispatch(setRemoteQueries([dupeQ])).then(() => {
-              dispatch(Tabs.new(lakeQueryPath(dupeQ.id, lakeId)))
+              dispatch(Tabs.create(lakeQueryPath(dupeQ.id, lakeId)))
             })
           }
         },

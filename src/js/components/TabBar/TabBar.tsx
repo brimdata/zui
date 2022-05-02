@@ -46,6 +46,7 @@ export default function TabBar() {
             style={layout.getStyle(id)}
             removeTab={(e) => ctl.onRemoveClick(e, id)}
             active={id === ctl.activeId}
+            preview={id === ctl.previewId}
             isNew={false}
           />
         ))}

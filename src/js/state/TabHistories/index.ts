@@ -1,5 +1,5 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
-import {TABS_ADD, TABS_REMOVE} from "../Tabs/types"
+import Tabs from "../Tabs"
 import {State} from "../types"
 import {SerializedHistory} from "./types"
 
@@ -12,12 +12,11 @@ const slice = createSlice({
     save: adapter.setAll,
   },
   extraReducers: {
-    TABS_ADD: (state, action: TABS_ADD) => {
-      global.tabHistories.create(action.id, [action.url])
-      return state
-    },
-    TABS_REMOVE: (state, action: TABS_REMOVE) => {
-      global.tabHistories.delete(action.id)
+    [Tabs.remove.toString()]: (
+      state,
+      action: ReturnType<typeof Tabs.remove>
+    ) => {
+      global.tabHistories.delete(action.payload)
       return state
     },
   },

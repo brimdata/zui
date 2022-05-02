@@ -29,7 +29,13 @@ const PoolItem = ({styles, data, state, handlers}) => {
 
   const onClick = (e) => {
     e.preventDefault()
-    dispatch(Tabs.activateByUrl(lakePoolPath(pool.id, lakeId)))
+    handlers.select(e, {selectOnClick: true})
+    dispatch(Tabs.previewUrl(lakePoolPath(pool.id, lakeId)))
+  }
+
+  const onDoubleClick = (e) => {
+    e.preventDefault()
+    dispatch(Tabs.activateUrl(lakePoolPath(pool.id, lakeId)))
   }
 
   return (
@@ -39,6 +45,7 @@ const PoolItem = ({styles, data, state, handlers}) => {
       state={state}
       styles={styles}
       onClick={onClick}
+      onDoubleClick={onDoubleClick}
       onContextMenu={() => showContextMenu(ctxMenu)}
       onSubmit={handlers.submit}
       progress={ingest?.progress}

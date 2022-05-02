@@ -22,6 +22,6 @@ export function maybeShowReleaseNotes() {
 export function showReleaseNotes() {
   return (dispatch, getState) => {
     const id = Current.getLakeId(getState())
-    dispatch(Tabs.new(releaseNotesPath(id)))
+    dispatch(Tabs.create(releaseNotesPath(id)))
   }
 }

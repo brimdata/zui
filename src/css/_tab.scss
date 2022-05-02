@@ -182,4 +182,8 @@ $tab-border-radius-bottom: 6px;
   &.is-new.active {
     background: white;
   }
+
+  &.preview {
+    font-style: italic;
+  }
 }

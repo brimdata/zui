@@ -25,11 +25,11 @@ export const newTab = (): Thunk => (dispatch, getState) => {
   } else {
     url = lakeQueryPath(dispatch(newQuery()).id, lakeId)
   }
-  dispatch(Tabs.new(url))
+  dispatch(Tabs.create(url))
 }
 
 function legacyNewTab(dispatch, getState) {
   const lakeId = Current.getLakeId(getState())
   const path = lakeId ? lakeImportPath(lakeId) : lakesPath()
-  dispatch(Tabs.new(path))
+  dispatch(Tabs.create(path))
 }

@@ -1,11 +1,10 @@
-import actions from "./actions"
-import flows from "./flows"
-import reducer from "./reducer"
-import selectors from "./selectors"
+import * as flows from "./flows"
+import * as selectors from "./selectors"
+import slice from "./slice"
 
 export default {
-  ...actions,
   ...selectors,
   ...flows,
-  reducer,
+  ...slice.actions,
+  reducer: slice.reducer,
 }
