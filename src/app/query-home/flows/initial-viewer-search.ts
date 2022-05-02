@@ -14,7 +14,7 @@ const initialViewerSearch = (): Thunk<any> => (dispatch, getState) => {
   const query = Current.getQuery(getState())
   if (!query) return
   const perPage = query.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
-  if (!query.hasHeadFilter) query.addFilterPin(`| head ${perPage}`)
+  if (!query.hasHeadFilter()) query.addFilterPin(`| head ${perPage}`)
   const tabId = Tabs.getActive(getState())
   const history = global.tabHistories.get(tabId)
   const {key} = history.location
