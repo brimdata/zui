@@ -13,11 +13,13 @@ import AddTab from "./AddTab"
 import SearchTab from "./SearchTab"
 import useTabController from "./useTabController"
 import useTabLayout from "./useTabLayout"
+import {useLocation} from "react-router"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 240
 
 export default function TabBar() {
+  useLocation() // Rerender this when the location changes
   const ids = useSelector(Tabs.getIds)
   const pools: PoolsState = useSelector(Pools.raw)
   const lakes = useSelector(Lakes.raw)
