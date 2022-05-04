@@ -80,7 +80,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: yarn
-          node-version-file: .nvmrc
+          node-version-file: .node-version
       - run: yarn add zed@brimdata/zed#${{ steps.zed_pr.outputs.sha }}
       - run: yarn --inline-builds
       - run: yarn lint
