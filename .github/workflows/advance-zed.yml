@@ -106,21 +106,8 @@ jobs:
       # while this job is running, this push will fail. I anticipate
       # this happening rarely, and it can be fixed by merging the
       # resulting PR opened from the failure.
-      - name: Commit and push change
-        run: |
-          git diff
-          cat << 'EOF' | git commit -a -F-
-          Zed update through "${{ steps.zed_pr.outputs.title }}" by ${{ steps.zed_pr.outputs.user }}
-
-          This is an auto-generated commit with a Zed dependency update. The Zed PR
-          ${{ steps.zed_pr.outputs.url }}, authored by @${{ steps.zed_pr.outputs.user }},
-          has been merged.
-
-          ${{ steps.zed_pr.outputs.title }}
-
-          ${{ steps.zed_pr.outputs.body }}
-          EOF
-          git push
+      - run: git commit -a -m 'upgrade Zed to ${{ github.event.client_payload.merge_commit_sha }}'
+      - run: git push
 
       - name: Create Pull Request for Manual Inspection
         if: failure()
