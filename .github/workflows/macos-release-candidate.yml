@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: yarn
-          node-version-file: .nvmrc
+          node-version-file: .node-version
 
       - if: ${{ !startsWith(steps.extract_branch.outputs.branch, 'rc-v') }}
         name: Set version string for ad hoc builds

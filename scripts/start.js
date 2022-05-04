@@ -11,7 +11,7 @@ async function start() {
   const css = sub("yarn", `build:css --watch`)
   const zealot = sub("yarn", `workspace @brimdata/zealot run build --watch`)
   await Promise.all([
-    css.waitForOutput(/Wrote CSS/),
+    css.waitForOutput(/Sass is watching for changes/),
     js.waitForOutput(/Watching for file changes/),
     zealot.waitForOutput(/Watching for file changes/),
   ])
