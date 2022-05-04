@@ -195,6 +195,7 @@ type ItemProps = {
   icon?: ReactNode
   progress?: number
   onClick?: MouseEventHandler
+  onDoubleClick?: MouseEventHandler
   onContextMenu?: MouseEventHandler
   onSubmit?: (text: string) => void
   state?: NodeState
@@ -211,6 +212,7 @@ export function Item(props: ItemProps) {
         style={props.styles.indent}
         onClick={props.onClick}
         onContextMenu={props.onContextMenu}
+        onDoubleClick={props.onDoubleClick}
       >
         <Toggle {...props} />
         <ItemIcon {...props} />

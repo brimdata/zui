@@ -13,11 +13,13 @@ import AddTab from "./AddTab"
 import SearchTab from "./SearchTab"
 import useTabController from "./useTabController"
 import useTabLayout from "./useTabLayout"
+import {useLocation} from "react-router"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 240
 
 export default function TabBar() {
+  useLocation() // Rerender this when the location changes
   const ids = useSelector(Tabs.getIds)
   const pools: PoolsState = useSelector(Pools.raw)
   const lakes = useSelector(Lakes.raw)
@@ -46,6 +48,7 @@ export default function TabBar() {
             style={layout.getStyle(id)}
             removeTab={(e) => ctl.onRemoveClick(e, id)}
             active={id === ctl.activeId}
+            preview={id === ctl.previewId}
             isNew={false}
           />
         ))}
