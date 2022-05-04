@@ -68,6 +68,15 @@ describe("drill down", () => {
     expect(program).toBe('this["i d"]["orig h"]==192.168.0.54')
   })
 
+  test("when there is a sort on there", () => {
+    const program = brim
+      .program('name=="james" | count() by proto | sort -r count')
+      .drillDown(result)
+      .string()
+
+    expect(program).toBe('name=="james" proto=="udp"')
+  })
+
   test("combines keys in the group by proc", () => {
     const program = brim
       .program('_path=="dns" | count() by id.orig_h, proto, query | sort -r')
@@ -351,10 +360,8 @@ describe("extracting the first filter", () => {
   })
 
   test('_path=="conn" | filter a', () => {
-    // This is questionable. We'd need another way to extract the filter if we
-    // want the result of this to be _path==\"conn\" | filter a
     expect(brim.program('_path=="conn" | filter a').filter()).toEqual(
-      '_path=="conn"'
+      '_path=="conn" | filter a'
     )
   })
 
