@@ -15,7 +15,6 @@ import {lakePath} from "src/app/router/utils/paths"
 import {FeatureFlag} from "../core/feature-flag"
 
 export default function PoolShow() {
-  const match = useRouteMatch()
   return (
     <Switch>
       <InitPool>
