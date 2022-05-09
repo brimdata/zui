@@ -27,14 +27,9 @@ export default function PoolShow() {
             </Route>
           }
           off={
-            <>
-              <Route path={lakePoolSearch.path}>
-                <SearchHome />
-              </Route>
-              <Route default>
-                <Redirect to={`${match.url}/search`} />
-              </Route>
-            </>
+            <Route path={lakePoolSearch.path}>
+              <SearchHome />
+            </Route>
           }
         />
       </InitPool>
