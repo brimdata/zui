@@ -77,6 +77,15 @@ describe("drill down", () => {
     expect(program).toBe('name=="james" proto=="udp"')
   })
 
+  test("when there is a grep with a star", () => {
+    const program = brim
+      .program('grep(/(*|Elm)/) Category=="Furnishings" | count() by proto')
+      .drillDown(result)
+      .string()
+
+    expect(program).toBe('grep(/(*|Elm)/) Category=="Furnishings" proto=="udp"')
+  })
+
   test("combines keys in the group by proc", () => {
     const program = brim
       .program('_path=="dns" | count() by id.orig_h, proto, query | sort -r')
