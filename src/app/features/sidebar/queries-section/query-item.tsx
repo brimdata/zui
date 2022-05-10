@@ -36,7 +36,14 @@ const QueryItem: NodeRenderer<any> = ({
   const onItemClick = (e: React.MouseEvent) => {
     handlers.select(e, {selectOnClick: true})
     if (!e.metaKey && !e.shiftKey) {
-      dispatch(Tabs.activateByUrl(lakeQueryPath(id, lakeId)))
+      dispatch(Tabs.previewUrl(lakeQueryPath(id, lakeId)))
+    }
+  }
+
+  const onItemDoubleClick = (e: React.MouseEvent) => {
+    if (isGroup) return
+    if (!e.metaKey && !e.shiftKey) {
+      dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
     }
   }
 
@@ -48,6 +55,7 @@ const QueryItem: NodeRenderer<any> = ({
       state={state}
       styles={styles}
       onClick={isGroup ? onGroupClick : onItemClick}
+      onDoubleClick={onItemDoubleClick}
       isFolder={isGroup}
       onContextMenu={() => {
         showContextMenu(

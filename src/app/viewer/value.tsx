@@ -9,6 +9,7 @@ import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
 import {zed} from "@brimdata/zealot"
 import {useZedFormatter} from "../core/format"
+import {take} from "lodash"
 
 const havelock = cssVar("--havelock")
 const transHavelock = transparentize(0.75, havelock as string)
@@ -30,6 +31,7 @@ const Syntax = styled.span`
 `
 
 type ValueProps = {
+  shallow: boolean
   field: zed.Field
   value: zed.Value
   record: zed.Record
@@ -96,18 +98,28 @@ export function SetValue(props: ValueProps) {
   const set = props.value as zed.Set
   const lastItem = (i) => i === set.items.length - 1
   const firstItem = (i) => i === 0
+  const limit = 10
+  const overLimit = set.items.length > limit
+  const limitItem = (i) => i === limit - 1
+  if (props.shallow) {
+    return <BG>Set({set.items.length})</BG>
+  }
   return (
     <>
       <Syntax>|[</Syntax>
-      {set.items.map((v, i) => (
+      {take(set.items, limit).map((v, i) => (
         <Fragment key={i}>
           <Value
             {...props}
+            shallow={true}
             value={v}
             padAfter={false}
             padBefore={!firstItem(i)}
           />
           {lastItem(i) ? null : <Syntax key={i + ","}>,</Syntax>}
+          {overLimit && limitItem(i) ? (
+            <Syntax key={i + "..."}>...</Syntax>
+          ) : null}
         </Fragment>
       ))}
       <Syntax>]|</Syntax>
@@ -120,18 +132,28 @@ export function ArrayValue(props: ValueProps) {
   const array = props.value as zed.Array
   const lastItem = (i) => i === array.items.length - 1
   const firstItem = (i) => i === 0
+  const limit = 10
+  const overLimit = array.items.length > limit
+  const limitItem = (i) => i === limit - 1
+  if (props.shallow) {
+    return <BG>Array({array.items.length})</BG>
+  }
   return (
     <>
       <Syntax>[</Syntax>
-      {array.items.map((v, i) => (
+      {take(array.items, limit).map((v, i) => (
         <Fragment key={i}>
           <Value
             {...props}
+            shallow={true}
             value={v}
             padAfter={false}
             padBefore={!firstItem(i)}
           />
           {lastItem(i) ? null : <Syntax key={i + ","}>,</Syntax>}
+          {overLimit && limitItem(i) ? (
+            <Syntax key={i + "..."}>...</Syntax>
+          ) : null}
         </Fragment>
       ))}
       <Syntax>]</Syntax>

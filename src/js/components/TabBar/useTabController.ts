@@ -24,6 +24,7 @@ export default function (count: number, calcWidths: Function) {
 
   return {
     activeId,
+    previewId: useSelector(Tabs.getPreview),
 
     onAddClick() {
       dispatch(newTab())

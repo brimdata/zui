@@ -23,7 +23,7 @@ export const listContextMenu =
             const {cancelled} = await tree.edit(id)
             if (!cancelled) {
               tree.selectById(id)
-              dispatch(Tabs.activateByUrl(lakeQueryPath(id, lakeId)))
+              dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
             }
           })
         },

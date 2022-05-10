@@ -80,7 +80,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           cache: yarn
-          node-version-file: .nvmrc
+          node-version-file: .node-version
       - run: yarn add zed@brimdata/zed#${{ steps.zed_pr.outputs.sha }}
       - run: yarn --inline-builds
       - run: yarn lint
@@ -102,38 +102,11 @@ jobs:
             run/playwright-itest
             !run/**/SS
 
-      # This push logic is simple. If someone merges a different brim PR
-      # while this job is running, this push will fail. I anticipate
-      # this happening rarely, and it can be fixed by merging the
-      # resulting PR opened from the failure.
-      - name: Commit and push change
-        run: |
-          git diff
-          cat << 'EOF' | git commit -a -F-
-          Zed update through "${{ steps.zed_pr.outputs.title }}" by ${{ steps.zed_pr.outputs.user }}
+      - run: git commit -a -m 'upgrade Zed to ${{ github.event.client_payload.merge_commit_sha }}'
 
-          This is an auto-generated commit with a Zed dependency update. The Zed PR
-          ${{ steps.zed_pr.outputs.url }}, authored by @${{ steps.zed_pr.outputs.user }},
-          has been merged.
-
-          ${{ steps.zed_pr.outputs.title }}
-
-          ${{ steps.zed_pr.outputs.body }}
-          EOF
-          git push
-
-      - name: Create Pull Request for Manual Inspection
-        if: failure()
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Zed update through "${{ steps.zed_pr.outputs.title }}" by ${{ steps.zed_pr.outputs.user }}
-          title: Zed update through "${{ steps.zed_pr.outputs.title }}" by ${{ steps.zed_pr.outputs.user }}
-          body: |
-            This is an auto-generated PR with a Zed dependency update needing manual attention. brimdata/zed#${{ steps.zed_pr.outputs.number }}, authored by @${{ steps.zed_pr.outputs.user }}, has been merged, however Zed could not be updated automatically. Please see https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} for the original failing run. If a Brim update is needed, you may use the branch on this PR to do so.
-
-            ----
-            #### ${{ steps.zed_pr.outputs.title }}
-            ${{ steps.zed_pr.outputs.body }}
-          branch: zedbot-${{ steps.zed_pr.outputs.branch }}
-          branch-suffix: short-commit-hash
+      # If this push fails because a PR was merged while this job was
+      # running, you can re-run the failed job via
+      # https://github.com/brimdata/brim/actions.  Or, if you expect
+      # this workflow to be dispatched again soon, you can simply ignore
+      # the failure.
+      - run: git push

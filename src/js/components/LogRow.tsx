@@ -36,6 +36,7 @@ const LogRow = (props: Props) => {
           type={field.data.type.toString()}
         >
           <Value
+            shallow={false}
             displayConfig={props.displayConfig}
             value={field.value}
             field={field}

@@ -17,6 +17,8 @@ import TabBar from "src/js/components/TabBar/TabBar"
 import styled from "styled-components"
 import {FeatureFlag} from "../core/feature-flag"
 import {Sidebar} from "src/app/features/sidebar"
+import Tabs from "src/js/state/Tabs"
+import {useDispatch} from "../core/state"
 
 const ColumnLayout = styled.div`
   display: flex;
@@ -47,7 +49,18 @@ const SearchPageWrapper = styled.div`
   position: relative;
 `
 
+function interactive() {
+  return (dispatch, getState) => {
+    const active = Tabs.getActive(getState())
+    const preview = Tabs.getPreview(getState())
+    if (active === preview) {
+      dispatch(Tabs.preview(null))
+    }
+  }
+}
+
 export default function AppWrapper({children}) {
+  const dispatch = useDispatch()
   return (
     <div className="app-wrapper">
       <div className="title-bar-drag-area" />
@@ -63,7 +76,12 @@ export default function AppWrapper({children}) {
                 on={<Sidebar />}
                 off={<LeftPane />}
               />
-              <ColumnLayout>{children}</ColumnLayout>
+              <ColumnLayout
+                onClick={() => dispatch(interactive())}
+                onMouseDown={() => dispatch(interactive())}
+              >
+                {children}
+              </ColumnLayout>
               <XRightPane />
             </RowLayout>
             <StatusBar />

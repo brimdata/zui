@@ -4,11 +4,12 @@ import {State} from "../types"
 import {createIsEqualSelector} from "../utils"
 import {TabsState} from "./types"
 
-const getData = (state: State) => state.tabs.data
-const getActive = (state: State) => state.tabs.active
-const getCount = (state: State) => state.tabs.data.length
+export const getData = (state: State) => state.tabs.data
+export const getActive = (state: State) => state.tabs.active
+export const getCount = (state: State) => state.tabs.data.length
+export const getPreview = (state: State) => state.tabs.preview
 
-const getActiveTab = createSelector<State, TabsState, TabState>(
+export const getActiveTab = createSelector<State, TabsState, TabState>(
   (state) => state.tabs,
   (tabs) => {
     const tab = tabs.data.find((t) => t.id === tabs.active)
@@ -17,16 +18,8 @@ const getActiveTab = createSelector<State, TabsState, TabState>(
   }
 )
 
-const _getIds = createSelector(getData, (data) => {
+export const _getIds = createSelector(getData, (data) => {
   return data.map((d) => d.id)
 })
 
-const getIds = createIsEqualSelector(_getIds, (ids) => ids)
-
-export default {
-  getData,
-  getActive,
-  getCount,
-  getActiveTab,
-  getIds,
-}
+export const getIds = createIsEqualSelector(_getIds, (ids) => ids)

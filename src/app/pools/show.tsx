@@ -5,7 +5,7 @@ import useLakeId from "src/app/router/hooks/use-lake-id"
 import {lakePoolSearch, poolShow} from "src/app/router/routes"
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {Redirect, Route, Switch, useRouteMatch} from "react-router"
+import {Redirect, Route, Switch} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import SearchHome from "../search/home"
@@ -15,7 +15,6 @@ import {lakePath} from "src/app/router/utils/paths"
 import {FeatureFlag} from "../core/feature-flag"
 
 export default function PoolShow() {
-  const match = useRouteMatch()
   return (
     <Switch>
       <InitPool>
@@ -27,14 +26,9 @@ export default function PoolShow() {
             </Route>
           }
           off={
-            <>
-              <Route path={lakePoolSearch.path}>
-                <SearchHome />
-              </Route>
-              <Route default>
-                <Redirect to={`${match.url}/search`} />
-              </Route>
-            </>
+            <Route path={lakePoolSearch.path}>
+              <SearchHome />
+            </Route>
           }
         />
       </InitPool>
