@@ -47,7 +47,7 @@ export default function (p = "", pins: string[] = []) {
         .map(brim.syntax.include)
         .join(" ")
 
-      if (/\s*\*\s*/.test(filter)) filter = ""
+      if (/^\s*\*\s*$/.test(filter)) filter = ""
       if (newFilters.includes(filter)) filter = ""
 
       p = stdlib.string(filter).append(" ").append(newFilters).trim().self()
