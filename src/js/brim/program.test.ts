@@ -79,7 +79,7 @@ describe("drill down", () => {
 
   test("when there is a grep with a star", () => {
     const program = brim
-      .program(`grep(/(\*|Elm)/) Category=="Furnishings" | count() by proto`)
+      .program('grep(/(*|Elm)/) Category=="Furnishings" | count() by proto')
       .drillDown(result)
       .string()
 
