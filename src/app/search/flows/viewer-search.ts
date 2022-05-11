@@ -53,8 +53,7 @@ export function viewerSearch(args: Args): Thunk<void> {
       dispatch(Viewer.setStatus(tabId, "ERROR"))
       dispatch(Notice.set(ErrorFactory.create(e)))
     } finally {
-      dispatch(Viewer.setStatus(tabId, "SUCCESS"))
-      dispatch(Viewer.setEndStatus(tabId, endStatus(res.rows.length)))
+      dispatch(Viewer.setStatus(tabId, endStatus(res.rows.length)))
     }
   }
 }

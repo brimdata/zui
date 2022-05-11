@@ -1,6 +1,5 @@
 import {TypeDefs, zed} from "@brimdata/zealot"
 import {ScrollPosition} from "../../types"
-import {SearchStatus} from "../../types/searches"
 
 export type ViewerStatus =
   | "INIT"
@@ -8,6 +7,7 @@ export type ViewerStatus =
   | "INCOMPLETE"
   | "COMPLETE"
   | "LIMIT"
+  | "ERROR"
 
 export type ViewerSelectionData = {
   rows: {
@@ -33,7 +33,6 @@ export type ViewerAction =
   | VIEWER_COLUMNS
   | VIEWER_SET_COLUMNS
   | VIEWER_SET_SEARCH_KEY
-  | VIEWER_END_STATUS
   | VIEWER_SCROLL
   | VIEWER_SELECT
   | VIEWER_SELECT_MULTI
@@ -75,7 +74,7 @@ export type VIEWER_END_STATUS = {
 
 export type VIEWER_STATUS = {
   type: "VIEWER_STATUS"
-  status: SearchStatus
+  status: ViewerStatus
   tabId: string
 }
 

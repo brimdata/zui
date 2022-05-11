@@ -43,11 +43,9 @@ export function viewerSearch(args: Args): Thunk<void> {
         dispatch(Viewer.updateColumns(tabId, shapesMap))
         dispatch(Columns.touch(shapesMap))
       })
-      dispatch(Viewer.setStatus(tabId, "SUCCESS"))
       dispatch(Viewer.setEndStatus(tabId, endStatus(res.rows.length)))
     } catch (e) {
       dispatch(Viewer.setStatus(tabId, "ERROR"))
-      dispatch(Viewer.setEndStatus(tabId, endStatus(0)))
       dispatch(Notice.set(ErrorFactory.create(e)))
     }
   }

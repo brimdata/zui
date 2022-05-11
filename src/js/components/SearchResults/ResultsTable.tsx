@@ -29,7 +29,7 @@ type Props = {
 export default function ResultsTable(props: Props) {
   const program = useSelector(Url.getSearchProgram)
   const isFetching = useSelector(Viewer.getStatus) === "FETCHING"
-  const isIncomplete = useSelector(Viewer.getEndStatus) === "INCOMPLETE"
+  const isIncomplete = useSelector(Viewer.getStatus) === "INCOMPLETE"
   const tableColumns = useSelector(Columns.getCurrentTableColumns)
   const columnHeadersView = useSelector(Layout.getColumnsView)
   const logs = useSelector(Viewer.getLogs)

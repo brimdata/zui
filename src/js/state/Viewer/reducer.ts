@@ -7,7 +7,6 @@ import {zed} from "@brimdata/zealot"
 
 const init = (): ViewerState => ({
   records: [],
-  endStatus: "INIT",
   status: "INIT",
   searchKey: "",
   columns: {},
@@ -31,8 +30,6 @@ export default function (
       return {...state, records: action.records as zed.Record[]}
     case "VIEWER_SPLICE":
       return {...state, records: splice(state.records, action.index)}
-    case "VIEWER_END_STATUS":
-      return {...state, endStatus: action.status}
     case "VIEWER_STATUS":
       return {...state, status: action.status}
     case "VIEWER_SET_SEARCH_KEY":

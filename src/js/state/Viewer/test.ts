@@ -48,26 +48,8 @@ test("splice results", () => {
   expect(Viewer.getLogs(state).length).toEqual(1)
 })
 
-test("results complete", () => {
-  const state = store.dispatchAll([Viewer.setEndStatus(tabId, "COMPLETE")])
-
-  expect(Viewer.getEndStatus(state)).toBe("COMPLETE")
-})
-
 test("set search key", () => {
   const state = store.dispatchAll([Viewer.setSearchKey(tabId, "testKey")])
 
   expect(Viewer.getSearchKey(state)).toBe("testKey")
-})
-
-test("results incomplete", () => {
-  const state = store.dispatchAll([Viewer.setEndStatus(tabId, "INCOMPLETE")])
-
-  expect(Viewer.getEndStatus(state)).toBe("INCOMPLETE")
-})
-
-test("results limited", () => {
-  const state = store.dispatchAll([Viewer.setEndStatus(tabId, "LIMIT")])
-
-  expect(Viewer.getEndStatus(state)).toBe("LIMIT")
 })

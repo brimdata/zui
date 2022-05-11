@@ -1,7 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import {TypeDefs} from "@brimdata/zealot/query/channel"
 import {ScrollPosition} from "../../types"
-import {SearchStatus} from "../../types/searches"
 import {
   VIEWER_CLEAR,
   VIEWER_COLUMNS,
@@ -34,7 +33,7 @@ export const splice = (tabId: string, index: number): VIEWER_SPLICE => {
 
 export const setStatus = (
   tabId: string,
-  status: SearchStatus
+  status: ViewerStatus
 ): VIEWER_STATUS => {
   return {type: "VIEWER_STATUS", status, tabId}
 }

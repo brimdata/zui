@@ -29,7 +29,7 @@ type Props = {
 const ResultsTable = (props: Props) => {
   const queryValue = useSelector(Current.getQuery)?.value
   const isFetching = useSelector(Viewer.getStatus) === "FETCHING"
-  const isIncomplete = useSelector(Viewer.getEndStatus) === "INCOMPLETE"
+  const isIncomplete = useSelector(Viewer.getStatus) === "INCOMPLETE"
   const tableColumns = useSelector(Columns.getCurrentTableColumns)
   const columnHeadersView = useSelector(Layout.getColumnsView)
   const logs = useSelector(Viewer.getLogs)
