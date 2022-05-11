@@ -15,7 +15,7 @@ describe("excluding and including", () => {
   test("excluding a field", () => {
     const program = brim.program('_path=="weird"').exclude(field).string()
 
-    expect(program).toEqual('_path=="weird" uid!="123"')
+    expect(program).toEqual('_path=="weird" | uid!="123"')
   })
 
   test("excluding a field with a pipe", () => {
@@ -27,7 +27,7 @@ describe("excluding and including", () => {
       .string()
 
     expect(program).toEqual(
-      'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" source!="HTTP" | sort'
+      'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort | source!="HTTP"'
     )
   })
 
@@ -37,7 +37,7 @@ describe("excluding and including", () => {
       .exclude(field)
       .string()
 
-    expect(program).toEqual('_path=="weird" uid!="123" | sort | filter 1')
+    expect(program).toEqual('_path=="weird" | sort | filter 1 | uid!="123"')
   })
 
   test("including a field with two pipes", () => {
@@ -46,7 +46,7 @@ describe("excluding and including", () => {
       .include(field)
       .string()
 
-    expect(program).toEqual('_path=="weird" uid=="123" | sort | filter 1')
+    expect(program).toEqual('_path=="weird" | sort | filter 1 | uid=="123"')
   })
 })
 
@@ -74,7 +74,7 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe('name=="james" proto=="udp"')
+    expect(program).toBe('name=="james" | proto=="udp"')
   })
 
   test("when there is a grep with a star", () => {
@@ -83,7 +83,9 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe('grep(/(*|Elm)/) Category=="Furnishings" proto=="udp"')
+    expect(program).toBe(
+      'grep(/(*|Elm)/) Category=="Furnishings" | proto=="udp"'
+    )
   })
 
   test("combines keys in the group by proc", () => {
@@ -93,7 +95,7 @@ describe("drill down", () => {
       .string()
 
     expect(program).toBe(
-      '_path=="dns" id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
+      '_path=="dns" | id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
     )
   })
 
@@ -112,7 +114,7 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe('names james proto=="udp"')
+    expect(program).toBe('names james | proto=="udp"')
   })
 
   test("count by and filter the same", () => {
@@ -140,7 +142,7 @@ describe("drill down", () => {
       .string()
 
     expect(program).toEqual(
-      '_path=="files" filename!="-" md5=="9f51ef98c42df4430a978e4157c43dd5"'
+      '_path=="files" filename!="-" | md5=="9f51ef98c42df4430a978e4157c43dd5"'
     )
   })
 })
@@ -150,7 +152,7 @@ describe("count by", () => {
     const field = createField("_path", "heyo")
     const program = brim.program().countBy(field).string()
 
-    expect(program).toBe("| count() by _path")
+    expect(program).toBe("count() by _path")
   })
 
   test("append a count to an existing query", () => {
