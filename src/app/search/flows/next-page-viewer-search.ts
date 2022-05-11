@@ -1,6 +1,7 @@
 import {zed} from "@brimdata/zealot"
 import {isEmpty} from "lodash"
 import brim from "src/js/brim"
+import {concatPins} from "src/js/brim/program"
 import {ANALYTIC_MAX_RESULTS, PER_PAGE} from "src/js/flows/config"
 import {indexOfLastChange} from "src/js/lib/Array"
 import {addHeadProc} from "src/js/lib/Program"
@@ -17,7 +18,7 @@ import {viewerSearch} from "./viewer-search"
 export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const params = Url.getSearchParams(getState())
   if (!params.spanArgs) return
-  const program = brim.program(params.program, params.pins)
+  const program = brim.program(concatPins(params.program, params.pins))
   const perPage = program.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
   const query = addHeadProc(program.string(), perPage)
   const origSpan = brim.span(params.spanArgs).toDateTuple()

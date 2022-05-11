@@ -6,6 +6,7 @@ import Url from "src/js/state/Url"
 import Viewer from "src/js/state/Viewer"
 import Tabs from "src/js/state/Tabs"
 import {viewerSearch} from "./viewer-search"
+import {concatPins} from "src/js/brim/program"
 
 /**
  * Initial search to fill the viewer, as opposed to the "next-page"
@@ -14,7 +15,7 @@ import {viewerSearch} from "./viewer-search"
 
 const initialViewerSearch = (): Thunk<any> => (dispatch, getState) => {
   const params = Url.getSearchParams(getState())
-  const program = brim.program(params.program, params.pins)
+  const program = brim.program(concatPins(params.program, params.pins))
   const perPage = program.hasAnalytics() ? ANALYTIC_MAX_RESULTS : PER_PAGE
   const query = addHeadProc(program.string(), perPage)
 

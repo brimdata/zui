@@ -109,3 +109,7 @@ function appendWithPipe(program, filter) {
 function isWhitespace(s: string) {
   return /\s/.test(s)
 }
+
+export function concatPins(program: string, pins: string[]) {
+  return [...pins, program].map((s) => trim(s)).join(" ")
+}
