@@ -20,7 +20,7 @@ const tabReducer = combineReducers({
   logDetails,
   search,
   searchBar,
-  viewer
+  viewer,
 })
 
 export type TabReducer = typeof tabReducer

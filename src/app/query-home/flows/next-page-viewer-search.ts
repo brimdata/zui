@@ -27,10 +27,9 @@ export const nextPageViewerSearch = (): Thunk => (dispatch, getState) => {
   const logs = Viewer.getLogs(getState())
   const tabId = Tabs.getActive(getState())
   const [spliceIndex, span] = nextPageArgs(logs, origSpan)
-  const [from, to] = span
-  // in the future this needs to use ast inspection/manipulation and not assume ts
-  // query.addFilterPin(`| ts >= '${from}'`)
-  // query.addFilterPin(`| ts < '${to}'`)
+  const [_from, _to] = span
+
+  // INFINITE SCROLL IS BROKEN AND NEEDS TO BE FIXED IN A SUBSEQUENT PR
   const append = true
 
   dispatch(Viewer.splice(tabId, spliceIndex))
@@ -49,10 +48,7 @@ function nextPageArgs(
       const ts = logs[index].try<zed.Time>("ts")
       if (ts instanceof zed.Time) {
         const prevTs = ts.toDate()
-        nextSpan[1] = brim
-          .time(prevTs)
-          .add(1, "ms")
-          .toDate()
+        nextSpan[1] = brim.time(prevTs).add(1, "ms").toDate()
         spliceIndex = index
       }
     }

@@ -10,43 +10,43 @@ export default function pinContextMenu(index: number) {
     showContextMenu([
       {
         label: "Edit",
-        click: () => dispatch(Editor.editPin(index))
+        click: () => dispatch(Editor.editPin(index)),
       },
       {type: "separator"},
       {
         label: "Disable",
         enabled: !pin.disabled,
-        click: () => dispatch(Editor.disablePin(index))
+        click: () => dispatch(Editor.disablePin(index)),
       },
       {
         label: "Disable Others",
         enabled: pins.some((p) => !p.disabled),
-        click: () => dispatch(Editor.disableOtherPins(index))
+        click: () => dispatch(Editor.disableOtherPins(index)),
       },
       {type: "separator"},
       {
         label: "Enable",
         enabled: !!pin.disabled,
-        click: () => dispatch(Editor.enablePin(index))
+        click: () => dispatch(Editor.enablePin(index)),
       },
       {
         label: "Enable Others",
         enabled: pins.some((p) => p.disabled),
-        click: () => dispatch(Editor.enableOtherPins(index))
+        click: () => dispatch(Editor.enableOtherPins(index)),
       },
       {type: "separator"},
       {
         label: "Delete",
-        click: () => dispatch(Editor.deletePin(index))
+        click: () => dispatch(Editor.deletePin(index)),
       },
       {
         label: "Delete to the Right",
-        click: () => dispatch(Editor.deletePinsToTheRight(index))
+        click: () => dispatch(Editor.deletePinsToTheRight(index)),
       },
       {
         label: "Delete All",
-        click: () => dispatch(Editor.deleteAllPins())
-      }
+        click: () => dispatch(Editor.deleteAllPins()),
+      },
     ] as MenuItemConstructorOptions[])
   }
 }
