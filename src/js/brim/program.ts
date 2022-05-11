@@ -1,39 +1,33 @@
 import {parseAst, zed} from "@brimdata/zealot"
-import {isEmpty} from "lodash"
+import {isEmpty, last} from "lodash"
 import {trim} from "../lib/Str"
-import stdlib from "../stdlib"
-import brim from "./"
-import {ANALYTIC_PROCS} from "./ast"
+import ast, {ANALYTIC_PROCS} from "./ast"
+import syntax from "./syntax"
 
-export default function (p = "", pins: string[] = []) {
-  p = concatPins(p, pins)
-
+export default function (p = "") {
   return {
     exclude(field: zed.Field) {
-      p = insertFilter(p, brim.syntax.exclude(field))
+      p = appendWithPipe(p, syntax.exclude(field))
       return this
     },
 
     include(field: zed.Field) {
-      p = insertFilter(p, brim.syntax.include(field))
+      p = appendWithPipe(p, syntax.include(field))
       return this
     },
 
     in(field: zed.Field, value: zed.Value) {
-      p = insertFilter(p, brim.syntax.in(field, value))
+      p = appendWithPipe(p, syntax.in(field, value))
       return this
     },
 
     notIn(field: zed.Field, value: zed.Value) {
-      p = insertFilter(p, brim.syntax.notIn(field, value))
+      p = appendWithPipe(p, syntax.notIn(field, value))
       return this
     },
 
     cut(...fields: string[]) {
-      p = stdlib
-        .string(p)
-        .append(" | cut " + fields.join(", "))
-        .self()
+      p = appendWithPipe(p, "cut " + fields.join(", "))
       return this
     },
 
@@ -44,35 +38,24 @@ export default function (p = "", pins: string[] = []) {
         .groupByKeys()
         .map((name) => log.tryField(name))
         .filter((f) => !!f)
-        .map(brim.syntax.include)
+        .map(syntax.include)
         .join(" ")
 
       if (/^\s*\*\s*$/.test(filter)) filter = ""
       if (newFilters.includes(filter)) filter = ""
 
-      p = stdlib.string(filter).append(" ").append(newFilters).trim().self()
-
+      p = appendWithPipe(filter, newFilters)
       return this
     },
 
     countBy(field: zed.Field) {
-      p = stdlib
-        .string(p)
-        .append(" | " + brim.syntax.countBy(field))
-        .trim()
-        .self()
-
+      p = appendWithPipe(p, syntax.countBy(field))
       return this
     },
 
     sortBy(name: string | string[], direction: "asc" | "desc" = "asc") {
-      p = stdlib
-        .string(p)
-        .replace(/\|\s*sort[^|]*$/i, "")
-        .append(" | " + brim.syntax.sortBy(name, direction))
-        .trim()
-        .self()
-
+      p = p.replace(/\|\s*sort[^|]*$/i, "")
+      p = appendWithPipe(p, syntax.sortBy(name, direction))
       return this
     },
 
@@ -83,7 +66,7 @@ export default function (p = "", pins: string[] = []) {
       } catch (error) {
         tree = {error}
       }
-      return brim.ast(tree)
+      return ast(tree)
     },
 
     filter() {
@@ -117,23 +100,12 @@ export default function (p = "", pins: string[] = []) {
   }
 }
 
-function insertFilter(program, filter) {
-  return stdlib
-    .string(program)
-    .insert(" " + filter + " ", filterEnd(program))
-    .trim()
-    .self()
+function appendWithPipe(program, filter) {
+  if (isEmpty(program)) return filter
+  if (!isWhitespace(last(program))) program += " "
+  return program + "| " + filter
 }
 
-function filterEnd(string) {
-  const pos = string.indexOf("|")
-  if (pos < 0) {
-    return string.length
-  } else {
-    return pos
-  }
-}
-
-function concatPins(program, pins) {
-  return [...pins, program].map((s) => trim(s)).join(" ")
+function isWhitespace(s: string) {
+  return /\s/.test(s)
 }

@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {original} from "immer"
 import buildPin from "./models/build-pin"
 import {QueryPin} from "./types"
 
@@ -52,7 +51,7 @@ const slice = createSlice({
     deletePinsToTheRight(s, a: PayloadAction<number>) {
       s.pins.splice(a.payload + 1)
     },
-    deleteAllPins(s, a: PayloadAction<number>) {
+    deleteAllPins(s) {
       s.pins = []
     },
     hoverOverPin(s, a: PayloadAction<number>) {
@@ -61,13 +60,14 @@ const slice = createSlice({
     dropPin(s, a: PayloadAction<number>) {
       const dropIndex = a.payload
       let insertIndex = s.pinHoverIndex
+      s.pinHoverIndex = null
       // We dropped an item to it's right, messing with the array indexes
       if (insertIndex > dropIndex) insertIndex -= 1
 
+      if (dropIndex === insertIndex) return
       const pin = s.pins[dropIndex]
       s.pins.splice(dropIndex, 1)
       s.pins.splice(insertIndex, 0, pin)
-      s.pinHoverIndex = null
     },
 
     updatePin(s, a: PayloadAction<Partial<QueryPin>>) {

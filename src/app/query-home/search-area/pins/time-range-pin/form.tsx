@@ -5,12 +5,14 @@ import styled from "styled-components"
 import {useDialog} from "../dialog"
 import {
   Actions,
+  ActionsGroup,
   Button,
   Field,
   getFormData,
   Input,
   Label,
   PrimaryButton,
+  RedLink,
 } from "../form-helpers"
 import {getTimeString} from "./get-time-preview"
 
@@ -25,6 +27,7 @@ export default function Form(props: {
   pin: TimeRangeQueryPin
   onSubmit: (pin: TimeRangeQueryPin) => void
   onReset: () => void
+  onDelete: () => void
 }) {
   useDialog({onCancel: props.onReset, onClose: props.onReset})
   const zone = useTimeZone()
@@ -76,8 +79,13 @@ export default function Form(props: {
         <Preview>{getTimeString(toValue, zone)}</Preview>
       </Field>
       <Actions>
-        <Button type="reset">Cancel</Button>
-        <PrimaryButton type="submit">OK</PrimaryButton>
+        <ActionsGroup>
+          <RedLink onClick={props.onDelete}>Delete</RedLink>
+        </ActionsGroup>
+        <ActionsGroup>
+          <Button type="reset">Cancel</Button>
+          <PrimaryButton type="submit">OK</PrimaryButton>
+        </ActionsGroup>
       </Actions>
     </form>
   )

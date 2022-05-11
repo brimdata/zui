@@ -1,12 +1,10 @@
 import React from "react"
-import {useTimeZone} from "src/app/core/format"
 import {useDispatch} from "src/app/core/state"
 import Editor from "src/js/state/Editor"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import styled from "styled-components"
 import {BasePin} from "../base-pin"
 import Form from "./form"
-import {getTimeString} from "./get-time-preview"
 
 const Sep = styled.span`
   padding: 0 10px;
@@ -18,12 +16,14 @@ export default function TimeRangePin(props: {
   index: number
 }) {
   const dispatch = useDispatch()
-  const zone = useTimeZone()
   const form = (
     <Form
       pin={props.pin}
       onSubmit={(pin) => dispatch(Editor.updatePin(pin))}
       onReset={() => dispatch(Editor.cancelPinEdit())}
+      onDelete={() => {
+        dispatch(Editor.deletePin(props.index))
+      }}
     />
   )
   const label = (

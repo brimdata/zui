@@ -7,9 +7,9 @@ import FromPin from "./from-pin/from-pin"
 import GenericPin from "./generic-pin/generic-pin"
 import TimeRangePin from "./time-range-pin/time-range-pin"
 import {useDispatch} from "src/app/core/state"
+import submitSearch from "../../flows/submit-search"
 
 const Container = styled.section`
-  margin-top: 16px;
   margin-bottom: 6px;
   display: flex;
   padding: 0 16px;
@@ -30,6 +30,10 @@ function renderPin(pin: QueryPin, index: number) {
 export function Pins() {
   const pins = useSelector(Editor.getPins)
   const dispatch = useDispatch()
-  useEffect(() => {}, [])
+  useEffect(() => {
+    dispatch(submitSearch())
+  }, [pins])
+
+  if (pins.length === 0) return null
   return <Container>{pins.map(renderPin)}</Container>
 }

@@ -34,6 +34,7 @@ const InputBackdrop = styled.div<{isVisible: boolean}>`
       : `
   flex-direction: column;
   background: var(--editor-background);
+  box-shadow: inset 0 1px 1px 0 rgba(0, 0, 0, 0.1), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.1);
   `};
 `
 

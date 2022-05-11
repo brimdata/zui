@@ -1,6 +1,4 @@
 import {zed} from "@brimdata/zealot"
-import {dispatch} from "d3"
-import Editor from "src/js/state/Editor"
 import brim from "../../brim"
 import {onlyWhitespace} from "../../lib/Str"
 import SearchBar from "../../state/SearchBar"
@@ -12,7 +10,6 @@ import {Thunk} from "../../state/types"
 
 const changeTo = (value) => (dispatch) => {
   dispatch(SearchBar.changeSearchBarInput(value))
-  dispatch(Editor.setValue(value))
 }
 
 export function appendQueryInclude(field: zed.Field): Thunk {
