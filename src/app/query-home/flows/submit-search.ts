@@ -29,7 +29,7 @@ const submitSearch =
       dispatch(Viewer.setError(error))
       return
     }
-    console.log(query.toString())
+
     await dispatch(updateQuery(query))
     // TODO: Mason - refactor history to use query copies
     // if (save.investigation) {
