@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react"
+import React, {useEffect} from "react"
 import {cssVar, darken, transparentize} from "polished"
 import {ReactNode} from "react"
 import styled from "styled-components"

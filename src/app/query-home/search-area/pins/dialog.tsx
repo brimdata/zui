@@ -10,7 +10,6 @@ import mergeRefs from "src/app/core/utils/merge-refs"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import useListener from "src/js/components/hooks/useListener"
 import styled from "styled-components"
-import useOutsideClick from "src/js/components/hooks/useOutsideClick"
 
 export type DialogProps = {
   anchor: HTMLElement | null

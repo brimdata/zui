@@ -1,10 +1,10 @@
 import {Query} from "src/js/state/Queries/types"
-import {isNumber, set} from "lodash"
+import {isNumber} from "lodash"
 import brim from "src/js/brim"
 import {ANALYTIC_PROCS, HEAD_PROC} from "src/js/brim/ast"
 import {parseAst} from "@brimdata/zealot"
 import buildPin from "src/js/state/Editor/models/build-pin"
-import {FromQueryPin, QueryPin} from "src/js/state/Editor/types"
+import {QueryPin} from "src/js/state/Editor/types"
 export type PinType = "from" | "filter"
 export const DRAFT_QUERY_NAME = "Draft Query"
 
