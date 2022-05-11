@@ -1,12 +1,11 @@
 import {createSelector} from "reselect"
 import {ScrollPosition} from "src/js/types"
-import {SearchStatus} from "src/js/types/searches"
 import {TypeDefs, zed} from "@brimdata/zealot"
 import {TabState} from "../Tab/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
 import {createSelection, ViewerSelection} from "./helpers/selection"
-import {ViewerSelectionData, ViewerState} from "./types"
+import {ViewerSelectionData, ViewerState, ViewerStatus} from "./types"
 
 export const getViewer = createSelector<State, TabState, ViewerState>(
   Tabs.getActiveTab,
@@ -22,7 +21,7 @@ export const getViewerRecords = createSelector<
 export const getLogs = getViewerRecords
 export const getRecords = getViewerRecords
 
-export const getStatus = createSelector<State, ViewerState, SearchStatus>(
+export const getStatus = createSelector<State, ViewerState, ViewerStatus>(
   getViewer,
   (viewer) => viewer.status
 )
@@ -34,22 +33,17 @@ export const isFetching = createSelector<State, ViewerState, boolean>(
 
 export const isComplete = createSelector<State, ViewerState, boolean>(
   getViewer,
-  (viewer) => viewer.endStatus === "COMPLETE"
+  (viewer) => viewer.status === "COMPLETE"
 )
 
 export const isLimited = createSelector<State, ViewerState, boolean>(
   getViewer,
-  (viewer) => viewer.endStatus === "LIMIT"
+  (viewer) => viewer.status === "LIMIT"
 )
 
 export const getSearchKey = createSelector<State, ViewerState, string>(
   getViewer,
   (viewer) => viewer.searchKey
-)
-
-export const getEndStatus = createSelector<State, ViewerState, string>(
-  getViewer,
-  (viewer) => viewer.endStatus
 )
 
 export const getShapes = createSelector<State, ViewerState, TypeDefs>(

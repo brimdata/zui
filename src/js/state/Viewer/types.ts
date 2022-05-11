@@ -18,8 +18,7 @@ export type ViewerSelectionData = {
 export type ViewerState = {
   records: zed.Record[]
   columns: TypeDefs
-  endStatus: ViewerStatus
-  status: SearchStatus
+  status: ViewerStatus
   searchKey: string
   scrollPos: ScrollPosition
   selection: ViewerSelectionData
