@@ -20,6 +20,7 @@ export default function GenericPin(props: {
           pin={props.pin}
           onSubmit={(pin) => dispatch(Editor.updatePin(pin))}
           onReset={() => dispatch(Editor.cancelPinEdit())}
+          onDelete={() => dispatch(Editor.deletePin(props.index))}
         />
       }
     />

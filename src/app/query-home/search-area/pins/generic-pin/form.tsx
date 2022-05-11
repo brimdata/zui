@@ -9,13 +9,16 @@ import {
   Input,
   Label,
   PrimaryButton,
-  TextArea
+  TextArea,
+  RedLink,
+  ActionsGroup,
 } from "../form-helpers"
 
 export function Form(props: {
   pin: GenericQueryPin
   onSubmit: (pin: GenericQueryPin) => void
   onReset: () => void
+  onDelete: () => void
 }) {
   useDialog({onCancel: props.onReset, onClose: props.onReset})
 
@@ -39,8 +42,14 @@ export function Form(props: {
         />
       </Field>
       <Actions>
-        <Button type="reset">Cancel</Button>
-        <PrimaryButton type="submit">OK</PrimaryButton>
+        <ActionsGroup>
+          <RedLink onClick={props.onDelete}>Delete</RedLink>
+        </ActionsGroup>
+
+        <ActionsGroup>
+          <Button type="reset">Cancel</Button>
+          <PrimaryButton type="submit">OK</PrimaryButton>
+        </ActionsGroup>
       </Actions>
     </form>
   )

@@ -24,12 +24,8 @@ import SearchArea from "./search-area"
 import usePins from "./toolbar/hooks/use-pins"
 import Editor from "src/js/state/Editor"
 import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
-<<<<<<< Updated upstream
 import Viewer from "src/js/state/Viewer"
 import submitSearch from "./flows/submit-search"
-=======
-import ReactDOM from "react-dom"
->>>>>>> Stashed changes
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())

@@ -1,4 +1,3 @@
-import React from "react"
 import {cssVar, darken, lighten} from "polished"
 import {FormEvent} from "react"
 import styled from "styled-components"
@@ -39,7 +38,11 @@ export const Actions = styled.div`
   margin-top: 26px;
   text-align: center;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+`
+
+export const ActionsGroup = styled.div`
+  display: flex;
   gap: 12px;
 `
 
@@ -77,8 +80,18 @@ export const PrimaryButton = styled(Button)`
   }
 `
 
+const red = cssVar("--red") as string
+const darkRed = darken(0.1, red)
+
+export const RedLink = styled.a`
+  color: ${red};
+  cursor: default;
+  &:active {
+    color: ${darkRed};
+  }
+`
+
 export function getFormData(e: FormEvent<HTMLFormElement>): any {
   const form = e.target as HTMLFormElement
-  console.log(new FormData(form))
   return Object.fromEntries(new FormData(form).entries())
 }
