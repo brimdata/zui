@@ -2,7 +2,6 @@ import Current from "src/js/state/Current"
 import Notice from "src/js/state/Notice"
 import Results from "src/js/state/Results"
 import SearchBar from "src/js/state/SearchBar"
-import Tabs from "src/js/state/Tabs"
 import {updateQuery} from "./update-query"
 
 type SaveOpts = {history: boolean; investigation: boolean}
@@ -23,9 +22,7 @@ const submitSearch =
     // if (save.investigation) {
     //   dispatch(Investigation.push(lakeId, poolId, record, brim.time(ts).toTs()))
     // }
-    const key = Current.getLocation(getState()).key
-    const tabId = Tabs.getActive(getState())
-    dispatch(Results.fetchFirstPage(query.format(), key, tabId))
+    dispatch(Results.fetchFirstPage(query.format()))
   }
 
 export default submitSearch

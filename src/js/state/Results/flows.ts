@@ -9,12 +9,49 @@ import Viewer from "../Viewer"
 import {actions} from "./reducer"
 import Current from "../Current"
 
-function createAbortable(api, tab, tag) {
-  api.abortables.abort({tab, tag})
-  const ctl = new AbortController()
-  const id = api.abortables.add({abort: () => ctl.abort(), tab, tag})
-  const cleanup = () => api.abortables.remove(id)
-  return [ctl.signal, cleanup] as const
+export function fetchFirstPage(query: string): Thunk {
+  return async (dispatch, getState) => {
+    const tabId = Current.getTabId(getState())
+    const key = Current.getLocation(getState()).key
+
+    dispatch(Viewer.clear())
+    dispatch(actions.init({query, key}))
+    dispatch(fetchResults(tabId))
+  }
+}
+
+export function fetchNextPage(): Thunk {
+  return async (dispatch, getState) => {
+    const tabId = Current.getTabId(getState())
+
+    dispatch(actions.nextPage())
+    dispatch(fetchResults(tabId))
+  }
+}
+
+function fetchResults(tabId: string): Thunk {
+  return async (dispatch, getState) => {
+    const prevVals = selectors.getValues(getState())
+
+    const collect = ({rows, shapesMap}) => {
+      dispatch(actions.setValues([...prevVals, ...rows], tabId))
+      dispatch(Viewer.updateColumns(tabId, shapesMap))
+      dispatch(Columns.touch(shapesMap))
+    }
+    try {
+      const res = await dispatch(
+        issueSearch({
+          query: selectors.getPaginatedQuery(getState()),
+          tabId,
+          id: "main-results",
+          collect,
+        })
+      )
+      dispatch(actions.success(res.rows.length, tabId))
+    } catch (e) {
+      dispatch(actions.error(ErrorFactory.create(e), tabId))
+    }
+  }
 }
 
 function issueSearch(args: {
@@ -37,63 +74,10 @@ function issueSearch(args: {
   }
 }
 
-export function fetchFirstPage(
-  query: string,
-  key: string,
-  tabId: string
-): Thunk {
-  return async (dispatch, getState) => {
-    dispatch(actions.init({query, key}))
-
-    const collect = ({rows, shapesMap}) => {
-      dispatch(actions.setValues(rows, tabId))
-      dispatch(Viewer.updateColumns(tabId, shapesMap))
-      dispatch(Columns.touch(shapesMap))
-    }
-
-    try {
-      console.log(selectors.getPaginatedQuery(getState()))
-      const res = await dispatch(
-        issueSearch({
-          query: selectors.getPaginatedQuery(getState()),
-          tabId,
-          id: "main-results",
-          collect,
-        })
-      )
-      dispatch(actions.success(res.rows.length, tabId))
-    } catch (e) {
-      dispatch(actions.error(ErrorFactory.create(e), tabId))
-    }
-  }
-}
-
-export function fetchNextPage(): Thunk {
-  return async (dispatch, getState) => {
-    const prevVals = selectors.getValues(getState())
-    const tabId = Current.getTabId(getState())
-
-    dispatch(actions.nextPage())
-
-    const collect = ({rows, shapesMap}) => {
-      dispatch(actions.setValues([...prevVals, ...rows], tabId))
-      dispatch(Viewer.updateColumns(tabId, shapesMap))
-      dispatch(Columns.touch(shapesMap))
-    }
-
-    console.log(selectors.getPaginatedQuery(getState()))
-    try {
-      const res = await dispatch(
-        issueSearch({
-          query: selectors.getPaginatedQuery(getState()),
-          tabId,
-          id: "main-results",
-          collect,
-        })
-      )
-      dispatch(actions.success(res.rows.length, tabId))
-    } catch (e) {
-      dispatch(actions.error(ErrorFactory.create(e), tabId))
-    }
-  }
+function createAbortable(api, tab, tag) {
+  api.abortables.abort({tab, tag})
+  const ctl = new AbortController()
+  const id = api.abortables.add({abort: () => ctl.abort(), tab, tag})
+  const cleanup = () => api.abortables.remove(id)
+  return [ctl.signal, cleanup] as const
 }
