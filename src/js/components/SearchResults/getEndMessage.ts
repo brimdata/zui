@@ -1,16 +1,18 @@
-import {ANALYTIC_MAX_RESULTS} from "../../flows/config"
+// import {ANALYTIC_MAX_RESULTS} from "../../flows/config"
+// Can I remove this file ^
+
 import {withCommas} from "../../lib/fmt"
-import brim from "../../brim"
+import {ResultsStatus} from "src/js/state/Results/types"
 
-const EOF = "End of results"
-const TRUNCATED_ANALYTICS = `Showing first ${withCommas(
-  ANALYTIC_MAX_RESULTS
-)} results`
-
-export default function getEndMessage(program: string, size: number) {
-  if (brim.program(program).hasAnalytics() && size === ANALYTIC_MAX_RESULTS) {
-    return TRUNCATED_ANALYTICS
+export default function getEndMessage(
+  status: ResultsStatus,
+  aggregationLimit: number
+) {
+  if (status === "LIMIT") {
+    return `Aggregations are limited to the first ${withCommas(
+      aggregationLimit
+    )} results.`
   } else {
-    return EOF
+    return "End of results"
   }
 }

@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 import MacSpinner from "../MacSpinner"
 import useDelayedMount from "../hooks/useDelayedMount"
-import Viewer from "src/js/state/Viewer"
+import Results from "src/js/state/Results"
 
 const Wrap = styled.div`
   animation: fadein 300ms;
@@ -17,7 +17,7 @@ const Wrap = styled.div`
 `
 
 export default function Spinner() {
-  const isFetching = useSelector(Viewer.isFetching)
+  const isFetching = useSelector(Results.isFetching)
   const ready = useDelayedMount(isFetching, 100)
   if (!ready) return null
 

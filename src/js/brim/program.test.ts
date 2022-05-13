@@ -243,7 +243,7 @@ describe("#hasAnalytics()", () => {
       brim
         .program("* | fork ( => cut uid, _path => cut uid ) | tail 1")
         .hasAnalytics()
-    ).toBe(true)
+    ).toBe(false)
   })
 
   test("for filter proc", () => {

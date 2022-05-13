@@ -95,4 +95,4 @@ export const SEQUENTIAL_PROC = "Sequential"
 export const OP_EXPR_PROC = "OpExpr"
 export const REGEXP_SEARCH_PROC = "RegexpSearch"
 export const COMPOUND_PROCS = [PARALLEL_PROC, SEQUENTIAL_PROC]
-export const ANALYTIC_PROCS = ["Summarize", "Call", "Cut"]
+export const ANALYTIC_PROCS = ["Summarize"]
