@@ -148,3 +148,7 @@ export const getPools = createSelector(getLake, Pools.raw, (l, pools) => {
     .map(({data, stats}) => new Pool(data, stats))
     .sort((a, b) => (a.name > b.name ? 1 : -1))
 })
+
+export const getTabId = (s: State) => {
+  return s.tabs.active
+}

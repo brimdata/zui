@@ -7,6 +7,7 @@ import {State} from "../types"
 import Viewer from "../Viewer"
 import {createColumnSet} from "./models/columnSet"
 import {ColumnsState} from "./types"
+import {getValues} from "../Results/selectors"
 
 const getColumns = activeTabSelect<ColumnsState>((tab) => tab.columns)
 
@@ -14,13 +15,13 @@ const getCurrentTableColumns = createSelector<
   State,
   TypeDefs,
   ColumnsState,
-  zed.Record[],
+  zed.Value[],
   FormatConfig,
   TableColumns
 >(
   Viewer.getShapes,
   getColumns,
-  Viewer.getRecords,
+  getValues,
   getFormatConfig,
   (viewerColumns, columnSettings, logs, config) => {
     const set = createColumnSet(viewerColumns)
@@ -31,7 +32,7 @@ const getCurrentTableColumns = createSelector<
       prefs,
       config
     )
-    table.setWidths(logs.slice(0, 50))
+    table.setWidths(logs.slice(0, 50) as zed.Record[])
     return table
   }
 )

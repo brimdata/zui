@@ -5,45 +5,12 @@ import {TabState} from "../Tab/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
 import {createSelection, ViewerSelection} from "./helpers/selection"
-import {ViewerSelectionData, ViewerState, ViewerStatus} from "./types"
+import {ViewerSelectionData, ViewerState} from "./types"
+import {getValues} from "../Results/selectors"
 
 export const getViewer = createSelector<State, TabState, ViewerState>(
   Tabs.getActiveTab,
   (tab) => tab.viewer
-)
-
-export const getViewerRecords = createSelector<
-  State,
-  ViewerState,
-  zed.Record[]
->(getViewer, (viewer) => viewer.records)
-
-export const getLogs = getViewerRecords
-export const getRecords = getViewerRecords
-
-export const getStatus = createSelector<State, ViewerState, ViewerStatus>(
-  getViewer,
-  (viewer) => viewer.status
-)
-
-export const isFetching = createSelector<State, ViewerState, boolean>(
-  getViewer,
-  (viewer) => viewer.status === "FETCHING"
-)
-
-export const isComplete = createSelector<State, ViewerState, boolean>(
-  getViewer,
-  (viewer) => viewer.status === "COMPLETE"
-)
-
-export const isLimited = createSelector<State, ViewerState, boolean>(
-  getViewer,
-  (viewer) => viewer.status === "LIMIT"
-)
-
-export const getSearchKey = createSelector<State, ViewerState, string>(
-  getViewer,
-  (viewer) => viewer.searchKey
 )
 
 export const getShapes = createSelector<State, ViewerState, TypeDefs>(
@@ -71,8 +38,8 @@ export const getSelection = createSelector<
 export const getSelectedRecords = createSelector<
   State,
   ViewerSelection,
-  zed.Record[],
-  zed.Record[]
->(getSelection, getRecords, (selection, records) =>
+  zed.Value[],
+  zed.Value[]
+>(getSelection, getValues, (selection, records) =>
   selection.getIndices().map((index) => records[index])
 )
