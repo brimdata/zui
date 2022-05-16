@@ -8,7 +8,6 @@ In this small release, we've fixed bugs and upgraded some core dependencies like
 - Fix `zed -version` and `brimcap -version` output (#2349)
 - Fix rendering of big arrays that would previously crash the app (#2348)
 - Fix bug causing the "About" window to appear blank (#2347)
-- Simplify Brim wiki (#2331)
 
 ## v0.29.0
 
