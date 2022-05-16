@@ -5,7 +5,7 @@ In this small release, we've fixed bugs and upgraded some core dependencies like
 - Upgrade to Electron 15, Node 16 (#2342)
 - Upgrade to React 18 (#2327)
 - Fix "Pivot to Logs" corner cases (#2354) (#2346)
-- Fix zed and brimcap -version output (#2349)
+- Fix `zed -version` and `brimcap -version` output (#2349)
 - Fix rendering of big arrays that would previously crash the app (#2348)
 - Fix bug causing the "About" window to appear blank (#2347)
 - Simplify Brim wiki (#2331)
