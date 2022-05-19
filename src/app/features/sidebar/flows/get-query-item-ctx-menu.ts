@@ -16,6 +16,7 @@ import {Query} from "../../../../js/state/Queries/types"
 import Queries from "../../../../js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
 import {BrimQuery} from "../../../query-home/utils/brim-query"
+import initialViewerSearch from "../../../query-home/flows/initial-viewer-search"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers, lakeId}) =>
@@ -27,14 +28,12 @@ const getQueryItemCtxMenu =
       !!tree.getSelectedIds().find((id) => id === data.id)
     const selected = hasMultiSelected ? tree.getSelectedIds() : [id]
     const isRemoteItem = dispatch(isRemoteLib([id]))
-    const latestVersion = QueryVersions.getLatestByQueryId({
-      queryId: id,
-    })(getState())
+    const latestVersion = QueryVersions.getLatestByQueryId(id)(getState())
     const hasBrimItemSelected = dispatch(isBrimLib(selected))
 
     const runQuery = () => {
       dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
-      dispatch(submitSearch())
+      dispatch(initialViewerSearch())
     }
 
     const handleDelete = () => {
@@ -97,7 +96,6 @@ const getQueryItemCtxMenu =
           )
           if (canceled) return
           toast.promise(
-            // TODO: Mason
             dispatch(exportQueryLib(filePath, api.exportQueries(id))),
             {
               loading: "Exporting Queries...",

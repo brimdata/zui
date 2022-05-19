@@ -22,6 +22,7 @@ const queriesToRemoteQueries = (
   return qs.map((q) => ({
     ...q,
     tombstone: isTombstone,
+    ts: new Date(),
   }))
 }
 
@@ -102,10 +103,11 @@ export const refreshRemoteQueries =
   }
 
 /*
- setRemoteQuery will create, update, or  Remote queries are stored in a special pool defined in
- the 'remoteQueriesPoolName' constant, and this function will create that pool
- if it does not exist. To determine that existence, we rely on redux's list of
- existing pools which means that this thunk depends on that state being populated
+ setRemoteQueries will create or update Remote queries stored in a special
+ pool defined in the 'remoteQueriesPoolName' constant, and this function will
+ create that pool if it does not exist. To determine that existence, we rely
+ on redux's list of existing pools which means that this thunk depends on
+ that state being populated
  */
 export const setRemoteQueries =
   (queries: (Query & QueryVersion)[]): Thunk<Promise<void>> =>

@@ -123,7 +123,9 @@ const RightPane = () => {
       aria-label="details"
     >
       <Menu />
-      <PaneContentSwitch paneName={currentPaneName} />
+      <AppErrorBoundary>
+        <PaneContentSwitch paneName={currentPaneName} />
+      </AppErrorBoundary>
     </Pane>
   )
 }

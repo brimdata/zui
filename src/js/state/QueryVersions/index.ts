@@ -60,6 +60,7 @@ const queryVersionsSlice = createSlice({
 export default {
   reducer: queryVersionsSlice.reducer,
   ...versionSlice.actions,
+  raw: (state) => state.queryVersions,
   getByQueryId: (queryId) => (state) => state.queryVersions[queryId],
   getLatestByQueryId: (queryId) => (state) => {
     const q = state.queryVersions[queryId]

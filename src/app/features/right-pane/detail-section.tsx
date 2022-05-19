@@ -5,7 +5,6 @@ import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import ExpandWindow from "src/js/icons/ExpandWindow"
 import Current from "src/js/state/Current"
 import LogDetails from "src/js/state/LogDetails"
-import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import HistoryButtons from "src/js/components/common/HistoryButtons"
 import {useDispatch} from "../../core/state"
 import NoSelection from "../../detail/NoSelection"
@@ -40,9 +39,7 @@ const DetailSection = () => {
         </PaneHeader>
       )}
       <PaneBody>
-        <AppErrorBoundary>
-          <DetailPane />
-        </AppErrorBoundary>
+        <DetailPane />
       </PaneBody>
     </>
   )

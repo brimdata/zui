@@ -26,6 +26,9 @@ import EmptySection from "src/js/components/common/EmptySection"
 import Icon from "src/app/core/icon-temp"
 import {listContextMenu} from "./list-context-menu"
 import Current from "src/js/state/Current"
+import QueryVersions from "src/js/state/QueryVersions"
+import {BrimQuery} from "../../../query-home/utils/brim-query"
+import {serialize} from "@electron/remote/dist/src/common/type-utils"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />,
@@ -53,6 +56,7 @@ const querySearch = (term: string, items: Query[]): Query[] => {
 const RemoteQueriesView = ({toolbarButtons}) => {
   const dispatch = useDispatch()
   const remoteQueries = useSelector(RemoteQueries.raw)?.items
+  const queryVersions = useSelector(QueryVersions.raw)
   const [filteredQueries, setFilteredQueries] = useState(remoteQueries)
   const {resizeRef: ref, defaults} = useSectionTreeDefaults()
 
@@ -68,9 +72,11 @@ const RemoteQueriesView = ({toolbarButtons}) => {
     const q = find(remoteQueries, ["id", itemId]) as Query
     if (!q) return console.error("cannot locate remote query with id " + itemId)
     if (q.isReadOnly) return
-    dispatch(setRemoteQueries([{...q, name}])).then(() => {
-      dispatch(refreshRemoteQueries())
-    })
+    const versions = queryVersions[itemId] || {ids: [], entities: {}}
+    const brimQ = new BrimQuery(q, versions)
+    dispatch(
+      setRemoteQueries([{...brimQ.serialize(), name, ...brimQ.latestVersion()}])
+    )
   }
 
   const onQuerySearch = (e) => {

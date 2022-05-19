@@ -5,7 +5,6 @@ export interface Query {
   id: string
   name: string
   description?: string
-  tags?: string[]
   isReadOnly?: boolean
 }
 
