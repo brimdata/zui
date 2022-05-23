@@ -8,6 +8,7 @@ import logDetails from "../LogDetails/reducer"
 import search from "../Search/reducer"
 import searchBar from "../SearchBar/reducer"
 import viewer from "../Viewer/reducer"
+import {reducer as results} from "../Results/reducer"
 
 const tabReducer = combineReducers({
   id: (state: string = brim.randomHash(), _) => state,
@@ -19,6 +20,7 @@ const tabReducer = combineReducers({
   logDetails,
   layout,
   inspector,
+  results,
 })
 
 export type TabReducer = typeof tabReducer

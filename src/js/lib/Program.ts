@@ -1,4 +1,3 @@
-import {HEAD_PROC, TAIL_PROC} from "../brim/ast"
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
 import brim from "../brim"
@@ -15,28 +14,6 @@ export const parse = (string: Program) => {
     error = e
   }
   return [ast, error]
-}
-
-export const removeHeadProc = (program: Program) => {
-  return program.replace(/\|\s*head\s+\d*/i, "")
-}
-
-export const addHeadProc = (program: Program, count: number) => {
-  const [ast] = parse(program)
-  if (brim.ast(ast).proc(HEAD_PROC)) return program
-  else return program + ` | head ${count}`
-}
-
-export const getHeadCount = (program: Program) => {
-  const [ast] = parse(program)
-  const head = brim.ast(ast).proc(HEAD_PROC)
-  return head ? head.count : 0
-}
-
-export const hasHeadOrTailProc = (program: Program) => {
-  const [ast] = parse(program)
-  const a = brim.ast(ast)
-  return !!(a.proc(HEAD_PROC) || a.proc(TAIL_PROC))
 }
 
 export const hasGroupByProc = (program: Program) => {

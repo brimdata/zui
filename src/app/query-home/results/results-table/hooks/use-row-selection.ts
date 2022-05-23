@@ -1,52 +1,38 @@
 import {throttle} from "lodash"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import {useLayoutEffect, MouseEvent} from "react"
 import Mousetrap from "mousetrap"
 
 import Viewer from "src/js/state/Viewer"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
+import {useDispatch} from "src/app/core/state"
+import useSelect from "src/app/core/hooks/use-select"
 
-function useKeybindings(multi) {
+function useKeybindings(count: number) {
   const dispatch = useDispatch()
   const [focusParent, ref] = useCallbackRef()
+  const select = useSelect()
 
   useLayoutEffect(() => {
     if (!focusParent) return
 
     function onDown(e) {
       e.preventDefault()
-      dispatch(Viewer.selectNext())
-    }
-
-    function onShiftDown(e) {
-      if (!multi) return
-      e.preventDefault()
-      dispatch(Viewer.selectRangeNext())
+      const selection = select(Viewer.getSelection)
+      const index = selection.getIndices()[0]
+      dispatch(Viewer.select(index ? Math.min(index + 1, count - 1) : 0))
     }
 
     function onUp(e) {
       e.preventDefault()
-      dispatch(Viewer.selectPrev())
-    }
-
-    function onShiftUp(e) {
-      if (!multi) return
-      e.preventDefault()
-      dispatch(Viewer.selectRangePrev())
-    }
-
-    function selectAll(e) {
-      if (!multi) return
-      e.preventDefault()
-      dispatch(Viewer.selectAll())
+      const selection = select(Viewer.getSelection)
+      const index = selection.getIndices()[0]
+      dispatch(Viewer.select(index ? Math.max(index - 1, 0) : 0))
     }
 
     const bindings = new Mousetrap(focusParent)
       .bind("down", throttle(onDown, 25))
-      .bind("shift+down", throttle(onShiftDown, 25))
       .bind("up", throttle(onUp, 25))
-      .bind("shift+up", throttle(onShiftUp, 25))
-      .bind("meta+a", selectAll)
 
     return () => {
       bindings.reset()
@@ -56,21 +42,15 @@ function useKeybindings(multi) {
   return ref
 }
 
-type Args = {multi: boolean}
+type Args = {count: number}
 
-export function useRowSelection({multi}: Args) {
-  const parentRef = useKeybindings(multi)
+export function useRowSelection({count}: Args) {
+  const parentRef = useKeybindings(count)
   const selection = useSelector(Viewer.getSelection)
   const dispatch = useDispatch()
 
   function clicked(e: MouseEvent, index: number) {
-    if (multi && e.metaKey) {
-      dispatch(Viewer.selectMulti(index))
-    } else if (multi && e.shiftKey) {
-      dispatch(Viewer.selectRange(index))
-    } else {
-      dispatch(Viewer.select(index))
-    }
+    dispatch(Viewer.select(index))
   }
 
   return {

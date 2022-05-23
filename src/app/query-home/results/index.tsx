@@ -29,11 +29,7 @@ const Results = () => {
       </Styled.Toolbar>
       <Styled.Body ref={ref} data-test-locator="viewer_results">
         {view.isTable ? (
-          <ResultsTable
-            height={rect.height}
-            width={rect.width}
-            multiSelect={false}
-          />
+          <ResultsTable height={rect.height} width={rect.width} />
         ) : (
           <div style={{height: 0, width: 0, overflow: "visible"}}>
             <MainInspector

@@ -1,8 +1,8 @@
 import {useSelector} from "react-redux"
-import Viewer from "src/js/state/Viewer"
+import Results from "src/js/state/Results"
 
 export function useResultsData() {
-  const values = useSelector(Viewer.getLogs)
+  const values = useSelector(Results.getValues)
 
   return {
     values,

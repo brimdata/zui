@@ -7,10 +7,9 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
-import Viewer from "src/js/state/Viewer"
-import nextPageViewerSearch from "../flows/next-page-viewer-search"
 import {useRowSelection} from "./results-table/hooks/use-row-selection"
-import {debounce} from "lodash"
+import {debounce, values} from "lodash"
+import Results from "src/js/state/Results"
 
 export function MainInspector(props: {
   height: number
@@ -22,7 +21,7 @@ export function MainInspector(props: {
   const expanded = useSelector(Slice.getExpanded)
   const defaultExpanded = useSelector(Slice.getDefaultExpanded)
   const {parentRef, clicked} = useRowSelection({
-    multi: false,
+    count: values.length,
   })
 
   function setExpanded(key: string, isExpanded: boolean) {
@@ -38,10 +37,10 @@ export function MainInspector(props: {
   }
 
   function loadMore() {
-    if (select(Viewer.isFetching)) return
-    if (select(Viewer.isComplete)) return
-    if (select(Viewer.isLimited)) return
-    dispatch(nextPageViewerSearch())
+    if (select(Results.isFetching)) return
+    if (select(Results.isComplete)) return
+    if (select(Results.isLimited)) return
+    dispatch(Results.fetchNextPage())
   }
 
   function onContextMenu(e, value: zed.Value, field: zed.Field) {

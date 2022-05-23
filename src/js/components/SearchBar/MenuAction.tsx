@@ -2,18 +2,18 @@ import {useBrimApi} from "src/app/core/context"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Tabs from "src/js/state/Tabs"
-import Viewer from "src/js/state/Viewer"
 import ThreeDotsIcon from "../../icons/ThreeDotsIcon"
 import open from "../../lib/open"
 import Modal from "../../state/Modal"
 import PopMenuPointy from "../PopMenu/PopMenuPointy"
 import InputAction from "./InputAction"
 import links from "src/app/core/links"
+import Results from "src/js/state/Results"
 
 export default function MenuAction() {
   const dispatch = useDispatch()
   const api = useBrimApi()
-  const isFetching = useSelector(Viewer.isFetching)
+  const isFetching = useSelector(Results.isFetching)
   const tab = useSelector(Tabs.getActive)
 
   const menu = [
