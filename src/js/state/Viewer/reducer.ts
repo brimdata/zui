@@ -1,9 +1,5 @@
 import produce from "immer"
-
 import {ViewerAction, ViewerState} from "./types"
-
-// import {createSelection} from "./helpers/selection"
-// Can this file be deleted?
 
 const init = (): ViewerState => ({
   columns: {},
