@@ -40,3 +40,5 @@ export const getKey = activeTabSelect((t) => {
 export const getAggregationLimit = activeTabSelect((t) => {
   return t.results.aggregationLimit
 })
+
+export const getError = activeTabSelect((t) => t.results.error)

@@ -1,19 +1,19 @@
 import React from "react"
 import {useSelector} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
-import Viewer from "src/js/state/Viewer"
 import {useResultsData} from "./data-hook"
 import {MainInspector} from "./main-inspector"
 import {ResultsError} from "./results-error"
 import ResultsTable from "./results-table"
 import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
+import Results from "src/js/state/Results"
 
-const Results = () => {
+const ResultsComponent = () => {
   const data = useResultsData()
   const view = useResultsView()
   const {ref, rect} = useResizeObserver()
-  const error = useSelector(Viewer.getError)
+  const error = useSelector(Results.getError)
   return (
     <Styled.BG>
       <Styled.Toolbar>
@@ -49,4 +49,4 @@ const Results = () => {
   )
 }
 
-export default Results
+export default ResultsComponent

@@ -2,7 +2,6 @@ import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Notice from "src/js/state/Notice"
 import Results from "src/js/state/Results"
-import Viewer from "src/js/state/Viewer"
 import {BrimQuery} from "../utils/brim-query"
 import {updateQuery} from "./update-query"
 
@@ -15,7 +14,7 @@ const submitSearch =
   ) =>
   async (dispatch, getState) => {
     dispatch(Notice.dismiss())
-    dispatch(Viewer.setError(null))
+    dispatch(Results.error(null))
     const value = Editor.getValue(getState())
     const pins = Editor.getPins(getState())
     const prev = Current.getQuery(getState())
@@ -26,7 +25,7 @@ const submitSearch =
     })
     const error = query.checkSyntax()
     if (error) {
-      dispatch(Viewer.setError(error))
+      dispatch(Results.error(error))
       return
     }
 
