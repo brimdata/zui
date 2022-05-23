@@ -2,7 +2,7 @@ import {useExpandState} from "src/app/query-home/results/expand-hook"
 import {DRAFT_QUERY_NAME} from "src/app/query-home/utils/brim-query"
 import {ActionButtonProps} from "src/app/toolbar/action-button"
 import Layout from "src/js/state/Layout"
-import Results from "./results"
+import ResultsComponent from "./results"
 import React, {useLayoutEffect} from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
@@ -24,7 +24,7 @@ import SearchArea from "./search-area"
 import usePins from "./toolbar/hooks/use-pins"
 import Editor from "src/js/state/Editor"
 import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
-import Viewer from "src/js/state/Viewer"
+import Results from "src/js/state/Results"
 import submitSearch from "./flows/submit-search"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
@@ -57,7 +57,7 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
     )
     dispatch(Editor.setValue(query?.value || ""))
     dispatch(Editor.setPins(query?.pins || []))
-    if (Viewer.getStatus(getState()) === "INIT") {
+    if (Results.getStatus(getState()) === "INIT") {
       dispatch(submitSearch())
     }
   })
@@ -172,7 +172,7 @@ const QueryHome = () => {
         <Toolbar actions={actions} />
         <SearchArea />
       </QueryPageHeader>
-      <Results />
+      <ResultsComponent />
     </>
   )
 }
