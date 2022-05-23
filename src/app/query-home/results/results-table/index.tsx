@@ -17,7 +17,6 @@ import ViewerComponent from "./viewer"
 import getEndMessage from "./get-end-message"
 import NoResults from "./no-results"
 import {useRowSelection} from "./hooks/use-row-selection"
-import Current from "src/js/state/Current"
 import Results from "src/js/state/Results"
 import {zed} from "packages/zealot/src"
 
@@ -27,7 +26,8 @@ type Props = {
 }
 
 const ResultsTable = (props: Props) => {
-  const queryValue = useSelector(Current.getQuery)?.value
+  const status = useSelector(Results.getStatus)
+  const aggregationLimit = useSelector(Results.getAggregationLimit)
   const isFetching = useSelector(Results.isFetching)
   const isIncomplete = useSelector(Results.isIncomplete)
   const tableColumns = useSelector(Columns.getCurrentTableColumns)
@@ -103,7 +103,7 @@ const ResultsTable = (props: Props) => {
     else
       return (
         <p className="end-message" style={endMessage(dimens)}>
-          {getEndMessage(queryValue, logs.length)}
+          {getEndMessage(status, aggregationLimit)}
         </p>
       )
   }

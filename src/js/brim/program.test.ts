@@ -1,12 +1,5 @@
 import {createField, createRecord} from "src/test/shared/factories/zed-factory"
-import {
-  addHeadProc,
-  getHeadCount,
-  hasHeadOrTailProc,
-  joinParts,
-  parallelizeProcs,
-  splitParts,
-} from "../lib/Program"
+import {joinParts, parallelizeProcs, splitParts} from "../lib/Program"
 import brim from "./"
 
 describe("excluding and including", () => {
@@ -248,54 +241,6 @@ describe("#hasAnalytics()", () => {
 
   test("for filter proc", () => {
     expect(brim.program('* | filter _path=="conn"').hasAnalytics()).toBe(false)
-  })
-})
-
-describe("#addHeadProc", () => {
-  test("when no head exists", () => {
-    expect(addHeadProc('_path=="dns"', 300)).toBe('_path=="dns" | head 300')
-  })
-
-  test("when head exists", () => {
-    expect(addHeadProc('_path=="dns" | head 45', 300)).toBe(
-      '_path=="dns" | head 45'
-    )
-  })
-
-  test("when sort exists", () => {
-    expect(addHeadProc('_path=="dns" | sort ts', 300)).toBe(
-      '_path=="dns" | sort ts | head 300'
-    )
-  })
-
-  test("when sort and head exists", () => {
-    expect(addHeadProc('_path=="dns" | head 23 | sort ts', 300)).toBe(
-      '_path=="dns" | head 23 | sort ts'
-    )
-  })
-})
-
-describe("#getHeadCount", () => {
-  test("with one head proc", () => {
-    expect(getHeadCount("* | head 1000")).toBe(1000)
-  })
-
-  test("with many procs", () => {
-    expect(getHeadCount("* | fork ( => head 1000 => count() )")).toBe(1000)
-  })
-
-  test("with no head", () => {
-    expect(getHeadCount("*")).toBe(0)
-  })
-})
-
-describe("#hasHeadCount", () => {
-  test("#hasHeadCount when false", () => {
-    expect(hasHeadOrTailProc("*")).toBe(false)
-  })
-
-  test("#hasHeadCount when true", () => {
-    expect(hasHeadOrTailProc("* | head 1")).toBe(true)
   })
 })
 
