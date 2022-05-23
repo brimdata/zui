@@ -21,7 +21,7 @@ export const openNewSearchTab = (): Thunk => {
     const pool = Current.getQueryPool(state)
     const {current} = SearchBar.getSearchBar(state)
     const query = dispatch(
-      newQuery({value: current, pins: {from: pool.id, filters: []}})
+      newQuery({value: current, pins: [{type: "from", value: pool.id}]})
     )
     invoke(
       ipc.windows.newSearchTab({

@@ -7,6 +7,7 @@ import useSelect from "src/app/core/hooks/use-select"
 import brim from "src/js/brim"
 import Url from "src/js/state/Url"
 import {annotateQuery} from "src/js/flows/search/mod"
+import {concatPins} from "src/js/brim/program"
 
 export function useResultsData() {
   const dispatch = useDispatch()
@@ -22,7 +23,7 @@ export function useResultsData() {
       startTransition(() => {
         const params = select(Url.getSearchParams)
         const poolId = select(Current.getPoolId)
-        const program = brim.program(params.program, params.pins)
+        const program = brim.program(concatPins(params.program, params.pins))
 
         let from = null
         let to = null

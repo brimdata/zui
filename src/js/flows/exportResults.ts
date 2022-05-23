@@ -46,7 +46,7 @@ export default (
     let from = null
     let to = null
     if (featureIsEnabled("query-flow")) {
-      poolId = Current.getQuery(getState()).getFromPin()
+      poolId = Current.getQuery(getState()).getPoolName()
     } else {
       const span = Tab.getSpan(getState())
       if (span) {

@@ -96,16 +96,18 @@ export const getQueryPool = createSelector<
   Pool
 >(Pools.raw, getLakeId, getQuery, (pools, lakeId, query) => {
   if (!lakeId || !query) return null
-  const poolId = query.getFromPin()
-  if (!poolId) return null
+  const name = query.getPoolName()
+  if (!name) return null
   if (!pools[lakeId]) return null
-  if (!pools[lakeId][poolId]) {
-    console.error(`Missing pool id: ${poolId}`)
+
+  const pool = Object.values(pools[lakeId]).find((p) => p.data.name === name)
+
+  if (!pool) {
+    console.error(`Missing pool: ${name}`)
     return null
   }
 
-  const {data, stats} = pools[lakeId][poolId]
-  return new Pool(data, stats)
+  return new Pool(pool.data, pool.stats)
 })
 
 export const mustGetPool = createSelector<State, PoolsState, Id, Id, Pool>(

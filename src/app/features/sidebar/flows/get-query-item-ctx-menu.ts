@@ -46,12 +46,11 @@ const getQueryItemCtxMenu =
                 id,
                 value: "",
                 name: "",
-                pins: {from: "", filters: []},
+                pins: [],
               }))
               dispatch(setRemoteQueries(remoteQueries, true))
               return
             }
-
             dispatch(Queries.removeItems(selected))
           }
         })

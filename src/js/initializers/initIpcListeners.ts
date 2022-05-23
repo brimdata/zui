@@ -13,6 +13,7 @@ import Tabs from "../state/Tabs"
 import {AppDispatch, Store} from "../state/types"
 import initNewSearchTab from "./initNewSearchTab"
 import PluginManager from "./pluginManager"
+import Editor from "../state/Editor"
 
 export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
@@ -32,6 +33,7 @@ export default (store: Store, pluginManager: PluginManager) => {
 
   ipcRenderer.on("pinSearch", () => {
     store.dispatch(SearchBar.pinSearchBar())
+    store.dispatch(Editor.pinValue())
   })
 
   ipcRenderer.on("focusSearchBar", () => {

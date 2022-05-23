@@ -5,6 +5,7 @@ import {State} from "../types"
 import {TabState} from "../Tab/types"
 import Tabs from "../Tabs"
 import brim from "../../brim"
+import {concatPins} from "src/js/brim/program"
 
 export const getSearchBar = createSelector<State, TabState, SearchBarState>(
   Tabs.getActiveTab,
@@ -31,5 +32,5 @@ export const getSearchBarError = createSelector<
 export const getSearchProgram = createSelector<State, string[], string, string>(
   getSearchBarPins,
   getSearchBarInputValue,
-  (pinned, program) => brim.program(program, pinned).string() || "*"
+  (pinned, program) => brim.program(concatPins(program, pinned)).string() || "*"
 )

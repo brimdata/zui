@@ -29,13 +29,13 @@ const editorTheme = EditorView.theme(
       margin: 0,
       border: "none",
       color: cssVar("--aqua-transparent"),
-      background: cssVar("--editor-background"),
+      background: "transparent",
     },
     ".cm-activeLine": {
-      background: cssVar("--hawkes-blue"),
+      background: "transparent",
     },
     ".cm-activeLineGutter": {
-      background: cssVar("--hawkes-blue"),
+      background: "transparent",
     },
   },
   {dark: false}

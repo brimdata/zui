@@ -8,10 +8,14 @@ import {
 } from "../../state/SearchBar/selectors"
 import {Thunk} from "../../state/types"
 
+const changeTo = (value) => (dispatch) => {
+  dispatch(SearchBar.changeSearchBarInput(value))
+}
+
 export function appendQueryInclude(field: zed.Field): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      SearchBar.changeSearchBarInput(
+      changeTo(
         brim.program(getSearchBarInputValue(getState())).include(field).string()
       )
     )
@@ -21,7 +25,7 @@ export function appendQueryInclude(field: zed.Field): Thunk {
 export function appendQueryExclude(field: zed.Field): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      SearchBar.changeSearchBarInput(
+      changeTo(
         brim.program(getSearchBarInputValue(getState())).exclude(field).string()
       )
     )
@@ -34,11 +38,7 @@ export function appendQueryCountBy(field: zed.Field): Thunk {
     const query = [...pinned, current].join(" ")
     const program = onlyWhitespace(query) ? "*" : current
 
-    dispatch(
-      SearchBar.changeSearchBarInput(
-        brim.program(program).countBy(field).string()
-      )
-    )
+    dispatch(changeTo(brim.program(program).countBy(field).string()))
   }
 }
 
@@ -51,18 +51,14 @@ export function appendQuerySortBy(
     const query = [...pinned, current].join(" ")
     const program = onlyWhitespace(query) ? "*" : current
 
-    dispatch(
-      SearchBar.changeSearchBarInput(
-        brim.program(program).sortBy(name, direction).string()
-      )
-    )
+    dispatch(changeTo(brim.program(program).sortBy(name, direction).string()))
   }
 }
 
 export function appendQueryIn(field: zed.Field, value: zed.Value): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      SearchBar.changeSearchBarInput(
+      changeTo(
         brim
           .program(getSearchBarInputValue(getState()))
           .in(field, value)
@@ -75,7 +71,7 @@ export function appendQueryIn(field: zed.Field, value: zed.Value): Thunk {
 export function appendQueryNotIn(field: zed.Field, value: zed.Value): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      SearchBar.changeSearchBarInput(
+      changeTo(
         brim
           .program(getSearchBarInputValue(getState()))
           .notIn(field, value)

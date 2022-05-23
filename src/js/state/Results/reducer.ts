@@ -56,7 +56,7 @@ const slice = createSlice({
       },
     },
     error: {
-      prepare: (error: any, tabId: string) => ({
+      prepare: (error: any, tabId?: string) => ({
         payload: {error, tabId},
       }),
       reducer: (s, a: Pay<{error: any}>) => {

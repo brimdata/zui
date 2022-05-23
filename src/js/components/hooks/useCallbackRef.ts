@@ -1,6 +1,6 @@
 import {useCallback, useState} from "react"
 
-export default function useCallbackRef<T = Element>(): [
+export default function useCallbackRef<T = HTMLElement>(): [
   T,
   (e: T | null) => T | null
 ] {
