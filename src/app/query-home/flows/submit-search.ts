@@ -1,10 +1,10 @@
 import Current from "src/js/state/Current"
-import Notice from "src/js/state/Notice"
-import {updateQuery} from "./update-query"
-import initialViewerSearch from "./initial-viewer-search"
 import Editor from "src/js/state/Editor"
-import {BrimQuery} from "../utils/brim-query"
+import Notice from "src/js/state/Notice"
+import Results from "src/js/state/Results"
 import Viewer from "src/js/state/Viewer"
+import {BrimQuery} from "../utils/brim-query"
+import {updateQuery} from "./update-query"
 
 type SaveOpts = {history: boolean; investigation: boolean}
 
@@ -35,7 +35,7 @@ const submitSearch =
     // if (save.investigation) {
     //   dispatch(Investigation.push(lakeId, poolId, record, brim.time(ts).toTs()))
     // }
-    dispatch(initialViewerSearch())
+    dispatch(Results.fetchFirstPage(query.toString()))
   }
 
 export default submitSearch

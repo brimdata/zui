@@ -5311,7 +5311,7 @@ __metadata:
     babel-eslint: ^10.1.0
     babel-plugin-module-resolver: ^4.0.0
     base64-js: ^1.3.1
-    brimcap: "github:brimdata/brimcap#0fa6e708c1d57abb5eea7e4106bc52c1b02ceea1"
+    brimcap: "brimdata/brimcap#v1.2.0"
     chalk: ^4.1.0
     chrono-node: ^1.4.8
     classnames: ^2.2.6
@@ -5398,7 +5398,7 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "brimdata/zed#4600f3e7d98ad895e4cb50e9b4c73d0a40b0a205"
+    zed: "brimdata/zed#50469a01b067cfcb9fdb657498a40bb8058808fe"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
@@ -5412,10 +5412,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"brimcap@github:brimdata/brimcap#0fa6e708c1d57abb5eea7e4106bc52c1b02ceea1":
+"brimcap@brimdata/brimcap#v1.2.0":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=0fa6e708c1d57abb5eea7e4106bc52c1b02ceea1"
-  checksum: c2fec9045a106e412694a91c65c559899cf9bb5ecd5f4ba5c70f4ead5cbc3df4935d9ec8cd3086c5a1540ec523a179da833c526fc8fa2c377b4a7f90377a709d
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=2844aba60e85517ee2bafaaf10180540970d8d40"
+  checksum: deca52375f6ec7f1e08e854db9b945e2f4b7384c0d0a5c35c943edbdf1ecd80a6694a6f0ddf2e7216fc24e0ccadece5a92e8d206def152093badac8c1f755431
   languageName: node
   linkType: hard
 
@@ -18050,11 +18050,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#4600f3e7d98ad895e4cb50e9b4c73d0a40b0a205":
+"zed@brimdata/zed#50469a01b067cfcb9fdb657498a40bb8058808fe":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=4600f3e7d98ad895e4cb50e9b4c73d0a40b0a205"
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=50469a01b067cfcb9fdb657498a40bb8058808fe"
   dependencies:
     zealot: ^0.2.0
-  checksum: 9434dd6010e80607a0e56a74c00b129bf4686b58562567e5f6fdb31118d05df0a1e29593d75e74350b83fbdd39adfae2d4745ce192a689512e9677d235d01d58
+  checksum: c5523564feab67cfdef890fe06fc5a210bd4d07488d0cbf45624b4ea53d1812d97c5e1d1523d0e176be226495b33c7494f54bafda90ab6891630fc82800a0a17
   languageName: node
   linkType: hard

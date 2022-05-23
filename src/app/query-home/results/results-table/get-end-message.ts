@@ -1,16 +1,15 @@
-import {ANALYTIC_MAX_RESULTS} from "src/js/flows/config"
 import {withCommas} from "src/js/lib/fmt"
-import brim from "src/js/brim"
+import {ResultsStatus} from "src/js/state/Results/types"
 
-const EOF = "End of results"
-const TRUNCATED_ANALYTICS = `Showing first ${withCommas(
-  ANALYTIC_MAX_RESULTS
-)} results`
-
-export default function getEndMessage(program: string, size: number) {
-  if (brim.program(program).hasAnalytics() && size === ANALYTIC_MAX_RESULTS) {
-    return TRUNCATED_ANALYTICS
+export default function getEndMessage(
+  status: ResultsStatus,
+  aggregationLimit: number
+) {
+  if (status === "LIMIT") {
+    return `Aggregations are limited to the first ${withCommas(
+      aggregationLimit
+    )} results.`
   } else {
-    return EOF
+    return "End of results"
   }
 }

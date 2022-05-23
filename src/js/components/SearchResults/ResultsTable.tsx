@@ -1,10 +1,8 @@
-import nextPageViewerSearch from "src/app/search/flows/next-page-viewer-search"
 import {debounce, isEmpty} from "lodash"
 import React, {useEffect, useMemo} from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
-import Url from "src/js/state/Url"
 import {openLogDetailsWindow} from "../../flows/openLogDetailsWindow"
 import {viewLogDetail} from "../../flows/viewLogDetail"
 import Columns from "../../state/Columns"
@@ -19,25 +17,27 @@ import ViewerComponent from "../Viewer/Viewer"
 import getEndMessage from "./getEndMessage"
 import NoResults from "./NoResults"
 import {useRowSelection} from "./selection"
+import Results from "src/js/state/Results"
+import {zed} from "packages/zealot/src"
 
 type Props = {
   height: number
   width: number
-  multiSelect: boolean
 }
 
 export default function ResultsTable(props: Props) {
-  const program = useSelector(Url.getSearchProgram)
-  const isFetching = useSelector(Viewer.getStatus) === "FETCHING"
-  const isIncomplete = useSelector(Viewer.getEndStatus) === "INCOMPLETE"
+  const isFetching = useSelector(Results.isFetching)
+  const isIncomplete = useSelector(Results.isIncomplete)
+  const status = useSelector(Results.getStatus)
+  const aggregationLimit = useSelector(Results.getAggregationLimit)
   const tableColumns = useSelector(Columns.getCurrentTableColumns)
   const columnHeadersView = useSelector(Layout.getColumnsView)
-  const logs = useSelector(Viewer.getLogs)
+  const logs = useSelector(Results.getValues) as zed.Record[]
   const scrollPos = useSelector(Viewer.getScrollPos)
   const dispatch = useDispatch()
   const displayConfig = useSelector(ConfigPropValues.get("display"))
   const {parentRef, selection, clicked} = useRowSelection({
-    multi: props.multiSelect,
+    count: logs.length,
   })
 
   let type
@@ -94,7 +94,7 @@ export default function ResultsTable(props: Props) {
 
   function onLastChunk() {
     if (isIncomplete && !isFetching) {
-      dispatch(nextPageViewerSearch())
+      dispatch(Results.fetchNextPage())
     }
   }
 
@@ -103,7 +103,7 @@ export default function ResultsTable(props: Props) {
     else
       return (
         <p className="end-message" style={endMessage(dimens)}>
-          {getEndMessage(program, logs.length)}
+          {getEndMessage(status, aggregationLimit)}
         </p>
       )
   }

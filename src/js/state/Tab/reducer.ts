@@ -9,6 +9,7 @@ import logDetails from "../LogDetails/reducer"
 import search from "../Search/reducer"
 import searchBar from "../SearchBar/reducer"
 import viewer from "../Viewer/reducer"
+import {reducer as results} from "../Results/reducer"
 
 const tabReducer = combineReducers({
   chart,
@@ -21,6 +22,7 @@ const tabReducer = combineReducers({
   search,
   searchBar,
   viewer,
+  results,
 })
 
 export type TabReducer = typeof tabReducer

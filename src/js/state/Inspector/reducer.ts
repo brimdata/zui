@@ -10,15 +10,9 @@ const slice = createSlice({
     scrollPosition: {top: 0, left: 0},
   },
   reducers: {
-    appendRows: (s, a: PayloadAction<RowData[]>) => {
-      s.rows = s.rows.concat(a.payload)
-    },
     setExpanded(s, a: PayloadAction<{key: string; isExpanded: boolean}>) {
       const {key, isExpanded} = a.payload
       s.expanded.set(key, isExpanded)
-    },
-    spliceRows: (s, a: PayloadAction<number>) => {
-      s.rows.splice(a.payload)
     },
     setAllExpanded: (s, a: PayloadAction<boolean>) => {
       s.expanded = new Map<any, any>()

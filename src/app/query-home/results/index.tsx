@@ -33,11 +33,7 @@ const Results = () => {
       <Styled.Body ref={ref} data-test-locator="viewer_results">
         {error && <ResultsError error={error} />}
         {!error && view.isTable && (
-          <ResultsTable
-            height={rect.height}
-            width={rect.width}
-            multiSelect={false}
-          />
+          <ResultsTable height={rect.height} width={rect.width} />
         )}
         {!error && view.isInspector && (
           <div style={{height: 0, width: 0, overflow: "visible"}}>
