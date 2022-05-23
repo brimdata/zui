@@ -46,7 +46,6 @@ export function ResultsError(props: {error: string | object}) {
 }
 
 export function SyntaxError(props: {error: PegSyntaxError}) {
-  console.log(props.error)
   return (
     <BG>
       <h4>{props.error.name}</h4>
