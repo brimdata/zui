@@ -1,21 +1,13 @@
-import {
-  deleteRemoteQueries,
-  isRemoteLib,
-  setRemoteQueries,
-} from "./remote-queries"
-import {isBrimLib} from "../../../../js/state/Queries/flows"
+import {deleteRemoteQueries, isRemoteLib} from "./remote-queries"
 import Tabs from "../../../../js/state/Tabs"
 import {lakeQueryPath} from "../../../router/utils/paths"
-import {submitSearch} from "../../../../js/flows/submitSearch/mod"
 import lib from "../../../../js/lib"
 import toast from "react-hot-toast"
 import {ipcRenderer, MenuItemConstructorOptions} from "electron"
 import exportQueryLib from "../../../../js/flows/exportQueryLib"
 import * as remote from "@electron/remote"
-import {Query} from "../../../../js/state/Queries/types"
 import Queries from "../../../../js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
-import {BrimQuery} from "../../../query-home/utils/brim-query"
 import initialViewerSearch from "../../../query-home/flows/initial-viewer-search"
 
 const getQueryItemCtxMenu =
@@ -26,10 +18,8 @@ const getQueryItemCtxMenu =
     const hasMultiSelected =
       tree.getSelectedIds().length > 1 &&
       !!tree.getSelectedIds().find((id) => id === data.id)
-    const selected = hasMultiSelected ? tree.getSelectedIds() : [id]
     const isRemoteItem = dispatch(isRemoteLib([id]))
     const latestVersion = QueryVersions.getLatestByQueryId(id)(getState())
-    const hasBrimItemSelected = dispatch(isBrimLib(selected))
 
     const runQuery = () => {
       dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
@@ -108,13 +98,12 @@ const getQueryItemCtxMenu =
       {type: "separator"},
       {
         label: "Rename",
-        enabled: !isReadOnly && !hasBrimItemSelected,
+        enabled: !isReadOnly,
         click: () => handlers.edit(),
       },
       {type: "separator"},
       {
         label: "Delete",
-        enabled: !hasBrimItemSelected,
         click: handleDelete,
       },
     ] as MenuItemConstructorOptions[]

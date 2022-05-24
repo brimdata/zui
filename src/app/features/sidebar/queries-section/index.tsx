@@ -3,7 +3,6 @@ import {Tree, TreeApi} from "react-arborist"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Queries from "src/js/state/Queries"
-import {isBrimLib} from "src/js/state/Queries/flows"
 import {
   SectionContents,
   StyledSection,
@@ -142,10 +141,10 @@ const LocalQueriesView = ({toolbarButtons}) => {
 
   useEffect(() => {
     if (!query?.id) {
-      tree.current.select(null, false, false)
-    } else if (!tree.current.getSelectedIds().includes(query.id)) {
-      tree.current.scrollToId(query.id)
-      tree.current.selectById(query.id)
+      tree?.current?.select(null, false, false)
+    } else if (!tree?.current?.getSelectedIds().includes(query.id)) {
+      tree?.current?.scrollToId(query.id)
+      tree?.current?.selectById(query.id)
     }
   }, [query?.id])
 
@@ -172,8 +171,8 @@ const LocalQueriesView = ({toolbarButtons}) => {
     parentId: string | null,
     index: number
   ) => {
-    // no reordering if any one item is part of shipped brim lib
-    if (isFiltered || dispatch(isBrimLib([...dragIds, parentId]))) return
+    // no movement allowed if using a filter
+    if (isFiltered) return
     dispatch(Queries.moveItems(dragIds, parentId, index))
   }
 
@@ -194,14 +193,12 @@ const LocalQueriesView = ({toolbarButtons}) => {
         ref={tree}
         {...defaults}
         data={filteredQueries}
-        disableDrag={(d) => !!dispatch(isBrimLib([d.id]))}
-        disableDrop={(d) => d.id === "brim"}
         onMove={handleMove}
         onEdit={handleRename}
         onToggle={(id, value) => {
           dispatch(Queries.toggleGroup(id, value))
         }}
-        onContextMenu={() => dispatch(listContextMenu(tree.current))}
+        onContextMenu={() => dispatch(listContextMenu(tree?.current))}
       >
         {QueryItem}
       </Tree>

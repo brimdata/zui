@@ -13,7 +13,6 @@ import Current from "../../state/Current"
 import Modal from "../../state/Modal"
 import Notice from "../../state/Notice"
 import Queries from "../../state/Queries"
-import {isBrimLib} from "../../state/Queries/flows"
 import SearchBar from "../../state/SearchBar"
 import useOutsideClick from "../hooks/useOutsideClick"
 import {StyledArrow} from "../LeftPane/common"
@@ -152,9 +151,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
   const hasMultiSelected = selected.length > 1
 
-  const isBrimItem = dispatch(isBrimLib([id]))
   const isRemoteItem = dispatch(isRemoteLib([id]))
-  const hasBrimItemSelected = dispatch(isBrimLib(selected))
 
   const runQuery = (value) => {
     dispatch(SearchBar.clearSearchBar())
@@ -223,12 +220,11 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {type: "separator"},
     {
       label: "Rename",
-      enabled: !isBrimItem,
       click: () => handlers.edit(),
     },
     {
       label: "Edit",
-      enabled: !hasMultiSelected && !isBrimItem,
+      enabled: !hasMultiSelected,
       visible: !isGroup,
       click: () => {
         const modalArgs = {query: data, isRemote: false}
@@ -239,7 +235,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {type: "separator"},
     {
       label: hasMultiSelected ? "Delete Selected" : "Delete",
-      enabled: !hasBrimItemSelected,
       click: () => {
         const selected = Array.from(
           new Set([...tree.getSelectedIds(), data.id])

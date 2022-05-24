@@ -1,7 +1,5 @@
-import React, {HTMLProps} from "react"
 import styled from "styled-components"
 
-// Left, PaneBody, Right
 export const Right = styled.div`
   display: flex;
 `
