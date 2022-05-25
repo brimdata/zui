@@ -20,7 +20,6 @@ const InputBackdrop = styled.div`
 
 type Props = {
   value: string
-  multiline?: boolean
   disabled?: boolean
 }
 
