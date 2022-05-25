@@ -183,7 +183,7 @@ const QueryHome = () => {
           <SearchArea />
           <ResultsComponent />
         </MainContent>
-        <FeatureFlag name="query-flow" on={<RightPane />} off={null} />
+        <RightPane />
       </ContentWrap>
     </>
   )

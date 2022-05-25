@@ -3,7 +3,7 @@ import {useDispatch} from "src/app/core/state"
 import React, {useRef} from "react"
 import styled from "styled-components"
 import {cssVar} from "../../lib/cssVar"
-import {submitSearch} from "../../flows/submitSearch/mod"
+import submitSearch from "src/app/query-home/flows/submit-search"
 import SearchBar from "../../state/SearchBar"
 import CmdHistory from "src/app/core/models/cmd-history"
 

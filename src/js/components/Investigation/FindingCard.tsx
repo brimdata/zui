@@ -1,9 +1,8 @@
 import React from "react"
 import classNames from "classnames"
 import styled from "styled-components"
-
 import {Finding} from "../../state/Investigation/types"
-import {submitSearch} from "../../flows/submitSearch/mod"
+import submitSearch from "src/app/query-home/flows/submit-search"
 import FindingProgram from "./FindingProgram"
 import Investigation from "../../state/Investigation"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"

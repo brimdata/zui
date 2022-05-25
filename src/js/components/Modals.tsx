@@ -9,8 +9,6 @@ import React from "react"
 import {ModalDialog} from "./ModalDialog/ModalDialog"
 import NewLakeModal from "./LakeModals/NewLakeModal"
 import ViewLakeModal from "./LakeModals/ViewLakeModal"
-import NewQueryModal from "./QueriesModals/NewQueryModal"
-import EditQueryModal from "./QueriesModals/EditQueryModal"
 import ExportModal from "./ExportModal"
 
 const MODALS = {
@@ -21,9 +19,7 @@ const MODALS = {
   "ingest-warnings": IngestWarningsModal,
   "new-lake": NewLakeModal,
   "view-lake": ViewLakeModal,
-  "new-query": NewQueryModal,
   export: ExportModal,
-  "edit-query": EditQueryModal,
 }
 
 export function Modals() {

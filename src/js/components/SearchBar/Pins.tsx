@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
-import {submitSearch} from "src/js/flows/submitSearch/mod"
+import submitSearch from "src/app/query-home/flows/submit-search"
 import SearchBar from "../../state/SearchBar"
 import FilterNode from "../FilterNode"
 import PinEdit from "./PinEdit"

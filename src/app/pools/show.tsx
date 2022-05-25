@@ -18,19 +18,9 @@ export default function PoolShow() {
   return (
     <Switch>
       <InitPool>
-        <FeatureFlag
-          name={"query-flow"}
-          on={
-            <Route path={poolShow.path}>
-              <PoolHome />
-            </Route>
-          }
-          off={
-            <Route path={lakePoolSearch.path}>
-              <SearchHome />
-            </Route>
-          }
-        />
+        <Route path={poolShow.path}>
+          <PoolHome />
+        </Route>
       </InitPool>
     </Switch>
   )

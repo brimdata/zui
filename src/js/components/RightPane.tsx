@@ -97,16 +97,13 @@ export default class RightPane extends React.Component<Props, S> {
 }
 
 const stateToProps = (state) => {
-  const pool = featureIsEnabled("query-flow")
-    ? Current.getQueryPool(state)
-    : Current.getPool(state)
   return {
     isOpen: Layout.getDetailPaneIsOpen(state),
     width: Layout.getDetailPaneWidth(state),
     prevExists: LogDetails.getHistory(state).canGoBack(),
     nextExists: LogDetails.getHistory(state).canGoForward(),
     currentLog: LogDetails.build(state),
-    pool: pool,
+    pool: Current.getQueryPool(state),
   }
 }
 

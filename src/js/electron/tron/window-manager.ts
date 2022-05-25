@@ -127,7 +127,6 @@ export class WindowManager {
 
   async openSearchTab(searchParams: NewTabSearchParams) {
     let isNewWin = true
-    // TODO: when we enable the "query-flow" feature flag this will no longer apply
     const existingWin = this.getAll()
       .sort((a, b) => b.lastFocused - a.lastFocused)
       .find((w) => w.name === "search")

@@ -2,8 +2,7 @@ import {darken} from "polished"
 import {useDispatch} from "src/app/core/state"
 import React from "react"
 import styled from "styled-components"
-
-import {submitSearch} from "../../flows/submitSearch/mod"
+import submitSearch from "src/app/query-home/flows/submit-search"
 import MagnifyingGlass from "../../icons/MagnifyingGlass"
 
 const start = "#6aa4e7"

@@ -157,9 +157,7 @@ const executeLoader = (
 
 const setPool = (dispatch, tabId, lakeId) => ({
   do({poolId}) {
-    const url = featureIsEnabled("query-flow")
-      ? lakePoolPath(poolId, lakeId)
-      : poolSearchPath(poolId, lakeId)
+    const url = lakePoolPath(poolId, lakeId)
     global.tabHistories.getOrCreate(tabId).push(url)
     dispatch(Url.changed())
   },

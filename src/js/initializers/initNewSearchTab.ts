@@ -12,5 +12,5 @@ export default function (store: Store, params: NewTabSearchParams) {
   } else {
     store.dispatch(tabHistory.replace(href))
   }
-  if (featureIsEnabled("query-flow")) store.dispatch(submitSearch())
+  store.dispatch(submitSearch())
 }

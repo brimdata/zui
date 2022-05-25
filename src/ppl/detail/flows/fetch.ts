@@ -30,7 +30,6 @@ const legacyFetchCorrelation =
   }
 
 export const fetchCorrelation = (record: zed.Record, id = "RELATED_EVENTS") => {
-  if (!featureIsEnabled("query-flow")) return legacyFetchCorrelation(record, id)
   return async (dispatch, getState) => {
     const query = getCorrelationQuery(record)
     const {uid, cid} = new Correlation(record).getIds()

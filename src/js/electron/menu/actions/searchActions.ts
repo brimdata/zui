@@ -11,7 +11,7 @@ import {
   appendQueryNotIn,
   appendQuerySortBy,
 } from "../../../flows/searchBar/actions"
-import {submitSearch} from "../../../flows/submitSearch/mod"
+import submitSearch from "src/app/query-home/flows/submit-search"
 import {viewLogDetail} from "../../../flows/viewLogDetail"
 import open from "../../../lib/open"
 import ErrorFactory from "../../../models/ErrorFactory"
