@@ -27,7 +27,6 @@ import {listContextMenu} from "./list-context-menu"
 import Current from "src/js/state/Current"
 import QueryVersions from "src/js/state/QueryVersions"
 import {BrimQuery} from "../../../query-home/utils/brim-query"
-import {serialize} from "@electron/remote/dist/src/common/type-utils"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />,

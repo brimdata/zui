@@ -13,6 +13,7 @@ const WINDOW_PERSIST: StateKey[] = [
   "pluginStorage",
   "queries",
   "draftQueries",
+  "queryVersions",
   "tabHistories",
   "tabs",
   "lakes",

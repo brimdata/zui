@@ -20,8 +20,8 @@ import {useBrimApi} from "src/app/core/context"
 import exportQueryLib from "../../flows/exportQueryLib"
 import {AppDispatch} from "../../state/types"
 import {showContextMenu} from "../../lib/System"
-import {isRemoteLib, setRemoteQueries} from "../LeftPane/remote-queries"
-import {Query} from "../../state/Queries/types"
+import {isRemoteLib} from "../LeftPane/remote-queries"
+import {deleteRemoteQueries} from "../../../app/features/sidebar/flows/remote-queries"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -251,14 +251,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
           .then(({response}) => {
             if (response === 0) {
               if (isRemoteItem) {
-                const remoteQueries = selected.map<Query>((id) => ({
-                  id,
-                  value: "",
-                  name: "",
-                  description: "",
-                  tags: [],
-                }))
-                dispatch(setRemoteQueries(remoteQueries, true))
+                dispatch(deleteRemoteQueries(selected))
                 return
               }
 

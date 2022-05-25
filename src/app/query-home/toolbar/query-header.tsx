@@ -18,7 +18,6 @@ import {cssVar} from "../../../js/lib/cssVar"
 import BrimTooltip from "src/js/components/BrimTooltip"
 import {showContextMenu} from "../../../js/lib/System"
 import getQueryHeaderMenu from "./flows/get-query-header-menu"
-import {serialize} from "@electron/remote/dist/src/common/type-utils"
 
 const Row = styled.div`
   display: flex;

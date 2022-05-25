@@ -5,12 +5,9 @@ import styled from "styled-components"
 import {useDispatch} from "src/app/core/state"
 import {useSelector} from "react-redux"
 import Appearance from "src/js/state/Appearance"
-import PoolsSection from "../sidebar/pools-section"
-import QueriesSection from "../sidebar/queries-section"
-import HistorySection from "../sidebar/history-section"
 import {XRightPaneExpander} from "../../../js/components/RightPaneExpander"
 import Layout from "../../../js/state/Layout"
-import Pane, {PaneBody} from "../../../js/components/Pane"
+import Pane from "../../../js/components/Pane"
 import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 
@@ -20,7 +17,6 @@ const BG = styled.div`
   align-items: center;
   box-shadow: 0 1px 0px var(--cloudy);
   height: 28px;
-  //
   flex-shrink: 0;
   user-select: none;
   position: relative;

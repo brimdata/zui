@@ -33,6 +33,8 @@ import {DropOverlay} from "./drop-overlay"
 import {refreshRemoteQueries, setRemoteQueries} from "./remote-queries"
 import {AppDispatch} from "../../state/types"
 import RemoteQueries from "src/js/state/RemoteQueries"
+import getQueryById from "src/app/query-home/flows/get-query-by-id"
+
 const StyledPlus = styled.div`
   margin-right: 8px;
   background: rgba(0, 0, 0, 0);
@@ -232,7 +234,12 @@ function QueriesSection({isOpen, style, resizeProps, toggleProps}) {
     if (selectedTag === "Remote") {
       const q = find(queries.items, ["id", itemId]) as Query
       if (!q) return console.error("cannot locate query with id " + itemId)
-      dispatch(setRemoteQueries([{...q, name}])).then(() => {
+      const brimQ = dispatch(getQueryById(q.id))
+      dispatch(
+        setRemoteQueries([
+          {...brimQ.serialize(), name, ...brimQ.latestVersion()},
+        ])
+      ).then(() => {
         dispatch(refreshRemoteQueries())
       })
       return

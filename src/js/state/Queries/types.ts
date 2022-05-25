@@ -1,5 +1,3 @@
-import {QueryPin} from "../Editor/types"
-
 export type QueriesState = Group
 export type Item = Query | Group
 

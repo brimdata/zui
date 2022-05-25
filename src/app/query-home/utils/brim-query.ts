@@ -1,5 +1,5 @@
 import {Query} from "src/js/state/Queries/types"
-import {ANALYTIC_PROCS, HEAD_PROC} from "src/js/brim/ast"
+import {ANALYTIC_PROCS} from "src/js/brim/ast"
 import {QueryVersion, VersionsState} from "src/js/state/QueryVersions"
 import {last} from "lodash"
 import {QueryPinInterface} from "../../../js/state/Editor/types"

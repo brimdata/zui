@@ -164,7 +164,7 @@ and metadata for this tombstone record will be empty
  */
 export const deleteRemoteQueries =
   (queryIds: string[]): Thunk<Promise<void>> =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     const queryDefaults = {
       name: "",
       version: "",
