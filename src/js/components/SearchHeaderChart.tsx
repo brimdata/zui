@@ -7,6 +7,7 @@ import Current from "../state/Current"
 import {AppDispatch} from "../state/types"
 import Url from "../state/Url"
 import MainHistogramChart from "./charts/MainHistogram/Chart"
+import {concatPins} from "../brim/program"
 
 export default function SearchHeaderChart() {
   const pool = useSelector(Current.getPool)
@@ -23,7 +24,7 @@ function ShowChart() {
   const {program, pins} = useSelector(Url.getSearchParams)
 
   const hasAnalytics = useMemo(
-    () => brim.program(program, pins).hasAnalytics(),
+    () => brim.program(concatPins(program, pins)).hasAnalytics(),
     [program, pins]
   )
   const data = useSelector(Chart.getData)

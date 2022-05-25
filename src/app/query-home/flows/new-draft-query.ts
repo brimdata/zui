@@ -5,26 +5,18 @@ import {Thunk} from "src/js/state/types"
 import {DRAFT_QUERY_NAME} from "../utils/brim-query"
 import QueryVersions, {QueryVersion} from "src/js/state/QueryVersions"
 
-type draftQueryAttrs = {
-  value: string
-  pins: {
-    from: string
-    filters: string[]
-  }
-}
-
 export const newDraftQuery =
-  (attrs: Partial<draftQueryAttrs> = {}): Thunk<Query> =>
+  (attrs: Partial<QueryVersion> = {}): Thunk<Query> =>
   (dispatch) => {
     const query: Query = {
       id: nanoid(),
       name: DRAFT_QUERY_NAME,
     }
     const version: QueryVersion = {
-      version: nanoid(),
-      ts: new Date(),
       value: "",
       ...attrs,
+      version: nanoid(),
+      ts: new Date(),
     }
     dispatch(DraftQueries.set(query))
     dispatch(QueryVersions.add({queryId: query.id, version}))

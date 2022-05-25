@@ -1,5 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import brim from "src/js/brim"
+import {concatPins} from "src/js/brim/program"
 import {search} from "src/js/flows/search/mod"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import {addEveryCountProc} from "src/js/searches/histogramSearch"
@@ -21,7 +22,7 @@ export function histogramSearch(): Thunk<Promise<void>> {
     if (!span) return
     const from = brim.time(span[0]).toDate()
     const to = brim.time(span[1]).toDate()
-    const brimProgram = brim.program(program, pins)
+    const brimProgram = brim.program(concatPins(program, pins))
     const query = addEveryCountProc(brimProgram.string(), [from, to])
     const poolId = Current.mustGetPool(state).id
 

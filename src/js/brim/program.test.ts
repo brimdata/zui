@@ -1,12 +1,5 @@
 import {createField, createRecord} from "src/test/shared/factories/zed-factory"
-import {
-  addHeadProc,
-  getHeadCount,
-  hasHeadOrTailProc,
-  joinParts,
-  parallelizeProcs,
-  splitParts,
-} from "../lib/Program"
+import {joinParts, parallelizeProcs, splitParts} from "../lib/Program"
 import brim from "./"
 
 describe("excluding and including", () => {
@@ -15,7 +8,7 @@ describe("excluding and including", () => {
   test("excluding a field", () => {
     const program = brim.program('_path=="weird"').exclude(field).string()
 
-    expect(program).toEqual('_path=="weird" uid!="123"')
+    expect(program).toEqual('_path=="weird" | uid!="123"')
   })
 
   test("excluding a field with a pipe", () => {
@@ -27,7 +20,7 @@ describe("excluding and including", () => {
       .string()
 
     expect(program).toEqual(
-      'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" source!="HTTP" | sort'
+      'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort | source!="HTTP"'
     )
   })
 
@@ -37,7 +30,7 @@ describe("excluding and including", () => {
       .exclude(field)
       .string()
 
-    expect(program).toEqual('_path=="weird" uid!="123" | sort | filter 1')
+    expect(program).toEqual('_path=="weird" | sort | filter 1 | uid!="123"')
   })
 
   test("including a field with two pipes", () => {
@@ -46,7 +39,7 @@ describe("excluding and including", () => {
       .include(field)
       .string()
 
-    expect(program).toEqual('_path=="weird" uid=="123" | sort | filter 1')
+    expect(program).toEqual('_path=="weird" | sort | filter 1 | uid=="123"')
   })
 })
 
@@ -74,7 +67,7 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe('name=="james" proto=="udp"')
+    expect(program).toBe('name=="james" | proto=="udp"')
   })
 
   test("when there is a grep with a star", () => {
@@ -83,7 +76,9 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe('grep(/(*|Elm)/) Category=="Furnishings" proto=="udp"')
+    expect(program).toBe(
+      'grep(/(*|Elm)/) Category=="Furnishings" | proto=="udp"'
+    )
   })
 
   test("combines keys in the group by proc", () => {
@@ -93,7 +88,7 @@ describe("drill down", () => {
       .string()
 
     expect(program).toBe(
-      '_path=="dns" id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
+      '_path=="dns" | id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
     )
   })
 
@@ -112,7 +107,7 @@ describe("drill down", () => {
       .drillDown(result)
       .string()
 
-    expect(program).toBe('names james proto=="udp"')
+    expect(program).toBe('names james | proto=="udp"')
   })
 
   test("count by and filter the same", () => {
@@ -140,7 +135,7 @@ describe("drill down", () => {
       .string()
 
     expect(program).toEqual(
-      '_path=="files" filename!="-" md5=="9f51ef98c42df4430a978e4157c43dd5"'
+      '_path=="files" filename!="-" | md5=="9f51ef98c42df4430a978e4157c43dd5"'
     )
   })
 })
@@ -150,7 +145,7 @@ describe("count by", () => {
     const field = createField("_path", "heyo")
     const program = brim.program().countBy(field).string()
 
-    expect(program).toBe("| count() by _path")
+    expect(program).toBe("count() by _path")
   })
 
   test("append a count to an existing query", () => {
@@ -243,59 +238,11 @@ describe("#hasAnalytics()", () => {
       brim
         .program("* | fork ( => cut uid, _path => cut uid ) | tail 1")
         .hasAnalytics()
-    ).toBe(true)
+    ).toBe(false)
   })
 
   test("for filter proc", () => {
     expect(brim.program('* | filter _path=="conn"').hasAnalytics()).toBe(false)
-  })
-})
-
-describe("#addHeadProc", () => {
-  test("when no head exists", () => {
-    expect(addHeadProc('_path=="dns"', 300)).toBe('_path=="dns" | head 300')
-  })
-
-  test("when head exists", () => {
-    expect(addHeadProc('_path=="dns" | head 45', 300)).toBe(
-      '_path=="dns" | head 45'
-    )
-  })
-
-  test("when sort exists", () => {
-    expect(addHeadProc('_path=="dns" | sort ts', 300)).toBe(
-      '_path=="dns" | sort ts | head 300'
-    )
-  })
-
-  test("when sort and head exists", () => {
-    expect(addHeadProc('_path=="dns" | head 23 | sort ts', 300)).toBe(
-      '_path=="dns" | head 23 | sort ts'
-    )
-  })
-})
-
-describe("#getHeadCount", () => {
-  test("with one head proc", () => {
-    expect(getHeadCount("* | head 1000")).toBe(1000)
-  })
-
-  test("with many procs", () => {
-    expect(getHeadCount("* | fork ( => head 1000 => count() )")).toBe(1000)
-  })
-
-  test("with no head", () => {
-    expect(getHeadCount("*")).toBe(0)
-  })
-})
-
-describe("#hasHeadCount", () => {
-  test("#hasHeadCount when false", () => {
-    expect(hasHeadOrTailProc("*")).toBe(false)
-  })
-
-  test("#hasHeadCount when true", () => {
-    expect(hasHeadOrTailProc("* | head 1")).toBe(true)
   })
 })
 

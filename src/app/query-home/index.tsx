@@ -1,9 +1,8 @@
-import {updateQuery} from "src/app/query-home/flows/update-query"
 import {useExpandState} from "src/app/query-home/results/expand-hook"
 import {DRAFT_QUERY_NAME} from "src/app/query-home/utils/brim-query"
 import {ActionButtonProps} from "src/app/toolbar/action-button"
 import Layout from "src/js/state/Layout"
-import Results from "./results"
+import ResultsComponent from "./results"
 import React, {useLayoutEffect} from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
@@ -15,7 +14,6 @@ import styled from "styled-components"
 import useExport from "./toolbar/hooks/use-export"
 import useColumns from "./toolbar/hooks/use-columns"
 import DraftQueries from "src/js/state/DraftQueries"
-import SearchBarActions from "src/js/state/SearchBar"
 import {syncPool} from "../core/pools/sync-pool"
 import ToolbarButton from "./toolbar/button"
 import {newDraftQuery} from "./flows/new-draft-query"
@@ -25,7 +23,11 @@ import {getQuerySource} from "./flows/get-query-source"
 import SearchArea from "./search-area"
 import {FeatureFlag} from "../core/feature-flag"
 import RightPane from "../features/right-pane"
-import {newQueryVersion} from "./flows/new-query-version"
+import usePins from "./toolbar/hooks/use-pins"
+import Editor from "src/js/state/Editor"
+import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
+import Results from "src/js/state/Results"
+import submitSearch from "./flows/submit-search"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -45,15 +47,14 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
       })
     )
   }
+
   // Give codemirror a chance to update by scheduling this update
   setTimeout(() => {
-    dispatch(
-      SearchBarState.restoreSearchBar({
-        current: query?.value || "",
-        pinned: query?.getFilterPins()?.map((p) => p.toString()) || [],
-        error: null,
-      })
-    )
+    dispatch(Editor.setValue(query?.value || ""))
+    dispatch(Editor.setPins(query?.pins || []))
+    if (Results.getStatus(getState()) === "INIT") {
+      dispatch(submitSearch())
+    }
   })
 }
 
@@ -93,30 +94,6 @@ const useInspectorButtons = (): ActionButtonProps[] => {
       click: () => collapseAll(),
     },
   ]
-}
-const usePin = (): ActionButtonProps => {
-  const dispatch = useDispatch()
-  return {
-    label: "Pin",
-    title: "Pin current search term",
-    icon: "pin",
-    click: async () => {
-      await dispatch(async (d, getState) => {
-        const state = getState()
-        const query = Current.getQuery(state)
-        const searchTerm = SearchBarActions.getSearchBarInputValue(state)
-        const version = {
-          value: "",
-          pins: {
-            from: query.getFromPin(),
-            filters: [...query.getFilterPins(), searchTerm],
-          },
-        }
-        await d(newQueryVersion(query.id, version))
-        d(SearchBarActions.pinSearchBar())
-      })
-    },
-  }
 }
 
 const PageWrap = styled.div`
@@ -163,10 +140,11 @@ const QueryHome = () => {
   useSearchParamLocationSync()
   const query = useSelector(Current.getQuery)
   const lakeId = useSelector(Current.getLakeId)
+  const drop = usePinContainerDnd()
   const dispatch = useDispatch()
   const exportAction = useExport()
   const columns = useColumns()
-  const pin = usePin()
+  const pin = usePins()
   const pluginButtons = usePluginToolbarItems("search")
   const [expandButton, collapseButton] = useInspectorButtons()
   const actions = [
@@ -198,13 +176,13 @@ const QueryHome = () => {
 
   return (
     <>
-      <QueryPageHeader>
+      <QueryPageHeader ref={drop}>
         <Toolbar actions={actions} />
       </QueryPageHeader>
       <ContentWrap>
         <MainContent>
           <SearchArea />
-          <Results />
+          <ResultsComponent />
         </MainContent>
         <FeatureFlag name="query-flow" on={<RightPane />} off={null} />
       </ContentWrap>

@@ -46,22 +46,28 @@ export const getQueryLocationData = (
   return {queryId, version}
 }
 
+export const getQueryById =
+  (id: string, version?: string) =>
+  (state: State): BrimQuery | null => {
+    // query lookup policy is to search drafts first, then local, and finally remote
+    const query =
+      DraftQueries.getById(id)(state) ||
+      Queries.getQueryById(id)(state) ||
+      RemoteQueries.getQueryById(id)(state)
+    if (!query) return null
+
+    const versions = QueryVersions.getByQueryId(id)(state) || {
+      ids: [],
+      entities: {},
+    }
+
+    return new BrimQuery(query, versions, version)
+  }
+
 export const getQuery = (state: State): BrimQuery | null => {
   const {queryId, version} = getQueryLocationData(state)
   if (!queryId) return null
-  // query lookup policy is to search drafts first, then local, and finally remote
-  const query =
-    DraftQueries.getById(queryId)(state) ||
-    Queries.getQueryById(queryId)(state) ||
-    RemoteQueries.getQueryById(queryId)(state)
-  if (!query) return null
-
-  const versions = QueryVersions.getByQueryId(queryId)(state) || {
-    ids: [],
-    entities: {},
-  }
-
-  return new BrimQuery(query, versions, version)
+  return getQueryById(queryId, version)(state)
 }
 
 export const getPoolId = (state) => {
@@ -97,16 +103,18 @@ export const getQueryPool = createSelector<
   Pool
 >(Pools.raw, getLakeId, getQuery, (pools, lakeId, query) => {
   if (!lakeId || !query) return null
-  const poolId = query.getFromPin()
-  if (!poolId) return null
+  const name = query.getPoolName()
+  if (!name) return null
   if (!pools[lakeId]) return null
-  if (!pools[lakeId][poolId]) {
-    console.error(`Missing pool id: ${poolId}`)
+
+  const pool = Object.values(pools[lakeId]).find((p) => p.data.name === name)
+
+  if (!pool) {
+    console.error(`Missing pool: ${name}`)
     return null
   }
 
-  const {data, stats} = pools[lakeId][poolId]
-  return new Pool(data, stats)
+  return new Pool(pool.data, pool.stats)
 })
 
 export const mustGetPool = createSelector<State, PoolsState, Id, Id, Pool>(
@@ -149,3 +157,7 @@ export const getPools = createSelector(getLake, Pools.raw, (l, pools) => {
     .map(({data, stats}) => new Pool(data, stats))
     .sort((a, b) => (a.name > b.name ? 1 : -1))
 })
+
+export const getTabId = (s: State) => {
+  return s.tabs.active
+}

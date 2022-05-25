@@ -1,27 +1,55 @@
 import {Query} from "src/js/state/Queries/types"
-import brim from "src/js/brim"
 import {ANALYTIC_PROCS, HEAD_PROC} from "src/js/brim/ast"
-import {parseAst} from "@brimdata/zealot"
-import {trim} from "src/js/lib/Str"
 import {QueryVersion, VersionsState} from "src/js/state/QueryVersions"
 import {last} from "lodash"
+import {QueryPinInterface} from "../../../js/state/Editor/types"
+import {isNumber} from "lodash"
+import brim from "src/js/brim"
+import {parseAst} from "@brimdata/zealot"
+import buildPin from "src/js/state/Editor/models/build-pin"
 export type PinType = "from" | "filter"
 export const DRAFT_QUERY_NAME = "Draft Query"
 
-export class BrimQuery {
-  readonly head: string | number
-  constructor(
-    readonly query: Query,
-    readonly versions: VersionsState,
-    head?: string
-  ) {
-    // default head to latest version if none supplied
-    if (!head) this.head = versions.ids[versions.ids.length - 1]
-    else this.head = head
+export class BrimQuery implements Query {
+  id: string
+  name: string
+  description?: string
+  tags?: string[]
+  isReadOnly?: boolean
+  current: string | number
+  versions: VersionsState
+  head?: number
+
+  constructor(raw: Query, versions: VersionsState, current?: string) {
+    this.id = raw.id
+    this.name = raw.name
+    this.versions = versions
+    this.description = raw.description || ""
+    this.tags = raw.tags || []
+    this.isReadOnly = raw.isReadOnly || false
+    // default current to latest version if none supplied
+    this.current = current ?? last(versions.ids)
+  }
+
+  get value() {
+    return this.currentVersion().value
+  }
+  get pins() {
+    return this.currentVersion().pins
+  }
+
+  getFromPin() {
+    const from = this.ast().proc("From")
+    if (!from) return null
+    const trunk = from.trunks.find((t) => t.source.kind === "Pool")
+    if (!trunk) return null
+    const name = trunk.source.spec.pool
+    if (!name) return null
+    return name
   }
 
   currentVersion(): QueryVersion {
-    return this.versions.entities[this.head]
+    return this.versions.entities[this.current]
   }
 
   allVersions(): QueryVersion[] {
@@ -32,20 +60,8 @@ export class BrimQuery {
     return this.versions.entities[last(this.versions.ids)]
   }
 
-  getFromPin(): string {
-    return this.currentVersion()?.pins?.from || ""
-  }
-
-  getFilterPins(): string[] {
-    return this.currentVersion()?.pins?.filters || []
-  }
-
-  hasHeadFilter() {
-    return !!this.ast().proc(HEAD_PROC)
-  }
-
-  get isReadOnly() {
-    return !!this.query.isReadOnly
+  getPoolName() {
+    return this.getFromPin()
   }
 
   private ast() {
@@ -58,6 +74,16 @@ export class BrimQuery {
     return brim.ast(tree)
   }
 
+  checkSyntax() {
+    let error = null
+    try {
+      parseAst(this.toString())
+    } catch (e) {
+      error = e
+    }
+    return error
+  }
+
   hasAnalytics() {
     for (const proc of this.ast().getProcs()) {
       if (ANALYTIC_PROCS.includes(proc.kind)) return true
@@ -66,33 +92,29 @@ export class BrimQuery {
   }
 
   serialize(): Query {
-    return {...this.query}
+    return {
+      id: this.id,
+      name: this.name,
+      description: this.description,
+      tags: this.tags,
+      isReadOnly: this.isReadOnly,
+    }
   }
 
   toString(): string {
-    return [trim(this.value) || "*", ...this.getFilterPins()].join(" ")
-  }
+    const current = this.currentVersion()
+    let s = current.pins
+      .filter((p) => !p.disabled)
+      .map<QueryPinInterface>(buildPin)
+      .map((p) => p.toZed())
+      .concat(current.value)
+      .filter((s) => s.trim() !== "")
+      .join(" | ")
+      .trim()
 
-  format(): string {
-    let formatted = this.toString()
-    // if query already starts with 'from', we do not annotate it further (even if fromPin exists)
-    // in the future we should instead do this by inspecting the ast
-    if (/^from[\s(]/i.test(this.value)) return formatted
-    const poolId = this.getFromPin()
-    if (poolId) formatted = [`from '${poolId}'`, formatted].join(" | ")
+    if (s === "") s = "*"
+    if (isNumber(this.head)) s += ` | head ${this.head}`
 
-    return formatted
-  }
-
-  get value() {
-    return this.currentVersion()?.value || ""
-  }
-
-  get id() {
-    return this.query.id
-  }
-
-  get name() {
-    return this.query.name
+    return s
   }
 }

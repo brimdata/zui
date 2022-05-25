@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import styled from "styled-components"
 import {QueryVersion} from "src/js/state/QueryVersions"
 import {formatDistanceToNowStrict} from "date-fns"
@@ -7,9 +7,7 @@ import Current from "../../../js/state/Current"
 import {useDispatch} from "../../core/state"
 import {lakeQueryPath} from "../../router/utils/paths"
 import tabHistory from "../../router/tab-history"
-import initialViewerSearch from "src/app/query-home/flows/initial-viewer-search"
-import BrimTooltip from "../../../js/components/BrimTooltip"
-import {BrimQuery} from "../../query-home/utils/brim-query"
+import Results from "src/js/state/Results"
 
 const TimeNode = styled.div`
   display: flex;
@@ -116,13 +114,13 @@ const VersionItem = ({styles, data, handlers}) => {
     dispatch(
       tabHistory.push(lakeQueryPath(query.id, lakeId, queryVersion.version))
     )
-    dispatch(initialViewerSearch())
+    dispatch(Results.fetchFirstPage(query.toString()))
   }
 
   return (
     <Container tabIndex={0} style={styles.row}>
       <BG
-        aria-selected={query.head === queryVersion.version}
+        aria-selected={query.current === queryVersion.version}
         style={styles.indent}
         onClick={onClick}
       >

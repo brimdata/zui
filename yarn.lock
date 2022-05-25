@@ -3781,15 +3781,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-beautiful-dnd@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "@types/react-beautiful-dnd@npm:13.0.0"
-  dependencies:
-    "@types/react": "*"
-  checksum: 1ce6fef10bd7e33bbf2a983bd28dd9ed80ac74b32294ec24c44560aac2e8f83f0a95088b962356ca773a94ce2bce8a8ce6403cfe8935802a2bf791256d3d023f
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:^18.0.0":
   version: 18.0.2
   resolution: "@types/react-dom@npm:18.0.2"
@@ -5301,7 +5292,6 @@ __metadata:
     "@types/node-fetch": ^3.0.3
     "@types/prismjs": ^1.16.1
     "@types/react": ^18.0.5
-    "@types/react-beautiful-dnd": ^13.0.0
     "@types/react-dom": ^18.0.1
     "@types/react-redux": ^7.1.9
     "@types/react-router": ^5.1.11
@@ -5408,7 +5398,7 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "brimdata/zed#v1.1.0"
+    zed: "brimdata/zed#95dd16cf3fddde9ca0200b0ce3a944b3bffe20ec"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
@@ -18060,11 +18050,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#v1.1.0":
+"zed@brimdata/zed#95dd16cf3fddde9ca0200b0ce3a944b3bffe20ec":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=ef7969361e95ac8bdafffed09116215f50a3e4a5"
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=95dd16cf3fddde9ca0200b0ce3a944b3bffe20ec"
   dependencies:
     zealot: ^0.2.0
-  checksum: 9534150dfa5f088c2bec0186d80b5f80307bdb92715d9052b987da4dfa5700ca69935d8db49a717a7d97a586447d1ee54ce5f049f3babae54c161761b753c764
+  checksum: 2042b321a9833e7e7b9696570712f9a26f4e7262a1727166118ec4491c87147733664cfae0db94b2cb0c3d69b692705b1f928a4d4e28e01c070b845397a01091
   languageName: node
   linkType: hard

@@ -12,3 +12,24 @@ $high-box-shadow: 0 2px 15px 0px rgba(0, 0, 0, 0.3);
 @mixin shadow-small {
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 }
+:root {
+  --shadow-color: 0deg 0% 68%;
+  --shadow-elevation-low: 0.4px 0.5px 1px hsl(var(--shadow-color) / 0),
+    0.7px 1px 1.8px hsl(var(--shadow-color) / 0.19),
+    1.3px 1.9px 3.5px hsl(var(--shadow-color) / 0.38);
+  --shadow-elevation-medium: 0.4px 0.5px 1px hsl(var(--shadow-color) / 0),
+    1.4px 2px 3.7px hsl(var(--shadow-color) / 0.1),
+    2.3px 3.4px 6.2px hsl(var(--shadow-color) / 0.19),
+    3.9px 5.7px 10.4px hsl(var(--shadow-color) / 0.29),
+    6.7px 9.7px 17.7px hsl(var(--shadow-color) / 0.38);
+  --shadow-elevation-high: 0.4px 0.5px 1px hsl(var(--shadow-color) / 0),
+    2.6px 3.8px 6.9px hsl(var(--shadow-color) / 0.04),
+    4.6px 6.6px 12.1px hsl(var(--shadow-color) / 0.09),
+    6.5px 9.4px 17.1px hsl(var(--shadow-color) / 0.13),
+    8.6px 12.4px 22.6px hsl(var(--shadow-color) / 0.18),
+    11.1px 16px 29.2px hsl(var(--shadow-color) / 0.22),
+    14.3px 20.7px 37.7px hsl(var(--shadow-color) / 0.27),
+    18.4px 26.6px 48.5px hsl(var(--shadow-color) / 0.31),
+    23.7px 34.3px 62.5px hsl(var(--shadow-color) / 0.35),
+    30.4px 44px 80.2px hsl(var(--shadow-color) / 0.4);
+}

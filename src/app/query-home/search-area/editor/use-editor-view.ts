@@ -2,7 +2,8 @@ import {useEffect, useRef, useState} from "react"
 import {EditorView} from "@codemirror/view"
 import {EditorState, StateEffect} from "@codemirror/state"
 import {useExtensions} from "./use-extensions"
-import {hasNewLine} from "../Input"
+
+export const hasNewLine = (str) => /\n/.test(str)
 
 export function useEditorView(args: {
   value: string
@@ -43,6 +44,7 @@ export function useEditorView(args: {
   // Update the EditorView when value changes externally
   useEffect(() => {
     if (!view) return
+    if (view.state.doc.toString() === args.value) return
     view.dispatch(
       view.state.update({
         changes: {from: 0, to: view.state.doc.length, insert: args.value},

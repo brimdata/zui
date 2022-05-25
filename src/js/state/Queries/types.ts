@@ -1,9 +1,12 @@
+import {QueryPin} from "../Editor/types"
+
 export type QueriesState = Group
 export type Item = Query | Group
 
 export interface Query {
   id: string
   name: string
+  tags?: string[]
   description?: string
   isReadOnly?: boolean
 }

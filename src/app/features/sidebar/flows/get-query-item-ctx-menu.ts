@@ -8,7 +8,8 @@ import exportQueryLib from "../../../../js/flows/exportQueryLib"
 import * as remote from "@electron/remote"
 import Queries from "../../../../js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
-import initialViewerSearch from "../../../query-home/flows/initial-viewer-search"
+import Results from "src/js/state/Results"
+import Current from "src/js/state/Current"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers, lakeId}) =>
@@ -20,10 +21,11 @@ const getQueryItemCtxMenu =
       !!tree.getSelectedIds().find((id) => id === data.id)
     const isRemoteItem = dispatch(isRemoteLib([id]))
     const latestVersion = QueryVersions.getLatestByQueryId(id)(getState())
+    const query = Current.getQueryById(id)(getState())
 
     const runQuery = () => {
       dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
-      dispatch(initialViewerSearch())
+      dispatch(Results.fetchFirstPage(query.toString()))
     }
 
     const handleDelete = () => {

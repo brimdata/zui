@@ -1,47 +1,30 @@
 import React from "react"
 import styled from "styled-components"
 
-import Pins from "./pins"
 import Error from "./error"
-import Input, {hasNewLine} from "./Input"
-import FromPinPicker from "./from-pin-picker"
+import Input from "./Input"
 import {useSelector} from "react-redux"
-import SearchBar from "src/js/state/SearchBar"
+import {Pins} from "./pins/pins"
 import Current from "src/js/state/Current"
+import Editor from "src/js/state/Editor"
 
-const Group = styled.div<{multiline: boolean}>`
+const Group = styled.div`
   display: flex;
   flex-direction: column;
-  padding: ${(p) => (p.multiline ? "0" : "0 16px 10px")};
-`
-
-const Wrap = styled.div<{isMultiLine: boolean}>`
-  padding-top: 12px;
-  ${(p) =>
-    p.isMultiLine &&
-    `
-    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.16);
-    background: var(--editor-background);
-  `}
+  padding: 0;
 `
 
 export default function SearchArea() {
-  const value = useSelector(SearchBar.getSearchBarInputValue)
-  const multiline = hasNewLine(value)
+  const value = useSelector(Editor.getValue)
   const query = useSelector(Current.getQuery)
 
   return (
-    <Wrap isMultiLine={multiline}>
-      <FromPinPicker isDisabled={query.isReadOnly} />
-      <Group multiline={multiline}>
-        <Input
-          value={value}
-          multiline={multiline}
-          disabled={query.isReadOnly}
-        />
+    <>
+      <Pins />
+      <Group>
+        <Input value={value} disabled={query.isReadOnly} />
         <Error />
-        <Pins />
       </Group>
-    </Wrap>
+    </>
   )
 }

@@ -12,7 +12,6 @@ import Current from "src/js/state/Current"
 import Tab from "src/js/state/Tab"
 import {Thunk} from "src/js/state/types"
 import {featureIsEnabled} from "../../core/feature-flag"
-import {BrimQuery} from "../../query-home/utils/brim-query"
 
 const id = "Md5"
 

@@ -4,7 +4,6 @@ import {zed} from "@brimdata/zealot"
 import {Correlation} from "../models/Correlation"
 import {getCorrelationQuery} from "./get-correlation-query"
 import {featureIsEnabled} from "../../../app/core/feature-flag"
-import {BrimQuery} from "../../../app/query-home/utils/brim-query"
 import Current from "src/js/state/Current"
 
 function findConn(records) {

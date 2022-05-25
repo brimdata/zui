@@ -9,7 +9,6 @@ import brim, {Ts} from "src/js/brim"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import {getZealot} from "src/js/flows/getZealot"
-import {BrimQuery} from "../utils/brim-query"
 
 type Args = {
   query: string
@@ -37,7 +36,7 @@ const search =
     const tag = id
 
     initial = isUndefined(initial) ? true : initial
-    const res = await zealot.query(query, {
+    const res = await zealot.query(query.toString(), {
       signal: ctl.signal,
     })
     api.abortables.abort({tab, tag})

@@ -1,7 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import useSelect from "src/app/core/hooks/use-select"
 import {Inspector} from "src/app/features/inspector/inspector"
-import nextPageViewerSearch from "src/app/search/flows/next-page-viewer-search"
 import searchFieldContextMenu from "src/ppl/menus/searchFieldContextMenu"
 import React, {MouseEvent, useCallback, useMemo} from "react"
 import {useSelector} from "react-redux"
@@ -9,8 +8,8 @@ import {useDispatch} from "src/app/core/state"
 import {useRowSelection} from "src/js/components/SearchResults/selection"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
-import Viewer from "src/js/state/Viewer"
-import {debounce} from "lodash"
+import {debounce, values} from "lodash"
+import Results from "src/js/state/Results"
 
 export function MainInspector(props: {
   height: number
@@ -21,9 +20,7 @@ export function MainInspector(props: {
   const dispatch = useDispatch()
   const expanded = useSelector(Slice.getExpanded)
   const defaultExpanded = useSelector(Slice.getDefaultExpanded)
-  const {parentRef, clicked} = useRowSelection({
-    multi: false,
-  })
+  const {parentRef, clicked} = useRowSelection({count: values.length})
 
   function setExpanded(key: string, isExpanded: boolean) {
     dispatch(Slice.setExpanded({key, isExpanded}))
@@ -38,10 +35,10 @@ export function MainInspector(props: {
   }
 
   function loadMore() {
-    if (select(Viewer.isFetching)) return
-    if (select(Viewer.isComplete)) return
-    if (select(Viewer.isLimited)) return
-    dispatch(nextPageViewerSearch())
+    if (select(Results.isFetching)) return
+    if (select(Results.isComplete)) return
+    if (select(Results.isLimited)) return
+    dispatch(Results.fetchNextPage())
   }
 
   function onContextMenu(e: MouseEvent, value: zed.Value, field: zed.Field) {

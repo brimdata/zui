@@ -10,7 +10,7 @@ type Props = {
   disabled?: boolean
   className?: string
   isPrimary?: boolean
-  onClick: () => void
+  onClick: React.MouseEventHandler
 }
 
 const DropdownIcon = styled(Icon).attrs({name: "chevron-down"})`

@@ -1,5 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {last} from "lodash"
+import {QueryPin} from "../Editor/types"
 
 const versionAdapter = createEntityAdapter<QueryVersion>({
   selectId: (queryVersion) => queryVersion.version,
@@ -34,10 +35,7 @@ export type QueryVersion = {
   version: string
   ts: Date
   value: string
-  pins?: {
-    from: string
-    filters?: string[]
-  }
+  pins?: QueryPin[]
 }
 
 const queryVersionsSlice = createSlice({
