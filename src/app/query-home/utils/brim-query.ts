@@ -49,15 +49,15 @@ export class BrimQuery implements Query {
   }
 
   currentVersion(): QueryVersion {
-    return this.versions.entities[this.current]
+    return this.versions.find((v) => v.version === this.current)
   }
 
   allVersions(): QueryVersion[] {
-    return this.versions.ids.map((id) => this.versions.entities[id])
+    return this.versions
   }
 
   latestVersion(): QueryVersion {
-    return this.versions.entities[last(this.versions.ids)]
+    return last(this.versions)
   }
 
   getPoolName() {
@@ -103,7 +103,7 @@ export class BrimQuery implements Query {
 
   toString(): string {
     const current = this.currentVersion()
-    let s = current.pins
+    let s = (current.pins || [])
       .filter((p) => !p.disabled)
       .map<QueryPinInterface>(buildPin)
       .map((p) => p.toZed())
