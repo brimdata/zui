@@ -38,7 +38,7 @@ test("add/delete versions", () => {
     })
   )
   expect(QueryVersions.getByQueryId(testQueryId)(store.getState())).toEqual({
-    ids: [testVersion.version, testVersion2.version],
+    ids: [testVersion2.version, testVersion.version],
     entities: {
       [testVersion.version]: testVersion,
       [testVersion2.version]: testVersion2,
