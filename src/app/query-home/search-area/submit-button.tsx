@@ -15,15 +15,12 @@ const Button = styled.button`
   background: ${bg};
   box-shadow: inset 0 0 0 1px var(--havelock);
   border: none;
-  height: 26px;
-  border-radius: 4px;
-  margin-right: 16px;
-  margin-bottom: 5px;
+  height: 22px;
+  border-radius: 6px;
   width: 42px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
 
   svg {
     path {
@@ -46,10 +43,10 @@ const Button = styled.button`
   }
 `
 
-export default function SubmitButton() {
+export default function SubmitButton({className}: {className?: string}) {
   const dispatch = useDispatch()
   return (
-    <Button onClick={() => dispatch(submitSearch())}>
+    <Button className={className} onClick={() => dispatch(submitSearch())}>
       <Icon name="run" />
     </Button>
   )

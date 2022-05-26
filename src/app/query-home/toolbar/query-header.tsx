@@ -37,7 +37,8 @@ const StyledTitle = styled.h2<{hover: boolean}>`
   margin: 0 0 3px 0;
   max-width: 100%;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 20px;
+  line-height: 24px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -144,9 +145,9 @@ const TitleInput = ({onCancel, onSubmit}) => {
           margin: 0,
           padding: 0,
           fontWeight: 700,
-          fontSize: "14px",
+          fontSize: "20px",
           letterSpacing: 0,
-          lineHeight: "16px",
+          lineHeight: "24px",
           display: "block",
           outline: "none",
           border: "none",

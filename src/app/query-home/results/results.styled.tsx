@@ -64,8 +64,8 @@ export const Button = styled.button`
 `
 
 export const ButtonSwitch = styled.nav`
-  border-radius: 5px;
-  background: var(--control-background);
+  border-radius: 6px;
+  background: var(--button-background);
   display: flex;
   margin: 0;
   height: 22px;

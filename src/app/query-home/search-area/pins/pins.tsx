@@ -9,10 +9,11 @@ import TimeRangePin from "./time-range-pin/time-range-pin"
 import {compact, isEmpty} from "lodash"
 
 const Container = styled.section`
-  margin: 10px 0 6px;
   display: flex;
-  padding: 0 16px;
+  padding: 10px 24px 0px 18px;
   flex-wrap: wrap;
+  background: var(--editor-background);
+  align-items: center;
 `
 
 function renderPin(pin: QueryPin, index: number) {

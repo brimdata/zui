@@ -6,11 +6,8 @@ import SearchBar from "src/js/state/SearchBar"
 import submitSearch from "../../flows/submit-search"
 
 const EditorWrap = styled.div<{isDisabled?: boolean}>`
+  height: 100%;
   width: 100%;
-  margin: 0;
-  max-height: 150px;
-  overflow: auto;
-
   ${(p) =>
     p.isDisabled &&
     `

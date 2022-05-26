@@ -13,7 +13,7 @@ const Wrap = styled.div`
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 `
 
 const Left = styled.div`
@@ -25,7 +25,6 @@ const Left = styled.div`
 `
 
 const Right = styled.div`
-  padding-top: 2px; // for the outline state to not get clipped
   overflow: hidden;
   display: flex;
   flex: 0 1 auto;
