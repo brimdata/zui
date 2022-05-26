@@ -2,8 +2,9 @@
  * @jest-environment jsdom
  */
 
+import QueryVersions from "."
 import initTestStore from "../../../test/unit/helpers/initTestStore"
-import QueryVersions, {QueryVersion} from "./index"
+import {QueryVersion} from "./types"
 
 let store
 beforeEach(() => {
