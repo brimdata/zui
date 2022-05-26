@@ -1,8 +1,8 @@
 import DraftQueries from "src/js/state/DraftQueries"
-import Queries from "src/js/state/Queries"
+import Queries from "src/js/state/Queries/index"
 import {getQuerySource} from "./get-query-source"
-import {setRemoteQueries} from "src/app/features/sidebar/flows/remote-queries"
-import {BrimQuery} from "../utils/brim-query"
+import {setRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"
+import {BrimQuery} from "../../../../app/query-home/utils/brim-query"
 import {Query} from "src/js/state/Queries/types"
 
 export const updateQuery =

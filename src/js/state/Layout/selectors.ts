@@ -9,8 +9,6 @@ export default {
     (state) => state.layout.rightSidebarIsOpen
   ),
 
-  // TODO: Mason - reset history view in migration
-
   getColumnsView: activeTabSelect((state) => state.layout.columnHeadersView),
 
   getResultsView: activeTabSelect((s) => s.layout.resultsView),

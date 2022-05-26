@@ -7,7 +7,7 @@ import Current from "src/js/state/Current"
 import Tabs from "src/js/state/Tabs"
 import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
-import {newDraftQuery} from "../query-home/flows/new-draft-query"
+import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
 import Actions from "../query-home/toolbar/actions"
 
 const Header = styled.header`

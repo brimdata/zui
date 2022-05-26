@@ -2,14 +2,14 @@ import Queries from "../../../../js/state/Queries"
 import {
   deleteRemoteQueries,
   setRemoteQueries,
-} from "../../../features/sidebar/flows/remote-queries"
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import {nanoid} from "@reduxjs/toolkit"
 import {toast} from "react-hot-toast"
 import {lakeQueryPath} from "../../../router/utils/paths"
 import Tabs from "src/js/state/Tabs"
 import Current from "src/js/state/Current"
 import {Query} from "src/js/state/Queries/types"
-import {getQuerySource} from "../../flows/get-query-source"
+import {getQuerySource} from "src/js/state/Queries/flows/get-query-source"
 import QueryVersions from "src/js/state/QueryVersions"
 
 const getQueryHeaderMenu =

@@ -14,12 +14,12 @@ const testQueryId = "testQueryId"
 const testQueryId2 = "testQueryId2"
 const testVersion: QueryVersion = {
   version: "v1.0.0",
-  ts: new Date(),
+  ts: new Date(1),
   value: "test zed",
 }
 const testVersion2: QueryVersion = {
   version: "v2.0.0",
-  ts: new Date(),
+  ts: new Date(2),
   value: "test zed",
 }
 
@@ -27,23 +27,19 @@ test("add/delete versions", () => {
   store.dispatch(
     QueryVersions.add({queryId: testQueryId, version: testVersion})
   )
-  expect(QueryVersions.getByQueryId(testQueryId)(store.getState())).toEqual({
-    ids: [testVersion.version],
-    entities: {[testVersion.version]: testVersion},
-  })
+  expect(QueryVersions.getByQueryId(testQueryId)(store.getState())).toEqual([
+    testVersion,
+  ])
   store.dispatch(
     QueryVersions.add({
       queryId: testQueryId,
       version: testVersion2,
     })
   )
-  expect(QueryVersions.getByQueryId(testQueryId)(store.getState())).toEqual({
-    ids: [testVersion2.version, testVersion.version],
-    entities: {
-      [testVersion.version]: testVersion,
-      [testVersion2.version]: testVersion2,
-    },
-  })
+  expect(QueryVersions.getByQueryId(testQueryId)(store.getState())).toEqual([
+    testVersion,
+    testVersion2,
+  ])
   store.dispatch(
     QueryVersions.add({
       queryId: testQueryId2,
@@ -60,8 +56,7 @@ test("add/delete versions", () => {
   store.dispatch(
     QueryVersions.delete({queryId: testQueryId, version: testVersion.version})
   )
-  expect(QueryVersions.getByQueryId(testQueryId)(store.getState())).toEqual({
-    ids: [testVersion2.version],
-    entities: {[testVersion2.version]: testVersion2},
-  })
+  expect(QueryVersions.getByQueryId(testQueryId)(store.getState())).toEqual([
+    testVersion2,
+  ])
 })

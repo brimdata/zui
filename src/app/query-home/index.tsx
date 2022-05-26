@@ -15,10 +15,10 @@ import useColumns from "./toolbar/hooks/use-columns"
 import DraftQueries from "src/js/state/DraftQueries"
 import {syncPool} from "../core/pools/sync-pool"
 import ToolbarButton from "./toolbar/button"
-import {newDraftQuery} from "./flows/new-draft-query"
+import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
-import {getQuerySource} from "./flows/get-query-source"
+import {getQuerySource} from "src/js/state/Queries/flows/get-query-source"
 import SearchArea from "./search-area"
 import {FeatureFlag} from "../core/feature-flag"
 import RightPane from "../features/right-pane"
@@ -26,7 +26,6 @@ import usePins from "./toolbar/hooks/use-pins"
 import Editor from "src/js/state/Editor"
 import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
 import Results from "src/js/state/Results"
-import submitSearch from "./flows/submit-search"
 
 const syncQueryLocationWithRedux = (dispatch, getState) => {
   const {queryId} = Current.getQueryLocationData(getState())
@@ -51,9 +50,7 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
   setTimeout(() => {
     dispatch(Editor.setValue(query?.value || ""))
     dispatch(Editor.setPins(query?.pins || []))
-    if (Results.getStatus(getState()) === "INIT") {
-      dispatch(submitSearch())
-    }
+    dispatch(Results.fetchFirstPage(query.toString()))
   })
 }
 

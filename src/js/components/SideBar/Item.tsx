@@ -15,13 +15,13 @@ import Notice from "../../state/Notice"
 import Queries from "../../state/Queries"
 import SearchBar from "../../state/SearchBar"
 import useOutsideClick from "../hooks/useOutsideClick"
-import {StyledArrow} from "../LeftPane/common"
 import {useBrimApi} from "src/app/core/context"
 import exportQueryLib from "../../flows/exportQueryLib"
 import {AppDispatch} from "../../state/types"
 import {showContextMenu} from "../../lib/System"
 import {isRemoteLib} from "../LeftPane/remote-queries"
-import {deleteRemoteQueries} from "../../../app/features/sidebar/flows/remote-queries"
+import {deleteRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"
+import DropdownArrow from "src/js/icons/DropdownArrow"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -81,6 +81,16 @@ const Input = styled.input`
   margin: 0 2px 0 -4px;
   width: 100%;
   flex: 1;
+`
+
+export const StyledArrow = styled(DropdownArrow)`
+  stroke: var(--aqua);
+  opacity: 0.3;
+  width: 8px;
+  height: 8px;
+  display: block;
+  margin-left: 12px;
+  transform: ${(props) => (props.show ? `rotate(0deg)` : "rotate(-90deg)")};
 `
 
 const GroupArrow = styled(StyledArrow)`

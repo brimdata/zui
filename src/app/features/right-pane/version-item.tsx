@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import styled from "styled-components"
 import {QueryVersion} from "src/js/state/QueryVersions"
 import {formatDistanceToNowStrict} from "date-fns"
@@ -7,7 +7,6 @@ import Current from "../../../js/state/Current"
 import {useDispatch} from "../../core/state"
 import {lakeQueryPath} from "../../router/utils/paths"
 import tabHistory from "../../router/tab-history"
-import Results from "src/js/state/Results"
 
 const TimeNode = styled.div`
   display: flex;
@@ -91,7 +90,10 @@ const BG = styled.div`
 
 const useForcedRenderInterval = (interval = 60000) => {
   const [renderTrigger, setRenderTrigger] = useState(true)
-  setTimeout(() => setRenderTrigger(!renderTrigger), interval)
+  useEffect(() => {
+    const id = setTimeout(() => setRenderTrigger(!renderTrigger), interval)
+    return () => clearTimeout(id)
+  }, [renderTrigger])
 }
 
 const FormattedTime = ({ts}: {ts: Date}) => {
@@ -114,13 +116,12 @@ const VersionItem = ({styles, data, handlers}) => {
     dispatch(
       tabHistory.push(lakeQueryPath(query.id, lakeId, queryVersion.version))
     )
-    dispatch(Results.fetchFirstPage(query.toString()))
   }
 
   return (
     <Container tabIndex={0} style={styles.row}>
       <BG
-        aria-selected={query.current === queryVersion.version}
+        aria-selected={query.current?.version === queryVersion.version}
         style={styles.indent}
         onClick={onClick}
       >

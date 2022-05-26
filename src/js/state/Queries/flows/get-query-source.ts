@@ -1,5 +1,5 @@
 import DraftQueries from "src/js/state/DraftQueries"
-import Queries from "src/js/state/Queries"
+import Queries from "src/js/state/Queries/index"
 import RemoteQueries from "src/js/state/RemoteQueries"
 
 export type QuerySource = "local" | "remote" | "draft"

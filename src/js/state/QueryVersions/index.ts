@@ -1,5 +1,4 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
-import {last} from "lodash"
 import {QueryPin} from "../Editor/types"
 
 const versionAdapter = createEntityAdapter<QueryVersion>({
@@ -59,11 +58,8 @@ export default {
   reducer: queryVersionsSlice.reducer,
   ...versionSlice.actions,
   raw: (state) => state.queryVersions,
-  getByQueryId: (queryId) => (state) => state.queryVersions[queryId],
-  getLatestByQueryId: (queryId) => (state) => {
-    const q = state.queryVersions[queryId]
-    return q?.entities[last<string>(q?.ids)]
-  },
+  getByQueryId: (queryId) => (state) =>
+    versionAdapter.getSelectors().selectAll(state.queryVersions[queryId]),
   getByVersion: (queryId, version) => (state) =>
     versionAdapter
       .getSelectors()
