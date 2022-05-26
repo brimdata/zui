@@ -11,7 +11,7 @@ import {Pool} from "src/app/core/pools/pool"
 import Ingests from "src/js/state/Ingests"
 import Tabs from "src/js/state/Tabs"
 import {Item} from "../item"
-import {newDraftQuery} from "src/app/query-home/flows/new-draft-query"
+import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
 
 const PoolItem = ({styles, data, state, handlers}) => {
   const pool = data as Pool

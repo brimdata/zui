@@ -3,9 +3,9 @@ import DraftQueries from "src/js/state/DraftQueries"
 import Editor from "src/js/state/Editor"
 import {syncPool} from "../core/pools/sync-pool"
 import Results from "src/js/state/Results"
-import {getQuerySource} from "./flows/get-query-source"
 import {DRAFT_QUERY_NAME} from "./utils/brim-query"
 import {startTransition} from "react"
+import {getQuerySource} from "src/js/state/Queries/flows/get-query-source"
 
 export function loadRoute(location) {
   return (dispatch) => {
