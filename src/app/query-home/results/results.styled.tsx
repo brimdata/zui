@@ -11,12 +11,9 @@ export const BG = styled.div`
 
 export const Toolbar = styled.header`
   background: white;
-  border-top: none;
-  flex: 0 0 25px;
   display: flex;
   align-items: center;
-  padding: 6px 16px 10px 16px;
-  justify-content: flex-end;
+  justify-content: center;
 `
 export const Body = styled.div`
   flex: 1;
@@ -69,6 +66,8 @@ export const ButtonSwitch = styled.nav`
   display: flex;
   margin: 0;
   height: 22px;
+  margin-top: -11px;
+  margin-bottom: 10px;
 `
 
 export const Group = styled.div`
