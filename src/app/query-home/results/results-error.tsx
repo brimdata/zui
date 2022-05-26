@@ -1,4 +1,4 @@
-import {isObject, isString} from "lodash"
+import {isObject} from "lodash"
 import React from "react"
 import styled from "styled-components"
 
