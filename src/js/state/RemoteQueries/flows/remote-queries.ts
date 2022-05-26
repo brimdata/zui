@@ -8,8 +8,10 @@ import RemoteQueries from "src/js/state/RemoteQueries"
 import {Thunk} from "src/js/state/types"
 import {Readable} from "stream"
 import {BrimLake} from "src/js/brim"
-import QueryVersions, {QueryVersion} from "src/js/state/QueryVersions"
+import QueryVersions from "src/js/state/QueryVersions"
 import {parseISO} from "date-fns"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {createPool} from "src/app/core/pools/create-pool"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
@@ -22,7 +24,6 @@ const queriesToRemoteQueries = (
   return qs.map((q) => ({
     ...q,
     tombstone: isTombstone,
-    ts: new Date(),
   }))
 }
 
@@ -55,7 +56,7 @@ const remoteQueriesToQueries = (
     if (!versions[r.id]) return
     if (seenVersionSet.has(r.version)) return
     seenVersionSet.add(r.version)
-    const {version, value, pins = {}} = r
+    const {version, value = "", pins = []} = r
     const ts = typeof r.ts === "string" ? parseISO(r.ts) : r.ts
     versions[r.id].push({version, ts, value, pins})
   })
@@ -112,7 +113,8 @@ export const refreshRemoteQueries =
 export const setRemoteQueries =
   (queries: (Query & QueryVersion)[]): Thunk<Promise<void>> =>
   async (dispatch) => {
-    await dispatch(loadRemoteQueries(queriesToRemoteQueries(queries)))
+    const remote = queriesToRemoteQueries(queries)
+    await dispatch(loadRemoteQueries(remote))
     await dispatch(refreshRemoteQueries())
   }
 
@@ -143,15 +145,13 @@ const loadRemoteQueries =
 
 const getOrCreateRemotePoolId =
   (): Thunk<Promise<string>> => async (dispatch, getState) => {
-    const zealot = await dispatch(getZealot())
     let rqPoolId = Pools.getByName(
       Current.getLakeId(getState()),
       remoteQueriesPoolName
     )(getState())?.id
     if (!rqPoolId) {
       // create remote-queries pool if it doesn't already exist
-      const createResp = await zealot.createPool(remoteQueriesPoolName)
-      rqPoolId = createResp.pool.id
+      rqPoolId = await dispatch(createPool({name: remoteQueriesPoolName}))
     }
 
     return rqPoolId

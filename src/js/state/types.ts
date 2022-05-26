@@ -21,7 +21,7 @@ import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
 import {LakeStatusesState} from "./LakeStatuses/types"
 import {DraftQueriesState} from "./DraftQueries"
-import {QueryVersionsState} from "./QueryVersions"
+import {QueryVersionsState} from "./QueryVersions/types"
 
 export type ThunkExtraArg = {
   dispatch: AppDispatch

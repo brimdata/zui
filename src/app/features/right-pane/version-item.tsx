@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 import styled from "styled-components"
-import {QueryVersion} from "src/js/state/QueryVersions"
 import {formatDistanceToNowStrict} from "date-fns"
 import {useSelector} from "react-redux"
 import Current from "../../../js/state/Current"
 import {useDispatch} from "../../core/state"
 import {lakeQueryPath} from "../../router/utils/paths"
 import tabHistory from "../../router/tab-history"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
 
 const TimeNode = styled.div`
   display: flex;

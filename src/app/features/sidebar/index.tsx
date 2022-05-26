@@ -5,7 +5,6 @@ import Appearance from "src/js/state/Appearance"
 import styled from "styled-components"
 import Current from "src/js/state/Current"
 import Pane from "src/js/components/Pane"
-import HistorySection from "./history-section"
 import {XLeftPaneExpander} from "./left-pane-expander"
 import PoolsSection from "./pools-section"
 import QueriesSection from "./queries-section"
@@ -31,8 +30,8 @@ const SectionContentSwitch = ({sectionName}) => {
       return <PoolsSection />
     case "queries":
       return <QueriesSection />
-    case "history":
-      return <HistorySection />
+    // case "history":
+    //   return <HistorySection />
     default:
       return null
   }

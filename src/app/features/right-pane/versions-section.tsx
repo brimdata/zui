@@ -21,8 +21,7 @@ const VersionsSection = () => {
         {...defaults}
         data={{
           id: "root",
-          items: query
-            .allVersions()
+          items: query.versions
             .map((v) => ({...v, id: v.version}))
             .sort((a, b) => (a.ts < b.ts ? 1 : -1)),
         }}

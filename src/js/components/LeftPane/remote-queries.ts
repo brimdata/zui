@@ -12,7 +12,7 @@ import {
   deleteRemoteQueries,
   setRemoteQueries as newSetRemoteQueries,
 } from "src/js/state/RemoteQueries/flows/remote-queries"
-import {QueryVersion} from "src/js/state/QueryVersions"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
