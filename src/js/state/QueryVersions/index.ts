@@ -4,8 +4,11 @@ export default {
   reducer: queryVersionsSlice.reducer,
   ...versionSlice.actions,
   raw: (state) => state.queryVersions,
-  getByQueryId: (queryId) => (state) =>
-    versionAdapter.getSelectors().selectAll(state.queryVersions[queryId]),
+  getByQueryId: (queryId) => (state) => {
+    const queryVersions = state.queryVersions[queryId]
+    if (!queryVersions) return []
+    return versionAdapter.getSelectors().selectAll(queryVersions)
+  },
   getByVersion: (queryId, version) => (state) =>
     versionAdapter
       .getSelectors()

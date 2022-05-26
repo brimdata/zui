@@ -3,7 +3,8 @@ import DraftQueries from "src/js/state/DraftQueries/index"
 import {Query} from "src/js/state/Queries/types"
 import {Thunk} from "src/js/state/types"
 import {DRAFT_QUERY_NAME} from "../../../../app/query-home/utils/brim-query"
-import QueryVersions, {QueryVersion} from "src/js/state/QueryVersions"
+import QueryVersions from "src/js/state/QueryVersions"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
 
 export const newDraftQuery =
   (attrs: Partial<QueryVersion> = {}): Thunk<Query> =>

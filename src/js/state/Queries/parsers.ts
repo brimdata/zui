@@ -2,7 +2,7 @@ import {Group} from "./types"
 import lib from "../../lib"
 import {nanoid} from "@reduxjs/toolkit"
 import {cloneDeep, last} from "lodash"
-import {QueryVersion, QueryVersionsState} from "../QueryVersions"
+import {QueryVersion, QueryVersionsState} from "../QueryVersions/types"
 import {QueryPin} from "../Editor/types"
 
 export type JSONQuery = {

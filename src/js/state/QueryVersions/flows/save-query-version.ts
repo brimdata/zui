@@ -1,5 +1,6 @@
 import {Thunk} from "src/js/state/types"
-import QueryVersions, {QueryVersion} from "src/js/state/QueryVersions/index"
+import QueryVersions from "src/js/state/QueryVersions/index"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {getQuerySource} from "../../Queries/flows/get-query-source"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {setRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"

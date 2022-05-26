@@ -8,8 +8,10 @@ import RemoteQueries from "src/js/state/RemoteQueries"
 import {Thunk} from "src/js/state/types"
 import {Readable} from "stream"
 import {BrimLake} from "src/js/brim"
-import QueryVersions, {QueryVersion} from "src/js/state/QueryVersions"
+import QueryVersions from "src/js/state/QueryVersions"
 import {parseISO} from "date-fns"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {createPool} from "src/app/core/pools/create-pool"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
@@ -143,15 +145,13 @@ const loadRemoteQueries =
 
 const getOrCreateRemotePoolId =
   (): Thunk<Promise<string>> => async (dispatch, getState) => {
-    const zealot = await dispatch(getZealot())
     let rqPoolId = Pools.getByName(
       Current.getLakeId(getState()),
       remoteQueriesPoolName
     )(getState())?.id
     if (!rqPoolId) {
       // create remote-queries pool if it doesn't already exist
-      const createResp = await zealot.createPool(remoteQueriesPoolName)
-      rqPoolId = createResp.pool.id
+      rqPoolId = await dispatch(createPool({name: remoteQueriesPoolName}))
     }
 
     return rqPoolId

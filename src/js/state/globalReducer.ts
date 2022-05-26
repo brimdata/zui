@@ -11,7 +11,8 @@ import Queries from "./Queries"
 import {QueriesState} from "./Queries/types"
 import RemoteQueries from "./RemoteQueries"
 import {DraftQueriesState} from "./DraftQueries"
-import QueryVersions, {QueryVersionsState} from "./QueryVersions"
+import QueryVersions from "./QueryVersions"
+import {QueryVersionsState} from "src/js/state/QueryVersions/types"
 
 export type GlobalState = {
   launches: LaunchesState
