@@ -55,11 +55,18 @@ const getQueryHeaderMenu =
         click: () => {
           try {
             const q = {...query.serialize(), id: nanoid()}
+            const versionsCopy = query.versions.map((v) => ({
+              ...v,
+              version: nanoid(),
+            }))
             if (querySource === "local") {
-              const queriesCopy = query.versions.map((v) => ({...q, ...v}))
+              const queriesCopy = versionsCopy.map((v) => ({...q, ...v}))
               dispatch(setRemoteQueries(queriesCopy))
             } else {
               dispatch(Queries.addItem(q, "root"))
+              dispatch(
+                QueryVersions.set({queryId: q.id, versions: versionsCopy})
+              )
             }
             toast.success("Query Copied")
           } catch (e) {
@@ -80,15 +87,17 @@ const getQueryHeaderMenu =
             id: nanoid(),
             name: query.name + " (copy)",
           }
+          const versionsCopy = query.versions.map((v) => ({
+            ...v,
+            version: nanoid(),
+          }))
           if (querySource === "local") {
             dispatch(Queries.addItem(q, "root"))
-            dispatch(
-              QueryVersions.set({queryId: q.id, versions: query.versions})
-            )
+            dispatch(QueryVersions.set({queryId: q.id, versions: versionsCopy}))
             dispatch(Tabs.create(lakeQueryPath(q.id, lakeId)))
           }
           if (querySource === "remote") {
-            const queriesCopy = query.versions.map((v) => ({...q, ...v}))
+            const queriesCopy = versionsCopy.map((v) => ({...q, ...v}))
             dispatch(setRemoteQueries(queriesCopy)).then(() => {
               dispatch(Tabs.create(lakeQueryPath(q.id, lakeId)))
             })

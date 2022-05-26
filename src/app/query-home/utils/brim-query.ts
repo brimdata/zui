@@ -37,7 +37,7 @@ export class BrimQuery implements Query {
     return this.current?.value ?? ""
   }
   get pins() {
-    return this.current.pins ?? []
+    return this.current?.pins ?? []
   }
 
   newVersion(value?: string, pins?: QueryPin[]) {
@@ -99,11 +99,11 @@ export class BrimQuery implements Query {
   }
 
   toString(): string {
-    let s = (this.current.pins || [])
+    let s = (this.current?.pins || [])
       .filter((p) => !p.disabled)
       .map<QueryPinInterface>(buildPin)
       .map((p) => p.toZed())
-      .concat(this.current.value)
+      .concat(this.current?.value ?? "")
       .filter((s) => s.trim() !== "")
       .join(" | ")
       .trim()

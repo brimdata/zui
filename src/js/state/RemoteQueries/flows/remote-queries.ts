@@ -24,7 +24,6 @@ const queriesToRemoteQueries = (
   return qs.map((q) => ({
     ...q,
     tombstone: isTombstone,
-    ts: new Date(),
   }))
 }
 
@@ -57,7 +56,7 @@ const remoteQueriesToQueries = (
     if (!versions[r.id]) return
     if (seenVersionSet.has(r.version)) return
     seenVersionSet.add(r.version)
-    const {version, value, pins = {}} = r
+    const {version, value = "", pins = []} = r
     const ts = typeof r.ts === "string" ? parseISO(r.ts) : r.ts
     versions[r.id].push({version, ts, value, pins})
   })
@@ -114,7 +113,8 @@ export const refreshRemoteQueries =
 export const setRemoteQueries =
   (queries: (Query & QueryVersion)[]): Thunk<Promise<void>> =>
   async (dispatch) => {
-    await dispatch(loadRemoteQueries(queriesToRemoteQueries(queries)))
+    const remote = queriesToRemoteQueries(queries)
+    await dispatch(loadRemoteQueries(remote))
     await dispatch(refreshRemoteQueries())
   }
 
