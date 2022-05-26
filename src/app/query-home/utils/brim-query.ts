@@ -1,6 +1,6 @@
 import {Query} from "src/js/state/Queries/types"
 import {QueryVersion} from "src/js/state/QueryVersions"
-import {isNumber, last} from "lodash"
+import {isEmpty, isNumber, last} from "lodash"
 import {QueryPin, QueryPinInterface} from "../../../js/state/Editor/types"
 import {nanoid} from "@reduxjs/toolkit"
 import {parseAst} from "@brimdata/zealot"
@@ -28,15 +28,15 @@ export class BrimQuery implements Query {
     this.isReadOnly = raw.isReadOnly || false
     // default current to latest version if none supplied
     this.current = current
-      ? versions.find((v) => v.version === current)
+      ? versions?.find((v) => v.version === current)
       : last(versions)
   }
 
   get value() {
-    return this.current.value
+    return this.current?.value ?? ""
   }
   get pins() {
-    return this.current.pins
+    return this.current?.pins ?? []
   }
 
   newVersion(value?: string, pins?: QueryPin[]) {
@@ -57,14 +57,6 @@ export class BrimQuery implements Query {
     const name = trunk.source.spec.pool
     if (!name) return null
     return name
-  }
-
-  currentVersion(): QueryVersion {
-    return this.current
-  }
-
-  allVersions(): QueryVersion[] {
-    return this.versions
   }
 
   latestVersion(): QueryVersion {
@@ -106,17 +98,19 @@ export class BrimQuery implements Query {
   }
 
   toString(): string {
-    const current = this.currentVersion()
-    let s = current.pins
-      .filter((p) => !p.disabled)
-      .map<QueryPinInterface>(buildPin)
-      .map((p) => p.toZed())
-      .concat(current.value)
+    let pinS = []
+    if (!isEmpty(this.current?.pins))
+      pinS = this.current.pins
+        .filter((p) => !p.disabled)
+        .map<QueryPinInterface>(buildPin)
+        .map((p) => p.toZed())
+    let s = pinS
+      .concat(this.current?.value ?? "")
       .filter((s) => s.trim() !== "")
       .join(" | ")
       .trim()
 
-    if (s === "") s = "*"
+    if (isEmpty(s)) s = "*"
     if (isNumber(this.head)) s += ` | head ${this.head}`
 
     return s
