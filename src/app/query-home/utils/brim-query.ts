@@ -108,7 +108,7 @@ export class BrimQuery implements Query {
 
   toString(): string {
     const current = this.currentVersion()
-    let s = current.pins
+    let s = (current.pins || [])
       .filter((p) => !p.disabled)
       .map<QueryPinInterface>(buildPin)
       .map((p) => p.toZed())

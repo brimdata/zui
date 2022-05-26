@@ -18,8 +18,8 @@ import Current from "src/js/state/Current"
 import LakeStatuses from "src/js/state/LakeStatuses"
 import styled from "styled-components"
 import LakeHome from "./home"
-import QueryHome from "../query-home"
 import PoolShow from "src/app/pools/show"
+import {QueryRoute} from "../query-home/route"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -72,7 +72,7 @@ export default function LakeRoot() {
           <PoolShow />
         </Route>
         <Route path={query.path}>
-          <QueryHome />
+          <QueryRoute />
         </Route>
         <Route default>
           <Redirect to={lakeImportPath(match.params.lakeId)} />
