@@ -4,12 +4,11 @@ import styled from "styled-components"
 
 const BG = styled.div`
   margin-top: 16px;
-  padding: 32px;
-  background: rgba(0, 0, 0, 0.03);
+  padding: 24px;
   width: 100%;
   height: 100%;
-  h4 {
-    margin-bottom: 1em;
+  h2 {
+    margin-bottom: 0.5em;
   }
 `
 
@@ -38,7 +37,7 @@ export function ResultsError(props: {error: string | object}) {
   }
   return (
     <BG>
-      <h4>Error</h4>
+      <h2>Error</h2>
       <p>{props.error.toString()}</p>
     </BG>
   )
