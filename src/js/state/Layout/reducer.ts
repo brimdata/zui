@@ -4,7 +4,7 @@ import {ColumnHeadersViewState, ResultsView} from "./types"
 const slice = createSlice({
   name: "TAB_LAYOUT",
   initialState: {
-    rightSidebarIsOpen: false,
+    rightSidebarIsOpen: true,
     rightSidebarWidth: 260,
     columnHeadersView: "AUTO" as ColumnHeadersViewState,
     resultsView: "TABLE" as ResultsView,
