@@ -48,7 +48,7 @@ const syncQueryLocationWithRedux = (dispatch, getState) => {
 
   // Give codemirror a chance to update by scheduling this update
   setTimeout(() => {
-    dispatch(Editor.setValue(query?.value || ""))
+    dispatch(Editor.setValue(query?.value ?? ""))
     dispatch(Editor.setPins(query?.pins || []))
     dispatch(Results.fetchFirstPage(query.toString()))
   })

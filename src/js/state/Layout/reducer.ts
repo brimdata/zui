@@ -1,13 +1,14 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {ColumnHeadersViewState, ResultsView} from "./types"
+import {ColumnHeadersViewState, ResultsView, PaneName} from "./types"
 
 const slice = createSlice({
   name: "TAB_LAYOUT",
   initialState: {
-    rightSidebarIsOpen: false,
+    rightSidebarIsOpen: true,
     rightSidebarWidth: 260,
     columnHeadersView: "AUTO" as ColumnHeadersViewState,
     resultsView: "TABLE" as ResultsView,
+    currentPaneName: "versions" as PaneName,
   },
   reducers: {
     showDetailPane: (s) => {
@@ -27,6 +28,9 @@ const slice = createSlice({
     },
     setResultsView: (s, a: PayloadAction<ResultsView>) => {
       s.resultsView = a.payload
+    },
+    setCurrentPaneName(s, action: PayloadAction<PaneName>) {
+      s.currentPaneName = action.payload
     },
   },
 })

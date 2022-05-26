@@ -30,6 +30,7 @@ import {listContextMenu} from "./list-context-menu"
 import Current from "src/js/state/Current"
 import QueryVersions from "src/js/state/QueryVersions"
 import {BrimQuery} from "../../../query-home/utils/brim-query"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />,
@@ -73,7 +74,8 @@ const RemoteQueriesView = ({toolbarButtons}) => {
     const q = find(remoteQueries, ["id", itemId]) as Query
     if (!q) return console.error("cannot locate remote query with id " + itemId)
     if (q.isReadOnly) return
-    const versions = queryVersions[itemId]?.entities || []
+    const versions =
+      Object.values<QueryVersion>(queryVersions[itemId]?.entities ?? {}) || []
     const brimQ = new BrimQuery(q, versions)
     dispatch(
       setRemoteQueries([{...brimQ.serialize(), name, ...brimQ.latestVersion()}])
