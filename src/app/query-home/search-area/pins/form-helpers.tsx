@@ -47,7 +47,7 @@ export const ActionsGroup = styled.div`
 `
 
 export const Button = styled.button`
-  background: var(--control-background);
+  background: var(--button-background);
   height: 22px;
   display: inline-flex;
   align-items: center;
@@ -59,10 +59,10 @@ export const Button = styled.button`
   min-width: 60px;
   font-weight: 500;
   &:hover {
-    background: var(--control-hover);
+    background: var(--button-background-hover);
   }
   &:active {
-    background: var(--control-active);
+    background: var(--button-background-active);
   }
 `
 

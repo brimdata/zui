@@ -38,7 +38,6 @@ const labelNormal = css`
 
 const labelBold = css`
   font-family: system-ui, sans-serif;
-  letter-spacing: -0.08;
   font-size: 13px;
   line-height: 16px;
   font-weight: 600;
