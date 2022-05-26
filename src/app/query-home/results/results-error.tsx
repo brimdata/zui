@@ -1,4 +1,4 @@
-import {isObject, isString} from "lodash"
+import {isObject} from "lodash"
 import React from "react"
 import styled from "styled-components"
 
@@ -33,16 +33,15 @@ function isParseError(obj: unknown): obj is PegSyntaxError {
 }
 
 export function ResultsError(props: {error: string | object}) {
-  if (isString(props.error))
-    return (
-      <BG>
-        <h4>Error</h4>
-        <p>{props.error}</p>
-      </BG>
-    )
   if (isParseError(props.error)) {
     return <SyntaxError error={props.error} />
   }
+  return (
+    <BG>
+      <h4>Error</h4>
+      <p>{props.error.toString()}</p>
+    </BG>
+  )
 }
 
 export function SyntaxError(props: {error: PegSyntaxError}) {

@@ -1,5 +1,5 @@
 import {Query} from "src/js/state/Queries/types"
-import {last} from "lodash"
+import {isEmpty, last} from "lodash"
 import {QueryPin, QueryPinInterface} from "../../../js/state/Editor/types"
 import {isNumber} from "lodash"
 import brim from "src/js/brim"
@@ -99,16 +99,19 @@ export class BrimQuery implements Query {
   }
 
   toString(): string {
-    let s = (this.current?.pins || [])
-      .filter((p) => !p.disabled)
-      .map<QueryPinInterface>(buildPin)
-      .map((p) => p.toZed())
+    let pinS = []
+    if (!isEmpty(this.current?.pins))
+      pinS = this.current.pins
+        .filter((p) => !p.disabled)
+        .map<QueryPinInterface>(buildPin)
+        .map((p) => p.toZed())
+    let s = pinS
       .concat(this.current?.value ?? "")
       .filter((s) => s.trim() !== "")
       .join(" | ")
       .trim()
 
-    if (s === "") s = "*"
+    if (isEmpty(s)) s = "*"
     if (isNumber(this.head)) s += ` | head ${this.head}`
 
     return s
