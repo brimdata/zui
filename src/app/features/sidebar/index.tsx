@@ -31,8 +31,8 @@ const SectionContentSwitch = ({sectionName}) => {
       return <PoolsSection />
     case "queries":
       return <QueriesSection />
-    case "history":
-      return <HistorySection />
+    // case "history":
+    //   return <HistorySection />
     default:
       return null
   }
