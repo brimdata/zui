@@ -16,7 +16,7 @@ export function submitSearch(
   save: SaveOpts = {history: true, investigation: true},
   ts: Date = new Date()
 ) {
-  if (featureIsEnabled("query-flow")) return submitNewSearch(save, ts)
+  if (featureIsEnabled("query-flow")) return submitNewSearch()
 
   return function (dispatch, getState) {
     dispatch(Notice.dismiss())

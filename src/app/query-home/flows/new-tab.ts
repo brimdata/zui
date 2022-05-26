@@ -8,7 +8,7 @@ import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
-import {newDraftQuery} from "./new-draft-query"
+import {newDraftQuery} from "../../../js/state/DraftQueries/flows/new-draft-query"
 
 export const newTab = (): Thunk => (dispatch, getState) => {
   if (!featureIsEnabled("query-flow")) {

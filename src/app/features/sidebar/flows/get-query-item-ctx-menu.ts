@@ -1,4 +1,7 @@
-import {deleteRemoteQueries, isRemoteLib} from "./remote-queries"
+import {
+  deleteRemoteQueries,
+  isRemoteLib,
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import Tabs from "../../../../js/state/Tabs"
 import {lakeQueryPath} from "../../../router/utils/paths"
 import lib from "../../../../js/lib"
@@ -10,6 +13,7 @@ import Queries from "../../../../js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
 import Results from "src/js/state/Results"
 import Current from "src/js/state/Current"
+import {last} from "lodash"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers, lakeId}) =>
@@ -20,7 +24,7 @@ const getQueryItemCtxMenu =
       tree.getSelectedIds().length > 1 &&
       !!tree.getSelectedIds().find((id) => id === data.id)
     const isRemoteItem = dispatch(isRemoteLib([id]))
-    const latestVersion = QueryVersions.getLatestByQueryId(id)(getState())
+    const latestVersion = last(QueryVersions.getByQueryId(id)(getState()))
     const query = Current.getQueryById(id)(getState())
 
     const runQuery = () => {

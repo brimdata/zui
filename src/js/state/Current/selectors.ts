@@ -55,11 +55,7 @@ export const getQueryById =
       Queries.getQueryById(id)(state) ||
       RemoteQueries.getQueryById(id)(state)
     if (!query) return null
-
-    const versions = QueryVersions.getByQueryId(id)(state) || {
-      ids: [],
-      entities: {},
-    }
+    const versions = QueryVersions.getByQueryId(id)(state) || []
 
     return new BrimQuery(query, versions, version)
   }

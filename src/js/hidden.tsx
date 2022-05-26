@@ -11,7 +11,7 @@ import lake from "./brim/lake"
 import {
   getRemotePoolForLake,
   refreshRemoteQueries,
-} from "src/app/features/sidebar/flows/remote-queries"
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import {subscribeEvents} from "./flows/subscribeEvents"
 import initialize from "./initializers/initialize"
 import lib from "./lib"

@@ -1,12 +1,12 @@
 import {Query} from "src/js/state/Queries/types"
-import {ANALYTIC_PROCS} from "src/js/brim/ast"
-import {QueryVersion, VersionsState} from "src/js/state/QueryVersions"
+import {QueryVersion} from "src/js/state/QueryVersions"
 import {last} from "lodash"
-import {QueryPinInterface} from "../../../js/state/Editor/types"
+import {QueryPin, QueryPinInterface} from "../../../js/state/Editor/types"
 import {isNumber} from "lodash"
 import brim from "src/js/brim"
 import {parseAst} from "@brimdata/zealot"
 import buildPin from "src/js/state/Editor/models/build-pin"
+import {nanoid} from "@reduxjs/toolkit"
 export type PinType = "from" | "filter"
 export const DRAFT_QUERY_NAME = "Draft Query"
 
@@ -16,11 +16,11 @@ export class BrimQuery implements Query {
   description?: string
   tags?: string[]
   isReadOnly?: boolean
-  current: string | number
-  versions: VersionsState
+  current: QueryVersion
+  versions: QueryVersion[]
   head?: number
 
-  constructor(raw: Query, versions: VersionsState, current?: string) {
+  constructor(raw: Query, versions: QueryVersion[], current?: string) {
     this.id = raw.id
     this.name = raw.name
     this.versions = versions
@@ -28,14 +28,26 @@ export class BrimQuery implements Query {
     this.tags = raw.tags || []
     this.isReadOnly = raw.isReadOnly || false
     // default current to latest version if none supplied
-    this.current = current ?? last(versions.ids)
+    this.current = current
+      ? versions.find((v) => v.version === current)
+      : last(versions)
   }
 
   get value() {
-    return this.currentVersion().value
+    return this.current.value
   }
   get pins() {
-    return this.currentVersion().pins
+    return this.current.pins
+  }
+
+  newVersion(value?: string, pins?: QueryPin[]) {
+    const newV: QueryVersion = {
+      value: value ?? "",
+      pins: pins ?? [],
+      version: nanoid(),
+      ts: new Date(),
+    }
+    return new BrimQuery(this.serialize(), [...this.versions, newV])
   }
 
   getFromPin() {
@@ -49,15 +61,15 @@ export class BrimQuery implements Query {
   }
 
   currentVersion(): QueryVersion {
-    return this.versions.entities[this.current]
+    return this.current
   }
 
   allVersions(): QueryVersion[] {
-    return this.versions.ids.map((id) => this.versions.entities[id])
+    return this.versions
   }
 
   latestVersion(): QueryVersion {
-    return this.versions.entities[last(this.versions.ids)]
+    return last(this.versions)
   }
 
   getPoolName() {
@@ -82,13 +94,6 @@ export class BrimQuery implements Query {
       error = e
     }
     return error
-  }
-
-  hasAnalytics() {
-    for (const proc of this.ast().getProcs()) {
-      if (ANALYTIC_PROCS.includes(proc.kind)) return true
-    }
-    return false
   }
 
   serialize(): Query {

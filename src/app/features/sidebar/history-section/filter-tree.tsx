@@ -4,7 +4,6 @@ import {initial, isEqual, map, tail, take} from "lodash"
 import React from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
-import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Current from "src/js/state/Current"
 import Investigation from "src/js/state/Investigation"
 import Search from "src/js/state/Search"
@@ -13,6 +12,7 @@ import {SearchRecord} from "src/js/types"
 import FilterNode from "./filter-node"
 import {createInvestigationTree, InvestigationNode} from "./helpers"
 import usePopupMenu from "src/js/components/hooks/usePopupMenu"
+import submitSearch from "../../../query-home/flows/submit-search"
 
 const getPins = (node?: InvestigationNode): string[] => {
   const result = map(node?.getPath(), (n) => {
@@ -90,7 +90,7 @@ function NodeRow({node, i, lakeId, poolId}: Props) {
 
   function onNodeClick() {
     dispatch(Search.restore(reconstructSearch(node)))
-    dispatch(submitSearch({history: true, investigation: false}))
+    dispatch(submitSearch({history: false, version: false}))
   }
 
   const className = classNames("filter-tree-node", {

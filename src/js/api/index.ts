@@ -111,9 +111,7 @@ export default class BrimApi {
   importQueries(file: File) {
     const {libRoot, versions} = parseJSONLib(file.path)
     this.dispatch(Queries.addItem(libRoot, "root"))
-    console.log("versions: ", versions)
     forEach(versions, (vs, queryId) => {
-      console.log({vs, queryId})
       this.dispatch(QueryVersions.set({queryId, versions: [vs]}))
     })
     this.toast.success(`Imported ${libRoot.name}`)

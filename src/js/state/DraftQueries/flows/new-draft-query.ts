@@ -1,8 +1,8 @@
 import {nanoid} from "@reduxjs/toolkit"
-import DraftQueries from "src/js/state/DraftQueries"
+import DraftQueries from "src/js/state/DraftQueries/index"
 import {Query} from "src/js/state/Queries/types"
 import {Thunk} from "src/js/state/types"
-import {DRAFT_QUERY_NAME} from "../utils/brim-query"
+import {DRAFT_QUERY_NAME} from "../../../../app/query-home/utils/brim-query"
 import QueryVersions, {QueryVersion} from "src/js/state/QueryVersions"
 
 export const newDraftQuery =

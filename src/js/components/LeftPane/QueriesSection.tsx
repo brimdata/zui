@@ -33,7 +33,7 @@ import {DropOverlay} from "./drop-overlay"
 import {refreshRemoteQueries, setRemoteQueries} from "./remote-queries"
 import {AppDispatch} from "../../state/types"
 import RemoteQueries from "src/js/state/RemoteQueries"
-import getQueryById from "src/app/query-home/flows/get-query-by-id"
+import getQueryById from "src/js/state/Queries/flows/get-query-by-id"
 
 const StyledPlus = styled.div`
   margin-right: 8px;

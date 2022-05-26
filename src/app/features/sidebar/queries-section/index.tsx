@@ -19,7 +19,10 @@ import {QueriesView} from "src/js/state/Appearance/types"
 import TreeModel from "tree-model"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Query} from "src/js/state/Queries/types"
-import {refreshRemoteQueries, setRemoteQueries} from "../flows/remote-queries"
+import {
+  refreshRemoteQueries,
+  setRemoteQueries,
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import styled from "styled-components"
 import EmptySection from "src/js/components/common/EmptySection"
 import Icon from "src/app/core/icon-temp"
@@ -70,7 +73,7 @@ const RemoteQueriesView = ({toolbarButtons}) => {
     const q = find(remoteQueries, ["id", itemId]) as Query
     if (!q) return console.error("cannot locate remote query with id " + itemId)
     if (q.isReadOnly) return
-    const versions = queryVersions[itemId] || {ids: [], entities: {}}
+    const versions = queryVersions[itemId]?.entities || []
     const brimQ = new BrimQuery(q, versions)
     dispatch(
       setRemoteQueries([{...brimQ.serialize(), name, ...brimQ.latestVersion()}])

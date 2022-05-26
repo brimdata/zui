@@ -10,7 +10,7 @@ import useLakeId from "src/app/router/hooks/use-lake-id"
 import Modal from "src/js/state/Modal"
 import {lakeImportPath, lakeQueryPath} from "src/app/router/utils/paths"
 import Tabs from "src/js/state/Tabs"
-import {newDraftQuery} from "src/app/query-home/flows/new-draft-query"
+import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
 
 const Button = styled.button`
   display: flex;

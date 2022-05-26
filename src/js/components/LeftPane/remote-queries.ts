@@ -11,7 +11,7 @@ import {Query} from "../../state/Queries/types"
 import {
   deleteRemoteQueries,
   setRemoteQueries as newSetRemoteQueries,
-} from "src/app/features/sidebar/flows/remote-queries"
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import {QueryVersion} from "src/js/state/QueryVersions"
 
 export const remoteQueriesPoolName = "_remote-queries"

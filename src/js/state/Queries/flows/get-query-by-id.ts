@@ -1,5 +1,5 @@
 import Current from "src/js/state/Current"
-import {BrimQuery} from "../utils/brim-query"
+import {BrimQuery} from "../../../../app/query-home/utils/brim-query"
 
 const getQueryById =
   (id: string, version?: string) =>

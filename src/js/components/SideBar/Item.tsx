@@ -21,7 +21,7 @@ import exportQueryLib from "../../flows/exportQueryLib"
 import {AppDispatch} from "../../state/types"
 import {showContextMenu} from "../../lib/System"
 import {isRemoteLib} from "../LeftPane/remote-queries"
-import {deleteRemoteQueries} from "../../../app/features/sidebar/flows/remote-queries"
+import {deleteRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"
 
 const BG = styled.div`
   padding-left: 12px;
