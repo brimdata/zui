@@ -2,17 +2,15 @@ import {syncPool} from "src/app/core/pools/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
 import PoolHome from "src/app/pools/home"
 import useLakeId from "src/app/router/hooks/use-lake-id"
-import {lakePoolSearch, poolShow} from "src/app/router/routes"
+import {poolShow} from "src/app/router/routes"
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Redirect, Route, Switch} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
-import SearchHome from "../search/home"
 import TabSearchLoading from "src/js/components/TabSearchLoading"
 import Ingests from "src/js/state/Ingests"
 import {lakePath} from "src/app/router/utils/paths"
-import {FeatureFlag} from "../core/feature-flag"
 
 export default function PoolShow() {
   return (
