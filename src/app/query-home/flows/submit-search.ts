@@ -11,7 +11,6 @@ type SaveOpts = {history: boolean; version: boolean}
 const submitSearch =
   (save: SaveOpts = {history: true, version: true}, _ts: Date = new Date()) =>
   (dispatch, getState) => {
-    console.log("submit search")
     dispatch(Notice.dismiss())
     dispatch(Results.error(null))
     const lakeId = Current.getLakeId(getState())
