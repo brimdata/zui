@@ -12,7 +12,6 @@ import Current from "src/js/state/Current"
 import Tab from "src/js/state/Tab"
 import {Thunk} from "src/js/state/types"
 import {featureIsEnabled} from "../../core/feature-flag"
-import {BrimQuery} from "../../query-home/utils/brim-query"
 
 const id = "Md5"
 
@@ -46,12 +45,7 @@ export const md5Search = (md5: string): Thunk<Promise<ResultStream>> => {
 
     return dispatch(
       querySearch({
-        query: new BrimQuery({
-          id: "",
-          name: "",
-          value: q,
-          pins: [{type: "from", value: poolId}],
-        }),
+        query: `from ${poolId} | ${q}`,
       })
     )
   }

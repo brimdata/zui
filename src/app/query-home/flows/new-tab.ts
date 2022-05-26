@@ -8,7 +8,7 @@ import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
-import {newQuery} from "./new-query"
+import {newDraftQuery} from "../../../js/state/DraftQueries/flows/new-draft-query"
 
 export const newTab = (): Thunk => (dispatch, getState) => {
   if (!featureIsEnabled("query-flow")) {
@@ -23,7 +23,7 @@ export const newTab = (): Thunk => (dispatch, getState) => {
   } else if (poolIds.length === 0) {
     url = lakeImportPath(lakeId)
   } else {
-    url = lakeQueryPath(dispatch(newQuery()).id, lakeId)
+    url = lakeQueryPath(dispatch(newDraftQuery()).id, lakeId)
   }
   dispatch(Tabs.create(url))
 }

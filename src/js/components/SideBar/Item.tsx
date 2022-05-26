@@ -13,7 +13,6 @@ import Current from "../../state/Current"
 import Modal from "../../state/Modal"
 import Notice from "../../state/Notice"
 import Queries from "../../state/Queries"
-import {isBrimLib} from "../../state/Queries/flows"
 import SearchBar from "../../state/SearchBar"
 import useOutsideClick from "../hooks/useOutsideClick"
 import {StyledArrow} from "../LeftPane/common"
@@ -21,8 +20,8 @@ import {useBrimApi} from "src/app/core/context"
 import exportQueryLib from "../../flows/exportQueryLib"
 import {AppDispatch} from "../../state/types"
 import {showContextMenu} from "../../lib/System"
-import {isRemoteLib, setRemoteQueries} from "../LeftPane/remote-queries"
-import {Query} from "../../state/Queries/types"
+import {isRemoteLib} from "../LeftPane/remote-queries"
+import {deleteRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"
 
 const BG = styled.div`
   padding-left: 12px;
@@ -152,9 +151,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
   const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
   const hasMultiSelected = selected.length > 1
 
-  const isBrimItem = dispatch(isBrimLib([id]))
   const isRemoteItem = dispatch(isRemoteLib([id]))
-  const hasBrimItemSelected = dispatch(isBrimLib(selected))
 
   const runQuery = (value) => {
     dispatch(SearchBar.clearSearchBar())
@@ -223,12 +220,11 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {type: "separator"},
     {
       label: "Rename",
-      enabled: !isBrimItem,
       click: () => handlers.edit(),
     },
     {
       label: "Edit",
-      enabled: !hasMultiSelected && !isBrimItem,
+      enabled: !hasMultiSelected,
       visible: !isGroup,
       click: () => {
         const modalArgs = {query: data, isRemote: false}
@@ -239,7 +235,6 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
     {type: "separator"},
     {
       label: hasMultiSelected ? "Delete Selected" : "Delete",
-      enabled: !hasBrimItemSelected,
       click: () => {
         const selected = Array.from(
           new Set([...tree.getSelectedIds(), data.id])
@@ -256,14 +251,7 @@ export default function Item({innerRef, styles, data, state, handlers, tree}) {
           .then(({response}) => {
             if (response === 0) {
               if (isRemoteItem) {
-                const remoteQueries = selected.map<Query>((id) => ({
-                  id,
-                  value: "",
-                  name: "",
-                  description: "",
-                  tags: [],
-                }))
-                dispatch(setRemoteQueries(remoteQueries, true))
+                dispatch(deleteRemoteQueries(selected))
                 return
               }
 

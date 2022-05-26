@@ -2,7 +2,8 @@ import {useEffect, useRef, useState} from "react"
 import {EditorView} from "@codemirror/view"
 import {EditorState, StateEffect} from "@codemirror/state"
 import {useExtensions} from "./use-extensions"
-import {hasNewLine} from "../Input"
+
+export const hasNewLine = (str) => /\n/.test(str)
 
 export function useEditorView(args: {
   value: string

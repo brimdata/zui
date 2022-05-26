@@ -1,9 +1,9 @@
-import {QueryPin} from "../types"
+import {QueryPin, QueryPinInterface} from "../types"
 import FromPin from "./from-pin"
 import GenericPin from "./generic-pin"
 import TimeRangePin from "./time-range-pin"
 
-export default function buildPin(pin: QueryPin) {
+export default function buildPin(pin: QueryPin): QueryPinInterface {
   switch (pin.type) {
     case "generic":
       return new GenericPin(pin)

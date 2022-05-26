@@ -1,40 +1,40 @@
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Notice from "src/js/state/Notice"
+import {saveQueryVersion} from "../../../js/state/QueryVersions/flows/save-query-version"
 import Results from "src/js/state/Results"
-import {BrimQuery} from "../utils/brim-query"
-import {updateQuery} from "./update-query"
+import tabHistory from "../../router/tab-history"
+import {lakeQueryPath} from "../../router/utils/paths"
 
-type SaveOpts = {history: boolean; investigation: boolean}
+type SaveOpts = {history: boolean; version: boolean}
 
 const submitSearch =
-  (
-    _save: SaveOpts = {history: true, investigation: true},
-    _ts: Date = new Date()
-  ) =>
-  async (dispatch, getState) => {
+  (save: SaveOpts = {history: true, version: true}, _ts: Date = new Date()) =>
+  (dispatch, getState) => {
     dispatch(Notice.dismiss())
     dispatch(Results.error(null))
+    const lakeId = Current.getLakeId(getState())
+    let query = Current.getQuery(getState())
     const value = Editor.getValue(getState())
     const pins = Editor.getPins(getState())
-    const prev = Current.getQuery(getState())
-    const query = new BrimQuery({
-      ...prev?.serialize(),
-      value,
-      pins,
-    })
+    query = query.newVersion(value, pins)
     const error = query.checkSyntax()
     if (error) {
       dispatch(Results.error(error))
       return
     }
+    if (save.version && !query.isReadOnly) {
+      dispatch(saveQueryVersion(query.id, query.latestVersion())).then(() => {
+        dispatch(tabHistory.push(lakeQueryPath(query.id, lakeId)))
+      })
+    } else {
+      dispatch(tabHistory.push(lakeQueryPath(query.id, lakeId)))
+    }
 
-    await dispatch(updateQuery(query))
     // TODO: Mason - refactor history to use query copies
-    // if (save.investigation) {
+    // if (save.history) {
     //   dispatch(Investigation.push(lakeId, poolId, record, brim.time(ts).toTs()))
     // }
-    dispatch(Results.fetchFirstPage(query.toString()))
   }
 
 export default submitSearch

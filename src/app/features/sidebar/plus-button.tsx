@@ -10,7 +10,7 @@ import useLakeId from "src/app/router/hooks/use-lake-id"
 import Modal from "src/js/state/Modal"
 import {lakeImportPath, lakeQueryPath} from "src/app/router/utils/paths"
 import Tabs from "src/js/state/Tabs"
-import {newQuery} from "src/app/query-home/flows/new-query"
+import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
 
 const Button = styled.button`
   display: flex;
@@ -49,7 +49,7 @@ export default function PlusButton() {
       {
         label: "New Query",
         click: () => {
-          const query = dispatch(newQuery())
+          const query = dispatch(newDraftQuery())
           dispatch(Tabs.create(lakeQueryPath(query.id, lakeId)))
         },
       },

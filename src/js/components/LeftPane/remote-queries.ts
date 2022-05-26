@@ -8,7 +8,11 @@ import {Readable} from "stream"
 import {BrimLake} from "../../brim"
 import {getZealot} from "../../flows/getZealot"
 import {Query} from "../../state/Queries/types"
-import {setRemoteQueries as newSetRemoteQueries} from "src/app/features/sidebar/flows/remote-queries"
+import {
+  deleteRemoteQueries,
+  setRemoteQueries as newSetRemoteQueries,
+} from "src/js/state/RemoteQueries/flows/remote-queries"
+import {QueryVersion} from "src/js/state/QueryVersions"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
@@ -50,11 +54,13 @@ export const refreshRemoteQueries = (lake?: BrimLake): Thunk<Promise<void>> => {
  existing pools which means that this thunk depends on that state being populated
  */
 export const setRemoteQueries = (
-  queries: Query[],
+  queries: (Query & QueryVersion)[],
   shouldDelete?: boolean
 ): Thunk<Promise<void>> => {
-  if (featureIsEnabled("query-flow"))
-    return newSetRemoteQueries(queries, shouldDelete)
+  if (featureIsEnabled("query-flow")) {
+    if (shouldDelete) return deleteRemoteQueries(queries.map(({id}) => id))
+    return newSetRemoteQueries(queries)
+  }
   return async (dispatch, getState) => {
     const zealot = await dispatch(getZealot())
     let rqPoolId = Pools.getByName(

@@ -7,7 +7,7 @@ import Current from "src/js/state/Current"
 import Tabs from "src/js/state/Tabs"
 import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
-import {newQuery} from "../query-home/flows/new-query"
+import {newDraftQuery} from "../../js/state/DraftQueries/flows/new-draft-query"
 import Actions from "../query-home/toolbar/actions"
 
 const Header = styled.header`
@@ -50,7 +50,9 @@ const PoolHome = () => {
   const lakeId = useSelector(Current.getLakeId)
 
   const openNewDraftQuery = () => {
-    const query = dispatch(newQuery({pins: [{type: "from", value: pool.name}]}))
+    const query = dispatch(
+      newDraftQuery({pins: [{type: "from", value: pool.name}]})
+    )
     dispatch(Tabs.create(lakeQueryPath(query.id, lakeId)))
   }
   const keys = pool.data.layout.keys.map((k) => k.join("."))

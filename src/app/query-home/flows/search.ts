@@ -9,10 +9,9 @@ import brim, {Ts} from "src/js/brim"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import {getZealot} from "src/js/flows/getZealot"
-import {BrimQuery} from "../utils/brim-query"
 
 type Args = {
-  query: BrimQuery
+  query: string
   id?: string
   initial?: boolean
 }

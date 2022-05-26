@@ -21,7 +21,7 @@ const LinearHistoryItem = ({styles, data: historyItem}) => {
 
   function onClick() {
     dispatch(Search.restore(historyItem.search))
-    dispatch(submitSearch({history: true, investigation: false}))
+    dispatch(submitSearch({history: false, version: false}))
   }
 
   const ctxMenu: MenuItemConstructorOptions[] = [

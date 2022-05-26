@@ -1,31 +1,35 @@
-import {isRemoteLib, setRemoteQueries} from "./remote-queries"
-import {isBrimLib} from "../../../../js/state/Queries/flows"
+import {
+  deleteRemoteQueries,
+  isRemoteLib,
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import Tabs from "../../../../js/state/Tabs"
 import {lakeQueryPath} from "../../../router/utils/paths"
-import {submitSearch} from "../../../../js/flows/submitSearch/mod"
 import lib from "../../../../js/lib"
 import toast from "react-hot-toast"
 import {ipcRenderer, MenuItemConstructorOptions} from "electron"
 import exportQueryLib from "../../../../js/flows/exportQueryLib"
 import * as remote from "@electron/remote"
-import {Query} from "../../../../js/state/Queries/types"
 import Queries from "../../../../js/state/Queries"
+import QueryVersions from "src/js/state/QueryVersions"
+import Results from "src/js/state/Results"
+import Current from "src/js/state/Current"
+import {last} from "lodash"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers, lakeId}) =>
   (dispatch, getState, {api}) => {
-    const {value, id, isReadOnly} = data
+    const {id, isReadOnly} = data
     const isGroup = "items" in data
     const hasMultiSelected =
       tree.getSelectedIds().length > 1 &&
       !!tree.getSelectedIds().find((id) => id === data.id)
-    const selected = hasMultiSelected ? tree.getSelectedIds() : [id]
     const isRemoteItem = dispatch(isRemoteLib([id]))
-    const hasBrimItemSelected = dispatch(isBrimLib(selected))
+    const latestVersion = last(QueryVersions.getByQueryId(id)(getState()))
+    const query = Current.getQueryById(id)(getState())
 
     const runQuery = () => {
       dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
-      dispatch(submitSearch())
+      dispatch(Results.fetchFirstPage(query.toString()))
     }
 
     const handleDelete = () => {
@@ -41,17 +45,11 @@ const getQueryItemCtxMenu =
         })
         .then(({response}) => {
           if (response === 0) {
-            if (isRemoteItem) {
-              const remoteQueries = selected.map<Query>((id) => ({
-                id,
-                value: "",
-                name: "",
-                pins: [],
-              }))
-              dispatch(setRemoteQueries(remoteQueries, true))
-              return
-            }
-            dispatch(Queries.removeItems(selected))
+            selected.forEach((id) =>
+              dispatch(QueryVersions.clear({queryId: id}))
+            )
+            if (isRemoteItem) dispatch(deleteRemoteQueries(selected))
+            else dispatch(Queries.removeItems(selected))
           }
         })
     }
@@ -71,11 +69,11 @@ const getQueryItemCtxMenu =
         click: () => runQuery(),
       },
       {
-        label: "Copy Query",
+        label: "Copy Query Value",
         visible: !isGroup,
         click: () => {
-          lib.doc.copyToClipboard(value)
-          toast("Query copied to clipboard")
+          lib.doc.copyToClipboard(latestVersion?.value)
+          toast("Query value copied to clipboard")
         },
       },
       {
@@ -106,13 +104,12 @@ const getQueryItemCtxMenu =
       {type: "separator"},
       {
         label: "Rename",
-        enabled: !isReadOnly && !hasBrimItemSelected,
+        enabled: !isReadOnly,
         click: () => handlers.edit(),
       },
       {type: "separator"},
       {
         label: "Delete",
-        enabled: !hasBrimItemSelected,
         click: handleDelete,
       },
     ] as MenuItemConstructorOptions[]

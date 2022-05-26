@@ -82,7 +82,7 @@ export default function AppWrapper({children}) {
               >
                 {children}
               </ColumnLayout>
-              <XRightPane />
+              <FeatureFlag name="query-flow" on={null} off={<XRightPane />} />
             </RowLayout>
             <StatusBar />
           </ColumnLayout>

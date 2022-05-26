@@ -3,7 +3,6 @@ import {Tree, TreeApi} from "react-arborist"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Queries from "src/js/state/Queries"
-import {isBrimLib} from "src/js/state/Queries/flows"
 import {
   SectionContents,
   StyledSection,
@@ -20,12 +19,17 @@ import {QueriesView} from "src/js/state/Appearance/types"
 import TreeModel from "tree-model"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Query} from "src/js/state/Queries/types"
-import {refreshRemoteQueries, setRemoteQueries} from "../flows/remote-queries"
+import {
+  refreshRemoteQueries,
+  setRemoteQueries,
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import styled from "styled-components"
 import EmptySection from "src/js/components/common/EmptySection"
 import Icon from "src/app/core/icon-temp"
 import {listContextMenu} from "./list-context-menu"
 import Current from "src/js/state/Current"
+import QueryVersions from "src/js/state/QueryVersions"
+import {BrimQuery} from "../../../query-home/utils/brim-query"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />,
@@ -43,8 +47,8 @@ const QueriesSectionSwitch = ({view, toolbarButtons}) => {
 }
 
 const querySearch = (term: string, items: Query[]): Query[] => {
-  return items?.filter(({name, value, description}) =>
-    JSON.stringify({name, value, description})
+  return items?.filter(({name, description}) =>
+    JSON.stringify({name, description})
       .toLowerCase()
       .includes(term.toLowerCase())
   )
@@ -53,6 +57,7 @@ const querySearch = (term: string, items: Query[]): Query[] => {
 const RemoteQueriesView = ({toolbarButtons}) => {
   const dispatch = useDispatch()
   const remoteQueries = useSelector(RemoteQueries.raw)?.items
+  const queryVersions = useSelector(QueryVersions.raw)
   const [filteredQueries, setFilteredQueries] = useState(remoteQueries)
   const {resizeRef: ref, defaults} = useSectionTreeDefaults()
 
@@ -68,9 +73,11 @@ const RemoteQueriesView = ({toolbarButtons}) => {
     const q = find(remoteQueries, ["id", itemId]) as Query
     if (!q) return console.error("cannot locate remote query with id " + itemId)
     if (q.isReadOnly) return
-    dispatch(setRemoteQueries([{...q, name}])).then(() => {
-      dispatch(refreshRemoteQueries())
-    })
+    const versions = queryVersions[itemId]?.entities || []
+    const brimQ = new BrimQuery(q, versions)
+    dispatch(
+      setRemoteQueries([{...brimQ.serialize(), name, ...brimQ.latestVersion()}])
+    )
   }
 
   const onQuerySearch = (e) => {
@@ -136,10 +143,10 @@ const LocalQueriesView = ({toolbarButtons}) => {
 
   useEffect(() => {
     if (!query?.id) {
-      tree.current.select(null, false, false)
-    } else if (!tree.current.getSelectedIds().includes(query.id)) {
-      tree.current.scrollToId(query.id)
-      tree.current.selectById(query.id)
+      tree?.current?.select(null, false, false)
+    } else if (!tree?.current?.getSelectedIds().includes(query.id)) {
+      tree?.current?.scrollToId(query.id)
+      tree?.current?.selectById(query.id)
     }
   }, [query?.id])
 
@@ -166,8 +173,8 @@ const LocalQueriesView = ({toolbarButtons}) => {
     parentId: string | null,
     index: number
   ) => {
-    // no reordering if any one item is part of shipped brim lib
-    if (isFiltered || dispatch(isBrimLib([...dragIds, parentId]))) return
+    // no movement allowed if using a filter
+    if (isFiltered) return
     dispatch(Queries.moveItems(dragIds, parentId, index))
   }
 
@@ -188,14 +195,12 @@ const LocalQueriesView = ({toolbarButtons}) => {
         ref={tree}
         {...defaults}
         data={filteredQueries}
-        disableDrag={(d) => !!dispatch(isBrimLib([d.id]))}
-        disableDrop={(d) => d.id === "brim"}
         onMove={handleMove}
         onEdit={handleRename}
         onToggle={(id, value) => {
           dispatch(Queries.toggleGroup(id, value))
         }}
-        onContextMenu={() => dispatch(listContextMenu(tree.current))}
+        onContextMenu={() => dispatch(listContextMenu(tree?.current))}
       >
         {QueryItem}
       </Tree>

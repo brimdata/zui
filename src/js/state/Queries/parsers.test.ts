@@ -2,7 +2,7 @@ import {parseJSONLib} from "./parsers"
 
 test("parses json file as query lib with annotations", () => {
   expect.assertions(8)
-  const parsedQueryLib = parseJSONLib(
+  const {libRoot: parsedQueryLib} = parseJSONLib(
     "src/js/state/Queries/fixtures/test-query-lib.json"
   )
   expect(parsedQueryLib["isOpen"]).toEqual(false)

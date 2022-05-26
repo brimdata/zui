@@ -22,6 +22,7 @@ import Appearance from "./Appearance"
 import RemoteQueries from "./RemoteQueries"
 import Ingests from "./Ingests"
 import DraftQueries from "./DraftQueries"
+import QueryVersions from "./QueryVersions"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -41,6 +42,7 @@ const rootReducer = combineReducers<any, any>({
   systemTest: SystemTest.reducer,
   lakeStatuses: LakeStatuses.reducer,
   queries: Queries.reducer,
+  queryVersions: QueryVersions.reducer,
   remoteQueries: RemoteQueries.reducer,
   draftQueries: DraftQueries.reducer,
   tabHistories: TabHistories.reducer,

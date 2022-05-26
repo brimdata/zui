@@ -2,8 +2,8 @@ import React, {useEffect, useLayoutEffect, useRef, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
 import Current from "src/js/state/Current"
-import {getQuerySource} from "../flows/get-query-source"
-import {updateQuery} from "../flows/update-query"
+import {getQuerySource} from "../../../js/state/Queries/flows/get-query-source"
+import {updateQuery} from "../../../js/state/Queries/flows/update-query"
 import useEnterKey from "../../../js/components/hooks/useEnterKey"
 import {AppDispatch} from "../../../js/state/types"
 import DraftQueries from "src/js/state/DraftQueries"
@@ -179,14 +179,14 @@ const QueryHeader = () => {
 
   const onSubmit = (newTitle) => {
     setIsEditing(false)
+    const newQuery = {...query.serialize(), name: newTitle}
     if (newTitle !== "") {
-      query.name = newTitle
       if (querySource === "draft") {
-        dispatch(Queries.addItem(query.serialize(), "root"))
+        dispatch(Queries.addItem(newQuery, "root"))
         dispatch(DraftQueries.remove({id: query.id}))
         dispatch(tabHistory.replace(lakeQueryPath(query.id, lakeId)))
       } else {
-        dispatch(updateQuery(query))
+        dispatch(updateQuery(query, newQuery))
       }
     }
   }

@@ -4,7 +4,6 @@ import {zed} from "@brimdata/zealot"
 import {Correlation} from "../models/Correlation"
 import {getCorrelationQuery} from "./get-correlation-query"
 import {featureIsEnabled} from "../../../app/core/feature-flag"
-import {BrimQuery} from "../../../app/query-home/utils/brim-query"
 import Current from "src/js/state/Current"
 
 function findConn(records) {
@@ -37,13 +36,9 @@ export const fetchCorrelation = (record: zed.Record, id = "RELATED_EVENTS") => {
     const {uid, cid} = new Correlation(record).getIds()
     const run = () => {
       const poolId = Current.getQueryPool(getState())?.id
-      const q = new BrimQuery({
-        id: "",
-        name: "",
-        value: query,
-        pins: [{type: "from", value: poolId}],
-      })
-      return dispatch(querySearch({query: q, id})).then((r) => r.zed())
+      return dispatch(
+        querySearch({query: `from ${poolId} | ${query}`, id})
+      ).then((r) => r.zed())
     }
 
     if (!uid && !cid) return []

@@ -1,31 +1,53 @@
 import {Query} from "src/js/state/Queries/types"
+import {QueryVersion} from "src/js/state/QueryVersions"
+import {last} from "lodash"
+import {QueryPin, QueryPinInterface} from "../../../js/state/Editor/types"
 import {isNumber} from "lodash"
 import brim from "src/js/brim"
-import {ANALYTIC_PROCS, HEAD_PROC} from "src/js/brim/ast"
 import {parseAst} from "@brimdata/zealot"
 import buildPin from "src/js/state/Editor/models/build-pin"
-import {QueryPin} from "src/js/state/Editor/types"
+import {nanoid} from "@reduxjs/toolkit"
 export type PinType = "from" | "filter"
 export const DRAFT_QUERY_NAME = "Draft Query"
 
 export class BrimQuery implements Query {
   id: string
   name: string
-  value: string
-  pins?: QueryPin[]
   description?: string
   tags?: string[]
   isReadOnly?: boolean
+  current: QueryVersion
+  versions: QueryVersion[]
   head?: number
 
-  constructor(raw: Query) {
+  constructor(raw: Query, versions: QueryVersion[], current?: string) {
     this.id = raw.id
     this.name = raw.name
-    this.value = raw.value
-    this.pins = raw.pins || []
+    this.versions = versions
     this.description = raw.description || ""
     this.tags = raw.tags || []
     this.isReadOnly = raw.isReadOnly || false
+    // default current to latest version if none supplied
+    this.current = current
+      ? versions.find((v) => v.version === current)
+      : last(versions)
+  }
+
+  get value() {
+    return this.current.value
+  }
+  get pins() {
+    return this.current.pins
+  }
+
+  newVersion(value?: string, pins?: QueryPin[]) {
+    const newV: QueryVersion = {
+      value: value ?? "",
+      pins: pins ?? [],
+      version: nanoid(),
+      ts: new Date(),
+    }
+    return new BrimQuery(this.serialize(), [...this.versions, newV])
   }
 
   getFromPin() {
@@ -38,16 +60,20 @@ export class BrimQuery implements Query {
     return name
   }
 
+  currentVersion(): QueryVersion {
+    return this.current
+  }
+
+  allVersions(): QueryVersion[] {
+    return this.versions
+  }
+
+  latestVersion(): QueryVersion {
+    return last(this.versions)
+  }
+
   getPoolName() {
     return this.getFromPin()
-  }
-
-  hasHeadFilter() {
-    return !!this.ast().proc(HEAD_PROC)
-  }
-
-  toggleLock() {
-    this.isReadOnly = !this.isReadOnly
   }
 
   private ast() {
@@ -70,19 +96,10 @@ export class BrimQuery implements Query {
     return error
   }
 
-  hasAnalytics() {
-    for (const proc of this.ast().getProcs()) {
-      if (ANALYTIC_PROCS.includes(proc.kind)) return true
-    }
-    return false
-  }
-
   serialize(): Query {
     return {
       id: this.id,
       name: this.name,
-      value: this.value,
-      pins: this.pins,
       description: this.description,
       tags: this.tags,
       isReadOnly: this.isReadOnly,
@@ -90,11 +107,12 @@ export class BrimQuery implements Query {
   }
 
   toString(): string {
-    let s = this.pins
+    const current = this.currentVersion()
+    let s = current.pins
       .filter((p) => !p.disabled)
-      .map(buildPin)
+      .map<QueryPinInterface>(buildPin)
       .map((p) => p.toZed())
-      .concat(this.value)
+      .concat(current.value)
       .filter((s) => s.trim() !== "")
       .join(" | ")
       .trim()

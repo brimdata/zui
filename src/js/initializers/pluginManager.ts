@@ -68,7 +68,7 @@ class Plugin {
     } catch (e) {
       if (e.code === "MODULE_NOT_FOUND") {
         throw new Error(
-          "Plugin directory must contain an index file as the entry point."
+          `Plugin directory ${this.folderPath} must contain an index file as the entry point.`
         )
       }
       throw e

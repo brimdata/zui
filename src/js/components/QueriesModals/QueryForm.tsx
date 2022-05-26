@@ -163,35 +163,39 @@ const QueryForm = ({onClose, query, value, isRemote}: Props) => {
         pins,
         from,
       }
-      if (isRemote) {
+      if (!isRemote) {
+        if (query) {
+          // editing local query
+          const {id} = query
+          dispatch(
+            Queries.editItem(
+              {
+                id,
+                ...newQuery,
+              },
+              id
+            )
+          )
+        } else {
+          // adding local query
+          dispatch(
+            Queries.addItem(
+              {
+                id: nanoid(),
+                ...newQuery,
+              },
+              queriesRoot.id
+            )
+          )
+        }
+      } else {
         // editing or creating remote query
         const id = query ? query.id : nanoid()
+        // TODO: fix this or just flip 'query-flow' flag on and remove?
+        // @ts-ignore
         dispatch(setRemoteQueries([{id, ...newQuery}])).then(() => {
           dispatch(refreshRemoteQueries())
         })
-      } else if (query) {
-        // editing local query
-        const {id} = query
-        dispatch(
-          Queries.editItem(
-            {
-              id,
-              ...newQuery,
-            },
-            id
-          )
-        )
-      } else {
-        // adding local query
-        dispatch(
-          Queries.addItem(
-            {
-              id: nanoid(),
-              ...newQuery,
-            },
-            queriesRoot.id
-          )
-        )
       }
     } else {
       setErrors(form.getErrors)
