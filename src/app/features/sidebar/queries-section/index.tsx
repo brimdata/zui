@@ -28,8 +28,9 @@ import EmptySection from "src/js/components/common/EmptySection"
 import Icon from "src/app/core/icon-temp"
 import {listContextMenu} from "./list-context-menu"
 import Current from "src/js/state/Current"
-import QueryVersions, {QueryVersion} from "src/js/state/QueryVersions"
-import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import QueryVersions from "src/js/state/QueryVersions"
+import {BrimQuery} from "../../../query-home/utils/brim-query"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />,

@@ -69,12 +69,12 @@ export function Menu() {
       >
         <span>Queries</span>
       </button>
-      <button
-        onClick={onClick("history")}
-        aria-pressed={currentSectionName === "history"}
-      >
-        <span>History</span>
-      </button>
+      {/*<button*/}
+      {/*  onClick={onClick("history")}*/}
+      {/*  aria-pressed={currentSectionName === "history"}*/}
+      {/*>*/}
+      {/*  <span>History</span>*/}
+      {/*</button>*/}
     </BG>
   )
 }

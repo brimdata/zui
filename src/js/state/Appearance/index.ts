@@ -1,14 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {SectionData} from "src/pkg/sectional"
 import {State} from "../types"
-import {HistoryView, PaneName, QueriesView, SectionName} from "./types"
+import {HistoryView, QueriesView, SectionName} from "./types"
 
 const init = () => ({
   sidebarIsOpen: true,
   sidebarWidth: 230,
   sidebarSections: [{id: "pools"}, {id: "queries"}, {id: "history"}],
   currentSectionName: "pools" as SectionName,
-  currentPaneName: "versions" as PaneName,
   queriesView: "local" as QueriesView,
   historyView: "linear" as HistoryView,
 })
@@ -18,7 +17,6 @@ const select = {
   sidebarWidth: (state: State) => state.appearance.sidebarWidth,
   sidebarSections: (state: State) => state.appearance.sidebarSections,
   getCurrentSectionName: (state: State) => state.appearance.currentSectionName,
-  getCurrentPaneName: (state: State) => state.appearance.currentPaneName,
   getQueriesView: (state: State) => state.appearance.queriesView,
   getHistoryView: (state: State) => state.appearance.historyView,
 }
@@ -38,9 +36,6 @@ const slice = createSlice({
     },
     setCurrentSectionName(s, action: PayloadAction<SectionName>) {
       s.currentSectionName = action.payload
-    },
-    setCurrentPaneName(s, action: PayloadAction<PaneName>) {
-      s.currentPaneName = action.payload
     },
     setQueriesView(s, action: PayloadAction<QueriesView>) {
       s.queriesView = action.payload

@@ -4,7 +4,6 @@ import DetailSection from "./detail-section"
 import styled from "styled-components"
 import {useDispatch} from "src/app/core/state"
 import {useSelector} from "react-redux"
-import Appearance from "src/js/state/Appearance"
 import {XRightPaneExpander} from "../../../js/components/RightPaneExpander"
 import Layout from "../../../js/state/Layout"
 import Pane from "../../../js/components/Pane"
@@ -76,8 +75,8 @@ const PaneContentSwitch = ({paneName}) => {
 
 export function Menu() {
   const dispatch = useDispatch()
-  const currentPaneName = useSelector(Appearance.getCurrentPaneName)
-  const onClick = (name) => () => dispatch(Appearance.setCurrentPaneName(name))
+  const currentPaneName = useSelector(Layout.getCurrentPaneName)
+  const onClick = (name) => () => dispatch(Layout.setCurrentPaneName(name))
   return (
     <BG>
       <button
@@ -98,7 +97,7 @@ export function Menu() {
 
 const RightPane = () => {
   const dispatch = useDispatch()
-  const currentPaneName = useSelector(Appearance.getCurrentPaneName)
+  const currentPaneName = useSelector(Layout.getCurrentPaneName)
   const isOpen = useSelector(Layout.getDetailPaneIsOpen)
   const width = useSelector(Layout.getDetailPaneWidth)
 

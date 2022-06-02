@@ -12,7 +12,7 @@ export const BG = styled.div`
 
 export const Toolbar = styled.header`
   background: white;
-  border-bottom: 1px solid var(--pane-border);
+  border-bottom: 1px solid var(--border-color);
   border-top: none;
   flex: 0 0 25px;
   display: flex;

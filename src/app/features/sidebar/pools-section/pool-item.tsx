@@ -1,5 +1,5 @@
 import getPoolContextMenu from "src/app/pools/flows/get-pool-context-menu"
-import {lakePoolPath} from "src/app/router/utils/paths"
+import {lakePoolPath, lakeQueryPath} from "src/app/router/utils/paths"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Current from "src/js/state/Current"
@@ -11,6 +11,7 @@ import {Pool} from "src/app/core/pools/pool"
 import Ingests from "src/js/state/Ingests"
 import Tabs from "src/js/state/Tabs"
 import {Item} from "../item"
+import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
 
 const PoolItem = ({styles, data, state, handlers}) => {
   const pool = data as Pool
@@ -24,18 +25,22 @@ const PoolItem = ({styles, data, state, handlers}) => {
         handlers.edit()
       },
     },
+    {
+      label: "Get Info",
+      click: () => {
+        dispatch(Tabs.activateUrl(lakePoolPath(pool.id, lakeId)))
+      },
+    },
     ...dispatch(getPoolContextMenu(pool)),
   ]
 
   const onClick = (e) => {
     e.preventDefault()
     handlers.select(e, {selectOnClick: true})
-    dispatch(Tabs.previewUrl(lakePoolPath(pool.id, lakeId)))
-  }
-
-  const onDoubleClick = (e) => {
-    e.preventDefault()
-    dispatch(Tabs.activateUrl(lakePoolPath(pool.id, lakeId)))
+    const query = dispatch(
+      newDraftQuery({pins: [{type: "from", value: pool.name}]})
+    )
+    dispatch(Tabs.previewUrl(lakeQueryPath(query.id, lakeId)))
   }
 
   return (
@@ -45,7 +50,6 @@ const PoolItem = ({styles, data, state, handlers}) => {
       state={state}
       styles={styles}
       onClick={onClick}
-      onDoubleClick={onDoubleClick}
       onContextMenu={() => showContextMenu(ctxMenu)}
       onSubmit={handlers.submit}
       progress={ingest?.progress}

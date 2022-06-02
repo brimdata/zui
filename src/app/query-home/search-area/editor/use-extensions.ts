@@ -6,6 +6,7 @@ import {
   drawSelection,
   highlightActiveLine,
   dropCursor,
+  placeholder,
 } from "@codemirror/view"
 import {Extension, EditorState} from "@codemirror/state"
 import {history, historyKeymap} from "@codemirror/history"
@@ -17,29 +18,7 @@ import {highlightSelectionMatches} from "@codemirror/search"
 import {autocompletion, completionKeymap} from "@codemirror/autocomplete"
 import {rectangularSelection} from "@codemirror/rectangular-selection"
 import {defaultHighlightStyle} from "@codemirror/highlight"
-import {cssVar} from "src/js/lib/cssVar"
-
-const editorTheme = EditorView.theme(
-  {
-    ".cm-content": {
-      fontFamily: cssVar("--mono-font"),
-      lineHeight: 1.6,
-    },
-    ".cm-gutters": {
-      margin: 0,
-      border: "none",
-      color: cssVar("--aqua-transparent"),
-      background: "transparent",
-    },
-    ".cm-activeLine": {
-      background: "transparent",
-    },
-    ".cm-activeLineGutter": {
-      background: "transparent",
-    },
-  },
-  {dark: false}
-)
+import {editorTheme} from "./theme"
 
 const baseEditorSetup: Extension = [
   lineNumbers(),
@@ -63,6 +42,7 @@ const baseEditorSetup: Extension = [
     ...completionKeymap,
     ...foldKeymap,
   ]),
+  placeholder("Compose your Zed query..."),
 ]
 
 export function useExtensions(args: {
@@ -76,7 +56,7 @@ export function useExtensions(args: {
       args.onChange(viewUpdate.state.doc.toString())
     })
     const extensions = [editorTheme, onChangeUpdater]
-    if (args.multiLine) extensions.push(baseEditorSetup)
+    extensions.push(baseEditorSetup)
     if (args.disabled) extensions.push(EditorView.editable.of(false))
     return extensions
   }, [args.multiLine, args.disabled, args.onChange])

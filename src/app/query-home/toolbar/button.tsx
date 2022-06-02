@@ -44,12 +44,12 @@ const Text = styled.span`
 `
 
 const StyledButton = styled.button<{isPrimary: boolean; disabled: boolean}>`
-  background: var(--control-background);
+  background: var(--button-background);
   &:active:not(:disabled) {
     background: linear-gradient(#fefefe, 0.5px, #f3f3f3 2px);
   }
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   user-select: none;
   min-width: 48px;
   -webkit-app-region: no-drag;
@@ -80,10 +80,10 @@ const StyledButton = styled.button<{isPrimary: boolean; disabled: boolean}>`
   } 
   `}
   &:hover:not(:disabled) {
-    background: var(--control-hover);
+    background: var(--button-background-hover);
   }
   &:active:not(:disabled) {
-    background: var(--control-active);
+    background: var(--button-background-active);
   }
 `
 

@@ -1,15 +1,14 @@
-import {isObject, isString} from "lodash"
+import {isObject} from "lodash"
 import React from "react"
 import styled from "styled-components"
 
 const BG = styled.div`
   margin-top: 16px;
-  padding: 32px;
-  background: rgba(0, 0, 0, 0.03);
+  padding: 24px;
   width: 100%;
   height: 100%;
-  h4 {
-    margin-bottom: 1em;
+  h2 {
+    margin-bottom: 0.5em;
   }
 `
 
@@ -33,16 +32,15 @@ function isParseError(obj: unknown): obj is PegSyntaxError {
 }
 
 export function ResultsError(props: {error: string | object}) {
-  if (isString(props.error))
-    return (
-      <BG>
-        <h4>Error</h4>
-        <p>{props.error}</p>
-      </BG>
-    )
   if (isParseError(props.error)) {
     return <SyntaxError error={props.error} />
   }
+  return (
+    <BG>
+      <h2>Error</h2>
+      <p>{props.error.toString()}</p>
+    </BG>
+  )
 }
 
 export function SyntaxError(props: {error: PegSyntaxError}) {
