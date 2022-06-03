@@ -1,0 +1,18 @@
+name: Build Linux
+description: Specific steps to build for Linux
+inputs:
+  gh_token:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: install rpm
+      run: sudo apt-get install -y rpm
+      shell: bash
+
+    - name: build packages
+      run: yarn electron-builder
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.gh_token }}

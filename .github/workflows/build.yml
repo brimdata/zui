@@ -1,0 +1,56 @@
+name: Build & Publish
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        platform: [linux]
+        include:
+          # - platform: windows
+          #   runner: windows-2019
+
+          # - platform: macos
+          #   runner: macos-10.15
+
+          - platform: linux
+            runner: ubuntu-18.04
+
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Brim
+        uses: ./.github/actions/setup-zui
+
+      - name: Build Linux
+        if: runner.os == 'Linux'
+        uses: ./.github/actions/build-linux
+        with:
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Windows
+        if: runner.os == 'Windows'
+        uses: ./.github/actions/build-win
+        with:
+          csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
+          csc_link: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Mac
+        if: runner.os == 'macOS'
+        uses: ./.github/actions/build-mac
+        with:
+          apple_id: ${{ secrets.APPLEID_USER }}
+          apple_id_password: ${{ secrets.APPLEID_PASSWORD }}
+          cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
+          cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,64 @@
+name: Build Mac
+description: Specific steps to build for Mac
+inputs:
+  apple_id:
+    required: true
+  apple_id_password:
+    required: true
+  cert_p12:
+    required: true
+  cert_passphrase:
+    required: true
+  gh_token:
+    requierd: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: create build keychain and import Developer ID certificate into it
+      run: |
+        security create-keychain -p password build
+        security default-keychain -s build
+        security unlock-keychain -p password build
+        f=$(mktemp)
+        echo ${{ inputs.cert_p12 }} | base64 -d > $f
+        security import $f -k build -A -T /usr/bin/codesign -T /usr/bin/security -f pkcs12  -P ${{ inputs.cert_passphrase }}
+        rm $f
+        security set-key-partition-list -S apple-tool:,apple: -k password build
+        security find-identity -p codesigning -v
+      shell: bash
+
+    - name: build signed and notarized package (failure expected)
+      # We've observed a problem with the new build system where the
+      # notarization consistently fails because of an alleged lack of signing
+      # of the file Corelight-CommunityID.darwin-x86_64.so. After much futile
+      # debug, since these Zeek pieces are not expected to be part of the Brim
+      # build for much longer, for now we're using the workaround of just
+      # running the build step twice, as we've observed that it works
+      # consistently on a retry.
+      run: |
+        yarn electron-builder || true
+      env:
+        APPLE_ID: ${{ inputs.apple_id }}
+        APPLE_ID_PASSWORD: ${{ inputs.apple_id_pasword }}
+        GH_TOKEN: ${{ inputs.gh_token }}
+      shell: bash
+
+    - name: build signed and notarized package (success expected)
+      # On the retry we've observed the "hanging" symptom similar to what's
+      # described at https://github.com/electron/electron-packager/issues/701.
+      # As implied there, repeating the "security" commands gets past the
+      # problem.
+      run: |
+        security set-key-partition-list -S apple-tool:,apple: -k password build
+        security find-identity -p codesigning -v
+        yarn electron-builder
+      env:
+        APPLE_ID: ${{ inputs.apple_id }}
+        APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
+        GH_TOKEN: ${{ inputs.gh_token }}
+      shell: bash
+
+    - name: run gatekeeper assessment on notarized package
+      run: spctl --assess --type execute --verbose --ignore-cache --no-cache dist/installers/mac/Zui.app
+      shell: bash

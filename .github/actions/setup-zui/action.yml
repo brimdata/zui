@@ -1,0 +1,23 @@
+name: Setup Zui
+description: Shared steps for setting up Zui in workflows
+runs:
+  using: "composite"
+  steps:
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: "1.18"
+
+    - name: Install Node
+      uses: actions/setup-node@v2
+      with:
+        cache: yarn
+        node-version-file: .node-version
+
+    - name: Yarn Install
+      run: yarn --inline-builds
+      shell: bash
+
+    - name: Yarn Build
+      run: yarn run build
+      shell: bash
