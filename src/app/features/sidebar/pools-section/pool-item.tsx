@@ -1,5 +1,5 @@
 import getPoolContextMenu from "src/app/pools/flows/get-pool-context-menu"
-import {lakePoolPath, lakeQueryPath} from "src/app/router/utils/paths"
+import {lakePoolPath} from "src/app/router/utils/paths"
 import React from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Current from "src/js/state/Current"
@@ -11,7 +11,7 @@ import {Pool} from "src/app/core/pools/pool"
 import Ingests from "src/js/state/Ingests"
 import Tabs from "src/js/state/Tabs"
 import {Item} from "../item"
-import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
+import {poolClick} from "../flows/pool-click"
 
 const PoolItem = ({styles, data, state, handlers}) => {
   const pool = data as Pool
@@ -37,10 +37,7 @@ const PoolItem = ({styles, data, state, handlers}) => {
   const onClick = (e) => {
     e.preventDefault()
     handlers.select(e, {selectOnClick: true})
-    const query = dispatch(
-      newDraftQuery({pins: [{type: "from", value: pool.name}]})
-    )
-    dispatch(Tabs.previewUrl(lakeQueryPath(query.id, lakeId)))
+    dispatch(poolClick(pool))
   }
 
   return (
