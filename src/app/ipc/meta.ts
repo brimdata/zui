@@ -2,7 +2,7 @@ import {readJSONSync} from "fs-extra"
 import {createClient} from "src/pkg/electron-ipc-service"
 import {app} from "electron"
 import {paths} from "./paths"
-
+import {isFirstRun} from "./first-run"
 class Meta {
   _packageJSON: object | undefined
 
@@ -19,6 +19,10 @@ class Meta {
 
   version() {
     return app.getVersion()
+  }
+
+  isFirstRun() {
+    return isFirstRun()
   }
 }
 
