@@ -10,9 +10,8 @@ import Layout from "src/js/state/Layout"
 import Viewer from "src/js/state/Viewer"
 import {ViewerDimens} from "src/js/types"
 import LogRow from "src/js/components/LogRow"
-import buildViewerDimens from "src/js/components/Viewer/buildViewerDimens"
-import Chunker from "src/js/components/Viewer/Chunker"
-import {endMessage} from "src/js/components/Viewer/Styler"
+import buildViewerDimens from "src/app/query-home/results/results-table/build-viewer-dimens"
+import Chunker from "src/app/query-home/results/results-table/chunker"
 import ViewerComponent from "./viewer"
 import getEndMessage from "./get-end-message"
 import NoResults from "./no-results"
@@ -23,6 +22,14 @@ import {zed} from "packages/zealot/src"
 type Props = {
   height: number
   width: number
+}
+
+const endMessage = (dimens: ViewerDimens) => {
+  return {
+    height: dimens.rowHeight * 4,
+    transform: `translateY(${dimens.listHeight}px)`,
+    width: dimens.viewWidth,
+  }
 }
 
 const ResultsTable = (props: Props) => {

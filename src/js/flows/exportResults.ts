@@ -6,11 +6,9 @@ import brim from "../brim"
 import Columns from "../state/Columns"
 import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
-import Tab from "../state/Tab"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 import {annotateQuery} from "./search/mod"
-import {featureIsEnabled} from "../../app/core/feature-flag"
 
 const streamPipeline = util.promisify(pipeline)
 

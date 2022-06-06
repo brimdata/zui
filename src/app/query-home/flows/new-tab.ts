@@ -7,7 +7,7 @@ import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
-import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
+import {newDraftQuery} from "src/app/query-home/flows/new-draft-query"
 
 export const newTab = (): Thunk => (dispatch, getState) => {
   const lakeId = Current.getLakeId(getState())
@@ -21,10 +21,4 @@ export const newTab = (): Thunk => (dispatch, getState) => {
     url = lakeQueryPath(dispatch(newDraftQuery()).id, lakeId)
   }
   dispatch(Tabs.create(url))
-}
-
-function legacyNewTab(dispatch, getState) {
-  const lakeId = Current.getLakeId(getState())
-  const path = lakeId ? lakeImportPath(lakeId) : lakesPath()
-  dispatch(Tabs.create(path))
 }

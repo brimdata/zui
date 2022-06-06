@@ -2,7 +2,7 @@ import React, {MouseEvent} from "react"
 
 import {ModalButton} from "./types"
 import ButtonRow from "../ButtonRow"
-import ToolbarButton from "src/app/toolbar/button"
+import ToolbarButton from "src/app/query-home/toolbar/button"
 
 type Props = {
   template: ModalButton[]

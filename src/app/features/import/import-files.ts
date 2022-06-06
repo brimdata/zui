@@ -16,8 +16,7 @@ import Pools from "src/js/state/Pools"
 import SystemTest from "src/js/state/SystemTest"
 import Tabs from "src/js/state/Tabs"
 import {Dispatch, Thunk} from "src/js/state/types"
-import {lakePath, lakePoolPath, poolSearchPath} from "../../router/utils/paths"
-import {featureIsEnabled} from "src/app/core/feature-flag"
+import {lakePath, lakePoolPath} from "../../router/utils/paths"
 
 export default (files: File[]): Thunk<Promise<void>> =>
   async (dispatch, getState, {api}) => {

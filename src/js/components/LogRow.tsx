@@ -7,7 +7,6 @@ import React, {memo, MouseEvent} from "react"
 import {zed} from "@brimdata/zealot"
 import TableColumns from "../models/TableColumns"
 import {ViewerDimens} from "../types"
-import * as Styler from "./Viewer/Styler"
 
 type Props = {
   displayConfig: FormatConfig
@@ -18,6 +17,13 @@ type Props = {
   columns: TableColumns
   onClick: (e: MouseEvent) => void
   onDoubleClick: (e: MouseEvent) => void
+}
+
+const row = (dimens: ViewerDimens) => {
+  return {
+    width: dimens.rowWidth,
+    height: dimens.rowHeight,
+  }
 }
 
 const LogRow = (props: Props) => {
@@ -55,7 +61,7 @@ const LogRow = (props: Props) => {
     <div
       role="row"
       className={classNames("log-row", {highlight, even: index % 2 === 0})}
-      style={Styler.row(dimens)}
+      style={row(dimens)}
       onClick={onClick}
       onDoubleClick={onDoubleClick}
     >

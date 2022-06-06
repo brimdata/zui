@@ -36,11 +36,3 @@ export const shift = (
     brim.time(to).add(amount, unit).toDate(),
   ]
 }
-
-export const spanOfLast = (
-  number: number,
-  unit: TimeUnit,
-  now: Date = new Date()
-): DateTuple => {
-  return [brim.time(now).subtract(number, unit).toDate(), now]
-}

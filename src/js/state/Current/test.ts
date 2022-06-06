@@ -7,18 +7,12 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 import Lakes from "../Lakes"
 import {Lake} from "../Lakes/types"
 import Current from "./"
-import {lakePath, poolSearchPath} from "src/app/router/utils/paths"
+import {lakePath} from "src/app/router/utils/paths"
 
 let store
 
 beforeEach(() => {
   store = initTestStore()
-})
-
-test("setting the pool id", () => {
-  store.dispatch(tabHistory.push(poolSearchPath("1", "1")))
-
-  expect(Current.getPoolId(store.getState())).toBe("1")
 })
 
 test("setting the lake id", () => {

@@ -1,8 +1,3 @@
-import {
-  DecodedSearchParams,
-  encodeSearchParams,
-} from "src/app/search/utils/search-params"
-
 export const lakesPath = () => {
   return "/lakes"
 }
@@ -17,16 +12,6 @@ export const lakeImportPath = (lakeId: string) => {
 
 export const lakePoolPath = (poolId: string, lakeId: string) => {
   return `${lakePath(lakeId)}/pools/${poolId}`
-}
-
-// TODO: deprecate this when we remove 'query-flow' feature-flag
-type Params = Partial<DecodedSearchParams>
-export function poolSearchPath(
-  poolId: string,
-  lakeId: string,
-  params: Params = {}
-) {
-  return `${lakePoolPath(poolId, lakeId)}/search?${encodeSearchParams(params)}`
 }
 
 export function lakeQueryPath(
