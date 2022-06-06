@@ -2,12 +2,22 @@ import LoadFilesInput from "src/ppl/import/LoadFilesInput"
 import React from "react"
 import Link from "src/js/components/common/Link"
 import links from "../core/links"
+import {Content} from "src/js/components/Content"
+import styled from "styled-components"
+
+const BG = styled.div`
+  padding: 24px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+`
 
 export default function TabImport() {
   return (
-    <div className="input-methods">
-      <section>
-        <h2>Import Files</h2>
+    <BG>
+      <Content>
+        <h2>New Pool</h2>
+        <p>Create a new pool by loading data.</p>
         <LoadFilesInput />
         <footer>
           <p>
@@ -29,7 +39,7 @@ export default function TabImport() {
           <Link href="https://parquet.apache.org/">Parquet</Link> and{" "}
           <Link href={links.ZED_DOCS_FORMATS_ZST}>ZST</Link> formats.
         </footer>
-      </section>
-    </div>
+      </Content>
+    </BG>
   )
 }

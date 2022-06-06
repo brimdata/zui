@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {useTimeZone} from "src/app/core/format"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import styled from "styled-components"
-import {useDialog} from "../dialog"
+import {PinFormProps} from "../base-pin"
 import {
   Actions,
   ActionsGroup,
@@ -23,13 +23,7 @@ const Preview = styled.time`
   whitespace: nowrap;
 `
 
-export default function Form(props: {
-  pin: TimeRangeQueryPin
-  onSubmit: (pin: TimeRangeQueryPin) => void
-  onReset: () => void
-  onDelete: () => void
-}) {
-  useDialog({onCancel: props.onReset, onClose: props.onReset})
+export default function Form(props: PinFormProps<TimeRangeQueryPin>) {
   const zone = useTimeZone()
   const [fromValue, setFromValue] = useState(props.pin.from)
   const [toValue, setToValue] = useState(props.pin.to)

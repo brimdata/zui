@@ -3,7 +3,7 @@ import {cssVar, darken, transparentize} from "polished"
 import {ReactNode} from "react"
 import styled from "styled-components"
 import Icon from "src/app/core/icon-temp"
-import {Dialog} from "./dialog"
+import {Dialog, useDialog} from "./dialog"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Editor from "src/js/state/Editor"
@@ -14,6 +14,8 @@ import usePinDnd from "./use-pin-dnd"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {QueryPin} from "src/js/state/Editor/types"
 import buildPin from "src/js/state/Editor/models/build-pin"
+import {isEqual} from "lodash"
+import submitSearch from "../../flows/submit-search"
 
 const primary = cssVar("--primary-color") as string
 const buttonColor = transparentize(0.8, primary)
@@ -95,13 +97,50 @@ const DropCursorRight = styled(DropCursor)`
   right: -4px;
 `
 
-export type PinProps = {
+function BaseForm(props: PinProps<QueryPin>) {
+  const dispatch = useDispatch()
+
+  function onSubmit(pin: QueryPin) {
+    if (isEqual(pin, props.pin)) return
+    dispatch(Editor.updatePin(pin))
+    dispatch(submitSearch())
+  }
+
+  function onDelete() {
+    dispatch(Editor.deletePin(props.index))
+    dispatch(submitSearch())
+  }
+
+  function onReset() {
+    dispatch(Editor.cancelPinEdit())
+  }
+
+  useDialog({onCancel: onReset, onClose: onReset})
+
+  return (
+    <props.form
+      pin={props.pin}
+      onSubmit={onSubmit}
+      onReset={onReset}
+      onDelete={onDelete}
+    />
+  )
+}
+
+export type PinProps<T extends QueryPin> = {
   index: number
   label: ReactNode
   pin: QueryPin
   prefix?: string
   showMenu?: () => void
-  form?: ReactNode
+  form?: React.FC<PinFormProps<T>>
+}
+
+export type PinFormProps<Pin extends QueryPin = QueryPin> = {
+  pin: Pin
+  onSubmit: (pin: Pin) => void
+  onReset: () => void
+  onDelete: () => void
 }
 
 /**
@@ -110,7 +149,7 @@ export type PinProps = {
  * to it, it will call it when editing.
  */
 export const BasePin = React.forwardRef(function BasePin(
-  props: PinProps,
+  props: PinProps<QueryPin>,
   forwardedRef
 ) {
   const [button, setButton] = useCallbackRef()
@@ -159,7 +198,7 @@ export const BasePin = React.forwardRef(function BasePin(
           left={0}
           width={360}
         >
-          {props.form}
+          <BaseForm {...props} />
         </Dialog>
       )}
     </>

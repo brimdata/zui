@@ -4,11 +4,11 @@ import {useDispatch, useSelector} from "react-redux"
 import {lakeQueryPath} from "src/app/router/utils/paths"
 import {bytes} from "src/js/lib/fmt"
 import Current from "src/js/state/Current"
+import Queries from "src/js/state/Queries"
 import Tabs from "src/js/state/Tabs"
 import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
 import Actions from "../query-home/toolbar/actions"
-import {newDraftQuery} from "src/app/query-home/flows/new-draft-query"
 
 const Header = styled.header`
   padding: 16px;
@@ -51,7 +51,7 @@ const PoolHome = () => {
 
   const openNewDraftQuery = () => {
     const query = dispatch(
-      newDraftQuery({pins: [{type: "from", value: pool.name}]})
+      Queries.create({pins: [{type: "from", value: pool.name}]})
     )
     dispatch(Tabs.create(lakeQueryPath(query.id, lakeId)))
   }
