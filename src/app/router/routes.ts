@@ -15,16 +15,16 @@ export const lakeList = {
   title: "Choose a Lake",
 }
 export const lakeShow = {
-  title: "<lake>",
+  title: "Lake: <lake>",
   path: `${lakeList.path}/:lakeId`,
 }
 export const lakeImport = {
-  title: "Import Files",
+  title: "New Pool",
   path: `${lakeShow.path}/import`,
 }
 
 export const poolShow = {
-  title: "<pool>",
+  title: "Pool: <pool>",
   path: `${lakeShow.path}/pools/:poolId`,
 }
 
@@ -35,11 +35,11 @@ export const lakePoolSearch = {
 }
 
 export const query = {
-  title: "<query>",
+  title: "Query: <query>",
   path: `${lakeShow.path}/queries/:queryId`,
 }
 export const queryVersion = {
-  title: "<query>@<version>",
+  title: "Query: <query>",
   path: `${lakeShow.path}/queries/:queryId/versions/:version`,
 }
 export const lakeReleaseNotes = {
