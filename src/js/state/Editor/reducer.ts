@@ -22,7 +22,8 @@ const slice = createSlice({
       s.value = ""
     },
     addPin(s, a: PayloadAction<QueryPin>) {
-      s.pins.push(a.payload)
+      if (!s.pins) s.pins = [a.payload]
+      else s.pins.push(a.payload)
     },
     editPin(s, a: PayloadAction<number>) {
       s.pinEditIndex = a.payload

@@ -1,6 +1,6 @@
 import {useBrimApi} from "src/app/core/context"
 import {useImportOnDrop} from "src/app/features/import/use-import-on-drop"
-import ToolbarButton from "src/app/toolbar/button"
+import ToolbarButton from "src/app/query-home/toolbar/button"
 import classNames from "classnames"
 import React, {ChangeEvent, MouseEvent} from "react"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"

@@ -25,7 +25,7 @@ import {
 import {SearchesApi} from "./searches"
 import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
-import {submitSearch} from "src/js/flows/submitSearch/mod"
+import submitSearch from "src/app/query-home/flows/submit-search"
 import SearchBar from "src/js/state/SearchBar"
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 import {forEach} from "lodash"

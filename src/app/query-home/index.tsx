@@ -1,25 +1,24 @@
 import {useExpandState} from "src/app/query-home/results/expand-hook"
-import {ActionButtonProps} from "src/app/toolbar/action-button"
 import Layout from "src/js/state/Layout"
 import ResultsComponent from "./results"
 import React from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Current from "src/js/state/Current"
-import usePluginToolbarItems from "../toolbar/hooks/usePluginToolbarItems"
 import Toolbar from "./toolbar"
 import styled from "styled-components"
 import useExport from "./toolbar/hooks/use-export"
 import useColumns from "./toolbar/hooks/use-columns"
 import ToolbarButton from "./toolbar/button"
-import {newDraftQuery} from "../../js/state/DraftQueries/flows/new-draft-query"
+import {newDraftQuery} from "src/app/query-home/flows/new-draft-query"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import SearchArea from "./search-area"
-import {FeatureFlag} from "../core/feature-flag"
 import RightPane from "../features/right-pane"
 import usePins from "./toolbar/hooks/use-pins"
 import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
+import {ActionButtonProps} from "./toolbar/action-button"
+import usePluginToolbarItems from "./toolbar/hooks/use-plugin-toolbar-items"
 
 const QueryPageHeader = styled.div`
   background: white;
@@ -137,7 +136,7 @@ const QueryHome = () => {
           <SearchArea />
           <ResultsComponent />
         </MainContent>
-        <FeatureFlag name="query-flow" on={<RightPane />} off={null} />
+        <RightPane />
       </ContentWrap>
     </>
   )

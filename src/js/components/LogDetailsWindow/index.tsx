@@ -1,26 +1,22 @@
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 import useStoreExport from "src/app/core/hooks/useStoreExport"
-import usePluginToolbarItems from "src/app/toolbar/hooks/usePluginToolbarItems"
-
 import {Center, Left, PaneHeader, PaneTitle, Right} from "../Pane"
 import Current from "../../state/Current"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "src/app/detail/Pane"
-import ToolbarAction from "src/app/toolbar/action-button"
-import {featureIsEnabled} from "../../../app/core/feature-flag"
+import ActionButton from "src/app/query-home/toolbar/action-button"
+import usePluginToolbarItems from "src/app/query-home/toolbar/hooks/use-plugin-toolbar-items"
 
 export default function LogDetailsWindow() {
   useStoreExport()
   const dispatch = useDispatch()
   const prevExists = useSelector(LogDetails.getHistory).canGoBack()
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()
-  const searchPool = useSelector(Current.getPool)
-  const queryPool = useSelector(Current.getQueryPool)
-  const pool = featureIsEnabled("query-flow") ? queryPool : searchPool
+  const pool = useSelector(Current.getQueryPool)
   const pluginButtons = usePluginToolbarItems("detail").map((button, i) => (
-    <ToolbarAction key={button.label || i} {...button} />
+    <ActionButton key={button.label || i} {...button} />
   ))
 
   return (

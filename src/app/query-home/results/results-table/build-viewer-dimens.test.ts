@@ -1,4 +1,4 @@
-import buildViewerDimens from "./buildViewerDimens"
+import buildViewerDimens from "./build-viewer-dimens"
 
 describe("AutoLayout", () => {
   const autoLayout = buildViewerDimens({

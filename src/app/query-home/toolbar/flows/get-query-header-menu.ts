@@ -9,7 +9,7 @@ import {lakeQueryPath} from "../../../router/utils/paths"
 import Tabs from "src/js/state/Tabs"
 import Current from "src/js/state/Current"
 import {Query} from "src/js/state/Queries/types"
-import {getQuerySource} from "../../../../js/state/Queries/flows/get-query-source"
+import {getQuerySource} from "src/js/state/Queries/flows/get-query-source"
 import QueryVersions from "src/js/state/QueryVersions"
 
 const getQueryHeaderMenu =

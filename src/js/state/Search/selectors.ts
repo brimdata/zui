@@ -1,4 +1,3 @@
-import {poolSearchPath} from "src/app/router/utils/paths"
 import {SearchRecord} from "../../types"
 import Current from "../Current"
 import SearchBar from "../SearchBar"
@@ -14,11 +13,4 @@ export const getRecord = (state: State): SearchRecord => {
     poolName: pool.name,
     poolId: pool.id,
   }
-}
-
-export const createHref = (state) => {
-  const record = getRecord(state)
-  const lakeId = Current.getLakeId(state)
-  const poolId = Current.getPoolId(state)
-  return poolSearchPath(poolId, lakeId, {...record})
 }

@@ -2,11 +2,9 @@ import {isEqual} from "lodash"
 import {fetchCorrelation} from "src/ppl/detail/flows/fetch"
 import {zed} from "@brimdata/zealot"
 import ErrorFactory from "../models/ErrorFactory"
-import Current from "../state/Current"
 import LogDetails from "../state/LogDetails"
 import Notice from "../state/Notice"
 import {Thunk} from "../state/types"
-import {featureIsEnabled} from "../../app/core/feature-flag"
 
 export const viewLogDetail =
   (record: zed.Record): Thunk =>
@@ -14,10 +12,6 @@ export const viewLogDetail =
     const current = LogDetails.build(getState())
     if (record && !isEqual(record, current)) {
       dispatch(LogDetails.push(record))
-
-      if (!featureIsEnabled("query-flow") && !Current.getPoolId(getState()))
-        return // It is possible for this code to be called without a pool
-
       dispatch(LogDetails.updateUidStatus("FETCHING"))
       dispatch(fetchCorrelation(record))
         .then((records) => {

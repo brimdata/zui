@@ -5,11 +5,11 @@ import styled from "styled-components"
 import {BrimLake} from "../brim"
 import {AppDispatch} from "../state/types"
 import Lakes from "../state/Lakes"
-import ToolbarButton from "src/app/toolbar/button"
 import MacSpinner from "./MacSpinner"
 import {isString} from "lodash"
 import {updateStatus} from "../flows/lake/update-status"
 import {login} from "../flows/lake/login"
+import ToolbarButton from "src/app/query-home/toolbar/button"
 
 const PageWrap = styled.div`
   width: 100%;

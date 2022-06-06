@@ -12,7 +12,7 @@ import {SearchRecord} from "src/js/types"
 import FilterNode from "./filter-node"
 import {createInvestigationTree, InvestigationNode} from "./helpers"
 import usePopupMenu from "src/js/components/hooks/usePopupMenu"
-import submitSearch from "../../../query-home/flows/submit-search"
+import submitSearch from "src/app/query-home/flows/submit-search"
 
 const getPins = (node?: InvestigationNode): string[] => {
   const result = map(node?.getPath(), (n) => {

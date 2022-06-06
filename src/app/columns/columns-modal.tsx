@@ -6,7 +6,7 @@ import {XColumnChooserMenu} from "src/js/components/ColumnChooserMenu"
 import lib from "src/js/lib"
 import Modal from "src/js/state/Modal"
 
-export default function ColumnsModal() {
+export default () => {
   const dispatch = useDispatch()
   const modal = useSelector(Modal.getName)
   if (modal !== "columns") return null
