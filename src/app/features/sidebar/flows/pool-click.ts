@@ -1,6 +1,6 @@
 import {Pool} from "src/app/core/pools/pool"
+import submitSearch from "src/app/query-home/flows/submit-search"
 import {lakeQueryPath} from "src/app/router/utils/paths"
-import {submitSearch} from "src/js/flows/submitSearch/mod"
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Queries from "src/js/state/Queries"
