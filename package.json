@@ -5,7 +5,7 @@
   "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/brim",
   "license": "BSD-3-Clause",
-  "version": "0.30.0",
+  "version": "1.0.0-beta",
   "main": "dist/js/electron/main.js",
   "author": "Brim Data, Inc.",
   "workspaces": [
