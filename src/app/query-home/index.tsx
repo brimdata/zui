@@ -12,7 +12,6 @@ import styled from "styled-components"
 import useExport from "./toolbar/hooks/use-export"
 import useColumns from "./toolbar/hooks/use-columns"
 import ToolbarButton from "./toolbar/button"
-import {newDraftQuery} from "../../js/state/DraftQueries/flows/new-draft-query"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import SearchArea from "./search-area"
@@ -20,6 +19,7 @@ import {FeatureFlag} from "../core/feature-flag"
 import RightPane from "../features/right-pane"
 import usePins from "./toolbar/hooks/use-pins"
 import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
+import Queries from "src/js/state/Queries"
 
 const QueryPageHeader = styled.div`
   background: white;
@@ -119,10 +119,10 @@ const QueryHome = () => {
         </StyledSubHeader>
         <ToolbarButton
           onClick={() => {
-            const {id} = dispatch(newDraftQuery())
+            const {id} = dispatch(Queries.create())
             dispatch(tabHistory.replace(lakeQueryPath(id, lakeId)))
           }}
-          text={"New Draft"}
+          text={"New Query"}
         />
       </PageWrap>
     )

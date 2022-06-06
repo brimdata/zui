@@ -3,10 +3,10 @@ import invoke from "../electron/ipc/invoke"
 import Search from "../state/Search"
 import {Thunk} from "../state/types"
 import {featureIsEnabled} from "src/app/core/feature-flag"
-import {newDraftQuery} from "src/js/state/DraftQueries/flows/new-draft-query"
 import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
 import {lakeQueryPath} from "src/app/router/utils/paths"
+import Queries from "../state/Queries"
 
 export const legacyOpenNewSearchTab = (): Thunk => (dispatch, getState) => {
   const href = Search.createHref(getState())
@@ -21,7 +21,7 @@ export const openNewSearchTab = (): Thunk => {
     const pool = Current.getQueryPool(state)
     const {current} = SearchBar.getSearchBar(state)
     const query = dispatch(
-      newDraftQuery({value: current, pins: [{type: "from", value: pool.id}]})
+      Queries.create({value: current, pins: [{type: "from", value: pool.id}]})
     )
     invoke(
       ipc.windows.newSearchTab({
