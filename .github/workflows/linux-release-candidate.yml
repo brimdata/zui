@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-go@v2
         with:
-          go-version: '1.18'
+          go-version: "1.18"
 
       - uses: actions/setup-node@v2
         with:
@@ -41,10 +41,10 @@ jobs:
       - name: build packages
         run: yarn electron-builder --linux
 
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v0'
+      - id: "auth"
+        uses: "google-github-actions/auth@v0"
         with:
-          credentials_json: '${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}'
+          credentials_json: "${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}"
 
       - name: Setup Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0
@@ -65,8 +65,9 @@ jobs:
 
       - name: Upload release artifacts to Google Cloud Storage bucket
         run: |
+          ls -la dist/installers
           gsutil rm -rf ${{ env.BUCKET_PATH }} || true
-          gsutil cp dist/installers/Brim-* ${{ env.BUCKET_PATH }}
+          gsutil cp dist/installers/Zui-Beta-* ${{ env.BUCKET_PATH }}
 
       - name: Assemble Slack message that points to multiple artifacts
         run: |

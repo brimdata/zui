@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-go@v2
         with:
-          go-version: '1.18'
+          go-version: "1.18"
 
       - uses: actions/setup-node@v2
         with:
@@ -50,10 +50,10 @@ jobs:
         with:
           python-version: 3.7
 
-      - id: 'auth'
-        uses: 'google-github-actions/auth@v0'
+      - id: "auth"
+        uses: "google-github-actions/auth@v0"
         with:
-          credentials_json: '${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}'
+          credentials_json: "${{ secrets.GCLOUD_CREDENTIAL_RELEASES }}"
 
       - name: Setup Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0
@@ -82,7 +82,7 @@ jobs:
           CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
         run: |
           gsutil rm -rf ${{ env.BUCKET_path }} || true
-          gsutil cp dist\installers\Brim-Setup*.exe* dist\installers\latest.yml ${{ env.BUCKET_path }}
+          gsutil cp "dist\installers\Zui Beta-Setup*.exe*"" dist\installers\latest.yml ${{ env.BUCKET_path }}
 
       - name: Assemble Slack message that points to multiple artifacts
         run: |
@@ -94,7 +94,7 @@ jobs:
           done
           echo "EOF" >> $GITHUB_ENV
         shell: bash
-        
+
       - name: Inform Slack users at Brim HQ of the new artifact
         uses: tiloio/slack-webhook-action@v1.1.2
         with:
