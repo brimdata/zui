@@ -77,7 +77,7 @@ const slice = createSlice({
       const newPin = {...pin, ...a.payload} as QueryPin
 
       if (buildPin(newPin).empty()) {
-        delete s.pins[s.pinEditIndex]
+        s.pins.splice(s.pinEditIndex, 1)
       } else {
         s.pins[s.pinEditIndex] = newPin
       }
