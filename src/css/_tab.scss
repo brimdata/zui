@@ -1,7 +1,7 @@
 $tab-inactive-color: var(--cloudy);
 $tab-hover-color: white;
 $tab-active-color: var(--aqua);
-$tab-hover-bg: rgba(255, 255, 255, 0.1);
+$tab-hover-bg: rgba(255, 255, 255, 0.15);
 $tab-active-bg: var(--snow);
 $tab-transition-duration: 200ms;
 $tab-border-radius-top: 8px;
@@ -25,7 +25,9 @@ $tab-border-radius-bottom: 6px;
   height: 34px;
   padding: 0;
   padding-bottom: 3px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.1);
+  border-left: 2px solid var(--cello);
+  border-right: 2px solid var(--cello);
   cursor: default;
   border-radius: $tab-border-radius-top $tab-border-radius-top 0 0;
   will-change: transform;
@@ -70,9 +72,11 @@ $tab-border-radius-bottom: 6px;
     width: $tab-border-radius-bottom;
     height: $tab-border-radius-bottom;
   }
+
   .ramp-right {
     left: 100%;
   }
+
   .ramp-left {
     right: 100%;
   }
@@ -97,11 +101,13 @@ $tab-border-radius-bottom: 6px;
     height: 17px;
     min-width: 17px;
     margin-right: 10px;
+
     svg {
       width: 9px;
       height: 9px;
       fill: $tab-inactive-color;
     }
+
     &:after {
       content: "";
       width: 17px;
@@ -113,15 +119,18 @@ $tab-border-radius-bottom: 6px;
       left: 0;
       transform: scale(0);
     }
+
     &:hover {
       svg {
         fill: white;
       }
+
       &:after {
         transition: transform 100ms;
         transform: scale(1);
       }
     }
+
     &:active:after {
       background: rgba(255, 255, 255, 0.3);
     }
@@ -130,6 +139,7 @@ $tab-border-radius-bottom: 6px;
   // The hover state
   &:hover {
     background-color: $tab-hover-bg;
+
     //  transition: background-color $tab-transition-duration;
     // &:before,
     // & + .tab:before,
@@ -140,9 +150,11 @@ $tab-border-radius-bottom: 6px;
     .ramp {
       fill: $tab-hover-bg;
     }
+
     .title {
       color: $tab-hover-color;
     }
+
     .close-button svg {
       fill: $tab-hover-color;
     }
@@ -152,6 +164,7 @@ $tab-border-radius-bottom: 6px;
   &.active {
     background: $tab-active-bg;
     z-index: 1;
+
     .ramp {
       fill: $tab-active-bg;
     }
@@ -166,13 +179,16 @@ $tab-border-radius-bottom: 6px;
     .title {
       color: $tab-active-color;
     }
+
     .close-button {
       svg {
         fill: $tab-active-color;
       }
+
       &:after {
         background: rgba(0, 0, 0, 0.1);
       }
+
       &:active:after {
         background: rgba(0, 0, 0, 0.2);
       }
