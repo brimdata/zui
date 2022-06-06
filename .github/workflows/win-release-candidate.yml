@@ -82,13 +82,13 @@ jobs:
           CLOUDSDK_PYTHON: ${{ env.pythonLocation }}\python.exe
         run: |
           gsutil rm -rf ${{ env.BUCKET_path }} || true
-          gsutil cp "dist\installers\Zui Beta-Setup*.exe*"" dist\installers\latest.yml ${{ env.BUCKET_path }}
+          gsutil cp dist\installers\*.exe* dist\installers\latest.yml ${{ env.BUCKET_path }}
 
       - name: Assemble Slack message that points to multiple artifacts
         run: |
           echo "SLACK_TEXT<<EOF" >> $GITHUB_ENV
           echo "New Windows release available -" >> $GITHUB_ENV
-          for FILENAME in $(find dist/installers -type f -name Brim-Setup\*.exe -exec basename {} \;)
+          for FILENAME in $(find dist/installers -type f -name \*.exe -exec basename {} \;)
           do
             echo "\n<${{ env.PUBLIC_BUCKET_PATH }}/$FILENAME|${{ env.BUCKET_PATH }}/$FILENAME>" >> $GITHUB_ENV
           done
