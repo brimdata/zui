@@ -1,4 +1,4 @@
-import Chunker from "./Chunker"
+import Chunker from "./chunker"
 
 let chunker
 beforeEach(() => {

@@ -16,8 +16,7 @@ import Pools from "src/js/state/Pools"
 import SystemTest from "src/js/state/SystemTest"
 import Tabs from "src/js/state/Tabs"
 import {Dispatch, Thunk} from "src/js/state/types"
-import {lakePath, lakePoolPath, poolSearchPath} from "../../router/utils/paths"
-import {featureIsEnabled} from "src/app/core/feature-flag"
+import {lakePath, lakePoolPath} from "../../router/utils/paths"
 
 export default (files: File[]): Thunk<Promise<void>> =>
   async (dispatch, getState, {api}) => {
@@ -157,9 +156,7 @@ const executeLoader = (
 
 const setPool = (dispatch, tabId, lakeId) => ({
   do({poolId}) {
-    const url = featureIsEnabled("query-flow")
-      ? lakePoolPath(poolId, lakeId)
-      : poolSearchPath(poolId, lakeId)
+    const url = lakePoolPath(poolId, lakeId)
     global.tabHistories.getOrCreate(tabId).push(url)
     dispatch(Url.changed())
   },

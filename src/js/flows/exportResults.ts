@@ -6,11 +6,9 @@ import brim from "../brim"
 import Columns from "../state/Columns"
 import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
-import Tab from "../state/Tab"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
 import {annotateQuery} from "./search/mod"
-import {featureIsEnabled} from "../../app/core/feature-flag"
 
 const streamPipeline = util.promisify(pipeline)
 
@@ -41,22 +39,8 @@ export default (
     const columns = Columns.getCurrentTableColumns(getState())
     const baseProgram = SearchBar.getSearchProgram(getState())
     const program = prepareProgram(format, baseProgram, columns)
-
-    let poolId = Current.getPoolId(getState())
-    let from = null
-    let to = null
-    if (featureIsEnabled("query-flow")) {
-      poolId = Current.getQuery(getState()).getPoolName()
-    } else {
-      const span = Tab.getSpan(getState())
-      if (span) {
-        const dates = span.map(brim.time).map((t) => t.toDate())
-        from = dates[0]
-        to = dates[1]
-      }
-    }
-
-    const query = annotateQuery(program, {from, to, poolId})
+    const poolId = Current.getQuery(getState()).getPoolName()
+    const query = annotateQuery(program, {poolId})
     const res = await zealot.query(query, {
       format,
       controlMessages: false,

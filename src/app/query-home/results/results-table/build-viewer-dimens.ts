@@ -1,4 +1,4 @@
-import {ViewerDimens} from "../../types"
+import {ViewerDimens} from "../../../../js/types"
 
 type Args = {
   sumColumnWidths: number

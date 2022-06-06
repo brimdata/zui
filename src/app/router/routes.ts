@@ -28,12 +28,6 @@ export const poolShow = {
   path: `${lakeShow.path}/pools/:poolId`,
 }
 
-// TODO: deprecate this when we remove 'query-flow' feature-flag
-export const lakePoolSearch = {
-  title: "<lake>: <program>",
-  path: `${poolShow.path}/search`,
-}
-
 export const query = {
   title: "Query: <query>",
   path: `${lakeShow.path}/queries/:queryId`,
@@ -53,7 +47,6 @@ export const releaseNotes = {
 
 export const allRoutes = [
   lakeReleaseNotes,
-  lakePoolSearch,
   lakeImport,
   lakeShow,
   lakeList,

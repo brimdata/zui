@@ -7,15 +7,12 @@ import BrimTooltip from "src/js/components/BrimTooltip"
 import ErrorNotice from "src/js/components/ErrorNotice"
 import HTMLContextMenu from "src/js/components/HTMLContextMenu"
 import {XLatestError} from "src/js/components/LatestError"
-import {LeftPane} from "src/js/components/LeftPane"
 import {Modals} from "src/js/components/Modals"
 import PoolModal from "src/js/components/PoolModal"
 import Preferences from "src/js/components/Preferences/Preferences"
-import {XRightPane} from "src/js/components/RightPane"
 import StatusBar from "src/js/components/StatusBar"
 import TabBar from "src/js/components/TabBar/TabBar"
 import styled from "styled-components"
-import {FeatureFlag} from "../core/feature-flag"
 import {Sidebar} from "src/app/features/sidebar"
 import Tabs from "src/js/state/Tabs"
 import {useDispatch} from "../core/state"
@@ -71,18 +68,13 @@ export default function AppWrapper({children}) {
             <div id="modal-dialog-root" />
             <TabBar />
             <RowLayout>
-              <FeatureFlag
-                name="query-flow"
-                on={<Sidebar />}
-                off={<LeftPane />}
-              />
+              <Sidebar />
               <ColumnLayout
                 onClick={() => dispatch(interactive())}
                 onMouseDown={() => dispatch(interactive())}
               >
                 {children}
               </ColumnLayout>
-              <FeatureFlag name="query-flow" on={null} off={<XRightPane />} />
             </RowLayout>
             <StatusBar />
           </ColumnLayout>

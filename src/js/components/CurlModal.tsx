@@ -13,7 +13,7 @@ import {
   Scrollable,
   Title,
 } from "./ModalDialog/ModalDialog"
-import ToolbarButton from "src/app/toolbar/button"
+import ToolbarButton from "src/app/query-home/toolbar/button"
 import useEnterKey from "./hooks/useEnterKey"
 
 export default function CurlModalBox({onClose}) {
