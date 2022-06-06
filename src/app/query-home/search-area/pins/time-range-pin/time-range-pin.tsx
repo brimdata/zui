@@ -1,6 +1,4 @@
 import React from "react"
-import {useDispatch} from "src/app/core/state"
-import Editor from "src/js/state/Editor"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import styled from "styled-components"
 import {BasePin} from "../base-pin"
@@ -15,17 +13,6 @@ export default function TimeRangePin(props: {
   pin: TimeRangeQueryPin
   index: number
 }) {
-  const dispatch = useDispatch()
-  const form = (
-    <Form
-      pin={props.pin}
-      onSubmit={(pin) => dispatch(Editor.updatePin(pin))}
-      onReset={() => dispatch(Editor.cancelPinEdit())}
-      onDelete={() => {
-        dispatch(Editor.deletePin(props.index))
-      }}
-    />
-  )
   const label = (
     <>
       {props.pin.from}
@@ -39,7 +26,7 @@ export default function TimeRangePin(props: {
       prefix="range"
       label={label}
       index={props.index}
-      form={form}
+      form={Form}
     />
   )
 }

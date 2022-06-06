@@ -1,10 +1,10 @@
 import ipc from "../electron/ipc"
 import invoke from "../electron/ipc/invoke"
 import {Thunk} from "../state/types"
-import {newDraftQuery} from "src/app/query-home/flows/new-draft-query"
 import Current from "../state/Current"
 import SearchBar from "../state/SearchBar"
 import {lakeQueryPath} from "src/app/router/utils/paths"
+import Queries from "../state/Queries"
 
 export const openNewSearchTab = (): Thunk => {
   return (dispatch, getState) => {
@@ -13,7 +13,7 @@ export const openNewSearchTab = (): Thunk => {
     const pool = Current.getQueryPool(state)
     const {current} = SearchBar.getSearchBar(state)
     const query = dispatch(
-      newDraftQuery({value: current, pins: [{type: "from", value: pool.id}]})
+      Queries.create({value: current, pins: [{type: "from", value: pool.id}]})
     )
     invoke(
       ipc.windows.newSearchTab({

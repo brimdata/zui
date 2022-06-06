@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import buildPin from "./models/build-pin"
-import {QueryPin} from "./types"
+import {FromQueryPin, QueryPin} from "./types"
 
 const slice = createSlice({
   name: "TAB_EDITOR",
@@ -85,6 +85,14 @@ const slice = createSlice({
     },
     cancelPinEdit(s) {
       s.pinEditIndex = null
+    },
+    setFrom(s, a: PayloadAction<string>) {
+      const index = s.pins.findIndex((p) => p.type === "from")
+      if (index === -1) {
+        s.pins.unshift({type: "from", value: a.payload})
+      } else {
+        ;(s.pins[index] as FromQueryPin).value = a.payload
+      }
     },
   },
   extraReducers: {

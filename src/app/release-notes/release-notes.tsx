@@ -2,37 +2,16 @@ import Markdown from "src/app/core/components/markdown"
 import React from "react"
 import styled from "styled-components"
 import {useReleaseNotes} from "./use-release-notes"
+import {Content} from "src/js/components/Content"
 
 const Scrollable = styled.div`
   overflow: auto;
 `
-const BG = styled.div`
+const BG = styled(Content)`
   margin: 48px auto;
   padding: 24px;
   width: 100%;
   max-width: 600px;
-  line-height: 1.6;
-  a {
-    color: var(--azure);
-  }
-  hr {
-    border: none;
-    border-top: 1px solid var(--cloudy);
-  }
-
-  * {
-    margin: 0.5em 0;
-  }
-
-  li {
-    margin: 0.1em 0;
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
 `
 
 export default function ReleaseNotes() {
