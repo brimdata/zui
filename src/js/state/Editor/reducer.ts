@@ -47,7 +47,7 @@ const slice = createSlice({
       s.pins[a.payload].disabled = false
     },
     deletePin(s, a: PayloadAction<number>) {
-      delete s.pins[a.payload]
+      s.pins.splice(a.payload, 1)
     },
     deletePinsToTheRight(s, a: PayloadAction<number>) {
       s.pins.splice(a.payload + 1)
