@@ -1,13 +1,13 @@
 {
   "name": "brim",
-  "productName": "Brim",
+  "productName": "Zui Beta",
   "private": true,
-  "description": "Brim Desktop App",
+  "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/brim",
   "license": "BSD-3-Clause",
   "version": "0.30.0",
   "main": "dist/js/electron/main.js",
-  "author": "Brim Security, Inc.",
+  "author": "Brim Data, Inc.",
   "workspaces": [
     "./packages/*"
   ],
