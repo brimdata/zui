@@ -66,6 +66,8 @@ export const ButtonSwitch = styled.nav`
   display: flex;
   margin: 0;
   height: 22px;
+  // z-index sits just above the drag anchor
+  z-index: 100;
   margin-top: -11px;
   margin-bottom: 10px;
 `
