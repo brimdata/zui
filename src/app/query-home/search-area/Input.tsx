@@ -14,8 +14,8 @@ const DragAnchor = styled.div`
   pointer-events: all !important;
   z-index: 99;
   width: 100%;
-  height: 9px;
-  bottom: -4px;
+  height: 16px;
+  bottom: -8px;
   top: unset;
   cursor: row-resize;
 `
@@ -29,7 +29,7 @@ const InputBackdrop = styled.div<{height: number}>`
 const Submit = styled(SubmitButton)`
   position: absolute;
   right: 20px;
-  bottom: 6px;
+  bottom: 10px;
 `
 
 type Props = {
