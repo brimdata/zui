@@ -12,14 +12,20 @@ const WINDOW_PERSIST: StateKey[] = [
   "launches",
   "pluginStorage",
   "queries",
-  "draftQueries",
   "queryVersions",
   "tabHistories",
   "tabs",
   "lakes",
 ]
 
-const TAB_PERSIST: TabKey[] = ["id", "search", "searchBar", "columns", "layout"]
+const TAB_PERSIST: TabKey[] = [
+  "id",
+  "search",
+  "searchBar",
+  "columns",
+  "layout",
+  "editor",
+]
 
 function deleteAccessTokens(state: Partial<State>) {
   if (!state.lakes) return

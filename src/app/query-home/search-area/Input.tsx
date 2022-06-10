@@ -2,17 +2,34 @@ import React from "react"
 import SubmitButton from "./submit-button"
 import styled from "styled-components"
 import QueryEditor from "./editor/query-editor"
+import {useDispatch} from "../../core/state"
+import useDrag, {DragArgs} from "../../../pkg/sectional/hooks/useDrag"
+import Editor from "../../../js/state/Editor"
+import {useSelector} from "react-redux"
+import lib from "src/js/lib"
 
-const InputBackdrop = styled.div`
+const DragAnchor = styled.div`
+  position: absolute;
+  background: transparent;
+  pointer-events: all !important;
+  z-index: 99;
+  width: 100%;
+  height: 16px;
+  bottom: -8px;
+  top: unset;
+  cursor: row-resize;
+`
+
+const InputBackdrop = styled.div<{height: number}>`
   border-bottom: 1px solid var(--border-color);
   position: relative;
-  height: 100px;
+  height: ${(p) => p.height + "px"};
 `
 
 const Submit = styled(SubmitButton)`
   position: absolute;
   right: 20px;
-  bottom: 6px;
+  bottom: 10px;
 `
 
 type Props = {
@@ -21,10 +38,22 @@ type Props = {
 }
 
 export default function Input({value, disabled}: Props) {
+  const dispatch = useDispatch()
+  const height = useSelector(Editor.getHeight)
+
+  const onDrag = ({dy}: DragArgs) => {
+    const minH = 100
+    const maxH = lib.win.getHeight() - 400
+    const newHeight = height + dy
+    dispatch(Editor.setHeight(Math.max(Math.min(newHeight, maxH), minH)))
+  }
+  const bindDrag = useDrag(onDrag)
+
   return (
-    <InputBackdrop>
+    <InputBackdrop height={height}>
       <QueryEditor value={value} disabled={disabled} />
       <Submit />
+      <DragAnchor onMouseDown={bindDrag} />
     </InputBackdrop>
   )
 }
