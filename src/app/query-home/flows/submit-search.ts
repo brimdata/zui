@@ -30,11 +30,6 @@ const submitSearch =
     } else {
       dispatch(tabHistory.push(lakeQueryPath(query.id, lakeId)))
     }
-
-    // TODO: Mason - refactor history to use query copies
-    // if (save.history) {
-    //   dispatch(Investigation.push(lakeId, poolId, record, brim.time(ts).toTs()))
-    // }
   }
 
 export default submitSearch
