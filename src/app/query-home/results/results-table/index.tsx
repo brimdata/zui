@@ -10,7 +10,6 @@ import Layout from "src/js/state/Layout"
 import Viewer from "src/js/state/Viewer"
 import {ViewerDimens} from "src/js/types"
 import LogRow from "src/js/components/LogRow"
-import buildViewerDimens from "src/app/query-home/results/results-table/build-viewer-dimens"
 import Chunker from "src/app/query-home/results/results-table/chunker"
 import ViewerComponent from "./viewer"
 import getEndMessage from "./get-end-message"
@@ -18,6 +17,7 @@ import NoResults from "./no-results"
 import {useRowSelection} from "./hooks/use-row-selection"
 import Results from "src/js/state/Results"
 import {zed} from "packages/zealot/src"
+import buildViewerDimens from "./viewer/build-viewer-dimens"
 
 type Props = {
   height: number
