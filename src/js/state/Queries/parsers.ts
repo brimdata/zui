@@ -26,7 +26,7 @@ export const parseJSONLib = (
     item.id = nanoid()
     versions[item.id] = {
       version: nanoid(),
-      ts: new Date(),
+      ts: new Date().toISOString(),
       value: item.value || "",
       pins: {...item.pins},
     }

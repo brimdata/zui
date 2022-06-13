@@ -44,7 +44,7 @@ export class BrimQuery implements Query {
       value: value ?? "",
       pins: pins ?? [],
       version: nanoid(),
-      ts: new Date(),
+      ts: new Date().toISOString(),
     }
     return new BrimQuery(this.serialize(), [...this.versions, newV])
   }

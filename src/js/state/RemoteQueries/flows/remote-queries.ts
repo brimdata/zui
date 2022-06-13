@@ -9,7 +9,6 @@ import {Thunk} from "src/js/state/types"
 import {Readable} from "stream"
 import {BrimLake} from "src/js/brim"
 import QueryVersions from "src/js/state/QueryVersions"
-import {parseISO} from "date-fns"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {createPool} from "src/app/core/pools/create-pool"
 
@@ -36,7 +35,7 @@ then only the most recent will be used. To manage this, the provided array
 of raw records must already be sorted by ts.
  */
 const remoteQueriesToQueries = (
-  remoteRecords: (Query & QueryVersion & {tombstone?: boolean})[]
+  remoteRecords: RemoteQueryRecord[]
 ): {queries: Query[]; versions: {[queryId: string]: QueryVersion[]}} => {
   const seenQuerySet = new Set()
   const versions = {}
@@ -56,8 +55,7 @@ const remoteQueriesToQueries = (
     if (!versions[r.id]) return
     if (seenVersionSet.has(r.version)) return
     seenVersionSet.add(r.version)
-    const {version, value = "", pins = []} = r
-    const ts = typeof r.ts === "string" ? parseISO(r.ts) : r.ts
+    const {version, value = "", pins = [], ts} = r
     versions[r.id].push({version, ts, value, pins})
   })
 
@@ -168,7 +166,7 @@ export const deleteRemoteQueries =
     const queryDefaults = {
       name: "",
       version: "",
-      ts: new Date(),
+      ts: new Date().toISOString(),
       value: "",
     }
     const queries = queryIds.map((id) => ({...queryDefaults, id}))
