@@ -53,6 +53,7 @@ const slice = createSlice({
         } else {
           s.status = "COMPLETE"
         }
+        s.error = null
       },
     },
     error: {
