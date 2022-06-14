@@ -1,7 +1,9 @@
 name: Build & Publish
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - welcome-zui
 
 jobs:
   build:
