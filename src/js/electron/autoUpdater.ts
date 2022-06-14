@@ -8,6 +8,10 @@ import get from "lodash/get"
 import semver from "semver/preload"
 import open from "../lib/open"
 
+autoUpdater.logger = log
+// @ts-ignore
+autoUpdater.logger.transports.file.level = "info"
+
 const getFeedURLForPlatform = (repo, platform) => {
   return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
 }
