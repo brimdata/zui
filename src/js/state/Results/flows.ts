@@ -49,7 +49,8 @@ function fetchResults(tabId: string): Thunk {
       )
       dispatch(actions.success(res.rows.length, tabId))
     } catch (e) {
-      dispatch(actions.error(ErrorFactory.create(e), tabId))
+      if (e instanceof DOMException && e.message.match(/user aborted/)) return
+      dispatch(actions.error(ErrorFactory.create(e).message, tabId))
     }
   }
 }

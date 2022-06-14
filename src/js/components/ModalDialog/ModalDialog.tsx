@@ -18,7 +18,7 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  z-index: 2;
+  z-index: 200;
   overflow: hidden;
 `
 
