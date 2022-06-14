@@ -3,7 +3,7 @@
   "productName": "Brim",
   "private": true,
   "description": "Brim Desktop App",
-  "repository": "https://github.com/brimdata/brim",
+  "repository": "https://github.com/brimdata/brim-update-test",
   "license": "BSD-3-Clause",
   "version": "0.30.0",
   "main": "dist/js/electron/main.js",
