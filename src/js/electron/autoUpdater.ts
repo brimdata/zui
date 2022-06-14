@@ -12,6 +12,10 @@ autoUpdater.logger = log
 // @ts-ignore
 autoUpdater.logger.transports.file.level = "info"
 
+autoUpdater.channel = meta.packageJSON().channel
+
+log.info("Update Channel: ", meta.packageJSON().channel)
+
 const getFeedURLForPlatform = (repo, platform) => {
   return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
 }
