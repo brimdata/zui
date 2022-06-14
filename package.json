@@ -5,7 +5,8 @@
   "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/brim-update-test",
   "license": "BSD-3-Clause",
-  "version": "1.0.0-alpha",
+  "version": "0.31.0",
+  "channel": "latest",
   "main": "dist/js/electron/main.js",
   "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "workspaces": [

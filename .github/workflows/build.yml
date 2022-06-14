@@ -1,26 +1,21 @@
 name: Build & Publish
 
 on:
-  push:
-    branches:
-      - main
-
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  workflow_dispatch:
 
 jobs:
   build:
     strategy:
       matrix:
-        platform: [linux]
+        platform: [Windows, Mac, Linux]
         include:
-          # - platform: windows
-          #   runner: windows-2019
+          - platform: Windows
+            runner: windows-2019
 
-          # - platform: macos
-          #   runner: macos-10.15
+          - platform: Mac
+            runner: macos-10.15
 
-          - platform: linux
+          - platform: Linux
             runner: ubuntu-18.04
 
     runs-on: ${{ matrix.runner }}
