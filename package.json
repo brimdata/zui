@@ -3,7 +3,7 @@
   "productName": "Zui",
   "private": true,
   "description": "Zed User Interface",
-  "repository": "https://github.com/brimdata/brim",
+  "repository": "https://github.com/brimdata/brim-update-test",
   "license": "BSD-3-Clause",
   "version": "1.0.0-alpha",
   "main": "dist/js/electron/main.js",
