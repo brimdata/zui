@@ -8,7 +8,7 @@ export type QueryVersionsState = {
 
 export type QueryVersion = {
   version: string
-  ts: Date
+  ts: string
   value: string
   pins?: QueryPin[]
 }

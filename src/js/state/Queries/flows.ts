@@ -23,7 +23,7 @@ export function create(attrs: Partial<QueryVersion> = {}): Thunk<Query> {
       value: "",
       ...attrs,
       version: nanoid(),
-      ts: new Date(),
+      ts: new Date().toISOString(),
     }
     dispatch(actions.addItem(query))
     dispatch(QueryVersions.add({queryId: query.id, version}))

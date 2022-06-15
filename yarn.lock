@@ -5382,6 +5382,7 @@ __metadata:
     react-virtualized-auto-sizer: ^1.0.6
     react-window: ^1.8.7
     regenerator-runtime: ^0.13.6
+    resize-observer-polyfill: ^1.5.1
     rimraf: ^3.0.2
     sass: ^1.51.0
     semver: ^7.3.2
@@ -15132,6 +15133,13 @@ __metadata:
   version: 4.0.0
   resolution: "reselect@npm:4.0.0"
   checksum: ac7dfc9ef2cdb42b6fc87a856f3ce904c2e4363a2bc1e6fb7eea5f78902a6f506e4388e6509752984877c6dbfe501100c076671d334799eb5a1bfe9936cb2c12
+  languageName: node
+  linkType: hard
+
+"resize-observer-polyfill@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "resize-observer-polyfill@npm:1.5.1"
+  checksum: 57e7f79489867b00ba43c9c051524a5c8f162a61d5547e99333549afc23e15c44fd43f2f318ea0261ea98c0eb3158cca261e6f48d66e1ed1cd1f340a43977094
   languageName: node
   linkType: hard
 

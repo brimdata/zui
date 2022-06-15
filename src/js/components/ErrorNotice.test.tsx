@@ -3,11 +3,9 @@
  */
 
 import React from "react"
-
 import Notice from "../state/Notice"
 import ErrorFactory from "../models/ErrorFactory"
 import ErrorNotice from "./ErrorNotice"
-// import {screen} from "@testing-library/react"
 import {setupBrim} from "src/test/unit/helpers/setup-brim"
 import {render, screen} from "src/test/unit/helpers"
 import {act} from "react-dom/test-utils"

@@ -96,10 +96,10 @@ const useForcedRenderInterval = (interval = 60000) => {
   }, [renderTrigger])
 }
 
-const FormattedTime = ({ts}: {ts: Date}) => {
+const FormattedTime = ({ts}: {ts: string}) => {
   useForcedRenderInterval()
 
-  const duration = formatDistanceToNowStrict(ts)
+  const duration = formatDistanceToNowStrict(new Date(ts))
   if (/second/.test(duration)) return <span>Just now</span>
   return <span>{duration} ago</span>
 }

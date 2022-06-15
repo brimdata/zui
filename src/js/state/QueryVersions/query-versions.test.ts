@@ -15,12 +15,12 @@ const testQueryId = "testQueryId"
 const testQueryId2 = "testQueryId2"
 const testVersion: QueryVersion = {
   version: "v1.0.0",
-  ts: new Date(1),
+  ts: new Date(1).toISOString(),
   value: "test zed",
 }
 const testVersion2: QueryVersion = {
   version: "v2.0.0",
-  ts: new Date(2),
+  ts: new Date(2).toISOString(),
   value: "test zed",
 }
 
