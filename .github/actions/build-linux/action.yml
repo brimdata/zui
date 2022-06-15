@@ -15,4 +15,5 @@ runs:
       run: yarn electron-builder
       shell: bash
       env:
+        DEBUG: electron-builder
         GH_TOKEN: ${{ inputs.gh_token }}
