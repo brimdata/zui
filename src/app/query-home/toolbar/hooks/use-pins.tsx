@@ -1,6 +1,7 @@
 import {useDispatch} from "src/app/core/state"
 import {showContextMenu} from "src/js/lib/System"
 import Editor from "src/js/state/Editor"
+import submitSearch from "../../flows/submit-search"
 import popupPosition from "../../search-area/popup-position"
 import {ActionButtonProps} from "../action-button"
 
@@ -10,7 +11,10 @@ const showPinsMenu = (anchor) => (dispatch, getState) => {
   const pinCurrent = {
     label: "Pin Editor Value",
     enabled: !!value.trim(),
-    click: () => dispatch(Editor.pinValue()),
+    click: () => {
+      dispatch(Editor.pinValue())
+      dispatch(submitSearch())
+    },
   }
   const newGeneric = {
     label: "New 'Generic' Pin",
