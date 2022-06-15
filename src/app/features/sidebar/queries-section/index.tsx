@@ -16,7 +16,6 @@ import {useQueryImportOnDrop, useSectionTreeDefaults} from "../hooks"
 import Appearance from "src/js/state/Appearance"
 import {capitalize, find} from "lodash"
 import {QueriesView} from "src/js/state/Appearance/types"
-import TreeModel from "tree-model"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Query} from "src/js/state/Queries/types"
 import {
