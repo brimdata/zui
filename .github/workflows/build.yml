@@ -51,3 +51,9 @@ jobs:
           cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
           gh_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: dist/installers/
