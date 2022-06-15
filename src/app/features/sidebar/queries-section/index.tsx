@@ -16,7 +16,6 @@ import {useQueryImportOnDrop, useSectionTreeDefaults} from "../hooks"
 import Appearance from "src/js/state/Appearance"
 import {capitalize, find} from "lodash"
 import {QueriesView} from "src/js/state/Appearance/types"
-import TreeModel from "tree-model"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Query} from "src/js/state/Queries/types"
 import {
@@ -31,6 +30,7 @@ import Current from "src/js/state/Current"
 import QueryVersions from "src/js/state/QueryVersions"
 import {BrimQuery} from "../../../query-home/utils/brim-query"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {flattenQueryTree} from "src/js/state/Queries/helpers"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />,
@@ -119,12 +119,6 @@ const RemoteQueriesView = ({toolbarButtons}) => {
       </SectionToolbar>
     </>
   )
-}
-
-const flattenQueryTree = (root, includeFolders = true) => {
-  return new TreeModel({childrenPropertyName: "items"}).parse(root).all((n) => {
-    return n.model.id !== "root" && (includeFolders || !("items" in n))
-  })
 }
 
 const LocalQueriesView = ({toolbarButtons}) => {
