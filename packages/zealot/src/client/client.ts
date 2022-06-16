@@ -140,7 +140,7 @@ export class Client {
 
   subscribe(): EventSource {
     return new EventSourcePolyfill(this.baseURL + "/events", {
-      headers: {Accept: "application/json"},
+      headers: {Accept: "text/event-stream"},
     })
   }
 
