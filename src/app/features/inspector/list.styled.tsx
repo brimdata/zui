@@ -16,7 +16,7 @@ export const List: ComponentType<PropsWithChildren<any>> = styled(
   }
 
   a {
-    cursor: pointer;
+    cursor: default;
     &:hover {
       background: rgba(0, 0, 0, 0.04);
     }

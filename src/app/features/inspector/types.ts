@@ -44,3 +44,5 @@ export type RowData = {
   indent: number
   render: ReactNode
 }
+
+export type RenderMode = "peek" | "single"
