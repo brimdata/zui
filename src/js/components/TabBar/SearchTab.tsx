@@ -1,9 +1,6 @@
 import React, {HTMLProps} from "react"
 import classNames from "classnames"
-
 import CloseButton from "../CloseButton"
-import RampLeft from "../../icons/ramp-left"
-import RampRight from "../../icons/ramp-right"
 
 type Props = {
   title: string
@@ -27,8 +24,6 @@ const SearchTab = React.forwardRef<HTMLDivElement, Props>(function SearchTab(
         <p className="title">{title}</p>
         <CloseButton onClick={removeTab} />
       </div>
-      <RampRight />
-      <RampLeft />
     </div>
   )
 })

@@ -14,9 +14,23 @@ import SearchTab from "./SearchTab"
 import useTabController from "./useTabController"
 import useTabLayout from "./useTabLayout"
 import {useLocation} from "react-router"
+import styled from "styled-components"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 240
+
+const Container = styled.div`
+  display: flex;
+  position: relative;
+  height: 36px;
+  width: 100%;
+  flex-shrink: 0;
+  align-items: flex-end;
+  padding-right: 30px;
+  background: var(--coconut);
+  overflow: hidden;
+  z-index: 2;
+`
 
 export default function TabBar() {
   useLocation() // Rerender this when the location changes
@@ -34,26 +48,24 @@ export default function TabBar() {
   useEffect(() => calcWidth(), [rect.width])
 
   return (
-    <div className="tab-bar">
-      <div className="tabs-container" ref={ref} onMouseLeave={ctl.onMouseLeave}>
-        {ids.map((id) => (
-          <AnimatedSearchTab
-            {...layout.dragBinding({
-              id,
-              onDown: () => ctl.onTabClick(id),
-              onChange: (indices) => ctl.onTabMove(indices),
-            })}
-            key={id}
-            title={brim.tab(id, lakes, pools, queryIdNameMap).title()}
-            style={layout.getStyle(id)}
-            removeTab={(e) => ctl.onRemoveClick(e, id)}
-            active={id === ctl.activeId}
-            preview={id === ctl.previewId}
-            isNew={false}
-          />
-        ))}
-        <AddTab onClick={ctl.onAddClick} left={width * count} />
-      </div>
-    </div>
+    <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
+      {ids.map((id) => (
+        <AnimatedSearchTab
+          {...layout.dragBinding({
+            id,
+            onDown: () => ctl.onTabClick(id),
+            onChange: (indices) => ctl.onTabMove(indices),
+          })}
+          key={id}
+          title={brim.tab(id, lakes, pools, queryIdNameMap).title()}
+          style={layout.getStyle(id)}
+          removeTab={(e) => ctl.onRemoveClick(e, id)}
+          active={id === ctl.activeId}
+          preview={id === ctl.previewId}
+          isNew={false}
+        />
+      ))}
+      <AddTab onClick={ctl.onAddClick} left={width * count} />
+    </Container>
   )
 }

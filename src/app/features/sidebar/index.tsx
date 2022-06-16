@@ -19,19 +19,12 @@ const EmptyText = styled.div`
   text-align: center;
 `
 
-export const StyledMenu = styled.menu`
-  margin: 0 0 6px;
-  padding: 0;
-`
-
 const SectionContentSwitch = ({sectionName}) => {
   switch (sectionName) {
     case "pools":
       return <PoolsSection />
     case "queries":
       return <QueriesSection />
-    // case "history":
-    //   return <HistorySection />
     default:
       return null
   }
@@ -40,6 +33,7 @@ const SectionContentSwitch = ({sectionName}) => {
 const StyledPane = styled(Pane)`
   background: var(--sidebar-background);
   overflow-x: unset;
+  padding-top: 22px;
 `
 
 export function Sidebar() {
