@@ -1,18 +1,21 @@
 import {zed} from "@brimdata/zealot"
+import {closing} from "../templates/closing"
 import * as container from "../templates/container"
 import {field} from "../templates/field"
-import {key} from "../templates/key"
-import {space} from "../templates/space"
-import {typename} from "../templates/typename"
+import {note} from "../templates/note"
+import {opening} from "../templates/opening"
+import {syntax} from "../templates/syntax"
+import {RenderMode} from "../types"
 import {View} from "./view"
 
 export abstract class ContainerView<
   T extends zed.Any = zed.Any
 > extends View<T> {
   abstract name(): string
+  abstract count(): number
   abstract openToken(): string
   abstract closeToken(): string
-  abstract iterate(): Generator<View<zed.Any>>
+  abstract iterate(n?: number): Generator<View<zed.Any>>
 
   rowCount() {
     if (!this.isExpanded()) return 1
@@ -32,29 +35,41 @@ export abstract class ContainerView<
       ctx.push(closing(this))
     } else {
       let line = opening(this)
-      for (let view of this.iterate()) line.push(field(view))
+      for (let view of this.iterate()) line.push(field(view, "peek"))
       line = line.concat(closing(this))
       ctx.push(container.anchor(this, line))
     }
   }
-}
 
-function closing(view: ContainerView) {
-  let nodes = []
-  nodes.push(container.close(view))
-  if (zed.isTypeAlias(view.args.type)) nodes.push(typename(view))
-  if (!view.args.last) nodes.push(",")
-  return nodes
-}
-
-function opening(view: ContainerView) {
-  const nodes = []
-  if (view.args.key) {
-    nodes.push(key(view))
+  // Update ErrorView when you update this.
+  renderSingle() {
+    return [
+      syntax(this.openToken()),
+      note("…" + this.count()),
+      syntax(this.closeToken()),
+    ]
   }
-  nodes.push(container.icon(view))
-  nodes.push(container.name(view))
-  nodes.push(space())
-  nodes.push(container.open(view))
-  return nodes
+
+  renderPeek() {
+    const n = 2
+    const l = this.count()
+    const trail = l > n ? l - n : null
+    const nodes = []
+    nodes.push(syntax(this.openToken()))
+    nodes.push(Array.from(this.iterate(n)).map((v) => field(v, "single")))
+    if (trail) nodes.push(note(" …+" + trail + " "))
+    nodes.push(syntax(this.closeToken()))
+    return nodes
+  }
+
+  render(name?: RenderMode) {
+    switch (name) {
+      case "single":
+        return this.renderSingle()
+      case "peek":
+        return this.renderPeek()
+      default:
+        return this.renderSingle()
+    }
+  }
 }

@@ -1,7 +1,4 @@
 import {zed} from "@brimdata/zealot"
-import {field} from "../templates/field"
-import {note} from "../templates/note"
-import {syntax} from "../templates/syntax"
 import {createView} from "../views/create"
 import {ContainerView} from "./container-view"
 
@@ -10,24 +7,16 @@ export class MapView extends ContainerView<zed.Map> {
     return "Map"
   }
 
+  count(): number {
+    return this.value.value.size
+  }
+
   openToken() {
     return "|{"
   }
 
   closeToken() {
     return "}|"
-  }
-
-  render() {
-    const n = 2
-    const l = this.value.value.size
-    const trail = l > n ? l - n : null
-    const nodes = []
-    nodes.push(syntax(this.openToken()))
-    nodes.push(Array.from(this.iterate(n)).map(field))
-    if (trail) nodes.push(note(" …+" + trail + " "))
-    nodes.push(syntax(this.closeToken()))
-    return nodes
   }
 
   *iterate(n?: number) {

@@ -1,13 +1,14 @@
 {
-  "name": "brim",
-  "productName": "Brim",
+  "name": "zui",
+  "productName": "Zui",
   "private": true,
-  "description": "Brim Desktop App",
-  "repository": "https://github.com/brimdata/brim",
+  "description": "Zed User Interface",
+  "repository": "https://github.com/brimdata/brim-update-test",
   "license": "BSD-3-Clause",
-  "version": "0.30.0",
+  "version": "0.31.0",
+  "channel": "latest",
   "main": "dist/js/electron/main.js",
-  "author": "Brim Security, Inc.",
+  "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "workspaces": [
     "./packages/*"
   ],
@@ -27,9 +28,13 @@
     "e2e": "yarn workspace e2e-tests test",
     "format": "prettier '**/*.{js,ts,tsx,scss}' --write --loglevel warn",
     "prerelease": "yarn build",
-    "release": "electron-builder --mac",
+    "release": "electron-builder",
+    "testrelease": "electron-builder --dir",
     "postinstall": "node scripts/post-install",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "icon:mac": "iconutil -c icns build/icon.iconset && rm -fr build/icon.iconset",
+    "icon:win": "convert icoset/*png icon.ico && rm -fr icoset",
+    "background:mac": "tiffutil -cathidpicheck build/background.png build/background@2x.png -out build/background.tiff && rm -fr build/background*.png"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",
@@ -70,10 +75,9 @@
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
     "electron": "^15.5.2",
-    "electron-builder": "^22.14.5",
-    "electron-builder-notarize": "^1.2.0",
+    "electron-builder": "^23.1.0",
+    "electron-builder-notarize": "^1.5.0",
     "electron-mock-ipc": "^0.3.10",
-    "electron-notarize": "^0.2.1",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.1.2",
@@ -172,7 +176,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#10c23881741df5f9974b76fd8f6c6dfb19b29cb5"
+    "zed": "brimdata/zed#d114ca7c50992b786b5c633851531a59c212433e"
   },
   "peerDependencies": {
     "react": "^18.0.0",

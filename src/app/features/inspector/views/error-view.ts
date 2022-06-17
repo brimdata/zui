@@ -3,21 +3,37 @@ import {ContainerView} from "./container-view"
 import {createView} from "./create"
 import {field} from "../templates/field"
 import {syntax} from "../templates/syntax"
+import {RenderMode} from "../types"
+import {space} from "../templates/space"
 
 export class ErrorView extends ContainerView<zed.Error> {
-  openToken(): string {
-    return "("
-  }
-  closeToken(): string {
-    return ")"
-  }
   name(): string {
     return "Error"
   }
-  render() {
-    const {value} = this.iterate().next()
-    return ["Error", syntax("("), field(value), syntax(")")]
+
+  count() {
+    return this.iterate().next().value.count()
   }
+
+  openToken(): string {
+    return "("
+  }
+
+  closeToken(): string {
+    return ")"
+  }
+
+  render(mode: RenderMode) {
+    const {value: view} = this.iterate().next()
+    return [
+      this.name(),
+      space(),
+      syntax(this.openToken()),
+      field(view, mode),
+      syntax(this.closeToken()),
+    ]
+  }
+
   *iterate() {
     yield createView({
       ...this.args,

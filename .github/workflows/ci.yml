@@ -16,21 +16,13 @@ jobs:
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.18'
-      - uses: actions/setup-node@v2
-        with:
-          cache: yarn
-          node-version-file: .node-version
-      - run: yarn --inline-builds
+      - uses: ./.github/actions/setup-zui
       - run: yarn lint
       - run: yarn test
       - name: Build and install package
         if: runner.os != 'Windows'
         run: |
           set -x
-          yarn build
           case ${{ runner.os }} in
             Linux )
               yarn electron-builder --linux=deb

@@ -1,0 +1,19 @@
+name: Build Windows
+description: Specific steps to build for Windows
+inputs:
+  csc_key_password:
+    required: true
+  csc_link:
+    required: true
+  gh_token:
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Build Signed Release
+      shell: bash
+      run: yarn electron-builder
+      env:
+        CSC_KEY_PASSWORD: ${{ inputs.csc_key_password }}
+        CSC_LINK: ${{ inputs.csc_link }}
+        GH_TOKEN: ${{ inputs.gh_token }}

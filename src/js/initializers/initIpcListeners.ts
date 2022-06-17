@@ -14,6 +14,7 @@ import {AppDispatch, Store} from "../state/types"
 import initNewSearchTab from "./initNewSearchTab"
 import PluginManager from "./pluginManager"
 import Editor from "../state/Editor"
+import submitSearch from "src/app/query-home/flows/submit-search"
 
 export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
@@ -34,6 +35,7 @@ export default (store: Store, pluginManager: PluginManager) => {
   ipcRenderer.on("pinSearch", () => {
     store.dispatch(SearchBar.pinSearchBar())
     store.dispatch(Editor.pinValue())
+    store.dispatch(submitSearch())
   })
 
   ipcRenderer.on("focusSearchBar", () => {
@@ -47,8 +49,9 @@ export default (store: Store, pluginManager: PluginManager) => {
   })
 
   ipcRenderer.on("clearPins", () => {
-    store.dispatch(SearchBar.removeAllSearchBarPins())
-    store.dispatch(SearchBar.changeSearchBarInput(""))
+    store.dispatch(Editor.deleteAllPins())
+    store.dispatch(Editor.setValue(""))
+    store.dispatch(submitSearch())
   })
 
   ipcRenderer.on("toggleLeftSidebar", () => {

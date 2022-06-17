@@ -7,10 +7,11 @@
   --interval: #544aa6;
   --bool: #3eaef4;
   --zed-string: hsl(130, 54%, 38%);
-  --zed-key: hsl(212, 17%, 55%);
+  --zed-key: hsl(212, 20%, 40%);
   --zed-number: #e65835;
   --zed-syntax: hsl(212, 17%, 55%);
   --zed-note: hsl(212, 17%, 80%);
+  --zed-container: var(--foreground-color);
 }
 
 .zed-syntax {
@@ -75,4 +76,8 @@
 .zed-note {
   color: var(--zed-note);
   font-style: italic;
+}
+
+.zed-container {
+  color: var(--zed-container);
 }
