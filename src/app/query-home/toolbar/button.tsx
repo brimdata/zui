@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import * as React from "react"
 
 import Icon from "src/app/core/icon-temp"
@@ -43,7 +44,7 @@ const Text = styled.span`
   white-space: nowrap;
 `
 
-const StyledButton = styled.button<{isPrimary: boolean; disabled: boolean}>`
+const StyledButton = styled.button`
   background: var(--button-background);
   &:active:not(:disabled) {
     background: linear-gradient(#fefefe, 0.5px, #f3f3f3 2px);
@@ -68,22 +69,27 @@ const StyledButton = styled.button<{isPrimary: boolean; disabled: boolean}>`
     cursor: not-allowed;
   }
 
-  ${({isPrimary}) =>
-    isPrimary &&
-    `
-  background: linear-gradient(#4b91e2, #3a87df);
-  .text {
-    color: white;
-  }
-  &:active:not(:disabled) {
-    background: var(--azure);
-  } 
-  `}
   &:hover:not(:disabled) {
     background: var(--button-background-hover);
   }
   &:active:not(:disabled) {
     background: var(--button-background-active);
+  }
+
+  &.primary {
+    background: linear-gradient(#4b91e2, #3a87df);
+    ${Text} {
+      color: white;
+    }
+    &:hover:not(:disabled) {
+      background: var(--primary-color);
+    }
+    &:hover:not(:disabled) {
+      background: var(--primary-color-dark);
+    }
+    &:active:not(:disabled) {
+      background: var(--primary-color-darker);
+    }
   }
 `
 
@@ -96,7 +102,11 @@ const ToolbarButton = ({
   onClick,
 }: Props) => {
   return (
-    <StyledButton isPrimary={isPrimary} disabled={disabled} onClick={onClick}>
+    <StyledButton
+      className={classNames({primary: isPrimary})}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {!!icon && <StyledIcon>{icon}</StyledIcon>}
       {!!text && <Text>{text}</Text>}
       {!!dropdown && <DropdownIcon />}

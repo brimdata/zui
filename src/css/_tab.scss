@@ -1,10 +1,9 @@
-$tab-inactive-color: orange;
-$tab-inactive-bg: red;
-$tab-hover-color: blue;
-$tab-hover-bg: yellow;
+$tab-inactive-color: var(--foreground-color);
+$tab-inactive-bg: transparent;
+$tab-hover-color: var(--foreground-color);
+$tab-hover-bg: var(--tab-background-hover);
 $tab-active-color: var(--aqua);
 $tab-active-bg: white;
-$tab-border-radius: 4px;
 $tab-transition-duration: 200ms;
 
 .tab {
@@ -17,7 +16,8 @@ $tab-transition-duration: 200ms;
   cursor: default;
   will-change: transform;
   transition: none;
-  border-radius: $tab-border-radius $tab-border-radius 0 0;
+  box-shadow: 1px 0 0 0 var(--border-color),
+    inset 0 -1px 0 0 var(--border-color);
 
   .tab-content {
     overflow: hidden;
@@ -26,73 +26,43 @@ $tab-transition-duration: 200ms;
     align-items: center;
     height: 100%;
     position: relative;
+    opacity: 0.75;
   }
 
-  .loading {
-    position: absolute;
-    left: 10px;
-    top: 6px;
-    transform: translateX(-30px);
+  .icon {
+    margin-left: 24px;
+    margin-right: 8px;
   }
 
   // Title
   .title {
     font-family: system-ui;
     font-size: 14px;
+    line-height: 1;
     margin: 0;
     font-weight: 400;
     color: $tab-inactive-color;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-left: 10px;
     flex: 1;
   }
 
   // Close x icon
   .close-button {
-    width: 17px;
-    height: 17px;
-    min-width: 17px;
     margin-right: 10px;
-
-    svg {
-      width: 9px;
-      height: 9px;
-      fill: $tab-inactive-color;
-    }
-
-    &:after {
-      content: "";
-      width: 17px;
-      height: 17px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform: scale(0);
-    }
+    position: relative;
 
     &:hover {
-      svg {
-        fill: white;
-      }
-
-      &:after {
-        transition: transform 100ms;
-        transform: scale(1);
-      }
-    }
-
-    &:active:after {
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(0, 0, 0, 0.3);
     }
   }
 
   // The hover state
   &:hover {
     background-color: $tab-hover-bg;
+    box-shadow: inset -1px 0 var(--border-color), -1px 0 var(--border-color),
+      inset 0 -1px var(--border-color);
 
     .title {
       color: $tab-hover-color;
@@ -101,15 +71,25 @@ $tab-transition-duration: 200ms;
     .close-button svg {
       fill: $tab-hover-color;
     }
+
+    .tab-content {
+      opacity: 0.9;
+    }
   }
 
   // The active state
   &.active {
     background: $tab-active-bg;
     z-index: 1;
+    box-shadow: 1px 0 var(--border-color), -1px 0 var(--border-color),
+      0 1px $tab-active-bg;
 
     .title {
       color: $tab-active-color;
+    }
+
+    .tab-content {
+      opacity: 1;
     }
 
     .close-button {

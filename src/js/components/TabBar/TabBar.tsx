@@ -15,21 +15,36 @@ import useTabController from "./useTabController"
 import useTabLayout from "./useTabLayout"
 import {useLocation} from "react-router"
 import styled from "styled-components"
+import Appearance from "src/js/state/Appearance"
+import env from "src/app/core/env"
 
 const AnimatedSearchTab = animated(SearchTab)
-const MAX_WIDTH = 240
+const MAX_WIDTH = 200
+
+const BG = styled.div`
+  box-shadow: inset 0 -1px 0 var(--border-color);
+  background: var(--tab-background);
+  display: flex;
+`
 
 const Container = styled.div`
   display: flex;
   position: relative;
-  height: 36px;
+  height: 42px;
   width: 100%;
   flex-shrink: 0;
   align-items: flex-end;
-  padding-right: 30px;
-  background: var(--coconut);
-  overflow: hidden;
   z-index: 2;
+  flex: 1;
+  margin-right: 86px;
+`
+
+const TrafficLightBG = styled.div`
+  width: 86px;
+  flex-shrink: 0;
+  box-shadow: inset -1px -1px var(--border-color);
+  background: var(--tab-background);
+  z-index: 100;
 `
 
 export default function TabBar() {
@@ -46,26 +61,33 @@ export default function TabBar() {
     setWidth(lib.bounded(rect.width / count, [0, MAX_WIDTH]))
   const ctl = useTabController(count, calcWidth)
   useEffect(() => calcWidth(), [rect.width])
-
+  const sidebarCollapsed = !useSelector(Appearance.sidebarIsOpen)
   return (
-    <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
-      {ids.map((id) => (
-        <AnimatedSearchTab
-          {...layout.dragBinding({
-            id,
-            onDown: () => ctl.onTabClick(id),
-            onChange: (indices) => ctl.onTabMove(indices),
-          })}
-          key={id}
-          title={brim.tab(id, lakes, pools, queryIdNameMap).title()}
-          style={layout.getStyle(id)}
-          removeTab={(e) => ctl.onRemoveClick(e, id)}
-          active={id === ctl.activeId}
-          preview={id === ctl.previewId}
-          isNew={false}
-        />
-      ))}
-      <AddTab onClick={ctl.onAddClick} left={width * count} />
-    </Container>
+    <BG>
+      {sidebarCollapsed && env.isMac && <TrafficLightBG />}
+      <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
+        {ids.map((id) => {
+          const tab = brim.tab(id, lakes, pools, queryIdNameMap)
+          return (
+            <AnimatedSearchTab
+              {...layout.dragBinding({
+                id,
+                onDown: () => ctl.onTabClick(id),
+                onChange: (indices) => ctl.onTabMove(indices),
+              })}
+              key={id}
+              title={tab.title()}
+              icon={tab.icon()}
+              style={layout.getStyle(id)}
+              removeTab={(e) => ctl.onRemoveClick(e, id)}
+              active={id === ctl.activeId}
+              preview={id === ctl.previewId}
+              isNew={false}
+            />
+          )
+        })}
+        <AddTab onClick={ctl.onAddClick} left={width * count} />
+      </Container>
+    </BG>
   )
 }

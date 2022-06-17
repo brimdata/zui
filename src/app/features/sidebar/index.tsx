@@ -33,7 +33,7 @@ const SectionContentSwitch = ({sectionName}) => {
 const StyledPane = styled(Pane)`
   background: var(--sidebar-background);
   overflow-x: unset;
-  padding-top: 22px;
+  padding-top: 40px;
 `
 
 export function Sidebar() {

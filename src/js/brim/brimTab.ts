@@ -10,10 +10,10 @@ export default function (
   pools: PoolsState,
   queryIdNameMap: any
 ) {
+  const history = global.tabHistories.getOrCreate(tabId)
+  const route = whichRoute(history.location.pathname)
   return {
     title() {
-      const history = global.tabHistories.getOrCreate(tabId)
-      const route = whichRoute(history.location.pathname)
       if (route) {
         return compileTitle(
           route,
@@ -25,6 +25,9 @@ export default function (
       } else {
         return "Brim"
       }
+    },
+    icon() {
+      return route?.icon
     },
   }
 }

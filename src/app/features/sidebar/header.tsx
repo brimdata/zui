@@ -6,9 +6,10 @@ import PlusButton from "./plus-button"
 
 const Container = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
+  user-select: none;
 `
 
 export default function Header() {

@@ -1,37 +1,37 @@
 import React from "react"
+import Icon from "src/app/core/icon-temp"
 import styled from "styled-components"
 
-const AddTabAnchor = styled.a`
+const BG = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
   left: 0;
-  width: 30px;
   height: 100%;
-  line-height: 27px;
-  text-align: center;
-  align-items: center;
-  // TODO: Design
-  color: black;
+`
+
+const Button = styled.button`
+  display: flex;
+  width: 32px;
+  height: 32px;
+  background-color: rgba(0, 0, 0, 0);
   border-radius: 50%;
-  margin-left: 8px;
-  margin-right: 8px;
-  margin-bottom: 2px;
+  border-width: 0;
+  font-weight: 300;
   font-size: 24px;
-  cursor: default;
-  user-select: none;
-  transition: none;
+  line-height: 32px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
 
   &:hover {
-    transition: all 300ms;
-    // TODO: Design
-    color: white;
-    background: rgba(255, 255, 255, 0.2);
+    background-color: rgba(0, 0, 0, 0.08);
+    transition: background-color 300ms;
   }
 
   &:active {
-    transition: none;
-    background: rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.12);
+    transition: background-color 0ms;
   }
 `
 
@@ -42,11 +42,10 @@ type Props = {
 
 export default function AddTab({onClick, left}: Props) {
   return (
-    <AddTabAnchor
-      onClick={onClick}
-      style={{transform: `translateX(${left}px)`}}
-    >
-      +
-    </AddTabAnchor>
+    <BG style={{transform: `translateX(${left}px)`}}>
+      <Button onClick={onClick}>
+        <Icon size={18} name="plus" fill="var(--foreground-color)" />
+      </Button>
+    </BG>
   )
 }

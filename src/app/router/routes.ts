@@ -1,4 +1,5 @@
 import {matchPath} from "react-router"
+import {IconName} from "../core/icon-temp"
 
 /**
  * A single place to store all app route information. The title field is
@@ -21,31 +22,42 @@ export const lakeShow = {
 export const lakeImport = {
   title: "New Pool",
   path: `${lakeShow.path}/import`,
+  icon: "pool",
 }
 
 export const poolShow = {
-  title: "Pool: <pool>",
+  title: "<pool>",
   path: `${lakeShow.path}/pools/:poolId`,
+  icon: "pool",
 }
 
 export const query = {
-  title: "Query: <query>",
+  title: "<query>",
   path: `${lakeShow.path}/queries/:queryId`,
+  icon: "query",
 }
 export const queryVersion = {
-  title: "Query: <query>",
+  title: "<query>",
   path: `${lakeShow.path}/queries/:queryId/versions/:version`,
+  icon: "query",
 }
-export const lakeReleaseNotes = {
+export const lakeReleaseNotes: Route = {
   title: "Release Notes",
   path: `${lakeShow.path}/release-notes`,
+  icon: "doc-plain",
 }
 export const releaseNotes = {
   title: "Release Notes",
   path: "/release-notes",
 }
 
-export const allRoutes = [
+type Route = {
+  title: string
+  path: string
+  icon?: IconName
+}
+
+export const allRoutes: Route[] = [
   lakeReleaseNotes,
   lakeImport,
   lakeShow,

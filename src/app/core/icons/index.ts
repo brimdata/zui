@@ -27,6 +27,9 @@ import tag from "./tag"
 import run from "./run"
 import pin from "./pin"
 import lock from "./lock"
+import close from "./close"
+import plus from "./plus"
+import zui from "./zui"
 
 export default {
   braces,
@@ -58,4 +61,7 @@ export default {
   "doc-plain": docPlain,
   tag,
   pin,
+  close,
+  plus,
+  zui,
 }
