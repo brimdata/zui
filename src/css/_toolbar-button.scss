@@ -39,20 +39,25 @@
     .icon {
       opacity: 0.25;
     }
+
     .text {
       opacity: 0.5;
     }
+
     & + label {
       opacity: 0.5;
     }
+
     cursor: not-allowed;
   }
 
   &.dragging {
     background: var(--havelock);
+
     .text {
       color: white;
     }
+
     .icon {
       fill: white;
     }
@@ -61,9 +66,11 @@
 
 .toolbar-button-primary {
   background: linear-gradient(#4b91e2, #3a87df);
+
   .text {
     color: white;
   }
+
   &:active:not(:disabled) {
     background: var(--azure);
   }

@@ -11,22 +11,25 @@ import Modal from "src/js/state/Modal"
 import {lakeImportPath, lakeQueryPath} from "src/app/router/utils/paths"
 import Tabs from "src/js/state/Tabs"
 import Queries from "src/js/state/Queries"
+import Icon from "src/app/core/icon-temp"
 
-const Button = styled.button`
+export const Button = styled.button`
   display: flex;
-  width: 24px;
-  height: 24px;
-  background-color: rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--primary-color);
   border-radius: 50%;
   border-width: 0;
-  margin: 0 16px;
-  line-height: 20px;
-  font-family: "system-ui", sans-serif;
-  font-weight: 300;
-  font-size: 20px;
+  margin-right: 10px;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-color-dark);
+  }
+  &:active {
+    background-color: var(--primary-color-darker);
   }
 `
 
@@ -73,7 +76,9 @@ export default function PlusButton() {
   }
   return (
     <>
-      <Button onClick={() => onClick()}>+</Button>
+      <Button onClick={() => onClick()}>
+        <Icon name="plus" size={18} fill="white" />
+      </Button>
       <input
         ref={ref}
         type="file"

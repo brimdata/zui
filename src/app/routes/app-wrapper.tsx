@@ -34,16 +34,22 @@ const RowLayout = styled.div`
   padding-top: 1px;
 `
 
-const SearchPageMain = styled.div`
+const PageContent = styled.div`
   display: flex;
   height: 100%;
 `
 
-const SearchPageWrapper = styled.div`
+const TitleBarDragArea = styled.div`
+  position: fixed;
+  height: 42px;
+  width: 100%;
+  -webkit-app-region: drag;
+  z-index: -1;
+`
+
+const Wrap = styled.div`
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  width: 100%;
 `
 
 function interactive() {
@@ -59,27 +65,25 @@ function interactive() {
 export default function AppWrapper({children}) {
   const dispatch = useDispatch()
   return (
-    <div className="app-wrapper">
-      <div className="title-bar-drag-area" />
+    <Wrap>
+      <TitleBarDragArea />
       <XLatestError />
-      <SearchPageWrapper>
-        <SearchPageMain>
-          <ColumnLayout>
-            <div id="modal-dialog-root" />
-            <TabBar />
-            <RowLayout>
-              <Sidebar />
-              <ColumnLayout
-                onClick={() => dispatch(interactive())}
-                onMouseDown={() => dispatch(interactive())}
-              >
-                {children}
-              </ColumnLayout>
-            </RowLayout>
-            <StatusBar />
-          </ColumnLayout>
-        </SearchPageMain>
-      </SearchPageWrapper>
+      <PageContent>
+        <Sidebar />
+        <ColumnLayout>
+          <div id="modal-dialog-root" />
+          <TabBar />
+          <RowLayout>
+            <ColumnLayout
+              onClick={() => dispatch(interactive())}
+              onMouseDown={() => dispatch(interactive())}
+            >
+              {children}
+            </ColumnLayout>
+          </RowLayout>
+          <StatusBar />
+        </ColumnLayout>
+      </PageContent>
 
       {/* Global Modals */}
       <ErrorNotice />
@@ -92,6 +96,6 @@ export default function AppWrapper({children}) {
       <BrimTooltip />
 
       {env.isIntegrationTest && <HookLog />}
-    </div>
+    </Wrap>
   )
 }
