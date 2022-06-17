@@ -3,7 +3,7 @@ name: Build & Publish
 on:
   push:
     branches:
-      - welcome-zui
+      - test-zui
 
 jobs:
   build:

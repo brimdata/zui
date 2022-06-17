@@ -13,8 +13,6 @@
   "afterSign": "electron-builder-notarize",
   "generateUpdatesFilesForAllChannels": true,
   "publish": {
-    "provider": "github",
-    "owner": "brimdata",
-    "repo": "brim-update-test"
+    "provider": "github"
   }
 }
