@@ -2,8 +2,6 @@ name: Build & Publish
 
 on:
   push:
-    branches:
-      - test-zui
 
 jobs:
   build:
