@@ -9,10 +9,6 @@ export function zedTypeClassName(data: zed.Value | zed.Type) {
     return "zed-null"
   }
 
-  if (data instanceof zed.Error) {
-    return "zed-error"
-  }
-
   if (data instanceof zed.Primitive) {
     const concrete = zed.trueType(data.type)
     const classes = []
@@ -23,4 +19,6 @@ export function zedTypeClassName(data: zed.Value | zed.Type) {
     }
     return classes.join(" ")
   }
+
+  return "zed-container"
 }
