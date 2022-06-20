@@ -18,6 +18,8 @@ export type InspectorProps = {
   values: zed.Value[]
   isExpanded: IsExpanded
   setExpanded: SetExpanded
+  getValuePage: (key: string) => number
+  renderMore: (key: string) => void
   onContextMenu?: InspectorMouseEvent
   onClick?: InspectorMouseEvent
   loadMore?: Function

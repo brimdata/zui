@@ -37,4 +37,17 @@ export const List: ComponentType<PropsWithChildren<any>> = styled(
       height: 14px;
     }
   }
+
+  a.render-more {
+    background: var(--button-background);
+    color: var(--zed-key);
+    padding: 0 12px;
+    &:hover {
+      background: var(--button-background-hover);
+      color: var(--foreground-color);
+    }
+    &:active {
+      background: var(--button-background-active);
+    }
+  }
 `

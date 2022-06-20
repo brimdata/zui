@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react"
+import React, {ReactNode} from "react"
 import {ContainerView} from "../views/container-view"
 import Icon from "src/app/core/icon-temp"
 import classNames from "classnames"
@@ -6,10 +6,7 @@ import {zed} from "@brimdata/zealot"
 
 export function open(view: ContainerView) {
   return (
-    <span
-      key={"open-token-" + view.args.indexPath.join(",")}
-      className="zed-syntax"
-    >
+    <span key={"open-token-" + view.key} className="zed-syntax">
       {view.openToken()}
     </span>
   )
@@ -17,29 +14,41 @@ export function open(view: ContainerView) {
 
 export function close(view: ContainerView) {
   return (
-    <span
-      key={"close-token-" + view.args.indexPath.join(",")}
-      className="zed-syntax"
-    >
+    <span key={"close-token-" + view.key} className="zed-syntax">
       {view.closeToken()}
     </span>
   )
 }
 
-export function anchor(view: ContainerView, children: ReactElement[]) {
+export function expandAnchor(view: ContainerView, children: ReactNode) {
   return (
     <a
-      key="handle"
+      key="expand-anchor"
       onClick={() => {
-        view.args.ctx.props.setExpanded(
-          view.args.indexPath.join(","),
-          !view.isExpanded()
-        )
+        view.args.ctx.props.setExpanded(view.key, !view.isExpanded())
       }}
     >
       {children}
     </a>
   )
+}
+
+export function renderMoreAnchor(
+  view: ContainerView,
+  perPage: number,
+  total: number
+) {
+  return [
+    <a
+      key="render-more-anchor"
+      className="render-more"
+      onClick={() => {
+        view.args.ctx.props.renderMore(view.key)
+      }}
+    >
+      Render next {perPage} of {total}
+    </a>,
+  ]
 }
 
 export function name(view: ContainerView) {
