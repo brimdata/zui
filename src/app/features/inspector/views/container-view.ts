@@ -70,6 +70,7 @@ export abstract class ContainerView<
     }
     nodes = nodes.concat(closing(this))
     ctx.push(container.expandAnchor(this, nodes))
+    return null
   }
 
   renderExpanded() {
@@ -85,6 +86,7 @@ export abstract class ContainerView<
     }
     ctx.unnest()
     ctx.push(closing(this))
+    return null
   }
 
   render(name?: RenderMode) {

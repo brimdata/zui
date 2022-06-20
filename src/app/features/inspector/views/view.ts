@@ -22,7 +22,7 @@ export class View<T extends zed.Any = zed.Any> {
     return this.args.ctx.props.isExpanded(this.key)
   }
 
-  render(_mode?: RenderMode): ReactNode | void {
+  render(_mode?: RenderMode): ReactNode {
     return this.args.value.toString()
   }
 

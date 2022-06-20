@@ -43,7 +43,7 @@ export function renderMoreAnchor(view: ContainerView, perPage: number) {
         view.args.ctx.props.renderMore(view.key)
       }}
     >
-      Render next {perPage}
+      Show next {perPage}
     </a>,
   ]
 }
