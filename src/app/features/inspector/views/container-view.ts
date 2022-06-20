@@ -25,24 +25,15 @@ export abstract class ContainerView<
     if (!this.isExpanded()) return 1
     let sum = 2 // the open and close tokens
     for (let view of this.iterate(this.rowLimit())) sum += view.rowCount()
-    if (this.isRowLimited()) sum += 1 // the "Render More" button
+    if (this.isRowLimited()) sum += 2 // the "Render More" button
     return sum
   }
 
   inspect() {
-    const {ctx} = this.args
-
     if (this.isExpanded()) {
-      ctx.push(container.expandAnchor(this, opening(this)))
-      ctx.nest()
-      for (let view of this.iterate(this.rowLimit())) view.inspect()
-      if (this.isRowLimited()) {
-        ctx.push(container.renderMoreAnchor(this, ROWS_PER_PAGE, this.count()))
-      }
-      ctx.unnest()
-      ctx.push(closing(this))
+      this.render("expanded")
     } else {
-      ctx.push(this.renderLine())
+      this.render("line")
     }
   }
 
@@ -56,24 +47,44 @@ export abstract class ContainerView<
   }
 
   renderPeek() {
-    const trail = this.count() > PEEK_LIMIT ? this.count() - PEEK_LIMIT : null
-    const nodes = []
+    let nodes = []
     nodes.push(syntax(this.openToken()))
-    nodes.push(
-      Array.from(this.iterate(PEEK_LIMIT)).map((v) => field(v, "single"))
-    )
-    if (trail) nodes.push(note(" …+" + trail + " "))
+    for (let view of this.iterate(PEEK_LIMIT)) {
+      nodes.push(field(view, "single"))
+    }
+    if (this.count() > PEEK_LIMIT) {
+      nodes.push(container.tail(this, PEEK_LIMIT))
+    }
     nodes.push(syntax(this.closeToken()))
     return nodes
   }
 
   renderLine() {
-    const trail = this.count() > LINE_LIMIT ? this.count() - LINE_LIMIT : null
-    let line = opening(this)
-    for (let view of this.iterate(LINE_LIMIT)) line.push(field(view, "peek"))
-    if (trail) line.push(note(" …+" + trail + " "))
-    line = line.concat(closing(this))
-    return container.expandAnchor(this, line)
+    const {ctx} = this.args
+    let nodes = opening(this)
+    for (let view of this.iterate(LINE_LIMIT)) {
+      nodes.push(field(view, "peek"))
+    }
+    if (this.count() > LINE_LIMIT) {
+      nodes.push(container.tail(this, LINE_LIMIT))
+    }
+    nodes = nodes.concat(closing(this))
+    ctx.push(container.expandAnchor(this, nodes))
+  }
+
+  renderExpanded() {
+    const {ctx} = this.args
+    ctx.push(container.expandAnchor(this, opening(this)))
+    ctx.nest()
+    for (let view of this.iterate(this.rowLimit())) {
+      view.inspect()
+    }
+    if (this.isRowLimited()) {
+      ctx.push(container.tail(this, this.rowLimit()))
+      ctx.push(container.renderMoreAnchor(this, ROWS_PER_PAGE))
+    }
+    ctx.unnest()
+    ctx.push(closing(this))
   }
 
   render(name?: RenderMode) {
@@ -82,8 +93,12 @@ export abstract class ContainerView<
         return this.renderSingle()
       case "peek":
         return this.renderPeek()
+      case "line":
+        return this.renderLine()
+      case "expanded":
+        return this.renderExpanded()
       default:
-        return this.renderSingle()
+        throw new Error("A Container Must Have a Render Mode")
     }
   }
 

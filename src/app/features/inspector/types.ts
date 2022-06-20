@@ -47,4 +47,4 @@ export type RowData = {
   render: ReactNode
 }
 
-export type RenderMode = "peek" | "single"
+export type RenderMode = "single" | "peek" | "line" | "expanded"

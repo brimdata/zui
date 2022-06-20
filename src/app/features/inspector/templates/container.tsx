@@ -3,6 +3,7 @@ import {ContainerView} from "../views/container-view"
 import Icon from "src/app/core/icon-temp"
 import classNames from "classnames"
 import {zed} from "@brimdata/zealot"
+import {note} from "./note"
 
 export function open(view: ContainerView) {
   return (
@@ -33,11 +34,7 @@ export function expandAnchor(view: ContainerView, children: ReactNode) {
   )
 }
 
-export function renderMoreAnchor(
-  view: ContainerView,
-  perPage: number,
-  total: number
-) {
+export function renderMoreAnchor(view: ContainerView, perPage: number) {
   return [
     <a
       key="render-more-anchor"
@@ -46,7 +43,7 @@ export function renderMoreAnchor(
         view.args.ctx.props.renderMore(view.key)
       }}
     >
-      Render next {perPage} of {total}
+      Render next {perPage}
     </a>,
   ]
 }
@@ -71,4 +68,9 @@ export function icon(view: ContainerView) {
   } else {
     return <Icon name="chevron-right" key="arrow" size={16} />
   }
+}
+
+export function tail(view: ContainerView, limit: number) {
+  const n = view.count() - limit
+  return note(" …+" + n + " ")
 }
