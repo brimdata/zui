@@ -5,5 +5,6 @@ export default {
   getExpanded: activeTabSelect((t) => t.inspector.expanded),
   getDefaultExpanded: activeTabSelect((t) => t.inspector.defaultExpanded),
   getScrollPosition: activeTabSelect((t) => t.inspector.scrollPosition),
+  getValuePages: activeTabSelect((t) => t.inspector.valuePages),
   ...actions,
 }
