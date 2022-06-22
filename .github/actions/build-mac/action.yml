@@ -60,5 +60,6 @@ runs:
       shell: bash
 
     - name: run gatekeeper assessment on notarized package
-      run: spctl --assess --type execute --verbose --ignore-cache --no-cache dist/installers/mac/Zui.app
+      run: |
+        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/installers/mac/*.app
       shell: bash
