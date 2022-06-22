@@ -1,0 +1,10 @@
+{
+  "extends": "./electron-builder.json",
+  "productName": "Zui Beta",
+  "mac": {
+    "icon": "build/icon-beta.icns"
+  },
+  "win": {
+    "icon": "build/icon-beta.ico"
+  }
+}

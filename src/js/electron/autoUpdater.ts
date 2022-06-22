@@ -12,7 +12,7 @@ autoUpdater.logger = log
 // @ts-ignore
 autoUpdater.logger.transports.file.level = "info"
 
-autoUpdater.channel = meta.packageJSON().channel
+// autoUpdater.channel = // read package.json version string extract channel name
 
 log.info("Update Channel: ", meta.packageJSON().channel)
 
