@@ -6,14 +6,7 @@ const filePath = path.join(__dirname, "../package.json")
 const package = fs.readJSONSync(filePath)
 
 function suffix(date) {
-  return [
-    date.getFullYear(),
-    date.getMonth() + 1,
-    date.getDate(),
-    date.getHours(),
-    date.getMinutes(),
-    date.getSeconds(),
-  ].join(".")
+  return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join(".")
 }
 const currentVersion = semver.valid(semver.coerce(package.version))
 const insiderVersion =
