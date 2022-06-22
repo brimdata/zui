@@ -5,7 +5,7 @@
   "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/brim-update-test",
   "license": "BSD-3-Clause",
-  "version": "0.31.2-beta",
+  "version": "0.31.0",
   "channel": "latest",
   "main": "dist/js/electron/main.js",
   "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
@@ -27,12 +27,13 @@
     "test:zealot": "yarn workspace @brimdata/zealot test",
     "e2e": "yarn workspace e2e-tests test",
     "format": "prettier '**/*.{js,ts,tsx,scss}' --write --loglevel warn",
-    "build-release": "node scripts/build-release",
+    "build-release": "electron-builder -c electron-builder-insiders.json --publish always",
     "postinstall": "node scripts/post-install",
     "prepare": "husky install",
     "icon:mac": "iconutil -c icns build/icon.iconset && rm -fr build/icon.iconset",
     "icon:win": "convert icoset/*png icon.ico && rm -fr icoset",
-    "background:mac": "tiffutil -cathidpicheck build/background.png build/background@2x.png -out build/background.tiff && rm -fr build/background*.png"
+    "background:mac": "tiffutil -cathidpicheck build/background.png build/background@2x.png -out build/background.tiff && rm -fr build/background*.png",
+    "insiders:version": "node scripts/set-insiders-version.js"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",

@@ -1,10 +1,14 @@
 {
   "extends": "./electron-builder.json",
-  "productName": "Zui Beta",
+  "productName": "Zui - Insiders",
   "mac": {
     "icon": "build/icon-beta.icns"
   },
   "win": {
     "icon": "build/icon-beta.ico"
+  },
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
   }
 }

@@ -19,8 +19,8 @@ const currentVersion = semver.valid(semver.coerce(package.version))
 const insiderVersion =
   semver.inc(currentVersion, "minor") + `-dev.${suffix(new Date())}`
 
-console.log("Current Version: ", currentVersion)
-console.log("Insider Version: ", insiderVersion)
+console.log(" Current Version: ", currentVersion)
+console.log("Insiders Version: ", insiderVersion)
 
 package.version = insiderVersion
 fs.writeFileSync(filePath, JSON.stringify(package, null, 2) + "\n")
