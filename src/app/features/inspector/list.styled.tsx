@@ -20,6 +20,9 @@ export const List: ComponentType<PropsWithChildren<any>> = styled(
     &:hover {
       background: rgba(0, 0, 0, 0.04);
     }
+    &:active {
+      background: rgba(0, 0, 0, 0.07);
+    }
     border-radius: 3px;
     display: inline-flex;
     white-space: pre;
