@@ -37,7 +37,7 @@ runs:
       # running the build step twice, as we've observed that it works
       # consistently on a retry.
       run: |
-        yarn electron-builder || true
+        yarn build-release || true
       env:
         APPLE_ID: ${{ inputs.apple_id }}
         APPLE_ID_PASSWORD: ${{ inputs.apple_id_pasword }}
@@ -52,7 +52,7 @@ runs:
       run: |
         security set-key-partition-list -S apple-tool:,apple: -k password build
         security find-identity -p codesigning -v
-        yarn electron-builder
+        yarn build-release
       env:
         APPLE_ID: ${{ inputs.apple_id }}
         APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}

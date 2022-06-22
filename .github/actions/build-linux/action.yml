@@ -12,7 +12,7 @@ runs:
       shell: bash
 
     - name: build packages
-      run: yarn electron-builder
+      run: yarn build-release
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.gh_token }}

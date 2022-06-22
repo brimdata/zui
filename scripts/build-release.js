@@ -22,11 +22,9 @@ function getChannel(version) {
 }
 
 const channel = getChannel(packageJSON.version)
-// console.log(`         ###                          ###         `)
 console.log("")
 console.log(`############     BUILDING RELEASE     ############`)
 console.log("")
-// console.log(`         ###                          ###         `)
 log("Platform: ", bold(process.platform))
 log("Version: ", bold(packageJSON.version))
 log("Channel: ", bold(channel))
