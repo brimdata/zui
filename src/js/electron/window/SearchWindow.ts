@@ -36,6 +36,7 @@ export class SearchWindow implements BrimWindow {
     this.ref = new BrowserWindow({
       ...getWindowDimens(dimens, DEFAULT_DIMENS, screens),
       titleBarStyle: env.isMac ? "hidden" : undefined,
+      trafficLightPosition: {x: 16, y: 16},
       resizable: true,
       minWidth: 480,
       minHeight: 100,

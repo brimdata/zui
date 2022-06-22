@@ -12,7 +12,7 @@ import {NodeRenderer} from "react-arborist"
 import getQueryItemCtxMenu from "../flows/get-query-item-ctx-menu"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
-const QueryIcon = styled(Icon).attrs({name: "doc-plain"})``
+const QueryIcon = styled(Icon).attrs({name: "query"})``
 
 const QueryItem: NodeRenderer<any> = ({
   innerRef,

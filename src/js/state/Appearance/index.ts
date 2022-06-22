@@ -29,7 +29,7 @@ const slice = createSlice({
       s.sidebarIsOpen = !s.sidebarIsOpen
     },
     resizeSidebar(s, action: PayloadAction<number>) {
-      s.sidebarWidth = action.payload
+      s.sidebarWidth = Math.max(action.payload, 175)
     },
     updateSidebarSections(s, action: PayloadAction<SectionData[]>) {
       s.sidebarSections = action.payload

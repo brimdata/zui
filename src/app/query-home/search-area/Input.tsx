@@ -42,7 +42,7 @@ export default function Input({value, disabled}: Props) {
   const height = useSelector(Editor.getHeight)
 
   const onDrag = ({dy}: DragArgs) => {
-    const minH = 100
+    const minH = 54
     const maxH = lib.win.getHeight() - 400
     const newHeight = height + dy
     dispatch(Editor.setHeight(Math.max(Math.min(newHeight, maxH), minH)))

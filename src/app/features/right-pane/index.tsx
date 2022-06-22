@@ -35,7 +35,7 @@ const BG = styled.div`
       align-items: center;
       font-weight: 500;
       border-bottom: 2px solid transparent;
-      padding: 5px 4px;
+      padding: 7px 4px 3px 4px;
       font-size: 11px;
       opacity: 0.5;
     }
