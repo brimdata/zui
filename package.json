@@ -7,7 +7,7 @@
   "license": "BSD-3-Clause",
   "version": "0.30.0",
   "main": "dist/js/electron/main.js",
-  "author": "Brim Security, Inc.",
+  "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "workspaces": [
     "./packages/*"
   ],

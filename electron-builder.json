@@ -11,7 +11,6 @@
   },
   "linux": {"target": ["deb", "rpm"]},
   "afterSign": "electron-builder-notarize",
-  "generateUpdatesFilesForAllChannels": true,
   "publish": {
     "provider": "github"
   }
