@@ -9,7 +9,6 @@ export function opening(view: ContainerView) {
     nodes.push(key(view))
   }
   nodes.push(container.icon(view))
-  nodes.push(container.name(view))
   nodes.push(space())
   nodes.push(container.open(view))
   return nodes
