@@ -25,11 +25,10 @@ inputs:
 
 runs:
   using: "composite"
-  env:  
+  env:
     GH_TOKEN: ${{ inputs.gh_token }}
     CSC_KEY_PASSWORD: ${{ inputs.csc_key_password }}
     CSC_LINK: ${{ inputs.csc_link }}
-    GH_TOKEN: ${{ inputs.gh_token }}
     APPLE_ID: ${{ inputs.apple_id }}
     APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
   steps:
@@ -37,7 +36,7 @@ runs:
       if: runner.os == 'Linux'
       run: sudo apt-get install -y rpm
       shell: bash
-    
+
     - name: Set developer ID certificate in keychain
       if: runner.os == 'macOS'
       run: |
