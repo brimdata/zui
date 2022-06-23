@@ -23,8 +23,8 @@ jobs:
       - name: Checkout Zui
         uses: actions/checkout@v3
 
-      # - name: Setup Zui
-      #   uses: ./.github/actions/setup-zui
+      - name: Setup Zui
+        uses: ./.github/actions/setup-zui
 
       - name: Build Zui
         uses: ./.github/actions/build-zui
