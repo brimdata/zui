@@ -40,7 +40,7 @@ runs:
         yarn build-release || true
       env:
         APPLE_ID: ${{ inputs.apple_id }}
-        APPLE_ID_PASSWORD: ${{ inputs.apple_id_pasword }}
+        APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
         GH_TOKEN: ${{ inputs.gh_token }}
       shell: bash
 
