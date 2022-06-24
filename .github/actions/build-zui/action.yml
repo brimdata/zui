@@ -60,6 +60,7 @@ runs:
         WIN_CSC_LINK: ${{ inputs.csc_link }}
         APPLE_ID: ${{ inputs.apple_id }}
         APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
+        APPLE_TEAM_ID: brim-data-inc
 
     - name: Check notorization with gatekeeper
       if: runner.os == 'macOS'
