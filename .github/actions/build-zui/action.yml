@@ -45,29 +45,6 @@ runs:
         security find-identity -p codesigning -v
       shell: bash
 
-    - name: Warm up build for Mac
-      if: runner.os == 'macOS'
-      # We've observed a problem with the new build system where the
-      # notarization consistently fails because of an alleged lack of signing
-      # of the file Corelight-CommunityID.darwin-x86_64.so. After much futile
-      # debug, since these Zeek pieces are not expected to be part of the Brim
-      # build for much longer, for now we're using the workaround of just
-      # running the build step twice, as we've observed that it works
-      # consistently on a retry.
-      # On the retry we've observed the "hanging" symptom similar to what's
-      # described at https://github.com/electron/electron-packager/issues/701.
-      # As implied there, repeating the "security" commands gets past the
-      # problem.
-      run: |
-        ${{ inputs.cmd }} || true
-        security set-key-partition-list -S apple-tool:,apple: -k password build
-        security find-identity -p codesigning -v
-      env:
-        GH_TOKEN: ${{ inputs.gh_token }}
-        APPLE_ID: ${{ inputs.apple_id }}
-        APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
-      shell: bash
-
     - name: Build & Publish
       run: ${{ inputs.cmd }}
       shell: bash
