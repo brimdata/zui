@@ -10,6 +10,7 @@
     ]
   },
   "linux": {"target": ["deb", "rpm"]},
+  "forceCodeSigning": true,
   "afterSign": "electron-builder-notarize",
   "publish": {
     "provider": "github"
