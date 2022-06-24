@@ -18,6 +18,8 @@ inputs:
     required: true
   apple_id_password:
     required: true
+  apple_team_id:
+    required: true
   cert_p12:
     required: true
   cert_passphrase:
@@ -60,6 +62,7 @@ runs:
         WIN_CSC_LINK: ${{ inputs.csc_link }}
         APPLE_ID: ${{ inputs.apple_id }}
         APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
+        APPLE_TEAM_ID: ${{ inputs.apple_team_id }}
 
     - name: Check notorization with gatekeeper
       if: runner.os == 'macOS'

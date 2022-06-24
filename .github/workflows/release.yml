@@ -27,5 +27,6 @@ jobs:
           # Mac
           apple_id: ${{ secrets.APPLEID_USER }}
           apple_id_password: ${{ secrets.APPLEID_PASSWORD }}
+          apple_team_id: ${{ secrets.APPLE_TEAM_ID }}
           cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
