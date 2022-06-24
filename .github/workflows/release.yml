@@ -17,6 +17,7 @@ jobs:
           xcode-version: "13.0"
 
       - name: TEST notarytool
+        if: runner.os == 'macOS'
         run: xcrun --find notarytool
 
       - name: Checkout Zui
