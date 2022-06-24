@@ -59,7 +59,7 @@ runs:
       # As implied there, repeating the "security" commands gets past the
       # problem.
       run: |
-        yarn build-release || true
+        ${{ inputs.cmd }} || true
         security set-key-partition-list -S apple-tool:,apple: -k password build
         security find-identity -p codesigning -v
       env:
