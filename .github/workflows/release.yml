@@ -19,7 +19,7 @@ jobs:
       - name: Build Zui
         uses: ./.github/actions/build-zui
         with:
-          cmd: yarn electron-builder
+          cmd: DEBUG=electron-notarize yarn electron-builder
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
           csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
