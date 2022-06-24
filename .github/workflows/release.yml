@@ -7,7 +7,7 @@ jobs:
   release:
     strategy:
       matrix:
-        platform: [windows-latest, macos-latest, ubunut-latest]
+        platform: [windows-latest, macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout Zui
