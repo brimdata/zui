@@ -10,6 +10,15 @@ jobs:
         platform: [windows-latest, macos-latest, ubunut-latest]
     runs-on: ${{ matrix.platform }}
     steps:
+      - name: Setup Xcode 13 # This lets us use the new notarytool cli
+        if: runner.os == 'macOS'
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+        xcode-version: "13.0"
+
+      - name: TEST notarytool
+        run: xcrun --find notarytool
+
       - name: Checkout Zui
         uses: actions/checkout@v3
 
@@ -19,7 +28,7 @@ jobs:
       - name: Build Zui
         uses: ./.github/actions/build-zui
         with:
-          cmd: DEBUG=electron-notarize,electron-builder yarn electron-builder
+          cmd: yarn electron-builder
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
           csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
