@@ -50,8 +50,8 @@ runs:
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.gh_token }}
-        CSC_KEY_PASSWORD: ${{ inputs.csc_key_password }}
-        CSC_LINK: ${{ inputs.csc_link }}
+        # CSC_KEY_PASSWORD: ${{ inputs.csc_key_password }}
+        # CSC_LINK: ${{ inputs.csc_link }}
         APPLE_ID: ${{ inputs.apple_id }}
         APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
 
