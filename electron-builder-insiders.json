@@ -1,6 +1,5 @@
 {
   "extends": "./electron-builder.json",
-  "productName": "Zui - Insiders",
   "mac": {
     "icon": "build/icon-beta.icns"
   },
