@@ -1,10 +1,10 @@
 {
   "extends": "./electron-builder.json",
   "mac": {
-    "icon": "build/icon-beta.icns"
+    "icon": "build/insiders/icon.icns"
   },
   "win": {
-    "icon": "build/icon-beta.ico"
+    "icon": "build/insiders/icon.ico"
   },
   "publish": {
     "provider": "github",
