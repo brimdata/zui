@@ -1,0 +1,13 @@
+{
+  "extends": "./electron-builder.json",
+  "mac": {
+    "icon": "build/insiders/icon.icns"
+  },
+  "win": {
+    "icon": "build/insiders/icon.ico"
+  },
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  }
+}

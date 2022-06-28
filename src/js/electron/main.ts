@@ -27,8 +27,10 @@ import requireAll from "./require-all"
 import isDev from "./isDev"
 require("@electron/remote/main").initialize()
 
+const pkg = meta.packageJSON()
+
 export const mainDefaults = () => ({
-  lakePort: 9867,
+  lakePort: pkg.lake.port || 9867,
   lakeRoot: join(app.getPath("userData"), "lake"),
   lakeLogs: app.getPath("logs"),
   lake: true,

@@ -1,0 +1,32 @@
+name: Build Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    strategy:
+      matrix:
+        platform: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout Zui
+        uses: actions/checkout@v3
+
+      - name: Setup Zui
+        uses: ./.github/actions/setup-zui
+
+      - name: Build Zui
+        uses: ./.github/actions/build-zui
+        with:
+          cmd: yarn electron-builder
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          # Windows
+          csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
+          csc_link: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+          # Mac
+          apple_id: ${{ secrets.APPLEID_USER }}
+          apple_id_password: ${{ secrets.APPLEID_PASSWORD }}
+          apple_team_id: ${{ secrets.APPLE_TEAM_ID }}
+          cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
+          cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
