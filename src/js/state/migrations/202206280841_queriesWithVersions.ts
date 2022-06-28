@@ -1,9 +1,9 @@
 import {getAllStates} from "./utils/getTestState"
 import TreeModel from "tree-model"
 import {nanoid} from "@reduxjs/toolkit"
-import util from "util"
 
 export const flattenQueryTree = (root) => {
+  if (!root) return []
   return new TreeModel({childrenPropertyName: "items"}).parse(root).all((n) => {
     return !("items" in n.model)
   })
@@ -12,8 +12,8 @@ export const flattenQueryTree = (root) => {
 export default function queriesWithVersions(state: any) {
   for (const s of getAllStates(state)) {
     // remove brim standard lib
-    const brimLibNdx = s.queries.items?.findIndex(({id}) => id === "brim")
-    if (brimLibNdx > -1) s.queries.items?.splice(brimLibNdx, 1)
+    const brimLibNdx = s.queries?.items?.findIndex(({id}) => id === "brim")
+    if (brimLibNdx > -1) s.queries?.items?.splice(brimLibNdx, 1)
 
     const versions = {}
     for (const q of flattenQueryTree(s.queries)) {
@@ -32,10 +32,6 @@ export default function queriesWithVersions(state: any) {
       delete q.model.from
     }
     s.queryVersions = versions
-    console.log(
-      "queryVersions is: ",
-      util.inspect(s.queryVersions, false, null, true)
-    )
   }
 
   return state
