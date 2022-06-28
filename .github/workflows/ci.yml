@@ -25,10 +25,11 @@ jobs:
           set -x
           case ${{ runner.os }} in
             Linux )
-              yarn electron-builder --linux=deb
+              yarn electron-builder --linux=deb -c.forceCodeSigning=false -c.publish=null
               sudo apt install -y --no-install-recommends ./dist/installers/*.deb
               ;;
           esac
+
       - name: End to end tests
         id: playwright
         if: runner.os == 'Linux'
