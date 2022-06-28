@@ -25,7 +25,7 @@ jobs:
           set -x
           case ${{ runner.os }} in
             Linux )
-              yarn electron-builder --linux=deb -c.forceCodeSigning=false -c.publish=null
+              yarn electron-builder --linux=deb --publish never
               sudo apt install -y --no-install-recommends ./dist/installers/*.deb
               ;;
           esac
