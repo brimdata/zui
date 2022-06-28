@@ -11,6 +11,9 @@
   "workspaces": [
     "./packages/*"
   ],
+  "lake": {
+    "port": 9222
+  },
   "scripts": {
     "start": "node scripts/start",
     "build": "run-p -l 'build:**'",
