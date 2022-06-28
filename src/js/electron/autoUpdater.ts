@@ -8,14 +8,6 @@ import get from "lodash/get"
 import semver from "semver/preload"
 import open from "../lib/open"
 
-autoUpdater.logger = log
-// @ts-ignore
-autoUpdater.logger.transports.file.level = "info"
-
-// autoUpdater.channel = // read package.json version string extract channel name
-
-log.info("Update Channel: ", meta.packageJSON().channel)
-
 const getFeedURLForPlatform = (repo, platform) => {
   return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
 }
