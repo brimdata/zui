@@ -12,7 +12,7 @@
     "./packages/*"
   ],
   "lake": {
-    "port": 9222
+    "port": 9867
   },
   "scripts": {
     "start": "node scripts/start",
