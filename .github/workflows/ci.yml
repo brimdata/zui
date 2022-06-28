@@ -28,10 +28,6 @@ jobs:
               yarn electron-builder --linux=deb
               sudo apt install -y --no-install-recommends ./dist/installers/*.deb
               ;;
-            macOS )
-              yarn electron-builder --mac=dir
-              cp -r dist/installers/mac/Brim.app /Applications
-              ;;
           esac
       - name: End to end tests
         id: playwright
