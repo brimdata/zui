@@ -19,18 +19,19 @@ type DTProps = {
   fields: zed.Field[]
   onRightClick: (f: zed.Field) => void
   onHover: (f: zed.Field) => void
-  format: (f: zed.Primitive) => string
+  format: (f: zed.Value) => string
 }
-
+const LIMIT = 500
 const DataPanel = React.memo<DTProps>(function DataTable({
   fields,
   onRightClick,
   onHover,
   format,
 }: DTProps) {
+  const items = fields.slice(0, LIMIT)
   return (
     <Panel>
-      {fields.map((field, index) => (
+      {items.map((field, index) => (
         <Data key={index} onMouseEnter={() => onHover(field)}>
           <Name>
             <TooltipAnchor>{printColumnName(field.path)}</TooltipAnchor>
@@ -43,6 +44,12 @@ const DataPanel = React.memo<DTProps>(function DataTable({
           </Value>
         </Data>
       ))}
+      {fields.length > LIMIT && (
+        <Data>
+          <Name>Limited to {LIMIT} fields</Name>
+          <Value>Use the Inspector view to see all values.</Value>
+        </Data>
+      )}
     </Panel>
   )
 })

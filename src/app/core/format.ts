@@ -35,8 +35,8 @@ const getTimeZone = createSelector<State, FormatConfig, string>(
 
 export const useTimeZone = () => useSelector(getTimeZone)
 
-export function formatPrimitive(
-  data: zed.Primitive,
+export function formatValue(
+  data: zed.Value,
   config: Partial<FormatConfig> = {}
 ) {
   if (data.isUnset()) {
@@ -57,8 +57,19 @@ export function formatPrimitive(
   if (zed.isFloat64(data)) {
     return replaceDecimal(data.toString(), config.decimal)
   }
-
-  return data.toString()
+  if (zed.isPrimitive(data)) {
+    return data.toString()
+  }
+  if (data instanceof zed.Array) {
+    return `[...${data.items.length}]`
+  }
+  if (data instanceof zed.Set) {
+    return `|[...${data.items.length}]|`
+  }
+  if (data instanceof zed.Map) {
+    return `|{...${data.value.size}}|`
+  }
+  return null
 }
 
 function getNumberLocale(config) {
@@ -91,5 +102,5 @@ function formatInt(string: number, config: Partial<FormatConfig> = {}) {
 export function useZedFormatter() {
   const config = useSelector(getFormatConfig)
 
-  return useMemo(() => (value) => formatPrimitive(value, config), [config])
+  return useMemo(() => (value) => formatValue(value, config), [config])
 }
