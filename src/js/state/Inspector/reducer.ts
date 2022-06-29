@@ -1,10 +1,8 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {RowData} from "src/app/features/inspector/types"
 
 const slice = createSlice({
   name: "TAB_INSPECTOR",
   initialState: {
-    rows: [] as RowData[],
     expanded: new Map<string, boolean>(),
     valuePages: new Map<string, number>(),
     defaultExpanded: false,
@@ -23,7 +21,6 @@ const slice = createSlice({
     setAllExpanded: (s, a: PayloadAction<boolean>) => {
       s.expanded = new Map<any, any>()
       s.defaultExpanded = a.payload
-      s.rows = []
     },
     setScrollPosition: (s, a: PayloadAction<{top: number; left: number}>) => {
       s.scrollPosition = a.payload
@@ -31,7 +28,6 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase("VIEWER_CLEAR", (s) => {
-      s.rows = []
       s.expanded = new Map<string, boolean>()
       s.valuePages = new Map<string, number>()
     })
