@@ -1,4 +1,4 @@
-import {zjson} from "@brimdata/zealot"
+import {zed} from "@brimdata/zealot"
 import {SearchStatus} from "../../types/searches"
 
 export type LogDetailsState = {
@@ -7,8 +7,8 @@ export type LogDetailsState = {
 }
 
 export type LogDetails = {
-  log: zjson.Object
-  uidLogs: zjson.Object[]
+  log: zed.Value
+  uidLogs: zed.Value[]
   uidStatus: SearchStatus
 }
 
@@ -21,7 +21,7 @@ export type LogDetailsAction =
 
 export type LOG_DETAIL_PUSH = {
   type: "LOG_DETAIL_PUSH"
-  record: zjson.Object
+  record: zed.Value
 }
 
 export type LOG_DETAIL_UPDATE = {

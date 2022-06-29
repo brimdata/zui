@@ -1,4 +1,4 @@
-import {decode, zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zealot"
 import env from "src/app/core/env"
 import {ChildProcess, spawn} from "child_process"
 import {MenuItemConstructorOptions} from "electron"
@@ -169,7 +169,7 @@ export default class BrimcapPlugin {
       // the detail window's packets button will operate off of the 'current' record
       this.api.commands.add("data-detail:current", ([record]) => {
         if (!record) return
-        const data = decode(record) as zed.Record
+        const data = record as zed.Record
 
         updateButtonStatus(
           "detail",
