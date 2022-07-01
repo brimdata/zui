@@ -56,7 +56,7 @@ export default function AboutWindow() {
               <a onClick={() => open(ackFilePath)}>Acknowledgments</a>
             </section>
             <section>
-              <p>Copyright {year} Brim Security, Inc.</p>
+              <p>Copyright {year} Brim Data, Inc.</p>
             </section>
           </footer>
         </div>
