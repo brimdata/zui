@@ -1,8 +1,8 @@
 {
-  "name": "brim",
-  "productName": "Brim",
+  "name": "zui",
+  "productName": "Zui",
   "private": true,
-  "description": "Brim Desktop App",
+  "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/brim",
   "license": "BSD-3-Clause",
   "version": "0.30.0",

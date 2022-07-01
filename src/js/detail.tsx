@@ -6,7 +6,6 @@ import "regenerator-runtime/runtime"
 import BrimTooltip from "./components/BrimTooltip"
 import LogDetailsWindow from "./components/LogDetailsWindow"
 import {Modals} from "./components/Modals"
-import StartupError from "./components/StartupError"
 import initDetail from "./initializers/initDetail"
 import lib from "./lib"
 
@@ -30,7 +29,5 @@ initDetail()
     )
   })
   .catch((e) => {
-    const container = lib.doc.id("app-root")
-    const root = createRoot(container!)
-    root.render(<StartupError error={e} />)
+    console.error(e)
   })

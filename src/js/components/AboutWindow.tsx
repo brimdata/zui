@@ -4,11 +4,10 @@ import {execSync} from "child_process"
 import {join} from "path"
 import * as remote from "@electron/remote"
 
-import BrimTextLogo from "./BrimTextLogo"
-import Octocat from "../icons/Octocat"
 import TextContent from "./TextContent"
 import electronIsDev from "../electron/isDev"
 import open from "../lib/open"
+import Icon from "src/app/core/icon-temp"
 
 export default function AboutWindow() {
   let appVersion = remote.app.getVersion()
@@ -30,7 +29,7 @@ export default function AboutWindow() {
   return (
     <div className="about-window">
       <div className="about-logo">
-        <BrimTextLogo />
+        <Icon name="zui" fill="var(--orange)" size={64} />
       </div>
       <TextContent>
         <div className="about-content">
@@ -44,11 +43,8 @@ export default function AboutWindow() {
           </section>
           <section>
             <label>Source</label>
-            <div className={"octocat-small"}>
-              <Octocat />
-            </div>
             <a onClick={() => open("https://github.com/brimdata/brim")}>
-              Repository
+              github.com/brimdata/brim
             </a>
           </section>
           <hr />
@@ -60,7 +56,7 @@ export default function AboutWindow() {
               <a onClick={() => open(ackFilePath)}>Acknowledgments</a>
             </section>
             <section>
-              <p>Copyright {year} Brim Security, Inc.</p>
+              <p>Copyright {year} Brim Data, Inc.</p>
             </section>
           </footer>
         </div>
