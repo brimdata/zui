@@ -72,7 +72,7 @@
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
-    "electron": "^15.5.2",
+    "electron": "^15.5.5",
     "electron-builder": "^22.14.5",
     "electron-builder-notarize": "^1.2.0",
     "electron-mock-ipc": "^0.3.10",
