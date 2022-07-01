@@ -8,9 +8,11 @@
 
 .about-window {
   animation: fadein 800ms;
+
   .about-logo {
     display: flex;
     justify-content: center;
+    margin-top: 24px;
     margin-bottom: 12px;
   }
 
@@ -38,6 +40,7 @@
       margin-right: 12px;
       @include label-bold;
       user-select: none;
+      width: 60px;
     }
 
     hr {
@@ -45,6 +48,7 @@
       box-shadow: 0 0 0 0.5px var(--border-color);
       margin: 18px 0 12px 0;
     }
+
     footer {
       section {
         justify-content: center;

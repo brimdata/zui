@@ -28,7 +28,7 @@ export default function (
   }
 
   const aboutBrim: MenuItemConstructorOptions = {
-    label: "About Brim",
+    label: `About ${app.getName()}`,
     click() {
       brim.windows.openAbout()
     },
