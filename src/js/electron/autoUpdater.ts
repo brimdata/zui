@@ -68,7 +68,7 @@ export async function setupAutoUpdater() {
       // releaseNotes are not available for windows, so use name instead
       message: env.isWindows ? releaseNotes : releaseName,
       detail:
-        "A new version of Brim has been downloaded. Restart the application to apply the update.",
+        "A new version of ZUI has been downloaded. ZUI is the new Brim! See the release notes for more details.",
     }
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
