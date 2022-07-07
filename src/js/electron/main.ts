@@ -22,9 +22,10 @@ import {windowsPre25Exists} from "./windows-pre-25"
 import {meta} from "src/app/ipc/meta"
 import secureWebContents from "./secure-web-contents"
 import env from "src/app/core/env"
-import {join} from "path"
+import path, {join} from "path"
 import requireAll from "./require-all"
 import isDev from "./isDev"
+import fs from "fs-extra"
 require("@electron/remote/main").initialize()
 
 const pkg = meta.packageJSON()
@@ -42,6 +43,12 @@ export const mainDefaults = () => ({
 
 export type MainArgs = ReturnType<typeof mainDefaults>
 
+const migrateBrimToZui = () => {
+  const zuiDataPath = path.join(app.getPath("userData"), "data")
+  const brimDataPath = zuiDataPath.replace("zui", "brim")
+  log.info({zuiDataPath, brimDataPath})
+}
+
 export async function main(args: Partial<MainArgs> = {}) {
   const opts = {...mainDefaults(), ...args}
   requireAll(join(__dirname, "./initializers"))
@@ -52,6 +59,12 @@ export async function main(args: Partial<MainArgs> = {}) {
     return
   }
   userTasks(app)
+
+  // TODO: find out why first run isn't working in dev
+  // if (await meta.isFirstRun()) await migrateBrimToZui()
+  log.info("first run is: " + (await meta.isFirstRun()))
+  await migrateBrimToZui()
+
   const brim = await BrimMain.boot(opts)
   menu.setMenu(brim)
 
@@ -61,6 +74,7 @@ export async function main(args: Partial<MainArgs> = {}) {
   serve(paths)
   serve(meta)
   handleQuit(brim)
+
   ipcMain.handle("get-feature-flags", () => {
     return app.commandLine.getSwitchValue("feature-flags").split(",")
   })
