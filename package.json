@@ -175,7 +175,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#4da8fb264e60546a97147892beca682dfed58cf5"
+    "zed": "brimdata/zed#4a0e5ef332a01ef09d68e65b79154b0907fe9ac5"
   },
   "peerDependencies": {
     "react": "^18.0.0",
