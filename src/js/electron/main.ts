@@ -26,7 +26,6 @@ import path, {join} from "path"
 import requireAll from "./require-all"
 import isDev from "./isDev"
 import fs from "fs-extra"
-import {getPath} from "../../app/ipc/first-run"
 require("@electron/remote/main").initialize()
 
 const pkg = meta.packageJSON()
@@ -44,23 +43,50 @@ export const mainDefaults = () => ({
 
 export type MainArgs = ReturnType<typeof mainDefaults>
 
-const migrateBrimToZui = (): Promise<void> => {
-  return new Promise(() => {
-    const zuiDataPath = path.join(app.getPath("userData"), "data")
-    const brimDataPath = zuiDataPath.replace("Zui", "Brim")
-    if (zuiDataPath === brimDataPath) return
-    fs.stat(brimDataPath, (err) => {
-      if (err) {
-        log.info("migrate err (path probably doesn't exist): ", err)
-        return
-      }
-      return fs.copyFileSync(
-        brimDataPath,
-        zuiDataPath,
-        fs.constants.COPYFILE_EXCL
-      )
-    })
-  })
+const migrateBrimToZui = () => {
+  const brimPath = app.getPath("userData")
+  const brimAppStatePath = path.join(brimPath, "appState.json")
+  const brimAppLakePath = path.join(brimPath, "lake")
+  const brimAppDataPath = path.join(brimPath, "data")
+
+  const zuiPath = brimPath.replace("Brim", "Zui")
+  if (zuiPath === brimPath) return
+
+  const zuiAppStatePath = path.join(zuiPath, "appState.json")
+  const zuiAppLakePath = path.join(zuiPath, "lake")
+  const zuiAppDataPath = path.join(zuiPath, "data")
+
+  try {
+    fs.statSync(brimAppStatePath)
+    fs.statSync(brimAppLakePath)
+    fs.statSync(brimAppDataPath)
+  } catch {
+    log.info("no brim data to migrate")
+    return
+  }
+
+  try {
+    fs.statSync(zuiAppStatePath)
+    fs.statSync(zuiAppLakePath)
+    fs.statSync(zuiAppDataPath)
+    log.info("zui data already exists, aborting migration")
+    return
+  } catch {
+    log.info("no existing zui data, proceeding to migrate")
+  }
+
+  try {
+    log.info(`migrating '${brimAppStatePath}' => '${zuiAppStatePath}'`)
+    fs.copySync(brimAppStatePath, zuiAppStatePath)
+    log.info(`migrating ${brimAppLakePath} => ${zuiAppLakePath}'`)
+    fs.copySync(brimAppLakePath, zuiAppLakePath)
+    log.info(`migrating '${brimAppDataPath} => ${zuiAppDataPath}'`)
+    fs.copySync(brimAppDataPath, zuiAppDataPath)
+  } catch (err) {
+    log.error("migration failed: ", err)
+  }
+
+  log.info("migration completed")
 }
 
 export async function main(args: Partial<MainArgs> = {}) {
@@ -77,7 +103,7 @@ export async function main(args: Partial<MainArgs> = {}) {
   // TODO: find out why first run isn't working in dev
   // if (await meta.isFirstRun()) await migrateBrimToZui()
   log.info("first run is: " + (await meta.isFirstRun()))
-  await migrateBrimToZui()
+  migrateBrimToZui()
 
   const brim = await BrimMain.boot(opts)
   menu.setMenu(brim)
