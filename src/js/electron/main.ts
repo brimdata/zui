@@ -44,17 +44,17 @@ export const mainDefaults = () => ({
 export type MainArgs = ReturnType<typeof mainDefaults>
 
 const migrateBrimToZui = () => {
-  const brimPath = app.getPath("userData")
-  const brimAppStatePath = path.join(brimPath, "appState.json")
-  const brimAppLakePath = path.join(brimPath, "lake")
-  const brimAppDataPath = path.join(brimPath, "data")
-
-  const zuiPath = brimPath.replace("Brim", "Zui")
-  if (zuiPath === brimPath) return
-
+  const zuiPath = app.getPath("userData")
   const zuiAppStatePath = path.join(zuiPath, "appState.json")
   const zuiAppLakePath = path.join(zuiPath, "lake")
   const zuiAppDataPath = path.join(zuiPath, "data")
+
+  const brimPath = zuiPath.replace("Zui", "Brim")
+  if (zuiPath === brimPath) return
+
+  const brimAppStatePath = path.join(brimPath, "appState.json")
+  const brimAppLakePath = path.join(brimPath, "lake")
+  const brimAppDataPath = path.join(brimPath, "data")
 
   try {
     fs.statSync(brimAppStatePath)
