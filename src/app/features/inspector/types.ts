@@ -18,6 +18,8 @@ export type InspectorProps = {
   values: zed.Value[]
   isExpanded: IsExpanded
   setExpanded: SetExpanded
+  getValuePage: (key: string) => number
+  renderMore: (key: string) => void
   onContextMenu?: InspectorMouseEvent
   onClick?: InspectorMouseEvent
   loadMore?: Function
@@ -44,3 +46,5 @@ export type RowData = {
   indent: number
   render: ReactNode
 }
+
+export type RenderMode = "single" | "peek" | "line" | "expanded"

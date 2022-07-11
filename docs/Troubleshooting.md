@@ -279,7 +279,7 @@ its origin.
   into [Brimcap releases](https://github.com/brimdata/brimcap/releases).
 
 * Each Brim release points at a [Brimcap release](https://github.com/brimdata/brim/blob/b288fae1654bd6b848a0714583f6570d22e91d97/package.json#L68)
-  that's bundled by Brim's own [release automation](https://github.com/brimdata/brim/blob/v0.25.0/.github/workflows/win-release-candidate.yml).
+  that's bundled by Brim's own [release automation](https://github.com/brimdata/brim/blob/main/.github/workflows/release.yml).
 
 To summarize, the executable consists of a minimally-enhanced Suricata-Update that's been
 turned into an executable by other open source tools. If your conclusion

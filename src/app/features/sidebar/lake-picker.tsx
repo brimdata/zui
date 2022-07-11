@@ -16,18 +16,17 @@ import brim from "src/js/brim"
 
 const LakeNameGroup = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 6px;
-  user-select: none;
-  width: 100%;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 24px;
+  margin: 0 6px;
   border-radius: 6px;
-  padding: 6px 10px;
+  min-width: 0;
+  position: relative;
 
   &:hover {
     background: rgba(0, 0, 0, 0.04);
-
     svg {
       opacity: 0.5;
     }
@@ -35,23 +34,26 @@ const LakeNameGroup = styled.div`
 
   svg {
     opacity: 0;
+    position: absolute;
+    bottom: 12px;
+    right: 8px;
     height: 8px;
     width: 8px;
     stroke: var(--foreground-color);
-    margin-left: 6px;
   }
 `
 
 const NameColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-
+  overflow: hidden;
   label {
+    display: block;
     font-size: 14px;
     font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
+
   label:last-child {
     font-size: 13px;
     font-weight: normal;

@@ -1,4 +1,4 @@
-import {FormatConfig, formatPrimitive} from "src/app/core/format"
+import {FormatConfig, formatValue} from "src/app/core/format"
 import {isEventType} from "src/ppl/suricata/suricata-plugin"
 import {isPath} from "src/ppl/zeek/zeek-plugin"
 import {zed} from "@brimdata/zealot"
@@ -27,7 +27,7 @@ export function estimateCellWidth(
   let width = MIN_WIDTH
   if (value instanceof zed.Primitive) {
     width = Math.ceil(
-      formatPrimitive(value, config).length * ONE_CHAR + CELL_PAD + 12
+      formatValue(value, config).length * ONE_CHAR + CELL_PAD + 12
     )
   } else {
     width = Math.ceil(value.toString().length * ONE_CHAR + CELL_PAD)

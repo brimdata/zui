@@ -6,7 +6,7 @@ import {State} from "../types"
 import {LogDetailHistory, toHistory} from "./reducer"
 import {LogDetailsState} from "./types"
 
-import {zed, decode} from "@brimdata/zealot"
+import {zed} from "@brimdata/zealot"
 
 const getLogDetails = activeTabSelect((state: TabState) => {
   return state.logDetails
@@ -22,7 +22,7 @@ const build = createSelector<State, LogDetailHistory, zed.Record | null>(
   (history) => {
     const entry = history.current()
     if (entry && entry.log) {
-      return decode(entry.log) as zed.Record
+      return entry.log as zed.Record
     } else {
       return null
     }
@@ -33,7 +33,7 @@ const getUidLogs = createSelector<State, LogDetailHistory, zed.Record[]>(
   getHistory,
   (history) => {
     const entry = history.current()
-    return entry ? (decode(entry.uidLogs) as zed.Record[]) : []
+    return entry ? (entry.uidLogs as zed.Record[]) : []
   }
 )
 

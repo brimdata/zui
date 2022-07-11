@@ -190,6 +190,8 @@ const LocalQueriesView = ({toolbarButtons}) => {
       <Tree
         ref={tree}
         {...defaults}
+        disableDrag={false}
+        disableDrop={false}
         data={filteredQueries}
         onMove={handleMove}
         onEdit={handleRename}

@@ -154,19 +154,22 @@ const SectionSearchWrapper = styled.div`
   width: 100%;
   border-radius: 5px;
   border: none;
-  background: var(--input-background);
+  background: rgba(0, 0, 0, 0.07);
   padding: 2px 12px;
 
   svg {
     width: 16px;
     height: 16px;
-    fill: rgba(0, 0, 0, 0.2);
     margin-right: 8px;
-    opacity: 0.2;
+    opacity: 0.5;
   }
 `
 
 const SearchInput = styled.input`
+  &::placeholder {
+    color: var(--foreground-color);
+    opacity: 0.4;
+  }
   height: 22px;
   width: 100%;
   border: none;

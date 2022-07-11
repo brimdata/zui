@@ -7,7 +7,7 @@ Array [
     "submenu": Array [
       Object {
         "click": [Function],
-        "label": "About Brim",
+        "label": "About TestApp",
       },
       Object {
         "type": "separator",
@@ -444,7 +444,7 @@ Array [
       },
       Object {
         "click": [Function],
-        "label": "About Brim",
+        "label": "About TestApp",
       },
     ],
   },

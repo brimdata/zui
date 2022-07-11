@@ -1,16 +1,19 @@
 {
-  "name": "brim",
-  "productName": "Brim",
+  "name": "zui",
+  "productName": "Zui",
   "private": true,
-  "description": "Brim Desktop App",
+  "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/brim",
   "license": "BSD-3-Clause",
   "version": "0.30.0",
   "main": "dist/js/electron/main.js",
-  "author": "Brim Security, Inc.",
+  "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "workspaces": [
     "./packages/*"
   ],
+  "lake": {
+    "port": 9867
+  },
   "scripts": {
     "start": "node scripts/start",
     "build": "run-p -l 'build:**'",
@@ -172,7 +175,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#10c23881741df5f9974b76fd8f6c6dfb19b29cb5"
+    "zed": "brimdata/zed#d97c452a625eb12dd1394e54b81e20e6c3ea76fc"
   },
   "peerDependencies": {
     "react": "^18.0.0",

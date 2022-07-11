@@ -7,7 +7,7 @@ class Sub {
     })
     this.p.stdout.on("data", (data) => {
       if (this.waiting) return
-      console.log(data.toString())
+      process.stdout.write(data.toString())
     })
     this.p.stdout.on("error", (e) => {
       if (this.waiting) return
@@ -15,7 +15,7 @@ class Sub {
     })
     this.p.stderr.on("data", (data) => {
       if (this.waiting) return
-      console.log(data.toString())
+      process.stderr.write(data.toString())
     })
   }
 

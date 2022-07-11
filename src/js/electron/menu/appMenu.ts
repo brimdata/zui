@@ -28,7 +28,7 @@ export default function (
   }
 
   const aboutBrim: MenuItemConstructorOptions = {
-    label: "About Brim",
+    label: `About ${app.getName()}`,
     click() {
       brim.windows.openAbout()
     },
@@ -249,7 +249,7 @@ export default function (
         async click() {
           const root = app.getAppPath()
           const version = brim.session.getVersion()
-          const file = path.join(root, `test/unit/states/${version}.json`)
+          const file = path.join(root, `src/test/unit/states/${version}.json`)
           const data = encodeSessionState(
             await brim.windows.serialize(),
             brim.store.getState()

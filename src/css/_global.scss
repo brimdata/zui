@@ -54,14 +54,6 @@ code {
   padding: 2px 3px;
 }
 
-.title-bar-drag-area {
-  position: fixed;
-  height: 42px;
-  width: 100%;
-  -webkit-app-region: drag;
-  z-index: -1;
-}
-
 .using-mouse {
   :focus {
     outline: none;

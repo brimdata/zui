@@ -8,7 +8,7 @@ import {useDispatch} from "src/app/core/state"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
 import {useRowSelection} from "./results-table/hooks/use-row-selection"
-import {debounce, values} from "lodash"
+import {debounce, isNumber, values} from "lodash"
 import Results from "src/js/state/Results"
 
 export function MainInspector(props: {
@@ -19,6 +19,7 @@ export function MainInspector(props: {
   const select = useSelect()
   const dispatch = useDispatch()
   const expanded = useSelector(Slice.getExpanded)
+  const valuePages = useSelector(Slice.getValuePages)
   const defaultExpanded = useSelector(Slice.getDefaultExpanded)
   const {parentRef, clicked} = useRowSelection({
     count: values.length,
@@ -34,6 +35,15 @@ export function MainInspector(props: {
     } else {
       return defaultExpanded
     }
+  }
+
+  function getValuePage(key: string) {
+    const page = valuePages.get(key)
+    return isNumber(page) ? page : 1
+  }
+
+  function renderMore(key: string) {
+    dispatch(Slice.renderMore({key}))
   }
 
   function loadMore() {
@@ -84,6 +94,8 @@ export function MainInspector(props: {
       innerRef={parentRef}
       isExpanded={useCallback(isExpanded, [expanded, defaultExpanded])}
       setExpanded={useCallback(setExpanded, [])}
+      getValuePage={useCallback(getValuePage, [valuePages])}
+      renderMore={useCallback(renderMore, [])}
       loadMore={useCallback(loadMore, [])}
       onContextMenu={useCallback(onContextMenu, [])}
       onClick={useCallback(onClick, [])}

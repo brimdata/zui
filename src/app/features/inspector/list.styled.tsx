@@ -16,9 +16,12 @@ export const List: ComponentType<PropsWithChildren<any>> = styled(
   }
 
   a {
-    cursor: pointer;
+    cursor: default;
     &:hover {
       background: rgba(0, 0, 0, 0.04);
+    }
+    &:active {
+      background: rgba(0, 0, 0, 0.07);
     }
     border-radius: 3px;
     display: inline-flex;
@@ -35,6 +38,19 @@ export const List: ComponentType<PropsWithChildren<any>> = styled(
       fill: var(--aqua);
       width: 14px;
       height: 14px;
+    }
+  }
+
+  a.render-more {
+    background: var(--button-background);
+    color: var(--zed-key);
+    padding: 0 12px;
+    &:hover {
+      background: var(--button-background-hover);
+      color: var(--foreground-color);
+    }
+    &:active {
+      background: var(--button-background-active);
     }
   }
 `

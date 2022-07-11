@@ -1,8 +1,5 @@
 const sub = require("./util/sub")
-
-const log = (...args) => {
-  console.log("‣", ...args)
-}
+const log = require("./util/log")
 
 async function start() {
   const electronArgs = process.argv.splice(2).join(" ")

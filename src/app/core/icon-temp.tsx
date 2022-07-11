@@ -22,7 +22,7 @@ const Wrap = styled.i<{
   svg {
     height: ${(p) => p.size || 22}px;
     width: ${(p) => p.size || 22}px;
-    fill: ${(p) => p.fill || css`var(--slate)`};
+    fill: ${(p) => p.fill || css`var(--foreground-color)`};
     stroke: ${(p) => p.stroke || "inherit"};
   }
 `
@@ -34,6 +34,8 @@ export default function Icon(props: Props) {
     <Wrap
       className={classNames(props.className, `${props.name}-icon`)}
       size={props.size}
+      fill={props.fill}
+      stroke={props.stroke}
     >
       <SVG />
     </Wrap>

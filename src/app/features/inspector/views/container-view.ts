@@ -1,60 +1,116 @@
 import {zed} from "@brimdata/zealot"
+import {isNumber} from "lodash"
+import {closing} from "../templates/closing"
 import * as container from "../templates/container"
 import {field} from "../templates/field"
-import {key} from "../templates/key"
-import {space} from "../templates/space"
-import {typename} from "../templates/typename"
+import {note} from "../templates/note"
+import {opening} from "../templates/opening"
+import {syntax} from "../templates/syntax"
+import {RenderMode} from "../types"
 import {View} from "./view"
 
+const PEEK_LIMIT = 2
+const LINE_LIMIT = 15
+const ROWS_PER_PAGE = 100
 export abstract class ContainerView<
   T extends zed.Any = zed.Any
 > extends View<T> {
   abstract name(): string
+  abstract count(): number
   abstract openToken(): string
   abstract closeToken(): string
-  abstract iterate(): Generator<View<zed.Any>>
+  abstract iterate(n?: number): Generator<View<zed.Any>>
 
   rowCount() {
     if (!this.isExpanded()) return 1
-    let sum = 2
-    for (let view of this.iterate()) sum += view.rowCount()
+    let sum = 2 // the open and close tokens
+    for (let view of this.iterate(this.rowLimit())) sum += view.rowCount()
+    if (this.isRowLimited()) sum += 2 // the "Render More" button
     return sum
   }
 
   inspect() {
-    const {ctx} = this.args
-
     if (this.isExpanded()) {
-      ctx.push(container.anchor(this, opening(this)))
-      ctx.nest()
-      for (let view of this.iterate()) view.inspect()
-      ctx.unnest()
-      ctx.push(closing(this))
+      this.render("expanded")
     } else {
-      let line = opening(this)
-      for (let view of this.iterate()) line.push(field(view))
-      line = line.concat(closing(this))
-      ctx.push(container.anchor(this, line))
+      this.render("line")
     }
   }
-}
 
-function closing(view: ContainerView) {
-  let nodes = []
-  nodes.push(container.close(view))
-  if (zed.isTypeAlias(view.args.type)) nodes.push(typename(view))
-  if (!view.args.last) nodes.push(",")
-  return nodes
-}
-
-function opening(view: ContainerView) {
-  const nodes = []
-  if (view.args.key) {
-    nodes.push(key(view))
+  // Update ErrorView when you update this.
+  renderSingle() {
+    return [
+      syntax(this.openToken()),
+      note("…" + this.count()),
+      syntax(this.closeToken()),
+    ]
   }
-  nodes.push(container.icon(view))
-  nodes.push(container.name(view))
-  nodes.push(space())
-  nodes.push(container.open(view))
-  return nodes
+
+  renderPeek() {
+    let nodes = []
+    nodes.push(syntax(this.openToken()))
+    for (let view of this.iterate(PEEK_LIMIT)) {
+      nodes.push(field(view, "single"))
+    }
+    if (this.count() > PEEK_LIMIT) {
+      nodes.push(container.tail(this, PEEK_LIMIT))
+    }
+    nodes.push(syntax(this.closeToken()))
+    return nodes
+  }
+
+  renderLine() {
+    const {ctx} = this.args
+    let nodes = opening(this)
+    for (let view of this.iterate(LINE_LIMIT)) {
+      nodes.push(field(view, "peek"))
+    }
+    if (this.count() > LINE_LIMIT) {
+      nodes.push(container.tail(this, LINE_LIMIT))
+    }
+    nodes = nodes.concat(closing(this))
+    ctx.push(container.expandAnchor(this, nodes))
+    return null
+  }
+
+  renderExpanded() {
+    const {ctx} = this.args
+    ctx.push(container.expandAnchor(this, opening(this)))
+    ctx.nest()
+    for (let view of this.iterate(this.rowLimit())) {
+      view.inspect()
+    }
+    if (this.isRowLimited()) {
+      ctx.push(container.tail(this, this.rowLimit()))
+      ctx.push(container.renderMoreAnchor(this, ROWS_PER_PAGE))
+    }
+    ctx.unnest()
+    ctx.push(closing(this))
+    return null
+  }
+
+  render(name?: RenderMode) {
+    switch (name) {
+      case "single":
+        return this.renderSingle()
+      case "peek":
+        return this.renderPeek()
+      case "line":
+        return this.renderLine()
+      case "expanded":
+        return this.renderExpanded()
+      default:
+        throw new Error("A Container Must Have a Render Mode")
+    }
+  }
+
+  rowLimit() {
+    const page = this.args.ctx.props.getValuePage(this.key)
+    if (!isNumber(page)) throw new Error(this.key)
+    return page * ROWS_PER_PAGE
+  }
+
+  isRowLimited() {
+    return this.rowLimit() < this.count()
+  }
 }

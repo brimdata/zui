@@ -16,31 +16,20 @@ jobs:
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-        with:
-          go-version: '1.18'
-      - uses: actions/setup-node@v2
-        with:
-          cache: yarn
-          node-version-file: .node-version
-      - run: yarn --inline-builds
+      - uses: ./.github/actions/setup-zui
       - run: yarn lint
       - run: yarn test
       - name: Build and install package
         if: runner.os != 'Windows'
         run: |
           set -x
-          yarn build
           case ${{ runner.os }} in
             Linux )
-              yarn electron-builder --linux=deb
+              yarn electron-builder --linux=deb --publish never
               sudo apt install -y --no-install-recommends ./dist/installers/*.deb
               ;;
-            macOS )
-              yarn electron-builder --mac=dir
-              cp -r dist/installers/mac/Brim.app /Applications
-              ;;
           esac
+
       - name: End to end tests
         id: playwright
         if: runner.os == 'Linux'
