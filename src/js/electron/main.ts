@@ -60,6 +60,7 @@ const migrateBrimToZui = () => {
     fs.statSync(brimAppStatePath)
     fs.statSync(brimAppLakePath)
     fs.statSync(brimAppDataPath)
+    log.info("brim data found")
   } catch {
     log.info("no brim data to migrate")
     return
@@ -78,12 +79,13 @@ const migrateBrimToZui = () => {
   try {
     log.info(`migrating '${brimAppStatePath}' => '${zuiAppStatePath}'`)
     fs.copySync(brimAppStatePath, zuiAppStatePath)
-    log.info(`migrating ${brimAppLakePath} => ${zuiAppLakePath}'`)
+    log.info(`migrating '${brimAppLakePath} => ${zuiAppLakePath}'`)
     fs.copySync(brimAppLakePath, zuiAppLakePath)
     log.info(`migrating '${brimAppDataPath} => ${zuiAppDataPath}'`)
     fs.copySync(brimAppDataPath, zuiAppDataPath)
   } catch (err) {
     log.error("migration failed: ", err)
+    return
   }
 
   log.info("migration completed")
@@ -100,10 +102,9 @@ export async function main(args: Partial<MainArgs> = {}) {
   }
   userTasks(app)
 
-  // TODO: find out why first run isn't working in dev
-  // if (await meta.isFirstRun()) await migrateBrimToZui()
-  log.info("first run is: " + (await meta.isFirstRun()))
-  migrateBrimToZui()
+  // On first ever run of a ZUI release, check if there is existing Brim app
+  // data and if so, copy it into ZUI.
+  if (!electronIsDev && (await meta.isFirstRun())) migrateBrimToZui()
 
   const brim = await BrimMain.boot(opts)
   menu.setMenu(brim)
