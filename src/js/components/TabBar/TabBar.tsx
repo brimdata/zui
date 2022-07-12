@@ -25,12 +25,14 @@ const BG = styled.div`
   box-shadow: inset 0 -1px 0 var(--border-color);
   background: var(--tab-background);
   display: flex;
+  height: 100%;
+  grid-area: tabs;
 `
 
 const Container = styled.div`
   display: flex;
   position: relative;
-  height: 42px;
+  height: 100%;
   width: 100%;
   flex-shrink: 0;
   align-items: flex-end;
