@@ -44,7 +44,6 @@ const TrafficLightBG = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  align-items: center;
   width: 128px;
   flex-shrink: 0;
   box-shadow: inset -1px -1px var(--border-color);

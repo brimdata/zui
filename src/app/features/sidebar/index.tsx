@@ -43,7 +43,7 @@ const SidebarTop = styled.div`
   height: 40px;
 
   button {
-    margin: 14px 18px 0 0;
+    margin: 13px 18px 0 0;
   }
 `
 
