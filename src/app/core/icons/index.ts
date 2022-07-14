@@ -30,6 +30,8 @@ import lock from "./lock"
 import close from "./close"
 import plus from "./plus"
 import zui from "./zui"
+import LeftArrow from "./left-arrow"
+import RightArrow from "./right-arrow"
 
 export default {
   braces,
@@ -64,4 +66,6 @@ export default {
   close,
   plus,
   zui,
+  "left-arrow": LeftArrow,
+  "right-arrow": RightArrow,
 }

@@ -1,53 +1,18 @@
-import {useExpandState} from "src/app/query-home/results/expand-hook"
-import Layout from "src/js/state/Layout"
 import ResultsComponent from "./results"
 import React from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Current from "src/js/state/Current"
-import Toolbar from "./toolbar"
 import styled from "styled-components"
-import useExport from "./toolbar/hooks/use-export"
-import useColumns from "./toolbar/hooks/use-columns"
 import ToolbarButton from "./toolbar/button"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import SearchArea from "./search-area"
 import RightPane from "../features/right-pane"
-import usePins from "./toolbar/hooks/use-pins"
 import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
 import Queries from "src/js/state/Queries"
-import {ActionButtonProps} from "./toolbar/action-button"
-import usePluginToolbarItems from "./toolbar/hooks/use-plugin-toolbar-items"
-
-const QueryPageHeader = styled.div`
-  background: white;
-  z-index: 1;
-  user-select: none;
-`
-
-const useInspectorButtons = (): ActionButtonProps[] => {
-  const {expandAll, collapseAll} = useExpandState()
-  const view = useSelector(Layout.getResultsView)
-
-  const disabled = view !== "INSPECTOR"
-  return [
-    {
-      label: "Expand",
-      title: "Expand all inspector view entries",
-      icon: "expand",
-      disabled,
-      click: () => expandAll(),
-    },
-    {
-      label: "Collapse",
-      title: "Collapse all inspector view entries",
-      icon: "collapse",
-      disabled,
-      click: () => collapseAll(),
-    },
-  ]
-}
+import {TitleBar} from "./title-bar/title-bar"
+import {ResultsToolbar} from "./toolbar/results-toolbar"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -95,19 +60,6 @@ const QueryHome = () => {
   const lakeId = useSelector(Current.getLakeId)
   const drop = usePinContainerDnd()
   const dispatch = useDispatch()
-  const exportAction = useExport()
-  const columns = useColumns()
-  const pin = usePins()
-  const pluginButtons = usePluginToolbarItems("search")
-  const [expandButton, collapseButton] = useInspectorButtons()
-  const actions = [
-    ...pluginButtons,
-    expandButton,
-    collapseButton,
-    exportAction,
-    columns,
-    pin,
-  ]
 
   if (!query)
     return (
@@ -129,12 +81,11 @@ const QueryHome = () => {
 
   return (
     <>
-      <QueryPageHeader ref={drop}>
-        <Toolbar actions={actions} />
-      </QueryPageHeader>
       <ContentWrap>
         <MainContent>
+          <TitleBar ref={drop} />
           <SearchArea />
+          <ResultsToolbar />
           <ResultsComponent />
         </MainContent>
         <RightPane />
