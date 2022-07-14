@@ -5,11 +5,11 @@ import Appearance from "src/js/state/Appearance"
 import styled from "styled-components"
 import Current from "src/js/state/Current"
 import Pane from "src/js/components/Pane"
-import {XLeftPaneExpander} from "./left-pane-expander"
 import PoolsSection from "./pools-section"
 import QueriesSection from "./queries-section"
 import Header from "./header"
 import {Menu} from "./menu"
+import SidebarToggleButton from "./sidebar-toggle-button"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -33,7 +33,18 @@ const SectionContentSwitch = ({sectionName}) => {
 const StyledPane = styled(Pane)`
   background: var(--sidebar-background);
   overflow-x: unset;
-  padding-top: 40px;
+`
+
+const SidebarTop = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+
+  button {
+    margin: 14px 18px 0 0;
+  }
 `
 
 export function Sidebar() {
@@ -50,8 +61,6 @@ export function Sidebar() {
     dispatch(Appearance.resizeSidebar(Math.min(width, max)))
   }
 
-  if (!isOpen) return <XLeftPaneExpander />
-
   return (
     <StyledPane
       isOpen={isOpen}
@@ -60,6 +69,9 @@ export function Sidebar() {
       onDrag={onDragPane}
       aria-label="sidebar"
     >
+      <SidebarTop>
+        <SidebarToggleButton />
+      </SidebarTop>
       {!id ? (
         <EmptyText>The lake previously on this tab has been removed.</EmptyText>
       ) : (
