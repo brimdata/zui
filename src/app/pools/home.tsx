@@ -8,7 +8,7 @@ import Queries from "src/js/state/Queries"
 import Tabs from "src/js/state/Tabs"
 import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
-import Actions from "../query-home/toolbar/actions"
+import Actions from "../query-home/toolbar/actions/actions"
 
 const Header = styled.header`
   padding: 16px;

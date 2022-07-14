@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
-import ToolbarButton from "src/app/query-home/toolbar/button"
+import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 import {useDispatch} from "src/app/core/state"
 import {initCurrentTab} from "../flows/initCurrentTab"
 import {Lake} from "../state/Lakes/types"

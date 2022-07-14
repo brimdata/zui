@@ -3,13 +3,13 @@ import React from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Current from "src/js/state/Current"
+
 import styled from "styled-components"
-import ToolbarButton from "./toolbar/button"
+import ToolbarButton from "./toolbar/actions/button"
 import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import SearchArea from "./search-area"
 import RightPane from "../features/right-pane"
-import {usePinContainerDnd} from "./search-area/pins/use-pin-dnd"
 import Queries from "src/js/state/Queries"
 import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
@@ -58,7 +58,6 @@ const ContentWrap = styled.div`
 const QueryHome = () => {
   const query = useSelector(Current.getQuery)
   const lakeId = useSelector(Current.getLakeId)
-  const drop = usePinContainerDnd()
   const dispatch = useDispatch()
 
   if (!query)
@@ -83,7 +82,7 @@ const QueryHome = () => {
     <>
       <ContentWrap>
         <MainContent>
-          <TitleBar ref={drop} />
+          <TitleBar />
           <SearchArea />
           <ResultsToolbar />
           <ResultsComponent />

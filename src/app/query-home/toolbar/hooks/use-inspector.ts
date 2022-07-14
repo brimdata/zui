@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux"
 import Layout from "src/js/state/Layout"
 import {useExpandState} from "../../results/expand-hook"
-import {ActionButtonProps} from "../action-button"
+import {ActionButtonProps} from "../actions/action-button"
 
 export const useInspectorButtons = (): ActionButtonProps[] => {
   const {expandAll, collapseAll} = useExpandState()

@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux"
 import Modal from "src/js/state/Modal"
-import {ActionButtonProps} from "../action-button"
+import {ActionButtonProps} from "../actions/action-button"
 
 export default function useExport(): ActionButtonProps {
   const dispatch = useDispatch()

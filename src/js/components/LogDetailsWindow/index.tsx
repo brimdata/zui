@@ -6,7 +6,7 @@ import Current from "../../state/Current"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "src/app/detail/Pane"
-import ActionButton from "src/app/query-home/toolbar/action-button"
+import ActionButton from "src/app/query-home/toolbar/actions/action-button"
 import usePluginToolbarItems from "src/app/query-home/toolbar/hooks/use-plugin-toolbar-items"
 
 export default function LogDetailsWindow() {
