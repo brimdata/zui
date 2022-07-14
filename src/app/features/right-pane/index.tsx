@@ -9,6 +9,7 @@ import Layout from "../../../js/state/Layout"
 import Pane from "../../../js/components/Pane"
 import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
+import {HistorySection} from "./history/section"
 
 const BG = styled.div`
   display: flex;
@@ -68,6 +69,8 @@ const PaneContentSwitch = ({paneName}) => {
       return <DetailSection />
     case "versions":
       return <VersionsSection />
+    case "history":
+      return <HistorySection />
     default:
       return null
   }
@@ -79,6 +82,12 @@ export function Menu() {
   const onClick = (name) => () => dispatch(Layout.setCurrentPaneName(name))
   return (
     <BG>
+      <button
+        onClick={onClick("history")}
+        aria-pressed={currentPaneName === "history"}
+      >
+        <span>History</span>
+      </button>
       <button
         onClick={onClick("detail")}
         aria-pressed={currentPaneName === "detail"}

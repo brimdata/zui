@@ -6,7 +6,7 @@ import {ResultsViewSwitch} from "./results-view-switch"
 const BG = styled.section`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 6px 20px;
 `
 

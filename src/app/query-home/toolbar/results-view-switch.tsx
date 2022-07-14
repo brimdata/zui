@@ -2,13 +2,9 @@ import React from "react"
 import {SwitchButton} from "src/app/core/components/switch-button"
 import styled from "styled-components"
 import {useResultsView} from "../results/view-hook"
-import Label from "./actions/label"
 
 const BG = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 0;z
+  margin-top: 8px;
 `
 
 export function ResultsViewSwitch() {
@@ -16,7 +12,7 @@ export function ResultsViewSwitch() {
   return (
     <BG>
       <SwitchButton
-        minWidth={80}
+        minWidth={70}
         options={[
           {label: "Table", click: view.setTable, active: view.isTable},
           {
@@ -26,7 +22,6 @@ export function ResultsViewSwitch() {
           },
         ]}
       />
-      <Label isDisabled={false}>View</Label>
     </BG>
   )
 }

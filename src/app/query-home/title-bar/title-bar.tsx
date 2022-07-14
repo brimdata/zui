@@ -3,6 +3,7 @@ import Icon from "src/app/core/icon-temp"
 import styled from "styled-components"
 
 const BG = styled.header`
+  flex-shrink: 0;
   height: 28px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
