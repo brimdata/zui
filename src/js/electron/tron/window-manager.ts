@@ -178,8 +178,8 @@ export class WindowManager {
       const {size, position, query, id} = params
       const dimens = dimensFromSizePosition(size, position)
       const win = new SearchWindow(dimens, query, initialState, id)
-      await win.load()
       this.windows[id] = win
+      await win.load()
       win.ref.on("closed", () => {
         onClosed(this.windows[id])
       })
