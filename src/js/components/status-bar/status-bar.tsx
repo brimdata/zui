@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import {IngestProgress} from "./ingest-progress"
 import {QueryProgress} from "./query-progress"
+import {TypeCount} from "./type-count"
 
 const BG = styled.footer`
   grid-area: status;
@@ -13,6 +14,10 @@ const BG = styled.footer`
   padding: 0 20px;
   display: flex;
   align-items: center;
+  gap: 24px;
+  font-size: 13px;
+  line-height: 13px;
+  opacity: 0.8;
 `
 
 export default function StatusBar() {
@@ -20,6 +25,7 @@ export default function StatusBar() {
     <BG>
       <QueryProgress />
       <IngestProgress />
+      <TypeCount />
     </BG>
   )
 }

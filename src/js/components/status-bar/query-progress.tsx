@@ -50,13 +50,19 @@ const Span = styled.span`
 
 export function QueryProgress() {
   const status = useSelector(Results.getStatus)
+  const count = useSelector(Results.getCount)
   if (status === "FETCHING") {
     return (
       <Span>
-        <Loader /> Querying...
+        Fetching
+        <Loader />
       </Span>
     )
   } else if (status === "COMPLETE") {
-    return <span>Completed</span>
+    return <span>Results: {count}</span>
+  } else if (status === "INCOMPLETE") {
+    return <span>Results: First {count}</span>
+  } else if (status === "LIMIT") {
+    return <span>Results: Limited to first {count}</span>
   }
 }
