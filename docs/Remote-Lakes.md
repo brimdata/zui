@@ -212,8 +212,7 @@ Because only your local pcap index was populated, another user remotely
 accessing the same pool would be able to query the logs, but in order to
 successfully extract flows from it, they would need to obtain and locally index
 the same pcap file. The following commands could be executed by such a user on
-their Mac workstation to index the same
-[sample pcap](https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz)
+their Mac workstation to index the same sample pcap
 shown above. See [brimcap/105](https://github.com/brimdata/brimcap/issues/105) for more details.
 
 ```
