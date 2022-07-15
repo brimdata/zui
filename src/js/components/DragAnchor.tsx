@@ -1,9 +1,29 @@
 import React from "react"
+import styled from "styled-components"
 
 type Props = {
   position: "left" | "right"
   onDrag: Function
 }
+
+const Area = styled.div`
+  width: 9px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: transparent;
+  pointer-events: all !important;
+  cursor: col-resize;
+  z-index: 99;
+
+  &.align-left {
+    left: -4px;
+  }
+
+  &.align-right {
+    right: -4px;
+  }
+`
 
 export default class DragAnchor extends React.Component<Props> {
   componentWillUnmount() {
@@ -34,8 +54,8 @@ export default class DragAnchor extends React.Component<Props> {
 
   render() {
     return (
-      <div
-        className={`drag-anchor drag-anchor-${this.props.position}`}
+      <Area
+        className={`align-${this.props.position}`}
         onMouseDown={this.down}
       />
     )

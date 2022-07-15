@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Appearance from "src/js/state/Appearance"
 import styled from "styled-components"
 import Current from "src/js/state/Current"
-import Pane from "src/js/components/Pane"
+import {DraggablePane} from "src/js/components/draggable-pane"
 import PoolsSection from "./pools-section"
 import QueriesSection from "./queries-section"
 import Header from "./header"
@@ -30,9 +30,14 @@ const SectionContentSwitch = ({sectionName}) => {
   }
 }
 
-const StyledPane = styled(Pane)`
+const Pane = styled(DraggablePane)`
+  height: 100%;
   background: var(--sidebar-background);
   overflow-x: unset;
+  grid-area: sidebar;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
 `
 
 const SidebarTop = styled.div`
@@ -48,7 +53,6 @@ const SidebarTop = styled.div`
 export function Sidebar() {
   const dispatch = useDispatch()
   const isOpen = useSelector(Appearance.sidebarIsOpen)
-  const width = useSelector(Appearance.sidebarWidth)
   const currentSectionName = useSelector(Appearance.getCurrentSectionName)
   const l = useSelector(Current.getLake)
 
@@ -62,13 +66,7 @@ export function Sidebar() {
   if (!isOpen) return null
 
   return (
-    <StyledPane
-      isOpen={isOpen}
-      position="left"
-      width={width}
-      onDrag={onDragPane}
-      aria-label="sidebar"
-    >
+    <Pane dragAnchor="right" onDrag={onDragPane} aria-label="sidebar">
       <SidebarTop>
         <SidebarToggleButton />
       </SidebarTop>
@@ -81,6 +79,6 @@ export function Sidebar() {
           <SectionContentSwitch sectionName={currentSectionName} />
         </>
       )}
-    </StyledPane>
+    </Pane>
   )
 }

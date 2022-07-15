@@ -151,11 +151,11 @@ export const SectionSearch = (props) => {
 const SectionSearchWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
   border-radius: 5px;
   border: none;
   background: rgba(0, 0, 0, 0.07);
   padding: 2px 12px;
+  margin: 8px;
 
   svg {
     width: 16px;

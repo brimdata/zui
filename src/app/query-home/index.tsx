@@ -79,7 +79,7 @@ const StyledSubHeader = styled.h2`
 const MainContent = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  flex: 1;
   height: 100%;
 `
 

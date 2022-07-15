@@ -32,9 +32,11 @@ export function fetchNextPage(): Thunk {
 function fetchResults(tabId: string): Thunk {
   return async (dispatch, getState) => {
     const prevVals = selectors.getValues(getState())
+    const prevShapes = selectors.getShapes(getState())
 
     const collect = ({rows, shapesMap}) => {
       dispatch(actions.setValues([...prevVals, ...rows], tabId))
+      dispatch(actions.setShapes({...prevShapes, ...shapesMap}, tabId))
       dispatch(Viewer.updateColumns(tabId, shapesMap))
       dispatch(Columns.touch(shapesMap))
     }

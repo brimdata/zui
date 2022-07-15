@@ -1,13 +1,30 @@
 import {useDispatch, useSelector} from "react-redux"
-import React from "react"
+import React, {HTMLProps} from "react"
 import useStoreExport from "src/app/core/hooks/useStoreExport"
-import {Center, Left, PaneHeader, PaneTitle, Right} from "../Pane"
 import Current from "../../state/Current"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "src/app/detail/Pane"
 import ActionButton from "src/app/query-home/toolbar/action-button"
 import usePluginToolbarItems from "src/app/query-home/toolbar/hooks/use-plugin-toolbar-items"
+import classNames from "classnames"
+
+type Pass = HTMLProps<any>
+
+const PaneHeader = (props: Pass) => (
+  <header {...props} className="pane-header" />
+)
+
+const PaneTitle = (props: Pass) => <h3 {...props} className="pane-title" />
+const Left = ({className, ...props}: Pass) => (
+  <div {...props} className={classNames("left", className)} />
+)
+const Right = ({className, ...props}: Pass) => (
+  <div {...props} className={classNames("right", className)} />
+)
+const Center = ({className, ...props}: Pass) => (
+  <div {...props} className={classNames("center", className)} />
+)
 
 export default function LogDetailsWindow() {
   useStoreExport()
