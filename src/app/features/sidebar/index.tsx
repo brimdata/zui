@@ -59,6 +59,8 @@ export function Sidebar() {
     dispatch(Appearance.resizeSidebar(Math.min(width, max)))
   }
 
+  if (!isOpen) return null
+
   return (
     <StyledPane
       isOpen={isOpen}
