@@ -1,14 +1,13 @@
 import {ResponseFormat} from "@brimdata/zealot"
+import log from "electron-log"
 import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
 import brim from "../brim"
 import Columns from "../state/Columns"
-import Current from "../state/Current"
-import SearchBar from "../state/SearchBar"
+import Results from "../state/Results"
 import {Thunk} from "../state/types"
 import {getZealot} from "./getZealot"
-import {annotateQuery} from "./search/mod"
 
 const streamPipeline = util.promisify(pipeline)
 
@@ -37,11 +36,10 @@ export default (
   async (dispatch, getState): Promise<string> => {
     const zealot = await dispatch(getZealot(undefined, "node"))
     const columns = Columns.getCurrentTableColumns(getState())
-    const baseProgram = SearchBar.getSearchProgram(getState())
-    const program = prepareProgram(format, baseProgram, columns)
-    const poolId = Current.getQuery(getState()).getPoolName()
-    const query = annotateQuery(program, {poolId})
-    const res = await zealot.query(query, {
+    const originalQuery = Results.getQuery(getState())
+    const exportQuery = prepareProgram(format, originalQuery, columns)
+    log.info("Exporting", exportQuery)
+    const res = await zealot.query(exportQuery, {
       format,
       controlMessages: false,
     })

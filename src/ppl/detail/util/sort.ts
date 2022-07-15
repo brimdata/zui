@@ -8,13 +8,11 @@ export const sort = (logs: zed.Record[]) => {
 function sortBy(logs: zed.Record[], name: string, dir: "asc" | "desc" = "asc") {
   const direction = dir === "asc" ? 1 : -1
 
-  logs.sort((a, b) =>
+  return [...logs].sort((a, b) =>
     a.try(name)?.toString() > b.try(name)?.toString()
       ? direction
       : direction * -1
   )
-
-  return logs
 }
 
 const toFront = (array: any[], accessor: (arg0: any) => boolean) => {

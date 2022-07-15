@@ -17,6 +17,10 @@ export const getPaginatedQuery = activeTabSelect((t) => {
   }
 })
 
+export const getQuery = activeTabSelect((t) => {
+  return t.results.query
+})
+
 export const isFetching = activeTabSelect((t) => {
   return t.results.status === "FETCHING"
 })
