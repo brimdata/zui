@@ -9,6 +9,7 @@ import PoolsSection from "./pools-section"
 import QueriesSection from "./queries-section"
 import Header from "./header"
 import {Menu} from "./menu"
+import SidebarToggleButton from "./sidebar-toggle-button"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -33,11 +34,16 @@ const Pane = styled(DraggablePane)`
   height: 100%;
   background: var(--sidebar-background);
   overflow-x: unset;
-  padding-top: 40px;
-  grid-area: sidebar;
-  border-right: 1px solid var(--border-color);
+`
+
+const SidebarTop = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  align-items: center;
+  width: 100%;
+  height: 42px;
+  padding-right: 10px;
 `
 
 export function Sidebar() {
@@ -57,6 +63,9 @@ export function Sidebar() {
 
   return (
     <Pane dragAnchor="right" onDrag={onDragPane} aria-label="sidebar">
+      <SidebarTop>
+        <SidebarToggleButton />
+      </SidebarTop>
       {!id ? (
         <EmptyText>The lake previously on this tab has been removed.</EmptyText>
       ) : (
