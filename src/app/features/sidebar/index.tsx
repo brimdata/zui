@@ -38,13 +38,11 @@ const StyledPane = styled(Pane)`
 const SidebarTop = styled.div`
   display: flex;
   justify-content: flex-end;
+  flex-shrink: 0;
   align-items: center;
   width: 100%;
-  height: 40px;
-
-  button {
-    margin: 13px 18px 0 0;
-  }
+  height: 42px;
+  padding-right: 10px;
 `
 
 export function Sidebar() {

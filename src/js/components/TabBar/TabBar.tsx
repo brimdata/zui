@@ -49,10 +49,7 @@ const TrafficLightBG = styled.div`
   box-shadow: inset -1px -1px var(--border-color);
   background: var(--tab-background);
   z-index: 100;
-
-  button {
-    margin: 5px 18px 0 0;
-  }
+  padding-right: 10px;
 `
 
 export default function TabBar() {
