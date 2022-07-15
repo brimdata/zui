@@ -90,7 +90,7 @@ export class SearchWindow implements BrimWindow {
   getStateFromWebContents() {
     const replyChannel = randomHash()
     return new Promise((resolve, reject) => {
-      const safety = setTimeout(() => reject(new Error("Timeout")), 1000)
+      const safety = setTimeout(() => reject(new Error("Timeout")), 60_000)
       this.ref.webContents.send("getState", replyChannel)
       ipcMain.once(replyChannel, (event, state) => {
         clearTimeout(safety)
