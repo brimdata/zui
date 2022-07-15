@@ -34,6 +34,10 @@ const Pane = styled(DraggablePane)`
   height: 100%;
   background: var(--sidebar-background);
   overflow-x: unset;
+  grid-area: sidebar;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
 `
 
 const SidebarTop = styled.div`
