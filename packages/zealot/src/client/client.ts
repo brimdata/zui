@@ -75,7 +75,7 @@ export class Client {
     const abortCtl = wrapAbort(options.signal)
     const result = await this.send({
       method: "POST",
-      path: "/query",
+      path: `/query?ctrl=${options.controlMessages}`,
       body: json({query}),
       format: options.format,
       signal: abortCtl.signal,
