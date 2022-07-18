@@ -1,4 +1,4 @@
-import {cloneDeep, pick} from "lodash"
+import {pick} from "lodash"
 import {TabState} from "./Tab/types"
 import {State} from "./types"
 
@@ -14,7 +14,6 @@ const WINDOW_PERSIST: StateKey[] = [
   "queries",
   "queryVersions",
   "tabHistories",
-  "tabs",
   "lakes",
 ]
 
@@ -35,15 +34,12 @@ function deleteAccessTokens(state: Partial<State>) {
 }
 
 export function getPersistedState(original: State) {
-  const clone = cloneDeep(original)
-  const state = pick(clone, WINDOW_PERSIST)
-
-  if (state.tabs) {
-    state.tabs.data = state.tabs.data.map(
-      (tab) => pick(tab, TAB_PERSIST) as TabState
-    )
+  const windowState = pick(original, WINDOW_PERSIST)
+  const tabsState = {
+    ...original.tabs,
+    data: original.tabs.data.map((tab) => pick(tab, TAB_PERSIST) as TabState),
   }
-
+  const state = {...windowState, tabs: tabsState}
   deleteAccessTokens(state)
   return state
 }
