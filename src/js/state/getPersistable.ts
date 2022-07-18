@@ -34,12 +34,16 @@ function deleteAccessTokens(state: Partial<State>) {
 }
 
 export function getPersistedState(original: State) {
-  const windowState = pick(original, WINDOW_PERSIST)
-  const tabsState = {
-    ...original.tabs,
-    data: original.tabs.data.map((tab) => pick(tab, TAB_PERSIST) as TabState),
+  let state = pick(original, WINDOW_PERSIST)
+
+  if (original.tabs) {
+    const tabs = {
+      ...original.tabs,
+      data: original.tabs.data.map((tab) => pick(tab, TAB_PERSIST) as TabState),
+    }
+    state = {...state, tabs}
   }
-  const state = {...windowState, tabs: tabsState}
+
   deleteAccessTokens(state)
   return state
 }
