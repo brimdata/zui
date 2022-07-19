@@ -10,7 +10,6 @@ import Tabs from "src/js/state/Tabs"
 import Current from "../../state/Current"
 import Tab from "../../state/Tab"
 import {Thunk} from "../../state/types"
-import {getZealot} from "../getZealot"
 
 type Args = {
   query: string
@@ -86,7 +85,7 @@ export function search({
     const tabSpan = Tab.getSpanAsDates(getState())
     const tab = Tabs.getActive(getState())
     const defaultPoolId = Current.getPoolId(getState())
-    const zealot = await dispatch(getZealot())
+    const zealot = await api.getZealot()
     const ctl = new AbortController()
     const abort = () => ctl.abort()
     const tag = id

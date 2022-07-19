@@ -8,7 +8,6 @@ import {isUndefined} from "lodash"
 import brim, {Ts} from "src/js/brim"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
-import {getZealot} from "src/js/flows/getZealot"
 
 type Args = {
   query: string
@@ -30,7 +29,7 @@ const search =
   ({query, id, initial}: Args): Thunk<Promise<ResultStream>> =>
   async (dispatch, getState, {api}) => {
     const tab = Tabs.getActive(getState())
-    const zealot = await dispatch(getZealot())
+    const zealot = await api.getZealot()
     const ctl = new AbortController()
     const abort = () => ctl.abort()
     const tag = id

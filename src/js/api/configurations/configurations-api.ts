@@ -1,21 +1,8 @@
-import {AppDispatch, State} from "../state/types"
-import Toolbar, {ToolbarItem} from "../state/Toolbars"
-import Configs, {Config} from "../state/Configs"
-import ConfigPropValues from "../state/ConfigPropValues"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
+import Configs, {Config} from "src/js/state/Configs"
+import {AppDispatch, State} from "src/js/state/types"
 
-export class ToolbarApi {
-  constructor(private dispatch: AppDispatch, private getState: () => State) {}
-
-  add(toolbarId: string, item: ToolbarItem) {
-    this.dispatch(Toolbar.createItem({toolbarId, item}))
-  }
-
-  update(toolbarId: string, itemId: string, item: Partial<ToolbarItem>) {
-    this.dispatch(Toolbar.updateItem({toolbarId, itemId, item}))
-  }
-}
-
-export class ConfigsApi {
+export class ConfigurationsApi {
   constructor(private dispatch: AppDispatch, private getState: () => State) {}
 
   get(configName, propName): any {

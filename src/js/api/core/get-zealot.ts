@@ -1,11 +1,11 @@
-import {validateToken} from "../auth0/utils"
-import {BrimLake} from "../brim"
-import Current from "../state/Current"
-import Lakes from "../state/Lakes"
-import {Thunk} from "../state/types"
-import LakeStatuses from "../state/LakeStatuses"
-import {getAuthCredentials} from "./lake/getAuthCredentials"
 import {Client} from "@brimdata/zealot"
+import {validateToken} from "src/js/auth0/utils"
+import {BrimLake} from "src/js/brim"
+import {getAuthCredentials} from "src/js/flows/lake/getAuthCredentials"
+import Current from "src/js/state/Current"
+import Lakes from "src/js/state/Lakes"
+import LakeStatuses from "src/js/state/LakeStatuses"
+import {Thunk} from "src/js/state/types"
 
 export const getZealot =
   (lake?: BrimLake, env?: "node" | "web"): Thunk<Promise<Client>> =>

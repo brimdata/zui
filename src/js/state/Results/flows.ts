@@ -1,5 +1,4 @@
 import {ResultStream, Collector} from "@brimdata/zealot"
-import {getZealot} from "src/js/flows/getZealot"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Columns from "../Columns"
 import * as selectors from "./selectors"
@@ -63,7 +62,7 @@ function issueSearch(args: {
   collect: Collector
 }): Thunk<Promise<ResultStream>> {
   return async (dispatch, _, {api}) => {
-    const zealot = await dispatch(getZealot())
+    const zealot = await api.getZealot()
     const [signal, cleanup] = createAbortable(api, args.tabId, args.id)
     let res: ResultStream
     try {
