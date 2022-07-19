@@ -84,15 +84,6 @@ export class SystemTest {
     await tl.screen.findByText(/import complete/i)
   }
 
-  runQuery(query: string, id = "Table") {
-    this.api.search(query)
-    return new Promise<void>((resolve) => {
-      this.api.searches.onDidFinish((search) => {
-        if (search.id === id) resolve()
-      })
-    })
-  }
-
   mockSaveDialog(result: {canceled: boolean; filePath: string}) {
     const save = jest.spyOn(dialog, "showSaveDialog")
     save.mockImplementationOnce(() => {

@@ -25,8 +25,6 @@ import {
 import {SearchesApi} from "./searches"
 import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
-import submitSearch from "src/app/query-home/flows/submit-search"
-import SearchBar from "src/js/state/SearchBar"
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 import {forEach} from "lodash"
 import QueryVersions from "../state/QueryVersions"
@@ -101,11 +99,6 @@ export default class BrimApi {
         this.dispatch(syncPoolsData()).catch((e) => e)
         console.error(e.message)
       })
-  }
-
-  search(zed: string) {
-    this.dispatch(SearchBar.changeSearchBarInput(zed))
-    this.dispatch(submitSearch())
   }
 
   importQueries(file: File) {
