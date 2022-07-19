@@ -22,7 +22,6 @@ import {
   LoaderRegistry,
   SearchCtxItemBuilder,
 } from "./registries"
-import {SearchesApi} from "./searches"
 import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
@@ -41,7 +40,6 @@ export default class BrimApi {
   public configs: ConfigsApi
   public storage: StorageApi
   public queries: QueriesApi
-  public searches = new SearchesApi()
 
   public toast = toast
 

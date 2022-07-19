@@ -103,15 +103,6 @@ export function search({
     const aId = api.abortables.add({abort, tab, tag})
 
     res.promise
-      .then(() => {
-        api.searches.emit("did-finish", {
-          tabId: tab,
-          status: res.status,
-          shapes: res.shapes,
-          id,
-          initial,
-        })
-      })
       .catch((e) => {
         console.error(e)
       })
