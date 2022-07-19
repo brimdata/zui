@@ -11,6 +11,7 @@ import {Detail, MenusApi, Search} from "./menus/menus-api"
 import {ConfigurationsApi} from "./configurations/configurations-api"
 import {ToolbarsApi} from "./toolbars/toolbars-api"
 import {BrimLake} from "../brim"
+import {query, QueryOptions} from "./core/query"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -42,5 +43,9 @@ export default class BrimApi {
 
   getPath(name: PathName) {
     return getPath(name)
+  }
+
+  query(body: string, opts: QueryOptions = {}) {
+    return this.dispatch(query(body, opts))
   }
 }
