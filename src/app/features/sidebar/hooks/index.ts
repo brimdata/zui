@@ -33,7 +33,7 @@ export const useQueryImportOnDrop = () => {
     accept: [NativeTypes.FILE],
     drop: ({files}) => {
       if (files && files[0]) {
-        api.importQueries(files[0])
+        api.queries.import(files[0])
       }
     },
     collect: (m) => ({

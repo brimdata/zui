@@ -7,14 +7,7 @@ import errors from "../errors"
 import {getZealot} from "../flows/getZealot"
 import ErrorFactory from "../models/ErrorFactory"
 import Notice from "../state/Notice"
-import Queries from "../state/Queries"
-import {
-  JSONGroup,
-  parseJSONLib,
-  serializeQueryLib,
-} from "../state/Queries/parsers"
 import {AppDispatch, State} from "../state/types"
-import {QueriesApi} from "./queries"
 import {
   CommandRegistry,
   ContextMenuRegistry,
@@ -25,8 +18,7 @@ import {
 import {StorageApi} from "./storage"
 import {ConfigsApi, ToolbarApi} from "./ui-apis"
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
-import {forEach} from "lodash"
-import QueryVersions from "../state/QueryVersions"
+import {QueriesApi} from "./queries/queries-api"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -59,7 +51,7 @@ export default class BrimApi {
     this.toolbar = new ToolbarApi(d, gs)
     this.configs = new ConfigsApi(d, gs)
     this.storage = new StorageApi(d, gs)
-    this.queries = new QueriesApi(d, gs)
+    this.queries = new QueriesApi(d)
   }
 
   getZealot() {
@@ -97,20 +89,5 @@ export default class BrimApi {
         this.dispatch(syncPoolsData()).catch((e) => e)
         console.error(e.message)
       })
-  }
-
-  importQueries(file: File) {
-    const {libRoot, versions} = parseJSONLib(file.path)
-    this.dispatch(Queries.addItem(libRoot, "root"))
-    forEach(versions, (vs, queryId) => {
-      this.dispatch(QueryVersions.set({queryId, versions: [vs]}))
-    })
-    this.toast.success(`Imported ${libRoot.name}`)
-  }
-
-  exportQueries(groupId: string): JSONGroup {
-    const group = Queries.getGroupById(groupId)(this.getState())
-    const versions = QueryVersions.raw(this.getState())
-    return serializeQueryLib(group, versions)
   }
 }

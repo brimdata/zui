@@ -42,7 +42,7 @@ export default function PlusButton() {
   const onImport = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files[0]
     if (file) {
-      api.importQueries(file)
+      api.queries.import(file)
     }
     e.target.value = null
   }
