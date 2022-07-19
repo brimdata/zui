@@ -1,5 +1,4 @@
-import {ResultStream} from "packages/zealot/src"
-import {Collector} from "packages/zealot/src/query/channel"
+import {ResultStream, Collector} from "@brimdata/zealot"
 import {getZealot} from "src/js/flows/getZealot"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Columns from "../Columns"
