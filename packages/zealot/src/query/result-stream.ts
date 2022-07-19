@@ -1,9 +1,9 @@
 import {isObject} from "lodash"
 import {Response as NodeResponse} from "node-fetch"
-import {zjson} from ".."
+import {Collector, zjson} from ".."
 import {eachLine} from "../ndjson/lines"
 import {JSOptions} from "../zed/values/types"
-import {Channel, Collector} from "./channel"
+import {Channel} from "./channel"
 
 type CrossResponse = Response | NodeResponse
 export class ResultStream {
