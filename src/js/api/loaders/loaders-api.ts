@@ -1,32 +1,8 @@
 import {EventEmitter} from "events"
+import {IngestParams} from "src/js/brim/ingest/getParams"
 import {remove} from "lodash"
-import {IngestParams} from "../brim/ingest/getParams"
-import {zed} from "@brimdata/zealot"
-import {MenuItemConstructorOptions} from "electron"
 
 type Cleanup = () => any
-
-export class CommandRegistry {
-  commandRegistry: EventEmitter
-
-  constructor() {
-    this.commandRegistry = new EventEmitter()
-  }
-
-  add(command: string, listener: (...args: any[]) => void): Cleanup {
-    this.commandRegistry.on(command, listener)
-
-    return () => this.commandRegistry.removeListener(command, listener)
-  }
-
-  execute(command: string, ...args: any[]): boolean {
-    return this.commandRegistry.emit(command, ...args)
-  }
-
-  list(): string[] {
-    return this.commandRegistry.eventNames() as string[]
-  }
-}
 
 interface Loader {
   match: string
@@ -40,7 +16,7 @@ interface Loader {
   unload?: (params: IngestParams) => Promise<void>
 }
 
-export class LoaderRegistry {
+export class LoadersApi {
   private loaders: Loader[] = []
   private emitter = new EventEmitter()
 
@@ -79,33 +55,5 @@ export class LoaderRegistry {
     await new Promise((res) => {
       this.onDidAbort(res)
     })
-  }
-}
-
-export type SearchCtxItemBuilder = (data: {
-  record: zed.Record
-  field: zed.Field
-}) => MenuItemConstructorOptions
-
-export type DetailCtxItemBuilder = (data: {
-  record: zed.Record
-  field: zed.Field
-}) => MenuItemConstructorOptions
-
-export class ContextMenuRegistry<T> {
-  private registry: T[] = []
-
-  constructor() {}
-
-  add(menuItem: T) {
-    this.registry.push(menuItem)
-  }
-
-  remove(menuItem: T): void {
-    if (this.registry.includes(menuItem)) remove(this.registry, (l) => l === l)
-  }
-
-  list() {
-    return [...this.registry]
   }
 }

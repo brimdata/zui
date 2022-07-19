@@ -80,7 +80,7 @@ export class SystemTest {
 
   async importFile(name: string) {
     const file = data.getWebFile(name)
-    await tl.act(() => this.api.import([file]))
+    await tl.act(() => this.api.pools.load([file]))
     await tl.screen.findByText(/import complete/i)
   }
 

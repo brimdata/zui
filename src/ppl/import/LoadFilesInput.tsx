@@ -13,7 +13,7 @@ export default function LoadFilesInput() {
   const [{canDrop, isOver}, drop] = useImportOnDrop()
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
-    api.import(Array.from(e.target.files))
+    api.pools.load(Array.from(e.target.files))
   }
 
   function openDialog(_: MouseEvent) {

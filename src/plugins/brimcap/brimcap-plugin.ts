@@ -49,7 +49,8 @@ export default class BrimcapPlugin {
 
   constructor(private api: BrimApi) {
     // RFC: what interface do we want the app to provide for this sort of data?
-    const {dataRoot, zdepsDirectory} = api.getAppConfig()
+    const dataRoot = api.getPath("app-data")
+    const zdepsDirectory = api.getPath("zdeps")
 
     const commandName = env.isWindows ? "brimcap.exe" : "brimcap"
     this.brimcapBinPath = path.join(zdepsDirectory, commandName)
@@ -84,7 +85,7 @@ export default class BrimcapPlugin {
   }
 
   private async tryConn(detail: zed.Record, eventId: string) {
-    // TODO: dispatch is only temporarily public to plugins, so this won't always be needed
+    // @ts-ignore dispatch is private
     const dispatch = this.api.dispatch as AppDispatch
     const uidRecords = await dispatch(fetchCorrelation(detail, eventId))
 
@@ -218,7 +219,7 @@ export default class BrimcapPlugin {
     const tsString = ts.toString()
     const dur = log.try("duration") as zed.Duration
     const dest = join(
-      this.api.getTempDir(),
+      this.api.getPath("temp"),
       `packets-${tsString}.pcap`.replace(/:/g, "_")
     )
 
@@ -412,7 +413,7 @@ export default class BrimcapPlugin {
   private async updateSuricata() {
     /* To get better coverage we can mock the spawn call */
     if (env.isTest) return
-    const {zdepsDirectory} = this.api.getAppConfig()
+    const zdepsDirectory = this.api.getPath("zdeps")
     const cmdName = env.isWindows ? "suricataupdater.exe" : "suricataupdater"
     const cmdPath = path.join(zdepsDirectory, "suricata", cmdName)
     const proc = spawn(cmdPath)
