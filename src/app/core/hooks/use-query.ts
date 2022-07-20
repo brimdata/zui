@@ -1,13 +1,16 @@
 import {ResultStream, zed} from "@brimdata/zealot"
 import {useEffect, useState} from "react"
-import {useDispatch} from "react-redux"
-import {search} from "src/js/flows/search/mod"
-import {AppDispatch} from "src/js/state/types"
+import {QueryOptions} from "src/js/api/core/query"
+import {useBrimApi} from "../context"
 
 type R = [zed.Value[], boolean]
 
-export default function useSearch(query: string, deps?: any[]): R {
-  const dispatch = useDispatch<AppDispatch>()
+export default function useQuery(
+  query: string,
+  opts: QueryOptions = {},
+  deps?: any[]
+): R {
+  const api = useBrimApi()
   const [rows, setRows] = useState<zed.Value[]>([])
   const [isFetching, setIsFetching] = useState<boolean>(true)
 
@@ -15,7 +18,8 @@ export default function useSearch(query: string, deps?: any[]): R {
     setIsFetching(true)
     let res: ResultStream
 
-    dispatch(search({query}))
+    api
+      .query(query, opts)
       .then((r) => {
         res = r
         return res.collect(({rows}) => {

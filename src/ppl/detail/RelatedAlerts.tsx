@@ -1,5 +1,4 @@
 import {Data, Name, Value} from "src/app/core/Data"
-import useSearch from "src/app/core/hooks/useSearch"
 import Panel from "src/app/detail/Panel"
 import PanelHeading from "src/app/detail/PanelHeading"
 import {Caption, ChartWrap, TableWrap} from "src/app/detail/Shared"
@@ -14,6 +13,7 @@ import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
 import firstLast from "./util/firstLast"
 import formatDur from "./util/formatDur"
+import useQuery from "src/app/core/hooks/use-query"
 
 type Props = {
   record: zed.Record
@@ -23,7 +23,11 @@ const LIMIT = 100
 
 export default memo(function RelatedAlerts({record}: Props) {
   const cid = record.get("community_id").toString()
-  const [records, isLoading] = useSearch(relatedAlerts(cid, LIMIT), [record])
+  const [records, isLoading] = useQuery(
+    relatedAlerts(cid, LIMIT),
+    {id: "related-alerts"},
+    [record]
+  )
   const events = useMemo(() => records.map(BrimEvent.build), [records])
   const [first, last] = firstLast(events)
   const current = useMemo(
