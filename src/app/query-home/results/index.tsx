@@ -8,7 +8,7 @@ import ResultsTable from "./results-table"
 import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
 import Results from "src/js/state/Results"
-import {MAIN_RESULTS} from "src/js/state/Results/flows"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 const ResultsComponent = () => {
   const data = useResultsData()

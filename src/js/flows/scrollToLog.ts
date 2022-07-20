@@ -3,7 +3,7 @@ import {zed} from "@brimdata/zealot"
 import {Thunk} from "../state/types"
 import Viewer from "../state/Viewer"
 import Results from "../state/Results"
-import {MAIN_RESULTS} from "../state/Results/flows"
+import {MAIN_RESULTS} from "../state/Results/types"
 
 export default (log: zed.Record): Thunk =>
   (dispatch, getState) => {

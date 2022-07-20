@@ -1,5 +1,5 @@
 import Results from "../state/Results"
-import {MAIN_RESULTS} from "../state/Results/flows"
+import {MAIN_RESULTS} from "../state/Results/types"
 import {Thunk} from "../state/types"
 
 export const inspectSearch =

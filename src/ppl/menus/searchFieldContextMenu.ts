@@ -4,7 +4,6 @@ import menu from "src/js/electron/menu"
 import {hasGroupByProc} from "src/js/lib/Program"
 import {showContextMenu} from "src/js/lib/System"
 import Columns from "src/js/state/Columns"
-import {MAIN_RESULTS} from "src/js/state/Results/flows"
 import SearchBar from "src/js/state/SearchBar"
 import {Thunk} from "src/js/state/types"
 
@@ -21,7 +20,7 @@ export default function searchFieldContextMenu({
   value,
 }: Args): Thunk {
   return (_, getState, {api}) => {
-    const columns = Columns.getCurrentTableColumns(MAIN_RESULTS)(getState())
+    const columns = Columns.getCurrentTableColumns(getState())
       .getColumns()
       .map((c) => c.name)
     const program = SearchBar.getSearchProgram(getState())

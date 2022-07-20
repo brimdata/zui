@@ -45,7 +45,7 @@ const Content = memo<Props>(function Content({record}) {
         {isSuricata && cid && <RelatedAlerts record={record} />}
         {isSuricata && cid && <RelatedConns />}
         {isConn && <ConnPanel record={record} />}
-        {hasMd5 && <Md5Panel record={record} />}
+        {hasMd5 && <Md5Panel />}
       </div>
     </BG>
   )

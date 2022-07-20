@@ -7,7 +7,7 @@ import {State} from "../types"
 import {createSelection, ViewerSelection} from "./helpers/selection"
 import {ViewerSelectionData, ViewerState} from "./types"
 import {getValues} from "../Results/selectors"
-import {MAIN_RESULTS} from "../Results/flows"
+import {MAIN_RESULTS} from "../Results/types"
 
 export const getViewer = createSelector<State, TabState, ViewerState>(
   Tabs.getActiveTab,

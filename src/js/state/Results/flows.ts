@@ -5,8 +5,8 @@ import {Thunk} from "../types"
 import Viewer from "../Viewer"
 import {actions} from "./reducer"
 import Current from "../Current"
+import {MAIN_RESULTS} from "./types"
 
-export const MAIN_RESULTS = "zui-results/main"
 const id = MAIN_RESULTS
 
 export function fetchFirstPage(query: string): Thunk {

@@ -6,7 +6,7 @@ import Results from "src/js/state/Results"
 import tabHistory from "../../router/tab-history"
 import {lakeQueryPath} from "../../router/utils/paths"
 import {Thunk} from "src/js/state/types"
-import {MAIN_RESULTS} from "src/js/state/Results/flows"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 type SaveOpts = {history: boolean; version: boolean}
 
@@ -26,7 +26,7 @@ const submitSearch =
     query = query.newVersion(value, pins)
     const error = query.checkSyntax()
     if (error) {
-      dispatch(Results.error(error))
+      dispatch(Results.error({id: MAIN_RESULTS, tabId, error}))
       return
     }
     if (save.version && !query.isReadOnly) {
