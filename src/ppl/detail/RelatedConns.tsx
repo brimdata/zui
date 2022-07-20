@@ -6,27 +6,19 @@ import {BrimEvent, BrimEventInterface} from "src/ppl/detail/models/BrimEvent"
 import React, {memo, useCallback, useMemo} from "react"
 import brim from "src/js/brim"
 import {showContextMenu} from "src/js/lib/System"
-import {relatedConns} from "src/js/searches/programs"
-import {zed} from "@brimdata/zealot"
 import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
 import firstLast from "./util/firstLast"
 import formatDur from "./util/formatDur"
-import useQuery from "src/app/core/hooks/use-query"
+import {SURICATA_CONNS} from "src/js/api/correlations/run-suricata-conns"
+import {useSelector} from "react-redux"
+import Results from "src/js/state/Results"
 
-type Props = {
-  record: zed.Record
-}
-
-const LIMIT = 100
-
-export default memo(function RelatedConns({record}: Props) {
-  const cid = record.get("community_id").toString()
-  const [records, isFetching] = useQuery(
-    relatedConns(cid, LIMIT),
-    {id: "related-conns"},
-    [record]
-  )
+export default memo(function RelatedConns() {
+  const records = useSelector(Results.getValues(SURICATA_CONNS))
+  const isFetching = useSelector(Results.isFetching(SURICATA_CONNS))
+  const query = useSelector(Results.getQuery(SURICATA_CONNS))
+  const perPage = useSelector(Results.getPerPage(SURICATA_CONNS))
   const events = useMemo(() => records.map(BrimEvent.build), [records])
   const [first, last] = firstLast<BrimEventInterface>(events)
   const data = [
@@ -46,7 +38,7 @@ export default memo(function RelatedConns({record}: Props) {
       <Panel>
         <ChartWrap>
           <EventTimeline events={events} />
-          <EventLimit query={relatedConns(cid)} count={events.length} />
+          <EventLimit query={query} count={events.length} limit={perPage} />
         </ChartWrap>
         <TableWrap>
           {data.map(([name, value]) => (

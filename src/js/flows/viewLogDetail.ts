@@ -1,10 +1,10 @@
 import {isEqual} from "lodash"
-import {fetchCorrelation} from "src/ppl/detail/flows/fetch"
 import {zed} from "@brimdata/zealot"
-import ErrorFactory from "../models/ErrorFactory"
 import LogDetails from "../state/LogDetails"
-import Notice from "../state/Notice"
 import {Thunk} from "../state/types"
+import {runZeekCorrelation} from "../api/correlations/run-zeek-correlation"
+import {runSuricataConnsCorrelation} from "../api/correlations/run-suricata-conns"
+import {runSuricataAlertsCorrelation} from "../api/correlations/run-suricata-alerts"
 
 export const viewLogDetail =
   (record: zed.Record): Thunk =>
@@ -12,19 +12,8 @@ export const viewLogDetail =
     const current = LogDetails.build(getState())
     if (record && !isEqual(record, current)) {
       dispatch(LogDetails.push(record))
-      dispatch(LogDetails.updateUidStatus("FETCHING"))
-      dispatch(fetchCorrelation(record))
-        .then((records) => {
-          dispatch(LogDetails.updateUidLogs(records))
-          dispatch(LogDetails.updateUidStatus("SUCCESS"))
-          /*
-        TODO: This correlation fetching and logic should all belong to the brimcap plugin. Since we have not yet
-          solidified how we want to give plugins access to the dom to write their own UI, and there are a few
-          components that rely on these uid logs (and expect them to be stored in the redux store), then for now
-          we can keep this process internal and just expose both the record and uidLogs data together in the same
-          brim-command.
-        */
-        })
-        .catch((e) => dispatch(Notice.set(ErrorFactory.create(e))))
+      dispatch(runZeekCorrelation())
+      dispatch(runSuricataConnsCorrelation())
+      dispatch(runSuricataAlertsCorrelation())
     }
   }
