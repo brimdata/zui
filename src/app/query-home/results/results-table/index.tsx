@@ -18,6 +18,7 @@ import {useRowSelection} from "./hooks/use-row-selection"
 import Results from "src/js/state/Results"
 import {zed} from "packages/zealot/src"
 import buildViewerDimens from "./viewer/build-viewer-dimens"
+import {MAIN_RESULTS} from "src/js/state/Results/flows"
 
 type Props = {
   height: number
@@ -33,13 +34,15 @@ const endMessage = (dimens: ViewerDimens) => {
 }
 
 const ResultsTable = (props: Props) => {
-  const status = useSelector(Results.getStatus)
-  const aggregationLimit = useSelector(Results.getAggregationLimit)
-  const isFetching = useSelector(Results.isFetching)
-  const isIncomplete = useSelector(Results.isIncomplete)
-  const tableColumns = useSelector(Columns.getCurrentTableColumns)
+  const status = useSelector(Results.getStatus(MAIN_RESULTS))
+  const aggregationLimit = useSelector(
+    Results.getAggregationLimit(MAIN_RESULTS)
+  )
+  const isFetching = useSelector(Results.isFetching(MAIN_RESULTS))
+  const isIncomplete = useSelector(Results.isIncomplete(MAIN_RESULTS))
+  const tableColumns = useSelector(Columns.getCurrentTableColumns(MAIN_RESULTS))
   const columnHeadersView = useSelector(Layout.getColumnsView)
-  const logs = useSelector(Results.getValues) as zed.Record[]
+  const logs = useSelector(Results.getValues(MAIN_RESULTS)) as zed.Record[]
   const scrollPos = useSelector(Viewer.getScrollPos)
   const dispatch = useDispatch()
   const displayConfig = useSelector(ConfigPropValues.get("display"))

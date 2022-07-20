@@ -6,6 +6,7 @@ import util from "util"
 import brim from "../brim"
 import Columns from "../state/Columns"
 import Results from "../state/Results"
+import {MAIN_RESULTS} from "../state/Results/flows"
 import {Thunk} from "../state/types"
 
 const streamPipeline = util.promisify(pipeline)
@@ -34,8 +35,8 @@ export default (
   ): Thunk<Promise<string>> =>
   async (dispatch, getState, {api}): Promise<string> => {
     const zealot = await api.getZealot(undefined, "node")
-    const columns = Columns.getCurrentTableColumns(getState())
-    const originalQuery = Results.getQuery(getState())
+    const columns = Columns.getCurrentTableColumns(MAIN_RESULTS)(getState())
+    const originalQuery = Results.getQuery(MAIN_RESULTS)(getState())
     const exportQuery = prepareProgram(format, originalQuery, columns)
     log.info("Exporting", exportQuery)
     const res = await zealot.query(exportQuery, {

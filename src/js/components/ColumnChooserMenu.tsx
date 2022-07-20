@@ -7,6 +7,7 @@ import Columns from "../state/Columns"
 import {printColumnName} from "../state/Columns/models/column"
 import {TableColumn} from "../state/Columns/types"
 import Layout from "../state/Layout"
+import {MAIN_RESULTS} from "../state/Results/flows"
 import {DispatchProps, State} from "../state/types"
 import CloseButton from "./CloseButton"
 import Checkbox from "./common/Checkbox"
@@ -188,7 +189,7 @@ export default class ColumnChooserMenu extends React.Component<
 }
 
 const stateToProps = (state: State) => ({
-  tableColumns: Columns.getCurrentTableColumns(state),
+  tableColumns: Columns.getCurrentTableColumns(MAIN_RESULTS)(state),
   columnHeadersView: Layout.getColumnsView(state),
 })
 
