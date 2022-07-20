@@ -17,6 +17,6 @@ test("conn correlation", () => {
       record.get("duration") as zed.Duration
     )
   ).toMatchInlineSnapshot(
-    `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" or (community_id == \\"1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=\\" and ts >= 1425568032.998 and ts < 1425568123.707) | head 100"`
+    `"uid==\\"CbOjYpkXn9LfqV51c\\" or \\"CbOjYpkXn9LfqV51c\\" in conn_uids or \\"CbOjYpkXn9LfqV51c\\" in uids or referenced_file.uid==\\"CbOjYpkXn9LfqV51c\\" or (community_id == \\"1:h09VUfAoDYfBA0xGKuKCQ7nOxqU=\\" and ts >= 2015-03-05T15:07:12.998Z and ts < 2015-03-05T15:08:43.707Z) | head 100"`
   )
 })
