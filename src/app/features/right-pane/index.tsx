@@ -4,12 +4,18 @@ import DetailSection from "./detail-section"
 import styled from "styled-components"
 import {useDispatch} from "src/app/core/state"
 import {useSelector} from "react-redux"
-import {XRightPaneExpander} from "../../../js/components/RightPaneExpander"
 import Layout from "../../../js/state/Layout"
-import Pane from "../../../js/components/Pane"
+import {DraggablePane} from "src/js/components/draggable-pane"
 import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {HistorySection} from "./history/section"
+
+const Pane = styled(DraggablePane)`
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+  background: white;
+`
 
 const BG = styled.div`
   display: flex;
@@ -104,33 +110,37 @@ export function Menu() {
   )
 }
 
-const RightPane = () => {
-  const dispatch = useDispatch()
-  const currentPaneName = useSelector(Layout.getCurrentPaneName)
-  const isOpen = useSelector(Layout.getDetailPaneIsOpen)
+function Container({children}) {
   const width = useSelector(Layout.getDetailPaneWidth)
+  const dispatch = useDispatch()
+  const isOpen = useSelector(Layout.getDetailPaneIsOpen)
 
-  const onDrag = (e: MouseEvent) => {
+  const onDrag = (e: React.MouseEvent) => {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
     dispatch(Layout.setDetailPaneWidth(Math.min(width, max)))
   }
 
-  if (!isOpen) return <XRightPaneExpander />
+  if (!isOpen) return null
+
   return (
-    <Pane
-      isOpen={isOpen}
-      onDrag={onDrag}
-      position="right"
-      width={width}
-      className="right-pane"
-      aria-label="details"
-    >
+    // @ts-ignore
+    <Pane onDrag={onDrag} dragAnchor="left" style={{width}}>
+      {children}
+    </Pane>
+  )
+}
+
+const RightPane = () => {
+  const currentPaneName = useSelector(Layout.getCurrentPaneName)
+
+  return (
+    <Container>
       <Menu />
       <AppErrorBoundary>
         <PaneContentSwitch paneName={currentPaneName} />
       </AppErrorBoundary>
-    </Pane>
+    </Container>
   )
 }
 

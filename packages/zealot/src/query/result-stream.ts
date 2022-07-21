@@ -87,7 +87,7 @@ export class ResultStream {
           (e instanceof Error && e.message.match(/context canceled/))
         ) {
           this.status = "aborted"
-          resolve()
+          reject(e)
         } else {
           this.status = "error"
           reject(e)

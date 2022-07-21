@@ -7,6 +7,7 @@ const slice = createSlice({
   name: "TAB_RESULTS",
   initialState: {
     values: [] as zed.Value[],
+    shapes: {} as {[id: string]: zed.Type},
     status: "INIT" as ResultsStatus,
     page: 1,
     perPage: 500,
@@ -22,14 +23,17 @@ const slice = createSlice({
       s.aggregation = program(a.payload.query).hasAnalytics()
       s.key = a.payload.key
       s.values = []
+      s.shapes = {}
       s.page = 1
       s.status = "FETCHING"
       s.error = null
     },
+
     nextPage(s) {
       s.page += 1
       s.status = "FETCHING"
     },
+
     setValues: {
       prepare: (values: zed.Value[], tabId: string) => ({
         payload: {tabId, values},
@@ -38,9 +42,16 @@ const slice = createSlice({
         s.values = a.payload.values
       },
     },
-    setStatus(s, a: Pay<ResultsStatus>) {
-      s.status = a.payload
+
+    setShapes: {
+      prepare: (shapes: {[id: string]: zed.Type}, tabId: string) => ({
+        payload: {tabId, shapes},
+      }),
+      reducer: (s, a: Pay<{shapes: {[id: string]: zed.Type}}>) => {
+        s.shapes = a.payload.shapes
+      },
     },
+
     success: {
       prepare: (count: number, tabId: string) => ({
         payload: {count, tabId},
@@ -56,6 +67,7 @@ const slice = createSlice({
         s.error = null
       },
     },
+
     error: {
       prepare: (error: any, tabId?: string) => ({
         payload: {error, tabId},

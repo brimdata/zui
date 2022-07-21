@@ -4,7 +4,7 @@ import {maybeShowReleaseNotes} from "src/app/release-notes/maybe-show-release-no
 import ReleaseNotes from "src/app/release-notes/release-notes"
 import AppTabsRouter from "src/app/router/app-tabs-router"
 import {releaseNotes, root, lakeShow, lakeList} from "src/app/router/routes"
-import AppWrapper from "src/app/routes/app-wrapper"
+import AppWrapper from "src/app/routes/app-wrapper/app-wrapper"
 import React, {useEffect} from "react"
 import {Redirect, Route, Switch} from "react-router"
 import useStoreExport from "src/app/core/hooks/useStoreExport"

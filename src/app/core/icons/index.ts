@@ -32,6 +32,7 @@ import plus from "./plus"
 import zui from "./zui"
 import LeftArrow from "./left-arrow"
 import RightArrow from "./right-arrow"
+import sidebarToggle from "./sidebar-toggle"
 
 export default {
   braces,
@@ -58,6 +59,7 @@ export default {
   pool,
   query,
   run,
+  "sidebar-toggle": sidebarToggle,
   "file-border": fileBorder,
   "file-filled": fileFilled,
   "doc-plain": docPlain,

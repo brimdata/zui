@@ -1,8 +1,13 @@
+import {createSelector} from "@reduxjs/toolkit"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {paginate} from "./paginate"
 
 export const getValues = activeTabSelect((t) => {
   return t.results.values
+})
+
+export const getShapes = activeTabSelect((t) => {
+  return t.results.shapes
 })
 
 export const getStatus = activeTabSelect((t) => {
@@ -46,3 +51,6 @@ export const getAggregationLimit = activeTabSelect((t) => {
 })
 
 export const getError = activeTabSelect((t) => t.results.error)
+export const getPage = activeTabSelect((t) => t.results.page)
+export const getPerPage = activeTabSelect((t) => t.results.perPage)
+export const getCount = createSelector(getValues, (values) => values.length)
