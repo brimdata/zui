@@ -12,17 +12,19 @@ import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
 import firstLast from "./util/firstLast"
 import formatDur from "./util/formatDur"
-import {SURICATA_ALERTS} from "src/js/api/correlations/run-suricata-alerts"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
+import {SURICATA_ALERTS} from "src/plugins/zui-suricata"
 
 type Props = {record: zed.Record}
 
+const id = SURICATA_ALERTS
+
 export default memo(function RelatedAlerts({record}: Props) {
-  const records = useSelector(Results.getValues(SURICATA_ALERTS))
-  const isFetching = useSelector(Results.isFetching(SURICATA_ALERTS))
-  const query = useSelector(Results.getQuery(SURICATA_ALERTS))
-  const perPage = useSelector(Results.getPerPage(SURICATA_ALERTS))
+  const records = useSelector(Results.getValues(id))
+  const isFetching = useSelector(Results.isFetching(id))
+  const query = useSelector(Results.getQuery(id))
+  const perPage = useSelector(Results.getPerPage(id))
   const events = useMemo(() => records.map(BrimEvent.build), [records])
   const [first, last] = firstLast(events)
   const current = useMemo(

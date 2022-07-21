@@ -41,9 +41,6 @@ export function findCommunityConnArgs(value: zed.Value): CommunityConnArgs {
     const duration = value.try("duration")
     const uid = findUid(value)
     const cid = findCid(value)
-    if (value.try("_path").toJS() === "conn") {
-      console.log(ts, duration, uid, cid)
-    }
     if (
       ts &&
       !ts.isUnset() &&
@@ -58,15 +55,4 @@ export function findCommunityConnArgs(value: zed.Value): CommunityConnArgs {
     }
   }
   return null
-}
-
-export function isSuricataAlert(value: zed.Value) {
-  if (value instanceof zed.Record) {
-    return (
-      value.has("event_type", zed.TypeString) &&
-      value.has("ts", zed.TypeTime) &&
-      value.has("community_id", zed.TypeString)
-    )
-  }
-  return false
 }

@@ -10,15 +10,17 @@ import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
 import firstLast from "./util/firstLast"
 import formatDur from "./util/formatDur"
-import {SURICATA_CONNS} from "src/js/api/correlations/run-suricata-conns"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
+import {SURICATA_CONNS} from "src/plugins/zui-suricata"
+
+const id = SURICATA_CONNS
 
 export default memo(function RelatedConns() {
-  const records = useSelector(Results.getValues(SURICATA_CONNS))
-  const isFetching = useSelector(Results.isFetching(SURICATA_CONNS))
-  const query = useSelector(Results.getQuery(SURICATA_CONNS))
-  const perPage = useSelector(Results.getPerPage(SURICATA_CONNS))
+  const records = useSelector(Results.getValues(id))
+  const isFetching = useSelector(Results.isFetching(id))
+  const query = useSelector(Results.getQuery(id))
+  const perPage = useSelector(Results.getPerPage(id))
   const events = useMemo(() => records.map(BrimEvent.build), [records])
   const [first, last] = firstLast<BrimEventInterface>(events)
   const data = [

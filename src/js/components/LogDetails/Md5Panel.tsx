@@ -6,12 +6,7 @@ import {AppDispatch} from "src/js/state/types"
 import {zed} from "@brimdata/zealot"
 import InlineTableLoading from "../InlineTableLoading"
 import HorizontalTable from "../Tables/HorizontalTable"
-import {
-  FILENAME_CORRELATION,
-  MD5_CORRELATION,
-  RX_HOSTS_CORRELATION,
-  TX_HOSTS_CORRELATION,
-} from "src/js/api/correlations/run-md5"
+import * as md5 from "src/plugins/zui-zeek/md5-correlations"
 import Results from "src/js/state/Results"
 
 export const Md5Panel = () => {
@@ -25,23 +20,23 @@ export const Md5Panel = () => {
     <section className="hash-correlation detail-panel">
       <PanelHeading isLoading={false}>Md5 Correlation</PanelHeading>
       <AsyncTable
-        resultId={MD5_CORRELATION}
+        resultId={md5.md5Correlation.id}
         onRightClick={onRightClick}
         expect={1}
       />
       <AsyncTable
-        resultId={FILENAME_CORRELATION}
+        resultId={md5.filenameCorrelation.id}
         onRightClick={onRightClick}
         expect={1}
       />
       <div className="two-column">
         <AsyncTable
-          resultId={TX_HOSTS_CORRELATION}
+          resultId={md5.txHostsCorrelation.id}
           onRightClick={onRightClick}
           expect={5}
         />
         <AsyncTable
-          resultId={RX_HOSTS_CORRELATION}
+          resultId={md5.rxHostsCorrelation.id}
           onRightClick={onRightClick}
           expect={5}
         />
@@ -61,6 +56,8 @@ function AsyncTable({resultId, expect, onRightClick}: Props2) {
   const isFetching = useSelector(Results.isFetching(resultId))
   if (logs.length === 0 && isFetching) {
     return <InlineTableLoading rows={expect} />
+  } else if (logs.length === 0) {
+    return null
   } else {
     return (
       <HorizontalTable

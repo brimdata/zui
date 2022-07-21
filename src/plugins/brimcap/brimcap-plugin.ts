@@ -6,14 +6,14 @@ import fsExtra, {pathExistsSync} from "fs-extra"
 import {compact} from "lodash"
 import path, {join} from "path"
 import errors from "src/js/errors"
-import {fetchCorrelation} from "src/ppl/detail/flows/fetch"
 import BrimApi from "src/js/api"
 import {IngestParams} from "src/js/brim/ingest/getParams"
 import open from "src/js/lib/open"
 import {toNodeReadable} from "src/js/lib/response"
 import {Config} from "src/js/state/Configs"
-import {AppDispatch} from "src/js/state/types"
 import BrimcapCLI, {analyzeOptions, searchOptions} from "./brimcap-cli"
+import {findConnLog} from "../zui-zeek/queries"
+import {findUid} from "../zui-zeek/util"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -84,12 +84,15 @@ export default class BrimcapPlugin {
     this.updateSuricata()
   }
 
-  private async tryConn(detail: zed.Record, eventId: string) {
-    // @ts-ignore dispatch is private
-    const dispatch = this.api.dispatch as AppDispatch
-    const uidRecords = await dispatch(fetchCorrelation(detail, eventId))
-
-    return uidRecords.find((log) => log.try("_path")?.toString() === "conn")
+  private async tryConn(detail: zed.Record, queryId: string) {
+    const uid = findUid(detail)
+    const pool = this.api.current.poolName
+    const res = await this.api.query(findConnLog(pool, uid), {
+      id: `brimcap/try-conn-${queryId}`,
+    })
+    const [conn] = await res.zed()
+    console.log(conn)
+    return conn as zed.Record | null
   }
 
   private setupBrimcapButtons() {

@@ -14,14 +14,15 @@ import EventLimit from "./EventLimit"
 import {showContextMenu} from "src/js/lib/System"
 import {zed} from "@brimdata/zealot"
 import Results from "src/js/state/Results"
-import {ZEEK_CORRELATION} from "src/js/api/correlations/run-zeek-correlation"
+import {uidCorrelation} from "src/plugins/zui-zeek/uid-correlations"
+
+const id = uidCorrelation.id
 
 export default memo(function UidPanel({record}: {record: zed.Record}) {
-  const isLoading =
-    useSelector(Results.getStatus(ZEEK_CORRELATION)) === "FETCHING"
-  const logs = useSelector(Results.getValues(ZEEK_CORRELATION)) as zed.Record[]
-  const query = useSelector(Results.getQuery(ZEEK_CORRELATION))
-  const perPage = useSelector(Results.getPerPage(ZEEK_CORRELATION))
+  const isLoading = useSelector(Results.getStatus(id)) === "FETCHING"
+  const logs = useSelector(Results.getValues(id)) as zed.Record[]
+  const query = useSelector(Results.getQuery(id))
+  const perPage = useSelector(Results.getPerPage(id))
 
   const events = useMemo(() => {
     return sort(logs).map(BrimEvent.build)
