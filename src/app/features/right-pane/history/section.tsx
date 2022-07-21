@@ -9,6 +9,7 @@ import {lakeQueryPath} from "../../../router/utils/paths"
 import {getQuerySource} from "../../../../js/state/Queries/flows/get-query-source"
 import getQueryById from "../../../query-home/flows/get-query-by-id"
 import QueryVersions from "src/js/state/QueryVersions"
+import {formatDistanceToNowStrict} from "date-fns"
 
 const BG = styled.div`
   padding: 6px 0;
@@ -43,7 +44,7 @@ export function HistorySection() {
         }
         return {
           text,
-          timestamp: entryVersion?.ts,
+          timestamp: formatDistanceToNowStrict(new Date(entryVersion?.ts)),
           type: type as EntryType,
           onClick: () =>
             dispatch(tabHistory.push(lakeQueryPath(queryId, lakeId, version))),

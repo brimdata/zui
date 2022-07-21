@@ -96,7 +96,7 @@ const useForcedRenderInterval = (interval = 60000) => {
   }, [renderTrigger])
 }
 
-const FormattedTime = ({ts}: {ts: string}) => {
+export const FormattedTime = ({ts}: {ts: string}) => {
   useForcedRenderInterval()
 
   const duration = formatDistanceToNowStrict(new Date(ts))
