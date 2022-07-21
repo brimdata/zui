@@ -14,7 +14,6 @@ import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import SessionQueries from "src/js/state/SessionQueries"
 import SessionHistories from "src/js/state/SessionHistories"
-import QueryVersions from "src/js/state/QueryVersions"
 
 const PageWrap = styled.div`
   width: 100%;
