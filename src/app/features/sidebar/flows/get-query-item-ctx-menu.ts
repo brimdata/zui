@@ -13,7 +13,6 @@ import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
 import Results from "src/js/state/Results"
 import Current from "src/js/state/Current"
-import {last} from "lodash"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers, lakeId}) =>
@@ -24,11 +23,13 @@ const getQueryItemCtxMenu =
       tree.getSelectedIds().length > 1 &&
       !!tree.getSelectedIds().find((id) => id === data.id)
     const isRemoteItem = dispatch(isRemoteLib([id]))
-    const latestVersion = last(QueryVersions.getByQueryId(id)(getState()))
     const query = Current.getQueryById(id)(getState())
+    const latestVersion = query.latestVersion()
 
     const runQuery = () => {
-      dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
+      dispatch(
+        Tabs.activateUrl(lakeQueryPath(id, lakeId, latestVersion.version))
+      )
       dispatch(Results.fetchFirstPage(query.toString()))
     }
 

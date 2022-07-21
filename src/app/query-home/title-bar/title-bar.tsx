@@ -1,6 +1,20 @@
-import React from "react"
+import React, {useEffect, useLayoutEffect, useRef, useState} from "react"
 import Icon from "src/app/core/icon-temp"
 import styled from "styled-components"
+import {useSelector} from "react-redux"
+import Current from "src/js/state/Current"
+import AutosizeInput from "react-input-autosize"
+import {useDispatch} from "../../core/state"
+import tabHistory from "../../router/tab-history"
+import {getQuerySource} from "../../../js/state/Queries/flows/get-query-source"
+import useEnterKey from "../../../js/components/hooks/useEnterKey"
+import useEscapeKey from "../../../js/components/hooks/useEscapeKey"
+import {cssVar} from "../../../js/lib/cssVar"
+import {updateQuery} from "../../../js/state/Queries/flows/update-query"
+import Queries from "src/js/state/Queries"
+import {lakeQueryPath} from "../../router/utils/paths"
+import SessionHistories from "src/js/state/SessionHistories"
+import BrimTooltip from "src/js/components/BrimTooltip"
 
 const BG = styled.header`
   flex-shrink: 0;
@@ -65,15 +79,117 @@ const TitleButton = styled(Button)`
   padding: 0 4px;
 `
 
+const StyledTitleWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+`
+
+const StyledAnchor = styled.a<{isPrimary?: boolean; isIndented?: boolean}>`
+  ${(props) => props.theme.typography.labelNormal}
+  text-decoration: underline;
+  color: ${(p) => (p.isPrimary ? "var(--havelock)" : "var(--slate)")};
+  margin-left: ${(p) => (p.isIndented ? "10px" : "0")};
+`
+
+const TitleInput = ({onCancel, onSubmit}) => {
+  const inputRef = useRef(null)
+  const query = useSelector(Current.getQuery)
+  const [queryTitle, setQueryTitle] = useState(query?.name)
+
+  const handleEdit = () => {
+    if (!queryTitle) onCancel()
+    else onSubmit(queryTitle)
+  }
+
+  useEnterKey(() => {
+    handleEdit()
+  })
+  useEscapeKey(() => {
+    onCancel()
+  })
+  useEffect(() => {
+    setQueryTitle(query?.name)
+  }, [query])
+  useLayoutEffect(() => {
+    inputRef.current && inputRef.current.select()
+  }, [])
+
+  return (
+    <StyledTitleWrapper>
+      <AutosizeInput
+        ref={inputRef}
+        onChange={(e) => setQueryTitle(e.target.value)}
+        value={queryTitle || ""}
+        style={{
+          overflow: "hidden",
+          background: cssVar("--input-background"),
+          minWidth: "120px",
+          borderRadius: "3px",
+          padding: "2px 6px",
+          margin: "-2px 0 1px -6px",
+        }}
+        inputStyle={{
+          background: "transparent",
+          margin: 0,
+          padding: 0,
+          fontWeight: 700,
+          fontSize: "20px",
+          letterSpacing: 0,
+          lineHeight: "24px",
+          display: "block",
+          outline: "none",
+          border: "none",
+        }}
+      />
+      <StyledAnchor isPrimary isIndented onClick={handleEdit}>
+        Save
+      </StyledAnchor>
+      <StyledAnchor isIndented onClick={onCancel}>
+        Cancel
+      </StyledAnchor>
+    </StyledTitleWrapper>
+  )
+}
+
 export function TitleBar() {
+  const dispatch = useDispatch()
+  const query = useSelector(Current.getQuery)
+  const lakeId = useSelector(Current.getLakeId)
+  const queryType = dispatch(getQuerySource(query.id))
+  const [isEditing, setIsEditing] = useState(false)
+
+  const isSession = queryType === "session"
+  const title = isSession ? "TODO: dropdown here" : query.name
+
+  useEffect(() => setIsEditing(false), [query?.id])
+
+  const onSubmit = (newTitle) => {
+    setIsEditing(false)
+    if (newTitle !== "") {
+      if (isSession) {
+        const q = dispatch(
+          Queries.create({...query.latestVersion(), name: newTitle})
+        )
+        dispatch(
+          tabHistory.push(lakeQueryPath(q.id, lakeId, q.latestVersionId()))
+        )
+        dispatch(SessionHistories.push(q.id))
+      } else {
+        const newQuery = {...query.serialize(), name: newTitle}
+        dispatch(updateQuery(query, newQuery))
+      }
+    }
+  }
+
   return (
     <BG>
       <Actions>
         <Nav>
-          <Button>
+          <Button onClick={() => dispatch(tabHistory.goBack())}>
             <Icon name="left-arrow" size={18} />
           </Button>
-          <Button>
+          <Button onClick={() => dispatch(tabHistory.goForward())}>
             <Icon name="right-arrow" size={18} />
           </Button>
         </Nav>
@@ -83,12 +199,36 @@ export function TitleBar() {
       </Actions>
 
       <TitleButton>
-        <Title>Total Prices for Vendors</Title>
+        {isEditing ? (
+          <TitleInput
+            onSubmit={onSubmit}
+            onCancel={() => setIsEditing(false)}
+          />
+        ) : (
+          <>
+            <Title
+              data-tip="query-title"
+              data-for="query-title"
+              data-place="bottom"
+              data-effect="solid"
+              data-delay-show={500}
+              onClick={() => !query.isReadOnly && setIsEditing(true)}
+            >
+              {title}
+            </Title>
+            {!isSession && (
+              <BrimTooltip id="query-title" className="brim-tooltip-show-hover">
+                {query?.name}
+              </BrimTooltip>
+            )}
+          </>
+        )}
+
         <Icon name="chevron-down" size={16} />
       </TitleButton>
 
       <Actions>
-        <Button>
+        <Button onClick={() => !query.isReadOnly && setIsEditing(true)}>
           <Icon name="plus" size={18} />
         </Button>
       </Actions>

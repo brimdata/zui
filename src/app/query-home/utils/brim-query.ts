@@ -1,13 +1,11 @@
 import {Query} from "src/js/state/Queries/types"
-import {isEmpty, isNumber, last} from "lodash"
+import {isEmpty, last} from "lodash"
 import {QueryPin, QueryPinInterface} from "../../../js/state/Editor/types"
 import {nanoid} from "@reduxjs/toolkit"
 import {parseAst} from "@brimdata/zealot"
 import buildPin from "src/js/state/Editor/models/build-pin"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import brim from "src/js/brim"
-export type PinType = "from" | "filter"
-export const DRAFT_QUERY_NAME = "Draft Query"
 
 export class BrimQuery implements Query {
   id: string
@@ -16,8 +14,8 @@ export class BrimQuery implements Query {
   tags?: string[]
   isReadOnly?: boolean
   current: QueryVersion
+  currentVersionId: string
   versions: QueryVersion[]
-  head?: number
 
   constructor(raw: Query, versions: QueryVersion[], current?: string) {
     this.id = raw.id
@@ -26,6 +24,7 @@ export class BrimQuery implements Query {
     this.description = raw.description || ""
     this.tags = raw.tags || []
     this.isReadOnly = raw.isReadOnly || false
+    this.currentVersionId = current
     // default current to latest version if none supplied
     this.current = current
       ? versions?.find((v) => v.version === current)
@@ -37,6 +36,10 @@ export class BrimQuery implements Query {
   }
   get pins() {
     return this.current?.pins ?? []
+  }
+
+  hasVersion(version: string): boolean {
+    return !!this.versions?.map((v) => v.version).includes(version)
   }
 
   newVersion(value?: string, pins?: QueryPin[]) {
@@ -61,6 +64,10 @@ export class BrimQuery implements Query {
 
   latestVersion(): QueryVersion {
     return last(this.versions)
+  }
+
+  latestVersionId(): string {
+    return this.latestVersion().version
   }
 
   getPoolName() {
@@ -97,22 +104,25 @@ export class BrimQuery implements Query {
     }
   }
 
-  toString(): string {
+  static versionToZed(version: QueryVersion): string {
     let pinS = []
-    if (!isEmpty(this.current?.pins))
-      pinS = this.current.pins
+    if (!isEmpty(version?.pins))
+      pinS = version.pins
         .filter((p) => !p.disabled)
         .map<QueryPinInterface>(buildPin)
         .map((p) => p.toZed())
     let s = pinS
-      .concat(this.current?.value ?? "")
+      .concat(version?.value ?? "")
       .filter((s) => s.trim() !== "")
       .join(" | ")
       .trim()
 
     if (isEmpty(s)) s = "*"
-    if (isNumber(this.head)) s += ` | head ${this.head}`
 
     return s
+  }
+
+  toString(): string {
+    return BrimQuery.versionToZed(this.current)
   }
 }

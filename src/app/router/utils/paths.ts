@@ -17,10 +17,9 @@ export const lakePoolPath = (poolId: string, lakeId: string) => {
 export function lakeQueryPath(
   queryId: string,
   lakeId: string,
-  version?: string
+  version: string
 ) {
-  const path = `${lakePath(lakeId)}/queries/${queryId}`
-  return version ? `${path}/versions/${version}` : path
+  return `${lakePath(lakeId)}/queries/${queryId}/versions/${version}`
 }
 
 export function releaseNotesPath(lakeId) {

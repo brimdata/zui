@@ -10,7 +10,6 @@ import PluginStorage, {PluginStorageState} from "./PluginStorage"
 import Queries from "./Queries"
 import {QueriesState} from "./Queries/types"
 import RemoteQueries from "./RemoteQueries"
-import {DraftQueriesState} from "./DraftQueries"
 import QueryVersions from "./QueryVersions"
 import {QueryVersionsState} from "src/js/state/QueryVersions/types"
 
@@ -24,7 +23,6 @@ export type GlobalState = {
   queries: QueriesState
   queryVersions: QueryVersionsState
   remoteQueries: QueriesState
-  draftQueries: DraftQueriesState
 }
 
 export default combineReducers<any, any>({

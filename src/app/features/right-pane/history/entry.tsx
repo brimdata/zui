@@ -37,10 +37,12 @@ const Timestamp = styled.p`
   opacity: 0.4;
 `
 
+export type EntryType = "outdated" | "latest" | "anonymous"
 type Props = {
   text: string
   timestamp: string
-  type: "outdated" | "latest" | "anonymous"
+  type: EntryType
+  onClick: () => void
 }
 
 function getColor(props: Props) {

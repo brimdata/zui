@@ -3,9 +3,10 @@ import submitSearch from "src/app/query-home/flows/submit-search"
 import {lakeQueryPath} from "src/app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
-import Queries from "src/js/state/Queries"
-import Tabs from "src/js/state/Tabs"
+import SessionHistories from "src/js/state/SessionHistories"
+import SessionQueries from "src/js/state/SessionQueries"
 import {Thunk} from "src/js/state/types"
+import tabHistory from "../../../router/tab-history"
 
 export function poolClick(pool: Pool): Thunk {
   return (dispatch, getState) => {
@@ -15,10 +16,15 @@ export function poolClick(pool: Pool): Thunk {
       dispatch(Editor.setFrom(pool.name))
       dispatch(submitSearch())
     } else {
-      const query = dispatch(
-        Queries.create({pins: [{type: "from", value: pool.name}]})
+      const newQuery = dispatch(
+        SessionQueries.create({
+          pins: [{type: "from", value: pool.name}],
+        })
       )
-      dispatch(Tabs.previewUrl(lakeQueryPath(query.id, lakeId)))
+      const versionId = newQuery.latestVersionId()
+
+      dispatch(SessionHistories.push(newQuery.id, versionId))
+      dispatch(tabHistory.push(lakeQueryPath(newQuery.id, lakeId, versionId)))
     }
   }
 }

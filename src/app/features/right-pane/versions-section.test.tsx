@@ -36,7 +36,7 @@ beforeEach(() => {
   brim.dispatch(
     QueryVersions.add({queryId: testQueryId, version: testVersion2})
   )
-  brim.navTo(lakeQueryPath(testQueryId, "testLakeId"))
+  brim.navTo(lakeQueryPath(testQueryId, "testLakeId", testVersion2.version))
   render(<VersionsSection />, {store: brim.store})
 })
 

@@ -10,9 +10,10 @@ import tabHistory from "../router/tab-history"
 import {lakeQueryPath} from "../router/utils/paths"
 import SearchArea from "./search-area"
 import RightPane from "../features/right-pane"
-import Queries from "src/js/state/Queries"
 import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
+import SessionQueries from "src/js/state/SessionQueries"
+import SessionHistories from "src/js/state/SessionHistories"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -60,20 +61,29 @@ const QueryHome = () => {
   const lakeId = useSelector(Current.getLakeId)
   const dispatch = useDispatch()
 
+  // TODO: Session Flow - need to handle query removal cases. Current behavior will orphan the
+  // entire session...
   if (!query)
     return (
       <PageWrap>
         <StyledHeader>Query Removed</StyledHeader>
         <StyledSubHeader>
           The query this tab was previously viewing has been removed. Use the
-          left sidebar to open an existing query, or begin a new draft.
+          left sidebar to open an existing query, or begin a new session.
         </StyledSubHeader>
         <ToolbarButton
           onClick={() => {
-            const {id} = dispatch(Queries.create())
-            dispatch(tabHistory.replace(lakeQueryPath(id, lakeId)))
+            const q = dispatch(
+              SessionQueries.create({pins: [{type: "from", value: ""}]})
+            )
+            dispatch(
+              tabHistory.replace(
+                lakeQueryPath(q.id, lakeId, q.latestVersionId())
+              )
+            )
+            dispatch(SessionHistories.push(q.id))
           }}
-          text={"New Query"}
+          text={"New Session"}
         />
       </PageWrap>
     )

@@ -53,7 +53,9 @@ const PoolHome = () => {
     const query = dispatch(
       Queries.create({pins: [{type: "from", value: pool.name}]})
     )
-    dispatch(Tabs.create(lakeQueryPath(query.id, lakeId)))
+    dispatch(
+      Tabs.create(lakeQueryPath(query.id, lakeId, query.latestVersionId()))
+    )
   }
   const keys = pool.data.layout.keys.map((k) => k.join("."))
 

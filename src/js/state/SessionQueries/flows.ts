@@ -3,33 +3,29 @@ import {Query} from "src/js/state/Queries/types"
 import {Thunk} from "src/js/state/types"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
-import actions from "./actions"
-import Queries from "."
-import {flattenQueryTree, getNextQueryCount} from "./helpers"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import SessionQueries from "."
+import {getNextQueryCount} from "../Queries/helpers"
+import Current from "../Current"
 
-export function create(
-  attrs: Partial<QueryVersion & {name?: string}> = {}
-): Thunk<BrimQuery> {
-  return (dispatch, getState) => {
-    const queries = flattenQueryTree(Queries.raw(getState()), false).map(
-      (n) => n.model
-    )
-    const {name, ...versionAttrs} = attrs
+export const create =
+  (attrs: Partial<QueryVersion> = {}): Thunk<BrimQuery> =>
+  (dispatch, getState) => {
+    const queryId = Current.getTabId(getState())
+    const queries = Object.values(SessionQueries.raw(getState()))
     const query: Query = {
-      id: nanoid(),
-      name: name || `Query #${getNextQueryCount(queries)}`,
+      id: queryId,
+      name: `Session #${getNextQueryCount(queries)}`,
     }
     const version: QueryVersion = {
       value: "",
-      ...versionAttrs,
-      version: nanoid(),
+      ...attrs,
       ts: new Date().toISOString(),
+      version: nanoid(),
     }
-    dispatch(actions.addItem(query))
+    dispatch(SessionQueries.set(query))
     dispatch(QueryVersions.add({queryId: query.id, version}))
     const versions = QueryVersions.getByQueryId(query.id)(getState())
 
     return new BrimQuery(query, versions)
   }
-}
