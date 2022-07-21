@@ -15,3 +15,16 @@ export const push =
     }
     dispatch(SessionHistories.pushById({sessionId, entry}))
   }
+
+export const replace =
+  (queryId: string, versionId?: string): Thunk =>
+  (dispatch, getState) => {
+    const sessionId = Current.getTabId(getState())
+    const version =
+      versionId || dispatch(getQueryById(queryId))?.latestVersionId() || ""
+    const entry = {
+      queryId,
+      version,
+    }
+    dispatch(SessionHistories.replaceById({sessionId, entry}))
+  }

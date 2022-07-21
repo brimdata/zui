@@ -5,7 +5,7 @@ import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import actions from "./actions"
 import Queries from "."
-import {flattenQueryTree, getNextQueryCount} from "./helpers"
+import {flattenQueryTree, getNextCount} from "./helpers"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 
 export function create(
@@ -18,7 +18,7 @@ export function create(
     const {name, ...versionAttrs} = attrs
     const query: Query = {
       id: nanoid(),
-      name: name || `Query #${getNextQueryCount(queries)}`,
+      name: name || `Query #${getNextCount(queries, "Query")}`,
     }
     const version: QueryVersion = {
       value: "",

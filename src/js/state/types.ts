@@ -22,6 +22,7 @@ import {ToolbarsState} from "./Toolbars"
 import {LakeStatusesState} from "./LakeStatuses/types"
 import {SessionQueriesState} from "./SessionQueries/types"
 import {QueryVersionsState} from "./QueryVersions/types"
+import {SessionHistoriesState} from "./SessionHistories/types"
 
 export type ThunkExtraArg = {
   dispatch: AppDispatch
@@ -56,6 +57,7 @@ export type State = {
   remoteQueries: QueriesState
   queryVersions: QueryVersionsState
   sessionQueries: SessionQueriesState
+  sessionHistories: SessionHistoriesState
   systemTest: SystemTestState
   toolbars: ToolbarsState
 }

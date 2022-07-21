@@ -5,7 +5,7 @@ import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 import SessionQueries from "."
-import {getNextQueryCount} from "../Queries/helpers"
+import {getNextCount} from "../Queries/helpers"
 import Current from "../Current"
 
 export const create =
@@ -15,7 +15,7 @@ export const create =
     const queries = Object.values(SessionQueries.raw(getState()))
     const query: Query = {
       id: queryId,
-      name: `Session #${getNextQueryCount(queries)}`,
+      name: `Session #${getNextCount(queries, "Session")}`,
     }
     const version: QueryVersion = {
       value: "",
@@ -23,7 +23,10 @@ export const create =
       ts: new Date().toISOString(),
       version: nanoid(),
     }
-    dispatch(SessionQueries.set(query))
+
+    const exists = queries.find((q) => q.id === queryId)
+    !exists && dispatch(SessionQueries.set(query))
+
     dispatch(QueryVersions.add({queryId: query.id, version}))
     const versions = QueryVersions.getByQueryId(query.id)(getState())
 

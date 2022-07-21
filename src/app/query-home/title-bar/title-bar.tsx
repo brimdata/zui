@@ -15,6 +15,14 @@ import Queries from "src/js/state/Queries"
 import {lakeQueryPath} from "../../router/utils/paths"
 import SessionHistories from "src/js/state/SessionHistories"
 import BrimTooltip from "src/js/components/BrimTooltip"
+import {showContextMenu} from "../../../js/lib/System"
+import getQueryHeaderMenu from "../toolbar/flows/get-query-header-menu"
+import getQueryListMenu from "../toolbar/flows/get-query-list-menu"
+import Layout from "../../../js/state/Layout"
+import QueryVersions from "../../../js/state/QueryVersions"
+import {getTabId} from "../../../js/state/Current/selectors"
+import {cloneDeep} from "lodash"
+import {nanoid} from "@reduxjs/toolkit"
 
 const BG = styled.header`
   flex-shrink: 0;
@@ -124,7 +132,6 @@ const TitleInput = ({onCancel, onSubmit}) => {
         style={{
           overflow: "hidden",
           background: cssVar("--input-background"),
-          minWidth: "120px",
           borderRadius: "3px",
           padding: "2px 6px",
           margin: "-2px 0 1px -6px",
@@ -134,7 +141,7 @@ const TitleInput = ({onCancel, onSubmit}) => {
           margin: 0,
           padding: 0,
           fontWeight: 700,
-          fontSize: "20px",
+          fontSize: "14px",
           letterSpacing: 0,
           lineHeight: "24px",
           display: "block",
@@ -155,14 +162,29 @@ const TitleInput = ({onCancel, onSubmit}) => {
 export function TitleBar() {
   const dispatch = useDispatch()
   const query = useSelector(Current.getQuery)
+  const currentVersion = useSelector(Current.getVersion)
   const lakeId = useSelector(Current.getLakeId)
   const queryType = dispatch(getQuerySource(query.id))
+  const tabId = useSelector(getTabId)
   const [isEditing, setIsEditing] = useState(false)
-
   const isSession = queryType === "session"
-  const title = isSession ? "TODO: dropdown here" : query.name
+  const isModified =
+    !isSession &&
+    currentVersion.version !== query.latestVersionId() &&
+    !query.hasVersion(currentVersion.version)
+  const isOutdated =
+    !isModified &&
+    currentVersion.version !== query.latestVersionId() &&
+    query.hasVersion(currentVersion.version)
 
   useEffect(() => setIsEditing(false), [query?.id])
+
+  const getTitle = () => {
+    if (isSession) return "Select Query"
+    if (isModified) return <em>{query.name}*</em>
+    if (isOutdated) return `${query.name} (outdated)`
+    return query.name
+  }
 
   const onSubmit = (newTitle) => {
     setIsEditing(false)
@@ -182,6 +204,40 @@ export function TitleBar() {
     }
   }
 
+  const openOpsMenu = () => {
+    if (isEditing || queryType === "session") return
+    showContextMenu(
+      dispatch(getQueryHeaderMenu({handleRename: () => setIsEditing(true)}))
+    )
+  }
+  const openQueriesList = () => {
+    if (isEditing) return
+    showContextMenu(dispatch(getQueryListMenu()))
+  }
+
+  const doUpdate = (id, isPush = true) => {
+    const versionCopy = {...cloneDeep(currentVersion), version: nanoid()}
+    dispatch(
+      QueryVersions.add({
+        queryId: id,
+        version: versionCopy,
+      })
+    )
+
+    if (isPush) {
+      dispatch(SessionHistories.push(id, versionCopy.version))
+      dispatch(tabHistory.push(lakeQueryPath(id, lakeId, versionCopy.version)))
+    } else {
+      dispatch(SessionHistories.replace(id, versionCopy.version))
+      dispatch(
+        tabHistory.replace(lakeQueryPath(id, lakeId, versionCopy.version))
+      )
+    }
+  }
+
+  const handleUpdate = () => doUpdate(query.id, false)
+  const handleDetach = () => doUpdate(tabId)
+
   return (
     <BG>
       <Actions>
@@ -193,12 +249,12 @@ export function TitleBar() {
             <Icon name="right-arrow" size={18} />
           </Button>
         </Nav>
-        <Button>
+        <Button onClick={() => dispatch(Layout.setCurrentPaneName("history"))}>
           <Icon name="history" size={18} />
         </Button>
       </Actions>
 
-      <TitleButton>
+      <TitleButton onContextMenu={openOpsMenu} onClick={openQueriesList}>
         {isEditing ? (
           <TitleInput
             onSubmit={onSubmit}
@@ -211,10 +267,9 @@ export function TitleBar() {
               data-for="query-title"
               data-place="bottom"
               data-effect="solid"
-              data-delay-show={500}
-              onClick={() => !query.isReadOnly && setIsEditing(true)}
+              data-delay-show={1000}
             >
-              {title}
+              {getTitle()}
             </Title>
             {!isSession && (
               <BrimTooltip id="query-title" className="brim-tooltip-show-hover">
@@ -223,14 +278,23 @@ export function TitleBar() {
             )}
           </>
         )}
-
         <Icon name="chevron-down" size={16} />
       </TitleButton>
 
       <Actions>
-        <Button onClick={() => !query.isReadOnly && setIsEditing(true)}>
-          <Icon name="plus" size={18} />
-        </Button>
+        {isSession ? (
+          <Button onClick={() => !query.isReadOnly && setIsEditing(true)}>
+            <Icon name="plus" size={18} />
+          </Button>
+        ) : (
+          <>
+            {/*TODO: Session Flow - use better icons*/}
+            <Button onClick={handleDetach}>💔</Button>
+            <Button onClick={handleUpdate}>
+              {query.isReadOnly ? "🔒" : "💾"}
+            </Button>
+          </>
+        )}
       </Actions>
     </BG>
   )

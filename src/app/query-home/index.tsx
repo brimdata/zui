@@ -14,6 +14,7 @@ import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import SessionQueries from "src/js/state/SessionQueries"
 import SessionHistories from "src/js/state/SessionHistories"
+import QueryVersions from "src/js/state/QueryVersions"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -60,6 +61,7 @@ const QueryHome = () => {
   const query = useSelector(Current.getQuery)
   const lakeId = useSelector(Current.getLakeId)
   const dispatch = useDispatch()
+  const tabId = useSelector(Current.getTabId)
 
   // TODO: Session Flow - need to handle query removal cases. Current behavior will orphan the
   // entire session...
@@ -73,17 +75,18 @@ const QueryHome = () => {
         </StyledSubHeader>
         <ToolbarButton
           onClick={() => {
+            // TODO: Session Flow - create new session if not already exist?
             const q = dispatch(
               SessionQueries.create({pins: [{type: "from", value: ""}]})
             )
             dispatch(
               tabHistory.replace(
-                lakeQueryPath(q.id, lakeId, q.latestVersionId())
+                lakeQueryPath(tabId, lakeId, q.latestVersionId())
               )
             )
             dispatch(SessionHistories.push(q.id))
           }}
-          text={"New Session"}
+          text={"Back to Session"}
         />
       </PageWrap>
     )

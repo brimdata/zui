@@ -5,6 +5,16 @@ const slice = createSlice({
   name: "$sessionHistories",
   initialState: {},
   reducers: {
+    replaceById(
+      s,
+      a: PayloadAction<{sessionId: string; entry: SessionHistoryEntry}>
+    ) {
+      if (!s[a.payload.sessionId]) s[a.payload.sessionId] = [a.payload.entry]
+      else {
+        s[a.payload.sessionId].pop()
+        s[a.payload.sessionId].push(a.payload.entry)
+      }
+    },
     pushById(
       s,
       a: PayloadAction<{sessionId: string; entry: SessionHistoryEntry}>

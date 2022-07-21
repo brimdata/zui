@@ -20,6 +20,7 @@ import {
   SessionHistoriesState,
   SessionHistoryEntry,
 } from "../SessionHistories/types"
+import {QueryVersion} from "../QueryVersions/types"
 
 type Id = string | null
 
@@ -68,6 +69,15 @@ export const getQuery = (state: State): BrimQuery | null => {
   const {queryId, version} = getQueryLocationData(state)
   if (!queryId) return null
   return getQueryById(queryId, version)(state)
+}
+
+export const getVersion = (state: State): QueryVersion => {
+  const {queryId, version} = getQueryLocationData(state)
+  const tabId = getTabId(state)
+  return (
+    QueryVersions.getByVersion(queryId, version)(state) ||
+    QueryVersions.getByVersion(tabId, version)(state)
+  )
 }
 
 export const getPoolId = (state) => {

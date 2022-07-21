@@ -14,6 +14,8 @@ const WINDOW_PERSIST: StateKey[] = [
   "queries",
   "queryVersions",
   "tabHistories",
+  "sessionHistories",
+  "sessionQueries",
   "tabs",
   "lakes",
 ]

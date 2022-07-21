@@ -14,7 +14,6 @@ export class BrimQuery implements Query {
   tags?: string[]
   isReadOnly?: boolean
   current: QueryVersion
-  currentVersionId: string
   versions: QueryVersion[]
 
   constructor(raw: Query, versions: QueryVersion[], current?: string) {
@@ -24,7 +23,6 @@ export class BrimQuery implements Query {
     this.description = raw.description || ""
     this.tags = raw.tags || []
     this.isReadOnly = raw.isReadOnly || false
-    this.currentVersionId = current
     // default current to latest version if none supplied
     this.current = current
       ? versions?.find((v) => v.version === current)

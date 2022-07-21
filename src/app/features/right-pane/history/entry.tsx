@@ -58,7 +58,7 @@ function getColor(props: Props) {
 
 export function HistoryEntry(props: Props) {
   return (
-    <Wrap>
+    <Wrap onClick={props.onClick}>
       <BG className={props.type}>
         <Timeline color={getColor(props)} />
         <Text>{props.text}</Text>
