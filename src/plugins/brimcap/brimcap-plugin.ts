@@ -91,7 +91,6 @@ export default class BrimcapPlugin {
       id: `brimcap/try-conn-${queryId}`,
     })
     const [conn] = await res.zed()
-    console.log(conn)
     return conn as zed.Record | null
   }
 
