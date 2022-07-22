@@ -1,6 +1,5 @@
 import {useSelector} from "react-redux"
-import {useEffect, useRef, useState} from "react"
-import onIdle from "on-idle"
+import {startTransition, useEffect, useRef, useState} from "react"
 
 import Tabs from "../../state/Tabs"
 import {ipcRenderer} from "electron"
@@ -42,7 +41,9 @@ export default function (count: number, calcWidths: Function) {
 
     onTabClick(id: string) {
       setActive(id)
-      onIdle(() => dispatch(Tabs.activate(id)))
+      startTransition(() => {
+        dispatch(Tabs.activate(id))
+      })
     },
 
     onMouseLeave() {

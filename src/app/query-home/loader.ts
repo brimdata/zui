@@ -6,6 +6,7 @@ import Results from "src/js/state/Results"
 import {DRAFT_QUERY_NAME} from "./utils/brim-query"
 import {startTransition} from "react"
 import {getQuerySource} from "src/js/state/Queries/flows/get-query-source"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 export function loadRoute(location) {
   return (dispatch) => {
@@ -41,7 +42,7 @@ function syncEditor(dispatch, getState) {
 
 function fetchData(location) {
   return (dispatch, getState) => {
-    const key = Results.getKey(getState())
+    const key = Results.getKey(MAIN_RESULTS)(getState())
     const query = Current.getQuery(getState())
 
     if (key === location.key) return

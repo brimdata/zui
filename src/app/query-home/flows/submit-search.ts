@@ -5,14 +5,20 @@ import {saveQueryVersion} from "../../../js/state/QueryVersions/flows/save-query
 import Results from "src/js/state/Results"
 import tabHistory from "../../router/tab-history"
 import {lakeQueryPath} from "../../router/utils/paths"
+import {Thunk} from "src/js/state/types"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 type SaveOpts = {history: boolean; version: boolean}
 
 const submitSearch =
-  (save: SaveOpts = {history: true, version: true}, _ts: Date = new Date()) =>
+  (
+    save: SaveOpts = {history: true, version: true},
+    _ts: Date = new Date()
+  ): Thunk =>
   (dispatch, getState) => {
     dispatch(Notice.dismiss())
-    dispatch(Results.error(null))
+    const tabId = Current.getTabId(getState())
+    dispatch(Results.error({id: MAIN_RESULTS, error: null, tabId}))
     const lakeId = Current.getLakeId(getState())
     let query = Current.getQuery(getState())
     const value = Editor.getValue(getState())
@@ -20,7 +26,7 @@ const submitSearch =
     query = query.newVersion(value, pins)
     const error = query.checkSyntax()
     if (error) {
-      dispatch(Results.error(error))
+      dispatch(Results.error({id: MAIN_RESULTS, tabId, error}))
       return
     }
     if (save.version && !query.isReadOnly) {

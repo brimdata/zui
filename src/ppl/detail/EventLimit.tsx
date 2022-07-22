@@ -4,15 +4,15 @@ import {useDispatch} from "src/app/core/state"
 import Link from "src/js/components/common/Link"
 import {openNewSearchTab} from "src/js/flows/openNewSearchWindow"
 import submitSearch from "src/app/query-home/flows/submit-search"
-import {UID_CORRELATION_LIMIT} from "src/js/searches/programs"
 import SearchBar from "src/js/state/SearchBar"
 
 type Props = {
   count: number
   query: string
+  limit: number
 }
 
-export default memo<Props>(function EventLimit({query, count}) {
+export default memo<Props>(function EventLimit({query, count, limit}) {
   const dispatch = useDispatch()
   const onClick = useCallback(() => {
     dispatch(SearchBar.clearSearchBar())
@@ -24,10 +24,10 @@ export default memo<Props>(function EventLimit({query, count}) {
     }
   }, [query])
 
-  if (count < UID_CORRELATION_LIMIT) return null
+  if (count < limit) return null
   return (
     <Caption>
-      Limited to {UID_CORRELATION_LIMIT} events.
+      Limited to {limit} events.
       <Link onClick={onClick}>Query for All</Link>
     </Caption>
   )

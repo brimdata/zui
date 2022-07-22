@@ -44,7 +44,7 @@ function toZqlString(string: string) {
 }
 
 function toZqlDate(date: Date) {
-  return (date.getTime() / 1000).toString()
+  return date.toISOString()
 }
 
 function toZqlBool(bool: boolean) {

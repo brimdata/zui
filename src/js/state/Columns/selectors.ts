@@ -7,7 +7,7 @@ import {State} from "../types"
 import Viewer from "../Viewer"
 import {createColumnSet} from "./models/columnSet"
 import {ColumnsState} from "./types"
-import {getValues} from "../Results/selectors"
+import {getMainValues} from "../Results/selectors"
 
 const getColumns = activeTabSelect<ColumnsState>((tab) => tab.columns)
 
@@ -21,7 +21,7 @@ const getCurrentTableColumns = createSelector<
 >(
   Viewer.getShapes,
   getColumns,
-  getValues,
+  getMainValues,
   getFormatConfig,
   (viewerColumns, columnSettings, logs, config) => {
     const set = createColumnSet(viewerColumns)

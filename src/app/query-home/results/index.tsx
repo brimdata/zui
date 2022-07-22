@@ -8,12 +8,13 @@ import ResultsTable from "./results-table"
 import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
 import Results from "src/js/state/Results"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 const ResultsComponent = () => {
   const data = useResultsData()
   const view = useResultsView()
   const {ref, rect} = useResizeObserver()
-  const error = useSelector(Results.getError)
+  const error = useSelector(Results.getError(MAIN_RESULTS))
   return (
     <Styled.BG>
       <Styled.Toolbar>

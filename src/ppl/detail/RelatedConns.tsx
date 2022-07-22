@@ -1,5 +1,4 @@
 import {Data, Name, Value} from "src/app/core/Data"
-import useSearch from "src/app/core/hooks/useSearch"
 import Panel from "src/app/detail/Panel"
 import PanelHeading from "src/app/detail/PanelHeading"
 import {Caption, ChartWrap, TableWrap} from "src/app/detail/Shared"
@@ -7,22 +6,21 @@ import {BrimEvent, BrimEventInterface} from "src/ppl/detail/models/BrimEvent"
 import React, {memo, useCallback, useMemo} from "react"
 import brim from "src/js/brim"
 import {showContextMenu} from "src/js/lib/System"
-import {relatedConns} from "src/js/searches/programs"
-import {zed} from "@brimdata/zealot"
 import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
 import firstLast from "./util/firstLast"
 import formatDur from "./util/formatDur"
+import {useSelector} from "react-redux"
+import Results from "src/js/state/Results"
+import {SURICATA_CONNS} from "src/plugins/zui-suricata"
 
-type Props = {
-  record: zed.Record
-}
+const id = SURICATA_CONNS
 
-const LIMIT = 100
-
-export default memo(function RelatedConns({record}: Props) {
-  const cid = record.get("community_id").toString()
-  const [records, isFetching] = useSearch(relatedConns(cid, LIMIT), [record])
+export default memo(function RelatedConns() {
+  const records = useSelector(Results.getValues(id))
+  const isFetching = useSelector(Results.isFetching(id))
+  const query = useSelector(Results.getQuery(id))
+  const perPage = useSelector(Results.getPerPage(id))
   const events = useMemo(() => records.map(BrimEvent.build), [records])
   const [first, last] = firstLast<BrimEventInterface>(events)
   const data = [
@@ -42,7 +40,7 @@ export default memo(function RelatedConns({record}: Props) {
       <Panel>
         <ChartWrap>
           <EventTimeline events={events} />
-          <EventLimit query={relatedConns(cid)} count={events.length} />
+          <EventLimit query={query} count={events.length} limit={perPage} />
         </ChartWrap>
         <TableWrap>
           {data.map(([name, value]) => (

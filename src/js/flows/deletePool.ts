@@ -1,5 +1,4 @@
 import {Thunk} from "../state/types"
-import {getZealot} from "./getZealot"
 import Current from "../state/Current"
 import Investigation from "../state/Investigation"
 import Pools from "../state/Pools"
@@ -9,7 +8,7 @@ import Handlers from "../state/Handlers"
 const deletePool =
   (poolId: string): Thunk<Promise<void>> =>
   async (dispatch, getState, {api}) => {
-    const zealot = await dispatch(getZealot())
+    const zealot = await api.getZealot()
     const lakeId = Current.getLakeId(getState())
 
     const poolHandler = Object.entries(Handlers.get(getState()))

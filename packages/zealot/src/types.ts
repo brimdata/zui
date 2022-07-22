@@ -1,3 +1,5 @@
+import * as zed from "./zed"
+
 export type QueryFormat = "zjson" | "zng" | "ndjson" | "csv" | "json"
 
 export type Order = "desc" | "asc"
@@ -59,3 +61,7 @@ export interface BranchMeta {
   pool: PoolConfig
   branch: BranchConfig
 }
+
+export type TypeDefs = {[name: string]: zed.Type}
+
+export type Collector = (vals: {rows: zed.Value[]; shapesMap: TypeDefs}) => void
