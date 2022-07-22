@@ -13,15 +13,16 @@ const Area = styled.div`
   bottom: 0;
   background: transparent;
   pointer-events: all !important;
-  cursor: col-resize;
   z-index: 99;
 
   &.align-left {
-    left: -4px;
+    left: -5px;
+    cursor: col-resize;
   }
 
   &.align-right {
-    right: -4px;
+    right: -5px;
+    cursor: col-resize;
   }
 `
 
