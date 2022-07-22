@@ -13,9 +13,9 @@ export const StyledSection = styled.section`
 
 export const SectionContents = styled.div`
   flex: 1;
-  overflow-y: auto;
   position: relative;
   padding-top: 6px;
+  min-height: 0;
 
   &::before,
   &::after {
