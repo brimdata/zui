@@ -1,6 +1,5 @@
 import {Pool} from "src/app/core/pools/pool"
 import {compact, forEach, intersection} from "lodash"
-import {getZealot} from "src/js/flows/getZealot"
 import {Query} from "src/js/state/Queries/types"
 import Pools from "src/js/state/Pools"
 import Current from "src/js/state/Current"
@@ -75,8 +74,8 @@ export const getRemotePoolForLake =
 
 export const refreshRemoteQueries =
   (lake?: BrimLake): Thunk<Promise<void>> =>
-  async (dispatch) => {
-    const zealot = await dispatch(getZealot(lake))
+  async (dispatch, gs, {api}) => {
+    const zealot = await api.getZealot(lake)
     try {
       const queryReq = await zealot.query(
         `from '${remoteQueriesPoolName}'
@@ -118,8 +117,8 @@ export const setRemoteQueries =
 
 const loadRemoteQueries =
   (queries: RemoteQueryRecord[]): Thunk<Promise<void>> =>
-  async (dispatch) => {
-    const zealot = await dispatch(getZealot())
+  async (dispatch, gs, {api}) => {
+    const zealot = await api.getZealot()
     const rqPoolId = await dispatch(getOrCreateRemotePoolId())
     try {
       const data = new Readable()

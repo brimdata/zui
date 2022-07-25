@@ -1,56 +1,74 @@
-import {createSelector} from "@reduxjs/toolkit"
+import {initialResultData} from "./util"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {paginate} from "./paginate"
+import {ResultData, ResultsState} from "./types"
+import {MAIN_RESULTS} from "./types"
 
-export const getValues = activeTabSelect((t) => {
-  return t.results.values
+const initial = Object.freeze(initialResultData())
+
+export function access(state: ResultsState, id: string) {
+  if (state[id]) return state[id]
+  else return initial
+}
+
+function resultsSelect<T>(selector: (r: ResultData) => T) {
+  return (id: string) =>
+    activeTabSelect((tab) => {
+      return selector(access(tab.results, id))
+    })
+}
+
+export const getValues = resultsSelect((results) => {
+  return results.values
 })
 
-export const getShapes = activeTabSelect((t) => {
-  return t.results.shapes
+export const getShapes = resultsSelect((results) => {
+  return results.shapes
 })
 
-export const getStatus = activeTabSelect((t) => {
-  return t.results.status
+export const getStatus = resultsSelect((results) => {
+  return results.status
 })
 
-export const getPaginatedQuery = activeTabSelect((t) => {
-  if (t.results.aggregation) {
-    return paginate(t.results.query, t.results.aggregationLimit, 1)
+export const getPaginatedQuery = resultsSelect((results) => {
+  if (results.aggregation) {
+    return paginate(results.query, results.aggregationLimit, 1)
   } else {
-    return paginate(t.results.query, t.results.perPage, t.results.page)
+    return paginate(results.query, results.perPage, results.page)
   }
 })
 
-export const getQuery = activeTabSelect((t) => {
-  return t.results.query
+export const getQuery = resultsSelect((results) => {
+  return results.query
 })
 
-export const isFetching = activeTabSelect((t) => {
-  return t.results.status === "FETCHING"
+export const isFetching = resultsSelect((results) => {
+  return results.status === "FETCHING"
 })
 
-export const isLimited = activeTabSelect((t) => {
-  return t.results.status === "LIMIT"
+export const isLimited = resultsSelect((results) => {
+  return results.status === "LIMIT"
 })
 
-export const isComplete = activeTabSelect(
-  (t) => t.results.status === "COMPLETE"
+export const isComplete = resultsSelect(
+  (results) => results.status === "COMPLETE"
 )
 
-export const isIncomplete = activeTabSelect(
-  (t) => t.results.status === "INCOMPLETE"
+export const isIncomplete = resultsSelect(
+  (results) => results.status === "INCOMPLETE"
 )
 
-export const getKey = activeTabSelect((t) => {
-  return t.results.key
+export const getKey = resultsSelect((results) => {
+  return results.key
 })
 
-export const getAggregationLimit = activeTabSelect((t) => {
-  return t.results.aggregationLimit
+export const getAggregationLimit = resultsSelect((results) => {
+  return results.aggregationLimit
 })
 
-export const getError = activeTabSelect((t) => t.results.error)
-export const getPage = activeTabSelect((t) => t.results.page)
-export const getPerPage = activeTabSelect((t) => t.results.perPage)
-export const getCount = createSelector(getValues, (values) => values.length)
+export const getError = resultsSelect((results) => results.error)
+export const getPage = resultsSelect((results) => results.page)
+export const getPerPage = resultsSelect((results) => results.perPage)
+export const getCount = resultsSelect((results) => results.values.length)
+
+export const getMainValues = getValues(MAIN_RESULTS)

@@ -8,6 +8,7 @@ import ResultsTable from "./results-table"
 import {useResultsView} from "./view-hook"
 import Results from "src/js/state/Results"
 import styled from "styled-components"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 const BG = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const ResultsComponent = () => {
   const data = useResultsData()
   const view = useResultsView()
   const {ref, rect} = useResizeObserver()
-  const error = useSelector(Results.getError)
+  const error = useSelector(Results.getError(MAIN_RESULTS))
   return (
     <BG>
       <Body ref={ref} data-test-locator="viewer_results">

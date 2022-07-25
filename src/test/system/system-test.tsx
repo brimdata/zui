@@ -80,17 +80,8 @@ export class SystemTest {
 
   async importFile(name: string) {
     const file = data.getWebFile(name)
-    await tl.act(() => this.api.import([file]))
+    await tl.act(() => this.api.pools.load([file]))
     await tl.screen.findByText(/import complete/i)
-  }
-
-  runQuery(query: string, id = "Table") {
-    this.api.search(query)
-    return new Promise<void>((resolve) => {
-      this.api.searches.onDidFinish((search) => {
-        if (search.id === id) resolve()
-      })
-    })
   }
 
   mockSaveDialog(result: {canceled: boolean; filePath: string}) {

@@ -18016,12 +18016,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#116f5c008f24fa9eff04c816696fe689eb52514a":
+"zed@brimdata/zed#cd2f3a378383b8ccdd7a9fff7c0b3e603d7fbfed":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=116f5c008f24fa9eff04c816696fe689eb52514a"
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=cd2f3a378383b8ccdd7a9fff7c0b3e603d7fbfed"
   dependencies:
     zealot: ^0.2.0
-  checksum: ace03099257af0c2a4e3c770fa3fddf23298a0f842fca26852e01107e6b2db5af03ae3396fd11ceeaaa7a3b80d9248ded515078852e0b02ea4e344de129d75ae
+  checksum: edc4f0408be3b5dea769cbc4572cfd5254acdff55dfa9e5905e869e92a1300279ac040861dc16e9845edf096c3ef142db9259d86427628cde6c171b14d96229a
   languageName: node
   linkType: hard
 
@@ -18170,7 +18170,7 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "brimdata/zed#116f5c008f24fa9eff04c816696fe689eb52514a"
+    zed: "brimdata/zed#cd2f3a378383b8ccdd7a9fff7c0b3e603d7fbfed"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0

@@ -34,6 +34,7 @@ export type Thunk<R = void> = ThunkAction<R, State, ThunkExtraArg, Action>
 export type Store = ReduxStore<State, any>
 export type AppDispatch = ThunkDispatch<State, ThunkExtraArg, Action>
 export type Dispatch = AppDispatch
+export type GetState = () => State
 
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {

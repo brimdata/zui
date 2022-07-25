@@ -11,7 +11,7 @@ export function useImportOnDrop() {
     accept: [NativeTypes.FILE],
     drop: ({files}) => {
       if (files && files.length) {
-        api.import(files)
+        api.pools.load(files)
       }
     },
     collect: (m) => ({

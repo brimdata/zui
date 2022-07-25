@@ -6,13 +6,16 @@ import tabHistory from "../../router/tab-history"
 import {lakeQueryPath} from "../../router/utils/paths"
 import SessionHistories from "src/js/state/SessionHistories"
 import QueryVersions from "../../../js/state/QueryVersions"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 const submitSearch = () => (dispatch, getState) => {
-  dispatch(Notice.dismiss())
-  dispatch(Results.error(null))
-  const lakeId = Current.getLakeId(getState())
   const tabId = Current.getTabId(getState())
+  const lakeId = Current.getLakeId(getState())
   const query = Current.getQuery(getState())
+
+  dispatch(Notice.dismiss())
+  dispatch(Results.error({id: MAIN_RESULTS, error: null, tabId: ""}))
+
   let sessionQuery = Current.getQueryById(tabId)(getState())
   const {queryId: pathQueryId} = Current.getQueryLocationData(getState())
   const value = Editor.getValue(getState())
@@ -20,7 +23,7 @@ const submitSearch = () => (dispatch, getState) => {
   sessionQuery = sessionQuery.newVersion(value, pins)
   const error = sessionQuery.checkSyntax()
   if (error) {
-    dispatch(Results.error(error))
+    dispatch(Results.error({id: MAIN_RESULTS, error, tabId}))
     return
   }
   if (!query.isReadOnly) {

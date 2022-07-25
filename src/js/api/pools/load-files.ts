@@ -7,7 +7,6 @@ import BrimApi from "src/js/api"
 import brim from "src/js/brim"
 import ingest from "src/js/brim/ingest"
 import {IngestParams} from "src/js/brim/ingest/getParams"
-import {getZealot} from "src/js/flows/getZealot"
 import lib from "src/js/lib"
 import Current from "src/js/state/Current"
 import Handlers from "src/js/state/Handlers"
@@ -16,13 +15,13 @@ import Pools from "src/js/state/Pools"
 import SystemTest from "src/js/state/SystemTest"
 import Tabs from "src/js/state/Tabs"
 import {Dispatch, Thunk} from "src/js/state/types"
-import {lakePath, lakePoolPath} from "../../router/utils/paths"
+import {lakePath, lakePoolPath} from "../../../app/router/utils/paths"
 
 export default (files: File[]): Thunk<Promise<void>> =>
   async (dispatch, getState, {api}) => {
     const l = Current.mustGetLake(getState())
     const lakeId = l.id
-    const zealot = await dispatch(getZealot())
+    const zealot = await api.getZealot()
     const tabId = Tabs.getActive(getState())
     const requestId = brim.randomHash()
     const poolNames = Pools.getPoolNames(lakeId)(getState())

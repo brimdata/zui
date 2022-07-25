@@ -4,6 +4,7 @@ import {syncPool} from "../core/pools/sync-pool"
 import Results from "src/js/state/Results"
 import {startTransition} from "react"
 import {BrimQuery} from "./utils/brim-query"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 export function loadRoute(location) {
   return (dispatch) => {
@@ -28,7 +29,7 @@ function syncEditor(dispatch, getState) {
 
 function fetchData(location) {
   return (dispatch, getState) => {
-    const key = Results.getKey(getState())
+    const key = Results.getKey(MAIN_RESULTS)(getState())
     const version = Current.getVersion(getState())
 
     if (key === location.key) return

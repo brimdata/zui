@@ -205,7 +205,12 @@ type ItemProps = {
 
 export function Item(props: ItemProps) {
   return (
-    <Container tabIndex={0} style={props.styles.row} ref={props.innerRef}>
+    <Container
+      tabIndex={0}
+      style={props.styles.row}
+      ref={props.innerRef}
+      title={props.text}
+    >
       <BG
         aria-selected={props.state.isSelected}
         className={getClassNames(props)}
