@@ -33,8 +33,14 @@ import zui from "./zui"
 import LeftArrow from "./left-arrow"
 import RightArrow from "./right-arrow"
 import sidebarToggle from "./sidebar-toggle"
+import check from "./check"
+import update from "./update"
+import detach from "./detach"
 
 export default {
+  check,
+  update,
+  detach,
   braces,
   expand,
   collapse,
