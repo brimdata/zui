@@ -2,6 +2,7 @@ import classNames from "classnames"
 import {MenuItemConstructorOptions} from "electron"
 import React, {useRef} from "react"
 import {useSelector} from "react-redux"
+import {useBrimApi} from "src/app/core/context"
 import Icon from "src/app/core/icon-temp"
 import {useDispatch} from "src/app/core/state"
 import {showContextMenu} from "src/js/lib/System"
@@ -45,6 +46,7 @@ const Dropdown = styled(Icon).attrs({name: "chevron-down", size: 16})``
 
 export function HeadingSaved({active}: {active: ActiveQuery}) {
   const dispatch = useDispatch()
+  const api = useBrimApi()
   const ref = useRef<HTMLButtonElement>()
   const anyQueries = useSelector(Queries.any)
   const onClick = () => {
@@ -58,15 +60,14 @@ export function HeadingSaved({active}: {active: ActiveQuery}) {
       },
       {
         label: "Go to Latest Version",
-        click: () => {
-          // Not sure how to do this yet...
-        },
+        click: () => api.queries.open(active.query.id),
+        visible: active.isOutdated(),
       },
-    ]
+    ] as MenuItemConstructorOptions[]
     const menu = [
       ...editOptions,
       {type: "separator"},
-      ...savedQueries,
+      {label: "Switch Query", submenu: savedQueries},
     ] as MenuItemConstructorOptions[]
     showContextMenu(menu, popupPosition(ref.current))
   }

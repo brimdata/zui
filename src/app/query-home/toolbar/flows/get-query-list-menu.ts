@@ -1,5 +1,5 @@
+import {MenuItemConstructorOptions} from "electron"
 import Queries from "src/js/state/Queries"
-import {flattenQueryTree} from "src/js/state/Queries/helpers"
 
 const getQueryListMenu =
   () =>
@@ -7,12 +7,23 @@ const getQueryListMenu =
     const state = getState()
     const queries = Queries.raw(state)
 
-    return flattenQueryTree(queries, false)
-      ?.map((q) => q.model)
-      .map((q) => ({
-        label: q.name,
-        click: () => api.queries.open(q.id),
-      }))
+    function createMenuItems(items) {
+      return items.map((query) => {
+        if ("items" in query) {
+          return {
+            label: query.name,
+            submenu: createMenuItems(query.items),
+          } as MenuItemConstructorOptions
+        } else {
+          return {
+            label: query.name,
+            click: () => api.queries.open(query.id),
+          }
+        }
+      })
+    }
+
+    return createMenuItems(queries.items)
   }
 
 export default getQueryListMenu
