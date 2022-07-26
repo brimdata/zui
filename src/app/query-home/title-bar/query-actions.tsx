@@ -17,13 +17,6 @@ const Actions = styled.div`
   display: flex;
   padding: 0 16px;
   gap: 10px;
-  position: absolute;
-  &:first-child {
-    left: 0px;
-  }
-  &:last-child {
-    right: 0px;
-  }
 `
 
 export function QueryActions({active}: {active: ActiveQuery}) {

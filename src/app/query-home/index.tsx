@@ -18,6 +18,7 @@ import SessionHistories from "src/js/state/SessionHistories"
 const PageWrap = styled.div`
   width: 100%;
   height: 100%;
+  min-width: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -47,6 +48,7 @@ const MainContent = styled.div`
   flex-direction: column;
   flex: 1;
   height: 100%;
+  min-width: 0;
 `
 
 const ContentWrap = styled.div`
@@ -54,6 +56,7 @@ const ContentWrap = styled.div`
   width: 100%;
   height: 100%;
   min-height: 0;
+  min-width: 0;
 `
 
 const QueryHome = () => {

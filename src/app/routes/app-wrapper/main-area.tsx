@@ -5,6 +5,7 @@ import styled from "styled-components"
 
 const BG = styled.main`
   min-height: 0;
+  min-width: 0;
   height: 100%;
   display: flex;
   flex-direction: column;

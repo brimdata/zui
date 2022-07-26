@@ -14,8 +14,7 @@ const BG = styled.header`
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
+  justify-content: space-between;
 `
 
 export function TitleBar() {

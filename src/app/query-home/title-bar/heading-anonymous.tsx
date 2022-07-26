@@ -13,6 +13,9 @@ const Placeholder = styled.span`
   font-size: 14px;
   line-height: 14px;
   opacity: 0.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const Dropdown = styled(Icon).attrs({name: "chevron-down", size: 16})`

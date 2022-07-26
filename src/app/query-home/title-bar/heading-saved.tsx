@@ -16,7 +16,10 @@ import {HeadingButton} from "./heading-button"
 const Title = styled.h2`
   font-size: 14px;
   font-weight: 700;
-  line-height: 14px;
+  line-height: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &.modified {
     font-style: italic;
