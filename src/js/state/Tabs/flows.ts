@@ -1,18 +1,29 @@
 import {ipcRenderer} from "electron"
+import tabHistory from "src/app/router/tab-history"
+import {lakeQueryPath} from "src/app/router/utils/paths"
 import brim from "../../brim"
+import Current from "../Current"
+import SessionQueries from "../SessionQueries"
 import {Thunk} from "../types"
 import Tabs from "./"
-import {findTabById, findTabByUrl} from "./find"
+import {findTabById, findTabByUrl, findQuerySessionTab} from "./find"
 
 export const create =
-  (url = "/"): Thunk<string> =>
+  (url = "/", id = brim.randomHash()): Thunk<string> =>
   (dispatch) => {
-    const id = brim.randomHash()
+    dispatch(SessionQueries.init(id))
     dispatch(Tabs.add(id))
     dispatch(Tabs.activate(id))
-    global.tabHistories.create(id).push(url)
+    global.tabHistories.create(id).replace(url)
     return id
   }
+
+export const createQuerySession = (): Thunk<string> => (dispatch, getState) => {
+  const id = brim.randomHash()
+  const lakeId = Current.getLakeId(getState())
+  const url = lakeQueryPath(id, lakeId, null)
+  return dispatch(create(url, id))
+}
 
 export const previewUrl =
   (url: string): Thunk =>
@@ -47,6 +58,19 @@ export const activateUrl =
     }
     if (tab?.id === previewId) {
       dispatch(Tabs.preview(null))
+    }
+  }
+
+export const activateQuerySession =
+  (url: string): Thunk =>
+  (dispatch, getState) => {
+    const tabs = Tabs.getData(getState())
+    let tab = findQuerySessionTab(tabs)
+    if (tab) {
+      dispatch(Tabs.activate(tab.id))
+      dispatch(tabHistory.push(url))
+    } else {
+      dispatch(Tabs.create(url))
     }
   }
 

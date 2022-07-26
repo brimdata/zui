@@ -1,4 +1,4 @@
-import React from "react"
+import React, {ButtonHTMLAttributes} from "react"
 import Icon, {IconName} from "src/app/core/icon-temp"
 import styled from "styled-components"
 
@@ -19,17 +19,20 @@ const Button = styled.button`
   &:active {
     background: var(--button-background-active);
   }
+
+  &:disabled {
+    opacity: 0.2;
+  }
 `
 
 type Props = {
-  onClick: React.MouseEventHandler
   icon: IconName
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
-export function IconButton(props: Props) {
+export function IconButton({icon, ...rest}: Props) {
   return (
-    <Button onClick={props.onClick}>
-      <Icon name={props.icon} size={18} />
+    <Button {...rest}>
+      <Icon name={icon} size={18} />
     </Button>
   )
 }

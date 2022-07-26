@@ -47,8 +47,9 @@ export const getQueryLocationData = (
     queryVersion.path,
     query.path,
   ])
-  const queryId = match?.params?.queryId
   const version = match?.params?.version
+
+  let queryId = match?.params?.queryId
   return {queryId, version}
 }
 
@@ -74,10 +75,11 @@ export const getQuery = (state: State): BrimQuery | null => {
 export const getVersion = (state: State): QueryVersion => {
   const {queryId, version} = getQueryLocationData(state)
   const tabId = getTabId(state)
-  return (
-    QueryVersions.getByVersion(queryId, version)(state) ||
-    QueryVersions.getByVersion(tabId, version)(state)
-  )
+  if (queryId === "session")
+    return (
+      QueryVersions.getByVersion(queryId, version)(state) ||
+      QueryVersions.getByVersion(tabId, version)(state)
+    )
 }
 
 export const getPoolId = (state) => {
@@ -88,6 +90,7 @@ export const getPoolId = (state) => {
   return match?.params?.poolId || null
 }
 
+// This is weird, we need to get this from the state and not the url.
 export const getLakeId = (state: State = undefined) => {
   type Params = {lakeId?: string}
   const match = matchPath<Params>(getLocation(state).pathname, "/lakes/:lakeId")

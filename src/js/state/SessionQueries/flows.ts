@@ -32,3 +32,7 @@ export const create =
 
     return new BrimQuery(query, versions)
   }
+
+export const init = (id: string) => (dispatch) => {
+  dispatch(SessionQueries.set({id, name: "Query Session"}))
+}

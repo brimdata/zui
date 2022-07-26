@@ -8,9 +8,8 @@ import {showContextMenu} from "src/js/lib/System"
 import {useDispatch} from "src/app/core/state"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import Modal from "src/js/state/Modal"
-import {lakeImportPath, lakeQueryPath} from "src/app/router/utils/paths"
+import {lakeImportPath} from "src/app/router/utils/paths"
 import Tabs from "src/js/state/Tabs"
-import Queries from "src/js/state/Queries"
 import Icon from "src/app/core/icon-temp"
 
 export const Button = styled.button`
@@ -50,15 +49,8 @@ export default function PlusButton() {
   const onClick = () => {
     const template: MenuItemConstructorOptions[] = [
       {
-        label: "New Query",
-        click: () => {
-          const query = dispatch(Queries.create())
-          dispatch(
-            Tabs.create(
-              lakeQueryPath(query.id, lakeId, query.latestVersionId())
-            )
-          )
-        },
+        label: "New Query Session",
+        click: () => dispatch(Tabs.createQuerySession()),
       },
       {
         label: "New Pool",

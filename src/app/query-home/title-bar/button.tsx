@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React from "react"
+import React, {ButtonHTMLAttributes} from "react"
 import Icon, {IconName} from "src/app/core/icon-temp"
 import styled from "styled-components"
 
@@ -46,13 +46,13 @@ type Props = {
   children: string
   icon?: IconName
   primary?: boolean
-}
+} & ButtonHTMLAttributes<HTMLButtonElement>
 
-export function Button(props: Props) {
+export function Button({icon, primary, children, ...rest}: Props) {
   return (
-    <Btn className={classNames({primary: props.primary})}>
-      {props.icon && <Icon name={props.icon} size={12} />}
-      <Text>{props.children}</Text>
+    <Btn className={classNames({primary: primary})} {...rest}>
+      {icon && <Icon name={icon} size={12} />}
+      <Text>{children}</Text>
     </Btn>
   )
 }

@@ -37,7 +37,7 @@ export default class BrimApi {
     this.dispatch = d
     this.toolbar = new ToolbarsApi(d, gs)
     this.configs = new ConfigurationsApi(d, gs)
-    this.queries = new QueriesApi(d)
+    this.queries = new QueriesApi(d, gs)
     this.pools = new PoolsApi(d)
     this.current = new CurrentApi(gs)
     this.correlations = new CorrelationsApi(d)

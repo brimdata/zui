@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 import {Timeline} from "./timeline"
-import {formatDistanceToNowStrict} from "date-fns"
 
 const Wrap = styled.div`
   height: 28px;

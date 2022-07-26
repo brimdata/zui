@@ -1,6 +1,8 @@
 import React from "react"
+import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import TabHistory from "src/app/router/tab-history"
+import Current from "src/js/state/Current"
 import Layout from "src/js/state/Layout"
 import styled from "styled-components"
 import {IconButton} from "./icon-button"
@@ -25,21 +27,30 @@ const Nav = styled.div`
 
 export function NavActions() {
   const dispatch = useDispatch()
+  const isEditing = useSelector(Layout.getIsEditingTitle)
+  const history = useSelector(Current.getHistory)
+
+  if (isEditing) return null
   return (
     <Actions>
       <Nav>
         <IconButton
           icon="left-arrow"
           onClick={() => dispatch(TabHistory.goBack())}
+          disabled={!history.canGo(-1)}
         />
         <IconButton
           icon="right-arrow"
+          disabled={!history.canGo(1)}
           onClick={() => dispatch(TabHistory.goForward())}
         />
       </Nav>
       <IconButton
         icon="history"
-        onClick={() => dispatch(Layout.setCurrentPaneName("history"))}
+        onClick={() => {
+          dispatch(Layout.showDetailPane())
+          dispatch(Layout.setCurrentPaneName("history"))
+        }}
       />
     </Actions>
   )

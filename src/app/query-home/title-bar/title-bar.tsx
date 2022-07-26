@@ -28,8 +28,8 @@ export function TitleBar() {
   return (
     <BG>
       <NavActions />
-      <Heading query={active} />
-      <QueryActions query={active} />
+      <Heading active={active} />
+      <QueryActions active={active} />
     </BG>
   )
 }

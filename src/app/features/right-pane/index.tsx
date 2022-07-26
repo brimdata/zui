@@ -21,8 +21,8 @@ const BG = styled.div`
   display: flex;
   padding: 0 6px;
   align-items: center;
-  box-shadow: 0 1px 0px var(--cloudy);
-  height: 28px;
+  border-bottom: 1px solid var(--border-color);
+  height: 31px;
   flex-shrink: 0;
   user-select: none;
   position: relative;

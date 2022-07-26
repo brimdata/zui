@@ -17,6 +17,7 @@ export default {
   },
 
   goBack: () => (dispatch, getState) => {
+    console.log(Current.getHistory(getState()))
     Current.getHistory(getState()).goBack()
   },
 

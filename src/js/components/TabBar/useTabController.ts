@@ -26,7 +26,7 @@ export default function (count: number, calcWidths: Function) {
     previewId: useSelector(Tabs.getPreview),
 
     onAddClick() {
-      dispatch(newTab())
+      dispatch(newTab)
     },
 
     onRemoveClick(event: MouseEvent, id: string) {

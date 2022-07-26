@@ -5,11 +5,11 @@ export class ActiveQuery {
   constructor(
     public session: BrimQuery, // the singleton for the tab
     public query: BrimQuery | null, // the query from the url param
-    public version: QueryVersion // the version from the url param
+    public version: QueryVersion | null // the version from the url param
   ) {}
 
   isAnonymous() {
-    return !this.query
+    return !this.query || this.query.id === this.session.id
   }
 
   isLatest() {
@@ -20,7 +20,7 @@ export class ActiveQuery {
   }
 
   isModified() {
-    return !this.isAnonymous() && !this.query.hasVersion(this.version.version)
+    return !this.isAnonymous() && !this.query.hasVersion(this.version?.version)
   }
 
   isOutdated() {
@@ -29,6 +29,7 @@ export class ActiveQuery {
 
   name() {
     if (this.isAnonymous()) return null
+    if (this.isModified()) return this.query.name + "*"
     return this.query.name
   }
 

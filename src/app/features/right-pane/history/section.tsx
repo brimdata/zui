@@ -4,12 +4,11 @@ import {EntryType, HistoryEntry} from "./entry"
 import Current from "src/js/state/Current"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
-import tabHistory from "../../../router/tab-history"
-import {lakeQueryPath} from "../../../router/utils/paths"
 import {getQuerySource} from "../../../../js/state/Queries/flows/get-query-source"
 import getQueryById from "../../../query-home/flows/get-query-by-id"
 import QueryVersions from "src/js/state/QueryVersions"
 import {formatDistanceToNowStrict} from "date-fns"
+import {useBrimApi} from "src/app/core/context"
 
 const BG = styled.div`
   padding: 6px 0;
@@ -20,8 +19,7 @@ export function HistorySection() {
   const sessionHistory = useSelector(Current.getSessionHistory)
   const allVersions = useSelector(QueryVersions.raw)
   const tabId = useSelector(Current.getTabId)
-
-  const lakeId = useSelector(Current.getLakeId)
+  const api = useBrimApi()
 
   // TODO: Session Flow - refactor this
   const historyToEntries = (sessHistory) => {
@@ -42,12 +40,19 @@ export function HistorySection() {
           if (version === q.latestVersionId()) type = "latest"
           else type = "outdated"
         }
+
+        let timestamp = ""
+        try {
+          timestamp = formatDistanceToNowStrict(new Date(entryVersion?.ts))
+        } catch (e) {
+          console.log(e)
+        }
+
         return {
           text,
-          timestamp: formatDistanceToNowStrict(new Date(entryVersion?.ts)),
+          timestamp,
           type: type as EntryType,
-          onClick: () =>
-            dispatch(tabHistory.push(lakeQueryPath(queryId, lakeId, version))),
+          onClick: () => api.queries.open(queryId, {version, history: false}),
           key: `${i}-${version}`,
         }
       })
