@@ -11,7 +11,6 @@ import {Pool} from "src/app/core/pools/pool"
 import Ingests from "src/js/state/Ingests"
 import Tabs from "src/js/state/Tabs"
 import {Item} from "../item"
-import {poolClick} from "../flows/pool-click"
 
 const PoolItem = ({styles, data, state, handlers}) => {
   const pool = data as Pool
@@ -25,19 +24,18 @@ const PoolItem = ({styles, data, state, handlers}) => {
         handlers.edit()
       },
     },
-    {
-      label: "Get Info",
-      click: () => {
-        dispatch(Tabs.activateUrl(lakePoolPath(pool.id, lakeId)))
-      },
-    },
     ...dispatch(getPoolContextMenu(pool)),
   ]
 
   const onClick = (e) => {
     e.preventDefault()
     handlers.select(e, {selectOnClick: true})
-    dispatch(poolClick(pool))
+    dispatch(Tabs.previewUrl(lakePoolPath(pool.id, lakeId)))
+  }
+
+  const onDoubleClick = (e) => {
+    e.preventDefault()
+    dispatch(Tabs.activateUrl(lakePoolPath(pool.id, lakeId)))
   }
 
   return (
@@ -47,6 +45,7 @@ const PoolItem = ({styles, data, state, handlers}) => {
       state={state}
       styles={styles}
       onClick={onClick}
+      onDoubleClick={onDoubleClick}
       onContextMenu={() => showContextMenu(ctxMenu)}
       onSubmit={handlers.submit}
       progress={ingest?.progress}
