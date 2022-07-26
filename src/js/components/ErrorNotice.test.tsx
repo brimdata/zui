@@ -13,7 +13,7 @@ import {act} from "react-dom/test-utils"
 const brim = setupBrim()
 
 beforeEach(() => {
-  render(<ErrorNotice />, {store: brim.store})
+  render(<ErrorNotice />, {store: brim.store, api: brim.api})
 })
 
 test("renders Error notice with no details", async () => {

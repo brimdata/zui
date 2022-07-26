@@ -37,7 +37,7 @@ beforeEach(() => {
     QueryVersions.add({queryId: testQueryId, version: testVersion2})
   )
   brim.navTo(lakeQueryPath(testQueryId, "testLakeId", testVersion2.version))
-  render(<VersionsSection />, {store: brim.store})
+  render(<VersionsSection />, {store: brim.store, api: brim.api})
 })
 
 test("Display query version history in order", async () => {
