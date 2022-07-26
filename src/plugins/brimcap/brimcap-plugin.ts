@@ -87,6 +87,7 @@ export default class BrimcapPlugin {
   private async tryConn(detail: zed.Record, queryId: string) {
     const uid = findUid(detail)
     const pool = this.api.current.poolName
+    if (!pool || !uid) return null
     const res = await this.api.query(findConnLog(pool, uid), {
       id: `brimcap/try-conn-${queryId}`,
     })

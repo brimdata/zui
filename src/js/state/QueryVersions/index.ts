@@ -9,8 +9,9 @@ export default {
     if (!queryVersions) return []
     return versionAdapter.getSelectors().selectAll(queryVersions)
   },
-  getByVersion: (queryId, version) => (state) =>
-    versionAdapter
-      .getSelectors()
-      .selectById(state.queryVersions[queryId], version),
+  getByVersion: (queryId, version) => (state) => {
+    const versions = state.queryVersions[queryId]
+    if (!versions) return null
+    return versionAdapter.getSelectors().selectById(versions, version)
+  },
 }
