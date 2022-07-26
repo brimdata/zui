@@ -1,3 +1,4 @@
+import {orderBy} from "lodash"
 import {matchPath} from "react-router"
 import {queryVersion} from "src/app/router/routes"
 
@@ -12,7 +13,7 @@ export function findTabById(tabs, id) {
 }
 
 export function findQuerySessionTab(tabs) {
-  return tabs.find((tab) => {
+  return orderBy(tabs, ["lastFocused"], ["desc"]).find((tab) => {
     const pathname = global.tabHistories.getOrCreate(tab.id).location.pathname
     const match = matchPath(pathname, {path: queryVersion.path, exact: true})
     return !!match

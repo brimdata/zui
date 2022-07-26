@@ -62,7 +62,11 @@ const slice = createSlice({
       if (id === s.preview) s.preview = null
     },
     activate(s, a: PayloadAction<string>) {
-      if (findTab(s, a.payload)) s.active = a.payload
+      const tab = findTab(s, a.payload)
+      if (tab) {
+        tab.lastFocused = new Date().toISOString()
+        s.active = a.payload
+      }
     },
     preview(s, a: PayloadAction<string | null>) {
       if (!a.payload) s.preview = null
