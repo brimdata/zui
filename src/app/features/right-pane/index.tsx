@@ -31,10 +31,10 @@ const BG = styled.div`
     background: none;
     border: none;
     display: flex;
-
     border-radius: 5px;
     padding: 0 6px;
     text-transform: uppercase;
+    height: 100%;
 
     span {
       height: 100%;
