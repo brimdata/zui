@@ -17,11 +17,15 @@ export default {
   },
 
   goBack: () => (dispatch, getState) => {
-    console.log(Current.getHistory(getState()))
     Current.getHistory(getState()).goBack()
   },
 
   goForward: () => (dispatch, getState) => {
     Current.getHistory(getState()).goForward()
+  },
+
+  reload: () => (dispatch, getState) => {
+    const history = Current.getHistory(getState())
+    history.replace(history.location.pathname)
   },
 }

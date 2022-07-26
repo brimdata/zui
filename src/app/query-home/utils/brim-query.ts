@@ -83,13 +83,7 @@ export class BrimQuery implements Query {
   }
 
   checkSyntax() {
-    let error = null
-    try {
-      parseAst(this.toString())
-    } catch (e) {
-      error = e
-    }
-    return error
+    return BrimQuery.checkSyntax(this.current)
   }
 
   serialize(): Query {
@@ -100,6 +94,17 @@ export class BrimQuery implements Query {
       tags: this.tags,
       isReadOnly: this.isReadOnly,
     }
+  }
+
+  static checkSyntax(version: QueryVersion) {
+    const zed = this.versionToZed(version)
+    let error = null
+    try {
+      parseAst(zed)
+    } catch (e) {
+      error = e
+    }
+    return error
   }
 
   static versionToZed(version: QueryVersion): string {

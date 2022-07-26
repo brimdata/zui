@@ -1,48 +1,37 @@
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
-import Notice from "src/js/state/Notice"
 import Results from "src/js/state/Results"
-import tabHistory from "../../router/tab-history"
-import {lakeQueryPath} from "../../router/utils/paths"
-import SessionHistories from "src/js/state/SessionHistories"
 import QueryVersions from "../../../js/state/QueryVersions"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
+import {Thunk} from "src/js/state/types"
+import {BrimQuery} from "../utils/brim-query"
 
-const submitSearch = () => (dispatch, getState) => {
-  const tabId = Current.getTabId(getState())
-  const lakeId = Current.getLakeId(getState())
-  const query = Current.getQuery(getState())
+const submitSearch =
+  (): Thunk =>
+  (dispatch, getState, {api}) => {
+    const tabId = Current.getTabId(getState())
+    const session = Current.getQueryById(tabId)(getState())
+    const nextVersion = Editor.getSnapshot(getState())
+    const query = Current.getQuery(getState())
+    const error = BrimQuery.checkSyntax(nextVersion)
 
-  dispatch(Notice.dismiss())
-  dispatch(Results.error({id: MAIN_RESULTS, error: null, tabId: ""}))
+    // An error with the syntax
+    if (error) {
+      dispatch(Results.error({id: MAIN_RESULTS, error, tabId}))
+      return
+    }
 
-  let sessionQuery = Current.getQueryById(tabId)(getState())
-  const {queryId: pathQueryId} = Current.getQueryLocationData(getState())
-  const value = Editor.getValue(getState())
-  const pins = Editor.getPins(getState())
-  sessionQuery = sessionQuery.newVersion(value, pins)
-  const error = sessionQuery.checkSyntax()
-  if (error) {
-    dispatch(Results.error({id: MAIN_RESULTS, error, tabId}))
-    return
+    // Reuse the version url if the next version is the same as the latest
+    // of this query, either session or saved.
+    if (QueryVersions.areEqual(query.latestVersion(), nextVersion)) {
+      api.queries.open(query.id, {version: query.latestVersionId()})
+      return
+    }
+
+    // This is a new query, add a new version to the session,
+    // And open the current active query with the version set to the new one.
+    dispatch(QueryVersions.add({queryId: session.id, version: nextVersion}))
+    api.queries.open(query.id, {version: nextVersion.version})
   }
-  if (!query.isReadOnly) {
-    dispatch(
-      QueryVersions.add({
-        queryId: sessionQuery.id,
-        version: sessionQuery.latestVersion(),
-      })
-    )
-    dispatch(
-      tabHistory.push(
-        lakeQueryPath(pathQueryId, lakeId, sessionQuery.latestVersionId())
-      )
-    )
-    dispatch(SessionHistories.push(pathQueryId, sessionQuery.latestVersionId()))
-  } else {
-    const version = query.latestVersion().version
-    dispatch(tabHistory.replace(lakeQueryPath(pathQueryId, lakeId, version)))
-  }
-}
 
 export default submitSearch
