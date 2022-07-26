@@ -10,8 +10,9 @@ const Form = styled.form`
   display: flex;
   gap: 4px;
   width: 100%;
-  margin: 0 24px;
-  max-width: 500px;
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 0 24px;
 `
 
 const Input = styled.input`
