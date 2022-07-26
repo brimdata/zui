@@ -75,11 +75,10 @@ export const getQuery = (state: State): BrimQuery | null => {
 export const getVersion = (state: State): QueryVersion => {
   const {queryId, version} = getQueryLocationData(state)
   const tabId = getTabId(state)
-  if (queryId === "session")
-    return (
-      QueryVersions.getByVersion(queryId, version)(state) ||
-      QueryVersions.getByVersion(tabId, version)(state)
-    )
+  return (
+    QueryVersions.getByVersion(queryId, version)(state) ||
+    QueryVersions.getByVersion(tabId, version)(state)
+  )
 }
 
 export const getPoolId = (state) => {
