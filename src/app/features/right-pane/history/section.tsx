@@ -12,6 +12,7 @@ import {useBrimApi} from "src/app/core/context"
 
 const BG = styled.div`
   padding: 6px 0;
+  overflow-y: auto;
 `
 
 const useSessionEntries = () => {
