@@ -1,5 +1,5 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
-import Tabs from "../Tabs"
+import Tabs from "../Tabs/slice"
 import {QueryVersion} from "./types"
 
 export const versionAdapter = createEntityAdapter<QueryVersion>({
@@ -41,7 +41,7 @@ export const queryVersionsSlice = createSlice({
       }
     )
     builder.addMatcher(
-      ({type}) => type == Tabs.remove.toString(),
+      ({type}) => type == Tabs.actions.remove.toString(),
       (s, a) => {
         delete s[a.payload]
       }

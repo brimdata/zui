@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import Tabs from "../Tabs"
+import Tabs from "../Tabs/slice"
 
 const slice = createSlice({
   name: "sessionQueries",
@@ -10,9 +10,10 @@ const slice = createSlice({
     },
   },
   extraReducers: {
-    // WHY DOES THIS LINE BREAK THE APP??
-    // [Tabs.remove.toString()]: (s, a: ReturnType<typeof Tabs.remove>) => {
-    "TABS/remove": (s, a: ReturnType<typeof Tabs.remove>) => {
+    [Tabs.actions.remove.toString()]: (
+      s,
+      a: ReturnType<typeof Tabs.actions.remove>
+    ) => {
       delete s[a.payload]
     },
   },
