@@ -1,3 +1,4 @@
+import {nanoid} from "@reduxjs/toolkit"
 import tabHistory from "src/app/router/tab-history"
 import {lakeQueryPath} from "src/app/router/utils/paths"
 import Current from "src/js/state/Current"
@@ -12,7 +13,7 @@ import {JSONGroup} from "../../state/Queries/parsers"
 import {AppDispatch, GetState} from "../../state/types"
 import {queriesExport} from "./export"
 import {queriesImport} from "./import"
-import {OpenQueryOptions} from "./types"
+import {OpenQueryOptions, QueryParams} from "./types"
 
 export class QueriesApi {
   constructor(private dispatch: AppDispatch, private getState: GetState) {}
@@ -39,8 +40,12 @@ export class QueriesApi {
     }
   }
 
-  addVersion(queryId: string, version: QueryVersion) {
-    return this.dispatch(QueryVersions.add({queryId, version}))
+  addVersion(queryId: string, params: QueryVersion | QueryParams) {
+    const ts = new Date().toISOString()
+    const id = nanoid()
+    const version = {ts, version: id, ...params}
+    this.dispatch(QueryVersions.add({queryId, version}))
+    return version
   }
 
   /**
@@ -52,26 +57,41 @@ export class QueriesApi {
    *
    * If it's not the same, push that url to the tab history
    * and optionally to the session history.
+   * This is a candidate for a refactor
    */
-  open(id: string, options: Partial<OpenQueryOptions> = {}) {
+  open(id: string | QueryParams, options: Partial<OpenQueryOptions> = {}) {
     const opts = openQueryOptions(options)
     const lakeId = this.select(Current.getLakeId)
-    const query = this.select(Current.getQueryById(id))
-    const version = opts.version || query.latestVersionId()
-    const url = lakeQueryPath(id, lakeId, version)
-    const tab = this.select(Tabs.findFirstQuerySession)
-    if (tab) {
-      this.dispatch(Tabs.activate(tab.id))
-      const history = this.select(Current.getHistory)
-      if (history.location.pathname === url) {
-        this.dispatch(tabHistory.reload())
+    let tab = this.select(Tabs.findFirstQuerySession)
+    const tabId = tab ? tab.id : nanoid()
+
+    let queryId: string, versionId: string
+    if (typeof id === "string") {
+      const q = this.select(Current.getQueryById(id))
+      queryId = id
+      versionId = opts.version || q.latestVersionId()
+    } else {
+      queryId = tabId
+      versionId = nanoid()
+    }
+
+    const url = lakeQueryPath(queryId, lakeId, versionId)
+    if (!tab) tab = this.dispatch(Tabs.init(url, tabId))
+    this.dispatch(Tabs.activate(tab.id))
+
+    const history = this.select(Current.getHistory)
+    if (history.location.pathname === url) {
+      this.dispatch(tabHistory.reload())
+    } else {
+      if (opts.history === "replace") {
+        this.dispatch(tabHistory.replace(url))
+        this.dispatch(SessionHistories.replace(queryId, versionId))
+      } else if (opts.history) {
+        this.dispatch(tabHistory.push(url))
+        this.dispatch(SessionHistories.push(queryId, versionId))
       } else {
         this.dispatch(tabHistory.push(url))
-        if (opts.history) this.dispatch(SessionHistories.push(id, version))
       }
-    } else {
-      this.dispatch(Tabs.create(url))
-      if (opts.history) this.dispatch(SessionHistories.push(id, version))
     }
   }
 
@@ -84,6 +104,5 @@ const openQueryOptions = (
   user: Partial<OpenQueryOptions>
 ): OpenQueryOptions => ({
   history: true,
-  version: null,
   ...user,
 })

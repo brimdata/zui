@@ -10,6 +10,7 @@ import Layout from "src/js/state/Layout"
 import Queries from "src/js/state/Queries"
 import styled from "styled-components"
 import popupPosition from "../search-area/popup-position"
+import getQueryHeaderMenu from "../toolbar/flows/get-query-header-menu"
 import getQueryListMenu from "../toolbar/flows/get-query-list-menu"
 import {ActiveQuery} from "./active-query"
 import {HeadingButton} from "./heading-button"
@@ -51,13 +52,12 @@ export function HeadingSaved({active}: {active: ActiveQuery}) {
   const anyQueries = useSelector(Queries.any)
   const onClick = () => {
     const savedQueries = dispatch(getQueryListMenu())
+    const queryMenu = dispatch(
+      getQueryHeaderMenu({
+        handleRename: () => dispatch(Layout.showTitleForm("update")),
+      })
+    )
     const editOptions = [
-      {
-        label: "Rename",
-        click: () => {
-          dispatch(Layout.showTitleForm("update"))
-        },
-      },
       {
         label: "Go to Latest Version",
         click: () => api.queries.open(active.query.id),
@@ -65,6 +65,7 @@ export function HeadingSaved({active}: {active: ActiveQuery}) {
       },
     ] as MenuItemConstructorOptions[]
     const menu = [
+      ...queryMenu,
       ...editOptions,
       {type: "separator"},
       {label: "Switch Query", submenu: savedQueries},

@@ -2,23 +2,17 @@ import {FormEvent} from "react"
 import {useSelector} from "react-redux"
 import {useBrimApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
-import useLakeId from "src/app/router/hooks/use-lake-id"
-import tabHistory from "src/app/router/tab-history"
-import {lakeQueryPath} from "src/app/router/utils/paths"
 import Layout from "src/js/state/Layout"
-import SessionHistories from "src/js/state/SessionHistories"
 import {ActiveQuery} from "./active-query"
 
 export function useHeadingForm(active: ActiveQuery) {
   const api = useBrimApi()
   const dispatch = useDispatch()
-  const lakeId = useLakeId()
   const action = useSelector(Layout.getTitleFormAction)
 
   function createNewQuery(name: string) {
     const q = api.queries.create(name)
-    dispatch(tabHistory.push(lakeQueryPath(q.id, lakeId, q.latestVersionId())))
-    dispatch(SessionHistories.push(q.id))
+    api.queries.open(q.id)
   }
 
   function renameQuery(name: string) {

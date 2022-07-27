@@ -30,3 +30,6 @@ export const findFirstQuerySession = createSelector<
   TabState[],
   TabState
 >((state) => state.tabs.data, findQuerySessionTab)
+
+export const findById = (tabId: string) =>
+  createSelector(getData, (tabs) => tabs.find((t) => t.id === tabId))

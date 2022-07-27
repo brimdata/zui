@@ -1,9 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import Current from "src/js/state/Current"
 import {showContextMenu} from "src/js/lib/System"
 import Icon from "src/app/core/icon-temp"
-import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import {Item} from "../item"
 import {NodeRenderer} from "react-arborist"
@@ -24,7 +22,6 @@ const QueryItem: NodeRenderer<any> = ({
   const api = useBrimApi()
   const {id} = data
   const isGroup = "items" in data
-  const lakeId = useSelector(Current.getLakeId)
   const dispatch = useDispatch()
   const itemIcon = isGroup ? <FolderIcon /> : <QueryIcon />
 
@@ -50,9 +47,7 @@ const QueryItem: NodeRenderer<any> = ({
       onClick={isGroup ? onGroupClick : onItemClick}
       isFolder={isGroup}
       onContextMenu={() => {
-        showContextMenu(
-          dispatch(getQueryItemCtxMenu({data, tree, handlers, lakeId}))
-        )
+        showContextMenu(dispatch(getQueryItemCtxMenu({data, tree, handlers})))
       }}
       onSubmit={handlers.submit}
     />

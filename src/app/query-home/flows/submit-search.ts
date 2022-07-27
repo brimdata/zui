@@ -30,7 +30,7 @@ const submitSearch =
 
     // This is a new query, add a new version to the session,
     // And open the current active query with the version set to the new one.
-    dispatch(QueryVersions.add({queryId: session.id, version: nextVersion}))
+    api.queries.addVersion(session.id, nextVersion)
     api.queries.open(query.id, {version: nextVersion.version})
   }
 
