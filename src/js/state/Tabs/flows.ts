@@ -1,6 +1,5 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {ipcRenderer} from "electron"
-import tabHistory from "src/app/router/tab-history"
 import {lakeQueryPath} from "src/app/router/utils/paths"
 import brim from "../../brim"
 import Current from "../Current"
@@ -9,7 +8,7 @@ import SessionQueries from "../SessionQueries"
 import {TabState} from "../Tab/types"
 import {Thunk} from "../types"
 import Tabs from "./"
-import {findTabById, findTabByUrl, findQuerySessionTab} from "./find"
+import {findTabById, findTabByUrl} from "./find"
 import {findById, findFirstQuerySession} from "./selectors"
 
 export const init =
@@ -84,19 +83,6 @@ export const activateUrl =
     }
     if (tab?.id === previewId) {
       dispatch(Tabs.preview(null))
-    }
-  }
-
-export const activateQuerySession =
-  (url: string): Thunk =>
-  (dispatch, getState) => {
-    const tabs = Tabs.getData(getState())
-    let tab = findQuerySessionTab(tabs)
-    if (tab) {
-      dispatch(Tabs.activate(tab.id))
-      dispatch(tabHistory.push(url))
-    } else {
-      dispatch(Tabs.create(url))
     }
   }
 

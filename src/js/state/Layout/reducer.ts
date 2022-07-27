@@ -8,7 +8,7 @@ const slice = createSlice({
     rightSidebarWidth: 260,
     columnHeadersView: "AUTO" as ColumnHeadersViewState,
     resultsView: "TABLE" as ResultsView,
-    currentPaneName: "versions" as PaneName,
+    currentPaneName: "history" as PaneName,
     isEditingTitle: false,
     titleFormAction: "create" as "create" | "update",
   },

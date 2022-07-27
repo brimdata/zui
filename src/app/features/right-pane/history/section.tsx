@@ -14,52 +14,52 @@ const BG = styled.div`
   padding: 6px 0;
 `
 
-export function HistorySection() {
+const useSessionEntries = () => {
   const dispatch = useDispatch()
-  const sessionHistory = useSelector(Current.getSessionHistory)
   const allVersions = useSelector(QueryVersions.raw)
   const tabId = useSelector(Current.getTabId)
+  const sessionHistory = useSelector(Current.getSessionHistory)
   const api = useBrimApi()
 
-  // TODO: Session Flow - refactor this
-  const historyToEntries = (sessHistory) => {
-    return sessHistory
-      ?.map(({queryId, version}, i) => {
-        const q = dispatch(getQueryById(queryId))
-        // if version does not match queryId saved in entry, it must be in session
-        let qType = dispatch(getQuerySource(queryId))
-        let entryVersion = allVersions[queryId]?.entities[version]
-        if (!entryVersion) {
-          entryVersion = allVersions[tabId]?.entities[version] || {}
-          qType = "session"
-        }
+  return sessionHistory
+    ?.map(({queryId, version}, i) => {
+      const q = dispatch(getQueryById(queryId))
+      // if version does not match queryId saved in entry, it must be in session
+      let qType = dispatch(getQuerySource(queryId))
+      let entryVersion = allVersions[queryId]?.entities[version]
+      if (!entryVersion) {
+        entryVersion = allVersions[tabId]?.entities[version] || {}
+        qType = "session"
+      }
 
-        const text = qType === "session" ? entryVersion?.value : q.name
-        let type = "anonymous"
-        if (qType !== "session") {
-          if (version === q.latestVersionId()) type = "latest"
-          else type = "outdated"
-        }
+      const text = qType === "session" ? entryVersion?.value : q.name
+      let type = "anonymous"
+      if (qType !== "session") {
+        if (version === q.latestVersionId()) type = "latest"
+        else type = "outdated"
+      }
 
-        let timestamp = ""
-        try {
-          timestamp = formatDistanceToNowStrict(new Date(entryVersion?.ts))
-        } catch (e) {
-          console.log(e)
-        }
+      let timestamp = ""
+      try {
+        timestamp = formatDistanceToNowStrict(new Date(entryVersion?.ts))
+        if (/second/.test(timestamp)) timestamp = "Just now"
+      } catch (e) {
+        console.error(e)
+      }
 
-        return {
-          text,
-          timestamp,
-          type: type as EntryType,
-          onClick: () => api.queries.open(queryId, {version, history: false}),
-          key: `${i}-${version}`,
-        }
-      })
-      .reverse()
-  }
+      return {
+        text,
+        timestamp,
+        type: type as EntryType,
+        onClick: () => api.queries.open(queryId, {version, history: false}),
+        key: `${i}-${version}`,
+      }
+    })
+    .reverse()
+}
 
-  const entries = historyToEntries(sessionHistory)
+export function HistorySection() {
+  const entries = useSessionEntries()
 
   return (
     <BG>

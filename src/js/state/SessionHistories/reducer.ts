@@ -1,8 +1,9 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {SessionHistoryEntry} from "./types"
+import Tabs from "../Tabs/slice"
 
 const slice = createSlice({
-  name: "$sessionHistories",
+  name: "sessionHistories",
   initialState: {},
   reducers: {
     replaceById(
@@ -24,6 +25,14 @@ const slice = createSlice({
     },
     deleteById(s, a: PayloadAction<{sessionId: string}>) {
       delete s[a.payload.sessionId]
+    },
+  },
+  extraReducers: {
+    [Tabs.actions.remove.toString()]: (
+      s,
+      a: ReturnType<typeof Tabs.actions.remove>
+    ) => {
+      delete s[a.payload]
     },
   },
 })
