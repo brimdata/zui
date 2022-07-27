@@ -1,8 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {SessionHistoryEntry} from "./types"
+import Tabs from "../Tabs"
+import log from "electron-log"
 
 const slice = createSlice({
-  name: "$sessionHistories",
+  name: "sessionHistories",
   initialState: {},
   reducers: {
     replaceById(
@@ -24,6 +26,11 @@ const slice = createSlice({
     },
     deleteById(s, a: PayloadAction<{sessionId: string}>) {
       delete s[a.payload.sessionId]
+    },
+  },
+  extraReducers: {
+    [Tabs.remove.toString()]: (s, a: ReturnType<typeof Tabs.remove>) => {
+      delete s[a.payload]
     },
   },
 })

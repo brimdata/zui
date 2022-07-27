@@ -4,6 +4,7 @@ import {lakeQueryPath} from "src/app/router/utils/paths"
 import brim from "../../brim"
 import Current from "../Current"
 import SessionQueries from "../SessionQueries"
+import TabHistories from "../TabHistories"
 import {Thunk} from "../types"
 import Tabs from "./"
 import {findTabById, findTabByUrl, findQuerySessionTab} from "./find"
@@ -83,6 +84,12 @@ export const closeActive = (): Thunk => (dispatch, getState) => {
     dispatch(Tabs.remove(id))
   }
 }
+
+// export const closeTab =
+//   (id: string): Thunk =>
+//   (dispatch, getState) => {
+//     dispatch(Tabs.remove(id))
+//   }
 
 export const activateNext = (): Thunk => (dispatch, getState) => {
   const id = Tabs.getActive(getState())
