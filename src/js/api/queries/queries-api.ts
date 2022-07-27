@@ -73,6 +73,11 @@ export class QueriesApi {
     } else {
       queryId = tabId
       versionId = nanoid()
+      this.addVersion(queryId, {
+        ...id,
+        version: versionId,
+        ts: new Date().toISOString(),
+      })
     }
 
     const url = lakeQueryPath(queryId, lakeId, versionId)
