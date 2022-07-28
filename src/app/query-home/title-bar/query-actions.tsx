@@ -6,22 +6,21 @@ import {useDispatch} from "src/app/core/state"
 import Editor from "src/js/state/Editor"
 import Layout from "src/js/state/Layout"
 import styled from "styled-components"
-import {ActiveQuery} from "./active-query"
 import {Button} from "./button"
+import {useActiveQuery} from "./context"
 
 const Actions = styled.div`
   display: flex;
-  padding: 0 16px;
   gap: 10px;
 `
 
-export function QueryActions({active}: {active: ActiveQuery}) {
+export function QueryActions() {
+  const active = useActiveQuery()
   const isEditing = useSelector(Layout.getIsEditingTitle)
   if (isEditing) return null
   return (
     <Actions>
-      {active.isModified() && <Update active={active} />}
-      {!active.isAnonymous() && <Detach active={active} />}
+      {active.isModified() && <Update />}
       <Create />
     </Actions>
   )
@@ -29,35 +28,21 @@ export function QueryActions({active}: {active: ActiveQuery}) {
 
 function Create() {
   const dispatch = useDispatch()
+  const active = useActiveQuery()
+  const text = active.isAnonymous() ? "Save" : "Save As"
+  const isEmpty = useSelector(Editor.isEmpty)
   function onClick() {
     dispatch(Layout.showTitleForm("create"))
   }
   return (
-    <Button onClick={onClick} icon="plus">
-      Create
+    <Button onClick={onClick} disabled={isEmpty}>
+      {text}
     </Button>
   )
 }
 
-function Detach({active}: {active: ActiveQuery}) {
-  const api = useBrimApi()
-  const select = useSelect()
-
-  function onClick() {
-    const snapshot = select(Editor.getSnapshot)
-    const id = active.session.id
-    api.queries.addVersion(id, snapshot)
-    api.queries.open(id)
-  }
-
-  return (
-    <Button onClick={onClick} icon="detach">
-      Detach
-    </Button>
-  )
-}
-
-function Update({active}: {active: ActiveQuery}) {
+function Update() {
+  const active = useActiveQuery()
   const api = useBrimApi()
   const select = useSelect()
 
@@ -69,8 +54,8 @@ function Update({active}: {active: ActiveQuery}) {
   }
 
   return (
-    <Button icon="update" primary onClick={onClick}>
-      Update
+    <Button primary onClick={onClick}>
+      Save
     </Button>
   )
 }

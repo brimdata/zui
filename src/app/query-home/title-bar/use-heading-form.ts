@@ -3,9 +3,11 @@ import {useSelector} from "react-redux"
 import {useBrimApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import Layout from "src/js/state/Layout"
-import {ActiveQuery} from "./active-query"
+import {useActiveQuery} from "./context"
+import {plusOne} from "./plus-one"
 
-export function useHeadingForm(active: ActiveQuery) {
+export function useHeadingForm() {
+  const active = useActiveQuery()
   const api = useBrimApi()
   const dispatch = useDispatch()
   const action = useSelector(Layout.getTitleFormAction)
@@ -23,12 +25,29 @@ export function useHeadingForm(active: ActiveQuery) {
     return e.currentTarget.elements.namedItem("query-name") as HTMLInputElement
   }
 
+  function getDefaultValue() {
+    if (action === "create" && active.name()) {
+      return plusOne(active.name())
+    } else {
+      return active.name()
+    }
+  }
+
+  function getButtonText() {
+    return action === "create" ? "Create" : "Update"
+  }
+
   return {
     onSubmit: (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       const input = getInput(e)
       if (!input) {
-        throw new Error("Could not find input in query title form")
+        dispatch(Layout.hideTitleForm())
+        return
+      }
+      if (action === "update" && input.value === getDefaultValue()) {
+        dispatch(Layout.hideTitleForm())
+        return
       }
       if (active.isAnonymous() || action === "create") {
         createNewQuery(input.value)
@@ -38,5 +57,7 @@ export function useHeadingForm(active: ActiveQuery) {
       dispatch(Layout.hideTitleForm())
     },
     onReset: () => dispatch(Layout.hideTitleForm()),
+    defaultValue: getDefaultValue(),
+    buttonText: getButtonText(),
   }
 }

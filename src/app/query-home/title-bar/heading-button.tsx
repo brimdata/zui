@@ -8,9 +8,10 @@ export const HeadingButton = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  padding: 0 6px 0 10px;
-  gap: 4px;
+  padding: 0 6px;
   min-width: 0;
+  margin-left: 10px;
+  margin-right: 10px;
 
   &:hover {
     background: var(--button-background);

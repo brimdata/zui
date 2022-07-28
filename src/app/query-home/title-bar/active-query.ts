@@ -12,6 +12,10 @@ export class ActiveQuery {
     return !this.query || this.query.id === this.session.id
   }
 
+  isSaved() {
+    return !this.isAnonymous()
+  }
+
   isLatest() {
     return (
       !this.isAnonymous() &&
@@ -28,8 +32,7 @@ export class ActiveQuery {
   }
 
   name() {
-    if (this.isAnonymous()) return null
-    if (this.isModified()) return this.query.name + "*"
+    if (this.isAnonymous()) return ""
     return this.query.name
   }
 

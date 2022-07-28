@@ -36,6 +36,7 @@ import sidebarToggle from "./sidebar-toggle"
 import check from "./check"
 import update from "./update"
 import detach from "./detach"
+import threeDotsStacked from "./three-dots-stacked"
 
 export default {
   check,
@@ -76,4 +77,5 @@ export default {
   zui,
   "left-arrow": LeftArrow,
   "right-arrow": RightArrow,
+  "three-dots-stacked": threeDotsStacked,
 }

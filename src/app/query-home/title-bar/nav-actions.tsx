@@ -9,7 +9,6 @@ import {IconButton} from "./icon-button"
 
 const Actions = styled.div`
   display: flex;
-  padding: 0 16px;
   gap: 10px;
 `
 
@@ -40,6 +39,7 @@ export function NavActions() {
       </Nav>
       <IconButton
         icon="history"
+        size={16}
         onClick={() => {
           dispatch(Layout.showDetailPane())
           dispatch(Layout.setCurrentPaneName("history"))

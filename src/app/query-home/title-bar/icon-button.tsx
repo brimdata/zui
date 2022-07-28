@@ -27,12 +27,15 @@ const Button = styled.button`
 
 type Props = {
   icon: IconName
+  size?: number
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-export function IconButton({icon, ...rest}: Props) {
-  return (
-    <Button {...rest}>
-      <Icon name={icon} size={18} />
-    </Button>
-  )
-}
+export const IconButton = React.forwardRef<HTMLButtonElement, Props>(
+  function IconButton({icon, size, ...rest}: Props, ref) {
+    return (
+      <Button ref={ref} {...rest}>
+        <Icon name={icon} size={size || 18} />
+      </Button>
+    )
+  }
+)

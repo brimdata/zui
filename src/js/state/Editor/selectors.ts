@@ -1,4 +1,4 @@
-import {nanoid} from "@reduxjs/toolkit"
+import {createSelector, nanoid} from "@reduxjs/toolkit"
 import {QueryVersion} from "../QueryVersions/types"
 import activeTabSelect from "../Tab/activeTabSelect"
 
@@ -33,4 +33,8 @@ export const getSnapshot = activeTabSelect((tab) => {
     version: nanoid(),
     ts: new Date().toISOString(),
   } as QueryVersion
+})
+
+export const isEmpty = createSelector(getValue, getPins, (value, pins) => {
+  return value.trim() === "" && pins.length === 0
 })

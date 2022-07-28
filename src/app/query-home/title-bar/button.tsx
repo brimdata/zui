@@ -13,6 +13,7 @@ const Btn = styled.button`
   justify-content: center;
   border-radius: 6px;
   gap: 6px;
+  white-space: nowrap;
 
   &:hover {
     background: var(--button-background-hover);
@@ -32,6 +33,12 @@ const Btn = styled.button`
     }
     &:active {
       background: var(--primary-color-darker);
+    }
+  }
+
+  &:disabled {
+    svg {
+      opacity: 0.3;
     }
   }
 `

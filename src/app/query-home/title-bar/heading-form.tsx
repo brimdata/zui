@@ -2,7 +2,6 @@ import React, {useRef} from "react"
 import {useAutoSelect} from "src/app/core/hooks/use-auto-select"
 import useEscapeKey from "src/js/components/hooks/useEscapeKey"
 import styled from "styled-components"
-import {ActiveQuery} from "./active-query"
 import {Button} from "./button"
 import {useHeadingForm} from "./use-heading-form"
 
@@ -11,7 +10,6 @@ const Form = styled.form`
   gap: 4px;
   width: 100%;
   margin: 0 auto;
-  max-width: 600px;
   padding: 0 24px;
 `
 
@@ -27,22 +25,22 @@ const Input = styled.input`
   flex: 1;
 `
 
-export default function HeadingForm({active}: {active: ActiveQuery}) {
-  const form = useHeadingForm(active)
-  useEscapeKey(form.onReset)
+export default function HeadingForm() {
+  const form = useHeadingForm()
   const ref = useRef()
   useAutoSelect(ref)
+  useEscapeKey(form.onReset)
   return (
     <Form onSubmit={form.onSubmit} onReset={form.onReset}>
       <Input
         autoFocus
         name="query-name"
-        defaultValue={active.name() || ""}
+        defaultValue={form.defaultValue}
         placeholder="Query name..."
         ref={ref}
       />
       <Button icon="check" primary type="submit">
-        Save
+        {form.buttonText}
       </Button>
       <Button type="reset">Cancel</Button>
     </Form>

@@ -7,14 +7,17 @@ import {Heading} from "./heading"
 import {ActiveQuery} from "./active-query"
 import {useTabId} from "src/app/core/hooks/use-tab-id"
 import {QueryActions} from "./query-actions"
+import {TitleBarProvider} from "./context"
 
-const BG = styled.header`
+const BG = styled.header.attrs({className: "title-bar"})`
   flex-shrink: 0;
   height: 31px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 16px;
+  gap: 10px;
 `
 
 export function TitleBar() {
@@ -26,9 +29,11 @@ export function TitleBar() {
 
   return (
     <BG>
-      <NavActions />
-      <Heading active={active} />
-      <QueryActions active={active} />
+      <TitleBarProvider activeQuery={active}>
+        <NavActions />
+        <Heading />
+        <QueryActions />
+      </TitleBarProvider>
     </BG>
   )
 }
