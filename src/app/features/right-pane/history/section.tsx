@@ -54,6 +54,7 @@ const useSessionEntries = () => {
         type: type as EntryType,
         onClick: () => api.queries.open(queryId, {version, history: false}),
         key: `${i}-${version}`,
+        index: i,
       }
     })
     .reverse()
@@ -64,8 +65,9 @@ export function HistorySection() {
 
   return (
     <BG>
-      {entries?.map(({text, timestamp, type, onClick, key}) => (
+      {entries?.map(({index, text, timestamp, type, onClick, key}) => (
         <HistoryEntry
+          index={index}
           key={key}
           text={text || "(empty search)"}
           timestamp={timestamp}

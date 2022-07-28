@@ -180,3 +180,5 @@ export const getSessionHistory = createSelector<
   SessionHistoriesState,
   SessionHistoryEntry[]
 >([getTabId, SessionHistories.raw], (tabId, histories) => histories[tabId])
+
+export const getSessionId = getTabId

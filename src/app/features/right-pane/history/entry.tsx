@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import {Timeline} from "./timeline"
+import {useEntryMenu} from "./use-entry-menu"
 
 const Wrap = styled.div`
   height: 28px;
@@ -39,6 +40,7 @@ const Timestamp = styled.p`
 
 export type EntryType = "outdated" | "latest" | "anonymous"
 type Props = {
+  index: number
   text: string
   timestamp: string
   type: EntryType
@@ -57,8 +59,9 @@ function getColor(props: Props) {
 }
 
 export function HistoryEntry(props: Props) {
+  const onContextMenu = useEntryMenu(props.index)
   return (
-    <Wrap onClick={props.onClick}>
+    <Wrap onClick={props.onClick} onContextMenu={onContextMenu}>
       <BG className={props.type}>
         <Timeline color={getColor(props)} />
         <Text>{props.text}</Text>
