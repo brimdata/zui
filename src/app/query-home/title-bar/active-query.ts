@@ -8,6 +8,18 @@ export class ActiveQuery {
     public version: QueryVersion | null // the version from the url param
   ) {}
 
+  id() {
+    return this.query?.id || this.session.id
+  }
+
+  versionId() {
+    return this.version?.version || null
+  }
+
+  isDeleted() {
+    return !this.query && !this.version
+  }
+
   isAnonymous() {
     return !this.query || this.query.id === this.session.id
   }
@@ -38,5 +50,9 @@ export class ActiveQuery {
 
   value() {
     return this.version.value
+  }
+
+  ts() {
+    return this.version.ts
   }
 }

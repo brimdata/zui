@@ -1,78 +1,26 @@
-import React from "react"
+import React, {useMemo} from "react"
 import styled from "styled-components"
-import {EntryType, HistoryEntry} from "./entry"
 import Current from "src/js/state/Current"
 import {useSelector} from "react-redux"
-import {useDispatch} from "src/app/core/state"
-import {getQuerySource} from "../../../../js/state/Queries/flows/get-query-source"
-import getQueryById from "../../../query-home/flows/get-query-by-id"
-import QueryVersions from "src/js/state/QueryVersions"
-import {formatDistanceToNowStrict} from "date-fns"
-import {useBrimApi} from "src/app/core/context"
+import {HistoryItem} from "./history-item"
 
 const BG = styled.div`
   padding: 6px 0;
   overflow-y: auto;
 `
 
-const useSessionEntries = () => {
-  const dispatch = useDispatch()
-  const allVersions = useSelector(QueryVersions.raw)
-  const tabId = useSelector(Current.getTabId)
-  const sessionHistory = useSelector(Current.getSessionHistory)
-  const api = useBrimApi()
-
-  return sessionHistory
-    ?.map(({queryId, version}, i) => {
-      const q = dispatch(getQueryById(queryId))
-      // if version does not match queryId saved in entry, it must be in session
-      let qType = dispatch(getQuerySource(queryId))
-      let entryVersion = allVersions[queryId]?.entities[version]
-      if (!entryVersion) {
-        entryVersion = allVersions[tabId]?.entities[version] || {}
-        qType = "session"
-      }
-
-      const text = qType === "session" ? entryVersion?.value : q.name
-      let type = "anonymous"
-      if (qType !== "session") {
-        if (version === q.latestVersionId()) type = "latest"
-        else type = "outdated"
-      }
-
-      let timestamp = ""
-      try {
-        timestamp = formatDistanceToNowStrict(new Date(entryVersion?.ts))
-        if (/second/.test(timestamp)) timestamp = "Just now"
-      } catch (e) {
-        console.error(e)
-      }
-
-      return {
-        text,
-        timestamp,
-        type: type as EntryType,
-        onClick: () => api.queries.open(queryId, {version, history: false}),
-        key: `${i}-${version}`,
-        index: i,
-      }
-    })
-    .reverse()
-}
-
 export function HistorySection() {
-  const entries = useSessionEntries()
+  const sessionHistory = useSelector(Current.getSessionHistory) || []
+  const history = useMemo(() => [...sessionHistory].reverse(), [sessionHistory])
 
   return (
     <BG>
-      {entries?.map(({index, text, timestamp, type, onClick, key}) => (
-        <HistoryEntry
-          index={index}
-          key={key}
-          text={text || "(empty search)"}
-          timestamp={timestamp}
-          type={type}
-          onClick={onClick}
+      {history.map(({version, queryId}, index) => (
+        <HistoryItem
+          key={index}
+          index={sessionHistory.length - 1 - index} // since we reversed it
+          queryId={queryId}
+          version={version}
         />
       ))}
     </BG>
