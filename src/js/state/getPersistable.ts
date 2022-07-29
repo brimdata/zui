@@ -1,4 +1,4 @@
-import {pick} from "lodash"
+import {omit, pick} from "lodash"
 import {TabState} from "./Tab/types"
 import {State} from "./types"
 
@@ -27,10 +27,16 @@ const TAB_PERSIST: TabKey[] = [
 ]
 
 function deleteAccessTokens(state: Partial<State>) {
-  if (!state.lakes) return
-  for (const l of Object.values(state.lakes)) {
-    if (l.authType === "auth0" && l.authData) delete l.authData.accessToken
+  if (!state.lakes) return undefined
+  const newLakes = {}
+  for (const id in state.lakes) {
+    const lake = {...state.lakes[id]}
+    if (lake.authData) {
+      lake.authData = omit(lake.authData, "accessToken")
+    }
+    newLakes[id] = lake
   }
+  return newLakes
 }
 
 export function getPersistedState(original: State) {
@@ -43,7 +49,7 @@ export function getPersistedState(original: State) {
     }
     state = {...state, tabs}
   }
-
-  deleteAccessTokens(state)
+  const lakes = deleteAccessTokens(state)
+  state = {...state, lakes}
   return state
 }
