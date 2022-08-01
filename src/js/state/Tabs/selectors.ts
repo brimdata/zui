@@ -23,7 +23,10 @@ export const _getIds = createSelector(getData, (data) => {
   return data.map((d) => d.id)
 })
 
-export const getIds = createIsEqualSelector(_getIds, (ids) => ids)
+export const getIds = createIsEqualSelector<State, string[], string[]>(
+  _getIds,
+  (ids) => ids
+)
 
 export const findFirstQuerySession = createSelector<
   State,

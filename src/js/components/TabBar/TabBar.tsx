@@ -77,7 +77,7 @@ export default function TabBar() {
         </TrafficLightBG>
       )}
       <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
-        {ids.map((id) => {
+        {ids.map((id: string) => {
           const tab = brim.tab(id, lakes, pools, queryIdNameMap)
           return (
             <AnimatedSearchTab
