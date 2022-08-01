@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import Tabs from "../Tabs/slice"
+import {actions as tabs} from "../Tabs/reducer"
 
 const slice = createSlice({
   name: "sessionQueries",
@@ -10,10 +10,7 @@ const slice = createSlice({
     },
   },
   extraReducers: {
-    [Tabs.actions.remove.toString()]: (
-      s,
-      a: ReturnType<typeof Tabs.actions.remove>
-    ) => {
+    [tabs.remove.toString()]: (s, a: ReturnType<typeof tabs.remove>) => {
       delete s[a.payload]
     },
   },

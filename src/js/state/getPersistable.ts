@@ -27,6 +27,7 @@ const TAB_PERSIST: TabKey[] = [
   "layout",
   "editor",
   "lastFocused",
+  "lastLocationKey",
 ]
 
 function deleteAccessTokens(state: Partial<State>) {

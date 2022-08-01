@@ -86,6 +86,10 @@ const slice = createSlice({
         type: "@INIT",
       })
     },
+    loaded(s, a: PayloadAction<string>) {
+      const tab = findTab(s, s.active)
+      tab.lastLocationKey = a.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(isTabAction, (s, a) => {
@@ -114,4 +118,5 @@ const findTabIndex = (s: Draft<TabsState>, id: string) => {
   return s.data.findIndex((t) => t.id === id)
 }
 
-export default slice
+export const actions = slice.actions
+export const reducer = slice.reducer

@@ -17,6 +17,7 @@ const tabReducer = combineReducers({
   editor,
   id: (state: string = brim.randomHash(), _) => state,
   lastFocused: (state: string = new Date().toISOString()) => state,
+  lastLocationKey: (state = "") => state,
   inspector,
   layout,
   logDetails,
