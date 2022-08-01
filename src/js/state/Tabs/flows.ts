@@ -1,54 +1,28 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {ipcRenderer} from "electron"
 import {lakeQueryPath} from "src/app/router/utils/paths"
-import brim from "../../brim"
 import Current from "../Current"
-import {QueryPin} from "../Editor/types"
 import SessionQueries from "../SessionQueries"
-import {TabState} from "../Tab/types"
 import {Thunk} from "../types"
 import Tabs from "./"
 import {findTabById, findTabByUrl} from "./find"
-import {findById, findFirstQuerySession} from "./selectors"
-
-export const init =
-  (url = "/", id = brim.randomHash()): Thunk<TabState> =>
-  (dispatch, getState) => {
-    dispatch(SessionQueries.init(id))
-    dispatch(Tabs.add(id))
-    global.tabHistories.create(id, [{pathname: url}], 0)
-    return findById(id)(getState())
-  }
 
 export const create =
-  (url = "/", id = brim.randomHash()): Thunk<string> =>
+  (url = "/", id = nanoid()): Thunk<string> =>
   (dispatch) => {
     dispatch(SessionQueries.init(id))
     dispatch(Tabs.add(id))
+    global.tabHistories.create(id, [{pathname: url}], 0)
     dispatch(Tabs.activate(id))
-    global.tabHistories.create(id).replace(url)
     return id
   }
 
 export const createQuerySession = (): Thunk<string> => (dispatch, getState) => {
-  const id = brim.randomHash()
+  const id = nanoid()
   const lakeId = Current.getLakeId(getState())
   const url = lakeQueryPath(id, lakeId, null)
   return dispatch(create(url, id))
 }
-
-const now = () => new Date().toISOString()
-
-export const openAnonymousQuery =
-  (params: {pins: QueryPin[]; value: string}): Thunk =>
-  (dispatch, getState, {api}) => {
-    // Find a tab to attach this thing to
-    const version = {...params, ts: now(), version: nanoid()}
-    const tab = findFirstQuerySession(getState())
-    const tabId = tab ? tab.id : brim.randomHash()
-    api.queries.addVersion(tabId, version)
-    api.queries.open(tabId, {tabId})
-  }
 
 export const previewUrl =
   (url: string): Thunk =>
@@ -125,10 +99,3 @@ export const activateLast = (): Thunk => (dispatch, getState) => {
   const tab = tabs[tabs.length - 1]
   if (tab) dispatch(Tabs.activate(tab.id))
 }
-
-export const getOrCreateQuerySessionTab =
-  (): Thunk<[string, boolean]> => (dispatch, getState) => {
-    const tab = findFirstQuerySession(getState())
-    if (tab) return [tab.id, false]
-    else return [dispatch(Tabs.init()).id, true]
-  }

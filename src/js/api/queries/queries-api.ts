@@ -62,7 +62,7 @@ export class QueriesApi {
   open(id: string | QueryParams, options: Partial<OpenQueryOptions> = {}) {
     const opts = openQueryOptions(options)
     const lakeId = this.select(Current.getLakeId)
-    let tab = this.select(Tabs.findFirstQuerySession)
+    const tab = this.select(Tabs.findFirstQuerySession)
     const tabId = tab ? tab.id : nanoid()
 
     let queryId: string, versionId: string
@@ -81,8 +81,11 @@ export class QueriesApi {
     }
 
     const url = lakeQueryPath(queryId, lakeId, versionId)
-    if (!tab) tab = this.dispatch(Tabs.init(url, tabId))
-    this.dispatch(Tabs.activate(tab.id))
+    if (tab) {
+      this.dispatch(Tabs.activate(tabId))
+    } else {
+      this.dispatch(Tabs.create(url, tabId))
+    }
 
     const history = this.select(Current.getHistory)
     if (history.location.pathname === url) {
