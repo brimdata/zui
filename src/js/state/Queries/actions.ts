@@ -10,10 +10,12 @@ import {
 } from "./types"
 
 export default {
-  setAll: (rootGroup: Group): QUERIES_SET_ALL => ({
-    type: "$QUERIES_SET_ALL",
-    rootGroup,
-  }),
+  setAll: (rootGroup: Group): QUERIES_SET_ALL => {
+    return {
+      type: "$QUERIES_SET_ALL",
+      rootGroup,
+    }
+  },
   addItem: (item: Item, parentGroupId = "root"): QUERIES_ADD_ITEM => ({
     type: "$QUERIES_ADD_ITEM",
     item,

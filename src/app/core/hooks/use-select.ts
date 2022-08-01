@@ -1,5 +1,5 @@
-import {useCallback} from "react"
 import {useStore} from "react-redux"
+import {State} from "src/js/state/types"
 
 /**
  * This is useful when you need to select from the state
@@ -8,10 +8,9 @@ import {useStore} from "react-redux"
  * needs to grab it once in the event handler.
  */
 export default function useSelect() {
-  const store = useStore()
-  const select = useCallback(
-    (selector: any) => selector(store.getState()),
-    [store]
-  )
+  const store = useStore<State>()
+  function select<T extends (...args: any) => any>(selector: T): ReturnType<T> {
+    return selector(store.getState())
+  }
   return select
 }

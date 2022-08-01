@@ -65,7 +65,7 @@ test("remove middle, active tab", () => {
 })
 
 test("remove first, active tab", () => {
-  const first = Tabs.getData(store.getState())[0].id
+  const first = Tabs.getData(store.getState())[0].id as string
   const state = store.dispatchAll([
     Tabs.add("1"),
     Tabs.add("2"),
@@ -97,7 +97,7 @@ test("remove non-active tab after active tab", () => {
 })
 
 test("remove tab does nothing if only one tab left", () => {
-  const first = Tabs.getData(store.getState())[0].id
+  const first = Tabs.getData(store.getState())[0].id as string
   const state = store.dispatchAll([Tabs.remove(first)])
 
   expect(Tabs.getCount(state)).toBe(1)

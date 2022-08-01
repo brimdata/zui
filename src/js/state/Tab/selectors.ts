@@ -11,6 +11,7 @@ import Url from "../Url"
 import {SearchParams} from "../Url/selectors"
 import {createIsEqualSelector} from "../utils"
 import {TabState} from "./types"
+import activeTabSelect from "./activeTabSelect"
 
 const lakeUrl = createSelector<State, Lake | null, string>(
   Current.getLake,
@@ -57,6 +58,8 @@ const getSpanAsDates = createSelector<State, Span, DateTuple>(
   }
 )
 
+const getLastLocationKey = activeTabSelect((t) => t.lastLocationKey)
+
 export default {
   lakeUrl,
   getPoolName: (state: State) => {
@@ -67,4 +70,5 @@ export default {
   getSpanAsDates,
   getSpanArgs,
   getComputedSpan,
+  getLastLocationKey,
 }

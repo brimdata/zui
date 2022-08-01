@@ -62,7 +62,11 @@ const slice = createSlice({
       if (id === s.preview) s.preview = null
     },
     activate(s, a: PayloadAction<string>) {
-      if (findTab(s, a.payload)) s.active = a.payload
+      const tab = findTab(s, a.payload)
+      if (tab) {
+        tab.lastFocused = new Date().toISOString()
+        s.active = a.payload
+      }
     },
     preview(s, a: PayloadAction<string | null>) {
       if (!a.payload) s.preview = null
@@ -81,6 +85,10 @@ const slice = createSlice({
       s.data[index] = tabReducer({id: s.active} as TabState, {
         type: "@INIT",
       })
+    },
+    loaded(s, a: PayloadAction<string>) {
+      const tab = findTab(s, s.active)
+      tab.lastLocationKey = a.payload
     },
   },
   extraReducers: (builder) => {
@@ -110,4 +118,5 @@ const findTabIndex = (s: Draft<TabsState>, id: string) => {
   return s.data.findIndex((t) => t.id === id)
 }
 
-export default slice
+export const actions = slice.actions
+export const reducer = slice.reducer

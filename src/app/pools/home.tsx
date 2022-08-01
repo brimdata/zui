@@ -1,14 +1,11 @@
 import {cssVar, transparentize} from "polished"
 import React from "react"
-import {useDispatch, useSelector} from "react-redux"
-import {lakeQueryPath} from "src/app/router/utils/paths"
+import {useSelector} from "react-redux"
 import {bytes} from "src/js/lib/fmt"
 import Current from "src/js/state/Current"
-import Queries from "src/js/state/Queries"
-import Tabs from "src/js/state/Tabs"
-import {AppDispatch} from "src/js/state/types"
 import styled from "styled-components"
-import Actions from "../query-home/toolbar/actions"
+import {useBrimApi} from "../core/context"
+import Actions from "../query-home/toolbar/actions/actions"
 
 const Header = styled.header`
   padding: 16px;
@@ -45,15 +42,14 @@ const Body = styled.section`
 `
 
 const PoolHome = () => {
-  const dispatch = useDispatch<AppDispatch>()
   const pool = useSelector(Current.mustGetPool)
-  const lakeId = useSelector(Current.getLakeId)
+  const api = useBrimApi()
 
   const openNewDraftQuery = () => {
-    const query = dispatch(
-      Queries.create({pins: [{type: "from", value: pool.name}]})
-    )
-    dispatch(Tabs.create(lakeQueryPath(query.id, lakeId)))
+    api.queries.open({
+      pins: [{type: "from", value: pool.name}],
+      value: "",
+    })
   }
   const keys = pool.data.layout.keys.map((k) => k.join("."))
 

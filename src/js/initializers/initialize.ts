@@ -22,7 +22,7 @@ export default async function initialize() {
   initIpcListeners(store, pluginManager)
   initMenuActionListeners(store)
   initLakeParams(store)
-  initDebugGlobals(store)
+  initDebugGlobals(store, api)
 
   return {store, api, pluginManager}
 }

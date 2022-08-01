@@ -2,7 +2,7 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import Toolbars from "src/js/state/Toolbars"
 import {IconName} from "src/app/core/icon-temp"
-import {ActionButtonProps} from "../action-button"
+import {ActionButtonProps} from "../actions/action-button"
 import {executeCommand} from "src/js/flows/executeCommand"
 
 const usePluginToolbarItems = (toolbarId: string): ActionButtonProps[] => {

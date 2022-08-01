@@ -38,3 +38,7 @@ export const getTags = createSelector<State, QueriesState, string[]>(
     return Object.keys(tagMap)
   }
 )
+
+export const any = createSelector(getGroupById("root"), (group) => {
+  return group.items.length > 0
+})

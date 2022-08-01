@@ -45,7 +45,7 @@ const $ = {
 
 beforeEach(() => {
   brim.dispatch(Modal.show("settings"))
-  render(<Preferences />, {store: brim.store})
+  render(<Preferences />, {store: brim.store, api: brim.api})
 })
 
 test("change time format", async () => {
@@ -56,7 +56,7 @@ test("change time format", async () => {
   await waitForElementToBeRemoved($.modal)
 
   const record = createRecord({ts: new Date(2019, 9, 1, 8)})
-  render(<Fields record={record} />, {store: brim.store})
+  render(<Fields record={record} />, {store: brim.store, api: brim.api})
   expect($.dd.textContent).toBe("2019")
 })
 

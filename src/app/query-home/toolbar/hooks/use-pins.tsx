@@ -3,7 +3,7 @@ import {showContextMenu} from "src/js/lib/System"
 import Editor from "src/js/state/Editor"
 import submitSearch from "../../flows/submit-search"
 import popupPosition from "../../search-area/popup-position"
-import {ActionButtonProps} from "../action-button"
+import {ActionButtonProps} from "../actions/action-button"
 
 const showPinsMenu = (anchor) => (dispatch, getState) => {
   const pins = Editor.getPins(getState())

@@ -3,10 +3,8 @@ import styled from "styled-components"
 import {formatDistanceToNowStrict} from "date-fns"
 import {useSelector} from "react-redux"
 import Current from "../../../js/state/Current"
-import {useDispatch} from "../../core/state"
-import {lakeQueryPath} from "../../router/utils/paths"
-import tabHistory from "../../router/tab-history"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {useBrimApi} from "src/app/core/context"
 
 const TimeNode = styled.div`
   display: flex;
@@ -96,7 +94,7 @@ const useForcedRenderInterval = (interval = 60000) => {
   }, [renderTrigger])
 }
 
-const FormattedTime = ({ts}: {ts: string}) => {
+export const FormattedTime = ({ts}: {ts: string}) => {
   useForcedRenderInterval()
 
   const duration = formatDistanceToNowStrict(new Date(ts))
@@ -106,16 +104,13 @@ const FormattedTime = ({ts}: {ts: string}) => {
 
 const VersionItem = ({styles, data, handlers}) => {
   const queryVersion = data as QueryVersion
-  const dispatch = useDispatch()
   const query = useSelector(Current.getQuery)
-  const lakeId = useSelector(Current.getLakeId)
+  const api = useBrimApi()
 
   const onClick = (e) => {
     e.preventDefault()
     handlers.select(e, {selectOnClick: true})
-    dispatch(
-      tabHistory.push(lakeQueryPath(query.id, lakeId, queryVersion.version))
-    )
+    api.queries.open(query.id, {version: queryVersion.version})
   }
 
   return (

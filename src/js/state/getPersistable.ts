@@ -14,6 +14,8 @@ const WINDOW_PERSIST: StateKey[] = [
   "queries",
   "queryVersions",
   "tabHistories",
+  "sessionHistories",
+  "sessionQueries",
   "lakes",
 ]
 
@@ -24,6 +26,8 @@ const TAB_PERSIST: TabKey[] = [
   "columns",
   "layout",
   "editor",
+  "lastFocused",
+  "lastLocationKey",
 ]
 
 function deleteAccessTokens(state: Partial<State>) {

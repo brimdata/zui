@@ -1,54 +1,49 @@
 import Current from "src/js/state/Current"
-import DraftQueries from "src/js/state/DraftQueries"
 import Editor from "src/js/state/Editor"
 import {syncPool} from "../core/pools/sync-pool"
 import Results from "src/js/state/Results"
-import {DRAFT_QUERY_NAME} from "./utils/brim-query"
 import {startTransition} from "react"
-import {getQuerySource} from "src/js/state/Queries/flows/get-query-source"
+import {BrimQuery} from "./utils/brim-query"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
+import Notice from "src/js/state/Notice"
+import Tabs from "src/js/state/Tabs"
+import {Thunk} from "src/js/state/types"
+import {Location} from "history"
 
-export function loadRoute(location) {
+export function loadRoute(location: Location): Thunk {
   return (dispatch) => {
+    dispatch(Tabs.loaded(location.key))
+    dispatch(Notice.dismiss())
+    dispatch(Results.error({id: MAIN_RESULTS, error: null, tabId: ""}))
     dispatch(syncEditor)
     dispatch(fetchData(location))
   }
 }
 
 function syncEditor(dispatch, getState) {
-  const {queryId} = Current.getQueryLocationData(getState())
   const lakeId = Current.getLakeId(getState())
-  const query = Current.getQuery(getState())
-  const isDraft = dispatch(getQuerySource(queryId)) === "draft"
+  const version = Current.getVersion(getState())
+
   const pool = Current.getQueryPool(getState())
   if (pool && !pool.hasSpan()) dispatch(syncPool(pool.id, lakeId))
-  if (!query && queryId && isDraft) {
-    // reset drafts?
-    dispatch(
-      DraftQueries.set({
-        id: queryId,
-        name: DRAFT_QUERY_NAME,
-        value: "",
-        pins: {},
-      })
-    )
-  }
+
   // Give codemirror a chance to update by scheduling this update
   setTimeout(() => {
-    dispatch(Editor.setValue(query?.value ?? ""))
-    dispatch(Editor.setPins(query?.pins || []))
+    dispatch(Editor.setValue(version?.value ?? ""))
+    dispatch(Editor.setPins(version?.pins || []))
   })
 }
 
 function fetchData(location) {
   return (dispatch, getState) => {
     const key = Results.getKey(MAIN_RESULTS)(getState())
-    const query = Current.getQuery(getState())
+    const version = Current.getVersion(getState())
 
     if (key === location.key) return
 
     startTransition(() => {
-      query && dispatch(Results.fetchFirstPage(query.toString()))
+      version &&
+        dispatch(Results.fetchFirstPage(BrimQuery.versionToZed(version)))
     })
   }
 }

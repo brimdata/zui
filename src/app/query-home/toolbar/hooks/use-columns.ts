@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux"
 import Modal from "src/js/state/Modal"
-import {ActionButtonProps} from "../action-button"
+import {ActionButtonProps} from "../actions/action-button"
 
 export default function useColumns(): ActionButtonProps {
   const dispatch = useDispatch()

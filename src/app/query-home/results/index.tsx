@@ -5,10 +5,22 @@ import {useResultsData} from "./data-hook"
 import {MainInspector} from "./main-inspector"
 import {ResultsError} from "./results-error"
 import ResultsTable from "./results-table"
-import * as Styled from "./results.styled"
 import {useResultsView} from "./view-hook"
 import Results from "src/js/state/Results"
+import styled from "styled-components"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
+
+const BG = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: none;
+  position: relative;
+  flex: 1;
+`
+
+const Body = styled.div`
+  flex: 1;
+`
 
 const ResultsComponent = () => {
   const data = useResultsData()
@@ -16,22 +28,8 @@ const ResultsComponent = () => {
   const {ref, rect} = useResizeObserver()
   const error = useSelector(Results.getError(MAIN_RESULTS))
   return (
-    <Styled.BG>
-      <Styled.Toolbar>
-        <Styled.Group>
-          <Styled.ButtonSwitch>
-            <Styled.TableButton
-              onClick={view.setTable}
-              aria-pressed={view.isTable}
-            />
-            <Styled.ObjectsButton
-              onClick={view.setInspector}
-              aria-pressed={view.isInspector}
-            />
-          </Styled.ButtonSwitch>
-        </Styled.Group>
-      </Styled.Toolbar>
-      <Styled.Body ref={ref} data-test-locator="viewer_results">
+    <BG>
+      <Body ref={ref} data-test-locator="viewer_results">
         {error && <ResultsError error={error} />}
         {!error && view.isTable && (
           <ResultsTable height={rect.height} width={rect.width} />
@@ -45,8 +43,8 @@ const ResultsComponent = () => {
             />
           </div>
         )}
-      </Styled.Body>
-    </Styled.BG>
+      </Body>
+    </BG>
   )
 }
 

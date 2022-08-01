@@ -8,6 +8,7 @@ import Layout from "../../../js/state/Layout"
 import {DraggablePane} from "src/js/components/draggable-pane"
 import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
+import {HistorySection} from "./history/section"
 
 const Pane = styled(DraggablePane)`
   display: flex;
@@ -20,8 +21,8 @@ const BG = styled.div`
   display: flex;
   padding: 0 6px;
   align-items: center;
-  box-shadow: 0 1px 0px var(--cloudy);
-  height: 28px;
+  border-bottom: 1px solid var(--border-color);
+  height: 31px;
   flex-shrink: 0;
   user-select: none;
   position: relative;
@@ -30,10 +31,10 @@ const BG = styled.div`
     background: none;
     border: none;
     display: flex;
-
     border-radius: 5px;
     padding: 0 6px;
     text-transform: uppercase;
+    height: 100%;
 
     span {
       height: 100%;
@@ -74,6 +75,8 @@ const PaneContentSwitch = ({paneName}) => {
       return <DetailSection />
     case "versions":
       return <VersionsSection />
+    case "history":
+      return <HistorySection />
     default:
       return null
   }
@@ -85,6 +88,12 @@ export function Menu() {
   const onClick = (name) => () => dispatch(Layout.setCurrentPaneName(name))
   return (
     <BG>
+      <button
+        onClick={onClick("history")}
+        aria-pressed={currentPaneName === "history"}
+      >
+        <span>History</span>
+      </button>
       <button
         onClick={onClick("detail")}
         aria-pressed={currentPaneName === "detail"}

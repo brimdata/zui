@@ -5,25 +5,31 @@ import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import actions from "./actions"
 import Queries from "."
-import {flattenQueryTree, getNextQueryCount} from "./helpers"
+import {flattenQueryTree, getNextCount} from "./helpers"
+import {BrimQuery} from "src/app/query-home/utils/brim-query"
 
-export function create(attrs: Partial<QueryVersion> = {}): Thunk<Query> {
+export function create(
+  attrs: Partial<QueryVersion & {name?: string}> = {}
+): Thunk<BrimQuery> {
   return (dispatch, getState) => {
     const queries = flattenQueryTree(Queries.raw(getState()), false).map(
       (n) => n.model
     )
+    const {name, ...versionAttrs} = attrs
     const query: Query = {
       id: nanoid(),
-      name: `Query #${getNextQueryCount(queries)}`,
+      name: name || `Query #${getNextCount(queries, "Query")}`,
     }
     const version: QueryVersion = {
       value: "",
-      ...attrs,
+      ...versionAttrs,
       version: nanoid(),
       ts: new Date().toISOString(),
     }
     dispatch(actions.addItem(query))
     dispatch(QueryVersions.add({queryId: query.id, version}))
-    return query
+    const versions = QueryVersions.getByQueryId(query.id)(getState())
+
+    return new BrimQuery(query, versions)
   }
 }

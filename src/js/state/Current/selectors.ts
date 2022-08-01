@@ -1,5 +1,4 @@
 import {matchPath} from "react-router"
-import {createSelector} from "reselect"
 import brim, {BrimLake} from "../../brim"
 import Pools from "../Pools"
 import {PoolsState} from "../Pools/types"
@@ -9,12 +8,19 @@ import Lakes from "../Lakes"
 import {LakesState} from "../Lakes/types"
 import {MemoryHistory} from "history"
 import {Pool} from "src/app/core/pools/pool"
-import DraftQueries from "../DraftQueries"
 import RemoteQueries from "../RemoteQueries"
 import Queries from "../Queries"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 import QueryVersions from "../QueryVersions"
 import {query, queryVersion} from "src/app/router/routes"
+import SessionQueries from "../SessionQueries"
+import SessionHistories from "../SessionHistories"
+import {createSelector} from "@reduxjs/toolkit"
+import {
+  SessionHistoriesState,
+  SessionHistoryEntry,
+} from "../SessionHistories/types"
+import {QueryVersion} from "../QueryVersions/types"
 
 type Id = string | null
 
@@ -41,17 +47,17 @@ export const getQueryLocationData = (
     queryVersion.path,
     query.path,
   ])
-  const queryId = match?.params?.queryId
   const version = match?.params?.version
+
+  let queryId = match?.params?.queryId
   return {queryId, version}
 }
 
 export const getQueryById =
   (id: string, version?: string) =>
   (state: State): BrimQuery | null => {
-    // query lookup policy is to search drafts first, then local, and finally remote
     const query =
-      DraftQueries.getById(id)(state) ||
+      SessionQueries.getById(id)(state) ||
       Queries.getQueryById(id)(state) ||
       RemoteQueries.getQueryById(id)(state)
     if (!query) return null
@@ -66,6 +72,15 @@ export const getQuery = (state: State): BrimQuery | null => {
   return getQueryById(queryId, version)(state)
 }
 
+export const getVersion = (state: State): QueryVersion => {
+  const {queryId, version} = getQueryLocationData(state)
+  const tabId = getTabId(state)
+  return (
+    QueryVersions.getByVersion(queryId, version)(state) ||
+    QueryVersions.getByVersion(tabId, version)(state)
+  )
+}
+
 export const getPoolId = (state) => {
   type Params = {poolId?: string}
   const match = matchPath<Params>(getLocation(state).pathname, [
@@ -74,6 +89,7 @@ export const getPoolId = (state) => {
   return match?.params?.poolId || null
 }
 
+// This is weird, we need to get this from the state and not the url.
 export const getLakeId = (state: State = undefined) => {
   type Params = {lakeId?: string}
   const match = matchPath<Params>(getLocation(state).pathname, "/lakes/:lakeId")
@@ -157,3 +173,12 @@ export const getPools = createSelector(getLake, Pools.raw, (l, pools) => {
 export const getTabId = (s: State) => {
   return s.tabs.active
 }
+
+export const getSessionHistory = createSelector<
+  State,
+  string,
+  SessionHistoriesState,
+  SessionHistoryEntry[]
+>([getTabId, SessionHistories.raw], (tabId, histories) => histories[tabId])
+
+export const getSessionId = getTabId

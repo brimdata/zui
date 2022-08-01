@@ -10,4 +10,6 @@ export default {
   getCurrentPaneName: activeTabSelect((state) => state.layout.currentPaneName),
   getColumnsView: activeTabSelect((state) => state.layout.columnHeadersView),
   getResultsView: activeTabSelect((s) => s.layout.resultsView),
+  getIsEditingTitle: activeTabSelect((s) => s.layout.isEditingTitle),
+  getTitleFormAction: activeTabSelect((s) => s.layout.titleFormAction),
 }

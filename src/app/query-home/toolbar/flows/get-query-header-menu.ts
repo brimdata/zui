@@ -11,6 +11,7 @@ import Current from "src/js/state/Current"
 import {Query} from "src/js/state/Queries/types"
 import {getQuerySource} from "src/js/state/Queries/flows/get-query-source"
 import QueryVersions from "src/js/state/QueryVersions"
+import {last} from "lodash"
 
 const getQueryHeaderMenu =
   ({handleRename}: {handleRename: () => void}) =>
@@ -94,12 +95,20 @@ const getQueryHeaderMenu =
           if (querySource === "local") {
             dispatch(Queries.addItem(q, "root"))
             dispatch(QueryVersions.set({queryId: q.id, versions: versionsCopy}))
-            dispatch(Tabs.create(lakeQueryPath(q.id, lakeId)))
+            dispatch(
+              Tabs.create(
+                lakeQueryPath(q.id, lakeId, last(versionsCopy).version)
+              )
+            )
           }
           if (querySource === "remote") {
             const queriesCopy = versionsCopy.map((v) => ({...q, ...v}))
             dispatch(setRemoteQueries(queriesCopy)).then(() => {
-              dispatch(Tabs.create(lakeQueryPath(q.id, lakeId)))
+              dispatch(
+                Tabs.create(
+                  lakeQueryPath(q.id, lakeId, last(queriesCopy).version)
+                )
+              )
             })
           }
         },

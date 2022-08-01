@@ -1,7 +1,7 @@
 import useContentRect from "src/app/core/hooks/useContentRect"
 import {useLayoutEffect, useState} from "react"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
-import {GUTTER} from "../action-buttons"
+import {GUTTER} from "../actions/action-buttons"
 
 const useVisibleActions = (actions) => {
   const [visible, setVisible] = useState([])
