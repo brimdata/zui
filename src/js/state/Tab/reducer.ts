@@ -17,7 +17,8 @@ const tabReducer = combineReducers({
   editor,
   id: (state: string = brim.randomHash(), _): string => state,
   lastFocused: (state: string = new Date().toISOString()): string => state,
-  lastLocationKey: (state = ""): string => state,
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+  lastLocationKey: (state: string = ""): string => state,
   inspector,
   layout,
   logDetails,
