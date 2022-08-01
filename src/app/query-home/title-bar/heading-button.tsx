@@ -5,6 +5,7 @@ export const HeadingButton = styled.button`
   border: none;
   height: 22px;
   display: flex;
+  gap: 4px;
   align-items: center;
   justify-content: center;
   border-radius: 6px;
