@@ -17,7 +17,6 @@ import {BootArgs, bootBrim} from "./boot-brim"
 
 jest.setTimeout(20_000)
 
-jest.setTimeout(20_000)
 export class SystemTest {
   store: Store
   plugins: PluginManager
