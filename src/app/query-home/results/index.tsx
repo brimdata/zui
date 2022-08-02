@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useRef} from "react"
 import {useSelector} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import {useResultsData} from "./data-hook"
@@ -9,6 +9,8 @@ import {useResultsView} from "./view-hook"
 import Results from "src/js/state/Results"
 import styled from "styled-components"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
+import AppErrorBoundary from "src/js/components/AppErrorBoundary"
+import {useLocation} from "react-router"
 
 const BG = styled.div`
   display: flex;
@@ -27,23 +29,32 @@ const ResultsComponent = () => {
   const view = useResultsView()
   const {ref, rect} = useResizeObserver()
   const error = useSelector(Results.getError(MAIN_RESULTS))
+  const location = useLocation()
+  const boundary = useRef<AppErrorBoundary>()
+
+  useEffect(() => {
+    boundary.current.clear()
+  }, [location.key])
+
   return (
     <BG>
-      <Body ref={ref} data-test-locator="viewer_results">
-        {error && <ResultsError error={error} />}
-        {!error && view.isTable && (
-          <ResultsTable height={rect.height} width={rect.width} />
-        )}
-        {!error && view.isInspector && (
-          <div style={{height: 0, width: 0, overflow: "visible"}}>
-            <MainInspector
-              height={rect.height}
-              width={rect.width}
-              values={data.values}
-            />
-          </div>
-        )}
-      </Body>
+      <AppErrorBoundary ref={boundary}>
+        <Body ref={ref} data-test-locator="viewer_results">
+          {error && <ResultsError error={error} />}
+          {!error && view.isTable && (
+            <ResultsTable height={rect.height} width={rect.width} />
+          )}
+          {!error && view.isInspector && (
+            <div style={{height: 0, width: 0, overflow: "visible"}}>
+              <MainInspector
+                height={rect.height}
+                width={rect.width}
+                values={data.values}
+              />
+            </div>
+          )}
+        </Body>
+      </AppErrorBoundary>
     </BG>
   )
 }
