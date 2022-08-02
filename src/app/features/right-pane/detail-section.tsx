@@ -8,6 +8,7 @@ import HistoryButtons from "src/js/components/common/HistoryButtons"
 import {useDispatch} from "../../core/state"
 import NoSelection from "../../detail/NoSelection"
 import {Left, PaneBody, PaneHeader, Right} from "./common"
+import {zed} from "@brimdata/zealot"
 
 const DetailSection = () => {
   const dispatch = useDispatch()
@@ -15,7 +16,7 @@ const DetailSection = () => {
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()
   const currentLog = useSelector(LogDetails.build)
 
-  if (!currentLog) return <NoSelection />
+  if (!currentLog && !(currentLog instanceof zed.Record)) return <NoSelection />
   return (
     <>
       <PaneHeader>

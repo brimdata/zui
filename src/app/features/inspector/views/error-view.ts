@@ -1,10 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import {ContainerView} from "./container-view"
 import {createView} from "./create"
-import {field} from "../templates/field"
-import {syntax} from "../templates/syntax"
-import {RenderMode} from "../types"
-import {space} from "../templates/space"
 
 export class ErrorView extends ContainerView<zed.Error> {
   name(): string {
@@ -12,26 +8,17 @@ export class ErrorView extends ContainerView<zed.Error> {
   }
 
   count() {
-    return this.iterate().next().value.count()
+    const {value: view} = this.iterate().next()
+    if (view instanceof ContainerView) return view.count()
+    else return 1
   }
 
   openToken(): string {
-    return "("
+    return "error("
   }
 
   closeToken(): string {
     return ")"
-  }
-
-  render(mode: RenderMode) {
-    const {value: view} = this.iterate().next()
-    return [
-      this.name(),
-      space(),
-      syntax(this.openToken()),
-      field(view, mode),
-      syntax(this.closeToken()),
-    ]
   }
 
   *iterate() {

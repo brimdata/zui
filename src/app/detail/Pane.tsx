@@ -68,7 +68,11 @@ export default function Pane() {
 
   return (
     <Wrap ref={ref}>
-      {record ? <Content record={record} /> : <NoSelection />}
+      {record && record instanceof zed.Record ? (
+        <Content record={record} />
+      ) : (
+        <NoSelection />
+      )}
     </Wrap>
   )
 }
