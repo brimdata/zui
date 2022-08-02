@@ -10,6 +10,7 @@ import RightPane from "../features/right-pane"
 import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
+import MainHistogramChart from "./histogram/MainHistogram/Chart"
 
 const MainContent = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const QueryHome = () => {
         <MainContent>
           <TitleBar />
           <SearchArea />
+          <MainHistogramChart />
           <ResultsToolbar />
           <ResultsComponent />
         </MainContent>
