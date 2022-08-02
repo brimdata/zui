@@ -4,7 +4,7 @@
 
 import React from "react"
 import {rest} from "msw"
-import {SystemTest} from "src/test/system/system-test"
+import {SystemTest} from "src/test/system"
 import ReleaseNotes from "./release-notes"
 import {screen} from "@testing-library/react"
 

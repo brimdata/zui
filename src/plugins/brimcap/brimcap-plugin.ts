@@ -31,7 +31,7 @@ export default class BrimcapPlugin {
     [pid: number]: ChildProcess
   } = {}
   private brimcapDataRoot = ""
-  private brimcapBinPath = ""
+  public brimcapBinPath = ""
   private suricataUserDir = ""
   private toastConfig = {
     loading: {

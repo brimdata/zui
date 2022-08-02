@@ -8,7 +8,7 @@ export function getPath(name: PathName) {
     case "app-data":
       return path.join(remote.app.getPath("userData"), "data")
     case "zdeps":
-      return (
+      return path.join(
         remote.app.getAppPath().replace("app.asar", "app.asar.unpacked"),
         "zdeps"
       )

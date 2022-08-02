@@ -1,3 +1,4 @@
+import "src/test/system/real-paths"
 import appMenu from "./appMenu"
 import {BrimMain} from "../brim"
 

@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom"
+import "../../system/real-paths"
 import BrimApi from "src/js/api"
 import {BrimMain} from "src/js/electron/brim"
 import {main} from "src/js/electron/main"

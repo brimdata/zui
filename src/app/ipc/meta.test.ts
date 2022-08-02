@@ -1,3 +1,4 @@
+import "src/test/system/real-paths"
 import {meta} from "./meta"
 
 test("repo", () => {
