@@ -1,4 +1,3 @@
-import "src/test/system/real-paths"
 import {app, dialog, shell, MenuItemConstructorOptions} from "electron"
 import path from "path"
 
