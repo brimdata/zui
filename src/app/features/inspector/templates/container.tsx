@@ -25,8 +25,8 @@ export function expandAnchor(view: ContainerView, children: ReactNode) {
   return (
     <a
       key="expand-anchor"
-      onClick={() => {
-        view.args.ctx.props.setExpanded(view.key, !view.isExpanded())
+      onClick={(e) => {
+        e.altKey ? view.toggleRecursive() : view.toggle()
       }}
     >
       {children}

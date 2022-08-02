@@ -113,4 +113,34 @@ export abstract class ContainerView<
   isRowLimited() {
     return this.rowLimit() < this.count()
   }
+
+  toggle() {
+    this.isExpanded() ? this.collapse() : this.expand()
+  }
+
+  expand() {
+    this.args.ctx.props.setExpanded(this.key, true)
+  }
+
+  collapse() {
+    this.args.ctx.props.setExpanded(this.key, false)
+  }
+
+  toggleRecursive() {
+    this.isExpanded() ? this.collapseRecursive() : this.expandRecursive()
+  }
+
+  expandRecursive() {
+    this.expand()
+    for (const view of this.iterate()) {
+      if (view instanceof ContainerView) view.expandRecursive()
+    }
+  }
+
+  collapseRecursive() {
+    this.collapse()
+    for (const view of this.iterate()) {
+      if (view instanceof ContainerView) view.collapseRecursive()
+    }
+  }
 }
