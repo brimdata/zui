@@ -3,6 +3,16 @@ import moment from "moment"
 import {DateTuple} from "../lib/TimeWindow"
 import {Interval} from "../types"
 
+export const timeUnits = {
+  millisecond: "ms",
+  second: "s",
+  minute: "m",
+  hour: "h",
+  day: "d",
+  week: "w",
+  year: "y",
+}
+
 export default function histogramInterval([start, end]: DateTuple): Interval {
   const duration = moment.duration(moment(end).diff(moment(start)))
 

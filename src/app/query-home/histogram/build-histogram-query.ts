@@ -1,0 +1,64 @@
+import {ZedScript} from "src/app/core/models/zed-script"
+import {Pool} from "src/app/core/pools/pool"
+import {syncPool} from "src/app/core/pools/sync-pool"
+import span from "src/js/brim/span"
+import histogramInterval, {timeUnits} from "src/js/lib/histogramInterval"
+import {DateTuple} from "src/js/lib/TimeWindow"
+import Current from "src/js/state/Current"
+import Editor from "src/js/state/Editor"
+import Pools from "src/js/state/Pools"
+import {Thunk} from "src/js/state/types"
+import zql from "src/js/zql"
+import {BrimQuery} from "../utils/brim-query"
+
+export const buildHistogramQuery =
+  (): Thunk<Promise<string | null>> =>
+  async (dispatch, getState, {api}) => {
+    const poolName = api.current.poolName
+    const range = await dispatch(getRange(poolName))
+    console.log(range)
+    return histogramZed(poolName, range)
+  }
+
+export const getRange =
+  (name: string): Thunk<Promise<DateTuple> | DateTuple> =>
+  (dispatch) => {
+    const queryRange = dispatch(getRangeFromQuery())
+    if (queryRange) return queryRange
+    else return dispatch(getRangeFromPool(name))
+  }
+
+function histogramZed(pool: string, range: DateTuple | null) {
+  if (!range) return null
+  const {number, unit} = histogramInterval(range)
+  const interval = `${number}${timeUnits[unit]}`
+  return `from "${pool}" range ${zql`${range[0]}`} to ${zql`${range[1]}`} | count() by every(${interval}), _path`
+}
+
+const getRangeFromPool =
+  (poolName: string): Thunk<Promise<DateTuple>> =>
+  async (dispatch) => {
+    if (!poolName) return null
+    const pool = await dispatch(ensurePoolLoaded(poolName))
+    if (!pool) return
+    return span(pool.everythingSpan()).toDateTuple()
+  }
+
+const getRangeFromQuery = (): Thunk<DateTuple> => (_, getState) => {
+  const snapshot = Editor.getSnapshot(getState())
+  const inputs = new ZedScript(BrimQuery.versionToZed(snapshot))
+  return inputs.range as DateTuple
+}
+
+const ensurePoolLoaded =
+  (name: string): Thunk<Promise<Pool>> =>
+  (dispatch, getState) => {
+    const lakeId = Current.getLakeId(getState())
+    const pool = Pools.getByName(lakeId, name)(getState())
+    if (!pool) return Promise.resolve(null)
+    if (pool.hasStats()) {
+      return Promise.resolve(pool)
+    } else {
+      return dispatch(syncPool(pool.id, lakeId))
+    }
+  }

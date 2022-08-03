@@ -6,7 +6,6 @@ import {DateTuple} from "src/js/lib/TimeWindow"
 import {Pen, HistogramChart} from "../types"
 import {innerHeight, innerWidth} from "../dimens"
 
-import Chart from "src/js/state/Chart"
 import EmptyMessage from "src/js/components/EmptyMessage"
 import HistogramTooltip from "src/js/components/HistogramTooltip"
 import LoadingMessage from "src/js/components/LoadingMessage"
@@ -22,15 +21,30 @@ import xAxisTime from "../pens/xAxisTime"
 import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 import submitSearch from "../../flows/submit-search"
+import Results from "src/js/state/Results"
+import {HISTOGRAM_RESULTS} from "../run-histogram-query"
+import {ChartData} from "src/js/state/Chart/types"
+import {zed} from "packages/zealot/src"
+import UniqArray from "src/js/models/UniqArray"
+import MergeHash from "src/js/models/MergeHash"
+import {ZedScript} from "src/app/core/models/zed-script"
+
+const id = HISTOGRAM_RESULTS
+
+// get pool
+// make a new brim query with the values,
+// get the pool name
+// get the pool
+// get the full pool range
 
 export default function useMainHistogram(
   width: number,
   height: number
 ): HistogramChart {
-  const chartData = useSelector(Chart.getData)
-  const status = useSelector(Chart.getStatus)
-  const span = [new Date(0), new Date()] //useSelector(tab.getSpanAsDates)
-
+  const chartData = useSelector(Results.getValues(id)) as zed.Record[]
+  const status = useSelector(Results.getStatus(id))
+  const query = useSelector(Results.getQuery(id))
+  const range = new ZedScript(query).range
   const dispatch = useDispatch()
   const pens = useConst<Pen[]>([], () => {
     function onDragEnd(span: DateTuple) {
@@ -63,7 +77,7 @@ export default function useMainHistogram(
   })
 
   return useMemo<HistogramChart>(() => {
-    const data = format(chartData, span)
+    const data = format(histogramFormat(chartData), range)
     const maxY = d3.max(data.points, (d: {count: number}) => d.count) || 0
     const oneCharWidth = 5.5366666667
     const chars = d3.format(",")(maxY).length
@@ -96,5 +110,34 @@ export default function useMainHistogram(
         .domain(data.span),
       pens,
     }
-  }, [chartData, status, span, width, height])
+  }, [chartData, status, range, width, height])
+}
+
+function histogramFormat(records: zed.Record[]): ChartData {
+  const paths = new UniqArray()
+  const table = new MergeHash()
+
+  records.forEach((r) => {
+    const [ts, path, count] = r.fields.map((f) => f.data) as [
+      zed.Time,
+      zed.String,
+      zed.Uint64
+    ]
+
+    try {
+      const pathName = path.toString()
+      const key = ts.toDate().getTime()
+      const val = {[path.toString()]: count.toInt()}
+
+      table.merge(key, val)
+      paths.push(pathName)
+    } catch (e) {
+      console.log("Error rendering histogram: " + e.toString())
+    }
+  })
+
+  return {
+    table: table.toJSON(),
+    keys: paths.toArray(),
+  }
 }

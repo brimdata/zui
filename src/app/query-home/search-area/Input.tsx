@@ -28,7 +28,7 @@ const InputBackdrop = styled.div<{height: number}>`
 
 const Submit = styled(SubmitButton)`
   position: absolute;
-  right: 20px;
+  right: 16px;
   bottom: 10px;
 `
 

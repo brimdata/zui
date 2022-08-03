@@ -9,6 +9,7 @@ import Notice from "src/js/state/Notice"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import {Location} from "history"
+import {runHistogramQuery} from "./histogram/run-histogram-query"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {
@@ -16,7 +17,7 @@ export function loadRoute(location: Location): Thunk {
     dispatch(Notice.dismiss())
     dispatch(Results.error({id: MAIN_RESULTS, error: null, tabId: ""}))
     dispatch(syncEditor)
-    dispatch(fetchData(location))
+    dispatch(fetchData())
   }
 }
 
@@ -34,16 +35,15 @@ function syncEditor(dispatch, getState) {
   })
 }
 
-function fetchData(location) {
+function fetchData() {
   return (dispatch, getState) => {
-    const key = Results.getKey(MAIN_RESULTS)(getState())
     const version = Current.getVersion(getState())
 
-    if (key === location.key) return
-
     startTransition(() => {
-      version &&
+      if (version) {
         dispatch(Results.fetchFirstPage(BrimQuery.versionToZed(version)))
+        dispatch(runHistogramQuery())
+      }
     })
   }
 }
