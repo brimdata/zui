@@ -41,9 +41,9 @@ const autoUpdateLinux = async () => {
     type: "info",
     buttons: ["Get Update", "Later"],
     title: "Application Update",
-    message: "A new version of Brim is available.",
+    message: "A new version is available.",
     detail:
-      "Attention: ZUI is the new Brim and is now available for download. See the release notes for more details.",
+      "Attention: Zui is the new Brim and is now available for download. See the release notes for more details.",
   }
 
   dialog.showMessageBox(dialogOpts).then((returnValue) => {
@@ -69,7 +69,7 @@ export async function setupAutoUpdater() {
       // releaseNotes are not available for windows, so use name instead
       message: env.isWindows ? releaseNotes : releaseName,
       detail:
-        "Attention: ZUI is the new Brim and has been downloaded! After closing this app, please open ZUI from your applications folder. See the release notes for more details.",
+        "Attention: Zui is the new Brim and has been downloaded! After closing this app, please open Zui from your applications folder. See the release notes for more details.",
     }
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
