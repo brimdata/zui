@@ -7,7 +7,7 @@ on:
 
 jobs:
   promote:
-    runs-on: macos-10.15
+    runs-on: macos-11
     steps:
     - name: Extract tag name
       run: echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/})"
