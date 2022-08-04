@@ -4,6 +4,7 @@ import fs from "fs-extra"
 import log from "electron-log"
 
 export default () => {
+  if (app.name !== "Zui") return
   const zuiPath = app.getPath("userData")
   const zuiAppStatePath = path.join(zuiPath, "appState.json")
   const zuiAppLakePath = path.join(zuiPath, "lake")
