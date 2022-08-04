@@ -39,7 +39,7 @@ jobs:
       - name: Build Signed Release
         shell: bash
         run: |
-          yarn electron-builder --win
+          yarn electron-builder --win --publish never
         env:
           CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
           CSC_LINK: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}

@@ -39,7 +39,7 @@ jobs:
       - run: yarn run build
 
       - name: build packages
-        run: yarn electron-builder --linux
+        run: yarn electron-builder --linux --publish never
 
       - id: 'auth'
         uses: 'google-github-actions/auth@v0'

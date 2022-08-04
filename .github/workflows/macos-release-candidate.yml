@@ -56,7 +56,7 @@ jobs:
         # running the build step twice, as we've observed that it works
         # consistently on a retry.
         run: |
-          yarn electron-builder --mac || true
+          yarn electron-builder --mac --publish never || true
         env:
           APPLE_ID: ${{ secrets.APPLEID_USER }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
@@ -70,7 +70,7 @@ jobs:
         run: |
           security set-key-partition-list -S apple-tool:,apple: -k password build
           security find-identity -p codesigning -v
-          yarn electron-builder --mac
+          yarn electron-builder --mac --publish never
         env:
           APPLE_ID: ${{ secrets.APPLEID_USER }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
