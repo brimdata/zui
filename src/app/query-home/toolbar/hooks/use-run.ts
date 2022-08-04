@@ -1,6 +1,6 @@
 import submitSearch from "src/app/query-home/flows/submit-search"
 import {useDispatch} from "src/app/core/state"
-import {ActionButtonProps} from "../action-button"
+import {ActionButtonProps} from "../actions/action-button"
 
 export default function useRun(): ActionButtonProps {
   const dispatch = useDispatch()

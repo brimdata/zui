@@ -1,7 +1,5 @@
-import {join} from "path"
 import createIPCMock from "electron-mock-ipc"
 import EventEmitter from "events"
-import os from "os"
 const mockIpc = createIPCMock()
 // Remove these 3 lines once this is merged upstream:
 // https://github.com/h3poteto/electron-mock-ipc/pull/402
@@ -76,15 +74,14 @@ class MockApp {
     return "TestApp"
   }
   getPath(name) {
-    if (name === "temp") return os.tmpdir()
-    return join(__dirname, "../../../../run/unit/data")
+    return `/test/app/${name}`
   }
   setPath() {}
   getVersion() {
     return "0.0.0"
   }
   getAppPath() {
-    return join(__dirname, "../../../../")
+    return `/test/app`
   }
 }
 

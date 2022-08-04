@@ -5,7 +5,7 @@ import lib from "../lib"
 
 interface PluginFunctions {
   activate(api: BrimApi): void
-  deactivate(): Promise<void>
+  deactivate(api: BrimApi): Promise<void>
 }
 
 export default class PluginManager {
@@ -34,7 +34,9 @@ export default class PluginManager {
   }
 
   async deactivate(): Promise<void> {
-    await Promise.all(Object.values(this.plugins).map((p) => p.deactivate()))
+    await Promise.all(
+      Object.values(this.plugins).map((p) => p.deactivate(this.api))
+    )
   }
 
   private add(plugin: Plugin) {
@@ -79,9 +81,9 @@ class Plugin {
     this.functions.activate(api)
   }
 
-  deactivate() {
+  deactivate(api: BrimApi) {
     if ("deactivate" in this.functions) {
-      this.functions.deactivate()
+      this.functions.deactivate(api)
     }
   }
 }

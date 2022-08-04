@@ -1,3 +1,4 @@
+import "src/test/system/real-paths"
 import React from "react"
 import {main} from "src/js/electron/main"
 import initialize from "src/js/initializers/initialize"

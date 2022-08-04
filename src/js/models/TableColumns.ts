@@ -41,6 +41,7 @@ export default class TableColumns {
       const stringName = printColumnName(col.name)
       let max = estimateHeaderWidth(stringName)
       records.forEach((r) => {
+        if (!(r instanceof zed.Record)) return
         const data = r?.try(col.name)
         if (!data) return
         const width = estimateCellWidth(data, stringName, this.config)

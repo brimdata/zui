@@ -18,12 +18,16 @@ export const listContextMenu =
         label: "New Query",
         click: () => {
           const id = nanoid()
-          dispatch(Queries.addItem({id, name: "New query"}))
+          const q = dispatch(Queries.create())
           ReactDOM.flushSync(async () => {
             const {cancelled} = await tree.edit(id)
             if (!cancelled) {
               tree?.selectById(id)
-              dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
+              dispatch(
+                Tabs.activateUrl(
+                  lakeQueryPath(q.id, lakeId, q.latestVersionId())
+                )
+              )
             }
           })
         },

@@ -1,4 +1,6 @@
 import "@testing-library/jest-dom"
+import "../../system/real-paths"
+import BrimApi from "src/js/api"
 import {BrimMain} from "src/js/electron/brim"
 import {main} from "src/js/electron/main"
 import initialize from "src/js/initializers/initialize"
@@ -14,11 +16,18 @@ class BrimTestContext {
   store: Store
   plugins: PluginManager
   main: BrimMain
+  api: BrimApi
 
-  assign(args: {store: Store; plugins: PluginManager; main: BrimMain}) {
+  assign(args: {
+    store: Store
+    plugins: PluginManager
+    main: BrimMain
+    api: BrimApi
+  }) {
     this.store = args.store
     this.plugins = args.plugins
     this.main = args.main
+    this.api = args.api
   }
 
   select = (fn) => fn(this.store.getState())
@@ -42,15 +51,15 @@ async function bootBrim({page}: Args = defaults()) {
   const brimMain = await main({lake: false})
   onPage(page)
   const {store, pluginManager} = await initialize()
-  return {store, main: brimMain, plugins: pluginManager}
+  const api = new BrimApi()
+  api.init(store.dispatch, store.getState)
+  return {store, main: brimMain, plugins: pluginManager, api}
 }
 
 export function setupBrim(opts: Args = defaults()) {
   const context = new BrimTestContext()
 
   beforeEach(async () => {
-    // If this fails, the tests will still run. When we're on
-    // jest 27, this will fail the test as expected.
     const props = await bootBrim(opts)
     context.assign(props)
     if (opts.lake) {

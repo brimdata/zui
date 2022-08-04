@@ -1,7 +1,6 @@
 import {useSelector} from "react-redux"
 import React, {memo, useCallback, useMemo} from "react"
 
-import LogDetails from "src/js/state/LogDetails"
 import {Caption, ChartWrap, TableWrap} from "src/app/detail/Shared"
 import PanelHeading from "src/app/detail/PanelHeading"
 import EventTimeline from "src/ppl/detail/EventTimeline"
@@ -11,15 +10,19 @@ import {Data, Name, Value} from "src/app/core/Data"
 import formatDur from "src/ppl/detail/util/formatDur"
 import {isEqual} from "lodash"
 import Panel from "src/app/detail/Panel"
-import {getCorrelationQuery} from "./flows/get-correlation-query"
 import EventLimit from "./EventLimit"
 import {showContextMenu} from "src/js/lib/System"
 import {zed} from "@brimdata/zealot"
+import Results from "src/js/state/Results"
+import {uidCorrelation} from "src/plugins/zui-zeek/uid-correlations"
+
+const id = uidCorrelation.id
 
 export default memo(function UidPanel({record}: {record: zed.Record}) {
-  const query = useMemo(() => getCorrelationQuery(record), [record])
-  const isLoading = useSelector(LogDetails.getUidStatus) === "FETCHING"
-  const logs = useSelector(LogDetails.getUidLogs)
+  const isLoading = useSelector(Results.getStatus(id)) === "FETCHING"
+  const logs = useSelector(Results.getValues(id)) as zed.Record[]
+  const query = useSelector(Results.getQuery(id))
+  const perPage = useSelector(Results.getPerPage(id))
 
   const events = useMemo(() => {
     return sort(logs).map(BrimEvent.build)
@@ -43,7 +46,7 @@ export default memo(function UidPanel({record}: {record: zed.Record}) {
       <Panel isLoading={isLoading && events.length === 0}>
         <ChartWrap>
           <EventTimeline events={events} current={index} />
-          <EventLimit query={query} count={events.length} />
+          <EventLimit query={query} count={events.length} limit={perPage} />
         </ChartWrap>
         <TableWrap>
           <Data>

@@ -1,5 +1,4 @@
 import brim from "src/js/brim"
-import {getZealot} from "src/js/flows/getZealot"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
 import Pools from "src/js/state/Pools"
@@ -8,12 +7,12 @@ import {Pool} from "./pool"
 
 export const syncPool =
   (poolId: string, lakeId?: string): Thunk<Promise<Pool | null>> =>
-  async (dispatch, getState) => {
+  async (dispatch, getState, {api}) => {
     const lake = lakeId
       ? brim.lake(Lakes.id(lakeId)(getState()))
       : Current.getLake(getState())
 
-    const zealot = await dispatch(getZealot(lake))
+    const zealot = await api.getZealot(lake)
 
     return Promise.all([zealot.getPool(poolId), zealot.getPoolStats(poolId)])
       .then(([data, stats]) => {

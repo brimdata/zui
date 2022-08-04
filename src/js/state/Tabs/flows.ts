@@ -1,18 +1,28 @@
+import {nanoid} from "@reduxjs/toolkit"
 import {ipcRenderer} from "electron"
-import brim from "../../brim"
+import {lakeQueryPath} from "src/app/router/utils/paths"
+import Current from "../Current"
+import SessionQueries from "../SessionQueries"
 import {Thunk} from "../types"
 import Tabs from "./"
 import {findTabById, findTabByUrl} from "./find"
 
 export const create =
-  (url = "/"): Thunk<string> =>
+  (url = "/", id = nanoid()): Thunk<string> =>
   (dispatch) => {
-    const id = brim.randomHash()
+    dispatch(SessionQueries.init(id))
     dispatch(Tabs.add(id))
+    global.tabHistories.create(id, [{pathname: url}], 0)
     dispatch(Tabs.activate(id))
-    global.tabHistories.create(id).push(url)
     return id
   }
+
+export const createQuerySession = (): Thunk<string> => (dispatch, getState) => {
+  const id = nanoid()
+  const lakeId = Current.getLakeId(getState())
+  const url = lakeQueryPath(id, lakeId, null)
+  return dispatch(create(url, id))
+}
 
 export const previewUrl =
   (url: string): Thunk =>

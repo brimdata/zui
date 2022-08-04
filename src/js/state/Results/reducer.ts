@@ -1,69 +1,70 @@
 import {createSlice, PayloadAction as Pay} from "@reduxjs/toolkit"
 import {zed} from "@brimdata/zealot"
 import program from "src/js/brim/program"
-import {ResultsStatus} from "./types"
+import {ResultsState} from "./types"
+import {initialResultData} from "./util"
 
+export function access(state: ResultsState, id: string) {
+  if (state[id]) return state[id]
+  else return (state[id] = initialResultData())
+}
+
+/**
+ * All of these actions need the tabId so that
+ * results are stored in the correct place.
+ * See where it's used in the Tabs reducer.
+ */
 const slice = createSlice({
   name: "TAB_RESULTS",
-  initialState: {
-    values: [] as zed.Value[],
-    status: "INIT" as ResultsStatus,
-    page: 1,
-    perPage: 500,
-    aggregationLimit: 2000,
-    aggregation: false,
-    key: "",
-    query: "*",
-    error: null as null | any,
-  },
+  initialState: {} as ResultsState,
   reducers: {
-    init(s, a: Pay<{query: string; key: string}>) {
-      s.query = a.payload.query
-      s.aggregation = program(a.payload.query).hasAnalytics()
-      s.key = a.payload.key
-      s.values = []
-      s.page = 1
-      s.status = "FETCHING"
-      s.error = null
+    init(s, a: Pay<{id: string; query: string; key: string; tabId: string}>) {
+      const r = access(s, a.payload.id)
+      r.query = a.payload.query
+      r.aggregation = program(a.payload.query).hasAnalytics()
+      r.key = a.payload.key
+      r.values = []
+      r.shapes = {}
+      r.page = 1
+      r.status = "FETCHING"
+      r.error = null
     },
-    nextPage(s) {
-      s.page += 1
-      s.status = "FETCHING"
+
+    nextPage(s, a: Pay<{id: string; tabId: string}>) {
+      const r = access(s, a.payload.id)
+      r.page += 1
+      r.status = "FETCHING"
     },
-    setValues: {
-      prepare: (values: zed.Value[], tabId: string) => ({
-        payload: {tabId, values},
-      }),
-      reducer: (s, a: Pay<{values: zed.Value[]}>) => {
-        s.values = a.payload.values
-      },
+
+    setValues(s, a: Pay<{id: string; values: zed.Value[]; tabId: string}>) {
+      const r = access(s, a.payload.id)
+      r.values = a.payload.values
     },
-    setStatus(s, a: Pay<ResultsStatus>) {
-      s.status = a.payload
+
+    setShapes(
+      s,
+      a: Pay<{id: string; shapes: {[id: string]: zed.Type}; tabId: string}>
+    ) {
+      const r = access(s, a.payload.id)
+      r.shapes = a.payload.shapes
     },
-    success: {
-      prepare: (count: number, tabId: string) => ({
-        payload: {count, tabId},
-      }),
-      reducer: (s, a: Pay<{count: number}>) => {
-        if (s.aggregation && a.payload.count === s.aggregationLimit) {
-          s.status = "LIMIT"
-        } else if (a.payload.count === s.perPage) {
-          s.status = "INCOMPLETE"
-        } else {
-          s.status = "COMPLETE"
-        }
-        s.error = null
-      },
+
+    success(s, a: Pay<{id: string; count: number; tabId: string}>) {
+      const r = access(s, a.payload.id)
+      if (r.aggregation && a.payload.count === r.aggregationLimit) {
+        r.status = "LIMIT"
+      } else if (a.payload.count === r.perPage) {
+        r.status = "INCOMPLETE"
+      } else {
+        r.status = "COMPLETE"
+      }
+      r.error = null
     },
-    error: {
-      prepare: (error: any, tabId?: string) => ({
-        payload: {error, tabId},
-      }),
-      reducer: (s, a: Pay<{error: any}>) => {
-        s.error = a.payload.error
-        s.status = "ERROR"
-      },
+
+    error: (s, a: Pay<{id: string; error: any; tabId: string}>) => {
+      const r = access(s, a.payload.id)
+      r.error = a.payload.error
+      r.status = "ERROR"
     },
   },
 })

@@ -28,7 +28,7 @@ export function toZql(object: unknown): string {
   if (isString(object)) return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)
   if (typeof object === "boolean") return toZqlBool(object)
-
+  if (object === null) return toZqlNull()
   throw new Error(`Can't convert object to ZQL: ${object}`)
 }
 
@@ -37,6 +37,10 @@ const ESCAPED_DOUBLE_QUOTE = '\\"'
 const BACK_SLASH = /\\/g
 const ESCAPED_BACK_SLASH = "\\\\"
 
+function toZqlNull() {
+  return "null"
+}
+
 function toZqlString(string: string) {
   return `"${string
     .replace(BACK_SLASH, ESCAPED_BACK_SLASH)
@@ -44,7 +48,7 @@ function toZqlString(string: string) {
 }
 
 function toZqlDate(date: Date) {
-  return (date.getTime() / 1000).toString()
+  return date.toISOString()
 }
 
 function toZqlBool(bool: boolean) {

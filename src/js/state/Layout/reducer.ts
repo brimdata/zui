@@ -8,7 +8,9 @@ const slice = createSlice({
     rightSidebarWidth: 260,
     columnHeadersView: "AUTO" as ColumnHeadersViewState,
     resultsView: "TABLE" as ResultsView,
-    currentPaneName: "versions" as PaneName,
+    currentPaneName: "history" as PaneName,
+    isEditingTitle: false,
+    titleFormAction: "create" as "create" | "update",
   },
   reducers: {
     showDetailPane: (s) => {
@@ -31,6 +33,17 @@ const slice = createSlice({
     },
     setCurrentPaneName(s, action: PayloadAction<PaneName>) {
       s.currentPaneName = action.payload
+    },
+    showTitleForm: {
+      prepare: (action: "create" | "update") => ({payload: {action}}),
+      reducer: (s, a: PayloadAction<{action: "create" | "update"}>) => {
+        s.isEditingTitle = true
+        s.titleFormAction = a.payload.action
+      },
+    },
+    hideTitleForm(s) {
+      s.isEditingTitle = false
+      s.titleFormAction = "create"
     },
   },
 })

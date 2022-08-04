@@ -1,3 +1,4 @@
+import "src/test/system/real-paths"
 import {app} from "electron"
 import {BrimMain} from "./brim"
 

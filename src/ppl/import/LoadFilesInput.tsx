@@ -1,6 +1,6 @@
 import {useBrimApi} from "src/app/core/context"
 import {useImportOnDrop} from "src/app/features/import/use-import-on-drop"
-import ToolbarButton from "src/app/query-home/toolbar/button"
+import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 import classNames from "classnames"
 import React, {ChangeEvent, MouseEvent} from "react"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
@@ -13,7 +13,7 @@ export default function LoadFilesInput() {
   const [{canDrop, isOver}, drop] = useImportOnDrop()
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
-    api.import(Array.from(e.target.files))
+    api.pools.load(Array.from(e.target.files))
   }
 
   function openDialog(_: MouseEvent) {

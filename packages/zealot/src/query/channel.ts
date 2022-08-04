@@ -1,10 +1,7 @@
 import EventEmitter from "events"
 import {DefaultContext, zed, zjson} from ".."
+import {Collector, TypeDefs} from "../types"
 import {DecodeStream} from "../zed/decode-stream"
-import {Type} from "../zed/types/types"
-
-export type TypeDefs = {[name: string]: Type}
-export type Collector = (vals: {rows: zed.Value[]; shapesMap: TypeDefs}) => void
 
 export class Channel extends EventEmitter {
   rows: zed.Value[] = []

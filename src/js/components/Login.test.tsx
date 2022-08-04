@@ -4,7 +4,7 @@
 import React from "react"
 import {act, screen, waitFor} from "@testing-library/react"
 import {shell} from "electron"
-import {SystemTest} from "src/test/system/system-test"
+import {SystemTest} from "src/test/system"
 import url from "url"
 import brim from "../brim"
 import {defaultLake} from "../initializers/initLakeParams"

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import {getNextQueryCount} from "./helpers"
+import {getNextCount} from "./helpers"
 import {Query} from "./types"
 
 const excludeTestQueries: Query[] = [
@@ -43,17 +43,20 @@ const includeTestQueries: Query[] = [
   },
 ]
 
-test("getNextQueryCount", () => {
-  expect(getNextQueryCount([])).toEqual(1)
-  expect(getNextQueryCount(excludeTestQueries)).toEqual(1)
+test("getNextCount", () => {
+  expect(getNextCount([], "Query")).toEqual(1)
+  expect(getNextCount(excludeTestQueries, "Query")).toEqual(1)
   expect(
-    getNextQueryCount([...excludeTestQueries, ...includeTestQueries])
+    getNextCount([...excludeTestQueries, ...includeTestQueries], "Query")
   ).toEqual(4)
   expect(
-    getNextQueryCount([
-      {id: "9", name: "Query #10"},
-      ...excludeTestQueries,
-      ...includeTestQueries,
-    ])
+    getNextCount(
+      [
+        {id: "9", name: "Query #10"},
+        ...excludeTestQueries,
+        ...includeTestQueries,
+      ],
+      "Query"
+    )
   ).toEqual(11)
 })

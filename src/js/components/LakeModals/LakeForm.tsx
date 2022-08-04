@@ -14,7 +14,7 @@ import TextInput from "../common/forms/TextInput"
 import useCallbackRef from "../hooks/useCallbackRef"
 import useEventListener from "../hooks/useEventListener"
 import MacSpinner from "../MacSpinner"
-import ToolbarButton from "src/app/query-home/toolbar/button"
+import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 import {isDefaultLake} from "../../initializers/initLakeParams"
 
 const SignInForm = styled.div`

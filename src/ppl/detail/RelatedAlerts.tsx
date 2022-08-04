@@ -1,5 +1,4 @@
 import {Data, Name, Value} from "src/app/core/Data"
-import useSearch from "src/app/core/hooks/useSearch"
 import Panel from "src/app/detail/Panel"
 import PanelHeading from "src/app/detail/PanelHeading"
 import {Caption, ChartWrap, TableWrap} from "src/app/detail/Shared"
@@ -8,22 +7,24 @@ import {BrimEvent} from "src/ppl/detail/models/BrimEvent"
 import React, {memo, useCallback, useMemo} from "react"
 import brim from "src/js/brim"
 import {showContextMenu} from "src/js/lib/System"
-import {relatedAlerts} from "src/js/searches/programs"
 import {zed} from "@brimdata/zealot"
 import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
 import firstLast from "./util/firstLast"
 import formatDur from "./util/formatDur"
+import {useSelector} from "react-redux"
+import Results from "src/js/state/Results"
+import {SURICATA_ALERTS} from "src/plugins/zui-suricata"
 
-type Props = {
-  record: zed.Record
-}
+type Props = {record: zed.Record}
 
-const LIMIT = 100
+const id = SURICATA_ALERTS
 
 export default memo(function RelatedAlerts({record}: Props) {
-  const cid = record.get("community_id").toString()
-  const [records, isLoading] = useSearch(relatedAlerts(cid, LIMIT), [record])
+  const records = useSelector(Results.getValues(id))
+  const isFetching = useSelector(Results.isFetching(id))
+  const query = useSelector(Results.getQuery(id))
+  const perPage = useSelector(Results.getPerPage(id))
   const events = useMemo(() => records.map(BrimEvent.build), [records])
   const [first, last] = firstLast(events)
   const current = useMemo(
@@ -43,11 +44,11 @@ export default memo(function RelatedAlerts({record}: Props) {
 
   return (
     <section>
-      <PanelHeading isLoading={isLoading}>Related Alerts</PanelHeading>
+      <PanelHeading isLoading={isFetching}>Related Alerts</PanelHeading>
       <Panel>
         <ChartWrap>
           <EventTimeline events={events} current={current}></EventTimeline>
-          <EventLimit count={events.length} query={relatedAlerts(cid)} />
+          <EventLimit count={events.length} query={query} limit={perPage} />
         </ChartWrap>
         <TableWrap>
           {data.map(([name, value]) => (

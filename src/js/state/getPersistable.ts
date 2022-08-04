@@ -1,4 +1,4 @@
-import {cloneDeep, pick} from "lodash"
+import {omit, pick} from "lodash"
 import {TabState} from "./Tab/types"
 import {State} from "./types"
 
@@ -14,7 +14,8 @@ const WINDOW_PERSIST: StateKey[] = [
   "queries",
   "queryVersions",
   "tabHistories",
-  "tabs",
+  "sessionHistories",
+  "sessionQueries",
   "lakes",
 ]
 
@@ -25,25 +26,33 @@ const TAB_PERSIST: TabKey[] = [
   "columns",
   "layout",
   "editor",
+  "lastFocused",
 ]
 
 function deleteAccessTokens(state: Partial<State>) {
-  if (!state.lakes) return
-  for (const l of Object.values(state.lakes)) {
-    if (l.authType === "auth0" && l.authData) delete l.authData.accessToken
+  if (!state.lakes) return undefined
+  const newLakes = {}
+  for (const id in state.lakes) {
+    const lake = {...state.lakes[id]}
+    if (lake.authData) {
+      lake.authData = omit(lake.authData, "accessToken")
+    }
+    newLakes[id] = lake
   }
+  return newLakes
 }
 
 export function getPersistedState(original: State) {
-  const clone = cloneDeep(original)
-  const state = pick(clone, WINDOW_PERSIST)
+  let state = pick(original, WINDOW_PERSIST)
 
-  if (state.tabs) {
-    state.tabs.data = state.tabs.data.map(
-      (tab) => pick(tab, TAB_PERSIST) as TabState
-    )
+  if (original.tabs) {
+    const tabs = {
+      ...original.tabs,
+      data: original.tabs.data.map((tab) => pick(tab, TAB_PERSIST) as TabState),
+    }
+    state = {...state, tabs}
   }
-
-  deleteAccessTokens(state)
+  const lakes = deleteAccessTokens(state)
+  state = {...state, lakes}
   return state
 }

@@ -9,7 +9,6 @@ import {
   SectionContents,
   StyledSection,
   DropOverlay,
-  SectionToolbar,
   SectionSearch,
 } from "../common"
 import EmptySection from "src/js/components/common/EmptySection"
@@ -90,9 +89,7 @@ const PoolsSection = () => {
         {renderContents()}
         <DropOverlay show={isOver}>Drop to import...</DropOverlay>
       </SectionContents>
-      <SectionToolbar>
-        <SectionSearch placeholder="Search pools..." onChange={onPoolSearch} />
-      </SectionToolbar>
+      <SectionSearch placeholder="Search pools..." onChange={onPoolSearch} />
     </StyledSection>
   )
 }

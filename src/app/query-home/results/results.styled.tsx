@@ -17,6 +17,7 @@ export const Toolbar = styled.header`
 `
 export const Body = styled.div`
   flex: 1;
+  overflow: hidden;
 `
 
 export const Button = styled.button`

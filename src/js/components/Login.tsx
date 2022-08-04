@@ -9,7 +9,7 @@ import MacSpinner from "./MacSpinner"
 import {isString} from "lodash"
 import {updateStatus} from "../flows/lake/update-status"
 import {login} from "../flows/lake/login"
-import ToolbarButton from "src/app/query-home/toolbar/button"
+import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 
 const PageWrap = styled.div`
   width: 100%;

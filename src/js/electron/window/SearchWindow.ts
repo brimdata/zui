@@ -36,7 +36,7 @@ export class SearchWindow implements BrimWindow {
     this.ref = new BrowserWindow({
       ...getWindowDimens(dimens, DEFAULT_DIMENS, screens),
       titleBarStyle: env.isMac ? "hidden" : undefined,
-      trafficLightPosition: {x: 16, y: 16},
+      trafficLightPosition: {x: 16, y: 13},
       resizable: true,
       minWidth: 480,
       minHeight: 100,
@@ -90,7 +90,7 @@ export class SearchWindow implements BrimWindow {
   getStateFromWebContents() {
     const replyChannel = randomHash()
     return new Promise((resolve, reject) => {
-      const safety = setTimeout(() => reject(new Error("Timeout")), 1000)
+      const safety = setTimeout(() => reject(new Error("Timeout")), 60_000)
       this.ref.webContents.send("getState", replyChannel)
       ipcMain.once(replyChannel, (event, state) => {
         clearTimeout(safety)

@@ -17,6 +17,7 @@ import {useLocation} from "react-router"
 import styled from "styled-components"
 import Appearance from "src/js/state/Appearance"
 import env from "src/app/core/env"
+import SidebarToggleButton from "src/app/features/sidebar/sidebar-toggle-button"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200
@@ -25,12 +26,14 @@ const BG = styled.div`
   box-shadow: inset 0 -1px 0 var(--border-color);
   background: var(--tab-background);
   display: flex;
+  height: 100%;
+  grid-area: tabs;
 `
 
 const Container = styled.div`
   display: flex;
   position: relative;
-  height: 42px;
+  height: 100%;
   width: 100%;
   flex-shrink: 0;
   align-items: flex-end;
@@ -40,11 +43,15 @@ const Container = styled.div`
 `
 
 const TrafficLightBG = styled.div`
-  width: 86px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 128px;
   flex-shrink: 0;
   box-shadow: inset -1px -1px var(--border-color);
   background: var(--tab-background);
   z-index: 100;
+  padding-right: 10px;
 `
 
 export default function TabBar() {
@@ -64,9 +71,13 @@ export default function TabBar() {
   const sidebarCollapsed = !useSelector(Appearance.sidebarIsOpen)
   return (
     <BG>
-      {sidebarCollapsed && env.isMac && <TrafficLightBG />}
+      {sidebarCollapsed && env.isMac && (
+        <TrafficLightBG>
+          <SidebarToggleButton />
+        </TrafficLightBG>
+      )}
       <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
-        {ids.map((id) => {
+        {ids.map((id: string) => {
           const tab = brim.tab(id, lakes, pools, queryIdNameMap)
           return (
             <AnimatedSearchTab

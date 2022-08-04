@@ -65,3 +65,9 @@ code {
     outline: auto 5px var(--havelock);
   }
 }
+
+body.dragging {
+  user-select: none;
+  pointer-events: none;
+  cursor: col-resize;
+}

@@ -20,8 +20,9 @@ import {TabHistoriesState} from "./TabHistories/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
 import {LakeStatusesState} from "./LakeStatuses/types"
-import {DraftQueriesState} from "./DraftQueries"
+import {SessionQueriesState} from "./SessionQueries/types"
 import {QueryVersionsState} from "./QueryVersions/types"
+import {SessionHistoriesState} from "./SessionHistories/types"
 
 export type ThunkExtraArg = {
   dispatch: AppDispatch
@@ -33,6 +34,7 @@ export type Thunk<R = void> = ThunkAction<R, State, ThunkExtraArg, Action>
 export type Store = ReduxStore<State, any>
 export type AppDispatch = ThunkDispatch<State, ThunkExtraArg, Action>
 export type Dispatch = AppDispatch
+export type GetState = () => State
 
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
@@ -55,7 +57,8 @@ export type State = {
   queries: QueriesState
   remoteQueries: QueriesState
   queryVersions: QueryVersionsState
-  draftQueries: DraftQueriesState
+  sessionQueries: SessionQueriesState
+  sessionHistories: SessionHistoriesState
   systemTest: SystemTestState
   toolbars: ToolbarsState
 }

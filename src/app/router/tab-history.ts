@@ -23,4 +23,9 @@ export default {
   goForward: () => (dispatch, getState) => {
     Current.getHistory(getState()).goForward()
   },
+
+  reload: () => (dispatch, getState) => {
+    const history = Current.getHistory(getState())
+    history.replace(history.location.pathname)
+  },
 }

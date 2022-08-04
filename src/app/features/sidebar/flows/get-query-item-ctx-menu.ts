@@ -2,8 +2,6 @@ import {
   deleteRemoteQueries,
   isRemoteLib,
 } from "src/js/state/RemoteQueries/flows/remote-queries"
-import Tabs from "src/js/state/Tabs"
-import {lakeQueryPath} from "src/app/router/utils/paths"
 import lib from "src/js/lib"
 import toast from "react-hot-toast"
 import {ipcRenderer, MenuItemConstructorOptions} from "electron"
@@ -11,12 +9,10 @@ import exportQueryLib from "src/js/flows/exportQueryLib"
 import * as remote from "@electron/remote"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
-import Results from "src/js/state/Results"
 import Current from "src/js/state/Current"
-import {last} from "lodash"
 
 const getQueryItemCtxMenu =
-  ({data, tree, handlers, lakeId}) =>
+  ({data, tree, handlers}) =>
   (dispatch, getState, {api}) => {
     const {id, isReadOnly} = data
     const isGroup = "items" in data
@@ -24,13 +20,8 @@ const getQueryItemCtxMenu =
       tree.getSelectedIds().length > 1 &&
       !!tree.getSelectedIds().find((id) => id === data.id)
     const isRemoteItem = dispatch(isRemoteLib([id]))
-    const latestVersion = last(QueryVersions.getByQueryId(id)(getState()))
     const query = Current.getQueryById(id)(getState())
-
-    const runQuery = () => {
-      dispatch(Tabs.activateUrl(lakeQueryPath(id, lakeId)))
-      dispatch(Results.fetchFirstPage(query.toString()))
-    }
+    const latestVersion = query.latestVersion()
 
     const handleDelete = () => {
       const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
@@ -66,7 +57,7 @@ const getQueryItemCtxMenu =
       {
         label: "Run Query",
         visible: !isGroup,
-        click: () => runQuery(),
+        click: () => api.queries.open(id),
       },
       {
         label: "Copy Query Value",

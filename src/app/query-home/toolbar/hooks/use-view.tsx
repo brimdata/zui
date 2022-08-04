@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {showContextMenu} from "src/js/lib/System"
 import Appearance from "src/js/state/Appearance"
 import Layout from "src/js/state/Layout"
-import {ActionButtonProps} from "../action-button"
+import {ActionButtonProps} from "../actions/action-button"
 
 export default function useView(): ActionButtonProps {
   const dispatch = useDispatch()

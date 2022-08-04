@@ -1,5 +1,3 @@
-/* @noflow */
-
 import {app, dialog, shell, MenuItemConstructorOptions} from "electron"
 import path from "path"
 

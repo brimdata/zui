@@ -1,12 +1,12 @@
-import DraftQueries from "src/js/state/DraftQueries"
 import Queries from "src/js/state/Queries/index"
 import RemoteQueries from "src/js/state/RemoteQueries"
+import SessionQueries from "src/js/state/SessionQueries"
 
-export type QuerySource = "local" | "remote" | "draft"
+export type QuerySource = "local" | "remote" | "session"
 export const getQuerySource =
   (id?: string) =>
   (_d, getState): QuerySource => {
-    if (DraftQueries.getById(id)(getState())) return "draft"
+    if (SessionQueries.getById(id)(getState())) return "session"
     if (Queries.getQueryById(id)(getState())) return "local"
     if (RemoteQueries.getQueryById(id)(getState())) return "remote"
     return null

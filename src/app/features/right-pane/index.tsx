@@ -4,18 +4,25 @@ import DetailSection from "./detail-section"
 import styled from "styled-components"
 import {useDispatch} from "src/app/core/state"
 import {useSelector} from "react-redux"
-import {XRightPaneExpander} from "../../../js/components/RightPaneExpander"
 import Layout from "../../../js/state/Layout"
-import Pane from "../../../js/components/Pane"
+import {DraggablePane} from "src/js/components/draggable-pane"
 import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
+import {HistorySection} from "./history/section"
+
+const Pane = styled(DraggablePane)`
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+  background: white;
+`
 
 const BG = styled.div`
   display: flex;
   padding: 0 6px;
   align-items: center;
-  box-shadow: 0 1px 0px var(--cloudy);
-  height: 28px;
+  border-bottom: 1px solid var(--border-color);
+  height: 31px;
   flex-shrink: 0;
   user-select: none;
   position: relative;
@@ -24,10 +31,10 @@ const BG = styled.div`
     background: none;
     border: none;
     display: flex;
-
     border-radius: 5px;
     padding: 0 6px;
     text-transform: uppercase;
+    height: 100%;
 
     span {
       height: 100%;
@@ -68,6 +75,8 @@ const PaneContentSwitch = ({paneName}) => {
       return <DetailSection />
     case "versions":
       return <VersionsSection />
+    case "history":
+      return <HistorySection />
     default:
       return null
   }
@@ -79,6 +88,12 @@ export function Menu() {
   const onClick = (name) => () => dispatch(Layout.setCurrentPaneName(name))
   return (
     <BG>
+      <button
+        onClick={onClick("history")}
+        aria-pressed={currentPaneName === "history"}
+      >
+        <span>History</span>
+      </button>
       <button
         onClick={onClick("detail")}
         aria-pressed={currentPaneName === "detail"}
@@ -95,33 +110,37 @@ export function Menu() {
   )
 }
 
-const RightPane = () => {
-  const dispatch = useDispatch()
-  const currentPaneName = useSelector(Layout.getCurrentPaneName)
-  const isOpen = useSelector(Layout.getDetailPaneIsOpen)
+function Container({children}) {
   const width = useSelector(Layout.getDetailPaneWidth)
+  const dispatch = useDispatch()
+  const isOpen = useSelector(Layout.getDetailPaneIsOpen)
 
-  const onDrag = (e: MouseEvent) => {
+  const onDrag = (e: React.MouseEvent) => {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
     dispatch(Layout.setDetailPaneWidth(Math.min(width, max)))
   }
 
-  if (!isOpen) return <XRightPaneExpander />
+  if (!isOpen) return null
+
   return (
-    <Pane
-      isOpen={isOpen}
-      onDrag={onDrag}
-      position="right"
-      width={width}
-      className="right-pane"
-      aria-label="details"
-    >
+    // @ts-ignore
+    <Pane onDrag={onDrag} dragAnchor="left" style={{width}}>
+      {children}
+    </Pane>
+  )
+}
+
+const RightPane = () => {
+  const currentPaneName = useSelector(Layout.getCurrentPaneName)
+
+  return (
+    <Container>
       <Menu />
       <AppErrorBoundary>
         <PaneContentSwitch paneName={currentPaneName} />
       </AppErrorBoundary>
-    </Pane>
+    </Container>
   )
 }
 

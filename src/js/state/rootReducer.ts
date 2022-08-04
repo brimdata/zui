@@ -21,8 +21,9 @@ import Launches from "./Launches"
 import Appearance from "./Appearance"
 import RemoteQueries from "./RemoteQueries"
 import Ingests from "./Ingests"
-import DraftQueries from "./DraftQueries"
 import QueryVersions from "./QueryVersions"
+import SessionQueries from "./SessionQueries"
+import SessionHistories from "./SessionHistories"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -44,7 +45,8 @@ const rootReducer = combineReducers<any, any>({
   queries: Queries.reducer,
   queryVersions: QueryVersions.reducer,
   remoteQueries: RemoteQueries.reducer,
-  draftQueries: DraftQueries.reducer,
+  sessionQueries: SessionQueries.reducer,
+  sessionHistories: SessionHistories.reducer,
   tabHistories: TabHistories.reducer,
   url: Url.reducer,
   toolbars: Toolbars.reducer,

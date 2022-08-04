@@ -12,12 +12,13 @@ let store
 const dispatch = (...args) => store.dispatch(...args)
 const select = (selector): any => selector(store.getState())
 const indices = () => select(Viewer.getSelection).getIndices()
-const records = Array(20).fill([{name: "a", type: "b", value: "c"}])
+const values = Array(20).fill([{name: "a", type: "b", value: "c"}])
 
 beforeEach(() => {
   store = initTestStore()
-  const id = select(Tabs.getActive)
-  store.dispatch(Results.setValues(id, records as any))
+  const tabId = select(Tabs.getActive)
+  const id = "test-selection"
+  store.dispatch(Results.setValues({tabId, id, values}))
 })
 
 test("select one row", () => {

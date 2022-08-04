@@ -1,4 +1,3 @@
-import DraftQueries from "src/js/state/DraftQueries"
 import Queries from "src/js/state/Queries/index"
 import {getQuerySource} from "./get-query-source"
 import {setRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"
@@ -17,7 +16,5 @@ export const updateQuery =
       case "remote":
         await dispatch(setRemoteQueries([{...q, ...query.latestVersion()}]))
         return
-      default:
-        dispatch(DraftQueries.set(q))
     }
   }

@@ -2,6 +2,7 @@
  * @jest-envrionment jsdom
  */
 
+import "src/test/system/real-paths"
 import {rest} from "msw"
 import {setupServer} from "msw/node"
 import {getLatestVersion} from "./autoUpdater"

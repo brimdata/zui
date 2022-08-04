@@ -30,8 +30,18 @@ import lock from "./lock"
 import close from "./close"
 import plus from "./plus"
 import zui from "./zui"
+import LeftArrow from "./left-arrow"
+import RightArrow from "./right-arrow"
+import sidebarToggle from "./sidebar-toggle"
+import check from "./check"
+import update from "./update"
+import detach from "./detach"
+import threeDotsStacked from "./three-dots-stacked"
 
 export default {
+  check,
+  update,
+  detach,
   braces,
   expand,
   collapse,
@@ -56,6 +66,7 @@ export default {
   pool,
   query,
   run,
+  "sidebar-toggle": sidebarToggle,
   "file-border": fileBorder,
   "file-filled": fileFilled,
   "doc-plain": docPlain,
@@ -64,4 +75,7 @@ export default {
   close,
   plus,
   zui,
+  "left-arrow": LeftArrow,
+  "right-arrow": RightArrow,
+  "three-dots-stacked": threeDotsStacked,
 }

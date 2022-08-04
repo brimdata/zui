@@ -6,14 +6,14 @@ import fsExtra, {pathExistsSync} from "fs-extra"
 import {compact} from "lodash"
 import path, {join} from "path"
 import errors from "src/js/errors"
-import {fetchCorrelation} from "src/ppl/detail/flows/fetch"
 import BrimApi from "src/js/api"
 import {IngestParams} from "src/js/brim/ingest/getParams"
 import open from "src/js/lib/open"
 import {toNodeReadable} from "src/js/lib/response"
 import {Config} from "src/js/state/Configs"
-import {AppDispatch} from "src/js/state/types"
 import BrimcapCLI, {analyzeOptions, searchOptions} from "./brimcap-cli"
+import {findConnLog} from "../zui-zeek/queries"
+import {findUid} from "../zui-zeek/util"
 
 export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
@@ -31,7 +31,7 @@ export default class BrimcapPlugin {
     [pid: number]: ChildProcess
   } = {}
   private brimcapDataRoot = ""
-  private brimcapBinPath = ""
+  public brimcapBinPath = ""
   private suricataUserDir = ""
   private toastConfig = {
     loading: {
@@ -49,7 +49,8 @@ export default class BrimcapPlugin {
 
   constructor(private api: BrimApi) {
     // RFC: what interface do we want the app to provide for this sort of data?
-    const {dataRoot, zdepsDirectory} = api.getAppConfig()
+    const dataRoot = api.getPath("app-data")
+    const zdepsDirectory = api.getPath("zdeps")
 
     const commandName = env.isWindows ? "brimcap.exe" : "brimcap"
     this.brimcapBinPath = path.join(zdepsDirectory, commandName)
@@ -83,12 +84,15 @@ export default class BrimcapPlugin {
     this.updateSuricata()
   }
 
-  private async tryConn(detail: zed.Record, eventId: string) {
-    // TODO: dispatch is only temporarily public to plugins, so this won't always be needed
-    const dispatch = this.api.dispatch as AppDispatch
-    const uidRecords = await dispatch(fetchCorrelation(detail, eventId))
-
-    return uidRecords.find((log) => log.try("_path")?.toString() === "conn")
+  private async tryConn(detail: zed.Record, queryId: string) {
+    const uid = findUid(detail)
+    const pool = this.api.current.poolName
+    if (!pool || !uid) return null
+    const res = await this.api.query(findConnLog(pool, uid), {
+      id: `brimcap/try-conn-${queryId}`,
+    })
+    const [conn] = await res.zed()
+    return conn as zed.Record | null
   }
 
   private setupBrimcapButtons() {
@@ -218,7 +222,7 @@ export default class BrimcapPlugin {
     const tsString = ts.toString()
     const dur = log.try("duration") as zed.Duration
     const dest = join(
-      this.api.getTempDir(),
+      this.api.getPath("temp"),
       `packets-${tsString}.pcap`.replace(/:/g, "_")
     )
 
@@ -412,7 +416,7 @@ export default class BrimcapPlugin {
   private async updateSuricata() {
     /* To get better coverage we can mock the spawn call */
     if (env.isTest) return
-    const {zdepsDirectory} = this.api.getAppConfig()
+    const zdepsDirectory = this.api.getPath("zdeps")
     const cmdName = env.isWindows ? "suricataupdater.exe" : "suricataupdater"
     const cmdPath = path.join(zdepsDirectory, "suricata", cmdName)
     const proc = spawn(cmdPath)

@@ -38,7 +38,7 @@ export const query = {
 }
 export const queryVersion = {
   title: "<query>",
-  path: `${lakeShow.path}/queries/:queryId/versions/:version`,
+  path: `${query.path}/versions/:version`,
   icon: "query",
 }
 export const lakeReleaseNotes: Route = {
