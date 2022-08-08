@@ -25,6 +25,7 @@ import env from "src/app/core/env"
 import {join} from "path"
 import requireAll from "./require-all"
 import isDev from "./isDev"
+import migrateBrimToZui from "./migrateBrimToZui"
 require("@electron/remote/main").initialize()
 
 const pkg = meta.packageJSON()
@@ -52,6 +53,11 @@ export async function main(args: Partial<MainArgs> = {}) {
     return
   }
   userTasks(app)
+
+  // On first ever run of a ZUI release, check if there is existing Brim app
+  // data and if so, copy it into ZUI.
+  if (!electronIsDev && (await meta.isFirstRun())) migrateBrimToZui()
+
   const brim = await BrimMain.boot(opts)
   menu.setMenu(brim)
 
@@ -61,6 +67,7 @@ export async function main(args: Partial<MainArgs> = {}) {
   serve(paths)
   serve(meta)
   handleQuit(brim)
+
   ipcMain.handle("get-feature-flags", () => {
     return app.commandLine.getSwitchValue("feature-flags").split(",")
   })
