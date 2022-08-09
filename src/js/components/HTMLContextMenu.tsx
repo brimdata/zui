@@ -19,12 +19,14 @@ import lib from "../lib"
 import useEventListener from "./hooks/useEventListener"
 
 import env from "src/app/core/env"
+import {log} from "electron-log"
+import useListener from "./hooks/useListener"
 
 export default function HTMLContextMenu() {
   const [template, setTemplate] = useState(null)
   const openMenu = (e) => setTemplate(e.detail)
 
-  useEventListener(document, "nativeContextMenu", openMenu, [])
+  useListener(document, "nativeContextMenu", openMenu)
 
   if (!template) return null
   return ReactDOM.createPortal(

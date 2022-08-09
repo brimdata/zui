@@ -72,7 +72,7 @@ export default function PlusButton() {
   }
   return (
     <>
-      <Button onClick={() => onClick()}>
+      <Button role="create" onClick={() => onClick()}>
         <Icon name="plus" size={18} fill="white" />
       </Button>
       <input

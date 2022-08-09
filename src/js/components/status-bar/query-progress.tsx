@@ -54,16 +54,16 @@ export function QueryProgress() {
   const count = useSelector(Results.getCount(MAIN_RESULTS))
   if (status === "FETCHING") {
     return (
-      <Span>
+      <Span role="fetching">
         Fetching
         <Loader />
       </Span>
     )
   } else if (status === "COMPLETE") {
-    return <span>Results: {count}</span>
+    return <span role="results">Results: {count}</span>
   } else if (status === "INCOMPLETE") {
-    return <span>Results: First {count}</span>
+    return <span role="results">Results: First {count}</span>
   } else if (status === "LIMIT") {
-    return <span>Results: Limited to first {count}</span>
+    return <span role="results">Results: Limited to first {count}</span>
   }
 }
