@@ -23,7 +23,7 @@ recommendations on which to run Brim:
    * Windows 10 or newer
    * Windows Server 2019 or newer
 * macOS
-   * macOS Catalina 10.15.7 or newer (see [below](#hardware) for hardware considerations)
+   * macOS Big Sur 11.6.8 or newer (see [below](#hardware) for hardware considerations)
 * Linux
   * Ubuntu 18.04 or newer
   * CentOS 8.0 1905 or newer
@@ -55,9 +55,9 @@ on releases older than Windows 8.1.
 
 ### Software
 
-Brim's [test automation](#automated-testing) runs on Catalina 10.15 and
+Brim's [test automation](#automated-testing) runs on Big Sur 11 and
 therefore this is the macOS version on which we are best able to ensure quality
-and prevent regressions. Several Brim developers also run macOS Monterey 12.3
+and prevent regressions. Several Brim developers also run macOS Monterey 12.5
 and regularly perform ad hoc testing with it to reproduce reported issues.
 
 Basic [smoke testing](#smoke-testing) has also validated that Brim appears to
@@ -69,7 +69,7 @@ recommend attempting to run Brim on macOS releases older than macOS Mojave
 ### Hardware
 
 The build procedure for Brim's macOS releases creates binaries intended to
-run on the Intel-based Mac hardware that make up the majority of Macs in
+run on the Intel-based Mac hardware that make up many of the Macs in
 use today. Brim releases are not yet available that are built specifically for
 the recently-released [M1-based hardware](https://en.wikipedia.org/wiki/Apple_M1).
 However, Apple's [Rosetta 2](https://support.apple.com/en-us/HT211861) makes
@@ -105,7 +105,7 @@ Basic [smoke testing](#smoke-testing) has also validated the _oldest_
 release on which Brim appeared to work for each common distribution, as
 follows:
 
-* Ubuntu 10.04
+* Ubuntu 18.04
 * CentOS 8 1905
 * Debian 10.0.0
 * Fedora 28
@@ -128,8 +128,8 @@ strongly about trying to get Brim running on a [non-recommended platform](#non-r
 ## Development Tools
 
 There are two primary development tools on which Brim depends:
-[Electron](https://www.electronjs.org/docs/tutorial/support#supported-platforms)
-and [Go](https://golang.org/doc/install#requirements). Their support
+[Electron](https://www.electronjs.org/docs/latest/development/README)
+and [Go](https://github.com/golang/go/wiki/MinimumRequirements). Their support
 statements cite older platform releases than the Brim-specific ones cited above.
 Therefore the recommendations in the [Summary](#summary) section above should
 be followed.
@@ -155,11 +155,10 @@ confirm basic functionality. Such a smoke test consists of the following:
 * Install the Brim app using the standard package install procedure for the platform
 * Import a test pcap into Brim and confirm the bundled Zeek and Suricata both produce records from it
 
-This exercise was most recently performed in December, 2020 in preparation for
-the GA release [`v0.21.0`](https://github.com/brimdata/brim/releases/tag/v0.21.0)
-that first introduced Suricata support. For more details on the outcome of
-this exercise, review
-[brim/1263](https://github.com/brimdata/brim/issues/1263).
+This exercise was most recently performed in August, 2022 in preparation for
+the transition from Brim to GA Zui release v1.0.0. For more details on a
+particularly thorough smoke testing exercise that was performed previously,
+review [brim/1263](https://github.com/brimdata/brim/issues/1263).
 
 ## Non-Recommended Platforms
 
