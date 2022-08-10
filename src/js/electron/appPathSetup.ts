@@ -29,6 +29,7 @@ export function appPathSetup() {
     return path.join(app.getPath("logs"), variables.fileName)
   }
 
-  // prettier-ignore
-  log.info(`app paths: getAppPath=${app.getAppPath()} userData=${app.getPath("userData")} logs=${app.getPath("logs")}`);
+  log.info("app path:", app.getAppPath())
+  log.info("userData path:", app.getPath("userData"))
+  log.info("logs path:", app.getPath("logs"))
 }

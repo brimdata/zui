@@ -8586,6 +8586,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"filter-console@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "filter-console@npm:1.0.0"
+  checksum: cb57256758f2bfafda54b87ce019e3badfc5eb05949d69b3dbd3ace965e78289dc824e7894f25ce7bfd42eccde6d8b9e20ca721f82fd9a9169db6143be3b6d45
+  languageName: node
+  linkType: hard
+
 "find-babel-config@npm:^1.2.0":
   version: 1.2.0
   resolution: "find-babel-config@npm:1.2.0"
@@ -18110,6 +18117,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.29.4
     event-source-polyfill: ^1.0.25
+    filter-console: ^1.0.0
     fs-extra: ^9.0.1
     glob: ^7.1.6
     got: ^10.7.0
