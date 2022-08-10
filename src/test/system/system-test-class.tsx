@@ -1,5 +1,6 @@
 import "web-streams-polyfill"
 import "cross-fetch/polyfill"
+import "@testing-library/jest-dom"
 import * as tl from "@testing-library/react"
 import {fireEvent} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
@@ -53,6 +54,7 @@ export class SystemTest {
           )
         },
       })
+
       this.assign(await bootBrim(name, opts))
       this.navTo(`/lakes/${defaultLake().id}`)
     })

@@ -11,6 +11,8 @@
     "target": "es2020"
   },
   "module": {
-    "type": "commonjs"
+    "type": "commonjs",
+    "ignoreDynamic": true
   }
+
 }

@@ -14,11 +14,11 @@ import {getPersistedState} from "../state/getPersistable"
 import Lakes from "../state/Lakes"
 import {installExtensions} from "./extensions"
 import isDev from "./isDev"
-import {MainArgs, mainDefaults} from "./main"
 import tron, {Session} from "./tron"
 import {decodeSessionState, encodeSessionState} from "./tron/session-state"
 import {WindowManager} from "./tron/window-manager"
 import * as zdeps from "./zdeps"
+import {MainArgs, mainDefaults} from "./run-main/args"
 
 type QuitOpts = {
   saveSession?: boolean

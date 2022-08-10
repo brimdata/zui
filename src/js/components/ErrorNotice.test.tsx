@@ -6,19 +6,19 @@ import React from "react"
 import Notice from "../state/Notice"
 import ErrorFactory from "../models/ErrorFactory"
 import ErrorNotice from "./ErrorNotice"
-import {setupBrim} from "src/test/unit/helpers/setup-brim"
-import {render, screen} from "src/test/unit/helpers"
+import {screen} from "src/test/unit/helpers"
 import {act} from "react-dom/test-utils"
+import {SystemTest} from "src/test/system"
 
-const brim = setupBrim()
+const system = new SystemTest("error-notice.test")
 
 beforeEach(() => {
-  render(<ErrorNotice />, {store: brim.store, api: brim.api})
+  system.render(<ErrorNotice />)
 })
 
 test("renders Error notice with no details", async () => {
   act(() => {
-    brim.store.dispatch(
+    system.store.dispatch(
       Notice.set(
         ErrorFactory.create({
           type: "Bad",
@@ -32,7 +32,7 @@ test("renders Error notice with no details", async () => {
 
 test("renders Error notice with detail string", async () => {
   act(() => {
-    brim.store.dispatch(
+    system.store.dispatch(
       Notice.set(
         ErrorFactory.create({
           type: "Bad",
@@ -48,7 +48,7 @@ test("renders Error notice with detail string", async () => {
 
 test("renders Error notice with detail array", async () => {
   act(() => {
-    brim.store.dispatch(
+    system.store.dispatch(
       Notice.set(
         ErrorFactory.create({
           type: "Bad",

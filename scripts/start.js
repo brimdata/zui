@@ -14,7 +14,7 @@ async function start() {
   ])
   log("Launching...")
   sub("yarn", `electron . ${electronArgs}`)
-  sub("yarn", "livereload 'dist, packages/zealot/dist'")
+  sub("yarn", "livereload 'dist, packages/zealot/dist'").silence()
 }
 
 process.on("SIGINT", () => process.exit(0))
