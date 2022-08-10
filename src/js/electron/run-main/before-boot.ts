@@ -5,8 +5,9 @@ import isDev from "../isDev"
 import migrateBrimToZui from "../migrateBrimToZui"
 import {handleSquirrelEvent} from "../squirrel"
 import {windowsPre25Exists} from "../windows-pre-25"
+import {MainArgs} from "./args"
 
-export async function beforeBoot(): Promise<string | null> {
+export async function beforeBoot(args: MainArgs): Promise<string | null> {
   // Setup app paths
   appPathSetup()
 
@@ -14,7 +15,7 @@ export async function beforeBoot(): Promise<string | null> {
   app.disableHardwareAcceleration()
   // Ensure only one instance of the app is ever on (windows)
   const lock = app.requestSingleInstanceLock()
-  if (!lock) {
+  if (args.singleInstance && !lock) {
     app.quit()
     return "Instance of the app already running"
   }

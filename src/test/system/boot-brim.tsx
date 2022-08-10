@@ -1,6 +1,6 @@
 import "src/test/system/real-paths"
 import React from "react"
-import {main} from "src/js/electron/main"
+import {main} from "src/js/electron/run-main/run-main"
 import initialize from "src/js/initializers/initialize"
 import fsExtra from "fs-extra"
 import {BrimProvider} from "src/app/core/context"
@@ -51,6 +51,7 @@ export async function bootBrim(name: string, args: Partial<BootArgs> = {}) {
     appState,
     releaseNotes: false,
     autoUpdater: false,
+    singleInstance: false,
   })) as BrimMain
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
     timeout: 20_000,

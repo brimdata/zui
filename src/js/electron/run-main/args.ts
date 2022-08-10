@@ -14,6 +14,7 @@ export const mainDefaults = () => ({
   appState: join(app.getPath("userData"), "appState.json"),
   releaseNotes: true,
   autoUpdater: true,
+  singleInstance: true,
 })
 
 export type MainArgs = ReturnType<typeof mainDefaults>

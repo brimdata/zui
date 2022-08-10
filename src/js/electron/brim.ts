@@ -18,7 +18,7 @@ import tron, {Session} from "./tron"
 import {decodeSessionState, encodeSessionState} from "./tron/session-state"
 import {WindowManager} from "./tron/window-manager"
 import * as zdeps from "./zdeps"
-import {MainArgs, mainDefaults} from "./main-run/args"
+import {MainArgs, mainDefaults} from "./run-main/args"
 
 type QuitOpts = {
   saveSession?: boolean

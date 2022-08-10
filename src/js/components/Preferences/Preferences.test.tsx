@@ -8,15 +8,14 @@ import Modal from "src/js/state/Modal"
 import {createRecord} from "src/test/shared/factories/zed-factory"
 import {
   fireEvent,
-  render,
   screen,
   waitForElementToBeRemoved,
 } from "src/test/unit/helpers"
-import {setupBrim} from "src/test/unit/helpers/setup-brim"
 import Preferences from "./Preferences"
 import {act} from "react-dom/test-utils"
+import {SystemTest} from "src/test/system"
 
-const brim = setupBrim()
+const brim = new SystemTest("preferences.test.ts")
 const $ = {
   get dd() {
     return screen.getByRole("definition")
@@ -44,8 +43,8 @@ const $ = {
 }
 
 beforeEach(() => {
-  brim.dispatch(Modal.show("settings"))
-  render(<Preferences />, {store: brim.store, api: brim.api})
+  brim.store.dispatch(Modal.show("settings"))
+  brim.render(<Preferences />)
 })
 
 test("change time format", async () => {
@@ -56,7 +55,7 @@ test("change time format", async () => {
   await waitForElementToBeRemoved($.modal)
 
   const record = createRecord({ts: new Date(2019, 9, 1, 8)})
-  render(<Fields record={record} />, {store: brim.store, api: brim.api})
+  brim.render(<Fields record={record} />)
   expect($.dd.textContent).toBe("2019")
 })
 
@@ -68,7 +67,7 @@ test("Brimcap YAML Config File docs", async () => {
   await waitForElementToBeRemoved($.modal)
 
   act(() => {
-    brim.dispatch(Modal.show("settings"))
+    brim.store.dispatch(Modal.show("settings"))
   })
   expect($.brimcapConfig.value).toBe(__filename)
 })
