@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04]
+        os: [ubuntu-20.04]
     timeout-minutes: 60
     steps:
       # Only one of these should run at a time, and the checkout of brim
