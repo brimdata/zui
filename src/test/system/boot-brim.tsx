@@ -8,6 +8,7 @@ import {getPort} from "./port-service"
 import {waitFor} from "@testing-library/react"
 import {Store} from "src/js/state/types"
 import BrimApi from "src/js/api"
+import {BrimMain} from "src/js/electron/brim"
 
 const defaults = () => ({
   page: "search",
@@ -43,14 +44,14 @@ export async function bootBrim(name: string, args: Partial<BootArgs> = {}) {
   fsExtra.removeSync(lakeRoot)
   fsExtra.removeSync(lakeLogs)
   fsExtra.removeSync(appState)
-  const brimMain = await main({
+  const brimMain = (await main({
     lakePort,
     lakeRoot,
     lakeLogs,
     appState,
     releaseNotes: false,
     autoUpdater: false,
-  })
+  })) as BrimMain
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
     timeout: 20_000,
   })
