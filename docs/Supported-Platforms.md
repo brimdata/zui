@@ -20,10 +20,10 @@ available that run on Windows, macOS, and Linux. Our current platform
 recommendations on which to run Brim:
 
 - Windows
-   - Windows 10 or newer
-   - Windows Server 2019 or newer
+  - Windows 10 or newer
+  - Windows Server 2019 or newer
 - macOS
-   - macOS Big Sur 11.6.8 or newer (see [below](#hardware) for hardware considerations)
+  - macOS Big Sur 11.6.8 or newer (see [below](#hardware) for hardware considerations)
 - Linux
   - Ubuntu 20.04 or newer
   - Debian 10.0.0 or newer
