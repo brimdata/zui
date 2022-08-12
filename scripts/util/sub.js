@@ -6,6 +6,7 @@ class Sub {
       shell: true,
     })
     this.p.stdout.on("data", (data) => {
+      if (this.silent) return
       if (this.waiting) return
       process.stdout.write(data.toString())
     })
@@ -17,6 +18,11 @@ class Sub {
       if (this.waiting) return
       process.stderr.write(data.toString())
     })
+  }
+
+  silence() {
+    this.silent = true
+    return this
   }
 
   waitForOutput(pattern, debug) {

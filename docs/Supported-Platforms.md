@@ -2,16 +2,16 @@
 
 - [Summary](#summary)
 - [Per-Platform Details](#per-platform-details)
-  * [Windows](#windows)
-  * [macOS](#macos)
-    + [Software](#software)
-    + [Hardware](#hardware)
-  * [Linux](#linux)
+  - [Windows](#windows)
+  - [macOS](#macos)
+    - [Software](#software)
+    - [Hardware](#hardware)
+  - [Linux](#linux)
 - [Establishing Platform Supportability](#establishing-platform-supportability)
-  * [Development Tools](#development-tools)
-  * [Automated Testing](#automated-testing)
-  * [Smoke Testing](#smoke-testing)
-  * [Non-Recommended Platforms](#non-recommended-platforms)
+  - [Development Tools](#development-tools)
+  - [Automated Testing](#automated-testing)
+  - [Smoke Testing](#smoke-testing)
+  - [Non-Recommended Platforms](#non-recommended-platforms)
 
 # Summary
 
@@ -19,17 +19,17 @@
 available that run on Windows, macOS, and Linux. Our current platform
 recommendations on which to run Brim:
 
-* Windows
-   * Windows 10 or newer
-   * Windows Server 2019 or newer
-* macOS
-   * macOS Big Sur 11.6.8 or newer (see [below](#hardware) for hardware considerations)
-* Linux
-  * Ubuntu 20.04 or newer
-  * Debian 10.0.0 or newer
-  * Fedora 29 or newer
-  * Rocky 8.3 or newer
-  * CentOS 8.0 1905 (deprecated)
+- Windows
+   - Windows 10 or newer
+   - Windows Server 2019 or newer
+- macOS
+   - macOS Big Sur 11.6.8 or newer (see [below](#hardware) for hardware considerations)
+- Linux
+  - Ubuntu 20.04 or newer
+  - Debian 10.0.0 or newer
+  - Fedora 29 or newer
+  - Rocky 8.3 or newer
+  - CentOS 8.0 1905 (deprecated)
 
 The sections below provide details regarding these guidelines and how they are
 established.
@@ -94,7 +94,7 @@ builds ([brim/1266](https://github.com/brimdata/brim/issues/1266)).
 
 Brim's [test automation](#automated-testing) runs on Ubuntu 20.04 (`.deb`
 package) and therefore this is the Linux distribution on which we are best able
-to ensure quality and prevent regressions. 
+to ensure quality and prevent regressions.
 
 An `.rpm` package is also provided that is periodically [smoke tested](https://github.com/brimdata/brim/wiki/Supported-Platforms#smoke-testing)
 on Rocky 8.3. The [Rocky Linux site](https://rockylinux.org/about) explains that Rocky
@@ -107,11 +107,11 @@ Basic [smoke testing](#smoke-testing) has also validated the _oldest_
 release on which Brim appeared to work for each common distribution, as
 follows:
 
-* Ubuntu 20.04
-* Debian 10.0.0
-* Fedora 29
-* Rocky 8.3
-* CentOS 8 1905 (deprecated)
+- Ubuntu 20.04
+- Debian 10.0.0
+- Fedora 29
+- Rocky 8.3
+- CentOS 8 1905 (deprecated)
 
 Therefore we do _not_ recommend attempting to run Brim on distributions older
 than those listed above.
@@ -121,9 +121,9 @@ than those listed above.
 The determination of the specific versions of platforms for which we can set
 expectations of quality are based on multiple factors. These include:
 
-* Support for the platform in dependent [development tools](#development-tools)
-* Availability of the platform for [automated testing](#automated-testing)
-and/or [smoke testing](#smoke-testing)
+- Support for the platform in dependent [development tools](#development-tools)
+- Availability of the platform for [automated testing](#automated-testing)
+  and/or [smoke testing](#smoke-testing)
 
 The following sections provide more detail, along with guidance if you feel
 strongly about trying to get Brim running on a [non-recommended platform](#non-recommended-platforms).
@@ -154,10 +154,10 @@ automated coverage on every version of every possible platform. Occasionally,
 manual "smoke testing" has been performed on a wider number of platforms to
 confirm basic functionality. Such a smoke test consists of the following:
 
-* Install the base platform while accepting the defaults on any offered install-time config options
-* Install the Brim app using the standard package install procedure for the platform
-* Import a test pcap into Brim and confirm the bundled Zeek and Suricata both produce records from it
-* Click the **Packets** button to extract a slice from the pcap into Wireshark
+- Install the base platform while accepting the defaults on any offered install-time config options
+- Install the Brim app using the standard package install procedure for the platform
+- Import a test pcap into Brim and confirm the bundled Zeek and Suricata both produce records from it
+- Click the **Packets** button to extract a slice from the pcap into Wireshark
 
 This exercise was most recently performed in August, 2022 in preparation for
 the transition from Brim to GA Zui release v1.0.0. For more details on
