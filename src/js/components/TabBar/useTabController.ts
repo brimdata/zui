@@ -2,9 +2,9 @@ import {useSelector} from "react-redux"
 import {startTransition, useEffect, useRef, useState} from "react"
 
 import Tabs from "../../state/Tabs"
-import {ipcRenderer} from "electron"
 import {newTab} from "src/app/query-home/flows/new-tab"
 import {useDispatch} from "src/app/core/state"
+import {closeWindow} from "src/js/electron/ops/close-window"
 
 export default function (count: number, calcWidths: Function) {
   const trueActiveId = useSelector(Tabs.getActive)
@@ -32,7 +32,7 @@ export default function (count: number, calcWidths: Function) {
     onRemoveClick(event: MouseEvent, id: string) {
       event.stopPropagation()
       if (tabCount === 1) {
-        ipcRenderer.invoke("windows:close")
+        closeWindow.invoke()
       } else {
         removedByClick.current = true
         dispatch(Tabs.remove(id))

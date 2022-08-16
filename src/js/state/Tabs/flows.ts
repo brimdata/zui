@@ -1,6 +1,6 @@
 import {nanoid} from "@reduxjs/toolkit"
-import {ipcRenderer} from "electron"
 import {lakeQueryPath} from "src/app/router/utils/paths"
+import {closeWindow} from "src/js/electron/ops/close-window"
 import Current from "../Current"
 import SessionQueries from "../SessionQueries"
 import {Thunk} from "../types"
@@ -63,7 +63,7 @@ export const activateUrl =
 export const closeActive = (): Thunk => (dispatch, getState) => {
   const tabs = Tabs.getData(getState())
   if (tabs.length === 1) {
-    ipcRenderer.invoke("windows:close")
+    closeWindow.invoke()
   } else {
     const id = Tabs.getActive(getState())
     dispatch(Tabs.remove(id))
