@@ -22,6 +22,10 @@ export class Pool {
     else throw new Error("No stats for this pool")
   }
 
+  get keys() {
+    return this.data.layout.keys || []
+  }
+
   defaultSpanArgs() {
     return this.everythingSpan()
   }
@@ -35,7 +39,7 @@ export class Pool {
   }
 
   hasTsKey() {
-    return isEqual(this.data.layout.keys, [["ts"]])
+    return isEqual(this.keys, [["ts"]])
   }
 
   empty() {
