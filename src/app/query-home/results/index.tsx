@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react"
+import React from "react"
 import {useSelector} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import {useResultsData} from "./data-hook"
@@ -10,7 +10,6 @@ import Results from "src/js/state/Results"
 import styled from "styled-components"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
-import {useLocation} from "react-router"
 
 const BG = styled.div`
   display: flex;
@@ -29,16 +28,10 @@ const ResultsComponent = () => {
   const view = useResultsView()
   const {ref, rect} = useResizeObserver()
   const error = useSelector(Results.getError(MAIN_RESULTS))
-  const location = useLocation()
-  const boundary = useRef<AppErrorBoundary>()
-
-  useEffect(() => {
-    boundary.current.clear()
-  }, [location.key])
 
   return (
     <BG>
-      <AppErrorBoundary ref={boundary}>
+      <AppErrorBoundary>
         <Body ref={ref} data-test-locator="viewer_results">
           {error && <ResultsError error={error} />}
           {!error && view.isTable && (
