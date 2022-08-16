@@ -10,6 +10,7 @@ import QueriesSection from "./queries-section"
 import Header from "./header"
 import {Menu} from "./menu"
 import SidebarToggleButton from "./sidebar-toggle-button"
+import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -76,7 +77,9 @@ export function Sidebar() {
         <>
           <Header />
           <Menu />
-          <SectionContentSwitch sectionName={currentSectionName} />
+          <AppErrorBoundary>
+            <SectionContentSwitch sectionName={currentSectionName} />
+          </AppErrorBoundary>
         </>
       )}
     </Pane>
