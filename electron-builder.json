@@ -10,6 +10,8 @@
     ]
   },
   "linux": {"target": ["deb", "rpm"]},
+  "rpm": {"depends": ["openssl"]},
+  "deb": {"depends": ["openssl"]},
   "forceCodeSigning": true,
   "afterSign": "electron-builder-notarize",
   "publish": {
