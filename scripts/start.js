@@ -1,7 +1,9 @@
 const sub = require("./util/sub")
 const log = require("./util/log")
+const fs = require("fs-extra")
 
 async function start() {
+  fs.removeSync("dist")
   const electronArgs = process.argv.splice(2).join(" ")
   log("Compiling...")
   const js = sub("yarn", `build:js --watch`)
