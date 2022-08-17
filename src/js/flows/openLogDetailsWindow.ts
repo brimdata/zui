@@ -1,9 +1,13 @@
+import {encode, zed} from "@brimdata/zealot"
 import {openDetailWindow} from "src/js/electron/ops/open-detail-window"
+import Current from "../state/Current"
 import {Thunk} from "../state/types"
 
 export const openLogDetailsWindow =
-  (): Thunk =>
-  async (dispatch, getState, {api}) => {
-    // invoke(ipc.windows.open("detail", {size: [700, 600], query: {href}}, state))
-    await openDetailWindow.invoke({value: api.current.value})
+  (value: zed.Value): Thunk =>
+  async (dispatch, getState) => {
+    await openDetailWindow.invoke({
+      value: encode(value),
+      url: Current.getLocation(getState()).pathname,
+    })
   }
