@@ -1,7 +1,6 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {HTMLProps} from "react"
 import useStoreExport from "src/app/core/hooks/useStoreExport"
-import Current from "../../state/Current"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "src/app/detail/Pane"
@@ -15,15 +14,11 @@ const PaneHeader = (props: Pass) => (
   <header {...props} className="pane-header" />
 )
 
-const PaneTitle = (props: Pass) => <h3 {...props} className="pane-title" />
 const Left = ({className, ...props}: Pass) => (
   <div {...props} className={classNames("left", className)} />
 )
 const Right = ({className, ...props}: Pass) => (
   <div {...props} className={classNames("right", className)} />
-)
-const Center = ({className, ...props}: Pass) => (
-  <div {...props} className={classNames("center", className)} />
 )
 
 export default function LogDetailsWindow() {
@@ -31,7 +26,6 @@ export default function LogDetailsWindow() {
   const dispatch = useDispatch()
   const prevExists = useSelector(LogDetails.getHistory).canGoBack()
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()
-  const pool = useSelector(Current.getQueryPool)
   const pluginButtons = usePluginToolbarItems("detail").map((button, i) => (
     <ActionButton key={button.label || i} {...button} />
   ))
@@ -47,9 +41,6 @@ export default function LogDetailsWindow() {
             forwardFunc={() => dispatch(LogDetails.forward())}
           />
         </Left>
-        <Center>
-          <PaneTitle>Log details for pool: {pool.name}</PaneTitle>
-        </Center>
         <Right>
           <div>{pluginButtons}</div>
         </Right>
