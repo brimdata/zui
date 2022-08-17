@@ -1,5 +1,5 @@
 import {getPersistedState} from "src/js/state/getPersistable"
-import {GlobalState} from "../../state/globalReducer"
+import {State} from "src/js/state/types"
 import {SerializedWindow, WindowName} from "./window-manager"
 
 export type SessionState = {
@@ -12,7 +12,7 @@ export type SessionState = {
       state: Object
     }
   }
-  globalState: GlobalState
+  globalState: State
 }
 
 function getWindowOrder(windows: SerializedWindow[]): string[] {
@@ -25,7 +25,7 @@ function getWindowData({name, state, size, position}: SerializedWindow) {
 
 export function encodeSessionState(
   windows: SerializedWindow[],
-  globalState: GlobalState
+  globalState: State
 ): SessionState {
   const groupById = (all, window) => ({
     ...all,
