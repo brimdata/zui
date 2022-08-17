@@ -8,6 +8,7 @@ import initMenuActionListeners from "./initMenuActionListeners"
 import initPlugins from "./initPlugins"
 import initStore from "./initStore"
 import initLakeParams from "./initLakeParams"
+import {initAutosave} from "./initAutosave"
 
 export default async function initialize() {
   const api = new BrimApi()
@@ -23,6 +24,7 @@ export default async function initialize() {
   initMenuActionListeners(store)
   initLakeParams(store)
   initDebugGlobals(store, api)
+  initAutosave(store)
 
   return {store, api, pluginManager}
 }
