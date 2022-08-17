@@ -1,5 +1,5 @@
 import {zjson} from "@brimdata/zealot"
-import {createOperation, createSpecialOperation} from "../main-op"
+import {createOperation, createSpecialOperation} from "../operations"
 
 export const openDetailWindow = createOperation(
   "detailWindow.open",

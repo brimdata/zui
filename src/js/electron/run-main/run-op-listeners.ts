@@ -1,7 +1,7 @@
 import {BrimMain} from "../brim"
 import path from "path"
 import {requireDir} from "../utils/require-dir"
-import {Operation, SpecialOperation} from "../main-op"
+import {Operation, SpecialOperation} from "../operations"
 
 export function runOpListeners(main: BrimMain) {
   return requireDir({
