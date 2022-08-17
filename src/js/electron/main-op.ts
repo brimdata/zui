@@ -2,14 +2,18 @@ import {ipcMain, IpcMainInvokeEvent, ipcRenderer} from "electron"
 import log from "electron-log"
 import {BrimMain} from "./brim"
 
-export function mainOp<Arg = never, Ret = never>(
+export function createOperation<Arg = never, Ret = never>(
   channel: string,
   handler: (main: BrimMain, e: IpcMainInvokeEvent, arg: Arg) => Ret
 ) {
-  return new MainOperation<Arg, Ret>(channel, handler)
+  return new Operation<Arg, Ret>(channel, handler)
 }
 
-export class MainOperation<Arg, Ret> {
+export function createSpecialOperation<Arg, Ret>(channel: string) {
+  return new SpecialOperation<Arg, Ret>(channel)
+}
+
+export class Operation<Arg, Ret> {
   constructor(
     public channel: string,
     private handler: (main: BrimMain, e: IpcMainInvokeEvent, arg: Arg) => Ret
@@ -24,6 +28,42 @@ export class MainOperation<Arg, Ret> {
   }
 
   invoke(...args: Arg extends never ? [] : [arg: Arg]): Promise<Ret> {
-    return ipcRenderer.invoke(this.channel, args)
+    return ipcRenderer.invoke(this.channel, args[0])
+  }
+}
+
+class OpResponse<A, R> {
+  constructor(public value: R, public condition = (_arg: A) => true) {}
+
+  when(condition: (arg: A) => boolean) {
+    this.condition = condition
+  }
+}
+
+export class SpecialOperation<A, R> {
+  responses: OpResponse<A, R>[] = []
+
+  constructor(public channel: string) {}
+
+  return(value: R) {
+    const res = new OpResponse<A, R>(value)
+    this.responses.push(res)
+    return res
+  }
+
+  listen() {
+    ipcMain.handle(this.channel, (e, arg: A) => {
+      log.debug("IPC Handling:", this.channel)
+      const index = this.responses.findIndex((r) => r.condition(arg))
+      if (index === -1) return
+      const res = this.responses[index]
+      this.responses.splice(index, 1)
+      return res.value
+    })
+    log.debug("IPC Listening:", this.channel)
+  }
+
+  invoke(arg: A): Promise<R> {
+    return ipcRenderer.invoke(this.channel, arg)
   }
 }

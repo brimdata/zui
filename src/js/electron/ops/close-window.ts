@@ -1,5 +1,5 @@
-import {mainOp} from "../main-op"
+import {createOperation} from "../main-op"
 
-export const closeWindow = mainOp("closeWindow", (main) => {
+export const closeWindow = createOperation("closeWindow", (main) => {
   main.windows.closeWindow()
 })
