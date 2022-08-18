@@ -6,7 +6,7 @@ import StartupError from "./components/StartupError"
 import deletePartialPools from "./flows/deletePartialPools"
 import initialize from "./initializers/initialize"
 import lib from "./lib"
-import {getPersistedState} from "./state/getPersistable"
+import {getPersistedWindowState} from "./state/getPersistable"
 import TabHistories from "./state/TabHistories"
 import React from "react"
 import {createRoot} from "react-dom/client"
@@ -23,7 +23,7 @@ initialize()
       ipcRenderer.send(
         "windows:updateState",
         global.windowId,
-        getPersistedState(store.getState())
+        getPersistedWindowState(store.getState())
       )
     }
     const container = lib.doc.id("app-root")

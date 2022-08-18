@@ -7,10 +7,11 @@ import {handleSquirrelEvent} from "../squirrel"
 import {windowsPre25Exists} from "../windows-pre-25"
 import {MainArgs} from "./args"
 
-export async function beforeBoot(args: MainArgs): Promise<string | null> {
-  // Setup app paths
+export async function beforeBoot(
+  args: Partial<MainArgs>
+): Promise<string | null> {
+  // Setup app paths, this must be first
   appPathSetup()
-
   // Disable for certain platforms
   app.disableHardwareAcceleration()
   // Ensure only one instance of the app is ever on (windows)

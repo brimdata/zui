@@ -15,7 +15,8 @@ beforeEach(() => {
 
 test("serialize each window", async () => {
   const manager = new WindowManager()
-  await manager.openWindow("search")
+  const win = await manager.openWindow("search")
+  manager.setWindowState(win.id, store.getState())
   const data = await manager.serialize()
   expect(data).toEqual([
     {

@@ -4,7 +4,7 @@ import confirmUnload from "../flows/confirmUnload"
 import deletePartialPools from "../flows/deletePartialPools"
 import Appearance from "../state/Appearance"
 import Current from "../state/Current"
-import {getPersistedState} from "../state/getPersistable"
+import {getPersistedWindowState} from "../state/getPersistable"
 import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import SearchBar from "../state/SearchBar"
@@ -63,7 +63,7 @@ export default (store: Store, pluginManager: PluginManager) => {
   })
 
   ipcRenderer.on("getState", (event, channel) => {
-    ipcRenderer.send(channel, getPersistedState(store.getState()))
+    ipcRenderer.send(channel, getPersistedWindowState(store.getState()))
   })
 
   ipcRenderer.on("showPreferences", () => {

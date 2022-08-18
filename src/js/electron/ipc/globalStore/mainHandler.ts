@@ -2,11 +2,12 @@ import {ipcMain} from "electron"
 import ipc from ".."
 import sendTo from "../sendTo"
 import {BrimMain} from "../../brim"
+import {getPersistedGlobalState} from "src/js/state/getPersistable"
 
 export default function (brim: BrimMain) {
   ipcMain.handle("globalStore:init", () => {
     return {
-      initialState: brim.store.getState(),
+      initialState: getPersistedGlobalState(brim.store.getState()),
     }
   })
 

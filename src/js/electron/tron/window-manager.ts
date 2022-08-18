@@ -10,6 +10,7 @@ import {SearchWindow} from "../window/SearchWindow"
 import {SessionState} from "./session-state"
 import tron from "./index"
 import {WindowParams} from "./window"
+import {State} from "src/js/state/types"
 
 export type WindowName = "search" | "about" | "detail" | "hidden"
 
@@ -23,7 +24,7 @@ export interface SerializedWindow {
   position: [number, number]
   size: [number, number]
   lastFocused: number
-  state: any
+  state: State
 }
 
 export interface BrimWindow {
@@ -125,6 +126,15 @@ export class WindowManager {
     return this.windows[id]
   }
 
+  setWindowState(id: string, state: State) {
+    const win = this.getWindow(id)
+    if (win) {
+      win.initialState = state
+    } else {
+      log.error("No Window Found with id: ", id)
+    }
+  }
+
   async openSearchTab(searchParams: NewTabSearchParams) {
     let isNewWin = true
     const existingWin = this.getAll()
@@ -211,7 +221,7 @@ export class WindowManager {
             id,
             name,
             lastFocused: this.lastFocused,
-            state: "Fill this in later",
+            state: undefined,
             position: ref.getPosition() as [number, number],
             size: ref.getSize() as [number, number],
           }

@@ -76,7 +76,6 @@ export class SearchWindow implements BrimWindow {
   }
 
   async serialize() {
-    this.initialState = await this.getStateFromWebContents()
     return {
       id: this.id,
       name: this.name,

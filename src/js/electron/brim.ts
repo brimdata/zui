@@ -10,7 +10,7 @@ import {
   toRefreshTokenKey,
 } from "../auth0/utils"
 import createGlobalStore from "../state/createGlobalStore"
-import {getPersistedState} from "../state/getPersistable"
+import {getPersistedGlobalState} from "../state/getPersistable"
 import Lakes from "../state/Lakes"
 import {installExtensions} from "./extensions"
 import isDev from "./isDev"
@@ -76,7 +76,7 @@ export class BrimMain {
 
   async saveSession() {
     const windowState = await this.windows.serialize()
-    const mainState = getPersistedState(this.store.getState())
+    const mainState = getPersistedGlobalState(this.store.getState())
 
     await this.session.save(encodeSessionState(windowState, mainState))
   }

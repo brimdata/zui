@@ -5,7 +5,19 @@ import {State} from "./types"
 type StateKey = keyof State
 type TabKey = keyof TabState
 
-const WINDOW_PERSIST: StateKey[] = [
+export const GLOBAL_PERSIST: StateKey[] = [
+  "launches",
+  "lakes",
+  "configs",
+  "configPropValues",
+  "pluginStorage",
+  "queryVersions",
+  "queries",
+  "sessionQueries",
+  "remoteQueries",
+]
+
+export const WINDOW_PERSIST: StateKey[] = [
   "appearance",
   "configPropValues",
   "investigation",
@@ -19,7 +31,7 @@ const WINDOW_PERSIST: StateKey[] = [
   "lakes",
 ]
 
-const TAB_PERSIST: TabKey[] = [
+export const TAB_PERSIST: TabKey[] = [
   "id",
   "search",
   "searchBar",
@@ -29,7 +41,34 @@ const TAB_PERSIST: TabKey[] = [
   "lastFocused",
 ]
 
-function deleteAccessTokens(state: Partial<State>) {
+export function getPersistedWindowState(original: State) {
+  return {
+    ...pick(original, WINDOW_PERSIST),
+    ...getPersistedLakes(original),
+    ...getPersistedTabs(original),
+    ...getPersistedTabHistories(),
+  }
+}
+
+export function getPersistedGlobalState(original: State) {
+  return {
+    ...pick(original, GLOBAL_PERSIST),
+    ...getPersistedLakes(original),
+  }
+}
+
+export function getPersistedTabs(original: State) {
+  if (!original.tabs) return undefined
+  const pickKeys = (tab) => pick(tab, TAB_PERSIST) as TabState
+  return {
+    tabs: {
+      ...original.tabs,
+      data: original.tabs.data.map(pickKeys),
+    },
+  }
+}
+
+function getPersistedLakes(state: Partial<State>) {
   if (!state.lakes) return undefined
   const newLakes = {}
   for (const id in state.lakes) {
@@ -39,20 +78,23 @@ function deleteAccessTokens(state: Partial<State>) {
     }
     newLakes[id] = lake
   }
-  return newLakes
+  return {lakes: newLakes}
 }
 
-export function getPersistedState(original: State) {
-  let state = pick(original, WINDOW_PERSIST)
-
-  if (original.tabs) {
-    const tabs = {
-      ...original.tabs,
-      data: original.tabs.data.map((tab) => pick(tab, TAB_PERSIST) as TabState),
-    }
-    state = {...state, tabs}
+function getPersistedTabHistories() {
+  if (!global.tabHistories) return undefined
+  return {
+    tabHistories: toEntityState(global.tabHistories.serialize()),
   }
-  const lakes = deleteAccessTokens(state)
-  state = {...state, lakes}
-  return state
+}
+
+function toEntityState(items) {
+  return items.reduce(
+    (slice, entity) => {
+      slice.ids.push(entity.id)
+      slice.entities[entity.id] = entity
+      return slice
+    },
+    {ids: [], entities: {}}
+  )
 }

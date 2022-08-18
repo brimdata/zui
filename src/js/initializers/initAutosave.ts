@@ -1,17 +1,23 @@
 import {throttle} from "lodash"
-
-let id = null
-
-function saveFuncion() {
-  window.cancelIdleCallback(id)
-  id = window.requestIdleCallback(() => {
-    console.log("SENDING STATE")
-  })
-}
-
-const save = throttle(saveFuncion, 3000, {leading: false})
+import {autosave} from "../electron/ops/autosave"
+import {getPersistedWindowState} from "../state/getPersistable"
+import onIdle from "on-idle"
 
 export function initAutosave(store) {
+  let cancel = () => {}
+
+  function saveFunction() {
+    cancel()
+    cancel = onIdle(() => {
+      autosave.invoke({
+        windowId: global.windowId,
+        windowState: getPersistedWindowState(store.getState()),
+      })
+    })
+  }
+
+  const save = throttle(saveFunction, 1000)
+
   store.subscribe(() => {
     save()
   })

@@ -13,12 +13,15 @@ function getInitialState(windowId) {
   return Promise.all([
     invoke(ipc.windows.initialState(windowId)),
     invoke(ipc.globalStore.init()).then(({initialState}) => initialState),
-  ]).then(([winState, globalState]) => ({...winState, ...globalState}))
+  ]).then(([winState, globalState]) => {
+    return {...winState, ...globalState}
+  })
 }
 
 export default async (api: BrimApi) => {
   const windowId = getUrlSearchParams().id
   const initialState = await getInitialState(windowId)
+
   return configureStore({
     reducer: rootReducer,
     preloadedState: initialState,

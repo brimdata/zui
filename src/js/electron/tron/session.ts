@@ -5,7 +5,7 @@ import {isNumber} from "../../lib/is"
 import {Migrations} from "./migrations"
 import {SessionState} from "./session-state"
 
-export default function session(path) {
+export default function session(path: string) {
   let version = 0
 
   return {
