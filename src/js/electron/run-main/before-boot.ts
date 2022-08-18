@@ -1,6 +1,5 @@
 import {app} from "electron"
 import {meta} from "src/app/ipc/meta"
-import {appPathSetup} from "../appPathSetup"
 import isDev from "../isDev"
 import migrateBrimToZui from "../migrateBrimToZui"
 import {handleSquirrelEvent} from "../squirrel"
