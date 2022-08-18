@@ -10,7 +10,6 @@ import {
 } from "playwright-chromium"
 import env from "../../../src/app/core/env"
 import {itestDir} from "./env"
-import {expect} from "@playwright/test"
 
 export default class TestApp {
   brim: ElectronApplication
@@ -60,13 +59,13 @@ export default class TestApp {
     ])
 
     await chooser.setFiles(filepaths)
-    await expect(this.mainWin.locator("text=Import Complete.")).toBeVisible()
+    await this.mainWin.locator("text=Import Complete.").isVisible()
   }
 
   async query(zed: string): Promise<void> {
     await this.mainWin.locator('div[role="textbox"]').fill(zed)
     await this.mainWin.locator('div[role="editor"] + button').click()
-    await expect(this.mainWin.locator('span[role="fetching"]')).toBeHidden()
+    await this.mainWin.locator('span[role="fetching"]').isHidden()
   }
 
   // TODO: this method is a wip, it still needs to wait for cells to populate first
