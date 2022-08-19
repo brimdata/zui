@@ -35,6 +35,7 @@ export abstract class ZuiWindow {
     })
     this.touch()
     this.ref.on("focus", this.onFocus.bind(this))
+    this.ref.on("close", this.onClose.bind(this))
     enable(this.ref.webContents) // For Remote Module to Work
     this.beforeLoad()
     return this.ref.loadFile(this.name + ".html", {
@@ -48,6 +49,10 @@ export abstract class ZuiWindow {
 
   onFocus() {
     this.touch()
+  }
+
+  onClose(_e: Electron.Event) {
+    /* For a sub-class to override */
   }
 
   close() {
