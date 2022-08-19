@@ -1,4 +1,4 @@
-import {WindowName} from "../tron/window-manager"
+import {WindowName} from "../windows/window-manager"
 import {ZuiWindow} from "./zui-window"
 
 export class HiddenWindow extends ZuiWindow {

@@ -1,10 +1,6 @@
-import {State} from "../../state/types"
-import {WindowParams} from "../tron/window"
-import {WindowName} from "../tron/window-manager"
 import {NewTabSearchParams} from "./windows/messages"
 
 export type IpcMsg =
-  | WindowsOpenMsg
   | WindowsInitialStateMsg
   | WindowsNewSearchTabMsg
   | WindowsOpenDirectorySelect
@@ -14,13 +10,6 @@ export type IpcMsg =
   | SecretsSetKeyMsg
   | SecretsGetKeyMsg
   | SecretsDeleteKeyMsg
-
-export type WindowsOpenMsg = {
-  channel: "windows:open"
-  name: WindowName
-  params: Partial<WindowParams>
-  state: State
-}
 
 export type WindowsAuthCallbackMsg = {
   channel: "windows:authCallback"

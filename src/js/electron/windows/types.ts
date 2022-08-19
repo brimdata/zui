@@ -1,5 +1,5 @@
-import {WindowName} from "../tron/window-manager"
-import {Dimens} from "../window/dimens"
+import {WindowName} from "../windows/window-manager"
+import {Dimens} from "../windows/dimens"
 
 export type WindowProps = {
   id?: string

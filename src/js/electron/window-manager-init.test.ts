@@ -1,4 +1,4 @@
-import {WindowManager} from "./tron/window-manager"
+import {WindowManager} from "./windows/window-manager"
 
 test("persis a session, then boot up from it", async () => {
   const manager = new WindowManager({

@@ -1,9 +1,11 @@
 import log from "electron-log"
 import {get} from "lodash"
-import lib from "../../lib"
-import {isNumber} from "../../lib/is"
+import lib from "src/js/lib"
+import {isNumber} from "src/js/lib/is"
 import {Migrations} from "./migrations"
 import {SessionState} from "./session-state"
+
+export type Session = ReturnType<typeof session>
 
 export default function session(path: string) {
   let version = 0

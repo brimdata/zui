@@ -14,11 +14,11 @@ import {getPersistedGlobalState} from "../state/getPersistable"
 import Lakes from "../state/Lakes"
 import {installExtensions} from "./extensions"
 import isDev from "./isDev"
-import tron, {Session} from "./tron"
-import {decodeSessionState, encodeSessionState} from "./tron/session-state"
-import {WindowManager} from "./tron/window-manager"
+import {decodeSessionState, encodeSessionState} from "./session-state"
+import {WindowManager} from "./windows/window-manager"
 import * as zdeps from "./zdeps"
 import {MainArgs, mainDefaults} from "./run-main/args"
+import createSession, {Session} from "./session"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -29,7 +29,6 @@ export class BrimMain {
 
   static async boot(params: Partial<MainArgs> = {}) {
     const args = {...mainDefaults(), ...params}
-    const createSession = tron.session
     const session = createSession(args.appState)
     const data = decodeSessionState(await session.load())
     const windows = new WindowManager(data)

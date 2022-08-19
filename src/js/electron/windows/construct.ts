@@ -1,5 +1,5 @@
 import log from "electron-log"
-import {dimensFromSizePosition} from "../window/dimens"
+import {dimensFromSizePosition} from "../windows/dimens"
 import {DetailWindow} from "./detail-window"
 import {SearchWindow} from "./search-window"
 import {AboutWindow} from "./about-window"

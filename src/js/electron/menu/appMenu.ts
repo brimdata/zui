@@ -2,7 +2,7 @@ import {app, dialog, shell, MenuItemConstructorOptions} from "electron"
 import path from "path"
 
 import electronIsDev from "../isDev"
-import {encodeSessionState} from "../tron/session-state"
+import {encodeSessionState} from "../session-state"
 import {BrimMain} from "../brim"
 import env from "src/app/core/env"
 import links from "src/app/core/links"

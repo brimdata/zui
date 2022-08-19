@@ -1,6 +1,6 @@
 import {getPersistedWindowState} from "src/js/state/getPersistable"
 import {State} from "src/js/state/types"
-import {SerializedWindow} from "../windows/types"
+import {SerializedWindow} from "./windows/types"
 
 export type SessionState = {
   order: string[]

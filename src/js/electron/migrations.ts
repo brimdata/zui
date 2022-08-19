@@ -1,7 +1,7 @@
 import path from "path"
 
-import {last} from "../../lib/Array"
-import lib from "../../lib"
+import {last} from "src/js/lib/Array"
+import lib from "src/js/lib"
 
 const dir = path.join(__dirname, "../../state/migrations")
 

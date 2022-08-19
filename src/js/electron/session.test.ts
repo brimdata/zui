@@ -10,9 +10,9 @@ import os from "os"
 import disableLogger from "src/test/unit/helpers/disableLogger"
 import {encodeSessionState} from "./session-state"
 import initTestStore from "src/test/unit/helpers/initTestStore"
-import tron from "./"
 import states from "src/test/unit/states"
 import {Migrations} from "./migrations"
+import createSession from "./session"
 
 const dir = path.join(os.tmpdir(), "session.test.ts")
 const file = path.join(dir, "appState.json")
@@ -24,7 +24,7 @@ afterEach(() => fsExtra.remove(dir))
 test("session loading with migrations", async () => {
   const state = initTestStore().getState()
   const migrations = await Migrations.init()
-  const session = tron.session(file)
+  const session = createSession(file)
   const data = encodeSessionState([], state)
 
   await session.save(data)
@@ -41,7 +41,7 @@ test("loading state from release 0.8.0 resets state", async () => {
   }
   fsExtra.writeJSONSync(file, v8)
 
-  const session = tron.session(file)
+  const session = createSession(file)
   const data = await session.load()
   const latestVersion = (await Migrations.init()).getLatestVersion()
 
@@ -52,7 +52,7 @@ test("loading state from release 0.8.0 resets state", async () => {
 test("loading state from a 0.9.1 release migrates", () => {
   const testState = states.getPath("v0.9.1.json")
   fsExtra.copySync(testState, file)
-  const session = tron.session(file)
+  const session = createSession(file)
 
   return expect(session.load()).resolves.toEqual({
     globalState: expect.any(Object),
@@ -63,7 +63,7 @@ test("loading state from a 0.9.1 release migrates", () => {
 
 test("failing to load sets session to latest version", async () => {
   fsExtra.writeFileSync(file, "this aint json")
-  const session = tron.session(file)
+  const session = createSession(file)
   const data = await session.load()
   const latestVersion = (await Migrations.init()).getLatestVersion()
 
