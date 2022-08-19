@@ -1,42 +1,22 @@
 import {BrowserWindow, screen} from "electron"
 import log from "electron-log"
 import {last} from "lodash"
-import brim from "src/js/brim"
-import ipc from "../ipc"
-import sendTo from "../ipc/sendTo"
 import {NewTabSearchParams} from "../ipc/windows/messages"
-import {dimensFromSizePosition, stack} from "../window/dimens"
-import {SearchWindow} from "../window/SearchWindow"
+import {stack} from "../window/dimens"
 import {SessionState} from "./session-state"
-import tron from "./index"
-import {WindowParams} from "./window"
 import {State} from "src/js/state/types"
+import {ZuiWindow} from "../windows/zui-window"
+import {HiddenWindow} from "../windows/hidden-window"
+import {SearchWindow} from "../windows/search-window"
+import {AboutWindow} from "../windows/about-window"
+import {DetailWindow} from "../windows/detail-window"
+import {SerializedWindow} from "../windows/types"
+import {constructWindow} from "../windows/construct"
 
 export type WindowName = "search" | "about" | "detail" | "hidden"
 
 export type WindowsState = {
-  [key: string]: BrimWindow
-}
-
-export interface SerializedWindow {
-  id: string
-  name: WindowName
-  position: [number, number]
-  size: [number, number]
-  lastFocused: number
-  state: State
-}
-
-export interface BrimWindow {
-  ref: BrowserWindow
-  name: WindowName
-  id: string
-  lastFocused: number
-  initialState: any
-  serialize: () => Promise<SerializedWindow>
-  confirmClose: () => Promise<boolean>
-  prepareClose: () => Promise<void>
-  close: () => void
+  [key: string]: ZuiWindow
 }
 
 export class WindowManager {
@@ -45,17 +25,13 @@ export class WindowManager {
   constructor(private session?: SessionState | null | undefined) {}
 
   async init() {
-    if (!this.session || (this.session && this.session.order.length === 0)) {
-      await this.openWindow("search")
-    } else {
-      for (const id of this.session.order) {
-        const {name, size, position, state} = this.session.windows[id]
-        await this.openWindow(name, {size, position, id}, state)
-      }
+    if (this.session) {
+      const windows = this.session.order
+        .map((id) => this.session.windows[id])
+        .map(constructWindow)
+      await Promise.all(windows.map((w) => this.addWindow(w)))
     }
-
-    // hidden renderer/window is never persisted, so always open it. To aid
-    // tests we always open it at the end
+    if (this.count() === 0) await this.openSearchWindow()
     await this.ensureHiddenRenderer()
   }
 
@@ -70,172 +46,117 @@ export class WindowManager {
   }
 
   serialize(): Promise<SerializedWindow[]> {
-    return Promise.all(
-      this.getAll()
-        .filter((w) => w.name === "search")
-        .map((w: BrimWindow) => w.serialize())
-    )
+    return Promise.all(this.persistable.map((w) => w.serialize()))
   }
 
-  confirmQuit(): Promise<boolean> {
-    return Promise.all(
-      this.getAll().map(async (w: BrimWindow) => {
-        return w.confirmClose()
-      })
-    )
-      .then((oks) => {
-        return oks.every((ok) => ok)
-      })
-      .catch((e) => {
-        log.error(e)
-        return true
-      })
+  async confirmQuit(): Promise<boolean> {
+    try {
+      const oks = await Promise.all(
+        this.searchWindows.map((w) => w.confirmClose())
+      )
+      return oks.every((ok) => ok)
+    } catch (e) {
+      log.error(e)
+      return true
+    }
   }
 
   prepareQuit(): Promise<void[]> {
-    return Promise.all(this.getAll().map((w: BrimWindow) => w.prepareClose()))
+    return Promise.all(this.searchWindows.map((w) => w.prepareClose()))
   }
 
   quit() {
-    this.getAll().forEach((w: BrimWindow) => w.close())
+    this.getAll().forEach((w: ZuiWindow) => w.close())
   }
 
-  getAll(): BrimWindow[] {
+  getAll(): ZuiWindow[] {
     return Object.values(this.windows).sort(
       (a, b) => a.lastFocused - b.lastFocused
     )
   }
 
-  getVisible(): BrimWindow[] {
-    return Object.values(this.windows)
-      .sort((a, b) => a.lastFocused - b.lastFocused)
-      .filter((w) => w.name !== "hidden")
+  get searchWindows() {
+    return this.getAll().filter(
+      (w) => w instanceof SearchWindow
+    ) as SearchWindow[]
   }
 
-  getHidden(): BrimWindow[] {
-    return Object.values(this.windows)
-      .sort((a, b) => a.lastFocused - b.lastFocused)
-      .filter((w) => w.name === "hidden")
+  get persistable() {
+    return this.getAll().filter((w) => w.persistable)
+  }
+
+  getVisible(): ZuiWindow[] {
+    return this.getAll().filter((w) => w.name !== "hidden")
+  }
+
+  getHidden(): ZuiWindow[] {
+    return this.getAll().filter((w) => w.name === "hidden")
   }
 
   count(): number {
     return Object.keys(this.windows).length
   }
 
-  getWindow(id: string): BrimWindow {
+  getWindow(id: string): ZuiWindow {
     return this.windows[id]
   }
 
   setWindowState(id: string, state: State) {
     const win = this.getWindow(id)
     if (win) {
-      win.initialState = state
+      win.state = state
     } else {
       log.error("No Window Found with id: ", id)
     }
   }
 
-  async openSearchTab(searchParams: NewTabSearchParams) {
-    let isNewWin = true
-    const existingWin = this.getAll()
-      .sort((a, b) => b.lastFocused - a.lastFocused)
-      .find((w) => w.name === "search")
-    if (existingWin) {
-      isNewWin = false
-      sendTo(
-        existingWin.ref.webContents,
-        ipc.windows.newSearchTab({...searchParams, isNewWin})
-      )
-      existingWin.ref.focus()
-      return
-    }
-
-    const {href} = searchParams
-    const win = await this.openWindow("search", {query: {href}})
-    win.ref.webContents.once("did-finish-load", () => {
-      sendTo(
-        win.ref.webContents,
-        ipc.windows.newSearchTab({...searchParams, isNewWin})
-      )
-    })
+  async openSearchTab(_searchParams: NewTabSearchParams) {
+    throw new Error("NEED TO RETHINK THIS FUNCTION")
   }
 
-  async openWindow(
-    name: WindowName,
-    winParams: Partial<WindowParams> = {},
-    initialState: any = undefined
-  ): Promise<BrimWindow> {
-    const lastWin = last<BrimWindow>(
-      this.getAll().filter((w) => w.name === name)
+  async addWindow(win: ZuiWindow) {
+    this.windows[win.id] = win
+    await win.load()
+    win.ref.on("closed", () => this.removeWindow(win))
+    return win
+  }
+
+  removeWindow(win: ZuiWindow) {
+    delete this.windows[win.id]
+    // whenever a window is closed in Linux or Windows check if 'hidden' window is last
+    // open, and if so tell it to close so the rest of the app will shutdown
+    if (
+      process.platform !== "darwin" &&
+      this.count() === 1 &&
+      this.getAll()[0].name === "hidden"
+    ) {
+      this.getAll()[0].ref.close()
+    }
+  }
+
+  openSearchWindow() {
+    return this.addWindow(
+      new SearchWindow({dimens: this.getNextDimensFor("search")})
     )
-    const params = defaultWindowParams(winParams, lastWin && lastWin.ref)
-    const id = params.id
+  }
 
-    const onClosed = (win: BrimWindow) => {
-      delete this.windows[win.id]
-      // whenever a window is closed in Linux or Windows check if 'hidden' window is last
-      // open, and if so tell it to close so the rest of the app will shutdown
-      if (
-        process.platform !== "darwin" &&
-        this.count() === 1 &&
-        this.getAll()[0].name === "hidden"
-      ) {
-        this.getAll()[0].ref.close()
-      }
-    }
+  openHiddenWindow() {
+    return this.addWindow(new HiddenWindow())
+  }
 
-    if (name === "search") {
-      const {size, position, query, id} = params
-      const dimens = dimensFromSizePosition(size, position)
-      const win = new SearchWindow(dimens, query, initialState, id)
-      this.windows[id] = win
-      await win.load()
-      win.ref.on("closed", () => {
-        onClosed(this.windows[id])
-      })
-      return win
-    } else {
-      const ref = await tron.window(name, params)
+  openAboutWindow() {
+    return this.addWindow(new AboutWindow())
+  }
 
-      ref.on("focus", () => {
-        this.windows[id].lastFocused = new Date().getTime()
-      })
-
-      ref.on("closed", () => {
-        onClosed(this.windows[id])
-      })
-
-      const win = {
-        id,
-        ref,
-        name,
-        lastFocused: name === "hidden" ? 0 : new Date().getTime(),
-        initialState,
-        close: () => Promise.resolve(),
-        async confirmClose() {
-          return true
-        },
-        async prepareClose() {},
-        async serialize() {
-          return {
-            id,
-            name,
-            lastFocused: this.lastFocused,
-            state: undefined,
-            position: ref.getPosition() as [number, number],
-            size: ref.getSize() as [number, number],
-          }
-        },
-      }
-      this.windows[id] = win
-      return win
-    }
+  async openDetailWindow() {
+    return this.addWindow(
+      new DetailWindow({dimens: this.getNextDimensFor("detail")})
+    )
   }
 
   async ensureHiddenRenderer() {
-    // only open hidden window if one doesn't already exist
     if (this.getHidden().length) return
-    await this.openWindow("hidden")
+    await this.openHiddenWindow()
   }
 
   openAbout() {
@@ -243,7 +164,7 @@ export class WindowManager {
     if (about) {
       about.ref.focus()
     } else {
-      this.openWindow("about")
+      this.openAboutWindow()
     }
   }
 
@@ -255,7 +176,7 @@ export class WindowManager {
     if (win) {
       win.ref.webContents.send("showPreferences")
     } else {
-      const newWin = await this.openWindow("search", {})
+      const newWin = await this.openSearchWindow()
 
       newWin.ref.webContents.once("did-finish-load", () => {
         newWin.ref.webContents.send("showPreferences")
@@ -271,7 +192,7 @@ export class WindowManager {
     if (win) {
       win.ref.webContents.send("showReleaseNotes")
     } else {
-      const newWin = await this.openWindow("search", {})
+      const newWin = await this.openSearchWindow()
       newWin.ref.webContents.once("did-finish-load", () => {
         newWin.ref.webContents.send("showReleaseNotes")
       })
@@ -289,7 +210,7 @@ export class WindowManager {
     const {x, y} = bounds
 
     let prev = [x, y]
-    this.getAll().forEach(({ref: win}: BrimWindow) => {
+    this.getAll().forEach(({ref: win}: ZuiWindow) => {
       const [width, height] = win.getSize()
       const [x, y] = prev
       const next = stack({x, y, width, height}, bounds, 25)
@@ -297,26 +218,14 @@ export class WindowManager {
       prev = [next.x, next.y]
     })
   }
-}
 
-function defaultWindowParams(
-  params: Partial<WindowParams>,
-  lastWin?: BrowserWindow
-): WindowParams {
-  let {position, size} = params
-  if (lastWin && !position && !size) {
-    const prev = lastWin.getBounds()
+  getNextDimensFor(name: WindowName) {
+    const lastWin = last<ZuiWindow>(
+      this.getAll().filter((w) => w.name === name)
+    )
+    if (!lastWin) return undefined
+    const prev = lastWin.ref.getBounds()
     const bounds = screen.getDisplayNearestPoint({x: prev.x, y: prev.y})
-    const dimens = stack(prev, bounds.workArea, 25)
-    position = [dimens.x, dimens.y]
-    size = [dimens.width, dimens.height]
-  }
-
-  return {
-    size,
-    position,
-    id: brim.randomHash(),
-    query: {},
-    ...params,
+    return stack(prev, bounds.workArea, 25)
   }
 }

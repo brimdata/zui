@@ -15,7 +15,7 @@ beforeEach(() => {
 
 test("serialize each window", async () => {
   const manager = new WindowManager()
-  const win = await manager.openWindow("search")
+  const win = await manager.openSearchWindow()
   manager.setWindowState(win.id, store.getState())
   const data = await manager.serialize()
   expect(data).toEqual([
@@ -32,7 +32,7 @@ test("serialize each window", async () => {
 
 test("confirm quit is true", async () => {
   const manager = new WindowManager()
-  await manager.openWindow("search")
+  await manager.openSearchWindow()
   const ok = await manager.confirmQuit()
   expect(ok).toBe(true)
 })
@@ -63,14 +63,14 @@ test("prevent multiple hidden windows", async () => {
 
 test("window getters filter properly", async () => {
   const manager = new WindowManager()
-  await manager.openWindow("search")
+  await manager.openSearchWindow()
   expect(manager.getVisible()).toHaveLength(1)
   let windows = manager.getAll()
   expect(windows).toHaveLength(1)
   expect(windows[0].name).toEqual("search")
   expect(manager.getHidden()).toHaveLength(0)
 
-  await manager.openWindow("hidden")
+  await manager.openHiddenWindow()
   windows = manager.getAll()
   expect(windows).toHaveLength(2)
   expect(manager.getVisible()).toHaveLength(1)

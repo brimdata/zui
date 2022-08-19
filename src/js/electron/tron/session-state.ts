@@ -1,18 +1,13 @@
 import {getPersistedWindowState} from "src/js/state/getPersistable"
 import {State} from "src/js/state/types"
-import {SerializedWindow, WindowName} from "./window-manager"
+import {SerializedWindow} from "../windows/types"
 
 export type SessionState = {
   order: string[]
   windows: {
-    [id: string]: {
-      name: WindowName
-      position: [number, number]
-      size: [number, number]
-      state: Object
-    }
+    [id: string]: SerializedWindow
   }
-  globalState: State
+  globalState: any
 }
 
 function getWindowOrder(windows: SerializedWindow[]): string[] {

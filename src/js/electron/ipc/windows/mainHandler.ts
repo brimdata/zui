@@ -7,11 +7,7 @@ export default function (brim: BrimMain) {
   ipcMain.handle("windows:initialState", (_e, {id}) => {
     const window = brim.windows.getWindow(id)
     if (!window) return undefined
-    return window.initialState
-  })
-
-  ipcMain.handle("windows:open", (e, args) => {
-    brim.windows.openWindow(args.name, args.params, args.state)
+    return window.state
   })
 
   ipcMain.handle("windows:newSearchTab", async (e, params) => {
@@ -35,6 +31,6 @@ export default function (brim: BrimMain) {
   })
 
   ipcMain.on("windows:updateState", (e, id, state) => {
-    brim.windows.getWindow(id).initialState = state
+    brim.windows.setWindowState(id, state)
   })
 }

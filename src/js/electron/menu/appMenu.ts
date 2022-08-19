@@ -17,7 +17,7 @@ export default function (
   const newWindow: MenuItemConstructorOptions = {
     label: "New Window",
     accelerator: "CmdOrCtrl+N",
-    click: () => brim.windows.openWindow("search", {}),
+    click: () => brim.windows.openSearchWindow(),
   }
 
   const exit: MenuItemConstructorOptions = {

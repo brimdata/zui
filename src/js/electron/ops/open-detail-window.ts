@@ -5,7 +5,7 @@ export const openDetailWindow = createOperation(
   "detailWindow.open",
   async (main, e, arg: {value: zjson.Object; url: string}) => {
     const {url, value} = arg
-    const win = await main.windows.openWindow("detail", {size: [600, 700]})
+    const win = await main.windows.openDetailWindow()
     setupDetailWindow.return({value, url}).when((id) => id === win.id)
   }
 )

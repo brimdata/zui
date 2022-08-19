@@ -8,7 +8,7 @@ export function initialize(main: BrimMain) {
     for (let arg of argv) {
       switch (arg) {
         case "--new-window":
-          main.windows.openWindow("search")
+          main.windows.openSearchWindow()
           break
         case "--move-to-current-display":
           main.windows.moveToCurrentDisplay()

@@ -9,6 +9,7 @@ export default function session(path: string) {
   let version = 0
 
   return {
+    path,
     getVersion() {
       return version
     },

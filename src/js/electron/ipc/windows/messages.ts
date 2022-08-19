@@ -1,11 +1,7 @@
-import {State} from "../../../state/types"
-import {WindowParams} from "../../tron/window"
-import {WindowName} from "../../tron/window-manager"
 import {
   WindowsInitialStateMsg,
   WindowsNewSearchTabMsg,
   WindowsOpenDirectorySelect,
-  WindowsOpenMsg,
 } from "../types"
 export type NewTabSearchParams = {
   href: string
@@ -13,18 +9,6 @@ export type NewTabSearchParams = {
 }
 
 export default {
-  open(
-    name: WindowName,
-    params: Partial<WindowParams>,
-    state: State
-  ): WindowsOpenMsg {
-    return {
-      channel: "windows:open",
-      name,
-      params,
-      state,
-    }
-  },
   newSearchTab(params: NewTabSearchParams): WindowsNewSearchTabMsg {
     return {
       channel: "windows:newSearchTab",

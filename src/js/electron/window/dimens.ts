@@ -1,4 +1,6 @@
+import {BrowserWindowConstructorOptions} from "electron"
 import {Rectangle} from "electron/main"
+import {pick} from "lodash"
 
 const SCREEN_PADDING = 50
 
@@ -22,7 +24,7 @@ export function dimensFromSizePosition(
 }
 
 export function getWindowDimens(
-  saved: Partial<Dimens>,
+  saved: Partial<Dimens> = {},
   defaults: Dimens,
   screens: Electron.Rectangle[]
 ) {
@@ -86,4 +88,8 @@ export function stack(prev: Rectangle, screen: Rectangle, distance: number) {
     width,
     height,
   }
+}
+
+export function pickDimens(options: BrowserWindowConstructorOptions = {}) {
+  return pick(options, "width", "height", "x", "y") as Dimens
 }

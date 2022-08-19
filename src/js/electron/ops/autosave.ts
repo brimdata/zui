@@ -6,7 +6,7 @@ import {createOperation} from "../operations"
 const saveSession = throttle((main) => {
   main.saveSession()
   log.info("Session Autosaved")
-}, 2000)
+}, 1000)
 
 export const autosave = createOperation(
   "windows.autosave",
