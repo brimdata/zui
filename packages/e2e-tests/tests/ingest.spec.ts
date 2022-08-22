@@ -36,7 +36,7 @@ test.describe("Ingest tests", () => {
       path.normalize(path.join(testDataDir(), "sample.tsv")),
     ])
     await app.mainWin
-      .locator('button:above(:text("Query Pool"))')
+      .locator('#app-root button:above(:text("Query Pool"))')
       .first()
       .click()
   })
