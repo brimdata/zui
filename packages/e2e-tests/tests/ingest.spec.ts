@@ -51,7 +51,6 @@ test.describe("Ingest tests", () => {
       await app.query(zed)
       const resultStats = await app.getViewerStats()
       expect(resultStats).toEqual(expectedStats)
-      await app.mainWin.pause()
     })
   })
 })
