@@ -1,9 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit"
-import globalReducer, {GlobalState} from "./globalReducer"
+import rootReducer from "./rootReducer"
+import {State} from "./types"
 
-export default function (initState: GlobalState | undefined) {
+export default function (initState: Partial<State> | undefined) {
   return configureStore({
-    reducer: globalReducer,
+    reducer: rootReducer,
     preloadedState: initState,
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware({

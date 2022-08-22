@@ -6,7 +6,7 @@ import "regenerator-runtime/runtime"
 import BrimTooltip from "./components/BrimTooltip"
 import LogDetailsWindow from "./components/LogDetailsWindow"
 import {Modals} from "./components/Modals"
-import initDetail from "./initializers/initDetail"
+import {initDetail} from "./initializers/initDetail"
 import lib from "./lib"
 
 initDetail()

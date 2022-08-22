@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit"
 import {actions as tabs} from "../Tabs/reducer"
 
 const slice = createSlice({
-  name: "sessionQueries",
+  name: "$sessionQueries",
   initialState: {},
   reducers: {
     set(s, a) {
