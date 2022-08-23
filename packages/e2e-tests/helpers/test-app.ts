@@ -51,7 +51,7 @@ export default class TestApp {
   }
 
   async createPool(filepaths: string[]): Promise<void> {
-    await this.mainWin.locator('button[role="create"]').click()
+    await this.mainWin.locator('button[aria-label="create"]').click()
     await this.mainWin.locator('li:has-text("New Pool")').click()
     const [chooser] = await Promise.all([
       this.mainWin.waitForEvent("filechooser"),
@@ -64,8 +64,8 @@ export default class TestApp {
 
   async query(zed: string): Promise<void> {
     await this.mainWin.locator('div[role="textbox"]').fill(zed)
-    await this.mainWin.locator('div[role="editor"] + button').click()
-    await this.mainWin.locator('span[role="fetching"]').isHidden()
+    await this.mainWin.locator('div[aria-label="editor"] + button').click()
+    await this.mainWin.locator('span[aria-label="fetching"]').isHidden()
   }
 
   // TODO: this method is a wip, it still needs to wait for cells to populate first
@@ -87,10 +87,10 @@ export default class TestApp {
 
   async getViewerStats(): Promise<{results: string; shapes: string}> {
     const results = await this.mainWin
-      .locator('span[role="results"]')
+      .locator('span[aria-label="results"]')
       .textContent()
     const shapes = await this.mainWin
-      .locator('span[role="shapes"]')
+      .locator('span[aria-label="shapes"]')
       .textContent()
 
     return {results, shapes}

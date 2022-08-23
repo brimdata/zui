@@ -36,7 +36,7 @@ const QueryEditor = ({value, disabled}: Props) => {
 
   return (
     <EditorWrap
-      role="editor"
+      aria-label="editor"
       isDisabled={disabled}
       ref={ref}
       onKeyDown={onKeyDown}
