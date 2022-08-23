@@ -35,7 +35,7 @@ export class BrimMain {
     const data = decodeSessionState(await session.load())
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
-    const appMeta = getAppMeta()
+    const appMeta = await getAppMeta()
     const lake = new Lake({
       root: args.lakeRoot,
       port: args.lakePort,

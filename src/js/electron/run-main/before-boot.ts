@@ -6,12 +6,14 @@ import migrateBrimToZui from "../migrateBrimToZui"
 import {handleSquirrelEvent} from "../squirrel"
 import {windowsPre25Exists} from "../windows-pre-25"
 import {MainArgs} from "./args"
+import {setLogLevel} from "../set-log-level"
 
 export async function beforeBoot(
   args: Partial<MainArgs>
 ): Promise<string | null> {
   // Setup app paths, this must be first
   appPathSetup()
+  setLogLevel()
   // Disable for certain platforms
   app.disableHardwareAcceleration()
   // Ensure only one instance of the app is ever on (windows)

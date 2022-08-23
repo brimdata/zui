@@ -12,7 +12,7 @@ export function initialize(main: BrimMain) {
           main.windows.create("search")
           break
         case "--move-to-current-display":
-          moveToCurrentDisplayOp.invoke()
+          moveToCurrentDisplayOp.run()
           break
       }
     }

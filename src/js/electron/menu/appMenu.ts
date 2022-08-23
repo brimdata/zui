@@ -10,6 +10,7 @@ import {showReleaseNotesOp} from "../ops/show-release-notes-op"
 import {closeWindowOp} from "../ops/close-window-op"
 import {showPreferencesOp} from "../ops/show-preferences-op"
 import {openAboutWindowOp} from "../ops/open-about-window-op"
+import {moveToCurrentDisplayOp} from "../ops/move-to-current-display-op"
 
 export default function (
   send: Function,
@@ -32,13 +33,13 @@ export default function (
   const aboutBrim: MenuItemConstructorOptions = {
     label: `About ${app.getName()}`,
     click() {
-      openAboutWindowOp.invoke()
+      openAboutWindowOp.run()
     },
   }
 
   const closeWindow: MenuItemConstructorOptions = {
     label: "Close Window",
-    click: () => closeWindowOp.invoke(),
+    click: () => closeWindowOp.run(),
   }
 
   const closeTab: MenuItemConstructorOptions = {
@@ -49,7 +50,7 @@ export default function (
   const preferences: MenuItemConstructorOptions = {
     id: "preferences",
     label: env.isMac ? "Preferences..." : "Settings",
-    click: () => showPreferencesOp.invoke(),
+    click: () => showPreferencesOp.run(),
   }
 
   const resetState: MenuItemConstructorOptions = {
@@ -127,13 +128,26 @@ export default function (
   function windowSubmenu(): MenuItemConstructorOptions[] {
     const submenu = [
       {role: "minimize"} as MenuItemConstructorOptions,
+      __,
       resetState,
+      __,
     ]
     if (mac) {
-      submenu.push({role: "close"}, {role: "minimize"}, {role: "zoom"}, __, {
-        role: "front",
-      })
+      submenu.push(
+        __,
+        {role: "close"},
+        {role: "zoom"},
+        __,
+        {
+          role: "front",
+        },
+        {
+          label: "Organize Windows",
+          click: () => moveToCurrentDisplayOp.run(),
+        }
+      )
     }
+    submenu.push()
     return submenu
   }
 
@@ -190,6 +204,7 @@ export default function (
         accelerator: "CmdOrCtrl+]",
         click: () => send("toggleRightSidebar"),
       },
+
       __,
       {role: "togglefullscreen"},
     ]
@@ -200,7 +215,7 @@ export default function (
       {
         label: "Release Notes",
         click() {
-          showReleaseNotesOp.invoke()
+          showReleaseNotesOp.run()
         },
       },
       {
