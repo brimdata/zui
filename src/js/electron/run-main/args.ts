@@ -1,9 +1,7 @@
 import {app} from "electron"
 import isDev from "../isDev"
 import {join} from "path"
-import {meta} from "src/app/ipc/meta"
-
-const pkg = meta.packageJSON()
+import pkg from "../pkg"
 
 export const mainDefaults = () => ({
   lakePort: pkg.lake.port || 9867,

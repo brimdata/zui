@@ -1,9 +1,9 @@
 import {app} from "electron"
 import os from "os"
 import {join} from "path"
-import {createClient} from "src/pkg/electron-ipc-service"
 
 const exe = (name) => (os.platform() === "win32" ? `${name}.exe` : name)
+
 class Paths {
   brimcap() {
     return join(
@@ -23,4 +23,3 @@ class Paths {
 }
 
 export const paths = new Paths()
-export const pathsClient = createClient(Paths)

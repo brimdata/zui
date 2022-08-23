@@ -3,7 +3,7 @@ import path from "path"
 import {last} from "src/js/lib/Array"
 import lib from "src/js/lib"
 
-const dir = path.join(__dirname, "../../state/migrations")
+const dir = path.join(__dirname, "../state/migrations")
 
 type Migration = {
   version: number

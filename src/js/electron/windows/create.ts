@@ -5,6 +5,7 @@ import {SearchWindow} from "./search-window"
 import {AboutWindow} from "./about-window"
 import {SerializedWindow, WindowProps} from "./types"
 import {WindowName} from "./types"
+import {HiddenWindow} from "./hidden-window"
 
 export function deserializeWindow(data: SerializedWindow) {
   const props = {
@@ -23,6 +24,8 @@ export function createWindow(name: WindowName, props: WindowProps) {
       return new AboutWindow(props)
     case "detail":
       return new DetailWindow(props)
+    case "hidden":
+      return new HiddenWindow(props)
     default:
       log.error("Unknown Window Type: ", name)
   }

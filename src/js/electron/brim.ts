@@ -20,6 +20,7 @@ import * as zdeps from "./zdeps"
 import {MainArgs, mainDefaults} from "./run-main/args"
 import createSession, {Session} from "./session"
 import {SearchWindow} from "./windows/search-window"
+import {getAppMeta, AppMeta} from "./meta"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -34,13 +35,14 @@ export class BrimMain {
     const data = decodeSessionState(await session.load())
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
+    const appMeta = getAppMeta()
     const lake = new Lake({
       root: args.lakeRoot,
       port: args.lakePort,
       logs: args.lakeLogs,
       bin: zdeps.zed,
     })
-    return new BrimMain(lake, windows, store, session, args)
+    return new BrimMain(lake, windows, store, session, args, appMeta)
   }
 
   // Only call this from boot
@@ -49,7 +51,8 @@ export class BrimMain {
     readonly windows: WindowManager,
     readonly store: Store,
     readonly session: Session,
-    readonly args: MainArgs
+    readonly args: MainArgs,
+    readonly appMeta: AppMeta
   ) {}
 
   async start() {

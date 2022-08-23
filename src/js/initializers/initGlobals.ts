@@ -6,6 +6,7 @@ import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
 import tabHistory from "src/app/router/tab-history"
 import {mainArgsOp} from "../electron/ops/main-args-op"
+import {getAppMetaOp} from "../electron/ops/get-app-meta-op"
 
 export default async function initGlobals(store: Store) {
   const id = getUrlSearchParams().id
@@ -18,6 +19,7 @@ export default async function initGlobals(store: Store) {
   global.windowHistory.replace(getUrlSearchParams().href)
   global.navTo = (path) => store.dispatch(tabHistory.push(path))
   global.mainArgs = await mainArgsOp.invoke()
+  global.appMeta = await getAppMetaOp.invoke()
 }
 
 function getWindowName() {

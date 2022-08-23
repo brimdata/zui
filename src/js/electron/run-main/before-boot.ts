@@ -1,6 +1,6 @@
 import {app} from "electron"
-import {meta} from "src/app/ipc/meta"
 import {appPathSetup} from "../appPathSetup"
+import {isFirstRun} from "../first-run"
 import isDev from "../isDev"
 import migrateBrimToZui from "../migrateBrimToZui"
 import {handleSquirrelEvent} from "../squirrel"
@@ -32,7 +32,7 @@ export async function beforeBoot(
 
   // On first ever run of a ZUI release, check if there is existing Brim app
   // data and if so, copy it into ZUI.
-  if (!isDev && (await meta.isFirstRun())) migrateBrimToZui()
+  if (!isDev && (await isFirstRun())) migrateBrimToZui()
 
   return null
 }

@@ -1,11 +1,11 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {SectionData} from "src/pkg/sectional"
 import {State} from "../types"
 import {HistoryView, QueriesView, SectionName} from "./types"
 
 const init = () => ({
   sidebarIsOpen: true,
   sidebarWidth: 230,
+  /* No used */
   sidebarSections: [{id: "pools"}, {id: "queries"}, {id: "history"}],
   currentSectionName: "pools" as SectionName,
   queriesView: "local" as QueriesView,
@@ -30,9 +30,6 @@ const slice = createSlice({
     },
     resizeSidebar(s, action: PayloadAction<number>) {
       s.sidebarWidth = Math.max(action.payload, 175)
-    },
-    updateSidebarSections(s, action: PayloadAction<SectionData[]>) {
-      s.sidebarSections = action.payload
     },
     setCurrentSectionName(s, action: PayloadAction<SectionName>) {
       s.currentSectionName = action.payload
