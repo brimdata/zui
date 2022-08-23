@@ -6,6 +6,7 @@ export const showPreferencesOp = createOperation(
     const win = main.windows.byName("search")[0]
 
     if (win) {
+      win.ref.focus()
       win.ref.webContents.send("showPreferences")
     } else {
       const newWin = await main.windows.create("search")

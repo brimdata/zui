@@ -26,7 +26,7 @@ export class WindowManager {
 
   get all(): ZuiWindow[] {
     return Object.values(this.windows).sort(
-      (a, b) => a.lastFocused - b.lastFocused
+      (a, b) => b.lastFocused - a.lastFocused
     )
   }
 
