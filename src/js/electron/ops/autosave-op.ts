@@ -8,10 +8,10 @@ const saveSession = throttle((main) => {
   log.info("Session Autosaved")
 }, 1000)
 
-export const autosave = createOperation(
+export const autosaveOp = createOperation(
   "windows.autosave",
   async (main, e, args: {windowId: string; windowState: State}) => {
-    main.windows.setWindowState(args.windowId, args.windowState)
+    main.windows.update(args.windowId, args.windowState)
     saveSession(main)
   }
 )

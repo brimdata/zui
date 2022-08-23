@@ -1,4 +1,3 @@
-import {ipcRenderer} from "electron"
 import BrimApi from "../api"
 import initDebugGlobals from "./initDebugGlobals"
 import initDOM from "./initDOM"
@@ -9,6 +8,7 @@ import initPlugins from "./initPlugins"
 import initStore from "./initStore"
 import initLakeParams from "./initLakeParams"
 import {initAutosave} from "./initAutosave"
+import {featureFlagsOp} from "../electron/ops/feature-flags-op"
 
 export default async function initialize() {
   const api = new BrimApi()
@@ -16,7 +16,7 @@ export default async function initialize() {
   api.init(store.dispatch, store.getState)
 
   const pluginManager = await initPlugins(api)
-  global.featureFlags = await ipcRenderer.invoke("get-feature-flags")
+  global.featureFlags = await featureFlagsOp.invoke()
 
   initDOM()
   await initGlobals(store)

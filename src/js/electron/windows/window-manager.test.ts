@@ -15,8 +15,8 @@ beforeEach(() => {
 
 test("serialize each window", async () => {
   const manager = new WindowManager()
-  const win = await manager.openSearchWindow()
-  manager.setWindowState(win.id, store.getState())
+  const win = await manager.create("search")
+  manager.update(win.id, store.getState())
   const data = await manager.serialize()
   expect(data).toEqual([
     {
@@ -28,51 +28,4 @@ test("serialize each window", async () => {
       state: expect.objectContaining({tabs: expect.any(Object)}),
     },
   ])
-})
-
-test("confirm quit is true", async () => {
-  const manager = new WindowManager()
-  await manager.openSearchWindow()
-  const ok = await manager.confirmQuit()
-  expect(ok).toBe(true)
-})
-
-test("when all closed resolves", (done) => {
-  const manager = new WindowManager()
-  let pending = true
-  manager.whenAllClosed().then(() => (pending = false))
-  setTimeout(() => {
-    expect(pending).toBe(false)
-    done()
-  })
-})
-
-test("prevent multiple hidden windows", async () => {
-  const manager = new WindowManager()
-  await manager.ensureHiddenRenderer()
-  let windows = manager.getAll()
-  expect(windows).toHaveLength(1)
-  expect(windows[0].name).toEqual("hidden")
-
-  // try again, still expect only 1
-  await manager.ensureHiddenRenderer()
-  windows = manager.getAll()
-  expect(windows).toHaveLength(1)
-  expect(windows[0].name).toEqual("hidden")
-})
-
-test("window getters filter properly", async () => {
-  const manager = new WindowManager()
-  await manager.openSearchWindow()
-  expect(manager.getVisible()).toHaveLength(1)
-  let windows = manager.getAll()
-  expect(windows).toHaveLength(1)
-  expect(windows[0].name).toEqual("search")
-  expect(manager.getHidden()).toHaveLength(0)
-
-  await manager.openHiddenWindow()
-  windows = manager.getAll()
-  expect(windows).toHaveLength(2)
-  expect(manager.getVisible()).toHaveLength(1)
-  expect(manager.getHidden()).toHaveLength(1)
 })

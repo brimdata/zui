@@ -6,6 +6,10 @@ import {encodeSessionState} from "../session-state"
 import {BrimMain} from "../brim"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
+import {showReleaseNotesOp} from "../ops/show-release-notes-op"
+import {closeWindowOp} from "../ops/close-window-op"
+import {showPreferencesOp} from "../ops/show-preferences-op"
+import {openAboutWindowOp} from "../ops/open-about-window-op"
 
 export default function (
   send: Function,
@@ -17,7 +21,7 @@ export default function (
   const newWindow: MenuItemConstructorOptions = {
     label: "New Window",
     accelerator: "CmdOrCtrl+N",
-    click: () => brim.windows.openSearchWindow(),
+    click: () => brim.windows.create("search"),
   }
 
   const exit: MenuItemConstructorOptions = {
@@ -28,13 +32,13 @@ export default function (
   const aboutBrim: MenuItemConstructorOptions = {
     label: `About ${app.getName()}`,
     click() {
-      brim.windows.openAbout()
+      openAboutWindowOp.invoke()
     },
   }
 
   const closeWindow: MenuItemConstructorOptions = {
     label: "Close Window",
-    click: () => brim.windows.closeWindow(),
+    click: () => closeWindowOp.invoke(),
   }
 
   const closeTab: MenuItemConstructorOptions = {
@@ -45,7 +49,7 @@ export default function (
   const preferences: MenuItemConstructorOptions = {
     id: "preferences",
     label: env.isMac ? "Preferences..." : "Settings",
-    click: () => brim.windows.openPreferences(),
+    click: () => showPreferencesOp.invoke(),
   }
 
   const resetState: MenuItemConstructorOptions = {
@@ -196,7 +200,7 @@ export default function (
       {
         label: "Release Notes",
         click() {
-          brim.windows.openReleaseNotes()
+          showReleaseNotesOp.invoke()
         },
       },
       {

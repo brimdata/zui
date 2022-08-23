@@ -36,6 +36,6 @@ test("persis a session, then boot up from it", async () => {
 
   await manager.init()
 
-  expect(manager.getVisible().length).toBe(3)
-  expect(manager.getWindow("1").state).toEqual({data: "window1"})
+  expect(manager.count).toBe(4)
+  expect(manager.find("1").state).toEqual({data: "window1"})
 })

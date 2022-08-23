@@ -1,5 +1,5 @@
 import {decode, zed} from "@brimdata/zealot"
-import {setupDetailWindow} from "../electron/ops/open-detail-window"
+import {setupDetailWindow} from "../electron/ops/open-detail-window-op"
 import {viewLogDetail} from "../flows/viewLogDetail"
 import initialize from "./initialize"
 

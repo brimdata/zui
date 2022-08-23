@@ -19,6 +19,7 @@ import {WindowManager} from "./windows/window-manager"
 import * as zdeps from "./zdeps"
 import {MainArgs, mainDefaults} from "./run-main/args"
 import createSession, {Session} from "./session"
+import {SearchWindow} from "./windows/search-window"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -58,7 +59,10 @@ export class BrimMain {
   }
 
   async activate() {
-    if (!this.windows.getVisible().length) await this.windows.init()
+    const visibleWindows = this.windows.where((w) => w.name !== "hidden")
+    if (visibleWindows.length === 0) {
+      await this.windows.init()
+    }
   }
 
   async resetState() {
@@ -86,12 +90,12 @@ export class BrimMain {
 
   async quit(opts: QuitOpts = {saveSession: true}) {
     this.isQuitting = true
-    if (await this.windows.confirmQuit()) {
-      await this.windows.prepareQuit()
-      if (opts.saveSession) {
-        await this.saveSession()
-      }
-      this.windows.quit()
+    const windows = this.windows.byName("search") as SearchWindow[]
+    const confirms = await Promise.all(windows.map((w) => w.confirmClose()))
+    if (confirms.every((ok) => ok)) {
+      await Promise.all(windows.map((w) => w.prepareClose()))
+      if (opts.saveSession) await this.saveSession()
+      this.windows.all.forEach((w) => w.close())
       await this.lake.stop()
       app.quit()
     } else {
@@ -105,7 +109,7 @@ export class BrimMain {
       [key: string]: string
     }
     const {lakeId, windowId} = deserializeState(state)
-    const win = this.windows.getWindow(windowId)
+    const win = this.windows.find(windowId)
     if (!win) {
       console.error("No Window Found")
     } else {

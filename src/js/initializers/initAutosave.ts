@@ -1,5 +1,5 @@
 import {throttle} from "lodash"
-import {autosave} from "../electron/ops/autosave"
+import {autosaveOp} from "../electron/ops/autosave-op"
 import {getPersistedWindowState} from "../state/getPersistable"
 import onIdle from "on-idle"
 
@@ -9,7 +9,7 @@ export function initAutosave(store) {
   function saveFunction() {
     cancel()
     cancel = onIdle(() => {
-      autosave.invoke({
+      autosaveOp.invoke({
         windowId: global.windowId,
         windowState: getPersistedWindowState(store.getState()),
       })

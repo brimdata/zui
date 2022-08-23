@@ -1,18 +1,22 @@
 import log from "electron-log"
-import {dimensFromSizePosition} from "../windows/dimens"
+import {dimensFromSizePosition} from "./dimens"
 import {DetailWindow} from "./detail-window"
 import {SearchWindow} from "./search-window"
 import {AboutWindow} from "./about-window"
-import {SerializedWindow} from "./types"
+import {SerializedWindow, WindowProps} from "./types"
+import {WindowName} from "./types"
 
-export function constructWindow(data: SerializedWindow) {
+export function deserializeWindow(data: SerializedWindow) {
   const props = {
     id: data.id,
     state: data.state,
     dimens: dimensFromSizePosition(data.size, data.position),
   }
+  return createWindow(data.name, props)
+}
 
-  switch (data.name) {
+export function createWindow(name: WindowName, props: WindowProps) {
+  switch (name) {
     case "search":
       return new SearchWindow(props)
     case "about":
@@ -20,6 +24,6 @@ export function constructWindow(data: SerializedWindow) {
     case "detail":
       return new DetailWindow(props)
     default:
-      log.error("Unknown Window Type: ", data.name)
+      log.error("Unknown Window Type: ", name)
   }
 }

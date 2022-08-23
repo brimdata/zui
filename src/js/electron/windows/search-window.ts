@@ -1,7 +1,7 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {BrowserWindowConstructorOptions, ipcMain} from "electron"
 import env from "src/app/core/env"
-import {WindowName} from "../windows/window-manager"
+import {WindowName} from "../windows/types"
 import {ZuiWindow} from "./zui-window"
 
 export class SearchWindow extends ZuiWindow {

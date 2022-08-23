@@ -1,5 +1,5 @@
-import {WindowName} from "../windows/window-manager"
 import {Dimens} from "../windows/dimens"
+import {ZuiWindow} from "./zui-window"
 
 export type WindowProps = {
   id?: string
@@ -14,4 +14,10 @@ export type SerializedWindow = {
   size: [number, number]
   lastFocused: number
   state: any
+}
+
+export type WindowName = "search" | "about" | "detail" | "hidden"
+
+export type WindowsState = {
+  [key: string]: ZuiWindow
 }
