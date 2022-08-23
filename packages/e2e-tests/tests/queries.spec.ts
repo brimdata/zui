@@ -26,7 +26,7 @@ test.describe("Query tests", () => {
     await app.query("2")
     await app.query("3")
     const history = await app.mainWin.locator(
-      'div[role="history-pane"] > div > div > p'
+      'div[aria-label="history-pane"] > div > div > p'
     )
     const entries = await history.evaluateAll<string[], HTMLElement>((nodes) =>
       nodes.map((n) => n.innerText.trim())
@@ -61,7 +61,9 @@ test.describe("Query tests", () => {
     ).toBeVisible()
 
     // outdated display
-    await app.mainWin.locator('div[role="history-pane"] p >> nth=2').click()
+    await app.mainWin
+      .locator('div[aria-label="history-pane"] p >> nth=2')
+      .click()
     await expect(
       await app.mainWin.locator("text=Test Query Name Outdated")
     ).toBeVisible()
