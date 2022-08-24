@@ -1,10 +1,10 @@
-import React from "react"
+import React, {useRef} from "react"
 import Link from "./common/Link"
 
 type Props = {children: any}
 type State = {error: Error | null | undefined}
 
-export default class AppErrorBoundary extends React.Component<Props, State> {
+class ErrorCatcher extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {error: null}
@@ -32,4 +32,11 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
       </div>
     )
   }
+}
+
+export default function AppErrorBoundary({children}) {
+  const boundary = useRef<ErrorCatcher>()
+  boundary?.current?.clear()
+
+  return <ErrorCatcher ref={boundary}>{children}</ErrorCatcher>
 }

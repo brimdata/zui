@@ -96,7 +96,7 @@ const ResultsTable = (props: Props) => {
         onClick={(e) => clicked(e, index)}
         onDoubleClick={() => {
           dispatch(viewLogDetail(logs[index]))
-          dispatch(openLogDetailsWindow())
+          dispatch(openLogDetailsWindow(logs[index]))
         }}
       />
     )

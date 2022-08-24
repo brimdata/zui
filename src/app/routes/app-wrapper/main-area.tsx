@@ -1,5 +1,6 @@
 import React from "react"
 import {useDispatch} from "src/app/core/state"
+import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import Tabs from "src/js/state/Tabs"
 import styled from "styled-components"
 
@@ -29,7 +30,7 @@ export function MainArea({children}) {
   return (
     <BG onMouseDown={touched} onKeyDown={touched}>
       <div id="modal-dialog-root" />
-      {children}
+      <AppErrorBoundary>{children}</AppErrorBoundary>
     </BG>
   )
 }

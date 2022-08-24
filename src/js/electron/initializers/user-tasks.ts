@@ -1,7 +1,8 @@
-import electronIsDev from "./isDev"
+import electronIsDev from "../isDev"
 import path from "path"
+import {app} from "electron"
 
-export default function (app: any) {
+export function initialize() {
   if (app.setUserTasks) {
     app.setUserTasks([
       {
@@ -28,7 +29,7 @@ function getArguments(arg) {
   if (electronIsDev) {
     // This is not exactly reliable. Each time the directory changes, this will change.
     // Thankfully, it's only run in dev mode.
-    const appRoot = path.join(__dirname, "..", "..", "..", "..")
+    const appRoot = path.join(__dirname, "..", "..", "..", "..", "..")
     return [appRoot, arg].join(" ")
   } else {
     return arg
