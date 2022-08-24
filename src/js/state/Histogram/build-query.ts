@@ -1,22 +1,26 @@
 import {ZedScript} from "src/app/core/models/zed-script"
 import {Pool} from "src/app/core/pools/pool"
 import {syncPool} from "src/app/core/pools/sync-pool"
+import {BrimQuery} from "src/app/query-home/utils/brim-query"
 import span from "src/js/brim/span"
 import histogramInterval, {timeUnits} from "src/js/lib/histogramInterval"
 import {DateTuple} from "src/js/lib/TimeWindow"
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
+import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Pools from "src/js/state/Pools"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {Thunk} from "src/js/state/types"
 import zql from "src/js/zql"
-import {BrimQuery} from "../utils/brim-query"
+import {actions} from "./reducer"
 
 export const buildHistogramQuery =
   (): Thunk<Promise<string | null>> =>
   async (dispatch, getState, {api}) => {
     const poolName = api.current.poolName
     const range = await dispatch(getRange(poolName))
-    console.log(range)
+    console.log(actions.setRange(range))
+    dispatch(actions.setRange(range))
     return histogramZed(poolName, range)
   }
 
@@ -46,8 +50,19 @@ const getRangeFromPool =
 
 const getRangeFromQuery = (): Thunk<DateTuple> => (_, getState) => {
   const snapshot = Editor.getSnapshot(getState())
-  const inputs = new ZedScript(BrimQuery.versionToZed(snapshot))
-  return inputs.range as DateTuple
+  return getCurrentRange(snapshot)
+}
+
+const getCurrentRange = (snapshot: QueryVersion): DateTuple => {
+  const rangePin = snapshot.pins.find(
+    (p) => p.type === "time-range"
+  ) as TimeRangeQueryPin
+
+  if (rangePin) {
+    return [new Date(rangePin.from), new Date(rangePin.to)]
+  } else {
+    return new ZedScript(BrimQuery.versionToZed(snapshot)).range as DateTuple
+  }
 }
 
 const ensurePoolLoaded =

@@ -9,7 +9,7 @@ import Notice from "src/js/state/Notice"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import {Location} from "history"
-import {runHistogramQuery} from "./histogram/run-histogram-query"
+import {runHistogramQuery} from "src/js/state/Histogram/run-query"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {

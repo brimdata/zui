@@ -1,7 +1,7 @@
 import {Collector} from "@brimdata/zealot"
 import Results from "src/js/state/Results"
 import {Thunk} from "src/js/state/types"
-import {buildHistogramQuery} from "./build-histogram-query"
+import {buildHistogramQuery} from "./build-query"
 
 export const HISTOGRAM_RESULTS = "zui/histogram"
 const id = HISTOGRAM_RESULTS
@@ -16,7 +16,6 @@ export const runHistogramQuery =
     const key = api.current.location.key
     const query = await dispatch(buildHistogramQuery())
     if (!query) return
-    console.log(query)
     dispatch(Results.init({id, tabId, query, key}))
     const collect: Collector = ({rows, shapesMap}) => {
       dispatch(Results.setValues({id, tabId, values: rows}))

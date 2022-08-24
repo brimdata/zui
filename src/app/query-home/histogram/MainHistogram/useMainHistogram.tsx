@@ -10,11 +10,9 @@ import EmptyMessage from "src/js/components/EmptyMessage"
 import HistogramTooltip from "src/js/components/HistogramTooltip"
 import LoadingMessage from "src/js/components/LoadingMessage"
 import barStacks from "../pens/barStacks"
-import brim from "src/js/brim"
 import format from "./format"
 import hoverLine from "../pens/hoverLine"
 import reactComponent from "../pens/reactComponent"
-import search from "src/js/state/Search"
 import useConst from "src/js/components/hooks/useConst"
 import xAxisBrush from "../pens/xAxisBrush"
 import xAxisTime from "../pens/xAxisTime"
@@ -22,12 +20,13 @@ import xPositionTooltip from "../pens/xPositionTooltip"
 import yAxisSingleTick from "../pens/yAxisSingleTick"
 import submitSearch from "../../flows/submit-search"
 import Results from "src/js/state/Results"
-import {HISTOGRAM_RESULTS} from "../run-histogram-query"
 import {ChartData} from "src/js/state/Chart/types"
 import {zed} from "packages/zealot/src"
 import UniqArray from "src/js/models/UniqArray"
 import MergeHash from "src/js/models/MergeHash"
-import {ZedScript} from "src/app/core/models/zed-script"
+import Editor from "src/js/state/Editor"
+import {HISTOGRAM_RESULTS} from "src/js/state/Histogram/run-query"
+import {HistogramProps} from "./Chart"
 
 const id = HISTOGRAM_RESULTS
 
@@ -38,22 +37,23 @@ const id = HISTOGRAM_RESULTS
 // get the full pool range
 
 export default function useMainHistogram(
-  width: number,
-  height: number
+  props: HistogramProps
 ): HistogramChart {
+  const {height, width, range} = props
+  const dispatch = useDispatch()
   const chartData = useSelector(Results.getValues(id)) as zed.Record[]
   const status = useSelector(Results.getStatus(id))
-  const query = useSelector(Results.getQuery(id))
-  const range = new ZedScript(query).range
-  const dispatch = useDispatch()
+
   const pens = useConst<Pen[]>([], () => {
     function onDragEnd(span: DateTuple) {
-      dispatch(search.setSpanArgs(brim.dateTuple(span).toSpan()))
+      const [from, to] = span
+      dispatch(Editor.setTimeRange({field: "ts", from, to}))
       dispatch(submitSearch())
     }
 
     function onSelection(span: DateTuple) {
-      dispatch(search.setSpanArgsFromDates(span))
+      const [from, to] = span
+      dispatch(Editor.setTimeRange({field: "ts", from, to}))
       dispatch(submitSearch())
     }
 

@@ -13,8 +13,8 @@ export const timeUnits = {
   year: "y",
 }
 
-export default function histogramInterval([start, end]: DateTuple): Interval {
-  const duration = moment.duration(moment(end).diff(moment(start)))
+export default function histogramInterval([from, to]: DateTuple): Interval {
+  const duration = moment.duration(moment(to).diff(moment(from)))
 
   if (duration.asMinutes() <= 5)
     return {number: 1, unit: "second", roundingUnit: "second"}

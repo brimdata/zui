@@ -10,6 +10,7 @@ import search from "../Search/reducer"
 import searchBar from "../SearchBar/reducer"
 import viewer from "../Viewer/reducer"
 import {reducer as results} from "../Results/reducer"
+import {reducer as histogram} from "../Histogram/reducer"
 
 const tabReducer = combineReducers({
   chart,
@@ -26,6 +27,7 @@ const tabReducer = combineReducers({
   searchBar,
   viewer,
   results,
+  histogram,
 })
 
 export type TabReducer = typeof tabReducer

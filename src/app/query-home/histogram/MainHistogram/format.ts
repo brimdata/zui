@@ -13,9 +13,9 @@ export type HistogramDataPoint = {
 
 export default function format(
   data: ChartData,
-  span: DateTuple
+  range: DateTuple
 ): HistogramData {
-  const interval = histogramInterval(span)
+  const interval = histogramInterval(range)
 
   const defaults: {
     [key: string]: number
@@ -35,10 +35,10 @@ export default function format(
     })
     return epochTs
   })
-  const spanStart = new Date(Math.min(...times, span[0].getTime()))
+  const spanStart = new Date(Math.min(...times, range[0].getTime()))
   return {
     interval,
-    span: [spanStart, span[1]],
+    span: [spanStart, range[1]],
     points: bins,
     keys: data.keys,
   }
