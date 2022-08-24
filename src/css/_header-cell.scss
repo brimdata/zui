@@ -3,6 +3,7 @@
   height: $bro-log-row-height;
   display: flex;
   box-shadow: 0 1px 3px -2px rgba(0, 0, 0, 0.7);
+  padding-left: 12px;
 }
 
 .viewer .header-cell {
@@ -56,6 +57,7 @@
 
   &.sorted {
     font-weight: bold;
+
     svg {
       margin-left: $space-xs;
     }

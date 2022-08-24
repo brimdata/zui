@@ -21,7 +21,7 @@ export default function (): Pen {
         `translate(${chart.margins.left}, ${chart.margins.top})`
       )
       .style("opacity", "1")
-      .call(d3.axisLeft(chart.yScale).tickValues(chart.yScale.domain()))
+      .call(d3.axisRight(chart.yScale).tickValues([chart.yScale.domain()[1]]))
   }
 
   return {mount, draw}

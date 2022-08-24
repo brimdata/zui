@@ -14,6 +14,7 @@ export const runHistogramQuery =
   async (dispatch, getState, {api}) => {
     const tabId = api.current.tabId
     const key = api.current.location.key
+    dispatch(Results.init({id, tabId, query: "", key}))
     const query = await dispatch(buildHistogramQuery())
     if (!query) return
     dispatch(Results.init({id, tabId, query, key}))

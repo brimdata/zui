@@ -79,17 +79,12 @@ export default function useMainHistogram(
   return useMemo<HistogramChart>(() => {
     const data = format(histogramFormat(chartData), range)
     const maxY = d3.max(data.points, (d: {count: number}) => d.count) || 0
-    const oneCharWidth = 5.5366666667
-    const chars = d3.format(",")(maxY).length
-    const yAxisWidth = chars * oneCharWidth + 3
-    const minWidth = 38
     const margins = {
-      left: Math.max(minWidth, yAxisWidth + 8),
-      right: 8,
-      top: 3,
-      bottom: 16,
+      left: 16,
+      right: 16,
+      top: 10,
+      bottom: 18,
     }
-
     return {
       data,
       width,

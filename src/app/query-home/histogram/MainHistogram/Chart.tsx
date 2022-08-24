@@ -10,17 +10,16 @@ import useMainHistogram from "./useMainHistogram"
 
 const BG = styled.div`
   height: 80px;
-  margin: 24px 16px 16px 16px;
+  margin: 12px 0;
 `
 
 export default function MainHistogramChart() {
   const range = useSelector(Histogram.getRange)
-  console.log(range)
   if (!range) return null
   return (
     <BG>
       <Dimens
-        className="chart main-search-histogram"
+        className="chart"
         data-testid="histogram"
         render={(rect) => (
           <MainHistogramSvg

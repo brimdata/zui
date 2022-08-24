@@ -38,7 +38,14 @@ const ResultsComponent = () => {
             <ResultsTable height={rect.height} width={rect.width} />
           )}
           {!error && view.isInspector && (
-            <div style={{height: 0, width: 0, overflow: "visible"}}>
+            <div
+              style={{
+                height: 0,
+                width: 0,
+                overflow: "visible",
+                paddingLeft: "2px",
+              }}
+            >
               <MainInspector
                 height={rect.height}
                 width={rect.width}

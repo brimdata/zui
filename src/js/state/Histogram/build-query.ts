@@ -11,17 +11,16 @@ import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Pools from "src/js/state/Pools"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {Thunk} from "src/js/state/types"
-import zql from "src/js/zql"
 import {actions} from "./reducer"
 
 export const buildHistogramQuery =
   (): Thunk<Promise<string | null>> =>
   async (dispatch, getState, {api}) => {
+    const query = Current.getQuery(getState())
     const poolName = api.current.poolName
     const range = await dispatch(getRange(poolName))
-    console.log(actions.setRange(range))
     dispatch(actions.setRange(range))
-    return histogramZed(poolName, range)
+    return histogramZed(query.toString(), range)
   }
 
 export const getRange =
@@ -32,11 +31,11 @@ export const getRange =
     else return dispatch(getRangeFromPool(name))
   }
 
-function histogramZed(pool: string, range: DateTuple | null) {
+function histogramZed(baseQuery: string, range: DateTuple | null) {
   if (!range) return null
   const {number, unit} = histogramInterval(range)
   const interval = `${number}${timeUnits[unit]}`
-  return `from "${pool}" range ${zql`${range[0]}`} to ${zql`${range[1]}`} | count() by every(${interval}), _path`
+  return `${baseQuery} | count() by every(${interval}), _path`
 }
 
 const getRangeFromPool =
@@ -55,7 +54,7 @@ const getRangeFromQuery = (): Thunk<DateTuple> => (_, getState) => {
 
 const getCurrentRange = (snapshot: QueryVersion): DateTuple => {
   const rangePin = snapshot.pins.find(
-    (p) => p.type === "time-range"
+    (p) => p.type === "time-range" && !p.disabled
   ) as TimeRangeQueryPin
 
   if (rangePin) {
