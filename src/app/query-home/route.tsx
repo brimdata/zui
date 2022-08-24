@@ -15,7 +15,6 @@ export function QueryRoute() {
   const dispatch = useDispatch()
 
   useLayoutEffect(() => {
-    console.log(location.key, lastKey)
     if (lastKey !== location.key) {
       dispatch(loadRoute(location))
     }

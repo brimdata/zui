@@ -6,14 +6,12 @@ import {boot} from "./boot"
 import {afterBoot} from "./after-boot"
 
 export async function main(args: Partial<MainArgs> = {}) {
-  const mainArgs = {...mainDefaults(), ...args}
-
-  const err = await beforeBoot(mainArgs)
+  // This must always come first
+  const err = await beforeBoot(args)
   if (err) return log.error(err)
-
+  const mainArgs = {...mainDefaults(), ...args}
+  log.info("Booting main with:", mainArgs)
   const brim = await boot(mainArgs)
-
   await afterBoot(brim)
-
   return brim
 }

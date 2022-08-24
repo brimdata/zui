@@ -28,8 +28,4 @@ export function appPathSetup() {
   log.transports.file.resolvePath = (variables) => {
     return path.join(app.getPath("logs"), variables.fileName)
   }
-
-  log.info("app path:", app.getAppPath())
-  log.info("userData path:", app.getPath("userData"))
-  log.info("logs path:", app.getPath("logs"))
 }

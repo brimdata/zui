@@ -2,10 +2,9 @@ import React, {useState, ChangeEvent} from "react"
 import classNames from "classnames"
 
 import TextInput from "./TextInput"
-import invoke from "../../../electron/ipc/invoke"
-import ipc from "../../../electron/ipc"
 import useCallbackRef from "../../hooks/useCallbackRef"
 import useDropzone from "../../hooks/useDropzone"
+import {openDirectoryOp} from "src/js/electron/ops/open-directory-op"
 
 type Props = {
   defaultValue?: string
@@ -27,11 +26,10 @@ export default function FileInput(props: Props) {
     setValue(path)
   }
 
-  function openDirPicker() {
-    invoke(ipc.windows.openDirectorySelect()).then(({canceled, filePaths}) => {
-      if (canceled) return
-      update(filePaths[0])
-    })
+  async function openDirPicker() {
+    const {canceled, filePaths} = await openDirectoryOp.invoke()
+    if (canceled) return
+    update(filePaths[0])
   }
 
   function openFilePicker() {

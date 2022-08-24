@@ -1,5 +1,4 @@
 import env from "src/app/core/env"
-import {metaClient} from "src/app/ipc/meta"
 import {releaseNotesPath} from "src/app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Launches from "src/js/state/Launches"
@@ -8,8 +7,8 @@ import {Thunk} from "src/js/state/types"
 
 export function maybeShowReleaseNotes(): Thunk {
   return async (dispatch, getState) => {
-    const version = await metaClient.version()
-    const isFirstRunEver = await metaClient.isFirstRun()
+    const version = global.appMeta.version
+    const isFirstRunEver = global.appMeta.isFirstRun
 
     if (
       !env.isIntegrationTest &&

@@ -1,4 +1,4 @@
-import {Migrations} from "src/js/electron/tron/migrations"
+import {Migrations} from "src/js/electron/migrations"
 import getTestState from "src/js/state/migrations/utils/getTestState"
 
 export async function migrate({state: name, to}): Promise<any> {

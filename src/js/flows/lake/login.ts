@@ -1,12 +1,11 @@
 import {ipcRenderer} from "electron"
+import {setSecretOp} from "src/js/electron/ops/secrets"
 import {
   serializeState,
   toAccessTokenKey,
   toRefreshTokenKey,
 } from "../../auth0/utils"
 import {BrimLake} from "../../brim"
-import ipc from "../../electron/ipc"
-import invoke from "../../electron/ipc/invoke"
 import {getAuth0} from "./getAuth0"
 
 export const login =
@@ -27,8 +26,8 @@ export const login =
         const {accessToken, refreshToken} = await client.exchangeCode(code)
 
         // store both tokens in os default keychain
-        invoke(ipc.secrets.setKey(toAccessTokenKey(lakeId), accessToken))
-        invoke(ipc.secrets.setKey(toRefreshTokenKey(lakeId), refreshToken))
+        setSecretOp.invoke({key: toAccessTokenKey(lakeId), val: accessToken})
+        setSecretOp.invoke({key: toRefreshTokenKey(lakeId), val: refreshToken})
 
         resolve(accessToken)
       } catch (e) {

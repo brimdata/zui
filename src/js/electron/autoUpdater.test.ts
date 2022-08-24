@@ -27,6 +27,6 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
 test("get latest version", async () => {
-  const version = await getLatestVersion()
+  const version = await getLatestVersion("brimdata/brim")
   expect(version).toBe("0.0.1")
 })

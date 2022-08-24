@@ -2,7 +2,7 @@ import "src/test/system/real-paths"
 import {app} from "electron"
 import {BrimMain} from "./brim"
 
-jest.mock("./tron/session", () => {
+jest.mock("./session", () => {
   return () => ({
     load: jest.fn(() => Promise.resolve()),
     delete: jest.fn(() => Promise.resolve()),
