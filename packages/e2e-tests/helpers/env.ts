@@ -7,4 +7,4 @@ export const itestDir = (): string =>
   path.join(process.env.WORKSPACE || "run", "playwright-itest")
 
 export const testDataDir = (): string =>
-  path.resolve(path.join(repoDir(), "test", "shared", "data"))
+  path.resolve(path.join(repoDir(), "src", "test", "shared", "data"))

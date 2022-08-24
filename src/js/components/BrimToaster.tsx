@@ -7,6 +7,7 @@ const BrimToaster = () => {
     <Toaster
       position="bottom-right"
       toastOptions={{
+        role: "status",
         className: "brim-toast",
         duration: env.isTest ? 2 ** 31 - 1 : undefined,
         success: {

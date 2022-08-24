@@ -7,7 +7,7 @@ export function TypeCount() {
   const shapes = useSelector(Results.getShapes(MAIN_RESULTS))
   const status = useSelector(Results.getStatus(MAIN_RESULTS))
   if (["COMPLETE", "LIMIT", "INCOMPLETE"].includes(status)) {
-    return <span>Shapes: {Object.keys(shapes).length}</span>
+    return <span aria-label="shapes">Shapes: {Object.keys(shapes).length}</span>
   } else {
     return null
   }
