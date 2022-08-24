@@ -34,7 +34,14 @@ const QueryEditor = ({value, disabled}: Props) => {
   }
   const ref = useEditorView({value, disabled, onChange})
 
-  return <EditorWrap isDisabled={disabled} ref={ref} onKeyDown={onKeyDown} />
+  return (
+    <EditorWrap
+      aria-label="editor"
+      isDisabled={disabled}
+      ref={ref}
+      onKeyDown={onKeyDown}
+    />
+  )
 }
 
 export default QueryEditor

@@ -68,6 +68,9 @@ class MockApp {
     getSwitchValue() {
       return ""
     },
+    hasSwitch() {
+      return false
+    },
   }
 
   getName() {

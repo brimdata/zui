@@ -202,14 +202,20 @@ Array [
         "role": "minimize",
       },
       Object {
+        "type": "separator",
+      },
+      Object {
         "click": [Function],
         "label": "Reset State",
       },
       Object {
-        "role": "close",
+        "type": "separator",
       },
       Object {
-        "role": "minimize",
+        "type": "separator",
+      },
+      Object {
+        "role": "close",
       },
       Object {
         "role": "zoom",
@@ -219,6 +225,10 @@ Array [
       },
       Object {
         "role": "front",
+      },
+      Object {
+        "click": [Function],
+        "label": "Organize Windows",
       },
     ],
   },
@@ -411,8 +421,14 @@ Array [
         "role": "minimize",
       },
       Object {
+        "type": "separator",
+      },
+      Object {
         "click": [Function],
         "label": "Reset State",
+      },
+      Object {
+        "type": "separator",
       },
     ],
   },

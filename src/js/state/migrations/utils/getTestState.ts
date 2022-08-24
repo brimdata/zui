@@ -1,6 +1,6 @@
 import compact from "lodash/compact"
 import states from "src/test/unit/states"
-import {SessionState} from "../../../electron/tron/session-state"
+import {SessionState} from "src/js/electron/session-state"
 import lib from "../../../lib"
 
 export default (version: string) => {

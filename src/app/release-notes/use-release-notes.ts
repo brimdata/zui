@@ -1,10 +1,8 @@
-import {metaClient} from "src/app/ipc/meta"
 import {useEffect, useState} from "react"
 import fetch from "cross-fetch"
 
 async function fetchNotes(version) {
-  const repo = await metaClient.repo()
-
+  const repo = global.appMeta.repo
   const url = `https://api.github.com/repos/${repo}/releases/tags/v${version}`
 
   try {
@@ -28,16 +26,11 @@ async function fetchNotes(version) {
 
 export function useReleaseNotes() {
   const [notes, setNotes] = useState("")
-  const [version, setVersion] = useState("")
+  const version = global.appMeta.version
   const [fetching, setIsFetching] = useState(true)
 
   useEffect(() => {
-    metaClient
-      .version()
-      .then((v) => {
-        setVersion(v)
-        return fetchNotes(v)
-      })
+    fetchNotes(version)
       .then((n) => setNotes(n))
       .catch((e) => setNotes(e.toString()))
       .finally(() => setIsFetching(false))

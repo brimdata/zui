@@ -29,20 +29,3 @@ jobs:
               sudo apt install -y --no-install-recommends ./dist/installers/*.deb
               ;;
           esac
-
-      - name: End to end tests
-        id: playwright
-        if: runner.os == 'Linux'
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          options: -screen 0 1280x1024x24
-          run: yarn e2e
-        env:
-          DEBUG: pw:api
-      - uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: artifacts-${{ matrix.os }}
-          path: |
-            run
-            !run/**/SS

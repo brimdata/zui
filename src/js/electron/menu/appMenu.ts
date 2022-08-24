@@ -2,10 +2,15 @@ import {app, dialog, shell, MenuItemConstructorOptions} from "electron"
 import path from "path"
 
 import electronIsDev from "../isDev"
-import {encodeSessionState} from "../tron/session-state"
+import {encodeSessionState} from "../session-state"
 import {BrimMain} from "../brim"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
+import {showReleaseNotesOp} from "../ops/show-release-notes-op"
+import {closeWindowOp} from "../ops/close-window-op"
+import {showPreferencesOp} from "../ops/show-preferences-op"
+import {openAboutWindowOp} from "../ops/open-about-window-op"
+import {moveToCurrentDisplayOp} from "../ops/move-to-current-display-op"
 
 export default function (
   send: Function,
@@ -17,7 +22,7 @@ export default function (
   const newWindow: MenuItemConstructorOptions = {
     label: "New Window",
     accelerator: "CmdOrCtrl+N",
-    click: () => brim.windows.openWindow("search", {}),
+    click: () => brim.windows.create("search"),
   }
 
   const exit: MenuItemConstructorOptions = {
@@ -28,13 +33,13 @@ export default function (
   const aboutBrim: MenuItemConstructorOptions = {
     label: `About ${app.getName()}`,
     click() {
-      brim.windows.openAbout()
+      openAboutWindowOp.run()
     },
   }
 
   const closeWindow: MenuItemConstructorOptions = {
     label: "Close Window",
-    click: () => brim.windows.closeWindow(),
+    click: () => closeWindowOp.run(),
   }
 
   const closeTab: MenuItemConstructorOptions = {
@@ -45,7 +50,7 @@ export default function (
   const preferences: MenuItemConstructorOptions = {
     id: "preferences",
     label: env.isMac ? "Preferences..." : "Settings",
-    click: () => brim.windows.openPreferences(),
+    click: () => showPreferencesOp.run(),
   }
 
   const resetState: MenuItemConstructorOptions = {
@@ -123,13 +128,26 @@ export default function (
   function windowSubmenu(): MenuItemConstructorOptions[] {
     const submenu = [
       {role: "minimize"} as MenuItemConstructorOptions,
+      __,
       resetState,
+      __,
     ]
     if (mac) {
-      submenu.push({role: "close"}, {role: "minimize"}, {role: "zoom"}, __, {
-        role: "front",
-      })
+      submenu.push(
+        __,
+        {role: "close"},
+        {role: "zoom"},
+        __,
+        {
+          role: "front",
+        },
+        {
+          label: "Organize Windows",
+          click: () => moveToCurrentDisplayOp.run(),
+        }
+      )
     }
+    submenu.push()
     return submenu
   }
 
@@ -186,6 +204,7 @@ export default function (
         accelerator: "CmdOrCtrl+]",
         click: () => send("toggleRightSidebar"),
       },
+
       __,
       {role: "togglefullscreen"},
     ]
@@ -196,7 +215,7 @@ export default function (
       {
         label: "Release Notes",
         click() {
-          brim.windows.openReleaseNotes()
+          showReleaseNotesOp.run()
         },
       },
       {

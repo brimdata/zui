@@ -6,7 +6,7 @@ export function showContextMenu(
   template: MenuItemConstructorOptions[],
   opts: PopupOptions = {}
 ) {
-  if (env.isTest) {
+  if (env.isTest || env.isIntegrationTest) {
     document.dispatchEvent(
       new CustomEvent("nativeContextMenu", {detail: template})
     )

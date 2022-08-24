@@ -1,16 +1,19 @@
 import {app} from "electron"
-import {meta} from "src/app/ipc/meta"
 import {appPathSetup} from "../appPathSetup"
+import {isFirstRun} from "../first-run"
 import isDev from "../isDev"
 import migrateBrimToZui from "../migrateBrimToZui"
 import {handleSquirrelEvent} from "../squirrel"
 import {windowsPre25Exists} from "../windows-pre-25"
 import {MainArgs} from "./args"
+import {setLogLevel} from "../set-log-level"
 
-export async function beforeBoot(args: MainArgs): Promise<string | null> {
-  // Setup app paths
+export async function beforeBoot(
+  args: Partial<MainArgs>
+): Promise<string | null> {
+  // Setup app paths, this must be first
   appPathSetup()
-
+  setLogLevel()
   // Disable for certain platforms
   app.disableHardwareAcceleration()
   // Ensure only one instance of the app is ever on (windows)
@@ -31,7 +34,7 @@ export async function beforeBoot(args: MainArgs): Promise<string | null> {
 
   // On first ever run of a ZUI release, check if there is existing Brim app
   // data and if so, copy it into ZUI.
-  if (!isDev && (await meta.isFirstRun())) migrateBrimToZui()
+  if (!isDev && (await isFirstRun())) migrateBrimToZui()
 
   return null
 }

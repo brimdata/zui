@@ -50,6 +50,52 @@ export default class TestApp {
     this.mainWin = await this.getWindowByTitle("Brim")
   }
 
+  async createPool(filepaths: string[]): Promise<void> {
+    await this.mainWin.locator('button[aria-label="create"]').click()
+    await this.mainWin.locator('li:has-text("New Pool")').click()
+    const [chooser] = await Promise.all([
+      this.mainWin.waitForEvent("filechooser"),
+      this.mainWin.locator("text=Choose Files").click(),
+    ])
+
+    await chooser.setFiles(filepaths)
+    await this.mainWin.locator("text=Import Complete.").isVisible()
+  }
+
+  async query(zed: string): Promise<void> {
+    await this.mainWin.locator('div[role="textbox"]').fill(zed)
+    await this.mainWin.locator('div[aria-label="editor"] + button').click()
+    await this.mainWin.locator('span[aria-label="fetching"]').isHidden()
+  }
+
+  // TODO: this method is a wip, it still needs to wait for cells to populate first
+  async getViewerResults(includeHeaders = true): Promise<string[]> {
+    const fields = await this.mainWin.locator(".viewer .field-cell")
+    let results = await fields.evaluateAll<string[], HTMLElement>((nodes) =>
+      nodes.map((n) => n.innerText.trim())
+    )
+    if (includeHeaders) {
+      const headers = await this.mainWin.locator(".viewer .header-cell")
+      const headerResults = await headers.evaluateAll<string[], HTMLElement>(
+        (headerCells) => headerCells.map((hc) => hc.innerText.trim())
+      )
+      results = headerResults.concat(results)
+    }
+
+    return results
+  }
+
+  async getViewerStats(): Promise<{results: string; shapes: string}> {
+    const results = await this.mainWin
+      .locator('span[aria-label="results"]')
+      .textContent()
+    const shapes = await this.mainWin
+      .locator('span[aria-label="shapes"]')
+      .textContent()
+
+    return {results, shapes}
+  }
+
   async shutdown() {
     await this.brim.close()
   }

@@ -14,21 +14,36 @@ export function createSpecialOperation<Arg, Ret>(channel: string) {
 }
 
 export class Operation<Arg, Ret> {
+  context: BrimMain | null
+
   constructor(
     public channel: string,
-    private handler: (main: BrimMain, e: IpcMainInvokeEvent, arg: Arg) => Ret
+    private handler: (
+      main: BrimMain,
+      e: IpcMainInvokeEvent | null,
+      arg: Arg
+    ) => Ret
   ) {}
 
   listen(main: BrimMain) {
+    this.context = main
     ipcMain.handle(this.channel, (event, arg) => {
-      log.info("IPC Handling:", this.channel)
+      log.debug("IPC Handling:", this.channel)
       return this.handler(main, event, arg)
     })
     log.debug("IPC Listening:", this.channel)
   }
 
   invoke(...args: Arg extends never ? [] : [arg: Arg]): Promise<Ret> {
-    return ipcRenderer.invoke(this.channel, args[0])
+    if (ipcRenderer) {
+      return ipcRenderer.invoke(this.channel, args[0])
+    } else {
+      throw new Error("You must call operation.run() in the main process")
+    }
+  }
+
+  run(...args: Arg extends never ? [] : [arg: Arg]): Ret {
+    return this.handler(this.context, null, args[0])
   }
 }
 
