@@ -1,5 +1,5 @@
 import "src/test/system/real-paths"
-import appMenu from "./appMenu"
+import appMenu from "./search-window-app-menu"
 import {BrimMain} from "../brim"
 
 const mockSend = jest.fn()

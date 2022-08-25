@@ -194,15 +194,19 @@ export default function (
       __,
       {
         id: "toggle-left-pane",
-        label: "Toggle Left Pane",
+        label: "Show Left Pane",
         accelerator: "CmdOrCtrl+[",
         click: () => send("toggleLeftSidebar"),
+        type: "checkbox",
+        checked: true,
       },
       {
         id: "toggle-right-pane",
         label: "Toggle Right Pane",
         accelerator: "CmdOrCtrl+]",
         click: () => send("toggleRightSidebar"),
+        type: "radio",
+        checked: true,
       },
 
       __,

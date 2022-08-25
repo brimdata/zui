@@ -1,7 +1,7 @@
 import log from "electron-log"
 import {dimensFromSizePosition} from "./dimens"
 import {DetailWindow} from "./detail-window"
-import {SearchWindow} from "./search-window"
+import {SearchWindow} from "./search/search-window"
 import {AboutWindow} from "./about-window"
 import {SerializedWindow, WindowProps} from "./types"
 import {WindowName} from "./types"
