@@ -3,7 +3,6 @@
  */
 
 import React from "react"
-import {setupBrim} from "src/test/unit/helpers/setup-brim"
 import VersionsSection from "./versions-section"
 import {lakeQueryPath} from "../../router/utils/paths"
 import Queries from "src/js/state/Queries"
@@ -11,10 +10,11 @@ import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {render, screen} from "src/test/unit/helpers"
 import ResizeObserver from "resize-observer-polyfill"
+import {SystemTest} from "src/test/system"
 
 global.ResizeObserver = ResizeObserver
 
-const brim = setupBrim()
+const system = new SystemTest("versions-section.test")
 
 const testQueryId = "testQueryId"
 const testVersion1: QueryVersion = {
@@ -29,15 +29,15 @@ const testVersion2: QueryVersion = {
 }
 
 beforeEach(() => {
-  brim.dispatch(Queries.addItem({id: testQueryId, name: "test query"}))
-  brim.dispatch(
+  system.store.dispatch(Queries.addItem({id: testQueryId, name: "test query"}))
+  system.store.dispatch(
     QueryVersions.add({queryId: testQueryId, version: testVersion1})
   )
-  brim.dispatch(
+  system.store.dispatch(
     QueryVersions.add({queryId: testQueryId, version: testVersion2})
   )
-  brim.navTo(lakeQueryPath(testQueryId, "testLakeId", testVersion2.version))
-  render(<VersionsSection />, {store: brim.store, api: brim.api})
+  system.navTo(lakeQueryPath(testQueryId, "testLakeId", testVersion2.version))
+  render(<VersionsSection />, {store: system.store, api: system.api})
 })
 
 test("Display query version history in order", async () => {

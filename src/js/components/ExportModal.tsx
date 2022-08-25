@@ -1,6 +1,5 @@
 import React from "react"
 import {ResponseFormat} from "@brimdata/zealot"
-import {ipcRenderer} from "electron"
 import {ChangeEvent, useState} from "react"
 import {toast} from "react-hot-toast"
 import {useDispatch} from "react-redux"
@@ -15,6 +14,7 @@ import {
   Footer,
   SmallTitle,
 } from "./ModalDialog/ModalDialog"
+import {showSaveDialogOp} from "../electron/ops/show-save-dialog-op"
 
 const RadioButtons = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ const StyledFooter = styled(Footer)`
 `
 
 const showDialog = (format) => {
-  return ipcRenderer.invoke("windows:showSaveDialog", {
+  return showSaveDialogOp.invoke({
     title: `Export Results as ${format.toUpperCase()}`,
     buttonLabel: "Export",
     defaultPath: `results.${format}`,

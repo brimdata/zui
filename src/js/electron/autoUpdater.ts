@@ -1,5 +1,4 @@
 import env from "src/app/core/env"
-import {meta} from "src/app/ipc/meta"
 import {app, dialog} from "electron"
 import log from "electron-log"
 import {autoUpdater} from "electron-updater"
@@ -7,14 +6,14 @@ import got from "got"
 import get from "lodash/get"
 import semver from "semver/preload"
 import open from "../lib/open"
+import {BrimMain} from "./brim"
 
 const getFeedURLForPlatform = (repo, platform) => {
   return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
 }
 
-export const getLatestVersion = async (): Promise<string> => {
+export const getLatestVersion = async (repo: string): Promise<string> => {
   // Check for updates for MacOS and if there are then we assume there is also one for our other supported OSs
-  const repo = meta.repo()
   const url = getFeedURLForPlatform(repo, "darwin-x64")
   const resp = await got(url)
 
@@ -31,8 +30,8 @@ export const getLatestVersion = async (): Promise<string> => {
   return latestVersion
 }
 
-const autoUpdateLinux = async () => {
-  const latestVersion = await getLatestVersion()
+const autoUpdateLinux = async (main: BrimMain) => {
+  const latestVersion = await getLatestVersion(main.appMeta.repo)
 
   // up to date
   if (semver.gte(app.getVersion(), latestVersion)) return
@@ -51,10 +50,10 @@ const autoUpdateLinux = async () => {
   })
 }
 
-export async function setupAutoUpdater() {
+export async function setupAutoUpdater(main: BrimMain) {
   if (env.isLinux) {
     setUpdateRepeater(() => {
-      autoUpdateLinux().catch((err) => log.error(err))
+      autoUpdateLinux(main).catch((err) => log.error(err))
     })
 
     return

@@ -8150,6 +8150,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"filter-console@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "filter-console@npm:0.1.1"
+  checksum: 020a6aee2b0b7f0e7fdff76b2b86429a7cfc0fd2bae131a8d0d6eaddad05ffbeac16e3267f382a2beaead9568d6b90f2aba923daeb8dd0c97720d8eba885ede2
+  languageName: node
+  linkType: hard
+
 "find-babel-config@npm:^1.2.0":
   version: 1.2.0
   resolution: "find-babel-config@npm:1.2.0"
@@ -17341,12 +17348,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#ae1ac60a485d4be3896afbf81b3d6c7f0f76078f":
+"zed@brimdata/zed#f75be28dd3057f680815437a9cc902c1e1b56ab1":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=ae1ac60a485d4be3896afbf81b3d6c7f0f76078f"
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=f75be28dd3057f680815437a9cc902c1e1b56ab1"
   dependencies:
     zealot: ^0.2.0
-  checksum: 9ad4621c19e30b0d8e64930d0c7be5142117193cc17e9a12049cb15f287d782a14f6b22c7a2552dbdf5488a1f116a12b303dc14fb0af267ba41a12b401246272
+  checksum: e7c626555c4b685ec80b43db19d8f6ec1eef7ec29c96cbeadb8008a35a42b930c4635eddfdb5c6af543731c9db50c972281fdd728e49fda9e324e842e55ee04c
   languageName: node
   linkType: hard
 
@@ -17435,6 +17442,7 @@ __metadata:
     eslint-plugin-prettier: ^4.0.0
     eslint-plugin-react: ^7.29.4
     event-source-polyfill: ^1.0.25
+    filter-console: ^0.1.1
     fs-extra: ^9.0.1
     glob: ^7.1.6
     got: ^10.7.0
@@ -17495,7 +17503,7 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "brimdata/zed#ae1ac60a485d4be3896afbf81b3d6c7f0f76078f"
+    zed: "brimdata/zed#f75be28dd3057f680815437a9cc902c1e1b56ab1"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0

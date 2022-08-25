@@ -10,15 +10,17 @@ import {
   toRefreshTokenKey,
 } from "../auth0/utils"
 import createGlobalStore from "../state/createGlobalStore"
-import {getPersistedState} from "../state/getPersistable"
+import {getPersistedGlobalState} from "../state/getPersistable"
 import Lakes from "../state/Lakes"
 import {installExtensions} from "./extensions"
 import isDev from "./isDev"
-import {MainArgs, mainDefaults} from "./main"
-import tron, {Session} from "./tron"
-import {decodeSessionState, encodeSessionState} from "./tron/session-state"
-import {WindowManager} from "./tron/window-manager"
+import {decodeSessionState, encodeSessionState} from "./session-state"
+import {WindowManager} from "./windows/window-manager"
 import * as zdeps from "./zdeps"
+import {MainArgs, mainDefaults} from "./run-main/args"
+import createSession, {Session} from "./session"
+import {SearchWindow} from "./windows/search-window"
+import {getAppMeta, AppMeta} from "./meta"
 
 type QuitOpts = {
   saveSession?: boolean
@@ -29,18 +31,18 @@ export class BrimMain {
 
   static async boot(params: Partial<MainArgs> = {}) {
     const args = {...mainDefaults(), ...params}
-    const createSession = tron.session
     const session = createSession(args.appState)
     const data = decodeSessionState(await session.load())
     const windows = new WindowManager(data)
     const store = createGlobalStore(data?.globalState)
+    const appMeta = await getAppMeta()
     const lake = new Lake({
       root: args.lakeRoot,
       port: args.lakePort,
       logs: args.lakeLogs,
       bin: zdeps.zed,
     })
-    return new BrimMain(lake, windows, store, session, args)
+    return new BrimMain(lake, windows, store, session, args, appMeta)
   }
 
   // Only call this from boot
@@ -49,7 +51,8 @@ export class BrimMain {
     readonly windows: WindowManager,
     readonly store: Store,
     readonly session: Session,
-    readonly args: MainArgs
+    readonly args: MainArgs,
+    readonly appMeta: AppMeta
   ) {}
 
   async start() {
@@ -59,7 +62,10 @@ export class BrimMain {
   }
 
   async activate() {
-    if (!this.windows.getVisible().length) await this.windows.init()
+    const visibleWindows = this.windows.where((w) => w.name !== "hidden")
+    if (visibleWindows.length === 0) {
+      await this.windows.init()
+    }
   }
 
   async resetState() {
@@ -76,7 +82,7 @@ export class BrimMain {
 
   async saveSession() {
     const windowState = await this.windows.serialize()
-    const mainState = getPersistedState(this.store.getState())
+    const mainState = getPersistedGlobalState(this.store.getState())
 
     await this.session.save(encodeSessionState(windowState, mainState))
   }
@@ -87,12 +93,12 @@ export class BrimMain {
 
   async quit(opts: QuitOpts = {saveSession: true}) {
     this.isQuitting = true
-    if (await this.windows.confirmQuit()) {
-      await this.windows.prepareQuit()
-      if (opts.saveSession) {
-        await this.saveSession()
-      }
-      this.windows.quit()
+    const windows = this.windows.byName("search") as SearchWindow[]
+    const confirms = await Promise.all(windows.map((w) => w.confirmClose()))
+    if (confirms.every((ok) => ok)) {
+      await Promise.all(windows.map((w) => w.prepareClose()))
+      if (opts.saveSession) await this.saveSession()
+      this.windows.all.forEach((w) => w.close())
       await this.lake.stop()
       app.quit()
     } else {
@@ -106,7 +112,7 @@ export class BrimMain {
       [key: string]: string
     }
     const {lakeId, windowId} = deserializeState(state)
-    const win = this.windows.getWindow(windowId)
+    const win = this.windows.find(windowId)
     if (!win) {
       console.error("No Window Found")
     } else {

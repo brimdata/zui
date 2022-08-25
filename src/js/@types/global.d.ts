@@ -2,6 +2,7 @@ import Histories from "src/app/core/models/histories"
 import {FeatureName} from "../state/Feature"
 import {BrowserHistory} from "history"
 import {MainArgs} from "../electron/main"
+import {AppMeta} from "../electron/meta"
 
 declare global {
   namespace NodeJS {
@@ -21,6 +22,7 @@ declare global {
       dev: DevGlobal
       mainArgs: MainArgs
       firstMount: boolean
+      appMeta: AppMeta
     }
   }
 }

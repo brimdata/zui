@@ -1,6 +1,6 @@
 import "src/test/system/real-paths"
 import React from "react"
-import {main} from "src/js/electron/main"
+import {main} from "src/js/electron/run-main/run-main"
 import initialize from "src/js/initializers/initialize"
 import fsExtra from "fs-extra"
 import {BrimProvider} from "src/app/core/context"
@@ -8,6 +8,7 @@ import {getPort} from "./port-service"
 import {waitFor} from "@testing-library/react"
 import {Store} from "src/js/state/types"
 import BrimApi from "src/js/api"
+import {BrimMain} from "src/js/electron/brim"
 
 const defaults = () => ({
   page: "search",
@@ -43,14 +44,15 @@ export async function bootBrim(name: string, args: Partial<BootArgs> = {}) {
   fsExtra.removeSync(lakeRoot)
   fsExtra.removeSync(lakeLogs)
   fsExtra.removeSync(appState)
-  const brimMain = await main({
+  const brimMain = (await main({
     lakePort,
     lakeRoot,
     lakeLogs,
     appState,
     releaseNotes: false,
     autoUpdater: false,
-  })
+    singleInstance: false,
+  })) as BrimMain
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
     timeout: 20_000,
   })

@@ -51,7 +51,7 @@ const PoolHome = () => {
       value: "",
     })
   }
-  const keys = pool.data.layout.keys.map((k) => k.join("."))
+  const keys = pool.keys.map((k) => k.join("."))
 
   return (
     <div>
@@ -79,7 +79,7 @@ const PoolHome = () => {
         </dl>
         <dl>
           <dt>Layout Key{keys.length > 1 ? "s" : null} </dt>
-          <dd>{keys.join(", ")}</dd>
+          <dd>{keys.join(", ") || "null"}</dd>
         </dl>
         <dl>
           <dt>Layout Order </dt>

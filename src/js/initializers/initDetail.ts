@@ -1,19 +1,18 @@
+import {decode, zed} from "@brimdata/zealot"
+import {setupDetailWindow} from "../electron/ops/open-detail-window-op"
 import {viewLogDetail} from "../flows/viewLogDetail"
-import Current from "../state/Current"
-import LogDetails from "../state/LogDetails"
-import Search from "../state/Search/actions"
 import initialize from "./initialize"
 
-export default async () => {
+export const initDetail = async () => {
   const {store, api, pluginManager} = await initialize()
-  // Set the span to everything
-  const pool = Current.getPool(store.getState())
-  pool?.hasSpan() && store.dispatch(Search.setSpan(pool.everythingSpan()))
-
-  // View the latest log and clear log detail history
-  const log = LogDetails.build(store.getState())
-  store.dispatch(LogDetails.clear())
-  log && store.dispatch(viewLogDetail(log))
+  const setup = await setupDetailWindow.invoke(global.windowId)
+  if (setup) {
+    global.windowHistory.replace(setup.url)
+    const value = decode(setup.value) as zed.Record
+    if (value) {
+      store.dispatch(viewLogDetail(value))
+    }
+  }
 
   return {store, api, pluginManager}
 }

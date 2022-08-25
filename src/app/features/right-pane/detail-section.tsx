@@ -30,7 +30,7 @@ const DetailSection = () => {
         </Left>
         <Right>
           <ExpandWindow
-            onClick={() => dispatch(openLogDetailsWindow())}
+            onClick={() => dispatch(openLogDetailsWindow(currentLog))}
             className="panel-button"
           />
         </Right>

@@ -2,16 +2,16 @@
 
 - [Summary](#summary)
 - [Per-Platform Details](#per-platform-details)
-  * [Windows](#windows)
-  * [macOS](#macos)
-    + [Software](#software)
-    + [Hardware](#hardware)
-  * [Linux](#linux)
+  - [Windows](#windows)
+  - [macOS](#macos)
+    - [Software](#software)
+    - [Hardware](#hardware)
+  - [Linux](#linux)
 - [Establishing Platform Supportability](#establishing-platform-supportability)
-  * [Development Tools](#development-tools)
-  * [Automated Testing](#automated-testing)
-  * [Smoke Testing](#smoke-testing)
-  * [Non-Recommended Platforms](#non-recommended-platforms)
+  - [Development Tools](#development-tools)
+  - [Automated Testing](#automated-testing)
+  - [Smoke Testing](#smoke-testing)
+  - [Non-Recommended Platforms](#non-recommended-platforms)
 
 # Summary
 
@@ -19,16 +19,17 @@
 available that run on Windows, macOS, and Linux. Our current platform
 recommendations on which to run Brim:
 
-* Windows
-   * Windows 10 or newer
-   * Windows Server 2019 or newer
-* macOS
-   * macOS Catalina 10.15.7 or newer (see [below](#hardware) for hardware considerations)
-* Linux
-  * Ubuntu 18.04 or newer
-  * CentOS 8.0 1905 or newer
-  * Debian 10.0.0 or newer
-  * Fedora 28 or newer
+- Windows
+  - Windows 10 or newer
+  - Windows Server 2019 or newer
+- macOS
+  - macOS Big Sur 11.6.8 or newer (see [below](#hardware) for hardware considerations)
+- Linux
+  - Ubuntu 20.04 or newer
+  - Debian 10.0.0 or newer
+  - Fedora 29 or newer
+  - Rocky 8.3 or newer
+  - CentOS 8.0 1905 (deprecated)
 
 The sections below provide details regarding these guidelines and how they are
 established.
@@ -55,9 +56,9 @@ on releases older than Windows 8.1.
 
 ### Software
 
-Brim's [test automation](#automated-testing) runs on Catalina 10.15 and
+Brim's [test automation](#automated-testing) runs on Big Sur 11 and
 therefore this is the macOS version on which we are best able to ensure quality
-and prevent regressions. Several Brim developers also run macOS Monterey 12.3
+and prevent regressions. Several Brim developers also run macOS Monterey 12.5
 and regularly perform ad hoc testing with it to reproduce reported issues.
 
 Basic [smoke testing](#smoke-testing) has also validated that Brim appears to
@@ -69,7 +70,7 @@ recommend attempting to run Brim on macOS releases older than macOS Mojave
 ### Hardware
 
 The build procedure for Brim's macOS releases creates binaries intended to
-run on the Intel-based Mac hardware that make up the majority of Macs in
+run on the Intel-based Mac hardware that make up many of the Macs in
 use today. Brim releases are not yet available that are built specifically for
 the recently-released [M1-based hardware](https://en.wikipedia.org/wiki/Apple_M1).
 However, Apple's [Rosetta 2](https://support.apple.com/en-us/HT211861) makes
@@ -91,24 +92,26 @@ builds ([brim/1266](https://github.com/brimdata/brim/issues/1266)).
 
 ## Linux
 
-Brim's [test automation](#automated-testing) runs on Ubuntu 18.04 (`.deb`
+Brim's [test automation](#automated-testing) runs on Ubuntu 20.04 (`.deb`
 package) and therefore this is the Linux distribution on which we are best able
-to ensure quality and prevent regressions. 
+to ensure quality and prevent regressions.
 
 An `.rpm` package is also provided that is periodically [smoke tested](https://github.com/brimdata/brim/wiki/Supported-Platforms#smoke-testing)
-on CentOS 8. The [CentOS FAQ](https://wiki.centos.org/FAQ/General) explains that CentOS
-"aims to be functionally compatible with Red Hat Enterprise Linux" ([RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)).
-Therefore the CentOS versions listed in this article provide the basis of the
-Brim supportability expectation for the equivalent RHEL version.
+on Rocky 8.3. The [Rocky Linux site](https://rockylinux.org/about) explains that Rocky
+seeks to maintain the [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)-compatibility
+mission formerly championed by [CentOS](https://www.centos.org/). Therefore the Rocky versions
+listed in this article provide the basis of the Brim supportability expectation for the
+equivalent RHEL version.
 
 Basic [smoke testing](#smoke-testing) has also validated the _oldest_
 release on which Brim appeared to work for each common distribution, as
 follows:
 
-* Ubuntu 10.04
-* CentOS 8 1905
-* Debian 10.0.0
-* Fedora 28
+- Ubuntu 20.04
+- Debian 10.0.0
+- Fedora 29
+- Rocky 8.3
+- CentOS 8 1905 (deprecated)
 
 Therefore we do _not_ recommend attempting to run Brim on distributions older
 than those listed above.
@@ -118,9 +121,9 @@ than those listed above.
 The determination of the specific versions of platforms for which we can set
 expectations of quality are based on multiple factors. These include:
 
-* Support for the platform in dependent [development tools](#development-tools)
-* Availability of the platform for [automated testing](#automated-testing)
-and/or [smoke testing](#smoke-testing)
+- Support for the platform in dependent [development tools](#development-tools)
+- Availability of the platform for [automated testing](#automated-testing)
+  and/or [smoke testing](#smoke-testing)
 
 The following sections provide more detail, along with guidance if you feel
 strongly about trying to get Brim running on a [non-recommended platform](#non-recommended-platforms).
@@ -128,8 +131,8 @@ strongly about trying to get Brim running on a [non-recommended platform](#non-r
 ## Development Tools
 
 There are two primary development tools on which Brim depends:
-[Electron](https://www.electronjs.org/docs/tutorial/support#supported-platforms)
-and [Go](https://golang.org/doc/install#requirements). Their support
+[Electron](https://www.electronjs.org/docs/latest/development/README)
+and [Go](https://github.com/golang/go/wiki/MinimumRequirements). Their support
 statements cite older platform releases than the Brim-specific ones cited above.
 Therefore the recommendations in the [Summary](#summary) section above should
 be followed.
@@ -151,15 +154,15 @@ automated coverage on every version of every possible platform. Occasionally,
 manual "smoke testing" has been performed on a wider number of platforms to
 confirm basic functionality. Such a smoke test consists of the following:
 
-* Install the base platform while accepting the defaults on any offered install-time config options
-* Install the Brim app using the standard package install procedure for the platform
-* Import a test pcap into Brim and confirm the bundled Zeek and Suricata both produce records from it
+- Install the base platform while accepting the defaults on any offered install-time config options
+- Install the Brim app using the standard package install procedure for the platform
+- Import a test pcap into Brim and confirm the bundled Zeek and Suricata both produce records from it
+- Click the **Packets** button to extract a slice from the pcap into Wireshark
 
-This exercise was most recently performed in December, 2020 in preparation for
-the GA release [`v0.21.0`](https://github.com/brimdata/brim/releases/tag/v0.21.0)
-that first introduced Suricata support. For more details on the outcome of
-this exercise, review
-[brim/1263](https://github.com/brimdata/brim/issues/1263).
+This exercise was most recently performed in August, 2022 in preparation for
+the transition from Brim to GA Zui release v1.0.0. For more details on
+previously-performed smoke testing exercises, review [brim/1263](https://github.com/brimdata/brim/issues/1263),
+[brim/2481](https://github.com/brimdata/brim/pull/2481), and [brim/2482](https://github.com/brimdata/brim/issues/2482).
 
 ## Non-Recommended Platforms
 
