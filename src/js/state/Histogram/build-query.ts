@@ -6,7 +6,6 @@ import span from "src/js/brim/span"
 import histogramInterval, {timeUnits} from "src/js/lib/histogramInterval"
 import {DateTuple} from "src/js/lib/TimeWindow"
 import Current from "src/js/state/Current"
-import Editor from "src/js/state/Editor"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Pools from "src/js/state/Pools"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
@@ -48,7 +47,7 @@ const getRangeFromPool =
   }
 
 const getRangeFromQuery = (): Thunk<DateTuple> => (_, getState) => {
-  const snapshot = Editor.getSnapshot(getState())
+  const snapshot = Current.getVersion(getState())
   return getCurrentRange(snapshot)
 }
 
