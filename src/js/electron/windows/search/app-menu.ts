@@ -205,7 +205,12 @@ export function compileTemplate(
         type: "checkbox",
         checked: state.showRightPane,
       },
-
+      {
+        label: "Show Histogram",
+        click: () => window.send("toggleHistogram"),
+        type: "checkbox",
+        checked: state.showHistogram,
+      },
       __,
       {role: "togglefullscreen"},
     ]

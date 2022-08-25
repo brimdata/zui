@@ -65,13 +65,21 @@ export const getQueryById =
 
     return new BrimQuery(query, versions, version)
   }
-
+/**
+ * This returns the currently saved query, but the version
+ * might not be correct (in the case of a modified query)
+ * Use current.getVersion for the most up to date snapshot
+ * (Change this)
+ */
 export const getQuery = (state: State): BrimQuery | null => {
   const {queryId, version} = getQueryLocationData(state)
   if (!queryId) return null
   return getQueryById(queryId, version)(state)
 }
-
+/**
+ * This will always be what was show in the editor before the
+ * last search was submitted. Combine this and getQuery one day.
+ */
 export const getVersion = (state: State): QueryVersion => {
   const {queryId, version} = getQueryLocationData(state)
   const tabId = getTabId(state)

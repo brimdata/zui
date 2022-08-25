@@ -10,10 +10,12 @@ import Layout from "src/js/state/Layout"
 const getAppMenuState = createSelector(
   Appearance.sidebarIsOpen,
   Layout.getDetailPaneIsOpen,
-  (showLeftPane, showRightPane) => {
+  Layout.getShowHistogram,
+  (showLeftPane, showRightPane, showHistogram) => {
     return {
       showLeftPane,
       showRightPane,
+      showHistogram,
     } as SearchAppMenuState
   }
 )
