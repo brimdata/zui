@@ -28,7 +28,7 @@ const testQueries = [
 ]
 
 test.describe("Ingest tests", () => {
-  const app = new TestApp("Query tests")
+  const app = new TestApp("Ingest tests")
 
   test.beforeAll(async () => {
     await app.init()
