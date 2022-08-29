@@ -4895,10 +4895,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@brimdata/brimcap#v1.2.0":
+"brimcap@brimdata/brimcap#415b2b21535913df1722609a58bd753a8fa2c104":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=2844aba60e85517ee2bafaaf10180540970d8d40"
-  checksum: deca52375f6ec7f1e08e854db9b945e2f4b7384c0d0a5c35c943edbdf1ecd80a6694a6f0ddf2e7216fc24e0ccadece5a92e8d206def152093badac8c1f755431
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=415b2b21535913df1722609a58bd753a8fa2c104"
+  checksum: 1665bf7d404a5084e995286644b9f9eb6ee8a709068982bc32f8b4afe6c1ab747566ac2c0511ce6dbc85e21a0e76e4f1233b4a9a747c22be64a52bd62896c554
   languageName: node
   linkType: hard
 
@@ -17414,7 +17414,7 @@ __metadata:
     babel-eslint: ^10.1.0
     babel-plugin-module-resolver: ^4.0.0
     base64-js: ^1.3.1
-    brimcap: "brimdata/brimcap#v1.2.0"
+    brimcap: "brimdata/brimcap#415b2b21535913df1722609a58bd753a8fa2c104"
     chalk: ^4.1.0
     chrono-node: ^1.4.8
     classnames: ^2.2.6
