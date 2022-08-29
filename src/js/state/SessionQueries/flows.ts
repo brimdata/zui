@@ -27,8 +27,9 @@ export const create =
     const exists = queries.find((q) => q.id === queryId)
     !exists && dispatch(SessionQueries.set(query))
 
-    dispatch(QueryVersions.add({queryId: query.id, version}))
-    const versions = QueryVersions.getByQueryId(query.id)(getState())
+    const Versions = QueryVersions.at(query.id)
+    dispatch(Versions.create(version))
+    const versions = Versions.all(getState())
 
     return new BrimQuery(query, versions)
   }

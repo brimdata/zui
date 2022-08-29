@@ -27,8 +27,8 @@ export function create(
       ts: new Date().toISOString(),
     }
     dispatch(actions.addItem(query))
-    dispatch(QueryVersions.add({queryId: query.id, version}))
-    const versions = QueryVersions.getByQueryId(query.id)(getState())
+    dispatch(QueryVersions.at(query.id).create(version))
+    const versions = QueryVersions.at(query.id).all(getState())
 
     return new BrimQuery(query, versions)
   }

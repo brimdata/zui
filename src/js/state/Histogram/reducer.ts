@@ -10,8 +10,6 @@ const slice = createSlice({
   },
   reducers: {
     setRange(s, a: PayloadAction<DateTuple | null>) {
-      console.log("SETTING RANGE")
-      console.log(a)
       s.range = a.payload
     },
   },

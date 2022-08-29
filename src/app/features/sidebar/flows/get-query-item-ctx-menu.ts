@@ -36,9 +36,7 @@ const getQueryItemCtxMenu =
         })
         .then(({response}) => {
           if (response === 0) {
-            selected.forEach((id) =>
-              dispatch(QueryVersions.clear({queryId: id}))
-            )
+            selected.forEach((id) => dispatch(QueryVersions.at(id).deleteAll()))
             if (isRemoteItem) dispatch(deleteRemoteQueries(selected))
             else dispatch(Queries.removeItems(selected))
           }

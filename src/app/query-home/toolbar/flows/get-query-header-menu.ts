@@ -65,9 +65,7 @@ const getQueryHeaderMenu =
               dispatch(setRemoteQueries(queriesCopy))
             } else {
               dispatch(Queries.addItem(q, "root"))
-              dispatch(
-                QueryVersions.set({queryId: q.id, versions: versionsCopy})
-              )
+              dispatch(QueryVersions.at(q.id).sync(versionsCopy))
             }
             toast.success("Query Copied")
           } catch (e) {
@@ -94,7 +92,7 @@ const getQueryHeaderMenu =
           }))
           if (querySource === "local") {
             dispatch(Queries.addItem(q, "root"))
-            dispatch(QueryVersions.set({queryId: q.id, versions: versionsCopy}))
+            dispatch(QueryVersions.at(q.id).sync(versionsCopy))
             dispatch(
               Tabs.create(
                 lakeQueryPath(q.id, lakeId, last(versionsCopy).version)
@@ -117,7 +115,7 @@ const getQueryHeaderMenu =
         label: "Delete",
         enabled: !query.isReadOnly,
         click: () => {
-          dispatch(QueryVersions.clear({queryId: query.id}))
+          dispatch(QueryVersions.at(query.id).deleteAll())
           if (querySource === "local") dispatch(Queries.removeItems([query.id]))
           else dispatch(deleteRemoteQueries([query.id]))
         },

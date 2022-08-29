@@ -61,8 +61,7 @@ export const getQueryById =
       Queries.getQueryById(id)(state) ||
       RemoteQueries.getQueryById(id)(state)
     if (!query) return null
-    const versions = QueryVersions.getByQueryId(id)(state) || []
-
+    const versions = QueryVersions.at(query.id).all(state) || []
     return new BrimQuery(query, versions, version)
   }
 /**
@@ -84,8 +83,8 @@ export const getVersion = (state: State): QueryVersion => {
   const {queryId, version} = getQueryLocationData(state)
   const tabId = getTabId(state)
   return (
-    QueryVersions.getByVersion(queryId, version)(state) ||
-    QueryVersions.getByVersion(tabId, version)(state)
+    QueryVersions.at(queryId).find(state, version) ||
+    QueryVersions.at(tabId).find(state, version)
   )
 }
 
@@ -190,3 +189,8 @@ export const getSessionHistory = createSelector<
 >([getTabId, SessionHistories.raw], (tabId, histories) => histories[tabId])
 
 export const getSessionId = getTabId
+
+// const tabId = useTabId()
+// const query = useSelector(Current.getQuery)
+// const session = useSelector(Current.getQueryById(tabId))
+// const version = useSelector(Current.getVersion)

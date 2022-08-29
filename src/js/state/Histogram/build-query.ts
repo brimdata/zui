@@ -15,16 +15,17 @@ import {actions} from "./reducer"
 export const buildHistogramQuery =
   (): Thunk<Promise<string | null>> =>
   async (dispatch, getState, {api}) => {
-    const query = Current.getQuery(getState())
     const poolName = api.current.poolName
+    const version = Current.getVersion(getState())
     const range = await dispatch(getRange(poolName))
     dispatch(actions.setRange(range))
-    return histogramZed(query.toString(), range)
+    return histogramZed(BrimQuery.versionToZed(version), range)
   }
 
 export const getRange =
   (name: string): Thunk<Promise<DateTuple> | DateTuple> =>
   (dispatch) => {
+    debugger
     const queryRange = dispatch(getRangeFromQuery())
     if (queryRange) return queryRange
     else return dispatch(getRangeFromPool(name))
@@ -34,6 +35,7 @@ function histogramZed(baseQuery: string, range: DateTuple | null) {
   if (!range) return null
   const {number, unit} = histogramInterval(range)
   const interval = `${number}${timeUnits[unit]}`
+  console.log("Base Query:", baseQuery)
   return `${baseQuery} | count() by every(${interval}), _path`
 }
 

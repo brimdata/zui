@@ -177,15 +177,19 @@ Array [
       },
       Object {
         "accelerator": "CmdOrCtrl+[",
+        "checked": true,
         "click": [Function],
         "id": "toggle-left-pane",
-        "label": "Toggle Left Pane",
+        "label": "Show Left Pane",
+        "type": "checkbox",
       },
       Object {
         "accelerator": "CmdOrCtrl+]",
+        "checked": true,
         "click": [Function],
         "id": "toggle-right-pane",
         "label": "Toggle Right Pane",
+        "type": "radio",
       },
       Object {
         "type": "separator",
@@ -396,15 +400,19 @@ Array [
       },
       Object {
         "accelerator": "CmdOrCtrl+[",
+        "checked": true,
         "click": [Function],
         "id": "toggle-left-pane",
-        "label": "Toggle Left Pane",
+        "label": "Show Left Pane",
+        "type": "checkbox",
       },
       Object {
         "accelerator": "CmdOrCtrl+]",
+        "checked": true,
         "click": [Function],
         "id": "toggle-right-pane",
         "label": "Toggle Right Pane",
+        "type": "radio",
       },
       Object {
         "type": "separator",

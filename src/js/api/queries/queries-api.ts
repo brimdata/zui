@@ -44,7 +44,7 @@ export class QueriesApi {
     const ts = new Date().toISOString()
     const id = nanoid()
     const version = {ts, version: id, ...params}
-    this.dispatch(QueryVersions.add({queryId, version}))
+    this.dispatch(QueryVersions.at(queryId).create(version))
     return version
   }
 

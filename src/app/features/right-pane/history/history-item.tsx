@@ -114,8 +114,12 @@ export function HistoryItem({version, queryId, index}: Props) {
   const sessionId = useSelector(Current.getSessionId)
   const session = useSelector(Current.getQueryById(sessionId))
   const query = useSelector(Current.getQueryById(queryId))
-  const sVersion = useSelector(QueryVersions.getByVersion(sessionId, version))
-  const qVersion = useSelector(QueryVersions.getByVersion(queryId, version))
+  const sVersion = useSelector((state) =>
+    QueryVersions.at(sessionId).find(state, version)
+  )
+  const qVersion = useSelector((state) =>
+    QueryVersions.at(queryId).find(state, version)
+  )
   const versionObj = sVersion || qVersion
   const active = new ActiveQuery(session, query, versionObj)
   const onClick = () => {

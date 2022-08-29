@@ -1,4 +1,4 @@
-import {createStore} from "@reduxjs/toolkit"
+import {createStore, EntityState} from "@reduxjs/toolkit"
 import {createEntitySlice} from "./create-entity-slice"
 
 type StuffType = {
@@ -8,7 +8,7 @@ type StuffType = {
 
 const Stuff = createEntitySlice<StuffType>({
   name: "stuff",
-  select: (state) => state,
+  select: (state: EntityState<StuffType>) => state,
   id: (stuff) => stuff.name,
   sort: (a, b) => (a.name > b.name ? 1 : -1),
 })
@@ -60,13 +60,13 @@ test("entity slice", () => {
   ])
 
   // find exists
-  expect(Stuff.find("alerts")(store.getState())).toEqual({
+  expect(Stuff.find(store.getState(), "alerts")).toEqual({
     name: "alerts",
     tags: ["security", "suricata"],
   })
 
   // find does not exist
-  expect(Stuff.find("nothing")(store.getState())).toEqual(undefined)
+  expect(Stuff.find(store.getState(), "nothing")).toEqual(undefined)
 
   // count
   expect(Stuff.count(store.getState())).toEqual(3)
@@ -98,3 +98,5 @@ test("entity slice", () => {
 
   expect(Stuff.count(store.getState())).toEqual(0)
 })
+
+test("nested entity slice", () => {})

@@ -14,7 +14,7 @@ export const saveQueryVersion =
       await dispatch(setRemoteQueries([{...query, ...version}]))
     }
 
-    dispatch(QueryVersions.add({queryId, version}))
+    dispatch(QueryVersions.at(queryId).create(version))
 
     return version
   }

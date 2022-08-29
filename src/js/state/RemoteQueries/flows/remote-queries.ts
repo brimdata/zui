@@ -90,7 +90,7 @@ export const refreshRemoteQueries =
 
       dispatch(RemoteQueries.set(queries))
       forEach(versions, (versions, queryId) => {
-        dispatch(QueryVersions.set({queryId, versions}))
+        dispatch(QueryVersions.at(queryId).sync(versions))
       })
     } catch (e) {
       if (/pool not found/.test(e.message)) {

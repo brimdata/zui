@@ -30,12 +30,8 @@ const testVersion2: QueryVersion = {
 
 beforeEach(() => {
   system.store.dispatch(Queries.addItem({id: testQueryId, name: "test query"}))
-  system.store.dispatch(
-    QueryVersions.add({queryId: testQueryId, version: testVersion1})
-  )
-  system.store.dispatch(
-    QueryVersions.add({queryId: testQueryId, version: testVersion2})
-  )
+  system.store.dispatch(QueryVersions.at(testQueryId).create(testVersion1))
+  system.store.dispatch(QueryVersions.at(testQueryId).create(testVersion2))
   system.navTo(lakeQueryPath(testQueryId, "testLakeId", testVersion2.version))
   render(<VersionsSection />, {store: system.store, api: system.api})
 })
