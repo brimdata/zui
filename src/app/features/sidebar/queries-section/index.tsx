@@ -140,7 +140,7 @@ const LocalQueriesView = ({toolbarButtons}) => {
   const filteredQueriesCount = flattenQueryTree(filteredQueries, false)?.length
   const isFiltered = flatQueries?.length !== filteredQueriesCount
 
-  const query = useSelector(Current.getQuery)
+  const query = useSelector(Current.getNamedQuery)
 
   useEffect(() => {
     if (!query?.id) {

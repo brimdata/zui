@@ -1,13 +1,15 @@
 import {formatDistanceToNowStrict} from "date-fns"
-import React from "react"
+import React, {useMemo} from "react"
 import {useSelector} from "react-redux"
 import {useBrimApi} from "src/app/core/context"
-import {ActiveQuery} from "src/app/query-home/title-bar/active-query"
 import Current from "src/js/state/Current"
+import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
 import styled from "styled-components"
 import {Timeline} from "./timeline"
 import {useEntryMenu} from "./use-entry-menu"
+import {State} from "src/js/state/types"
+import {ActiveQuery} from "src/app/core/models/active-query"
 
 const Wrap = styled.div`
   height: 28px;
@@ -112,8 +114,9 @@ export function HistoryItem({version, queryId, index}: Props) {
   const api = useBrimApi()
   const onContextMenu = useEntryMenu(index)
   const sessionId = useSelector(Current.getSessionId)
-  const session = useSelector(Current.getQueryById(sessionId))
-  const query = useSelector(Current.getQueryById(queryId))
+  const session = useSelector(Current.getSession)
+  const build = useMemo(Queries.makeBuildSelector, [])
+  const query = useSelector((state: State) => build(state, queryId))
   const sVersion = useSelector((state) =>
     QueryVersions.at(sessionId).find(state, version)
   )

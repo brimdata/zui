@@ -29,14 +29,15 @@ const ContentWrap = styled.div`
 `
 
 const QueryHome = () => {
-  const query = useSelector(Current.getQuery)
+  const activeQuery = useSelector(Current.getActiveQuery)
   const lakeId = useSelector(Current.getLakeId)
   const tabId = useSelector(Current.getTabId)
-  const version = useSelector(Current.getVersion)
 
-  if (!query) {
+  if (activeQuery.isDeleted()) {
     return (
-      <Redirect to={lakeQueryPath(tabId, lakeId, version?.version || "0")} />
+      <Redirect
+        to={lakeQueryPath(tabId, lakeId, activeQuery.versionId() || "0")}
+      />
     )
   }
 

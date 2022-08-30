@@ -10,4 +10,12 @@ export default {
   areEqual(a: QueryVersion, b: QueryVersion) {
     return isEqual(a?.pins, b?.pins) && isEqual(a?.value, b?.value)
   },
+  initial(): QueryVersion {
+    return {
+      ts: new Date().toISOString(),
+      version: "0",
+      value: "",
+      pins: [],
+    }
+  },
 }

@@ -10,7 +10,7 @@ export const saveQueryVersion =
   async (dispatch, getState) => {
     const source = dispatch(getQuerySource(queryId))
     if (source === "remote") {
-      const query = RemoteQueries.getQueryById(queryId)(getState())
+      const query = RemoteQueries.find(getState(), queryId)
       await dispatch(setRemoteQueries([{...query, ...version}]))
     }
 

@@ -10,7 +10,7 @@ export const queriesImport =
     const {libRoot, versions} = parseJSONLib(file.path)
     dispatch(Queries.addItem(libRoot, "root"))
     forEach(versions, (vs, queryId) => {
-      dispatch(QueryVersions.at(queryId).sync([vs]))
+      dispatch(QueryVersions.at(queryId).sync(vs))
     })
     api.toast.success(`Imported ${libRoot.name}`)
   }

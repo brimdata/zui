@@ -104,7 +104,7 @@ export const FormattedTime = ({ts}: {ts: string}) => {
 
 const VersionItem = ({styles, data, handlers}) => {
   const queryVersion = data as QueryVersion
-  const query = useSelector(Current.getQuery)
+  const query = useSelector(Current.getNamedQuery)
   const api = useBrimApi()
 
   const onClick = (e) => {

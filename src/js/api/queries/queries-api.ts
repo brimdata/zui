@@ -32,7 +32,7 @@ export class QueriesApi {
   }
 
   rename(id: string, name: string) {
-    const query = Current.getQueryById(id)(this.getState())
+    const query = Queries.build(this.getState(), id)
     if (query) {
       this.dispatch(updateQuery(query, {name}))
     } else {
@@ -67,9 +67,9 @@ export class QueriesApi {
 
     let queryId: string, versionId: string
     if (typeof id === "string") {
-      const q = this.select(Current.getQueryById(id))
+      const q = this.select((state) => Queries.build(state, id))
       queryId = id
-      versionId = opts.version || q.latestVersionId()
+      versionId = opts.version || q?.latestVersionId() || "0"
     } else {
       queryId = tabId
       versionId = nanoid()

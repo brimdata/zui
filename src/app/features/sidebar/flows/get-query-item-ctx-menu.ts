@@ -9,7 +9,6 @@ import exportQueryLib from "src/js/flows/exportQueryLib"
 import * as remote from "@electron/remote"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
-import Current from "src/js/state/Current"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers}) =>
@@ -20,7 +19,7 @@ const getQueryItemCtxMenu =
       tree.getSelectedIds().length > 1 &&
       !!tree.getSelectedIds().find((id) => id === data.id)
     const isRemoteItem = dispatch(isRemoteLib([id]))
-    const query = Current.getQueryById(id)(getState())
+    const query = Queries.build(getState(), id)
     const latestVersion = query.latestVersion()
 
     const handleDelete = () => {

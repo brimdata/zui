@@ -24,7 +24,7 @@ export default function (): Pen {
       .selectAll("g")
       .data(series, (d) => d.key)
 
-    const t = d3.transition().duration(100)
+    const t = d3.transition().duration(500)
     const innerH = innerHeight(chart.height, chart.margins)
     barGroups.exit().selectAll("rect").remove()
 

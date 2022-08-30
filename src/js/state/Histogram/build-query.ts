@@ -18,6 +18,7 @@ export const buildHistogramQuery =
     const poolName = api.current.poolName
     const version = Current.getVersion(getState())
     const range = await dispatch(getRange(poolName))
+    // this doesn't belong here
     dispatch(actions.setRange(range))
     return histogramZed(BrimQuery.versionToZed(version), range)
   }
@@ -25,7 +26,6 @@ export const buildHistogramQuery =
 export const getRange =
   (name: string): Thunk<Promise<DateTuple> | DateTuple> =>
   (dispatch) => {
-    debugger
     const queryRange = dispatch(getRangeFromQuery())
     if (queryRange) return queryRange
     else return dispatch(getRangeFromPool(name))

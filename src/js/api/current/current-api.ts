@@ -14,7 +14,7 @@ export class CurrentApi {
   }
 
   get poolName() {
-    return Current.getQuery(this.getState()).getPoolName()
+    return Current.getActiveQuery(this.getState()).toAst().poolName
   }
 
   get value() {

@@ -2,8 +2,19 @@ import * as zealot from "@brimdata/zealot"
 
 export class ZedAst {
   public tree: any
+
   constructor(public script: string) {
     this.tree = zealot.parseAst(script)
+  }
+
+  get poolName() {
+    const from = this.from
+    if (!from) return null
+    const trunk = from.trunks.find((t) => t.source.kind === "Pool")
+    if (!trunk) return null
+    const name = trunk.source.spec.pool
+    if (!name) return null
+    return name
   }
 
   get from() {

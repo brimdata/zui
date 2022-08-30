@@ -24,12 +24,11 @@ const EmptyMessage = () => {
 }
 
 const VersionsSection = () => {
-  const query = useSelector(Current.getQuery)
-  const tabId = useSelector(Current.getTabId)
-  if (!query || tabId === query.id) {
+  const active = useSelector(Current.getActiveQuery)
+  if (active.isAnonymous()) {
     return <EmptyMessage />
   } else {
-    return <VersionsList query={query} />
+    return <VersionsList query={active.query} />
   }
 }
 

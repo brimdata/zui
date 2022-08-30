@@ -9,29 +9,28 @@ import {BrimQuery} from "../utils/brim-query"
 const submitSearch =
   (): Thunk =>
   (dispatch, getState, {api}) => {
-    const tabId = Current.getTabId(getState())
-    const session = Current.getQueryById(tabId)(getState())
     const nextVersion = Editor.getSnapshot(getState())
-    const query = Current.getQuery(getState())
+    const active = Current.getActiveQuery(getState())
     const error = BrimQuery.checkSyntax(nextVersion)
 
     // An error with the syntax
     if (error) {
+      const tabId = Current.getTabId(getState())
       dispatch(Results.error({id: MAIN_RESULTS, error, tabId}))
       return
     }
 
     // Reuse the version url if the next version is the same as the latest
     // of this query, either session or saved.
-    if (QueryVersions.areEqual(query.latestVersion(), nextVersion)) {
-      api.queries.open(query.id, {version: query.latestVersionId()})
+    if (QueryVersions.areEqual(active.version, nextVersion)) {
+      api.queries.open(active.id(), {version: active.versionId()})
       return
     }
 
     // This is a new query, add a new version to the session,
     // And open the current active query with the version set to the new one.
-    api.queries.addVersion(session.id, nextVersion)
-    api.queries.open(query.id, {version: nextVersion.version})
+    api.queries.addVersion(active.session.id, nextVersion)
+    api.queries.open(active.id(), {version: nextVersion.version})
   }
 
 export default submitSearch

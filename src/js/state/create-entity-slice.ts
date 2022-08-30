@@ -46,8 +46,8 @@ export function createNestedEntitySlice<T, Meta, NestedArgs extends any[]>(
   const reducer = makeReducer(adapter, actions, options.id)
   function at(...args: NestedArgs) {
     const meta = options.meta(...args)
-    const actions = makeActions(options.name, meta)
-    const selectors = makeSelectors(adapter, (state: unknown) => {
+    const actions = makeActions<T>(options.name, meta)
+    const selectors = makeSelectors<T>(adapter, (state: unknown) => {
       return options.select(state, meta)
     })
     return {...actions, ...selectors}

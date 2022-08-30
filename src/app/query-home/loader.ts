@@ -10,6 +10,7 @@ import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import {Location} from "history"
 import {runHistogramQuery} from "src/js/state/Histogram/run-query"
+import Pools from "src/js/state/Pools"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {
@@ -24,8 +25,9 @@ export function loadRoute(location: Location): Thunk {
 function syncEditor(dispatch, getState) {
   const lakeId = Current.getLakeId(getState())
   const version = Current.getVersion(getState())
+  const poolName = Current.getActiveQuery(getState()).toAst().poolName
+  const pool = Pools.getByName(lakeId, poolName)(getState())
 
-  const pool = Current.getQueryPool(getState())
   if (pool && !pool.hasSpan()) dispatch(syncPool(pool.id, lakeId))
 
   // Give codemirror a chance to update by scheduling this update

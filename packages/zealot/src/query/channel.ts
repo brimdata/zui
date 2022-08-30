@@ -47,8 +47,8 @@ export class Channel extends EventEmitter {
      */
     let first = true
     let count = 0
-    let countThresh = 30
-    let timeThresh = 500
+    let countThresh = 2000
+    let timeThresh = 2000
     let timeId = 0
 
     const flush = () => {
