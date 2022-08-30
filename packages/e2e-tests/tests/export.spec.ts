@@ -8,6 +8,7 @@ import fsExtra from "fs-extra"
 const tempDir = os.tmpdir()
 const formats = [
   {label: "zng", expectedSize: 3692},
+  {label: "zson", expectedSize: 15137},
   {label: "json", expectedSize: 13659},
   {label: "ndjson", expectedSize: 13657},
   {label: "csv", expectedSize: 12208},
