@@ -25,6 +25,7 @@ export function create(
       ...versionAttrs,
       version: nanoid(),
       ts: new Date().toISOString(),
+      pins: [],
     }
     dispatch(actions.addItem(query))
     dispatch(QueryVersions.at(query.id).create(version))

@@ -22,6 +22,7 @@ export const create =
       ...attrs,
       ts: new Date().toISOString(),
       version: nanoid(),
+      pins: [],
     }
 
     const exists = queries.find((q) => q.id === queryId)

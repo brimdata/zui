@@ -167,6 +167,7 @@ export const deleteRemoteQueries =
       version: "",
       ts: new Date().toISOString(),
       value: "",
+      pins: [],
     }
     const queries = queryIds.map((id) => ({...queryDefaults, id}))
     await dispatch(loadRemoteQueries(queriesToRemoteQueries(queries, true)))

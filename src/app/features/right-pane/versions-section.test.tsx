@@ -21,11 +21,13 @@ const testVersion1: QueryVersion = {
   version: "v1",
   ts: new Date(1).toISOString(),
   value: "test value 1",
+  pins: [],
 }
 const testVersion2: QueryVersion = {
   version: "v2 (latest)",
   ts: new Date(2).toISOString(),
   value: "test value 2",
+  pins: [],
 }
 
 beforeEach(() => {

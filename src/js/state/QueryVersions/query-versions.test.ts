@@ -17,11 +17,13 @@ const testVersion: QueryVersion = {
   version: "v1.0.0",
   ts: new Date(1).toISOString(),
   value: "test zed",
+  pins: [],
 }
 const testVersion2: QueryVersion = {
   version: "v2.0.0",
   ts: new Date(2).toISOString(),
   value: "test zed",
+  pins: [],
 }
 
 test("add/delete versions", () => {
