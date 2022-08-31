@@ -40,7 +40,6 @@ date.parseInZone = (string, zone, ref?) => {
 
     const str = [year, month, date, hour, mins, secs, ms, offset].join(" ")
     const fmt = "YYYY MM DD HH mm ss SSS Z"
-    console.log(str)
     return time(moment(str, fmt, true).tz(zone).toDate()).toTs()
   } else if (relTime(string).isValid()) {
     return string
