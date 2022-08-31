@@ -55,31 +55,20 @@ export const getVersion = (state: State): QueryVersion => {
   )
 }
 
-const getRawQuery = (state: State) => {
-  const {queryId} = getQueryUrlParams(state)
-  return Queries.find(state, queryId)
-}
 const getRawSession = (state: State) => {
   const id = getSessionId(state)
   return SessionQueries.find(state, id)
 }
-const getQueryVersions = (state: State) => {
-  const {queryId} = getQueryUrlParams(state)
-  return QueryVersions.at(queryId).all(state)
-}
+
 const getSessionVersions = (state: State) => {
   const id = getSessionId(state)
   return QueryVersions.at(id).all(state)
 }
 
-export const getNamedQuery = createSelector(
-  getRawQuery,
-  getQueryVersions,
-  (query, versions) => {
-    if (!query) return null
-    return new BrimQuery(query, versions)
-  }
-)
+export const getNamedQuery = (state: State) => {
+  const {queryId} = getQueryUrlParams(state)
+  return Queries.build(state, queryId)
+}
 
 export const getSession = createSelector(
   getRawSession,

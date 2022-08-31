@@ -68,6 +68,7 @@ export class QueriesApi {
     let queryId: string, versionId: string
     if (typeof id === "string") {
       const q = this.select((state) => Queries.build(state, id))
+
       queryId = id
       versionId = opts.version || q?.latestVersionId() || "0"
     } else {

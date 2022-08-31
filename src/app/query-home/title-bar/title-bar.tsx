@@ -20,7 +20,6 @@ const BG = styled.header.attrs({className: "title-bar"})`
 
 export function TitleBar() {
   const active = useSelector(Current.getActiveQuery)
-
   return (
     <BG>
       <TitleBarProvider activeQuery={active}>
