@@ -2,8 +2,8 @@ import {test, expect} from "@playwright/test"
 import TestApp from "../helpers/test-app"
 import {getPath} from "zui-test-data"
 
-test.describe("Ingest tests", () => {
-  const app = new TestApp("Query tests")
+test.describe("Histogram Spec", () => {
+  const app = new TestApp("Histogram Spec")
 
   test.beforeAll(async () => {
     await app.init()
@@ -18,9 +18,20 @@ test.describe("Ingest tests", () => {
     await app.find(`role=button[name="Query Pool"]`).click()
     const results = app.find(`role=status[name="results"]`)
 
-    await expect(results).toHaveText("Results: 31")
+    await expect(results).toHaveText(/Results:/)
 
     const chart = app.find(`[aria-label="histogram"]`)
     await expect(chart).toBeVisible()
+  })
+
+  test("Histogram does not appears for non-zeek data", async () => {
+    await app.createPool([getPath("prs.json")])
+    await app.find(`role=button[name="Query Pool"]`).click()
+    const results = app.find(`role=status[name="results"]`)
+
+    await expect(results).toHaveText(/Results:/)
+
+    const chart = app.find(`[aria-label="histogram"]`)
+    await expect(chart).toBeHidden()
   })
 })
