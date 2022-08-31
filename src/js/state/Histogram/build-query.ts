@@ -43,7 +43,8 @@ const getRangeFromPool =
   async (dispatch) => {
     if (!poolName) return null
     const pool = await dispatch(ensurePoolLoaded(poolName))
-    if (!pool) return
+    if (!pool) return null
+    if (!pool.hasSpan()) return null
     return span(pool.everythingSpan()).toDateTuple()
   }
 
