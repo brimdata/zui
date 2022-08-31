@@ -102,6 +102,10 @@ const ExportModal = ({onClose}) => {
             <label htmlFor="zng">zng</label>
           </RadioItem>
           <RadioItem>
+            <input type="radio" id="zson" value="zson" name="format" />
+            <label htmlFor="zson">zson</label>
+          </RadioItem>
+          <RadioItem>
             <input type="radio" id="json" value="json" name="format" />
             <label htmlFor="json">json</label>
           </RadioItem>
