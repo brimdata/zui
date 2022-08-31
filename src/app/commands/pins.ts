@@ -8,8 +8,8 @@ export const createTimeRange = createCommand(
   async ({dispatch, api, getState}) => {
     const pins = Editor.getPins(getState())
     const range = await dispatch(Pools.getTimeRange(api.current.poolName))
-    const from = range[0] || endOfDay(new Date())
-    const to = range[1] || startOfDay(new Date())
+    const from = (range && range[0]) || endOfDay(new Date())
+    const to = (range && range[1]) || startOfDay(new Date())
     dispatch(
       Editor.addPin({
         type: "time-range",

@@ -14,7 +14,7 @@ export function HistorySection() {
   const history = useMemo(() => [...sessionHistory].reverse(), [sessionHistory])
 
   return (
-    <BG>
+    <BG aria-label="history-pane">
       {history.map(({version, queryId}, index) => (
         <HistoryItem
           key={index}
