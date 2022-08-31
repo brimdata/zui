@@ -9,6 +9,7 @@ import initStore from "./initStore"
 import initLakeParams from "./initLakeParams"
 import {initAutosave} from "./initAutosave"
 import {featureFlagsOp} from "../electron/ops/feature-flags-op"
+import {commands} from "src/app/commands/command"
 
 export default async function initialize() {
   const api = new BrimApi()
@@ -25,6 +26,7 @@ export default async function initialize() {
   initLakeParams(store)
   initDebugGlobals(store, api)
   initAutosave(store)
+  commands.setContext(store, api)
 
   return {store, api, pluginManager}
 }

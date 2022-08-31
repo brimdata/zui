@@ -59,7 +59,7 @@ export class Pool {
     if (!this.stats) throw new Error("Pool has no stats")
     if (!this.stats.span) throw new Error("Pool has no span")
     const date = new Date(
-      this.minTime().getTime() + Math.ceil(this.stats.span.dur / 1e6)
+      this.minTime().getTime() + Math.ceil(this.stats.span.dur / 1e6) + 1
     )
     if (isNaN(date.getTime())) throw new Error("Invalid Date")
     return date
