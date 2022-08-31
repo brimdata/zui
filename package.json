@@ -68,7 +68,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
-    "brimcap": "brimdata/brimcap#2907d70bf6d8293d5a38c93ceaf755a5f16fed65",
+    "brimcap": "brimdata/brimcap#c0cec8d1bdce6720e27f66b59cca17914efdbb6c",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
