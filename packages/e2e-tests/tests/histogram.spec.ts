@@ -16,8 +16,8 @@ test.describe("Histogram Spec", () => {
   test("Histogram appears for zeek data", async () => {
     await app.createPool([getPath("small-zeek.zng")])
     await app.find(`role=button[name="Query Pool"]`).click()
-    const results = app.find(`role=status[name="results"]`)
 
+    const results = app.find(`role=status[name="results"]`)
     await expect(results).toHaveText(/Results:/)
 
     const chart = app.find(`[aria-label="histogram"]`)
@@ -27,8 +27,8 @@ test.describe("Histogram Spec", () => {
   test("Histogram does not appears for non-zeek data", async () => {
     await app.createPool([getPath("prs.json")])
     await app.find(`role=button[name="Query Pool"]`).click()
-    const results = app.find(`role=status[name="results"]`)
 
+    const results = app.find(`role=status[name="results"]`)
     await expect(results).toHaveText(/Results:/)
 
     const chart = app.find(`[aria-label="histogram"]`)
