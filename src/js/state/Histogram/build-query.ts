@@ -35,7 +35,6 @@ function histogramZed(baseQuery: string, range: DateTuple | null) {
   if (!range) return null
   const {number, unit} = histogramInterval(range)
   const interval = `${number}${timeUnits[unit]}`
-  console.log("Base Query:", baseQuery)
   return `${baseQuery} | count() by every(${interval}), _path`
 }
 

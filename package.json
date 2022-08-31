@@ -100,7 +100,8 @@
     "typescript": "^4.6.2",
     "web-streams-polyfill": "^3.2.0",
     "whatwg-fetch": "^3.2.0",
-    "win-7zip": "^0.1.0"
+    "win-7zip": "^0.1.0",
+    "zui-test-data": "workspace:*"
   },
   "dependencies": {
     "@babel/core": "^7.17.9",

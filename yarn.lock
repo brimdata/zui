@@ -17357,6 +17357,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"zui-test-data@workspace:*, zui-test-data@workspace:packages/zui-test-data":
+  version: 0.0.0-use.local
+  resolution: "zui-test-data@workspace:packages/zui-test-data"
+  languageName: unknown
+  linkType: soft
+
 "zui@workspace:.":
   version: 0.0.0-use.local
   resolution: "zui@workspace:."
@@ -17504,6 +17510,7 @@ __metadata:
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
     zed: "brimdata/zed#2d52400feccd74f550d3aec2778e3469ff71ed79"
+    zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0

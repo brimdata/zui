@@ -20,7 +20,6 @@ const getQueryItemCtxMenu =
       !!tree.getSelectedIds().find((id) => id === data.id)
     const isRemoteItem = dispatch(isRemoteLib([id]))
     const query = Queries.build(getState(), id)
-    const latestVersion = query.latestVersion()
 
     const handleDelete = () => {
       const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
@@ -60,7 +59,7 @@ const getQueryItemCtxMenu =
         label: "Copy Query Value",
         visible: !isGroup,
         click: () => {
-          lib.doc.copyToClipboard(latestVersion?.value)
+          lib.doc.copyToClipboard(query?.latestVersion()?.value)
           toast("Query value copied to clipboard")
         },
       },
