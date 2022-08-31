@@ -144,7 +144,7 @@
     "lodash": "^4.17.21",
     "md5": "^2.2.1",
     "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "mousetrap": "^1.6.5",
     "node-abort-controller": "^3.0.1",
     "node-addon-api": "^3.1.0",
