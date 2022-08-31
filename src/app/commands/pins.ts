@@ -1,4 +1,3 @@
-import {endOfDay, startOfDay} from "date-fns"
 import Editor from "src/js/state/Editor"
 import Pools from "src/js/state/Pools"
 import {createCommand} from "./command"
@@ -8,8 +7,15 @@ export const createTimeRange = createCommand(
   async ({dispatch, api, getState}) => {
     const pins = Editor.getPins(getState())
     const range = await dispatch(Pools.getTimeRange(api.current.poolName))
-    const from = (range && range[0]) || endOfDay(new Date())
-    const to = (range && range[1]) || startOfDay(new Date())
+    const now = new Date()
+    const defaultFrom = new Date(
+      Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)
+    )
+    const defaultTo = new Date(
+      Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0)
+    )
+    const from = (range && range[0]) || defaultFrom
+    const to = (range && range[1]) || defaultTo
     dispatch(
       Editor.addPin({
         type: "time-range",
