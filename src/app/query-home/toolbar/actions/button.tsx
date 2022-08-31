@@ -100,12 +100,14 @@ const ToolbarButton = ({
   dropdown,
   isPrimary,
   onClick,
+  ...rest
 }: Props) => {
   return (
     <StyledButton
       className={classNames({primary: isPrimary})}
       disabled={disabled}
       onClick={onClick}
+      {...rest}
     >
       {!!icon && <StyledIcon>{icon}</StyledIcon>}
       {!!text && <Text>{text}</Text>}

@@ -60,10 +60,22 @@ export function QueryProgress() {
       </Span>
     )
   } else if (status === "COMPLETE") {
-    return <span aria-label="results">Results: {count}</span>
+    return (
+      <span role="status" aria-label="results">
+        Results: {count}
+      </span>
+    )
   } else if (status === "INCOMPLETE") {
-    return <span aria-label="results">Results: First {count}</span>
+    return (
+      <span role="status" aria-label="results">
+        Results: First {count}
+      </span>
+    )
   } else if (status === "LIMIT") {
-    return <span aria-label="results">Results: Limited to first {count}</span>
+    return (
+      <span role="status" aria-label="results">
+        Results: Limited to first {count}
+      </span>
+    )
   }
 }

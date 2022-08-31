@@ -22,6 +22,10 @@ export default class TestApp {
     this.zealot = new Client("http://localhost:9867")
   }
 
+  find(text: string) {
+    return this.mainWin.locator(text)
+  }
+
   async init() {
     const userDataDir = path.resolve(
       path.join(itestDir(), this.name, (this.testNdx++).toString())

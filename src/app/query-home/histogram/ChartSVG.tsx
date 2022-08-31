@@ -25,7 +25,15 @@ const ChartSVG = React.memo<Props>(function ChartSVG({chart}: Props) {
   useLayoutEffect(mount, [el.current])
   useLayoutEffect(draw)
 
-  return <svg width={chart.width} height={chart.height} ref={el} />
+  return (
+    <svg
+      width={chart.width}
+      height={chart.height}
+      ref={el}
+      role="graphics-document"
+      aria-label="histogram"
+    />
+  )
 })
 
 export default ChartSVG
