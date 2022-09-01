@@ -21,6 +21,7 @@ const BG = styled.div`
 
 const Body = styled.div`
   flex: 1;
+  overflow: hidden;
 `
 
 const ResultsComponent = () => {
