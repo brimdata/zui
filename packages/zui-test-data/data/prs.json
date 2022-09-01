@@ -1896,7 +1896,7 @@
       "type": "User",
       "site_admin": false
     },
-    "body": "PR #5 wired up zsio.LookupWriter() to the -f argument but overlooked\r\nthe fact that the default value for -f is \"text\" and we don't have a\r\ntext writer.  Fix it for now by making \"table\" the default.",
+    "body": "PR #5 wired up zsio.LookupWriter() to the -f argument but overlooked\r\nthe fact that the default value for -f is \"text\" and we don't have a\r\ntext writer. Fix it for now by making \"table\" the default.",
     "created_at": "2019-11-12T17:10:26Z",
     "updated_at": "2019-11-13T17:55:46Z",
     "closed_at": "2019-11-13T17:55:42Z",
@@ -7156,7 +7156,7 @@
       "type": "User",
       "site_admin": false
     },
-    "body": "The command line now expects at least one input file, which can\r\nbe specified as \"-\" for standard input.  Also, we allow the zql\r\nexpression to be optional by checking to see if the argument is\r\na valid file and interpret it as such instead of a search for\r\nthe string that represents the file.\r\n\r\nAlso, we added a brief description for help text.\r\n",
+    "body": "The command line now expects at least one input file, which can\r\nbe specified as \"-\" for standard input. Also, we allow the zql\r\nexpression to be optional by checking to see if the argument is\r\na valid file and interpret it as such instead of a search for\r\nthe string that represents the file.\r\n\r\nAlso, we added a brief description for help text.\r\n",
     "created_at": "2019-11-18T00:59:12Z",
     "updated_at": "2019-11-19T01:34:45Z",
     "closed_at": "2019-11-19T01:34:44Z",
@@ -7488,7 +7488,7 @@
       "type": "User",
       "site_admin": false
     },
-    "body": "These changes allow for reading and writing of zson.  The zeek\r\nreader was refactored into a zson reader that uses a zeek parser\r\nfor legacy zeek logs.  This commit also fixes a bug where we\r\nweren't properly handling semicolon termination.  The zeek parsing\r\ntests were broken out into the legacy parsing tests and tests\r\nin zsio for the new zson syntax.\r\n",
+    "body": "These changes allow for reading and writing of zson. The zeek\r\nreader was refactored into a zson reader that uses a zeek parser\r\nfor legacy zeek logs. This commit also fixes a bug where we\r\nweren't properly handling semicolon termination. The zeek parsing\r\ntests were broken out into the legacy parsing tests and tests\r\nin zsio for the new zson syntax.\r\n",
     "created_at": "2019-11-18T04:35:36Z",
     "updated_at": "2019-11-19T01:24:44Z",
     "closed_at": "2019-11-19T01:24:43Z",
@@ -8194,7 +8194,7 @@
       "type": "User",
       "site_admin": false
     },
-    "body": "The argument to emitter.Emitter.SetWarningsFd is a *os.File, but an\r\nio.Writer suffices.  Change the argument to io.Writer and rename to\r\n.SetWarningsWriter.",
+    "body": "The argument to emitter.Emitter.SetWarningsFd is a *os.File, but an\r\nio.Writer suffices. Change the argument to io.Writer and rename to\r\n.SetWarningsWriter.",
     "created_at": "2019-11-18T20:52:32Z",
     "updated_at": "2019-11-19T02:40:55Z",
     "closed_at": "2019-11-19T02:40:54Z",
@@ -9334,7 +9334,7 @@
       "type": "User",
       "site_admin": false
     },
-    "body": "zson.NewRawAndTsFromJSON does not convert Zeek JSON::TS_ISO8601\r\ntimestamps to the standard Zeek format, and it does not handle\r\nJSON:TS_MILLIS timestamps correctly.  Fix both issues.",
+    "body": "zson.NewRawAndTsFromJSON does not convert Zeek JSON::TS_ISO8601\r\ntimestamps to the standard Zeek format, and it does not handle\r\nJSON:TS_MILLIS timestamps correctly. Fix both issues.",
     "created_at": "2019-11-19T00:11:46Z",
     "updated_at": "2019-11-25T18:59:35Z",
     "closed_at": "2019-11-25T18:59:34Z",
