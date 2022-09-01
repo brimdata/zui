@@ -14,7 +14,7 @@ const BrimToaster = () => {
           duration: env.isTest ? 2 ** 31 - 1 : undefined,
         },
         loading: {
-          duration: env.isTest ? 2 ** 31 - 1 : undefined,
+          duration: 2 ** 31 - 1,
         },
         error: {
           duration: env.isTest ? 2 ** 31 - 1 : undefined,
