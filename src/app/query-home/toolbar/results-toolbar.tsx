@@ -7,7 +7,7 @@ const BG = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 6px 20px;
+  padding: 6px 16px;
 `
 
 export function ResultsToolbar() {

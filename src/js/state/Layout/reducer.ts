@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {ColumnHeadersViewState, ResultsView, PaneName} from "./types"
 
+// This is tab level appearance stuff
 const slice = createSlice({
   name: "TAB_LAYOUT",
   initialState: {
@@ -11,6 +12,7 @@ const slice = createSlice({
     currentPaneName: "history" as PaneName,
     isEditingTitle: false,
     titleFormAction: "create" as "create" | "update",
+    showHistogram: true,
   },
   reducers: {
     showDetailPane: (s) => {
@@ -44,6 +46,9 @@ const slice = createSlice({
     hideTitleForm(s) {
       s.isEditingTitle = false
       s.titleFormAction = "create"
+    },
+    toggleHistogram(s) {
+      s.showHistogram = !s.showHistogram
     },
   },
 })

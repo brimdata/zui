@@ -11,7 +11,7 @@ const BG = styled.footer`
   border-top: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
-  padding: 0 20px;
+  padding: 0 22px;
   display: flex;
   align-items: center;
   gap: 24px;

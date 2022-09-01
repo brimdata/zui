@@ -12,4 +12,5 @@ export default {
   getResultsView: activeTabSelect((s) => s.layout.resultsView),
   getIsEditingTitle: activeTabSelect((s) => s.layout.isEditingTitle),
   getTitleFormAction: activeTabSelect((s) => s.layout.titleFormAction),
+  getShowHistogram: activeTabSelect((s) => s.layout.showHistogram ?? true),
 }

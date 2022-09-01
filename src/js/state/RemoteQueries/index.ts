@@ -21,14 +21,12 @@ const slice = createSlice({
 export default {
   reducer: slice.reducer,
   ...slice.actions,
-  raw: (s) => s.remoteQueries,
-  getQueryById:
-    (queryId: string) =>
-    (state: State): Query => {
-      return new TreeModel({childrenPropertyName: "items"})
-        .parse(state.remoteQueries)
-        .first((n) => n.model.id === queryId && !("items" in n.model))?.model
-    },
+  raw: (state: State) => state.remoteQueries,
+  find: (state: State, id: string): Query => {
+    return new TreeModel({childrenPropertyName: "items"})
+      .parse(state.remoteQueries)
+      .first((n) => n.model.id === id && !("items" in n.model))?.model
+  },
   getGroupById:
     (groupId: string) =>
     (state: State): Group => {

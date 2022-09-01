@@ -9,7 +9,6 @@ import exportQueryLib from "src/js/flows/exportQueryLib"
 import * as remote from "@electron/remote"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
-import Current from "src/js/state/Current"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers}) =>
@@ -20,8 +19,7 @@ const getQueryItemCtxMenu =
       tree.getSelectedIds().length > 1 &&
       !!tree.getSelectedIds().find((id) => id === data.id)
     const isRemoteItem = dispatch(isRemoteLib([id]))
-    const query = Current.getQueryById(id)(getState())
-    const latestVersion = query.latestVersion()
+    const query = Queries.build(getState(), id)
 
     const handleDelete = () => {
       const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
@@ -36,9 +34,7 @@ const getQueryItemCtxMenu =
         })
         .then(({response}) => {
           if (response === 0) {
-            selected.forEach((id) =>
-              dispatch(QueryVersions.clear({queryId: id}))
-            )
+            selected.forEach((id) => dispatch(QueryVersions.at(id).deleteAll()))
             if (isRemoteItem) dispatch(deleteRemoteQueries(selected))
             else dispatch(Queries.removeItems(selected))
           }
@@ -63,7 +59,7 @@ const getQueryItemCtxMenu =
         label: "Copy Query Value",
         visible: !isGroup,
         click: () => {
-          lib.doc.copyToClipboard(latestVersion?.value)
+          lib.doc.copyToClipboard(query?.latestVersion()?.value)
           toast("Query value copied to clipboard")
         },
       },

@@ -36,6 +36,7 @@ export abstract class ZuiWindow {
     this.touch()
     this.ref.on("focus", this.onFocus.bind(this))
     this.ref.on("close", this.onClose.bind(this))
+    this.ref.on("focus", this.touch.bind(this))
     enable(this.ref.webContents) // For Remote Module to Work
     this.beforeLoad()
     return this.ref.loadFile(this.name + ".html", {
@@ -48,7 +49,7 @@ export abstract class ZuiWindow {
   }
 
   onFocus() {
-    this.touch()
+    /* For a sub-class to override */
   }
 
   onClose(_e: Electron.Event) {
@@ -57,6 +58,10 @@ export abstract class ZuiWindow {
 
   close() {
     this.ref.destroy()
+  }
+
+  send(channel: string, ...args: any[]) {
+    this.ref.webContents.send(channel, ...args)
   }
 
   serialize(): SerializedWindow {

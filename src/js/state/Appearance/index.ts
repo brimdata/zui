@@ -5,7 +5,7 @@ import {HistoryView, QueriesView, SectionName} from "./types"
 const init = () => ({
   sidebarIsOpen: true,
   sidebarWidth: 230,
-  /* No used */
+  /* Not used */
   sidebarSections: [{id: "pools"}, {id: "queries"}, {id: "history"}],
   currentSectionName: "pools" as SectionName,
   queriesView: "local" as QueriesView,
@@ -21,6 +21,7 @@ const select = {
   getHistoryView: (state: State) => state.appearance.historyView,
 }
 
+// This is the window level appearance state
 const slice = createSlice({
   name: "appearance",
   initialState: init(),

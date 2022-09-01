@@ -14,7 +14,7 @@ import {
   PrimaryButton,
   RedLink,
 } from "../form-helpers"
-import {getTimeString} from "./get-time-preview"
+import {getTimeString} from "./get-time-string"
 
 const Preview = styled.time`
   display: block;
@@ -29,7 +29,7 @@ export default function Form(props: PinFormProps<TimeRangeQueryPin>) {
   const [toValue, setToValue] = useState(props.pin.to)
   return (
     <form
-      action="dialog"
+      method="dialog"
       onSubmit={(e) => {
         const raw = getFormData(e)
         props.onSubmit({

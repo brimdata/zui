@@ -16,13 +16,13 @@ const Group = styled.div`
 
 export default function SearchArea() {
   const value = useSelector(Editor.getValue)
-  const query = useSelector(Current.getQuery)
+  const query = useSelector(Current.getActiveQuery)
 
   return (
     <>
       <Pins />
       <Group>
-        <Input value={value} disabled={query.isReadOnly} />
+        <Input value={value} disabled={query.isReadOnly()} />
         <Error />
       </Group>
     </>

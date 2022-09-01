@@ -8,12 +8,10 @@ import Lakes from "../Lakes"
 import {LakesState} from "../Lakes/types"
 import {MemoryHistory} from "history"
 import {Pool} from "src/app/core/pools/pool"
-import RemoteQueries from "../RemoteQueries"
 import Queries from "../Queries"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 import QueryVersions from "../QueryVersions"
 import {query, queryVersion} from "src/app/router/routes"
-import SessionQueries from "../SessionQueries"
 import SessionHistories from "../SessionHistories"
 import {createSelector} from "@reduxjs/toolkit"
 import {
@@ -21,6 +19,8 @@ import {
   SessionHistoryEntry,
 } from "../SessionHistories/types"
 import {QueryVersion} from "../QueryVersions/types"
+import {ActiveQuery} from "src/app/core/models/active-query"
+import SessionQueries from "../SessionQueries"
 
 type Id = string | null
 
@@ -39,47 +39,54 @@ export const getLocation = (state: State) => {
   return getHistory(state)?.location
 }
 
-export const getQueryLocationData = (
-  state: State
-): {queryId: string | null; version: string | null} => {
-  type Params = {queryId?: string; version?: string}
-  const match = matchPath<Params>(getLocation(state).pathname, [
-    queryVersion.path,
-    query.path,
-  ])
-  const version = match?.params?.version
-
-  let queryId = match?.params?.queryId
-  return {queryId, version}
-}
-
-export const getQueryById =
-  (id: string, version?: string) =>
-  (state: State): BrimQuery | null => {
-    const query =
-      SessionQueries.getById(id)(state) ||
-      Queries.getQueryById(id)(state) ||
-      RemoteQueries.getQueryById(id)(state)
-    if (!query) return null
-    const versions = QueryVersions.getByQueryId(id)(state) || []
-
-    return new BrimQuery(query, versions, version)
-  }
-
-export const getQuery = (state: State): BrimQuery | null => {
-  const {queryId, version} = getQueryLocationData(state)
-  if (!queryId) return null
-  return getQueryById(queryId, version)(state)
-}
+const getQueryUrlParams = createSelector(getLocation, (location) => {
+  const path = location.pathname
+  const routes = [queryVersion.path, query.path]
+  const match = matchPath<{queryId: string; version: string}>(path, routes)
+  return match?.params ?? {queryId: "", version: ""}
+})
 
 export const getVersion = (state: State): QueryVersion => {
-  const {queryId, version} = getQueryLocationData(state)
+  const {queryId, version} = getQueryUrlParams(state)
   const tabId = getTabId(state)
   return (
-    QueryVersions.getByVersion(queryId, version)(state) ||
-    QueryVersions.getByVersion(tabId, version)(state)
+    QueryVersions.at(queryId).find(state, version) ||
+    QueryVersions.at(tabId).find(state, version)
   )
 }
+
+const getRawSession = (state: State) => {
+  const id = getSessionId(state)
+  return SessionQueries.find(state, id)
+}
+
+const getSessionVersions = (state: State) => {
+  const id = getSessionId(state)
+  return QueryVersions.at(id).all(state)
+}
+
+export const getNamedQuery = (state: State) => {
+  const {queryId} = getQueryUrlParams(state)
+  return Queries.build(state, queryId)
+}
+
+export const getSession = createSelector(
+  getRawSession,
+  getSessionVersions,
+  (query, versions) => {
+    if (!query) return null
+    return new BrimQuery(query, versions)
+  }
+)
+
+export const getActiveQuery = createSelector(
+  getSession,
+  getNamedQuery,
+  getVersion,
+  (session, query, version) => {
+    return new ActiveQuery(session, query, version || QueryVersions.initial())
+  }
+)
 
 export const getPoolId = (state) => {
   type Params = {poolId?: string}
@@ -106,28 +113,6 @@ export const mustGetLake = createSelector<State, LakesState, Id, BrimLake>(
     return brim.lake(lakes[id])
   }
 )
-
-export const getQueryPool = createSelector<
-  State,
-  PoolsState,
-  Id,
-  BrimQuery,
-  Pool
->(Pools.raw, getLakeId, getQuery, (pools, lakeId, query) => {
-  if (!lakeId || !query) return null
-  const name = query.getPoolName()
-  if (!name) return null
-  if (!pools[lakeId]) return null
-
-  const pool = Object.values(pools[lakeId]).find((p) => p.data.name === name)
-
-  if (!pool) {
-    console.error(`Missing pool: ${name}`)
-    return null
-  }
-
-  return new Pool(pool.data, pool.stats)
-})
 
 export const mustGetPool = createSelector<State, PoolsState, Id, Id, Pool>(
   Pools.raw,

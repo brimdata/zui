@@ -12,8 +12,10 @@ import {defaultLake} from "../initializers/initLakeParams"
 import Handlers from "../state/Handlers"
 import useSearchShortcuts from "./useSearchShortcuts"
 import {useDispatch} from "src/app/core/state"
+import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
 
 export default function App() {
+  useSearchAppMenu()
   useStoreExport()
   const dispatch = useDispatch()
   useSearchShortcuts()

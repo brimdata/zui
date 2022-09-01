@@ -10,6 +10,7 @@ import RightPane from "../features/right-pane"
 import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
+import MainHistogramChart from "./histogram/MainHistogram/Chart"
 
 const MainContent = styled.div`
   display: flex;
@@ -28,14 +29,15 @@ const ContentWrap = styled.div`
 `
 
 const QueryHome = () => {
-  const query = useSelector(Current.getQuery)
+  const activeQuery = useSelector(Current.getActiveQuery)
   const lakeId = useSelector(Current.getLakeId)
   const tabId = useSelector(Current.getTabId)
-  const version = useSelector(Current.getVersion)
 
-  if (!query) {
+  if (activeQuery.isDeleted()) {
     return (
-      <Redirect to={lakeQueryPath(tabId, lakeId, version?.version || "0")} />
+      <Redirect
+        to={lakeQueryPath(tabId, lakeId, activeQuery.versionId() || "0")}
+      />
     )
   }
 
@@ -45,6 +47,7 @@ const QueryHome = () => {
         <MainContent>
           <TitleBar />
           <SearchArea />
+          <MainHistogramChart />
           <ResultsToolbar />
           <ResultsComponent />
         </MainContent>

@@ -1,5 +1,5 @@
 import React, {ReactNode, useContext} from "react"
-import {ActiveQuery} from "./active-query"
+import {ActiveQuery} from "src/app/core/models/active-query"
 
 const TitleBarContext = React.createContext<ActiveQuery | null>(null)
 

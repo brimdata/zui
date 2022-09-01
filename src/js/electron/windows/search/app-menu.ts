@@ -1,28 +1,34 @@
-import {app, dialog, shell, MenuItemConstructorOptions} from "electron"
-import path from "path"
-
-import electronIsDev from "../isDev"
-import {encodeSessionState} from "../session-state"
-import {BrimMain} from "../brim"
+import {app, MenuItemConstructorOptions, shell, Menu} from "electron"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
-import {showReleaseNotesOp} from "../ops/show-release-notes-op"
-import {closeWindowOp} from "../ops/close-window-op"
-import {showPreferencesOp} from "../ops/show-preferences-op"
-import {openAboutWindowOp} from "../ops/open-about-window-op"
-import {moveToCurrentDisplayOp} from "../ops/move-to-current-display-op"
+import {closeWindowOp} from "../../ops/close-window-op"
+import {moveToCurrentDisplayOp} from "../../ops/move-to-current-display-op"
+import {openAboutWindowOp} from "../../ops/open-about-window-op"
+import {openSearchWindowOp} from "../../ops/open-search-window-op"
+import {resetStateOp} from "../../ops/reset-state-op"
+import {showPreferencesOp} from "../../ops/show-preferences-op"
+import {showReleaseNotesOp} from "../../ops/show-release-notes-op"
+import {SearchWindow} from "./search-window"
 
-export default function (
-  send: Function,
-  brim: BrimMain
-): MenuItemConstructorOptions[] {
+export const defaultAppMenuState = () => ({
+  showRightPane: true,
+  showLeftPane: true,
+  showHistogram: true,
+})
+
+export type SearchAppMenuState = ReturnType<typeof defaultAppMenuState>
+
+export function compileTemplate(
+  window: SearchWindow,
+  state: SearchAppMenuState = defaultAppMenuState()
+) {
   const mac = env.isMac
   const __: MenuItemConstructorOptions = {type: "separator"}
 
   const newWindow: MenuItemConstructorOptions = {
     label: "New Window",
     accelerator: "CmdOrCtrl+N",
-    click: () => brim.windows.create("search"),
+    click: () => openSearchWindowOp.run(),
   }
 
   const exit: MenuItemConstructorOptions = {
@@ -44,7 +50,7 @@ export default function (
 
   const closeTab: MenuItemConstructorOptions = {
     label: "Close Tab",
-    click: () => send("closeTab"),
+    click: () => window.send("closeTab"),
   }
 
   const preferences: MenuItemConstructorOptions = {
@@ -55,19 +61,12 @@ export default function (
 
   const resetState: MenuItemConstructorOptions = {
     label: "Reset State",
-    click: async () => {
-      const {response} = await dialog.showMessageBox({
-        message: "Are you sure?",
-        detail: "This will reset local app state but retain lake data.",
-        buttons: ["OK", "Cancel"],
-      })
-      if (response === 0) await brim.resetState()
-    },
+    click: () => resetStateOp.run(),
   }
 
   const exportResults: MenuItemConstructorOptions = {
     label: "Export Results As...",
-    click: () => send("showExportResults"),
+    click: () => window.send("showExportResults"),
   }
 
   const brimMenu: MenuItemConstructorOptions = {
@@ -156,28 +155,28 @@ export default function (
       {
         label: "Pin Search",
         accelerator: "CmdOrCtrl+K",
-        click: () => send("pinSearch"),
+        click: () => window.send("pinSearch"),
       },
       {
         label: "Clear Pins",
         accelerator: "CmdOrCtrl+Shift+K",
-        click: () => send("clearPins"),
+        click: () => window.send("clearPins"),
       },
       {
         label: "Focus Search Bar",
         accelerator: "CmdOrCtrl+L",
-        click: () => send("focusSearchBar"),
+        click: () => window.send("focusSearchBar"),
       },
       __,
       {
         label: "Back",
         accelerator: "CmdOrCtrl+Left",
-        click: () => send("back"),
+        click: () => window.send("back"),
       },
       {
         label: "Forward",
         accelerator: "CmdOrCtrl+Right",
-        click: () => send("forward"),
+        click: () => window.send("forward"),
       },
     ]
   }
@@ -193,18 +192,25 @@ export default function (
       {role: "zoomOut"},
       __,
       {
-        id: "toggle-left-pane",
-        label: "Toggle Left Pane",
+        label: "Show Left Pane",
         accelerator: "CmdOrCtrl+[",
-        click: () => send("toggleLeftSidebar"),
+        click: () => window.send("toggleLeftSidebar"),
+        type: "checkbox",
+        checked: state.showLeftPane,
       },
       {
-        id: "toggle-right-pane",
-        label: "Toggle Right Pane",
+        label: "Show Right Pane",
         accelerator: "CmdOrCtrl+]",
-        click: () => send("toggleRightSidebar"),
+        click: () => window.send("toggleRightSidebar"),
+        type: "checkbox",
+        checked: state.showRightPane,
       },
-
+      {
+        label: "Show Histogram",
+        click: () => window.send("toggleHistogram"),
+        type: "checkbox",
+        checked: state.showHistogram,
+      },
       __,
       {role: "togglefullscreen"},
     ]
@@ -252,35 +258,6 @@ export default function (
     return submenu
   }
 
-  const developerMenu = {
-    label: "Developer",
-    submenu: [
-      {
-        label: "Save Session Now",
-        async click() {
-          await brim.saveSession()
-        },
-      },
-      {
-        label: "Save Session for Testing Migrations",
-        async click() {
-          const root = app.getAppPath()
-          const version = brim.session.getVersion()
-          const file = path.join(root, `src/test/unit/states/${version}.json`)
-          const data = encodeSessionState(
-            await brim.windows.serialize(),
-            brim.store.getState()
-          )
-          await brim.session.save(data, file)
-          dialog.showMessageBox({
-            message: `Session has been saved`,
-            detail: file,
-          })
-        },
-      },
-    ],
-  }
-
   const template: MenuItemConstructorOptions[] = [
     {label: "File", submenu: fileSubmenu()},
     {label: "Edit", submenu: editSubmenu()},
@@ -290,6 +267,9 @@ export default function (
     {role: "help", submenu: helpSubmenu()},
   ]
   if (mac) template.unshift(brimMenu)
-  if (electronIsDev) template.push(developerMenu)
   return template
+}
+
+export function createMenu(win: SearchWindow, state: SearchAppMenuState) {
+  return Menu.buildFromTemplate(compileTemplate(win, state))
 }

@@ -1,8 +1,5 @@
+import {State} from "../types"
 import {SessionQueriesState} from "./types"
-import {Query} from "../Queries/types"
 
-export const raw = (s): SessionQueriesState => s.sessionQueries
-export const getById =
-  (sessionId: string) =>
-  (s): Query =>
-    s.sessionQueries[sessionId]
+export const raw = (state: State): SessionQueriesState => state.sessionQueries
+export const find = (state: State, id: string) => state.sessionQueries[id]

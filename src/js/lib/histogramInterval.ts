@@ -3,11 +3,33 @@ import moment from "moment"
 import {DateTuple} from "../lib/TimeWindow"
 import {Interval} from "../types"
 
-export default function histogramInterval([start, end]: DateTuple): Interval {
-  const duration = moment.duration(moment(end).diff(moment(start)))
+export const timeUnits = {
+  millisecond: "ms",
+  second: "s",
+  minute: "m",
+  hour: "h",
+  day: "d",
+  week: "w",
+  year: "y",
+}
+
+export default function histogramInterval([from, to]: DateTuple): Interval {
+  const duration = moment.duration(moment(to).diff(moment(from)))
+
+  if (duration.asMinutes() <= 1)
+    return {number: 100, unit: "millisecond", roundingUnit: "second"}
+
+  if (duration.asMinutes() <= 3)
+    return {number: 500, unit: "millisecond", roundingUnit: "second"}
 
   if (duration.asMinutes() <= 5)
     return {number: 1, unit: "second", roundingUnit: "second"}
+
+  if (duration.asMinutes() <= 10)
+    return {number: 10, unit: "second", roundingUnit: "second"}
+
+  if (duration.asMinutes() <= 20)
+    return {number: 20, unit: "second", roundingUnit: "second"}
 
   if (duration.asMinutes() <= 30)
     return {number: 30, unit: "second", roundingUnit: "minute"}

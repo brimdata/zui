@@ -28,7 +28,7 @@ export const editorTheme = EditorView.theme(
     ".cm-lineNumbers .cm-gutterElement": {
       opacity: 0.2,
       minWidth: 0,
-      padding: "0 4px 0 24px",
+      padding: "0 4px 0 22px",
     },
     ".cm-activeLine": {
       background: "transparent",

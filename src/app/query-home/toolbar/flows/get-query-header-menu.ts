@@ -17,37 +17,40 @@ const getQueryHeaderMenu =
   ({handleRename}: {handleRename: () => void}) =>
   (dispatch, getState) => {
     const state = getState()
-    const query = Current.getQuery(state)
-    const querySource = dispatch(getQuerySource(query?.id))
+    const active = Current.getActiveQuery(state)
+    const querySource = dispatch(getQuerySource(active.id()))
     const lakeId = Current.getLakeId(state)
 
     return [
       {
-        label: query.isReadOnly ? "Unlock Query" : "Lock Query",
+        enabled: active.isSaved(),
+        label: active.isReadOnly() ? "Unlock Query" : "Lock Query",
         click: () => {
-          const q: Query = {
-            ...query.serialize(),
-            isReadOnly: !query.isReadOnly,
+          const updates: Query = {
+            ...active.query.serialize(),
+            isReadOnly: !active.isReadOnly(),
           }
           if (querySource === "local") {
-            dispatch(Queries.editItem(q, query.id))
+            dispatch(Queries.editItem(updates, active.id()))
           } else {
-            dispatch(setRemoteQueries([{...q, ...query.latestVersion()}]))
+            dispatch(
+              setRemoteQueries([{...updates, ...active.query.latestVersion()}])
+            )
           }
         },
       },
       {
         label: `Move to ${querySource === "local" ? "Remote" : "Local"}`,
-        enabled: !query.isReadOnly,
+        enabled: active.isSaved() && !active.isReadOnly(),
         click: () => {
           if (querySource === "local") {
-            const q = query.serialize()
-            const queriesCopy = query.versions.map((v) => ({...q, ...v}))
+            const q = active.query.serialize()
+            const queriesCopy = active.query.versions.map((v) => ({...q, ...v}))
             dispatch(setRemoteQueries(queriesCopy))
-            dispatch(Queries.removeItems([query.id]))
+            dispatch(Queries.removeItems([active.id()]))
           } else {
-            dispatch(Queries.addItem(query.serialize(), "root"))
-            dispatch(deleteRemoteQueries([query.id]))
+            dispatch(Queries.addItem(active.query.serialize(), "root"))
+            dispatch(deleteRemoteQueries([active.id()]))
           }
         },
       },
@@ -55,8 +58,8 @@ const getQueryHeaderMenu =
         label: `Copy to ${querySource === "local" ? "Remote" : "Local"}`,
         click: () => {
           try {
-            const q = {...query.serialize(), id: nanoid()}
-            const versionsCopy = query.versions.map((v) => ({
+            const q = {...active.query.serialize(), id: nanoid()}
+            const versionsCopy = active.query.versions.map((v) => ({
               ...v,
               version: nanoid(),
             }))
@@ -65,9 +68,7 @@ const getQueryHeaderMenu =
               dispatch(setRemoteQueries(queriesCopy))
             } else {
               dispatch(Queries.addItem(q, "root"))
-              dispatch(
-                QueryVersions.set({queryId: q.id, versions: versionsCopy})
-              )
+              dispatch(QueryVersions.at(q.id).sync(versionsCopy))
             }
             toast.success("Query Copied")
           } catch (e) {
@@ -77,24 +78,24 @@ const getQueryHeaderMenu =
       },
       {
         label: "Rename",
-        enabled: !query.isReadOnly,
+        enabled: !active.isReadOnly(),
         click: () => handleRename(),
       },
       {
         label: "Duplicate",
         click: () => {
           const q = {
-            ...query.serialize(),
+            ...active.query.serialize(),
             id: nanoid(),
-            name: query.name + " (copy)",
+            name: active.name + " (copy)",
           }
-          const versionsCopy = query.versions.map((v) => ({
+          const versionsCopy = active.query.versions.map((v) => ({
             ...v,
             version: nanoid(),
           }))
           if (querySource === "local") {
             dispatch(Queries.addItem(q, "root"))
-            dispatch(QueryVersions.set({queryId: q.id, versions: versionsCopy}))
+            dispatch(QueryVersions.at(q.id).sync(versionsCopy))
             dispatch(
               Tabs.create(
                 lakeQueryPath(q.id, lakeId, last(versionsCopy).version)
@@ -115,11 +116,12 @@ const getQueryHeaderMenu =
       },
       {
         label: "Delete",
-        enabled: !query.isReadOnly,
+        enabled: !active.isReadOnly(),
         click: () => {
-          dispatch(QueryVersions.clear({queryId: query.id}))
-          if (querySource === "local") dispatch(Queries.removeItems([query.id]))
-          else dispatch(deleteRemoteQueries([query.id]))
+          dispatch(QueryVersions.at(active.id()).deleteAll())
+          if (querySource === "local")
+            dispatch(Queries.removeItems([active.id()]))
+          else dispatch(deleteRemoteQueries([active.id()]))
         },
       },
     ]

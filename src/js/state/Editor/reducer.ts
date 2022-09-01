@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import buildPin from "./models/build-pin"
-import {FromQueryPin, QueryPin} from "./types"
+import {FromQueryPin, QueryPin, TimeRangeQueryPin} from "./types"
 
 const slice = createSlice({
   name: "TAB_EDITOR",
@@ -74,7 +74,6 @@ const slice = createSlice({
       s.pins.splice(dropIndex, 1)
       s.pins.splice(insertIndex, 0, pin)
     },
-
     updatePin(s, a: PayloadAction<Partial<QueryPin>>) {
       const pin = s.pins[s.pinEditIndex]
       if (!pin) return
@@ -96,6 +95,25 @@ const slice = createSlice({
         s.pins.unshift({type: "from", value: a.payload})
       } else {
         ;(s.pins[index] as FromQueryPin).value = a.payload
+      }
+    },
+    setTimeRange(s, a: PayloadAction<{field: string; from: Date; to: Date}>) {
+      const {field, from, to} = a.payload
+      const pin = s.pins.find(
+        (p) => p.type === "time-range"
+      ) as TimeRangeQueryPin
+
+      if (pin) {
+        pin.from = from.toISOString()
+        pin.to = to.toISOString()
+        pin.field = field
+      } else {
+        s.pins.push({
+          type: "time-range",
+          field,
+          from: from.toISOString(),
+          to: to.toISOString(),
+        })
       }
     },
   },

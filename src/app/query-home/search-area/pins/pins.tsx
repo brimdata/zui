@@ -10,7 +10,7 @@ import {compact, isEmpty} from "lodash"
 
 const Container = styled.section`
   display: flex;
-  padding: 10px 24px 0px 18px;
+  padding: 10px 16px 0px 16px;
   flex-wrap: wrap;
   background: var(--editor-background);
   align-items: center;

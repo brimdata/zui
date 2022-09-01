@@ -15,6 +15,7 @@ import {Store} from "src/js/state/types"
 import data from "src/test/shared/data"
 import {setupServer} from "msw/node"
 import {BootArgs, bootBrim} from "./boot-brim"
+import Tabs from "src/js/state/Tabs"
 
 jest.setTimeout(20_000)
 
@@ -56,6 +57,7 @@ export class SystemTest {
       })
 
       this.assign(await bootBrim(name, opts))
+      this.store.dispatch(Tabs.create())
       this.navTo(`/lakes/${defaultLake().id}`)
     })
 

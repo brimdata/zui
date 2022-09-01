@@ -90,7 +90,7 @@ export const refreshRemoteQueries =
 
       dispatch(RemoteQueries.set(queries))
       forEach(versions, (versions, queryId) => {
-        dispatch(QueryVersions.set({queryId, versions}))
+        dispatch(QueryVersions.at(queryId).sync(versions))
       })
     } catch (e) {
       if (/pool not found/.test(e.message)) {
@@ -167,6 +167,7 @@ export const deleteRemoteQueries =
       version: "",
       ts: new Date().toISOString(),
       value: "",
+      pins: [],
     }
     const queries = queryIds.map((id) => ({...queryDefaults, id}))
     await dispatch(loadRemoteQueries(queriesToRemoteQueries(queries, true)))

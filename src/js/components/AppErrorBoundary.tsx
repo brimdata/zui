@@ -1,4 +1,4 @@
-import React, {useRef} from "react"
+import React, {useEffect, useRef} from "react"
 import Link from "./common/Link"
 
 type Props = {children: any}
@@ -36,7 +36,12 @@ class ErrorCatcher extends React.Component<Props, State> {
 
 export default function AppErrorBoundary({children}) {
   const boundary = useRef<ErrorCatcher>()
-  boundary?.current?.clear()
+
+  useEffect(() => {
+    if (boundary.current.state.error) {
+      boundary.current.clear()
+    }
+  })
 
   return <ErrorCatcher ref={boundary}>{children}</ErrorCatcher>
 }

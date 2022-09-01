@@ -2,9 +2,11 @@
   overflow: visible;
   height: 0;
   width: 0;
+
   *::selection {
     background: transparent;
   }
+
   .using-keyboard &:focus {
     outline: none;
   }
@@ -34,7 +36,7 @@
   line-height: 25px;
   align-items: center;
   opacity: 1;
-  padding-left: 12px;
+  padding-left: 16px;
 
   &.even {
     background: var(--table-stripe-bg);
@@ -46,6 +48,7 @@
 
   &.highlight {
     background: var(--havelock);
+
     span {
       color: white;
     }
@@ -72,6 +75,7 @@
   .int64 {
     text-align: right;
   }
+
   .path-tag {
     @include path-tag;
   }

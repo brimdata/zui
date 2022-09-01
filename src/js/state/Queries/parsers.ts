@@ -17,10 +17,9 @@ export type JSONGroup = {
 
 export const parseJSONLib = (
   filePath: string
-): {libRoot: Group; versions: {[queryId: string]: [QueryVersion]}} => {
+): {libRoot: Group; versions: {[queryId: string]: QueryVersion}} => {
   const contents = lib.file(filePath).readSync()
   const libRoot: Group = JSON.parse(contents)
-
   const versions = {}
   flattenItemTree(libRoot).forEach((item) => {
     item.id = nanoid()
@@ -28,13 +27,16 @@ export const parseJSONLib = (
       version: nanoid(),
       ts: new Date().toISOString(),
       value: item.value || "",
-      pins: {...item.pins},
-    }
+      pins: [...(item.pins ?? [])],
+    } as QueryVersion
     delete item.value
     delete item.pins
     if ("items" in item) item.isOpen = false
   })
 
+  // The lib root is what gets added to queries
+  // The versions is an object keyed by the query id
+  // and the value is a single version to create
   return {libRoot, versions}
 }
 

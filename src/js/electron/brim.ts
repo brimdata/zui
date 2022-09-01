@@ -19,7 +19,7 @@ import {WindowManager} from "./windows/window-manager"
 import * as zdeps from "./zdeps"
 import {MainArgs, mainDefaults} from "./run-main/args"
 import createSession, {Session} from "./session"
-import {SearchWindow} from "./windows/search-window"
+import {SearchWindow} from "./windows/search/search-window"
 import {getAppMeta, AppMeta} from "./meta"
 
 type QuitOpts = {

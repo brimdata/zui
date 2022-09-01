@@ -15,11 +15,8 @@ type Props = {
 }
 
 const Header = ({dimens, scrollLeft, columns, ...rest}: Props) => {
-  const queryValue = useSelector(Current.getQuery)?.value
-  const sorts = useMemo(
-    () => brim.program(queryValue).ast().sorts(),
-    [queryValue]
-  )
+  const zed = useSelector(Current.getActiveQuery).toZed()
+  const sorts = useMemo(() => brim.program(zed).ast().sorts(), [zed])
 
   if (dimens.rowWidth === "auto") return null
 

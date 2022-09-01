@@ -102,4 +102,8 @@ export default (store: Store, pluginManager: PluginManager) => {
     const id = Current.getLakeId(store.getState())
     store.dispatch(Tabs.create(releaseNotesPath(id)))
   })
+
+  ipcRenderer.on("toggleHistogram", () => {
+    store.dispatch(Layout.toggleHistogram())
+  })
 }

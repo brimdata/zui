@@ -4,8 +4,6 @@ import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import {NavActions} from "./nav-actions"
 import {Heading} from "./heading"
-import {ActiveQuery} from "./active-query"
-import {useTabId} from "src/app/core/hooks/use-tab-id"
 import {QueryActions} from "./query-actions"
 import {TitleBarProvider} from "./context"
 
@@ -21,12 +19,7 @@ const BG = styled.header.attrs({className: "title-bar"})`
 `
 
 export function TitleBar() {
-  const tabId = useTabId()
-  const query = useSelector(Current.getQuery)
-  const session = useSelector(Current.getQueryById(tabId))
-  const version = useSelector(Current.getVersion)
-  const active = new ActiveQuery(session, query, version)
-
+  const active = useSelector(Current.getActiveQuery)
   return (
     <BG>
       <TitleBarProvider activeQuery={active}>

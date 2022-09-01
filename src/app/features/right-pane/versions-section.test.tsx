@@ -21,21 +21,19 @@ const testVersion1: QueryVersion = {
   version: "v1",
   ts: new Date(1).toISOString(),
   value: "test value 1",
+  pins: [],
 }
 const testVersion2: QueryVersion = {
   version: "v2 (latest)",
   ts: new Date(2).toISOString(),
   value: "test value 2",
+  pins: [],
 }
 
 beforeEach(() => {
   system.store.dispatch(Queries.addItem({id: testQueryId, name: "test query"}))
-  system.store.dispatch(
-    QueryVersions.add({queryId: testQueryId, version: testVersion1})
-  )
-  system.store.dispatch(
-    QueryVersions.add({queryId: testQueryId, version: testVersion2})
-  )
+  system.store.dispatch(QueryVersions.at(testQueryId).create(testVersion1))
+  system.store.dispatch(QueryVersions.at(testQueryId).create(testVersion2))
   system.navTo(lakeQueryPath(testQueryId, "testLakeId", testVersion2.version))
   render(<VersionsSection />, {store: system.store, api: system.api})
 })

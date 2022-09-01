@@ -1,8 +1,9 @@
 import {nanoid} from "@reduxjs/toolkit"
-import {BrowserWindowConstructorOptions, ipcMain} from "electron"
+import {Menu, BrowserWindowConstructorOptions, ipcMain} from "electron"
 import env from "src/app/core/env"
-import {WindowName} from "../windows/types"
-import {ZuiWindow} from "./zui-window"
+import {WindowName} from "../types"
+import {ZuiWindow} from "../zui-window"
+import {createMenu, SearchAppMenuState} from "./app-menu"
 
 export class SearchWindow extends ZuiWindow {
   name: WindowName = "search"
@@ -19,6 +20,14 @@ export class SearchWindow extends ZuiWindow {
       experimentalFeatures: true,
       contextIsolation: false,
     },
+  }
+
+  updateAppMenu(state: SearchAppMenuState) {
+    Menu.setApplicationMenu(createMenu(this, state))
+  }
+
+  onFocus(): void {
+    this.send("updateSearchAppMenu")
   }
 
   async onClose(e: Electron.Event) {

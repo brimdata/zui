@@ -59,9 +59,7 @@ test("#query collector", async () => {
 
   const fn = jest.fn()
   await resp.collect(fn)
-  // It calls when the first 30 are returned, then when they
-  // are all returned
-  expect(fn).toHaveBeenCalledTimes(2)
+  expect(fn).toHaveBeenCalledTimes(1)
 })
 
 test("curl", () => {

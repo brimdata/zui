@@ -27,10 +27,13 @@ import EmptySection from "src/js/components/common/EmptySection"
 import Icon from "src/app/core/icon-temp"
 import {listContextMenu} from "./list-context-menu"
 import Current from "src/js/state/Current"
-import QueryVersions from "src/js/state/QueryVersions"
 import {BrimQuery} from "../../../query-home/utils/brim-query"
-import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {
+  QueryVersion,
+  QueryVersionsState,
+} from "src/js/state/QueryVersions/types"
 import {flattenQueryTree} from "src/js/state/Queries/helpers"
+import {State} from "src/js/state/types"
 
 const StyledEmptySection = styled(EmptySection).attrs({
   icon: <Icon name="query" />,
@@ -58,7 +61,9 @@ const querySearch = (term: string, items: Query[]): Query[] => {
 const RemoteQueriesView = ({toolbarButtons}) => {
   const dispatch = useDispatch()
   const remoteQueries = useSelector(RemoteQueries.raw)?.items
-  const queryVersions = useSelector(QueryVersions.raw)
+  const queryVersions = useSelector<State, QueryVersionsState>(
+    (state) => state.queryVersions
+  )
   const [filteredQueries, setFilteredQueries] = useState(remoteQueries)
   const {resizeRef: ref, defaults} = useSectionTreeDefaults()
 
@@ -135,7 +140,7 @@ const LocalQueriesView = ({toolbarButtons}) => {
   const filteredQueriesCount = flattenQueryTree(filteredQueries, false)?.length
   const isFiltered = flatQueries?.length !== filteredQueriesCount
 
-  const query = useSelector(Current.getQuery)
+  const query = useSelector(Current.getNamedQuery)
 
   useEffect(() => {
     if (!query?.id) {
