@@ -1,11 +1,12 @@
 import * as brimPackage from "../../../package.json"
 
 const currentZedTag = brimPackage.dependencies.zed.split("#")[1] || "main"
+const zedDocsTag = currentZedTag.startsWith("v") ? currentZedTag : "next"
 
 export default {
-  ZED_DOCS_ROOT: `https://github.com/brimdata/zed/blob/${currentZedTag}/docs/commands/zed.md`,
-  ZED_DOCS_LANGUAGE: `https://github.com/brimdata/zed/blob/${currentZedTag}/docs/language/README.md`,
-  ZED_DOCS_FORMATS_ZNG: `https://github.com/brimdata/zed/blob/${currentZedTag}/docs/formats/zng.md`,
-  ZED_DOCS_FORMATS_ZSON: `https://github.com/brimdata/zed/blob/${currentZedTag}/docs/formats/zson.md`,
-  ZED_DOCS_FORMATS_ZST: `https://github.com/brimdata/zed/blob/${currentZedTag}/docs/formats/zst.md`,
+  ZED_DOCS_ROOT: `https://zed.brimdata.io/docs/${zedDocsTag}/commands/zed`,
+  ZED_DOCS_LANGUAGE: `https://zed.brimdata.io/docs/${zedDocsTag}/language`,
+  ZED_DOCS_FORMATS_ZNG: `https://zed.brimdata.io/docs/${zedDocsTag}/formats/zng`,
+  ZED_DOCS_FORMATS_ZSON: `https://zed.brimdata.io/docs/${zedDocsTag}/formats/zson`,
+  ZED_DOCS_FORMATS_ZST: `https://zed.brimdata.io/docs/${zedDocsTag}/formats/zst`,
 }
