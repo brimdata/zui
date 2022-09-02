@@ -12,6 +12,9 @@ const BrimToaster = () => {
           // This is so that the loading indicator does not go away.
           duration: 2 ** 31 - 1,
         },
+        success: {
+          duration: 6000,
+        },
       }}
     />
   )
