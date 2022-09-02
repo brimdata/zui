@@ -1,4 +1,3 @@
-import env from "src/app/core/env"
 import React from "react"
 import {Toaster} from "react-hot-toast"
 
@@ -9,15 +8,12 @@ const BrimToaster = () => {
       toastOptions={{
         role: "status",
         className: "brim-toast",
-        duration: env.isTest ? 2 ** 31 - 1 : undefined,
-        success: {
-          duration: env.isTest ? 2 ** 31 - 1 : undefined,
-        },
         loading: {
-          duration: env.isTest ? 2 ** 31 - 1 : undefined,
+          // This is so that the loading indicator does not go away.
+          duration: 2 ** 31 - 1,
         },
-        error: {
-          duration: env.isTest ? 2 ** 31 - 1 : undefined,
+        success: {
+          duration: 6000,
         },
       }}
     />

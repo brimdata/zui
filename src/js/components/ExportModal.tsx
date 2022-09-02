@@ -71,7 +71,7 @@ const ExportModal = ({onClose}) => {
     toast
       .promise(dispatch(exportResults(filePath, format as ResponseFormat)), {
         loading: "Exporting...",
-        success: "Export Complete",
+        success: "Export Completed: " + filePath,
         error: "Error Exporting",
       })
       .catch((e) => {
