@@ -31,6 +31,10 @@ export default function (p = "") {
       return this
     },
 
+    quietCut(...fields: string[]) {
+      return this.cut(fields.map((fieldName) => "quiet(" + fieldName + ")"))
+    },
+
     drillDown(log: zed.Record) {
       let filter = this.filter()
 

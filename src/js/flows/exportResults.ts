@@ -18,7 +18,7 @@ function cutColumns(program, columns) {
     const names = columns.getVisible().map((c) => c.name)
     return brim
       .program(program)
-      .cut(...names)
+      .quietCut(...names)
       .string()
   }
 }
