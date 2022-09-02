@@ -7,10 +7,10 @@ import {MenuItemConstructorOptions} from "electron"
 import {showContextMenu} from "src/js/lib/System"
 import {useDispatch} from "src/app/core/state"
 import useLakeId from "src/app/router/hooks/use-lake-id"
-import Modal from "src/js/state/Modal"
-import {lakeImportPath} from "src/app/router/utils/paths"
 import Tabs from "src/js/state/Tabs"
 import Icon from "src/app/core/icon-temp"
+import {newPool} from "src/app/commands/new-pool"
+import {connectToLake} from "src/app/commands/connect-to-lake"
 
 export const Button = styled.button`
   display: flex;
@@ -54,13 +54,13 @@ export default function PlusButton() {
       },
       {
         label: "New Pool",
-        click: () => dispatch(Tabs.create(lakeImportPath(lakeId))),
+        click: () => newPool.run(),
         enabled: !!lakeId,
       },
       {type: "separator"},
       {
         label: "Add Lake...",
-        click: () => dispatch(Modal.show("new-lake")),
+        click: () => connectToLake.run(),
       },
       {
         label: "Import Queries...",

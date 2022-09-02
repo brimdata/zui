@@ -11,16 +11,25 @@ type CommandContext = {
   api: BrimApi
 }
 
-type CommandExecutor = (context: CommandContext) => void
+type CommandExecutor<Args extends any[]> = (
+  context: CommandContext,
+  ...args: Args
+) => void
 
 export class Commands {
-  private map = new Map<string, Command>()
+  private map = new Map<string, Command<any>>()
   private store: Store | null
   private api: BrimApi | null
 
-  add(command: Command) {
+  add(command: Command<any>) {
     this.map.set(command.id, command)
     return command
+  }
+
+  run(id: string, ...args: any[]) {
+    const cmd = this.map.get(id)
+    if (cmd) cmd.run(...args)
+    else console.log("No command found: ", id)
   }
 
   get context() {
@@ -41,18 +50,23 @@ export class Commands {
 
 export const commands = new Commands()
 
-export class Command {
-  constructor(private meta: CommandMeta, private exec: CommandExecutor) {}
+export class Command<Args extends any[]> {
+  constructor(private meta: CommandMeta, private exec: CommandExecutor<Args>) {}
 
   get id() {
     return this.meta.id
   }
 
-  run() {
-    return this.exec(commands.context)
+  run(...args: Args) {
+    return this.exec(commands.context, ...args)
   }
 }
 
-export const createCommand = (meta: CommandMeta, exec: CommandExecutor) => {
-  return commands.add(new Command(meta, exec))
+export const createCommand = <Args extends any[] = never>(
+  meta: CommandMeta,
+  exec: CommandExecutor<Args>
+) => {
+  const cmd = new Command<Args>(meta, exec)
+  commands.add(cmd)
+  return cmd
 }

@@ -4,6 +4,7 @@ import {
   lakeImport,
   query,
   poolShow,
+  lakeWelcome,
 } from "src/app/router/routes"
 import {lakeImportPath} from "src/app/router/utils/paths"
 import React, {useLayoutEffect} from "react"
@@ -20,6 +21,7 @@ import styled from "styled-components"
 import LakeHome from "./home"
 import PoolShow from "src/app/pools/show"
 import {QueryRoute} from "../query-home/route"
+import {WelcomePage} from "src/pages/welcome"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -67,6 +69,9 @@ export default function LakeRoot() {
         </Route>
         <Route path={lakeReleaseNotes.path}>
           <ReleaseNotes />
+        </Route>
+        <Route path={lakeWelcome.path}>
+          <WelcomePage />
         </Route>
         <Route path={poolShow.path}>
           <PoolShow />

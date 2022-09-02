@@ -46,9 +46,20 @@ export const lakeReleaseNotes: Route = {
   path: `${lakeShow.path}/release-notes`,
   icon: "doc-plain",
 }
+
 export const releaseNotes = {
   title: "Release Notes",
   path: "/release-notes",
+}
+export const lakeWelcome: Route = {
+  title: "Welcome to Zui",
+  path: `${lakeShow.path}/welcome`,
+  icon: "zui",
+}
+export const welcome = {
+  title: "Welcome to Zui",
+  path: "/welcome",
+  icon: "zui",
 }
 
 type Route = {
@@ -58,6 +69,7 @@ type Route = {
 }
 
 export const allRoutes: Route[] = [
+  lakeWelcome,
   lakeReleaseNotes,
   lakeImport,
   lakeShow,
@@ -66,6 +78,7 @@ export const allRoutes: Route[] = [
   query,
   queryVersion,
   releaseNotes,
+  welcome,
   root,
 ]
 

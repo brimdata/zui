@@ -15,6 +15,7 @@ import initNewSearchTab from "./initNewSearchTab"
 import PluginManager from "./pluginManager"
 import Editor from "../state/Editor"
 import submitSearch from "src/app/query-home/flows/submit-search"
+import {commands} from "src/app/commands/command"
 
 export default (store: Store, pluginManager: PluginManager) => {
   const dispatch = store.dispatch as AppDispatch
@@ -105,5 +106,9 @@ export default (store: Store, pluginManager: PluginManager) => {
 
   ipcRenderer.on("toggleHistogram", () => {
     store.dispatch(Layout.toggleHistogram())
+  })
+
+  ipcRenderer.on("runCommand", (e, id, ...args) => {
+    commands.run(id, ...args)
   })
 }
