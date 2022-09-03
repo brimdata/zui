@@ -1,0 +1,16 @@
+name: Notify docs update
+
+on:
+  push:
+    branches:
+      - zuifi-wiki
+    paths:
+      - 'docs/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Send dispatch event
+      run: |
+        curl -XPOST -u "${{ secrets.PAT_USERNAME }}:${{ secrets.PAT_TOKEN }}" -H "Accept: application/vnd.github.v3+json"  -H "Content-Type: application/json" https://api.github.com/repos/brimdata/zui-docs-site/dispatches --data '{"event_type":"zui-docs-update"}'
