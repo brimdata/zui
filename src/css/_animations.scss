@@ -33,3 +33,24 @@
   transition: transform 150ms;
   transform: translateX(100%);
 }
+
+@keyframes flash-element {
+  from {
+    background: inherit;
+    transform: inherit;
+  }
+
+  10% {
+    background: yellow;
+    transform: scale(1.3);
+  }
+
+  to {
+    background: inherit;
+    transform: inherit;
+  }
+}
+
+.flash-element {
+  animation: flash-element 500ms ease-out;
+}

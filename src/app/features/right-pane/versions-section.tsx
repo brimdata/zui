@@ -6,21 +6,15 @@ import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import styled from "styled-components"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {EmptyText} from "./common"
 
 const SectionWrapper = styled.div`
   flex: 1;
   margin-top: 8px;
 `
 
-const Text = styled.p`
-  padding: 24px;
-  margin-top: 33%;
-  opacity: 0.5;
-  text-align: center;
-`
-
 const EmptyMessage = () => {
-  return <Text>Open a saved query to see the previous versions.</Text>
+  return <EmptyText>Open a saved query to see the previous versions.</EmptyText>
 }
 
 const VersionsSection = () => {
