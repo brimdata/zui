@@ -1,5 +1,6 @@
 import React from "react"
 import {useSelector} from "react-redux"
+import {showHistoryPane} from "src/app/commands/show-history-pane"
 import {useDispatch} from "src/app/core/state"
 import TabHistory from "src/app/router/tab-history"
 import Current from "src/js/state/Current"
@@ -39,11 +40,9 @@ export function NavActions() {
       </Nav>
       <IconButton
         icon="history"
+        title="Show Session History"
         size={16}
-        onClick={() => {
-          dispatch(Layout.showDetailPane())
-          dispatch(Layout.setCurrentPaneName("history"))
-        }}
+        onClick={() => showHistoryPane.run()}
       />
     </Actions>
   )

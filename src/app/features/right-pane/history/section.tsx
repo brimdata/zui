@@ -3,6 +3,8 @@ import styled from "styled-components"
 import Current from "src/js/state/Current"
 import {useSelector} from "react-redux"
 import {HistoryItem} from "./history-item"
+import {isEmpty} from "lodash"
+import {EmptyText} from "../common"
 
 const BG = styled.div`
   padding: 6px 0;
@@ -15,6 +17,9 @@ export function HistorySection() {
 
   return (
     <BG aria-label="history-pane">
+      {isEmpty(history) && (
+        <EmptyText>Session history will appear here.</EmptyText>
+      )}
       {history.map(({version, queryId}, index) => (
         <HistoryItem
           key={index}
