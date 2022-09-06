@@ -1,65 +1,54 @@
 import LakeList from "src/app/lakes/list"
 import LakeRoot from "src/app/lakes/root"
-import {maybeShowReleaseNotes} from "src/app/release-notes/maybe-show-release-notes"
 import ReleaseNotes from "src/app/release-notes/release-notes"
 import AppTabsRouter from "src/app/router/app-tabs-router"
-import {
-  releaseNotes,
-  root,
-  lakeShow,
-  lakeList,
-  welcome,
-} from "src/app/router/routes"
+import * as routes from "src/app/router/routes"
 import AppWrapper from "src/app/routes/app-wrapper/app-wrapper"
-import React, {useEffect} from "react"
+import React from "react"
 import {Redirect, Route, Switch} from "react-router"
 import useStoreExport from "src/app/core/hooks/useStoreExport"
 import {defaultLake} from "../initializers/initLakeParams"
-import Handlers from "../state/Handlers"
 import useSearchShortcuts from "./useSearchShortcuts"
-import {useDispatch} from "src/app/core/state"
 import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
 import {WelcomePage} from "src/pages/welcome"
 import {useWelcomePage} from "src/application/use-welcome-page"
+import {useReleaseNotes} from "src/application/use-release-notes"
+import {useHandlersCleanup} from "src/application/use-app-unmount"
+import {lakeImportPath} from "src/app/router/utils/paths"
 
 export default function App() {
   useSearchAppMenu()
   useStoreExport()
   useWelcomePage()
-  const dispatch = useDispatch()
+  useReleaseNotes()
   useSearchShortcuts()
-  useEffect(() => {
-    dispatch(maybeShowReleaseNotes())
-    return () => {
-      dispatch(Handlers.abortAll())
-    }
-  }, [])
+  useHandlersCleanup()
 
   return (
     <AppTabsRouter>
       <Switch>
-        <Route path={lakeShow.path}>
+        <Route path={routes.lakeShow.path}>
           <AppWrapper>
             <LakeRoot />
           </AppWrapper>
         </Route>
-        <Route path={lakeList.path}>
+        <Route path={routes.lakeList.path}>
           <AppWrapper>
             <LakeList />
           </AppWrapper>
         </Route>
-        <Route path={releaseNotes.path}>
+        <Route path={routes.releaseNotes.path}>
           <AppWrapper>
             <ReleaseNotes />
           </AppWrapper>
         </Route>
-        <Route path={welcome.path}>
+        <Route path={routes.welcome.path}>
           <AppWrapper>
             <WelcomePage />
           </AppWrapper>
         </Route>
-        <Route path={root.path}>
-          <Redirect to={`/lakes/${defaultLake().id}`} />
+        <Route path={routes.root.path}>
+          <Redirect to={lakeImportPath(defaultLake().id)} />
         </Route>
       </Switch>
     </AppTabsRouter>
