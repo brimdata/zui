@@ -1,4 +1,5 @@
 import {app, MenuItemConstructorOptions, shell, Menu} from "electron"
+import {showWelcomePage} from "src/app/commands/show-welcome-page"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
 import {closeWindowOp} from "../../ops/close-window-op"
@@ -6,6 +7,7 @@ import {moveToCurrentDisplayOp} from "../../ops/move-to-current-display-op"
 import {openAboutWindowOp} from "../../ops/open-about-window-op"
 import {openSearchWindowOp} from "../../ops/open-search-window-op"
 import {resetStateOp} from "../../ops/reset-state-op"
+import {runCommandOp} from "../../ops/run-command-op"
 import {showPreferencesOp} from "../../ops/show-preferences-op"
 import {showReleaseNotesOp} from "../../ops/show-release-notes-op"
 import {SearchWindow} from "./search-window"
@@ -223,6 +225,10 @@ export function compileTemplate(
         click() {
           showReleaseNotesOp.run()
         },
+      },
+      {
+        label: "Show Welcome Page",
+        click: () => runCommandOp.run(showWelcomePage),
       },
       {
         label: "Zed Syntax Docs",

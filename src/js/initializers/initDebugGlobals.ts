@@ -1,3 +1,4 @@
+import tabHistory from "src/app/router/tab-history"
 import BrimApi from "../api"
 import Current from "../state/Current"
 import Tabs from "../state/Tabs"
@@ -16,6 +17,10 @@ export class DevGlobal {
 
   get currentTabState() {
     return Tabs.getActiveTab(this.store.getState())
+  }
+
+  navTo(url: string) {
+    this.store.dispatch(tabHistory.push(url))
   }
 }
 
