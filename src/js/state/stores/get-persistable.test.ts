@@ -5,9 +5,9 @@ import {
   GLOBAL_PERSIST,
   TAB_PERSIST,
   WINDOW_PERSIST,
-} from "./getPersistable"
-import Lakes from "./Lakes"
-import Tabs from "./Tabs"
+} from "./get-persistable"
+import Lakes from "../Lakes"
+import Tabs from "../Tabs"
 
 test("deleting access tokens for authType auth0", () => {
   const store = initTestStore()

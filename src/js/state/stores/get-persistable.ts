@@ -1,6 +1,6 @@
 import {omit, pick} from "lodash"
-import {TabState} from "./Tab/types"
-import {State} from "./types"
+import {TabState} from "../Tab/types"
+import {State} from "../types"
 
 type StateKey = keyof State
 type TabKey = keyof TabState

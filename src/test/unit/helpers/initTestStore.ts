@@ -1,7 +1,7 @@
 import {configureStore} from "@reduxjs/toolkit"
 import BrimApi from "src/js/api"
 import initGlobals from "src/js/initializers/initGlobals"
-import rootReducer from "src/js/state/rootReducer"
+import rootReducer from "src/js/state/stores/root-reducer"
 import {Action, State, Store} from "src/js/state/types"
 
 export type TestStore = {

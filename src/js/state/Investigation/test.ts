@@ -1,11 +1,11 @@
 import Investigation from "./"
 import brim from "../../brim"
-import createGlobalStore from "../createGlobalStore"
 import {SearchRecord} from "src/js/types"
+import {createMainStore} from "../stores/create-main-store"
 
 let store
 beforeEach(() => {
-  store = createGlobalStore(undefined)
+  store = createMainStore(undefined)
 })
 
 const dispatch = (a) => store.dispatch(a)

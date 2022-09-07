@@ -61,6 +61,7 @@ export abstract class ZuiWindow {
   }
 
   send(channel: string, ...args: any[]) {
+    if (this.ref.isDestroyed()) return
     this.ref.webContents.send(channel, ...args)
   }
 
