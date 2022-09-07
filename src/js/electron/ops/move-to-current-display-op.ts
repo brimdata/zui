@@ -5,7 +5,7 @@ import {stack} from "../windows/dimens"
 
 export const moveToCurrentDisplayOp = createOperation(
   "moveToCurrentDisplay",
-  (main) => {
+  ({main}) => {
     const point = screen.getCursorScreenPoint()
     const bounds = screen.getDisplayNearestPoint(point).workArea
     const {x, y} = bounds

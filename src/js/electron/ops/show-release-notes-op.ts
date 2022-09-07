@@ -2,7 +2,7 @@ import {createOperation} from "../operations"
 
 export const showReleaseNotesOp = createOperation(
   "showReleaseNotes",
-  async (main) => {
+  async ({main}) => {
     const win = main.windows.byName("search")[0]
 
     if (win) {

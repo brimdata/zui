@@ -3,8 +3,8 @@ import {createOperation} from "../operations"
 
 export const openDirectoryOp = createOperation(
   "openDirectory",
-  async (main, e) => {
-    const win = BrowserWindow.fromWebContents(e.sender)
+  async ({event}) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
     const result = await dialog.showOpenDialog(win, {
       properties: ["openDirectory"],
     })

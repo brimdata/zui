@@ -20,10 +20,10 @@ initialize()
       pluginManager.deactivate()
       store.dispatch(deletePartialPools())
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))
-      autosaveOp.invoke({
-        windowId: global.windowId,
-        windowState: getPersistedWindowState(store.getState()),
-      })
+      autosaveOp.invoke(
+        global.windowId,
+        getPersistedWindowState(store.getState())
+      )
     }
     const container = lib.doc.id("app-root")
     const root = createRoot(container!)

@@ -26,8 +26,8 @@ export const login =
         const {accessToken, refreshToken} = await client.exchangeCode(code)
 
         // store both tokens in os default keychain
-        setSecretOp.invoke({key: toAccessTokenKey(lakeId), val: accessToken})
-        setSecretOp.invoke({key: toRefreshTokenKey(lakeId), val: refreshToken})
+        setSecretOp.invoke(toAccessTokenKey(lakeId), accessToken)
+        setSecretOp.invoke(toRefreshTokenKey(lakeId), refreshToken)
 
         resolve(accessToken)
       } catch (e) {

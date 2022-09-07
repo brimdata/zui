@@ -9,10 +9,10 @@ export function initAutosave(store) {
   function saveFunction() {
     cancel()
     cancel = onIdle(() => {
-      autosaveOp.invoke({
-        windowId: global.windowId,
-        windowState: getPersistedWindowState(store.getState()),
-      })
+      autosaveOp.invoke(
+        global.windowId,
+        getPersistedWindowState(store.getState())
+      )
     })
   }
 

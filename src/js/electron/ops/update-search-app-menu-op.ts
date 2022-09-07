@@ -4,10 +4,10 @@ import {SearchWindow} from "../windows/search/search-window"
 
 export const updateSearchAppMenuOp = createOperation(
   "updateSearchAppMenu",
-  (main, e, args: {state: SearchAppMenuState; id: string}) => {
-    const win = main.windows.find(args.id)
+  ({main}, id: string, state: SearchAppMenuState) => {
+    const win = main.windows.find(id)
     if (win instanceof SearchWindow && win.ref.isFocused) {
-      win.updateAppMenu(args.state)
+      win.updateAppMenu(state)
     }
   }
 )
