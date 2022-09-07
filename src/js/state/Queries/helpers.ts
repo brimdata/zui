@@ -1,6 +1,6 @@
 import TreeModel from "tree-model"
 import {Group, Query} from "./types"
-import {last} from "lodash"
+import {isArray, isObject, last} from "lodash"
 
 export const flattenQueryTree = (root: Group, includeFolders = true) => {
   return new TreeModel({childrenPropertyName: "items"}).parse(root).all((n) => {
@@ -21,4 +21,22 @@ export const getNextCount = (
         .sort((a, b) => a - b)
     ) ?? 0) + 1
   )
+}
+
+export const isQuery = (obj: unknown): obj is Query => {
+  return isObject(obj) && "name" in obj && "id" in obj
+}
+
+export const isGroup = (obj: unknown): obj is Group => {
+  if (
+    isObject(obj) &&
+    "name" in obj &&
+    "id" in obj &&
+    "items" in obj &&
+    isArray(obj["items"])
+  ) {
+    return obj["items"].every((item) => isGroup(item) || isQuery(item))
+  } else {
+    return false
+  }
 }

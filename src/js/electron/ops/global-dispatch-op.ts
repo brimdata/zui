@@ -1,8 +1,8 @@
 import {AnyAction} from "@reduxjs/toolkit"
 import {createOperation} from "../operations"
 
-export const dispatchGlobalOp = createOperation(
-  "dispatchGlobal",
+export const globalDispatchFromWindow = createOperation(
+  "dispatchGlobalFromWindow",
   (main, e, action: AnyAction) => {
     main.store.dispatch(action)
     for (const win of main.windows.all) {
@@ -15,3 +15,8 @@ export const dispatchGlobalOp = createOperation(
     }
   }
 )
+
+// export const globalDispatchFromMain = createOperation(
+//   "dispatchGlobalFromMain",
+//   (main, e) => {}
+// )
