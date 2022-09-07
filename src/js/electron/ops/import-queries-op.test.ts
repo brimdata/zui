@@ -16,7 +16,7 @@ test("import valid queries", () => {
   const filepath = getPath("brimcap-queries.json")
   const [error, count] = importQueriesOp.run(filepath)
   expect(error).toBe(null)
-  expect(count).toBe(13)
+  expect(count).toBe(12)
 })
 
 test("import non-json data", () => {
