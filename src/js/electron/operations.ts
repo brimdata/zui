@@ -19,7 +19,7 @@ type OperationContext = {
 }
 
 export class Operation<Args extends any[], Ret> {
-  main: BrimMain | null
+  private main: BrimMain | null
 
   constructor(
     public channel: string,

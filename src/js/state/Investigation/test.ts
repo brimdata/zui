@@ -1,11 +1,12 @@
 import Investigation from "./"
 import brim from "../../brim"
 import {SearchRecord} from "src/js/types"
-import {createMainStore} from "../stores/create-main-store"
+import {createWindowStore} from "../stores/create-window-store"
+import BrimApi from "src/js/api"
 
 let store
 beforeEach(() => {
-  store = createMainStore(undefined)
+  store = createWindowStore(undefined, {api: new BrimApi()})
 })
 
 const dispatch = (a) => store.dispatch(a)
