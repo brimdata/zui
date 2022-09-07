@@ -24,6 +24,7 @@ export const importQueriesOp = createOperation(
       const version = versions[queryId]
       main.store.dispatch(QueryVersions.at(queryId).sync([version]))
     }
+    console.log(Object.keys(versions))
     return [null, Object.keys(versions).length]
   }
 )
