@@ -25,7 +25,6 @@ import {QueryVersionsState} from "./QueryVersions/types"
 import {SessionHistoriesState} from "./SessionHistories/types"
 
 export type ThunkExtraArg = {
-  dispatch: AppDispatch
   api: BrimApi
 }
 

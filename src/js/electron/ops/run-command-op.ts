@@ -1,13 +1,13 @@
+import {isString} from "lodash"
+import {Command} from "src/app/commands/command"
 import {createOperation} from "../operations"
 
 export const runCommandOp = createOperation(
   "runCommand",
-  async (main, e, arg: {id: string; args?: any[]}) => {
+  async ({main}, id: string | Command<any>, ...args: any[]) => {
     const win = main.windows.byName("search")[0]
     const sendMessage = () => {
-      const commandArgs = arg.args ?? []
-      const commandId = arg.id
-      win.ref.webContents.send("runCommand", commandId, ...commandArgs)
+      win.ref.webContents.send("runCommand", getId(id), ...args)
     }
 
     if (win) {
@@ -19,3 +19,8 @@ export const runCommandOp = createOperation(
     }
   }
 )
+
+function getId(idOrCmd: string | Command<any>) {
+  if (isString(idOrCmd)) return idOrCmd
+  else return idOrCmd.id
+}

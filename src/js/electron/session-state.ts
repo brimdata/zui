@@ -1,4 +1,4 @@
-import {getPersistedWindowState} from "src/js/state/getPersistable"
+import {getPersistedWindowState} from "src/js/state/stores/get-persistable"
 import {State} from "src/js/state/types"
 import {SerializedWindow} from "./windows/types"
 

@@ -23,15 +23,18 @@ export const parseJSONLib = (
   const versions = {}
   flattenItemTree(libRoot).forEach((item) => {
     item.id = nanoid()
-    versions[item.id] = {
-      version: nanoid(),
-      ts: new Date().toISOString(),
-      value: item.value || "",
-      pins: [...(item.pins ?? [])],
-    } as QueryVersion
-    delete item.value
-    delete item.pins
-    if ("items" in item) item.isOpen = false
+    if ("items" in item) {
+      item.isOpen = false
+    } else {
+      versions[item.id] = {
+        version: nanoid(),
+        ts: new Date().toISOString(),
+        value: item.value || "",
+        pins: [...(item.pins ?? [])],
+      } as QueryVersion
+      delete item.value
+      delete item.pins
+    }
   })
 
   // The lib root is what gets added to queries

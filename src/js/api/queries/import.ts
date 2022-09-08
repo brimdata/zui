@@ -1,16 +1,10 @@
-import Queries from "src/js/state/Queries"
-import {parseJSONLib} from "src/js/state/Queries/parsers"
-import QueryVersions from "src/js/state/QueryVersions"
+import {importQueriesOp} from "src/js/electron/ops/import-queries-op"
 import {Thunk} from "src/js/state/types"
 
 export const queriesImport =
   (file: File): Thunk =>
-  (dispatch, getState, {api}) => {
-    const {libRoot, versions} = parseJSONLib(file.path)
-    dispatch(Queries.addItem(libRoot, "root"))
-    for (let queryId in versions) {
-      const version = versions[queryId]
-      dispatch(QueryVersions.at(queryId).sync([version]))
-    }
-    api.toast.success(`Imported ${libRoot.name}`)
+  async (_, __, {api}) => {
+    const [error, count] = await importQueriesOp.invoke(file.path)
+    if (error) api.toast.error(error)
+    else api.toast.success(`Imported ${count} queries`)
   }

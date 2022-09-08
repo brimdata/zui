@@ -3,10 +3,10 @@ import {createOperation, createSpecialOperation} from "../operations"
 
 export const openDetailWindow = createOperation(
   "detailWindow.open",
-  async (main, e, arg: {value: zjson.Object; url: string}) => {
-    const {url, value} = arg
+  async ({main}, opts: {value: zjson.Object; url: string}) => {
     const win = await main.windows.create("detail")
-    setupDetailWindow.return({value, url}).when((id) => id === win.id)
+    // or just wait until it's loaded, then send it something
+    setupDetailWindow.return(opts).when((id) => id === win.id)
   }
 )
 

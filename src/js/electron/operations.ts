@@ -2,48 +2,49 @@ import {ipcMain, IpcMainInvokeEvent, ipcRenderer} from "electron"
 import log from "electron-log"
 import {BrimMain} from "./brim"
 
-export function createOperation<Arg = never, Ret = never>(
+export function createOperation<Args extends any[] = never[], Ret = never>(
   channel: string,
-  handler: (main: BrimMain, e: IpcMainInvokeEvent, arg: Arg) => Ret
+  handler: (context: OperationContext, ...args: Args) => Ret
 ) {
-  return new Operation<Arg, Ret>(channel, handler)
+  return new Operation<Args, Ret>(channel, handler)
 }
 
 export function createSpecialOperation<Arg, Ret>(channel: string) {
   return new SpecialOperation<Arg, Ret>(channel)
 }
 
-export class Operation<Arg, Ret> {
-  context: BrimMain | null
+type OperationContext = {
+  main: BrimMain
+  event: IpcMainInvokeEvent | null
+}
+
+export class Operation<Args extends any[], Ret> {
+  private main: BrimMain | null
 
   constructor(
     public channel: string,
-    private handler: (
-      main: BrimMain,
-      e: IpcMainInvokeEvent | null,
-      arg: Arg
-    ) => Ret
+    private handler: (context: OperationContext, ...args: Args) => Ret
   ) {}
 
   listen(main: BrimMain) {
-    this.context = main
-    ipcMain.handle(this.channel, (event, arg) => {
+    this.main = main
+    ipcMain.handle(this.channel, (event, ...args: Args) => {
       log.debug("IPC Handling:", this.channel)
-      return this.handler(main, event, arg)
+      return this.handler({main, event}, ...args)
     })
     log.debug("IPC Listening:", this.channel)
   }
 
-  invoke(...args: Arg extends never ? [] : [arg: Arg]): Promise<Ret> {
+  invoke(...args: Args): Promise<Ret> {
     if (ipcRenderer) {
-      return ipcRenderer.invoke(this.channel, args[0])
+      return ipcRenderer.invoke(this.channel, ...args)
     } else {
       throw new Error("You must call operation.run() in the main process")
     }
   }
 
-  run(...args: Arg extends never ? [] : [arg: Arg]): Ret {
-    return this.handler(this.context, null, args[0])
+  run(...args: Args): Ret {
+    return this.handler({main: this.main, event: null}, ...args)
   }
 }
 

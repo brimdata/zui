@@ -25,7 +25,7 @@ export function useSearchAppMenu() {
 
   useEffect(() => {
     const update = () => {
-      updateSearchAppMenuOp.invoke({id: global.windowId, state})
+      updateSearchAppMenuOp.invoke(global.windowId, state)
     }
 
     update()
