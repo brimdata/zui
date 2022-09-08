@@ -19,17 +19,6 @@ jobs:
       - uses: ./.github/actions/setup-zui
       - run: yarn lint
       - run: yarn test
-
-      - run: yarn build
-      - name: End to end tests
-        if: runner.os == 'Linux'
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          options: -screen 0 1280x1024x24
-          run: yarn e2e
-        env:
-          DEBUG: pw:api
-
       - name: Build and install package
         if: runner.os != 'Windows'
         run: |
