@@ -1,3 +1,5 @@
+import {nanoid} from "@reduxjs/toolkit"
+import {isObject} from "lodash"
 import {
   getPersistedGlobalState,
   getPersistedWindowState,
@@ -39,12 +41,31 @@ export function encodeSessionState(
   }
 }
 
-export function decodeSessionState(ss: SessionState) {
-  if (!ss) return null
-  console.log(ss)
-  ss.globalState = getPersistedGlobalState(ss.globalState as any)
-  for (let id in ss.windows) {
-    ss.windows[id].state = getPersistedWindowState(ss.windows[id].state as any)
+function decodeSessionWindows(windows: unknown) {
+  if (!windows) return {}
+  if (!isObject(windows)) return {}
+  let object = {}
+  for (let id in windows) {
+    const data = windows[id]
+    const window: SerializedWindow = {
+      id: data["id"] ?? nanoid(),
+      name: data["name"] ?? "search",
+      position: data["position"] ?? [25, 25],
+      size: data["size"] ?? [500, 500],
+      lastFocused: data["lastFocused"] ?? 0,
+      state: getPersistedWindowState(data["state"]),
+    }
+    object[id] = window
   }
-  return ss
+  return object
+}
+
+export function decodeSessionState(data: unknown): SessionState {
+  if (!data) return null
+  if (!isObject(data)) return null
+  return {
+    globalState: getPersistedGlobalState(data["globalState"]),
+    order: data["order"] ?? [],
+    windows: decodeSessionWindows(data["windows"]),
+  }
 }
