@@ -41,7 +41,8 @@ export const TAB_PERSIST: TabKey[] = [
   "lastFocused",
 ]
 
-export function getPersistedWindowState(original: State) {
+export function getPersistedWindowState(original?: State) {
+  if (!original) return
   return {
     ...pick(original, WINDOW_PERSIST),
     ...getPersistedLakes(original),
@@ -50,7 +51,8 @@ export function getPersistedWindowState(original: State) {
   }
 }
 
-export function getPersistedGlobalState(original: State) {
+export function getPersistedGlobalState(original?: State) {
+  if (!original) return
   return {
     ...pick(original, GLOBAL_PERSIST),
     ...getPersistedLakes(original),
