@@ -80,3 +80,11 @@ test("global persist", () => {
   `)
   expect(Object.keys(persist)).toEqual(GLOBAL_PERSIST)
 })
+
+test("passing in undefined window", () => {
+  getPersistedWindowState(undefined)
+})
+
+test("passing in undefined global", () => {
+  getPersistedGlobalState(undefined)
+})

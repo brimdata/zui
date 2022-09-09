@@ -1,4 +1,7 @@
-import {getPersistedWindowState} from "src/js/state/stores/get-persistable"
+import {
+  getPersistedGlobalState,
+  getPersistedWindowState,
+} from "src/js/state/stores/get-persistable"
 import {State} from "src/js/state/types"
 import {SerializedWindow} from "./windows/types"
 
@@ -38,7 +41,8 @@ export function encodeSessionState(
 
 export function decodeSessionState(ss: SessionState) {
   if (!ss) return null
-  ss.globalState = getPersistedWindowState(ss.globalState as any)
+  console.log(ss)
+  ss.globalState = getPersistedGlobalState(ss.globalState as any)
   for (let id in ss.windows) {
     ss.windows[id].state = getPersistedWindowState(ss.windows[id].state as any)
   }
