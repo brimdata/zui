@@ -22,10 +22,10 @@ export function create(
     }
     const version: QueryVersion = {
       value: "",
-      ...versionAttrs,
+      pins: [],
       version: nanoid(),
       ts: new Date().toISOString(),
-      pins: [],
+      ...versionAttrs,
     }
     dispatch(actions.addItem(query))
     dispatch(QueryVersions.at(query.id).create(version))
