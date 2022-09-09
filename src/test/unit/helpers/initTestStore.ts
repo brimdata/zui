@@ -10,7 +10,9 @@ export type TestStore = {
   getActionTypes: Function
   clearActions: Function
 } & Store
-
+/**
+ * @deprecated Use import {setupStore} from "src/test/unit"
+ */
 export default (api: BrimApi = new BrimApi()): TestStore => {
   const store = configureStore({
     reducer: rootReducer,
