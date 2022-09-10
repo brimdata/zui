@@ -51,7 +51,7 @@ export default class TestApp {
         })
       )
     )
-    this.mainWin = await this.getWindowByTitle("Brim")
+    this.mainWin = await this.getWindowByTitle("Zui")
   }
 
   async createPool(filepaths: string[]): Promise<void> {
