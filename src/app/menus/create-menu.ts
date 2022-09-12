@@ -2,9 +2,11 @@ import BrimApi from "src/js/api"
 import {commands} from "../commands/command"
 import {handleDropdown} from "./handle-dropdown"
 
-type MenuItem = Electron.MenuItemConstructorOptions & {
-  command: string | {id: string}
-}
+type MenuItem =
+  | Electron.MenuItemConstructorOptions & {
+      command?: string | {id: string}
+    }
+
 type MenuContext = {api: BrimApi}
 type MenuBuilder = (ctx: MenuContext) => MenuItem[]
 

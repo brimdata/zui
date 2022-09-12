@@ -15,7 +15,7 @@ export const createGeneric = createCommand(
   "pins.createGeneric",
   ({dispatch, api}) => {
     dispatch(Editor.addPin({type: "generic", value: ""}))
-    dispatch(Editor.editPin(api.editor.pins.length))
+    dispatch(Editor.editPin(api.editor.pins.length - 1))
   }
 )
 
@@ -23,7 +23,7 @@ export const createFrom = createCommand(
   "pins.createFrom",
   ({dispatch, api}) => {
     dispatch(Editor.addPin({type: "from", value: ""}))
-    dispatch(Editor.editPin(api.editor.pins.length))
+    dispatch(Editor.editPin(api.editor.pins.length - 1))
   }
 )
 

@@ -10,10 +10,11 @@ import {NewPinButton} from "./new-pin-button"
 
 const Container = styled.section`
   display: flex;
-  padding: 10px 16px 0px 14px;
+  padding: 16px 16px 4px 16px;
   flex-wrap: wrap;
   background: var(--editor-background);
   align-items: center;
+  z-index: 1;
 `
 
 function renderPin(pin: QueryPin, index: number) {
