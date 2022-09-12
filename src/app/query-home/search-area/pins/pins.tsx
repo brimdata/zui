@@ -6,11 +6,11 @@ import {QueryPin} from "src/js/state/Editor/types"
 import FromPin from "./from-pin/from-pin"
 import GenericPin from "./generic-pin/generic-pin"
 import TimeRangePin from "./time-range-pin/time-range-pin"
-import {compact, isEmpty} from "lodash"
+import {NewPinButton} from "./new-pin-button"
 
 const Container = styled.section`
   display: flex;
-  padding: 10px 16px 0px 16px;
+  padding: 10px 16px 0px 14px;
   flex-wrap: wrap;
   background: var(--editor-background);
   align-items: center;
@@ -29,6 +29,11 @@ function renderPin(pin: QueryPin, index: number) {
 
 export function Pins() {
   const pins = useSelector(Editor.getPins)
-  if (isEmpty(compact(pins))) return null
-  return <Container>{pins.map(renderPin)}</Container>
+  // if (isEmpty(compact(pins))) return null
+  return (
+    <Container>
+      <NewPinButton />
+      {pins.map(renderPin)}
+    </Container>
+  )
 }
