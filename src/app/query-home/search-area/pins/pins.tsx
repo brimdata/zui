@@ -7,6 +7,8 @@ import FromPin from "./from-pin/from-pin"
 import GenericPin from "./generic-pin/generic-pin"
 import TimeRangePin from "./time-range-pin/time-range-pin"
 import {NewPinButton} from "./new-pin-button"
+import {compact, isEmpty} from "lodash"
+import {PlaceholderFromPin} from "./placeholder-pin"
 
 const Container = styled.section`
   display: flex;
@@ -35,6 +37,7 @@ export function Pins() {
     <Container>
       <NewPinButton />
       {pins.map(renderPin)}
+      {isEmpty(compact(pins)) && <PlaceholderFromPin />}
     </Container>
   )
 }

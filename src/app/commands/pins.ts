@@ -5,7 +5,8 @@ import {createCommand} from "./command"
 
 export const createFromEditor = createCommand(
   "pins.createFromEditor",
-  ({dispatch}) => {
+  ({dispatch, api}) => {
+    if (api.editor.value.trim() === "") return
     dispatch(Editor.pinValue())
     dispatch(submitSearch())
   }

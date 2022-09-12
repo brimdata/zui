@@ -80,8 +80,8 @@ export default function useMainHistogram(
     const data = format(histogramFormat(chartData), range)
     const maxY = d3.max(data.points, (d: {count: number}) => d.count) || 0
     const margins = {
-      left: 16,
-      right: 16,
+      left: 24,
+      right: 24,
       top: 10,
       bottom: 18,
     }

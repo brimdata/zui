@@ -14,12 +14,12 @@ const Button = styled.button`
   margin-right: 8px;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: transparent;
   &:hover {
-    background-color: var(--button-background-hover);
+    background-color: rgb(0 0 0 / 0.05);
   }
   &:active {
-    background-color: var(--button-background-active);
+    background-color: rgb(0 0 0 / 0.08);
   }
 `
 
