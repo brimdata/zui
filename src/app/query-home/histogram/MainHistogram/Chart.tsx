@@ -11,7 +11,7 @@ import useMainHistogram from "./useMainHistogram"
 
 const BG = styled.div`
   height: 80px;
-  margin: 12px 0;
+  margin-bottom: 12px;
 `
 
 export default function MainHistogramChart() {

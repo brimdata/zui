@@ -35,7 +35,6 @@ export function ResultsError(props: {error: string | object}) {
   if (isParseError(props.error)) {
     return <SyntaxError error={props.error} />
   }
-  console.error(props.error)
   return (
     <BG>
       <h2>Error</h2>

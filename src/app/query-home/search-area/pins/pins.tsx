@@ -32,7 +32,6 @@ function renderPin(pin: QueryPin, index: number) {
 
 export function Pins() {
   const pins = useSelector(Editor.getPins)
-  // if (isEmpty(compact(pins))) return null
   return (
     <Container>
       <NewPinButton />
