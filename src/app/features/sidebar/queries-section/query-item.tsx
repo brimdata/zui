@@ -43,7 +43,8 @@ const QueryItem: NodeRenderer<any> = ({
       icon={itemIcon}
       text={data.name}
       state={state}
-      styles={styles}
+      style={styles.row}
+      innerStyle={styles.indent}
       onClick={isGroup ? onGroupClick : onItemClick}
       isFolder={isGroup}
       onContextMenu={() => {

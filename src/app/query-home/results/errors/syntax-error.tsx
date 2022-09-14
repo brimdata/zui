@@ -27,20 +27,8 @@ type PegSyntaxError = {
   }
 }
 
-function isParseError(obj: unknown): obj is PegSyntaxError {
+export function isParseError(obj: unknown): obj is PegSyntaxError {
   return isObject(obj) && "name" in obj && "message" in obj && "location" in obj
-}
-
-export function ResultsError(props: {error: string | object}) {
-  if (isParseError(props.error)) {
-    return <SyntaxError error={props.error} />
-  }
-  return (
-    <BG>
-      <h2>Error</h2>
-      <p>{props.error.toString()}</p>
-    </BG>
-  )
 }
 
 export function SyntaxError(props: {error: PegSyntaxError}) {

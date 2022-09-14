@@ -9,6 +9,8 @@ import Chunk from "./chunk"
 import Chunker from "./chunker"
 import Header from "./header"
 import * as Styler from "./styler"
+import {useScrollShadow} from "src/js/components/hooks/use-scroll-shadow"
+import mergeRefs from "src/app/core/utils/merge-refs"
 
 type Props = {
   chunker: Chunker
@@ -75,6 +77,8 @@ const Viewer = (props: Props) => {
     }
   }, [props.scrollPos])
 
+  const scrollRef = useScrollShadow()
+
   return (
     <div className="viewer" ref={props.innerRef} tabIndex={0}>
       <Header
@@ -89,7 +93,7 @@ const Viewer = (props: Props) => {
           width: props.dimens.viewWidth,
           height: props.dimens.viewHeight,
         }}
-        ref={ref}
+        ref={mergeRefs(ref, scrollRef)}
       >
         <List {...{...props, chunks}} />
       </div>

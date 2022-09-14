@@ -47,15 +47,15 @@ const BG = styled.div`
   border-radius: 6px;
 
   &:hover:not(.dragging) {
-    background: var(--sidebar-item-hover);
+    background: rgb(0 0 0 / 0.03);
   }
 
   &:active:not(.dragging) {
-    background: var(--sidebar-item-active);
+    background: rgb(0 0 0 / 0.05);
   }
 
   &.droppable {
-    background: var(--sidebar-item-active);
+    background: rgb(0 0 0 / 0.1);
   }
 
   &[aria-selected="true"] {
@@ -140,15 +140,15 @@ function Toggle(props: ItemProps) {
 
 function getClassNames(props: ItemProps) {
   const oneSelection =
-    isUndefined(props.state.isSelectedStart) &&
-    isUndefined(props.state.isSelectedEnd) &&
-    props.state.isSelected
+    isUndefined(props.state?.isSelectedStart) &&
+    isUndefined(props.state?.isSelectedEnd) &&
+    props.state?.isSelected
 
   return classNames({
-    "selected-start": oneSelection || props.state.isSelectedStart,
-    "selected-end": oneSelection || props.state.isSelectedEnd,
-    droppable: props.state.isHoveringOverChild,
-    dragging: props.state.isDragging,
+    "selected-start": oneSelection || props.state?.isSelectedStart,
+    "selected-end": oneSelection || props.state?.isSelectedEnd,
+    droppable: props.state?.isHoveringOverChild,
+    dragging: props.state?.isDragging,
   })
 }
 
@@ -173,7 +173,7 @@ const Rename = ({defaultValue, onSubmit}) => {
 }
 
 function Content(props: ItemProps) {
-  if (props.state.isEditing) {
+  if (props.state?.isEditing) {
     return <Rename defaultValue={props.text} onSubmit={props.onSubmit} />
   } else {
     return <Name>{props.text}</Name>
@@ -191,7 +191,8 @@ function Progress(props: ItemProps) {
 
 type ItemProps = {
   text: string
-  styles: {indent: CSSProperties; row: CSSProperties}
+  style?: CSSProperties
+  innerStyle?: CSSProperties
   icon?: ReactNode
   progress?: number
   onClick?: MouseEventHandler
@@ -207,14 +208,14 @@ export function Item(props: ItemProps) {
   return (
     <Container
       tabIndex={0}
-      style={props.styles.row}
+      style={props.style}
       ref={props.innerRef}
       title={props.text}
     >
       <BG
-        aria-selected={props.state.isSelected}
+        aria-selected={props.state?.isSelected}
         className={getClassNames(props)}
-        style={props.styles.indent}
+        style={props.innerStyle}
         onClick={props.onClick}
         onContextMenu={props.onContextMenu}
         onDoubleClick={props.onDoubleClick}

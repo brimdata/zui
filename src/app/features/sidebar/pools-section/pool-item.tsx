@@ -27,7 +27,7 @@ const PoolItem = ({styles, data, state, handlers}) => {
     ...dispatch(getPoolContextMenu(pool)),
   ]
 
-  const onClick = (e) => {
+  const onClick = (e: React.MouseEvent) => {
     e.preventDefault()
     handlers.select(e, {selectOnClick: true})
     dispatch(Tabs.previewUrl(lakePoolPath(pool.id, lakeId)))
@@ -43,7 +43,8 @@ const PoolItem = ({styles, data, state, handlers}) => {
       text={pool.name}
       icon={<Icon name="pool" />}
       state={state}
-      styles={styles}
+      style={styles.row}
+      innerStyle={styles.indent}
       onClick={onClick}
       onDoubleClick={onDoubleClick}
       onContextMenu={() => showContextMenu(ctxMenu)}

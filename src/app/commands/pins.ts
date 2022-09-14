@@ -20,11 +20,15 @@ export const createGeneric = createCommand(
   }
 )
 
-export const createFrom = createCommand(
+export const createFrom = createCommand<[value?: string]>(
   "pins.createFrom",
-  ({dispatch, api}) => {
-    dispatch(Editor.addPin({type: "from", value: ""}))
-    dispatch(Editor.editPin(api.editor.pins.length - 1))
+  ({dispatch, api}, value = "") => {
+    dispatch(Editor.addPin({type: "from", value}))
+    if (value.length === 0) {
+      dispatch(Editor.editPin(api.editor.pins.length - 1))
+    } else {
+      dispatch(submitSearch())
+    }
   }
 )
 
