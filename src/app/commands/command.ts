@@ -26,8 +26,9 @@ export class Commands {
     return command
   }
 
-  run(id: string, ...args: any[]) {
-    const cmd = this.map.get(id)
+  run(id: string | {id: string}, ...args: any[]) {
+    const cmdId = typeof id === "string" ? id : id.id
+    const cmd = this.map.get(cmdId)
     if (cmd) cmd.run(...args)
     else console.log("No command found: ", id)
   }
@@ -63,10 +64,11 @@ export class Command<Args extends any[]> {
 }
 
 export const createCommand = <Args extends any[] = never>(
-  meta: CommandMeta,
+  meta: CommandMeta | string,
   exec: CommandExecutor<Args>
 ) => {
-  const cmd = new Command<Args>(meta, exec)
+  const cmdMeta = typeof meta === "string" ? {id: meta} : meta
+  const cmd = new Command<Args>(cmdMeta, exec)
   commands.add(cmd)
   return cmd
 }

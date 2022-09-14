@@ -47,8 +47,8 @@ const QueryHome = () => {
         <MainContent>
           <TitleBar />
           <SearchArea />
-          <MainHistogramChart />
           <ResultsToolbar />
+          <MainHistogramChart />
           <ResultsComponent />
         </MainContent>
         <RightPane />

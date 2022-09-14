@@ -22,7 +22,7 @@ const BG = styled.div`
   padding: 0 6px;
   align-items: center;
   border-bottom: 1px solid var(--border-color);
-  height: 31px;
+  height: 37px;
   flex-shrink: 0;
   user-select: none;
   position: relative;

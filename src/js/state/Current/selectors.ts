@@ -1,6 +1,6 @@
 import {matchPath} from "react-router"
 import brim, {BrimLake} from "../../brim"
-import Pools from "../Pools"
+import * as Pools from "../Pools/selectors"
 import {PoolsState} from "../Pools/types"
 import Tabs from "../Tabs"
 import {State} from "../types"

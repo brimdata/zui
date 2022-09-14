@@ -1,4 +1,5 @@
 import {app, MenuItemConstructorOptions, shell, Menu} from "electron"
+import {createFromEditor} from "src/app/commands/pins"
 import {showWelcomePage} from "src/app/commands/show-welcome-page"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
@@ -157,7 +158,7 @@ export function compileTemplate(
       {
         label: "Pin Search",
         accelerator: "CmdOrCtrl+K",
-        click: () => window.send("pinSearch"),
+        click: () => runCommandOp.run(createFromEditor),
       },
       {
         label: "Clear Pins",

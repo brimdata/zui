@@ -14,6 +14,7 @@ import {BrimLake} from "../brim"
 import {query, QueryOptions} from "./core/query"
 import {CurrentApi} from "./current/current-api"
 import {CorrelationsApi} from "./correlations/correlations-api"
+import {EditorApi} from "./editor/editor-api"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -24,6 +25,7 @@ export default class BrimApi {
   public queries: QueriesApi
   public pools: PoolsApi
   public current: CurrentApi
+  public editor: EditorApi
   public correlations: CorrelationsApi
   public toast = toast
   public contextMenus = {
@@ -41,6 +43,7 @@ export default class BrimApi {
     this.pools = new PoolsApi(d)
     this.current = new CurrentApi(gs)
     this.correlations = new CorrelationsApi(d)
+    this.editor = new EditorApi(d, gs)
   }
 
   getZealot(lake?: BrimLake, env?: "node" | "web") {

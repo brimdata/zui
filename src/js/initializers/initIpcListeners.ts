@@ -33,12 +33,6 @@ export default (store: Store, pluginManager: PluginManager) => {
     ipcRenderer.send(replyChannel)
   })
 
-  ipcRenderer.on("pinSearch", () => {
-    store.dispatch(SearchBar.pinSearchBar())
-    store.dispatch(Editor.pinValue())
-    store.dispatch(submitSearch())
-  })
-
   ipcRenderer.on("focusSearchBar", () => {
     const el = document.getElementById("main-search-input")
 
