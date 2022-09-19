@@ -36,6 +36,7 @@ const RunButton = styled(Button)`
 function Run() {
   return (
     <RunButton
+      aria-label="run-query"
       onClick={() => runQuery.run()} // 🎶
       icon="run"
       iconSize={16}
