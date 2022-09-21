@@ -36,9 +36,9 @@ const Card = styled.section`
   align-items: center;
   margin-top: 50px;
   width: 320px;
-  overflow-x: visible;
+  overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 22px 80px hsla(0 0% 72% / 0.8);
+  box-shadow: 0 0 0 1px var(--border-color);
   flex: 1;
   margin-bottom: 30px;
 `
