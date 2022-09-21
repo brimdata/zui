@@ -1,14 +1,16 @@
 import React from "react"
 import {useSelector} from "react-redux"
+import {newPool} from "src/app/commands/new-pool"
 import {createFrom} from "src/app/commands/pins"
 import Icon from "src/app/core/icon-temp"
+import {Pool} from "src/app/core/pools/pool"
 import {Item} from "src/app/features/sidebar/item"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import {Content} from "src/js/components/Content"
-import {useScrollShadow} from "src/js/components/hooks/use-scroll-shadow"
 import {VirtualList} from "src/js/components/virtual-list"
 import Pools from "src/js/state/Pools"
 import styled from "styled-components"
+import {Button} from "../../title-bar/button"
 
 const BG = styled.div`
   width: 100%;
@@ -47,39 +49,67 @@ export function isMissingPoolError(e: unknown) {
   return e === "pool name missing"
 }
 
-export function MissingPoolError() {
-  const lakeId = useLakeId()
-  const pools = useSelector((state) => Pools.all(state, lakeId))
-  const scroll = useScrollShadow()
+function PoolsList({pools}: {pools: Pool[]}) {
   const rowHeight = 26
+
   return (
-    <BG ref={scroll}>
-      <h1>No Pool Specified</h1>
+    <Card style={{maxHeight: rowHeight * pools.length + 20 + "px"}}>
+      <VirtualList
+        items={pools}
+        rowHeight={rowHeight}
+        paddingTop={10}
+        paddingBottom={10}
+      >
+        {(props) => {
+          return (
+            <Item
+              text={props.item.name}
+              style={props.style}
+              icon={<Icon name="pool" />}
+              onClick={() => createFrom.run(props.item.name)}
+            />
+          )
+        }}
+      </VirtualList>
+    </Card>
+  )
+}
+
+function NoPoolsMessage() {
+  return (
+    <>
+      <Message>
+        {
+          "You don't have any pools yet. Load data into a pool to start querying."
+        }
+      </Message>
+      <Message>
+        <Button onClick={() => newPool.run()}>Create Pool</Button>
+      </Message>
+    </>
+  )
+}
+
+function SomePoolsMessage(props: {pools: Pool[]}) {
+  return (
+    <>
       <Message>
         {
           "Add a from clause to your query, or click one of the pools below to create a 'from' pin in your query."
         }
       </Message>
+      <PoolsList pools={props.pools} />
+    </>
+  )
+}
 
-      <Card style={{maxHeight: rowHeight * pools.length + 20 + "px"}}>
-        <VirtualList
-          items={pools}
-          rowHeight={rowHeight}
-          paddingTop={10}
-          paddingBottom={10}
-        >
-          {(props) => {
-            return (
-              <Item
-                text={props.item.name}
-                style={props.style}
-                icon={<Icon name="pool" />}
-                onClick={() => createFrom.run(props.item.name)}
-              />
-            )
-          }}
-        </VirtualList>
-      </Card>
+export function MissingPoolError() {
+  const lakeId = useLakeId()
+  const pools = useSelector((state) => Pools.all(state, lakeId))
+  return (
+    <BG>
+      <h1>No Pool Specified</h1>
+      {pools.length ? <SomePoolsMessage pools={pools} /> : <NoPoolsMessage />}
     </BG>
   )
 }
