@@ -20,6 +20,8 @@ const BG = styled.div`
   padding-left: 10%;
   padding-top: 50px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 `
 
 const Message = styled(Content)`
@@ -37,7 +39,8 @@ const Card = styled.section`
   overflow-x: visible;
   border-radius: 8px;
   box-shadow: 0 22px 80px hsla(0 0% 72% / 0.8);
-  max-height: 300px;
+  flex: 1;
+  margin-bottom: 30px;
 `
 
 export function isMissingPoolError(e: unknown) {
@@ -58,7 +61,7 @@ export function MissingPoolError() {
         }
       </Message>
 
-      <Card style={{height: rowHeight * pools.length + "px"}}>
+      <Card style={{maxHeight: rowHeight * pools.length + 20 + "px"}}>
         <VirtualList
           items={pools}
           rowHeight={rowHeight}
