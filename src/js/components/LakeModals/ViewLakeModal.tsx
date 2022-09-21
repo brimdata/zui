@@ -160,7 +160,10 @@ const ViewLake = ({onClose, onEdit}) => {
           <p>{wsStatus || "unknown"}</p>
         </Status>
         <LakeFields>
-          <Field label="Lake URL" value={[host, port].join(":")} />
+          <Field
+            label="Lake URL"
+            value={port ? [host, port].join(":") : host}
+          />
           <Field label="Zed Version" value={version} />
           <Field label="Pools" value={`${poolCount}`} />
         </LakeFields>
