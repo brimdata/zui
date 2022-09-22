@@ -1,5 +1,5 @@
 {
-  "appId": "io.brimdata.zui",
+  "appId": "com.electron.brim",
   "asar": true,
   "asarUnpack": ["zdeps", "LICENSE.txt", "acknowledgments.txt"],
   "directories": {"output": "dist/installers"},
