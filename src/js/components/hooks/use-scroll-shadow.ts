@@ -6,7 +6,6 @@ export function useScrollShadow() {
   const [ref, setRef] = useCallbackRef()
 
   useEffect(() => {
-    console.log("hey", ref)
     ref?.classList.add("scroll-shadow")
     return () => {
       ref?.classList.remove("scroll-shadow")
