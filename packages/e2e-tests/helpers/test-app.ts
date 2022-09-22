@@ -109,6 +109,10 @@ export default class TestApp {
     const winTitles = await Promise.all(wins.map((w) => w.title()))
     return wins[winTitles.findIndex((wTitle) => wTitle === title)]
   }
+
+  sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms))
+  }
 }
 
 const getAppInfo = () => {
