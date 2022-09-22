@@ -17,12 +17,16 @@ export const create =
     return id
   }
 
-export const createQuerySession = (): Thunk<string> => (dispatch, getState) => {
-  const id = nanoid()
-  const lakeId = Current.getLakeId(getState())
-  const url = lakeQueryPath(id, lakeId, null)
-  return dispatch(create(url, id))
-}
+export const createQuerySession =
+  (): Thunk<string> =>
+  (dispatch, getState, {api}) => {
+    const sessionId = nanoid()
+    const version = "0"
+    const lakeId = Current.getLakeId(getState())
+    api.queries.addVersion(sessionId, {version, value: "", pins: []})
+    const url = lakeQueryPath(sessionId, lakeId, version)
+    return dispatch(create(url, sessionId))
+  }
 
 export const previewUrl =
   (url: string): Thunk =>
