@@ -59,6 +59,7 @@ function PoolsList({pools}: {pools: Pool[]}) {
         rowHeight={rowHeight}
         paddingTop={10}
         paddingBottom={10}
+        innerProps={{"aria-label": "from-pin-list"}}
       >
         {(props) => {
           return (
@@ -67,6 +68,7 @@ function PoolsList({pools}: {pools: Pool[]}) {
               style={props.style}
               icon={<Icon name="pool" />}
               onClick={() => createFrom.run(props.item.name)}
+              aria={props.aria}
             />
           )
         }}

@@ -80,7 +80,6 @@ export class QueriesApi {
         ts: new Date().toISOString(),
       })
     }
-
     const url = lakeQueryPath(queryId, lakeId, versionId)
     if (tab) {
       this.dispatch(Tabs.activate(tabId))

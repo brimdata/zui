@@ -1,6 +1,7 @@
 import classNames from "classnames"
 import {isNumber, isUndefined} from "lodash"
 import React, {
+  HTMLAttributes,
   MouseEventHandler,
   ReactNode,
   Ref,
@@ -202,6 +203,7 @@ type ItemProps = {
   state?: NodeState
   innerRef?: Ref<HTMLDivElement>
   isFolder?: boolean
+  aria?: HTMLAttributes<any>
 }
 
 export function Item(props: ItemProps) {
@@ -211,6 +213,7 @@ export function Item(props: ItemProps) {
       style={props.style}
       ref={props.innerRef}
       title={props.text}
+      {...props.aria}
     >
       <BG
         aria-selected={props.state?.isSelected}

@@ -6,9 +6,10 @@ export const InnerElement = forwardRef<any, any>(function InnerElement(
   {style, ...rest},
   ref
 ) {
-  const {paddingTop, paddingBottom} = useListContext()
+  const {paddingTop, paddingBottom, innerProps} = useListContext()
   return (
     <div
+      role="list"
       ref={ref}
       style={{
         ...style,
@@ -17,6 +18,7 @@ export const InnerElement = forwardRef<any, any>(function InnerElement(
         }px`,
       }}
       {...rest}
+      {...innerProps}
     />
   )
 })

@@ -32,7 +32,6 @@ const QueryHome = () => {
   const activeQuery = useSelector(Current.getActiveQuery)
   const lakeId = useSelector(Current.getLakeId)
   const tabId = useSelector(Current.getTabId)
-
   if (activeQuery.isDeleted()) {
     return (
       <Redirect

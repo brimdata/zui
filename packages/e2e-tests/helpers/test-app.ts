@@ -89,7 +89,7 @@ export default class TestApp {
     return results
   }
 
-  async getViewerStats(): Promise<{results: string; shapes: string}> {
+  async getViewerStats(): Promise<{results: number; shapes: number}> {
     const results = await this.mainWin
       .locator('span[aria-label="results"]')
       .textContent()
@@ -97,7 +97,8 @@ export default class TestApp {
       .locator('span[aria-label="shapes"]')
       .textContent()
 
-    return {results, shapes}
+    const toInt = (str: string) => parseInt(str.replace(/\D*/, ""))
+    return {results: toInt(results), shapes: toInt(shapes)}
   }
 
   async shutdown() {

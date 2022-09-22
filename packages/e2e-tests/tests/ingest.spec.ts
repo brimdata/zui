@@ -7,23 +7,23 @@ import {sprintf} from "sprintf-js"
 const testQueries = [
   {
     zed: "* | count()",
-    expectedStats: {results: "Results: 1", shapes: "Shapes: 1"},
+    expectedStats: {results: 1, shapes: 1},
   },
   {
     zed: "* | count() by _path | sort _path",
-    expectedStats: {results: "Results: 8", shapes: "Shapes: 1"},
+    expectedStats: {results: 8, shapes: 1},
   },
   {
     zed: '_path=="conn" | count()',
-    expectedStats: {results: "Results: 1", shapes: "Shapes: 1"},
+    expectedStats: {results: 1, shapes: 1},
   },
   {
     zed: '_path=="conn" | cut ts, id.orig_h, id.orig_p, id.resp_h, id.resp_p, proto | sort ts',
-    expectedStats: {results: "Results: 19", shapes: "Shapes: 1"},
+    expectedStats: {results: 19, shapes: 1},
   },
   {
     zed: '_path=="x509" or _path=="ssl" | sort _path',
-    expectedStats: {results: "Results: 2", shapes: "Shapes: 2"},
+    expectedStats: {results: 2, shapes: 2},
   },
 ]
 
