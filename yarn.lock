@@ -13790,18 +13790,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "react-arborist@npm:1.0.3"
+"react-arborist@file:../react-arborist/packages/react-arborist::locator=zui%40workspace%3A.":
+  version: 1.2.0
+  resolution: "react-arborist@file:../react-arborist/packages/react-arborist#../react-arborist/packages/react-arborist::hash=35f68c&locator=zui%40workspace%3A."
   dependencies:
     memoize-one: ^6.0.0
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
     react-window: ^1.8.6
+    redux: ^4.1.1
+    tree-model-improved: ^2.0.1
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: af1abc02a2fd4d313d46bac7297535f19b63b76b25f6cd821dec669fd474dfd489445f869c79f0ad0562d07ae6c5b2d7046455c60d489a4c7a122f3b8da16710
+  checksum: c262a4c732f873849ab5e4455aab4a4f4012cdd3864ef73ec4f1c6f96abdd395668a25499218b231e22df6e64250e20ba29ba7de34d7a6ab49dac470b96b14af
   languageName: node
   linkType: hard
 
@@ -16220,6 +16222,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tree-model-improved@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "tree-model-improved@npm:2.0.1"
+  dependencies:
+    find-insert-index: 0.0.1
+    mergesort: 0.0.1
+  checksum: 21013a33e815bc72cf2a465940ea968fdfe3dd08d884942cc191e4ec54d9a55ac9896d88500e1877a636b32eccc459bce7f2469a22e63e3bc9cbf400c96e9978
+  languageName: node
+  linkType: hard
+
 "tree-model@npm:^1.0.7":
   version: 1.0.7
   resolution: "tree-model@npm:1.0.7"
@@ -17476,7 +17488,7 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^18.0.0
-    react-arborist: ^1.0.3
+    react-arborist: ../react-arborist/packages/react-arborist
     react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0
