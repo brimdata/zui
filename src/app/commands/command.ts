@@ -61,6 +61,22 @@ export class Command<Args extends any[]> {
   run(...args: Args) {
     return this.exec(commands.context, ...args)
   }
+
+  bind(...args: Args) {
+    return new BoundCommand<Args>(this, args)
+  }
+}
+
+export class BoundCommand<Args extends any[]> {
+  args: Args
+
+  constructor(public command: Command<Args>, args: Args) {
+    this.args = args
+  }
+
+  run() {
+    return this.command.run(...this.args)
+  }
 }
 
 export const createCommand = <Args extends any[] = never>(

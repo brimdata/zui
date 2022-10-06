@@ -25,7 +25,7 @@ const Button = styled.button`
 
 export function NewPinButton() {
   return (
-    <Button onClick={newPinMenu.dropdownHandler}>
+    <Button onClick={(e) => newPinMenu.build().showUnder(e.currentTarget)}>
       <Icon name="pin" size={12} />
       <Icon name="chevron-down" size={11} />
     </Button>

@@ -13792,18 +13792,18 @@ __metadata:
 
 "react-arborist@file:../react-arborist/packages/react-arborist::locator=zui%40workspace%3A.":
   version: 1.2.0
-  resolution: "react-arborist@file:../react-arborist/packages/react-arborist#../react-arborist/packages/react-arborist::hash=35f68c&locator=zui%40workspace%3A."
+  resolution: "react-arborist@file:../react-arborist/packages/react-arborist#../react-arborist/packages/react-arborist::hash=2d7009&locator=zui%40workspace%3A."
   dependencies:
     memoize-one: ^6.0.0
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
     react-window: ^1.8.6
     redux: ^4.1.1
-    tree-model-improved: ^2.0.1
+    use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: c262a4c732f873849ab5e4455aab4a4f4012cdd3864ef73ec4f1c6f96abdd395668a25499218b231e22df6e64250e20ba29ba7de34d7a6ab49dac470b96b14af
+  checksum: 938e0cb9dabb51bf699d43397d6795ac4b76a654464fdb51a4820588152c0c49e2cd7565c344633064c065998de5fe89c7442c92135e41589bab4a994c986e9b
   languageName: node
   linkType: hard
 
@@ -16222,16 +16222,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tree-model-improved@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "tree-model-improved@npm:2.0.1"
-  dependencies:
-    find-insert-index: 0.0.1
-    mergesort: 0.0.1
-  checksum: 21013a33e815bc72cf2a465940ea968fdfe3dd08d884942cc191e4ec54d9a55ac9896d88500e1877a636b32eccc459bce7f2469a22e63e3bc9cbf400c96e9978
-  languageName: node
-  linkType: hard
-
 "tree-model@npm:^1.0.7":
   version: 1.0.7
   resolution: "tree-model@npm:1.0.7"
@@ -16701,6 +16691,15 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0-rc
   checksum: f3df10af62625169d6a8cd8d4f38942dc6817aa27398fa7f474421fd574b0c4c83679b9d15f983f482c396ee1183416eb146814c81f44241e1480acd701ef018
+  languageName: node
+  linkType: hard
+
+"use-sync-external-store@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "use-sync-external-store@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 5c639e0f8da3521d605f59ce5be9e094ca772bd44a4ce7322b055a6f58eeed8dda3c94cabd90c7a41fb6fa852210092008afe48f7038792fd47501f33299116a
   languageName: node
   linkType: hard
 

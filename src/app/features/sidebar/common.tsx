@@ -139,7 +139,9 @@ export const ButtonRow = ({buttons}) => {
   )
 }
 
-export const SectionSearch = (props) => {
+export const SectionSearch = (
+  props: React.HTMLAttributes<HTMLInputElement>
+) => {
   return (
     <SectionSearchWrapper>
       <Icon name="query" />

@@ -14,15 +14,11 @@ export const useSectionTreeDefaults = () => {
     resizeRef: ref,
     defaults: {
       indent: 16,
+      rowHeight: 28,
       getChildren: "items",
       isOpen: "isOpen",
-      rowHeight: 28,
       width: width,
       height: height,
-      hideRoot: true,
-      disableDrag: true,
-      disableDrop: true,
-      openByDefault: true,
     },
   }
 }
