@@ -1,28 +1,25 @@
 import {useImportOnDrop} from "src/app/features/import/use-import-on-drop"
 import React, {useState} from "react"
-import {
-  SectionContents,
-  StyledSection,
-  DropOverlay,
-  SectionSearch,
-} from "../common"
 import {Contents} from "./contents"
+import {Content} from "../content"
+import {DropOverlay} from "../drop-overlay"
+import {SearchBar} from "../search-bar"
 
 const PoolsSection = () => {
   const [{isOver}, drop] = useImportOnDrop()
   const [searchTerm, setSearchTerm] = useState("")
 
   return (
-    <StyledSection>
-      <SectionContents ref={drop}>
+    <>
+      <Content ref={drop}>
         <Contents searchTerm={searchTerm} />
         <DropOverlay show={isOver}>Drop to import...</DropOverlay>
-      </SectionContents>
-      <SectionSearch
+      </Content>
+      <SearchBar
         placeholder="Search pools..."
         onChange={(e) => setSearchTerm(e.currentTarget.value)}
       />
-    </StyledSection>
+    </>
   )
 }
 

@@ -6,5 +6,6 @@ export const queriesImport =
   async (_, __, {api}) => {
     const [error, count] = await importQueriesOp.invoke(file.path)
     if (error) api.toast.error(error)
+    // Toast should only be in commands, no the api calls.
     else api.toast.success(`Imported ${count} queries`)
   }

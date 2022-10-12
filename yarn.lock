@@ -11851,13 +11851,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memoize-one@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "memoize-one@npm:6.0.0"
-  checksum: f185ea69f7cceae5d1cb596266dcffccf545e8e7b4106ec6aa93b71ab9d16460dd118ac8b12982c55f6d6322fcc1485de139df07eacffaae94888b9b3ad7675f
-  languageName: node
-  linkType: hard
-
 "memorystream@npm:^0.3.1":
   version: 0.3.1
   resolution: "memorystream@npm:0.3.1"
@@ -13792,9 +13785,8 @@ __metadata:
 
 "react-arborist@file:../react-arborist/packages/react-arborist::locator=zui%40workspace%3A.":
   version: 1.2.0
-  resolution: "react-arborist@file:../react-arborist/packages/react-arborist#../react-arborist/packages/react-arborist::hash=2d7009&locator=zui%40workspace%3A."
+  resolution: "react-arborist@file:../react-arborist/packages/react-arborist#../react-arborist/packages/react-arborist::hash=4ceb12&locator=zui%40workspace%3A."
   dependencies:
-    memoize-one: ^6.0.0
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
     react-window: ^1.8.6
@@ -13803,7 +13795,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: 938e0cb9dabb51bf699d43397d6795ac4b76a654464fdb51a4820588152c0c49e2cd7565c344633064c065998de5fe89c7442c92135e41589bab4a994c986e9b
+  checksum: 0e13f64c46012e80eb6156bad95c29e4480cd14fa69f3eeb104a00b1f93eb1610bbfd0769016159d2bbcbef471812406d57d01186846b44e437bee245ffeb686
   languageName: node
   linkType: hard
 

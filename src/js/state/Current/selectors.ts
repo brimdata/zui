@@ -66,8 +66,13 @@ const getSessionVersions = (state: State) => {
 }
 
 export const getNamedQuery = (state: State) => {
-  const {queryId} = getQueryUrlParams(state)
+  const queryId = getQueryId(state)
   return Queries.build(state, queryId)
+}
+
+export const getQueryId = (state: State) => {
+  const {queryId} = getQueryUrlParams(state)
+  return queryId
 }
 
 export const getSession = createSelector(

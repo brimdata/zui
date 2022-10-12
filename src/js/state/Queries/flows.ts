@@ -9,13 +9,13 @@ import {flattenQueryTree, getNextCount} from "./helpers"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 
 export function create(
-  attrs: Partial<QueryVersion & {name?: string}> = {}
+  attrs: Partial<QueryVersion & {name?: string; parentId?: string}> = {}
 ): Thunk<BrimQuery> {
   return (dispatch, getState) => {
     const queries = flattenQueryTree(Queries.raw(getState()), false).map(
       (n) => n.model
     )
-    const {name, ...versionAttrs} = attrs
+    const {name, parentId, ...versionAttrs} = attrs
     const query: Query = {
       id: nanoid(),
       name: name || `Query #${getNextCount(queries, "Query")}`,
@@ -27,7 +27,7 @@ export function create(
       ts: new Date().toISOString(),
       ...versionAttrs,
     }
-    dispatch(actions.addItem(query))
+    dispatch(actions.addItem(query, parentId))
     dispatch(QueryVersions.at(query.id).create(version))
     const versions = QueryVersions.at(query.id).all(getState())
 

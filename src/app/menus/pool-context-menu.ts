@@ -11,9 +11,12 @@ export const poolContextMenu = createMenu(
     const multi = ids.has(node.id) && ids.size > 1
 
     return [
-      {label: "Rename", click: () => node.edit()},
-      {label: "Use as From Pin", command: updateFrom.bind(node.data.name)},
+      {
+        label: "Use as From Pin",
+        command: updateFrom.bind(node.data.name),
+      },
       {type: "separator"},
+      {label: "Rename...", click: () => node.edit()},
       {
         label: "Delete",
         command: deletePools.bind(multi ? Array.from(ids) : [node.id]),

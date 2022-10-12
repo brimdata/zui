@@ -37,13 +37,12 @@ class BuiltMenu {
 function toElectron(opts: MenuItem[]) {
   for (let opt of opts) {
     if ("command" in opt) {
-      opt.click = () => {
-        if (opt.command instanceof BoundCommand) {
-          opt.command.run()
-        } else {
-          commands.run(opt.command)
-        }
-      }
+      const command = opt.command
+      delete opt.command
+      opt.click =
+        command instanceof BoundCommand
+          ? () => command.run()
+          : () => commands.run(command)
     }
   }
   return opts

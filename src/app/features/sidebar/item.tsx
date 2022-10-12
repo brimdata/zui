@@ -59,6 +59,10 @@ const BG = styled.div`
     background: rgb(0 0 0 / 0.1);
   }
 
+  [aria-role="tree-item"]:focus-visible & {
+    background-color: var(--primary-color-light);
+  }
+
   &[aria-selected="true"] {
     border-radius: 0;
     outline: none;
@@ -133,7 +137,12 @@ function ItemIcon(props: ItemProps) {
 function Toggle(props: ItemProps) {
   if (!props.isFolder) return null
   return (
-    <ToggleLink>
+    <ToggleLink
+      onClick={(e) => {
+        e.stopPropagation()
+        props.onToggle()
+      }}
+    >
       <Icon name={`chevron-${props.state.isOpen ? "down" : "right"}`} />
     </ToggleLink>
   )
@@ -148,8 +157,9 @@ function getClassNames(props: ItemProps) {
   return classNames({
     "selected-start": oneSelection || props.state?.isSelectedStart,
     "selected-end": oneSelection || props.state?.isSelectedEnd,
-    droppable: props.state?.isHoveringOverChild,
+    droppable: props.state?.willReceiveDrop,
     dragging: props.state?.isDragging,
+    "is-focused": props.state?.isFocused,
   })
 }
 
@@ -200,6 +210,7 @@ type ItemProps = {
   onDoubleClick?: MouseEventHandler
   onContextMenu?: MouseEventHandler
   onSubmit?: (text: string) => void
+  onToggle?: () => void
   state?: NodeState
   innerRef?: Ref<HTMLDivElement>
   isFolder?: boolean
@@ -209,7 +220,6 @@ type ItemProps = {
 export function Item(props: ItemProps) {
   return (
     <Container
-      tabIndex={0}
       style={props.style}
       ref={props.innerRef}
       title={props.text}

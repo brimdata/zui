@@ -6,11 +6,12 @@ import styled from "styled-components"
 import Current from "src/js/state/Current"
 import {DraggablePane} from "src/js/components/draggable-pane"
 import PoolsSection from "./pools-section"
-import QueriesSection from "./queries-section"
+import {QueriesSection} from "./queries-section"
 import Header from "./header"
 import {Menu} from "./menu"
 import SidebarToggleButton from "./sidebar-toggle-button"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
+import {Body} from "./body"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -20,8 +21,8 @@ const EmptyText = styled.div`
   text-align: center;
 `
 
-const SectionContentSwitch = ({sectionName}) => {
-  switch (sectionName) {
+const PaneSwitch = ({name}) => {
+  switch (name) {
     case "pools":
       return <PoolsSection />
     case "queries":
@@ -77,9 +78,11 @@ export function Sidebar() {
         <>
           <Header />
           <Menu />
-          <AppErrorBoundary>
-            <SectionContentSwitch sectionName={currentSectionName} />
-          </AppErrorBoundary>
+          <Body>
+            <AppErrorBoundary>
+              <PaneSwitch name={currentSectionName} />
+            </AppErrorBoundary>
+          </Body>
         </>
       )}
     </Pane>

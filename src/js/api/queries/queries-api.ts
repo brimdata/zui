@@ -1,17 +1,20 @@
 import {nanoid} from "@reduxjs/toolkit"
 import tabHistory from "src/app/router/tab-history"
 import {lakeQueryPath} from "src/app/router/utils/paths"
+import {exportQueryGroupOp} from "src/js/electron/ops/export-query-group-op"
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Queries from "src/js/state/Queries"
 import {updateQuery} from "src/js/state/Queries/flows/update-query"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {
+  deleteRemoteQueries,
+  isRemoteLib,
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import SessionHistories from "src/js/state/SessionHistories"
 import Tabs from "src/js/state/Tabs"
-import {JSONGroup} from "../../state/Queries/parsers"
 import {AppDispatch, GetState} from "../../state/types"
-import {queriesExport} from "./export"
 import {queriesImport} from "./import"
 import {OpenQueryOptions, QueryParams} from "./types"
 
@@ -22,13 +25,31 @@ export class QueriesApi {
     return this.dispatch(queriesImport(file))
   }
 
-  export(groupId: string): JSONGroup {
-    return this.dispatch(queriesExport(groupId))
+  export(groupId: string, filePath: string) {
+    return exportQueryGroupOp.invoke(groupId, filePath)
   }
 
-  create(name: string) {
+  create(name: string, parentId: string) {
     const attrs = Editor.getSnapshot(this.getState())
-    return this.dispatch(Queries.create({name, ...attrs}))
+    return this.dispatch(Queries.create({name, parentId, ...attrs}))
+  }
+
+  createGroup(name: string, parentId: string) {
+    const item = {name, id: nanoid(), items: []}
+    this.dispatch(Queries.addItem(item, parentId))
+    return item
+  }
+
+  delete(id: string | string[]) {
+    const ids = Array.isArray(id) ? id : [id]
+    ids.map((id) => {
+      this.dispatch(QueryVersions.at(id).deleteAll())
+      if (this.dispatch(isRemoteLib([id]))) {
+        this.dispatch(deleteRemoteQueries([id]))
+      } else {
+        this.dispatch(Queries.removeItems([id]))
+      }
+    })
   }
 
   rename(id: string, name: string) {
