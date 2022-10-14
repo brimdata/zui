@@ -35,22 +35,21 @@ export function PoolsTree(props: {searchTerm: string}) {
             width={dimens.width}
             data={pools}
             searchTerm={props.searchTerm}
-            searchMatch={(pool, term) => pool.name.toLowerCase().includes(term)}
+            searchMatch={(node, term) =>
+              node.data.name.toLowerCase().includes(term)
+            }
             selection={poolId}
             selectionFollowsFocus
             onRename={(args: {id: string; name: string}) => {
               dispatch(renamePool(args.id, args.name))
             }}
-            onSelect={(pools) => {
-              if (pools.length === 1) {
+            onSelect={(nodes) => {
+              if (nodes.length === 1) {
                 dispatch(Tabs.previewUrl(lakePoolPath(pools[0].id, lakeId)))
               }
             }}
-            onPreview={(pool) => {
-              dispatch(Tabs.previewUrl(lakePoolPath(pool.id, lakeId)))
-            }}
-            onActivate={(pool) => {
-              dispatch(Tabs.activateUrl(lakePoolPath(pool.id, lakeId)))
+            onActivate={(node) => {
+              dispatch(Tabs.activateUrl(lakePoolPath(node.id, lakeId)))
             }}
           >
             {PoolItem}

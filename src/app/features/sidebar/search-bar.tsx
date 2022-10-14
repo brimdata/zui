@@ -9,7 +9,7 @@ const BG = styled.div`
   border: none;
   background: rgba(0, 0, 0, 0.07);
   padding: 2px 12px;
-  margin: 8px;
+  width: 100%;
 
   svg {
     width: 16px;

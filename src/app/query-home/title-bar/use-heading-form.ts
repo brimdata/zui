@@ -12,8 +12,8 @@ export function useHeadingForm() {
   const dispatch = useDispatch()
   const action = useSelector(Layout.getTitleFormAction)
 
-  function createNewQuery(name: string) {
-    const q = api.queries.create(name)
+  async function createNewQuery(name: string) {
+    const q = await api.queries.create({name})
     api.queries.open(q.id)
   }
 

@@ -107,7 +107,7 @@ export const refreshRemoteQueries =
  on redux's list of existing pools which means that this thunk depends on
  that state being populated
  */
-export const setRemoteQueries =
+export const appendRemoteQueries =
   (queries: (Query & QueryVersion)[]): Thunk<Promise<void>> =>
   async (dispatch) => {
     const remote = queriesToRemoteQueries(queries)

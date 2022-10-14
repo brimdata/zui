@@ -4,7 +4,7 @@ import {formatDistanceToNowStrict} from "date-fns"
 import {useSelector} from "react-redux"
 import Current from "../../../js/state/Current"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
-import {useBrimApi} from "src/app/core/context"
+import {NodeRendererProps} from "react-arborist"
 
 const TimeNode = styled.div`
   display: flex;
@@ -102,29 +102,26 @@ export const FormattedTime = ({ts}: {ts: string}) => {
   return <span>{duration} ago</span>
 }
 
-const VersionItem = ({styles, data, handlers}) => {
-  const queryVersion = data as QueryVersion
+const VersionItem = ({
+  node,
+  style,
+  dragHandle,
+}: NodeRendererProps<QueryVersion & {id: string}>) => {
+  const queryVersion = node.data
   const query = useSelector(Current.getNamedQuery)
-  const api = useBrimApi()
-
-  const onClick = (e) => {
-    e.preventDefault()
-    handlers.select(e, {selectOnClick: true})
-    api.queries.open(query.id, {version: queryVersion.version})
-  }
 
   return (
-    <Container tabIndex={0} style={styles.row}>
+    <Container>
       <BG
+        ref={dragHandle}
         aria-selected={query.current?.version === queryVersion.version}
-        style={styles.indent}
-        onClick={onClick}
+        style={style}
       >
         <TimeNode>
           <Dot />
           <FormattedTime ts={queryVersion.ts} />
         </TimeNode>
-        <Version onClick={onClick}>{queryVersion.value}</Version>
+        <Version>{queryVersion.value}</Version>
       </BG>
     </Container>
   )

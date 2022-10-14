@@ -6,7 +6,6 @@ import {Content} from "../content"
 import {SearchBar} from "../search-bar"
 import {Toolbar} from "../toolbar"
 import {QueriesTree} from "./queries-tree"
-import {RemoteQueriesTree} from "./remote-queries-tree"
 
 // const RemoteQueriesView = ({toolbarButtons}) => {
 //   )
@@ -84,8 +83,7 @@ export function QueriesSection() {
   return (
     <>
       <Content>
-        {view === "local" && <QueriesTree searchTerm={searchTerm} />}
-        {view === "remote" && <RemoteQueriesTree searchTerm={searchTerm} />}
+        <QueriesTree source={view} searchTerm={searchTerm} />
       </Content>
       <Toolbar>
         <SwitchButton

@@ -6,6 +6,7 @@ import popupPosition from "../query-home/search-area/popup-position"
 type MenuItem =
   | Electron.MenuItemConstructorOptions & {
       command?: string | {id: string} | BoundCommand<any>
+      nestedMenu?: Menu
     }
 
 type MenuContext = {api: BrimApi}
@@ -43,6 +44,11 @@ function toElectron(opts: MenuItem[]) {
         command instanceof BoundCommand
           ? () => command.run()
           : () => commands.run(command)
+    }
+    if ("nestedMenu" in opt) {
+      if (opt.nestedMenu instanceof Menu) {
+        opt.submenu = menus.build(opt.nestedMenu.id)
+      }
     }
   }
   return opts

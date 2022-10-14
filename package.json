@@ -32,7 +32,8 @@
     "prerelease": "yarn build",
     "release": "electron-builder --mac",
     "postinstall": "node scripts/post-install",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "watch:types": "yarn lint:tsc --watch"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",

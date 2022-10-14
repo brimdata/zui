@@ -80,7 +80,7 @@ export const getSession = createSelector(
   getSessionVersions,
   (query, versions) => {
     if (!query) return null
-    return new BrimQuery(query, versions)
+    return new BrimQuery(query, versions, "session")
   }
 )
 

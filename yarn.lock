@@ -13785,7 +13785,7 @@ __metadata:
 
 "react-arborist@file:../react-arborist/packages/react-arborist::locator=zui%40workspace%3A.":
   version: 1.2.0
-  resolution: "react-arborist@file:../react-arborist/packages/react-arborist#../react-arborist/packages/react-arborist::hash=4ceb12&locator=zui%40workspace%3A."
+  resolution: "react-arborist@file:../react-arborist/packages/react-arborist#../react-arborist/packages/react-arborist::hash=109d21&locator=zui%40workspace%3A."
   dependencies:
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
@@ -13795,7 +13795,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: 0e13f64c46012e80eb6156bad95c29e4480cd14fa69f3eeb104a00b1f93eb1610bbfd0769016159d2bbcbef471812406d57d01186846b44e437bee245ffeb686
+  checksum: bd15157b81e752760c1e36af853de35ecc870cf877b6ccf2756f27c2d5c5bca91b92a57f001c8d307683bc6a3b8ae179e012d0e503b8a83b2a49b0af0720be31
   languageName: node
   linkType: hard
 

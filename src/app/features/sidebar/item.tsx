@@ -2,6 +2,7 @@ import classNames from "classnames"
 import {isNumber, isUndefined} from "lodash"
 import React, {
   HTMLAttributes,
+  KeyboardEventHandler,
   MouseEventHandler,
   ReactNode,
   Ref,
@@ -211,6 +212,7 @@ type ItemProps = {
   onContextMenu?: MouseEventHandler
   onSubmit?: (text: string) => void
   onToggle?: () => void
+  onKeyPress?: KeyboardEventHandler
   state?: NodeState
   innerRef?: Ref<HTMLDivElement>
   isFolder?: boolean
@@ -232,6 +234,7 @@ export function Item(props: ItemProps) {
         onClick={props.onClick}
         onContextMenu={props.onContextMenu}
         onDoubleClick={props.onDoubleClick}
+        onKeyPress={props.onKeyPress}
       >
         <Toggle {...props} />
         <ItemIcon {...props} />

@@ -4,6 +4,7 @@ import {Contents} from "./contents"
 import {Content} from "../content"
 import {DropOverlay} from "../drop-overlay"
 import {SearchBar} from "../search-bar"
+import {Toolbar} from "../toolbar"
 
 const PoolsSection = () => {
   const [{isOver}, drop] = useImportOnDrop()
@@ -15,10 +16,12 @@ const PoolsSection = () => {
         <Contents searchTerm={searchTerm} />
         <DropOverlay show={isOver}>Drop to import...</DropOverlay>
       </Content>
-      <SearchBar
-        placeholder="Search pools..."
-        onChange={(e) => setSearchTerm(e.currentTarget.value)}
-      />
+      <Toolbar>
+        <SearchBar
+          placeholder="Search pools..."
+          onChange={(e) => setSearchTerm(e.currentTarget.value)}
+        />
+      </Toolbar>
     </>
   )
 }
