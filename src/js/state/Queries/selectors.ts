@@ -10,7 +10,7 @@ export const raw = (state: State): QueriesState => state.queries
 export const find = (state: State, id: string): Query | null => {
   return new TreeModel({childrenPropertyName: "items"})
     .parse(state.queries)
-    .first((n) => n.model.id === id && !("items" in n.model))?.model
+    .first((n) => n.model.id === id)?.model
 }
 
 export const findRemoteQuery = (state: State, id: string): Query | null => {

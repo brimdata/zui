@@ -39,17 +39,11 @@ export function PoolsTree(props: {searchTerm: string}) {
               node.data.name.toLowerCase().includes(term)
             }
             selection={poolId}
-            selectionFollowsFocus
             onRename={(args: {id: string; name: string}) => {
               dispatch(renamePool(args.id, args.name))
             }}
-            onSelect={(nodes) => {
-              if (nodes.length === 1) {
-                dispatch(Tabs.previewUrl(lakePoolPath(pools[0].id, lakeId)))
-              }
-            }}
             onActivate={(node) => {
-              dispatch(Tabs.activateUrl(lakePoolPath(node.id, lakeId)))
+              dispatch(Tabs.previewUrl(lakePoolPath(node.id, lakeId)))
             }}
           >
             {PoolItem}
