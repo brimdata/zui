@@ -1,5 +1,6 @@
 import {FormEvent} from "react"
 import {useSelector} from "react-redux"
+import * as queries from "src/app/commands/queries"
 import {useBrimApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import Layout from "src/js/state/Layout"
@@ -13,8 +14,7 @@ export function useHeadingForm() {
   const action = useSelector(Layout.getTitleFormAction)
 
   async function createNewQuery(name: string) {
-    const q = await api.queries.create({name})
-    api.queries.open(q.id)
+    queries.save.run(name)
   }
 
   function renameQuery(name: string) {

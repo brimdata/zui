@@ -1,8 +1,18 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {QuerySource} from "src/js/api/queries/types"
 import Current from "src/js/state/Current"
+import Editor from "src/js/state/Editor"
 import Layout from "src/js/state/Layout"
 import {createCommand} from "./command"
+
+export const save = createCommand(
+  "queries.save",
+  async ({api, getState}, name: string) => {
+    const attrs = Editor.getSnapshot(getState())
+    const query = await api.queries.create({name, versions: [attrs]})
+    api.queries.open(query.id)
+  }
+)
 
 export const lock = createCommand("queries.lock", ({api, getState}) => {
   const active = Current.getActiveQuery(getState())
