@@ -50,6 +50,7 @@ const SidebarTop = styled.div`
   width: 100%;
   height: 42px;
   padding-right: 10px;
+  -webkit-app-region: drag;
 `
 
 export function Sidebar() {

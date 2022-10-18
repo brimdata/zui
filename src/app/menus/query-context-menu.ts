@@ -19,7 +19,7 @@ export const queryContextMenu = createMenu(
         accelerator: "a",
         click: () => {
           tree.focus(node)
-          tree.createInternal()
+          tree.createLeaf()
         },
       },
       {

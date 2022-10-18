@@ -13,6 +13,13 @@ const Header = styled.header`
   justify-content: space-between;
 `
 
+const Toolbar = styled.div`
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+`
+
 const Title = styled.h1`
   font-weight: bold;
   font-size: 14px;
@@ -60,17 +67,19 @@ const PoolHome = () => {
           <Title>{pool.name}</Title>
           <Subtitle>{bytes(pool.stats.size)}</Subtitle>
         </div>
-        <Actions
-          actions={[
-            {
-              label: "Query Pool",
-              icon: "query",
-              click: openNewDraftQuery,
-              title:
-                "Open a new session query with this pool as the from clause.",
-            },
-          ]}
-        />
+        <Toolbar>
+          <Actions
+            actions={[
+              {
+                label: "Query Pool",
+                icon: "query",
+                click: openNewDraftQuery,
+                title:
+                  "Open a new session query with this pool as the from clause.",
+              },
+            ]}
+          />
+        </Toolbar>
       </Header>
       <Body>
         <dl>

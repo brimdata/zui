@@ -1,5 +1,7 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {QuerySource} from "src/js/api/queries/types"
+import Appearance from "src/js/state/Appearance"
+import {QueriesView} from "src/js/state/Appearance/types"
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Layout from "src/js/state/Layout"
@@ -34,7 +36,7 @@ export const unlock = createCommand("queries.lock", ({api, getState}) => {
 
 export const moveToSource = createCommand(
   "queries.moveToSource",
-  async ({api, getState}, type: QuerySource) => {
+  async ({api, getState, dispatch}, type: QuerySource) => {
     const active = Current.getActiveQuery(getState())
     if (!active) return
     const query = active.query
@@ -44,6 +46,9 @@ export const moveToSource = createCommand(
       type,
       versions: query.versions,
     })
+    dispatch(Appearance.setCurrentSectionName("queries"))
+    dispatch(Appearance.setQueriesView(type as QueriesView))
+    api.queries.open(query.id)
   }
 )
 

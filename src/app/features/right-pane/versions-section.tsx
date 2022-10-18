@@ -33,7 +33,6 @@ const VersionsList = ({query}: {query: BrimQuery}) => {
   return (
     <FillFlexParent>
       {(dimens) => {
-        console.log(dimens)
         return (
           <Tree
             {...dimens}
