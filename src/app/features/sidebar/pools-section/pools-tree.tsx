@@ -1,6 +1,7 @@
 import React from "react"
 import {Tree} from "react-arborist"
 import {useSelector} from "react-redux"
+import {deletePools} from "src/app/commands/delete-pools"
 import {useDispatch} from "src/app/core/state"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import usePoolId from "src/app/router/hooks/use-pool-id"
@@ -47,6 +48,7 @@ export function PoolsTree(props: {searchTerm: string}) {
             onActivate={(node) => {
               dispatch(Tabs.previewUrl(lakePoolPath(node.id, lakeId)))
             }}
+            onDelete={(args) => deletePools.run(args.ids)}
           >
             {PoolItem}
           </Tree>
