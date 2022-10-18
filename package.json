@@ -155,7 +155,7 @@
     "polished": "^3.6.5",
     "prismjs": "^1.25.0",
     "react": "^18.0.0",
-    "react-arborist": "github:brimdata/react-arborist#version-2",
+    "react-arborist": "2.0.0-rc",
     "react-dnd": "^14.0.5",
     "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^18.0.0",
