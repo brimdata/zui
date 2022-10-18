@@ -5,7 +5,7 @@ import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 import {EmptyText} from "./common"
-import {FillFlexParent} from "../sidebar/pools-section/fill-flex-parent"
+import {FillFlexParent} from "src/components/fill-flex-parent"
 import {useBrimApi} from "src/app/core/context"
 
 const EmptyMessage = () => {

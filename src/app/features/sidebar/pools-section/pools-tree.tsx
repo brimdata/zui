@@ -10,7 +10,7 @@ import renamePool from "src/js/flows/renamePool"
 import Current from "src/js/state/Current"
 import Tabs from "src/js/state/Tabs"
 import {Empty} from "./empty"
-import {FillFlexParent} from "./fill-flex-parent"
+import {FillFlexParent} from "src/components/fill-flex-parent"
 import PoolItem from "./pool-item"
 
 export function PoolsTree(props: {searchTerm: string}) {

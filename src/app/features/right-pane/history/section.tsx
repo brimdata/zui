@@ -5,7 +5,7 @@ import {useSelector} from "react-redux"
 import {HistoryItem} from "./history-item"
 import {isEmpty} from "lodash"
 import {EmptyText} from "../common"
-import {FillFlexParent} from "../../sidebar/pools-section/fill-flex-parent"
+import {FillFlexParent} from "src/components/fill-flex-parent"
 import {Tree} from "react-arborist"
 import {useBrimApi} from "src/app/core/context"
 

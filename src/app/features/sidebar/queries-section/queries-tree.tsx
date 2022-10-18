@@ -12,7 +12,7 @@ import RemoteQueries from "src/js/state/RemoteQueries"
 import {refreshRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"
 import {DropOverlay} from "../drop-overlay"
 import {useQueryImportOnDrop} from "../hooks"
-import {FillFlexParent} from "../pools-section/fill-flex-parent"
+import {FillFlexParent} from "src/components/fill-flex-parent"
 import QueryItem from "./query-item"
 
 type Props = {

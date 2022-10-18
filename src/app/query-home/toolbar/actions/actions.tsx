@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useState} from "react"
 import ActionButtons from "./action-buttons"
 import ActionMenu from "./action-menu"
-import {FillFlexParent} from "src/app/features/sidebar/pools-section/fill-flex-parent"
+import {FillFlexParent} from "src/components/fill-flex-parent"
 import MeasureLayer from "src/app/core/MeasureLayer"
 import {GUTTER} from "../actions/action-buttons"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
