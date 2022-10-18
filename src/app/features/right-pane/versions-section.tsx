@@ -1,17 +1,12 @@
-import React from "react"
+import React, {useMemo} from "react"
 import VersionItem from "./version-item"
-import {useSectionTreeDefaults} from "../sidebar/hooks"
 import {Tree} from "react-arborist"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
-import styled from "styled-components"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 import {EmptyText} from "./common"
-
-const SectionWrapper = styled.div`
-  flex: 1;
-  margin-top: 8px;
-`
+import {FillFlexParent} from "../sidebar/pools-section/fill-flex-parent"
+import {useBrimApi} from "src/app/core/context"
 
 const EmptyMessage = () => {
   return <EmptyText>Open a saved query to see the previous versions.</EmptyText>
@@ -27,18 +22,36 @@ const VersionsSection = () => {
 }
 
 const VersionsList = ({query}: {query: BrimQuery}) => {
-  const {resizeRef, defaults} = useSectionTreeDefaults()
+  const api = useBrimApi()
+  const data = useMemo(() => {
+    return query.versions
+      .map((v) => ({...v, id: v.version}))
+      .sort((a, b) => (a.ts < b.ts ? 1 : -1))
+  }, [query])
+
+  const currentId = useSelector(Current.getVersion)?.version ?? null
   return (
-    <SectionWrapper ref={resizeRef}>
-      <Tree
-        {...defaults}
-        data={query.versions
-          .map((v) => ({...v, id: v.version}))
-          .sort((a, b) => (a.ts < b.ts ? 1 : -1))}
-      >
-        {VersionItem}
-      </Tree>
-    </SectionWrapper>
+    <FillFlexParent>
+      {(dimens) => {
+        console.log(dimens)
+        return (
+          <Tree
+            {...dimens}
+            disableDrag
+            indent={16}
+            rowHeight={28}
+            padding={8}
+            data={data}
+            selection={currentId}
+            onActivate={(node) =>
+              api.queries.open(query.id, {version: node.id})
+            }
+          >
+            {VersionItem}
+          </Tree>
+        )
+      }}
+    </FillFlexParent>
   )
 }
 

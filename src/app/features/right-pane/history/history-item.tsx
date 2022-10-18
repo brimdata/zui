@@ -10,6 +10,7 @@ import {Timeline} from "./timeline"
 import {useEntryMenu} from "./use-entry-menu"
 import {State} from "src/js/state/types"
 import {ActiveQuery} from "src/app/core/models/active-query"
+import {NodeRendererProps} from "react-arborist"
 
 const Wrap = styled.div`
   height: 28px;
@@ -77,6 +78,7 @@ type Props = {
   version: string
   queryId: string
   index: number
+  id: string
 }
 
 function getType(active: ActiveQuery): EntryType {
@@ -110,8 +112,9 @@ function getTimestamp(active: ActiveQuery) {
   }
 }
 
-export function HistoryItem({version, queryId, index}: Props) {
+export function HistoryItem({node}: NodeRendererProps<Props>) {
   const api = useBrimApi()
+  const {index, queryId, version} = node.data
   const onContextMenu = useEntryMenu(index)
   const sessionId = useSelector(Current.getSessionId)
   const session = useSelector(Current.getSession)

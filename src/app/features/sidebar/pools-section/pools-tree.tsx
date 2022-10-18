@@ -28,9 +28,11 @@ export function PoolsTree(props: {searchTerm: string}) {
       {(dimens) => {
         return (
           <Tree
-            disableDrop={true}
+            disableDrag
+            disableDrop
             indent={16}
             rowHeight={28}
+            padding={8}
             height={dimens.height}
             width={dimens.width}
             data={pools}

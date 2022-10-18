@@ -3,7 +3,6 @@ import styled from "styled-components"
 export const Content = styled.div`
   flex: 1;
   position: relative;
-  padding-top: 6px;
   min-height: 0;
 
   &::before,

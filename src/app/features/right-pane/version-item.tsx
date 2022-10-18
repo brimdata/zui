@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react"
 import styled from "styled-components"
 import {formatDistanceToNowStrict} from "date-fns"
-import {useSelector} from "react-redux"
-import Current from "../../../js/state/Current"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {NodeRendererProps} from "react-arborist"
 
@@ -19,8 +17,10 @@ const Version = styled.div`
 `
 const Dot = styled.div`
   position: relative;
-  margin: 0 18px;
-  padding-bottom: 2.5em;
+  height: 100%;
+  height: 5px;
+  width: 5px;
+  margin: 0 16px;
 
   &:after {
     content: "";
@@ -29,7 +29,6 @@ const Dot = styled.div`
     width: 5px;
     border-radius: 50%;
     position: absolute;
-    top: 13px;
   }
 `
 
@@ -65,11 +64,10 @@ const BG = styled.div`
   border-radius: 6px;
 
   &:hover {
-    background: var(--sidebar-item-hover);
+    background-color: rgba(0, 0, 0, 0.04);
   }
-
   &:active {
-    background: var(--sidebar-item-active);
+    background-color: rgba(0, 0, 0, 0.06);
   }
 
   &[aria-selected="true"] {
@@ -107,21 +105,14 @@ const VersionItem = ({
   style,
   dragHandle,
 }: NodeRendererProps<QueryVersion & {id: string}>) => {
-  const queryVersion = node.data
-  const query = useSelector(Current.getNamedQuery)
-
   return (
     <Container>
-      <BG
-        ref={dragHandle}
-        aria-selected={query.current?.version === queryVersion.version}
-        style={style}
-      >
+      <BG ref={dragHandle} aria-selected={node.isSelected} style={style}>
         <TimeNode>
           <Dot />
-          <FormattedTime ts={queryVersion.ts} />
+          <FormattedTime ts={node.data.ts} />
         </TimeNode>
-        <Version>{queryVersion.value}</Version>
+        <Version>{node.data.value}</Version>
       </BG>
     </Container>
   )

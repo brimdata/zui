@@ -59,6 +59,8 @@ function QueryTree(props: {
         return (
           <Tree
             {...dimens}
+            padding={8}
+            disableDrag={props.type === "remote"}
             ref={tree}
             selection={id}
             className="sidebar-tree"
