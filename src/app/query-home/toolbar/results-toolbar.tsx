@@ -8,7 +8,6 @@ const BG = styled.section`
   justify-content: space-between;
   align-items: flex-start;
   padding: 6px 16px;
-  height: 42px;
 `
 
 export function ResultsToolbar() {

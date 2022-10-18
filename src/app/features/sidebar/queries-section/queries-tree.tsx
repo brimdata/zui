@@ -10,6 +10,8 @@ import Queries from "src/js/state/Queries"
 import {Group, Query} from "src/js/state/Queries/types"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {refreshRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"
+import {DropOverlay} from "../drop-overlay"
+import {useQueryImportOnDrop} from "../hooks"
 import {FillFlexParent} from "../pools-section/fill-flex-parent"
 import QueryItem from "./query-item"
 
@@ -53,63 +55,67 @@ function QueryTree(props: {
   const api = useBrimApi()
   const id = useSelector(Current.getQueryId)
   const tree = useRef<TreeApi<Query | Group>>()
+  const [{isOver}, drop] = useQueryImportOnDrop()
   return (
-    <FillFlexParent>
-      {(dimens) => {
-        return (
-          <Tree
-            {...dimens}
-            padding={8}
-            disableDrag={props.type === "remote"}
-            ref={tree}
-            selection={id}
-            className="sidebar-tree"
-            searchTerm={props.searchTerm}
-            searchMatch={(node, term) =>
-              node.data.name.toLowerCase().includes(term)
-            }
-            indent={16}
-            rowHeight={28}
-            data={props.queries}
-            getChildren="items"
-            onActivate={(node) => {
-              if (node.isLeaf && id !== node.id) api.queries.open(node.id)
-            }}
-            onMove={(args) => {
-              dispatch(
-                Queries.moveItems(args.dragIds, args.parentId, args.index)
-              )
-            }}
-            onRename={async (args) => {
-              await api.queries.update({
-                id: args.id,
-                changes: {name: args.name},
-              })
-            }}
-            onCreate={({type, parentId}) => {
-              if (type === "leaf") {
-                return api.queries.create({
-                  name: "",
-                  parentId,
-                  type: props.type,
+    <>
+      <DropOverlay show={isOver}>Drop to import...</DropOverlay>
+      <FillFlexParent ref={drop}>
+        {(dimens) => {
+          return (
+            <Tree
+              {...dimens}
+              padding={8}
+              disableDrag={props.type === "remote"}
+              ref={tree}
+              selection={id}
+              className="sidebar-tree"
+              searchTerm={props.searchTerm}
+              searchMatch={(node, term) =>
+                node.data.name.toLowerCase().includes(term)
+              }
+              indent={16}
+              rowHeight={28}
+              data={props.queries}
+              getChildren="items"
+              onActivate={(node) => {
+                if (node.isLeaf && id !== node.id) api.queries.open(node.id)
+              }}
+              onMove={(args) => {
+                dispatch(
+                  Queries.moveItems(args.dragIds, args.parentId, args.index)
+                )
+              }}
+              onRename={async (args) => {
+                await api.queries.update({
+                  id: args.id,
+                  changes: {name: args.name},
                 })
-              } else {
-                return api.queries.createGroup("", parentId)
-              }
-            }}
-            onDelete={(args) => {
-              deleteQueries.run(args.ids)
-            }}
-            onContextMenu={() => {
-              if (tree.current) {
-                queryTreeContextMenu.build(tree.current).show()
-              }
-            }}
-          >
-            {QueryItem}
-          </Tree>
-        )
-      }}
-    </FillFlexParent>
+              }}
+              onCreate={({type, parentId}) => {
+                if (type === "leaf") {
+                  return api.queries.create({
+                    name: "",
+                    parentId,
+                    type: props.type,
+                  })
+                } else {
+                  return api.queries.createGroup("", parentId)
+                }
+              }}
+              onDelete={(args) => {
+                deleteQueries.run(args.ids)
+              }}
+              onContextMenu={() => {
+                if (tree.current) {
+                  queryTreeContextMenu.build(tree.current).show()
+                }
+              }}
+            >
+              {QueryItem}
+            </Tree>
+          )
+        }}
+      </FillFlexParent>
+    </>
   )
 }

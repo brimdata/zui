@@ -1,4 +1,5 @@
 import React, {ReactElement} from "react"
+import mergeRefs from "src/app/core/utils/merge-refs"
 import styled from "styled-components"
 import useResizeObserver from "use-resize-observer"
 
@@ -14,11 +15,14 @@ const Container = styled.div`
   min-width: 0;
 `
 
-export function FillFlexParent(props: Props) {
+export const FillFlexParent = React.forwardRef(function FillFlexParent(
+  props: Props,
+  forwardRef
+) {
   const {ref, width, height} = useResizeObserver()
   return (
-    <Container ref={ref}>
+    <Container ref={mergeRefs(ref, forwardRef)}>
       {width && height ? props.children({width, height}) : null}
     </Container>
   )
-}
+})
