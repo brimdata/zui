@@ -1,27 +1,7 @@
-import useResizeObserver from "use-resize-observer"
 import {useDrop} from "react-dnd"
 import {NativeTypes} from "react-dnd-html5-backend"
 import {DragItem, DragProps} from "src/app/features/import/use-import-on-drop"
 import {useBrimApi} from "src/app/core/context"
-import {useMemo} from "react"
-import {useSelector} from "react-redux"
-import brim from "src/js/brim"
-import Investigation from "src/js/state/Investigation"
-
-export const useSectionTreeDefaults = () => {
-  const {ref, width = 1, height = 1} = useResizeObserver<HTMLDivElement>()
-  return {
-    resizeRef: ref,
-    defaults: {
-      indent: 16,
-      rowHeight: 28,
-      getChildren: "items",
-      isOpen: "isOpen",
-      width: width,
-      height: height,
-    },
-  }
-}
 
 export const useQueryImportOnDrop = () => {
   const api = useBrimApi()
@@ -37,14 +17,4 @@ export const useQueryImportOnDrop = () => {
       canDrop: m.canDrop(),
     }),
   }))
-}
-
-export const useSearchHistory = () => {
-  const historyEntries = useSelector(Investigation.getCurrentHistory)
-
-  return useMemo(() => {
-    return [...historyEntries].sort((a, b) =>
-      brim.time(a.ts).toDate() < brim.time(b.ts).toDate() ? 1 : -1
-    )
-  }, [historyEntries])
 }
