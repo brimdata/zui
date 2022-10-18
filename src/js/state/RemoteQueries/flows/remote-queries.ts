@@ -132,10 +132,7 @@ const loadRemoteQueries =
             queries.map((q) => q.id).join(", "),
         },
       })
-      queries.forEach((d) => {
-        console.log("pushing", d)
-        data.push(JSON.stringify(d))
-      })
+      queries.forEach((d) => data.push(JSON.stringify(d)))
       data.push(null)
       await loadPromise
     } catch (e) {
