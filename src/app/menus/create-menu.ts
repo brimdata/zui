@@ -5,7 +5,7 @@ import popupPosition from "../query-home/search-area/popup-position"
 
 type MenuItem =
   | Electron.MenuItemConstructorOptions & {
-      command?: string | {id: string} | BoundCommand<any>
+      command?: string | {id: string} | BoundCommand<any, any>
       nestedMenu?: Menu
     }
 

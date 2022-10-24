@@ -4,7 +4,7 @@ import {createOperation} from "../operations"
 
 export const runCommandOp = createOperation(
   "runCommand",
-  async ({main}, id: string | Command<any>, ...args: any[]) => {
+  async ({main}, id: string | Command<any, any>, ...args: any[]) => {
     const win = main.windows.byName("search")[0]
     const sendMessage = () => {
       win.ref.webContents.send("runCommand", getId(id), ...args)
@@ -20,7 +20,7 @@ export const runCommandOp = createOperation(
   }
 )
 
-function getId(idOrCmd: string | Command<any>) {
+function getId(idOrCmd: string | Command<any, any>) {
   if (isString(idOrCmd)) return idOrCmd
   else return idOrCmd.id
 }

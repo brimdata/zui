@@ -54,16 +54,19 @@ export const moveToSource = createCommand(
 
 export const copyToSource = createCommand(
   "queries.copyToSource",
-  async ({api, getState}, type: QuerySource) => {
+  async ({api, getState, dispatch}, type: QueriesView) => {
     const active = Current.getActiveQuery(getState())
     if (!active) return
     try {
       const query = active.query
-      await api.queries.create({
+      const newQuery = await api.queries.create({
         ...query.serialize(),
+        id: nanoid(),
         type,
         versions: query.versions,
       })
+      dispatch(Appearance.setQueriesView(type))
+      api.queries.open(newQuery.id)
       api.toast.success("Query Copied")
     } catch (e) {
       api.toast.error(`Copy Failed: ${e}`)
