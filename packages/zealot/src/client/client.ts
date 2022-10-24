@@ -52,9 +52,8 @@ export class Client {
     if (!pool) throw new Error("Missing required option 'pool'")
     const poolId = typeof pool === "string" ? pool : pool.id
     const branch = opts.branch || "main"
-    const headers = opts.message
-      ? {"Zed-Commit": json(opts.message)}
-      : undefined
+    let headers = <any>{"Content-Type": ""}
+    if (opts.message) headers["Zed-Commit"] = json(opts.message)
     const res = await this.send({
       path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: "POST",
