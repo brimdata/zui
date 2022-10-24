@@ -76,7 +76,7 @@ function QueryTree(props: {
               indent={16}
               rowHeight={28}
               data={props.queries}
-              getChildren="items"
+              childrenAccessor="items"
               onActivate={(node) => {
                 if (node.isLeaf && id !== node.id) api.queries.open(node.id)
               }}

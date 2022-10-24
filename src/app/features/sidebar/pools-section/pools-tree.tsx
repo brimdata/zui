@@ -23,7 +23,6 @@ export function PoolsTree(props: {searchTerm: string}) {
       <Empty message="You have no pools yet. Create a pool by importing data." />
     )
   }
-
   return (
     <FillFlexParent>
       {(dimens) => {

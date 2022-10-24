@@ -10,14 +10,14 @@ export const queryTreeContextMenu = createMenu(
         label: "New Query...",
         accelerator: "a",
         click: () => {
-          tree.createLeaf()
+          tree.create({type: "leaf", parentId: null})
         },
       },
       {
         label: "New Folder...",
         accelerator: "Shift+a",
         click: () => {
-          tree.createInternal()
+          tree.create({type: "internal", parentId: null})
         },
       },
     ]

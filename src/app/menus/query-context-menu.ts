@@ -11,7 +11,6 @@ export const queryContextMenu = createMenu(
   (_, tree: TreeApi<Query | Group>, node: NodeApi<Query | Group>) => {
     const ids = tree.selectedIds
     const multi = ids.has(node.id) && ids.size > 1
-
     return [
       {
         label: "New Query...",
