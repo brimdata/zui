@@ -39,7 +39,7 @@ export function PoolsTree(props: {searchTerm: string}) {
             data={pools}
             searchTerm={props.searchTerm}
             searchMatch={(node, term) =>
-              node.data.name.toLowerCase().includes(term)
+              node.data.name.toLowerCase().includes(term.toLowerCase())
             }
             selection={poolId}
             onRename={(args: {id: string; name: string}) => {

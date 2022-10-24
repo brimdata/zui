@@ -71,7 +71,7 @@ function QueryTree(props: {
               className="sidebar-tree"
               searchTerm={props.searchTerm}
               searchMatch={(node, term) =>
-                node.data.name.toLowerCase().includes(term)
+                node.data.name.toLowerCase().includes(term.toLowerCase())
               }
               indent={16}
               rowHeight={28}
