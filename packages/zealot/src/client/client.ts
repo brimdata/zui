@@ -59,6 +59,7 @@ export class Client {
       method: "POST",
       body: data,
       headers,
+      contentType: "",
       signal: opts.signal,
       fetch: nodeFetch,
       timeout: Infinity,
