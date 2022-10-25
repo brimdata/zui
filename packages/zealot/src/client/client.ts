@@ -1,6 +1,6 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
 import {isUndefined} from "lodash"
-import nodeFetch from "node-fetch"
+import nodeFetch, {Headers, HeadersInit} from "node-fetch"
 import {PoolConfig, PoolStats} from ".."
 import {ResultStream} from "../query/result-stream"
 import {createError} from "../util/error"
@@ -52,9 +52,8 @@ export class Client {
     if (!pool) throw new Error("Missing required option 'pool'")
     const poolId = typeof pool === "string" ? pool : pool.id
     const branch = opts.branch || "main"
-    const headers = opts.message
-      ? {"Zed-Commit": json(opts.message)}
-      : undefined
+    let headers = new Headers()
+    if (opts.message) headers.set("Zed-Commit", json(opts.message))
     const res = await this.send({
       path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: "POST",
@@ -77,6 +76,7 @@ export class Client {
       method: "POST",
       path: `/query?ctrl=${options.controlMessages}`,
       body: json({query}),
+      contentType: "application/json",
       format: options.format,
       signal: abortCtl.signal,
     })
@@ -95,6 +95,7 @@ export class Client {
       method: "POST",
       path: "/pool",
       body: json({name, layout}),
+      contentType: "application/json",
     }).then(toJS)
   }
 
@@ -134,6 +135,7 @@ export class Client {
       method: "PUT",
       path: `/pool/${poolId}`,
       body: json(args),
+      contentType: "application/json",
     })
     return true
   }
@@ -162,23 +164,27 @@ export class Client {
     format?: Types.ResponseFormat
     signal?: AbortSignal
     fetch?: Types.CrossFetch
-    headers?: object
+    headers?: HeadersInit
     timeout?: number
+    contentType?: string
   }) {
     const abortCtl = wrapAbort(opts.signal)
     const clearTimer = this.setTimeout(() => abortCtl.abort(), opts.timeout)
-    const fetch = opts.fetch || this.fetch
+    const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy
+    const headers = new Headers(opts.headers)
+    headers.set("Accept", accept(opts.format || "zjson"))
+    if (opts.contentType) {
+      headers.set("Content-Type", opts.contentType)
+    }
+    if (this.auth) {
+      headers.set("Authorization", `Bearer ${this.auth}`)
+    }
+
     const resp = await fetch(this.baseURL + opts.path, {
       method: opts.method,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: accept(opts.format || "zjson"),
-        ...this.authHeader,
-        ...opts.headers,
-      },
-      // @ts-ignore
+      signal: abortCtl.signal as any,
+      headers: headers,
       body: opts.body,
-      signal: abortCtl.signal,
     })
     clearTimer()
     if (resp.ok) {
@@ -186,10 +192,6 @@ export class Client {
     } else {
       return Promise.reject(createError(await parseContent(resp)))
     }
-  }
-
-  private get authHeader() {
-    return this.auth ? {Authorization: `Bearer ${this.auth}`} : undefined
   }
 
   private setTimeout(fn: () => void, ms?: number) {
