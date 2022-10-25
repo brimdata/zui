@@ -59,6 +59,7 @@ export class Client {
       method: "POST",
       body: data,
       headers,
+      contentType: "",
       signal: opts.signal,
       fetch: nodeFetch,
       timeout: Infinity,
@@ -173,7 +174,7 @@ export class Client {
     const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy
     const headers = new Headers(opts.headers)
     headers.set("Accept", accept(opts.format || "zjson"))
-    if (opts.contentType) {
+    if (opts.contentType !== undefined) {
       headers.set("Content-Type", opts.contentType)
     }
     if (this.auth) {
