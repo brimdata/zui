@@ -13783,9 +13783,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:2.0.0-rc":
-  version: 2.0.0-rc
-  resolution: "react-arborist@npm:2.0.0-rc"
+"react-arborist@npm:2.0.0-rc.2":
+  version: 2.0.0-rc.2
+  resolution: "react-arborist@npm:2.0.0-rc.2"
   dependencies:
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
@@ -13795,7 +13795,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: af45c655df281a5302aa45725a48998e60f44fb7f6659399bf0f6533a1f1fa7cf7a24390c5d59ae7ab48c0165a4dc40e3e9dc870d3cd4f3376346c661a0f1234
+  checksum: d5e0fdec981ace17cae293876404c1e4143643158f38e89299510e0b02b58445cbe00c54055e89b9d512a05c4e739688e888bcacd7fe2189398f9a05f83b3aa5
   languageName: node
   linkType: hard
 
@@ -17479,7 +17479,7 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^18.0.0
-    react-arborist: 2.0.0-rc
+    react-arborist: 2.0.0-rc.2
     react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0
