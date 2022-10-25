@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useMemo} from "react"
 import {Tree} from "react-arborist"
 import {useSelector} from "react-redux"
 import {deletePools} from "src/app/commands/delete-pools"
@@ -12,12 +12,15 @@ import Tabs from "src/js/state/Tabs"
 import {Empty} from "./empty"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import PoolItem from "./pool-item"
+import {groupBySlash} from "./group-by-slash"
 
 export function PoolsTree(props: {searchTerm: string}) {
   const dispatch = useDispatch()
   const poolId = usePoolId()
   const lakeId = useLakeId()
   const pools = useSelector(Current.getPools)
+  const data = useMemo(() => groupBySlash(pools), [pools])
+
   if (pools.length === 0) {
     return (
       <Empty message="You have no pools yet. Create a pool by importing data." />
@@ -35,7 +38,7 @@ export function PoolsTree(props: {searchTerm: string}) {
             padding={8}
             height={dimens.height}
             width={dimens.width}
-            data={pools}
+            data={data}
             searchTerm={props.searchTerm}
             searchMatch={(node, term) =>
               node.data.name.toLowerCase().includes(term.toLowerCase())
@@ -45,7 +48,9 @@ export function PoolsTree(props: {searchTerm: string}) {
               dispatch(renamePool(args.id, args.name))
             }}
             onActivate={(node) => {
-              dispatch(Tabs.previewUrl(lakePoolPath(node.id, lakeId)))
+              if (node.isLeaf) {
+                dispatch(Tabs.previewUrl(lakePoolPath(node.id, lakeId)))
+              }
             }}
             onDelete={(args) => deletePools.run(args.ids)}
           >
