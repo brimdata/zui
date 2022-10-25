@@ -6,7 +6,7 @@ import {createOperation} from "../operations"
 
 export const importQueriesOp = createOperation(
   "importQueries",
-  ({main}, filepath: string) => {
+  ({main}, filepath: string): {error: string} | {size: number; id: string} => {
     let json
     try {
       json = parseJSONLib(filepath)

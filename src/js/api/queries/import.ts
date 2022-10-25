@@ -7,8 +7,8 @@ export const queriesImport =
   (file: File): Thunk =>
   async (dispatch, __, {api}) => {
     const resp = await importQueriesOp.invoke(file.path)
-    console.log(resp)
-    if (resp.error) {
+
+    if ("error" in resp) {
       api.toast.error(resp.error)
     } else {
       const {id, size} = resp
