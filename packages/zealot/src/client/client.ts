@@ -172,8 +172,13 @@ export class Client {
     const clearTimer = this.setTimeout(() => abortCtl.abort(), opts.timeout)
     const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy
     const headers = new Headers(opts.headers)
-    if (opts.contentType) headers.set("Content-Type", opts.contentType)
     headers.set("Accept", accept(opts.format || "zjson"))
+    if (opts.contentType) {
+      headers.set("Content-Type", opts.contentType)
+    }
+    if (this.auth) {
+      headers.set("Authorization", `Bearer ${this.auth}`)
+    }
 
     const resp = await fetch(this.baseURL + opts.path, {
       method: opts.method,
@@ -187,10 +192,6 @@ export class Client {
     } else {
       return Promise.reject(createError(await parseContent(resp)))
     }
-  }
-
-  private get authHeader() {
-    return this.auth ? {Authorization: `Bearer ${this.auth}`} : undefined
   }
 
   private setTimeout(fn: () => void, ms?: number) {
