@@ -2,7 +2,7 @@ import {groupBySlash} from "./group-by-slash"
 
 test("group by slash", () => {
   const data = [{name: "mine / query1"}, {name: "base"}, {name: "a/b/c/d/e/f"}]
-  const result = groupBySlash(data)
+  const result = groupBySlash(data as any)
 
   expect(result).toEqual([
     {
