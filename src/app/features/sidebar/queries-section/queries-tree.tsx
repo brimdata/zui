@@ -14,6 +14,7 @@ import {DropOverlay} from "../drop-overlay"
 import {useQueryImportOnDrop} from "../hooks"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import QueryItem from "./query-item"
+import {selectQuery} from "src/app/events/select-query-event"
 
 type Props = {
   source: "local" | "remote"
@@ -56,6 +57,8 @@ function QueryTree(props: {
   const id = useSelector(Current.getQueryId)
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()
+  selectQuery.useListener((id) => tree.current.select(id))
+
   return (
     <>
       <DropOverlay show={isOver}>Drop to import...</DropOverlay>

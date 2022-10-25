@@ -28,6 +28,7 @@ const QueryItem = ({
       onToggle={() => node.toggle()}
       onContextMenu={() => queryContextMenu.build(tree, node).show()}
       onSubmit={(name) => node.submit(name)}
+      onClick={() => node.isOnlySelection && node.edit()}
     />
   )
 }

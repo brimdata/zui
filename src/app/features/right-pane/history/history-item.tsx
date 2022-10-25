@@ -100,7 +100,7 @@ function getValue(active: ActiveQuery) {
 }
 
 function getTimestamp(active: ActiveQuery) {
-  if (active.isDeleted()) return "-"
+  if (active.isDeleted() || !active.ts()) return "-"
   const isoString = active.ts()
   try {
     let text = formatDistanceToNowStrict(new Date(isoString))

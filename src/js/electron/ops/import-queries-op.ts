@@ -11,11 +11,11 @@ export const importQueriesOp = createOperation(
     try {
       json = parseJSONLib(filepath)
     } catch {
-      return ["File is not JSON", 0]
+      return {error: "File is not JSON"}
     }
     const {libRoot, versions} = json
     if (!isValidQueryGroup(libRoot)) {
-      return ["Incorrect query format", 0]
+      return {error: "Incorrect query format"}
     }
 
     main.store.dispatch(Queries.addItem(libRoot, "root"))
@@ -24,8 +24,8 @@ export const importQueriesOp = createOperation(
       const version = versions[queryId]
       main.store.dispatch(QueryVersions.at(queryId).sync([version]))
     }
-    console.log(Object.keys(versions))
-    return [null, Object.keys(versions).length]
+
+    return {size: Object.keys(versions).length, id: libRoot.id}
   }
 )
 

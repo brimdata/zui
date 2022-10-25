@@ -48,11 +48,15 @@ export class BrimQuery implements Query {
   }
 
   latestVersion(): QueryVersion {
-    return last(this.versions)
+    return last(this.versions) ?? null
   }
 
-  latestVersionId(): string {
-    return this.latestVersion().version
+  latestVersionId() {
+    if (this.latestVersion()) {
+      return this.latestVersion().version
+    } else {
+      return null
+    }
   }
 
   serialize(): Query {

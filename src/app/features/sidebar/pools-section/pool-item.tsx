@@ -26,6 +26,8 @@ const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
         if (e.altKey) {
           e.stopPropagation()
           updateFrom.run(node.data.name)
+        } else {
+          node.isOnlySelection && node.edit()
         }
       }}
     />
