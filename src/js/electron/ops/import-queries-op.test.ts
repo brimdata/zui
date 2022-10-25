@@ -27,5 +27,5 @@ test("import non-json data", () => {
 test("import json but not correct format", () => {
   const filepath = getPath("prs.json")
   const resp = importQueriesOp.run(filepath)
-  expect(resp).toBe({error: "Incorrect query format"})
+  expect(resp).toEqual({error: "Incorrect query format"})
 })
