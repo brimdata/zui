@@ -17,7 +17,6 @@ const checkFile = (path) => {
 export const useConfigsForm = (): FormConfig => {
   const dispatch = useDispatch()
   const configs = useSelector(Configs.all)
-
   const formConfig: FormConfig = {}
   configs.forEach((config) => {
     Object.values(config.properties).forEach((prop) => {

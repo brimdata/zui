@@ -37,6 +37,18 @@ export function activate(api: BrimApi) {
       },
     },
   })
+  api.configs.add({
+    name: "editor",
+    title: "Editor",
+    properties: {
+      runQueryOnEnter: {
+        name: "runQueryOnEnter",
+        label: "Run Query on Enter",
+        type: "boolean",
+        defaultValue: true,
+      },
+    },
+  })
 }
 
 export function deactivate() {}

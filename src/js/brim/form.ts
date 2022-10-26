@@ -62,7 +62,7 @@ function getFields(el, config) {
     const input = el.elements.namedItem(name)
     if (!input) throw new Error(`No input with name="${name}"`)
 
-    const value = input.value
+    const value = input.type === "checkbox" ? input.checked : input.value
     const safeCheck = check || ((_) => [true, ""])
     const safeSubmit = submit || ((_) => {})
 
