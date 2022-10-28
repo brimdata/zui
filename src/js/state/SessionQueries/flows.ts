@@ -32,7 +32,7 @@ export const create =
     dispatch(Versions.create(version))
     const versions = Versions.all(getState())
 
-    return new BrimQuery(query, versions)
+    return new BrimQuery(query, versions, "session")
   }
 
 export const init = (id: string) => (dispatch) => {

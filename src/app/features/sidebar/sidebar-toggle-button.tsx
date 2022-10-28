@@ -15,6 +15,7 @@ const Button = styled.button`
   border-radius: 50%;
   align-items: center;
   justify-content: center;
+  -webkit-app-region: no-drag;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.08);

@@ -1,34 +1,61 @@
 import BrimApi from "src/js/api"
-import {commands} from "../commands/command"
-import {handleDropdown} from "./handle-dropdown"
+import {showContextMenu} from "src/js/lib/System"
+import {BoundCommand, commands} from "../commands/command"
+import popupPosition from "../query-home/search-area/popup-position"
 
 type MenuItem =
   | Electron.MenuItemConstructorOptions & {
-      command?: string | {id: string}
+      command?: string | {id: string} | BoundCommand<any, any>
+      nestedMenu?: Menu
     }
 
 type MenuContext = {api: BrimApi}
-type MenuBuilder = (ctx: MenuContext) => MenuItem[]
+type MenuBuilder<Args extends any[]> = (
+  ctx: MenuContext,
+  ...args: Args
+) => MenuItem[]
 
-class Menu {
-  constructor(public id: string, public builder: MenuBuilder) {}
+class Menu<Args extends any[] = []> {
+  constructor(public id: string, public builder: MenuBuilder<Args>) {}
 
-  get dropdownHandler() {
-    return handleDropdown(this.id)
+  build(...args: Args) {
+    return new BuiltMenu(menus.build(this.id, ...args))
+  }
+}
+
+class BuiltMenu {
+  constructor(public template: Electron.MenuItemConstructorOptions[]) {}
+
+  show() {
+    showContextMenu(this.template)
+  }
+
+  showUnder(target: HTMLElement) {
+    showContextMenu(this.template, popupPosition(target))
   }
 }
 
 function toElectron(opts: MenuItem[]) {
   for (let opt of opts) {
     if ("command" in opt) {
-      opt.click = () => commands.run(opt.command)
+      const command = opt.command
+      delete opt.command
+      opt.click =
+        command instanceof BoundCommand
+          ? () => command.run()
+          : () => commands.run(command)
+    }
+    if ("nestedMenu" in opt) {
+      if (opt.nestedMenu instanceof Menu) {
+        opt.submenu = menus.build(opt.nestedMenu.id)
+      }
     }
   }
   return opts
 }
 
 class MenuManager {
-  map = new Map<string, Menu>()
+  map = new Map<string, Menu<any>>()
   ctx: MenuContext | null = null
 
   get context() {
@@ -40,24 +67,28 @@ class MenuManager {
     this.ctx = {api}
   }
 
-  add(menu: Menu) {
+  add(menu: Menu<any>) {
     this.map.set(menu.id, menu)
   }
 
-  build(id: string) {
+  build(id: string, ...args: any[]) {
     const menu = this.map.get(id)
     if (menu) {
-      return toElectron(menu.builder(this.context))
+      return toElectron(menu.builder(this.context, ...args))
     } else {
       throw new Error("No menu with id: " + id)
     }
   }
 }
 
-export const menus = new MenuManager()
-
-export function createMenu(id: string, builder: MenuBuilder) {
-  const menu = new Menu(id, builder)
+export function createMenu<Args extends any[] = []>(
+  id: string,
+  builder: MenuBuilder<Args>
+) {
+  const menu = new Menu<Args>(id, builder)
   menus.add(menu)
   return menu
 }
+
+/* The global object that stores all menus */
+export const menus = new MenuManager()

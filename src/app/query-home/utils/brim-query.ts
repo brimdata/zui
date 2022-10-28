@@ -1,11 +1,10 @@
 import {Query} from "src/js/state/Queries/types"
 import {isEmpty, last} from "lodash"
-import {QueryPin, QueryPinInterface} from "../../../js/state/Editor/types"
-import {nanoid} from "@reduxjs/toolkit"
+import {QueryPinInterface} from "../../../js/state/Editor/types"
 import {parseAst} from "@brimdata/zealot"
 import buildPin from "src/js/state/Editor/models/build-pin"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
-import brim from "src/js/brim"
+import {QuerySource} from "src/js/api/queries/types"
 
 export class BrimQuery implements Query {
   id: string
@@ -15,75 +14,49 @@ export class BrimQuery implements Query {
   isReadOnly?: boolean
   current: QueryVersion
   versions: QueryVersion[]
+  source: QuerySource
 
-  constructor(raw: Query, versions: QueryVersion[], current?: string) {
+  constructor(raw: Query, versions: QueryVersion[], source: QuerySource) {
     this.id = raw.id
     this.name = raw.name
+    this.source = source
     this.versions = versions
     this.description = raw.description || ""
     this.tags = raw.tags || []
     this.isReadOnly = raw.isReadOnly || false
-    // default current to latest version if none supplied
-    this.current = current
-      ? versions?.find((v) => v.version === current)
-      : last(versions)
+    this.current = last(versions)
   }
 
   get value() {
     return this.current?.value ?? ""
   }
+
   get pins() {
     return this.current?.pins ?? []
+  }
+
+  get isLocal() {
+    return this.source === "local"
+  }
+
+  get isRemote() {
+    return this.source === "remote"
   }
 
   hasVersion(version: string): boolean {
     return !!this.versions?.map((v) => v.version).includes(version)
   }
 
-  newVersion(value?: string, pins?: QueryPin[]) {
-    const newV: QueryVersion = {
-      value: value ?? "",
-      pins: pins ?? [],
-      version: nanoid(),
-      ts: new Date().toISOString(),
-    }
-    return new BrimQuery(this.serialize(), [...this.versions, newV])
-  }
-
-  getFromPin() {
-    const from = this.ast().proc("From")
-    if (!from) return null
-    const trunk = from.trunks.find((t) => t.source.kind === "Pool")
-    if (!trunk) return null
-    const name = trunk.source.spec.pool
-    if (!name) return null
-    return name
-  }
-
   latestVersion(): QueryVersion {
-    return last(this.versions)
+    return last(this.versions) ?? null
   }
 
-  latestVersionId(): string {
-    return this.latestVersion().version
-  }
-
-  getPoolName() {
-    return this.getFromPin()
-  }
-
-  private ast() {
-    let tree
-    try {
-      tree = parseAst(this.toString())
-    } catch (error) {
-      tree = {error}
+  latestVersionId() {
+    if (this.latestVersion()) {
+      return this.latestVersion().version
+    } else {
+      return null
     }
-    return brim.ast(tree)
-  }
-
-  checkSyntax() {
-    return BrimQuery.checkSyntax(this.current)
   }
 
   serialize(): Query {

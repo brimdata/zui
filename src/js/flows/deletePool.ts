@@ -5,7 +5,7 @@ import Pools from "../state/Pools"
 import SystemTest from "../state/SystemTest"
 import Handlers from "../state/Handlers"
 
-const deletePool =
+export const deleteOnePool =
   (poolId: string): Thunk<Promise<void>> =>
   async (dispatch, getState, {api}) => {
     const zealot = await api.getZealot()
@@ -30,5 +30,3 @@ const deletePool =
       dispatch(SystemTest.hook("pool-deleted"))
     })
   }
-
-export default deletePool

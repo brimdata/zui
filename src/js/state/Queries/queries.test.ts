@@ -219,14 +219,14 @@ test("move query, different group", () => {
 test("edit query", () => {
   store.dispatch(Queries.setAll(testLib))
 
-  store.dispatch(Queries.editItem(newQuery, "testId2"))
+  store.dispatch(Queries.editItem({id: "testId2", changes: newQuery}))
   expect(getGroup([0]).items[0]).toEqual(newQuery)
 })
 
 test("edit group", () => {
   store.dispatch(Queries.setAll(testLib))
 
-  store.dispatch(Queries.editItem(newGroup, "testId3"))
+  store.dispatch(Queries.editItem({id: "testId3", changes: newGroup}))
   expect(getGroup([0, 1])).toEqual(newGroup)
 })
 

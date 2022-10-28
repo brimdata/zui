@@ -28,6 +28,7 @@ const BG = styled.div`
   display: flex;
   height: 100%;
   grid-area: tabs;
+  -webkit-app-region: drag;
 `
 
 const Container = styled.div`

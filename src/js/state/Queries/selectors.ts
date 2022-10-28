@@ -10,7 +10,7 @@ export const raw = (state: State): QueriesState => state.queries
 export const find = (state: State, id: string): Query | null => {
   return new TreeModel({childrenPropertyName: "items"})
     .parse(state.queries)
-    .first((n) => n.model.id === id && !("items" in n.model))?.model
+    .first((n) => n.model.id === id)?.model
 }
 
 export const findRemoteQuery = (state: State, id: string): Query | null => {
@@ -32,9 +32,9 @@ export const build = createSelector(
   findSessionQuery,
   getQueryVersions,
   (localMeta, remoteMeta, sessionMeta, versions) => {
-    if (localMeta) return new BrimQuery(localMeta, versions)
-    if (remoteMeta) return new BrimQuery(remoteMeta, versions)
-    if (sessionMeta) return new BrimQuery(sessionMeta, versions)
+    if (localMeta) return new BrimQuery(localMeta, versions, "local")
+    if (remoteMeta) return new BrimQuery(remoteMeta, versions, "remote")
+    if (sessionMeta) return new BrimQuery(sessionMeta, versions, "session")
     return null
   }
 )
@@ -42,7 +42,7 @@ export const build = createSelector(
 export const makeBuildSelector = () => {
   return createSelector(find, getQueryVersions, (meta, versions) => {
     if (!meta) return null
-    return new BrimQuery(meta, versions)
+    return new BrimQuery(meta, versions, "local")
   })
 }
 

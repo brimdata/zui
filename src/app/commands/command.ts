@@ -11,17 +11,17 @@ type CommandContext = {
   api: BrimApi
 }
 
-type CommandExecutor<Args extends any[]> = (
+type CommandExecutor<Args extends any[], Return> = (
   context: CommandContext,
   ...args: Args
-) => void
+) => Return
 
 export class Commands {
-  private map = new Map<string, Command<any>>()
+  private map = new Map<string, Command<any, any>>()
   private store: Store | null
   private api: BrimApi | null
 
-  add(command: Command<any>) {
+  add(command: Command<any, any>) {
     this.map.set(command.id, command)
     return command
   }
@@ -51,8 +51,11 @@ export class Commands {
 
 export const commands = new Commands()
 
-export class Command<Args extends any[]> {
-  constructor(private meta: CommandMeta, private exec: CommandExecutor<Args>) {}
+export class Command<Args extends any[], Return> {
+  constructor(
+    private meta: CommandMeta,
+    private exec: CommandExecutor<Args, Return>
+  ) {}
 
   get id() {
     return this.meta.id
@@ -61,14 +64,30 @@ export class Command<Args extends any[]> {
   run(...args: Args) {
     return this.exec(commands.context, ...args)
   }
+
+  bind(...args: Args) {
+    return new BoundCommand<Args, Return>(this, args)
+  }
 }
 
-export const createCommand = <Args extends any[] = never>(
+export class BoundCommand<Args extends any[], Return> {
+  args: Args
+
+  constructor(public command: Command<Args, Return>, args: Args) {
+    this.args = args
+  }
+
+  run() {
+    return this.command.run(...this.args)
+  }
+}
+
+export const createCommand = <Args extends any[] = never, Return = void>(
   meta: CommandMeta | string,
-  exec: CommandExecutor<Args>
+  exec: CommandExecutor<Args, Return>
 ) => {
   const cmdMeta = typeof meta === "string" ? {id: meta} : meta
-  const cmd = new Command<Args>(cmdMeta, exec)
+  const cmd = new Command<Args, Return>(cmdMeta, exec)
   commands.add(cmd)
   return cmd
 }

@@ -1,43 +1,103 @@
 import {nanoid} from "@reduxjs/toolkit"
 import tabHistory from "src/app/router/tab-history"
 import {lakeQueryPath} from "src/app/router/utils/paths"
+import {exportQueryGroupOp} from "src/js/electron/ops/export-query-group-op"
 import Current from "src/js/state/Current"
-import Editor from "src/js/state/Editor"
 import Queries from "src/js/state/Queries"
-import {updateQuery} from "src/js/state/Queries/flows/update-query"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {
+  deleteRemoteQueries,
+  isRemoteLib,
+  appendRemoteQueries,
+} from "src/js/state/RemoteQueries/flows/remote-queries"
 import SessionHistories from "src/js/state/SessionHistories"
 import Tabs from "src/js/state/Tabs"
-import {JSONGroup} from "../../state/Queries/parsers"
 import {AppDispatch, GetState} from "../../state/types"
-import {queriesExport} from "./export"
 import {queriesImport} from "./import"
-import {OpenQueryOptions, QueryParams} from "./types"
+import {CreateQueryParams, OpenQueryOptions, QueryParams} from "./types"
+import {Query} from "src/js/state/Queries/types"
+import RemoteQueries from "src/js/state/RemoteQueries"
+import SessionQueries from "src/js/state/SessionQueries"
 
 export class QueriesApi {
   constructor(private dispatch: AppDispatch, private getState: GetState) {}
+
+  get allLocal() {
+    return Queries.raw(this.getState()).items
+  }
 
   import(file: File) {
     return this.dispatch(queriesImport(file))
   }
 
-  export(groupId: string): JSONGroup {
-    return this.dispatch(queriesExport(groupId))
+  export(groupId: string, filePath: string) {
+    return exportQueryGroupOp.invoke(groupId, filePath)
   }
 
-  create(name: string) {
-    const attrs = Editor.getSnapshot(this.getState())
-    return this.dispatch(Queries.create({name, ...attrs}))
+  find(id: string) {
+    return Queries.build(this.getState(), id)
+  }
+
+  async create(params: CreateQueryParams) {
+    const type = params.type ?? "local"
+    const query = {id: params.id ?? nanoid(), name: params.name ?? ""}
+    const versions = params.versions ?? [QueryVersions.initial()]
+
+    if (type === "local") {
+      this.dispatch(Queries.addItem(query, params.parentId))
+      versions.forEach((version) => this.addVersion(query.id, version))
+      return this.find(query.id)
+    } else if (type === "remote") {
+      const records = versions.map((version) => ({...query, ...version}))
+      await this.dispatch(appendRemoteQueries(records))
+      return this.find(query.id)
+    }
+  }
+
+  createGroup(name: string, parentId: string) {
+    const item = {name, id: nanoid(), items: []}
+    this.dispatch(Queries.addItem(item, parentId))
+    return item
+  }
+
+  async update(args: {id: string; changes: Partial<Query>}) {
+    switch (this.getSource(args.id)) {
+      case "local":
+        this.dispatch(Queries.editItem(args))
+        return true
+      case "remote":
+        var query = Queries.build(this.getState(), args.id)
+        if (!query) return false
+        var serialized = query.serialize()
+        var version = query.latestVersion()
+        var insert = {
+          ...serialized,
+          ...args.changes,
+          ...version,
+          ts: new Date().toISOString(),
+        }
+        await this.dispatch(appendRemoteQueries([insert]))
+        return true
+    }
+  }
+
+  async delete(id: string | string[]) {
+    const ids = Array.isArray(id) ? id : [id]
+    await Promise.all(
+      ids.map(async (id) => {
+        this.dispatch(QueryVersions.at(id).deleteAll())
+        if (this.dispatch(isRemoteLib([id]))) {
+          await this.dispatch(deleteRemoteQueries([id]))
+        } else {
+          this.dispatch(Queries.removeItems([id]))
+        }
+      })
+    )
   }
 
   rename(id: string, name: string) {
-    const query = Queries.build(this.getState(), id)
-    if (query) {
-      this.dispatch(updateQuery(query, {name}))
-    } else {
-      console.error("Could not find query with id: " + id)
-    }
+    this.update({id, changes: {name}})
   }
 
   addVersion(queryId: string, params: QueryVersion | QueryParams) {
@@ -46,6 +106,13 @@ export class QueriesApi {
     const version = {ts, version: id, ...params}
     this.dispatch(QueryVersions.at(queryId).create(version))
     return version
+  }
+
+  getSource(id: string) {
+    if (SessionQueries.find(this.getState(), id)) return "session"
+    if (Queries.find(this.getState(), id)) return "local"
+    if (RemoteQueries.find(this.getState(), id)) return "remote"
+    return null
   }
 
   /**
@@ -58,6 +125,8 @@ export class QueriesApi {
    * If it's not the same, push that url to the tab history
    * and optionally to the session history.
    * This is a candidate for a refactor
+   *
+   * TODO: This should be a command, not part of the api like this
    */
   open(id: string | QueryParams, options: Partial<OpenQueryOptions> = {}) {
     const opts = openQueryOptions(options)

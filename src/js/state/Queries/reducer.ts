@@ -7,11 +7,19 @@ const itemToNode = (item: Item): TreeModel.Node<Item> =>
 
 const getNodeById = (
   root: TreeModel.Node<Item>,
-  itemId: string
-): TreeModel.Node<Item> => root.first((n) => n.model.id === itemId)
+  itemId: string | null
+): TreeModel.Node<Item> => {
+  if (itemId === null) {
+    return root
+  } else {
+    return root.first((n) => n.model.id === itemId)
+  }
+}
+
+const TREE_ROOT_ID = "root"
 
 const init = () => ({
-  id: "root",
+  id: TREE_ROOT_ID,
   name: "root",
   isOpen: true,
   items: [],
@@ -70,10 +78,12 @@ export default produce((draft: QueriesState, action: QueriesAction) => {
 }, init())
 
 const moveItems = (queriesTree, action) => {
-  const parentNode = getNodeById(queriesTree, action.parentId)
+  const parentNode = getNodeById(queriesTree, action.parentId || TREE_ROOT_ID)
   action.itemIds.forEach((itemId) => {
     const node = getNodeById(queriesTree, itemId)
-    parentNode.addChildAtIndex(itemToNode(node.model), action.index)
-    node?.drop()
+    if (parentNode && node) {
+      parentNode.addChildAtIndex(itemToNode(node.model), action.index)
+      node.drop()
+    }
   })
 }
