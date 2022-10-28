@@ -155,7 +155,7 @@
     "polished": "^3.6.5",
     "prismjs": "^1.25.0",
     "react": "^18.0.0",
-    "react-arborist": "2.0.0-rc.2",
+    "react-arborist": "2.0.0",
     "react-dnd": "^14.0.5",
     "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^18.0.0",
@@ -178,7 +178,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#6737ae9f5cab127ca93cc055d3a37866f5a65b7e"
+    "zed": "brimdata/zed#0b61d603b8b5d908f1d5dc3bb04c0326a2e73bc2"
   },
   "peerDependencies": {
     "react": "^18.0.0",

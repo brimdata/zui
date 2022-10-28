@@ -7,6 +7,8 @@ import get from "lodash/get"
 import semver from "semver/preload"
 import open from "../lib/open"
 import {BrimMain} from "./brim"
+import links from "src/app/core/links"
+import brimPackage from "../../../package.json"
 
 const getFeedURLForPlatform = (repo, platform) => {
   return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
@@ -45,7 +47,10 @@ const autoUpdateLinux = async (main: BrimMain) => {
   }
 
   dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    const navUrl = "https://www.brimdata.io/download/"
+    const navUrl =
+      brimPackage.name == "zui-insiders"
+        ? brimPackage.repository + "/releases"
+        : links.ZUI_DOWNLOAD
     if (returnValue.response === 0) open(navUrl)
   })
 }

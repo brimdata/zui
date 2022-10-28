@@ -6,6 +6,7 @@ import React, {
   MouseEventHandler,
   ReactNode,
   Ref,
+  useRef,
 } from "react"
 import {NodeState} from "react-arborist"
 import Icon from "src/app/core/icon-temp"
@@ -162,17 +163,29 @@ function getClassNames(props: ItemProps) {
 }
 
 const Rename = (props: ItemProps) => {
+  const defaultValue = props.inputValue ?? props.text
+  const submitting = useRef(false)
+
+  function handleSubmit(value: string) {
+    if (submitting.current) return
+    value === defaultValue ? props.onReset() : props.onSubmit(value)
+    submitting.current = true
+  }
+
   return (
     <Input
-      type="text"
       autoFocus
-      defaultValue={props.inputValue ?? props.text}
+      type="text"
+      defaultValue={defaultValue}
+      onFocus={(e) => e.currentTarget.select()}
+      onBlur={(e) => handleSubmit(e.currentTarget.value)}
       onKeyDown={(e) => {
-        if (e.key === "Enter") props.onSubmit(e.currentTarget.value)
+        if (e.key === "Enter") {
+          e.stopPropagation()
+          handleSubmit(e.currentTarget.value)
+        }
         if (e.key === "Escape") props.onReset()
       }}
-      onFocus={(e) => e.currentTarget.select()}
-      onBlur={() => props.onReset()}
     />
   )
 }
