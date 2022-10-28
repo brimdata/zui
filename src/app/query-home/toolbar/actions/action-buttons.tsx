@@ -4,12 +4,11 @@ import ActionButton, {ActionButtonProps} from "./action-button"
 
 export const GUTTER = 8
 
-const BG = styled.div<{size: number}>`
+const BG = styled.div`
   display: flex;
   flex: 0 1 auto;
   overflow: hidden;
   justify-content: flex-end;
-  width: ${(p) => p.size}px;
 
   & > * {
     margin-right: ${GUTTER}px;
@@ -25,9 +24,9 @@ type Props = {
   width?: number
 }
 
-export default function ActionButtons({actions, width, innerRef}: Props) {
+export default function ActionButtons({actions, innerRef}: Props) {
   return (
-    <BG ref={innerRef} size={width}>
+    <BG ref={innerRef}>
       {actions.map((props, i) => (
         <ActionButton key={i} {...props} />
       ))}

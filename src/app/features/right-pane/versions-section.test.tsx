@@ -8,7 +8,7 @@ import {lakeQueryPath} from "../../router/utils/paths"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
-import {render, screen} from "src/test/unit/helpers"
+import {screen} from "src/test/unit/helpers"
 import ResizeObserver from "resize-observer-polyfill"
 import {SystemTest} from "src/test/system"
 
@@ -30,12 +30,13 @@ const testVersion2: QueryVersion = {
   pins: [],
 }
 
-beforeEach(() => {
+beforeEach(async () => {
   system.store.dispatch(Queries.addItem({id: testQueryId, name: "test query"}))
   system.store.dispatch(QueryVersions.at(testQueryId).create(testVersion1))
   system.store.dispatch(QueryVersions.at(testQueryId).create(testVersion2))
   system.navTo(lakeQueryPath(testQueryId, "testLakeId", testVersion2.version))
-  render(<VersionsSection />, {store: system.store, api: system.api})
+  system.render(<VersionsSection />)
+  await screen.findAllByText(/test value/i)
 })
 
 test("Display query version history in order", async () => {

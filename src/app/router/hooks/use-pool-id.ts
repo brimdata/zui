@@ -1,6 +1,6 @@
-import {useParams} from "react-router"
+import {useSelector} from "react-redux"
+import Current from "src/js/state/Current"
 
 export default function usePoolId() {
-  const {poolId} = useParams<{poolId: string}>()
-  return poolId
+  return useSelector(Current.getPoolId)
 }

@@ -11851,13 +11851,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memoize-one@npm:^6.0.0":
-  version: 6.0.0
-  resolution: "memoize-one@npm:6.0.0"
-  checksum: f185ea69f7cceae5d1cb596266dcffccf545e8e7b4106ec6aa93b71ab9d16460dd118ac8b12982c55f6d6322fcc1485de139df07eacffaae94888b9b3ad7675f
-  languageName: node
-  linkType: hard
-
 "memorystream@npm:^0.3.1":
   version: 0.3.1
   resolution: "memorystream@npm:0.3.1"
@@ -13790,18 +13783,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "react-arborist@npm:1.0.3"
+"react-arborist@npm:2.0.0":
+  version: 2.0.0
+  resolution: "react-arborist@npm:2.0.0"
   dependencies:
-    memoize-one: ^6.0.0
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
     react-window: ^1.8.6
+    redux: ^4.1.1
+    use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: af1abc02a2fd4d313d46bac7297535f19b63b76b25f6cd821dec669fd474dfd489445f869c79f0ad0562d07ae6c5b2d7046455c60d489a4c7a122f3b8da16710
+  checksum: 9c67f211e108dd21795239d5d9a4dddc3e0c8a98dc685ae81c5590170ec5a84b0ba89d63961059755a68b0bf8b526ec74da1e7bf179ab883fba271b4b6bb449d
   languageName: node
   linkType: hard
 
@@ -16692,6 +16686,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"use-sync-external-store@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "use-sync-external-store@npm:1.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 5c639e0f8da3521d605f59ce5be9e094ca772bd44a4ce7322b055a6f58eeed8dda3c94cabd90c7a41fb6fa852210092008afe48f7038792fd47501f33299116a
+  languageName: node
+  linkType: hard
+
 "use@npm:^3.1.0":
   version: 3.1.1
   resolution: "use@npm:3.1.1"
@@ -17476,7 +17479,7 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^18.0.0
-    react-arborist: ^1.0.3
+    react-arborist: 2.0.0
     react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0

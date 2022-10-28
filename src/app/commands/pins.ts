@@ -32,6 +32,14 @@ export const createFrom = createCommand<[value?: string]>(
   }
 )
 
+export const updateFrom = createCommand(
+  "pins.updateFrom",
+  ({dispatch}, value: string) => {
+    dispatch(Editor.setFrom(value))
+    dispatch(submitSearch())
+  }
+)
+
 export const createTimeRange = createCommand(
   "pins.createTimeRange",
   async ({dispatch, api, getState}) => {

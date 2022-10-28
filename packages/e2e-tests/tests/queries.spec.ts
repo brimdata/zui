@@ -26,12 +26,13 @@ test.describe("Query tests", () => {
     await app.query("2")
     await app.query("3")
     const history = await app.mainWin.locator(
-      'div[aria-label="history-pane"] > div > div > p'
+      '[aria-label="history-pane"] [role="treeitem"]'
     )
     const entries = await history.evaluateAll<string[], HTMLElement>((nodes) =>
-      nodes.map((n) => n.innerText.trim())
+      nodes.map((n) => n.innerText.trim().replaceAll(/\s+/g, " "))
     )
-    expect(entries).toEqual(["3", "now", "2", "now", "1", "now"])
+
+    expect(entries).toEqual(["3 now", "2 now", "1 now"])
 
     await expect(await app.mainWin.locator("_react=HeadingSaved")).toBeHidden()
   })

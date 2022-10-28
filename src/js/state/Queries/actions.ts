@@ -1,3 +1,4 @@
+import {Update} from "@reduxjs/toolkit"
 import {
   Group,
   Item,
@@ -25,10 +26,10 @@ export default {
     type: "$QUERIES_REMOVE_ITEMS",
     itemIds,
   }),
-  editItem: (item: Partial<Item>, itemId: string): QUERIES_EDIT_ITEM => ({
+  editItem: (args: Update<Item>): QUERIES_EDIT_ITEM => ({
     type: "$QUERIES_EDIT_ITEM",
-    item,
-    itemId,
+    item: args.changes,
+    itemId: args.id.toString(),
   }),
   moveItems: (
     itemIds: string[],

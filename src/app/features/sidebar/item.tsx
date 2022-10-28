@@ -2,15 +2,14 @@ import classNames from "classnames"
 import {isNumber, isUndefined} from "lodash"
 import React, {
   HTMLAttributes,
+  KeyboardEventHandler,
   MouseEventHandler,
   ReactNode,
   Ref,
-  useLayoutEffect,
   useRef,
 } from "react"
 import {NodeState} from "react-arborist"
 import Icon from "src/app/core/icon-temp"
-import useOutsideClick from "src/js/components/hooks/useOutsideClick"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
 import styled, {CSSProperties} from "styled-components"
 
@@ -57,6 +56,10 @@ const BG = styled.div`
 
   &.droppable {
     background: rgb(0 0 0 / 0.1);
+  }
+
+  [aria-role="tree-item"]:focus-visible & {
+    background-color: var(--primary-color-light);
   }
 
   &[aria-selected="true"] {
@@ -133,7 +136,12 @@ function ItemIcon(props: ItemProps) {
 function Toggle(props: ItemProps) {
   if (!props.isFolder) return null
   return (
-    <ToggleLink>
+    <ToggleLink
+      onClick={(e) => {
+        e.stopPropagation()
+        props.onToggle()
+      }}
+    >
       <Icon name={`chevron-${props.state.isOpen ? "down" : "right"}`} />
     </ToggleLink>
   )
@@ -148,34 +156,43 @@ function getClassNames(props: ItemProps) {
   return classNames({
     "selected-start": oneSelection || props.state?.isSelectedStart,
     "selected-end": oneSelection || props.state?.isSelectedEnd,
-    droppable: props.state?.isHoveringOverChild,
+    droppable: props.state?.willReceiveDrop,
     dragging: props.state?.isDragging,
+    "is-focused": props.state?.isFocused,
   })
 }
 
-const Rename = ({defaultValue, onSubmit}) => {
-  const input = useRef(null)
-  useLayoutEffect(() => input.current && input.current.select(), [])
-  useOutsideClick(input, () => onSubmit(input.current.value))
-  const onKey = (e) => {
-    if (e.key === "Enter") onSubmit(input.current.value)
-    else if (e.key === "Escape") onSubmit(defaultValue)
+const Rename = (props: ItemProps) => {
+  const defaultValue = props.text
+  const submitting = useRef(false)
+
+  function handleSubmit(value: string) {
+    if (submitting.current) return
+    value === defaultValue ? props.onReset() : props.onSubmit(value)
+    submitting.current = true
   }
 
   return (
     <Input
-      ref={input}
-      onKeyDown={onKey}
-      type="text"
       autoFocus
+      type="text"
       defaultValue={defaultValue}
+      onFocus={(e) => e.currentTarget.select()}
+      onBlur={(e) => handleSubmit(e.currentTarget.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          e.stopPropagation()
+          handleSubmit(e.currentTarget.value)
+        }
+        if (e.key === "Escape") props.onReset()
+      }}
     />
   )
 }
 
 function Content(props: ItemProps) {
   if (props.state?.isEditing) {
-    return <Rename defaultValue={props.text} onSubmit={props.onSubmit} />
+    return <Rename {...props} />
   } else {
     return <Name>{props.text}</Name>
   }
@@ -200,6 +217,9 @@ type ItemProps = {
   onDoubleClick?: MouseEventHandler
   onContextMenu?: MouseEventHandler
   onSubmit?: (text: string) => void
+  onReset?: () => void
+  onToggle?: () => void
+  onKeyPress?: KeyboardEventHandler
   state?: NodeState
   innerRef?: Ref<HTMLDivElement>
   isFolder?: boolean
@@ -209,7 +229,6 @@ type ItemProps = {
 export function Item(props: ItemProps) {
   return (
     <Container
-      tabIndex={0}
       style={props.style}
       ref={props.innerRef}
       title={props.text}
@@ -222,6 +241,7 @@ export function Item(props: ItemProps) {
         onClick={props.onClick}
         onContextMenu={props.onContextMenu}
         onDoubleClick={props.onDoubleClick}
+        onKeyPress={props.onKeyPress}
       >
         <Toggle {...props} />
         <ItemIcon {...props} />

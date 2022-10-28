@@ -49,8 +49,11 @@ export const serializeQueryLib = (
 ): JSONGroup => {
   // remove internal keys
   const jsonGroup = cloneDeep(group)
-  flattenItemTree(jsonGroup).forEach((item) => {
+  const flat = flattenItemTree(jsonGroup)
+  flat.forEach((item) => {
+    if ("items" in item) return
     const queryVs = versions[item.id]
+    if (!queryVs) return
     const {value, pins} = queryVs.entities[last(queryVs.ids)]
     item.value = value
     item.pins = pins

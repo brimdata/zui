@@ -14,21 +14,18 @@ beforeEach(async () => {
 
 test("import valid queries", () => {
   const filepath = getPath("brimcap-queries.json")
-  const [error, count] = importQueriesOp.run(filepath)
-  expect(error).toBe(null)
-  expect(count).toBe(12)
+  const resp = importQueriesOp.run(filepath)
+  expect(resp).toEqual({size: 12, id: expect.any(String)})
 })
 
 test("import non-json data", () => {
   const filepath = getPath("small-zeek.zng")
-  const [error, count] = importQueriesOp.run(filepath)
-  expect(error).toBe("File is not JSON")
-  expect(count).toBe(0)
+  const resp = importQueriesOp.run(filepath)
+  expect(resp).toEqual({error: "File is not JSON"})
 })
 
 test("import json but not correct format", () => {
   const filepath = getPath("prs.json")
-  const [error, count] = importQueriesOp.run(filepath)
-  expect(error).toBe("Incorrect query format")
-  expect(count).toBe(0)
+  const resp = importQueriesOp.run(filepath)
+  expect(resp).toEqual({error: "Incorrect query format"})
 })

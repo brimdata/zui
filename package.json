@@ -32,7 +32,8 @@
     "prerelease": "yarn build",
     "release": "electron-builder --mac",
     "postinstall": "node scripts/post-install",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "watch:types": "yarn lint:tsc --watch"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",
@@ -154,7 +155,7 @@
     "polished": "^3.6.5",
     "prismjs": "^1.25.0",
     "react": "^18.0.0",
-    "react-arborist": "^1.0.3",
+    "react-arborist": "2.0.0",
     "react-dnd": "^14.0.5",
     "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^18.0.0",
