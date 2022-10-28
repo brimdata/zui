@@ -7,10 +7,12 @@ import {Item} from "../item"
 import {NodeRendererProps} from "react-arborist"
 import {poolContextMenu} from "src/app/menus/pool-context-menu"
 import {updateFrom} from "src/app/commands/pins"
+import {useAfterDelayOf} from "src/app/core/hooks/use-after-delay-of"
 
 const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
   const pool = node.data
   const ingest = useSelector(Ingests.get(pool.id))
+  const afterDelayOf = useAfterDelayOf()
 
   return (
     <Item
@@ -21,13 +23,16 @@ const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
       innerStyle={style}
       onContextMenu={() => poolContextMenu.build(tree, node).show()}
       onSubmit={(name: string) => node.submit(name)}
+      onReset={() => node.reset()}
       progress={ingest?.progress}
       onClick={(e) => {
         if (e.altKey) {
           e.stopPropagation()
           updateFrom.run(node.data.name)
         } else {
-          node.isOnlySelection && node.edit()
+          afterDelayOf(480, () => {
+            node.isOnlySelection && node.edit()
+          })
         }
       }}
     />
