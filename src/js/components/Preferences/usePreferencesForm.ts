@@ -2,7 +2,7 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import Configs from "src/js/state/Configs"
-import {FormConfig} from "../../brim/form"
+import {FormConfig, FormFieldConfig} from "../../brim/form"
 import {executeCommand} from "../../flows/executeCommand"
 import lib from "../../lib"
 
@@ -55,7 +55,7 @@ export const useConfigsForm = (): FormConfig => {
         submit,
         check,
         helpLink,
-      }
+      } as FormFieldConfig
     })
   })
 

@@ -1,11 +1,7 @@
-import {ConfigItemType} from "../state/Configs"
-
-export type FormFieldConfig = {
-  configName?: string
-  defaultValue?: string
-  type?: ConfigItemType
+type Common = {
   name: string
   label: string
+  configName?: string
   check?: (arg0: string) => FormCheckResult
   submit?: (arg0: string) => void
   enum?: string[]
@@ -14,6 +10,16 @@ export type FormFieldConfig = {
     url: string
   }
 }
+export type StringField = Common & {type: "string"; defaultValue: string}
+export type BooleanField = Common & {type: "boolean"; defaultValue: boolean}
+export type FileField = Common & {type: "file"; defaultValue: string}
+export type DirectoryField = Common & {type: "directory"; defaultValue: string}
+
+export type FormFieldConfig =
+  | StringField
+  | BooleanField
+  | FileField
+  | DirectoryField
 
 export type FormConfig = {
   [key: string]: FormFieldConfig

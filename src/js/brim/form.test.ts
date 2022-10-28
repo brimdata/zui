@@ -3,6 +3,7 @@ import {FormConfig} from "./form"
 
 const sampleConfig = (): FormConfig => ({
   username: {
+    type: "string",
     label: "Username",
     name: "username",
     defaultValue: "joe",
