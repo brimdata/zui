@@ -60,7 +60,7 @@ function getFields(el, config) {
   for (const key in config) {
     const {name, label, check, submit} = config[key]
     const input = el.elements.namedItem(name)
-    if (!input) throw new Error(`No input with name="${name}"`)
+    if (!input) continue
 
     const value = input.value
     const safeCheck = check || ((_) => [true, ""])
