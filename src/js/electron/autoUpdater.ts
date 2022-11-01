@@ -49,7 +49,7 @@ const autoUpdateLinux = async (main: BrimMain) => {
   dialog.showMessageBox(dialogOpts).then((returnValue) => {
     const navUrl =
       brimPackage.name == "zui-insiders"
-        ? brimPackage.repository + "/releases"
+        ? brimPackage.repository + "/releases/latest"
         : links.ZUI_DOWNLOAD
     if (returnValue.response === 0) open(navUrl)
   })
