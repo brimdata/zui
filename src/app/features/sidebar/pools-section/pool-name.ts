@@ -6,16 +6,16 @@ export class PoolName {
   }
 
   get group() {
-    const parts = this.parts
-    return parts.slice(0, parts.length - 1).map((s) => s.trim())
+    const parts = this.parts.map((p) => p.trim())
+    return parts.slice(0, parts.length - 1)
   }
 
   get basename() {
-    const parts = this.parts
-    return parts[parts.length - 1].trim()
+    const parts = this.parts.map((p) => p.trim())
+    return parts[parts.length - 1]
   }
 
   isIn(group: string[]) {
-    return group.every((dir, index) => dir.trim() === this.group[index].trim())
+    return group.every((dir, index) => dir.trim() === this.group[index])
   }
 }
