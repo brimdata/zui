@@ -1,5 +1,5 @@
-import React, {useMemo} from "react"
-import {NodeApi, Tree} from "react-arborist"
+import React, {useMemo, useRef} from "react"
+import {NodeApi, Tree, TreeApi} from "react-arborist"
 import {useSelector} from "react-redux"
 import {deletePools} from "src/app/commands/delete-pools"
 import {useDispatch} from "src/app/core/state"
@@ -17,6 +17,7 @@ import * as poolCmd from "src/app/commands/pools"
 import Config from "src/js/state/Config"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "./pool-name"
+import Appearance from "src/js/state/Appearance"
 
 export function PoolsTree(props: {searchTerm: string}) {
   const dispatch = useDispatch()
@@ -29,6 +30,8 @@ export function PoolsTree(props: {searchTerm: string}) {
     () => groupByDelimeter(pools, delimeter),
     [pools, delimeter]
   )
+  const initialOpenState = useSelector(Appearance.getPoolsOpenState)
+  const tree = useRef<TreeApi<any>>()
 
   if (data.length === 0) {
     return (
@@ -41,6 +44,12 @@ export function PoolsTree(props: {searchTerm: string}) {
       {(dimens) => {
         return (
           <Tree
+            ref={tree}
+            initialOpenState={initialOpenState}
+            onToggle={() => {
+              const t = tree.current
+              if (t) dispatch(Appearance.setPoolsOpenState(t.openState))
+            }}
             disableDrag
             disableDrop
             indent={16}
@@ -48,6 +57,7 @@ export function PoolsTree(props: {searchTerm: string}) {
             padding={8}
             height={dimens.height}
             width={dimens.width}
+            openByDefault={false}
             data={data}
             searchTerm={props.searchTerm}
             searchMatch={(node, term) =>
