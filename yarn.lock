@@ -13783,9 +13783,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@file:../react-arborist/packages/react-arborist::locator=zui%40workspace%3A.":
-  version: 2.0.0
-  resolution: "react-arborist@file:../react-arborist/packages/react-arborist#../react-arborist/packages/react-arborist::hash=c0ca01&locator=zui%40workspace%3A."
+"react-arborist@npm:2.1.0":
+  version: 2.1.0
+  resolution: "react-arborist@npm:2.1.0"
   dependencies:
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
@@ -13795,7 +13795,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: c576b8af3e3f392456b2089eb626b0abf7c28c9eb0bf1bceead1817f573dcfe7683c658f1e3bb1e363669496ca2b052fa364a4f94c94ae81a826453bfe7051c9
+  checksum: bab15393a7d2921293092db244a1053ce399eb413fbd9ae2d38770101fa88f8853d3268d6ecfb2e3bce7567d3b7416ca2072ecdd73361b329182be4f36fb0ffa
   languageName: node
   linkType: hard
 
@@ -17479,7 +17479,7 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^18.0.0
-    react-arborist: "file:../react-arborist/packages/react-arborist"
+    react-arborist: 2.1.0
     react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0
