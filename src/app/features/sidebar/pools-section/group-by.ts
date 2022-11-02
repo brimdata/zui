@@ -8,7 +8,7 @@ export type Internal = {
   children: (Pool | Internal)[]
 }
 
-export function groupBySlash(data: Pool[], delimeter: string) {
+export function groupByDelimeter(data: Pool[], delimeter: string) {
   const tree: (Pool | Internal)[] = []
   for (let pool of data) {
     const poolName = new PoolName(pool.name, delimeter)

@@ -28,7 +28,7 @@ export const renameGroup = createCommand(
     }
 
     const promise = api.pools.update(changes)
-    api.toast
+    return api.toast
       .promise(promise, {
         success: "Renamed pools",
         loading: "Renaming pools...",

@@ -11,7 +11,7 @@ import Tabs from "src/js/state/Tabs"
 import {Empty} from "./empty"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import PoolItem from "./pool-item"
-import {groupBySlash, Internal} from "./group-by"
+import {groupByDelimeter, Internal} from "./group-by"
 import {useBrimApi} from "src/app/core/context"
 import * as poolCmd from "src/app/commands/pools"
 import Config from "src/js/state/Config"
@@ -25,7 +25,10 @@ export function PoolsTree(props: {searchTerm: string}) {
   const api = useBrimApi()
   const pools = useSelector(Current.getPools)
   const delimeter = useSelector(Config.getPoolNameDelimeter)
-  const data = useMemo(() => groupBySlash(pools, delimeter), [pools, delimeter])
+  const data = useMemo(
+    () => groupByDelimeter(pools, delimeter),
+    [pools, delimeter]
+  )
 
   if (data.length === 0) {
     return (
