@@ -15,7 +15,7 @@ export class PoolName {
     return parts[parts.length - 1]
   }
 
-  within(group: string[]) {
+  isIn(group: string[]) {
     return group.every((dir, index) => dir === this.group[index])
   }
 }

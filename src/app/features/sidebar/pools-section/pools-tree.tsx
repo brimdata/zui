@@ -69,7 +69,7 @@ export function PoolsTree(props: {searchTerm: string}) {
                 if (isInternal(node)) {
                   for (let pool of api.pools.all) {
                     const poolName = new PoolName(pool.name, delimeter)
-                    if (poolName.within(node.data.group)) ids.add(pool.id)
+                    if (poolName.isIn(node.data.group)) ids.add(pool.id)
                   }
                 } else {
                   ids.add(node.id)

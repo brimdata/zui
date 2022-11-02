@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 
+import {renameGroup} from "src/app/commands/pools"
 import {SystemTest} from "src/test/system"
 import {PoolsApi} from "./pools-api"
 
@@ -22,9 +23,7 @@ test("rename pool", async () => {
 })
 
 test("rename group", async () => {
-  for (let pool of pools.all) {
-    await pools.delete(pool.id)
-  }
+  for (let pool of pools.all) await pools.delete(pool.id)
 
   await pools.create("backups/2022/jan")
   await pools.create("backups/ 2022/ feb")
@@ -35,15 +34,8 @@ test("rename group", async () => {
   await pools.create("production/native / logs")
   await pools.create("root")
 
-  await pools.renameGroup({
-    group: ["backups", "2022"],
-    changes: {group: ["backups", "2023"]},
-  })
-
-  await pools.renameGroup({
-    group: ["production"],
-    changes: {group: ["prod"]},
-  })
+  await renameGroup.run(["backups", "2022"], "2023")
+  await renameGroup.run(["production"], "prod")
 
   expect(pools.all.map((p) => p.name)).toEqual([
     "backups/ 2023 / march",
