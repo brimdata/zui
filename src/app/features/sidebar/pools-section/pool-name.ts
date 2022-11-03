@@ -2,6 +2,7 @@ export class PoolName {
   constructor(public name: string, public delimeter: string) {}
 
   get parts() {
+    if (this.delimeter === "") return [this.name]
     return this.name.split(this.delimeter)
   }
 
