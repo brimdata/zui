@@ -19,6 +19,9 @@ test("group by slash", () => {
         "name": "mine",
       },
       Object {
+        "name": "base",
+      },
+      Object {
         "children": Array [
           Object {
             "children": Array [
