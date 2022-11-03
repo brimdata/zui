@@ -15,6 +15,7 @@ import {useQueryImportOnDrop} from "../hooks"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import QueryItem from "./query-item"
 import {selectQuery} from "src/app/events/select-query-event"
+import Appearance from "src/js/state/Appearance"
 
 type Props = {
   source: "local" | "remote"
@@ -57,6 +58,7 @@ function QueryTree(props: {
   const id = useSelector(Current.getQueryId)
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()
+  const initialOpenState = useSelector(Appearance.getQueriesOpenState)
   selectQuery.useListener((id) => tree.current.select(id))
 
   return (
@@ -67,6 +69,12 @@ function QueryTree(props: {
           return (
             <Tree
               {...dimens}
+              onToggle={() => {
+                const t = tree.current
+                if (t) dispatch(Appearance.setQueriesOpenState(t.openState))
+              }}
+              initialOpenState={initialOpenState}
+              openByDefault={false}
               padding={8}
               disableDrag={props.type === "remote"}
               ref={tree}

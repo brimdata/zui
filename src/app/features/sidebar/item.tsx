@@ -163,7 +163,7 @@ function getClassNames(props: ItemProps) {
 }
 
 const Rename = (props: ItemProps) => {
-  const defaultValue = props.text
+  const defaultValue = props.inputValue ?? props.text
   const submitting = useRef(false)
 
   function handleSubmit(value: string) {
@@ -219,6 +219,7 @@ type ItemProps = {
   onSubmit?: (text: string) => void
   onReset?: () => void
   onToggle?: () => void
+  inputValue?: string
   onKeyPress?: KeyboardEventHandler
   state?: NodeState
   innerRef?: Ref<HTMLDivElement>

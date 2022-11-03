@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {State} from "../types"
-import {HistoryView, QueriesView, SectionName} from "./types"
+import {HistoryView, QueriesView, SectionName, OpenMap} from "./types"
 
 const init = () => ({
   sidebarIsOpen: true,
@@ -10,6 +10,8 @@ const init = () => ({
   currentSectionName: "pools" as SectionName,
   queriesView: "local" as QueriesView,
   historyView: "linear" as HistoryView,
+  poolsOpenState: {} as OpenMap,
+  queriesOpenState: {} as OpenMap,
 })
 
 const select = {
@@ -19,6 +21,8 @@ const select = {
   getCurrentSectionName: (state: State) => state.appearance.currentSectionName,
   getQueriesView: (state: State) => state.appearance.queriesView,
   getHistoryView: (state: State) => state.appearance.historyView,
+  getPoolsOpenState: (state: State) => state.appearance.poolsOpenState,
+  getQueriesOpenState: (state: State) => state.appearance.queriesOpenState,
 }
 
 // This is the window level appearance state
@@ -40,6 +44,12 @@ const slice = createSlice({
     },
     setHistoryView: (s, a: PayloadAction<HistoryView>) => {
       s.historyView = a.payload
+    },
+    setQueriesOpenState: (s, a: PayloadAction<OpenMap>) => {
+      s.queriesOpenState = a.payload
+    },
+    setPoolsOpenState: (s, a: PayloadAction<OpenMap>) => {
+      s.poolsOpenState = a.payload
     },
   },
 })
