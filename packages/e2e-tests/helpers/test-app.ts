@@ -22,8 +22,8 @@ export default class TestApp {
     this.zealot = new Client("http://localhost:9867")
   }
 
-  find(text: string) {
-    return this.mainWin.locator(text)
+  find(...args: Parameters<Page["locator"]>) {
+    return this.mainWin.locator(...args)
   }
 
   async init() {
