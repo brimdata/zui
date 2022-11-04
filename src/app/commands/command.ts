@@ -14,7 +14,7 @@ type CommandContext = {
 type CommandExecutor<Args extends any[], Return> = (
   context: CommandContext,
   ...args: Args
-) => Return
+) => Return | Promise<Return>
 
 export class Commands {
   private map = new Map<string, Command<any, any>>()

@@ -5,6 +5,8 @@ import {Client} from "./client"
 import {removeSync} from "fs-extra"
 import fs from "fs"
 
+jest.setTimeout(10_000)
+
 const root = path.join(__dirname, "..", "..", "run", "client.test.ts", "root")
 const logs = path.join(__dirname, "..", "..", "run", "client.test.ts", "logs")
 const lake = new Lake({root, port: 9000, logs})

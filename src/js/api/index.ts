@@ -1,7 +1,7 @@
 import {Abortables} from "src/app/core/models/abortables"
 import toast from "react-hot-toast"
 import {getZealot} from "./core/get-zealot"
-import {AppDispatch, State} from "../state/types"
+import {AppDispatch, GetState} from "../state/types"
 import {QueriesApi} from "./queries/queries-api"
 import {PoolsApi} from "./pools/pools-api"
 import {getPath, PathName} from "./core/get-path"
@@ -32,15 +32,16 @@ export default class BrimApi {
     search: new MenusApi<Search>(),
     detail: new MenusApi<Detail>(),
   }
+  public dispatch: AppDispatch
+  public getState: GetState
 
-  private dispatch: AppDispatch
-
-  init(d: AppDispatch, gs: () => State) {
+  init(d: AppDispatch, gs: GetState) {
     this.dispatch = d
+    this.getState = gs
     this.toolbar = new ToolbarsApi(d, gs)
     this.configs = new ConfigurationsApi(d, gs)
     this.queries = new QueriesApi(d, gs)
-    this.pools = new PoolsApi(d)
+    this.pools = new PoolsApi(this)
     this.current = new CurrentApi(gs)
     this.correlations = new CorrelationsApi(d)
     this.editor = new EditorApi(d, gs)

@@ -6,8 +6,7 @@
     "test": "playwright test -c playwright.config.js"
   },
   "devDependencies": {
-    "@playwright-testing-library/test": "^4.3.0",
-    "@playwright/test": "^1.24.2",
-    "playwright-chromium": "^1.24.2"
+    "@playwright/test": "^1.27.1",
+    "playwright-chromium": "^1.27.1"
   }
 }

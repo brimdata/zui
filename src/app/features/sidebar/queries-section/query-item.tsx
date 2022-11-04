@@ -17,6 +17,7 @@ const QueryItem = ({
   tree,
 }: NodeRendererProps<Query>) => {
   const itemIcon = node.isInternal ? <FolderIcon /> : <QueryIcon />
+
   const afterDelayOf = useAfterDelayOf()
   return (
     <Item

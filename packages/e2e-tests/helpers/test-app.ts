@@ -22,8 +22,8 @@ export default class TestApp {
     this.zealot = new Client("http://localhost:9867")
   }
 
-  find(text: string) {
-    return this.mainWin.locator(text)
+  find(...args: Parameters<Page["locator"]>) {
+    return this.mainWin.locator(...args)
   }
 
   async init() {
@@ -64,6 +64,13 @@ export default class TestApp {
 
     await chooser.setFiles(filepaths)
     await this.mainWin.locator("text=Import Complete.").isVisible()
+  }
+
+  async deleteAllPools() {
+    const pools = await this.zealot.getPools()
+    for (let pool of pools) {
+      await this.zealot.deletePool(pool.id)
+    }
   }
 
   async query(zed: string): Promise<void> {

@@ -3,6 +3,18 @@ import brim from "src/js/brim"
 
 export function activate(api: BrimApi) {
   api.configs.add({
+    name: "pools",
+    title: "Pools",
+    properties: {
+      nameDelimeter: {
+        name: "nameDelimeter",
+        label: "Group Pools By",
+        type: "string",
+        defaultValue: "/",
+      },
+    },
+  })
+  api.configs.add({
     name: "display",
     title: "Display",
     properties: {
