@@ -63,7 +63,6 @@ test.describe("Pool Groups", () => {
   test("delete group", async () => {
     await app.zealot.createPool("old / today")
     await app.zealot.createPool("old / yesterday")
-    await app.zealot.createPool("new / tomorrow")
 
     const item = app.mainWin.getByRole("treeitem", {name: "old"})
     await item.click({button: "right"})
@@ -72,6 +71,6 @@ test.describe("Pool Groups", () => {
     await expect(app.find(":text('Deleted 2 pools')")).toBeVisible()
 
     const pools = await app.zealot.getPools()
-    expect(pools.map((p) => p.name).sort()).toEqual(["new / tomorrow"])
+    expect(pools.map((p) => p.name).sort()).toEqual([])
   })
 })
