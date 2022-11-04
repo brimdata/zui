@@ -1,3 +1,4 @@
+import {isEqual} from "lodash"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "./pool-name"
 
@@ -23,7 +24,9 @@ export function groupByDelimeter(data: Pool[], delimeter: string) {
         if (isLeaf) {
           siblings.push(pool)
         } else {
-          let node = siblings.find((n) => n.id === id) as Internal
+          let node = siblings.find(
+            (n) => "group" in n && isEqual(n.group, group)
+          ) as Internal
           if (!node) {
             node = {id, name, group, children: []}
             siblings.push(node)

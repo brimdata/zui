@@ -57,7 +57,6 @@ export function PoolsTree(props: {searchTerm: string}) {
             padding={8}
             height={dimens.height}
             width={dimens.width}
-            openByDefault={false}
             data={data}
             searchTerm={props.searchTerm}
             searchMatch={(node, term) =>
