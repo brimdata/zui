@@ -65,9 +65,9 @@ test.describe("Pool Groups", () => {
     await app.zealot.createPool("old / yesterday")
     await app.zealot.createPool("new / tomorrow")
 
-    await app.mainWin.getByRole("treeitem", {name: "old"}).click()
-    await app.mainWin.getByRole("treeitem", {name: "old", selected: true})
-    await app.mainWin.keyboard.press("Backspace")
+    const item = app.mainWin.getByRole("treeitem", {name: "old"})
+    await item.click({button: "right"})
+    await app.find(":text('Delete')").click()
 
     await expect(app.find(":text('Deleted 2 pools')")).toBeVisible()
 
