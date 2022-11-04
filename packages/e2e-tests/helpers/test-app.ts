@@ -66,6 +66,13 @@ export default class TestApp {
     await this.mainWin.locator("text=Import Complete.").isVisible()
   }
 
+  async deleteAllPools() {
+    const pools = await this.zealot.getPools()
+    for (let pool of pools) {
+      await this.zealot.deletePool(pool.id)
+    }
+  }
+
   async query(zed: string): Promise<void> {
     await this.mainWin.locator('div[role="textbox"]').fill(zed)
     await this.mainWin.locator('[aria-label="run-query"]').click()
