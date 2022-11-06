@@ -1,11 +1,11 @@
 import React, {useState} from "react"
 
-import {FormFieldConfig} from "../../brim/form"
+import {FileField} from "../../brim/form"
 import FileInput from "../common/forms/FileInput"
 import InputLabel from "../common/forms/InputLabel"
 
 type Props = {
-  config: FormFieldConfig
+  config: FileField
 }
 
 export default function SuricataUpdater({config}: Props) {
