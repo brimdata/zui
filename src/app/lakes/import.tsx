@@ -4,6 +4,7 @@ import Link from "src/js/components/common/Link"
 import links from "../core/links"
 import {Content} from "src/js/components/Content"
 import styled from "styled-components"
+import {useBrimApi} from "../core/context"
 
 const BG = styled.div`
   padding: 24px;
@@ -13,12 +14,13 @@ const BG = styled.div`
 `
 
 export default function TabImport() {
+  const api = useBrimApi()
   return (
     <BG>
       <Content>
         <h2>New Pool</h2>
         <p>Create a new pool by loading data.</p>
-        <LoadFilesInput />
+        <LoadFilesInput onChange={(files) => api.pools.load(files)} />
         <footer>
           <p>
             <b>Accepted formats:</b>{" "}

@@ -1,13 +1,17 @@
-import {useImportOnDrop} from "src/app/features/import/use-import-on-drop"
 import React, {useState} from "react"
 import {Contents} from "./contents"
 import {Content} from "../content"
 import {DropOverlay} from "../drop-overlay"
 import {SearchBar} from "../search-bar"
 import {Toolbar} from "../toolbar"
+import {useBrimApi} from "src/app/core/context"
+import {useFilesDrop} from "src/util/hooks/use-files-drop"
 
 const PoolsSection = () => {
-  const [{isOver}, drop] = useImportOnDrop()
+  const api = useBrimApi()
+  const [{isOver}, drop] = useFilesDrop({
+    onDrop: (files) => api.pools.load(files),
+  })
   const [searchTerm, setSearchTerm] = useState("")
 
   return (
