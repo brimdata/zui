@@ -65,3 +65,5 @@ export const deleteGroup = createCommand(
     return deletePools.run(decendentIds)
   }
 )
+
+export const loadFiles = createCommand("pools.loadFiles", () => {})

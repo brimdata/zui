@@ -15,7 +15,6 @@ import {NoticeState} from "./Notice/types"
 import {PluginStorageState} from "./PluginStorage"
 import {PoolsState} from "./Pools/types"
 import {QueriesState} from "./Queries/types"
-import {SystemTestState} from "./SystemTest"
 import {TabHistoriesState} from "./TabHistories/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
@@ -58,6 +57,5 @@ export type State = {
   queryVersions: QueryVersionsState
   sessionQueries: SessionQueriesState
   sessionHistories: SessionHistoriesState
-  systemTest: SystemTestState
   toolbars: ToolbarsState
 }

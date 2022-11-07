@@ -9,7 +9,6 @@ import Notice from "../Notice"
 import Pools from "../Pools"
 import Tabs from "../Tabs"
 import Queries from "../Queries"
-import SystemTest from "../SystemTest"
 import LakeStatuses from "../LakeStatuses"
 import TabHistories from "../TabHistories"
 import Url from "../Url"
@@ -40,7 +39,6 @@ const rootReducer = combineReducers<any, any>({
   pools: Pools.reducer,
   ingests: Ingests.reducer,
   pluginStorage: PluginStorage.reducer,
-  systemTest: SystemTest.reducer,
   lakeStatuses: LakeStatuses.reducer,
   queries: Queries.reducer,
   queryVersions: QueryVersions.reducer,

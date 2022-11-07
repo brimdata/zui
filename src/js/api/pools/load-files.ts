@@ -12,7 +12,6 @@ import Current from "src/js/state/Current"
 import Handlers from "src/js/state/Handlers"
 import {Handler} from "src/js/state/Handlers/types"
 import Pools from "src/js/state/Pools"
-import SystemTest from "src/js/state/SystemTest"
 import Tabs from "src/js/state/Tabs"
 import {Dispatch, Thunk} from "src/js/state/types"
 import {lakePath, lakePoolPath} from "../../../app/router/utils/paths"
@@ -26,19 +25,14 @@ export default (files: File[]): Thunk<Promise<void>> =>
     const requestId = brim.randomHash()
     const poolNames = Pools.getPoolNames(lakeId)(getState())
 
-    dispatch(SystemTest.hook("import-start"))
-    return lib
-      .transaction([
-        validateInput(files, poolNames),
-        newPool(zealot, dispatch, lakeId),
-        registerIngest(dispatch, requestId),
-        setPool(dispatch, tabId, lakeId),
-        executeLoader(zealot, dispatch, lakeId, api, requestId),
-        unregisterIngest(dispatch, requestId),
-      ])
-      .then(() => {
-        dispatch(SystemTest.hook("import-complete"))
-      })
+    return lib.transaction([
+      validateInput(files, poolNames),
+      newPool(zealot, dispatch, lakeId),
+      registerIngest(dispatch, requestId),
+      setPool(dispatch, tabId, lakeId),
+      executeLoader(zealot, dispatch, lakeId, api, requestId),
+      unregisterIngest(dispatch, requestId),
+    ])
   }
 
 const validateInput = (files: File[], poolNames) => ({
