@@ -16,7 +16,8 @@ import Tabs from "src/js/state/Tabs"
 import {Dispatch, Thunk} from "src/js/state/types"
 import {lakePath, lakePoolPath} from "../../../app/router/utils/paths"
 
-export default (files: File[]): Thunk<Promise<void>> =>
+export const createAndLoadFiles =
+  (files: File[]): Thunk<Promise<void>> =>
   async (dispatch, getState, {api}) => {
     const l = Current.mustGetLake(getState())
     const lakeId = l.id

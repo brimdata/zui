@@ -6,7 +6,7 @@ import deletePools from "src/js/flows/deletePools"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
-import {load} from "./load"
+import {createAndLoadFiles} from "./create-and-load-files"
 
 type Update = {id: string; changes: {name: string}}
 export class PoolsApi extends ApiDomain {
@@ -28,8 +28,8 @@ export class PoolsApi extends ApiDomain {
     return this.select(Pools.get(this.lakeId, id))
   }
 
-  load(files: File[]) {
-    return this.dispatch(load(files))
+  createFromFiles(files: File[]) {
+    return this.dispatch(createAndLoadFiles(files))
   }
 
   delete(id: string | string[]) {

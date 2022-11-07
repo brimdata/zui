@@ -4,13 +4,12 @@ import {Content} from "../content"
 import {DropOverlay} from "../drop-overlay"
 import {SearchBar} from "../search-bar"
 import {Toolbar} from "../toolbar"
-import {useBrimApi} from "src/app/core/context"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
+import {createAndLoadFiles} from "src/app/commands/pools"
 
 const PoolsSection = () => {
-  const api = useBrimApi()
   const [{isOver}, drop] = useFilesDrop({
-    onDrop: (files) => api.pools.load(files),
+    onDrop: (files) => createAndLoadFiles.run(files),
   })
   const [searchTerm, setSearchTerm] = useState("")
 

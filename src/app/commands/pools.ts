@@ -1,3 +1,6 @@
+import errors from "src/js/errors"
+import {BrimError} from "src/js/errors/types"
+import ErrorFactory from "src/js/models/ErrorFactory"
 import {PoolName} from "../features/sidebar/pools-section/pool-name"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
@@ -66,4 +69,25 @@ export const deleteGroup = createCommand(
   }
 )
 
-export const loadFiles = createCommand("pools.loadFiles", () => {})
+export const createAndLoadFiles = createCommand(
+  "pools.createAndLoadFiles",
+  async ({api}, files: File[]) => {
+    try {
+      await api.pools.createFromFiles(files)
+      api.toast.success("Import complete.")
+    } catch (e) {
+      const cause = e.cause
+      let error: BrimError
+      if (/(Failed to fetch)|(network error)/.test(cause.message)) {
+        error = errors.importInterrupt()
+      } else if (/format detection error/i.test(cause.message)) {
+        error = errors.formatDetection(cause.message)
+      } else {
+        error = ErrorFactory.create(e.cause)
+      }
+      api.notice.error(error)
+      api.pools.syncAll()
+      console.error(e.message)
+    }
+  }
+)

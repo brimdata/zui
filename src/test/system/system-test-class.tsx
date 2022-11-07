@@ -16,6 +16,7 @@ import data from "src/test/shared/data"
 import {setupServer} from "msw/node"
 import {BootArgs, bootBrim} from "./boot-brim"
 import Tabs from "src/js/state/Tabs"
+import {createAndLoadFiles} from "src/app/commands/pools"
 
 jest.setTimeout(20_000)
 
@@ -83,7 +84,7 @@ export class SystemTest {
 
   async importFile(name: string) {
     const file = data.getWebFile(name)
-    await tl.act(() => this.api.pools.load([file]))
+    await tl.act(async () => await createAndLoadFiles.run([file]))
     await tl.screen.findByText(/import complete/i)
   }
 
