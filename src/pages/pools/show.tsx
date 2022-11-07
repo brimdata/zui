@@ -1,6 +1,6 @@
 import {syncPool} from "src/app/core/pools/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import PoolHome from "src/app/pools/home"
+import PoolHome from "./home"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import {poolShow} from "src/app/router/routes"
 import React, {useEffect} from "react"

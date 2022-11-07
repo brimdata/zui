@@ -19,7 +19,7 @@ import Current from "src/js/state/Current"
 import LakeStatuses from "src/js/state/LakeStatuses"
 import styled from "styled-components"
 import LakeHome from "./home"
-import PoolShow from "src/app/pools/show"
+import PoolShow from "src/pages/pools/show"
 import {QueryRoute} from "../query-home/route"
 import {WelcomePage} from "src/pages/welcome"
 

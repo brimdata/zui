@@ -4,8 +4,8 @@ import {useSelector} from "react-redux"
 import {bytes} from "src/js/lib/fmt"
 import Current from "src/js/state/Current"
 import styled from "styled-components"
-import {useBrimApi} from "../core/context"
-import Actions from "../query-home/toolbar/actions/actions"
+import {useBrimApi} from "../../app/core/context"
+import Actions from "../../app/query-home/toolbar/actions/actions"
 
 const Header = styled.header`
   padding: 16px;
