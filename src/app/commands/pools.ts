@@ -76,18 +76,33 @@ export const createAndLoadFiles = createCommand(
       await api.pools.createFromFiles(files)
       api.toast.success("Import complete.")
     } catch (e) {
-      const cause = e.cause
-      let error: BrimError
-      if (/(Failed to fetch)|(network error)/.test(cause.message)) {
-        error = errors.importInterrupt()
-      } else if (/format detection error/i.test(cause.message)) {
-        error = errors.formatDetection(cause.message)
-      } else {
-        error = ErrorFactory.create(e.cause)
-      }
-      api.notice.error(error)
+      api.notice.error(parseError(e))
       api.pools.syncAll()
       console.error(e.message)
     }
   }
 )
+
+export const loadFiles = createCommand(
+  "pools.loadFiles",
+  async ({api}, id: string, files: File[]) => {
+    try {
+      await api.pools.loadFiles(id, files)
+    } catch (e) {
+      api.notice.error(parseError(e))
+      api.pools.syncAll()
+      console.error(e.message)
+    }
+  }
+)
+
+function parseError(e: Error): BrimError {
+  const cause = e.cause
+  if (/(Failed to fetch)|(network error)/.test(cause.message)) {
+    return errors.importInterrupt()
+  } else if (/format detection error/i.test(cause.message)) {
+    return errors.formatDetection(cause.message)
+  } else {
+    return ErrorFactory.create(e.cause)
+  }
+}

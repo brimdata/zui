@@ -24,6 +24,10 @@ export class ApiDomain {
     return this.base.configs
   }
 
+  get loaders() {
+    return this.base.loaders
+  }
+
   select<R>(selector: (state: State) => R) {
     return selector(this.state)
   }

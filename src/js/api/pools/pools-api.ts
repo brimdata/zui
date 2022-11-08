@@ -1,9 +1,13 @@
+import {nanoid} from "@reduxjs/toolkit"
 import {isArray} from "lodash"
 import {createPool} from "src/app/core/pools/create-pool"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
+import detectFileTypes from "src/js/brim/ingest/detectFileTypes"
 import deletePools from "src/js/flows/deletePools"
 import Current from "src/js/state/Current"
+import Handlers from "src/js/state/Handlers"
+import Ingests from "src/js/state/Ingests"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
 import {createAndLoadFiles} from "./create-and-load-files"
@@ -30,6 +34,67 @@ export class PoolsApi extends ApiDomain {
 
   createFromFiles(files: File[]) {
     return this.dispatch(createAndLoadFiles(files))
+  }
+
+  // TODO: The loading of files needs to be done in the main process if it uses node.
+  // If we use the new web streams, then it can remain here.
+  // Clean this up pleeezzz
+  // Don't require a file list data
+  async loadFiles(id: string, files: File[]) {
+    // for now, to find a loader match we will assume all files are the same
+    // type
+    const fileListData = await detectFileTypes(files)
+    const loadId = nanoid()
+    const filesType = fileListData[0]?.type
+    const loaders = this.loaders.getMatches(filesType)
+    if (!loaders || loaders.length === 0) {
+      throw new Error(
+        `No registered loaders match the provided file type: ${filesType}`
+      )
+    }
+    // only supporting one loader at this time
+    const l = loaders[0]
+    const abortCtl = new AbortController()
+
+    this.dispatch(Handlers.register(loadId, {type: "INGEST", poolId: id}))
+    this.dispatch(Ingests.create(id))
+    const abortHandler = () => {
+      abortCtl.abort()
+    }
+    const cleanup = this.loaders.setAbortHandler(loadId, abortHandler)
+    const params = {poolId: id, branch: "main", name: "", fileListData}
+    try {
+      await l.load(
+        params,
+        (progress: number) => {
+          // on progress
+          this.dispatch(Ingests.setProgress({poolId: id, progress}))
+        },
+        (warning: string): void => {
+          // on warning
+          this.dispatch(Ingests.addWarning({poolId: id, warning}))
+        },
+        () => this.sync(id).then(() => {}), // on detail update
+        abortCtl.signal
+      )
+      // Wait for the pool to have some data before we signal that
+      // the ingest is done.
+      let tries = 0
+      while (tries < 20) {
+        tries++
+        const pool = await this.sync(id)
+        if (pool.hasStats() && pool.size > 0) break
+        await new Promise((r) => setTimeout(r, 300))
+      }
+    } catch (e) {
+      l.unload && (await l.unload(params))
+      throw e
+    } finally {
+      this.dispatch(Handlers.remove(loadId))
+      this.dispatch(Ingests.remove(id))
+      if (abortCtl.signal.aborted) this.loaders.didAbort(loadId)
+      cleanup()
+    }
   }
 
   delete(id: string | string[]) {
