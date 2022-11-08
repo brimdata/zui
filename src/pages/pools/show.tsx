@@ -16,6 +16,7 @@ import styled from "styled-components"
 import {useBrimApi} from "../../app/core/context"
 import Actions from "../../app/query-home/toolbar/actions/actions"
 import LoadFilesInput from "src/ppl/import/LoadFilesInput"
+import {loadFiles} from "src/app/commands/pools"
 
 const BG = styled.div`
   --page-padding: 32px;
@@ -146,11 +147,7 @@ const PoolHome = () => {
         <LoadFilesContainer>
           <h3>Load Data</h3>
           <label>Add more data to this pool.</label>
-          <LoadFilesInput
-            onChange={(files) => {
-              alert("FILES: " + files.length)
-            }}
-          />
+          <LoadFilesInput onChange={(files) => loadFiles.run(pool.id, files)} />
         </LoadFilesContainer>
       </Body>
     </BG>
