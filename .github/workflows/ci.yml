@@ -15,7 +15,7 @@ jobs:
         os: [macos-11, ubuntu-20.04, windows-2019]
     steps:
       - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-zui
       - run: yarn lint
       - run: yarn test

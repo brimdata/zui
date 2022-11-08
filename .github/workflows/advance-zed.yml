@@ -28,7 +28,7 @@ jobs:
 
       # Since we intend to push, we must have a a writable token and
       # minimal git config settings to create commits.
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # ref defaults to github.sha, which is fixed at the time a run
           # is triggered. Using github.ref ensures a run that waits in
