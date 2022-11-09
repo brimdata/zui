@@ -22,14 +22,14 @@ export function Form(props: PinFormProps<GenericQueryPin>) {
       onReset={props.onReset}
     >
       <Field>
-        <Label htmlFor="value">Value</Label>
+        <Label htmlFor="value">Zed Snippet</Label>
         <TextArea autoFocus name="value" defaultValue={props.pin.value} />
       </Field>
       <Field>
         <Label htmlFor="label">Label</Label>
         <Input
           name="label"
-          placeholder="Same as value"
+          placeholder="Same as Zed Snippet text"
           defaultValue={props.pin.label}
           style={{width: "66%"}}
         />

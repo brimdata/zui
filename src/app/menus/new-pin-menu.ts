@@ -9,7 +9,7 @@ export const newPinMenu = createMenu("newPinMenu", ({api}) => {
     },
     {label: "New 'Time Range' Pin", command: pins.createTimeRange},
     {
-      label: "New 'Generic' Pin",
+      label: "New Zed Snippet Pin",
       command: pins.createGeneric,
     },
     {type: "separator"},
