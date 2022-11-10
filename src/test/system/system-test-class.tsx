@@ -56,7 +56,6 @@ export class SystemTest {
           )
         },
       })
-
       this.assign(await bootBrim(name, opts))
       this.store.dispatch(Tabs.create())
       this.navTo(`/lakes/${defaultLake().id}`)
@@ -67,7 +66,7 @@ export class SystemTest {
     afterAll(async () => {
       if (this.initialized) {
         await this.plugins.deactivate()
-        await this.main.quit()
+        await this.main.stop()
         tl.cleanup()
         this.network.close()
       }

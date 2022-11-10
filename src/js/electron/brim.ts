@@ -60,6 +60,10 @@ export class BrimMain {
     await this.windows.init()
   }
 
+  async stop() {
+    await this.lake.stop()
+  }
+
   async activate() {
     const visibleWindows = this.windows.where((w) => w.name !== "hidden")
     if (visibleWindows.length === 0) {

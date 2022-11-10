@@ -19,8 +19,7 @@ export function initialize(main: BrimMain) {
   })
 
   app.on("activate", () => main.activate())
-
-  app.on("will-quit", () => main.lake.stop())
+  app.on("will-quit", () => main.stop())
 
   app.on("open-url", (event, url) => {
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
