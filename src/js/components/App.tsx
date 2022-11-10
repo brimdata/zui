@@ -13,7 +13,6 @@ import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
 import {WelcomePage} from "src/pages/welcome"
 import {useWelcomePage} from "src/application/use-welcome-page"
 import {useReleaseNotes} from "src/application/use-release-notes"
-import {useHandlersCleanup} from "src/application/use-app-unmount"
 import {lakeImportPath} from "src/app/router/utils/paths"
 
 export default function App() {
@@ -22,7 +21,6 @@ export default function App() {
   useWelcomePage()
   useReleaseNotes()
   useSearchShortcuts()
-  useHandlersCleanup()
 
   return (
     <AppTabsRouter>

@@ -5,7 +5,6 @@ import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
 import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
-import {HandlersState} from "./Handlers/types"
 import Ingests from "./Ingests"
 import {InvestigationState} from "./Investigation/types"
 import {LakesState} from "./Lakes/types"
@@ -41,7 +40,6 @@ export type State = {
   configs: ConfigsState
   configPropValues: ConfigPropValuesState
   tabHistories: TabHistoriesState
-  handlers: HandlersState
   lakes: LakesState
   errors: ErrorsState
   pools: PoolsState

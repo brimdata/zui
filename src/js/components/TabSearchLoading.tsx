@@ -6,7 +6,7 @@ export default function TabSearchLoading() {
   return (
     <div className="tab-search-loading">
       <div className="message">
-        <p>Waiting for pool to become queryable...</p>
+        <p>Loading data into pool...</p>
         <MacSpinner />
       </div>
     </div>

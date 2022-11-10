@@ -6,7 +6,8 @@ import styled from "styled-components"
 const Btn = styled.button`
   background: var(--button-background);
   border: none;
-  height: 22px;
+  height: 24px;
+  min-width: 58px;
   padding: 0 10px 0 10px;
   display: flex;
   align-items: center;

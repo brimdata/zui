@@ -2,24 +2,26 @@ import {syncPool} from "src/app/core/pools/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import {poolShow} from "src/app/router/routes"
-import React, {useEffect} from "react"
+import React, {useEffect, useRef} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Redirect, Route, Switch} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
-import TabSearchLoading from "src/js/components/TabSearchLoading"
-import Ingests from "src/js/state/Ingests"
 import {lakePath} from "src/app/router/utils/paths"
 import {cssVar, transparentize} from "polished"
 import {bytes} from "src/js/lib/fmt"
 import styled from "styled-components"
 import {useBrimApi} from "../../app/core/context"
 import Actions from "../../app/query-home/toolbar/actions/actions"
-import LoadFilesInput from "src/ppl/import/LoadFilesInput"
 import {loadFiles} from "src/app/commands/pools"
+import {useFilesDrop} from "src/util/hooks/use-files-drop"
+import classNames from "classnames"
+import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
 
 const BG = styled.div`
   --page-padding: 32px;
+  position: relative;
+  flex: 1;
 `
 
 const Header = styled.header`
@@ -37,7 +39,7 @@ const Toolbar = styled.div`
 
 const Title = styled.h1`
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
   margin: 0;
 `
 
@@ -67,7 +69,17 @@ const DataList = styled.div`
 `
 
 const LoadFilesContainer = styled.div`
+  margin: var(--page-padding);
   padding: var(--page-padding);
+  height: 100px;
+  border: 2px dashed var(--border-color);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  label {
+    opacity: 0.5;
+  }
 `
 
 function InitPool({children}) {
@@ -75,7 +87,6 @@ function InitPool({children}) {
   const poolId = usePoolId()
   const lakeId = useLakeId()
   const pool = useSelector(Current.getPool)
-  const ingesting = useSelector(Ingests.isInProgress(pool?.id))
 
   useEffect(() => {
     if (poolId) dispatch(syncPool(poolId))
@@ -83,8 +94,6 @@ function InitPool({children}) {
 
   if (!pool) {
     return <Redirect to={lakePath(lakeId)} />
-  } else if (ingesting) {
-    return <TabSearchLoading />
   } else if (!pool.hasStats()) {
     return null
   } else {
@@ -92,7 +101,7 @@ function InitPool({children}) {
   }
 }
 
-const PoolHome = () => {
+const Show = () => {
   const pool = useSelector(Current.mustGetPool)
   const api = useBrimApi()
 
@@ -103,17 +112,42 @@ const PoolHome = () => {
     })
   }
   const keys = pool.keys.map((k) => k.join("."))
+  const [{isOver}, dropRef] = useFilesDrop({
+    onDrop: (files) => loadFiles.run(pool.id, files),
+  })
+  const fileInput = useRef<HTMLInputElement>()
 
   return (
-    <BG>
+    <BG ref={dropRef} className={classNames({isOver})}>
+      <DropOverlay show={isOver}>
+        <p>Drop To Load Files Into:</p>
+        <p>{pool.name}</p>
+      </DropOverlay>
       <Header>
         <div>
           <Title>{pool.name}</Title>
           <Subtitle>{bytes(pool.stats.size)}</Subtitle>
         </div>
         <Toolbar>
+          <input
+            type="file"
+            multiple
+            style={{display: "none"}}
+            ref={fileInput}
+            onChange={(e) =>
+              loadFiles.run(pool.id, Array.from(e.currentTarget.files))
+            }
+          />
           <Actions
             actions={[
+              {
+                label: "Load Data",
+                icon: "doc-plain",
+                click: () => {
+                  fileInput.current?.click()
+                },
+                title: "Load more data into this pool.",
+              },
               {
                 label: "Query Pool",
                 icon: "query",
@@ -144,11 +178,11 @@ const PoolHome = () => {
             <dd>{pool.data.ts.toLocaleString()}</dd>
           </dl>
         </DataList>
-        <LoadFilesContainer>
-          <h3>Load Data</h3>
-          <label>Add more data to this pool.</label>
-          <LoadFilesInput onChange={(files) => loadFiles.run(pool.id, files)} />
-        </LoadFilesContainer>
+        {!isOver && (
+          <LoadFilesContainer>
+            <label>Drag and drop files to load more data into this pool.</label>
+          </LoadFilesContainer>
+        )}
       </Body>
     </BG>
   )
@@ -159,7 +193,7 @@ export default function PoolShow() {
     <Switch>
       <InitPool>
         <Route path={poolShow.path}>
-          <PoolHome />
+          <Show />
         </Route>
       </InitPool>
     </Switch>

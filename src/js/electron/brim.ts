@@ -18,7 +18,6 @@ import {WindowManager} from "./windows/window-manager"
 import * as zdeps from "./zdeps"
 import {MainArgs, mainDefaults} from "./run-main/args"
 import createSession, {Session} from "./session"
-import {SearchWindow} from "./windows/search/search-window"
 import {getAppMeta, AppMeta} from "./meta"
 import {createMainStore} from "../state/stores/create-main-store"
 
@@ -92,18 +91,8 @@ export class BrimMain {
   }
 
   async quit(opts: QuitOpts = {saveSession: true}) {
-    this.isQuitting = true
-    const windows = this.windows.byName("search") as SearchWindow[]
-    const confirms = await Promise.all(windows.map((w) => w.confirmClose()))
-    if (confirms.every((ok) => ok)) {
-      await Promise.all(windows.map((w) => w.prepareClose()))
-      if (opts.saveSession) await this.saveSession()
-      this.windows.all.forEach((w) => w.close())
-      await this.lake.stop()
-      app.quit()
-    } else {
-      this.isQuitting = false
-    }
+    if (opts.saveSession) await this.saveSession()
+    app.quit()
   }
 
   openUrl(uri: string) {

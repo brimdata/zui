@@ -4,9 +4,9 @@ import {createPool} from "src/app/core/pools/create-pool"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
 import detectFileTypes from "src/js/brim/ingest/detectFileTypes"
+import {loadEnd, loadStart} from "src/js/electron/ops/loads-in-progress-op"
 import deletePools from "src/js/flows/deletePools"
 import Current from "src/js/state/Current"
-import Handlers from "src/js/state/Handlers"
 import Ingests from "src/js/state/Ingests"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
@@ -56,13 +56,13 @@ export class PoolsApi extends ApiDomain {
     const l = loaders[0]
     const abortCtl = new AbortController()
 
-    this.dispatch(Handlers.register(loadId, {type: "INGEST", poolId: id}))
     this.dispatch(Ingests.create(id))
     const abortHandler = () => {
       abortCtl.abort()
     }
     const cleanup = this.loaders.setAbortHandler(loadId, abortHandler)
     const params = {poolId: id, branch: "main", name: "", fileListData}
+    await loadStart.invoke(global.windowId)
     try {
       await l.load(
         params,
@@ -90,7 +90,7 @@ export class PoolsApi extends ApiDomain {
       l.unload && (await l.unload(params))
       throw e
     } finally {
-      this.dispatch(Handlers.remove(loadId))
+      await loadEnd.invoke(global.windowId)
       this.dispatch(Ingests.remove(id))
       if (abortCtl.signal.aborted) this.loaders.didAbort(loadId)
       cleanup()

@@ -5,7 +5,7 @@ export default function showIngestWarning(pools: string[]) {
     .showMessageBox({
       type: "warning",
       title: "Confirm Close Window",
-      message: "Are you sure you want to close while ingesting?",
+      message: "Are you sure you want to close while loading?",
       detail: `This will delete the partial generated data for: ${pools.join(
         ", "
       )}`,

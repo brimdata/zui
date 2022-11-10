@@ -1,5 +1,4 @@
-import {nanoid} from "@reduxjs/toolkit"
-import {Menu, BrowserWindowConstructorOptions, ipcMain} from "electron"
+import {Menu, BrowserWindowConstructorOptions, dialog} from "electron"
 import env from "src/app/core/env"
 import {WindowName} from "../types"
 import {ZuiWindow} from "../zui-window"
@@ -21,6 +20,7 @@ export class SearchWindow extends ZuiWindow {
       contextIsolation: false,
     },
   }
+  loadsInProgress = 0
 
   updateAppMenu(state: SearchAppMenuState) {
     Menu.setApplicationMenu(createMenu(this, state))
@@ -30,27 +30,17 @@ export class SearchWindow extends ZuiWindow {
     this.send("updateSearchAppMenu")
   }
 
-  async onClose(e: Electron.Event) {
-    e.preventDefault()
-    if (await this.confirmClose()) {
-      await this.prepareClose()
-      this.close()
+  onClose(e: Electron.Event) {
+    if (this.loadsInProgress !== 0) {
+      const resp = dialog.showMessageBoxSync(this.ref, {
+        message: "Abort the load?",
+        detail:
+          "Closing the window will abort the load. Are you sure you want to close?",
+        buttons: ["OK", "Cancel"],
+        defaultId: 0,
+        cancelId: 1,
+      })
+      if (resp === 1) e.preventDefault()
     }
-  }
-
-  async confirmClose() {
-    const replyChannel = nanoid()
-    return new Promise<boolean>((resolve) => {
-      this.ref.webContents.send("confirmClose", replyChannel)
-      ipcMain.once(replyChannel, (e, confirmed: boolean) => resolve(confirmed))
-    })
-  }
-
-  async prepareClose() {
-    const replyChannel = nanoid()
-    return new Promise<void>((resolve) => {
-      this.ref.webContents.send("prepareClose", replyChannel)
-      ipcMain.once(replyChannel, () => resolve())
-    })
   }
 }
