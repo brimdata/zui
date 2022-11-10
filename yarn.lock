@@ -3346,10 +3346,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.6.2":
-  version: 14.18.0
-  resolution: "@types/node@npm:14.18.0"
-  checksum: b120c26fe5f30bc358e861db8d7e401e419d14bd9dd25c022f3c2ea8b0b429d4c9efd77ad5d6d2a8bde61702a6786fb74d409f1b2cbb61c79133e2a65aab4fb1
+"@types/node@npm:^16.11.26":
+  version: 16.18.3
+  resolution: "@types/node@npm:16.18.3"
+  checksum: 6b8ba2ea5d842f7986e366cb9184c54d273d492784dc62e08fd5afeae938d9b61aec6e4222d2541cd18f9b1412ba361bbcb3f4204fb003608af80a2a6af959f9
   languageName: node
   linkType: hard
 
@@ -7088,16 +7088,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^15.5.2":
-  version: 15.5.3
-  resolution: "electron@npm:15.5.3"
+"electron@npm:^18.3.7":
+  version: 18.3.15
+  resolution: "electron@npm:18.3.15"
   dependencies:
     "@electron/get": ^1.13.0
-    "@types/node": ^14.6.2
+    "@types/node": ^16.11.26
     extract-zip: ^1.0.3
   bin:
     electron: cli.js
-  checksum: 977365cf278fefd82e812754a64d81e06f85be16576f8bb764ab08f79b7ec773910804e5348c23f85220d8f5ea5fd9ed7502fbdfa45e798ed9f57d43f93b7246
+  checksum: d5ff1a31cb2da292e3f1141036640cabe66563425ebe5ce9784c1945aab1f2b1a6d1b474c23c753cd46af5937702ace343d4b6f9119934bc86e3c41d4dd9fa4a
   languageName: node
   linkType: hard
 
@@ -17355,7 +17355,7 @@ __metadata:
     d3: ^5.16.0
     date-fns: ^2.16.1
     decompress: ^4.2.1
-    electron: ^15.5.2
+    electron: ^18.3.7
     electron-builder: ^22.14.5
     electron-builder-notarize: ^1.2.0
     electron-devtools-installer: ^3.2.0
