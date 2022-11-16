@@ -28,6 +28,10 @@ export class ApiDomain {
     return this.base.loaders
   }
 
+  get abortables() {
+    return this.base.abortables
+  }
+
   select<R>(selector: (state: State) => R) {
     return selector(this.state)
   }

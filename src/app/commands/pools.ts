@@ -83,7 +83,8 @@ export const createAndLoadFiles = createCommand(
     } catch (e) {
       api.notice.error(parseError(e))
       api.pools.syncAll()
-      console.error(e.message)
+      console.error(e)
+      console.error(e.cause)
     }
   }
 )
@@ -102,7 +103,7 @@ export const loadFiles = createCommand(
     } catch (e) {
       api.notice.error(parseError(e))
       api.pools.syncAll()
-      console.error(e.message)
+      console.error(e)
     }
   }
 )

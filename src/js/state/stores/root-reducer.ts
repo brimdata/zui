@@ -18,7 +18,7 @@ import ConfigPropValues from "../ConfigPropValues"
 import Launches from "../Launches"
 import Appearance from "../Appearance"
 import RemoteQueries from "../RemoteQueries"
-import Ingests from "../Ingests"
+import Loads from "../Loads"
 import QueryVersions from "../QueryVersions"
 import SessionQueries from "../SessionQueries"
 import SessionHistories from "../SessionHistories"
@@ -35,7 +35,7 @@ const rootReducer = combineReducers<any, any>({
   tabs: Tabs.reducer,
   investigation: Investigation.reducer,
   pools: Pools.reducer,
-  ingests: Ingests.reducer,
+  loads: Loads.reducer,
   pluginStorage: PluginStorage.reducer,
   lakeStatuses: LakeStatuses.reducer,
   queries: Queries.reducer,

@@ -4,10 +4,11 @@ import {createPool} from "src/app/core/pools/create-pool"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
 import detectFileTypes from "src/js/brim/ingest/detectFileTypes"
+import {FileListData} from "src/js/brim/ingest/fileList"
 import {loadEnd, loadStart} from "src/js/electron/ops/loads-in-progress-op"
 import deletePools from "src/js/flows/deletePools"
 import Current from "src/js/state/Current"
-import Ingests from "src/js/state/Ingests"
+import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
 import {createAndLoadFiles} from "./create-and-load-files"
@@ -36,64 +37,27 @@ export class PoolsApi extends ApiDomain {
     return this.dispatch(createAndLoadFiles(files))
   }
 
-  // TODO: The loading of files needs to be done in the main process if it uses node.
-  // If we use the new web streams, then it can remain here.
-  // Clean this up pleeezzz
-  // Don't require a file list data
-  async loadFiles(id: string, files: File[]) {
-    // for now, to find a loader match we will assume all files are the same
-    // type
+  // TODO: Move to main progress, create a loads domain
+  async loadFiles(poolId: string, files: File[]) {
     const fileListData = await detectFileTypes(files)
-    const loadId = nanoid()
-    const filesType = fileListData[0]?.type
-    const loaders = this.loaders.getMatches(filesType)
-    if (!loaders || loaders.length === 0) {
-      throw new Error(
-        `No registered loaders match the provided file type: ${filesType}`
-      )
-    }
-    // only supporting one loader at this time
-    const l = loaders[0]
-    const abortCtl = new AbortController()
-
-    this.dispatch(Ingests.create(id))
-    const abortHandler = () => {
-      abortCtl.abort()
-    }
-    const cleanup = this.loaders.setAbortHandler(loadId, abortHandler)
-    const params = {poolId: id, branch: "main", name: "", fileListData}
-    await loadStart.invoke(global.windowId)
+    const loader = chooseLoader(this, fileListData)
+    const load = createLoad(this, poolId)
+    const params = {poolId: poolId, branch: "main", name: "", fileListData}
     try {
-      await l.load(
+      await load.setup()
+      await loader.load(
         params,
-        (progress: number) => {
-          // on progress
-          this.dispatch(Ingests.setProgress({poolId: id, progress}))
-        },
-        (warning: string): void => {
-          // on warning
-          this.dispatch(Ingests.addWarning({poolId: id, warning}))
-        },
-        () => this.sync(id).then(() => {}), // on detail update
-        abortCtl.signal
+        load.onProgress,
+        load.onWarning,
+        load.onPoolChanged,
+        load.signal
       )
-      // Wait for the pool to have some data before we signal that
-      // the ingest is done.
-      let tries = 0
-      while (tries < 20) {
-        tries++
-        const pool = await this.sync(id)
-        if (pool.hasStats() && pool.size > 0) break
-        await new Promise((r) => setTimeout(r, 300))
-      }
+      await waitForPoolStats(this, poolId)
     } catch (e) {
-      l.unload && (await l.unload(params))
+      loader.unload && (await loader.unload(params))
       throw e
     } finally {
-      await loadEnd.invoke(global.windowId)
-      this.dispatch(Ingests.remove(id))
-      if (abortCtl.signal.aborted) this.loaders.didAbort(loadId)
-      cleanup()
+      load.teardown()
     }
   }
 
@@ -130,5 +94,62 @@ export class PoolsApi extends ApiDomain {
     const client = await this.zealot
     const allData = await client.getPools()
     this.dispatch(Pools.setAllData({lakeId: this.lakeId, allData}))
+  }
+}
+
+function createLoad(api: PoolsApi, poolId: string) {
+  const ctl = new AbortController()
+  const id = nanoid()
+  let warnings = []
+
+  return {
+    signal: ctl.signal,
+
+    setup: async () => {
+      await loadStart.invoke(global.windowId)
+      api.abortables.add({id, abort: () => ctl.abort()})
+      api.dispatch(Loads.create({id, poolId, progress: 0, warnings: []}))
+    },
+
+    teardown: async () => {
+      await loadEnd.invoke(global.windowId)
+      api.abortables.remove(id)
+      api.dispatch(Loads.delete(id))
+    },
+
+    onProgress: (progress: number) => {
+      api.dispatch(Loads.update({id, changes: {progress}}))
+    },
+
+    onWarning: (warning: string) => {
+      warnings = [...warnings, warning]
+      api.dispatch(Loads.update({id, changes: {warnings}}))
+    },
+
+    onPoolChanged: async () => {
+      await api.sync(poolId)
+    },
+  }
+}
+
+function chooseLoader(api: PoolsApi, fileListData: FileListData) {
+  const filesType = fileListData[0]?.type
+  const loaders = api.loaders.getMatches(filesType)
+  if (!loaders || loaders.length === 0) {
+    throw new Error(
+      `No registered loaders match the provided file type: ${filesType}`
+    )
+  }
+  // only supporting one loader at this time
+  return loaders[0]
+}
+
+async function waitForPoolStats(api: PoolsApi, poolId: string) {
+  let tries = 0
+  while (tries < 20) {
+    tries++
+    const pool = await api.sync(poolId)
+    if (pool.hasStats() && pool.size > 0) break
+    await new Promise((r) => setTimeout(r, 300))
   }
 }

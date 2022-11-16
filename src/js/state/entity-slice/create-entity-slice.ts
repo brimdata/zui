@@ -26,10 +26,12 @@ type NestedOptions<T, Meta, NestedArgs extends any[]> = {
 }
 
 export function createEntitySlice<T>(options: Options<T>) {
-  const adapter = makeAdapter(options)
-  const actions = makeActions(options.name)
-  const reducer = makeReducer(adapter, actions, options.id)
-  const selectors = makeSelectors(adapter, options.select)
+  const id = options.id ?? ((thing) => thing["id"])
+  const sort = options.sort ?? false
+  const adapter = makeAdapter<T>(id, sort)
+  const actions = makeActions<T>(options.name)
+  const reducer = makeReducer<T>(adapter, actions, id)
+  const selectors = makeSelectors<T>(adapter, options.select)
   return {
     ...actions,
     ...selectors,
@@ -41,9 +43,11 @@ export function createEntitySlice<T>(options: Options<T>) {
 export function createNestedEntitySlice<T, Meta, NestedArgs extends any[]>(
   options: NestedOptions<T, Meta, NestedArgs>
 ) {
-  const adapter = makeAdapter(options)
-  const actions = makeActions(options.name) // Just to make the reducer
-  const reducer = makeReducer(adapter, actions, options.id)
+  const id = options.id ?? ((thing) => thing["id"])
+  const sort = options.sort ?? false
+  const adapter = makeAdapter<T>(id, sort)
+  const actions = makeActions<T>(options.name) // Just to make the reducer
+  const reducer = makeReducer<T>(adapter, actions, id)
   function at(...args: NestedArgs) {
     const meta = options.meta(...args)
     const actions = makeActions<T>(options.name, meta)
@@ -59,11 +63,11 @@ export function createNestedEntitySlice<T, Meta, NestedArgs extends any[]>(
   }
 }
 
-function makeAdapter<T>(options: {id?: IdSelector<T>; sort?: Comparer<T>}) {
-  return createEntityAdapter<T>({
-    selectId: options.id,
-    sortComparer: options.sort,
-  })
+function makeAdapter<T>(
+  selectId: IdSelector<T>,
+  sortComparer: Comparer<T> | false
+) {
+  return createEntityAdapter<T>({selectId, sortComparer})
 }
 
 function makeAction<Payload, Meta = undefined>(

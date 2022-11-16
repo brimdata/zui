@@ -5,7 +5,7 @@ import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
 import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
-import Ingests from "./Ingests"
+import {LoadsState} from "./Loads/types"
 import {InvestigationState} from "./Investigation/types"
 import {LakesState} from "./Lakes/types"
 import {LaunchesState} from "./Launches"
@@ -43,7 +43,7 @@ export type State = {
   lakes: LakesState
   errors: ErrorsState
   pools: PoolsState
-  ingests: ReturnType<typeof Ingests.reducer>
+  loads: LoadsState
   investigation: InvestigationState
   modal: ModalState
   notice: NoticeState

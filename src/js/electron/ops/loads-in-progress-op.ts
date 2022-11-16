@@ -16,7 +16,7 @@ export const loadEnd = createOperation(
   ({main}, windowId: string) => {
     const win = main.windows.find(windowId)
     if (win && win instanceof SearchWindow) {
-      win.loadsInProgress--
+      win.loadsInProgress = Math.max(0, win.loadsInProgress - 1)
     }
   }
 )
