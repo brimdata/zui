@@ -11,7 +11,6 @@ import Current from "src/js/state/Current"
 import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
-import {createAndLoadFiles} from "./create-and-load-files"
 
 type Update = {id: string; changes: {name: string}}
 export class PoolsApi extends ApiDomain {
@@ -31,10 +30,6 @@ export class PoolsApi extends ApiDomain {
 
   find(id: string) {
     return this.select(Pools.get(this.lakeId, id))
-  }
-
-  createFromFiles(files: File[]) {
-    return this.dispatch(createAndLoadFiles(files))
   }
 
   // TODO: Move to main progress, create a loads domain

@@ -1,3 +1,4 @@
+import {createAndLoadFilesThunk} from "src/js/api/pools/create-and-load-files"
 import errors from "src/js/errors"
 import {BrimError} from "src/js/errors/types"
 import ErrorFactory from "src/js/models/ErrorFactory"
@@ -71,9 +72,9 @@ export const deleteGroup = createCommand(
 
 export const createAndLoadFiles = createCommand(
   "pools.createAndLoadFiles",
-  async ({api}, files: File[]) => {
+  async ({api, dispatch}, files: File[]) => {
     try {
-      const promise = api.pools.createFromFiles(files)
+      const promise = dispatch(createAndLoadFilesThunk(files))
       api.toast.promise(promise, {
         loading: "Loading data into pool...",
         success: "Load successful",
