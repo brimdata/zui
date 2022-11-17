@@ -14,10 +14,11 @@ export const createAndLoadFilesThunk =
     try {
       poolId = await api.pools.create(name)
       api.url.push(lakePoolPath(poolId, lakeId))
-      api.pools.loadFiles(poolId, files)
-    } catch {
+      await api.pools.loadFiles(poolId, files)
+    } catch (e) {
       if (poolId) await api.pools.delete(poolId)
       api.url.replace(lakePath(lakeId))
+      throw e
     }
   }
 
