@@ -3,7 +3,7 @@ import {getAllStates} from "src/js/state/migrations/utils/getTestState"
 export default function moveQueriesStateToGlobal(state: any) {
   // Migrate state here
   const mergedQueryMap = {}
-  const mergedQueryItems = []
+  const mergedQueryItems: any[] = []
   const windows = Object.values(state.windows)
 
   if (windows.length === 0) {

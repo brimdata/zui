@@ -5,8 +5,8 @@ import {Thunk} from "../../types"
 
 export type QuerySource = "local" | "remote" | "session"
 export const getQuerySource =
-  (id?: string): Thunk<QuerySource | null> =>
-  (_d, getState): QuerySource => {
+  (id: string): Thunk<QuerySource | null> =>
+  (_d, getState) => {
     if (SessionQueries.find(getState(), id)) return "session"
     if (Queries.find(getState(), id)) return "local"
     if (RemoteQueries.find(getState(), id)) return "remote"

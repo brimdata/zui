@@ -8,7 +8,7 @@ export type ToolbarsState = {
 export type ToolbarItem = {
   id: string
   order: number
-  label: string
+  label?: string
   icon: string
   disabled: boolean
   tooltip?: string

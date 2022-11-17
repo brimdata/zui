@@ -8,6 +8,7 @@ import {
 } from "./get-persistable"
 import Lakes from "../Lakes"
 import Tabs from "../Tabs"
+import {State} from "../types"
 
 test("deleting access tokens for authType auth0", () => {
   const store = initTestStore()
@@ -21,7 +22,7 @@ test("deleting access tokens for authType auth0", () => {
       authData: {clientId: "1", accessToken: "SECRET", domain: "me.com"},
     })
   )
-  const persist = getPersistedWindowState(store.getState())
+  const persist = getPersistedWindowState(store.getState()) as State
   const persistedLake = Lakes.id("1")(persist)
   expect(persistedLake.authData).toMatchInlineSnapshot(`
     Object {
@@ -42,7 +43,7 @@ test("delete accessToken for authType none", () => {
       name: "test",
     })
   )
-  const persist = getPersistedWindowState(store.getState())
+  const persist = getPersistedWindowState(store.getState()) as State
   const persistedLake = Lakes.id("1")(persist)
   expect(persistedLake.authData).toMatchInlineSnapshot(`undefined`)
 })
@@ -52,7 +53,7 @@ test("keeps the tabs", () => {
   store.dispatch(Tabs.create("/", "1"))
   store.dispatch(Tabs.create("/", "2"))
   store.dispatch(Tabs.create("/", "3"))
-  const persist = getPersistedWindowState(store.getState())
+  const persist = getPersistedWindowState(store.getState()) as State
   expect(Object.keys(persist)).toEqual([...WINDOW_PERSIST, "tabs"])
   expect(persist.tabs.data.length).toBe(4)
   expect(Object.keys(persist.tabs.data[0])).toEqual(TAB_PERSIST)
@@ -70,7 +71,7 @@ test("global persist", () => {
       authData: {clientId: "1", accessToken: "SECRET", domain: "me.com"},
     })
   )
-  const persist = getPersistedGlobalState(store.getState())
+  const persist = getPersistedGlobalState(store.getState()) as State
   const persistedLake = Lakes.id("1")(persist)
   expect(persistedLake.authData).toMatchInlineSnapshot(`
     Object {

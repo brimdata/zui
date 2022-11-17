@@ -2,7 +2,7 @@ import {BrowserWindow} from "electron"
 import shortcuts from "electron-localshortcut"
 
 export function initialize() {
-  function zoom(dir: "in" | "out", win: BrowserWindow | undefined) {
+  function zoom(dir: "in" | "out", win: BrowserWindow | null) {
     const web = win && win.webContents
     if (!web) return
     const level = web.getZoomLevel()

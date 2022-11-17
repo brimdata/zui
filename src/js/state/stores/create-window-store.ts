@@ -4,7 +4,7 @@ import {ipcRendererReduxMiddleware} from "./ipc-redux-middleware"
 import rootReducer from "./root-reducer"
 
 export function createWindowStore(
-  initialState: State,
+  initialState: State | undefined,
   extraArgument: ThunkExtraArg
 ) {
   return configureStore({

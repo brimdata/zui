@@ -26,7 +26,8 @@ function ErrorDialog() {
   const ready = (height: number) => ipcRenderer.send(readyChannel(id), height)
 
   useEffect(() => {
-    ready(document.getElementById(ROOT_ID).clientHeight)
+    const node = document.getElementById(ROOT_ID)
+    node && ready(node.clientHeight)
   }, [])
 
   useKeybinding(["meta+.", "esc", "enter"], close)
@@ -48,5 +49,9 @@ function ErrorDialog() {
     </ThemeProvider>
   )
 }
-
-createRoot(document.getElementById(ROOT_ID)).render(<ErrorDialog />)
+const node = document.getElementById(ROOT_ID)
+if (node) {
+  createRoot(node).render(<ErrorDialog />)
+} else {
+  console.error("Could not mount html dialog")
+}

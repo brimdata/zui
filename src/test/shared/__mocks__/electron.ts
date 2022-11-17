@@ -36,6 +36,7 @@ export class BrowserWindow {
     if (name === "search.html" && params?.query) {
       // We can't change the location with jest, so we just
       // delete it and make it our own. https://remarkablemark.org/blog/2018/11/17/mock-window-location/
+      // @ts-ignore
       delete window.location
       // @ts-ignore
       window.location = {

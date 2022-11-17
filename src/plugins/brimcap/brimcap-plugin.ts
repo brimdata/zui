@@ -21,10 +21,10 @@ export default class BrimcapPlugin {
   private cli: BrimcapCLI
   // currentConn represents the data detail currently seen in the Brim detail
   // pane/window
-  private currentConn = null
+  private currentConn: zed.Record | null = null
   // selectedConn represents the data detail currently selected and highlighted
   // in the search viewer
-  private selectedConn = null
+  private selectedConn: zed.Record | null = null
   private yamlConfigPath = ""
   private cleanupFns: Function[] = []
   private processes: {
@@ -126,7 +126,7 @@ export default class BrimcapPlugin {
       toolbarId: string,
       buttonId: string,
       data: zed.Record,
-      setConn: (conn: zed.Record) => {}
+      setConn: (conn: zed.Record | null) => void
     ) => {
       if (!data) {
         setButtonDetails(toolbarId, buttonId, true)
@@ -134,8 +134,13 @@ export default class BrimcapPlugin {
       }
       this.tryConn(data, buttonId)
         .then((conn) => {
-          setConn(conn)
-          setButtonDetails(toolbarId, buttonId, !conn)
+          if (conn) {
+            setButtonDetails(toolbarId, buttonId, !conn)
+            setConn(conn)
+          } else {
+            setConn(null)
+            setButtonDetails(toolbarId, buttonId, true)
+          }
         })
         .catch((err) => {
           if (!env.isTest) console.error(err)
@@ -154,7 +159,6 @@ export default class BrimcapPlugin {
       ...itemOptions,
       id: detailButtonId,
       command: brimcapDownloadCurrentCmd,
-      label: undefined,
     })
 
     // add click handlers for button's emitted commands
@@ -175,22 +179,16 @@ export default class BrimcapPlugin {
         if (!record) return
         const data = record as zed.Record
 
-        updateButtonStatus(
-          "detail",
-          detailButtonId,
-          data,
-          (conn) => (this.currentConn = conn)
-        )
+        updateButtonStatus("detail", detailButtonId, data, (conn) => {
+          this.currentConn = conn
+        })
       }),
       // the search window's packets button operates off of the 'selected' record
       // (whatever is highlighted in the viewer/table)
       this.api.commands.add("data-detail:selected", ([data]) => {
-        updateButtonStatus(
-          "search",
-          searchButtonId,
-          data,
-          (conn) => (this.selectedConn = conn)
-        )
+        updateButtonStatus("search", searchButtonId, data, (conn) => {
+          this.selectedConn = conn
+        })
       })
     )
   }
@@ -252,8 +250,8 @@ export default class BrimcapPlugin {
     }
 
     const searchAndOpen = async () => {
-      const res = await this.cli.search(searchOpts)
-      if (res.status > 0) {
+      const res = this.cli.search(searchOpts)
+      if (res.status && res.status > 0) {
         const err = res.stderr.toString()
         const msg = JSON.parse(err)?.error || `brimcap search failed: ${err}`
 
@@ -307,7 +305,7 @@ export default class BrimcapPlugin {
       onProgressUpdate(0)
       const analyzeP = this.cli.analyze("-", cliOpts, signal)
       this.processes[analyzeP.pid] = analyzeP
-      pcapStream.pipe(analyzeP.stdin)
+      pcapStream.pipe(analyzeP.stdin ?? "")
 
       analyzeP.on("close", () => {
         delete this.processes[analyzeP.pid]

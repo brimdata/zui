@@ -34,7 +34,7 @@ function histogramFormat(records: zed.Record[]): ChartData {
   const table = new MergeHash()
 
   records.forEach((r) => {
-    const [ts, path, count] = r.fields.map((f) => f.data) as [
+    const [ts, path, count] = r.fields?.map((f) => f.data) as [
       zed.Time,
       zed.String,
       zed.Uint64
@@ -42,7 +42,7 @@ function histogramFormat(records: zed.Record[]): ChartData {
 
     try {
       const pathName = path.toString()
-      const key = ts.toDate().getTime()
+      const key = ts.toDate()?.getTime()
       const val = {[path.toString()]: count.toInt()}
 
       table.merge(key, val)

@@ -1,5 +1,5 @@
 import env from "src/app/core/env"
-import {spawnSync, spawn, ChildProcess} from "child_process"
+import {spawnSync, spawn} from "child_process"
 import {compact, isEmpty} from "lodash"
 import flatMap from "lodash/flatMap"
 
@@ -97,11 +97,7 @@ export default class BrimcapCLI {
     return this.execSpawnSync("index", [...toCliOpts(opts)])
   }
 
-  analyze(
-    pcapPath: string,
-    opts: analyzeOptions,
-    signal?: AbortSignal
-  ): ChildProcess {
+  analyze(pcapPath: string, opts: analyzeOptions, signal?: AbortSignal) {
     return this.execSpawn("analyze", [...toCliOpts(opts), pcapPath], signal)
   }
 

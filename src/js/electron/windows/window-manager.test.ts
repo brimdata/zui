@@ -7,7 +7,7 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 import {WindowManager} from "./window-manager"
 
 let store = initTestStore()
-initIpcListeners(store, null)
+initIpcListeners(store, null as any)
 
 beforeEach(() => {
   store = initTestStore()

@@ -13,7 +13,7 @@ export default function moveSidebarStateToAppearance(state: any) {
   }
 
   // If there is one, populate the appearance state from it
-  let appearance = undefined
+  let appearance: any = undefined
   if (firstActiveTab) {
     appearance = {
       sidebarIsOpen: firstActiveTab.layout.leftSidebarIsOpen,
