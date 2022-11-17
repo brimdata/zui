@@ -114,6 +114,12 @@ function parseError(e: Error): BrimError {
     return errors.importInterrupt()
   } else if (/format detection error/i.test(e && e.message)) {
     return errors.formatDetection(e.message)
+  } else if (/EISDIR/.test(e && e.message)) {
+    return ErrorFactory.create(
+      new Error(
+        "Importing directories is not yet supported. Select multiple files."
+      )
+    )
   } else {
     return ErrorFactory.create(e)
   }

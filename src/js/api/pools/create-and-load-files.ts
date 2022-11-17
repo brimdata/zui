@@ -9,7 +9,7 @@ export const createAndLoadFilesThunk =
     const lakeId = api.current.lakeId
     const tabId = api.current.tabId
     const poolNames = api.pools.all.map((p) => p.name)
-    const filesData = await getFilesData(files)
+    const filesData = await detectFileTypes(files)
     const name = getPoolName(filesData, poolNames)
     let poolId: string | null = null
     try {
@@ -22,15 +22,3 @@ export const createAndLoadFilesThunk =
       throw e
     }
   }
-
-async function getFilesData(files: File[]) {
-  try {
-    return await detectFileTypes(files)
-  } catch (e) {
-    if (e.message.startsWith("EISDIR"))
-      throw new Error(
-        "Importing directories is not yet supported. Select multiple files."
-      )
-    else throw e
-  }
-}
