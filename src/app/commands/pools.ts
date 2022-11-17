@@ -110,11 +110,10 @@ export const loadFiles = createCommand(
 )
 
 function parseError(e: Error): BrimError {
-  const cause = e.cause
-  if (/(Failed to fetch)|(network error)/.test(cause && cause.message)) {
+  if (/(Failed to fetch)|(network error)/.test(e && e.message)) {
     return errors.importInterrupt()
-  } else if (/format detection error/i.test(cause && cause.message)) {
-    return errors.formatDetection(cause.message)
+  } else if (/format detection error/i.test(e && e.message)) {
+    return errors.formatDetection(e.message)
   } else {
     return ErrorFactory.create(e)
   }
