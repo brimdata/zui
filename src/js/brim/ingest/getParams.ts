@@ -9,32 +9,6 @@ export type IngestParams = {
   fileListData: FileListData
 }
 
-export default function getParams(
-  data: FileListData,
-  existingNames: string[] = [],
-  now: Date = new Date()
-): IngestParams {
-  const files = new FileList(data)
-
-  function getPoolName() {
-    let name: string
-    if (files.oneFile()) {
-      name = files.first().file.name
-    } else if (files.inSameDir()) {
-      name = isEmpty(compact(files.paths()))
-        ? files.first().file.name
-        : files.dirName()
-    } else name = generateDirName(now)
-
-    return getUniqName(name, existingNames)
-  }
-
-  return {
-    name: getPoolName(),
-    fileListData: data,
-  }
-}
-
 function generateDirName(now: Date = new Date()) {
   return "pool_" + time(now).format("YYYY-MM-DD_HH:mm:ss")
 }

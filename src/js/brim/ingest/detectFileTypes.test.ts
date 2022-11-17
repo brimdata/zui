@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import ingest from "./"
 import data from "src/test/shared/data"
+import detectFileTypes from "./detectFileTypes"
 
 const json = data.getWebFile("sample.ndjson")
 const pcap = data.getWebFile("sample.pcap")
@@ -14,7 +14,7 @@ const zeek = data.getWebFile("sample.tsv")
 test("add file types", async () => {
   const files = [pcap, pcapng, zeek, json, unknown]
 
-  const types = await ingest.detectFileTypes(files)
+  const types = await detectFileTypes(files)
 
   expect(types).toEqual([
     {type: "pcap", file: pcap},
