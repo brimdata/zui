@@ -6,10 +6,19 @@ import {SearchBar} from "../search-bar"
 import {Toolbar} from "../toolbar"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {createAndLoadFiles} from "src/app/commands/pools"
+import {useDispatch} from "src/app/core/state"
+import Tabs from "src/js/state/Tabs"
+import {useBrimApi} from "src/app/core/context"
+import {lakePath} from "src/app/router/utils/paths"
 
 const PoolsSection = () => {
+  const dispatch = useDispatch()
+  const api = useBrimApi()
   const [{isOver}, drop] = useFilesDrop({
-    onDrop: (files) => createAndLoadFiles.run(files),
+    onDrop: (files) => {
+      dispatch(Tabs.activateUrl(lakePath(api.current.lakeId)))
+      createAndLoadFiles.run(files)
+    },
   })
   const [searchTerm, setSearchTerm] = useState("")
 

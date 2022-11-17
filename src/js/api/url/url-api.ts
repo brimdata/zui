@@ -1,17 +1,20 @@
-import tabHistory from "src/app/router/tab-history"
 import {ApiDomain} from "../api-domain"
 
 export class UrlApi extends ApiDomain {
-  push(url: string) {
-    this.dispatch(tabHistory.push(url))
+  push(url: string, opts: {tabId?: string} = {}) {
+    const id = opts.tabId ?? this.current.tabId
+    global.tabHistories.getOrCreate(id).push(url)
   }
-  replace(url: string) {
-    this.dispatch(tabHistory.replace(url))
+  replace(url: string, opts: {tabId?: string} = {}) {
+    const id = opts.tabId ?? this.current.tabId
+    global.tabHistories.getOrCreate(id).replace(url)
   }
-  goBack() {
-    this.dispatch(tabHistory.goBack())
+  goBack(opts: {tabId?: string} = {}) {
+    const id = opts.tabId ?? this.current.tabId
+    global.tabHistories.getOrCreate(id).goBack()
   }
-  goForward() {
-    this.dispatch(tabHistory.goForward())
+  goForward(opts: {tabId?: string} = {}) {
+    const id = opts.tabId ?? this.current.tabId
+    global.tabHistories.getOrCreate(id).goForward()
   }
 }

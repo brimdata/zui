@@ -4,6 +4,10 @@ import {State} from "../state/types"
 export class ApiDomain {
   constructor(private base: BrimApi) {}
 
+  get current() {
+    return this.base.current
+  }
+
   get state() {
     return this.base.getState()
   }
