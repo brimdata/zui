@@ -29,7 +29,7 @@ On subsequent updates, `git pull` and `yarn`.
 
 Brim is a TypeScript, React, Electron app.
 
-- [Electron](https://www.electronjs.org/docs) - it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/tutorial/quick-start#main-and-renderer-processes)
+- [Electron](https://www.electronjs.org/docs/latest) - it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/latest/tutorial/quick-start#main-and-renderer-processes)
 - [TypeScript](https://www.typescriptlang.org/)
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/docs/en/index.html)
