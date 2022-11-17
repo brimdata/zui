@@ -5,8 +5,7 @@ import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
 import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
-import {HandlersState} from "./Handlers/types"
-import Ingests from "./Ingests"
+import {LoadsState} from "./Loads/types"
 import {InvestigationState} from "./Investigation/types"
 import {LakesState} from "./Lakes/types"
 import {LaunchesState} from "./Launches"
@@ -15,7 +14,6 @@ import {NoticeState} from "./Notice/types"
 import {PluginStorageState} from "./PluginStorage"
 import {PoolsState} from "./Pools/types"
 import {QueriesState} from "./Queries/types"
-import {SystemTestState} from "./SystemTest"
 import {TabHistoriesState} from "./TabHistories/types"
 import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
@@ -42,11 +40,10 @@ export type State = {
   configs: ConfigsState
   configPropValues: ConfigPropValuesState
   tabHistories: TabHistoriesState
-  handlers: HandlersState
   lakes: LakesState
   errors: ErrorsState
   pools: PoolsState
-  ingests: ReturnType<typeof Ingests.reducer>
+  loads: LoadsState
   investigation: InvestigationState
   modal: ModalState
   notice: NoticeState
@@ -58,6 +55,5 @@ export type State = {
   queryVersions: QueryVersionsState
   sessionQueries: SessionQueriesState
   sessionHistories: SessionHistoriesState
-  systemTest: SystemTestState
   toolbars: ToolbarsState
 }

@@ -4,6 +4,10 @@ import {State} from "../state/types"
 export class ApiDomain {
   constructor(private base: BrimApi) {}
 
+  get current() {
+    return this.base.current
+  }
+
   get state() {
     return this.base.getState()
   }
@@ -22,6 +26,14 @@ export class ApiDomain {
 
   get configs() {
     return this.base.configs
+  }
+
+  get loaders() {
+    return this.base.loaders
+  }
+
+  get abortables() {
+    return this.base.abortables
   }
 
   select<R>(selector: (state: State) => R) {

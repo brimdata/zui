@@ -2,7 +2,7 @@ import React from "react"
 import {useSelector} from "react-redux"
 import Icon from "src/app/core/icon-temp"
 import {Pool} from "src/app/core/pools/pool"
-import Ingests from "src/js/state/Ingests"
+import Loads from "src/js/state/Loads"
 import {Item} from "../item"
 import {NodeRendererProps} from "react-arborist"
 import {poolContextMenu} from "src/app/menus/pool-context-menu"
@@ -13,7 +13,7 @@ import {PoolName} from "./pool-name"
 
 const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
   const pool = node.data
-  const ingest = useSelector(Ingests.get(pool.id))
+  const progress = useSelector((state) => Loads.getPoolProgress(state, pool.id))
   const afterDelayOf = useAfterDelayOf()
   const delimeter = useSelector(Config.getPoolNameDelimeter)
   const poolName = new PoolName(pool.name, delimeter)
@@ -31,7 +31,7 @@ const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
       onSubmit={(name: string) => node.submit(name)}
       onReset={() => node.reset()}
       onToggle={() => node.toggle()}
-      progress={ingest?.progress}
+      progress={progress}
       onClick={(e) => {
         if (e.altKey) {
           e.stopPropagation()

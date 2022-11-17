@@ -66,6 +66,15 @@ export default class TestApp {
     await this.mainWin.locator("text=Import Complete.").isVisible()
   }
 
+  async chooseFiles(locator, paths: string[]) {
+    const [chooser] = await Promise.all([
+      this.mainWin.waitForEvent("filechooser"),
+      locator.click(),
+    ])
+
+    await chooser.setFiles(paths)
+  }
+
   async deleteAllPools() {
     const pools = await this.zealot.getPools()
     for (let pool of pools) {

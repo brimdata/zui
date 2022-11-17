@@ -5,9 +5,9 @@ import styled from "styled-components"
 const BG = styled.div`
   display: flex;
   align-items: center;
-  border-radius: 5px;
   border: none;
-  background: rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
+  border: 1px solid var(--border-color);
   padding: 2px 12px;
   width: 100%;
 
@@ -16,6 +16,10 @@ const BG = styled.div`
     height: 16px;
     margin-right: 8px;
     opacity: 0.5;
+  }
+
+  &:focus-within {
+    background: rgba(0, 0, 0, 0.05);
   }
 `
 

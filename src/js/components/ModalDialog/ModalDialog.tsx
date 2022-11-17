@@ -1,8 +1,6 @@
 import React, {useState} from "react"
 import ReactDOM from "react-dom"
-import {useDispatch} from "react-redux"
 import {CSSTransition} from "react-transition-group"
-import SystemTest from "src/js/state/SystemTest"
 import styled from "styled-components"
 import doc from "../../lib/doc"
 import useEscapeKey from "../hooks/useEscapeKey"
@@ -120,7 +118,6 @@ type Props = {
 }
 
 export function ModalDialog(props: Props) {
-  const dispatch = useDispatch()
   const [show, setShow] = useState(true)
   const onClose = () => setShow(false)
 
@@ -135,8 +132,6 @@ export function ModalDialog(props: Props) {
         classNames=""
         timeout={310}
         onExited={() => setTimeout(props.onClosed, 100)}
-        onEntering={() => dispatch(SystemTest.hook("modal-entering"))}
-        onEntered={() => dispatch(SystemTest.hook("modal-entered"))}
       >
         <Background role="dialog">{props.children({onClose})}</Background>
       </CSSTransition>

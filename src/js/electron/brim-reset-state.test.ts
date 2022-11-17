@@ -21,5 +21,4 @@ test("reset state", async () => {
   expect(brim.session.delete).toHaveBeenCalled()
   expect(brim.session.save).not.toHaveBeenCalled()
   expect(app.relaunch).toHaveBeenCalled()
-  expect(brim.isQuitting).toBe(true)
 })

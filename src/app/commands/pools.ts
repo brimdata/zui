@@ -1,3 +1,7 @@
+import {createAndLoadFilesThunk} from "src/js/api/pools/create-and-load-files"
+import errors from "src/js/errors"
+import {BrimError} from "src/js/errors/types"
+import ErrorFactory from "src/js/models/ErrorFactory"
 import {PoolName} from "../features/sidebar/pools-section/pool-name"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
@@ -65,3 +69,58 @@ export const deleteGroup = createCommand(
     return deletePools.run(decendentIds)
   }
 )
+
+export const createAndLoadFiles = createCommand(
+  "pools.createAndLoadFiles",
+  async ({api, dispatch}, files: File[]) => {
+    try {
+      const promise = dispatch(createAndLoadFilesThunk(files))
+      api.toast.promise(promise, {
+        loading: "Loading data into pool...",
+        success: "Load successful",
+        error: "Load error",
+      })
+      await promise
+    } catch (e) {
+      api.notice.error(parseError(e))
+      api.pools.syncAll()
+      console.error(e)
+      console.error(e.cause)
+    }
+  }
+)
+
+export const loadFiles = createCommand(
+  "pools.loadFiles",
+  async ({api}, id: string, files: File[]) => {
+    try {
+      const promise = api.pools.loadFiles(id, files)
+      api.toast.promise(promise, {
+        loading: "Loading data into pool...",
+        success: "Load successful",
+        error: "Load error",
+      })
+      await promise
+    } catch (e) {
+      api.notice.error(parseError(e))
+      api.pools.syncAll()
+      console.error(e)
+    }
+  }
+)
+
+function parseError(e: Error): BrimError {
+  if (/(Failed to fetch)|(network error)/.test(e && e.message)) {
+    return errors.importInterrupt()
+  } else if (/format detection error/i.test(e && e.message)) {
+    return errors.formatDetection(e.message)
+  } else if (/EISDIR/.test(e && e.message)) {
+    return ErrorFactory.create(
+      new Error(
+        "Importing directories is not yet supported. Select multiple files."
+      )
+    )
+  } else {
+    return ErrorFactory.create(e)
+  }
+}

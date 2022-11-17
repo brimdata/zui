@@ -2,10 +2,10 @@ import React from "react"
 import {cssVar, transparentize} from "polished"
 import styled, {keyframes} from "styled-components"
 
-const bgColor = transparentize(0.1, cssVar("--cello") as string)
+const bgColor = transparentize(0.3, cssVar("--primary-color") as string)
 const reveal = keyframes`
     from {
-        clip-path: circle(30%);
+        clip-path: circle(10%);
     }
     to {
         clip-path: circle(100%);
@@ -25,8 +25,9 @@ const DropBG = styled.div`
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
-  animation: fadein 0.5s, ${reveal} ease-in 0.5s;
+  animation: fadein 0.3s ease-in-out, ${reveal} ease-in-out 1s;
   box-shadow: inset 0 0px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
   ${(p) => p.theme.typography.headingSection}
 `
 

@@ -4,6 +4,7 @@ import Link from "src/js/components/common/Link"
 import links from "../core/links"
 import {Content} from "src/js/components/Content"
 import styled from "styled-components"
+import {createAndLoadFiles} from "../commands/pools"
 
 const BG = styled.div`
   padding: 24px;
@@ -18,7 +19,7 @@ export default function TabImport() {
       <Content>
         <h2>New Pool</h2>
         <p>Create a new pool by loading data.</p>
-        <LoadFilesInput />
+        <LoadFilesInput onChange={(files) => createAndLoadFiles.run(files)} />
         <footer>
           <p>
             <b>Accepted formats:</b>{" "}

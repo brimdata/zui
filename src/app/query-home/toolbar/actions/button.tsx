@@ -52,9 +52,9 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 6px;
   user-select: none;
-  min-width: 48px;
+  min-width: 58px;
   -webkit-app-region: no-drag;
-  height: 22px;
+  height: 24px;
   padding: 0 4px;
   display: flex;
   align-items: center;

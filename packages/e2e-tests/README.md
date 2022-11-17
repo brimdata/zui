@@ -11,6 +11,9 @@ Then create a describe block and initialize a new TestApp class within it. That 
 Here's a template for getting started.
 
 ```ts
+import {expect, test} from "@playwright/test"
+import TestApp from "../helpers/test-app"
+
 test.describe("Pool Groups", () => {
   const app = new TestApp("Pool Groups")
 
@@ -36,3 +39,11 @@ These are common ways to select nodes.
 await app.find("role=button[name=create]").click()
 await app.find(':text("New Query Session")').click()
 ```
+
+https://playwright.dev/docs/api/class-locator
+
+https://playwright.dev/docs/selectors
+
+https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques
+
+https://playwright.dev/docs/api/class-page

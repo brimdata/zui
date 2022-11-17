@@ -16,6 +16,7 @@ import data from "src/test/shared/data"
 import {setupServer} from "msw/node"
 import {BootArgs, bootBrim} from "./boot-brim"
 import Tabs from "src/js/state/Tabs"
+import {createAndLoadFiles} from "src/app/commands/pools"
 
 jest.setTimeout(20_000)
 
@@ -55,7 +56,6 @@ export class SystemTest {
           )
         },
       })
-
       this.assign(await bootBrim(name, opts))
       this.store.dispatch(Tabs.create())
       this.navTo(`/lakes/${defaultLake().id}`)
@@ -66,7 +66,7 @@ export class SystemTest {
     afterAll(async () => {
       if (this.initialized) {
         await this.plugins.deactivate()
-        await this.main.quit()
+        await this.main.stop()
         tl.cleanup()
         this.network.close()
       }
@@ -83,7 +83,7 @@ export class SystemTest {
 
   async importFile(name: string) {
     const file = data.getWebFile(name)
-    await tl.act(() => this.api.pools.load([file]))
+    await tl.act(async () => await createAndLoadFiles.run([file]))
     await tl.screen.findByText(/import complete/i)
   }
 

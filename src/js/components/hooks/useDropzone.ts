@@ -14,6 +14,7 @@ type DragProps = {
 
 type ReturnValue = [() => DragProps, boolean]
 
+// @deprecated
 export default function useDropzone(dropCallback: Function): ReturnValue {
   const [dragging, setDragging] = useState(false)
 

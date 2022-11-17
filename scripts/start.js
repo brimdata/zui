@@ -15,7 +15,7 @@ async function start() {
     zealot.waitForOutput(/Watching for file changes/),
   ])
   log("Launching...")
-  sub("yarn", `electron . ${electronArgs}`)
+  sub("yarn", `electron . ${electronArgs}`).p.on("exit", () => process.exit(0))
   sub("yarn", "livereload 'dist, packages/zealot/dist'").silence()
 }
 

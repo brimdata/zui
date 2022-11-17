@@ -8,7 +8,6 @@ export const Toolbar = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  border-top: 1px solid var(--border-color);
   padding: 8px;
   gap: 8px;
 `

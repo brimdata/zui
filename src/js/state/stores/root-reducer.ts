@@ -2,14 +2,12 @@ import {combineReducers} from "@reduxjs/toolkit"
 
 import Lakes from "../Lakes"
 import Errors from "../Errors"
-import Handlers from "../Handlers"
 import Investigation from "../Investigation"
 import Modal from "../Modal"
 import Notice from "../Notice"
 import Pools from "../Pools"
 import Tabs from "../Tabs"
 import Queries from "../Queries"
-import SystemTest from "../SystemTest"
 import LakeStatuses from "../LakeStatuses"
 import TabHistories from "../TabHistories"
 import Url from "../Url"
@@ -20,7 +18,7 @@ import ConfigPropValues from "../ConfigPropValues"
 import Launches from "../Launches"
 import Appearance from "../Appearance"
 import RemoteQueries from "../RemoteQueries"
-import Ingests from "../Ingests"
+import Loads from "../Loads"
 import QueryVersions from "../QueryVersions"
 import SessionQueries from "../SessionQueries"
 import SessionHistories from "../SessionHistories"
@@ -34,13 +32,11 @@ const rootReducer = combineReducers<any, any>({
   lakes: Lakes.reducer,
   modal: Modal.reducer,
   notice: Notice.reducer,
-  handlers: Handlers.reducer,
   tabs: Tabs.reducer,
   investigation: Investigation.reducer,
   pools: Pools.reducer,
-  ingests: Ingests.reducer,
+  loads: Loads.reducer,
   pluginStorage: PluginStorage.reducer,
-  systemTest: SystemTest.reducer,
   lakeStatuses: LakeStatuses.reducer,
   queries: Queries.reducer,
   queryVersions: QueryVersions.reducer,

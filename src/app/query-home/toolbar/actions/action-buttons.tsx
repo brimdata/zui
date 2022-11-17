@@ -2,7 +2,7 @@ import React, {RefCallback} from "react"
 import styled from "styled-components"
 import ActionButton, {ActionButtonProps} from "./action-button"
 
-export const GUTTER = 8
+export const GUTTER = 10
 
 const BG = styled.div`
   display: flex;
