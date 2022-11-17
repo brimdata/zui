@@ -134,7 +134,7 @@ variable is typically not set, and therefore the `/tmp` path is used.
 
 > **Note:** Detailed explanations for the logic used for locating the
 temporary storage location can be found in the
-[Electron docs](https://www.electronjs.org/docs/api/app#appgetpathname) (for Brim)
+[Electron docs](https://www.electronjs.org/docs/latest/api/app#appgetpathname) (for Brim)
 and the [Go docs](https://pkg.go.dev/os#TempDir) (for Zed/Brimcap).
 
 If you'd like to change the base temporary storage path that's used by Brim
