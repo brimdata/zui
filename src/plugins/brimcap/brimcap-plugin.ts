@@ -362,8 +362,9 @@ export default class BrimcapPlugin {
           signal,
         })
       } catch (e) {
-        // if load failed because analyze did, report the analyzeErr
-        if (analyzeErr) throw errors.pcapIngest(analyzeErr)
+        if (analyzeErr)
+          // if load failed because analyze did, report the analyzeErr
+          throw errors.pcapIngest(analyzeErr)
         // otherwise report the loadErr
         throw errors.pcapIngest(e)
       }

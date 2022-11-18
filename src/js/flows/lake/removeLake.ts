@@ -20,8 +20,8 @@ const removeLake =
 
     // remove creds from keychain
     if (authType === "auth0") {
-      deleteSecretOp.invoke({key: toAccessTokenKey(id)})
-      deleteSecretOp.invoke({key: toRefreshTokenKey(id)})
+      deleteSecretOp.invoke(toAccessTokenKey(id))
+      deleteSecretOp.invoke(toRefreshTokenKey(id))
     }
     dispatch(Investigation.clearLakeInvestigation(id))
     dispatch(Pools.removeAll(id))

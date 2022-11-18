@@ -3,7 +3,7 @@
   --red: #cd1313;
   --green: #399c81;
   --green-bright: #4ef567;
-  --orange: #ea6842;
+  --orange: #ff7f00;
   --yellow: #ffc933;
   --azure: #2f629c;
   --cello: hsl(212, 100%, 14%);
@@ -45,6 +45,8 @@
   --tab-background: hsl(212, 15%, 94%);
   --tab-background-hover: hsl(212, 15%, 97%);
 
+  --primary-color-lighter: hsl(212, 72%, 75%);
+  --primary-color-light: hsl(212, 72%, 69%);
   --primary-color: hsl(212, 72%, 59%);
   --primary-color-dark: hsl(212, 72%, 53%);
   --primary-color-darker: hsl(212, 72%, 48%);
@@ -55,7 +57,7 @@
   --button-background-hover: #ececee;
   --button-background-active: #e5e5e7;
 
-  --editor-background: hsl(212, 15%, 98%);
+  --editor-background: hsl(212, 3%, 95%);
 
   --border-color: hsl(216, 10%, 80%);
 }

@@ -135,7 +135,7 @@ variable is typically not set, and therefore the `/tmp` path is used.
 :::tip
 Detailed explanations for the logic used for locating the
 temporary storage location can be found in the
-[Electron docs](https://www.electronjs.org/docs/api/app#appgetpathname) (for Zui)
+[Electron docs](https://www.electronjs.org/docs/latest/api/app#appgetpathname) (for Zui)
 and the [Go docs](https://pkg.go.dev/os#TempDir) (for Zed/Brimcap).
 :::
 

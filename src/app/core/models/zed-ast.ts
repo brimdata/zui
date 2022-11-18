@@ -12,7 +12,7 @@ export class ZedAst {
     if (!from) return null
     const trunk = from.trunks.find((t) => t.source.kind === "Pool")
     if (!trunk) return null
-    const name = trunk.source.spec.pool
+    const name = trunk.source.spec.pool.text
     if (!name) return null
     return name
   }

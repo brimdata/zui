@@ -11,16 +11,26 @@ type CommandContext = {
   api: BrimApi
 }
 
-type CommandExecutor = (context: CommandContext) => void
+type CommandExecutor<Args extends any[], Return> = (
+  context: CommandContext,
+  ...args: Args
+) => Return | Promise<Return>
 
 export class Commands {
-  private map = new Map<string, Command>()
+  private map = new Map<string, Command<any, any>>()
   private store: Store | null
   private api: BrimApi | null
 
-  add(command: Command) {
+  add(command: Command<any, any>) {
     this.map.set(command.id, command)
     return command
+  }
+
+  run(id: string | {id: string}, ...args: any[]) {
+    const cmdId = typeof id === "string" ? id : id.id
+    const cmd = this.map.get(cmdId)
+    if (cmd) cmd.run(...args)
+    else console.log("No command found: ", id)
   }
 
   get context() {
@@ -41,18 +51,43 @@ export class Commands {
 
 export const commands = new Commands()
 
-export class Command {
-  constructor(private meta: CommandMeta, private exec: CommandExecutor) {}
+export class Command<Args extends any[], Return> {
+  constructor(
+    private meta: CommandMeta,
+    private exec: CommandExecutor<Args, Return>
+  ) {}
 
   get id() {
     return this.meta.id
   }
 
-  run() {
-    return this.exec(commands.context)
+  run(...args: Args) {
+    return this.exec(commands.context, ...args)
+  }
+
+  bind(...args: Args) {
+    return new BoundCommand<Args, Return>(this, args)
   }
 }
 
-export const createCommand = (meta: CommandMeta, exec: CommandExecutor) => {
-  return commands.add(new Command(meta, exec))
+export class BoundCommand<Args extends any[], Return> {
+  args: Args
+
+  constructor(public command: Command<Args, Return>, args: Args) {
+    this.args = args
+  }
+
+  run() {
+    return this.command.run(...this.args)
+  }
+}
+
+export const createCommand = <Args extends any[] = never, Return = void>(
+  meta: CommandMeta | string,
+  exec: CommandExecutor<Args, Return>
+) => {
+  const cmdMeta = typeof meta === "string" ? {id: meta} : meta
+  const cmd = new Command<Args, Return>(cmdMeta, exec)
+  commands.add(cmd)
+  return cmd
 }

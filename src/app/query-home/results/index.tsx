@@ -3,7 +3,7 @@ import {useSelector} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import {useResultsData} from "./data-hook"
 import {MainInspector} from "./main-inspector"
-import {ResultsError} from "./results-error"
+import {ResultsError} from "./errors/results-error"
 import ResultsTable from "./results-table"
 import {useResultsView} from "./view-hook"
 import Results from "src/js/state/Results"
@@ -17,6 +17,7 @@ const BG = styled.div`
   border: none;
   position: relative;
   flex: 1;
+  min-height: 0;
 `
 
 const Body = styled.div`

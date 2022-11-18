@@ -17,7 +17,7 @@ export function showContextMenu(
 }
 
 export function showMessageBox(opts: Electron.MessageBoxOptions) {
-  if (env.isTest) {
+  if (env.isTest || env.isIntegrationTest) {
     return Promise.resolve({response: 0})
     // To do, mock the options and give the test case a way to select some
   } else {

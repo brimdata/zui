@@ -24,7 +24,7 @@ const buttonActiveColor = transparentize(0.7, primary)
 const labelColor = darken(0.4, primary)
 const prefixColor = darken(0.3, primary)
 
-const Button = styled.button`
+export const Button = styled.button`
   font-family: var(--mono-font);
   position: relative;
   margin-right: 4px;
@@ -56,7 +56,7 @@ const Button = styled.button`
   }
 `
 
-const Prefix = styled.span`
+export const Prefix = styled.span`
   opacity: 0.5;
   margin-right: 8px;
   text-transform: uppercase;

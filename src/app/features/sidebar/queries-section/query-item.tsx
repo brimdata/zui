@@ -1,55 +1,39 @@
 import React from "react"
 import styled from "styled-components"
-import {showContextMenu} from "src/js/lib/System"
 import Icon from "src/app/core/icon-temp"
-import {useDispatch} from "src/app/core/state"
 import {Item} from "../item"
-import {NodeRenderer} from "react-arborist"
-import getQueryItemCtxMenu from "../flows/get-query-item-ctx-menu"
-import {useBrimApi} from "src/app/core/context"
+import {NodeRendererProps} from "react-arborist"
+import {Query} from "src/js/state/Queries/types"
+import {queryContextMenu} from "src/app/menus/query-context-menu"
+import {useAfterDelayOf} from "src/app/core/hooks/use-after-delay-of"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
 const QueryIcon = styled(Icon).attrs({name: "query"})``
 
-const QueryItem: NodeRenderer<any> = ({
-  innerRef,
-  styles,
-  data,
-  state,
-  handlers,
+const QueryItem = ({
+  dragHandle,
+  style,
+  node,
   tree,
-}) => {
-  const api = useBrimApi()
-  const {id} = data
-  const isGroup = "items" in data
-  const dispatch = useDispatch()
-  const itemIcon = isGroup ? <FolderIcon /> : <QueryIcon />
+}: NodeRendererProps<Query>) => {
+  const itemIcon = node.isInternal ? <FolderIcon /> : <QueryIcon />
 
-  const onGroupClick = (e) => {
-    e.stopPropagation()
-    handlers.toggle(e)
-  }
-
-  const onItemClick = (e: React.MouseEvent) => {
-    handlers.select(e, {selectOnClick: true})
-    if (!e.metaKey && !e.shiftKey) {
-      api.queries.open(id)
-    }
-  }
-
+  const afterDelayOf = useAfterDelayOf()
   return (
     <Item
-      innerRef={innerRef}
+      innerRef={dragHandle}
       icon={itemIcon}
-      text={data.name}
-      state={state}
-      styles={styles}
-      onClick={isGroup ? onGroupClick : onItemClick}
-      isFolder={isGroup}
-      onContextMenu={() => {
-        showContextMenu(dispatch(getQueryItemCtxMenu({data, tree, handlers})))
-      }}
-      onSubmit={handlers.submit}
+      text={node.data.name}
+      state={node.state}
+      innerStyle={style}
+      isFolder={node.isInternal}
+      onToggle={() => node.toggle()}
+      onContextMenu={() => queryContextMenu.build(tree, node).show()}
+      onSubmit={(name) => node.submit(name)}
+      onReset={() => node.reset()}
+      onClick={() =>
+        afterDelayOf(480, () => node.isOnlySelection && node.edit())
+      }
     />
   )
 }

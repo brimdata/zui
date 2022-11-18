@@ -4,21 +4,21 @@ import {isEmpty} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import Warning from "src/app/core/icons/warning"
 import Current from "src/js/state/Current"
-import Ingests from "src/js/state/Ingests"
+import Loads from "src/js/state/Loads"
 import Modal from "src/js/state/Modal"
 import ProgressIndicator from "../ProgressIndicator"
 
 export function IngestProgress() {
   const dispatch = useDispatch()
   const poolId = useSelector(Current.getPoolId)
-  const ingest = useSelector(Ingests.get(poolId))
+  const progress = useSelector((s) => Loads.getPoolProgress(s, poolId))
+  const warnings = useSelector((s) => Loads.getPoolWarnings(s, poolId))
 
-  if (!ingest) return null
+  if (progress === null) return null
 
   function onWarningsClick() {
     dispatch(Modal.show("ingest-warnings"))
   }
-  const {progress, warnings} = ingest
 
   return (
     <div className="packet-post-progress">

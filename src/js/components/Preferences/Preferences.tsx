@@ -45,6 +45,18 @@ function ConfigFormItems(props: {configs: FormConfig}) {
 
     const val = get(configVals, [c.configName, c.name], undefined)
     switch (c.type) {
+      case "boolean":
+        return (
+          <div className="setting-panel" key={name}>
+            {itemLabel}
+            <input
+              id={name}
+              type="checkbox"
+              name={name}
+              defaultChecked={val === undefined ? defaultValue : val}
+            />
+          </div>
+        )
       case "file":
         return (
           <div key={name} className="setting-panel">
@@ -112,7 +124,6 @@ export default function Preferences() {
   const [errors, setErrors] = useState([])
 
   const configsForm = useConfigsForm()
-
   const onClose = () => setErrors([])
 
   const onSubmit = useCallback(

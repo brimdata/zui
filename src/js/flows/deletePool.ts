@@ -2,33 +2,23 @@ import {Thunk} from "../state/types"
 import Current from "../state/Current"
 import Investigation from "../state/Investigation"
 import Pools from "../state/Pools"
-import SystemTest from "../state/SystemTest"
-import Handlers from "../state/Handlers"
+import Loads from "../state/Loads"
 
-const deletePool =
+export const deleteOnePool =
   (poolId: string): Thunk<Promise<void>> =>
   async (dispatch, getState, {api}) => {
     const zealot = await api.getZealot()
     const lakeId = Current.getLakeId(getState())
 
-    const poolHandler = Object.entries(Handlers.get(getState()))
-      .map(([hId, h]) => h.type === "INGEST" && {...h, id: hId})
-      .filter(Boolean)
-      .find((h) => h.poolId === poolId)
+    // Abort any ingests
+    const loads = Loads.all(getState()).filter((l) => l.poolId === poolId)
 
-    // if pool is still loading, use brim api to call abort using its handler id
-    if (poolHandler) {
-      await api.loaders.abort(poolHandler.id)
-      // upon abort, loader.load() will throw an error triggering a transaction rollback
-      // which will handle the actual delete and cleanup
-      return Promise.resolve()
+    for (let {id} of loads) {
+      api.abortables.abort({id})
     }
 
     return zealot.deletePool(poolId).then(() => {
       dispatch(Investigation.clearPoolInvestigation(lakeId, poolId))
       dispatch(Pools.remove({lakeId, poolId}))
-      dispatch(SystemTest.hook("pool-deleted"))
     })
   }
-
-export default deletePool

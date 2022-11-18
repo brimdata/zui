@@ -1,11 +1,11 @@
 import React from "react"
 
-import {FormFieldConfig} from "../../brim/form"
+import {DirectoryField} from "../../brim/form"
 import FileInput from "../common/forms/FileInput"
 import InputLabel from "../common/forms/InputLabel"
 
 type Props = {
-  config: FormFieldConfig
+  config: DirectoryField
 }
 
 export default function DataDirInput({config}: Props) {

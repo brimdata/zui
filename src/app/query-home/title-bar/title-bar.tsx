@@ -9,7 +9,7 @@ import {TitleBarProvider} from "./context"
 
 const BG = styled.header.attrs({className: "title-bar"})`
   flex-shrink: 0;
-  height: 31px;
+  height: 37px;
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;

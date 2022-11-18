@@ -1,6 +1,6 @@
 import {matchPath} from "react-router"
 import brim, {BrimLake} from "../../brim"
-import Pools from "../Pools"
+import * as Pools from "../Pools/selectors"
 import {PoolsState} from "../Pools/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
@@ -66,8 +66,13 @@ const getSessionVersions = (state: State) => {
 }
 
 export const getNamedQuery = (state: State) => {
-  const {queryId} = getQueryUrlParams(state)
+  const queryId = getQueryId(state)
   return Queries.build(state, queryId)
+}
+
+export const getQueryId = (state: State) => {
+  const {queryId} = getQueryUrlParams(state)
+  return queryId
 }
 
 export const getSession = createSelector(
@@ -75,7 +80,7 @@ export const getSession = createSelector(
   getSessionVersions,
   (query, versions) => {
     if (!query) return null
-    return new BrimQuery(query, versions)
+    return new BrimQuery(query, versions, "session")
   }
 )
 

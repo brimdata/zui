@@ -95,6 +95,8 @@ const LakeForm = ({onClose, lake}: Props) => {
     host: {
       name: "host",
       label: "Lake URL",
+      type: "string",
+      defaultValue: "",
       check: (value) => {
         if (isEmpty(value)) return [false, "must not be blank"]
         try {
@@ -113,6 +115,8 @@ const LakeForm = ({onClose, lake}: Props) => {
     name: {
       name: "name",
       label: "Name",
+      type: "string",
+      defaultValue: "",
       check: (value) => [!isEmpty(value), "must not be blank"],
     },
   }

@@ -10,6 +10,7 @@ import initLakeParams from "./initLakeParams"
 import {initAutosave} from "./initAutosave"
 import {featureFlagsOp} from "../electron/ops/feature-flags-op"
 import {commands} from "src/app/commands/command"
+import {menus} from "src/app/menus/create-menu"
 
 export default async function initialize() {
   const api = new BrimApi()
@@ -21,12 +22,13 @@ export default async function initialize() {
 
   initDOM()
   await initGlobals(store)
-  initIpcListeners(store, pluginManager)
+  initIpcListeners(store)
   initMenuActionListeners(store)
   initLakeParams(store)
   initDebugGlobals(store, api)
   initAutosave(store)
   commands.setContext(store, api)
+  menus.setContext(api)
 
   return {store, api, pluginManager}
 }

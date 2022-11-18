@@ -28,7 +28,7 @@ jobs:
 
       # Since we intend to push, we must have a a writable token and
       # minimal git config settings to create commits.
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # ref defaults to github.sha, which is fixed at the time a run
           # is triggered. Using github.ref ensures a run that waits in
@@ -53,31 +53,31 @@ jobs:
         # Rewrite bare PR numbers as Zed PRs (https://github.com/brimdata/brim/issues/797)
         run: |
           sha="$(jq -r '.client_payload.merge_commit_sha' "${GITHUB_EVENT_PATH}")"
-          echo "::set-output name=sha::$sha"
+          echo "sha=$sha" >> $GITHUB_OUTPUT
           branch="$(jq -r '.client_payload.branch' "${GITHUB_EVENT_PATH}")"
-          echo "::set-output name=branch::$branch"
+          echo "branch=$branch" >> $GITHUB_OUTPUT
           number="$(jq -r '.client_payload.number' "${GITHUB_EVENT_PATH}")"
-          echo "::set-output name=number::$number"
+          echo "number=$number" >> $GITHUB_OUTPUT
           title="$(jq -r '.client_payload.title' "${GITHUB_EVENT_PATH}")"
           title="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zed$2$3,g; s,^(#\d+)(\W+),brimdata/zed$1$2,g; s,(\W+)(#\d+),$1brimdata/zed$2,g; s,^(#\d+)$,brimdata/zed$1,g;' <<< "${title}")"
-          echo "::set-output name=title::$title"
+          echo "title=$title" >> $GITHUB_OUTPUT
           body="$(jq -r '.client_payload.body' "${GITHUB_EVENT_PATH}")"
           body="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zed$2$3,g; s,^(#\d+)(\W+),brimdata/zed$1$2,g; s,(\W+)(#\d+),$1brimdata/zed$2,g; s,^(#\d+)$,brimdata/zed$1,g;' <<< "${body}")"
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}"
-          echo "::set-output name=body::$body"
+          echo "body=$body" >> $GITHUB_OUTPUT
           url="$(jq -r '.client_payload.url' "${GITHUB_EVENT_PATH}")"
-          echo "::set-output name=url::$url"
+          echo "url=$url" >> $GITHUB_OUTPUT
           user="$(jq -r '.client_payload.user' "${GITHUB_EVENT_PATH}")"
-          echo "::set-output name=user::$user"
+          echo "user=$user" >> $GITHUB_OUTPUT
 
       # This section runs typical CI, with an updated Zed. Most of this
       # is no different than the normal CI flow.
       - uses: actions/setup-go@v2
         with:
           go-version: '1.18'
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           cache: yarn
           node-version-file: .node-version

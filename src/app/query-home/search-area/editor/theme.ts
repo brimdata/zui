@@ -8,7 +8,7 @@ export const editorTheme = EditorView.theme(
       height: "100%",
     },
     "&.cm-editor": {
-      padding: "10px 0",
+      padding: "0",
     },
     "&.cm-editor.cm-focused": {
       outline: "none",
@@ -28,7 +28,7 @@ export const editorTheme = EditorView.theme(
     ".cm-lineNumbers .cm-gutterElement": {
       opacity: 0.2,
       minWidth: 0,
-      padding: "0 4px 0 22px",
+      padding: "0 20px 0 26px",
     },
     ".cm-activeLine": {
       background: "transparent",

@@ -2,6 +2,7 @@ import {Pool} from "src/app/core/pools/pool"
 import {find, keys} from "lodash"
 import {State} from "../types"
 import {PoolsState, PoolState} from "./types"
+import {createSelector} from "@reduxjs/toolkit"
 
 export const ids = (lakeId: string) => (state: State) => {
   return keys(getLake(state, lakeId))
@@ -16,6 +17,15 @@ export const get =
 
 export const raw = (state: State): PoolsState => state.pools
 
+export const all = createSelector(
+  (_, lakeId: string) => lakeId,
+  raw,
+  (lakeId, pools) => {
+    return Object.keys(pools[lakeId])
+      .map((key) => Pool.from(pools[lakeId][key]))
+      .sort((a, b) => (a.name < b.name ? -1 : 1))
+  }
+)
 export const getPools =
   (lakeId: string | null) =>
   (state: State): Pool[] => {

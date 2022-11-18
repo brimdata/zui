@@ -1,13 +1,15 @@
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 import Notice from "../state/Notice"
 import {Thunk} from "../state/types"
-import deletePool from "./deletePool"
+import {deleteOnePool} from "./deletePool"
 
 const deletePools =
   (ids: string[]): Thunk<Promise<void[] | void>> =>
-  (dispatch) => {
-    return Promise.all(ids.map((id) => dispatch(deletePool(id))))
-      .catch((e) => {
+  async (dispatch) => {
+    for (let id of ids) {
+      try {
+        await dispatch(deleteOnePool(id))
+      } catch (e) {
         dispatch(
           Notice.set({
             type: "PoolDeleteError",
@@ -15,8 +17,9 @@ const deletePools =
             details: e.message,
           })
         )
-      })
-      .finally(() => dispatch(syncPoolsData()))
+      }
+    }
+    await dispatch(syncPoolsData())
   }
 
 export default deletePools

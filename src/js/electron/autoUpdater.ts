@@ -7,6 +7,8 @@ import get from "lodash/get"
 import semver from "semver/preload"
 import open from "../lib/open"
 import {BrimMain} from "./brim"
+import links from "src/app/core/links"
+import brimPackage from "../../../package.json"
 
 const getFeedURLForPlatform = (repo, platform) => {
   return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
@@ -40,12 +42,15 @@ const autoUpdateLinux = async (main: BrimMain) => {
     type: "info",
     buttons: ["Get Update", "Later"],
     title: "Application Update",
-    message: "A new version of Brim is available.",
-    detail: `Brim version ${latestVersion} is available for download; you are running v${app.getVersion()}.`,
+    message: "A new version of Zui is available.",
+    detail: `Zui version ${latestVersion} is available for download; you are running v${app.getVersion()}.`,
   }
 
   dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    const navUrl = "https://www.brimdata.io/download/"
+    const navUrl =
+      brimPackage.name == "zui-insiders"
+        ? brimPackage.repository + "/releases/latest"
+        : links.ZUI_DOWNLOAD
     if (returnValue.response === 0) open(navUrl)
   })
 }
@@ -67,7 +72,7 @@ export async function setupAutoUpdater(main: BrimMain) {
       // releaseNotes are not available for windows, so use name instead
       message: env.isWindows ? releaseNotes : releaseName,
       detail:
-        "A new version of Brim has been downloaded. Restart the application to apply the update.",
+        "A new version of Zui has been downloaded. Restart the application to apply the update.",
     }
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {

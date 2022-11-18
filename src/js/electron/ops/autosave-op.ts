@@ -10,8 +10,8 @@ const saveSession = throttle((main) => {
 
 export const autosaveOp = createOperation(
   "windows.autosave",
-  async (main, e, args: {windowId: string; windowState: State}) => {
-    main.windows.update(args.windowId, args.windowState)
+  async ({main}, windowId: string, windowState: State) => {
+    main.windows.update(windowId, windowState)
     saveSession(main)
   }
 )

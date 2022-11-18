@@ -22,7 +22,7 @@ const BG = styled.div`
   padding: 0 6px;
   align-items: center;
   border-bottom: 1px solid var(--border-color);
-  height: 31px;
+  height: 37px;
   flex-shrink: 0;
   user-select: none;
   position: relative;
@@ -31,7 +31,6 @@ const BG = styled.div`
     background: none;
     border: none;
     display: flex;
-    border-radius: 5px;
     padding: 0 6px;
     text-transform: uppercase;
     height: 100%;
@@ -91,6 +90,7 @@ export function Menu() {
       <button
         onClick={onClick("history")}
         aria-pressed={currentPaneName === "history"}
+        id="js-history-pane"
       >
         <span>History</span>
       </button>

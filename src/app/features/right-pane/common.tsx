@@ -27,3 +27,10 @@ export const PaneHeader = styled.header`
   padding: 0 12px;
   margin-top: 8px;
 `
+
+export const EmptyText = styled.p`
+  padding: 24px;
+  margin-top: 33%;
+  opacity: 0.5;
+  text-align: center;
+`

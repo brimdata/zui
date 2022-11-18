@@ -1,6 +1,12 @@
 import {QueryPin} from "src/js/state/Editor/types"
+import {Query} from "src/js/state/Queries/types"
+import {QueryVersion} from "src/js/state/QueryVersions/types"
 
-export type CreateQueryParams = {name: string}
+export type CreateQueryParams = Partial<Query> & {
+  type?: QuerySource
+  parentId?: string | null
+  versions?: QueryVersion[]
+}
 
 export type OpenQueryOptions = {
   history?: boolean | "replace"
@@ -16,3 +22,5 @@ export type QueryParams = {
 export type Select = <T extends (...args: any) => any>(
   selector: T
 ) => ReturnType<T>
+
+export type QuerySource = "local" | "remote" | "session"

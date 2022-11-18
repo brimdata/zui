@@ -22,8 +22,8 @@ export default class TestApp {
     this.zealot = new Client("http://localhost:9867")
   }
 
-  find(text: string) {
-    return this.mainWin.locator(text)
+  find(...args: Parameters<Page["locator"]>) {
+    return this.mainWin.locator(...args)
   }
 
   async init() {
@@ -51,7 +51,7 @@ export default class TestApp {
         })
       )
     )
-    this.mainWin = await this.getWindowByTitle("Brim")
+    this.mainWin = await this.getWindowByTitle("Zui")
   }
 
   async createPool(filepaths: string[]): Promise<void> {
@@ -66,9 +66,25 @@ export default class TestApp {
     await this.mainWin.locator("text=Import Complete.").isVisible()
   }
 
+  async chooseFiles(locator, paths: string[]) {
+    const [chooser] = await Promise.all([
+      this.mainWin.waitForEvent("filechooser"),
+      locator.click(),
+    ])
+
+    await chooser.setFiles(paths)
+  }
+
+  async deleteAllPools() {
+    const pools = await this.zealot.getPools()
+    for (let pool of pools) {
+      await this.zealot.deletePool(pool.id)
+    }
+  }
+
   async query(zed: string): Promise<void> {
     await this.mainWin.locator('div[role="textbox"]').fill(zed)
-    await this.mainWin.locator('div[aria-label="editor"] + button').click()
+    await this.mainWin.locator('[aria-label="run-query"]').click()
     await this.mainWin.locator('span[aria-label="fetching"]').isHidden()
   }
 
@@ -89,7 +105,7 @@ export default class TestApp {
     return results
   }
 
-  async getViewerStats(): Promise<{results: string; shapes: string}> {
+  async getViewerStats(): Promise<{results: number; shapes: number}> {
     const results = await this.mainWin
       .locator('span[aria-label="results"]')
       .textContent()
@@ -97,7 +113,8 @@ export default class TestApp {
       .locator('span[aria-label="shapes"]')
       .textContent()
 
-    return {results, shapes}
+    const toInt = (str: string) => parseInt(str.replace(/\D*/, ""))
+    return {results: toInt(results), shapes: toInt(shapes)}
   }
 
   async shutdown() {
@@ -108,6 +125,10 @@ export default class TestApp {
     const wins = await this.brim.windows()
     const winTitles = await Promise.all(wins.map((w) => w.title()))
     return wins[winTitles.findIndex((wTitle) => wTitle === title)]
+  }
+
+  sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms))
   }
 }
 

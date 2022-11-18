@@ -1,5 +1,4 @@
 import React from "react"
-import SubmitButton from "./submit-button"
 import styled from "styled-components"
 import QueryEditor from "./editor/query-editor"
 import {useDispatch} from "../../core/state"
@@ -26,12 +25,6 @@ const InputBackdrop = styled.div<{height: number}>`
   height: ${(p) => p.height + "px"};
 `
 
-const Submit = styled(SubmitButton)`
-  position: absolute;
-  right: 16px;
-  bottom: 10px;
-`
-
 type Props = {
   value: string
   disabled?: boolean
@@ -52,7 +45,6 @@ export default function Input({value, disabled}: Props) {
   return (
     <InputBackdrop height={height}>
       <QueryEditor value={value} disabled={disabled} />
-      <Submit />
       <DragAnchor onMouseDown={bindDrag} />
     </InputBackdrop>
   )

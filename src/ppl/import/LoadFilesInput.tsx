@@ -1,20 +1,19 @@
-import {useBrimApi} from "src/app/core/context"
-import {useImportOnDrop} from "src/app/features/import/use-import-on-drop"
 import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 import classNames from "classnames"
-import React, {ChangeEvent, MouseEvent} from "react"
+import React, {MouseEvent} from "react"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import Folder from "src/js/icons/Folder"
 import DataFileIcon from "./DataFileIcon"
+import {useFilesDrop} from "src/util/hooks/use-files-drop"
 
-export default function LoadFilesInput() {
-  const api = useBrimApi()
+type Props = {
+  onChange: (files: File[]) => void
+  className?: string
+}
+
+export default function LoadFilesInput(props: Props) {
   const [input, setInput] = useCallbackRef<HTMLInputElement>()
-  const [{canDrop, isOver}, drop] = useImportOnDrop()
-
-  function onChange(e: ChangeEvent<HTMLInputElement>) {
-    api.pools.load(Array.from(e.target.files))
-  }
+  const [{canDrop, isOver}, drop] = useFilesDrop({onDrop: props.onChange})
 
   function openDialog(_: MouseEvent) {
     if (input) input.click()
@@ -22,7 +21,9 @@ export default function LoadFilesInput() {
 
   return (
     <div
-      className={classNames("load-files-input", {dragging: canDrop && isOver})}
+      className={classNames(props.className, "load-files-input", {
+        dragging: canDrop && isOver,
+      })}
       ref={drop}
     >
       <input
@@ -31,7 +32,7 @@ export default function LoadFilesInput() {
         type="file"
         multiple
         title=""
-        onChange={onChange}
+        onChange={(e) => props.onChange(Array.from(e.currentTarget.files))}
       />
       <div className="radiation">
         <div />

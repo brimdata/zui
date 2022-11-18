@@ -54,18 +54,6 @@ code {
   padding: 2px 3px;
 }
 
-.using-mouse {
-  :focus {
-    outline: none;
-  }
-}
-
-.using-keyboard {
-  :focus {
-    outline: auto 5px var(--havelock);
-  }
-}
-
 body.dragging {
   user-select: none;
   pointer-events: none;

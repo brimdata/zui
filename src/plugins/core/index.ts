@@ -1,7 +1,19 @@
 import BrimApi from "src/js/api"
-import brim from "src/js/brim"
+import time from "src/js/brim/time"
 
 export function activate(api: BrimApi) {
+  api.configs.add({
+    name: "pools",
+    title: "Pools",
+    properties: {
+      nameDelimeter: {
+        name: "nameDelimeter",
+        label: "Group Pools By",
+        type: "string",
+        defaultValue: "/",
+      },
+    },
+  })
   api.configs.add({
     name: "display",
     title: "Display",
@@ -11,7 +23,7 @@ export function activate(api: BrimApi) {
         label: "Timezone",
         type: "string",
         defaultValue: "UTC",
-        enum: brim.time.getZoneNames(),
+        enum: time.getZoneNames(),
       },
       timeFormat: {
         name: "timeFormat",
@@ -34,6 +46,18 @@ export function activate(api: BrimApi) {
         label: "Decimal",
         type: "string",
         defaultValue: ".",
+      },
+    },
+  })
+  api.configs.add({
+    name: "editor",
+    title: "Editor",
+    properties: {
+      runQueryOnEnter: {
+        name: "runQueryOnEnter",
+        label: "Run Query on Enter",
+        type: "boolean",
+        defaultValue: true,
       },
     },
   })

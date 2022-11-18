@@ -6,7 +6,8 @@ import styled from "styled-components"
 const Btn = styled.button`
   background: var(--button-background);
   border: none;
-  height: 22px;
+  height: 24px;
+  min-width: 58px;
   padding: 0 10px 0 10px;
   display: flex;
   align-items: center;
@@ -50,16 +51,24 @@ const Text = styled.span`
 `
 
 type Props = {
-  children: string
+  children?: string
   icon?: IconName
+  iconSize?: number
   primary?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-export function Button({icon, primary, children, ...rest}: Props) {
+export function Button({
+  icon,
+  iconSize,
+  primary,
+  children,
+  className,
+  ...rest
+}: Props) {
   return (
-    <Btn className={classNames({primary: primary})} {...rest}>
-      {icon && <Icon name={icon} size={12} />}
-      <Text>{children}</Text>
+    <Btn className={classNames(className, {primary: primary})} {...rest}>
+      {icon && <Icon name={icon} size={iconSize ?? 12} />}
+      {children && <Text>{children}</Text>}
     </Btn>
   )
 }

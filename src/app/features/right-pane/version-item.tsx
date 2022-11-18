@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react"
 import styled from "styled-components"
 import {formatDistanceToNowStrict} from "date-fns"
-import {useSelector} from "react-redux"
-import Current from "../../../js/state/Current"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
-import {useBrimApi} from "src/app/core/context"
+import {NodeRendererProps} from "react-arborist"
 
 const TimeNode = styled.div`
   display: flex;
@@ -19,8 +17,10 @@ const Version = styled.div`
 `
 const Dot = styled.div`
   position: relative;
-  margin: 0 18px;
-  padding-bottom: 2.5em;
+  height: 100%;
+  height: 5px;
+  width: 5px;
+  margin: 0 16px;
 
   &:after {
     content: "";
@@ -29,7 +29,6 @@ const Dot = styled.div`
     width: 5px;
     border-radius: 50%;
     position: absolute;
-    top: 13px;
   }
 `
 
@@ -65,11 +64,10 @@ const BG = styled.div`
   border-radius: 6px;
 
   &:hover {
-    background: var(--sidebar-item-hover);
+    background-color: rgba(0, 0, 0, 0.04);
   }
-
   &:active {
-    background: var(--sidebar-item-active);
+    background-color: rgba(0, 0, 0, 0.06);
   }
 
   &[aria-selected="true"] {
@@ -102,29 +100,19 @@ export const FormattedTime = ({ts}: {ts: string}) => {
   return <span>{duration} ago</span>
 }
 
-const VersionItem = ({styles, data, handlers}) => {
-  const queryVersion = data as QueryVersion
-  const query = useSelector(Current.getNamedQuery)
-  const api = useBrimApi()
-
-  const onClick = (e) => {
-    e.preventDefault()
-    handlers.select(e, {selectOnClick: true})
-    api.queries.open(query.id, {version: queryVersion.version})
-  }
-
+const VersionItem = ({
+  node,
+  style,
+  dragHandle,
+}: NodeRendererProps<QueryVersion & {id: string}>) => {
   return (
-    <Container tabIndex={0} style={styles.row}>
-      <BG
-        aria-selected={query.current?.version === queryVersion.version}
-        style={styles.indent}
-        onClick={onClick}
-      >
+    <Container>
+      <BG ref={dragHandle} aria-selected={node.isSelected} style={style}>
         <TimeNode>
           <Dot />
-          <FormattedTime ts={queryVersion.ts} />
+          <FormattedTime ts={node.data.ts} />
         </TimeNode>
-        <Version onClick={onClick}>{queryVersion.value}</Version>
+        <Version>{node.data.value}</Version>
       </BG>
     </Container>
   )

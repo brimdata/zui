@@ -1,54 +1,47 @@
-import getPoolContextMenu from "src/app/pools/flows/get-pool-context-menu"
-import {lakePoolPath} from "src/app/router/utils/paths"
 import React from "react"
-import {useDispatch, useSelector} from "react-redux"
-import Current from "src/js/state/Current"
-import {AppDispatch} from "src/js/state/types"
+import {useSelector} from "react-redux"
 import Icon from "src/app/core/icon-temp"
-import {showContextMenu} from "src/js/lib/System"
-import {MenuItemConstructorOptions} from "electron"
 import {Pool} from "src/app/core/pools/pool"
-import Ingests from "src/js/state/Ingests"
-import Tabs from "src/js/state/Tabs"
+import Loads from "src/js/state/Loads"
 import {Item} from "../item"
+import {NodeRendererProps} from "react-arborist"
+import {poolContextMenu} from "src/app/menus/pool-context-menu"
+import {updateFrom} from "src/app/commands/pins"
+import {useAfterDelayOf} from "src/app/core/hooks/use-after-delay-of"
+import Config from "src/js/state/Config"
+import {PoolName} from "./pool-name"
 
-const PoolItem = ({styles, data, state, handlers}) => {
-  const pool = data as Pool
-  const dispatch = useDispatch<AppDispatch>()
-  const lakeId = useSelector(Current.getLakeId)
-  const ingest = useSelector(Ingests.get(pool.id))
-  const ctxMenu: MenuItemConstructorOptions[] = [
-    {
-      label: "Rename",
-      click: () => {
-        handlers.edit()
-      },
-    },
-    ...dispatch(getPoolContextMenu(pool)),
-  ]
-
-  const onClick = (e) => {
-    e.preventDefault()
-    handlers.select(e, {selectOnClick: true})
-    dispatch(Tabs.previewUrl(lakePoolPath(pool.id, lakeId)))
-  }
-
-  const onDoubleClick = (e) => {
-    e.preventDefault()
-    dispatch(Tabs.activateUrl(lakePoolPath(pool.id, lakeId)))
-  }
+const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
+  const pool = node.data
+  const progress = useSelector((state) => Loads.getPoolProgress(state, pool.id))
+  const afterDelayOf = useAfterDelayOf()
+  const delimeter = useSelector(Config.getPoolNameDelimeter)
+  const poolName = new PoolName(pool.name, delimeter)
 
   return (
     <Item
-      text={pool.name}
-      icon={<Icon name="pool" />}
-      state={state}
-      styles={styles}
-      onClick={onClick}
-      onDoubleClick={onDoubleClick}
-      onContextMenu={() => showContextMenu(ctxMenu)}
-      onSubmit={handlers.submit}
-      progress={ingest?.progress}
+      innerRef={dragHandle}
+      text={node.isInternal ? poolName.name : poolName.basename}
+      inputValue={pool.name}
+      isFolder={node.isInternal}
+      icon={node.isInternal ? <Icon name="folder" /> : <Icon name="pool" />}
+      state={node.state}
+      innerStyle={style}
+      onContextMenu={() => poolContextMenu.build(tree, node).show()}
+      onSubmit={(name: string) => node.submit(name)}
+      onReset={() => node.reset()}
+      onToggle={() => node.toggle()}
+      progress={progress}
+      onClick={(e) => {
+        if (e.altKey) {
+          e.stopPropagation()
+          updateFrom.run(node.data.name)
+        } else {
+          afterDelayOf(480, () => {
+            node.isOnlySelection && node.edit()
+          })
+        }
+      }}
     />
   )
 }

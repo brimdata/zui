@@ -1,7 +1,7 @@
 import {Abortables} from "src/app/core/models/abortables"
 import toast from "react-hot-toast"
 import {getZealot} from "./core/get-zealot"
-import {AppDispatch, State} from "../state/types"
+import {AppDispatch, GetState} from "../state/types"
 import {QueriesApi} from "./queries/queries-api"
 import {PoolsApi} from "./pools/pools-api"
 import {getPath, PathName} from "./core/get-path"
@@ -14,6 +14,9 @@ import {BrimLake} from "../brim"
 import {query, QueryOptions} from "./core/query"
 import {CurrentApi} from "./current/current-api"
 import {CorrelationsApi} from "./correlations/correlations-api"
+import {EditorApi} from "./editor/editor-api"
+import {NoticeApi} from "./notice/notice-api"
+import {UrlApi} from "./url/url-api"
 
 export default class BrimApi {
   public abortables = new Abortables()
@@ -24,23 +27,30 @@ export default class BrimApi {
   public queries: QueriesApi
   public pools: PoolsApi
   public current: CurrentApi
+  public editor: EditorApi
   public correlations: CorrelationsApi
+  public url: UrlApi
   public toast = toast
   public contextMenus = {
     search: new MenusApi<Search>(),
     detail: new MenusApi<Detail>(),
   }
+  public dispatch: AppDispatch
+  public getState: GetState
+  public notice: NoticeApi
 
-  private dispatch: AppDispatch
-
-  init(d: AppDispatch, gs: () => State) {
+  init(d: AppDispatch, gs: GetState) {
     this.dispatch = d
+    this.getState = gs
     this.toolbar = new ToolbarsApi(d, gs)
     this.configs = new ConfigurationsApi(d, gs)
     this.queries = new QueriesApi(d, gs)
-    this.pools = new PoolsApi(d)
+    this.pools = new PoolsApi(this)
     this.current = new CurrentApi(gs)
     this.correlations = new CorrelationsApi(d)
+    this.editor = new EditorApi(d, gs)
+    this.notice = new NoticeApi(this)
+    this.url = new UrlApi(this)
   }
 
   getZealot(lake?: BrimLake, env?: "node" | "web") {

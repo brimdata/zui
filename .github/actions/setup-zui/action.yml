@@ -9,7 +9,7 @@ runs:
         go-version: "1.18"
 
     - name: Install Node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         cache: yarn
         node-version-file: .node-version

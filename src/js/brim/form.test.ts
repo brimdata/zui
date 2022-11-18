@@ -3,6 +3,7 @@ import {FormConfig} from "./form"
 
 const sampleConfig = (): FormConfig => ({
   username: {
+    type: "string",
     label: "Username",
     name: "username",
     defaultValue: "joe",
@@ -63,9 +64,7 @@ test("a missing field", () => {
   config.username.name = "missing"
   const form = brim.form(sampleFormElement(), config)
 
-  return expect(form.isValid()).rejects.toEqual(
-    new Error(`No input with name="missing"`)
-  )
+  return expect(form.isValid()).resolves.toBe(true)
 })
 
 test("when check returns undefined", () => {

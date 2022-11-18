@@ -19,18 +19,13 @@ export function initialize(main: BrimMain) {
   })
 
   app.on("activate", () => main.activate())
+  app.on("will-quit", () => main.stop())
 
   app.on("open-url", (event, url) => {
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()
     log.info("Opening url:", url)
     main.openUrl(url)
-  })
-
-  app.on("before-quit", async (e) => {
-    if (main.isQuitting) return
-    e.preventDefault()
-    await main.quit()
   })
 
   app.on("window-all-closed", async () => {
