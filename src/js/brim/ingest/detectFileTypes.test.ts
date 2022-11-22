@@ -10,9 +10,11 @@ const pcap = data.getWebFile("sample.pcap")
 const pcapng = data.getWebFile("sample.pcapng")
 const unknown = data.getWebFile("plain.txt")
 const zeek = data.getWebFile("sample.tsv")
+const zng = data.getWebFile("sample.zng")
+const zson = data.getWebFile("sample.zson")
 
 test("add file types", async () => {
-  const files = [pcap, pcapng, zeek, json, unknown]
+  const files = [pcap, pcapng, zeek, json, unknown, zng, zson]
 
   const types = await detectFileTypes(files)
 
@@ -22,5 +24,7 @@ test("add file types", async () => {
     {type: "log", file: zeek},
     {type: "log", file: json},
     {type: "log", file: unknown},
+    {type: "log", file: zng},
+    {type: "log", file: zson},
   ])
 })
