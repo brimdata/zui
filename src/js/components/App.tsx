@@ -5,7 +5,7 @@ import AppTabsRouter from "src/app/router/app-tabs-router"
 import * as routes from "src/app/router/routes"
 import AppWrapper from "src/app/routes/app-wrapper/app-wrapper"
 import React from "react"
-import {Route, Switch} from "react-router"
+import {Redirect, Route, Switch} from "react-router"
 import useStoreExport from "src/app/core/hooks/useStoreExport"
 import useSearchShortcuts from "./useSearchShortcuts"
 import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
@@ -15,6 +15,8 @@ import {useReleaseNotes} from "src/application/use-release-notes"
 import {PoolNew} from "src/pages/pools/new"
 import {InitPool, Show} from "src/pages/pools/show"
 import {QueryRoute} from "src/app/query-home/route"
+import {lakePath} from "src/app/router/utils/paths"
+import {defaultLake} from "../initializers/initLakeParams"
 
 export default function App() {
   useSearchAppMenu()
@@ -32,9 +34,6 @@ export default function App() {
               <Switch>
                 <Route path={routes.lakeReleaseNotes.path}>
                   <ReleaseNotes />
-                </Route>
-                <Route path={routes.lakeWelcome.path}>
-                  <WelcomePage />
                 </Route>
                 <Route path={routes.poolNew.path}>
                   <PoolNew />
@@ -70,9 +69,7 @@ export default function App() {
           </AppWrapper>
         </Route>
         <Route path="/">
-          <AppWrapper>
-            <LakeList />
-          </AppWrapper>
+          <Redirect to={lakePath(defaultLake().id)} />
         </Route>
       </Switch>
     </AppTabsRouter>
