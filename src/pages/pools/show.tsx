@@ -1,13 +1,11 @@
 import {syncPool} from "src/app/core/pools/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import useLakeId from "src/app/router/hooks/use-lake-id"
 import {poolShow} from "src/app/router/routes"
 import React, {useEffect, useRef} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {Redirect, Route, Switch} from "react-router"
+import {Route, Switch} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
-import {lakePath} from "src/app/router/utils/paths"
 import {cssVar, transparentize} from "polished"
 import {bytes} from "src/js/lib/fmt"
 import styled from "styled-components"
@@ -82,10 +80,9 @@ const LoadFilesContainer = styled.div`
   }
 `
 
-function InitPool({children}) {
+export function InitPool({children}) {
   const dispatch = useDispatch<AppDispatch>()
   const poolId = usePoolId()
-  const lakeId = useLakeId()
   const pool = useSelector(Current.getPool)
 
   useEffect(() => {
@@ -93,7 +90,7 @@ function InitPool({children}) {
   }, [poolId])
 
   if (!pool) {
-    return <Redirect to={lakePath(lakeId)} />
+    return <h1>404</h1>
   } else if (!pool.hasStats()) {
     return null
   } else {
@@ -101,7 +98,7 @@ function InitPool({children}) {
   }
 }
 
-const Show = () => {
+export const Show = () => {
   const pool = useSelector(Current.mustGetPool)
   const api = useBrimApi()
 
@@ -191,11 +188,11 @@ const Show = () => {
 export default function PoolShow() {
   return (
     <Switch>
-      <InitPool>
-        <Route path={poolShow.path}>
+      <Route path={poolShow.path}>
+        <InitPool>
           <Show />
-        </Route>
-      </InitPool>
+        </InitPool>
+      </Route>
     </Switch>
   )
 }

@@ -1,6 +1,8 @@
 import React from "react"
 import {connectToLake} from "src/app/commands/connect-to-lake"
 import {newPool} from "src/app/commands/new-pool"
+import {Subtitle} from "src/components/subtitle"
+import {Title} from "src/components/title"
 import styled from "styled-components"
 
 const BG = styled.div`
@@ -13,19 +15,6 @@ const BG = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
-
-const Title = styled.h1`
-  text-align: center;
-  font-size: 60px;
-  font-weight: 900;
-  span {
-    color: var(--orange);
-  }
-`
-const Subtitle = styled.h2`
-  font-weight: 300;
-  font-size: 32px;
 `
 
 const Card = styled.section`

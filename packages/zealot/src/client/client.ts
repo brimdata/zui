@@ -9,6 +9,7 @@ import {
   accept,
   defaults,
   getEnv,
+  getLoadContentType,
   json,
   parseContent,
   toJS,
@@ -54,12 +55,22 @@ export class Client {
     const branch = opts.branch || "main"
     let headers = new Headers()
     if (opts.message) headers.set("Zed-Commit", json(opts.message))
+    console.log({
+      path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
+      method: "POST",
+      body: data,
+      headers,
+      contentType: getLoadContentType(opts.format) ?? "",
+      signal: opts.signal,
+      fetch: nodeFetch,
+      timeout: Infinity,
+    })
     const res = await this.send({
       path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: "POST",
       body: data,
       headers,
-      contentType: "",
+      contentType: getLoadContentType(opts.format) ?? "",
       signal: opts.signal,
       fetch: nodeFetch,
       timeout: Infinity,
@@ -180,7 +191,6 @@ export class Client {
     if (this.auth) {
       headers.set("Authorization", `Bearer ${this.auth}`)
     }
-
     const resp = await fetch(this.baseURL + opts.path, {
       method: opts.method,
       signal: abortCtl.signal as any,

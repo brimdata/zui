@@ -1,8 +1,10 @@
 import styled from "styled-components"
 
-const Label = styled.label`
-  ${(p) => p.theme.typography.labelBold};
-  color: var(--aqua);
+export const Label = styled.label`
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: bold;
+  display: block;
 `
 
 export default Label

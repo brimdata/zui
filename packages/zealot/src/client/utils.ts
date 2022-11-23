@@ -1,6 +1,6 @@
 import {Response as NodeResponse} from "node-fetch"
 import {decode} from "../encoder"
-import {ResponseFormat} from "./types"
+import {LoadContentType, LoadFormat, ResponseFormat} from "./types"
 
 export function parseContent(resp: Response | NodeResponse) {
   if (resp.status === 204) return Promise.resolve(null)
@@ -64,4 +64,19 @@ export function wrapAbort(signal?: AbortSignal) {
   const ctl = new AbortController()
   signal?.addEventListener("abort", () => ctl.abort())
   return ctl
+}
+
+export function getLoadContentType(
+  format?: LoadFormat
+): LoadContentType | null {
+  if (!format) return null
+  if (format === "auto") return "*/*"
+  if (format === "csv") return "text/csv"
+  if (format === "json") return "application/json"
+  if (format === "ndjson") return "application/x-ndjson"
+  if (format === "parquet") return "application/x-parquet"
+  if (format === "zjson") return "application/x-zjson"
+  if (format === "zng") return "application/x-zng"
+  if (format === "zson") return "application/x-zson"
+  throw new Error("Unknown load format: " + format)
 }

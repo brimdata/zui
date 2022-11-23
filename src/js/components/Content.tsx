@@ -9,11 +9,6 @@ export const Content = styled.section`
     cursor: pointer;
   }
 
-  hr {
-    border: none;
-    border-top: 1px solid var(--cloudy);
-  }
-
   * {
     margin: 0.5em 0;
   }

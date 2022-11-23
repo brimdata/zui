@@ -1,7 +1,7 @@
 import React from "react"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import tabHistory from "src/app/router/tab-history"
-import {lakeImportPath} from "src/app/router/utils/paths"
+import {newPoolPath} from "src/app/router/utils/paths"
 import {MenuItemConstructorOptions} from "electron"
 import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
@@ -82,7 +82,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
-        dispatch(tabHistory.push(lakeImportPath(l.id)))
+        dispatch(tabHistory.push(newPoolPath(l.id)))
       },
     })
   })

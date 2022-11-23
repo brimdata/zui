@@ -53,12 +53,32 @@ export interface IdObj {
 export type LoadOpts = {
   pool: string | IdObj
   branch: string
-  signal: AbortSignal
   message: {
     author: string
     body: string
   }
+  signal?: AbortSignal
+  format?: LoadFormat
 }
+export type LoadFormat =
+  | "auto"
+  | "csv"
+  | "json"
+  | "ndjson"
+  | "parquet"
+  | "zjson"
+  | "zng"
+  | "zson"
+
+export type LoadContentType =
+  | "*/*"
+  | "text/csv"
+  | "application/json"
+  | "application/x-ndjson"
+  | "application/x-parquet"
+  | "application/x-zjson"
+  | "application/x-zng"
+  | "application/x-zson"
 
 export type WebFetch = typeof window.fetch
 export type NodeFetch = typeof nodeFetch

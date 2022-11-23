@@ -19,15 +19,16 @@ export const lakeShow = {
   title: "Lake: <lake>",
   path: `${lakeList.path}/:lakeId`,
 }
-export const lakeImport = {
-  title: "New Pool",
-  path: `${lakeShow.path}/import`,
-  icon: "pool",
-}
 
 export const poolShow = {
   title: "<pool>",
   path: `${lakeShow.path}/pools/:poolId`,
+  icon: "pool",
+}
+
+export const poolNew = {
+  title: "New Pool",
+  path: `${lakeShow.path}/pools/new`,
   icon: "pool",
 }
 
@@ -71,9 +72,9 @@ type Route = {
 export const allRoutes: Route[] = [
   lakeWelcome,
   lakeReleaseNotes,
-  lakeImport,
   lakeShow,
   lakeList,
+  poolNew,
   poolShow,
   query,
   queryVersion,

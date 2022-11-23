@@ -13,7 +13,7 @@ function generateDirName(now: Date = new Date()) {
   return "pool_" + time(now).format("YYYY-MM-DD_HH:mm:ss")
 }
 
-export function getPoolName(data: FileListData, existingNames: string[]) {
+export function derivePoolName(data: FileListData, existingNames: string[]) {
   const files = new FileList(data)
   let name: string
   if (files.oneFile()) {
