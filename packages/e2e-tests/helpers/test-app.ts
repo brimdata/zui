@@ -8,6 +8,7 @@ import {
   Page,
   _electron as electron,
 } from "playwright-chromium"
+import {expect} from "@playwright/test"
 import env from "../../../src/app/core/env"
 import {itestDir} from "./env"
 
@@ -63,7 +64,7 @@ export default class TestApp {
     ])
 
     await chooser.setFiles(filepaths)
-    await this.mainWin.locator("text=Import Complete.").isVisible()
+    await expect(this.mainWin.getByText("Load Successful")).toBeVisible()
   }
 
   async chooseFiles(locator, paths: string[]) {
