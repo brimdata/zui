@@ -63,5 +63,3 @@ rules:
     - off
   jest/no-done-callback:
     - off
-  jest/no-standalone-expect:
-    - off
