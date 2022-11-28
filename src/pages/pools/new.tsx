@@ -57,12 +57,13 @@ const Footer = styled.footer`
   margin: 0 auto;
   padding: 0 32px;
   margin-top: 28px;
+  margin-bottom: 16px;
 `
 
 const Drop = styled(DropZone)`
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 28px;
 `
 
 export function PoolNew() {
@@ -161,14 +162,15 @@ export function PoolNew() {
         </Field>
         {error && <FormError>{error}</FormError>}
         <SubmitButton
-          text={loading ? "Loading..." : "Create Pool"}
           disabled={loading}
           style={{
             minWidth: "100%",
             marginTop: 12,
             alignSelf: "center",
           }}
-        />
+        >
+          {loading ? "Loading..." : "Create Pool"}
+        </SubmitButton>
       </Form>
       <Footer>
         <Help>

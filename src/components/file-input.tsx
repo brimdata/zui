@@ -23,12 +23,13 @@ export function FileInput(
       <InputButton
         type="button"
         icon="doc-plain"
-        text="Choose Files..."
         autoFocus={autoFocus}
         onClick={() => {
           input.current?.click()
         }}
-      />
+      >
+        Choose Files...
+      </InputButton>
       <Help>
         {count === 0
           ? "No Files Selected"

@@ -10,4 +10,5 @@ export const Card = styled.section`
   border-radius: 8px;
   padding: 30px 50px 50px;
   box-shadow: 0 22px 80px hsla(0 0% 72% / 0.8);
+  border: 1px solid hsl(0 0% 85%);
 `

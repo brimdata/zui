@@ -16,7 +16,7 @@ export const lakeList = {
   title: "Choose a Lake",
 }
 export const lakeShow = {
-  title: "Lake: <lake>",
+  title: "Welcome to Zui",
   path: `${lakeList.path}/:lakeId`,
 }
 

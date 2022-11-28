@@ -12,7 +12,6 @@ export const SubmitButton = styled(InputButton).attrs({type: "submit"})`
   user-select: none;
   line-height: 1;
   align-items: center;
-  height: 32px;
 
   &:active {
     background-color: var(--primary-color-darker);

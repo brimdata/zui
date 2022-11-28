@@ -10,7 +10,6 @@ import useStoreExport from "src/app/core/hooks/useStoreExport"
 import useSearchShortcuts from "./useSearchShortcuts"
 import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
 import {WelcomePage} from "src/pages/welcome"
-import {useWelcomePage} from "src/application/use-welcome-page"
 import {useReleaseNotes} from "src/application/use-release-notes"
 import {PoolNew} from "src/pages/pools/new"
 import {InitPool, Show} from "src/pages/pools/show"
@@ -21,7 +20,6 @@ import {defaultLake} from "../initializers/initLakeParams"
 export default function App() {
   useSearchAppMenu()
   useStoreExport()
-  useWelcomePage()
   useReleaseNotes()
   useSearchShortcuts()
 

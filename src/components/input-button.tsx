@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import React from "react"
 import Icon, {IconName} from "src/app/core/icon-temp"
-import styled from "styled-components"
+import styled, {StyledComponent} from "styled-components"
 
 const Button = styled.button`
   display: inline-block;
@@ -14,10 +14,8 @@ const Button = styled.button`
   height: 28px;
   white-space: nowrap;
   user-select: none;
-
   font-size: 14px;
   font-weight: 500;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,16 +36,20 @@ const Button = styled.button`
 `
 
 export function InputButton(
-  props: {icon?: IconName; text: string} & JSX.IntrinsicElements["button"]
+  props: {
+    icon?: IconName
+    children: string
+    className?: string
+  } & JSX.IntrinsicElements["button"]
 ) {
-  const {icon, text, ...buttonProps} = props
+  const {icon, children, className, ...buttonProps} = props
   return (
     <Button
-      className={classNames({"has-icon": !!icon})}
+      className={classNames(className, {"has-icon": !!icon})}
       {...(buttonProps as any)}
     >
       {icon && <Icon name={icon} size={16} />}
-      {text}
+      {children}
     </Button>
   )
 }
