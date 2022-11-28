@@ -84,19 +84,27 @@ export const createAndLoadFiles = createCommand(
     const lakeId = api.current.lakeId
     const tabId = api.current.tabId
     const poolNames = api.pools.all.map((p) => p.name)
+    if (!opts.name && files.length === 0) {
+      api.toast("No pool name and no files provided.")
+      return
+    }
     try {
       const name =
-        opts.name.trim() ||
-        derivePoolName(await detectFileTypes(files), poolNames)
+        opts.name || derivePoolName(await detectFileTypes(files), poolNames)
       poolId = await api.pools.create(name, opts)
 
-      const promise = api.pools.loadFiles(poolId, files, opts.format)
-      api.toast.promise(promise, {
-        loading: "Loading data into pool...",
-        success: "Load successful",
-        error: "Load error",
-      })
-      await promise
+      if (files.length === 0) {
+        api.toast.success("Pool created: " + name)
+      } else {
+        const promise = api.pools.loadFiles(poolId, files, opts.format)
+        api.toast.promise(promise, {
+          loading: `Loading data into pool: ${name}...`,
+          success: "Load successful",
+          error: "Load error",
+        })
+        await promise
+      }
+
       api.url.push(lakePoolPath(poolId, lakeId), {tabId})
     } catch (e) {
       if (poolId) await api.pools.delete(poolId)
@@ -108,9 +116,9 @@ export const createAndLoadFiles = createCommand(
 
 export const loadFiles = createCommand(
   "pools.loadFiles",
-  async ({api}, id: string, files: File[]) => {
+  async ({api}, id: string, files: File[], format?: LoadFormat) => {
     try {
-      const promise = api.pools.loadFiles(id, files)
+      const promise = api.pools.loadFiles(id, files, format)
       api.toast.promise(promise, {
         loading: "Loading data into pool...",
         success: "Load successful",

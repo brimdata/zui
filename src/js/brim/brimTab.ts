@@ -23,7 +23,7 @@ export default function (
           queryIdNameMap
         )
       } else {
-        return "Brim"
+        return "Zui"
       }
     },
     icon() {

@@ -1,6 +1,6 @@
 import Icon, {IconName} from "src/app/core/icon-temp"
 import {MenuItemConstructorOptions} from "electron/main"
-import React, {MouseEvent} from "react"
+import React from "react"
 import Button from "./button"
 import Label from "./label"
 import styled from "styled-components"
@@ -10,19 +10,17 @@ export function toMenu(
 ): MenuItemConstructorOptions[] {
   return actions.map(({label, click, submenu, disabled}) => ({
     label,
-    click: () => click(),
+    click,
     submenu,
     enabled: !disabled,
   }))
 }
 
-export type ActionButtonProps = {
-  label: string
-  click: (e?: MouseEvent) => void
-  title: string
-  icon: IconName
+export type ActionButtonProps = MenuItemConstructorOptions & {
+  label?: string
+  title?: string
+  icon?: IconName | MenuItemConstructorOptions["icon"]
   disabled?: boolean
-  submenu?: MenuItemConstructorOptions[]
   buttonProps?: object
 }
 
@@ -38,8 +36,11 @@ const ActionButton = (props: ActionButtonProps) => {
     <Wrap title={props.title}>
       <Button
         aria-label={props.label}
-        onClick={(e) => props.click(e)}
-        icon={<Icon name={props.icon} />}
+        onClick={(e) => {
+          // @ts-ignore
+          props.click()
+        }}
+        icon={<Icon name={props.icon as IconName} />}
         disabled={props.disabled}
         dropdown={!!props.submenu}
         {...props.buttonProps}

@@ -19,6 +19,8 @@ import {useHistory} from "react-router"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
 import {LoadFormat} from "packages/zealot/src"
+import {DataFormatSelect} from "src/components/data-format-select"
+import {H1} from "src/components/h1"
 
 const BG = styled(Scrollable)`
   background-image: url(dist/static/welcome-page-background.svg);
@@ -26,11 +28,14 @@ const BG = styled(Scrollable)`
   width: 100%;
   background-position: center center;
   background-repeat: no-repeat;
-  padding-top: 50px;
+  padding-top: 5vh;
   display: flex;
   flex-direction: column;
-  gap: 32px;
   position: relative;
+  ${H1} {
+    text-align: center;
+    margin-bottom: 16px;
+  }
 `
 
 const Form = styled.form`
@@ -40,23 +45,18 @@ const Form = styled.form`
   margin-right: auto;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 28px;
   background: white;
   box-shadow: 0 22px 80px hsla(0 0% 72% / 0.8);
   border-radius: 8px;
   border: 1px solid hsl(0 0% 85%);
-
-  header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 `
 
 const Footer = styled.footer`
   width: 400px;
   margin: 0 auto;
-  padding: 32px;
+  padding: 0 32px;
+  margin-top: 28px;
 `
 
 const Drop = styled(DropZone)`
@@ -64,8 +64,6 @@ const Drop = styled(DropZone)`
   flex-direction: column;
   gap: 32px;
 `
-
-export function usePoolForm() {}
 
 export function PoolNew() {
   const [error, setError] = useState("")
@@ -101,9 +99,7 @@ export function PoolNew() {
 
   return (
     <BG ref={ref}>
-      <header>
-        <Title>New Pool</Title>
-      </header>
+      <H1>New Pool</H1>
       <Form
         ref={form}
         onSubmit={async (e) => {
@@ -111,8 +107,8 @@ export function PoolNew() {
           const form = e.currentTarget
           const formData = getFormData(form)
           api.url.setState(formData)
-          if (formData.files.length === 0) {
-            setError("Please select one or more files.")
+          if (formData.files.length === 0 && !formData.name) {
+            setError("Please select files or supply a pool name.")
             return
           }
           setLoading(true)
@@ -137,16 +133,7 @@ export function PoolNew() {
           </Field>
           <Field>
             <InputLabel htmlFor="format">Format</InputLabel>
-            <SelectInput name="format" defaultValue={defaults["format"]}>
-              <option value="auto">Auto detect</option>
-              <option value="csv">csv</option>
-              <option value="json">json</option>
-              <option value="ndjson">ndjson</option>
-              <option value="parquet">parquet</option>
-              <option value="auto">zeek</option>
-              <option value="zng">zng</option>
-              <option value="zson">zson</option>
-            </SelectInput>
+            <DataFormatSelect name="format" defaultValue={defaults["format"]} />
           </Field>
         </Drop>
         <Field>
@@ -165,7 +152,6 @@ export function PoolNew() {
             defaultValue={defaults["key"]}
           />
         </Field>
-
         <Field>
           <InputLabel htmlFor="order">Sort Order</InputLabel>
           <SelectInput name="order" defaultValue={defaults["order"]}>
@@ -175,7 +161,7 @@ export function PoolNew() {
         </Field>
         {error && <FormError>{error}</FormError>}
         <SubmitButton
-          text={loading ? "Loading..." : "Create"}
+          text={loading ? "Loading..." : "Create Pool"}
           disabled={loading}
           style={{
             minWidth: "100%",

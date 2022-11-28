@@ -1,7 +1,9 @@
+import {MenuItemConstructorOptions} from "electron"
 import BrimApi from "src/js/api"
 import {showContextMenu} from "src/js/lib/System"
 import {BoundCommand, commands} from "../commands/command"
 import popupPosition from "../query-home/search-area/popup-position"
+import {ActionButtonProps} from "../query-home/toolbar/actions/action-button"
 
 type MenuItem =
   | Electron.MenuItemConstructorOptions & {

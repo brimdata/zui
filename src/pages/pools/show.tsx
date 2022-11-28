@@ -1,7 +1,7 @@
 import {syncPool} from "src/app/core/pools/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
 import {poolShow} from "src/app/router/routes"
-import React, {useEffect, useRef} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Route, Switch} from "react-router"
 import Current from "src/js/state/Current"
@@ -15,6 +15,18 @@ import {loadFiles} from "src/app/commands/pools"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import classNames from "classnames"
 import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
+import {DropZone as DropZoneBase} from "src/components/drop-zone"
+import {Field} from "src/components/field"
+import InputLabel from "src/js/components/common/forms/InputLabel"
+import {FileInput} from "src/components/file-input"
+import {DataFormatSelect} from "src/components/data-format-select"
+import {PoolDataList} from "src/panes/pool-data-list"
+import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
+import {Title} from "src/components/title"
+import {H1} from "src/components/h1"
+import {SubmitButton} from "src/components/submit-button"
+import {LoadFormat} from "packages/zealot/src"
+import {PoolLoadMore, PoolLoadMoreHandle} from "src/panes/pool-load-more"
 
 const BG = styled.div`
   --page-padding: 32px;
@@ -35,12 +47,6 @@ const Toolbar = styled.div`
   height: 42px;
 `
 
-const Title = styled.h1`
-  font-weight: bold;
-  font-size: 18px;
-  margin: 0;
-`
-
 const Subtitle = styled.p`
   font-size: 13px;
   opacity: 0.5;
@@ -58,25 +64,6 @@ const Body = styled.section`
   dd {
     margin-bottom: 6px;
     font-family: var(--mono-font);
-  }
-`
-
-const DataList = styled.div`
-  padding: 16px var(--page-padding);
-  background: ${transparentize(0.98, cssVar("--foreground-color") as string)};
-`
-
-const LoadFilesContainer = styled.div`
-  margin: var(--page-padding);
-  padding: var(--page-padding);
-  height: 100px;
-  border: 2px dashed var(--border-color);
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  label {
-    opacity: 0.5;
   }
 `
 
@@ -100,87 +87,29 @@ export function InitPool({children}) {
 
 export const Show = () => {
   const pool = useSelector(Current.mustGetPool)
-  const api = useBrimApi()
-
-  const openNewDraftQuery = () => {
-    api.queries.open({
-      pins: [{type: "from", value: pool.name}],
-      value: "",
-    })
-  }
-  const keys = pool.keys.map((k) => k.join("."))
+  const loadForm = useRef<PoolLoadMoreHandle>()
   const [{isOver}, dropRef] = useFilesDrop({
-    onDrop: (files) => loadFiles.run(pool.id, files),
+    onDrop: (files) => loadForm.current?.submit(files),
   })
-  const fileInput = useRef<HTMLInputElement>()
-
   return (
     <BG ref={dropRef} className={classNames({isOver})}>
+      <Header>
+        <div>
+          <H1>{pool.name}</H1>
+          <Subtitle>{bytes(pool.stats.size)}</Subtitle>
+        </div>
+        <Toolbar>
+          <Actions actions={poolToolbarMenu.build(pool).template} />
+        </Toolbar>
+      </Header>
+      <Body>
+        <PoolDataList pool={pool} />
+        <PoolLoadMore pool={pool} ref={loadForm} />
+      </Body>
       <DropOverlay show={isOver}>
         <p>Drop To Load Files Into:</p>
         <p>{pool.name}</p>
       </DropOverlay>
-      <Header>
-        <div>
-          <Title>{pool.name}</Title>
-          <Subtitle>{bytes(pool.stats.size)}</Subtitle>
-        </div>
-        <Toolbar>
-          <input
-            type="file"
-            multiple
-            style={{display: "none"}}
-            ref={fileInput}
-            onChange={(e) =>
-              loadFiles.run(pool.id, Array.from(e.currentTarget.files))
-            }
-          />
-          <Actions
-            actions={[
-              {
-                label: "Load Data",
-                icon: "doc-plain",
-                click: () => {
-                  fileInput.current?.click()
-                },
-                title: "Load more data into this pool.",
-              },
-              {
-                label: "Query Pool",
-                icon: "query",
-                click: openNewDraftQuery,
-                title:
-                  "Open a new session query with this pool as the from clause.",
-              },
-            ]}
-          />
-        </Toolbar>
-      </Header>
-      <Body>
-        <DataList>
-          <dl>
-            <dt>ID </dt>
-            <dd>{pool.id}</dd>
-          </dl>
-          <dl>
-            <dt>Layout Key{keys.length > 1 ? "s" : null} </dt>
-            <dd>{keys.join(", ") || "null"}</dd>
-          </dl>
-          <dl>
-            <dt>Layout Order </dt>
-            <dd>{pool.data.layout.order}</dd>
-          </dl>
-          <dl>
-            <dt>Timestamp </dt>
-            <dd>{pool.data.ts.toLocaleString()}</dd>
-          </dl>
-        </DataList>
-        {!isOver && (
-          <LoadFilesContainer>
-            <label>Drag and drop files to load more data into this pool.</label>
-          </LoadFilesContainer>
-        )}
-      </Body>
     </BG>
   )
 }
