@@ -63,7 +63,7 @@ export default class TestApp {
     ])
 
     await chooser.setFiles(filepaths)
-    await this.mainWin.locator("text=Import Complete.").isVisible()
+    await this.mainWin.getByText("Load Successful").waitFor()
   }
 
   async chooseFiles(locator, paths: string[]) {
