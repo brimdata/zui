@@ -37,42 +37,12 @@ test("serialize", () => {
   expect(histories.serialize()).toEqual([
     {
       id: "tab-id-1",
-      entries: [
-        {
-          hash: "",
-          key: expect.any(String),
-          pathname: "/",
-          search: "",
-          state: undefined,
-        },
-        {
-          hash: "",
-          key: expect.any(String),
-          pathname: "/home",
-          search: "",
-          state: undefined,
-        },
-      ],
+      entries: ["/", "/home"],
       index: 1,
     },
     {
       id: "tab-id-2",
-      entries: [
-        {
-          hash: "",
-          key: expect.any(String),
-          pathname: "/",
-          search: "",
-          state: undefined,
-        },
-        {
-          hash: "",
-          key: expect.any(String),
-          pathname: "/run",
-          search: "",
-          state: undefined,
-        },
-      ],
+      entries: ["/", "/run"],
       index: 1,
     },
   ])

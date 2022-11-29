@@ -22,17 +22,17 @@ test("save and select", () => {
   expect(TabHistories.selectAll(store.getState())).toEqual([
     {
       id: "1",
-      entries: [{pathname: "/", search: "", hash: "", key: expect.any(String)}],
+      entries: ["/"],
       index: 0,
     },
     {
       id: "2",
-      entries: [{pathname: "/", search: "", hash: "", key: expect.any(String)}],
+      entries: ["/"],
       index: 0,
     },
     {
       id: "3",
-      entries: [{pathname: "/", search: "", hash: "", key: expect.any(String)}],
+      entries: ["/"],
       index: 0,
     },
   ])
