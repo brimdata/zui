@@ -12,7 +12,6 @@ import {SubmitButton} from "src/components/submit-button"
 import {Scrollable} from "src/components/scrollable"
 import links from "src/app/core/links"
 import {createAndLoadFiles} from "src/app/commands/pools"
-import {Title} from "src/components/title"
 import {useBrimApi} from "src/app/core/context"
 import {FormError} from "src/components/form-error"
 import {useHistory} from "react-router"
@@ -113,8 +112,8 @@ export function PoolNew() {
             return
           }
           setLoading(true)
-          const {name, order, key} = formData
-          await createAndLoadFiles.run(files, {name, order, key})
+          const {name, order, key, format} = formData
+          await createAndLoadFiles.run(files, {name, order, key, format})
           setLoading(false)
         }}
       >

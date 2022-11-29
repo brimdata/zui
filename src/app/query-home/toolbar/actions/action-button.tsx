@@ -36,7 +36,7 @@ const ActionButton = (props: ActionButtonProps) => {
     <Wrap title={props.title}>
       <Button
         aria-label={props.label}
-        onClick={(e) => {
+        onClick={() => {
           // @ts-ignore
           props.click()
         }}

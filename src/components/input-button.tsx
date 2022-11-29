@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import React from "react"
 import Icon, {IconName} from "src/app/core/icon-temp"
-import styled, {StyledComponent} from "styled-components"
+import styled from "styled-components"
 
 const Button = styled.button`
   display: inline-block;
