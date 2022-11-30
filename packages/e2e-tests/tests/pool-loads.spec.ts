@@ -40,7 +40,9 @@ test.describe("Pool Loads", () => {
   test("create with bad data deletes pool", async () => {
     await app.createPool([getPath("soccer-ball.png")], "Load error")
     await app.mainWin.getByText("Format detection error").waitFor()
-    await app.mainWin.getByRole("treeitem", {name: "soccer-ball.png"}).waitFor({state: "hidden"})
+    await app.mainWin
+      .getByRole("treeitem", {name: "soccer-ball.png"})
+      .waitFor({state: "hidden"})
     await app.mainWin.getByText("Load error").waitFor({state: "hidden"})
   })
 
