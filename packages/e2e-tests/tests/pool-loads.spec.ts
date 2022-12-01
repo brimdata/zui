@@ -20,6 +20,7 @@ test.describe("Pool Loads", () => {
     await app.query("count()")
     const results = await app.getViewerResults()
     expect(results).toEqual(["count", "1"])
+    await app.mainWin.getByText("Load Successful").waitFor({state: "hidden"})
   })
 
   test("load more data into the pool", async () => {
@@ -28,19 +29,21 @@ test.describe("Pool Loads", () => {
       app.mainWin.getByRole("button", {name: "Load Data"}),
       [getPath("prs.json")]
     )
-    await app.find(":text('Load successful')").isVisible()
+    await app.mainWin.getByText("Load Successful").waitFor()
     await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
     await app.query("count()")
     const results = await app.getViewerResults()
     expect(results).toEqual(["count", "2"])
+    await app.mainWin.getByText("Load Successful").waitFor({state: "hidden"})
   })
 
   test("create with bad data deletes pool", async () => {
-    await app.createPool([getPath("soccer-ball.png")])
-    await expect(app.find(":text('Format detection error')")).toBeVisible()
-    await expect(
-      app.mainWin.getByRole("treeitem", {name: "soccer-ball.png"})
-    ).toBeHidden()
+    await app.createPool([getPath("soccer-ball.png")], "Load error")
+    await app.mainWin.getByText("Format detection error").waitFor()
+    await app.mainWin
+      .getByRole("treeitem", {name: "soccer-ball.png"})
+      .waitFor({state: "hidden"})
+    await app.mainWin.getByText("Load error").waitFor({state: "hidden"})
   })
 
   test("load data into pool does not delete pool", async () => {
@@ -50,8 +53,7 @@ test.describe("Pool Loads", () => {
       [getPath("soccer-ball.png")]
     )
     await app.find(":text('Load error')").isVisible()
-    await expect(
-      app.mainWin.getByRole("treeitem", {name: "prs.json"})
-    ).toBeVisible()
+    app.mainWin.getByRole("treeitem", {name: "prs.json"}).waitFor()
+    await app.mainWin.getByText("Load error").waitFor({state: "hidden"})
   })
 })
