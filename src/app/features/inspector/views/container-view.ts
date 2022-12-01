@@ -9,8 +9,8 @@ import {syntax} from "../templates/syntax"
 import {RenderMode} from "../types"
 import {View} from "./view"
 
-const PEEK_LIMIT = 2
-const LINE_LIMIT = 15
+const PEEK_LIMIT = 1
+const LINE_LIMIT = 2
 const ROWS_PER_PAGE = 100
 export abstract class ContainerView<
   T extends zed.Any = zed.Any
