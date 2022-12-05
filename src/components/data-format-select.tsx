@@ -7,6 +7,7 @@ export function DataFormatSelect(props: JSX.IntrinsicElements["select"]) {
       <option value="auto">Auto detect</option>
       <option value="csv">csv</option>
       <option value="json">json</option>
+      <option value="line">line</option>
       <option value="ndjson">ndjson</option>
       <option value="parquet">parquet</option>
       <option value="auto">zeek</option>
