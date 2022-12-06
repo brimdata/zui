@@ -14,9 +14,17 @@ async function start() {
     js.waitForOutput(/Watching for file changes/),
     zealot.waitForOutput(/Watching for file changes/),
   ])
+  const livereload = sub(
+    "yarn",
+    "livereload 'dist, packages/zealot/dist'"
+  ).silence()
   log("Launching...")
-  sub("yarn", `electron . ${electronArgs}`).p.on("exit", () => process.exit(0))
-  sub("yarn", "livereload 'dist, packages/zealot/dist'").silence()
+  sub("yarn", `electron . ${electronArgs}`).p.on("exit", () => {
+    js.kill()
+    css.kill()
+    zealot.kill()
+    livereload.kill()
+  })
 }
 
 process.on("SIGINT", () => process.exit(0))
