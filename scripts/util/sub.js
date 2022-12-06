@@ -39,6 +39,10 @@ class Sub {
       this.waiting = false
     })
   }
+
+  kill() {
+    process.kill(this.p.pid)
+  }
 }
 
 module.exports = (bin, args) => new Sub(bin, args)
