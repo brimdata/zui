@@ -1,31 +1,36 @@
 import React from "react"
 import {zed} from "@brimdata/zealot"
-import {Column} from "react-table"
 import {ZedValue} from "../zed-value"
+import {createColumnHelper} from "@tanstack/react-table"
+import {useLocationState} from "src/js/components/hooks/use-location-state"
 
-function createColumnFromField(field: zed.TypeField): Column {
+const columnHelper = createColumnHelper<zed.Value>()
+
+function createColumnFromField(
+  field: zed.TypeField,
+  widths: Record<string, number>
+) {
   if (!field) throw new Error("No Field")
-  return {
-    Header: field.name,
-    Cell: ({value: field}) => <ZedValue value={field.data} />,
-    id: field.name,
-    accessor: (record: zed.Record) => record.getField(field.name),
-  }
+  return columnHelper.accessor((row: zed.Record) => row.getField(field.name), {
+    id: field.name, // Make this field.id
+    header: field.name,
+    cell: (info) => <ZedValue value={info.getValue().data} />,
+    size: widths[field.name /* Make this field.id */],
+  })
 }
 
-function createColumnFromArray(array: zed.TypeArray): Column {
-  return {
-    Header: "<Array>",
-    Cell: ({value}) => <ZedValue value={value} />,
-    id: "Array",
-    accessor: (array: zed.Array) => array,
-    width: 600,
-  }
+function createColumnFromArray(array: zed.TypeArray) {
+  return columnHelper.accessor((row: zed.Array) => row, {
+    id: "array",
+    header: "array",
+    cell: (info) => <ZedValue value={info.getValue()} />,
+    size: 600,
+  })
 }
 
-export function createColumns(shape: zed.Type): Column[] {
+export function createColumns(shape: zed.Type, widths: Record<string, number>) {
   if (shape instanceof zed.TypeRecord) {
-    return shape.fields.map(createColumnFromField)
+    return shape.fields.map((f) => createColumnFromField(f, widths))
   } else if (shape instanceof zed.TypeArray) {
     return [createColumnFromArray(shape)]
   } else {

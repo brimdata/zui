@@ -1,9 +1,13 @@
 import React from "react"
 import {createContext, ReactElement, useContext} from "react"
-import {TableInstance} from "react-table"
+import {Table} from "@tanstack/react-table"
 
 type ZedTableContextValue = {
-  table: TableInstance
+  table: Table<any>
+  headerHeight: number
+  ref: React.MutableRefObject<HTMLDivElement | null>
+  widths: Record<string, number>
+  setWidths: (next: Record<string, number>) => void
 }
 
 const ZedTableContext = createContext<ZedTableContextValue | null>(null)

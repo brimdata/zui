@@ -1,27 +1,47 @@
-import React from "react"
+import React, {useRef} from "react"
 import {config} from "./config"
 import {VariableSizeGrid} from "react-window"
 import {Cell} from "./cell"
 import {useZedTable} from "./context"
 import {FillFlexParent} from "../fill-flex-parent"
+import {InnerElement} from "./grid-container"
+import {useColumnSizeRerender} from "./utils"
+import {useAutosize} from "./autosize"
 
-export function Grid(props: {outerRef: React.Ref<HTMLDivElement>}) {
+/**
+ * Auto Size Logic
+ *
+ * 1. Keep track of which columns have been measured in a ref object
+ * 2. Keep track of which columns have been rendered
+ * 3. When the number of rendered columns changes, measure the new columns
+ * 4. When measuring, lookup all the cells for all the columns, then measure them,
+ * 5. Then simply return an {id: newWidth} data
+ */
+
+export function Grid() {
   const {table} = useZedTable()
+  const cols = table.getAllColumns()
+  const gridRef = useColumnSizeRerender(cols)
+  const {setEnd} = useAutosize()
+
   return (
     <FillFlexParent>
       {({width, height}) => {
         return (
           <VariableSizeGrid
+            ref={gridRef}
             width={width}
             height={height}
-            itemData={table}
-            columnWidth={(index) => table.columns[index].width as number}
+            columnWidth={(index) => cols[index].getSize()}
             rowHeight={() => config.rowHeight}
-            rowCount={table.rows.length}
-            columnCount={table.columns.length}
+            rowCount={table.getRowModel().rows.length}
+            columnCount={table.getAllColumns().length}
             overscanRowCount={5}
             overscanColumnCount={2}
-            outerRef={props.outerRef}
+            innerElementType={InnerElement}
+            onItemsRendered={(props) => {
+              setEnd(props.overscanColumnStopIndex)
+            }}
           >
             {Cell}
           </VariableSizeGrid>
