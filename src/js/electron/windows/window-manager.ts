@@ -7,6 +7,15 @@ import {State} from "src/js/state/types"
 import {ZuiWindow} from "../windows/zui-window"
 import {SerializedWindow, WindowName, WindowsState} from "../windows/types"
 import {createWindow, deserializeWindow} from "./create"
+import env from "src/app/core/env"
+
+/**
+ * Listen to the close event in the zui window
+ * If this is the last window. Run the same thing as if they "quit" the app.
+ * But if it's mac and they close the last window, just hide that last window.
+ * The when the app is activated, show that last window.
+ * When they click new window, check if there is a hidden search window and show it.
+ */
 
 export class WindowManager {
   private windows: WindowsState = {}
@@ -61,15 +70,23 @@ export class WindowManager {
     }
   }
 
-  serialize(): Promise<SerializedWindow[]> {
-    return Promise.all(
-      this.where((w) => w.persistable).map((w) => w.serialize())
+  serialize(): SerializedWindow[] {
+    return this.where((w) => w.persistable && !w.destroyed).map((w) =>
+      w.serialize()
     )
   }
 
   private async register(win: ZuiWindow) {
     this.windows[win.id] = win
     await win.load()
+    win.ref.on("close", (e) => {
+      if (win.name === "search" && this.byName("search").length === 1) {
+        if (env.isMac) {
+          e.preventDefault()
+          win.ref.hide()
+        }
+      }
+    })
     win.ref.on("closed", () => this.unregister(win))
     return win
   }

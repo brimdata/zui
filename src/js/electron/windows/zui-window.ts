@@ -26,6 +26,10 @@ export abstract class ZuiWindow {
     this.dimens = props.dimens
   }
 
+  get destroyed() {
+    return this.ref.isDestroyed()
+  }
+
   didInitialize() {
     this.initialized.complete()
   }

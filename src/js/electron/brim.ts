@@ -68,6 +68,8 @@ export class BrimMain {
     const visibleWindows = this.windows.where((w) => w.name !== "hidden")
     if (visibleWindows.length === 0) {
       await this.windows.init()
+    } else {
+      visibleWindows.forEach((win) => win.ref.show())
     }
   }
 
@@ -84,7 +86,7 @@ export class BrimMain {
   }
 
   async saveSession() {
-    const windowState = await this.windows.serialize()
+    const windowState = this.windows.serialize()
     const mainState = getPersistedGlobalState(this.store.getState())
 
     await this.session.save(encodeSessionState(windowState, mainState))
