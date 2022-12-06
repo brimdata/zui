@@ -6,6 +6,7 @@ import {WindowName} from "../windows/types"
 import {Dimens, getWindowDimens, pickDimens} from "../windows/dimens"
 import {getDisplays} from "./get-displays"
 import {SerializedWindow, WindowProps} from "./types"
+import {TimedPromise} from "src/util/timed-promise"
 
 export abstract class ZuiWindow {
   abstract name: WindowName
@@ -17,11 +18,20 @@ export abstract class ZuiWindow {
   state: State | undefined
   dimens: Dimens | null = null
   persistable = true
+  initialized = new TimedPromise(60_000)
 
   constructor(props: WindowProps = {}) {
     this.id = props.id || nanoid()
     this.state = props.state
     this.dimens = props.dimens
+  }
+
+  didInitialize() {
+    this.initialized.complete()
+  }
+
+  whenInitialized() {
+    return this.initialized.waitFor()
   }
 
   beforeLoad() {
