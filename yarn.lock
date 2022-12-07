@@ -6998,10 +6998,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-log@npm:^4.2.2":
-  version: 4.2.2
-  resolution: "electron-log@npm:4.2.2"
-  checksum: b465daa648220508bd4bafb38f9f21b57dd8fb53ce1382fc870f3179d29fa48e494692c04784d0edf2179dceb6544f6a858640563633bf777452ee328722fcd6
+"electron-log@npm:5.0.0-beta.6":
+  version: 5.0.0-beta.6
+  resolution: "electron-log@npm:5.0.0-beta.6"
+  checksum: a54b24a42b69511ece61cd620196f0bdd91a8ea3465ece902c9a2be6d0458b3742b5b4119c139f33e4072ef8e29782d07721e0194fdc60b946b05ab9ccb0acf5
   languageName: node
   linkType: hard
 
@@ -17273,12 +17273,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#723a6e9c2c19062b7d1ecff545361f76baa3bc46":
+"zed@brimdata/zed#a31161a3404c7cb45ba2dd405b195c01e0123cf9":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=723a6e9c2c19062b7d1ecff545361f76baa3bc46"
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=a31161a3404c7cb45ba2dd405b195c01e0123cf9"
   dependencies:
     zealot: ^0.2.0
-  checksum: cffa66ff65d15a3abf7fa64a534d3b0602b0ea4ae093ed18e6fadc6f9b567f80f594282760b4fea770f093bef06c8544c8c588c8a5db9c63bf45e249c901aceb
+  checksum: 67b327b7b7039de7d7e59cc1e2e384e0f3e09de47a23b12ec2353e74b40a8e3a8b117b973512b8d45c4a1c6a58da9f8685e5d12ea024b16cf09795bfe589f760
   languageName: node
   linkType: hard
 
@@ -17363,7 +17363,7 @@ __metadata:
     electron-installer-debian: ^3.0.0
     electron-installer-redhat: ^3.0.0
     electron-localshortcut: ^3.2.1
-    electron-log: ^4.2.2
+    electron-log: 5.0.0-beta.6
     electron-mock-ipc: ^0.3.10
     electron-notarize: ^0.2.1
     electron-updater: ^4.3.8
@@ -17434,7 +17434,7 @@ __metadata:
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "brimdata/zed#723a6e9c2c19062b7d1ecff545361f76baa3bc46"
+    zed: "brimdata/zed#a31161a3404c7cb45ba2dd405b195c01e0123cf9"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
