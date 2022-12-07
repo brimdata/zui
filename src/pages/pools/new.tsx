@@ -152,7 +152,7 @@ export function PoolNew() {
           <TextInput
             name="key"
             placeholder="None"
-            defaultValue={defaults["key"]}
+            defaultValue={defaults["key"] ?? "ts"}
           />
         </Field>
         <Field>
