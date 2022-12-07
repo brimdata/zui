@@ -57,6 +57,9 @@ const Footer = styled.footer`
   padding: 0 32px;
   margin-top: 28px;
   margin-bottom: 16px;
+  display: flex;
+  flex-flow: column;
+  gap: 12px;
 `
 
 const Drop = styled(DropZone)`
@@ -182,7 +185,9 @@ export function PoolNew() {
           </Link>
           , <Link href={links.ZED_DOCS_FORMATS_ZJSON}>ZJSON</Link>,{" "}
           <Link href={links.ZED_DOCS_FORMATS_ZNG}>ZNG</Link>, and{" "}
-          <Link href={links.ZED_DOCS_FORMATS_ZSON}>ZSON</Link>.<br></br>
+          <Link href={links.ZED_DOCS_FORMATS_ZSON}>ZSON</Link>.
+        </Help>
+        <Help>
           <b>Non-auto-detectable formats</b>: Line and{" "}
           <Link href="https://parquet.apache.org/">Parquet</Link>.
         </Help>
