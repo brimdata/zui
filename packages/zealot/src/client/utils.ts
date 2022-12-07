@@ -77,6 +77,7 @@ export function getLoadContentType(
   if (format === "line") return "application/x-line"
   if (format === "ndjson") return "application/x-ndjson"
   if (format === "parquet") return "application/x-parquet"
+  if (format === "zeek") return "application/x-zeek"
   if (format === "zjson") return "application/x-zjson"
   if (format === "zng") return "application/x-zng"
   if (format === "zson") return "application/x-zson"
