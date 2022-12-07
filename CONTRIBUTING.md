@@ -10,7 +10,8 @@ Install these dependencies:
 
 1. [Node](https://nodejs.org/en/download/package-manager/) - the version specified in the `.node-version` file at the root folder.
 2. [Yarn](https://yarnpkg.com/) - a package manager for installing dependencies and starting Brim in dev mode.
-3. [Go](https://go.dev/doc/install) - to compile some Zed dependencies.
+3. [Go](https://go.dev/doc/install) - to compile some [Zed](https://zed.brimdata.io/) dependencies.
+4. Typical command line tools, such as `make`, `unzip`, and `curl`
 
 Then clone the repo, install the node modules, and start the app.
 
@@ -21,7 +22,7 @@ yarn
 yarn start
 ```
 
-When a file is changed, it will be recompiled it and reload the app.
+When a file is changed, it will be recompiled and the app will automatically reload.
 
 On subsequent updates, `git pull` and `yarn`.
 
@@ -139,11 +140,11 @@ bin/gen migration addScrollPositionToViewer
 
 This creates a file in `src/js/state/migrations` with a function that can manipulate the persisted state from the previous version.
 
-See the [[Adding Migrations]] page for a more detailed guide.
+See the [Adding Migrations](https://github.com/brimdata/brim/wiki/Adding-Migrations) page for a more detailed guide.
 
 ### Zed
 
-The [Zed](https://github.com/brimdata/zed) service is the daemon responsible for data ingestion and query execution. As a postinstall step, the `zed` binary is downloaded and stored in the `./zdeps` directory. Brim will automatically execute and terminate the service when it starts and stops.
+The [Zed service](https://zed.brimdata.io/docs/commands/zed#213-serve) is the daemon responsible for data ingestion and query execution. As a postinstall step, the `zed` binary is downloaded and stored in the `./zdeps` directory. Brim will automatically execute and terminate the service when it starts and stops.
 
 ## Pull Requests
 
@@ -161,32 +162,52 @@ yarn test:playwright  # Integration tests with jest & playwright
 
 ## Installation Packaging
 
-You can create an installable artifact - like a disk image for MacOS - via:
+[Releases](./releases) with installable artifacts are created automatically by an [Actions Workflow](.github/workflows/release.yml) when a GA release is tagged.
+
+You can installable artifacts based on your own checkout via:
 
 ```bash
+yarn build
 yarn release
 ```
 
 Any platform artifacts created will be found under `./dist/installers`.
 
-### MacOS Notarization
+This will create packages for the detected OS platform, e.g., `.deb` and `.rpm`
+packages if on Linux. Creation of your own macOS (`.dmg`) and Windows (`.exe`)
+artifacts requires additional settings described in the following sections.
 
-[Notarized](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution)
-MacOS releases are created automatically by our CI process when a GitHub
-release is created. The below is useful if you need to create one by hand.
+### MacOS Notarization and Code Signing
+
+To create [notarized](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution)
+MacOS packages by hand, set the following environment variables before running
+the `yarn` commands shown above.
 
 ```bash
-yarn build
-APPLE_ID=<user> APPLE_ID_PASSWORD=<app-specific-password> yarn electron-builder --mac
+export APPLE_ID=<user>
+export APPLE_TEAM_ID=<team-id>
+export APPLE_ID_PASSWORD=<app-specific-password>
 ```
 
-Where `APPLE_ID` is the apple ID user name, and `APPLE_ID_PASSWORD` is an app-specific password created for notarization (details [here](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow)). This will also sign the contents of the package, which requires a [Developer ID](https://developer.apple.com/developer-id/) certificate to be present in your keychain.
+Where `APPLE_ID` is the Apple ID user name (typically an email address), `APPLE_TEAM_ID` is the Team ID from the user's [Apple Developer Account](https://developer.apple.com/account/) page, and `APPLE_ID_PASSWORD` is an app-specific password created for notarization (details [here](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow)). This will also sign the contents of the package, which requires a [Developer ID certificate](https://developer.apple.com/developer-id/) to be present in your keychain.
 
 Notarization can take some time to complete ("typically less than an hour"). If you want to check on the status of the notarization request, run:
 
 ```bash
 xcrun altool --notarization-history 0 -u <user> -p <app-specific-password>
 ```
+
+### Windows Code Signing
+
+To create signed Windows packages by hand, set the following environment
+variables before running the `yarn` commands shown above.
+
+```bash
+export WIN_CSC_LINK=<base64-encoded-certificate>
+export WIN_CSC_KEY_PASSWORD=<certificate-password>
+```
+
+Where `WIN_CSC_LINK` contains the base64-encoded code signing certificate and `WIN_CSC_KEY_PASSWORD` is the password used to decrypt it (details [here](https://www.electron.build/code-signing.html#windows)).
 
 ## Licensing
 
@@ -225,4 +246,4 @@ of the source code lets us realize both.
 
 ## Questions?
 
-We appreciate your interest in improving Brim. If you've got questions that aren't answered here or in the [video](#video), please join our [public Slack](https://www.brimdata.io/join-slack/) workspace and ask!
+We appreciate your interest in improving Brim. If you've got questions that aren't answered here, please join our [public Slack](https://www.brimdata.io/join-slack/) workspace and ask!
