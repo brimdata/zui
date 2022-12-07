@@ -1,4 +1,3 @@
-import log from "electron-log"
 import {dimensFromSizePosition} from "./dimens"
 import {DetailWindow} from "./detail-window"
 import {SearchWindow} from "./search/search-window"
@@ -19,14 +18,14 @@ export function deserializeWindow(data: SerializedWindow) {
 export function createWindow(name: WindowName, props: WindowProps) {
   switch (name) {
     case "search":
-      return new SearchWindow(props)
+      return new SearchWindow(props).init()
     case "about":
-      return new AboutWindow(props)
+      return new AboutWindow(props).init()
     case "detail":
-      return new DetailWindow(props)
+      return new DetailWindow(props).init()
     case "hidden":
-      return new HiddenWindow(props)
+      return new HiddenWindow(props).init()
     default:
-      log.error("Unknown Window Type: ", name)
+      throw new Error("Unknown Window Type: ", name)
   }
 }

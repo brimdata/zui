@@ -25,6 +25,25 @@ export abstract class ZuiWindow {
     this.state = props.state
     this.dimens = props.dimens
   }
+  /**
+   * YOU MUST CALL INIT after constructing a window
+   *
+   * This is because the subclasses provide options that
+   * this base class needs access to. The order in which
+   * typescript does initialization requires this.
+   */
+  init() {
+    this.ref = new BrowserWindow({
+      ...this.options,
+      ...getWindowDimens(this.dimens, pickDimens(this.options), getDisplays()),
+    })
+    this.touch()
+    this.ref.on("focus", this.onFocus.bind(this))
+    this.ref.on("close", this.onClose.bind(this))
+    this.ref.on("focus", this.touch.bind(this))
+    enable(this.ref.webContents) // For Remote Module to Work
+    return this
+  }
 
   get destroyed() {
     return this.ref.isDestroyed()
@@ -43,15 +62,6 @@ export abstract class ZuiWindow {
   }
 
   load() {
-    this.ref = new BrowserWindow({
-      ...this.options,
-      ...getWindowDimens(this.dimens, pickDimens(this.options), getDisplays()),
-    })
-    this.touch()
-    this.ref.on("focus", this.onFocus.bind(this))
-    this.ref.on("close", this.onClose.bind(this))
-    this.ref.on("focus", this.touch.bind(this))
-    enable(this.ref.webContents) // For Remote Module to Work
     this.beforeLoad()
     return this.ref.loadFile(this.name + ".html", {
       query: {id: this.id},

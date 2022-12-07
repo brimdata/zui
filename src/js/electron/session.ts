@@ -57,23 +57,23 @@ async function migrate(appState, migrator): Promise<VersionedState> {
   const state = ensureVersioned(appState)
 
   if (!canMigrate(state)) {
-    log.info("Migrations unsupported version, using fresh state")
+    log.info("migrations unsupported version, using fresh state")
     return freshState(migrator.getLatestVersion())
   }
 
   migrator.setCurrentVersion(state.version)
   const pending = migrator.getPending().length
 
-  log.info(`Migrations pending: ${pending}`)
+  log.info(`migrations pending: ${pending}`)
 
   if (pending) {
     try {
-      log.info("Migrations started")
+      log.info("migrations started")
       const nextState = migrator.runPending(state)
-      log.info(`Migrated to version: ${nextState.version}`)
+      log.info(`migrated to version: ${nextState.version}`)
       return nextState
     } catch (e) {
-      log.error("Unable to Migrate")
+      log.error("unable to migrate")
       log.error(e)
       return freshState(migrator.getLatestVersion())
     }
