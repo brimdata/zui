@@ -8,25 +8,6 @@ import {ZuiWindow} from "../windows/zui-window"
 import {SerializedWindow, WindowName, WindowsState} from "../windows/types"
 import {createWindow, deserializeWindow} from "./create"
 
-/**
- * Listen to the close event in the zui window
- * If this is the last window. Run the same thing as if they "quit" the app.
- * But if it's mac and they close the last window, just hide that last window.
- * The when the app is activated, show that last window.
- * When they click new window, check if there is a hidden search window and show it.
- *
- * Maybe saving the state should not be tied to the windows.
- * Maybe you can just trigger a state save any time, not just during quit.
- */
-
-/* 
-  Keep saved state in memory 
-  Update it all the time when an interested window sends an update,
-  When a sindow closes
-  Write it out occassionally during down time
-  Write it out
-*/
-
 export class WindowManager {
   private windows: WindowsState = {}
 
