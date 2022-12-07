@@ -84,7 +84,7 @@ export class BrimMain {
   }
 
   async saveSession() {
-    const windowState = await this.windows.serialize()
+    const windowState = this.windows.serialize()
     const mainState = getPersistedGlobalState(this.store.getState())
 
     await this.session.save(encodeSessionState(windowState, mainState))

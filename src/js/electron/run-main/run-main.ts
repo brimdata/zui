@@ -16,7 +16,7 @@ export async function main(args: Partial<MainArgs> = {}) {
     BOOT: Starts the app
   */
   const mainArgs = {...mainDefaults(), ...args}
-  log.info("Booting main with:", mainArgs)
+  log.info("booting main with:", mainArgs)
   const brim = await boot(mainArgs)
 
   /* 

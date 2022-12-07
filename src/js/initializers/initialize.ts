@@ -11,6 +11,7 @@ import {initAutosave} from "./initAutosave"
 import {featureFlagsOp} from "../electron/ops/feature-flags-op"
 import {commands} from "src/app/commands/command"
 import {menus} from "src/app/menus/create-menu"
+import {windowInitialized} from "../electron/ops/window-initialized-op"
 
 export default async function initialize() {
   const api = new BrimApi()
@@ -29,6 +30,7 @@ export default async function initialize() {
   initAutosave(store)
   commands.setContext(store, api)
   menus.setContext(api)
+  windowInitialized.invoke(global.windowId)
 
   return {store, api, pluginManager}
 }

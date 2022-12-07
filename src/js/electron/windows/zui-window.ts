@@ -6,6 +6,7 @@ import {WindowName} from "../windows/types"
 import {Dimens, getWindowDimens, pickDimens} from "../windows/dimens"
 import {getDisplays} from "./get-displays"
 import {SerializedWindow, WindowProps} from "./types"
+import {TimedPromise} from "src/util/timed-promise"
 
 export abstract class ZuiWindow {
   abstract name: WindowName
@@ -17,18 +18,21 @@ export abstract class ZuiWindow {
   state: State | undefined
   dimens: Dimens | null = null
   persistable = true
+  initialized = new TimedPromise(60_000)
 
   constructor(props: WindowProps = {}) {
     this.id = props.id || nanoid()
     this.state = props.state
     this.dimens = props.dimens
   }
-
-  beforeLoad() {
-    /* Sub-classes can plugin here */
-  }
-
-  load() {
+  /**
+   * YOU MUST CALL INIT after constructing a window
+   *
+   * This is because the subclasses provide options that
+   * this base class needs access to. The order in which
+   * typescript does initialization requires this.
+   */
+  init() {
     this.ref = new BrowserWindow({
       ...this.options,
       ...getWindowDimens(this.dimens, pickDimens(this.options), getDisplays()),
@@ -38,6 +42,26 @@ export abstract class ZuiWindow {
     this.ref.on("close", this.onClose.bind(this))
     this.ref.on("focus", this.touch.bind(this))
     enable(this.ref.webContents) // For Remote Module to Work
+    return this
+  }
+
+  get destroyed() {
+    return this.ref.isDestroyed()
+  }
+
+  didInitialize() {
+    this.initialized.complete()
+  }
+
+  whenInitialized() {
+    return this.initialized.waitFor()
+  }
+
+  beforeLoad() {
+    /* Sub-classes can plugin here */
+  }
+
+  load() {
     this.beforeLoad()
     return this.ref.loadFile(this.name + ".html", {
       query: {id: this.id},

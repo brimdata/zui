@@ -1,3 +1,4 @@
+import log from "electron-log"
 import {isString} from "lodash"
 import {Command} from "src/app/commands/command"
 import {createOperation} from "../operations"
@@ -14,8 +15,12 @@ export const runCommandOp = createOperation(
       win.ref.focus()
       sendMessage()
     } else {
-      const newWin = await main.windows.create("search")
-      newWin.ref.webContents.once("did-finish-load", sendMessage)
+      try {
+        const newWin = await main.windows.create("search")
+        newWin.ref.webContents.once("did-finish-load", sendMessage)
+      } catch (e) {
+        log.error("command failed because search window failed to open")
+      }
     }
   }
 )
