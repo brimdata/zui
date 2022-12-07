@@ -68,8 +68,6 @@ export class BrimMain {
     const visibleWindows = this.windows.where((w) => w.name !== "hidden")
     if (visibleWindows.length === 0) {
       await this.windows.init()
-    } else {
-      visibleWindows.forEach((win) => win.ref.show())
     }
   }
 
