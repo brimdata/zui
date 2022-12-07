@@ -8,7 +8,6 @@ export function DataFormatSelect(props: JSX.IntrinsicElements["select"]) {
       <option value="csv">csv</option>
       <option value="json">json</option>
       <option value="line">line</option>
-      <option value="ndjson">ndjson</option>
       <option value="parquet">parquet</option>
       <option value="zeek">zeek</option>
       <option value="zjson">zjson</option>
