@@ -105,12 +105,7 @@ export default function (tabIds: string[], width: number) {
   }, [tabIds.length, width, first])
 
   // The drag handler
-  const dragBinding = useDrag(({args, dx, type, event}) => {
-    if ((event.target as HTMLElement).classList.contains("no-drag")) {
-      console.log("no-drag!", event.target)
-      return
-    }
-
+  const dragBinding = useDrag(({args, dx, type}) => {
     if (type === "down") {
       // This fires once at the beginning of the drag
       interuptDrag.current = false

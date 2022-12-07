@@ -39,8 +39,8 @@ const SearchTab = React.forwardRef<HTMLAnchorElement, Props>(function SearchTab(
       <div className="tab-content">
         <Icon className="icon" name={icon || "zui"} size={13} />
         <p className="title">{title}</p>
-        <CloseButton onClick={(e) => removeTab(e)} className="no-drag">
-          <Icon name="close" className="no-drag" />
+        <CloseButton onClick={removeTab as any}>
+          <Icon name="close" />
         </CloseButton>
       </div>
     </a>
