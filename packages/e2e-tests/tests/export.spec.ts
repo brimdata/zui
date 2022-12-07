@@ -9,6 +9,8 @@ const tempDir = os.tmpdir()
 const formats = [
   {label: "zng", expectedSize: 3692},
   {label: "zson", expectedSize: 15137},
+  {label: "zjson", expectedSize: 18007},
+  {label: "zeek", expectedSize: 9697},
   {label: "json", expectedSize: 13659},
   {label: "ndjson", expectedSize: 13657},
   {label: "csv", expectedSize: 12208},
@@ -45,8 +47,8 @@ test.describe("Export tests", () => {
         .locator('#app-root button:above(:text("Export"))')
         .first()
         .click()
-      await app.mainWin.locator(`text=${label}`).first().click()
-      await app.mainWin.locator('button:has-text("Export")').click()
+      await app.mainWin.getByRole("radio", {name: `${label}`}).click()
+      await app.mainWin.getByRole("button").filter({hasText: "Export"}).click()
 
       await expect(
         await app.mainWin.locator("text=Export Complete").first()

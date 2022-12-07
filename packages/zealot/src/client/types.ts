@@ -12,6 +12,7 @@ export type ResponseFormat =
   | "json"
   | "zjson"
   | "zson"
+  | "zeek"
 
 export type QueryOpts = {
   format: ResponseFormat
