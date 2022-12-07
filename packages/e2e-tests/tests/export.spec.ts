@@ -7,10 +7,10 @@ import fsExtra from "fs-extra"
 
 const tempDir = os.tmpdir()
 const formats = [
-  {label: "zng", expectedSize: 3648},
+  {label: "zng", expectedSize: 3643},
   {label: "zson", expectedSize: 15137},
   {label: "zjson", expectedSize: 18007},
-  {label: "zeek", expectedSize: 7520},
+  {label: "zeek", expectedSize: 9772},
   {label: "json", expectedSize: 13659},
   {label: "ndjson", expectedSize: 13657},
   {label: "csv", expectedSize: 12208},
@@ -28,6 +28,7 @@ test.describe("Export tests", () => {
       .locator('#app-root button:above(:text("Query Pool"))')
       .first()
       .click()
+    await app.query("sort ts")
   })
 
   test.afterAll(async () => {
