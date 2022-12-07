@@ -64,8 +64,8 @@ export default class TestApp {
       this.mainWin.waitForEvent("filechooser"),
       this.mainWin.locator("text=Choose Files").click(),
     ])
-
     await chooser.setFiles(filepaths)
+    await this.mainWin.getByRole("button", {name: "Create Pool"}).click()
     await this.mainWin.getByText(expectedResult).waitFor()
   }
 
