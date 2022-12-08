@@ -1,20 +1,29 @@
 import {ApiDomain} from "../api-domain"
 
 export class UrlApi extends ApiDomain {
-  push(url: string, opts: {tabId?: string} = {}) {
-    const id = opts.tabId ?? this.current.tabId
-    global.tabHistories.getOrCreate(id).push(url)
+  get path() {
+    return this.getHistory().location.pathname
   }
-  replace(url: string, opts: {tabId?: string} = {}) {
-    const id = opts.tabId ?? this.current.tabId
-    global.tabHistories.getOrCreate(id).replace(url)
+
+  push(url: string, opts: {tabId?: string; state?: any} = {}) {
+    this.getHistory(opts).push(url, opts.state)
+  }
+  replace(url: string, opts: {tabId?: string; state?: any} = {}) {
+    this.getHistory(opts).replace(url, opts.state)
   }
   goBack(opts: {tabId?: string} = {}) {
-    const id = opts.tabId ?? this.current.tabId
-    global.tabHistories.getOrCreate(id).goBack()
+    this.getHistory(opts).goBack()
   }
   goForward(opts: {tabId?: string} = {}) {
+    this.getHistory(opts).goForward()
+  }
+
+  setState(data: any) {
+    this.getHistory().location.state = data
+  }
+
+  private getHistory(opts: {tabId?: string} = {}) {
     const id = opts.tabId ?? this.current.tabId
-    global.tabHistories.getOrCreate(id).goForward()
+    return global.tabHistories.getOrCreate(id)
   }
 }

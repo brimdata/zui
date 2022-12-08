@@ -54,7 +54,7 @@ export default class Histories {
     const array = Array.from(this.histories.entries())
     return array.map(([id, {entries, index}]) => ({
       id,
-      entries,
+      entries: entries.map((e) => e.pathname),
       index,
     }))
   }

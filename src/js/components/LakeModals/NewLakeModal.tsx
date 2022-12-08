@@ -1,11 +1,12 @@
 import React from "react"
-import {Content, SmallTitle} from "../ModalDialog/ModalDialog"
+import {H1} from "src/components/h1"
+import {Content} from "../ModalDialog/ModalDialog"
 import LakeForm from "./LakeForm"
 
 const NewLakeModal = ({onClose}) => {
   return (
     <Content>
-      <SmallTitle>New Lake</SmallTitle>
+      <H1>New Lake</H1>
       <LakeForm onClose={onClose} />
     </Content>
   )

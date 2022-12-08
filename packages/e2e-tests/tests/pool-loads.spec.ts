@@ -26,7 +26,7 @@ test.describe("Pool Loads", () => {
   test("load more data into the pool", async () => {
     await app.mainWin.getByRole("treeitem", {name: "prs.json"}).click()
     await app.chooseFiles(
-      app.mainWin.getByRole("button", {name: "Load Data"}),
+      app.mainWin.getByRole("button", {name: "Choose Files..."}),
       [getPath("prs.json")]
     )
     await app.mainWin.getByText("Load Successful").waitFor()
@@ -49,7 +49,7 @@ test.describe("Pool Loads", () => {
   test("load data into pool does not delete pool", async () => {
     await app.mainWin.getByRole("treeitem", {name: "prs.json"}).click()
     await app.chooseFiles(
-      app.mainWin.getByRole("button", {name: "Load Data"}),
+      app.mainWin.getByRole("button", {name: "Choose Files..."}),
       [getPath("soccer-ball.png")]
     )
     await app.find(":text('Load error')").isVisible()

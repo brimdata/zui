@@ -1,6 +1,10 @@
 import React from "react"
 import {connectToLake} from "src/app/commands/connect-to-lake"
 import {newPool} from "src/app/commands/new-pool"
+import {H1} from "src/components/h1"
+import {InputButton} from "src/components/input-button"
+import {Subtitle} from "src/components/subtitle"
+import {Title} from "src/components/title"
 import styled from "styled-components"
 
 const BG = styled.div`
@@ -13,19 +17,10 @@ const BG = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
 
-const Title = styled.h1`
-  text-align: center;
-  font-size: 60px;
-  font-weight: 900;
-  span {
-    color: var(--orange);
+  ${H1} {
+    margin-bottom: 24px;
   }
-`
-const Subtitle = styled.h2`
-  font-weight: 300;
-  font-size: 32px;
 `
 
 const Card = styled.section`
@@ -38,31 +33,14 @@ const Card = styled.section`
   border-radius: 8px;
   padding: 30px 50px 50px;
   box-shadow: 0 22px 80px hsla(0 0% 72% / 0.8);
+  border: 1px solid hsl(0 0% 85%);
 `
 
-const Heading = styled.h3`
-  font-size: 26px;
-  margin-bottom: 12px;
-`
-
-const Button = styled.button`
-  background: var(--button-background);
-  border: none;
-  border-radius: 8px;
-  height: 32px;
+const Actions = styled.section`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-flow: column;
+  gap: 16px;
   width: 100%;
-  margin: 12px 0;
-  font-size: 16px;
-  font-weight: 500;
-  &:hover {
-    background: var(--button-background-hover);
-  }
-  &:active {
-    background: var(--button-background-active);
-  }
 `
 
 export function WelcomePage() {
@@ -73,9 +51,13 @@ export function WelcomePage() {
       </Title>
       <Subtitle>Zed User Interface</Subtitle>
       <Card>
-        <Heading>Get Started</Heading>
-        <Button onClick={() => newPool.run()}>Import Data</Button>
-        <Button onClick={() => connectToLake.run()}>Connect to Lake</Button>
+        <H1>Get Started</H1>
+        <Actions>
+          <InputButton onClick={() => newPool.run()}>Import Data</InputButton>
+          <InputButton onClick={() => connectToLake.run()}>
+            Connect to Lake
+          </InputButton>
+        </Actions>
       </Card>
     </BG>
   )

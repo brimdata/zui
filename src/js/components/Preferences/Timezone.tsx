@@ -12,7 +12,7 @@ export default function Timezone({config}: Props) {
   return (
     <div className="setting-panel">
       <InputLabel htmlFor={name}>{label}</InputLabel>
-      <SelectInput name={name} id={name} defaultValue={defaultValue}>
+      <SelectInput name={name} id={name} defaultValue={defaultValue as string}>
         {brim.time.getZoneNames().map((name) => (
           <option key={name} value={name}>
             {name}

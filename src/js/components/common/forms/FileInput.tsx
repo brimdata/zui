@@ -5,6 +5,7 @@ import TextInput from "./TextInput"
 import useCallbackRef from "../../hooks/useCallbackRef"
 import useDropzone from "../../hooks/useDropzone"
 import {openDirectoryOp} from "src/js/electron/ops/open-directory-op"
+import styled from "styled-components"
 
 type Props = {
   defaultValue?: string
@@ -15,6 +16,11 @@ type Props = {
   isDirInput?: boolean
   textInputProps?: Object
 }
+
+const Input = styled(TextInput)`
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+`
 
 export default function FileInput(props: Props) {
   const [picker, ref] = useCallbackRef<HTMLButtonElement>()
@@ -65,7 +71,7 @@ export default function FileInput(props: Props) {
       >
         Choose...
       </button>
-      <TextInput
+      <Input
         id={props.id}
         name={props.name}
         type="text"
