@@ -54,16 +54,19 @@ export default class TestApp {
     this.mainWin = await this.getWindowByTitle("Zui")
   }
 
-  async createPool(filepaths: string[]): Promise<void> {
+  async createPool(
+    filepaths: string[],
+    expectedResult = "Load Successful"
+  ): Promise<void> {
     await this.mainWin.locator('button[aria-label="create"]').click()
     await this.mainWin.locator('li:has-text("New Pool")').click()
     const [chooser] = await Promise.all([
       this.mainWin.waitForEvent("filechooser"),
       this.mainWin.locator("text=Choose Files").click(),
     ])
-
     await chooser.setFiles(filepaths)
-    await this.mainWin.locator("text=Import Complete.").isVisible()
+    await this.mainWin.getByRole("button", {name: "Create Pool"}).click()
+    await this.mainWin.getByText(expectedResult).waitFor()
   }
 
   async chooseFiles(locator, paths: string[]) {

@@ -12,6 +12,8 @@ import initNewSearchTab from "./initNewSearchTab"
 import Editor from "../state/Editor"
 import submitSearch from "src/app/query-home/flows/submit-search"
 import {commands} from "src/app/commands/command"
+import {decode, zed} from "@brimdata/zealot"
+import {viewLogDetail} from "../flows/viewLogDetail"
 
 export default (store: Store) => {
   ipcRenderer.on("focusSearchBar", () => {
@@ -85,5 +87,15 @@ export default (store: Store) => {
 
   ipcRenderer.on("runCommand", (e, id, ...args) => {
     commands.run(id, ...args)
+  })
+
+  ipcRenderer.on("detail-window-args", (e, opts) => {
+    if (opts) {
+      global.windowHistory.replace(opts.url)
+      const value = decode(opts.value) as zed.Record
+      if (value) {
+        store.dispatch(viewLogDetail(value))
+      }
+    }
   })
 }

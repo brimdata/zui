@@ -12,6 +12,6 @@ export function installExtensions() {
   return installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS], {
     loadExtensionOptions: {allowFileAccess: true},
   })
-    .then(() => log.info("Devtools loaded"))
-    .catch((err) => log.error("Devtools error occurred: ", err))
+    .then(() => log.info("devtools loaded"))
+    .catch((err) => log.error("devtools error occurred: ", err))
 }

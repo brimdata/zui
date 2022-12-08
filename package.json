@@ -73,7 +73,7 @@
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
-    "electron": "^15.5.2",
+    "electron": "^22.0.0",
     "electron-builder": "^22.14.5",
     "electron-builder-notarize": "^1.2.0",
     "electron-mock-ipc": "^0.3.10",
@@ -135,7 +135,7 @@
     "electron-devtools-installer": "^3.2.0",
     "electron-dl": "^3.0.1",
     "electron-localshortcut": "^3.2.1",
-    "electron-log": "^4.2.2",
+    "electron-log": "5.0.0-beta.6",
     "electron-updater": "^4.3.8",
     "event-source-polyfill": "^1.0.25",
     "filter-console": "^0.1.1",
@@ -179,7 +179,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#161adbc31a2b64a34f085df9473795579822fcfc"
+    "zed": "brimdata/zed#a31161a3404c7cb45ba2dd405b195c01e0123cf9"
   },
   "peerDependencies": {
     "react": "^18.0.0",

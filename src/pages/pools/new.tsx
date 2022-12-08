@@ -57,6 +57,9 @@ const Footer = styled.footer`
   padding: 0 32px;
   margin-top: 28px;
   margin-bottom: 16px;
+  display: flex;
+  flex-flow: column;
+  gap: 12px;
 `
 
 const Drop = styled(DropZone)`
@@ -149,7 +152,7 @@ export function PoolNew() {
           <TextInput
             name="key"
             placeholder="None"
-            defaultValue={defaults["key"]}
+            defaultValue={defaults["key"] ?? "ts"}
           />
         </Field>
         <Field>
@@ -173,21 +176,20 @@ export function PoolNew() {
       </Form>
       <Footer>
         <Help>
-          <b>Auto detactable formats</b>:{" "}
+          <b>Auto-detectable formats</b>:{" "}
           <Link href="https://tools.ietf.org/html/rfc4180">CSV</Link>,{" "}
           <Link href="https://www.json.org/json-en.html">JSON</Link>,{" "}
           <Link href="http://ndjson.org/">NDJSON</Link>,{" "}
           <Link href="https://docs.zeek.org/en/current/log-formats.html#zeek-tsv-format-logs">
-            Zeek TSV
+            Zeek
           </Link>
-          , <Link href={links.ZED_DOCS_FORMATS_ZNG}>ZNG</Link>,{" "}
-          <Link href={links.ZED_DOCS_FORMATS_ZSON}>ZSON</Link>. See{" "}
-          <Link href="https://github.com/brimdata/brim/wiki/Importing-Parquet-and-ZST">
-            docs
-          </Link>{" "}
-          for Zed platform support for{" "}
-          <Link href="https://parquet.apache.org/">Parquet</Link> and{" "}
-          <Link href={links.ZED_DOCS_FORMATS_ZST}>ZST</Link> formats.
+          , <Link href={links.ZED_DOCS_FORMATS_ZJSON}>ZJSON</Link>,{" "}
+          <Link href={links.ZED_DOCS_FORMATS_ZNG}>ZNG</Link>, and{" "}
+          <Link href={links.ZED_DOCS_FORMATS_ZSON}>ZSON</Link>.
+        </Help>
+        <Help>
+          <b>Non-auto-detectable formats</b>: Line and{" "}
+          <Link href="https://parquet.apache.org/">Parquet</Link>.
         </Help>
       </Footer>
       <DropOverlay show={isOver}>Drop to Set Files...</DropOverlay>

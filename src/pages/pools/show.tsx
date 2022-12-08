@@ -16,6 +16,7 @@ import {PoolDataList} from "src/panes/pool-data-list"
 import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
 import {H1} from "src/components/h1"
 import {PoolLoadMore, PoolLoadMoreHandle} from "src/panes/pool-load-more"
+import {NotFound} from "./404"
 
 const BG = styled.div`
   --page-padding: 32px;
@@ -66,7 +67,7 @@ export function InitPool({children}) {
   }, [poolId])
 
   if (!pool) {
-    return <h1>404</h1>
+    return <NotFound />
   } else if (!pool.hasStats()) {
     return null
   } else {

@@ -12,6 +12,7 @@ export type ResponseFormat =
   | "json"
   | "zjson"
   | "zson"
+  | "zeek"
 
 export type QueryOpts = {
   format: ResponseFormat
@@ -64,8 +65,9 @@ export type LoadFormat =
   | "auto"
   | "csv"
   | "json"
-  | "ndjson"
+  | "line"
   | "parquet"
+  | "zeek"
   | "zjson"
   | "zng"
   | "zson"
@@ -74,8 +76,9 @@ export type LoadContentType =
   | "*/*"
   | "text/csv"
   | "application/json"
-  | "application/x-ndjson"
+  | "application/x-line"
   | "application/x-parquet"
+  | "application/x-zeek"
   | "application/x-zjson"
   | "application/x-zng"
   | "application/x-zson"

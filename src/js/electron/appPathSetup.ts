@@ -25,7 +25,7 @@ export function appPathSetup() {
   // Logs go under userData, to make finding logs consistent across platforms.
   app.setPath("logs", path.join(app.getPath("userData"), "logs"))
 
-  log.transports.file.resolvePath = (variables) => {
+  log.transports.file.resolvePathFn = (variables) => {
     return path.join(app.getPath("logs"), variables.fileName)
   }
 }
