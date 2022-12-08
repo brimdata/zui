@@ -29,7 +29,13 @@ function getSpliceIndex(props: Props) {
   return index
 }
 
-const Actions = ({actions}: {actions: ActionButtonProps[]}) => {
+const Actions = ({
+  actions,
+  labels,
+}: {
+  labels: boolean
+  actions: ActionButtonProps[]
+}) => {
   const [hiddenEl, setHiddenEl] = useCallbackRef()
   const [childWidths, setChildWidths] = useState<null | number[]>(null)
 
@@ -41,7 +47,11 @@ const Actions = ({actions}: {actions: ActionButtonProps[]}) => {
   return (
     <>
       <MeasureLayer>
-        <ActionButtons actions={actions} innerRef={setHiddenEl} />
+        <ActionButtons
+          actions={actions}
+          innerRef={setHiddenEl}
+          labels={labels}
+        />
       </MeasureLayer>
       <FillFlexParent>
         {({width}) => (

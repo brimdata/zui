@@ -53,11 +53,13 @@
 
   --foreground-color: var(--aqua);
 
-  --button-background: #f2f2f3;
-  --button-background-hover: #ececee;
-  --button-background-active: #e5e5e7;
+  --button-background: hsl(212, 5%, 92%);
+  --button-background-hover: hsl(212, 5%, 90%);
+  --button-background-active: hsl(212, 5%, 87%);
 
-  --editor-background: hsl(212, 3%, 95%);
+  --editor-background: white;
 
   --border-color: hsl(216, 10%, 80%);
+
+  --chrome-color: rgb(250, 250, 250);
 }

@@ -11,7 +11,7 @@ export const showHistoryPane = createCommand(
       Layout.getDetailPaneIsOpen(getState()) &&
       Layout.getCurrentPaneName(getState()) === "history"
     ) {
-      flashElement.run("#js-history-pane")
+      flashElement.run("[data-section-tab-value='history']")
     } else {
       dispatch(Layout.showDetailPane())
       dispatch(Layout.setCurrentPaneName("history"))

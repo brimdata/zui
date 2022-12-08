@@ -171,7 +171,11 @@ export class Client {
     contentType?: string
   }) {
     const abortCtl = wrapAbort(opts.signal)
-    const clearTimer = this.setTimeout(() => abortCtl.abort(), opts.timeout)
+    if (opts.path.startsWith("/query")) console.log(opts.timeout)
+    const clearTimer = this.setTimeout(() => {
+      abortCtl.abort()
+      console.error("request timed out:", opts)
+    }, opts.timeout)
     const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy
     const headers = new Headers(opts.headers)
     headers.set("Accept", accept(opts.format || "zjson"))

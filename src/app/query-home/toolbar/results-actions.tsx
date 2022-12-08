@@ -18,5 +18,5 @@ export function ResultsActions() {
     columns,
   ]
 
-  return <Actions actions={actions} />
+  return <Actions actions={actions} labels={false} />
 }

@@ -9,63 +9,14 @@ import {DraggablePane} from "src/js/components/draggable-pane"
 import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {HistorySection} from "./history/section"
+import {SectionTabs} from "src/components/section-tabs"
+import {PaneName} from "src/js/state/Layout/types"
 
 const Pane = styled(DraggablePane)`
   display: flex;
   flex-direction: column;
   border-left: 1px solid var(--border-color);
   background: white;
-`
-
-const BG = styled.div`
-  display: flex;
-  padding: 0 6px;
-  align-items: center;
-  border-bottom: 1px solid var(--border-color);
-  height: 37px;
-  flex-shrink: 0;
-  user-select: none;
-  position: relative;
-
-  button {
-    background: none;
-    border: none;
-    display: flex;
-    padding: 0 6px;
-    text-transform: uppercase;
-    height: 100%;
-
-    span {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      font-weight: 500;
-      border-bottom: 2px solid transparent;
-      padding: 7px 4px 3px 4px;
-      font-size: 11px;
-      opacity: 0.5;
-    }
-
-    &:hover {
-      span {
-        opacity: 0.7;
-        transition: opacity 0.2s;
-      }
-    }
-
-    &:active {
-      span {
-        opacity: 0.8;
-      }
-    }
-
-    &[aria-pressed="true"] {
-      span {
-        opacity: 1;
-        border-bottom: 2px solid var(--primary-color);
-      }
-    }
-  }
 `
 
 const PaneContentSwitch = ({paneName}) => {
@@ -81,31 +32,26 @@ const PaneContentSwitch = ({paneName}) => {
   }
 }
 
+const BG = styled.div`
+  height: 37px;
+`
+
 export function Menu() {
   const dispatch = useDispatch()
   const currentPaneName = useSelector(Layout.getCurrentPaneName)
-  const onClick = (name) => () => dispatch(Layout.setCurrentPaneName(name))
+  const onChange = (name: string) =>
+    dispatch(Layout.setCurrentPaneName(name as PaneName))
   return (
     <BG>
-      <button
-        onClick={onClick("history")}
-        aria-pressed={currentPaneName === "history"}
-        id="js-history-pane"
-      >
-        <span>History</span>
-      </button>
-      <button
-        onClick={onClick("detail")}
-        aria-pressed={currentPaneName === "detail"}
-      >
-        <span>Detail</span>
-      </button>
-      <button
-        onClick={onClick("versions")}
-        aria-pressed={currentPaneName === "versions"}
-      >
-        <span>Versions</span>
-      </button>
+      <SectionTabs
+        value={currentPaneName}
+        onChange={onChange}
+        options={[
+          {label: "History", value: "history"},
+          {label: "Detail", value: "detail"},
+          {label: "Versions", value: "versions"},
+        ]}
+      />
     </BG>
   )
 }

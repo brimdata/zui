@@ -12,7 +12,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-
+  background: none;
   &:hover {
     background: var(--button-background);
   }

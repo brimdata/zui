@@ -22,6 +22,7 @@ export type ActionButtonProps = MenuItemConstructorOptions & {
   icon?: IconName | MenuItemConstructorOptions["icon"]
   disabled?: boolean
   buttonProps?: object
+  showLabel?: boolean
 }
 
 const Wrap = styled.div`
@@ -45,7 +46,9 @@ const ActionButton = (props: ActionButtonProps) => {
         dropdown={!!props.submenu}
         {...props.buttonProps}
       />
-      {props.label && <Label isDisabled={props.disabled}>{props.label}</Label>}
+      {props.label && props.showLabel && (
+        <Label isDisabled={props.disabled}>{props.label}</Label>
+      )}
     </Wrap>
   )
 }

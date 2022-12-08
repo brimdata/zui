@@ -16,6 +16,7 @@ const BG = styled.header.attrs({className: "title-bar"})`
   justify-content: space-between;
   padding: 0 16px;
   gap: 10px;
+  background: var(--chrome-color);
 `
 
 export function TitleBar() {

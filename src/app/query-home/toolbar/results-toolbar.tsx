@@ -6,8 +6,10 @@ import {ResultsViewSwitch} from "./results-view-switch"
 const BG = styled.section`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   padding: 6px 16px;
+  background: var(--chrome-color);
+  border-bottom: 1px solid var(--border-color);
 `
 
 export function ResultsToolbar() {

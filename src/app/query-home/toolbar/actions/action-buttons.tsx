@@ -22,13 +22,14 @@ type Props = {
   actions: ActionButtonProps[]
   innerRef?: RefCallback<HTMLElement>
   width?: number
+  labels?: boolean
 }
 
-export default function ActionButtons({actions, innerRef}: Props) {
+export default function ActionButtons({actions, innerRef, labels}: Props) {
   return (
     <BG ref={innerRef}>
       {actions.map((props, i) => (
-        <ActionButton key={i} {...props} />
+        <ActionButton key={i} {...props} showLabel={labels} />
       ))}
     </BG>
   )
