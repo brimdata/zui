@@ -42,6 +42,7 @@ export default (
     const res = await zealot.query(exportQuery, {
       format,
       controlMessages: false,
+      timeout: Infinity,
     })
     try {
       await streamPipeline(

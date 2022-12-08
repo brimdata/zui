@@ -81,6 +81,7 @@ export class Client {
       contentType: "application/json",
       format: options.format,
       signal: abortCtl.signal,
+      timeout: options.timeout,
     })
     return new ResultStream(result, abortCtl)
   }
@@ -171,7 +172,10 @@ export class Client {
     contentType?: string
   }) {
     const abortCtl = wrapAbort(opts.signal)
-    const clearTimer = this.setTimeout(() => abortCtl.abort(), opts.timeout)
+    const clearTimer = this.setTimeout(() => {
+      console.error("request timed out:", opts)
+      abortCtl.abort()
+    }, opts.timeout)
     const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy
     const headers = new Headers(opts.headers)
     headers.set("Accept", accept(opts.format || "zjson"))

@@ -18,6 +18,7 @@ export type QueryOpts = {
   format: ResponseFormat
   controlMessages: boolean
   signal?: AbortSignal
+  timeout?: number
 }
 
 export type CreatePoolOpts = {
