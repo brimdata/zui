@@ -171,7 +171,6 @@ export class Client {
     contentType?: string
   }) {
     const abortCtl = wrapAbort(opts.signal)
-    if (opts.path.startsWith("/query")) console.log(opts.timeout)
     const clearTimer = this.setTimeout(() => {
       abortCtl.abort()
       console.error("request timed out:", opts)

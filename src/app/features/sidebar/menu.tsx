@@ -4,22 +4,29 @@ import {useSelector} from "react-redux"
 import Appearance from "src/js/state/Appearance"
 import {SectionName} from "src/js/state/Appearance/types"
 import {SectionTabs} from "src/components/section-tabs"
+import styled from "styled-components"
+
+const BG = styled.div`
+  height: 36px;
+  padding: 0 8px;
+`
 
 export function Menu() {
   const dispatch = useDispatch()
   const currentSectionName = useSelector(Appearance.getCurrentSectionName)
 
   return (
-    <SectionTabs
-      value={currentSectionName}
-      onChange={(name) => {
-        console.log("onChange", name)
-        dispatch(Appearance.setCurrentSectionName(name as SectionName))
-      }}
-      options={[
-        {label: "Pools", value: "pools"},
-        {label: "Queries", value: "queries"},
-      ]}
-    />
+    <BG>
+      <SectionTabs
+        value={currentSectionName}
+        onChange={(name) => {
+          dispatch(Appearance.setCurrentSectionName(name as SectionName))
+        }}
+        options={[
+          {label: "Pools", value: "pools"},
+          {label: "Queries", value: "queries"},
+        ]}
+      />
+    </BG>
   )
 }

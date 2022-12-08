@@ -2,7 +2,6 @@ import React from "react"
 import {useSelector} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import {useResultsData} from "./data-hook"
-import {useResultsView} from "./view-hook"
 import Results from "src/js/state/Results"
 import styled from "styled-components"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
@@ -10,6 +9,7 @@ import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {MainTable} from "src/panes/main-table"
 import {ResultsError} from "./errors/results-error"
 import {MainInspector} from "./main-inspector"
+import Layout from "src/js/state/Layout"
 
 const BG = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ const Body = styled.div`
 
 const ResultsComponent = () => {
   const data = useResultsData()
-  const view = useResultsView()
+  const view = useSelector(Layout.getResultsView)
   const {ref, rect} = useResizeObserver()
   const error = useSelector(Results.getError(MAIN_RESULTS))
   return (
@@ -35,8 +35,8 @@ const ResultsComponent = () => {
       <AppErrorBoundary>
         <Body ref={ref} data-test-locator="viewer_results">
           {error && <ResultsError error={error} />}
-          {!error && view.isTable && <MainTable {...rect} />}
-          {!error && view.isInspector && (
+          {!error && view === "TABLE" && <MainTable {...rect} />}
+          {!error && view === "INSPECTOR" && (
             <div
               style={{
                 height: 0,

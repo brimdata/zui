@@ -6,9 +6,10 @@ export const GUTTER = 10
 
 const BG = styled.div`
   display: flex;
-  flex: 0 1 auto;
   overflow: hidden;
   justify-content: flex-end;
+  align-items: center;
+  height: 100%;
 
   & > * {
     margin-right: ${GUTTER}px;

@@ -34,6 +34,10 @@ const PaneContentSwitch = ({paneName}) => {
 
 const BG = styled.div`
   height: 37px;
+  background: var(--chrome-color);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+  padding: 0 8px;
 `
 
 export function Menu() {

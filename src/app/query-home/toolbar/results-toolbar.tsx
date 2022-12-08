@@ -7,9 +7,10 @@ const BG = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 16px;
   background: var(--chrome-color);
   border-bottom: 1px solid var(--border-color);
+  height: 32px;
+  padding: 0 8px;
 `
 
 export function ResultsToolbar() {
