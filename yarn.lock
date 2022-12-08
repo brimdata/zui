@@ -1169,7 +1169,7 @@ __metadata:
     lodash: ^4.17.21
     node-fetch: 2
     npm-run-all: ^4.1.5
-    prettier: ^1.19.1
+    prettier: ^2.6.2
     prettier-eslint: ^8.8.2
     rollup: ^2.59.0
     serve: ^13.0.2
@@ -13513,7 +13513,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^1.19.1, prettier@npm:^1.7.0":
+"prettier@npm:^1.7.0":
   version: 1.19.1
   resolution: "prettier@npm:1.19.1"
   bin:
