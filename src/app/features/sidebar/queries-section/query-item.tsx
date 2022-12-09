@@ -28,7 +28,10 @@ const QueryItem = ({
       innerStyle={style}
       isFolder={node.isInternal}
       onToggle={() => node.toggle()}
-      onContextMenu={() => queryContextMenu.build(tree, node).show()}
+      onContextMenu={(e) => {
+        e.stopPropagation()
+        queryContextMenu.build(tree, node).show()
+      }}
       onSubmit={(name) => node.submit(name)}
       onReset={() => node.reset()}
       onClick={() =>
