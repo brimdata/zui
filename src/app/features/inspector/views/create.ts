@@ -10,7 +10,7 @@ import {StringView} from "./string-view"
 import {TypeRecordView} from "./type-record-view"
 import {View} from "./view"
 
-export function createView(args: InspectArgs) {
+export function createView(args: InspectArgs): View {
   // VALUES
 
   // * unset

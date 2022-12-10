@@ -19,11 +19,9 @@ import {useAutosize} from "./autosize"
  */
 
 export function Grid() {
-  const {table} = useZedTable()
-  const cols = table.getAllColumns()
-  const gridRef = useColumnSizeRerender(cols)
+  const api = useZedTable()
+  const gridRef = useColumnSizeRerender()
   const {setEnd} = useAutosize()
-
   return (
     <FillFlexParent>
       {({width, height}) => {
@@ -32,10 +30,10 @@ export function Grid() {
             ref={gridRef}
             width={width}
             height={height}
-            columnWidth={(index) => cols[index].getSize()}
-            rowHeight={() => config.rowHeight}
-            rowCount={table.getRowModel().rows.length}
-            columnCount={table.getAllColumns().length}
+            columnWidth={(index) => api.columns[index].getSize()}
+            rowHeight={(index) => api.getRowHeight(index)}
+            rowCount={api.rows.length}
+            columnCount={api.columns.length}
             overscanRowCount={5}
             overscanColumnCount={2}
             innerElementType={InnerElement}

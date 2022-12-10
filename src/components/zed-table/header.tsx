@@ -1,11 +1,8 @@
-import {arrayExpression} from "@babel/core/node_modules/@babel/types"
-import {CoreColumn, flexRender} from "@tanstack/react-table"
-import {max} from "lodash"
-import React, {Ref} from "react"
+import {flexRender} from "@tanstack/react-table"
+import React from "react"
 import styled from "styled-components"
-import {config} from "./config"
 import {useZedTable} from "./context"
-import {measureMaxCellSize} from "./utils"
+import {getMaxCellSizes} from "./utils"
 
 const BG = styled.div`
   width: 100%;
@@ -13,7 +10,7 @@ const BG = styled.div`
   position: sticky;
   top: 0;
   left: 0;
-  background: white;
+  background: var(--chrome-color);
   z-index: 1;
 `
 
@@ -23,6 +20,7 @@ const Group = styled.div`
 `
 
 const TH = styled.div`
+  line-height: 24px;
   white-space: nowrap;
   text-align: left;
   padding: 0 10px;
@@ -31,7 +29,6 @@ const TH = styled.div`
   font-size: 11px;
   height: 100%;
   position: relative;
-  background: white;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -59,13 +56,13 @@ const ResizeBar = styled.div`
 `
 
 export function Header() {
-  const {table, ref} = useZedTable()
+  const api = useZedTable()
 
   return (
     <BG>
-      {table.getHeaderGroups().map((group) => {
+      {api.table.getHeaderGroups().map((group) => {
         return (
-          <Group key={group.id} style={{height: config.headerHeight + "px"}}>
+          <Group key={group.id} style={{height: api.headerHeight + "px"}}>
             {group.headers.map((header) => {
               return (
                 <React.Fragment key={header.id}>
@@ -81,11 +78,9 @@ export function Header() {
                   <ResizeArea
                     onMouseDown={header.getResizeHandler()}
                     onDoubleClick={() => {
-                      if (ref.current) {
-                        const id = header.column.id
-                        const size = measureMaxCellSize(ref.current, id)
-                        table.setColumnSizing((prev) => ({...prev, [id]: size}))
-                      }
+                      const id = header.column.id
+                      const sizes = getMaxCellSizes(api.container, [id])
+                      api.setColumnWidths(sizes)
                     }}
                     style={{
                       left:

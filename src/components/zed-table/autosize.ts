@@ -8,55 +8,30 @@ import {getMaxCellSizes} from "./utils"
 type Sizes = Record<string, number>
 
 export function useAutosize() {
-  const {table, ref, widths, setWidths} = useZedTable()
-  const updateTable = (sizes: Sizes) => {
-    table.setColumnSizing((prev) => ({...prev, ...sizes}))
-  }
-
-  const cache = useRef<Sizes>(widths)
-  useUnmount(() => {
-    setWidths(cache.current)
-  })
-
-  const updateCache = (sizes: Sizes) => {
-    cache.current = {...cache.current, ...sizes}
-  }
-  const clearCache = () => {
-    cache.current = {}
-  }
-
-  let [end, setEndState] = useState<number>(0)
-  const setEnd = (index: number) => {
-    if (index > end) setEndState(index)
-  }
+  const api = useZedTable()
+  let [end, setEndState] = useState<number>(-1)
+  const setEnd = (index: number) => index > end && setEndState(index)
 
   const getUnmeasuredIds = () => {
-    return table
-      .getAllColumns()
-      .slice(0, end)
-      .filter((col) => !(col.id in cache.current))
+    const sliced = api.columns.slice(0, end + 1)
+    return sliced
+      .filter((col) => !api.state.columnWidths.has(col.id))
       .map((col) => col.id)
   }
 
   const measure = () => {
-    const container = ref.current
+    const container = api.container
     if (container) {
       const ids = getUnmeasuredIds()
       if (ids.length === 0) return
       const sizes = getMaxCellSizes(container, ids)
-      updateCache(sizes)
-      updateTable(sizes)
+      api.setColumnWidths(sizes)
     }
   }
 
   useEffect(() => {
     measure()
-  }, [end])
-
-  useLayoutEffect(() => {
-    clearCache()
-    measure()
-  }, [table.getAllColumns()])
+  }, [end, api])
 
   return {
     setEnd,

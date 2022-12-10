@@ -3,7 +3,7 @@ $tab-inactive-bg: transparent;
 $tab-hover-color: var(--foreground-color);
 $tab-hover-bg: var(--tab-background-hover);
 $tab-active-color: var(--aqua);
-$tab-active-bg: white;
+$tab-active-bg: var(--chrome-color);
 $tab-transition-duration: 200ms;
 
 .tab {

@@ -6,6 +6,10 @@ import {InspectArgs, RenderMode} from "../types"
 export class View<T extends zed.Any = zed.Any> {
   constructor(public args: InspectArgs) {}
 
+  get ctx() {
+    return this.args.ctx
+  }
+
   get value(): T {
     return this.args.value as T
   }

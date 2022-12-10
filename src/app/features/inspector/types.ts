@@ -2,9 +2,6 @@ import {zed} from "@brimdata/zealot"
 import React, {MouseEvent, ReactNode} from "react"
 import {InspectContext} from "./inspect-list"
 
-export type IsExpanded = (key: string) => boolean
-export type SetExpanded = (key: string, value: boolean) => void
-
 type InspectorMouseEvent = (
   e: MouseEvent,
   value: zed.Value | zed.Type,
@@ -16,8 +13,8 @@ export type InspectorProps = {
   height: number
   width: number
   values: zed.Value[]
-  isExpanded: IsExpanded
-  setExpanded: SetExpanded
+  isExpanded: (key: string) => boolean
+  setExpanded: (key: string, value: boolean) => void
   getValuePage: (key: string) => number
   renderMore: (key: string) => void
   onContextMenu?: InspectorMouseEvent

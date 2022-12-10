@@ -3,20 +3,61 @@ import {zed} from "@brimdata/zealot"
 import {ZedValue} from "../zed-value"
 import {createColumnHelper} from "@tanstack/react-table"
 import {useLocationState} from "src/js/components/hooks/use-location-state"
+import {InspectContext} from "src/app/features/inspector/inspect-list"
+import {createView} from "src/app/features/inspector/views/create"
+import {ZedTableApi} from "./api"
 
 const columnHelper = createColumnHelper<zed.Value>()
 
 function createColumnFromField(
-  field: zed.TypeField,
-  widths: Record<string, number>
+  fieldType: zed.TypeField,
+  index: number,
+  api: ZedTableApi
 ) {
-  if (!field) throw new Error("No Field")
-  return columnHelper.accessor((row: zed.Record) => row.getField(field.name), {
-    id: field.name, // Make this field.id
-    header: field.name,
-    cell: (info) => <ZedValue value={info.getValue().data} />,
-    size: widths[field.name /* Make this field.id */],
-  })
+  if (!fieldType) throw new Error("No Field")
+  return columnHelper.accessor(
+    (row: zed.Record) => {
+      const field = row.getField(fieldType.name)
+      const ctx = new InspectContext(api)
+      const view = createView({
+        ctx,
+        value: field.value,
+        type: field.value.type,
+        field: field,
+        key: null,
+        last: true,
+        indexPath: [0],
+      })
+      view.inspect()
+      return view
+    },
+    {
+      id: fieldType.name, // Make this field.id
+      header: fieldType.name,
+      cell: (info) => {
+        const view = info.getValue()
+        return (
+          <>
+            {view.ctx.rows.map(({indent, render}) => {
+              return (
+                <div
+                  style={{
+                    paddingLeft: 16 * indent,
+                    display: "flex",
+                    whiteSpace: "pre",
+                    alignItems: "center",
+                  }}
+                >
+                  {render}
+                </div>
+              )
+            })}
+          </>
+        )
+      },
+      size: api.getColumnWidth(fieldType.name),
+    }
+  )
 }
 
 function createColumnFromArray(array: zed.TypeArray) {
@@ -28,11 +69,13 @@ function createColumnFromArray(array: zed.TypeArray) {
   })
 }
 
-export function createColumns(shape: zed.Type, widths: Record<string, number>) {
-  if (shape instanceof zed.TypeRecord) {
-    return shape.fields.map((f) => createColumnFromField(f, widths))
-  } else if (shape instanceof zed.TypeArray) {
-    return [createColumnFromArray(shape)]
+export function createColumns(api: ZedTableApi) {
+  if (api.shape instanceof zed.TypeRecord) {
+    return api.shape.fields.map((field, index) =>
+      createColumnFromField(field, index, api)
+    )
+  } else if (api.shape instanceof zed.TypeArray) {
+    return [createColumnFromArray(api.shape)]
   } else {
     throw new Error("Unsupported Type")
   }

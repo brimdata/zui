@@ -22,7 +22,8 @@ export function useCellStyle(style: React.CSSProperties) {
   }
 }
 
-export function useColumnSizeRerender(cols: Column<zed.Value>[]) {
+export function useColumnSizeRerender() {
+  const api = useZedTable()
   const ref = React.useRef<VariableSizeGrid | null>(null)
   React.useLayoutEffect(
     () => {
@@ -34,7 +35,7 @@ export function useColumnSizeRerender(cols: Column<zed.Value>[]) {
         })
       }
     },
-    cols.map((c) => c.getSize())
+    api.columns.map((c) => c.getSize())
   )
   return ref
 }

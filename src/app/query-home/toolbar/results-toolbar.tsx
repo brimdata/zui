@@ -9,7 +9,7 @@ const BG = styled.section`
   align-items: center;
   background: var(--chrome-color);
   border-bottom: 1px solid var(--border-color);
-  height: 32px;
+  height: 37px;
   padding: 0 8px;
 `
 

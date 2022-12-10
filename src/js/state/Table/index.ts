@@ -6,5 +6,7 @@ export default {
   getDefaultExpanded: activeTabSelect((t) => t.table.defaultExpanded),
   getScrollPosition: activeTabSelect((t) => t.table.scrollPosition),
   getValuePages: activeTabSelect((t) => t.table.valuePages),
+  getColumnWidths: activeTabSelect((t) => t.table.columnWidths),
+  getState: activeTabSelect((t) => t.table),
   ...actions,
 }

@@ -68,10 +68,22 @@ export class InspectList {
   }
 }
 
+// Change the props to use only what it needs
+
+type InspectContextArgs = Pick<
+  InspectorProps,
+  | "renderMore"
+  | "getValuePage"
+  | "setExpanded"
+  | "isExpanded"
+  | "onClick"
+  | "onContextMenu"
+>
 export class InspectContext {
   indent = 0
   rows = [] as RowData[]
-  constructor(public props: InspectorProps) {}
+
+  constructor(public props: InspectContextArgs) {}
 
   nest() {
     this.indent += 1
