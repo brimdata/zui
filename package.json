@@ -30,7 +30,7 @@
     "e2e": "yarn workspace e2e-tests test",
     "format": "prettier '**/*.{js,ts,tsx,scss}' --write --loglevel warn",
     "prerelease": "yarn build",
-    "release": "electron-builder --mac",
+    "release": "electron-builder --publish never",
     "postinstall": "node scripts/post-install",
     "prepare": "husky install",
     "watch:types": "yarn lint:tsc --watch"
