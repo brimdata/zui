@@ -50,6 +50,7 @@ export class Lake {
 
     const opts = {
       stdio: ["inherit", "inherit", "inherit"],
+      windowsHide: true,
     }
     // For unix systems, pass posix pipe read file descriptor into lake process.
     // In the event of Brim getting shutdown via `SIGKILL`, this will let lake
