@@ -11,7 +11,7 @@ depends on the backend [Zed](https://github.com/brimdata/zed) platform's
 ability to "auto-detect" these formats. While several formats are covered by
 the current auto-detection implementation,
 [Parquet](https://parquet.apache.org/) and
-[VNG](https://zed.brimdata.io/docs/formats/vng/) are not
+[VNG](https://zed.brimdata.io/docs/next/formats/vng) are not
 yet (see [zed/2517](https://github.com/brimdata/zed/issues/2517)).
 
 This article shows how the Zed CLI tools can be used to preprocess data of
