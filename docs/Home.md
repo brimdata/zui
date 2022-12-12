@@ -20,7 +20,7 @@ effective use of the Brim desktop application and related tools.
 ## User Documentation
 
 - [[Migration for Version 0.29]]
-- [[Importing Parquet and ZST]]
+- [[Importing Parquet and VNG]]
 
 ## Cookbooks
 
