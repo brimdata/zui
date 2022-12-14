@@ -11,6 +11,7 @@ import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
 import MainHistogramChart from "./histogram/MainHistogram/Chart"
+import {useRefCheck} from "src/util/hooks/use-ref-check"
 
 const MainContent = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const QueryHome = () => {
   const activeQuery = useSelector(Current.getActiveQuery)
   const lakeId = useSelector(Current.getLakeId)
   const tabId = useSelector(Current.getTabId)
+
   if (activeQuery.isDeleted()) {
     return (
       <Redirect

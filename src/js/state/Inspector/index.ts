@@ -2,9 +2,9 @@ import activeTabSelect from "../Tab/activeTabSelect"
 import {actions} from "./reducer"
 
 export default {
-  getExpanded: activeTabSelect((t) => t.table.expanded),
-  getDefaultExpanded: activeTabSelect((t) => t.table.defaultExpanded),
-  getScrollPosition: activeTabSelect((t) => t.table.scrollPosition),
-  getValuePages: activeTabSelect((t) => t.table.valuePages),
+  getExpanded: activeTabSelect((t) => t.inspector.expanded),
+  getDefaultExpanded: activeTabSelect((t) => t.inspector.defaultExpanded),
+  getScrollPosition: activeTabSelect((t) => t.inspector.scrollPosition),
+  getValuePages: activeTabSelect((t) => t.inspector.valuePages),
   ...actions,
 }

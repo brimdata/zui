@@ -7,6 +7,8 @@ import Table from "src/js/state/Table"
 import {TabState} from "src/js/state/Tab/types"
 import {View} from "src/app/features/inspector/views/view"
 import {max} from "lodash"
+import {InspectContext} from "src/app/features/inspector/inspect-list"
+import {createView} from "src/app/features/inspector/views/create"
 
 type Args = {
   shape: zed.Type
@@ -23,6 +25,7 @@ export class ZedTableApi {
   dispatch: Args["dispatch"]
   state: Args["state"]
   private tableInstance: null | ReactTable<zed.Value>
+  private cellViews: Map<string, View> = new Map()
 
   constructor(args: Args) {
     this.shape = args.shape
@@ -62,6 +65,26 @@ export class ZedTableApi {
     return this.table.getRowModel().rows
   }
 
+  getView(cellId: string, value: zed.Value) {
+    if (this.cellViews.has(cellId)) {
+      return this.cellViews.get(cellId)
+    } else {
+      const ctx = new InspectContext(this)
+      const view = createView({
+        ctx,
+        value: value,
+        type: value.type,
+        field: null,
+        key: null,
+        last: true,
+        indexPath: [cellId],
+      })
+      view.inspect()
+      this.cellViews.set(cellId, view)
+      return view
+    }
+  }
+
   getColumnWidth(key: string) {
     return this.state.columnWidths.get(key)
   }
@@ -70,25 +93,36 @@ export class ZedTableApi {
     // Maybe these dispatch calls go in the parent container so we can make this generic
     // Do that later...
     this.dispatch(Table.setColumnWidths(sizes))
-    this.table.setColumnSizing(sizes)
+    this.table.setColumnSizing((prev) => ({...prev, ...sizes}))
   }
 
   getRowHeight(index: number) {
     const row = this.rows[index]
     const rowCounts = row
       .getAllCells()
-      .map((cell) => cell.getValue<View>().rowCount())
-    const height = config.rowHeight * max(rowCounts)
-    return height
+      .map((cell) =>
+        this.getView(cell.id, cell.getValue<zed.Value>()).rowCount()
+      )
+    return config.lineHeight * (max(rowCounts) - 1) + config.rowHeight
   }
 
   isExpanded(key: string) {
-    return false
     return !!this.state.expanded.get(key)
   }
 
-  setExpanded(key: string, isExpanded: boolean) {
-    this.dispatch(Table.setExpanded({key, isExpanded}))
+  setExpanded(valueId: string, isExpanded: boolean) {
+    const [cellId] = valueId.split(",")
+    this.cellViews.delete(cellId)
+    this.cellChanged(cellId)
+    this.dispatch(Table.setExpanded({key: valueId, isExpanded}))
+  }
+  private listeners = []
+  cellChanged(id: string) {
+    this.listeners.forEach((listener) => listener(id))
+  }
+
+  onCellChanged(fn: (id: string) => void) {
+    this.listeners.push(fn)
   }
 
   getValuePage(key: string) {

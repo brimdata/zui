@@ -1,4 +1,4 @@
-import React from "react"
+import React, {startTransition} from "react"
 import {useSelector} from "react-redux"
 import useKeybinding from "src/app/core/hooks/use-keybinding"
 import {useDispatch} from "src/app/core/state"
@@ -18,7 +18,9 @@ export function ResultsViewSwitch() {
   const view = useSelector(Layout.getResultsView)
 
   const setView = (view: ResultsView) => {
-    dispatch(Layout.setResultsView(view as ResultsView))
+    startTransition(() => {
+      dispatch(Layout.setResultsView(view as ResultsView))
+    })
   }
 
   useKeybinding("ctrl+d", () => {

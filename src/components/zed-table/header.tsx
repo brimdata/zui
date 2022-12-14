@@ -1,5 +1,5 @@
 import {flexRender} from "@tanstack/react-table"
-import React from "react"
+import React, {useEffect, useReducer} from "react"
 import styled from "styled-components"
 import {useZedTable} from "./context"
 import {getMaxCellSizes} from "./utils"
@@ -55,7 +55,7 @@ const ResizeBar = styled.div`
   background: var(--border-color);
 `
 
-export function Header() {
+export const Header = function Header() {
   const api = useZedTable()
 
   return (

@@ -1,6 +1,5 @@
-import {Column} from "@tanstack/react-table"
 import {max} from "lodash"
-import {zed} from "packages/zealot/src"
+import {cssVar} from "polished"
 import React from "react"
 import {VariableSizeGrid} from "react-window"
 import {config} from "./config"
@@ -25,18 +24,33 @@ export function useCellStyle(style: React.CSSProperties) {
 export function useColumnSizeRerender() {
   const api = useZedTable()
   const ref = React.useRef<VariableSizeGrid | null>(null)
-  React.useLayoutEffect(
-    () => {
+  React.useLayoutEffect(() => {
+    if (ref.current) {
+      ref.current.resetAfterIndices({
+        columnIndex: 0,
+        rowIndex: 0,
+        shouldForceUpdate: true,
+      })
+    }
+  }, [...api.columns.map((c) => c.getSize())])
+
+  React.useLayoutEffect(() => {
+    api.onCellChanged((id) => {
+      const [cell] = id.split(",")
+      const [row, col] = cell.split("_")
+      const rowIndex = parseInt(row)
+      const columnIndex = parseInt(col)
+      if (columnIndex === -1) return
       if (ref.current) {
         ref.current.resetAfterIndices({
-          columnIndex: 0,
-          rowIndex: 0,
-          shouldForceUpdate: true,
+          columnIndex,
+          rowIndex,
+          shouldForceUpdate: false,
         })
       }
-    },
-    api.columns.map((c) => c.getSize())
-  )
+    })
+  }, [api])
+
   return ref
 }
 
@@ -52,6 +66,8 @@ export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
     for (let cell of columns[id]) {
       const copy = cell.cloneNode(true) as HTMLElement
       copy.style.width = "auto"
+      copy.style.fontFamily = cssVar("--mono-font") as string
+      copy.style.paddingRight = "10px"
       temp.append(copy)
     }
   }

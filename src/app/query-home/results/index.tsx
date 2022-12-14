@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useDeferredValue} from "react"
 import {useSelector} from "react-redux"
 import {useResizeObserver} from "src/js/components/hooks/useResizeObserver"
 import {useResultsData} from "./data-hook"
@@ -6,7 +6,7 @@ import Results from "src/js/state/Results"
 import styled from "styled-components"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
-import {MainTable} from "src/panes/main-table"
+import {MainTable} from "src/panes/main-table/main-table"
 import {ResultsError} from "./errors/results-error"
 import {MainInspector} from "./main-inspector"
 import Layout from "src/js/state/Layout"
@@ -27,7 +27,8 @@ const Body = styled.div`
 
 const ResultsComponent = () => {
   const data = useResultsData()
-  const view = useSelector(Layout.getResultsView)
+  const realView = useSelector(Layout.getResultsView)
+  const view = useDeferredValue(realView)
   const {ref, rect} = useResizeObserver()
   const error = useSelector(Results.getError(MAIN_RESULTS))
   return (

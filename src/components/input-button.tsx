@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React from "react"
+import React, {ReactNode} from "react"
 import Icon, {IconName} from "src/app/core/icon-temp"
 import styled from "styled-components"
 
@@ -35,12 +35,13 @@ const Button = styled.button`
   }
 `
 
-export function InputButton(
+export const InputButton = React.forwardRef(function InputButton(
   props: {
     icon?: IconName
-    children: string
+    children?: ReactNode
     className?: string
-  } & JSX.IntrinsicElements["button"]
+  } & JSX.IntrinsicElements["button"],
+  ref
 ) {
   const {icon, children, className, ...buttonProps} = props
   return (
@@ -52,4 +53,4 @@ export function InputButton(
       {children}
     </Button>
   )
-}
+})

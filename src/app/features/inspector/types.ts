@@ -5,8 +5,7 @@ import {InspectContext} from "./inspect-list"
 type InspectorMouseEvent = (
   e: MouseEvent,
   value: zed.Value | zed.Type,
-  field: zed.Field | zed.TypeField,
-  index: number
+  field: zed.Field | zed.TypeField
 ) => void
 
 export type InspectorProps = {
@@ -36,7 +35,7 @@ export type InspectArgs = {
   // and the key type for a map
   key: string | null | zed.Any
   last: boolean
-  indexPath: number[]
+  indexPath: (number | string)[]
 }
 
 export type RowData = {

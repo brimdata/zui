@@ -30,7 +30,11 @@ export function Grid() {
             ref={gridRef}
             width={width}
             height={height}
-            columnWidth={(index) => api.columns[index].getSize()}
+            columnWidth={(index) => {
+              const col = api.columns[index]
+              if (!col) throw new Error("What? " + index)
+              return col.getSize()
+            }}
             rowHeight={(index) => api.getRowHeight(index)}
             rowCount={api.rows.length}
             columnCount={api.columns.length}

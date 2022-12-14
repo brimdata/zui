@@ -8,7 +8,6 @@ import {Grid} from "./grid"
 import styled from "styled-components"
 import {config} from "./config"
 import classNames from "classnames"
-import {useLocationState} from "src/js/components/hooks/use-location-state"
 import {ZedTableApi} from "./api"
 import {useSelector} from "react-redux"
 import Table from "src/js/state/Table"
@@ -21,18 +20,18 @@ import {useDispatch} from "src/app/core/state"
  * - [x] The header must scroll left along with the table
  * - [x] Resize columns
  * - [x] Autosize columns
- * - [ ] Expand complex values
+ * - [x] Expand complex values
+ * - [ ] Use robust cell and value ids
  * - [ ] Configure preview limits in the <ZedValue component />
  * - [ ] Maybe even use the <ZedValue> component in the inspector?
- * - [ ] Auto detect the size of the cells
- * - [ ] Multi-shape design?
+ * - [x] Auto detect the size of the cells
+ * - [x] Multi-shape design?
  * - [ ] Infinite Scroll
  * - [ ] Header groups for nested records
  * - [ ] Keep track of which records you want to expand headers for
  * - [ ] Make sure the styles are the same when you are measuring (font-family)
+ * - [ ] Store the columns widths per shape, since zed identities are stable
  */
-
-// When you return, get isExpanded working with the right keys for the values
 
 const BG = styled.div`
   display: flex;
@@ -56,10 +55,10 @@ export function ZedTable(props: {
   const ref = useRef<HTMLDivElement | null>(null)
   const state = useSelector(Table.getState)
   const dispatch = useDispatch()
-  const api = useMemo(
-    () => new ZedTableApi({shape, values, state, ref, dispatch}),
-    [shape, values, state, ref, dispatch]
-  )
+  const api = useMemo(() => {
+    return new ZedTableApi({shape, values, state, ref, dispatch})
+  }, [shape, values, ref, dispatch])
+  api.state = state
 
   const columns = useMemo(() => createColumns(api), [api])
   api.table = useReactTable({
