@@ -36,10 +36,7 @@ export function useColumnSizeRerender() {
 
   React.useLayoutEffect(() => {
     api.onCellChanged((id) => {
-      const [cell] = id.split(",")
-      const [row, col] = cell.split("_")
-      const rowIndex = parseInt(row)
-      const columnIndex = parseInt(col)
+      const {columnIndex, rowIndex} = identifyCell(id)
       if (columnIndex === -1) return
       if (ref.current) {
         ref.current.resetAfterIndices({
@@ -84,4 +81,18 @@ export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
   temp.remove()
 
   return maxWidths
+}
+
+const identifyCell = (id: string) => {
+  const [cellId, ...valuePathString] = id.split(",")
+  const valueIndexPath = valuePathString.map((s) => parseInt(s))
+  const [row, col] = cellId.split("_")
+  const rowIndex = parseInt(row)
+  const columnIndex = parseInt(col)
+  return {
+    cellId,
+    columnIndex,
+    rowIndex,
+    valueIndexPath,
+  }
 }
