@@ -27,13 +27,14 @@ export function parseContent(resp: Response | NodeResponse) {
 
 export function accept(format: ResponseFormat) {
   const formats = {
-    zng: "application/x-zng",
-    ndjson: "application/x-ndjson",
+    arrows: "application/vnd.apache.arrow.stream",
     csv: "text/csv",
     json: "application/json",
-    zjson: "application/x-zjson",
-    zson: "application/x-zson",
+    ndjson: "application/x-ndjson",
     zeek: "application/x-zeek",
+    zjson: "application/x-zjson",
+    zng: "application/x-zng",
+    zson: "application/x-zson",
   }
   const value = formats[format]
   if (!value) {
@@ -72,6 +73,7 @@ export function getLoadContentType(
 ): LoadContentType | null {
   if (!format) return null
   if (format === "auto") return "*/*"
+  if (format === "arrows") return "application/vnd.apache.arrow.stream"
   if (format === "csv") return "text/csv"
   if (format === "json") return "application/json"
   if (format === "line") return "application/x-line"
