@@ -42,7 +42,7 @@ await app.find(':text("New Query Session")').click()
 
 https://playwright.dev/docs/api/class-locator
 
-https://playwright.dev/docs/selectors
+https://playwright.dev/docs/other-locators (formerly "Selectors")
 
 https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques
 
