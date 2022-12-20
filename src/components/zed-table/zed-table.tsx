@@ -46,6 +46,7 @@ export function ZedTable(props: {
   const state = useSelector(Table.getState)
   const dispatch = useDispatch()
   const api = useMemo(() => {
+    console.log("New Api")
     return new ZedTableApi({shape, values, state, ref, dispatch})
   }, [shape, values, ref, dispatch])
   api.state = state
@@ -58,16 +59,18 @@ export function ZedTable(props: {
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
     defaultColumn: {size: config.defaultCellWidth},
-    initialState: {
-      columnSizing,
-    },
+    // initialState: {
+    // columnSizing,
+    // },
   })
 
+  console.log("Table Rendering")
+
   // Sync column sizes
-  useEffect(() => {
-    const sizes = api.table.getState().columnSizing
-    dispatch(Table.setColumnWidths(sizes))
-  }, [api.table.getState().columnSizing])
+  // useEffect(() => {
+  //   const sizes = api.table.getState().columnSizing
+  //   dispatch(Table.setColumnWidths(sizes))
+  // }, [api.table.getState().columnSizing])
 
   useEffect(() => {
     if (api.isResizing) {

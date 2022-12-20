@@ -141,16 +141,18 @@ export class ZedTableApi {
     }
   }
 
-  autosizeColumns() {
+  autosizeColumns(columnIds?: string[]) {
     const container = this.ref.current
     if (container) {
-      const ids = this.columns
-        .slice(
-          this.gridState.overscanColumnStartIndex,
-          this.gridState.overscanColumnStopIndex + 1
-        )
-        .filter((col) => !this.state.columnWidths.has(col.id))
-        .map((col) => col.id)
+      const ids =
+        columnIds ??
+        this.columns
+          .slice(
+            this.gridState.overscanColumnStartIndex,
+            this.gridState.overscanColumnStopIndex + 1
+          )
+          .filter((col) => !this.state.columnWidths.has(col.id))
+          .map((col) => col.id)
 
       console.log("measuring", ids)
       if (ids.length === 0) return

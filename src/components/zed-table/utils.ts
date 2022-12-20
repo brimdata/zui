@@ -27,6 +27,7 @@ export function useColumnSizeRerender() {
   const ref = React.useRef<VariableSizeGrid | null>(null)
   React.useLayoutEffect(() => {
     if (ref.current) {
+      return
       ref.current.resetAfterIndices({
         columnIndex: 0,
         rowIndex: 0,

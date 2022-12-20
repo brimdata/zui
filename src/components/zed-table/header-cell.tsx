@@ -20,7 +20,7 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
           {header.column.columnDef.header as string}
         </span>
       )}
-      <HeaderResizeArea header={header} />
+      {!isPlaceholder && <HeaderResizeArea header={header} />}
     </div>
   )
 }

@@ -10,7 +10,7 @@ export const Header = function Header() {
     <div className="zed-table__header">
       {groups.map((group, index) => {
         return (
-          <HeaderGroup key={index} isLeaf={index === groups.length - 1}>
+          <HeaderGroup key={group.id} isLeaf={index === groups.length - 1}>
             {group.headers.map((header) => (
               <HeaderCell header={header} key={header.id} />
             ))}
