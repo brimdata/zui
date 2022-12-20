@@ -5,6 +5,7 @@ export function DataFormatSelect(props: JSX.IntrinsicElements["select"]) {
   return (
     <SelectInput {...props}>
       <option value="auto">Auto-detect</option>
+      <option value="arrows">Arrow IPC Stream</option>
       <option value="csv">CSV</option>
       <option value="json">JSON</option>
       <option value="line">Line</option>

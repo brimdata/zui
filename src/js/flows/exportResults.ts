@@ -25,7 +25,7 @@ function cutColumns(program, columns) {
 
 export function prepareProgram(format, program, columns) {
   let p = cutColumns(program, columns)
-  if (format === "csv") p += " | fuse"
+  if (format === "csv" || format === "arrows") p += " | fuse"
   return p
 }
 

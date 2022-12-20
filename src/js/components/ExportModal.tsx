@@ -92,6 +92,10 @@ const ExportModal = ({onClose}) => {
           }}
         >
           <RadioItem>
+            <input type="radio" id="arrows" value="arrows" name="format" />
+            <label htmlFor="arrows">Arrow IPC Stream</label>
+          </RadioItem>
+          <RadioItem>
             <input type="radio" id="csv" value="csv" name="format" />
             <label htmlFor="csv">CSV</label>
           </RadioItem>

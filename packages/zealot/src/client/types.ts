@@ -6,13 +6,14 @@ export type ClientOpts = {
 }
 
 export type ResponseFormat =
-  | "zng"
-  | "ndjson"
+  | "arrows"
   | "csv"
   | "json"
-  | "zjson"
-  | "zson"
+  | "ndjson"
   | "zeek"
+  | "zjson"
+  | "zng"
+  | "zson"
 
 export type QueryOpts = {
   format: ResponseFormat
@@ -64,6 +65,7 @@ export type LoadOpts = {
 }
 export type LoadFormat =
   | "auto"
+  | "arrows"
   | "csv"
   | "json"
   | "line"
@@ -75,6 +77,7 @@ export type LoadFormat =
 
 export type LoadContentType =
   | "*/*"
+  | "application/vnd.apache.arrow.stream"
   | "text/csv"
   | "application/json"
   | "application/x-line"
