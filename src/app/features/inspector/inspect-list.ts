@@ -1,6 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import {isNumber} from "lodash"
-import {ReactNode} from "react"
+import {InspectContext} from "./inspect-context"
 import {InspectorProps, RowData} from "./types"
 import {createView} from "./views/create"
 
@@ -65,38 +65,5 @@ export class InspectList {
       indexPath: [index],
     }).inspect()
     return ctx.rows
-  }
-}
-
-// Change the props to use only what it needs
-
-type InspectContextArgs = Pick<
-  InspectorProps,
-  | "renderMore"
-  | "getValuePage"
-  | "setExpanded"
-  | "isExpanded"
-  | "onClick"
-  | "onContextMenu"
->
-export class InspectContext {
-  indent = 0
-  rows = [] as RowData[]
-
-  constructor(public props: InspectContextArgs) {}
-
-  nest() {
-    this.indent += 1
-  }
-
-  unnest() {
-    this.indent -= 1
-  }
-
-  push(render: ReactNode) {
-    this.rows.push({
-      render,
-      indent: this.indent,
-    })
   }
 }

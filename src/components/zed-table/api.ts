@@ -1,14 +1,14 @@
 import {Table as ReactTable} from "@tanstack/react-table"
 import {zed} from "@brimdata/zealot"
 import {config} from "./config"
-import {MutableRefObject} from "react"
+import {MutableRefObject, startTransition} from "react"
 import {AppDispatch} from "src/js/state/types"
 import Table from "src/js/state/Table"
 import {TabState} from "src/js/state/Tab/types"
-import {View} from "src/app/features/inspector/views/view"
-import {max} from "lodash"
-import {InspectContext} from "src/app/features/inspector/inspect-list"
-import {createView} from "src/app/features/inspector/views/create"
+import {Cell} from "./cell"
+import {Position} from "./position"
+import {getMaxCellSizes} from "./utils"
+import {GridOnItemsRenderedProps} from "react-window"
 
 type Args = {
   shape: zed.Type
@@ -22,10 +22,11 @@ export class ZedTableApi {
   shape: Args["shape"]
   values: Args["values"]
   ref: Args["ref"]
+  // get this dispatch out of here to make it re-usable, and the state
   dispatch: Args["dispatch"]
   state: Args["state"]
+  gridState: null | GridOnItemsRenderedProps = null
   private tableInstance: null | ReactTable<zed.Value>
-  private cellViews: Map<string, View> = new Map()
 
   constructor(args: Args) {
     this.shape = args.shape
@@ -44,90 +45,136 @@ export class ZedTableApi {
     throw new Error("First set the table instance")
   }
 
-  get headerHeight() {
-    return this.table.getHeaderGroups().length * config.headerHeight
+  get container() {
+    if (!this.ref.current) throw new Error("table container not rendered")
+    return this.ref.current
+  }
+
+  private _headerGroups = null
+  get headerGroups() {
+    if (this._headerGroups) return this._headerGroups
+    return (this._headerGroups = this.table.getHeaderGroups())
+  }
+
+  get totalHeaderHeight() {
+    return (
+      (this.headerGroups.length - 1) * config.placeholderHeaderHeight +
+      config.headerHeight
+    )
   }
 
   get isResizing() {
     return this.columns.some((c) => c.getIsResizing())
   }
 
+  private _columns = null
   get columns() {
-    return this.table.getAllColumns()
+    if (this._columns) return this._columns
+    this._columns = this.table.getVisibleLeafColumns()
+    return this._columns
   }
 
-  get container() {
-    if (!this.ref.current) throw new Error("table container not rendered")
-    return this.ref.current
+  get columnCount() {
+    return this.columns.length
   }
 
-  get rows() {
-    return this.table.getRowModel().rows
+  get rowCount() {
+    return this.values.length
   }
 
-  getView(cellId: string, value: zed.Value) {
-    if (this.cellViews.has(cellId)) {
-      return this.cellViews.get(cellId)
+  getColumnWidth(colIndex: number) {
+    return this.columns[colIndex].getSize()
+  }
+
+  getRowHeight(rowIndex: number) {
+    // Row height takes forever, cache some more things
+    let maxLines = 1
+    for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+      const cell = this.getCell(columnIndex, rowIndex)
+      if (cell.lineCount > maxLines) maxLines = cell.lineCount
+    }
+    return config.lineHeight * (maxLines - 1) + config.rowHeight
+  }
+
+  private cells: Map<string, Cell> = new Map()
+  getCell(columnIndex: number, rowIndex: number) {
+    const position = new Position(columnIndex, rowIndex)
+    if (this.cells.has(position.id)) {
+      return this.cells.get(position.id)
     } else {
-      const ctx = new InspectContext(this)
-      const view = createView({
-        ctx,
-        value: value,
-        type: value.type,
-        field: null,
-        key: null,
-        last: true,
-        indexPath: [cellId],
+      const root = this.values[rowIndex]
+      const column = this.columns[columnIndex]
+      if (!root) throw new Error("No Root Value")
+      if (!column) throw Error("No Column")
+      const value = column.accessorFn(root, rowIndex) as zed.Value
+      const cell = new Cell({
+        api: this,
+        columnId: column.id,
+        position,
+        value: value ?? new zed.Null(),
       })
-      view.inspect()
-      this.cellViews.set(cellId, view)
-      return view
+      this.cells.set(position.id, cell)
+      return cell
     }
   }
 
-  getColumnWidth(key: string) {
-    return this.state.columnWidths.get(key)
-  }
-
-  setColumnWidths(sizes: Record<string, number>) {
-    // Maybe these dispatch calls go in the parent container so we can make this generic
-    // Do that later...
-    this.dispatch(Table.setColumnWidths(sizes))
-    this.table.setColumnSizing((prev) => ({...prev, ...sizes}))
-  }
-
-  getRowHeight(index: number) {
-    const row = this.rows[index]
-    const rowCounts = row
-      .getAllCells()
-      .map((cell) =>
-        this.getView(cell.id, cell.getValue<zed.Value>()).rowCount()
-      )
-    return config.lineHeight * (max(rowCounts) - 1) + config.rowHeight
-  }
-
-  isExpanded(key: string) {
-    return !!this.state.expanded.get(key)
-  }
-
-  setExpanded(valueId: string, isExpanded: boolean) {
-    const [cellId] = valueId.split(",")
-    this.cellViews.delete(cellId)
-    this.cellChanged(cellId)
-    this.dispatch(Table.setExpanded({key: valueId, isExpanded}))
-  }
   private listeners = []
-  cellChanged(id: string) {
-    this.listeners.forEach((listener) => listener(id))
+  cellChanged(position: Position) {
+    this.cells.delete(position.id)
+    this.listeners.forEach((listener) => listener(position.id))
   }
 
   onCellChanged(fn: (id: string) => void) {
     this.listeners.push(fn)
   }
 
+  setColumnWidths(sizes: Record<string, number>) {
+    this.table.setColumnSizing((prev) => ({...prev, ...sizes}))
+  }
+
+  cellInspected(cell: Cell) {
+    if (
+      this.gridState.overscanRowStopIndex === cell.position.rowIndex &&
+      this.gridState.overscanColumnStopIndex === cell.position.columnIndex
+    ) {
+      this.autosizeColumns()
+    }
+  }
+
+  autosizeColumns() {
+    const container = this.ref.current
+    if (container) {
+      const ids = this.columns
+        .slice(
+          this.gridState.overscanColumnStartIndex,
+          this.gridState.overscanColumnStopIndex + 1
+        )
+        .filter((col) => !this.state.columnWidths.has(col.id))
+        .map((col) => col.id)
+
+      console.log("measuring", ids)
+      if (ids.length === 0) return
+      const sizes = getMaxCellSizes(container, ids)
+      console.log(sizes)
+      this.setColumnWidths(sizes)
+    }
+  }
+
+  // Move these into the parent component out of the api
+
   getValuePage(key: string) {
     return this.state.valuePages.get(key) ?? 1
   }
 
-  renderMore(key: string) {}
+  incValuePage(key: string) {
+    this.dispatch(Table.incValuePage({key}))
+  }
+
+  isExpanded(key: string) {
+    return !!this.state.expanded.get(key)
+  }
+
+  setExpanded(key: string, isExpanded: boolean) {
+    this.dispatch(Table.setExpanded({key, isExpanded}))
+  }
 }

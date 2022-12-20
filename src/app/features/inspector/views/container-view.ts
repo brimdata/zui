@@ -9,9 +9,6 @@ import {syntax} from "../templates/syntax"
 import {RenderMode} from "../types"
 import {View} from "./view"
 
-const PEEK_LIMIT = 1
-const LINE_LIMIT = 2
-const ROWS_PER_PAGE = 100
 export abstract class ContainerView<
   T extends zed.Any = zed.Any
 > extends View<T> {
@@ -25,7 +22,7 @@ export abstract class ContainerView<
     if (!this.isExpanded()) return 1
     let sum = 2 // the open and close tokens
     for (let view of this.iterate(this.rowLimit())) sum += view.rowCount()
-    if (this.isRowLimited()) sum += 2 // the "Render More" button
+    if (this.hasMorePages() || this.hasReachedRowLimit()) sum += 2 // the "Next Page/Limit Reached" button
     return sum
   }
 
@@ -47,42 +44,46 @@ export abstract class ContainerView<
   }
 
   renderPeek() {
-    let nodes = []
+    const nodes = []
+    const limit = this.ctx.peekLimit
     nodes.push(syntax(this.openToken()))
-    for (let view of this.iterate(PEEK_LIMIT)) {
+    for (let view of this.iterate(limit)) {
       nodes.push(field(view, "single"))
     }
-    if (this.count() > PEEK_LIMIT) {
-      nodes.push(container.tail(this, PEEK_LIMIT))
+    if (this.count() > limit) {
+      nodes.push(container.tail(this, limit))
     }
     nodes.push(syntax(this.closeToken()))
     return nodes
   }
 
   renderLine() {
-    const {ctx} = this.args
+    const limit = this.ctx.lineLimit
     let nodes = opening(this)
-    for (let view of this.iterate(LINE_LIMIT)) {
+    for (let view of this.iterate(limit)) {
       nodes.push(field(view, "peek"))
     }
-    if (this.count() > LINE_LIMIT) {
-      nodes.push(container.tail(this, LINE_LIMIT))
+    if (this.count() > limit) {
+      nodes.push(container.tail(this, limit))
     }
     nodes = nodes.concat(closing(this))
-    ctx.push(container.expandAnchor(this, nodes))
+    this.ctx.push(container.expandAnchor(this, nodes))
     return null
   }
 
   renderExpanded() {
-    const {ctx} = this.args
+    const {ctx} = this
     ctx.push(container.expandAnchor(this, opening(this)))
     ctx.nest()
     for (let view of this.iterate(this.rowLimit())) {
       view.inspect()
     }
-    if (this.isRowLimited()) {
+    if (this.hasReachedRowLimit()) {
       ctx.push(container.tail(this, this.rowLimit()))
-      ctx.push(container.renderMoreAnchor(this, ROWS_PER_PAGE))
+      ctx.push(container.reachedLimitAnchor(this, ctx.rowsPerPage))
+    } else if (this.hasMorePages()) {
+      ctx.push(container.tail(this, this.rowLimit()))
+      ctx.push(container.nextPageAnchor(this, ctx.rowsPerPage))
     }
     ctx.unnest()
     ctx.push(closing(this))
@@ -107,11 +108,16 @@ export abstract class ContainerView<
   rowLimit() {
     const page = this.args.ctx.props.getValuePage(this.key)
     if (!isNumber(page)) throw new Error(this.key)
-    return page * ROWS_PER_PAGE
+    const count = page * this.ctx.rowsPerPage
+    return Math.min(count, this.ctx.rowLimit)
   }
 
-  isRowLimited() {
+  hasMorePages() {
     return this.rowLimit() < this.count()
+  }
+
+  hasReachedRowLimit() {
+    return this.count() >= this.ctx.rowLimit
   }
 
   toggle() {

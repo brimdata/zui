@@ -9,7 +9,7 @@ const slice = createSlice({
     scrollPosition: {top: 0, left: 0},
   },
   reducers: {
-    renderMore: (s, a: PayloadAction<{key: string}>) => {
+    incValuePage: (s, a: PayloadAction<{key: string}>) => {
       const {key} = a.payload
       const page = s.valuePages.get(key) || 1
       s.valuePages.set(key, page + 1)

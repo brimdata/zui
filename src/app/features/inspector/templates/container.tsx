@@ -34,16 +34,30 @@ export function expandAnchor(view: ContainerView, children: ReactNode) {
   )
 }
 
-export function renderMoreAnchor(view: ContainerView, perPage: number) {
+export function nextPageAnchor(view: ContainerView, perPage: number) {
   return [
     <a
       key="render-more-anchor"
       className="render-more"
       onClick={() => {
-        view.args.ctx.props.renderMore(view.key)
+        view.args.ctx.props.incValuePage(view.key)
       }}
     >
       Show next {perPage}
+    </a>,
+  ]
+}
+
+export function reachedLimitAnchor(view: ContainerView, perPage: number) {
+  return [
+    <a
+      key="render-more-anchor"
+      className="render-more"
+      onClick={() => {
+        // view.args.ctx.props.incValuePage(view.key)
+      }}
+    >
+      Show Full Value in the Detail Pane
     </a>,
   ]
 }

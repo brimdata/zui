@@ -8,9 +8,9 @@ const BG = styled.section`
   justify-content: space-between;
   align-items: center;
   background: var(--chrome-color);
-  border-bottom: 1px solid var(--border-color);
   height: 37px;
   padding: 0 8px;
+  border-bottom: 1px solid var(--border-color);
 `
 
 export function ResultsToolbar() {

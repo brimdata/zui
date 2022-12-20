@@ -1,4 +1,5 @@
-import {isEmpty, isNull, isString} from "lodash"
+import {isArray, isEmpty, isNull, isNumber, isString} from "lodash"
+import {zed} from "../.."
 import {EncodeStream} from "../encode-stream"
 import {Null} from "../index"
 import {TypeAlias} from "../types/type-alias"
@@ -52,13 +53,26 @@ export class Record implements Value {
     return this.fields.map((f) => stream.encodeValue(f.value))
   }
 
-  at(index: number) {
-    return this.fieldAt(index)?.value
+  at(index: number | number[]) {
+    return this.fieldAt(index)?.value ?? null
   }
 
-  fieldAt(index: number) {
+  fieldAt(index: number | number[]): null | zed.Field {
     if (isNull(this.fields)) return null
-    return this.fields[index]
+    if (isNumber(index)) return this.fields[index]
+    if (isArray(index)) {
+      if (index.length === 1) return this.fieldAt(index[0])
+      const [head, ...tail] = index
+      const value = this.fieldAt(head)?.value
+      // Probably bugs in this
+      if (!value) return null
+      if (!(value instanceof zed.Record)) {
+        throw new Error("Not a record")
+      }
+      return value.fieldAt(tail)
+    } else {
+      throw new Error("Argument must be number | number[]")
+    }
   }
 
   has(name: string | string[], ...types: ZedType[]) {

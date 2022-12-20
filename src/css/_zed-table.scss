@@ -1,0 +1,119 @@
+.zed-table {
+    display: flex;
+    min-height: 0;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
+    font-family: var(--mono-font);
+
+    --header-height: 28px;
+}
+
+.zed-table__header {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 1;
+}
+
+.zed-table__header-group {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 20px;
+    border-bottom: 1px solid var(--border-color);
+
+    &--parent {
+        display: flex;
+        align-items: center;
+        position: relative;
+        height: 20px;
+        border-bottom: none;
+    }
+}
+
+.zed-table__header-cell {
+    flex-shrink: 0;
+    line-height: 20px;
+    height: 100%;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-right: 1px solid var(--border-color);
+
+    &:not(.isPlaceholder).hasChildren {
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    &.isPlaceholder,
+    &.hasChildren {
+        line-height: 20px;
+    }
+}
+
+.hasChildren .zed-table__header-cell-text {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.zed-table__header-cell-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    position: sticky;
+    padding: 10px;
+    left: 0px;
+}
+
+.zed-table__header-resize-area {
+    width: 17px;
+    height: 100%;
+    position: absolute;
+    cursor: col-resize;
+    display: flex;
+    justify-content: center;
+    bottom: 0;
+    right: -8px;
+    z-index: 2;
+}
+
+.zed-table__cell {
+    --background-color: #f9f9f9;
+
+    &.even {
+        --background-color: white;
+    }
+
+    background-color: var(--background-color);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0 10px;
+    padding-right: 0;
+    border-right: 2px solid white;
+
+    a {
+        display: flex;
+        align-items: center;
+        user-select: none;
+    }
+
+    a:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+        border-radius: 3px;
+        cursor: default;
+    }
+}
+
+.zed-table__line {
+    white-space: pre;
+    height: 20px;
+    display: flex;
+    align-items: center;
+}

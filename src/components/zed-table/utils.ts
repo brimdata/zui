@@ -1,4 +1,5 @@
 import {max} from "lodash"
+import {appendFile} from "original-fs"
 import {cssVar} from "polished"
 import React from "react"
 import {VariableSizeGrid} from "react-window"
@@ -6,18 +7,18 @@ import {config} from "./config"
 import {useZedTable} from "./context"
 
 export function useListStyle(style: React.CSSProperties) {
-  const {headerHeight} = useZedTable()
+  const api = useZedTable()
   return {
     ...style,
-    height: `${parseFloat(style.height as string) + headerHeight}px`,
+    height: `${parseFloat(style.height as string) + api.totalHeaderHeight}px`,
   }
 }
 
 export function useCellStyle(style: React.CSSProperties) {
-  const {headerHeight} = useZedTable()
+  const api = useZedTable()
   return {
     ...style,
-    top: `${parseFloat(style.top as string) + headerHeight}px`,
+    top: `${parseFloat(style.top as string) + api.totalHeaderHeight}px`,
   }
 }
 
@@ -62,6 +63,7 @@ export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
   for (let id of ids) {
     for (let cell of columns[id]) {
       const copy = cell.cloneNode(true) as HTMLElement
+      copy.style.display = "inline-block"
       copy.style.width = "auto"
       copy.style.fontFamily = cssVar("--mono-font") as string
       copy.style.paddingRight = "10px"
@@ -75,7 +77,9 @@ export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
   for (let id of ids) {
     const cells = Array.from(temp.querySelectorAll(selector(id)))
     const widths = cells.map((cell) => cell.getBoundingClientRect().width)
-    maxWidths[id] = Math.max(config.defaultCellWidth, max(widths))
+    const maxWidth = Math.max(config.defaultCellWidth, max(widths))
+    if (isNaN(maxWidth)) continue
+    maxWidths[id] = maxWidth
   }
 
   temp.remove()
@@ -83,7 +87,7 @@ export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
   return maxWidths
 }
 
-const identifyCell = (id: string) => {
+export const identifyCell = (id: string) => {
   const [cellId, ...valuePathString] = id.split(",")
   const valueIndexPath = valuePathString.map((s) => parseInt(s))
   const [row, col] = cellId.split("_")

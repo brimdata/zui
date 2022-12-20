@@ -33,7 +33,7 @@ const Actions = ({
   actions,
   labels,
 }: {
-  labels: boolean
+  labels?: boolean
   actions: ActionButtonProps[]
 }) => {
   const [hiddenEl, setHiddenEl] = useCallbackRef()

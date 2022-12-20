@@ -10,7 +10,7 @@ const slice = createSlice({
     scrollPosition: {top: 0, left: 0},
   },
   reducers: {
-    renderMore: (s, a: PayloadAction<{key: string}>) => {
+    incValuePage: (s, a: PayloadAction<{key: string}>) => {
       const {key} = a.payload
       const page = s.valuePages.get(key) || 1
       s.valuePages.set(key, page + 1)
@@ -36,6 +36,7 @@ const slice = createSlice({
     builder.addCase("VIEWER_CLEAR", (s) => {
       s.expanded = new Map<string, boolean>()
       s.valuePages = new Map<string, number>()
+      s.columnWidths = new Map<string, number>()
     })
   },
 })

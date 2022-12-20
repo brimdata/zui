@@ -1,6 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import React, {MouseEvent, ReactNode} from "react"
-import {InspectContext} from "./inspect-list"
+import {InspectContext} from "./inspect-context"
 
 type InspectorMouseEvent = (
   e: MouseEvent,
@@ -15,7 +15,7 @@ export type InspectorProps = {
   isExpanded: (key: string) => boolean
   setExpanded: (key: string, value: boolean) => void
   getValuePage: (key: string) => number
-  renderMore: (key: string) => void
+  incValuePage: (key: string) => void
   onContextMenu?: InspectorMouseEvent
   onClick?: InspectorMouseEvent
   loadMore?: Function
@@ -36,6 +36,21 @@ export type InspectArgs = {
   key: string | null | zed.Any
   last: boolean
   indexPath: (number | string)[]
+}
+
+export type InspectContextArgs = Pick<
+  InspectorProps,
+  | "incValuePage"
+  | "getValuePage"
+  | "setExpanded"
+  | "isExpanded"
+  | "onClick"
+  | "onContextMenu"
+> & {
+  peekLimit?: number
+  lineLimit?: number
+  rowsPerPage?: number
+  rowLimit?: number
 }
 
 export type RowData = {

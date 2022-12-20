@@ -1,12 +1,11 @@
-import React, {useRef} from "react"
+import React, {useEffect, useRef, useTransition} from "react"
 import {config} from "./config"
 import {VariableSizeGrid} from "react-window"
-import {Cell} from "./cell"
+import {Cell} from "./cell-component"
 import {useZedTable} from "./context"
 import {FillFlexParent} from "../fill-flex-parent"
 import {InnerElement} from "./grid-container"
 import {useColumnSizeRerender} from "./utils"
-import {useAutosize} from "./autosize"
 
 /**
  * Auto Size Logic
@@ -21,28 +20,25 @@ import {useAutosize} from "./autosize"
 export function Grid() {
   const api = useZedTable()
   const gridRef = useColumnSizeRerender()
-  const {setEnd} = useAutosize()
+
   return (
     <FillFlexParent>
       {({width, height}) => {
         return (
           <VariableSizeGrid
+            className="zed-table--grid"
             ref={gridRef}
             width={width}
             height={height}
-            columnWidth={(index) => {
-              const col = api.columns[index]
-              if (!col) throw new Error("What? " + index)
-              return col.getSize()
-            }}
+            rowCount={api.rowCount}
             rowHeight={(index) => api.getRowHeight(index)}
-            rowCount={api.rows.length}
-            columnCount={api.columns.length}
+            columnCount={api.columnCount}
+            columnWidth={(index) => api.getColumnWidth(index)}
             overscanRowCount={5}
             overscanColumnCount={2}
             innerElementType={InnerElement}
-            onItemsRendered={(props) => {
-              setEnd(props.overscanColumnStopIndex)
+            onItemsRendered={(gridState) => {
+              api.gridState = gridState
             }}
           >
             {Cell}

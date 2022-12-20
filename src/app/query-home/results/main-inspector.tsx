@@ -7,7 +7,6 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
-import {useRowSelection} from "./results-table/hooks/use-row-selection"
 import {debounce, isNumber, values} from "lodash"
 import Results from "src/js/state/Results"
 
@@ -21,9 +20,6 @@ export function MainInspector(props: {
   const expanded = useSelector(Slice.getExpanded)
   const valuePages = useSelector(Slice.getValuePages)
   const defaultExpanded = useSelector(Slice.getDefaultExpanded)
-  const {parentRef, clicked} = useRowSelection({
-    count: values.length,
-  })
 
   function setExpanded(key: string, isExpanded: boolean) {
     dispatch(Slice.setExpanded({key, isExpanded}))
@@ -42,8 +38,8 @@ export function MainInspector(props: {
     return isNumber(page) ? page : 1
   }
 
-  function renderMore(key: string) {
-    dispatch(Slice.renderMore({key}))
+  function incValuePage(key: string) {
+    dispatch(Slice.incValuePage({key}))
   }
 
   function loadMore() {
@@ -63,14 +59,8 @@ export function MainInspector(props: {
     )
   }
 
-  function onClick(
-    e: MouseEvent,
-    value: zed.Value,
-    field: zed.Field,
-    index: number
-  ) {
+  function onClick(e: MouseEvent, value: zed.Value, field: zed.Field) {
     dispatch(viewLogDetail(field.rootRecord))
-    clicked(e, index)
   }
 
   function onScroll({top, left}) {
@@ -91,11 +81,10 @@ export function MainInspector(props: {
     <Inspector
       initialScrollPosition={initialScrollPosition}
       onScroll={safeOnScroll}
-      innerRef={parentRef}
       isExpanded={useCallback(isExpanded, [expanded, defaultExpanded])}
       setExpanded={useCallback(setExpanded, [])}
       getValuePage={useCallback(getValuePage, [valuePages])}
-      renderMore={useCallback(renderMore, [])}
+      incValuePage={useCallback(incValuePage, [])}
       loadMore={useCallback(loadMore, [])}
       onContextMenu={useCallback(onContextMenu, [])}
       onClick={useCallback(onClick, [])}
