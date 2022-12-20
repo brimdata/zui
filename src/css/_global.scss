@@ -54,7 +54,10 @@ code {
   padding: 2px 3px;
 }
 
-body.dragging {
+body.no-select {
   user-select: none;
-  pointer-events: none;
+}
+
+body.col-resize {
+  cursor: col-resize;
 }
