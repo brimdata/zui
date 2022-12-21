@@ -1,5 +1,4 @@
-import React, {useEffect, useRef, useTransition} from "react"
-import {config} from "./config"
+import React from "react"
 import {VariableSizeGrid} from "react-window"
 import {Cell} from "./cell-component"
 import {useZedTable} from "./context"

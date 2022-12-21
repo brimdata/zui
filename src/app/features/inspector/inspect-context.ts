@@ -1,6 +1,5 @@
 // Change the props to use only what it needs
 
-import React, {Children} from "react"
 import {ReactNode} from "react"
 import {InspectContextArgs, RowData} from "./types"
 

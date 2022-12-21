@@ -1,7 +1,7 @@
 import {Column, Table as ReactTable} from "@tanstack/react-table"
 import {zed} from "@brimdata/zealot"
 import {config} from "./config"
-import {MutableRefObject, startTransition} from "react"
+import {MutableRefObject} from "react"
 import {AppDispatch} from "src/js/state/types"
 import Table from "src/js/state/Table"
 import {TabState} from "src/js/state/Tab/types"

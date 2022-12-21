@@ -7,7 +7,7 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
-import {debounce, isNumber, values} from "lodash"
+import {debounce, isNumber} from "lodash"
 import Results from "src/js/state/Results"
 
 export function MainInspector(props: {

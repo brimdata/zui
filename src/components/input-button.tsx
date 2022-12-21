@@ -35,13 +35,12 @@ const Button = styled.button`
   }
 `
 
-export const InputButton = React.forwardRef(function InputButton(
+export function InputButton(
   props: {
     icon?: IconName
     children?: ReactNode
     className?: string
-  } & JSX.IntrinsicElements["button"],
-  ref
+  } & JSX.IntrinsicElements["button"]
 ) {
   const {icon, children, className, ...buttonProps} = props
   return (
@@ -53,4 +52,4 @@ export const InputButton = React.forwardRef(function InputButton(
       {children}
     </Button>
   )
-})
+}

@@ -12,7 +12,7 @@ export function MainTable(props: {width: number; height: number}) {
   if (!shape) {
     return null
   } else if (shapesArray.length > 1) {
-    return <MultiShapeError shapes={shapes} />
+    return <MultiShapeError />
   } else if (
     !(shape instanceof zed.TypeRecord || shape instanceof zed.TypeArray)
   ) {

@@ -48,13 +48,13 @@ export function nextPageAnchor(view: ContainerView, perPage: number) {
   ]
 }
 
-export function reachedLimitAnchor(view: ContainerView, perPage: number) {
+export function reachedLimitAnchor(_view: ContainerView, _perPage: number) {
   return [
     <a
       key="render-more-anchor"
       className="render-more"
       onClick={() => {
-        // view.args.ctx.props.incValuePage(view.key)
+        // TODO
       }}
     >
       Show Full Value in the Detail Pane

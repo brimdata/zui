@@ -4,7 +4,7 @@ import {RenderMode} from "../types"
 import {View} from "../views/view"
 
 export function clickHandlers(view: View) {
-  const {field, value, ctx, indexPath} = view.args
+  const {field, value, ctx} = view.args
   return {
     onContextMenu: (e: React.MouseEvent) => {
       const fn = ctx.props?.onContextMenu

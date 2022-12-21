@@ -1,5 +1,4 @@
 import isEmpty from "lodash/isEmpty"
-import {zed} from "packages/zealot/src"
 import React from "react"
 import {useBrimApi} from "src/app/core/context"
 import submitSearch from "src/app/query-home/flows/submit-search"
@@ -25,14 +24,14 @@ const BG = styled.div`
   }
 `
 
-export function MultiShapeError(props: {shapes: {[id: string]: zed.Type}}) {
+export function MultiShapeError() {
   const api = useBrimApi()
   return (
     <BG>
       <Card>
         <H1>Multiple Shapes</H1>
         <p>
-          The table can only display data of a single type. Use "fuse" to
+          The table can only display data of a single type. Use {'"fuse"'} to
           combine the types into one.
         </p>
         <InputButton
