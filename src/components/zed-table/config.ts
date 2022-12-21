@@ -3,5 +3,5 @@ export const config = {
   lineHeight: 20,
   headerHeight: 28,
   defaultCellWidth: 80,
-  placeholderHeaderHeight: 20,
+  placeholderHeaderHeight: 28,
 }

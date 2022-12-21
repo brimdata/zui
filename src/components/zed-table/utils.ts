@@ -36,8 +36,8 @@ export function useColumnSizeRerender() {
   }, [...api.columns.map((c) => c.getSize())])
 
   React.useLayoutEffect(() => {
-    api.onCellChanged((id) => {
-      const {columnIndex, rowIndex} = identifyCell(id)
+    api.onCellChanged((cell) => {
+      const {columnIndex, rowIndex} = cell.position
       if (columnIndex === -1) return
       if (ref.current) {
         ref.current.resetAfterIndices({

@@ -57,11 +57,11 @@ export class Cell {
         isExpanded: (key) => args.api.isExpanded(this.viewId(key)),
         setExpanded: (key, value) => {
           args.api.setExpanded(this.viewId(key), value)
-          args.api.cellChanged(this.position)
+          args.api.cellChanged(this)
         },
         getValuePage: (key) => args.api.getValuePage(this.viewId(key)),
         incValuePage: (key) => {
-          args.api.cellChanged(this.position)
+          args.api.cellChanged(this)
           args.api.incValuePage(this.viewId(key))
         },
         peekLimit: 1,
@@ -98,10 +98,10 @@ export class Cell {
     return [this.id, this.valueId(valuePath)].join("_")
   }
 
-  private inspected = false
+  isInspected = false
   inspect() {
-    if (this.inspected) return
+    if (this.isInspected) return
     this.view.inspect()
-    this.inspected = true
+    this.isInspected = true
   }
 }

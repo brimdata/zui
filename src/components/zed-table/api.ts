@@ -1,4 +1,4 @@
-import {Table as ReactTable} from "@tanstack/react-table"
+import {Column, Table as ReactTable} from "@tanstack/react-table"
 import {zed} from "@brimdata/zealot"
 import {config} from "./config"
 import {MutableRefObject, startTransition} from "react"
@@ -26,6 +26,7 @@ export class ZedTableApi {
   dispatch: Args["dispatch"]
   state: Args["state"]
   gridState: null | GridOnItemsRenderedProps = null
+  lastEvent: "mount" | "scroll" | "interaction" = "mount"
   private tableInstance: null | ReactTable<zed.Value>
 
   constructor(args: Args) {
@@ -67,7 +68,7 @@ export class ZedTableApi {
     return this.columns.some((c) => c.getIsResizing())
   }
 
-  private _columns = null
+  private _columns: Column<zed.Value, unknown>[] | null = null
   get columns() {
     if (this._columns) return this._columns
     this._columns = this.table.getVisibleLeafColumns()
@@ -119,12 +120,13 @@ export class ZedTableApi {
   }
 
   private listeners = []
-  cellChanged(position: Position) {
-    this.cells.delete(position.id)
-    this.listeners.forEach((listener) => listener(position.id))
+  cellChanged(cell: Cell) {
+    this.lastEvent = "interaction"
+    this.cells.delete(cell.position.id)
+    this.listeners.forEach((listener) => listener(cell))
   }
 
-  onCellChanged(fn: (id: string) => void) {
+  onCellChanged(fn: (cell: Cell) => void) {
     this.listeners.push(fn)
   }
 
@@ -141,6 +143,10 @@ export class ZedTableApi {
     }
   }
 
+  hasWidth(columnId: string) {
+    return columnId in (this.state.columnWidths.get(this.shape) ?? {})
+  }
+
   autosizeColumns(columnIds?: string[]) {
     const container = this.ref.current
     if (container) {
@@ -151,14 +157,11 @@ export class ZedTableApi {
             this.gridState.overscanColumnStartIndex,
             this.gridState.overscanColumnStopIndex + 1
           )
-          .filter((col) => !this.state.columnWidths.has(col.id))
+          .filter((col) => !this.hasWidth(col.id))
           .map((col) => col.id)
 
-      console.log("measuring", ids)
       if (ids.length === 0) return
-      const sizes = getMaxCellSizes(container, ids)
-      console.log(sizes)
-      this.setColumnWidths(sizes)
+      this.setColumnWidths(getMaxCellSizes(container, ids))
     }
   }
 
@@ -174,6 +177,20 @@ export class ZedTableApi {
 
   isExpanded(key: string) {
     return !!this.state.expanded.get(key)
+  }
+
+  isGrouped(key: string) {
+    return !!(this.state.columnGroups.get(this.shape) ?? {})[key]
+  }
+
+  setGrouped(key: string, isGrouped: boolean) {
+    return this.dispatch(
+      Table.setColumnGroups({shape: this.shape, groups: {[key]: isGrouped}})
+    )
+  }
+
+  toggleGrouped(key) {
+    this.setGrouped(key, !this.isGrouped(key))
   }
 
   setExpanded(key: string, isExpanded: boolean) {

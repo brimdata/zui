@@ -2,7 +2,7 @@ $tab-inactive-color: var(--foreground-color);
 $tab-inactive-bg: transparent;
 $tab-hover-color: var(--foreground-color);
 $tab-hover-bg: var(--tab-background-hover);
-$tab-active-color: var(--aqua);
+$tab-active-color: var(--foreground-color);
 $tab-active-bg: var(--chrome-color);
 $tab-transition-duration: 200ms;
 
@@ -11,7 +11,8 @@ $tab-transition-duration: 200ms;
   left: 0;
   user-select: none;
   -webkit-app-region: no-drag;
-  height: 100%;
+  height: 80%;
+  border-radius: 10px 10px 0 0;
   background: $tab-inactive-bg;
   cursor: default;
   will-change: transform;
@@ -79,10 +80,10 @@ $tab-transition-duration: 200ms;
 
   // The active state
   &.active {
+    border-radius: 10px 10px 0 0;
     background: $tab-active-bg;
     z-index: 1;
-    box-shadow: 1px 0 var(--border-color), -1px 0 var(--border-color),
-      0 1px $tab-active-bg;
+    box-shadow: 1px 0 0 0 var(--border-color), -1px 0 0 0 var(--border-color), inset 0 -1px 0 0 var(--border-color);
 
     .title {
       color: $tab-active-color;

@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React, {useEffect, useLayoutEffect, useState} from "react"
+import React, {startTransition, useEffect, useState} from "react"
 import {GridChildComponentProps} from "react-window"
 import {CellValue} from "./cell-value"
 import {useZedTable} from "./context"
@@ -12,21 +12,21 @@ export const Cell = React.memo(function Cell({
 }: GridChildComponentProps) {
   const api = useZedTable()
   const cell = api.getCell(columnIndex, rowIndex)
-  const [ready, setReady] = useState(false)
-  const [_, startTransition] = React.useTransition()
+  const immediate = api.lastEvent === "interaction"
+  if (immediate) cell.inspect()
+  const [isInspected, setIsInspected] = useState(cell.isInspected)
 
   useEffect(() => {
+    if (cell.isInspected) return
     startTransition(() => {
       cell.inspect()
-      setReady(true)
+      setIsInspected(true)
     })
   }, [cell])
 
-  useLayoutEffect(() => {
-    if (ready) {
-      api.cellInspected(cell)
-    }
-  }, [ready])
+  useEffect(() => {
+    if (isInspected) api.cellInspected(cell)
+  }, [isInspected])
 
   return (
     <div
@@ -35,7 +35,7 @@ export const Cell = React.memo(function Cell({
       id={cell.id}
       data-column-id={cell.columnId}
     >
-      <CellValue view={cell.view} key={ready ? "on" : "off"} />
+      <CellValue view={cell.isInspected ? cell.view : null} />
     </div>
   )
 })

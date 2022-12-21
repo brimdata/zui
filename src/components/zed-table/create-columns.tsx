@@ -25,8 +25,7 @@ export function createRecordColumns(
   return type.fields.map((field, index) => {
     const path = [...indexPath, index]
     const id = `col:${path.join(",")}`
-
-    if (field.type instanceof zed.TypeRecord) {
+    if (field.type instanceof zed.TypeRecord && api.isGrouped(id)) {
       return columnHelper.group({
         id,
         header: field.name,
@@ -36,6 +35,7 @@ export function createRecordColumns(
       return columnHelper.accessor((row: zed.Record) => row.at(path), {
         id,
         header: field.name,
+        meta: field,
       })
     }
   })

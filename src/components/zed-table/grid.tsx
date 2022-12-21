@@ -37,6 +37,9 @@ export function Grid() {
             overscanRowCount={5}
             overscanColumnCount={2}
             innerElementType={InnerElement}
+            onScroll={() => {
+              api.lastEvent = "scroll"
+            }}
             onItemsRendered={(gridState) => {
               api.gridState = gridState
             }}

@@ -7,6 +7,7 @@
     font-family: var(--mono-font);
 
     --header-height: 28px;
+    --row-height: 20px;
 }
 
 .zed-table__header {
@@ -22,21 +23,21 @@
     display: flex;
     align-items: center;
     position: relative;
-    height: 20px;
+    height: var(--header-height);
     border-bottom: 1px solid var(--border-color);
 
     &--parent {
         display: flex;
         align-items: center;
         position: relative;
-        height: 20px;
+        height: var(--header-height);
         border-bottom: none;
     }
 }
 
 .zed-table__header-cell {
     flex-shrink: 0;
-    line-height: 20px;
+    line-height: var(--header-height);
     height: 100%;
     white-space: nowrap;
     text-align: left;
@@ -50,11 +51,6 @@
 
     &:not(.isPlaceholder).hasChildren {
         border-bottom: 1px solid var(--border-color);
-    }
-
-    &.isPlaceholder,
-    &.hasChildren {
-        line-height: 20px;
     }
 }
 
@@ -82,7 +78,6 @@
     bottom: 0;
     right: -8px;
     z-index: 2;
-    background: green;
     border: 1px solid white;
 }
 
@@ -115,7 +110,7 @@
 
 .zed-table__line {
     white-space: pre;
-    height: 20px;
+    height: var(--row-height);
     display: flex;
     align-items: center;
 }

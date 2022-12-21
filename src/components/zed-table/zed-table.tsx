@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, {useEffect, useRef} from "react"
 import {zed} from "packages/zealot/src"
 import {useMemo} from "react"
 import {getCoreRowModel, useReactTable} from "@tanstack/react-table"
@@ -11,7 +11,6 @@ import {ZedTableApi} from "./api"
 import {useSelector} from "react-redux"
 import Table from "src/js/state/Table"
 import {useDispatch} from "src/app/core/state"
-import {useFreezeBody} from "src/js/components/hooks/useFreezeBody"
 
 /**
  * TODO LIST
@@ -26,12 +25,12 @@ import {useFreezeBody} from "src/js/components/hooks/useFreezeBody"
  * - [x] Auto detect the size of the cells
  * - [x] Multi-shape design?
  * - [ ] Infinite Scroll
- * - [ ] Header groups for nested records
- * - [ ] Figure out an id scheme for nexted columns
+ * - [x] Header groups for nested records
+ * - [x] Figure out an id scheme for nexted columns
  * - [ ] Keep track of which records you want to expand headers for
- * - [ ] Make sure the styles are the same when you are measuring (font-family)
- * - [ ] Store the columns widths per shape, since zed identities are stable
- * - [ ] Re-style the header
+ * - [x] Make sure the styles are the same when you are measuring (font-family)
+ * - [x] Store the columns widths per shape, since zed identities are stable
+ * - [x] Re-style the header
  * - [ ] Add the right click menus
  * - [ ] Cell selection to match google docs
  * - [ ] Right click on selected cells menu
@@ -47,10 +46,9 @@ export function ZedTable(props: {
   const dispatch = useDispatch()
   const api = useMemo(() => {
     return new ZedTableApi({shape, values, state, ref, dispatch})
-  }, [shape, values, ref, dispatch])
+  }, [shape, values, ref, dispatch, state.columnGroups])
   api.state = state
   const columns = useMemo(() => createColumns(api, api.shape), [api])
-  const columnSizing = Object.fromEntries(state.columnWidths.entries())
 
   api.table = useReactTable({
     columns,
@@ -59,14 +57,14 @@ export function ZedTable(props: {
     columnResizeMode: "onChange",
     defaultColumn: {size: config.defaultCellWidth},
     initialState: {
-      columnSizing,
+      columnSizing: state.columnWidths.get(shape) ?? {},
     },
   })
 
   // Sync column sizes
   useEffect(() => {
-    const sizes = api.table.getState().columnSizing
-    dispatch(Table.setColumnWidths(sizes))
+    const widths = api.table.getState().columnSizing
+    dispatch(Table.setColumnWidths({shape, widths}))
   }, [api.table.getState().columnSizing])
 
   useEffect(() => {

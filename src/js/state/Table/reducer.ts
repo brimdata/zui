@@ -1,11 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
+import {zed} from "packages/zealot/src"
 
 const slice = createSlice({
   name: "TAB_TABLE",
   initialState: {
     expanded: new Map<string, boolean>(),
     valuePages: new Map<string, number>(),
-    columnWidths: new Map<string, number>(),
+    columnWidths: new Map<zed.Type, Record<string, number>>(),
+    columnGroups: new Map<zed.Type, Record<string, boolean>>(),
     defaultExpanded: false,
     scrollPosition: {top: 0, left: 0},
   },
@@ -26,17 +28,35 @@ const slice = createSlice({
     setScrollPosition: (s, a: PayloadAction<{top: number; left: number}>) => {
       s.scrollPosition = a.payload
     },
-    setColumnWidths: (s, a: PayloadAction<Record<string, number>>) => {
-      for (let id in a.payload) {
-        s.columnWidths.set(id, a.payload[id])
+    setColumnWidths: (
+      s,
+      a: PayloadAction<{shape: zed.Type; widths: Record<string, number>}>
+    ) => {
+      const {shape, widths} = a.payload
+      let config = s.columnWidths.get(shape)
+      if (!config) {
+        config = {}
+        s.columnWidths.set(shape, config)
       }
+      for (let id in widths) config[id] = widths[id]
+    },
+    setColumnGroups: (
+      s,
+      a: PayloadAction<{shape: zed.Type; groups: Record<string, boolean>}>
+    ) => {
+      const {shape, groups} = a.payload
+      let config = s.columnGroups.get(shape)
+      if (!config) {
+        config = {}
+        s.columnGroups.set(shape, config)
+      }
+      for (let id in groups) config[id] = groups[id]
     },
   },
   extraReducers: (builder) => {
     builder.addCase("VIEWER_CLEAR", (s) => {
-      s.expanded = new Map<string, boolean>()
-      s.valuePages = new Map<string, number>()
-      s.columnWidths = new Map<string, number>()
+      s.expanded.clear()
+      s.valuePages.clear()
     })
   },
 })

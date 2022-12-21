@@ -7,7 +7,7 @@ import {TypeCount} from "./type-count"
 const BG = styled.footer`
   grid-area: status;
   user-select: none;
-  background: var(--tab-background);
+  background: var(--chrome-color);
   border-top: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
