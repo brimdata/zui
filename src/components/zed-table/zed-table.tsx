@@ -1,16 +1,10 @@
-import React, {useEffect, useRef} from "react"
+import React from "react"
 import {zed} from "packages/zealot/src"
-import {useMemo} from "react"
-import {getCoreRowModel, useReactTable} from "@tanstack/react-table"
 import {Provider} from "./context"
-import {createColumns} from "./create-columns"
 import {Grid} from "./grid"
-import {config} from "./config"
 import classNames from "classnames"
-import {ZedTableApi} from "./api"
-import {useSelector} from "react-redux"
-import Table from "src/js/state/Table"
-import {useDispatch} from "src/app/core/state"
+import {TableHandlers} from "./types"
+import {useApi} from "./api-hook"
 
 /**
  * TODO LIST
@@ -39,44 +33,9 @@ import {useDispatch} from "src/app/core/state"
 export function ZedTable(props: {
   shape: zed.TypeRecord | zed.TypeArray
   values: zed.Value[]
+  handlers: TableHandlers
 }) {
-  const {shape, values} = props
-  const ref = useRef<HTMLDivElement | null>(null)
-  const state = useSelector(Table.getState)
-  const dispatch = useDispatch()
-  const api = useMemo(() => {
-    return new ZedTableApi({shape, values, state, ref, dispatch})
-  }, [shape, values, ref, dispatch, state.columnGroups])
-  api.state = state
-  const columns = useMemo(() => createColumns(api, api.shape), [api])
-
-  api.table = useReactTable({
-    columns,
-    data: useMemo(() => [], []),
-    getCoreRowModel: getCoreRowModel(),
-    columnResizeMode: "onChange",
-    defaultColumn: {size: config.defaultCellWidth},
-    initialState: {
-      columnSizing: state.columnWidths.get(shape) ?? {},
-    },
-  })
-
-  // Sync column sizes
-  useEffect(() => {
-    const widths = api.table.getState().columnSizing
-    dispatch(Table.setColumnWidths({shape, widths}))
-  }, [api.table.getState().columnSizing])
-
-  useEffect(() => {
-    if (api.isResizing) {
-      document.body.classList.add("no-select", "col-resize")
-    } else {
-      document.body.classList.remove("no-select", "col-resize")
-    }
-    return () => {
-      document.body.classList.remove("no-select", "col-resize")
-    }
-  }, [api.isResizing])
+  const api = useApi(props)
 
   return (
     <Provider value={api}>
@@ -84,7 +43,7 @@ export function ZedTable(props: {
         className={classNames("zed-table", {
           "zed-table--resizing": api.isResizing,
         })}
-        ref={ref}
+        ref={(node) => (api.element = node)}
       >
         <Grid />
       </div>

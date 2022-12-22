@@ -1,6 +1,6 @@
 import {max} from "lodash"
 import {cssVar} from "polished"
-import React from "react"
+import React, {useEffect} from "react"
 import {VariableSizeGrid} from "react-window"
 import {config} from "./config"
 import {useZedTable} from "./context"
@@ -98,4 +98,18 @@ export const identifyCell = (id: string) => {
     rowIndex,
     valueIndexPath,
   }
+}
+
+export function useResizingClasses() {
+  const api = useZedTable()
+  useEffect(() => {
+    if (api.isResizing) {
+      document.body.classList.add("no-select", "col-resize")
+    } else {
+      document.body.classList.remove("no-select", "col-resize")
+    }
+    return () => {
+      document.body.classList.remove("no-select", "col-resize")
+    }
+  }, [api.isResizing])
 }

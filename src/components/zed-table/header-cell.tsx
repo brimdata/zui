@@ -1,6 +1,8 @@
 import {Header} from "@tanstack/react-table"
 import classNames from "classnames"
 import React from "react"
+import Icon from "src/app/core/icon-temp"
+import {Column} from "./column"
 import {useZedTable} from "./context"
 import {HeaderResizeArea} from "./header-resize-area"
 
@@ -17,17 +19,22 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
       })}
       style={{width: header.getSize()}}
       data-column-id={isPlaceholder ? header.placeholderId : header.column.id}
-      onClick={() => {
-        if (!isPlaceholder) {
-          api.toggleGrouped(header.column.id)
-        }
-      }}
     >
       {isPlaceholder ? null : (
         <>
           <span className="zed-table__header-cell-text">
             {def.header as string}
           </span>
+          <button
+            className="zed-table__header-cell-menu-button"
+            aria-label={`${def.header} Header Menu`}
+            onClick={(e) => {
+              console.log(def)
+              api.handlers.onHeaderMenu(e, def.meta as Column)
+            }}
+          >
+            <Icon name="chevron-down" size={16} />
+          </button>
         </>
       )}
       <HeaderResizeArea header={header} />

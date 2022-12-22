@@ -4,7 +4,7 @@ import {Cell} from "./cell-component"
 import {useZedTable} from "./context"
 import {FillFlexParent} from "../fill-flex-parent"
 import {InnerElement} from "./grid-container"
-import {useColumnSizeRerender} from "./utils"
+import {useColumnSizeRerender, useResizingClasses} from "./utils"
 
 /**
  * Auto Size Logic
@@ -19,13 +19,14 @@ import {useColumnSizeRerender} from "./utils"
 export function Grid() {
   const api = useZedTable()
   const gridRef = useColumnSizeRerender()
+  useResizingClasses()
 
   return (
     <FillFlexParent>
       {({width, height}) => {
         return (
           <VariableSizeGrid
-            className="zed-table--grid"
+            className="zed-table__grid"
             ref={gridRef}
             width={width}
             height={height}
@@ -36,12 +37,15 @@ export function Grid() {
             overscanRowCount={5}
             overscanColumnCount={2}
             innerElementType={InnerElement}
-            onScroll={() => {
-              api.lastEvent = "scroll"
-            }}
-            onItemsRendered={(gridState) => {
-              api.gridState = gridState
-            }}
+            onScroll={() => api.setLastEvent("scroll")}
+            onItemsRendered={(state) =>
+              api.setGridState({
+                rowStart: state.overscanRowStartIndex,
+                rowStop: state.overscanRowStopIndex,
+                colStart: state.overscanColumnStartIndex,
+                colStop: state.overscanColumnStopIndex,
+              })
+            }
           >
             {Cell}
           </VariableSizeGrid>

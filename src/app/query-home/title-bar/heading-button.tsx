@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const HeadingButton = styled.button`
-  background: white;
+  background: transparent;
   border: none;
   height: 22px;
   display: flex;

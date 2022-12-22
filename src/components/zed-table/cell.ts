@@ -54,15 +54,15 @@ export class Cell {
     this.position = args.position
     this.view = createView({
       ctx: new InspectContext({
-        isExpanded: (key) => args.api.isExpanded(this.viewId(key)),
+        isExpanded: (key) => args.api.handlers.isExpanded(this.viewId(key)),
         setExpanded: (key, value) => {
-          args.api.setExpanded(this.viewId(key), value)
+          args.api.handlers.setExpanded(this.viewId(key), value)
           args.api.cellChanged(this)
         },
-        getValuePage: (key) => args.api.getValuePage(this.viewId(key)),
+        getValuePage: (key) => args.api.handlers.getValuePage(this.viewId(key)),
         incValuePage: (key) => {
+          args.api.handlers.incValuePage(this.viewId(key))
           args.api.cellChanged(this)
-          args.api.incValuePage(this.viewId(key))
         },
         peekLimit: 1,
         lineLimit: 2,
