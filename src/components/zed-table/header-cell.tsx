@@ -22,16 +22,16 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
     >
       {isPlaceholder ? null : (
         <>
-          <span className="zed-table__header-cell-text">
+          <span
+            className="zed-table__header-cell-text"
+            title={def.header as string}
+          >
             {def.header as string}
           </span>
           <button
             className="zed-table__header-cell-menu-button"
             aria-label={`${def.header} Header Menu`}
-            onClick={(e) => {
-              console.log(def)
-              api.handlers.onHeaderMenu(e, def.meta as Column)
-            }}
+            onClick={(e) => api.handlers.onHeaderMenu(e, def.meta as Column)}
           >
             <Icon name="chevron-down" size={16} />
           </button>

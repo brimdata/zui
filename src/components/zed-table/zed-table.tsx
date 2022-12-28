@@ -36,6 +36,7 @@ import {useApi} from "./api-hook"
  - [ ] The sort indicators on the headers
  - [x] Sorting nested headers, get the field name right
  - [ ] Show non-record types
+ - [ ] Toolbar button to expand all headers and collapse all headers 
 */
 
 export function ZedTable(props: {
