@@ -9,7 +9,7 @@ export function createRecord(object): zed.Record {
   for (let name in object) {
     fields.push(createField(name, object[name]))
   }
-  const typeFields: zed.TypeField[] = fields.map((f) => ({
+  const typeFields: zed.FieldData[] = fields.map((f) => ({
     name: f.name,
     type: f.value.type,
   }))

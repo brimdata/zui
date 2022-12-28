@@ -5,7 +5,7 @@ import {InspectContext} from "./inspect-context"
 type InspectorMouseEvent = (
   e: MouseEvent,
   value: zed.Value | zed.Type,
-  field: zed.Field | zed.TypeField
+  field: zed.Field | zed.FieldData
 ) => void
 
 export type InspectorProps = {
@@ -27,7 +27,7 @@ export type InspectorProps = {
 export type InspectArgs = {
   ctx: InspectContext
   value: zed.Value | zed.Type
-  field: zed.Field | zed.TypeField | null
+  field: zed.Field | zed.FieldData | null
   type: zed.Type
   // This is the visual name of the key,
   // the field name for records,

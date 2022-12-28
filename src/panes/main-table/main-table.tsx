@@ -47,7 +47,9 @@ function useZedTableHandlers(): TableHandlers {
     },
 
     onHeaderMenu(e, column) {
-      headerContextMenu.build(column).showUnder(e.currentTarget as HTMLElement)
+      headerContextMenu
+        .build(this, column)
+        .showUnder(e.currentTarget as HTMLElement)
     },
   }
 }

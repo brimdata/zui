@@ -26,6 +26,10 @@ export class Column {
     return this.args.field.name
   }
 
+  get path() {
+    return this.args.field.path
+  }
+
   get leafDef() {
     return helper.accessor((row: zed.Record) => row.at(this.args.path), {
       id: this.id,

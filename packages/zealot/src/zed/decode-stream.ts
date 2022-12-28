@@ -1,6 +1,8 @@
 import {isNull} from "lodash"
+import {zed} from ".."
 import * as zjson from "../zjson"
 import {TypeDefs, ZedContext} from "./context"
+import {TypeField} from "./types/type-field"
 import {PrimitiveName} from "./types/type-primitives"
 import {Type} from "./types/types"
 import {getPrimitiveType} from "./utils/get-primitive-type"
@@ -15,15 +17,15 @@ export class DecodeStream {
     return type.create(object.value, this)
   }
 
-  decodeType(obj: zjson.Type): Type {
-    const type = this.buildType(obj)
+  decodeType(obj: zjson.Type, parentField?: TypeField): Type {
+    const type = this.buildType(obj, parentField)
     if ("id" in obj && obj.kind !== "ref") {
       this.typedefs[obj.id] = type
     }
     return type
   }
 
-  buildType(obj: zjson.Type) {
+  buildType(obj: zjson.Type, parentField?: TypeField) {
     switch (obj.kind) {
       case "primitive":
         return getPrimitiveType(obj.name as PrimitiveName)
@@ -50,10 +52,18 @@ export class DecodeStream {
         return this.context.lookupTypeRecord(
           isNull(obj.fields)
             ? null
-            : obj.fields.map(({name, type}) => ({
-                name,
-                type: this.decodeType(type),
-              }))
+            : obj.fields.map(({name, type}) => {
+                if (type.kind === "record") {
+                  const field = new TypeField(
+                    name,
+                    zed.TypeNull /* Temporary Null */
+                  )
+                  field.type = this.decodeType(type, field)
+                  return field
+                } else {
+                  return new TypeField(name, this.decodeType(type), parentField)
+                }
+              })
         )
       default:
         throw `Implement decoding: ${obj.kind}`

@@ -32,7 +32,7 @@ export class Record implements Value {
   }
 
   get trueType(): TypeRecord {
-    return trueType<TypeRecord>(this.type)
+    return trueType(this.type) as TypeRecord
   }
 
   toString() {

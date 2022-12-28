@@ -32,7 +32,7 @@ export function useColumnSizeRerender() {
         shouldForceUpdate: true,
       })
     }
-  }, [...api.columns.map((c) => c.getSize())])
+  }, [api.table.getState().columnSizing, api.columnCount])
 
   React.useLayoutEffect(() => {
     api.onCellChanged((cell) => {
