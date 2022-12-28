@@ -32,7 +32,7 @@ export function appendQueryExclude(field: zed.Field): Thunk {
   }
 }
 
-export function appendQueryCountBy(field: zed.Field): Thunk {
+export function appendQueryCountBy(field: zed.Field | zed.TypeField): Thunk {
   return function (dispatch, getState) {
     const {current, pinned} = getSearchBar(getState())
     const query = [...pinned, current].join(" ")

@@ -34,7 +34,8 @@ import {useApi} from "./api-hook"
  - [ ] Fix style around zeek histogram
  - [ ] Add custom styling for cells just like in the old days
  - [ ] The sort indicators on the headers
- - [ ] Sorting nested headers, get the field name right
+ - [x] Sorting nested headers, get the field name right
+ - [ ] Show non-record types
 */
 
 export function ZedTable(props: {

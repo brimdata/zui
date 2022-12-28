@@ -23,9 +23,8 @@ function filter(record: zed.Record, names: string[]) {
   })
 
   const type = new zed.TypeRecord(
-    fields.map((f) => ({name: f.name, type: f.value.type}))
+    fields.map((f) => new zed.TypeField(f.name, f.value.type))
   )
-
   return new zed.Record(type, fields)
 }
 

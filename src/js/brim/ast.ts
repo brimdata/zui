@@ -38,7 +38,7 @@ export default function ast(tree: any) {
   }
 }
 
-function fieldExprToName(expr) {
+export function fieldExprToName(expr) {
   let s = _fieldExprToName(expr)
   // const r = toFieldPath(s)
   return s

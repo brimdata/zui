@@ -18,16 +18,20 @@ export class Column {
     return `col:${this.args.path.join(",")}`
   }
 
+  get field() {
+    return this.args.field
+  }
+
   get type() {
-    return this.args.field.type
+    return this.field.type
   }
 
   get name() {
-    return this.args.field.name
+    return this.field.name
   }
 
   get path() {
-    return this.args.field.path
+    return this.field.path
   }
 
   get leafDef() {
