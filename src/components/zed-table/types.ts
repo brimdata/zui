@@ -12,6 +12,7 @@ export type TableHandlers = {
   setColumnWidths: (shape: zed.Type, widths: Record<string, number>) => void
   getColumnWidths: (shape: zed.Type) => Record<string, number>
   onHeaderMenu: (e: React.MouseEvent, column: Column) => void
+  loadNextPage(): void
 }
 
 export type GridState = {

@@ -38,14 +38,18 @@ export function Grid() {
             overscanColumnCount={2}
             innerElementType={InnerElement}
             onScroll={() => api.setLastEvent("scroll")}
-            onItemsRendered={(state) =>
+            onItemsRendered={(state) => {
               api.setGridState({
                 rowStart: state.overscanRowStartIndex,
                 rowStop: state.overscanRowStopIndex,
                 colStart: state.overscanColumnStartIndex,
                 colStop: state.overscanColumnStopIndex,
               })
-            }
+              if (state.overscanRowStopIndex > api.values.length - 30) {
+                console.log("load next page")
+                api.handlers.loadNextPage()
+              }
+            }}
           >
             {Cell}
           </VariableSizeGrid>

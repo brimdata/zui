@@ -4,13 +4,19 @@ import {zed} from "@brimdata/zealot"
 import {ZedTable} from "src/components/zed-table"
 import {MultiShapeError} from "./multi-shape-error"
 import {TableHandlers} from "src/components/zed-table/types"
-import {useSelector, useDispatch} from "react-redux"
+import {useSelector} from "react-redux"
 import Table from "src/js/state/Table"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
+import useSelect from "src/app/core/hooks/use-select"
+import Results from "src/js/state/Results"
+import {useDispatch} from "src/app/core/state"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 function useZedTableHandlers(): TableHandlers {
   const state = useSelector(Table.getState)
   const dispatch = useDispatch()
+  const select = useSelect()
+
   return {
     getValuePage(valueId) {
       return state.valuePages.get(valueId) ?? 1
@@ -50,6 +56,13 @@ function useZedTableHandlers(): TableHandlers {
       headerContextMenu
         .build(this, column)
         .showUnder(e.currentTarget as HTMLElement)
+    },
+
+    loadNextPage() {
+      if (select(Results.isFetching(MAIN_RESULTS))) return
+      if (select(Results.isComplete(MAIN_RESULTS))) return
+      if (select(Results.isLimited(MAIN_RESULTS))) return
+      dispatch(Results.fetchNextPage())
     },
   }
 }

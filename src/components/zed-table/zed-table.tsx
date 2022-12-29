@@ -37,6 +37,10 @@ import {useApi} from "./api-hook"
  - [x] Sorting nested headers, get the field name right
  - [ ] Show non-record types
  - [ ] Toolbar button to expand all headers and collapse all headers 
+ - [ ] Resize header performance on many columns
+ - [ ] Style the header properly during the autosize, right now headers are cut off
+ - [ ] Performance on Giant Tables
+ - [ ] When new results come in, it doesn't render
 */
 
 export function ZedTable(props: {

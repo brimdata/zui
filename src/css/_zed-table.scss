@@ -58,7 +58,6 @@
 .hasChildren .zed-table__header-cell-text {
   font-weight: normal;
   font-style: italic;
-  flex: 1;
 }
 
 .zed-table__header-cell-text {
@@ -66,7 +65,8 @@
   white-space: nowrap;
   overflow: hidden;
   position: sticky;
-  left: 0px;
+  left: 10px;
+  padding-right: 2px; // So we don't clip the italics
 }
 
 .zed-table__header-resize-area {
@@ -128,6 +128,8 @@
   opacity: 0;
   background: none;
   transition: all 200ms;
+  position: sticky;
+  right: 10px;
 
   &:hover {
     background: rgba(0, 0, 0, 0.08);

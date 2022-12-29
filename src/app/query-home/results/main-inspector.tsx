@@ -9,6 +9,7 @@ import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import Slice from "src/js/state/Inspector"
 import {debounce, isNumber} from "lodash"
 import Results from "src/js/state/Results"
+import {MAIN_RESULTS} from "src/js/state/Results/types"
 
 export function MainInspector(props: {
   height: number
@@ -43,9 +44,9 @@ export function MainInspector(props: {
   }
 
   function loadMore() {
-    if (select(Results.isFetching)) return
-    if (select(Results.isComplete)) return
-    if (select(Results.isLimited)) return
+    if (select(Results.isFetching(MAIN_RESULTS))) return
+    if (select(Results.isComplete(MAIN_RESULTS))) return
+    if (select(Results.isLimited(MAIN_RESULTS))) return
     dispatch(Results.fetchNextPage())
   }
 
