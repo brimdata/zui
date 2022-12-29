@@ -40,7 +40,7 @@ import {useApi} from "./api-hook"
  - [ ] Resize header performance on many columns
  - [ ] Style the header properly during the autosize, right now headers are cut off
  - [ ] Performance on Giant Tables
- - [ ] When new results come in, it doesn't render
+ - [x] When new results come in, it doesn't render
 */
 
 export function ZedTable(props: {
