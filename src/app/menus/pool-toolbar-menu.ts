@@ -1,5 +1,5 @@
 import {Pool} from "../core/pools/pool"
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 
 export const poolToolbarMenu = createMenu(
   "poolToolbarMenu",

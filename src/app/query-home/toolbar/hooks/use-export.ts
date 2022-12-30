@@ -1,14 +1,14 @@
 import {useDispatch} from "react-redux"
+import {MenuItem} from "src/core/menu"
 import Modal from "src/js/state/Modal"
-import {ActionButtonProps} from "../actions/action-button"
 
-export default function useExport(): ActionButtonProps {
+export default function useExport(): MenuItem {
   const dispatch = useDispatch()
 
   return {
     label: "Export",
-    title: "Export search results to file",
-    icon: "export",
+    description: "Export search results to file",
+    iconName: "export",
     click: () => dispatch(Modal.show("export")),
   }
 }

@@ -24,7 +24,6 @@ export const toFieldPath = (arg: string | string[] | zed.Field) => {
 
 export function toZql(object: unknown): string {
   if (object instanceof zed.Field) return toFieldPath(object)
-  if (object instanceof zed.TypeField) return toFieldPath(object.path)
   if (object instanceof zed.Primitive) return toZqlZngPrimitive(object)
   if (isString(object)) return toZqlString(object)
   if (object instanceof Date) return toZqlDate(object)

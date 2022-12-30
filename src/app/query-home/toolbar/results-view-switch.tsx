@@ -30,11 +30,17 @@ export function ResultsViewSwitch() {
   return (
     <BG>
       <SectionTabs
-        value={view}
-        onChange={setView}
         options={[
-          {label: "Table", value: TABLE},
-          {label: "Inspector", value: INSPECTOR},
+          {
+            label: "Table",
+            click: () => setView(TABLE),
+            checked: view === TABLE,
+          },
+          {
+            label: "Inspector",
+            click: () => setView(INSPECTOR),
+            checked: view === INSPECTOR,
+          },
         ]}
       />
     </BG>

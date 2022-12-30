@@ -13,10 +13,7 @@ export type FieldData = {name: string; type: Type}
 export class TypeRecord implements Type {
   kind = "record"
 
-  constructor(public fields: TypeField[] | null) {
-    if (this.fields === null) return
-    for (let field of this.fields) field.parent = field.parent || this
-  }
+  constructor(public fields: TypeField[] | null) {}
 
   has(name: string) {
     return !!this.fields?.find((f) => f.name === name)

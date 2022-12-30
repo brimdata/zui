@@ -1,4 +1,5 @@
 import React, {RefCallback} from "react"
+import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
 import ActionButton, {ActionButtonProps} from "./action-button"
 
@@ -20,17 +21,16 @@ const BG = styled.div`
 `
 
 type Props = {
-  actions: ActionButtonProps[]
+  actions: MenuItem[]
   innerRef?: RefCallback<HTMLElement>
   width?: number
-  labels?: boolean
 }
 
-export default function ActionButtons({actions, innerRef, labels}: Props) {
+export default function ActionButtons({actions, innerRef}: Props) {
   return (
     <BG ref={innerRef}>
       {actions.map((props, i) => (
-        <ActionButton key={i} {...props} showLabel={labels} />
+        <ActionButton key={i} {...props} />
       ))}
     </BG>
   )

@@ -1,9 +1,10 @@
 import Icon, {IconName} from "src/app/core/icon-temp"
 import {MenuItemConstructorOptions} from "electron/main"
-import React from "react"
+import React, {MouseEvent} from "react"
 import Button from "./button"
 import Label from "./label"
 import styled from "styled-components"
+import {MenuItem} from "src/core/menu"
 
 export function toMenu(
   actions: ActionButtonProps[]
@@ -32,22 +33,21 @@ const Wrap = styled.div`
   flex-grow: 0;
 `
 
-const ActionButton = (props: ActionButtonProps) => {
+const ActionButton = (props: MenuItem) => {
   return (
-    <Wrap title={props.title}>
+    <Wrap title={props.description}>
       <Button
         aria-label={props.label}
-        onClick={() => {
-          // @ts-ignore
-          props.click()
-        }}
-        icon={<Icon name={props.icon as IconName} />}
-        disabled={props.disabled}
-        dropdown={!!props.submenu}
-        {...props.buttonProps}
+        onClick={(htmlEvent: MouseEvent<HTMLElement>) =>
+          props.click({htmlEvent})
+        }
+        icon={<Icon name={props.iconName} />}
+        disabled={props.enabled === false}
+        dropdown={!!props.nestedMenu}
+        {...props.htmlAttrs}
       />
-      {props.label && props.showLabel && (
-        <Label isDisabled={props.disabled}>{props.label}</Label>
+      {props.label && (
+        <Label isDisabled={props.enabled === false}>{props.label}</Label>
       )}
     </Wrap>
   )

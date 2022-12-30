@@ -14,17 +14,19 @@ const BG = styled.div`
 export function Menu() {
   const dispatch = useDispatch()
   const currentSectionName = useSelector(Appearance.getCurrentSectionName)
-
+  const makeOption = (name: string, value: SectionName) => ({
+    label: name,
+    checked: value === currentSectionName,
+    click: () => {
+      dispatch(Appearance.setCurrentSectionName(value))
+    },
+  })
   return (
     <BG>
       <SectionTabs
-        value={currentSectionName}
-        onChange={(name) => {
-          dispatch(Appearance.setCurrentSectionName(name as SectionName))
-        }}
         options={[
-          {label: "Pools", value: "pools"},
-          {label: "Queries", value: "queries"},
+          makeOption("Pools", "pools"),
+          makeOption("Queries", "queries"),
         ]}
       />
     </BG>

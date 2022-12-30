@@ -70,7 +70,9 @@ export class ZedContext {
   lookupTypeRecord(fields: TypeField[] | null): TypeRecord {
     const key = TypeRecord.stringify(fields)
     if (key in this.typeByShape) {
-      return this.typeByShape[key] as TypeRecord
+      const record = this.typeByShape[key] as TypeRecord
+      record.fields = fields
+      return record
     } else {
       return this.alloc(key, new TypeRecord(fields))
     }

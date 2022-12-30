@@ -8,7 +8,7 @@ import {
   appendQuerySortBy,
 } from "src/js/flows/searchBar/actions"
 import submitSearch from "../query-home/flows/submit-search"
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 
 function getWhenContext(api: BrimApi, column: Column) {
   const query = api.current.query
@@ -70,6 +70,11 @@ export const headerContextMenu = createMenu(
         click: () => column.collapse(),
         visible: when.isRecord,
         enabled: when.isGrouped,
+      },
+      {type: "separator"},
+      {
+        label: "Hide Column",
+        click: () => column.hide(),
       },
     ]
   }

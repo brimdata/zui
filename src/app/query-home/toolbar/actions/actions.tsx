@@ -5,12 +5,12 @@ import {FillFlexParent} from "src/components/fill-flex-parent"
 import MeasureLayer from "src/app/core/MeasureLayer"
 import {GUTTER} from "../actions/action-buttons"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
-import {ActionButtonProps} from "./action-button"
+import {MenuItem} from "src/core/menu"
 
 type Props = {
   width: number
   childWidths: number[]
-  actions: ActionButtonProps[]
+  actions: MenuItem[]
   estimatedChildWidth: number
 }
 
@@ -34,7 +34,7 @@ const Actions = ({
   labels,
 }: {
   labels?: boolean
-  actions: ActionButtonProps[]
+  actions: MenuItem[]
 }) => {
   const [hiddenEl, setHiddenEl] = useCallbackRef()
   const [childWidths, setChildWidths] = useState<null | number[]>(null)
@@ -47,11 +47,7 @@ const Actions = ({
   return (
     <>
       <MeasureLayer>
-        <ActionButtons
-          actions={actions}
-          innerRef={setHiddenEl}
-          labels={labels}
-        />
+        <ActionButtons actions={actions} innerRef={setHiddenEl} />
       </MeasureLayer>
       <FillFlexParent>
         {({width}) => (

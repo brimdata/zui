@@ -1,4 +1,5 @@
 import {zed} from "@brimdata/zealot"
+import {prevSnippetField} from "@codemirror/autocomplete"
 import {createColumnHelper} from "@tanstack/react-table"
 import {ZedTableApi} from "./api"
 import {createColumns} from "./create-columns"
@@ -6,7 +7,8 @@ import {createColumns} from "./create-columns"
 type Args = {
   api: ZedTableApi
   field: zed.TypeField
-  path: number[]
+  path: string[]
+  indexPath: number[]
 }
 
 const helper = createColumnHelper<zed.Value>()
@@ -14,8 +16,12 @@ const helper = createColumnHelper<zed.Value>()
 export class Column {
   constructor(private args: Args) {}
 
+  private get api() {
+    return this.args.api
+  }
+
   get id() {
-    return `col:${this.args.path.join(",")}`
+    return `col:${this.args.indexPath.join(",")}`
   }
 
   get field() {
@@ -31,11 +37,11 @@ export class Column {
   }
 
   get path() {
-    return this.field.path
+    return this.args.path
   }
 
   get leafDef() {
-    return helper.accessor((row: zed.Record) => row.at(this.args.path), {
+    return helper.accessor((row: zed.Record) => row.at(this.args.indexPath), {
       id: this.id,
       header: this.name,
       meta: this,
@@ -46,14 +52,19 @@ export class Column {
     return helper.group({
       id: this.id,
       header: this.name,
-      columns: createColumns(this.args.api, this.type, this.args.path),
+      columns: createColumns(
+        this.api,
+        this.type,
+        this.args.path,
+        this.args.indexPath
+      ),
       meta: this,
     })
   }
 
   get isGrouped() {
-    const shape = this.args.api.shape
-    return this.args.api.handlers.isGrouped(shape, this.id)
+    const shape = this.api.shape
+    return this.api.handlers.isGrouped(shape, this.id)
   }
 
   get def() {
@@ -61,16 +72,19 @@ export class Column {
   }
 
   expand() {
-    const shape = this.args.api.shape
-    console.log(this.id)
-    this.args.api.handlers.setGrouped(shape, this.id, true)
-    this.args.api.reset()
+    const shape = this.api.shape
+    this.api.handlers.setGrouped(shape, this.id, true)
+    this.api.reset()
   }
 
   collapse() {
-    const shape = this.args.api.shape
-    console.log(this.id)
-    this.args.api.handlers.setGrouped(shape, this.id, false)
-    this.args.api.reset()
+    const shape = this.api.shape
+    this.api.handlers.setGrouped(shape, this.id, false)
+    this.api.reset()
+  }
+
+  hide() {
+    this.api.table.setColumnVisibility((prev) => ({...prev, [this.id]: false}))
+    this.api.reset()
   }
 }

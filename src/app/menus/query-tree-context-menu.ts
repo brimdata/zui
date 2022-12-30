@@ -1,6 +1,6 @@
 import {TreeApi} from "react-arborist"
 import {Group, Query} from "src/js/state/Queries/types"
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 
 export const queryTreeContextMenu = createMenu(
   "queryTreeContextMenu",

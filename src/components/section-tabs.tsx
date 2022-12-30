@@ -1,11 +1,23 @@
 import React, {useLayoutEffect, useRef, useState} from "react"
+import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
+import {useResponsiveMenu} from "./button-menu"
+import {MoreItemsButton} from "./more-items-button"
 
 const BG = styled.div`
   display: flex;
+  min-width: 0;
   align-items: center;
   height: 100%;
   position: relative;
+  overflow: hidden;
+`
+
+const Nav = styled.nav`
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
 
   button {
     background: none;
@@ -53,25 +65,11 @@ const Underline = styled.div`
   border-radius: 1px;
 `
 
-export type SectionTabOptions = {
-  label: string
-  value: string
-}
-
-export function SectionTabs(props: {
-  value: string
-  options: SectionTabOptions[]
-  onChange: (value: string) => void
-}) {
+export function SectionTabs(props: {options: MenuItem[]}) {
   const changeCount = useRef(0)
-  function changeTo(value: string) {
-    if (value === props.value) return
-    props.onChange(value)
-    changeCount.current += 1
-  }
-
   const ref = useRef<HTMLDivElement>()
   const [pos, setPos] = useState({x: 0, width: 10})
+  const pressedIndex = props.options.findIndex((opt) => opt.checked)
 
   useLayoutEffect(() => {
     const el = ref.current
@@ -85,27 +83,42 @@ export function SectionTabs(props: {
         setPos({x, width})
       }
     }
-  }, [props.value])
+  }, [pressedIndex])
+
+  const menu = useResponsiveMenu(ref, props.options)
 
   return (
-    <BG ref={ref}>
-      {props.options.map((opts) => (
-        <button
-          key={opts.value}
-          onClick={() => changeTo(opts.value)}
-          aria-pressed={opts.value === props.value}
-          data-section-tab-value={opts.value}
-        >
-          <span>{opts.label}</span>
-        </button>
-      ))}
+    <BG>
+      <Nav ref={ref}>
+        {props.options.map((opts, i) => (
+          <button
+            key={opts.id ?? i}
+            onClick={(htmlEvent) => {
+              changeCount.current += 1
+              opts.click({htmlEvent})
+            }}
+            aria-pressed={opts.checked}
+            data-section-tab-value={opts.label}
+            style={{
+              visibility: menu.isHidden(i) ? "hidden" : "visible",
+            }}
+          >
+            <span>{opts.label}</span>
+          </button>
+        ))}
+      </Nav>
       <Underline
         style={{
           transform: `translateX(${pos.x}px)`,
           width: pos.width,
-          transition: changeCount.current === 0 ? "none" : "all 200ms",
+          transition:
+            changeCount.current === 0 ? "none" : "width 200ms, transform 200ms",
+          visibility: menu.isHidden(pressedIndex) ? "hidden" : "visible",
         }}
       />
+      {menu.hasHiddenItems ? (
+        <MoreItemsButton items={menu.hiddenItems} />
+      ) : null}
     </BG>
   )
 }

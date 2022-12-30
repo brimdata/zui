@@ -11,6 +11,7 @@ import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {HistorySection} from "./history/section"
 import {SectionTabs} from "src/components/section-tabs"
 import {PaneName} from "src/js/state/Layout/types"
+import {ColumnsPane} from "src/panes/columns-pane/columns-pane"
 
 const Pane = styled(DraggablePane)`
   display: flex;
@@ -27,6 +28,8 @@ const PaneContentSwitch = ({paneName}) => {
       return <VersionsSection />
     case "history":
       return <HistorySection />
+    case "columns":
+      return <ColumnsPane />
     default:
       return null
   }
@@ -43,17 +46,27 @@ const BG = styled.div`
 export function Menu() {
   const dispatch = useDispatch()
   const currentPaneName = useSelector(Layout.getCurrentPaneName)
-  const onChange = (name: string) =>
+  const onChange = (name: string) => {
+    if (name === currentPaneName) return
     dispatch(Layout.setCurrentPaneName(name as PaneName))
+  }
+
+  function makeOption(label: string, value: string) {
+    return {
+      label,
+      click: () => onChange(value),
+      checked: currentPaneName === value,
+    }
+  }
+
   return (
     <BG>
       <SectionTabs
-        value={currentPaneName}
-        onChange={onChange}
         options={[
-          {label: "History", value: "history"},
-          {label: "Detail", value: "detail"},
-          {label: "Versions", value: "versions"},
+          makeOption("History", "history"),
+          makeOption("Detail", "detail"),
+          makeOption("Versions", "versions"),
+          makeOption("Columns", "columns"),
         ]}
       />
     </BG>

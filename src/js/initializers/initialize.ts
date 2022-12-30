@@ -10,7 +10,7 @@ import initLakeParams from "./initLakeParams"
 import {initAutosave} from "./initAutosave"
 import {featureFlagsOp} from "../electron/ops/feature-flags-op"
 import {commands} from "src/app/commands/command"
-import {menus} from "src/app/menus/create-menu"
+import {menus} from "src/core/menu"
 import {windowInitialized} from "../electron/ops/window-initialized-op"
 
 export default async function initialize() {
@@ -29,7 +29,7 @@ export default async function initialize() {
   initDebugGlobals(store, api)
   initAutosave(store)
   commands.setContext(store, api)
-  menus.setContext(api)
+  menus.setContext({api})
   windowInitialized.invoke(global.windowId)
 
   return {store, api, pluginManager}

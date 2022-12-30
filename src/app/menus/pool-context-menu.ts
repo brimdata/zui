@@ -1,7 +1,7 @@
 import {NodeApi, TreeApi} from "react-arborist"
 import {updateFrom} from "../commands/pins"
 import {Pool} from "../core/pools/pool"
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 
 export const poolContextMenu = createMenu(
   "poolContextMenu",
