@@ -177,7 +177,10 @@ export function PoolNew() {
       <Footer>
         <Help>
           <b>Auto-detectable formats</b>:{" "}
-          <Link href="https://tools.ietf.org/html/rfc4180">CSV</Link>,{" "}
+          <Link href="https://arrow.apache.org/docs/format/Columnar.html#ipc-streaming-format">
+            Arrow IPC Stream
+          </Link>
+          , <Link href="https://tools.ietf.org/html/rfc4180">CSV</Link>,{" "}
           <Link href="https://www.json.org/json-en.html">JSON</Link>,{" "}
           <Link href="http://ndjson.org/">NDJSON</Link>,{" "}
           <Link href="https://docs.zeek.org/en/current/log-formats.html#zeek-tsv-format-logs">
