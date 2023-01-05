@@ -1,10 +1,12 @@
-import {Column, Table as ReactTable} from "@tanstack/react-table"
+import {Column, Table, createTable} from "@tanstack/table-core"
 import {zed} from "@brimdata/zealot"
 import {config} from "./config"
 import {Cell} from "./cell"
 import {Position} from "./position"
 import {getMaxCellSizes} from "./utils"
-import {GridState, TableEvent, TableHandlers} from "./types"
+import {GridState, TableEvent, ZedTableHandlers, ZedTableState} from "./types"
+import {createColumns} from "./create-columns"
+import {ZedColumn} from "./column"
 
 export class ZedTableApi {
   element: HTMLDivElement | null = null
@@ -12,24 +14,28 @@ export class ZedTableApi {
   private event: TableEvent = "init"
   private cells: Map<string, Cell> = new Map()
   private listeners = []
-  private _table: null | ReactTable<zed.Value>
   private _headerGroups = null
   private _columns: Column<zed.Value, unknown>[] | null = null
+  public baseColumns: ZedColumn[]
+  private table: Table<any>
 
   constructor(
     public shape: zed.Type,
     public values: zed.Value[],
-    public handlers: TableHandlers,
-    public reset: () => void
-  ) {}
-
-  set table(t: ReactTable<zed.Value>) {
-    this._table = t
-  }
-
-  get table() {
-    if (this._table) return this._table
-    throw new Error("No Table Yet")
+    public state: ZedTableState,
+    public handlers: ZedTableHandlers
+  ) {
+    this.baseColumns = createColumns(this, shape)
+    this.table = createTable({
+      data: [],
+      columns: this.baseColumns.map((c) => c.def),
+      columnResizeMode: "onChange",
+      defaultColumn: {size: config.defaultCellWidth},
+      onStateChange: () => {},
+      getCoreRowModel: () => null,
+      renderFallbackValue: null,
+      state: {},
+    })
   }
 
   get headerGroups() {
@@ -45,11 +51,11 @@ export class ZedTableApi {
   }
 
   get isResizing() {
-    return this.columns.some((c) => c.getIsResizing())
+    return this.table.getState().columnSizingInfo.isResizingColumn
   }
 
   get columns() {
-    // if (this._columns) return this._columns
+    if (this._columns) return this._columns
     this._columns = this.table.getVisibleLeafColumns()
     return this._columns
   }
@@ -107,7 +113,13 @@ export class ZedTableApi {
   }
 
   setColumnWidths(sizes: Record<string, number>) {
-    this.table.setColumnSizing((prev) => ({...prev, ...sizes}))
+    this.handlers.onStateChange({
+      ...this.state,
+      columnWidth: {
+        ...this.state.columnWidth,
+        ...sizes,
+      },
+    })
   }
 
   cellInspected(cell: Cell) {
@@ -120,7 +132,7 @@ export class ZedTableApi {
   }
 
   autosizeColumns(columnIds?: string[]) {
-    const widths = this.handlers.getColumnWidths(this.shape) ?? {}
+    const widths = this.state.columnWidth
     if (this.element) {
       const ids =
         columnIds ??
@@ -144,5 +156,49 @@ export class ZedTableApi {
 
   get shouldRenderImmediately() {
     return this.event === "interaction"
+  }
+
+  columnIsVisible(id: string) {
+    return !!this.state.columnVisible[id]
+  }
+
+  setColumnVisible(id: string, value: boolean) {
+    this.handlers.onStateChange({
+      ...this.state,
+      columnVisible: {...this.state.columnVisible, [id]: value},
+    })
+  }
+
+  columnIsExpanded(id: string) {
+    return !!this.state.columnExpanded[id]
+  }
+
+  setColumnExpanded(id: string, value: boolean) {
+    this.handlers.onStateChange({
+      ...this.state,
+      columnExpanded: {...this.state.columnExpanded, [id]: value},
+    })
+  }
+
+  valueIsExpanded(id: string) {
+    return !!this.state.valueExpanded[id]
+  }
+
+  setValueExpanded(id: string, value: boolean) {
+    this.handlers.onStateChange({
+      ...this.state,
+      valueExpanded: {...this.state.valueExpanded, [id]: value},
+    })
+  }
+
+  valuePage(id: string) {
+    return this.state.valuePage[id] ?? 1
+  }
+
+  setValuePage(id: string, page: number) {
+    this.handlers.onStateChange({
+      ...this.state,
+      valuePage: {...this.state.valuePage, [id]: page},
+    })
   }
 }

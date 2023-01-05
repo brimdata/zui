@@ -1,6 +1,6 @@
 import React from "react"
 import {createContext, ReactElement, useContext} from "react"
-import {ZedTableApi} from "./api"
+import {ZedTableApi} from "./zed-table-api"
 
 const ZedTableContext = createContext<ZedTableApi | null>(null)
 

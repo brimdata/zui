@@ -1,7 +1,7 @@
 import {zed} from "@brimdata/zealot"
 import {isEqual} from "lodash"
-import {ZedTableApi} from "src/components/zed-table/api"
-import {Column} from "src/components/zed-table/column"
+import {ZedTableApi} from "src/components/zed-table/zed-table-api"
+import {ZedColumn} from "src/components/zed-table/column"
 import BrimApi from "src/js/api"
 import {
   appendQueryCountBy,
@@ -10,7 +10,7 @@ import {
 import submitSearch from "../query-home/flows/submit-search"
 import {createMenu} from "src/core/menu"
 
-function getWhenContext(api: BrimApi, column: Column) {
+function getWhenContext(api: BrimApi, column: ZedColumn) {
   const query = api.current.query
   const ast = query.toAst()
   const sorts = ast.sorts
@@ -25,7 +25,7 @@ function getWhenContext(api: BrimApi, column: Column) {
 
 export const headerContextMenu = createMenu(
   "headerContextMenu",
-  (ctx, api: ZedTableApi, column: Column) => {
+  (ctx, api: ZedTableApi, column: ZedColumn) => {
     const when = getWhenContext(ctx.api, column)
     const dispatch = ctx.api.dispatch
     return [

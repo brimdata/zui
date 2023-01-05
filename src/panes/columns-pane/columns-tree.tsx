@@ -1,29 +1,64 @@
-import {zed} from "@brimdata/zealot"
-import React, {useMemo} from "react"
-import {Tree} from "react-arborist"
-import {useSelector} from "react-redux"
+import React from "react"
+import {columnListItemMenu} from "src/app/menus/column-list-item-menu"
+import {ListItem} from "src/components/list-item"
+import {ZedColumn} from "src/components/zed-table/column"
+import {NodeRendererProps, Tree} from "react-arborist"
+import {useResultsContext} from "src/app/query-home"
 import {FillFlexParent} from "src/components/fill-flex-parent"
-import Results from "src/js/state/Results"
-import {MAIN_RESULTS} from "src/js/state/Results/types"
-import styled from "styled-components"
-import {Node} from "./node"
-import {toTreeData} from "./tree-data"
+import classNames from "classnames"
+
+function Node(props: NodeRendererProps<ZedColumn>) {
+  const {node} = props
+  const column = node.data
+  const menu = columnListItemMenu.build(column)
+  return (
+    <ListItem
+      innerRef={props.dragHandle}
+      indent={node.level}
+      isOpen={node.isOpen}
+      canToggle={column.isRecordType}
+      onToggle={() => props.node.toggle()}
+      menu={menu}
+    >
+      {column.name}
+      <code
+        className={classNames("columns-tree__type", getClassName(column.type))}
+      >
+        {"<" + getType(column.type) + ">"}
+      </code>
+    </ListItem>
+  )
+}
 
 export function ColumnsTree() {
-  const shapesObj = useSelector(Results.getShapes(MAIN_RESULTS))
-  const shapes = Object.values(shapesObj)
-  const record = shapes[0] as zed.TypeRecord
-  const data = useMemo(() => toTreeData(record), [record])
-  if (!record || !(record instanceof zed.TypeRecord)) return null
+  const {table} = useResultsContext()
+  if (!table) return <p>Columns are for the table view</p>
   return (
     <FillFlexParent>
       {({width, height}) => {
         return (
-          <Tree width={width} height={height} initialData={data} padding={10}>
+          <Tree
+            className="columns-tree"
+            rowHeight={28}
+            width={width}
+            height={height}
+            initialData={table.baseColumns}
+            padding={10}
+          >
             {Node}
           </Tree>
         )
       }}
     </FillFlexParent>
   )
+}
+
+function getClassName(type) {
+  if (type.kind === "primitive") return "zed-" + type.name
+  else return "zed-container"
+}
+
+function getType(type) {
+  if (type.kind === "primitive") return type.name
+  else return type.kind
 }

@@ -1,26 +1,21 @@
 import React, {useRef} from "react"
 import {useAutoSelect} from "src/app/core/hooks/use-auto-select"
+import {InputButton} from "src/components/input-button"
+import {SubmitButton} from "src/components/submit-button"
+import TextInput from "src/js/components/common/forms/TextInput"
 import useEscapeKey from "src/js/components/hooks/useEscapeKey"
 import styled from "styled-components"
-import {Button} from "./button"
 import {useHeadingForm} from "./use-heading-form"
 
 const Form = styled.form`
   display: flex;
-  gap: 4px;
+  gap: 10px;
   width: 100%;
   margin: 0 auto;
 `
 
-const Input = styled.input`
-  height: 22px;
-  border: 2px solid var(--primary-color);
-  font-size: 14px;
+const Input = styled(TextInput)`
   font-weight: 700;
-  padding 0 10px;
-  border-radius: 6px;
-  line-height: 22px;
-  margin-right: 6px;
   flex: 1;
 `
 
@@ -38,10 +33,8 @@ export default function HeadingForm() {
         placeholder="Query name..."
         ref={ref}
       />
-      <Button icon="check" primary type="submit">
-        {form.buttonText}
-      </Button>
-      <Button type="reset">Cancel</Button>
+      <InputButton type="reset">Cancel</InputButton>
+      <SubmitButton icon="check">{form.buttonText}</SubmitButton>
     </Form>
   )
 }

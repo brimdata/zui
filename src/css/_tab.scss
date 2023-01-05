@@ -12,7 +12,7 @@ $tab-transition-duration: 200ms;
   user-select: none;
   -webkit-app-region: no-drag;
   height: 80%;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 2px 2px;
   background: $tab-inactive-bg;
   cursor: default;
   will-change: transform;
@@ -80,10 +80,10 @@ $tab-transition-duration: 200ms;
 
   // The active state
   &.active {
-    border-radius: 10px 10px 0 0;
     background: $tab-active-bg;
     z-index: 1;
-    box-shadow: 1px 0 0 0 var(--border-color), -1px 0 0 0 var(--border-color), inset 0 -1px 0 0 var(--border-color);
+    box-shadow: 1px 0 0 0 var(--border-color), -1px 0 0 0 var(--border-color),
+      inset 0 -1px 0 0 var(--border-color);
 
     .title {
       color: $tab-active-color;

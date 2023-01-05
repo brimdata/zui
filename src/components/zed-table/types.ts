@@ -1,19 +1,6 @@
 import React from "react"
 import {zed} from "packages/zealot/src"
-import {Column} from "./column"
-
-export type TableHandlers = {
-  getValuePage: (valueId: string) => number
-  incValuePage: (valueId: string) => void
-  isExpanded: (valueId: string) => boolean
-  setExpanded: (valueId: string, value: boolean) => void
-  isGrouped: (shape: zed.Type, columnId: string) => boolean
-  setGrouped: (shape: zed.Type, columnId: string, value: boolean) => void
-  setColumnWidths: (shape: zed.Type, widths: Record<string, number>) => void
-  getColumnWidths: (shape: zed.Type) => Record<string, number>
-  onHeaderMenu: (e: React.MouseEvent, column: Column) => void
-  loadNextPage(): void
-}
+import {ZedColumn} from "./column"
 
 export type GridState = {
   rowStart: number
@@ -23,3 +10,24 @@ export type GridState = {
 }
 
 export type TableEvent = "init" | "scroll" | "interaction"
+
+export type ZedTableState = {
+  valueExpanded: {}
+  valuePage: {}
+  columnWidth: {}
+  columnExpanded: {}
+  columnVisible: {}
+  columnExpandedDefault: boolean
+}
+
+export type ZedTableProps = {
+  shape: zed.Type
+  values: zed.Value[]
+  state: ZedTableState
+} & ZedTableHandlers
+
+export type ZedTableHandlers = {
+  onStateChange: (nextState: ZedTableState) => void
+  onScrollNearBottom: () => void
+  onHeaderMenu: (e: React.MouseEvent, column: ZedColumn) => void
+}

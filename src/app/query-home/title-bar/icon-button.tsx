@@ -13,11 +13,12 @@ const Button = styled.button`
   justify-content: center;
   border-radius: 6px;
   background: none;
+
   &:hover {
-    background: var(--button-background);
+    background: rgba(0, 0, 0, 0.06);
   }
   &:active {
-    background: var(--button-background-active);
+    background: rgba(0, 0, 0, 0.1);
   }
 
   &:disabled {

@@ -4,7 +4,6 @@ export const TextInput = styled.input.attrs({type: "text"})`
   display: block;
   width: 100%;
   border: 1px solid #c0c0c0;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.14);
   border-radius: 6px;
   padding: 3px 10px;
   font-size: 14px;

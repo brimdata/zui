@@ -34,7 +34,7 @@ export function IconButton(props: MenuItem & {className?: string}) {
   return (
     <BG
       className={props.className}
-      title={props.label}
+      title={props.description ?? props.label}
       onClick={(htmlEvent) => props.click({htmlEvent})}
       disabled={props.enabled === false}
     >

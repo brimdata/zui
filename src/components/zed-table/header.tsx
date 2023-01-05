@@ -5,7 +5,7 @@ import {HeaderGroup} from "./header-group"
 
 export const Header = function Header() {
   const api = useZedTable()
-  const groups = api.table.getHeaderGroups()
+  const groups = api.headerGroups
   return (
     <div className="zed-table__header">
       {groups.map((group, index) => {

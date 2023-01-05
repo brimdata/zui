@@ -1,7 +1,7 @@
 import {zed} from "@brimdata/zealot"
 import {InspectContext} from "src/app/features/inspector/inspect-context"
 import {createView} from "src/app/features/inspector/views/create"
-import {ZedTableApi} from "./api"
+import {ZedTableApi} from "./zed-table-api"
 import {View} from "src/app/features/inspector/views/view"
 import {Position} from "./position"
 
@@ -54,14 +54,16 @@ export class Cell {
     this.position = args.position
     this.view = createView({
       ctx: new InspectContext({
-        isExpanded: (key) => args.api.handlers.isExpanded(this.viewId(key)),
+        isExpanded: (key) => args.api.valueIsExpanded(this.viewId(key)),
         setExpanded: (key, value) => {
-          args.api.handlers.setExpanded(this.viewId(key), value)
+          args.api.setValueExpanded(this.viewId(key), value)
           args.api.cellChanged(this)
         },
-        getValuePage: (key) => args.api.handlers.getValuePage(this.viewId(key)),
+        getValuePage: (key) => args.api.valuePage(this.viewId(key)),
         incValuePage: (key) => {
-          args.api.handlers.incValuePage(this.viewId(key))
+          const viewId = this.viewId(key)
+          const page = args.api.valuePage(viewId)
+          args.api.setValuePage(viewId, page + 1)
           args.api.cellChanged(this)
         },
         peekLimit: 1,

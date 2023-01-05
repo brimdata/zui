@@ -21,6 +21,7 @@ export function useCellStyle(style: React.CSSProperties) {
   }
 }
 
+// RETHINK THIS BAD BOY
 export function useColumnSizeRerender() {
   const api = useZedTable()
   const ref = React.useRef<VariableSizeGrid | null>(null)
@@ -32,12 +33,7 @@ export function useColumnSizeRerender() {
         shouldForceUpdate: true,
       })
     }
-  }, [
-    api,
-    api.table.getState().columnSizing,
-    api.columnCount,
-    api.table.getHeaderGroups().length,
-  ])
+  }, [api, api.state.columnWidth, api.columnCount, api.headerGroups.length])
 
   React.useLayoutEffect(() => {
     api.onCellChanged((cell) => {

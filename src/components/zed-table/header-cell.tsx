@@ -2,7 +2,7 @@ import {Header} from "@tanstack/react-table"
 import classNames from "classnames"
 import React from "react"
 import Icon from "src/app/core/icon-temp"
-import {Column} from "./column"
+import {ZedColumn} from "./column"
 import {useZedTable} from "./context"
 import {HeaderResizeArea} from "./header-resize-area"
 
@@ -31,7 +31,7 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
           <button
             className="zed-table__header-cell-menu-button"
             aria-label={`${def.header} Header Menu`}
-            onClick={(e) => api.handlers.onHeaderMenu(e, def.meta as Column)}
+            onClick={(e) => api.handlers.onHeaderMenu(e, def.meta as ZedColumn)}
           >
             <Icon name="chevron-down" size={16} />
           </button>

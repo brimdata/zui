@@ -1,5 +1,5 @@
 import ResultsComponent from "./results"
-import React from "react"
+import React, {useCallback, useContext, useState} from "react"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 
@@ -11,6 +11,7 @@ import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
 import MainHistogramChart from "./histogram/MainHistogram/Chart"
+import {ZedTableApi} from "src/components/zed-table/zed-table-api"
 
 const MainContent = styled.div`
   display: flex;
@@ -28,6 +29,28 @@ const ContentWrap = styled.div`
   min-width: 0;
 `
 
+const ResultsContext = React.createContext<{
+  table: ZedTableApi | null
+  setTable: (v: ZedTableApi | null) => void
+}>(null)
+
+export function useResultsContext() {
+  const value = useContext(ResultsContext)
+  if (!value) throw new Error("Provide MainTableContext")
+  return value
+}
+
+function ResultsProvider({children}) {
+  const [table, setTable] = useState<ZedTableApi | null>(null)
+  const value = {
+    table,
+    setTable: useCallback((table: ZedTableApi | null) => setTable(table), []),
+  }
+  return (
+    <ResultsContext.Provider value={value}>{children}</ResultsContext.Provider>
+  )
+}
+
 const QueryHome = () => {
   const activeQuery = useSelector(Current.getActiveQuery)
   const lakeId = useSelector(Current.getLakeId)
@@ -42,7 +65,7 @@ const QueryHome = () => {
   }
 
   return (
-    <>
+    <ResultsProvider>
       <ContentWrap>
         <MainContent>
           <TitleBar />
@@ -53,7 +76,7 @@ const QueryHome = () => {
         </MainContent>
         <RightPane />
       </ContentWrap>
-    </>
+    </ResultsProvider>
   )
 }
 

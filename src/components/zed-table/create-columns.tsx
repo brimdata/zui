@@ -1,6 +1,6 @@
 import {zed} from "@brimdata/zealot"
-import {ZedTableApi} from "./api"
-import {Column} from "./column"
+import {ZedTableApi} from "./zed-table-api"
+import {ZedColumn} from "./column"
 
 export function createColumns(
   api: ZedTableApi,
@@ -11,12 +11,12 @@ export function createColumns(
   if (type instanceof zed.TypeRecord) {
     return type.fields.map(
       (field, index) =>
-        new Column({
+        new ZedColumn({
           field,
           api,
           path: [...namePath, field.name],
           indexPath: [...indexPath, index],
-        }).def
+        })
     )
   } else {
     throw new Error("Unsupported Type" + type.toString())

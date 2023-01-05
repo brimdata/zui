@@ -19,4 +19,8 @@ export const SubmitButton = styled(InputButton).attrs({type: "submit"})`
   &:disabled {
     opacity: 0.5;
   }
+
+  svg {
+    fill: white;
+  }
 `

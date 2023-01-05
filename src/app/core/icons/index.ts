@@ -37,6 +37,10 @@ import check from "./check"
 import update from "./update"
 import detach from "./detach"
 import threeDotsStacked from "./three-dots-stacked"
+import ExpandHorizontal from "./expand-horizontal"
+import CollapseHorizontal from "./collapse-horizontal"
+import show from "./show"
+import hide from "./hide"
 
 export default {
   check,
@@ -78,4 +82,8 @@ export default {
   "left-arrow": LeftArrow,
   "right-arrow": RightArrow,
   "three-dots-stacked": threeDotsStacked,
+  "expand-horizontal": ExpandHorizontal,
+  "collapse-horizontal": CollapseHorizontal,
+  show,
+  hide,
 }

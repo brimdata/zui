@@ -5,21 +5,14 @@ import {ButtonMenu} from "src/components/button-menu"
 
 const columnToolbarMenu = createMenu("columnsToolbarMenu", () => {
   return [
-    {label: "Expand All", click: () => alert("whoo hoo"), iconName: "expand"},
+    {label: "Expand All", click: () => {}, iconName: "expand"},
     {
       label: "Collapse All",
       iconName: "collapse",
-      click: () => alert("whoo"),
+      click: () => {},
     },
-    {label: "Show All", iconName: "sidebar-toggle"},
-    {label: "Hide All", iconName: "braces"},
-    {label: "More", iconName: "chevron-up"},
-    {label: "Less", iconName: "chevron-down"},
-    {label: "Everything", iconName: "detach"},
-    {label: "Everything", iconName: "chart"},
-    {label: "Everything", iconName: "check"},
-    {label: "Everything", iconName: "detach"},
-    {label: "Everything", iconName: "detach"},
+    {label: "Show All", iconName: "show"},
+    {label: "Hide All", iconName: "hide"},
   ] as MenuItem[]
 })
 

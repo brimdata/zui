@@ -1,7 +1,6 @@
 import {zed} from "@brimdata/zealot"
-import {prevSnippetField} from "@codemirror/autocomplete"
 import {createColumnHelper} from "@tanstack/react-table"
-import {ZedTableApi} from "./api"
+import {ZedTableApi} from "./zed-table-api"
 import {createColumns} from "./create-columns"
 
 type Args = {
@@ -13,11 +12,27 @@ type Args = {
 
 const helper = createColumnHelper<zed.Value>()
 
-export class Column {
-  constructor(private args: Args) {}
+export class ZedColumn {
+  children: null | ZedColumn[]
+
+  constructor(private args: Args) {
+    this.children =
+      this.isRecordType && this.isGrouped
+        ? createColumns(
+            this.api,
+            this.type,
+            this.args.path,
+            this.args.indexPath
+          )
+        : null
+  }
 
   private get api() {
     return this.args.api
+  }
+
+  get isRecordType() {
+    return this.type instanceof zed.TypeRecord
   }
 
   get id() {
@@ -30,6 +45,11 @@ export class Column {
 
   get type() {
     return this.field.type
+  }
+
+  get typeName() {
+    if (zed.isPrimitiveType(this.type)) return this.type.name
+    else return this.type.kind
   }
 
   get name() {
@@ -52,19 +72,13 @@ export class Column {
     return helper.group({
       id: this.id,
       header: this.name,
-      columns: createColumns(
-        this.api,
-        this.type,
-        this.args.path,
-        this.args.indexPath
-      ),
+      columns: this.children.map((column) => column.def),
       meta: this,
     })
   }
 
   get isGrouped() {
-    const shape = this.api.shape
-    return this.api.handlers.isGrouped(shape, this.id)
+    return this.api.columnIsExpanded(this.id)
   }
 
   get def() {
@@ -72,19 +86,18 @@ export class Column {
   }
 
   expand() {
-    const shape = this.api.shape
-    this.api.handlers.setGrouped(shape, this.id, true)
-    this.api.reset()
+    this.api.setColumnExpanded(this.id, true)
   }
 
   collapse() {
-    const shape = this.api.shape
-    this.api.handlers.setGrouped(shape, this.id, false)
-    this.api.reset()
+    this.api.setColumnExpanded(this.id, false)
   }
 
   hide() {
-    this.api.table.setColumnVisibility((prev) => ({...prev, [this.id]: false}))
-    this.api.reset()
+    this.api.setColumnVisible(this.id, false)
+  }
+
+  show() {
+    this.api.setColumnVisible(this.id, true)
   }
 }

@@ -1,10 +1,9 @@
-import React from "react"
-import {zed} from "packages/zealot/src"
+import React, {forwardRef, useImperativeHandle} from "react"
 import {Provider} from "./context"
 import {Grid} from "./grid"
 import classNames from "classnames"
-import {TableHandlers} from "./types"
-import {useApi} from "./api-hook"
+import {ZedTableProps} from "./types"
+import {createZedTable} from "./create-zed-table"
 
 /**
  * TODO LIST
@@ -43,12 +42,12 @@ import {useApi} from "./api-hook"
  - [x] When new results come in, it doesn't render
 */
 
-export function ZedTable(props: {
-  shape: zed.TypeRecord | zed.TypeArray
-  values: zed.Value[]
-  handlers: TableHandlers
-}) {
-  const api = useApi(props)
+export const ZedTable = forwardRef(function ZedTable(
+  props: ZedTableProps,
+  ref
+) {
+  const api = createZedTable(props)
+  useImperativeHandle(ref, () => api, [api])
 
   return (
     <Provider value={api}>
@@ -62,4 +61,4 @@ export function ZedTable(props: {
       </div>
     </Provider>
   )
-}
+})

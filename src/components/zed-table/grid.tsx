@@ -46,7 +46,7 @@ export function Grid() {
                 colStop: state.overscanColumnStopIndex,
               })
               if (state.overscanRowStopIndex > api.values.length - 30) {
-                api.handlers.loadNextPage()
+                api.handlers.onScrollNearBottom()
               }
             }}
           >

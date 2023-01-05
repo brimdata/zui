@@ -17,7 +17,7 @@ const BG = styled.footer`
   gap: 24px;
   font-size: 13px;
   line-height: 13px;
-  opacity: 0.8;
+  opacity: 1;
 `
 
 export default function StatusBar() {
