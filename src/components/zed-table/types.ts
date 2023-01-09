@@ -1,6 +1,7 @@
 import React from "react"
 import {zed} from "packages/zealot/src"
 import {ZedColumn} from "./column"
+import {ColumnSizingInfoState} from "@tanstack/react-table"
 
 export type GridState = {
   rowStart: number
@@ -18,6 +19,7 @@ export type ZedTableState = {
   columnExpanded: {}
   columnVisible: {}
   columnExpandedDefault: boolean
+  columnResizeInfo: ColumnSizingInfoState
 }
 
 export type ZedTableProps = {
@@ -31,3 +33,20 @@ export type ZedTableHandlers = {
   onScrollNearBottom: () => void
   onHeaderMenu: (e: React.MouseEvent, column: ZedColumn) => void
 }
+
+export const defaultState = (): ZedTableState => ({
+  valueExpanded: {},
+  valuePage: {},
+  columnWidth: {},
+  columnExpanded: {},
+  columnVisible: {},
+  columnExpandedDefault: false,
+  columnResizeInfo: {
+    isResizingColumn: false,
+    startOffset: 0,
+    deltaOffset: 0,
+    startSize: 0,
+    deltaPercentage: 0,
+    columnSizingStart: [],
+  },
+})

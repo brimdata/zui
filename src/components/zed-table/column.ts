@@ -82,7 +82,7 @@ export class ZedColumn {
   }
 
   get def() {
-    return this.isGrouped ? this.groupDef : this.leafDef
+    return Array.isArray(this.children) ? this.groupDef : this.leafDef
   }
 
   expand() {

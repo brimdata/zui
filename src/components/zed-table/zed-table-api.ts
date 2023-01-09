@@ -1,10 +1,16 @@
-import {Column, Table, createTable} from "@tanstack/table-core"
+import {Table, createTable} from "@tanstack/table-core"
 import {zed} from "@brimdata/zealot"
 import {config} from "./config"
 import {Cell} from "./cell"
 import {Position} from "./position"
 import {getMaxCellSizes} from "./utils"
-import {GridState, TableEvent, ZedTableHandlers, ZedTableState} from "./types"
+import {
+  defaultState,
+  GridState,
+  TableEvent,
+  ZedTableHandlers,
+  ZedTableState,
+} from "./types"
 import {createColumns} from "./create-columns"
 import {ZedColumn} from "./column"
 
@@ -14,8 +20,6 @@ export class ZedTableApi {
   private event: TableEvent = "init"
   private cells: Map<string, Cell> = new Map()
   private listeners = []
-  private _headerGroups = null
-  private _columns: Column<zed.Value, unknown>[] | null = null
   public baseColumns: ZedColumn[]
   private table: Table<any>
 
@@ -25,22 +29,56 @@ export class ZedTableApi {
     public state: ZedTableState,
     public handlers: ZedTableHandlers
   ) {
+    this.state = {...defaultState(), ...state}
     this.baseColumns = createColumns(this, shape)
     this.table = createTable({
       data: [],
       columns: this.baseColumns.map((c) => c.def),
       columnResizeMode: "onChange",
       defaultColumn: {size: config.defaultCellWidth},
-      onStateChange: () => {},
+      onStateChange: (updater) => {
+        const next =
+          typeof updater === "function"
+            ? updater(this.table.getState())
+            : updater
+        handlers.onStateChange({
+          ...this.state,
+          columnWidth: next.columnSizing,
+          columnVisible: next.columnVisibility,
+          columnResizeInfo: next.columnSizingInfo,
+        })
+      },
       getCoreRowModel: () => null,
       renderFallbackValue: null,
-      state: {},
+      state: {
+        columnSizing: this.state.columnWidth,
+        columnVisibility: this.state.columnVisible,
+        columnSizingInfo: this.state.columnResizeInfo,
+      },
     })
+    this.table.setOptions((prev) => ({...prev, state: this.table.initialState}))
+  }
+
+  update(state: ZedTableState) {
+    // Combine whats similar in this and the constructor
+    // Next up is the value expands and collapses and pages
+
+    this.state = {...this.state, ...state}
+    const tableState = {
+      columnSizing: this.state.columnWidth,
+      columnVisibility: this.state.columnVisible,
+      columnSizingInfo: this.state.columnResizeInfo,
+    }
+    this.baseColumns = createColumns(this, this.shape)
+    this.table.setOptions((prev) => ({
+      ...prev,
+      columns: this.baseColumns.map((c) => c.def),
+      state: {...prev.state, ...tableState},
+    }))
   }
 
   get headerGroups() {
-    if (this._headerGroups) return this._headerGroups
-    return (this._headerGroups = this.table.getHeaderGroups())
+    return this.table.getHeaderGroups()
   }
 
   get totalHeaderHeight() {
@@ -55,9 +93,7 @@ export class ZedTableApi {
   }
 
   get columns() {
-    if (this._columns) return this._columns
-    this._columns = this.table.getVisibleLeafColumns()
-    return this._columns
+    return this.table.getVisibleLeafColumns()
   }
 
   get columnCount() {
@@ -83,13 +119,15 @@ export class ZedTableApi {
 
   getCell(columnIndex: number, rowIndex: number) {
     const position = new Position(columnIndex, rowIndex)
-    if (this.cells.has(position.id)) {
-      return this.cells.get(position.id)
+    const column = this.columns[columnIndex]
+    if (!column) throw Error("No Column")
+    const cellId = Cell.createId(column.id, rowIndex)
+
+    if (this.cells.has(cellId)) {
+      return this.cells.get(cellId)
     } else {
       const root = this.values[rowIndex]
-      const column = this.columns[columnIndex]
       if (!root) throw new Error("No Root Value")
-      if (!column) throw Error("No Column")
       const value = column.accessorFn(root, rowIndex) as zed.Value
       const cell = new Cell({
         api: this,
@@ -97,14 +135,14 @@ export class ZedTableApi {
         position,
         value: value ?? new zed.Null(),
       })
-      this.cells.set(position.id, cell)
+      this.cells.set(cellId, cell)
       return cell
     }
   }
 
   cellChanged(cell: Cell) {
     this.event = "interaction"
-    this.cells.delete(cell.position.id)
+    this.cells.delete(cell.id)
     this.listeners.forEach((listener) => listener(cell))
   }
 

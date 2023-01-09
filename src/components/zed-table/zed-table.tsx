@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle} from "react"
+import React, {forwardRef, useImperativeHandle, useMemo} from "react"
 import {Provider} from "./context"
 import {Grid} from "./grid"
 import classNames from "classnames"
@@ -46,9 +46,10 @@ export const ZedTable = forwardRef(function ZedTable(
   props: ZedTableProps,
   ref
 ) {
-  const api = createZedTable(props)
+  const api = useMemo(() => createZedTable(props), [props.shape, props.values])
+  api.update(props.state)
   useImperativeHandle(ref, () => api, [api])
-
+  console.log("data", props.state.columnWidth)
   return (
     <Provider value={api}>
       <div

@@ -7,7 +7,7 @@ export const poolToolbarMenu = createMenu(
     return [
       {
         label: "Query Pool",
-        icon: "query",
+        iconName: "query",
         click: () => {
           api.queries.open({
             pins: [{type: "from", value: pool.name}],

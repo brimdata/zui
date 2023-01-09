@@ -40,9 +40,15 @@ import {Position} from "./position"
  */
 
 export class Cell {
+  id: string
   view: View
   columnId: string
   position: Position
+
+  static createId(columnId: string, rowIndex: number) {
+    const rowId = `row:${rowIndex}`
+    return [columnId, rowId].join("_")
+  }
 
   constructor(args: {
     api: ZedTableApi
@@ -50,6 +56,7 @@ export class Cell {
     columnId: string
     value: zed.Value
   }) {
+    this.id = Cell.createId(args.columnId, args.position.rowIndex)
     this.columnId = args.columnId
     this.position = args.position
     this.view = createView({
@@ -82,14 +89,6 @@ export class Cell {
 
   get lineCount() {
     return this.view.rowCount()
-  }
-
-  get rowId() {
-    return `row:${this.position.rowIndex}`
-  }
-
-  get id() {
-    return [this.columnId, this.rowId].join("_")
   }
 
   valueId(path: string) {
