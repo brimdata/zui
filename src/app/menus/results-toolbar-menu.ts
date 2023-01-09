@@ -51,7 +51,9 @@ export const resultsToolbarMenu = createMenu("resultsToolbarMenu", ({api}) => {
       label: "Columns",
       description: "Show or hide columns in the table",
       iconName: "columns",
-      click: () => dispatch(Modal.show("columns")),
+      click: () => {
+        api.layout.activatePane("columns")
+      },
     },
   ]
 })

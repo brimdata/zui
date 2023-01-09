@@ -98,7 +98,7 @@ export function SectionTabs(props: {options: MenuItem[]}) {
               opts.click({htmlEvent})
             }}
             aria-pressed={opts.checked}
-            data-section-tab-value={opts.label}
+            data-section-tab-value={opts.label.toLowerCase()}
             style={{
               visibility: menu.isHidden(i) ? "hidden" : "visible",
             }}
