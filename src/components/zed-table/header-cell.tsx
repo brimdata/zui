@@ -11,7 +11,7 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
   const isPlaceholder = header.isPlaceholder
   const hasChildren = header.subHeaders.length !== 0
   const def = header.column.columnDef
-  console.log(header.getSize())
+
   return (
     <div
       className={classNames("zed-table__header-cell", {

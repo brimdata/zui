@@ -64,6 +64,7 @@ export class ZedTableApi {
     // Next up is the value expands and collapses and pages
 
     this.state = {...this.state, ...state}
+    console.log(this.state.columnVisible)
     const tableState = {
       columnSizing: this.state.columnWidth,
       columnVisibility: this.state.columnVisible,
@@ -98,6 +99,13 @@ export class ZedTableApi {
 
   get columnCount() {
     return this.columns.length
+  }
+
+  get hiddenColumnCount() {
+    return (
+      this.table.getAllFlatColumns().length -
+      this.table.getVisibleFlatColumns().length
+    )
   }
 
   get rowCount() {
@@ -196,14 +204,51 @@ export class ZedTableApi {
     return this.event === "interaction"
   }
 
-  columnIsVisible(id: string) {
-    return !!this.state.columnVisible[id]
-  }
-
-  setColumnVisible(id: string, value: boolean) {
+  showAllColumns() {
     this.handlers.onStateChange({
       ...this.state,
-      columnVisible: {...this.state.columnVisible, [id]: value},
+      columnVisible: {},
+    })
+  }
+
+  hideAllColumns() {
+    const ids = this.baseColumns.flatMap((c) => [c.id, ...c.decendentIds])
+    const obj = {}
+    for (let id of ids) obj[id] = false
+    this.handlers.onStateChange({
+      ...this.state,
+      columnVisible: obj,
+    })
+  }
+
+  expandAllColumns() {
+    const ids = this.baseColumns.flatMap((c) => [c.id, ...c.decendentIds])
+    const obj = {}
+    for (let id of ids) obj[id] = true
+    this.handlers.onStateChange({
+      ...this.state,
+      columnExpanded: obj,
+    })
+  }
+
+  collapseAllColumns() {
+    const ids = this.baseColumns.flatMap((c) => [c.id, c.decendentIds])
+    const obj = {}
+    for (let id of ids) obj[id] = false
+    this.handlers.onStateChange({
+      ...this.state,
+      columnExpanded: obj,
+    })
+  }
+
+  columnIsVisible(id: string) {
+    return this.state.columnVisible[id] ?? true
+  }
+
+  setColumnVisible(state: Record<string, boolean>) {
+    this.handlers.onStateChange({
+      ...this.state,
+      columnVisible: {...this.state.columnVisible, ...state},
     })
   }
 

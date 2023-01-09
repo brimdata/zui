@@ -5,6 +5,7 @@ import {ZedColumn} from "./column"
 export function createColumns(
   api: ZedTableApi,
   type: zed.Type,
+  parent: ZedColumn | null = null,
   namePath: string[] = [],
   indexPath: number[] = []
 ) {
@@ -14,6 +15,7 @@ export function createColumns(
         new ZedColumn({
           field,
           api,
+          parent,
           path: [...namePath, field.name],
           indexPath: [...indexPath, index],
         })

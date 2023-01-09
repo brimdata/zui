@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react"
+import React, {useMemo} from "react"
 import {useResultsData} from "src/app/query-home/results/data-hook"
 import {zed} from "@brimdata/zealot"
 import {MultiShapeError} from "./multi-shape-error"
@@ -10,15 +10,22 @@ import {MAIN_RESULTS} from "src/js/state/Results/types"
 import {ZedTable} from "src/components/zed-table"
 import {useResultsContext} from "src/app/query-home"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
+import {useSelector} from "react-redux"
+import Table from "src/js/state/Table"
+import {State} from "src/js/state/types"
 
-function useZedTableHandlers(): [ZedTableState, ZedTableHandlers] {
+function useZedTableHandlers(
+  shape: zed.Type
+): [ZedTableState, ZedTableHandlers] {
   const select = useSelect()
   const dispatch = useDispatch()
-  const [state, setState] = useState<ZedTableState>({})
+  const state = useSelector((state: State) =>
+    Table.getStateForShape(state, shape)
+  )
   const handlers: ZedTableHandlers = useMemo(
     () => ({
-      onStateChange: (next) => {
-        setState(next)
+      onStateChange: (state) => {
+        dispatch(Table.setStateForShape({shape, state}))
       },
       onScrollNearBottom: () => {
         if (select(Results.isFetching(MAIN_RESULTS))) return
@@ -32,7 +39,7 @@ function useZedTableHandlers(): [ZedTableState, ZedTableHandlers] {
           .showUnder(e.currentTarget as HTMLElement)
       },
     }),
-    []
+    [shape]
   )
   return [state, handlers]
 }
@@ -42,7 +49,7 @@ export function MainTable() {
   const {setTable} = useResultsContext()
   const shapesArray = Object.values(shapes)
   const shape = shapesArray[0]
-  const [state, handlers] = useZedTableHandlers()
+  const [state, handlers] = useZedTableHandlers(shape)
 
   if (!shape) {
     return null

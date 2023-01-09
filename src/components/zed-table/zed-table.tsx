@@ -20,7 +20,7 @@ import {createZedTable} from "./create-zed-table"
  - [ ] Infinite Scroll
  - [x] Header groups for nested records
  - [x] Figure out an id scheme for nexted columns
- - [ ] Keep track of which records you want to expand headers for
+ - [x] Keep track of which records you want to expand headers for
  - [x] Make sure the styles are the same when you are measuring (font-family)
  - [x] Store the columns widths per shape, since zed identities are stable
  - [x] Re-style the header
@@ -49,7 +49,6 @@ export const ZedTable = forwardRef(function ZedTable(
   const api = useMemo(() => createZedTable(props), [props.shape, props.values])
   api.update(props.state)
   useImperativeHandle(ref, () => api, [api])
-  console.log("data", props.state.columnWidth)
   return (
     <Provider value={api}>
       <div

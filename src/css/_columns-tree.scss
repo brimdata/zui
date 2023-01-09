@@ -3,3 +3,12 @@
   display: inline-block;
   margin-left: 2px;
 }
+
+.columns-tree__item--hidden {
+  opacity: 0.5;
+
+  .list-item__menu {
+    visibility: visible;
+    width: auto;
+  }
+}

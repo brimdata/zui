@@ -29,13 +29,7 @@ function getSpliceIndex(props: Props) {
   return index
 }
 
-const Actions = ({
-  actions,
-  labels,
-}: {
-  labels?: boolean
-  actions: MenuItem[]
-}) => {
+const Actions = ({actions}: {actions: MenuItem[]}) => {
   const [hiddenEl, setHiddenEl] = useCallbackRef()
   const [childWidths, setChildWidths] = useState<null | number[]>(null)
 

@@ -11,13 +11,18 @@ function Node(props: NodeRendererProps<ZedColumn>) {
   const {node} = props
   const column = node.data
   const menu = columnListItemMenu.build(column)
+
   return (
     <ListItem
+      className={classNames({"columns-tree__item--hidden": !column.isVisible})}
       innerRef={props.dragHandle}
       indent={node.level}
       isOpen={node.isOpen}
       canToggle={column.isRecordType}
-      onToggle={() => props.node.toggle()}
+      onToggle={() => {
+        node.isOpen ? column.collapse() : column.expand()
+        node.toggle()
+      }}
       menu={menu}
     >
       {column.name}
@@ -33,6 +38,7 @@ function Node(props: NodeRendererProps<ZedColumn>) {
 export function ColumnsTree() {
   const {table} = useResultsContext()
   if (!table) return <p>Columns are for the table view</p>
+
   return (
     <FillFlexParent>
       {({width, height}) => {
@@ -42,7 +48,11 @@ export function ColumnsTree() {
             rowHeight={28}
             width={width}
             height={height}
-            initialData={table.baseColumns}
+            data={table.baseColumns}
+            openByDefault={false}
+            initialOpenState={table.state.columnExpanded}
+            disableDrag
+            disableDrop
             padding={10}
           >
             {Node}

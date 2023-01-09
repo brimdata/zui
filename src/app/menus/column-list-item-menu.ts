@@ -9,21 +9,13 @@ export const columnListItemMenu = createMenu(
         label: "Hide Column",
         iconName: "show",
         click: () => column.hide(),
+        visible: column.isVisible,
       },
       {
         label: "Show Column",
         iconName: "hide",
         click: () => column.show(),
-      },
-      {
-        label: "Expand Columns",
-        iconName: "expand-horizontal",
-        click: () => column.expand(),
-      },
-      {
-        label: "Expand Columns",
-        iconName: "collapse-horizontal",
-        click: () => column.collapse(),
+        visible: !column.isVisible,
       },
     ]
   }

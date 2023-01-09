@@ -1,6 +1,5 @@
 import {zq} from "./cmd/zq"
 import {decode, encode, zed, zjson} from "./index"
-import {trueType} from "./zed"
 
 const file = "testdata/sample.zson" // data.getPath("sample.zson");
 

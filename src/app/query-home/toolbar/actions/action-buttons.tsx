@@ -1,7 +1,7 @@
 import React, {RefCallback} from "react"
 import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
-import ActionButton, {ActionButtonProps} from "./action-button"
+import ActionButton from "./action-button"
 
 export const GUTTER = 10
 

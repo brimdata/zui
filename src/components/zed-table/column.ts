@@ -8,23 +8,26 @@ type Args = {
   field: zed.TypeField
   path: string[]
   indexPath: number[]
+  parent?: ZedColumn
 }
 
 const helper = createColumnHelper<zed.Value>()
 
 export class ZedColumn {
   children: null | ZedColumn[]
+  parent: null | ZedColumn
 
   constructor(private args: Args) {
-    this.children =
-      this.isRecordType && this.isGrouped
-        ? createColumns(
-            this.api,
-            this.type,
-            this.args.path,
-            this.args.indexPath
-          )
-        : null
+    this.parent = args.parent
+    this.children = this.isRecordType
+      ? createColumns(
+          this.api,
+          this.type,
+          this,
+          this.args.path,
+          this.args.indexPath
+        )
+      : null
   }
 
   private get api() {
@@ -81,8 +84,29 @@ export class ZedColumn {
     return this.api.columnIsExpanded(this.id)
   }
 
+  get isVisible() {
+    if (this.parent && !this.parent.isVisible) return false
+    return this.api.columnIsVisible(this.id)
+  }
+
+  get isExpanded() {
+    return this.api.columnIsExpanded(this.id)
+  }
+
+  get decendentIds() {
+    if (!this.children) return []
+    return this.children.flatMap((c) => [c.id, ...c.decendentIds])
+  }
+
+  get ancestorIds() {
+    if (!this.parent) return []
+    return [this.parent.id, ...this.parent.ancestorIds]
+  }
+
   get def() {
-    return Array.isArray(this.children) ? this.groupDef : this.leafDef
+    return Array.isArray(this.children) && this.isGrouped
+      ? this.groupDef
+      : this.leafDef
   }
 
   expand() {
@@ -94,10 +118,17 @@ export class ZedColumn {
   }
 
   hide() {
-    this.api.setColumnVisible(this.id, false)
+    const ids = [this.id, ...this.decendentIds]
+    const obj: Record<string, boolean> = {}
+    for (let id of ids) obj[id] = false
+    this.api.setColumnVisible(obj)
   }
 
   show() {
-    this.api.setColumnVisible(this.id, true)
+    let ids = [...this.ancestorIds, this.id]
+    if (this.isRecordType) ids = ids.concat(this.decendentIds)
+    const obj: Record<string, boolean> = {}
+    for (let id of ids) obj[id] = true
+    this.api.setColumnVisible(obj)
   }
 }

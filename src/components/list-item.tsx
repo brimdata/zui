@@ -6,6 +6,7 @@ import {BuiltMenu} from "src/core/menu"
 import {IconButton} from "./icon-button"
 
 export function ListItem(props: {
+  className?: string
   indent?: number
   children?: ReactNode
   canToggle?: boolean
@@ -26,7 +27,7 @@ export function ListItem(props: {
   return (
     <div
       ref={props.innerRef}
-      className={classNames("list-item", {
+      className={classNames("list-item", props.className, {
         "list-item--open": props.isOpen,
         "list-item--can-toggle": props.canToggle,
         "list-item--has-click": !!props.onClick,
@@ -56,6 +57,7 @@ export function ListItem(props: {
         <div className="list-item__content">{props.children}</div>
         <menu className="list-item__menu">
           {props.menu.items.map((item, i) => {
+            if (!item.visible) return null
             return (
               <IconButton key={i} className="list-item__menu-item" {...item} />
             )
