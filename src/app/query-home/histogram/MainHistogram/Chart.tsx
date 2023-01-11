@@ -10,7 +10,7 @@ import ChartSVG from "../ChartSVG"
 import useMainHistogram from "./useMainHistogram"
 
 const BG = styled.div`
-  height: 80px;
+  height: 100px;
   border-bottom: 1px solid var(--border-color);
 `
 
