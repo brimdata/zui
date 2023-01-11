@@ -13,6 +13,7 @@ export const HeadingButton = styled.button`
   min-width: 0;
   margin-left: 10px;
   margin-right: 10px;
+  flex: 1;
 
   &:hover {
     background: var(--button-background);
