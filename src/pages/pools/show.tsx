@@ -8,7 +8,6 @@ import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import {bytes} from "src/js/lib/fmt"
 import styled from "styled-components"
-import Actions from "../../app/query-home/toolbar/actions/actions"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import classNames from "classnames"
 import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
@@ -17,6 +16,7 @@ import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
 import {H1} from "src/components/h1"
 import {PoolLoadMore, PoolLoadMoreHandle} from "src/panes/pool-load-more"
 import {NotFound} from "./404"
+import {SubmitButton} from "src/components/submit-button"
 
 const BG = styled.div`
   --page-padding: 32px;
@@ -35,6 +35,8 @@ const Toolbar = styled.div`
   flex: 1;
   min-width: 0;
   height: 42px;
+  align-items: center;
+  justify-content: flex-end;
 `
 
 const Subtitle = styled.p`
@@ -81,6 +83,7 @@ export const Show = () => {
   const [{isOver}, dropRef] = useFilesDrop({
     onDrop: (files) => loadForm.current?.submit(files),
   })
+  const queryPool = poolToolbarMenu.build(pool).items[0]
   return (
     <BG ref={dropRef} className={classNames({isOver})}>
       <Header>
@@ -89,7 +92,12 @@ export const Show = () => {
           <Subtitle>{bytes(pool.stats.size)}</Subtitle>
         </div>
         <Toolbar>
-          <Actions actions={poolToolbarMenu.build(pool).template} />
+          <SubmitButton
+            icon={queryPool.iconName}
+            onClick={(htmlEvent) => queryPool.click({htmlEvent})}
+          >
+            Query Pool
+          </SubmitButton>
         </Toolbar>
       </Header>
       <Body>
