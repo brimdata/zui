@@ -17,6 +17,10 @@ export class MenuManager<Context> {
     this.map.set(menu.id, menu)
   }
 
+  get(id: string) {
+    return this.map.get(id)
+  }
+
   build(id: string, ...args: any[]) {
     const menu = this.map.get(id)
     if (menu) {

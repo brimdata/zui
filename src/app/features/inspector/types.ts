@@ -4,8 +4,8 @@ import {InspectContext} from "./inspect-context"
 
 type InspectorMouseEvent = (
   e: MouseEvent,
-  value: zed.Value | zed.Type,
-  field: zed.Field | zed.FieldData
+  value: zed.Any,
+  field: zed.Field
 ) => void
 
 export type InspectorProps = {

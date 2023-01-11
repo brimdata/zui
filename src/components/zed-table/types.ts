@@ -2,6 +2,7 @@ import React from "react"
 import {zed} from "packages/zealot/src"
 import {ZedColumn} from "./column"
 import {ColumnSizingInfoState} from "@tanstack/react-table"
+import {Cell} from "./cell"
 
 export type GridState = {
   rowStart: number
@@ -31,7 +32,13 @@ export type ZedTableProps = {
 export type ZedTableHandlers = {
   onStateChange: (nextState: ZedTableState) => void
   onScrollNearBottom: () => void
-  onHeaderMenu: (e: React.MouseEvent, column: ZedColumn) => void
+  onHeaderContextMenu: (e: React.MouseEvent, column: ZedColumn) => void
+  onValueContextMenu: (
+    e: React.MouseEvent,
+    value: zed.Any,
+    field: zed.Field,
+    cell: Cell
+  ) => void
 }
 
 export const defaultState = (): ZedTableState => ({

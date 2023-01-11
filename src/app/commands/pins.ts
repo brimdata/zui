@@ -1,4 +1,8 @@
+import {zed} from "@brimdata/zealot"
+import BrimApi from "src/js/api"
+import {DateTuple} from "src/js/lib/TimeWindow"
 import Editor from "src/js/state/Editor"
+import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Pools from "src/js/state/Pools"
 import submitSearch from "../query-home/flows/submit-search"
 import {createCommand} from "./command"
@@ -40,20 +44,31 @@ export const updateFrom = createCommand(
   }
 )
 
+function defaultFrom(now: Date) {
+  return new Date(
+    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)
+  )
+}
+
+function defaultTo(now: Date) {
+  return new Date(
+    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0)
+  )
+}
+
+async function defaultRange(api: BrimApi): Promise<DateTuple> {
+  const range = await api.dispatch(Pools.getTimeRange(api.current.poolName))
+  const now = new Date()
+  const from = (range && range[0]) || defaultFrom(now)
+  const to = (range && range[1]) || defaultTo(now)
+  return [from, to]
+}
+
 export const createTimeRange = createCommand(
   "pins.createTimeRange",
   async ({dispatch, api, getState}) => {
     const pins = Editor.getPins(getState())
-    const range = await dispatch(Pools.getTimeRange(api.current.poolName))
-    const now = new Date()
-    const defaultFrom = new Date(
-      Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)
-    )
-    const defaultTo = new Date(
-      Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0)
-    )
-    const from = (range && range[0]) || defaultFrom
-    const to = (range && range[1]) || defaultTo
+    const [from, to] = await defaultRange(api)
     dispatch(
       Editor.addPin({
         type: "time-range",
@@ -63,5 +78,39 @@ export const createTimeRange = createCommand(
       })
     )
     dispatch(Editor.editPin(pins.length))
+  }
+)
+
+function currentRange(api: BrimApi) {
+  const pin = api.editor.pins.find(
+    (p) => p.type === "time-range"
+  ) as TimeRangeQueryPin
+  if (pin) return [new Date(pin.from), new Date(pin.to)] as const
+  else return null
+}
+
+export const setTimeRangeFrom = createCommand(
+  "pins.setTimeRangeFrom",
+  async ({api}, value: zed.Any) => {
+    if (!(value instanceof zed.Time)) return
+    const current = currentRange(api)
+    const defaults = await defaultRange(api)
+    const from = value.toDate()
+    const to = current ? current[1] : defaults[1]
+    api.dispatch(Editor.setTimeRange({from, to}))
+    api.dispatch(submitSearch())
+  }
+)
+
+export const setTimeRangeTo = createCommand(
+  "pins.setTimeRangeFrom",
+  async ({api}, value: zed.Any) => {
+    if (!(value instanceof zed.Time)) return
+    const current = currentRange(api)
+    const defaults = await defaultRange(api)
+    const from = current ? current[0] : defaults[0]
+    const to = value.toDate()
+    api.dispatch(Editor.setTimeRange({from, to}))
+    api.dispatch(submitSearch())
   }
 )

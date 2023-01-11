@@ -64,7 +64,6 @@ export class ZedTableApi {
     // Next up is the value expands and collapses and pages
 
     this.state = {...this.state, ...state}
-    console.log(this.state.columnVisible)
     const tableState = {
       columnSizing: this.state.columnWidth,
       columnVisibility: this.state.columnVisible,
@@ -136,12 +135,12 @@ export class ZedTableApi {
     } else {
       const root = this.values[rowIndex]
       if (!root) throw new Error("No Root Value")
-      const value = column.accessorFn(root, rowIndex) as zed.Value
+      const field = column.accessorFn(root, rowIndex) as zed.Field | null
       const cell = new Cell({
         api: this,
         columnId: column.id,
         position,
-        value: value ?? new zed.Null(),
+        field,
       })
       this.cells.set(cellId, cell)
       return cell

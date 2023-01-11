@@ -1,8 +1,11 @@
+import {zed} from "packages/zealot/src"
 import Current from "src/js/state/Current"
 import LogDetails from "src/js/state/LogDetails"
 import {GetState} from "src/js/state/types"
 
 export class CurrentApi {
+  field: zed.Field
+
   constructor(private getState: GetState) {}
 
   get lakeId() {

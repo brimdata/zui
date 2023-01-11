@@ -44,6 +44,8 @@ export class Cell {
   view: View
   columnId: string
   position: Position
+  field: zed.Field
+  value: zed.Value
 
   static createId(columnId: string, rowIndex: number) {
     const rowId = `row:${rowIndex}`
@@ -54,11 +56,13 @@ export class Cell {
     api: ZedTableApi
     position: Position
     columnId: string
-    value: zed.Value
+    field: zed.Field | null
   }) {
     this.id = Cell.createId(args.columnId, args.position.rowIndex)
     this.columnId = args.columnId
     this.position = args.position
+    this.field = args.field
+    this.value = args.field?.value ?? new zed.Null()
     this.view = createView({
       ctx: new InspectContext({
         isExpanded: (key) => args.api.valueIsExpanded(this.viewId(key)),
@@ -73,14 +77,17 @@ export class Cell {
           args.api.setValuePage(viewId, page + 1)
           args.api.cellChanged(this)
         },
+        onContextMenu: (e, value, field) => {
+          args.api.handlers.onValueContextMenu(e, value, field, this)
+        },
         peekLimit: 1,
         lineLimit: 2,
         rowsPerPage: 25,
         rowLimit: 50,
       }),
-      value: args.value,
-      type: args.value.type,
-      field: null,
+      value: this.value,
+      type: this.value.type,
+      field: this.field,
       key: null,
       last: true,
       indexPath: [],

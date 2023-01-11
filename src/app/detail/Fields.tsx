@@ -28,7 +28,7 @@ const DataPanel = React.memo<DTProps>(function DataTable({
   onHover,
   format,
 }: DTProps) {
-  const items = fields.slice(0, LIMIT)
+  const items = fields.slice(0, LIMIT).filter((f) => !!f)
   return (
     <Panel>
       {items.map((field, index) => (

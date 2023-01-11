@@ -64,11 +64,14 @@ export class ZedColumn {
   }
 
   get leafDef() {
-    return helper.accessor((row: zed.Record) => row.at(this.args.indexPath), {
-      id: this.id,
-      header: this.name,
-      meta: this,
-    })
+    return helper.accessor(
+      (row: zed.Record) => row.fieldAt(this.args.indexPath),
+      {
+        id: this.id,
+        header: this.name,
+        meta: this,
+      }
+    )
   }
 
   get groupDef() {

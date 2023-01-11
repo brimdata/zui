@@ -21,7 +21,7 @@ export default function (p = "") {
       return this
     },
 
-    notIn(field: zed.Field, value: zed.Value) {
+    notIn(field: zed.Field, value: zed.Any) {
       p = appendWithPipe(p, syntax.notIn(field, value))
       return this
     },

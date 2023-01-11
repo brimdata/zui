@@ -1,6 +1,6 @@
 import {Type} from "./types/types"
 import {Value} from "./values/types"
-export type Any = Type | Value
+
 export {ZedContext as Context} from "./context"
 export {TypeAlias} from "./types/type-alias"
 export {TypeArray} from "./types/type-array"
@@ -77,3 +77,5 @@ export * from "./utils/is-string"
 export * from "./utils/is-time"
 export * from "./utils/is-type-alias"
 export * from "./utils/true-type"
+export * from "./utils/base-value"
+export type Any = Type | Value

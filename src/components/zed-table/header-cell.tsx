@@ -32,7 +32,9 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
           <button
             className="zed-table__header-cell-menu-button"
             aria-label={`${def.header} Header Menu`}
-            onClick={(e) => api.handlers.onHeaderMenu(e, def.meta as ZedColumn)}
+            onClick={(e) =>
+              api.handlers.onHeaderContextMenu(e, def.meta as ZedColumn)
+            }
           >
             <Icon name="chevron-down" size={16} />
           </button>

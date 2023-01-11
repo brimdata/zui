@@ -13,6 +13,7 @@ import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {useSelector} from "react-redux"
 import Table from "src/js/state/Table"
 import {State} from "src/js/state/types"
+import {cellContextMenu} from "src/app/menus/cell-context-menu"
 
 function useZedTableHandlers(
   shape: zed.Type
@@ -33,10 +34,14 @@ function useZedTableHandlers(
         if (select(Results.isLimited(MAIN_RESULTS))) return
         dispatch(Results.fetchNextPage())
       },
-      onHeaderMenu(e, column) {
+      onHeaderContextMenu(e, column) {
         headerContextMenu
           .build(this, column)
           .showUnder(e.currentTarget as HTMLElement)
+      },
+      onValueContextMenu(e, value, field, cell) {
+        e.preventDefault()
+        cellContextMenu.build(value, field, cell).show()
       },
     }),
     [shape]
