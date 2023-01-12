@@ -10,6 +10,7 @@ import Slice from "src/js/state/Inspector"
 import {debounce, isNumber} from "lodash"
 import Results from "src/js/state/Results"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
+import {PathView} from "./path-view"
 
 export function MainInspector(props: {
   height: number
@@ -89,6 +90,7 @@ export function MainInspector(props: {
       loadMore={useCallback(loadMore, [])}
       onContextMenu={useCallback(onContextMenu, [])}
       onClick={useCallback(onClick, [])}
+      customViews={[PathView]}
       {...props}
     />
   )
