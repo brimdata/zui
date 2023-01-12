@@ -9,14 +9,12 @@ import {syntax} from "../templates/syntax"
 import {RenderMode} from "../types"
 import {View} from "./view"
 
-export abstract class ContainerView<
-  T extends zed.Any = zed.Any
-> extends View<T> {
+export abstract class ContainerView extends View {
   abstract name(): string
   abstract count(): number
   abstract openToken(): string
   abstract closeToken(): string
-  abstract iterate(n?: number): Generator<View<zed.Any>>
+  abstract iterate(n?: number): Generator<View>
 
   rowCount() {
     if (!this.isExpanded()) return 1

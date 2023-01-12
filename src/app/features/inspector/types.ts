@@ -24,6 +24,26 @@ export type InspectorProps = {
   onScroll?: (props: {top: number; left: number}) => void
   initialScrollPosition?: {top: number; left: number}
   customViews: typeof View[]
+  hideKeys: boolean
+  hideSyntax: boolean
+}
+
+export type InspectContextArgs = Pick<
+  InspectorProps,
+  | "incValuePage"
+  | "getValuePage"
+  | "setExpanded"
+  | "isExpanded"
+  | "onClick"
+  | "onContextMenu"
+  | "customViews"
+  | "hideKeys"
+  | "hideSyntax"
+> & {
+  peekLimit?: number
+  lineLimit?: number
+  rowsPerPage?: number
+  rowLimit?: number
 }
 
 export type InspectArgs = {
@@ -38,22 +58,6 @@ export type InspectArgs = {
   key: string | null | zed.Any
   last: boolean
   indexPath: (number | string)[]
-}
-
-export type InspectContextArgs = Pick<
-  InspectorProps,
-  | "incValuePage"
-  | "getValuePage"
-  | "setExpanded"
-  | "isExpanded"
-  | "onClick"
-  | "onContextMenu"
-  | "customViews"
-> & {
-  peekLimit?: number
-  lineLimit?: number
-  rowsPerPage?: number
-  rowLimit?: number
 }
 
 export type RowData = {

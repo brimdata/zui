@@ -3,11 +3,13 @@ import {RenderMode} from "../types"
 import {View} from "../views/view"
 import {item} from "./item"
 import {key} from "./key"
+import {space} from "./space"
 import {typename} from "./typename"
 
-export function field(view: View<zed.Any>, mode: RenderMode) {
+export function field(view: View, mode: RenderMode) {
   const nodes = []
-  if (view.args.key) {
+
+  if (view.showKey) {
     nodes.push(key(view))
   }
 
@@ -18,7 +20,7 @@ export function field(view: View<zed.Any>, mode: RenderMode) {
   }
 
   if (!view.args.last) {
-    nodes.push(", ")
+    nodes.push(view.showSyntax ? ", " : space())
   }
 
   return nodes

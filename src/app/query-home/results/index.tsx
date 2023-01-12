@@ -36,7 +36,9 @@ const ResultsComponent = () => {
       <AppErrorBoundary>
         <Body ref={ref} data-test-locator="viewer_results">
           {error && <ResultsError error={error} />}
-          {!error && view === "TABLE" && <MainTable />}
+          {!error && view === "TABLE" && (
+            <MainTable height={rect.height} width={rect.width} />
+          )}
           {!error && view === "INSPECTOR" && (
             <div
               style={{

@@ -15,6 +15,7 @@ import Table from "src/js/state/Table"
 import {State} from "src/js/state/types"
 import {cellContextMenu} from "src/app/menus/cell-context-menu"
 import {createRecord} from "@brimdata/zealot"
+import {MainInspector} from "src/app/query-home/results/main-inspector"
 
 function useZedTableHandlers(
   shape: zed.Type
@@ -56,7 +57,7 @@ function useZedTableHandlers(
   return [state, handlers]
 }
 
-export function MainTable() {
+export function MainTable(props: {height: number; width: number}) {
   const {shapes, values} = useResultsData()
   const {setTable} = useResultsContext()
   const shapesArray = Object.values(shapes)
@@ -73,9 +74,9 @@ export function MainTable() {
   }, [values, shape, singleShape])
 
   if (!shape) {
-    return <p>No Shape</p>
+    return null
   } else if (!singleShape) {
-    return <MultiShapeError />
+    return <MainInspector {...props} values={values} />
   } else {
     return (
       <ZedTable

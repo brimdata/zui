@@ -91,6 +91,8 @@ export function MainInspector(props: {
       onContextMenu={useCallback(onContextMenu, [])}
       onClick={useCallback(onClick, [])}
       customViews={[PathView]}
+      // hideKeys
+      // hideSyntax
       {...props}
     />
   )

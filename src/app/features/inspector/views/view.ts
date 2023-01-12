@@ -27,6 +27,14 @@ export class View {
     return zedTypeClassName(this.value)
   }
 
+  get showKey() {
+    return !!this.args.key && !this.args.ctx.props.hideKeys
+  }
+
+  get showSyntax() {
+    return !this.args.ctx.props.hideSyntax
+  }
+
   rowCount() {
     return 1
   }

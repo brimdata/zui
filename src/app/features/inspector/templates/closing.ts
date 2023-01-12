@@ -5,8 +5,10 @@ import {zed} from "@brimdata/zealot"
 
 export function closing(view: ContainerView) {
   let nodes = []
-  nodes.push(container.close(view))
+  if (view.showSyntax) {
+    nodes.push(container.close(view))
+  }
   if (zed.isTypeAlias(view.args.type)) nodes.push(typename(view))
-  if (!view.args.last) nodes.push(",")
+  if (!view.args.last && view.showSyntax) nodes.push(",")
   return nodes
 }

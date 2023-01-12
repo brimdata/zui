@@ -1,3 +1,4 @@
+import {useDeferredValue} from "react"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
@@ -7,7 +8,7 @@ export function useResultsData() {
   const shapes = useSelector(Results.getShapes(MAIN_RESULTS))
 
   return {
-    values,
-    shapes,
+    values: useDeferredValue(values),
+    shapes: useDeferredValue(shapes),
   }
 }
