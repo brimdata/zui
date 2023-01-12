@@ -27,7 +27,6 @@ export const Cell = React.memo(function Cell({
 }: GridChildComponentProps) {
   const api = useZedTable()
   const cell = api.getCell(columnIndex, rowIndex)
-
   if (api.shouldRenderImmediately) cell.inspect()
 
   const [isInspected, setIsInspected] = useState(cell.isInspected)

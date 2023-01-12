@@ -17,7 +17,7 @@ export class Channel extends EventEmitter {
     this.emit("row", row)
   }
 
-  addShape(id: number, type: zed.Type) {
+  addShape(id: number | string, type: zed.Type) {
     this.shapesMap[id] = type
     this.emit("shape", type)
   }
@@ -32,8 +32,11 @@ export class Channel extends EventEmitter {
 
   consume(json: zjson.Object) {
     const value = this.stream.decode(json)
+    console.log(json)
     if ("id" in json.type && !this.hasShape(json.type.id)) {
       this.addShape(json.type.id, value.type)
+    } else if (json.type.kind === "primitive") {
+      this.addShape(json.type.name, value.type)
     }
     this.addRow(value)
   }

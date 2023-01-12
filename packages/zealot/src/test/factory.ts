@@ -25,6 +25,10 @@ export function createField(name: string, value: unknown): zed.Field {
 }
 
 export function createData(value: unknown): zed.Value {
+  if (value instanceof zed.Array) {
+    return value as zed.Value
+  }
+
   if (value instanceof zed.Primitive) {
     return value as zed.Value
   }

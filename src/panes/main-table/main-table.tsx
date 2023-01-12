@@ -14,7 +14,7 @@ import {useSelector} from "react-redux"
 import Table from "src/js/state/Table"
 import {State} from "src/js/state/types"
 import {cellContextMenu} from "src/app/menus/cell-context-menu"
-import {useActiveQuery} from "src/app/query-home/title-bar/context"
+import {createRecord} from "@brimdata/zealot"
 
 function useZedTableHandlers(
   shape: zed.Type
@@ -60,22 +60,27 @@ export function MainTable() {
   const {shapes, values} = useResultsData()
   const {setTable} = useResultsContext()
   const shapesArray = Object.values(shapes)
+  const singleShape = shapesArray.length === 1
   const shape = shapesArray[0]
   const [state, handlers] = useZedTableHandlers(shape)
 
+  const recordValues = useMemo(() => {
+    if (singleShape && !(shape instanceof zed.TypeRecord)) {
+      return values.map((value) => createRecord({this: value}))
+    } else {
+      return values
+    }
+  }, [values, shape, singleShape])
+
   if (!shape) {
-    return null
-  } else if (shapesArray.length > 1) {
+    return <p>No Shape</p>
+  } else if (!singleShape) {
     return <MultiShapeError />
-  } else if (
-    !(shape instanceof zed.TypeRecord || shape instanceof zed.TypeArray)
-  ) {
-    return <p>Not a Record Type</p>
   } else {
     return (
       <ZedTable
         shape={shape}
-        values={values}
+        values={recordValues}
         state={state}
         {...handlers}
         ref={setTable}

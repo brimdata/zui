@@ -66,7 +66,12 @@ export class ZedColumn {
 
   get leafDef() {
     return helper.accessor(
-      (row: zed.Record) => row.fieldAt(this.args.indexPath),
+      (row: zed.Any) => {
+        if (row instanceof zed.Record) return row.fieldAt(this.args.indexPath)
+        else {
+          return row
+        }
+      },
       {
         id: this.id,
         header: this.name,

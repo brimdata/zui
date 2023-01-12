@@ -21,6 +21,14 @@ export function createColumns(
         })
     )
   } else {
-    throw new Error("Unsupported Type" + type.toString())
+    return [
+      new ZedColumn({
+        field: new zed.TypeField("this", type),
+        api,
+        parent: null,
+        path: ["this"],
+        indexPath: [0],
+      }),
+    ]
   }
 }
