@@ -9,6 +9,10 @@ export class InspectContext {
 
   constructor(public props: InspectContextArgs) {}
 
+  get customViews() {
+    return this.props.customViews ?? []
+  }
+
   // How many fields to show on a line
   get lineLimit() {
     return this.props.lineLimit ?? 15

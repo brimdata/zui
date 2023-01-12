@@ -1,21 +1,30 @@
 import {zed} from "@brimdata/zealot"
 import {ReactNode} from "react"
+import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import {field} from "../templates/field"
 import {InspectArgs, RenderMode} from "../types"
 
-export class View<T extends zed.Any = zed.Any> {
+export class View {
+  static when(_args: InspectArgs) {
+    return true
+  }
+
   constructor(public args: InspectArgs) {}
 
   get ctx() {
     return this.args.ctx
   }
 
-  get value(): T {
-    return this.args.value as T
+  get value(): zed.Any {
+    return this.args.value
   }
 
   get key() {
     return this.args.indexPath.join(",")
+  }
+
+  get className() {
+    return zedTypeClassName(this.value)
   }
 
   rowCount() {

@@ -4,6 +4,8 @@ import {createView} from "src/app/features/inspector/views/create"
 import {ZedTableApi} from "./zed-table-api"
 import {View} from "src/app/features/inspector/views/view"
 import {Position} from "./position"
+import {PathView} from "src/app/query-home/results/path-view"
+import {BareStringView} from "src/app/query-home/results/bare-string-view"
 
 /**
  * There are several types of IDs
@@ -41,7 +43,7 @@ import {Position} from "./position"
 
 export class Cell {
   id: string
-  view: View
+  view: View<zed.Any>
   columnId: string
   position: Position
   field: zed.Field
@@ -65,6 +67,7 @@ export class Cell {
     this.value = args.field?.value ?? new zed.Null()
     this.view = createView({
       ctx: new InspectContext({
+        customViews: [PathView, BareStringView],
         isExpanded: (key) => args.api.valueIsExpanded(this.viewId(key)),
         setExpanded: (key, value) => {
           args.api.setValueExpanded(this.viewId(key), value)

@@ -6,6 +6,7 @@
 }
 
 $unknown-type-color: #afafaf;
+
 [class*="-bg-color"] {
   background: $unknown-type-color;
   fill: $unknown-type-color;
@@ -45,3 +46,13 @@ $unknown-type-color: #afafaf;
 @include zeek-bg-color("alert-1", var(--alert-1));
 @include zeek-bg-color("alert-2", var(--alert-2));
 @include zeek-bg-color("alert-3", var(--alert-3));
+
+.zeek-path-tag {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0 6px;
+  line-height: 15px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}

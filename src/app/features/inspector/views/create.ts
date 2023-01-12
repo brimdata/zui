@@ -11,6 +11,11 @@ import {TypeRecordView} from "./type-record-view"
 import {View} from "./view"
 
 export function createView(args: InspectArgs): View {
+  const CustomView = args.ctx.customViews.find((v) => v.when(args))
+  if (CustomView) {
+    return new CustomView(args)
+  }
+
   // VALUES
 
   // * unset

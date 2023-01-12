@@ -1,6 +1,7 @@
 import {zed} from "@brimdata/zealot"
 import React, {MouseEvent, ReactNode} from "react"
 import {InspectContext} from "./inspect-context"
+import {View} from "./views/view"
 
 type InspectorMouseEvent = (
   e: MouseEvent,
@@ -22,6 +23,7 @@ export type InspectorProps = {
   innerRef?: React.Ref<any>
   onScroll?: (props: {top: number; left: number}) => void
   initialScrollPosition?: {top: number; left: number}
+  customViews: typeof View[]
 }
 
 export type InspectArgs = {
@@ -46,6 +48,7 @@ export type InspectContextArgs = Pick<
   | "isExpanded"
   | "onClick"
   | "onContextMenu"
+  | "customViews"
 > & {
   peekLimit?: number
   lineLimit?: number

@@ -1,5 +1,4 @@
 import React from "react"
-import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import {RenderMode} from "../types"
 import {View} from "../views/view"
 
@@ -20,7 +19,7 @@ export function clickHandlers(view: View) {
 export function item(view: View, mode: RenderMode) {
   const props = {
     key: view.args.indexPath.join(","),
-    className: zedTypeClassName(view.value),
+    className: view.className,
     ...clickHandlers(view),
   }
   return <span {...props}>{view.render(mode)}</span>
