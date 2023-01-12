@@ -12,6 +12,7 @@ import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
 import MainHistogramChart from "./histogram/MainHistogram/Chart"
 import {ZedTableApi} from "src/components/zed-table/zed-table-api"
+import {ActiveQuery} from "../core/models/active-query"
 
 const MainContent = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const ContentWrap = styled.div`
 const ResultsContext = React.createContext<{
   table: ZedTableApi | null
   setTable: (v: ZedTableApi | null) => void
+  query: ActiveQuery
 }>(null)
 
 export function useResultsContext() {
@@ -42,7 +44,9 @@ export function useResultsContext() {
 
 function ResultsProvider({children}) {
   const [table, setTable] = useState<ZedTableApi | null>(null)
+  const query = useSelector(Current.getActiveQuery)
   const value = {
+    query,
     table,
     setTable: useCallback((table: ZedTableApi | null) => setTable(table), []),
   }

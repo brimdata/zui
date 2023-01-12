@@ -262,6 +262,14 @@ export class ZedTableApi {
     })
   }
 
+  columnIsSortedAsc(fieldPath: string) {
+    return this.state.columnSorted[fieldPath] === "asc"
+  }
+
+  columnIsSortedDesc(fieldPath: string) {
+    return this.state.columnSorted[fieldPath] === "desc"
+  }
+
   valueIsExpanded(id: string) {
     return !!this.state.valueExpanded[id]
   }

@@ -19,6 +19,7 @@ export type ZedTableState = {
   columnWidth: {}
   columnExpanded: {}
   columnVisible: {}
+  columnSorted: {}
   columnExpandedDefault: boolean
   columnResizeInfo: ColumnSizingInfoState
 }

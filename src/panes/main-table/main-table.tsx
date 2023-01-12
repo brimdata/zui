@@ -14,15 +14,22 @@ import {useSelector} from "react-redux"
 import Table from "src/js/state/Table"
 import {State} from "src/js/state/types"
 import {cellContextMenu} from "src/app/menus/cell-context-menu"
+import {useActiveQuery} from "src/app/query-home/title-bar/context"
 
 function useZedTableHandlers(
   shape: zed.Type
 ): [ZedTableState, ZedTableHandlers] {
   const select = useSelect()
   const dispatch = useDispatch()
-  const state = useSelector((state: State) =>
+  const tableState = useSelector((state: State) =>
     Table.getStateForShape(state, shape)
   )
+  const {query} = useResultsContext()
+  const state = useMemo(
+    () => ({...tableState, columnSorted: query.toAst().sorts}),
+    [tableState, query]
+  )
+
   const handlers: ZedTableHandlers = useMemo(
     () => ({
       onStateChange: (state) => {

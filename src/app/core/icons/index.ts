@@ -41,6 +41,8 @@ import ExpandHorizontal from "./expand-horizontal"
 import CollapseHorizontal from "./collapse-horizontal"
 import show from "./show"
 import hide from "./hide"
+import SortAsc from "./sort-asc"
+import SortDesc from "./sort-desc"
 
 export default {
   check,
@@ -86,4 +88,6 @@ export default {
   "collapse-horizontal": CollapseHorizontal,
   show,
   hide,
+  "sort-asc": SortAsc,
+  "sort-desc": SortDesc,
 }

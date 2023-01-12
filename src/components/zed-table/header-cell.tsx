@@ -11,24 +11,35 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
   const isPlaceholder = header.isPlaceholder
   const hasChildren = header.subHeaders.length !== 0
   const def = header.column.columnDef
-
+  const column = def.meta as ZedColumn
+  const width = header.getSize()
   return (
     <div
       className={classNames("zed-table__header-cell", {
         isPlaceholder,
         hasChildren,
       })}
-      style={{width: header.getSize()}}
+      style={{width}}
       data-column-id={isPlaceholder ? header.placeholderId : header.column.id}
     >
       {isPlaceholder ? null : (
         <>
-          <span
-            className="zed-table__header-cell-text"
-            title={def.header as string}
-          >
-            {def.header as string}
-          </span>
+          <div className="zed-table__header-cell-info">
+            <span
+              className="zed-table__header-cell-text"
+              title={def.header as string}
+            >
+              {def.header as string}
+            </span>
+
+            {column.isSortedAsc && width > 75 && (
+              <Icon name="sort-asc" className="zed-table__sort-icon" />
+            )}
+            {column.isSortedDesc && width > 75 && (
+              <Icon name="sort-desc" className="zed-table__sort-icon" />
+            )}
+          </div>
+
           <button
             className="zed-table__header-cell-menu-button"
             aria-label={`${def.header} Header Menu`}

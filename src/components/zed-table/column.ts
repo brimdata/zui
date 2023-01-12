@@ -2,6 +2,7 @@ import {zed} from "@brimdata/zealot"
 import {createColumnHelper} from "@tanstack/react-table"
 import {ZedTableApi} from "./zed-table-api"
 import {createColumns} from "./create-columns"
+import {toFieldPath} from "src/js/zql/toZql"
 
 type Args = {
   api: ZedTableApi
@@ -69,6 +70,7 @@ export class ZedColumn {
       {
         id: this.id,
         header: this.name,
+        minSize: 40,
         meta: this,
       }
     )
@@ -110,6 +112,18 @@ export class ZedColumn {
     return Array.isArray(this.children) && this.isGrouped
       ? this.groupDef
       : this.leafDef
+  }
+
+  get fieldPath() {
+    return toFieldPath(this.path)
+  }
+
+  get isSortedAsc() {
+    return this.api.columnIsSortedAsc(this.fieldPath)
+  }
+
+  get isSortedDesc() {
+    return this.api.columnIsSortedDesc(this.fieldPath)
   }
 
   expand() {

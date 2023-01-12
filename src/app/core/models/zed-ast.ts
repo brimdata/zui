@@ -1,6 +1,6 @@
 import * as zealot from "@brimdata/zealot"
 import {fieldExprToName} from "src/js/brim/ast"
-import {ColumnName} from "src/js/state/Columns/models/column"
+import {toFieldPath} from "src/js/zql/toZql"
 
 export class ZedAst {
   public tree: any
@@ -47,13 +47,16 @@ export class ZedAst {
     return (this._ops = list)
   }
 
-  get sorts(): [ColumnName, "asc" | "desc"][] {
+  get sorts(): Record<string, "asc" | "desc"> {
     const ops = this.ops.filter((o) => o.kind === "Sort") ?? []
-    return ops.map((op) => {
+    let sorts = {}
+    for (let op of ops) {
       const name = fieldExprToName(op.args[0])
       const column = Array.isArray(name) ? name : [name]
-      return [column, op.order]
-    })
+      const fieldPath = toFieldPath(column)
+      sorts[fieldPath] = op.order
+    }
+    return sorts
   }
 
   get isSummarized() {

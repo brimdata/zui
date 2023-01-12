@@ -13,12 +13,11 @@ import {createMenu} from "src/core/menu"
 function getWhenContext(api: BrimApi, column: ZedColumn) {
   const query = api.current.query
   const ast = query.toAst()
-  const sorts = ast.sorts
   return {
-    isRecord: zed.trueType(column.type) instanceof zed.TypeRecord,
+    isRecord: column.isRecordType,
     isGrouped: column.isGrouped,
-    isSortedAsc: !!sorts.find((sort) => isEqual(sort, [column.path, "asc"])),
-    isSortedDesc: !!sorts.find((sort) => isEqual(sort, [column.path, "desc"])),
+    isSortedAsc: column.isSortedAsc,
+    isSortedDesc: column.isSortedDesc,
     isSummarized: ast.isSummarized,
   }
 }

@@ -55,6 +55,13 @@
   }
 }
 
+.zed-table__header-cell-info {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+}
+
 .hasChildren .zed-table__header-cell-text {
   font-weight: normal;
   font-style: italic;
@@ -67,6 +74,15 @@
   position: sticky;
   left: 10px;
   padding-right: 2px; // So we don't clip the italics
+}
+
+.zed-table__sort-icon {
+  margin: 0 4px;
+  width: 11px;
+  height: 11px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .zed-table__header-resize-area {

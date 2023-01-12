@@ -1,4 +1,5 @@
 import React from "react"
+import {useResultsContext} from "src/app/query-home"
 import {useZedTable} from "./context"
 import {HeaderCell} from "./header-cell"
 import {HeaderGroup} from "./header-group"
