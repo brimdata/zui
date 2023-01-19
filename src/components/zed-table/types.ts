@@ -36,7 +36,7 @@ export type ZedTableHandlers = {
   onHeaderContextMenu: (e: React.MouseEvent, column: ZedColumn) => void
   onValueContextMenu: (
     e: React.MouseEvent,
-    value: zed.Any,
+    value: zed.Value,
     field: zed.Field,
     cell: Cell
   ) => void
@@ -48,6 +48,7 @@ export const defaultState = (): ZedTableState => ({
   columnWidth: {},
   columnExpanded: {},
   columnVisible: {},
+  columnSorted: {},
   columnExpandedDefault: false,
   columnResizeInfo: {
     isResizingColumn: false,

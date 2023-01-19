@@ -1,9 +1,9 @@
-import {ZedTableApi} from "src/components/zed-table/zed-table-api"
 import {createMenu, MenuItem} from "src/core/menu"
+import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 
 export const columnsToolbarMenu = createMenu(
   "columnsToolbarMenu",
-  (ctx, table: ZedTableApi) => {
+  (ctx, table: TableViewApi) => {
     return [
       {
         label: "Show All",

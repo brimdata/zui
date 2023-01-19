@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit"
+import {createSlice, PayloadAction as Payload} from "@reduxjs/toolkit"
 import {zed} from "packages/zealot/src"
 import {ZedTableState} from "src/components/zed-table/types"
 
@@ -9,11 +9,14 @@ const slice = createSlice({
     scrollPosition: {top: 0, left: 0},
   },
   reducers: {
-    setStateForShape: (
-      s,
-      a: PayloadAction<{shape: zed.Type; state: ZedTableState}>
-    ) => {
-      s.states.set(a.payload.shape, a.payload.state)
+    setStateForShape(
+      state,
+      action: Payload<{shape: zed.Type; state: ZedTableState}>
+    ) {
+      state.states.set(action.payload.shape, action.payload.state)
+    },
+    setScrollPosition(state, action: Payload<{top: number; left: number}>) {
+      state.scrollPosition = action.payload
     },
   },
 })

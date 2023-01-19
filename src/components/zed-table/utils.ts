@@ -21,37 +21,6 @@ export function useCellStyle(style: React.CSSProperties) {
   }
 }
 
-// RETHINK THIS BAD BOY
-export function useColumnSizeRerender() {
-  const api = useZedTable()
-  const ref = React.useRef<VariableSizeGrid | null>(null)
-  React.useLayoutEffect(() => {
-    if (ref.current) {
-      ref.current.resetAfterIndices({
-        columnIndex: 0,
-        rowIndex: 0,
-        shouldForceUpdate: true,
-      })
-    }
-  }, [api, api.state.columnWidth, api.columnCount, api.headerGroups.length])
-
-  React.useLayoutEffect(() => {
-    api.onCellChanged((cell) => {
-      const {columnIndex, rowIndex} = cell.position
-      if (columnIndex === -1) return
-      if (ref.current) {
-        ref.current.resetAfterIndices({
-          columnIndex,
-          rowIndex,
-          shouldForceUpdate: false,
-        })
-      }
-    })
-  }, [api])
-
-  return ref
-}
-
 export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
   const temp = document.createElement("div")
   const selector = (id: string) => `[data-column-id="${id}"]`

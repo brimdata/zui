@@ -1,8 +1,8 @@
 import React from "react"
 import {createContext, ReactElement, useContext} from "react"
-import {ZedTableApi} from "./zed-table-api"
+import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 
-const ZedTableContext = createContext<ZedTableApi | null>(null)
+const ZedTableContext = createContext<TableViewApi | null>(null)
 
 export function useZedTable() {
   const value = useContext(ZedTableContext)
@@ -10,7 +10,7 @@ export function useZedTable() {
   else return value
 }
 
-export function Provider(props: {value: ZedTableApi; children: ReactElement}) {
+export function Provider(props: {value: TableViewApi; children: ReactElement}) {
   const {children, value} = props
   return (
     <ZedTableContext.Provider value={value}>

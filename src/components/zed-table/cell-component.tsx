@@ -50,7 +50,7 @@ export const Cell = React.memo(function Cell({
       id={cell.id}
       data-column-id={cell.columnId}
       onContextMenu={(e) =>
-        api.handlers.onValueContextMenu(e, cell.value, cell.field, cell)
+        api.args.cellProps.onContextMenu(e, cell.value, cell.field, cell)
       }
     >
       <CellValue view={cell.isInspected ? cell.view : null} />

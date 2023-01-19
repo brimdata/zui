@@ -1,9 +1,9 @@
 import {zed} from "@brimdata/zealot"
-import {ZedTableApi} from "./zed-table-api"
+import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 import {ZedColumn} from "./column"
 
 export function createColumns(
-  api: ZedTableApi,
+  api: TableViewApi,
   type: zed.Type,
   parent: ZedColumn | null = null,
   namePath: string[] = [],

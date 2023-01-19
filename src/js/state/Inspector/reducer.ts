@@ -3,33 +3,32 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 const slice = createSlice({
   name: "TAB_INSPECTOR",
   initialState: {
-    expanded: new Map<string, boolean>(),
-    valuePages: new Map<string, number>(),
-    defaultExpanded: false,
+    expanded: {} as Record<string, boolean>,
+    expandedDefault: false,
+    pages: {} as Record<string, number>,
     scrollPosition: {top: 0, left: 0},
   },
   reducers: {
-    incValuePage: (s, a: PayloadAction<{key: string}>) => {
-      const {key} = a.payload
-      const page = s.valuePages.get(key) || 1
-      s.valuePages.set(key, page + 1)
+    setPages(state, action: PayloadAction<Record<string, number>>) {
+      state.pages = action.payload
     },
-    setExpanded(s, a: PayloadAction<{key: string; isExpanded: boolean}>) {
-      const {key, isExpanded} = a.payload
-      s.expanded.set(key, isExpanded)
+    setExpanded(state, action: PayloadAction<Record<string, boolean>>) {
+      state.expanded = action.payload
     },
-    setAllExpanded: (s, a: PayloadAction<boolean>) => {
-      s.expanded = new Map<any, any>()
-      s.defaultExpanded = a.payload
+    setExpandedDefault(state, action: PayloadAction<boolean>) {
+      state.expandedDefault = action.payload
     },
-    setScrollPosition: (s, a: PayloadAction<{top: number; left: number}>) => {
-      s.scrollPosition = a.payload
+    setScrollPosition(
+      state,
+      action: PayloadAction<{top: number; left: number}>
+    ) {
+      state.scrollPosition = action.payload
     },
   },
   extraReducers: (builder) => {
-    builder.addCase("VIEWER_CLEAR", (s) => {
-      s.expanded = new Map<string, boolean>()
-      s.valuePages = new Map<string, number>()
+    builder.addCase("VIEWER_CLEAR", (state) => {
+      state.expanded = {}
+      state.pages = {}
     })
   },
 })

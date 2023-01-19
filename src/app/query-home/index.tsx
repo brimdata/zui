@@ -1,4 +1,3 @@
-import ResultsComponent from "./results"
 import React, {useCallback, useContext, useState} from "react"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
@@ -11,8 +10,9 @@ import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
 import MainHistogramChart from "./histogram/MainHistogram/Chart"
-import {ZedTableApi} from "src/components/zed-table/zed-table-api"
 import {ActiveQuery} from "../core/models/active-query"
+import {ResultsPane} from "src/panes/results-pane/results-pane"
+import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 
 const MainContent = styled.div`
   display: flex;
@@ -31,8 +31,8 @@ const ContentWrap = styled.div`
 `
 
 const ResultsContext = React.createContext<{
-  table: ZedTableApi | null
-  setTable: (v: ZedTableApi | null) => void
+  table: TableViewApi | null
+  setTable: (v: TableViewApi | null) => void
   query: ActiveQuery
 }>(null)
 
@@ -43,12 +43,12 @@ export function useResultsContext() {
 }
 
 function ResultsProvider({children}) {
-  const [table, setTable] = useState<ZedTableApi | null>(null)
+  const [table, setTable] = useState<TableViewApi | null>(null)
   const query = useSelector(Current.getActiveQuery)
   const value = {
     query,
     table,
-    setTable: useCallback((table: ZedTableApi | null) => setTable(table), []),
+    setTable: useCallback((table: TableViewApi | null) => setTable(table), []),
   }
   return (
     <ResultsContext.Provider value={value}>{children}</ResultsContext.Provider>
@@ -76,7 +76,7 @@ const QueryHome = () => {
           <SearchArea />
           <ResultsToolbar />
           <MainHistogramChart />
-          <ResultsComponent />
+          <ResultsPane />
         </MainContent>
         <RightPane />
       </ContentWrap>

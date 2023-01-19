@@ -52,8 +52,8 @@ export default function (p = "") {
       return this
     },
 
-    countBy(field: zed.Field | zed.TypeField) {
-      p = appendWithPipe(p, syntax.countBy(field))
+    countBy(name: string | string[]) {
+      p = appendWithPipe(p, syntax.countBy(name))
       return this
     },
 

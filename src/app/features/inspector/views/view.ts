@@ -4,7 +4,7 @@ import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import {field} from "../templates/field"
 import {InspectArgs, RenderMode} from "../types"
 
-export class View {
+export class View<T extends any = any> {
   static when(_args: InspectArgs) {
     return true
   }
@@ -15,24 +15,36 @@ export class View {
     return this.args.ctx
   }
 
-  get value(): zed.Any {
-    return this.args.value
+  get value(): T {
+    return this.args.value as T
+  }
+
+  get type() {
+    return this.args.type
   }
 
   get key() {
+    return this.args.key
+  }
+
+  get id() {
     return this.args.indexPath.join(",")
   }
 
   get className() {
-    return zedTypeClassName(this.value)
+    return zedTypeClassName(this.value as any)
   }
 
   get showKey() {
-    return !!this.args.key && !this.args.ctx.props.hideKeys
+    return !!this.args.key && !this.ctx.hideKeys
   }
 
   get showSyntax() {
-    return !this.args.ctx.props.hideSyntax
+    return !this.ctx.hideSyntax
+  }
+
+  get isLast() {
+    return this.args.last
   }
 
   rowCount() {
@@ -40,14 +52,14 @@ export class View {
   }
 
   isExpanded() {
-    return this.args.ctx.props.isExpanded(this.key)
+    return this.ctx.isExpanded(this.id)
   }
 
   render(_mode?: RenderMode): ReactNode {
-    return this.args.value.toString()
+    return this.value.toString()
   }
 
   inspect() {
-    return this.args.ctx.push(field(this, "single"))
+    return this.ctx.push(field(this, "single"))
   }
 }

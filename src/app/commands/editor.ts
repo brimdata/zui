@@ -28,7 +28,7 @@ export const copyValueToClipboard = createCommand(
 export const countByField = createCommand(
   "countByField",
   ({api}, field: zed.Field) => {
-    api.dispatch(appendQueryCountBy(field))
+    api.dispatch(appendQueryCountBy(field.path))
     api.dispatch(submitSearch())
   }
 )
@@ -112,3 +112,8 @@ export const sortDesc = createCommand(
     api.dispatch(submitSearch())
   }
 )
+
+export const fuse = createCommand("fuse", ({api}) => {
+  api.editor.append(api.editor.value.trim().length === 0 ? "fuse" : " | fuse")
+  api.dispatch(submitSearch())
+})

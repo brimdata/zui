@@ -1,11 +1,11 @@
 import {zed} from "@brimdata/zealot"
 import {createColumnHelper} from "@tanstack/react-table"
-import {ZedTableApi} from "./zed-table-api"
 import {createColumns} from "./create-columns"
 import {toFieldPath} from "src/js/zql/toZql"
+import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 
 type Args = {
-  api: ZedTableApi
+  api: TableViewApi
   field: zed.TypeField
   path: string[]
   indexPath: number[]

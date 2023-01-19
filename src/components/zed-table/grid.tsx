@@ -30,11 +30,12 @@ export function Grid() {
       })
     }
   }
+
   React.useLayoutEffect(() => {
     reset()
-  }, [api, api.state.columnVisible])
+  }, [api, api.args.columnVisibleState.value])
 
-  const tuple = api.state.columnResizeInfo.columnSizingStart[0]
+  const tuple = api.args.columnResizeInfoState.value?.columnSizingStart[0]
   let resizeWidth = 0
   let resizeIndex = null
   if (tuple) {
@@ -55,19 +56,25 @@ export function Grid() {
     } else {
       reset()
     }
-  }, [resizeWidth, resizeIndex, api.state.columnWidth])
+  }, [resizeWidth, resizeIndex, api.args.columnWidthState.value])
 
   React.useLayoutEffect(() => {
     // This could be improved if we could
     // know which column changed.
     reset()
-  }, [api.state.columnExpanded])
+  }, [api.args.columnExpandedState.value])
+
+  React.useLayoutEffect(() => {
+    // This could be improved if we could
+    // know which column changed.
+    reset()
+  }, [api.args.columnVisibleState.value])
 
   React.useLayoutEffect(() => {
     // This could be sped up if we knew
     // which cell changed.
     reset()
-  }, [api.state.valueExpanded, api.state.valuePage])
+  }, [api.args.valueExpandedState.value, api.args.valuePageState.value])
 
   return (
     <FillFlexParent>
@@ -84,8 +91,13 @@ export function Grid() {
             columnWidth={(index) => api.getColumnWidth(index)}
             overscanRowCount={5}
             overscanColumnCount={2}
+            initialScrollLeft={api.args.initialScrollPosition?.left}
+            initialScrollTop={api.args.initialScrollPosition?.top}
             innerElementType={InnerElement}
-            onScroll={() => api.setLastEvent("scroll")}
+            onScroll={(p) => {
+              api.setLastEvent("scroll")
+              api.args.onScroll({top: p.scrollTop, left: p.scrollLeft})
+            }}
             onItemsRendered={(state) => {
               api.setGridState({
                 rowStart: state.overscanRowStartIndex,
@@ -93,9 +105,6 @@ export function Grid() {
                 colStart: state.overscanColumnStartIndex,
                 colStop: state.overscanColumnStopIndex,
               })
-              if (state.overscanRowStopIndex > api.values.length - 30) {
-                api.handlers.onScrollNearBottom()
-              }
             }}
           >
             {Cell}

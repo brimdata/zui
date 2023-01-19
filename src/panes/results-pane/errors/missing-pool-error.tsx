@@ -10,7 +10,7 @@ import {Content} from "src/js/components/Content"
 import {VirtualList} from "src/js/components/virtual-list"
 import Pools from "src/js/state/Pools"
 import styled from "styled-components"
-import {Button} from "../../title-bar/button"
+import {Button} from "../../../app/query-home/title-bar/button"
 
 const BG = styled.div`
   width: 100%;

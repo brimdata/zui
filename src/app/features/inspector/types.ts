@@ -1,6 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import React, {MouseEvent, ReactNode} from "react"
-import {InspectContext} from "./inspect-context"
+import {ViewContext} from "../../../zui-kit/core/value-view/view-context"
 import {View} from "./views/view"
 
 type InspectorMouseEvent = (
@@ -23,9 +23,9 @@ export type InspectorProps = {
   innerRef?: React.Ref<any>
   onScroll?: (props: {top: number; left: number}) => void
   initialScrollPosition?: {top: number; left: number}
-  customViews: typeof View[]
-  hideKeys: boolean
-  hideSyntax: boolean
+  customViews?: typeof View[]
+  hideKeys?: boolean
+  hideSyntax?: boolean
 }
 
 export type InspectContextArgs = Pick<
@@ -47,8 +47,8 @@ export type InspectContextArgs = Pick<
 }
 
 export type InspectArgs = {
-  ctx: InspectContext
-  value: zed.Value | zed.Type
+  ctx: ViewContext
+  value: zed.Any
   field: zed.Field | zed.FieldData | null
   type: zed.Type
   // This is the visual name of the key,

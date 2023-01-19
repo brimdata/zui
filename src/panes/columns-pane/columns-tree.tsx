@@ -64,7 +64,7 @@ export function ColumnsTree() {
             height={height}
             data={table.baseColumns}
             openByDefault={false}
-            initialOpenState={table.state.columnExpanded}
+            initialOpenState={table.args.columnExpandedState.value}
             disableDrag
             disableDrop
             padding={10}

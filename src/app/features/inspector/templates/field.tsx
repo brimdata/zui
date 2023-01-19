@@ -15,11 +15,11 @@ export function field(view: View, mode: RenderMode) {
 
   nodes.push(item(view, mode))
 
-  if (zed.isTypeAlias(view.args.type)) {
+  if (zed.isTypeAlias(view.type)) {
     nodes.push(typename(view))
   }
 
-  if (!view.args.last) {
+  if (!view.isLast) {
     nodes.push(view.showSyntax ? ", " : space())
   }
 

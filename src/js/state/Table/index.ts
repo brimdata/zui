@@ -6,5 +6,6 @@ import {actions} from "./reducer"
 export default {
   getStateForShape: (state: State, shape: zed.Type) =>
     activeTabSelect((tab) => tab.table.states.get(shape))(state),
+  getScrollPosition: activeTabSelect((tab) => tab.table.scrollPosition),
   ...actions,
 }

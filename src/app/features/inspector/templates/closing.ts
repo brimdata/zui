@@ -8,7 +8,7 @@ export function closing(view: ContainerView) {
   if (view.showSyntax) {
     nodes.push(container.close(view))
   }
-  if (zed.isTypeAlias(view.args.type)) nodes.push(typename(view))
-  if (!view.args.last && view.showSyntax) nodes.push(",")
+  if (zed.isTypeAlias(view.type)) nodes.push(typename(view))
+  if (!view.isLast && view.showSyntax) nodes.push(",")
   return nodes
 }

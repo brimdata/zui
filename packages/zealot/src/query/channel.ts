@@ -32,7 +32,6 @@ export class Channel extends EventEmitter {
 
   consume(json: zjson.Object) {
     const value = this.stream.decode(json)
-    console.log(json)
     if ("id" in json.type && !this.hasShape(json.type.id)) {
       this.addShape(json.type.id, value.type)
     } else if (json.type.kind === "primitive") {

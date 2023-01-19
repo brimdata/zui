@@ -1,12 +1,11 @@
 import {zed} from "@brimdata/zealot"
-import {Cell} from "src/components/zed-table/cell"
 import {createMenu} from "src/core/menu"
 import BrimApi from "src/js/api"
 import * as editor from "../commands/editor"
 import * as pins from "../commands/pins"
 import * as values from "../commands/values"
 
-function getWhenContext(api: BrimApi, value: zed.Value) {
+function getWhenContext(api: BrimApi, value: zed.Any) {
   return {
     isPrimitive: zed.isPrimitive(value),
     isIterable: zed.isIterable(value),
@@ -16,10 +15,15 @@ function getWhenContext(api: BrimApi, value: zed.Value) {
   }
 }
 
-export const cellContextMenu = createMenu(
+export const valueContextMenu = createMenu(
   "valueContextMenu",
-  ({api}, value: zed.Any, field: zed.Field, cell: Cell) => {
-    const when = getWhenContext(api, cell.value)
+  (
+    {api},
+    value: zed.Any,
+    field: zed.Field | zed.FieldData | null,
+    rootValue: zed.Value
+  ) => {
+    const when = getWhenContext(api, value)
 
     return [
       {
@@ -64,8 +68,8 @@ export const cellContextMenu = createMenu(
       },
       {
         label: "Copy Full Value",
-        command: editor.copyValueToClipboard.bind(cell.value),
-        visible: value !== cell.value,
+        command: editor.copyValueToClipboard.bind(value),
+        visible: value !== rootValue,
       },
       {type: "separator"},
       {

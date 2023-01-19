@@ -15,8 +15,8 @@ export default {
   notIn(field: zed.Field, value: zed.Any) {
     return zql`!${value} in ${field}`
   },
-  countBy(field: zed.Field | zed.TypeField) {
-    return zql`count() by ${field}`
+  countBy(name: string | string[]) {
+    return `count() by ${toFieldPath(name)}`
   },
   sortBy(name: string | string[], direction: "asc" | "desc") {
     if (direction === "asc") return `sort ${toFieldPath(name)}`

@@ -32,14 +32,20 @@ export const resultsToolbarMenu = createMenu("resultsToolbarMenu", ({api}) => {
       description: "Expand all inspector view entries",
       iconName: "expand",
       enabled: isInspector,
-      click: () => dispatch(Inspector.setAllExpanded(true)),
+      click: () => {
+        dispatch(Inspector.setExpanded({}))
+        dispatch(Inspector.setExpandedDefault(true))
+      },
     },
     {
       label: "Collapse",
       description: "Collapse all inspector view entries",
       iconName: "collapse",
       enabled: isInspector,
-      click: () => dispatch(Inspector.setAllExpanded(false)),
+      click: () => {
+        dispatch(Inspector.setExpanded({}))
+        dispatch(Inspector.setExpandedDefault(false))
+      },
     },
     {
       label: "Export",

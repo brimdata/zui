@@ -1,6 +1,6 @@
 import {zed} from "@brimdata/zealot"
 import {isEqual} from "lodash"
-import {ZedTableApi} from "src/components/zed-table/zed-table-api"
+import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 import {ZedColumn} from "src/components/zed-table/column"
 import BrimApi from "src/js/api"
 import {
@@ -24,7 +24,7 @@ function getWhenContext(api: BrimApi, column: ZedColumn) {
 
 export const headerContextMenu = createMenu(
   "headerContextMenu",
-  (ctx, api: ZedTableApi, column: ZedColumn) => {
+  (ctx, api: TableViewApi, column: ZedColumn) => {
     const when = getWhenContext(ctx.api, column)
     const dispatch = ctx.api.dispatch
     return [
@@ -51,7 +51,7 @@ export const headerContextMenu = createMenu(
         label: "Count by Field",
         enabled: !when.isSummarized,
         click: () => {
-          dispatch(appendQueryCountBy(column.field))
+          dispatch(appendQueryCountBy(column.path))
           dispatch(submitSearch())
         },
       },

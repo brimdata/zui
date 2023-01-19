@@ -9,7 +9,7 @@ import {syntax} from "../templates/syntax"
 import {RenderMode} from "../types"
 import {View} from "./view"
 
-export abstract class ContainerView extends View {
+export abstract class ContainerView<T extends any = any> extends View<T> {
   abstract name(): string
   abstract count(): number
   abstract openToken(): string
@@ -104,14 +104,19 @@ export abstract class ContainerView extends View {
   }
 
   rowLimit() {
-    const page = this.args.ctx.props.getValuePage(this.key)
-    if (!isNumber(page)) throw new Error(this.key)
+    const page = this.args.ctx.page(this.id)
+    if (!isNumber(page)) throw new Error(this.id)
     const count = page * this.ctx.rowsPerPage
     return Math.min(count, this.ctx.rowLimit)
   }
 
   hasMorePages() {
     return this.rowLimit() < this.count()
+  }
+
+  showNextPage() {
+    const current = this.ctx.page(this.id)
+    this.ctx.setPage(this.id, current + 1)
   }
 
   hasReachedRowLimit() {
@@ -123,11 +128,11 @@ export abstract class ContainerView extends View {
   }
 
   expand() {
-    this.args.ctx.props.setExpanded(this.key, true)
+    this.args.ctx.setIsExpanded(this.id, true)
   }
 
   collapse() {
-    this.args.ctx.props.setExpanded(this.key, false)
+    this.args.ctx.setIsExpanded(this.id, false)
   }
 
   toggleRecursive() {

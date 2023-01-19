@@ -1,11 +1,9 @@
 import {zed} from "@brimdata/zealot"
-import {InspectContext} from "src/app/features/inspector/inspect-context"
 import {createView} from "src/app/features/inspector/views/create"
-import {ZedTableApi} from "./zed-table-api"
+import {TableViewApi} from "../../zui-kit/core/table-view/table-view-api"
 import {View} from "src/app/features/inspector/views/view"
 import {Position} from "./position"
-import {PathView} from "src/app/query-home/results/path-view"
-import {BareStringView} from "src/app/query-home/results/bare-string-view"
+import {ViewContext} from "src/zui-kit/core/value-view/view-context"
 
 /**
  * There are several types of IDs
@@ -43,7 +41,7 @@ import {BareStringView} from "src/app/query-home/results/bare-string-view"
 
 export class Cell {
   id: string
-  view: View<zed.Any>
+  view: View
   columnId: string
   position: Position
   field: zed.Field
@@ -55,7 +53,7 @@ export class Cell {
   }
 
   constructor(args: {
-    api: ZedTableApi
+    api: TableViewApi
     position: Position
     columnId: string
     field: zed.Field | null
@@ -65,35 +63,29 @@ export class Cell {
     this.position = args.position
     this.field = args.field
     this.value = args.field?.value ?? new zed.Null()
+    const api = args.api
+    const ctx = new ViewContext({
+      ...api.args.viewConfig,
+      expandedDefaultState: {
+        value: false,
+        onChange: () => {},
+      },
+      expandedState: api.args.valueExpandedState,
+      pageState: api.args.valuePageState,
+      onClick: () => {},
+      onContextMenu: (...args) =>
+        api.args.cellProps.onContextMenu(...args, this),
+      viewIdPrefix: `${this.id}_val:`,
+      onDidChange: () => api.cellChanged(this),
+    })
     this.view = createView({
-      ctx: new InspectContext({
-        customViews: [PathView, BareStringView],
-        isExpanded: (key) => args.api.valueIsExpanded(this.viewId(key)),
-        setExpanded: (key, value) => {
-          args.api.setValueExpanded(this.viewId(key), value)
-          args.api.cellChanged(this)
-        },
-        getValuePage: (key) => args.api.valuePage(this.viewId(key)),
-        incValuePage: (key) => {
-          const viewId = this.viewId(key)
-          const page = args.api.valuePage(viewId)
-          args.api.setValuePage(viewId, page + 1)
-          args.api.cellChanged(this)
-        },
-        onContextMenu: (e, value, field) => {
-          args.api.handlers.onValueContextMenu(e, value, field, this)
-        },
-        peekLimit: 1,
-        lineLimit: 2,
-        rowsPerPage: 25,
-        rowLimit: 50,
-      }),
+      ctx,
       value: this.value,
       type: this.value.type,
       field: this.field,
       key: null,
       last: true,
-      indexPath: [],
+      indexPath: [0],
     })
   }
 
@@ -101,17 +93,8 @@ export class Cell {
     return this.view.rowCount()
   }
 
-  valueId(path: string) {
-    return `val:${path}`
-  }
-
-  viewId(valuePath: string) {
-    return [this.id, this.valueId(valuePath)].join("_")
-  }
-
   isInspected = false
   inspect() {
-    if (this.isInspected) return
     this.view.inspect()
     this.isInspected = true
   }

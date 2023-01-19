@@ -1,20 +1,16 @@
 import {Table, createTable} from "@tanstack/table-core"
 import {zed} from "@brimdata/zealot"
-import {config} from "./config"
-import {Cell} from "./cell"
-import {Position} from "./position"
-import {getMaxCellSizes} from "./utils"
-import {
-  defaultState,
-  GridState,
-  TableEvent,
-  ZedTableHandlers,
-  ZedTableState,
-} from "./types"
-import {createColumns} from "./create-columns"
-import {ZedColumn} from "./column"
+import {config} from "../../../components/zed-table/config"
+import {Cell} from "../../../components/zed-table/cell"
+import {Position} from "../../../components/zed-table/position"
+import {getMaxCellSizes} from "../../../components/zed-table/utils"
+import {GridState, TableEvent} from "../../../components/zed-table/types"
+import {createColumns} from "../../../components/zed-table/create-columns"
+import {ZedColumn} from "../../../components/zed-table/column"
+import {TableViewArgs} from "./types"
+import {Controller} from "src/zui-kit/types/utils"
 
-export class ZedTableApi {
+export class TableViewApi {
   element: HTMLDivElement | null = null
   private grid: GridState = {rowStart: 0, rowStop: 0, colStart: 0, colStop: 0}
   private event: TableEvent = "init"
@@ -23,58 +19,68 @@ export class ZedTableApi {
   public baseColumns: ZedColumn[]
   private table: Table<any>
 
-  constructor(
-    public shape: zed.Type,
-    public values: zed.Value[],
-    public state: ZedTableState,
-    public handlers: ZedTableHandlers
-  ) {
-    this.state = {...defaultState(), ...state}
-    this.baseColumns = createColumns(this, shape)
+  constructor(public args: TableViewArgs) {
+    this.baseColumns = createColumns(this, this.shape)
+
     this.table = createTable({
       data: [],
       columns: this.baseColumns.map((c) => c.def),
       columnResizeMode: "onChange",
       defaultColumn: {size: config.defaultCellWidth},
-      onStateChange: (updater) => {
-        const next =
-          typeof updater === "function"
-            ? updater(this.table.getState())
-            : updater
-        handlers.onStateChange({
-          ...this.state,
-          columnWidth: next.columnSizing,
-          columnVisible: next.columnVisibility,
-          columnResizeInfo: next.columnSizingInfo,
-        })
-      },
+      onStateChange: () => {},
       getCoreRowModel: () => null,
       renderFallbackValue: null,
-      state: {
-        columnSizing: this.state.columnWidth,
-        columnVisibility: this.state.columnVisible,
-        columnSizingInfo: this.state.columnResizeInfo,
-      },
+      state: this.tanstackTableState,
+      initialState: this.tanstackTableState,
+      ...this.tanstackHandlers,
     })
     this.table.setOptions((prev) => ({...prev, state: this.table.initialState}))
   }
 
-  update(state: ZedTableState) {
-    // Combine whats similar in this and the constructor
-    // Next up is the value expands and collapses and pages
-
-    this.state = {...this.state, ...state}
-    const tableState = {
-      columnSizing: this.state.columnWidth,
-      columnVisibility: this.state.columnVisible,
-      columnSizingInfo: this.state.columnResizeInfo,
-    }
+  update(args: TableViewArgs) {
+    this.args = args
     this.baseColumns = createColumns(this, this.shape)
     this.table.setOptions((prev) => ({
       ...prev,
+      ...this.tanstackHandlers,
       columns: this.baseColumns.map((c) => c.def),
-      state: {...prev.state, ...tableState},
+      state: {...prev.state, ...this.tanstackTableState},
     }))
+  }
+
+  private get tanstackTableState() {
+    return {
+      columnSizing: this.args.columnWidthState.value,
+      columnVisibility: this.args.columnVisibleState.value,
+      columnSizingInfo: this.args.columnResizeInfoState.value,
+    }
+  }
+
+  private get tanstackHandlers() {
+    return {
+      onColumnSizingChange: this.tanstackUpdater(this.args.columnWidthState),
+      onColumnVisibilityChange: this.tanstackUpdater(
+        this.args.columnVisibleState
+      ),
+      onColumnSizingInfoChange: this.tanstackUpdater(
+        this.args.columnResizeInfoState
+      ),
+    }
+  }
+
+  private tanstackUpdater(ctl: Controller<any>) {
+    return (updater) => {
+      const value = typeof updater === "function" ? updater(ctl.value) : updater
+      ctl.onChange(value)
+    }
+  }
+
+  get shape() {
+    return this.args.shape
+  }
+
+  get values() {
+    return this.args.values
   }
 
   get headerGroups() {
@@ -158,13 +164,8 @@ export class ZedTableApi {
   }
 
   setColumnWidths(sizes: Record<string, number>) {
-    this.handlers.onStateChange({
-      ...this.state,
-      columnWidth: {
-        ...this.state.columnWidth,
-        ...sizes,
-      },
-    })
+    const prev = this.args.columnWidthState.value
+    this.args.columnWidthState.onChange({...prev, ...sizes})
   }
 
   cellInspected(cell: Cell) {
@@ -177,7 +178,7 @@ export class ZedTableApi {
   }
 
   autosizeColumns(columnIds?: string[]) {
-    const widths = this.state.columnWidth
+    const widths = this.args.columnWidthState.value
     if (this.element) {
       const ids =
         columnIds ??
@@ -204,91 +205,74 @@ export class ZedTableApi {
   }
 
   showAllColumns() {
-    this.handlers.onStateChange({
-      ...this.state,
-      columnVisible: {},
-    })
+    this.args.columnVisibleState.onChange({})
   }
 
   hideAllColumns() {
     const ids = this.baseColumns.flatMap((c) => [c.id, ...c.decendentIds])
     const obj = {}
     for (let id of ids) obj[id] = false
-    this.handlers.onStateChange({
-      ...this.state,
-      columnVisible: obj,
-    })
+    this.args.columnVisibleState.onChange(obj)
   }
 
   expandAllColumns() {
-    const ids = this.baseColumns.flatMap((c) => [c.id, ...c.decendentIds])
-    const obj = {}
-    for (let id of ids) obj[id] = true
-    this.handlers.onStateChange({
-      ...this.state,
-      columnExpanded: obj,
-    })
+    this.args.columnExpandedDefaultState.onChange(true)
+    this.args.columnExpandedState.onChange({})
   }
 
   collapseAllColumns() {
-    const ids = this.baseColumns.flatMap((c) => [c.id, c.decendentIds])
-    const obj = {}
-    for (let id of ids) obj[id] = false
-    this.handlers.onStateChange({
-      ...this.state,
-      columnExpanded: obj,
-    })
+    this.args.columnExpandedDefaultState.onChange(false)
+    this.args.columnExpandedState.onChange({})
   }
 
   columnIsVisible(id: string) {
-    return this.state.columnVisible[id] ?? true
+    return this.args.columnVisibleState.value[id] ?? true
   }
 
   setColumnVisible(state: Record<string, boolean>) {
-    this.handlers.onStateChange({
-      ...this.state,
-      columnVisible: {...this.state.columnVisible, ...state},
-    })
+    const prev = this.args.columnVisibleState.value
+    this.args.columnVisibleState.onChange({...prev, ...state})
   }
 
   columnIsExpanded(id: string) {
-    return !!this.state.columnExpanded[id]
+    return (
+      this.args.columnExpandedState.value[id] ??
+      this.args.columnExpandedDefaultState.value
+    )
   }
 
   setColumnExpanded(id: string, value: boolean) {
-    this.handlers.onStateChange({
-      ...this.state,
-      columnExpanded: {...this.state.columnExpanded, [id]: value},
-    })
+    const prev = this.args.columnExpandedState.value
+    this.args.columnExpandedState.onChange({...prev, [id]: value})
   }
 
   columnIsSortedAsc(fieldPath: string) {
-    return this.state.columnSorted[fieldPath] === "asc"
+    return this.args.columnSortedState.value[fieldPath] === "asc"
   }
 
   columnIsSortedDesc(fieldPath: string) {
-    return this.state.columnSorted[fieldPath] === "desc"
+    return this.args.columnSortedState.value[fieldPath] === "desc"
   }
 
   valueIsExpanded(id: string) {
-    return !!this.state.valueExpanded[id]
+    return this.args.valueExpandedState.value[id] ?? false
   }
 
   setValueExpanded(id: string, value: boolean) {
-    this.handlers.onStateChange({
-      ...this.state,
-      valueExpanded: {...this.state.valueExpanded, [id]: value},
-    })
+    const prev = this.args.valueExpandedState.value
+    this.args.valueExpandedState.onChange({...prev, [id]: value})
   }
 
   valuePage(id: string) {
-    return this.state.valuePage[id] ?? 1
+    return this.args.valuePageState.value[id] ?? 1
   }
 
   setValuePage(id: string, page: number) {
-    this.handlers.onStateChange({
-      ...this.state,
-      valuePage: {...this.state.valuePage, [id]: page},
-    })
+    const prev = this.args.valuePageState.value
+    this.args.valuePageState.onChange({...prev, [id]: page})
+  }
+
+  nearBottom(n: number) {
+    return this.grid.rowStop >= this.values.length - n
   }
 }

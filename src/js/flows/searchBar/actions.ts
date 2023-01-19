@@ -32,13 +32,13 @@ export function appendQueryExclude(field: zed.Field): Thunk {
   }
 }
 
-export function appendQueryCountBy(field: zed.Field | zed.TypeField): Thunk {
+export function appendQueryCountBy(name: string | string[]): Thunk {
   return function (dispatch, getState) {
     const {current, pinned} = getSearchBar(getState())
     const query = [...pinned, current].join(" ")
     const program = onlyWhitespace(query) ? "*" : current
 
-    dispatch(changeTo(brim.program(program).countBy(field).string()))
+    dispatch(changeTo(brim.program(program).countBy(name).string()))
   }
 }
 
