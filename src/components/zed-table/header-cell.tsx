@@ -20,7 +20,7 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
         hasChildren,
       })}
       style={{width}}
-      data-column-id={isPlaceholder ? header.placeholderId : header.column.id}
+      data-header-id={isPlaceholder ? header.placeholderId : header.column.id}
     >
       {isPlaceholder ? null : (
         <>

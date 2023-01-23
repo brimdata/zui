@@ -21,8 +21,20 @@ import {
 import {QueryVersion} from "../QueryVersions/types"
 import {ActiveQuery} from "src/app/core/models/active-query"
 import SessionQueries from "../SessionQueries"
+import memoizeOne from "memoize-one"
+import {entitiesToArray} from "../utils"
 
 type Id = string | null
+
+// function makeDiff() {
+//   let prev = null
+//   return (next) => {
+//     if (next === prev) console.log("SAME")
+//     else console.log("DIFF", next, prev)
+//     prev = next
+//   }
+// }
+// const diff = makeDiff()
 
 export const getHistory = (
   state,
@@ -60,9 +72,13 @@ const getRawSession = (state: State) => {
   return SessionQueries.find(state, id)
 }
 
+const memoGetVersions = memoizeOne(entitiesToArray)
+
 const getSessionVersions = (state: State) => {
   const id = getSessionId(state)
-  return QueryVersions.at(id).all(state)
+  const entities = QueryVersions.at(id).entities(state)
+  const ids = QueryVersions.at(id).ids(state)
+  return memoGetVersions(ids, entities)
 }
 
 export const getNamedQuery = (state: State) => {
@@ -89,6 +105,7 @@ export const getActiveQuery = createSelector(
   getNamedQuery,
   getVersion,
   (session, query, version) => {
+    // diff(session)
     return new ActiveQuery(session, query, version || QueryVersions.initial())
   }
 )
