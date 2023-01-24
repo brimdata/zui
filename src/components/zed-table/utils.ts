@@ -20,38 +20,27 @@ export function useCellStyle(style: React.CSSProperties) {
 }
 
 export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
-  // const temp = document.createElement("div")
-  const selector = (id: string) => `[data-column-id="${id}"]`
-  //   const columns = {}
-  //   for (let id of ids) {
-  //     columns[id] = Array.from(container.querySelectorAll(selector(id)))
-  //   }
-  //
-  //   for (let id of ids) {
-  //     for (let cell of columns[id]) {
-  //       const copy = cell.cloneNode(true) as HTMLElement
-  //       copy.style.display = "inline-block"
-  //       copy.style.width = "auto"
-  //       copy.style.paddingRight = "10px"
-  //       temp.append(copy)
-  //     }
-  //   }
-  //
-  //   document.body.appendChild(temp)
+  const selector = (id: string) => `[data-header-id="${id}"]`
+  const selector2 = (id: string) => `[data-column-id="${id}"]`
 
   const maxWidths = {}
   for (let id of ids) {
-    const cells = Array.from(container.querySelectorAll(selector(id)))
+    const cells1 = Array.from(container.querySelectorAll(selector(id)))
+    const cell2 = Array.from(container.querySelectorAll(selector2(id)))
+    const cells = [...cells1, ...cell2] as HTMLElement[]
+    cells.forEach((el) => {
+      el.style.width = "auto"
+    })
     const widths = cells.map((cell) => {
-      return cell.scrollWidth + 10
+      return cell.scrollWidth + 8
+    })
+    cells.forEach((el) => {
+      el.style.overflow = ""
     })
     const maxWidth = Math.max(config.defaultCellWidth, max(widths))
-    // console.log({maxWidth})
     if (isNaN(maxWidth)) continue
     maxWidths[id] = maxWidth
   }
-
-  // temp.remove()
 
   return maxWidths
 }

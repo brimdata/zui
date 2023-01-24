@@ -21,7 +21,6 @@ export function Table() {
   )
   const dispatch = useDispatch()
   const shape = ctx.firstShape
-
   return (
     <TableView
       ref={setTable}
@@ -52,6 +51,12 @@ export function Table() {
       onScroll={(pos) => {
         dispatch(TableState.setScrollPosition(pos))
         if (table.nearBottom(30)) ctx.loadMore()
+      }}
+      viewConfig={{
+        peekLimit: 2,
+        lineLimit: 2,
+        rowLimit: 300,
+        rowsPerPage: 50,
       }}
     />
   )

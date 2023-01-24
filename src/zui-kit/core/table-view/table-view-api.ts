@@ -9,6 +9,7 @@ import {createColumns} from "../../../components/zed-table/create-columns"
 import {ZedColumn} from "../../../components/zed-table/column"
 import {TableViewArgs} from "./types"
 import {Controller} from "src/zui-kit/types/utils"
+import memoizeOne from "memoize-one"
 
 export class TableViewApi {
   element: HTMLDivElement | null = null
@@ -17,7 +18,7 @@ export class TableViewApi {
   private cells: Map<string, Cell> = new Map()
   private listeners = []
   public baseColumns: ZedColumn[]
-  private table: Table<any>
+  public table: Table<any>
 
   constructor(public args: TableViewArgs) {
     this.baseColumns = createColumns(this, this.shape)
@@ -84,7 +85,11 @@ export class TableViewApi {
   }
 
   get headerGroups() {
-    return this.table.getHeaderGroups()
+    return memoHeaderGroups(
+      this,
+      this.args.columnWidthState.value,
+      this.args.columnVisibleState.value
+    )
   }
 
   get totalHeaderHeight() {
@@ -99,7 +104,7 @@ export class TableViewApi {
   }
 
   get columns() {
-    return this.table.getVisibleLeafColumns()
+    return memoColumns(this, this.args.columnVisibleState.value)
   }
 
   get columnCount() {
@@ -122,12 +127,7 @@ export class TableViewApi {
   }
 
   getRowHeight(rowIndex: number) {
-    let maxLines = 1
-    for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
-      const cell = this.getCell(columnIndex, rowIndex)
-      if (cell.lineCount > maxLines) maxLines = cell.lineCount
-    }
-    return config.lineHeight * (maxLines - 1) + config.rowHeight
+    return memoGetRowHeight(this, rowIndex)
   }
 
   getCell(columnIndex: number, rowIndex: number) {
@@ -201,7 +201,7 @@ export class TableViewApi {
   }
 
   get shouldRenderImmediately() {
-    return this.event === "interaction"
+    return this.event === "interaction" || this.event === "scroll"
   }
 
   showAllColumns() {
@@ -276,3 +276,28 @@ export class TableViewApi {
     return this.grid.rowStop >= this.values.length - n
   }
 }
+
+const memoColumns = memoizeOne(
+  (api: TableViewApi, _visible: Record<string, boolean>) => {
+    return api.table.getVisibleLeafColumns()
+  }
+)
+
+const memoHeaderGroups = memoizeOne(
+  (
+    api: TableViewApi,
+    _widths: Record<string, number>,
+    _visible: Record<string, boolean>
+  ) => {
+    return api.table.getHeaderGroups()
+  }
+)
+
+const memoGetRowHeight = memoizeOne((api: TableViewApi, rowIndex: number) => {
+  let maxLines = 1
+  for (let columnIndex = 0; columnIndex < api.columnCount; columnIndex++) {
+    const cell = api.getCell(columnIndex, rowIndex)
+    if (cell.lineCount > maxLines) maxLines = cell.lineCount
+  }
+  return config.lineHeight * (maxLines - 1) + config.rowHeight
+})

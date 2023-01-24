@@ -1,12 +1,12 @@
+import {HeaderGroup as HeaderGroupType} from "@tanstack/table-core"
 import React from "react"
-import {useResultsContext} from "src/app/query-home"
-import {useZedTable} from "./context"
 import {HeaderCell} from "./header-cell"
 import {HeaderGroup} from "./header-group"
 
-export const Header = function Header() {
-  const api = useZedTable()
-  const groups = api.headerGroups
+export const Header = React.memo(function Header(props: {
+  headerGroups: HeaderGroupType<any>[]
+}) {
+  const groups = props.headerGroups
   return (
     <div className="zed-table__header">
       {groups.map((group, index) => {
@@ -20,4 +20,4 @@ export const Header = function Header() {
       })}
     </div>
   )
-}
+})

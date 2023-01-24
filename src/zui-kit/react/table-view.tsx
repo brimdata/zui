@@ -14,7 +14,15 @@ export const TableView = forwardRef(function TableView(
 ) {
   const controllers = useStateControllers(props, defaultTableViewState)
   const args = {...props, ...controllers}
-  const api = useMemo(() => new TableViewApi(args), [props.values, props.shape])
+  const api = useMemo(
+    () => new TableViewApi(args),
+    [
+      args.values,
+      args.shape,
+      args.columnVisibleState.value,
+      args.columnExpandedState.value,
+    ]
+  )
   api.update(args)
 
   useImperativeHandle(ref, () => api, [api])

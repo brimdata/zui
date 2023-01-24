@@ -70,9 +70,17 @@ export class Cell {
         value: false,
         onChange: () => {},
       },
-      expandedState: api.args.valueExpandedState,
-      pageState: api.args.valuePageState,
-      onClick: () => {},
+      expandedState: {
+        value: api.args.valueExpandedState.value,
+        onChange: (next) => api.args.valueExpandedState.onChange(next),
+      },
+      pageState: {
+        value: api.args.valuePageState.value,
+        onChange: (next) => api.args.valuePageState.onChange(next),
+      },
+      onClick: () => {
+        console.log("widths", api.args.columnWidthState.value)
+      },
       onContextMenu: (...args) =>
         api.args.cellProps.onContextMenu(...args, this),
       viewIdPrefix: `${this.id}_val:`,
@@ -95,6 +103,7 @@ export class Cell {
 
   isInspected = false
   inspect() {
+    if (this.isInspected) return
     this.view.inspect()
     this.isInspected = true
   }

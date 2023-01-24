@@ -34,7 +34,8 @@ export function getSliceController(props, name, internal) {
   if (root) {
     return {
       value: root.value[name] ?? internal.value[name],
-      onChange: (next) => root.onChange({...root.value, [name]: next}),
+      onChange: (next) =>
+        root.onChange({...internal.value, ...root.value, [name]: next}),
     }
   }
   const partial = props[`${name}State`]

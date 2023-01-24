@@ -61,6 +61,8 @@
   align-items: center;
   height: 100%;
   min-width: 0;
+  position: sticky;
+  left: 10px;
 }
 
 .hasChildren .zed-table__header-cell-text {
@@ -72,8 +74,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  position: sticky;
-  left: 10px;
+
   padding-right: 2px; // So we don't clip the italics
 }
 

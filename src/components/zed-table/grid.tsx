@@ -31,10 +31,6 @@ export function Grid() {
     }
   }
 
-  React.useLayoutEffect(() => {
-    reset()
-  }, [api, api.args.columnVisibleState.value])
-
   const tuple = api.args.columnResizeInfoState.value?.columnSizingStart[0]
   let resizeWidth = 0
   let resizeIndex = null
@@ -62,19 +58,12 @@ export function Grid() {
     // This could be improved if we could
     // know which column changed.
     reset()
-  }, [api.args.columnExpandedState.value])
-
-  React.useLayoutEffect(() => {
-    // This could be improved if we could
-    // know which column changed.
-    reset()
-  }, [api.args.columnVisibleState.value])
-
-  React.useLayoutEffect(() => {
-    // This could be sped up if we knew
-    // which cell changed.
-    reset()
-  }, [api.args.valueExpandedState.value, api.args.valuePageState.value])
+  }, [
+    api.args.columnExpandedState.value,
+    api.args.columnVisibleState.value,
+    api.args.valueExpandedState.value,
+    api.args.valuePageState.value,
+  ])
 
   return (
     <FillFlexParent>
@@ -89,7 +78,7 @@ export function Grid() {
             rowHeight={(index) => api.getRowHeight(index)}
             columnCount={api.columnCount}
             columnWidth={(index) => api.getColumnWidth(index)}
-            overscanRowCount={5}
+            overscanRowCount={3}
             overscanColumnCount={2}
             initialScrollLeft={api.args.initialScrollPosition?.left}
             initialScrollTop={api.args.initialScrollPosition?.top}

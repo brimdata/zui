@@ -19,6 +19,12 @@ const slice = createSlice({
       state.scrollPosition = action.payload
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase("VIEWER_CLEAR", (s) => {
+      s.scrollPosition = {top: 0, left: 0}
+      s.states = new Map()
+    })
+  },
 })
 
 export const reducer = slice.reducer

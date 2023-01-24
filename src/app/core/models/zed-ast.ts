@@ -51,6 +51,7 @@ export class ZedAst {
     const ops = this.ops.filter((o) => o.kind === "Sort") ?? []
     let sorts = {}
     for (let op of ops) {
+      if (!op.args) continue
       const name = fieldExprToName(op.args[0])
       const column = Array.isArray(name) ? name : [name]
       const fieldPath = toFieldPath(column)
