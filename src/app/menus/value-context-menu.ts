@@ -17,12 +17,7 @@ function getWhenContext(api: BrimApi, value: zed.Any) {
 
 export const valueContextMenu = createMenu(
   "valueContextMenu",
-  (
-    {api},
-    value: zed.Any,
-    field: zed.Field | zed.FieldData | null,
-    rootValue: zed.Value
-  ) => {
+  ({api}, value: zed.Any, field: zed.Field | null, rootValue: zed.Value) => {
     const when = getWhenContext(api, value)
 
     return [
@@ -89,7 +84,7 @@ export const valueContextMenu = createMenu(
       {type: "separator"},
       {
         label: "Show In Detail Pane",
-        command: values.showValueDetails.bind(field.rootRecord),
+        command: values.showValueDetails.bind(rootValue),
       },
       {type: "separator"},
       {

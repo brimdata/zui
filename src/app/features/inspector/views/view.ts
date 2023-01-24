@@ -1,10 +1,9 @@
-import {zed} from "@brimdata/zealot"
 import {ReactNode} from "react"
 import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import {field} from "../templates/field"
 import {InspectArgs, RenderMode} from "../types"
 
-export class View<T extends any = any> {
+export class View<T = any> {
   static when(_args: InspectArgs) {
     return true
   }
@@ -16,7 +15,7 @@ export class View<T extends any = any> {
   }
 
   get value(): T {
-    return this.args.value as T
+    return this.args.value as unknown as T
   }
 
   get type() {

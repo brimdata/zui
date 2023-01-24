@@ -1,7 +1,5 @@
-import contextMenu from "src/app/detail/flows/contextMenu"
 import {every} from "lodash"
 import React from "react"
-import {useDispatch} from "src/app/core/state"
 import {zed} from "@brimdata/zealot"
 import connHistoryView from "../lib/connHistoryView"
 import VerticalTable from "./Tables/VerticalTable"
@@ -73,31 +71,17 @@ type HostProps = {
 }
 
 const Host = ({className, title, ip, port, record}: HostProps) => {
-  const dispatch = useDispatch()
   if (!ip) return null
   if (!port) return null
-
-  function onRightClick(field, record) {
-    dispatch(contextMenu(field, record))
-  }
 
   return (
     <div className={`host ${className}`}>
       <Fieldset>{title}</Fieldset>
-      <p
-        onContextMenu={() => onRightClick(ip, record)}
-        className={`ip ${ip.data.toString().length > 16 ? "small" : ""}`}
-      >
+      <p className={`ip ${ip.data.toString().length > 16 ? "small" : ""}`}>
         {ip.data.toString()}
       </p>
-      <p onContextMenu={() => onRightClick(port, record)} className="port">
-        {port.data.toString()}
-      </p>
-      <VerticalTable
-        descriptor={record.fields}
-        record={record}
-        onRightClick={onRightClick}
-      />
+      <p className="port">{port.data.toString()}</p>
+      <VerticalTable descriptor={record.fields} record={record} />
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import ErrorFactory from "src/js/models/ErrorFactory"
-import Columns from "../Columns"
 import * as selectors from "./selectors"
 import {Thunk} from "../types"
 import Viewer from "../Viewer"
@@ -39,7 +38,6 @@ function fetchResults(tabId: string): Thunk {
       dispatch(actions.setValues({id, tabId, values}))
       dispatch(actions.setShapes({id, tabId, shapes}))
       dispatch(Viewer.updateColumns(tabId, shapesMap))
-      dispatch(Columns.touch(shapesMap))
     }
 
     try {

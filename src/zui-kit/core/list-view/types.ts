@@ -1,5 +1,7 @@
 import {zed} from "@brimdata/zealot"
 import {MakeControllers} from "src/zui-kit/types/utils"
+import {ValueMouseEventHandler, ViewConfig} from "../value-view/types"
+import {ListViewApi} from "./list-view-api"
 
 export type ListViewState = {
   valueExpanded: Record<string, boolean>

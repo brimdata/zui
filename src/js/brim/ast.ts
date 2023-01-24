@@ -1,5 +1,3 @@
-import lib from "../lib"
-import {ColumnName, printColumnName} from "../state/Columns/models/column"
 import {toFieldPath} from "../zql/toZql"
 
 export default function ast(tree: any) {
@@ -9,11 +7,6 @@ export default function ast(tree: any) {
     },
     error() {
       return tree.error || null
-    },
-    groupByKeys(): ColumnName[] {
-      const g = this.proc("Summarize")
-      const keys = g ? g.keys : []
-      return keys.map((k) => fieldExprToName(k.lhs || k.rhs))
     },
     proc(name: string) {
       return getOps(tree).find((p) => p.kind === name)
@@ -26,14 +19,6 @@ export default function ast(tree: any) {
     },
     self() {
       return tree
-    },
-    sorts() {
-      return this.procs("Sort").reduce((sorts, proc) => {
-        lib.array.wrap(proc.args).forEach((field) => {
-          sorts[printColumnName(fieldExprToName(field))] = proc.order
-        })
-        return sorts
-      }, {})
     },
   }
 }

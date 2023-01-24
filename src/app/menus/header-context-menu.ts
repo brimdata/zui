@@ -1,5 +1,3 @@
-import {zed} from "@brimdata/zealot"
-import {isEqual} from "lodash"
 import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 import {ZedColumn} from "src/components/zed-table/column"
 import BrimApi from "src/js/api"

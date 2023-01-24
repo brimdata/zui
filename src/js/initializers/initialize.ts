@@ -3,7 +3,6 @@ import initDebugGlobals from "./initDebugGlobals"
 import initDOM from "./initDOM"
 import initGlobals from "./initGlobals"
 import initIpcListeners from "./initIpcListeners"
-import initMenuActionListeners from "./initMenuActionListeners"
 import initPlugins from "./initPlugins"
 import initStore from "./initStore"
 import initLakeParams from "./initLakeParams"
@@ -24,7 +23,6 @@ export default async function initialize() {
   initDOM()
   await initGlobals(store)
   initIpcListeners(store)
-  initMenuActionListeners(store)
   initLakeParams(store)
   initDebugGlobals(store, api)
   initAutosave(store)

@@ -49,7 +49,7 @@ export type InspectContextArgs = Pick<
 export type InspectArgs = {
   ctx: ViewContext
   value: zed.Any
-  field: zed.Field | zed.FieldData | null
+  field: zed.Field | null
   type: zed.Type
   // This is the visual name of the key,
   // the field name for records,

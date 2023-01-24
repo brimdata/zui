@@ -35,7 +35,6 @@ export const TAB_PERSIST: TabKey[] = [
   "id",
   "search",
   "searchBar",
-  "columns",
   "layout",
   "editor",
   "lastFocused",

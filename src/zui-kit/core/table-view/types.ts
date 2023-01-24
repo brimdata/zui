@@ -31,7 +31,7 @@ export type TableViewArgs = {
     onContextMenu?: (
       e: React.MouseEvent,
       value: zed.Any,
-      field: zed.Field | zed.FieldData | null,
+      field: zed.Field | null,
       cell: Cell
     ) => void
   }

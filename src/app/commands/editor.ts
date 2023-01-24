@@ -9,11 +9,12 @@ import {
   appendQuerySortBy,
 } from "src/js/flows/searchBar/actions"
 import {copyToClipboard} from "src/js/lib/doc"
-import {ColumnName} from "src/js/state/Columns/models/column"
 import SearchBar from "src/js/state/SearchBar"
 import {toZql} from "src/js/zql/toZql"
 import submitSearch from "../query-home/flows/submit-search"
 import {createCommand} from "./command"
+
+type ColumnName = string | string[]
 
 export const copyValueToClipboard = createCommand(
   "copyValueToClipboard",

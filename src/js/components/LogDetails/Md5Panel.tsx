@@ -1,8 +1,6 @@
-import contextMenu from "src/app/detail/flows/contextMenu"
 import PanelHeading from "src/app/detail/PanelHeading"
 import React from "react"
-import {useDispatch, useSelector} from "react-redux"
-import {AppDispatch} from "src/js/state/types"
+import {useSelector} from "react-redux"
 import {zed} from "@brimdata/zealot"
 import InlineTableLoading from "../InlineTableLoading"
 import HorizontalTable from "../Tables/HorizontalTable"
@@ -10,36 +8,14 @@ import * as md5 from "src/plugins/zui-zeek/md5-correlations"
 import Results from "src/js/state/Results"
 
 export const Md5Panel = () => {
-  const dispatch = useDispatch<AppDispatch>()
-
-  function onRightClick(field, record) {
-    dispatch(contextMenu(field, record))
-  }
-
   return (
     <section className="hash-correlation detail-panel">
       <PanelHeading isLoading={false}>Md5 Correlation</PanelHeading>
-      <AsyncTable
-        resultId={md5.md5Correlation.id}
-        onRightClick={onRightClick}
-        expect={1}
-      />
-      <AsyncTable
-        resultId={md5.filenameCorrelation.id}
-        onRightClick={onRightClick}
-        expect={1}
-      />
+      <AsyncTable resultId={md5.md5Correlation.id} expect={1} />
+      <AsyncTable resultId={md5.filenameCorrelation.id} expect={1} />
       <div className="two-column">
-        <AsyncTable
-          resultId={md5.txHostsCorrelation.id}
-          onRightClick={onRightClick}
-          expect={5}
-        />
-        <AsyncTable
-          resultId={md5.rxHostsCorrelation.id}
-          onRightClick={onRightClick}
-          expect={5}
-        />
+        <AsyncTable resultId={md5.txHostsCorrelation.id} expect={5} />
+        <AsyncTable resultId={md5.rxHostsCorrelation.id} expect={5} />
       </div>
     </section>
   )

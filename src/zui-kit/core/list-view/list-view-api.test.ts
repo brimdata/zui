@@ -3,7 +3,7 @@ import {createListView} from "./create-list-view"
 function controller<T>(initialValue: T) {
   return {
     value: initialValue,
-    onChange: (next: T) => {},
+    onChange: (_next: T) => {},
   }
 }
 

@@ -28,15 +28,10 @@ export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
     const cells1 = Array.from(container.querySelectorAll(selector(id)))
     const cell2 = Array.from(container.querySelectorAll(selector2(id)))
     const cells = [...cells1, ...cell2] as HTMLElement[]
-    cells.forEach((el) => {
-      el.style.width = "auto"
-    })
-    const widths = cells.map((cell) => {
-      return cell.scrollWidth + 8
-    })
-    cells.forEach((el) => {
-      el.style.overflow = ""
-    })
+    const oldWidths = cells.map((el) => el.style.width)
+    cells.forEach((el) => (el.style.width = "auto"))
+    const widths = cells.map((cell) => cell.scrollWidth + 8)
+    cells.forEach((el, i) => (el.style.width = oldWidths[i]))
     const maxWidth = Math.max(config.defaultCellWidth, max(widths))
     if (isNaN(maxWidth)) continue
     maxWidths[id] = maxWidth

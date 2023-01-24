@@ -1,4 +1,3 @@
-import {zed} from "@brimdata/zealot"
 import {isNumber} from "lodash"
 import {closing} from "../templates/closing"
 import * as container from "../templates/container"
@@ -9,7 +8,7 @@ import {syntax} from "../templates/syntax"
 import {RenderMode} from "../types"
 import {View} from "./view"
 
-export abstract class ContainerView<T extends any = any> extends View<T> {
+export abstract class ContainerView<T = any> extends View<T> {
   abstract name(): string
   abstract count(): number
   abstract openToken(): string
