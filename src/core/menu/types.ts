@@ -25,3 +25,8 @@ export type MenuBuilder<Args extends any[]> = (
   ctx: MenuContext,
   ...args: Args
 ) => MenuItem[]
+
+export type MenuInfo = {
+  id: string
+  label?: string
+}

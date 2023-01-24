@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import React, {useState} from "react"
-import {BuiltMenu} from "src/core/menu"
+import {BuiltMenu, MenuItem} from "src/core/menu"
 import styled from "styled-components"
 import useResizeObserver from "use-resize-observer"
 import {IconButton} from "./icon-button"
@@ -70,7 +70,7 @@ export function ButtonMenu(props: {menu: BuiltMenu}) {
   const ref = React.useRef<HTMLDivElement>()
   const menu = useResponsiveMenu(ref, props.menu.items)
 
-  const buttons = menu.items.map((item, i) => {
+  const buttons = menu.items.map((item: MenuItem, i: number) => {
     return (
       <IconButton
         {...item}
@@ -84,7 +84,7 @@ export function ButtonMenu(props: {menu: BuiltMenu}) {
 
   return (
     <>
-      <BG>
+      <BG aria-label={props.menu.label}>
         <Buttons ref={ref}>{buttons}</Buttons>
         {menu.hasHiddenItems ? (
           <MoreItemsButton items={menu.hiddenItems} />

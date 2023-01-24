@@ -7,11 +7,13 @@ import TableState from "src/js/state/Table"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {valueContextMenu} from "src/app/menus/value-context-menu"
 import useSelect from "src/app/core/hooks/use-select"
-import {TableView} from "src/zui-kit"
+import {TableView, TableViewApi} from "src/zui-kit"
+import {useBrimApi} from "src/app/core/context"
 
 export function Table() {
   const {table, setTable} = useResultsContext()
   const ctx = useResultsPaneContext()
+  const api = useBrimApi()
   const values = useTableValues()
   const state = useTableState()
   const select = useSelect()
@@ -23,7 +25,10 @@ export function Table() {
   const shape = ctx.firstShape
   return (
     <TableView
-      ref={setTable}
+      ref={(table: TableViewApi | null) => {
+        setTable(table)
+        api.table = table
+      }}
       shape={shape}
       values={values}
       width={ctx.width}

@@ -4,13 +4,17 @@ import {menus} from "./global-menus"
 import {Menu} from "./menu"
 import {popupPosition} from "./popup-position"
 import {showContextMenu} from "./show-context-menu"
-import {MenuItem} from "./types"
+import {MenuInfo, MenuItem} from "./types"
 
 export class BuiltMenu {
-  constructor(public template: MenuItem[]) {}
+  constructor(public info: MenuInfo, public template: MenuItem[]) {}
 
   get items() {
     return this.template
+  }
+
+  get label() {
+    return this.info.label ?? this.info.id
   }
 
   show() {

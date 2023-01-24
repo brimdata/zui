@@ -6,6 +6,6 @@ export class Menu<Args extends any[] = []> {
   constructor(public id: string, private builder: MenuBuilder<Args>) {}
 
   build(...args: Args) {
-    return new BuiltMenu(this.builder(menus.context, ...args))
+    return new BuiltMenu({id: this.id}, this.builder(menus.context, ...args))
   }
 }
