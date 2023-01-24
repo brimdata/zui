@@ -1,5 +1,7 @@
 import {toFieldPath} from "../zql/toZql"
 
+type ColumnName = string | string[]
+
 export default function ast(tree: any) {
   return {
     valid() {
@@ -7,6 +9,11 @@ export default function ast(tree: any) {
     },
     error() {
       return tree.error || null
+    },
+    groupByKeys(): ColumnName[] {
+      const g = this.proc("Summarize")
+      const keys = g ? g.keys : []
+      return keys.map((k) => fieldExprToName(k.lhs || k.rhs))
     },
     proc(name: string) {
       return getOps(tree).find((p) => p.kind === name)
