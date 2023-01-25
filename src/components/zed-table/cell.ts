@@ -72,7 +72,9 @@ export class Cell {
       },
       expandedState: {
         value: api.args.valueExpandedState.value,
-        onChange: (next) => api.args.valueExpandedState.onChange(next),
+        onChange: (next) => {
+          api.args.valueExpandedState.onChange(next)
+        },
       },
       pageState: {
         value: api.args.valuePageState.value,
@@ -82,7 +84,9 @@ export class Cell {
       onContextMenu: (...args) =>
         api.args.cellProps.onContextMenu(...args, this),
       viewIdPrefix: `${this.id}_val:`,
-      onDidChange: () => api.cellChanged(this),
+      onDidChange: () => {
+        api.cellChanged(this)
+      },
     })
     this.view = createView({
       ctx,

@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React, {startTransition, useEffect, useState} from "react"
+import React, {startTransition, useEffect, useReducer} from "react"
 import {GridChildComponentProps} from "react-window"
 import {CellValue} from "./cell-value"
 import {useZedTable} from "./context"
@@ -28,20 +28,19 @@ export const Cell = React.memo(function Cell({
   const api = useZedTable()
   const cell = api.getCell(columnIndex, rowIndex)
   if (api.shouldRenderImmediately) cell.inspect()
+  const [renderCount, render] = useReducer((n) => n + 1, 0)
 
-  const [isInspected, setIsInspected] = useState(cell.isInspected)
+  useEffect(() => {
+    if (cell.isInspected) api.cellInspected(cell)
+  }, [cell, renderCount])
 
   useEffect(() => {
     if (cell.isInspected) return
     startTransition(() => {
       cell.inspect()
-      setIsInspected(true)
+      render()
     })
   }, [cell])
-
-  useEffect(() => {
-    if (isInspected) api.cellInspected(cell)
-  }, [isInspected])
 
   return (
     <div

@@ -127,7 +127,12 @@ export class TableViewApi {
   }
 
   getRowHeight(rowIndex: number) {
-    return memoGetRowHeight(this, rowIndex)
+    let maxLines = 1
+    for (let columnIndex = 0; columnIndex < this.columnCount; columnIndex++) {
+      const cell = this.getCell(columnIndex, rowIndex)
+      if (cell.lineCount > maxLines) maxLines = cell.lineCount
+    }
+    return config.lineHeight * (maxLines - 1) + config.rowHeight
   }
 
   getCell(columnIndex: number, rowIndex: number) {
@@ -292,12 +297,3 @@ const memoHeaderGroups = memoizeOne(
     return api.table.getHeaderGroups()
   }
 )
-
-const memoGetRowHeight = memoizeOne((api: TableViewApi, rowIndex: number) => {
-  let maxLines = 1
-  for (let columnIndex = 0; columnIndex < api.columnCount; columnIndex++) {
-    const cell = api.getCell(columnIndex, rowIndex)
-    if (cell.lineCount > maxLines) maxLines = cell.lineCount
-  }
-  return config.lineHeight * (maxLines - 1) + config.rowHeight
-})

@@ -63,5 +63,5 @@ export function useTableValues() {
     } else {
       return ctx.values
     }
-  }, [ctx])
+  }, [ctx.values, ctx.isSingleShape, ctx.firstShape])
 }

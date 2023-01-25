@@ -23,6 +23,7 @@ export const TableView = forwardRef(function TableView(
       args.columnExpandedState.value,
     ]
   )
+
   api.update(args)
 
   useImperativeHandle(ref, () => api, [api])
