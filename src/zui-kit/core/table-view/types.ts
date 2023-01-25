@@ -19,21 +19,27 @@ export type TableViewState = {
 export type TableViewOptionalControllers = MakeControllers<TableViewState>
 export type TableViewController = Controller<TableViewState>
 
+type CellMouseEventHandler = (
+  e: React.MouseEvent,
+  value: zed.Any,
+  field: zed.Field | null,
+  cell: Cell
+) => void
+
+type HeaderMouseEventHandler = (e: React.MouseEvent, column: ZedColumn) => void
+
 export type TableViewArgs = {
   values: zed.Value[]
   shape: zed.Type
   viewConfig?: ViewConfig
   onScroll?: (props: {top: number; left: number}) => void
   headerCellProps?: {
-    onContextMenu?: (e: React.MouseEvent, column: ZedColumn) => void
+    onContextMenu?: HeaderMouseEventHandler
   }
   cellProps?: {
-    onContextMenu?: (
-      e: React.MouseEvent,
-      value: zed.Any,
-      field: zed.Field | null,
-      cell: Cell
-    ) => void
+    onContextMenu?: CellMouseEventHandler
+    onDoubleClick?: CellMouseEventHandler
+    onClick?: CellMouseEventHandler
   }
   state?: TableViewController
   initialScrollPosition?: {top: number; left: number}

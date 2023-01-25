@@ -11,6 +11,7 @@ import {TableView, TableViewApi} from "src/zui-kit"
 import {useBrimApi} from "src/app/core/context"
 import {BareStringView} from "src/app/query-home/results/bare-string-view"
 import {PathView} from "src/app/query-home/results/path-view"
+import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 
 export function Table() {
   const {table, setTable} = useResultsContext()
@@ -61,6 +62,10 @@ export function Table() {
         onContextMenu: (e, value, field, cell) => {
           e.preventDefault()
           valueContextMenu.build(value, field, cell.value).show()
+        },
+        onDoubleClick: (e, _value, field, _cell) => {
+          e.preventDefault()
+          dispatch(openLogDetailsWindow(field.rootRecord))
         },
       }}
       onScroll={(pos) => {

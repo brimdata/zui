@@ -50,8 +50,11 @@ export const Cell = React.memo(function Cell({
       id={cell.id}
       data-column-id={cell.columnId}
       onContextMenu={(e) =>
-        api.args.cellProps.onContextMenu(e, cell.value, cell.field, cell)
+        api.args?.cellProps?.onContextMenu(e, cell.value, cell.field, cell)
       }
+      onDoubleClick={(e) => {
+        api.args?.cellProps?.onDoubleClick(e, cell.value, cell.field, cell)
+      }}
     >
       <CellValue view={cell.isInspected ? cell.view : null} />
     </div>
