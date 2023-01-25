@@ -8,8 +8,9 @@ export function MoreItemsButton(props: {items: MenuItem[]}) {
       iconName="double-chevron-right"
       iconSize={10}
       click={({htmlEvent}) => {
-        console.log(props.items)
-        new BuiltMenu(props.items).showUnder(htmlEvent.currentTarget)
+        new BuiltMenu({id: "more-items"}, props.items).showUnder(
+          htmlEvent.currentTarget
+        )
       }}
     />
   )
