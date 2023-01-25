@@ -14,6 +14,9 @@ const Warning = styled.p`
   height: 100%;
   line-height: ${config.headerHeight}px;
   padding: 0 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   a {
     color: var(--primary-color);
