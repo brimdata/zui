@@ -25,7 +25,7 @@ function cutColumns(program: string, api: BrimApi) {
 
 function prepareProgram(format: string, program: string, api: BrimApi) {
   let p = cutColumns(program, api)
-  if (format === "csv") p += " | fuse"
+  if (format === "csv" || format === "arrows") p += " | fuse"
   return p
 }
 

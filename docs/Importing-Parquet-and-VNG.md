@@ -1,4 +1,4 @@
-# Importing Parquet and ZST
+# Importing Parquet and VNG
 
 - [Summary](#summary)
 - [Example](#example)
@@ -11,7 +11,7 @@ depends on the backend [Zed](https://github.com/brimdata/zed) platform's
 ability to "auto-detect" these formats. While several formats are covered by
 the current auto-detection implementation,
 [Parquet](https://parquet.apache.org/) and
-[ZST](https://zed.brimdata.io/docs/formats/zst/) are not
+[VNG](https://zed.brimdata.io/docs/next/formats/vng) are not
 yet (see [zed/2517](https://github.com/brimdata/zed/issues/2517)).
 
 This article shows how the Zed CLI tools can be used to preprocess data of
@@ -37,7 +37,7 @@ USAGE
 
 OPTIONS
 ...
-    -i format of input data [auto,zng,zst,json,zeek,zjson,csv,parquet] (default "auto")
+    -i format of input data [auto,zng,vng,json,zeek,zjson,csv,parquet,line] (default "auto")
 ...
 ```
 

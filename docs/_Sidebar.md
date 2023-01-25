@@ -8,7 +8,7 @@
 **User Documentation**
 
 - [[Migration for Version 0.29]]
-- [[Importing Parquet and ZST]]
+- [[Importing Parquet and VNG]]
 
 **Cookbooks**
 

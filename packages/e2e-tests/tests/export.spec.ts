@@ -7,13 +7,14 @@ import fsExtra from "fs-extra"
 
 const tempDir = os.tmpdir()
 const formats = [
-  {label: "zng", expectedSize: 3643},
-  {label: "zson", expectedSize: 15137},
-  {label: "zjson", expectedSize: 18007},
-  {label: "zeek", expectedSize: 9772},
-  {label: "json", expectedSize: 13659},
-  {label: "ndjson", expectedSize: 13657},
-  {label: "csv", expectedSize: 12208},
+  {label: "Arrow IPC Stream", expectedSize: 46512},
+  {label: "CSV", expectedSize: 12208},
+  {label: "JSON", expectedSize: 13659},
+  {label: "NDJSON", expectedSize: 13657},
+  {label: "Zeek", expectedSize: 9772},
+  {label: "ZJSON", expectedSize: 18007},
+  {label: "ZNG", expectedSize: 3744},
+  {label: "ZSON", expectedSize: 15137},
 ]
 
 test.describe("Export tests", () => {

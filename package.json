@@ -30,7 +30,7 @@
     "e2e": "yarn workspace e2e-tests test",
     "format": "prettier '**/*.{js,ts,tsx,scss}' --write --loglevel warn",
     "prerelease": "yarn build",
-    "release": "electron-builder --mac",
+    "release": "electron-builder --publish never",
     "postinstall": "node scripts/post-install",
     "prepare": "husky install",
     "watch:types": "yarn lint:tsc --watch"
@@ -74,7 +74,7 @@
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
     "electron": "^22.0.0",
-    "electron-builder": "^22.14.5",
+    "electron-builder": "^23.6.0",
     "electron-builder-notarize": "^1.2.0",
     "electron-mock-ipc": "^0.3.10",
     "electron-notarize": "^0.2.1",
@@ -180,7 +180,7 @@
     "use-resize-observer": "^8.0.0",
     "valid-url": "^1.0.9",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#a31161a3404c7cb45ba2dd405b195c01e0123cf9"
+    "zed": "brimdata/zed#91db4e808ff9a25477e8fa35af7d1eab1c52bf76"
   },
   "peerDependencies": {
     "react": "^18.0.0",

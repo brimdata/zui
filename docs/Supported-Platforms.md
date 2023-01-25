@@ -23,7 +23,7 @@ recommendations on which to run Brim:
   - Windows 10 or newer
   - Windows Server 2019 or newer
 - macOS
-  - macOS Big Sur 11.6.8 or newer (see [below](#hardware) for hardware considerations)
+  - macOS Big Sur 11.7.2 or newer (see [below](#hardware) for hardware considerations)
 - Linux
   - Ubuntu 20.04 or newer
   - Debian 10.0.0 or newer
@@ -56,16 +56,14 @@ on releases older than Windows 8.1.
 
 ### Software
 
-Brim's [test automation](#automated-testing) runs on Big Sur 11 and
+Brim's [test automation](#automated-testing) runs on Monterey 12 and
 therefore this is the macOS version on which we are best able to ensure quality
-and prevent regressions. Several Brim developers also run macOS Monterey 12.5
+and prevent regressions. Several Brim developers also run macOS Ventura 13.1
 and regularly perform ad hoc testing with it to reproduce reported issues.
 
 Basic [smoke testing](#smoke-testing) has also validated that Brim appears to
-work on macOS Mojave 10.14 as well. Similar testing has also confirmed that
-Brim does _not_ work on macOS High Sierra 10.13. Therefore, we do _not_
-recommend attempting to run Brim on macOS releases older than macOS Mojave
-10.14.
+work on macOS Big Sur 11.7.2 as well. We do _not_ recommend attempting to run
+Brim on macOS releases older than macOS Big Sur 11.7.2.
 
 ### Hardware
 
