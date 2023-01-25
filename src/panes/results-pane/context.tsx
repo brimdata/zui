@@ -15,8 +15,8 @@ function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
   const dispatch = useDispatch()
 
   return {
-    width: rect.width,
-    height: rect.height,
+    width: rect.width ?? 1000,
+    height: rect.height ?? 1000,
     view: useSelector(Layout.getResultsView),
     error: useSelector(Results.getError(MAIN_RESULTS)),
     values: useSelector(Results.getValues(MAIN_RESULTS)),
