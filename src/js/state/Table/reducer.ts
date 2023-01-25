@@ -1,12 +1,13 @@
 import {createSlice, PayloadAction as Payload} from "@reduxjs/toolkit"
-import {zed} from "packages/zealot/src"
-import {ZedTableState} from "src/components/zed-table/types"
+import {zed} from "@brimdata/zealot"
+import {defaultState, ZedTableState} from "src/components/zed-table/types"
 
 const slice = createSlice({
   name: "TAB_TABLE",
   initialState: {
     states: new Map<zed.Type, ZedTableState>(),
     scrollPosition: {top: 0, left: 0},
+    lastShape: null as zed.Type | null,
   },
   reducers: {
     setStateForShape(
@@ -18,11 +19,20 @@ const slice = createSlice({
     setScrollPosition(state, action: Payload<{top: number; left: number}>) {
       state.scrollPosition = action.payload
     },
+    setLastShape(state, action: Payload<zed.Type>) {
+      state.lastShape = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase("VIEWER_CLEAR", (s) => {
       s.scrollPosition = {top: 0, left: 0}
-      s.states = new Map()
+      if (s.lastShape) {
+        const state = s.states.get(s.lastShape)
+        if (state) {
+          const {columnExpanded} = state
+          s.states.set(s.lastShape, {...defaultState(), columnExpanded})
+        }
+      }
     })
   },
 })

@@ -1,4 +1,4 @@
-import React, {useMemo} from "react"
+import React, {useEffect, useMemo} from "react"
 import {useResultsContext} from "src/app/query-home"
 import {useResultsPaneContext} from "./context"
 import {useTableState, useTableValues} from "./table-controller"
@@ -9,6 +9,8 @@ import {valueContextMenu} from "src/app/menus/value-context-menu"
 import useSelect from "src/app/core/hooks/use-select"
 import {TableView, TableViewApi} from "src/zui-kit"
 import {useBrimApi} from "src/app/core/context"
+import {BareStringView} from "src/app/query-home/results/bare-string-view"
+import {PathView} from "src/app/query-home/results/path-view"
 
 export function Table() {
   const {table, setTable} = useResultsContext()
@@ -23,6 +25,14 @@ export function Table() {
   )
   const dispatch = useDispatch()
   const shape = ctx.firstShape
+
+  useEffect(() => {
+    dispatch(TableState.setLastShape(shape))
+    return () => {
+      dispatch(TableState.setLastShape(null))
+    }
+  }, [shape])
+
   return (
     <TableView
       ref={(table: TableViewApi | null) => {
@@ -62,6 +72,7 @@ export function Table() {
         lineLimit: 2,
         rowLimit: 300,
         rowsPerPage: 50,
+        customViews: [PathView, BareStringView],
       }}
     />
   )

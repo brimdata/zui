@@ -9,18 +9,7 @@ import {zed} from "@brimdata/zealot"
 import {valueContextMenu} from "src/app/menus/value-context-menu"
 import useSelect from "src/app/core/hooks/use-select"
 import {ListViewApi} from "src/zui-kit"
-
-// loadMore() {
-//   if (select(Results.isFetching(MAIN_RESULTS))) return
-//   if (select(Results.isComplete(MAIN_RESULTS))) return
-//   if (select(Results.isLimited(MAIN_RESULTS))) return
-//   dispatch(Results.fetchNextPage())
-// },
-
-// onScroll: useMemo(
-//       () => debounce(onScroll, 250, {trailing: true, leading: false}),
-//       []
-//     ),
+import {PathView} from "src/app/query-home/results/path-view"
 
 export function Inspector(props: {height?: number}) {
   const {values, shapes, width, height, loadMore} = useResultsPaneContext()
@@ -46,6 +35,9 @@ export function Inspector(props: {height?: number}) {
       height={props.height ?? height}
       onScroll={onScroll}
       initialScrollPosition={initialScrollPosition}
+      viewConfig={{
+        customViews: [PathView],
+      }}
       valueExpandedState={{
         value: useSelector(Slice.getExpanded),
         onChange: (next) => dispatch(Slice.setExpanded(next)),
