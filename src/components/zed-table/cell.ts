@@ -78,9 +78,7 @@ export class Cell {
         value: api.args.valuePageState.value,
         onChange: (next) => api.args.valuePageState.onChange(next),
       },
-      onClick: () => {
-        console.log("widths", api.args.columnWidthState.value)
-      },
+      onClick: () => {},
       onContextMenu: (...args) =>
         api.args.cellProps.onContextMenu(...args, this),
       viewIdPrefix: `${this.id}_val:`,

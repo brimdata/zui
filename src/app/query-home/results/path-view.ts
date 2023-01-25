@@ -4,7 +4,7 @@ import {BareStringView} from "./bare-string-view"
 
 export class PathView extends BareStringView {
   static when(args: InspectArgs) {
-    return args.type === zed.TypeString && args.field.name === "_path"
+    return args.type === zed.TypeString && args.field?.name === "_path"
   }
 
   get className() {

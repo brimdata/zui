@@ -78,4 +78,6 @@ export * from "./utils/is-time"
 export * from "./utils/is-type-alias"
 export * from "./utils/true-type"
 export * from "./utils/base-value"
+export * from "./utils/is-container"
+export * from "./utils/is-value"
 export type Any = Type | Value

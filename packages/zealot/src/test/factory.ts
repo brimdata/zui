@@ -25,11 +25,7 @@ export function createField(name: string, value: unknown): zed.Field {
 }
 
 export function createData(value: unknown): zed.Value {
-  if (value instanceof zed.Array) {
-    return value as zed.Value
-  }
-
-  if (value instanceof zed.Primitive) {
+  if (zed.isValue(value)) {
     return value as zed.Value
   }
 
@@ -57,7 +53,7 @@ export function createData(value: unknown): zed.Value {
     return new zed.String(value)
   }
 
-  if (isObject(value)) {
+  if (isObject(value) && value?.constructor === Object) {
     return createRecord(value as {[k: string]: unknown})
   }
 
