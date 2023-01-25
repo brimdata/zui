@@ -28,6 +28,7 @@ export class ViewContext {
   rowLimit: number
   hideSyntax: boolean
   hideKeys: boolean
+  hideDecorators: boolean
   viewIdPrefix: string
 
   constructor(args: Args) {
@@ -38,6 +39,7 @@ export class ViewContext {
     this.rowLimit = args.rowLimit ?? Infinity // Hard limit for number of rows in case list is not virtualized
     this.hideKeys = args.hideKeys ?? false
     this.hideSyntax = args.hideSyntax ?? false
+    this.hideDecorators = args.hideDecorators ?? false
     this.expandedState = args.expandedState
     this.expandedDefaultState = args.expandedDefaultState
     this.pageState = args.pageState

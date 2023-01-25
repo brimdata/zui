@@ -73,6 +73,7 @@ export function Table() {
         rowLimit: 300,
         rowsPerPage: 50,
         customViews: [PathView, BareStringView],
+        hideDecorators: true,
       }}
     />
   )

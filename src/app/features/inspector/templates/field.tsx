@@ -15,7 +15,7 @@ export function field(view: View, mode: RenderMode) {
 
   nodes.push(item(view, mode))
 
-  if (zed.isTypeAlias(view.type)) {
+  if (zed.isTypeAlias(view.type) && view.showDecorator) {
     nodes.push(typename(view))
   }
 

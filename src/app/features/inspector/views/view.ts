@@ -38,6 +38,10 @@ export class View<T = any> {
     return !!this.args.key && !this.ctx.hideKeys
   }
 
+  get showDecorator() {
+    return !this.ctx.hideDecorators
+  }
+
   get showSyntax() {
     return !this.ctx.hideSyntax
   }

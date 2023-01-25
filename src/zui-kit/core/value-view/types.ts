@@ -5,6 +5,7 @@ export type ViewConfig = {
   customViews?: typeof View[]
   hideKeys?: boolean
   hideSyntax?: boolean
+  hideDecorators?: boolean
   lineLimit?: number
   peekLimit?: number
   rowLimit?: number
