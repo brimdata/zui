@@ -55,6 +55,9 @@ export const Cell = React.memo(function Cell({
       onDoubleClick={(e) => {
         api.args?.cellProps?.onDoubleClick(e, cell.value, cell.field, cell)
       }}
+      onClick={(e) => {
+        api.args?.cellProps?.onClick(e, cell.value, cell.field, cell)
+      }}
     >
       <CellValue view={cell.isInspected ? cell.view : null} />
     </div>

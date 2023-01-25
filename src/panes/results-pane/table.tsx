@@ -12,6 +12,7 @@ import {useBrimApi} from "src/app/core/context"
 import {BareStringView} from "src/app/query-home/results/bare-string-view"
 import {PathView} from "src/app/query-home/results/path-view"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
+import {viewLogDetail} from "src/js/flows/viewLogDetail"
 
 export function Table() {
   const {table, setTable} = useResultsContext()
@@ -63,7 +64,11 @@ export function Table() {
           e.preventDefault()
           valueContextMenu.build(value, field, cell.value).show()
         },
-        onDoubleClick: (e, _value, field, _cell) => {
+        onClick: (e, _value, field) => {
+          e.preventDefault()
+          dispatch(viewLogDetail(field.rootRecord))
+        },
+        onDoubleClick: (e, _value, field) => {
           e.preventDefault()
           dispatch(openLogDetailsWindow(field.rootRecord))
         },
