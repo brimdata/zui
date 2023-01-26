@@ -2647,6 +2647,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/react-table@npm:^8.7.0":
+  version: 8.7.0
+  resolution: "@tanstack/react-table@npm:8.7.0"
+  dependencies:
+    "@tanstack/table-core": 8.7.0
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: 5f739f619dacfd134449bc8cff819d7e1b9549b8c8b20c293f2c786098a53d20fe5755727d8abb6fa56a64583792bbc89d8b1c7cd24ac3497495d2c20bac9e77
+  languageName: node
+  linkType: hard
+
+"@tanstack/table-core@npm:8.7.0":
+  version: 8.7.0
+  resolution: "@tanstack/table-core@npm:8.7.0"
+  checksum: 835511727ab5651066a4cbc98916fbc2463ec6d6ddc5c74c1fec5713eeba8e26641653c1a35b69b303f0c58f574416a09e26da44cf7e9a884cb954fc26b12afd
+  languageName: node
+  linkType: hard
+
 "@testing-library/dom@npm:^8.13.0, @testing-library/dom@npm:^8.5.0":
   version: 8.13.0
   resolution: "@testing-library/dom@npm:8.13.0"
@@ -11648,6 +11667,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"memoize-one@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "memoize-one@npm:6.0.0"
+  checksum: f185ea69f7cceae5d1cb596266dcffccf545e8e7b4106ec6aa93b71ab9d16460dd118ac8b12982c55f6d6322fcc1485de139df07eacffaae94888b9b3ad7675f
+  languageName: node
+  linkType: hard
+
 "memorystream@npm:^0.3.1":
   version: 0.3.1
   resolution: "memorystream@npm:0.3.1"
@@ -13558,9 +13584,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:2.1.0":
-  version: 2.1.0
-  resolution: "react-arborist@npm:2.1.0"
+"react-arborist@npm:2.2.0":
+  version: 2.2.0
+  resolution: "react-arborist@npm:2.2.0"
   dependencies:
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
@@ -13570,7 +13596,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: bab15393a7d2921293092db244a1053ce399eb413fbd9ae2d38770101fa88f8853d3268d6ecfb2e3bce7567d3b7416ca2072ecdd73361b329182be4f36fb0ffa
+  checksum: e2262b36bdd980695cc76b1fdcef79b13435bca55eb81796e07a0bb9e11b5c05cd7623751f086326886c6792133a677fd14f3dc28b99775bf3107b62b0d7b6b5
   languageName: node
   linkType: hard
 
@@ -17117,6 +17143,7 @@ __metadata:
     "@swc/cli": ^0.1.55
     "@swc/core": ^1.2.144
     "@swc/jest": ^0.2.17
+    "@tanstack/react-table": ^8.7.0
     "@testing-library/dom": ^8.13.0
     "@testing-library/jest-dom": ^5.16.4
     "@testing-library/react": ^13.1.1
@@ -17192,6 +17219,7 @@ __metadata:
     livereload: ^0.9.1
     lodash: ^4.17.21
     md5: ^2.2.1
+    memoize-one: ^6.0.0
     moment: ^2.27.0
     moment-timezone: ^0.5.31
     mousetrap: ^1.6.5
@@ -17207,7 +17235,7 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^18.0.0
-    react-arborist: 2.1.0
+    react-arborist: 2.2.0
     react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0

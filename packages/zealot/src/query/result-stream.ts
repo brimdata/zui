@@ -94,7 +94,6 @@ export class ResultStream {
         }
       }
     })
-    return this._promise
   }
 
   private consumeLine(json: zjson.QueryObject) {

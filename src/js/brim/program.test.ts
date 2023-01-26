@@ -143,14 +143,14 @@ describe("drill down", () => {
 describe("count by", () => {
   test("empty program", () => {
     const field = createField("_path", "heyo")
-    const program = brim.program().countBy(field).string()
+    const program = brim.program().countBy(field.path).string()
 
     expect(program).toBe("count() by _path")
   })
 
   test("append a count to an existing query", () => {
     const field = createField("query", "heyo")
-    const program = brim.program("dns").countBy(field).string()
+    const program = brim.program("dns").countBy(field.path).string()
 
     expect(program).toBe("dns | count() by query")
   })

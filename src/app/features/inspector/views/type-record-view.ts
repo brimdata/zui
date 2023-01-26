@@ -29,6 +29,7 @@ export class TypeRecordView extends ContainerView<zed.TypeRecord> {
       yield createView({
         ...this.args,
         value: field.type,
+        // @ts-ignore need to think about rendering types
         field,
         last,
         key: field.name,

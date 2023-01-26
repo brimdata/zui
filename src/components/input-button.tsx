@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React from "react"
+import React, {ReactNode} from "react"
 import Icon, {IconName} from "src/app/core/icon-temp"
 import styled from "styled-components"
 
@@ -7,7 +7,7 @@ const Button = styled.button`
   display: inline-block;
   background: white;
   border: 1px solid #c0c0c0;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 0.14);
+  // box-shadow: 0 1px 2px rgb(0 0 0 / 0.14);
   border-radius: 6px;
   padding-left: 16px;
   padding-right: 16px;
@@ -22,8 +22,8 @@ const Button = styled.button`
   padding: 0 10px;
   gap: 6px;
 
-  &.has-icon {
-    padding-right: 16px;
+  &.has-icon.has-children {
+    padding-right: 14px;
   }
 
   &::placeholder {
@@ -38,17 +38,22 @@ const Button = styled.button`
 export function InputButton(
   props: {
     icon?: IconName
-    children: string
+    iconSize?: number
+    children?: ReactNode
     className?: string
   } & JSX.IntrinsicElements["button"]
 ) {
-  const {icon, children, className, ...buttonProps} = props
+  const {icon, children, className, iconSize, ...buttonProps} = props
+
   return (
     <Button
-      className={classNames(className, {"has-icon": !!icon})}
+      className={classNames(className, {
+        "has-icon": !!icon,
+        "has-children": !!children,
+      })}
       {...(buttonProps as any)}
     >
-      {icon && <Icon name={icon} size={16} />}
+      {icon && <Icon name={icon} size={iconSize ?? 16} />}
       {children}
     </Button>
   )

@@ -22,9 +22,6 @@ export default class BrimcapPlugin {
   // currentConn represents the data detail currently seen in the Brim detail
   // pane/window
   private currentConn = null
-  // selectedConn represents the data detail currently selected and highlighted
-  // in the search viewer
-  private selectedConn = null
   private yamlConfigPath = ""
   private cleanupFns: Function[] = []
   private processes: {
@@ -97,13 +94,11 @@ export default class BrimcapPlugin {
 
   private setupBrimcapButtons() {
     const searchButtonId = "wireshark-button:search"
-    const detailButtonId = "wireshark-button:detail"
-    const brimcapDownloadSelectedCmd = "brimcap-download-packets:selected"
     const brimcapDownloadCurrentCmd = "brimcap-download-packets:current"
 
     const itemOptions = {
       label: "Packets",
-      icon: "sharkfin", // TODO: enable plugins to provide their own assets
+      icon: "sharkfin",
       disabled: true,
       tooltip: "No connection record found.",
       order: 0,
@@ -148,20 +143,11 @@ export default class BrimcapPlugin {
     this.api.toolbar.add("search", {
       ...itemOptions,
       id: searchButtonId,
-      command: brimcapDownloadSelectedCmd,
-    })
-    this.api.toolbar.add("detail", {
-      ...itemOptions,
-      id: detailButtonId,
       command: brimcapDownloadCurrentCmd,
-      label: undefined,
     })
 
     // add click handlers for button's emitted commands
     this.cleanupFns.push(
-      this.api.commands.add(brimcapDownloadSelectedCmd, () => {
-        this.selectedConn && this.downloadPcap(this.selectedConn)
-      }),
       this.api.commands.add(
         brimcapDownloadCurrentCmd,
         () => this.currentConn && this.downloadPcap(this.currentConn)
@@ -170,26 +156,15 @@ export default class BrimcapPlugin {
 
     // add brim-command listeners to update button statuses
     this.cleanupFns.push(
-      // the detail window's packets button will operate off of the 'current' record
       this.api.commands.add("data-detail:current", ([record]) => {
         if (!record) return
         const data = record as zed.Record
 
         updateButtonStatus(
-          "detail",
-          detailButtonId,
-          data,
-          (conn) => (this.currentConn = conn)
-        )
-      }),
-      // the search window's packets button operates off of the 'selected' record
-      // (whatever is highlighted in the viewer/table)
-      this.api.commands.add("data-detail:selected", ([data]) => {
-        updateButtonStatus(
           "search",
           searchButtonId,
           data,
-          (conn) => (this.selectedConn = conn)
+          (conn) => (this.currentConn = conn)
         )
       })
     )
@@ -213,7 +188,6 @@ export default class BrimcapPlugin {
     }
 
     this.api.contextMenus.search.add(itemBuilder)
-    this.api.contextMenus.detail.add(itemBuilder)
   }
 
   private logToSearchOpts(log: zed.Record): searchOptions {

@@ -1,4 +1,4 @@
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 import * as pins from "src/app/commands/pins"
 
 export const newPinMenu = createMenu("newPinMenu", ({api}) => {

@@ -1,0 +1,58 @@
+@mixin zeek-bg-color($log-type, $color) {
+  .#{$log-type}-bg-color {
+    background-color: $color;
+    fill: $color;
+  }
+}
+
+$unknown-type-color: #afafaf;
+
+[class*="-bg-color"] {
+  background: $unknown-type-color;
+  fill: $unknown-type-color;
+}
+
+@include zeek-bg-color("conn", #86c8b7);
+@include zeek-bg-color("dhcp", #00578a);
+@include zeek-bg-color("dns", #1ca0f2);
+@include zeek-bg-color("ftp", #392277);
+@include zeek-bg-color("http", hsl(49, 93%, 58%));
+@include zeek-bg-color("files", #ad3f95);
+@include zeek-bg-color("mysql", #d28204);
+@include zeek-bg-color("irc", #00d1a6);
+@include zeek-bg-color("radius", #ffd901);
+@include zeek-bg-color("kerberos", #fbf758);
+@include zeek-bg-color("sip", #006c7b);
+@include zeek-bg-color("smtp", #e2e317);
+@include zeek-bg-color("ssl", hsl(0, 0%, 3%));
+@include zeek-bg-color("ssh", #535765);
+@include zeek-bg-color("syslog", #ddb81d);
+@include zeek-bg-color("tunnel", #007249);
+@include zeek-bg-color("dce_rpc", #929292);
+@include zeek-bg-color("ntlm", #6284a4);
+@include zeek-bg-color("rdp", #081d5b);
+@include zeek-bg-color("smb_files", #27eeff);
+@include zeek-bg-color("smb_mapping", #0511d4);
+@include zeek-bg-color("weird", #5e6373);
+@include zeek-bg-color("x509", #eeb457);
+@include zeek-bg-color("pe", #e65835);
+@include zeek-bg-color("dpd", #256453);
+@include zeek-bg-color("notice", red);
+@include zeek-bg-color("capture_loss", purple);
+@include zeek-bg-color("software", hsl(203, 89%, 68%));
+@include zeek-bg-color("stats", #5ec4a8);
+@include zeek-bg-color("known_hosts", #eeb457);
+@include zeek-bg-color("known_services", darken(#eeb457, 10%));
+@include zeek-bg-color("alert-1", var(--alert-1));
+@include zeek-bg-color("alert-2", var(--alert-2));
+@include zeek-bg-color("alert-3", var(--alert-3));
+
+.zeek-path-tag {
+  display: inline-block;
+  border-radius: 3px;
+  padding: 0 6px;
+  line-height: 17px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}

@@ -1,5 +1,4 @@
-import ResultsComponent from "./results"
-import React from "react"
+import React, {useCallback, useContext, useState} from "react"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 
@@ -11,6 +10,9 @@ import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
 import MainHistogramChart from "./histogram/MainHistogram/Chart"
+import {ActiveQuery} from "../core/models/active-query"
+import {ResultsPane} from "src/panes/results-pane/results-pane"
+import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 
 const MainContent = styled.div`
   display: flex;
@@ -28,10 +30,36 @@ const ContentWrap = styled.div`
   min-width: 0;
 `
 
+const ResultsContext = React.createContext<{
+  table: TableViewApi | null
+  setTable: (v: TableViewApi | null) => void
+  query: ActiveQuery
+}>(null)
+
+export function useResultsContext() {
+  const value = useContext(ResultsContext)
+  if (!value) throw new Error("Provide MainTableContext")
+  return value
+}
+
+function ResultsProvider({children}) {
+  const [table, setTable] = useState<TableViewApi | null>(null)
+  const query = useSelector(Current.getActiveQuery)
+  const value = {
+    query,
+    table,
+    setTable: useCallback((table: TableViewApi | null) => setTable(table), []),
+  }
+  return (
+    <ResultsContext.Provider value={value}>{children}</ResultsContext.Provider>
+  )
+}
+
 const QueryHome = () => {
   const activeQuery = useSelector(Current.getActiveQuery)
   const lakeId = useSelector(Current.getLakeId)
   const tabId = useSelector(Current.getTabId)
+
   if (activeQuery.isDeleted()) {
     return (
       <Redirect
@@ -41,18 +69,18 @@ const QueryHome = () => {
   }
 
   return (
-    <>
+    <ResultsProvider>
       <ContentWrap>
         <MainContent>
           <TitleBar />
           <SearchArea />
           <ResultsToolbar />
           <MainHistogramChart />
-          <ResultsComponent />
+          <ResultsPane />
         </MainContent>
         <RightPane />
       </ContentWrap>
-    </>
+    </ResultsProvider>
   )
 }
 

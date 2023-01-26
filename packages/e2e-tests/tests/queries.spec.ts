@@ -11,10 +11,7 @@ test.describe("Query tests", () => {
     await app.createPool([
       path.normalize(path.join(testDataDir(), "sample.tsv")),
     ])
-    await app.mainWin
-      .locator('#app-root button:above(:text("Query Pool"))')
-      .first()
-      .click()
+    await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
   })
 
   test.afterAll(async () => {
@@ -38,27 +35,28 @@ test.describe("Query tests", () => {
   })
 
   test("named queries' creation, modification, update/save, proper outdated status display", async () => {
+    const titleBar = app.mainWin.getByTestId("title-bar")
     // creation
-    await app.mainWin.locator('button :text-is("Save")').click()
-    await app.mainWin
+    await titleBar.getByRole("button", {name: "Save"}).click()
+    await titleBar
       .locator('[placeholder="Query name\\.\\.\\."]')
       .fill("Test Query Name")
-    await app.mainWin.locator('button :text-is("Create")').click()
+    await titleBar.getByRole("button", {name: "Create"}).click()
     await expect(await app.mainWin.locator("_react=HeadingSaved")).toBeVisible()
     await expect(
-      await app.mainWin.locator('button :text-is("Test Query Name")')
+      await titleBar.getByRole("button", {name: "Test Query Name"})
     ).toBeVisible()
 
     // modification
     await app.query("4")
     await expect(
-      await app.mainWin.locator('button :text-is("Test Query Name *")')
+      await titleBar.getByRole("button", {name: "Test Query Name *"})
     ).toBeVisible()
 
     // update
-    await app.mainWin.locator('button :text-is("Save")').click()
+    await titleBar.getByRole("button", {name: "Save"}).click()
     await expect(
-      await app.mainWin.locator('button :text-is("Test Query Name")')
+      await titleBar.getByRole("button", {name: "Test Query Name"})
     ).toBeVisible()
 
     // outdated display
@@ -71,14 +69,15 @@ test.describe("Query tests", () => {
   })
 
   test("named query, save as => new named query", async () => {
-    await app.mainWin.locator('button :text-is("Save As")').click()
-    await app.mainWin
+    const titleBar = app.mainWin.getByTestId("title-bar")
+    await titleBar.getByRole("button", {name: "Save As"}).click()
+    await titleBar
       .locator('[placeholder="Query name\\.\\.\\."]')
       .fill("Another Test Query")
     await app.mainWin
       .locator('div[role="textbox"]')
       .fill("another test query zed value")
-    await app.mainWin.locator('button :text-is("Create")').click()
+    await titleBar.getByRole("button", {name: "Create"}).click()
     await expect(
       await app.mainWin.locator('button :text-is("Another Test Query")')
     ).toBeVisible()

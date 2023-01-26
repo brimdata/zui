@@ -16,7 +16,6 @@ export class SearchWindow extends ZuiWindow {
     height: 750,
     webPreferences: {
       nodeIntegration: true,
-      experimentalFeatures: true,
       contextIsolation: false,
     },
   }

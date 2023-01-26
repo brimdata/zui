@@ -97,8 +97,9 @@ const slice = createSlice({
         ;(s.pins[index] as FromQueryPin).value = a.payload
       }
     },
-    setTimeRange(s, a: PayloadAction<{field: string; from: Date; to: Date}>) {
-      const {field, from, to} = a.payload
+    setTimeRange(s, a: PayloadAction<{field?: string; from: Date; to: Date}>) {
+      let {field, from, to} = a.payload
+
       const pin = s.pins.find(
         (p) => p.type === "time-range"
       ) as TimeRangeQueryPin
@@ -106,11 +107,11 @@ const slice = createSlice({
       if (pin) {
         pin.from = from.toISOString()
         pin.to = to.toISOString()
-        pin.field = field
+        pin.field = field ?? pin.field
       } else {
         s.pins.push({
           type: "time-range",
-          field,
+          field: field ?? "ts",
           from: from.toISOString(),
           to: to.toISOString(),
         })

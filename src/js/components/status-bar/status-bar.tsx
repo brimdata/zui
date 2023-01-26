@@ -7,7 +7,7 @@ import {TypeCount} from "./type-count"
 const BG = styled.footer`
   grid-area: status;
   user-select: none;
-  background: var(--tab-background);
+  background: var(--chrome-color);
   border-top: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
@@ -17,7 +17,7 @@ const BG = styled.footer`
   gap: 24px;
   font-size: 13px;
   line-height: 13px;
-  opacity: 0.8;
+  opacity: 1;
 `
 
 export default function StatusBar() {

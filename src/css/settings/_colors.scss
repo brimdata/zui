@@ -38,12 +38,12 @@
 
   --input-background: hsl(240, 15%, 92%);
 
-  --sidebar-background: hsl(212, 15%, 89%);
+  --sidebar-background: hsl(212, 8%, 85%);
   --sidebar-item-hover: hsl(212, 15%, 85%);
   --sidebar-item-active: hsl(212, 15%, 83%);
 
-  --tab-background: hsl(212, 15%, 94%);
-  --tab-background-hover: hsl(212, 15%, 97%);
+  --tab-background: hsl(212, 4%, 88%);
+  --tab-background-hover: hsl(212, 15%, 96%);
 
   --primary-color-lighter: hsl(212, 72%, 75%);
   --primary-color-light: hsl(212, 72%, 69%);
@@ -53,11 +53,14 @@
 
   --foreground-color: var(--aqua);
 
-  --button-background: #f2f2f3;
-  --button-background-hover: #ececee;
-  --button-background-active: #e5e5e7;
+  --button-background: hsl(212, 5%, 92%);
+  --button-background-hover: hsl(212, 5%, 90%);
+  --button-background-active: hsl(212, 5%, 87%);
 
-  --editor-background: hsl(212, 3%, 95%);
+  --editor-background: white;
 
-  --border-color: hsl(216, 10%, 80%);
+  --border-color: hsl(216, 10%, 87%);
+  --border-color-dark: hsl(216, 10%, 80%);
+
+  --chrome-color: hsl(212, 10%, 97%);
 }

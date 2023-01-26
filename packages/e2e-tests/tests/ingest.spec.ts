@@ -35,10 +35,7 @@ test.describe("Ingest tests", () => {
     await app.createPool([
       path.normalize(path.join(testDataDir(), "sample.tsv")),
     ])
-    await app.mainWin
-      .locator('#app-root button:above(:text("Query Pool"))')
-      .first()
-      .click()
+    await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
   })
 
   test.afterAll(async () => {

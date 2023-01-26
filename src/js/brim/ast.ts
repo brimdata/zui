@@ -1,6 +1,6 @@
-import lib from "../lib"
-import {ColumnName, printColumnName} from "../state/Columns/models/column"
 import {toFieldPath} from "../zql/toZql"
+
+type ColumnName = string | string[]
 
 export default function ast(tree: any) {
   return {
@@ -27,18 +27,10 @@ export default function ast(tree: any) {
     self() {
       return tree
     },
-    sorts() {
-      return this.procs("Sort").reduce((sorts, proc) => {
-        lib.array.wrap(proc.args).forEach((field) => {
-          sorts[printColumnName(fieldExprToName(field))] = proc.order
-        })
-        return sorts
-      }, {})
-    },
   }
 }
 
-function fieldExprToName(expr) {
+export function fieldExprToName(expr) {
   let s = _fieldExprToName(expr)
   // const r = toFieldPath(s)
   return s

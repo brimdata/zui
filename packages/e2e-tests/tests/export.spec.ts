@@ -25,10 +25,7 @@ test.describe("Export tests", () => {
     await app.createPool([
       path.normalize(path.join(testDataDir(), "sample.tsv")),
     ])
-    await app.mainWin
-      .locator('#app-root button:above(:text("Query Pool"))')
-      .first()
-      .click()
+    await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
     await app.query("sort ts")
   })
 
@@ -45,12 +42,11 @@ test.describe("Export tests", () => {
           Promise.resolve({canceled: false, filePath})
       }, file)
 
-      await app.mainWin
-        .locator('#app-root button:above(:text("Export"))')
-        .first()
-        .click()
-      await app.mainWin.getByRole("radio", {name: `${label}`}).click()
-      await app.mainWin.getByRole("button").filter({hasText: "Export"}).click()
+      const menu = app.mainWin.getByRole("list", {name: "resultsToolbarMenu"})
+      await menu.getByRole("button", {name: "Export"}).click()
+      const dialog = app.mainWin.getByRole("dialog")
+      await dialog.getByRole("radio", {name: `${label}`}).click()
+      await dialog.getByRole("button").filter({hasText: "Export"}).click()
 
       await expect(
         await app.mainWin.locator("text=Export Complete").first()

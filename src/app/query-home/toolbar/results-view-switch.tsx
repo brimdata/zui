@@ -1,24 +1,45 @@
-import React from "react"
-import {SwitchButton} from "src/app/core/components/switch-button"
+import React, {startTransition} from "react"
+import {useSelector} from "react-redux"
+import useKeybinding from "src/app/core/hooks/use-keybinding"
+import {useDispatch} from "src/app/core/state"
+import {SectionTabs} from "src/components/section-tabs"
+import Layout from "src/js/state/Layout"
+import {ResultsView} from "src/js/state/Layout/types"
 import styled from "styled-components"
-import {useResultsView} from "../results/view-hook"
 
 const BG = styled.div`
-  margin-top: 8px;
+  height: 100%;
 `
+const INSPECTOR = "INSPECTOR"
+const TABLE = "TABLE"
 
 export function ResultsViewSwitch() {
-  const view = useResultsView()
+  const dispatch = useDispatch()
+  const view = useSelector(Layout.getResultsView)
+
+  const setView = (view: ResultsView) => {
+    startTransition(() => {
+      dispatch(Layout.setResultsView(view as ResultsView))
+    })
+  }
+
+  useKeybinding("ctrl+d", () => {
+    setView(view === TABLE ? INSPECTOR : TABLE)
+  })
+
   return (
     <BG>
-      <SwitchButton
-        minWidth={70}
+      <SectionTabs
         options={[
-          {label: "Table", click: view.setTable, active: view.isTable},
+          {
+            label: "Table",
+            click: () => setView(TABLE),
+            checked: view === TABLE,
+          },
           {
             label: "Inspector",
-            click: view.setInspector,
-            active: view.isInspector,
+            click: () => setView(INSPECTOR),
+            checked: view === INSPECTOR,
           },
         ]}
       />

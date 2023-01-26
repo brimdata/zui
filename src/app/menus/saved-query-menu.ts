@@ -1,6 +1,6 @@
 import * as queries from "src/app/commands/queries"
 import {ActiveQuery} from "../core/models/active-query"
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 import {openQueryMenu} from "./open-query-menu"
 
 export const savedQueryMenu = createMenu(

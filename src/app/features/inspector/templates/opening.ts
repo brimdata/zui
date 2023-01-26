@@ -5,11 +5,14 @@ import {space} from "./space"
 
 export function opening(view: ContainerView) {
   const nodes = []
-  if (view.args.key) {
+  if (view.showKey) {
     nodes.push(key(view))
   }
   nodes.push(container.icon(view))
   nodes.push(space())
-  nodes.push(container.open(view))
+
+  if (view.showSyntax) {
+    nodes.push(container.open(view))
+  }
   return nodes
 }

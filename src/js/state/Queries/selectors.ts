@@ -4,6 +4,8 @@ import TreeModel from "tree-model"
 import {createSelector} from "reselect"
 import QueryVersions from "../QueryVersions"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {entitiesToArray} from "../utils"
+import memoizeOne from "memoize-one"
 
 export const raw = (state: State): QueriesState => state.queries
 
@@ -23,8 +25,13 @@ export const findSessionQuery = (state: State, id: string): Query | null => {
   return state.sessionQueries[id]
 }
 
-const getQueryVersions = (state: State, id: string) =>
-  QueryVersions.at(id).all(state)
+const memoGetVersions = memoizeOne(entitiesToArray)
+
+const getQueryVersions = (state: State, id: string) => {
+  const ids = QueryVersions.at(id).ids(state)
+  const entities = QueryVersions.at(id).entities(state)
+  return memoGetVersions(ids, entities)
+}
 
 export const build = createSelector(
   find,

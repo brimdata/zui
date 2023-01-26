@@ -82,8 +82,8 @@ export default function useMainHistogram(
     const margins = {
       left: 24,
       right: 24,
-      top: 10,
-      bottom: 18,
+      top: 20,
+      bottom: 28,
     }
     return {
       data,

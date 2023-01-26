@@ -7,13 +7,13 @@ const BG = styled.div`
   display: flex;
   align-items: center;
   left: 0;
-  height: 100%;
+  height: 80%;
 `
 
 const Button = styled.button`
   display: flex;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   background-color: rgba(0, 0, 0, 0);
   border-radius: 50%;
   border-width: 0;

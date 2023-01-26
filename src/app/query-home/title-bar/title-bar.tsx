@@ -7,7 +7,11 @@ import {Heading} from "./heading"
 import {QueryActions} from "./query-actions"
 import {TitleBarProvider} from "./context"
 
-const BG = styled.header.attrs({className: "title-bar"})`
+const BG = styled.header.attrs({
+  className: "title-bar",
+  "aria-label": "Title Bar",
+  "data-testid": "title-bar",
+})`
   flex-shrink: 0;
   height: 37px;
   border-bottom: 1px solid var(--border-color);
@@ -16,6 +20,7 @@ const BG = styled.header.attrs({className: "title-bar"})`
   justify-content: space-between;
   padding: 0 16px;
   gap: 10px;
+  background: var(--chrome-color);
 `
 
 export function TitleBar() {

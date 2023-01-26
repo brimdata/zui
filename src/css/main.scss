@@ -10,7 +10,6 @@
 @import "shared/shadows";
 @import "shared/type-colors";
 @import "shared/typography";
-@import "../ppl/css/zeek-colors";
 @import "shared/effects";
 
 /* Forms */
@@ -92,3 +91,9 @@
 @import "html-context-menu";
 @import "brim-toaster";
 @import "scroll-shadow";
+@import "zed-table";
+@import "list-item";
+@import "columns-tree";
+@import "zeek-plugin";
+@import "results-pane";
+@import "zed-view";

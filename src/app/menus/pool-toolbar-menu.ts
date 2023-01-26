@@ -1,5 +1,5 @@
 import {Pool} from "../core/pools/pool"
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 
 export const poolToolbarMenu = createMenu(
   "poolToolbarMenu",
@@ -7,7 +7,7 @@ export const poolToolbarMenu = createMenu(
     return [
       {
         label: "Query Pool",
-        icon: "query",
+        iconName: "query",
         click: () => {
           api.queries.open({
             pins: [{type: "from", value: pool.name}],

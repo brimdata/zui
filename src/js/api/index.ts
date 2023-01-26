@@ -17,8 +17,11 @@ import {CorrelationsApi} from "./correlations/correlations-api"
 import {EditorApi} from "./editor/editor-api"
 import {NoticeApi} from "./notice/notice-api"
 import {UrlApi} from "./url/url-api"
+import {LayoutApi} from "./layout-api"
+import {TableViewApi} from "src/zui-kit"
 
 export default class BrimApi {
+  table: TableViewApi | null = null
   public abortables = new Abortables()
   public commands = new CommandsApi()
   public loaders = new LoadersApi()
@@ -38,6 +41,7 @@ export default class BrimApi {
   public dispatch: AppDispatch
   public getState: GetState
   public notice: NoticeApi
+  public layout: LayoutApi
 
   init(d: AppDispatch, gs: GetState) {
     this.dispatch = d
@@ -51,6 +55,7 @@ export default class BrimApi {
     this.editor = new EditorApi(d, gs)
     this.notice = new NoticeApi(this)
     this.url = new UrlApi(this)
+    this.layout = new LayoutApi(this)
   }
 
   getZealot(lake?: BrimLake, env?: "node" | "web") {

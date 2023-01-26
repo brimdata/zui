@@ -12,11 +12,11 @@ export default {
   in(field: zed.Field, value: zed.Value) {
     return zql`${value} in ${field}`
   },
-  notIn(field: zed.Field, value: zed.Value) {
+  notIn(field: zed.Field, value: zed.Any) {
     return zql`!${value} in ${field}`
   },
-  countBy(field: zed.Field) {
-    return zql`count() by ${field}`
+  countBy(name: string | string[]) {
+    return `count() by ${toFieldPath(name)}`
   },
   sortBy(name: string | string[], direction: "asc" | "desc") {
     if (direction === "asc") return `sort ${toFieldPath(name)}`
