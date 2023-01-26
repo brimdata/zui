@@ -26,16 +26,6 @@ import {entitiesToArray} from "../utils"
 
 type Id = string | null
 
-// function makeDiff() {
-//   let prev = null
-//   return (next) => {
-//     if (next === prev) console.log("SAME")
-//     else console.log("DIFF", next, prev)
-//     prev = next
-//   }
-// }
-// const diff = makeDiff()
-
 export const getHistory = (
   state,
   windowName = global.windowName
