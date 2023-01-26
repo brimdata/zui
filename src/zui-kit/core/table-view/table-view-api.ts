@@ -10,6 +10,8 @@ import {ZedColumn} from "../../../components/zed-table/column"
 import {TableViewArgs} from "./types"
 import {Controller} from "src/zui-kit/types/utils"
 import memoizeOne from "memoize-one"
+import {diffKeys} from "../utils/diff-keys"
+import {extractCellId} from "../utils/extract-cell-id"
 
 export class TableViewApi {
   element: HTMLDivElement | null = null
@@ -39,6 +41,14 @@ export class TableViewApi {
   }
 
   update(args: TableViewArgs) {
+    // Find the cells that changed and delete them so they get re-rendered
+    const keys = diffKeys(
+      this.args.valueExpandedState.value,
+      args.valueExpandedState.value
+    )
+    const cells = keys.map((key) => extractCellId(key)).filter((c) => !!c)
+    cells.forEach((id) => this.cells.delete(id))
+
     this.args = args
     this.baseColumns = createColumns(this, this.shape)
     this.table.setOptions((prev) => ({

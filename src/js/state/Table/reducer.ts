@@ -22,6 +22,13 @@ const slice = createSlice({
     setLastShape(state, action: Payload<zed.Type>) {
       state.lastShape = action.payload
     },
+    setValueExpanded(state, action: Payload<Record<string, boolean>>) {
+      const prev = state.states.get(state.lastShape)
+      state.states.set(state.lastShape, {
+        ...prev,
+        valueExpanded: action.payload,
+      })
+    },
   },
   extraReducers: (builder) => {
     builder.addCase("VIEWER_CLEAR", (s) => {

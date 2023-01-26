@@ -64,21 +64,33 @@ export class Cell {
     this.field = args.field
     this.value = args.field?.value ?? new zed.Null()
     const api = args.api
+    // This needs its state updated if it changed I guess
     const ctx = new ViewContext({
       ...api.args.viewConfig,
       expandedDefaultState: {
         value: false,
         onChange: () => {},
       },
+      // These need to reach into the api to get the old state because the
+      // arguments in the api may have changed but this cell might be
+      // cached.
       expandedState: {
         value: api.args.valueExpandedState.value,
         onChange: (next) => {
-          api.args.valueExpandedState.onChange(next)
+          api.args.valueExpandedState.onChange({
+            ...api.args.valueExpandedState.value,
+            ...next,
+          })
         },
       },
       pageState: {
         value: api.args.valuePageState.value,
-        onChange: (next) => api.args.valuePageState.onChange(next),
+        onChange: (next) => {
+          api.args.valuePageState.onChange({
+            ...api.args.valuePageState.value,
+            ...next,
+          })
+        },
       },
       onClick: () => {},
       onContextMenu: (...args) =>
