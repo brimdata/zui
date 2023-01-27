@@ -8,7 +8,7 @@ import fsExtra from "fs-extra"
 const tempDir = os.tmpdir()
 const formats = [
   {label: "Arrow IPC Stream", expectedSize: 46512},
-  {label: "CSV", expectedSize: 12208},
+  {label: "CSV", expectedSize: 10851},
   {label: "JSON", expectedSize: 13659},
   {label: "NDJSON", expectedSize: 13657},
   {label: "Zeek", expectedSize: 9772},
