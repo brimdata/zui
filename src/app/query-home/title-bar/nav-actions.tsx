@@ -3,19 +3,15 @@ import {useSelector} from "react-redux"
 import {showHistoryPane} from "src/app/commands/show-history-pane"
 import {useDispatch} from "src/app/core/state"
 import TabHistory from "src/app/router/tab-history"
+import {IconButton} from "src/components/icon-button"
 import Current from "src/js/state/Current"
 import Layout from "src/js/state/Layout"
 import styled from "styled-components"
-import {IconButton} from "./icon-button"
-
-const Actions = styled.div`
-  display: flex;
-  gap: 10px;
-`
 
 const Nav = styled.div`
   display: flex;
-  gap: 2px;
+  button {
+  }
 `
 
 export function NavActions() {
@@ -25,25 +21,29 @@ export function NavActions() {
 
   if (isEditing) return null
   return (
-    <Actions>
-      <Nav>
-        <IconButton
-          icon="left-arrow"
-          onClick={() => dispatch(TabHistory.goBack())}
-          disabled={!history.canGo(-1)}
-        />
-        <IconButton
-          icon="right-arrow"
-          disabled={!history.canGo(1)}
-          onClick={() => dispatch(TabHistory.goForward())}
-        />
-      </Nav>
+    <Nav>
       <IconButton
-        icon="history"
-        title="Show Session History"
-        size={16}
-        onClick={() => showHistoryPane.run()}
+        label="Back"
+        iconName="left-arrow"
+        iconSize={18}
+        click={() => dispatch(TabHistory.goBack())}
+        enabled={history.canGo(-1)}
       />
-    </Actions>
+      <IconButton
+        label="Forward"
+        iconName="right-arrow"
+        iconSize={18}
+        enabled={history.canGo(1)}
+        click={() => dispatch(TabHistory.goForward())}
+      />
+
+      <IconButton
+        label="History"
+        description="Show Session History"
+        iconName="history"
+        iconSize={16}
+        click={() => showHistoryPane.run()}
+      />
+    </Nav>
   )
 }

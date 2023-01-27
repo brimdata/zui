@@ -1,12 +1,13 @@
-import {isEmpty, isNull, isString} from "lodash"
+import {isArray, isEmpty, isNull, isNumber, isString} from "lodash"
+import {zed} from "../.."
 import {EncodeStream} from "../encode-stream"
-import {Null} from "../index"
 import {TypeAlias} from "../types/type-alias"
 import {TypeRecord} from "../types/type-record"
 import {ZedType} from "../types/types"
 import {flatColumns} from "../utils/flat-columns"
 import {trueType} from "../utils/true-type"
 import {Field} from "./field"
+import {Null} from "./null"
 import {ZedValue, Value, JSOptions} from "./types"
 
 type ColumnName = string | string[]
@@ -31,7 +32,7 @@ export class Record implements Value {
   }
 
   get trueType(): TypeRecord {
-    return trueType<TypeRecord>(this.type)
+    return trueType(this.type) as TypeRecord
   }
 
   toString() {
@@ -52,13 +53,26 @@ export class Record implements Value {
     return this.fields.map((f) => stream.encodeValue(f.value))
   }
 
-  at(index: number) {
-    return this.fieldAt(index)?.value
+  at(index: number | number[]) {
+    return this.fieldAt(index)?.value ?? null
   }
 
-  fieldAt(index: number) {
+  fieldAt(index: number | number[]): null | zed.Field {
     if (isNull(this.fields)) return null
-    return this.fields[index]
+    if (isNumber(index)) return this.fields[index]
+    if (isArray(index)) {
+      if (index.length === 1) return this.fieldAt(index[0])
+      const [head, ...tail] = index
+      const value = this.fieldAt(head)?.value
+      // Probably bugs in this
+      if (!value) return null
+      if (!(value instanceof zed.Record)) {
+        throw new Error("Not a record")
+      }
+      return value.fieldAt(tail)
+    } else {
+      throw new Error("Argument must be number | number[]")
+    }
   }
 
   has(name: string | string[], ...types: ZedType[]) {
@@ -71,20 +85,25 @@ export class Record implements Value {
   }
 
   get<T extends ZedValue>(name: string | string[]): T {
-    return this.getField(name).value as T
+    return (this.getField(name)?.value as T) ?? null
   }
 
-  getField(name: string | string[]): Field {
+  getField(name: string | string[]): Field | null {
     if (isString(name)) return this._getField(name)
     if (isEmpty(name)) throw new Error("No fields specified")
-    return name.reduce<Field | null>((field, namePart) => {
-      if (!field) return this._getField(namePart)
-      if (field.value instanceof Record) {
-        return field.value._getField(namePart, field)
-      } else {
-        throw new Error(`${namePart} is not a record`)
-      }
-    }, null) as Field
+    if (name.length === 1) return this._getField(name[0])
+
+    const [next, ...rest] = name
+    const field = this.getField(next)
+    if (!field) throw new Error("No field named " + next)
+    const value = field.baseValue
+    if (value == null || value instanceof Null) {
+      return null
+    } else if (value instanceof Record) {
+      return value.getField(rest)
+    } else {
+      throw new Error(`${next} is not a record`)
+    }
   }
 
   try<T extends ZedValue>(name: string | string[]): T | null {

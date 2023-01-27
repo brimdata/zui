@@ -9,10 +9,6 @@ export function createOperation<Args extends any[] = never[], Ret = never>(
   return new Operation<Args, Ret>(channel, handler)
 }
 
-export function createSpecialOperation<Arg, Ret>(channel: string) {
-  return new SpecialOperation<Arg, Ret>(channel)
-}
-
 type OperationContext = {
   main: BrimMain
   event: IpcMainInvokeEvent | null
@@ -45,41 +41,5 @@ export class Operation<Args extends any[], Ret> {
 
   run(...args: Args): Ret {
     return this.handler({main: this.main, event: null}, ...args)
-  }
-}
-
-class OpResponse<A, R> {
-  constructor(public value: R, public condition = (_arg: A) => true) {}
-
-  when(condition: (arg: A) => boolean) {
-    this.condition = condition
-  }
-}
-
-export class SpecialOperation<A, R> {
-  responses: OpResponse<A, R>[] = []
-
-  constructor(public channel: string) {}
-
-  return(value: R) {
-    const res = new OpResponse<A, R>(value)
-    this.responses.push(res)
-    return res
-  }
-
-  listen() {
-    ipcMain.handle(this.channel, (e, arg: A) => {
-      log.debug("IPC Handling:", this.channel)
-      const index = this.responses.findIndex((r) => r.condition(arg))
-      if (index === -1) return
-      const res = this.responses[index]
-      this.responses.splice(index, 1)
-      return res.value
-    })
-    log.debug("IPC Listening:", this.channel)
-  }
-
-  invoke(arg: A): Promise<R> {
-    return ipcRenderer.invoke(this.channel, arg)
   }
 }

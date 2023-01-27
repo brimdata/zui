@@ -7,7 +7,7 @@ import {ResultStream} from "./query/result-stream"
 import {DefaultContext, TypeDefs} from "./zed/context"
 import * as zed from "./zed/index"
 import * as zjson from "./zjson"
-
+export * from "./test/factory"
 export * from "./client/types"
 export * from "./types"
 export {

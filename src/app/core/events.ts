@@ -6,7 +6,7 @@ export function createEvent<Args extends any[]>(name: string) {
       document.dispatchEvent(new CustomEvent(name, {detail: args}))
     },
     useListener(callback: (...args: Args) => void) {
-      useListener(document, name, (e: CustomEvent<Args>) => {
+      useListener(document, name as any, (e: CustomEvent<Args>) => {
         callback(...e.detail)
       })
     },

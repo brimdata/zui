@@ -6,17 +6,20 @@ export type ClientOpts = {
 }
 
 export type ResponseFormat =
-  | "zng"
-  | "ndjson"
+  | "arrows"
   | "csv"
   | "json"
+  | "ndjson"
+  | "zeek"
   | "zjson"
+  | "zng"
   | "zson"
 
 export type QueryOpts = {
   format: ResponseFormat
   controlMessages: boolean
   signal?: AbortSignal
+  timeout?: number
 }
 
 export type CreatePoolOpts = {
@@ -53,12 +56,36 @@ export interface IdObj {
 export type LoadOpts = {
   pool: string | IdObj
   branch: string
-  signal: AbortSignal
   message: {
     author: string
     body: string
   }
+  signal?: AbortSignal
+  format?: LoadFormat
 }
+export type LoadFormat =
+  | "auto"
+  | "arrows"
+  | "csv"
+  | "json"
+  | "line"
+  | "parquet"
+  | "zeek"
+  | "zjson"
+  | "zng"
+  | "zson"
+
+export type LoadContentType =
+  | "*/*"
+  | "application/vnd.apache.arrow.stream"
+  | "text/csv"
+  | "application/json"
+  | "application/x-line"
+  | "application/x-parquet"
+  | "application/x-zeek"
+  | "application/x-zjson"
+  | "application/x-zng"
+  | "application/x-zson"
 
 export type WebFetch = typeof window.fetch
 export type NodeFetch = typeof nodeFetch

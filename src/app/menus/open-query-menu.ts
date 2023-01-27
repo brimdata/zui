@@ -1,6 +1,6 @@
 import {MenuItemConstructorOptions} from "electron"
 import {Item} from "src/js/state/Queries/types"
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 
 export const openQueryMenu = createMenu("openQueryMenu", ({api}) => {
   function createMenuItems(items: Item[]) {

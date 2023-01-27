@@ -92,6 +92,30 @@ const ExportModal = ({onClose}) => {
           }}
         >
           <RadioItem>
+            <input type="radio" id="arrows" value="arrows" name="format" />
+            <label htmlFor="arrows">Arrow IPC Stream</label>
+          </RadioItem>
+          <RadioItem>
+            <input type="radio" id="csv" value="csv" name="format" />
+            <label htmlFor="csv">CSV</label>
+          </RadioItem>
+          <RadioItem>
+            <input type="radio" id="json" value="json" name="format" />
+            <label htmlFor="json">JSON</label>
+          </RadioItem>
+          <RadioItem>
+            <input type="radio" id="ndjson" value="ndjson" name="format" />
+            <label htmlFor="ndjson">NDJSON</label>
+          </RadioItem>
+          <RadioItem>
+            <input type="radio" id="zeek" value="zeek" name="format" />
+            <label htmlFor="zeek">Zeek</label>
+          </RadioItem>
+          <RadioItem>
+            <input type="radio" id="zjson" value="zjson" name="format" />
+            <label htmlFor="zjson">ZJSON</label>
+          </RadioItem>
+          <RadioItem>
             <input
               type="radio"
               id="zng"
@@ -99,23 +123,11 @@ const ExportModal = ({onClose}) => {
               name="format"
               defaultChecked
             />
-            <label htmlFor="zng">zng</label>
+            <label htmlFor="zng">ZNG</label>
           </RadioItem>
           <RadioItem>
             <input type="radio" id="zson" value="zson" name="format" />
-            <label htmlFor="zson">zson</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="json" value="json" name="format" />
-            <label htmlFor="json">json</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="ndjson" value="ndjson" name="format" />
-            <label htmlFor="ndjson">ndjson</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="csv" value="csv" name="format" />
-            <label htmlFor="csv">csv</label>
+            <label htmlFor="zson">ZSON</label>
           </RadioItem>
         </RadioButtons>
       </FormatContent>

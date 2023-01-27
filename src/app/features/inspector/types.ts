@@ -1,37 +1,55 @@
 import {zed} from "@brimdata/zealot"
 import React, {MouseEvent, ReactNode} from "react"
-import {InspectContext} from "./inspect-list"
-
-export type IsExpanded = (key: string) => boolean
-export type SetExpanded = (key: string, value: boolean) => void
+import {ViewContext} from "../../../zui-kit/core/value-view/view-context"
+import {View} from "./views/view"
 
 type InspectorMouseEvent = (
   e: MouseEvent,
-  value: zed.Value | zed.Type,
-  field: zed.Field | zed.TypeField,
-  index: number
+  value: zed.Any,
+  field: zed.Field
 ) => void
 
 export type InspectorProps = {
   height: number
   width: number
   values: zed.Value[]
-  isExpanded: IsExpanded
-  setExpanded: SetExpanded
+  isExpanded: (key: string) => boolean
+  setExpanded: (key: string, value: boolean) => void
   getValuePage: (key: string) => number
-  renderMore: (key: string) => void
+  incValuePage: (key: string) => void
   onContextMenu?: InspectorMouseEvent
   onClick?: InspectorMouseEvent
   loadMore?: Function
   innerRef?: React.Ref<any>
   onScroll?: (props: {top: number; left: number}) => void
   initialScrollPosition?: {top: number; left: number}
+  customViews?: typeof View[]
+  hideKeys?: boolean
+  hideSyntax?: boolean
+}
+
+export type InspectContextArgs = Pick<
+  InspectorProps,
+  | "incValuePage"
+  | "getValuePage"
+  | "setExpanded"
+  | "isExpanded"
+  | "onClick"
+  | "onContextMenu"
+  | "customViews"
+  | "hideKeys"
+  | "hideSyntax"
+> & {
+  peekLimit?: number
+  lineLimit?: number
+  rowsPerPage?: number
+  rowLimit?: number
 }
 
 export type InspectArgs = {
-  ctx: InspectContext
-  value: zed.Value | zed.Type
-  field: zed.Field | zed.TypeField | null
+  ctx: ViewContext
+  value: zed.Any
+  field: zed.Field | null
   type: zed.Type
   // This is the visual name of the key,
   // the field name for records,
@@ -39,7 +57,7 @@ export type InspectArgs = {
   // and the key type for a map
   key: string | null | zed.Any
   last: boolean
-  indexPath: number[]
+  indexPath: (number | string)[]
 }
 
 export type RowData = {

@@ -58,13 +58,13 @@ const Background = styled.div`
 `
 
 export const Content = styled.div<{width?: number}>`
-  ${(p) => p.theme.typography.labelNormal}
   min-height: 0;
   min-width: 100%;
   width: ${(p) => (p.width && p.width + "px") || "100%"};
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
+  padding-top: 32px;
+  gap: 28px;
   & > * {
     padding-left: 24px;
     padding-right: 24px;

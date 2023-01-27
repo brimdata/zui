@@ -45,14 +45,14 @@ const Text = styled.span`
 `
 
 const StyledButton = styled.button`
-  background: var(--button-background);
-  &:active:not(:disabled) {
-    background: linear-gradient(#fefefe, 0.5px, #f3f3f3 2px);
-  }
+  // background: var(--button-background);
+  // &:active:not(:disabled) {
+  // background: linear-gradient(#fefefe, 0.5px, #f3f3f3 2px);
+  // }
+  background: none;
   border: none;
   border-radius: 6px;
   user-select: none;
-  min-width: 58px;
   -webkit-app-region: no-drag;
   height: 24px;
   padding: 0 4px;

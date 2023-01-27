@@ -3,22 +3,24 @@ import {RenderMode} from "../types"
 import {View} from "../views/view"
 import {item} from "./item"
 import {key} from "./key"
+import {space} from "./space"
 import {typename} from "./typename"
 
-export function field(view: View<zed.Any>, mode: RenderMode) {
+export function field(view: View, mode: RenderMode) {
   const nodes = []
-  if (view.args.key) {
+
+  if (view.showKey) {
     nodes.push(key(view))
   }
 
   nodes.push(item(view, mode))
 
-  if (zed.isTypeAlias(view.args.type)) {
+  if (zed.isTypeAlias(view.type) && view.showDecorator) {
     nodes.push(typename(view))
   }
 
-  if (!view.args.last) {
-    nodes.push(", ")
+  if (!view.isLast) {
+    nodes.push(view.showSyntax ? ", " : space())
   }
 
   return nodes

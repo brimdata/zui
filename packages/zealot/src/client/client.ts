@@ -9,6 +9,7 @@ import {
   accept,
   defaults,
   getEnv,
+  getLoadContentType,
   json,
   parseContent,
   toJS,
@@ -59,7 +60,7 @@ export class Client {
       method: "POST",
       body: data,
       headers,
-      contentType: "",
+      contentType: getLoadContentType(opts.format) ?? "",
       signal: opts.signal,
       fetch: nodeFetch,
       timeout: Infinity,
@@ -80,6 +81,7 @@ export class Client {
       contentType: "application/json",
       format: options.format,
       signal: abortCtl.signal,
+      timeout: options.timeout,
     })
     return new ResultStream(result, abortCtl)
   }
@@ -170,7 +172,10 @@ export class Client {
     contentType?: string
   }) {
     const abortCtl = wrapAbort(opts.signal)
-    const clearTimer = this.setTimeout(() => abortCtl.abort(), opts.timeout)
+    const clearTimer = this.setTimeout(() => {
+      console.error("request timed out:", opts)
+      abortCtl.abort()
+    }, opts.timeout)
     const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy
     const headers = new Headers(opts.headers)
     headers.set("Accept", accept(opts.format || "zjson"))
@@ -180,7 +185,6 @@ export class Client {
     if (this.auth) {
       headers.set("Authorization", `Bearer ${this.auth}`)
     }
-
     const resp = await fetch(this.baseURL + opts.path, {
       method: opts.method,
       signal: abortCtl.signal as any,

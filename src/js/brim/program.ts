@@ -21,7 +21,7 @@ export default function (p = "") {
       return this
     },
 
-    notIn(field: zed.Field, value: zed.Value) {
+    notIn(field: zed.Field, value: zed.Any) {
       p = appendWithPipe(p, syntax.notIn(field, value))
       return this
     },
@@ -52,8 +52,8 @@ export default function (p = "") {
       return this
     },
 
-    countBy(field: zed.Field) {
-      p = appendWithPipe(p, syntax.countBy(field))
+    countBy(name: string | string[]) {
+      p = appendWithPipe(p, syntax.countBy(name))
       return this
     },
 

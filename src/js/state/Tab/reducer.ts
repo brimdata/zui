@@ -2,9 +2,9 @@ import {combineReducers} from "redux"
 import {reducer as editor} from "../Editor/reducer"
 import {reducer as inspector} from "src/js/state/Inspector/reducer"
 import {reducer as layout} from "../Layout/reducer"
+import {reducer as table} from "../Table/reducer"
 import brim from "../../brim"
 import chart from "../Chart/reducer"
-import columns from "../Columns/reducer"
 import logDetails from "../LogDetails/reducer"
 import search from "../Search/reducer"
 import searchBar from "../SearchBar/reducer"
@@ -14,7 +14,6 @@ import {reducer as histogram} from "../Histogram/reducer"
 
 const tabReducer = combineReducers({
   chart,
-  columns,
   editor,
   id: (state: string = brim.randomHash(), _): string => state,
   lastFocused: (state: string = new Date().toISOString()): string => state,
@@ -28,6 +27,7 @@ const tabReducer = combineReducers({
   viewer,
   results,
   histogram,
+  table,
 })
 
 export type TabReducer = typeof tabReducer

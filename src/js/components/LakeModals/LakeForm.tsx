@@ -13,9 +13,9 @@ import InputLabel from "../common/forms/InputLabel"
 import TextInput from "../common/forms/TextInput"
 import useCallbackRef from "../hooks/useCallbackRef"
 import useEventListener from "../hooks/useEventListener"
-import MacSpinner from "../MacSpinner"
-import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 import {isDefaultLake} from "../../initializers/initLakeParams"
+import {SubmitButton} from "src/components/submit-button"
+import {InputButton} from "src/components/input-button"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;
@@ -243,17 +243,12 @@ const LakeForm = ({onClose, lake}: Props) => {
         </form>
       </SignInForm>
       <StyledFooter>
-        <ToolbarButton
-          isPrimary
-          text={isSubmitting ? "" : isNewLake ? "Connect" : "Save"}
-          icon={isSubmitting ? <MacSpinner light /> : null}
-          disabled={isSubmitting}
-          onClick={onSave}
-        />
-        <ToolbarButton
-          text={isSubmitting ? "Cancel" : "Close"}
-          onClick={isSubmitting ? onCancel : onClickClose}
-        />
+        <SubmitButton disabled={isSubmitting} onClick={onSave}>
+          {isSubmitting ? "Conecting..." : isNewLake ? "Connect" : "Save"}
+        </SubmitButton>
+        <InputButton onClick={isSubmitting ? onCancel : onClickClose}>
+          {isSubmitting ? "Cancel" : "Close"}
+        </InputButton>
       </StyledFooter>
     </>
   )

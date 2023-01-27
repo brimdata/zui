@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const HeadingButton = styled.button`
-  background: white;
+  background: transparent;
   border: none;
   height: 22px;
   display: flex;
@@ -13,6 +13,7 @@ export const HeadingButton = styled.button`
   min-width: 0;
   margin-left: 10px;
   margin-right: 10px;
+  flex: 1;
 
   &:hover {
     background: var(--button-background);

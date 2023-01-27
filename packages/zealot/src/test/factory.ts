@@ -10,10 +10,7 @@ export function createRecord(object: {[key: string]: unknown}): zed.Record {
   for (let name in object) {
     fields.push(createField(name, object[name]))
   }
-  const typeFields: zed.TypeField[] = fields.map((f) => ({
-    name: f.name,
-    type: f.value.type,
-  }))
+  const typeFields = fields.map((f) => new zed.TypeField(f.name, f.value.type))
 
   // This could be more efficient
   const type: TypeRecord = DefaultContext.lookupTypeRecord(typeFields)
@@ -28,7 +25,7 @@ export function createField(name: string, value: unknown): zed.Field {
 }
 
 export function createData(value: unknown): zed.Value {
-  if (value instanceof zed.Primitive) {
+  if (zed.isValue(value)) {
     return value as zed.Value
   }
 
@@ -56,7 +53,7 @@ export function createData(value: unknown): zed.Value {
     return new zed.String(value)
   }
 
-  if (isObject(value)) {
+  if (isObject(value) && value?.constructor === Object) {
     return createRecord(value as {[k: string]: unknown})
   }
 

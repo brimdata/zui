@@ -4,7 +4,7 @@ import {copyQueryToClipboard} from "../commands/copy-query-to-clipboard"
 import {deleteQueries} from "../commands/delete-queries"
 import {exportQueryGroup} from "../commands/export-query-group"
 import {openQuery} from "../commands/open-query"
-import {createMenu} from "./create-menu"
+import {createMenu} from "src/core/menu"
 
 export const queryContextMenu = createMenu(
   "queryContextMenu",

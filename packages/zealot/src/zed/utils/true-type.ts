@@ -1,10 +1,9 @@
-import {Type} from "../types/types"
 import {isTypeAlias} from "./is-type-alias"
 
-export function trueType<T extends Type>(start: Type): T {
+export function trueType(start: unknown) {
   let t = start
   while (isTypeAlias(t)) {
     t = t.type
   }
-  return t as T
+  return t
 }

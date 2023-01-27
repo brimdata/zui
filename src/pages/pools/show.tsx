@@ -1,22 +1,22 @@
 import {syncPool} from "src/app/core/pools/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import useLakeId from "src/app/router/hooks/use-lake-id"
 import {poolShow} from "src/app/router/routes"
 import React, {useEffect, useRef} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {Redirect, Route, Switch} from "react-router"
+import {Route, Switch} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
-import {lakePath} from "src/app/router/utils/paths"
-import {cssVar, transparentize} from "polished"
 import {bytes} from "src/js/lib/fmt"
 import styled from "styled-components"
-import {useBrimApi} from "../../app/core/context"
-import Actions from "../../app/query-home/toolbar/actions/actions"
-import {loadFiles} from "src/app/commands/pools"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import classNames from "classnames"
 import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
+import {PoolDataList} from "src/panes/pool-data-list"
+import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
+import {H1} from "src/components/h1"
+import {PoolLoadMore, PoolLoadMoreHandle} from "src/panes/pool-load-more"
+import {NotFound} from "./404"
+import {SubmitButton} from "src/components/submit-button"
 
 const BG = styled.div`
   --page-padding: 32px;
@@ -35,12 +35,8 @@ const Toolbar = styled.div`
   flex: 1;
   min-width: 0;
   height: 42px;
-`
-
-const Title = styled.h1`
-  font-weight: bold;
-  font-size: 18px;
-  margin: 0;
+  align-items: center;
+  justify-content: flex-end;
 `
 
 const Subtitle = styled.p`
@@ -63,29 +59,9 @@ const Body = styled.section`
   }
 `
 
-const DataList = styled.div`
-  padding: 16px var(--page-padding);
-  background: ${transparentize(0.98, cssVar("--foreground-color") as string)};
-`
-
-const LoadFilesContainer = styled.div`
-  margin: var(--page-padding);
-  padding: var(--page-padding);
-  height: 100px;
-  border: 2px dashed var(--border-color);
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  label {
-    opacity: 0.5;
-  }
-`
-
-function InitPool({children}) {
+export function InitPool({children}) {
   const dispatch = useDispatch<AppDispatch>()
   const poolId = usePoolId()
-  const lakeId = useLakeId()
   const pool = useSelector(Current.getPool)
 
   useEffect(() => {
@@ -93,7 +69,7 @@ function InitPool({children}) {
   }, [poolId])
 
   if (!pool) {
-    return <Redirect to={lakePath(lakeId)} />
+    return <NotFound />
   } else if (!pool.hasStats()) {
     return null
   } else {
@@ -101,89 +77,37 @@ function InitPool({children}) {
   }
 }
 
-const Show = () => {
+export const Show = () => {
   const pool = useSelector(Current.mustGetPool)
-  const api = useBrimApi()
-
-  const openNewDraftQuery = () => {
-    api.queries.open({
-      pins: [{type: "from", value: pool.name}],
-      value: "",
-    })
-  }
-  const keys = pool.keys.map((k) => k.join("."))
+  const loadForm = useRef<PoolLoadMoreHandle>()
   const [{isOver}, dropRef] = useFilesDrop({
-    onDrop: (files) => loadFiles.run(pool.id, files),
+    onDrop: (files) => loadForm.current?.submit(files),
   })
-  const fileInput = useRef<HTMLInputElement>()
-
+  const queryPool = poolToolbarMenu.build(pool).items[0]
   return (
     <BG ref={dropRef} className={classNames({isOver})}>
+      <Header>
+        <div>
+          <H1>{pool.name}</H1>
+          <Subtitle>{bytes(pool.stats.size)}</Subtitle>
+        </div>
+        <Toolbar>
+          <SubmitButton
+            icon={queryPool.iconName}
+            onClick={(htmlEvent) => queryPool.click({htmlEvent})}
+          >
+            Query Pool
+          </SubmitButton>
+        </Toolbar>
+      </Header>
+      <Body>
+        <PoolDataList pool={pool} />
+        <PoolLoadMore pool={pool} ref={loadForm} />
+      </Body>
       <DropOverlay show={isOver}>
         <p>Drop To Load Files Into:</p>
         <p>{pool.name}</p>
       </DropOverlay>
-      <Header>
-        <div>
-          <Title>{pool.name}</Title>
-          <Subtitle>{bytes(pool.stats.size)}</Subtitle>
-        </div>
-        <Toolbar>
-          <input
-            type="file"
-            multiple
-            style={{display: "none"}}
-            ref={fileInput}
-            onChange={(e) =>
-              loadFiles.run(pool.id, Array.from(e.currentTarget.files))
-            }
-          />
-          <Actions
-            actions={[
-              {
-                label: "Load Data",
-                icon: "doc-plain",
-                click: () => {
-                  fileInput.current?.click()
-                },
-                title: "Load more data into this pool.",
-              },
-              {
-                label: "Query Pool",
-                icon: "query",
-                click: openNewDraftQuery,
-                title:
-                  "Open a new session query with this pool as the from clause.",
-              },
-            ]}
-          />
-        </Toolbar>
-      </Header>
-      <Body>
-        <DataList>
-          <dl>
-            <dt>ID </dt>
-            <dd>{pool.id}</dd>
-          </dl>
-          <dl>
-            <dt>Layout Key{keys.length > 1 ? "s" : null} </dt>
-            <dd>{keys.join(", ") || "null"}</dd>
-          </dl>
-          <dl>
-            <dt>Layout Order </dt>
-            <dd>{pool.data.layout.order}</dd>
-          </dl>
-          <dl>
-            <dt>Timestamp </dt>
-            <dd>{pool.data.ts.toLocaleString()}</dd>
-          </dl>
-        </DataList>
-        {!isOver && (
-          <LoadFilesContainer>
-            <label>Drag and drop files to load more data into this pool.</label>
-          </LoadFilesContainer>
-        )}
-      </Body>
     </BG>
   )
 }
@@ -191,11 +115,11 @@ const Show = () => {
 export default function PoolShow() {
   return (
     <Switch>
-      <InitPool>
-        <Route path={poolShow.path}>
+      <Route path={poolShow.path}>
+        <InitPool>
           <Show />
-        </Route>
-      </InitPool>
+        </InitPool>
+      </Route>
     </Switch>
   )
 }

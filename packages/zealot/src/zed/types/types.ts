@@ -28,4 +28,5 @@ export interface Type {
   toString(): string
   serialize(stream: EncodeStream): zjson.NoId<zjson.Type> | zjson.PrimitiveType
   create(value: zjson.Value, stream: DecodeStream, parent?: Field): Value
+  kind: string
 }

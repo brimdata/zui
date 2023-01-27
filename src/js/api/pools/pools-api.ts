@@ -1,6 +1,6 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {isArray} from "lodash"
-import {createPool} from "src/app/core/pools/create-pool"
+import {CreatePoolOpts} from "packages/zealot/src"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
 import detectFileTypes from "src/js/brim/ingest/detectFileTypes"
@@ -33,11 +33,18 @@ export class PoolsApi extends ApiDomain {
   }
 
   // TODO: Move to main progress, create a loads domain
-  async loadFiles(poolId: string, files: File[]) {
+  async loadFiles(poolId: string, files: File[], format?: string) {
+    console.log(format)
     const fileListData = await detectFileTypes(files)
     const loader = chooseLoader(this, fileListData)
     const load = createLoad(this, poolId)
-    const params = {poolId: poolId, branch: "main", name: "", fileListData}
+    const params = {
+      poolId: poolId,
+      branch: "main",
+      name: "",
+      fileListData,
+      format,
+    }
     try {
       await load.setup()
       await loader.load(
@@ -61,8 +68,11 @@ export class PoolsApi extends ApiDomain {
     return this.dispatch(deletePools(ids))
   }
 
-  create(name: string) {
-    return this.dispatch(createPool({name}))
+  async create(name: string, opts: Partial<CreatePoolOpts> = {}) {
+    const client = await this.zealot
+    const res = await client.createPool(name, opts)
+    await this.sync(res.pool.id)
+    return res.pool.id
   }
 
   async update(update: Update | Update[]) {

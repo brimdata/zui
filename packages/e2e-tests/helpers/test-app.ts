@@ -54,16 +54,19 @@ export default class TestApp {
     this.mainWin = await this.getWindowByTitle("Zui")
   }
 
-  async createPool(filepaths: string[]): Promise<void> {
+  async createPool(
+    filepaths: string[],
+    expectedResult = "Load Successful"
+  ): Promise<void> {
     await this.mainWin.locator('button[aria-label="create"]').click()
     await this.mainWin.locator('li:has-text("New Pool")').click()
     const [chooser] = await Promise.all([
       this.mainWin.waitForEvent("filechooser"),
       this.mainWin.locator("text=Choose Files").click(),
     ])
-
     await chooser.setFiles(filepaths)
-    await this.mainWin.locator("text=Import Complete.").isVisible()
+    await this.mainWin.getByRole("button", {name: "Create Pool"}).click()
+    await this.mainWin.getByText(expectedResult).waitFor()
   }
 
   async chooseFiles(locator, paths: string[]) {
@@ -90,12 +93,12 @@ export default class TestApp {
 
   // TODO: this method is a wip, it still needs to wait for cells to populate first
   async getViewerResults(includeHeaders = true): Promise<string[]> {
-    const fields = await this.mainWin.locator(".viewer .field-cell")
+    const fields = await this.mainWin.locator(".zed-table__cell")
     let results = await fields.evaluateAll<string[], HTMLElement>((nodes) =>
       nodes.map((n) => n.innerText.trim())
     )
     if (includeHeaders) {
-      const headers = await this.mainWin.locator(".viewer .header-cell")
+      const headers = await this.mainWin.locator(".zed-table__header-cell")
       const headerResults = await headers.evaluateAll<string[], HTMLElement>(
         (headerCells) => headerCells.map((hc) => hc.innerText.trim())
       )

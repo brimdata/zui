@@ -22,7 +22,7 @@ export default function TimeFormat({config}: Props) {
         name={config.name}
         type="text"
         placeholder="ISO-8601"
-        defaultValue={config.defaultValue}
+        defaultValue={config.defaultValue as string}
       />
     </div>
   )

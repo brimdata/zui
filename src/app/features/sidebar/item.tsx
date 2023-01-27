@@ -252,3 +252,5 @@ export function Item(props: ItemProps) {
     </Container>
   )
 }
+
+export const ItemText = styled.p``

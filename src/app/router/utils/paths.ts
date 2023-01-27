@@ -6,8 +6,8 @@ export const lakePath = (id: string) => {
   return `${lakesPath()}/${id}`
 }
 
-export const lakeImportPath = (lakeId: string) => {
-  return `${lakePath(lakeId)}/import`
+export const newPoolPath = (lakeId: string) => {
+  return `${lakePath(lakeId)}/pools/new`
 }
 
 export const lakePoolPath = (poolId: string, lakeId: string) => {

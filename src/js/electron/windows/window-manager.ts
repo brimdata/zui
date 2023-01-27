@@ -57,25 +57,27 @@ export class WindowManager {
     if (win) {
       win.state = state
     } else {
-      log.error("No Window Found with id: ", id)
+      log.error("window not found: ", id)
     }
   }
 
-  serialize(): Promise<SerializedWindow[]> {
-    return Promise.all(
-      this.where((w) => w.persistable).map((w) => w.serialize())
+  serialize(): SerializedWindow[] {
+    return this.where((w) => w.persistable && !w.destroyed).map((w) =>
+      w.serialize()
     )
   }
 
   private async register(win: ZuiWindow) {
     this.windows[win.id] = win
-    await win.load()
     win.ref.on("closed", () => this.unregister(win))
+    await win.load()
+    log.debug(`window registered:`, {id: win.id, name: win.name})
     return win
   }
 
   private unregister(win: ZuiWindow) {
     delete this.windows[win.id]
+    log.debug(`window unregistered:`, {id: win.id, name: win.name})
     // whenever a window is closed in Linux or Windows check if 'hidden' window is last
     // open, and if so tell it to close so the rest of the app will shutdown
     if (

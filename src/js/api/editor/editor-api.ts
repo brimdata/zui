@@ -8,7 +8,15 @@ export class EditorApi {
     return Editor.getValue(this.getState())
   }
 
+  set value(next: string) {
+    this.dispatch(Editor.setValue(next))
+  }
+
   get pins() {
     return Editor.getPins(this.getState())
+  }
+
+  append(value: string) {
+    this.value = this.value + value
   }
 }

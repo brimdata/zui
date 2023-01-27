@@ -20,5 +20,9 @@ export function zedTypeClassName(data: zed.Value | zed.Type) {
     return classes.join(" ")
   }
 
+  if (data instanceof zed.Union) {
+    return zedTypeClassName(zed.baseValue(data))
+  }
+
   return "zed-container"
 }

@@ -12,5 +12,5 @@ export async function runInitializers(main: BrimMain) {
       src.initialize(main)
     },
   })
-  log.info(`Initializers loaded`)
+  log.info(`initializers loaded`)
 }

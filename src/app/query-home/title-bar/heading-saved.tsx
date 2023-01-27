@@ -14,6 +14,12 @@ const BG = styled.div`
   min-width: 120px;
   justify-content: center;
   align-items: center;
+  flex: 1;
+  background: rgba(0, 0, 0, 0.05);
+  height: 28px;
+  border-radius: 14px;
+  justify-content: space-between;
+  padding: 0 8px;
 `
 
 const Title = styled.h2`

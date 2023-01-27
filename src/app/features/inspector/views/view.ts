@@ -1,17 +1,53 @@
-import {zed} from "@brimdata/zealot"
 import {ReactNode} from "react"
+import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import {field} from "../templates/field"
 import {InspectArgs, RenderMode} from "../types"
 
-export class View<T extends zed.Any = zed.Any> {
+export class View<T = any> {
+  static when(_args: InspectArgs) {
+    return true
+  }
+
   constructor(public args: InspectArgs) {}
 
+  get ctx() {
+    return this.args.ctx
+  }
+
   get value(): T {
-    return this.args.value as T
+    return this.args.value as unknown as T
+  }
+
+  get type() {
+    return this.args.type
   }
 
   get key() {
+    return this.args.key
+  }
+
+  get id() {
     return this.args.indexPath.join(",")
+  }
+
+  get className() {
+    return zedTypeClassName(this.value as any)
+  }
+
+  get showKey() {
+    return !!this.args.key && !this.ctx.hideKeys
+  }
+
+  get showDecorator() {
+    return !this.ctx.hideDecorators
+  }
+
+  get showSyntax() {
+    return !this.ctx.hideSyntax
+  }
+
+  get isLast() {
+    return this.args.last
   }
 
   rowCount() {
@@ -19,14 +55,14 @@ export class View<T extends zed.Any = zed.Any> {
   }
 
   isExpanded() {
-    return this.args.ctx.props.isExpanded(this.key)
+    return this.ctx.isExpanded(this.id)
   }
 
   render(_mode?: RenderMode): ReactNode {
-    return this.args.value.toString()
+    return this.value.toString()
   }
 
   inspect() {
-    return this.args.ctx.push(field(this, "single"))
+    return this.ctx.push(field(this, "single"))
   }
 }

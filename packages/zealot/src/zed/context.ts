@@ -6,12 +6,13 @@ import {TypeAlias} from "./types/type-alias"
 import {TypeArray} from "./types/type-array"
 import {TypeError} from "./types/type-error"
 import {TypeMap} from "./types/type-map"
-import {TypeField, TypeRecord} from "./types/type-record"
+import {TypeRecord} from "./types/type-record"
 import {TypeSet} from "./types/type-set"
 import {TypeUnion} from "./types/type-union"
 import {Type} from "./types/types"
 import {Field} from "./values/field"
 import {Value} from "./values/types"
+import {TypeField} from "./types/type-field"
 
 export type TypeDefs = {[key: string]: Type}
 
@@ -69,7 +70,9 @@ export class ZedContext {
   lookupTypeRecord(fields: TypeField[] | null): TypeRecord {
     const key = TypeRecord.stringify(fields)
     if (key in this.typeByShape) {
-      return this.typeByShape[key] as TypeRecord
+      const record = this.typeByShape[key] as TypeRecord
+      record.fields = fields
+      return record
     } else {
       return this.alloc(key, new TypeRecord(fields))
     }

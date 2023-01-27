@@ -23,7 +23,7 @@ export default function (
           queryIdNameMap
         )
       } else {
-        return "Brim"
+        return "Zui"
       }
     },
     icon() {
@@ -43,7 +43,7 @@ function compileTitle(route, location, lakes, pools, queryIdNameMap) {
   if (poolId) {
     title = title.replace(
       "<pool>",
-      get(pools, [lakeId, poolId, "data", "name"], "")
+      get(pools, [lakeId, poolId, "data", "name"], "Not Found")
     )
   }
   if (queryId) {

@@ -34,7 +34,7 @@ export default class DragAnchor extends React.Component<Props> {
   down = () => {
     const body = document.body
     if (body) {
-      body.classList.add("dragging")
+      body.classList.add("no-select", "col-resize")
       document.addEventListener("mousemove", this.move)
       document.addEventListener("mouseup", this.up)
     }
@@ -47,7 +47,7 @@ export default class DragAnchor extends React.Component<Props> {
   up = () => {
     const body = document.body
     if (body) {
-      body.classList.remove("dragging")
+      body.classList.remove("no-select", "col-resize")
       document.removeEventListener("mousemove", this.move)
       document.removeEventListener("mouseup", this.up)
     }

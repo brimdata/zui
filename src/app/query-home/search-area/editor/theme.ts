@@ -15,8 +15,8 @@ export const editorTheme = EditorView.theme(
     },
     ".cm-scroller": {
       fontFamily: cssVar("--mono-font"),
-      lineHeight: "19px",
-      fontSize: "13px",
+      lineHeight: "21px",
+      fontSize: "15px",
       color: "var(--foreground-color)",
       overflow: "auto",
     },
@@ -28,7 +28,7 @@ export const editorTheme = EditorView.theme(
     ".cm-lineNumbers .cm-gutterElement": {
       opacity: 0.2,
       minWidth: 0,
-      padding: "0 20px 0 26px",
+      padding: "0 20px 0 22px",
     },
     ".cm-activeLine": {
       background: "transparent",

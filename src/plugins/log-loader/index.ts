@@ -2,10 +2,15 @@ import BrimApi from "src/js/api"
 import {IngestParams} from "src/js/brim/ingest/getParams"
 import {forEach, get} from "lodash"
 import {Readable} from "stream"
+import {LoadFormat} from "packages/zealot/src"
 
 export const activate = (api: BrimApi) => {
   const load = async (
-    params: IngestParams & {poolId: string; branch: string},
+    params: IngestParams & {
+      poolId: string
+      branch: string
+      format?: LoadFormat
+    },
     onProgressUpdate: (value: number) => void,
     onWarning: (warning: string) => void,
     onDetailUpdate: () => Promise<void>,
@@ -29,6 +34,7 @@ export const activate = (api: BrimApi) => {
       const res = await zealot.load(data, {
         pool: params.poolId,
         branch: params.branch,
+        format: params.format,
         message: {
           author: "brim",
           body: "automatic import of " + file.path,

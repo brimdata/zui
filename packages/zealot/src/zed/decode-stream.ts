@@ -1,6 +1,7 @@
 import {isNull} from "lodash"
 import * as zjson from "../zjson"
 import {TypeDefs, ZedContext} from "./context"
+import {TypeField} from "./types/type-field"
 import {PrimitiveName} from "./types/type-primitives"
 import {Type} from "./types/types"
 import {getPrimitiveType} from "./utils/get-primitive-type"
@@ -50,10 +51,9 @@ export class DecodeStream {
         return this.context.lookupTypeRecord(
           isNull(obj.fields)
             ? null
-            : obj.fields.map(({name, type}) => ({
-                name,
-                type: this.decodeType(type),
-              }))
+            : obj.fields.map(({name, type}) => {
+                return new TypeField(name, this.decodeType(type))
+              })
         )
       default:
         throw `Implement decoding: ${obj.kind}`

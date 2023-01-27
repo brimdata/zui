@@ -84,7 +84,9 @@ export default function TabBar() {
             <AnimatedSearchTab
               {...layout.dragBinding({
                 id,
-                onDown: () => ctl.onTabClick(id),
+                onDown: () => {
+                  ctl.onTabClick(id)
+                },
                 onChange: (indices) => ctl.onTabMove(indices),
               })}
               key={id}

@@ -6,7 +6,6 @@ import HTMLContextMenu from "src/js/components/HTMLContextMenu"
 import {Modals} from "src/js/components/Modals"
 import PoolModal from "src/js/components/PoolModal"
 import Preferences from "src/js/components/Preferences/Preferences"
-import ColumnsModal from "../../columns/columns-modal"
 
 export function AppModals() {
   return (
@@ -15,7 +14,6 @@ export function AppModals() {
       <Preferences />
       <Modals />
       <PoolModal />
-      <ColumnsModal />
       <HTMLContextMenu />
       <BrimToaster />
       <BrimTooltip />

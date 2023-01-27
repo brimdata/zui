@@ -7,7 +7,7 @@ import {note} from "./note"
 
 export function open(view: ContainerView) {
   return (
-    <span key={"open-token-" + view.key} className="zed-syntax">
+    <span key={"open-token-" + view.id} className="zed-syntax">
       {view.openToken()}
     </span>
   )
@@ -15,7 +15,7 @@ export function open(view: ContainerView) {
 
 export function close(view: ContainerView) {
   return (
-    <span key={"close-token-" + view.key} className="zed-syntax">
+    <span key={"close-token-" + view.id} className="zed-syntax">
       {view.closeToken()}
     </span>
   )
@@ -34,16 +34,28 @@ export function expandAnchor(view: ContainerView, children: ReactNode) {
   )
 }
 
-export function renderMoreAnchor(view: ContainerView, perPage: number) {
+export function nextPageAnchor(view: ContainerView, perPage: number) {
   return [
     <a
       key="render-more-anchor"
-      className="render-more"
-      onClick={() => {
-        view.args.ctx.props.renderMore(view.key)
-      }}
+      className="zed-view__more-link"
+      onClick={() => view.showNextPage()}
     >
       Show next {perPage}
+    </a>,
+  ]
+}
+
+export function reachedLimitAnchor(_view: ContainerView, _perPage: number) {
+  return [
+    <a
+      key="render-more-anchor"
+      className="zed-view__more-link"
+      onClick={() => {
+        // TODO
+      }}
+    >
+      Show Full Value in the Detail Pane
     </a>,
   ]
 }
@@ -53,8 +65,8 @@ export function name(view: ContainerView) {
     <span
       key={"view" + view.name()}
       className={classNames("zed-container", {
-        "zed-type": zed.isType(view.args.value),
-        "zed-error": view.args.value instanceof zed.Error,
+        "zed-type": zed.isType(view.value),
+        "zed-error": view.value instanceof zed.Error,
       })}
     >
       {view.name()}

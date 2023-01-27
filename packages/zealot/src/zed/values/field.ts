@@ -1,3 +1,4 @@
+import {zed} from "../.."
 import {Record} from "./record"
 import {Value} from "./types"
 
@@ -32,5 +33,9 @@ export class Field {
     }
     if (parent instanceof Record) return parent
     else return null
+  }
+
+  get baseValue() {
+    return zed.baseValue(this.value)
   }
 }

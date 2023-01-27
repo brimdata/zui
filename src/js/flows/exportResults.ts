@@ -3,29 +3,29 @@ import log from "electron-log"
 import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
+import BrimApi from "../api"
 import brim from "../brim"
-import Columns from "../state/Columns"
 import Results from "../state/Results"
 import {MAIN_RESULTS} from "../state/Results/types"
 import {Thunk} from "../state/types"
 
 const streamPipeline = util.promisify(pipeline)
 
-function cutColumns(program, columns) {
-  if (columns.allVisible()) {
-    return program
-  } else {
-    const names = columns.getVisible().map((c) => c.name)
+function cutColumns(program: string, api: BrimApi) {
+  if (api.table && api.table.hiddenColumnCount > 0) {
+    const names = api.table.columns.map((c) => c.columnDef.header as string)
     return brim
       .program(program)
       .quietCut(...names)
       .string()
+  } else {
+    return program
   }
 }
 
-export function prepareProgram(format, program, columns) {
-  let p = cutColumns(program, columns)
-  if (format === "csv") p += " | fuse"
+function prepareProgram(format: string, program: string, api: BrimApi) {
+  let p = cutColumns(program, api)
+  if (format === "csv" || format === "arrows") p += " | fuse"
   return p
 }
 
@@ -35,13 +35,13 @@ export default (
   ): Thunk<Promise<string>> =>
   async (dispatch, getState, {api}): Promise<string> => {
     const zealot = await api.getZealot(undefined, "node")
-    const columns = Columns.getCurrentTableColumns(getState())
     const originalQuery = Results.getQuery(MAIN_RESULTS)(getState())
-    const exportQuery = prepareProgram(format, originalQuery, columns)
+    const exportQuery = prepareProgram(format, originalQuery, api)
     log.info("Exporting", exportQuery)
     const res = await zealot.query(exportQuery, {
       format,
       controlMessages: false,
+      timeout: Infinity,
     })
     try {
       await streamPipeline(

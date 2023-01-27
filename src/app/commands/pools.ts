@@ -1,8 +1,11 @@
-import {createAndLoadFilesThunk} from "src/js/api/pools/create-and-load-files"
+import {CreatePoolOpts, LoadFormat} from "packages/zealot/src"
+import detectFileTypes from "src/js/brim/ingest/detectFileTypes"
+import {derivePoolName} from "src/js/brim/ingest/getParams"
 import errors from "src/js/errors"
 import {BrimError} from "src/js/errors/types"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import {PoolName} from "../features/sidebar/pools-section/pool-name"
+import {lakePoolPath} from "../router/utils/paths"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
 
@@ -72,29 +75,50 @@ export const deleteGroup = createCommand(
 
 export const createAndLoadFiles = createCommand(
   "pools.createAndLoadFiles",
-  async ({api, dispatch}, files: File[]) => {
+  async (
+    {api},
+    files: File[],
+    opts: {name?: string; format?: LoadFormat} & Partial<CreatePoolOpts> = {}
+  ) => {
+    let poolId: string | null = null
+    const lakeId = api.current.lakeId
+    const tabId = api.current.tabId
+    const poolNames = api.pools.all.map((p) => p.name)
+    if (!opts.name && files.length === 0) {
+      api.toast("No pool name and no files provided.")
+      return
+    }
     try {
-      const promise = dispatch(createAndLoadFilesThunk(files))
-      api.toast.promise(promise, {
-        loading: "Loading data into pool...",
-        success: "Load successful",
-        error: "Load error",
-      })
-      await promise
+      const name =
+        opts.name || derivePoolName(await detectFileTypes(files), poolNames)
+      poolId = await api.pools.create(name, opts)
+
+      if (files.length === 0) {
+        api.toast.success("Pool created: " + name)
+      } else {
+        const promise = api.pools.loadFiles(poolId, files, opts.format)
+        api.toast.promise(promise, {
+          loading: `Loading data into pool: ${name}...`,
+          success: "Load successful",
+          error: "Load error",
+        })
+        await promise
+      }
+
+      api.url.push(lakePoolPath(poolId, lakeId), {tabId})
     } catch (e) {
+      if (poolId) await api.pools.delete(poolId)
       api.notice.error(parseError(e))
       api.pools.syncAll()
-      console.error(e)
-      console.error(e.cause)
     }
   }
 )
 
 export const loadFiles = createCommand(
   "pools.loadFiles",
-  async ({api}, id: string, files: File[]) => {
+  async ({api}, id: string, files: File[], format?: LoadFormat) => {
     try {
-      const promise = api.pools.loadFiles(id, files)
+      const promise = api.pools.loadFiles(id, files, format)
       api.toast.promise(promise, {
         loading: "Loading data into pool...",
         success: "Load successful",

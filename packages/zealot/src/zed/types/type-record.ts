@@ -6,13 +6,10 @@ import {trueType} from "../utils/true-type"
 import {Field} from "../values/field"
 import {Null} from "../values/null"
 import {Record} from "../values/record"
+import {TypeField} from "./type-field"
 import {Type} from "./types"
 
-export type TypeField = {
-  name: string
-  type: Type
-}
-
+export type FieldData = {name: string; type: Type}
 export class TypeRecord implements Type {
   kind = "record"
 
@@ -22,7 +19,7 @@ export class TypeRecord implements Type {
     return !!this.fields?.find((f) => f.name === name)
   }
 
-  static stringify(fields: TypeField[] | null) {
+  static stringify(fields: FieldData[] | null) {
     if (isNull(fields)) return "null"
     let s = "{"
     let sep = ""

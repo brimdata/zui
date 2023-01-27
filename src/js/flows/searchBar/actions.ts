@@ -32,13 +32,13 @@ export function appendQueryExclude(field: zed.Field): Thunk {
   }
 }
 
-export function appendQueryCountBy(field: zed.Field): Thunk {
+export function appendQueryCountBy(name: string | string[]): Thunk {
   return function (dispatch, getState) {
     const {current, pinned} = getSearchBar(getState())
     const query = [...pinned, current].join(" ")
     const program = onlyWhitespace(query) ? "*" : current
 
-    dispatch(changeTo(brim.program(program).countBy(field).string()))
+    dispatch(changeTo(brim.program(program).countBy(name).string()))
   }
 }
 
@@ -68,7 +68,7 @@ export function appendQueryIn(field: zed.Field, value: zed.Value): Thunk {
   }
 }
 
-export function appendQueryNotIn(field: zed.Field, value: zed.Value): Thunk {
+export function appendQueryNotIn(field: zed.Field, value: zed.Any): Thunk {
   return function (dispatch, getState) {
     dispatch(
       changeTo(

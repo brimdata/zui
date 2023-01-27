@@ -2,7 +2,7 @@ import {useEffect, useRef} from "react"
 
 export default function useListener<T>(
   el: Node | null | undefined,
-  event: string,
+  event: keyof DocumentEventMap | "cancel" | "nativeContextMenu",
   callback: (e: T) => void,
   opts: boolean | Object = false
 ) {

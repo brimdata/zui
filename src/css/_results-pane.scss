@@ -1,0 +1,13 @@
+.results-pane {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    position: relative;
+    flex: 1;
+    min-height: 0;
+}
+
+.results-pane__content {
+    flex: 1;
+    overflow: hidden;
+}
