@@ -13584,9 +13584,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:2.2.0":
-  version: 2.2.0
-  resolution: "react-arborist@npm:2.2.0"
+"react-arborist@npm:3.0.1":
+  version: 3.0.1
+  resolution: "react-arborist@npm:3.0.1"
   dependencies:
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
@@ -13596,7 +13596,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: e2262b36bdd980695cc76b1fdcef79b13435bca55eb81796e07a0bb9e11b5c05cd7623751f086326886c6792133a677fd14f3dc28b99775bf3107b62b0d7b6b5
+  checksum: b9395efd580552f3479c0465c8cc470ffd31fd710fca432b5194f78a03a960afb8e240973deb13c0098aa85275e58e072b446703bc1a84d88e741c3e2629375b
   languageName: node
   linkType: hard
 
@@ -13827,16 +13827,6 @@ __metadata:
     react: ">=15.0.0"
     react-dom: ">=15.0.0"
   checksum: d8c9e50aabdc2cfc324e5cdb0ad1c6eecb02e1c0cd007b26d5b30ccf49015e900683dd489348c71fba4055858308d9ba7019e0d37d0e8d37bd46ed098788f670
-  languageName: node
-  linkType: hard
-
-"react-virtualized-auto-sizer@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "react-virtualized-auto-sizer@npm:1.0.6"
-  peerDependencies:
-    react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
-    react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
-  checksum: 81270e9d328e9b779515f42b6aa8dea2f21097f69fc776906d6b7d31ada03706d34408a6318baf59531f180402fbf74fdb9928ab65d53442a134b7ee5ba01265
   languageName: node
   linkType: hard
 
@@ -15783,15 +15773,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tee-1@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "tee-1@npm:0.2.0"
-  dependencies:
-    through: ~1.1.1
-  checksum: dd898c5168df329e0298053c117bc6931e3d1df4facd8063f817919d72abb18687db5a26292f61d55c022af518d559182151b070a6389a2b4889994d7d758a21
-  languageName: node
-  linkType: hard
-
 "temp-file@npm:^3.4.0":
   version: 3.4.0
   resolution: "temp-file@npm:3.4.0"
@@ -15841,13 +15822,6 @@ __metadata:
   version: 2.3.8
   resolution: "through@npm:2.3.8"
   checksum: a38c3e059853c494af95d50c072b83f8b676a9ba2818dcc5b108ef252230735c54e0185437618596c790bbba8fcdaef5b290405981ffa09dce67b1f1bf190cbd
-  languageName: node
-  linkType: hard
-
-"through@npm:~1.1.1":
-  version: 1.1.2
-  resolution: "through@npm:1.1.2"
-  checksum: 738acf63a737c9ee01286cbc3f5e59330c8b8fd1c8edebf0f676def8deaf908683b8976318bb82784f9e7b50bd832c7d32afcc99ba692f6c5fc4c52d5e0c7f46
   languageName: node
   linkType: hard
 
@@ -16501,13 +16475,6 @@ __metadata:
     convert-source-map: ^1.6.0
     source-map: ^0.7.3
   checksum: c7dabf9567e0c210b24d0720e553803cbe1ff81edb1ec7f2080eb4be01ed081a40286cc9f4aaa86d1bf8d57840cefae8fdf326b7cb8faa316ba50c7b948030d4
-  languageName: node
-  linkType: hard
-
-"valid-url@npm:^1.0.9":
-  version: 1.0.9
-  resolution: "valid-url@npm:1.0.9"
-  checksum: 3ecb030559404441c2cf104cbabab8770efb0f36d117db03d1081052ef133015a68806148ce954bb4dd0b5c42c14b709a88783c93d66b0916cb67ba771c98702
   languageName: node
   linkType: hard
 
@@ -17235,7 +17202,7 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^18.0.0
-    react-arborist: 2.2.0
+    react-arborist: 3.0.1
     react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0
@@ -17248,7 +17215,6 @@ __metadata:
     react-spring: ^8.0.27
     react-tooltip: ^4.2.7
     react-transition-group: ^2.9.0
-    react-virtualized-auto-sizer: ^1.0.6
     react-window: ^1.8.7
     regenerator-runtime: ^0.13.6
     resize-observer-polyfill: ^1.5.1
@@ -17258,12 +17224,10 @@ __metadata:
     set-tz: ^0.2.0
     sprintf-js: ^1.1.2
     styled-components: ^5.3.5
-    tee-1: ^0.2.0
     tmp: ^0.1.0
     tree-model: ^1.0.7
     typescript: ^4.6.2
     use-resize-observer: ^8.0.0
-    valid-url: ^1.0.9
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
