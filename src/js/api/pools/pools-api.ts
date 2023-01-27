@@ -34,7 +34,6 @@ export class PoolsApi extends ApiDomain {
 
   // TODO: Move to main progress, create a loads domain
   async loadFiles(poolId: string, files: File[], format?: string) {
-    console.log(format)
     const fileListData = await detectFileTypes(files)
     const loader = chooseLoader(this, fileListData)
     const load = createLoad(this, poolId)
