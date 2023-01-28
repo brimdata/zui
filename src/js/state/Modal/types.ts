@@ -11,15 +11,9 @@ export type MODAL_HIDE = {
 }
 
 export type ModalName =
-  | "about"
-  | "curl"
-  | "debug"
+  | "settings"
   | "export"
   | "ingest-warnings"
   | "new-lake"
-  | "settings"
-  | "pool"
   | "view-lake"
   | "whois"
-  | "zq"
-  | "columns"

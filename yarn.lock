@@ -5311,13 +5311,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"charenc@npm:~0.0.1":
-  version: 0.0.2
-  resolution: "charenc@npm:0.0.2"
-  checksum: 81dcadbe57e861d527faf6dd3855dc857395a1c4d6781f4847288ab23cffb7b3ee80d57c15bba7252ffe3e5e8019db767757ee7975663ad2ca0939bb8fcaf2e5
-  languageName: node
-  linkType: hard
-
 "chokidar@npm:>=3.0.0 <4.0.0":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
@@ -5948,13 +5941,6 @@ __metadata:
     shebang-command: ^2.0.0
     which: ^2.0.1
   checksum: a6863ec15a85db58876228843ea4ebdf6b9c4af8e528bec5ca62ed41854931ea1fbeb94633b0c6ed78625802b8abc638db950da0c2c7e2146409a9f33b714b48
-  languageName: node
-  linkType: hard
-
-"crypt@npm:~0.0.1":
-  version: 0.0.2
-  resolution: "crypt@npm:0.0.2"
-  checksum: baf4c7bbe05df656ec230018af8cf7dbe8c14b36b98726939cef008d473f6fe7a4fad906cfea4062c93af516f1550a3f43ceb4d6615329612c6511378ed9fe34
   languageName: node
   linkType: hard
 
@@ -9329,7 +9315,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-buffer@npm:^1.1.5, is-buffer@npm:~1.1.1":
+"is-buffer@npm:^1.1.5":
   version: 1.1.6
   resolution: "is-buffer@npm:1.1.6"
   checksum: 4a186d995d8bbf9153b4bd9ff9fd04ae75068fe695d29025d25e592d9488911eeece84eefbd8fa41b8ddcc0711058a71d4c466dcf6f1f6e1d83830052d8ca707
@@ -11597,17 +11583,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"md5@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "md5@npm:2.2.1"
-  dependencies:
-    charenc: ~0.0.1
-    crypt: ~0.0.1
-    is-buffer: ~1.1.1
-  checksum: 2237e583f961d04d43c59c2f9383d1e47099427fa37f9dc50e8aec32e770f8b038ad9268c2523a7c8041ab6f4678a742ca533a7f670dbc2857c5b18388cf4d71
-  languageName: node
-  linkType: hard
-
 "mdast-util-definitions@npm:^4.0.0":
   version: 4.0.0
   resolution: "mdast-util-definitions@npm:4.0.0"
@@ -12278,14 +12253,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-abort-controller@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "node-abort-controller@npm:3.0.1"
-  checksum: 2b3d75c65249fea99e8ba22da3a8bc553f034f44dd12f5f4b38b520f718b01c88718c978f0c24c2a460fc01de9a80b567028f547b94440cb47adeacfeb82c2ee
-  languageName: node
-  linkType: hard
-
-"node-addon-api@npm:*, node-addon-api@npm:^3.0.0, node-addon-api@npm:^3.1.0":
+"node-addon-api@npm:*, node-addon-api@npm:^3.0.0":
   version: 3.1.0
   resolution: "node-addon-api@npm:3.1.0"
   dependencies:
@@ -17144,7 +17112,6 @@ __metadata:
     babel-core: ^7.0.0-bridge.0
     babel-eslint: ^10.1.0
     babel-plugin-module-resolver: ^4.0.0
-    base64-js: ^1.3.1
     brimcap: "brimdata/brimcap#0bcc312e86f6e3d9cfc85033f25a4bae790b15c7"
     chalk: ^4.1.0
     chrono-node: ^1.4.8
@@ -17185,14 +17152,11 @@ __metadata:
     lint-staged: ^12.1.5
     livereload: ^0.9.1
     lodash: ^4.17.21
-    md5: ^2.2.1
     memoize-one: ^6.0.0
     moment: ^2.27.0
     moment-timezone: ^0.5.31
     mousetrap: ^1.6.5
     msw: ^0.36.8
-    node-abort-controller: ^3.0.1
-    node-addon-api: ^3.1.0
     node-fetch: ^2.6.1
     node-pipe: ^0.1.1
     npm-run-all: ^4.1.5
