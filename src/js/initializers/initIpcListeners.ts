@@ -52,10 +52,6 @@ export default (store: Store) => {
     store.dispatch(Modal.show("export"))
   })
 
-  ipcRenderer.on("showAbout", () => {
-    store.dispatch(Modal.show("about"))
-  })
-
   ipcRenderer.on("back", () => {
     store.dispatch(SearchBar.goBack())
   })

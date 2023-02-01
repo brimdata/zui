@@ -3,8 +3,6 @@ import Modal from "../state/Modal"
 import {DebugModal} from "./DebugModal"
 import IngestWarningsModal from "./IngestWarningsModal"
 import WhoisModal from "./WhoisModal"
-import ZQModal from "./ZQModal"
-import CurlModal from "./CurlModal"
 import React from "react"
 import {ModalDialog} from "./ModalDialog/ModalDialog"
 import NewLakeModal from "./LakeModals/NewLakeModal"
@@ -14,8 +12,6 @@ import ExportModal from "./ExportModal"
 const MODALS = {
   debug: DebugModal,
   whois: WhoisModal,
-  curl: CurlModal,
-  zq: ZQModal,
   "ingest-warnings": IngestWarningsModal,
   "new-lake": NewLakeModal,
   "view-lake": ViewLakeModal,
