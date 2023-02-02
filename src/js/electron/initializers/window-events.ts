@@ -18,9 +18,6 @@ export function initialize(main: BrimMain) {
     }
   })
 
-  app.on("activate", () => main.activate())
-  app.on("will-quit", () => main.stop())
-
   app.on("open-url", (event, url) => {
     // recommended to preventDefault in docs: https://www.electronjs.org/docs/api/app#event-open-url-macos
     event.preventDefault()
@@ -28,18 +25,36 @@ export function initialize(main: BrimMain) {
     main.openUrl(url)
   })
 
-  app.on("window-all-closed", async () => {
-    if (env.isMac) return
-    // Strangely, this event fires before the "closed" event on the window is fired,
-    // where we dereference the window. Here we check to make sure all the windows
-    // have indeed been dereferenced before we quit the app.
-    await new Promise<void>((resolve) => {
-      const checkCount = () => {
-        if (main.windows.count === 0) resolve()
-        else setTimeout(checkCount, 0)
+  app.on("activate", () => {
+    if (main.windows.visible.length === 0) {
+      main.windows.init()
+    } else {
+      main.windows.visible.forEach((win) => win.ref.show())
+    }
+  })
+
+  main.windows.on("window-will-close", (e) => {
+    if (!main.isQuitting && main.windows.visible.length === 1) {
+      e.preventDefault()
+      if (env.isMac) {
+        main.windows.visible[0].ref.hide()
+      } else {
+        app.quit()
       }
-      checkCount()
-    })
-    app.quit()
+    }
+  })
+
+  app.on("before-quit", () => {
+    main.saveSession()
+    main.isQuitting = true
+  })
+
+  app.on("will-quit", () => {
+    console.log("will quit")
+    main.stop()
+  })
+
+  app.on("quit", () => {
+    console.log("quit")
   })
 }

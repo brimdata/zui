@@ -80,6 +80,10 @@ export default function file(p: string) {
       })
     },
 
+    writeSync(data: string) {
+      fs.writeFileSync(p, data)
+    },
+
     remove() {
       return new Promise<void>((good, bad) => {
         fs.unlink(p, (err) => {

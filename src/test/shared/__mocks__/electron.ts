@@ -52,16 +52,17 @@ export class BrowserWindow {
     return [0, 0]
   }
   destroy() {}
+  hide = jest.fn()
+  show = jest.fn()
 }
 
-class MockApp {
+class MockApp extends EventEmitter {
   isPackaged = true
   quit = jest.fn()
   relaunch = jest.fn()
   disableHardwareAcceleration = jest.fn()
   requestSingleInstanceLock = jest.fn()
   setAsDefaultProtocolClient = jest.fn()
-  on = jest.fn()
   whenReady = jest.fn(() => Promise.resolve())
 
   commandLine = {
