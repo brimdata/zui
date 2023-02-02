@@ -64,7 +64,3 @@ export function useTableValues(shape: zed.Any, values: zed.Value[]) {
     }
   }, [shape, values])
 }
-
-export function useTableShape(shape: zed.Type) {
-  return useMemo(() => zed.typeunder(shape) as zed.Type, [shape])
-}

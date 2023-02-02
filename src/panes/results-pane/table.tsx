@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from "react"
 import {useResultsContext} from "src/app/query-home"
 import {useResultsPaneContext} from "./context"
-import {useTableShape, useTableState, useTableValues} from "./table-controller"
+import {useTableState, useTableValues} from "./table-controller"
 import {useDispatch} from "src/app/core/state"
 import TableState from "src/js/state/Table"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
@@ -13,13 +13,15 @@ import {BareStringView} from "src/app/query-home/results/bare-string-view"
 import {PathView} from "src/app/query-home/results/path-view"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
+import {zed} from "@brimdata/zealot"
 
 export function Table() {
   const {table, setTable} = useResultsContext()
   const ctx = useResultsPaneContext()
   const api = useBrimApi()
-  const shape = useTableShape(ctx.firstShape)
-  const values = useTableValues(shape, ctx.values)
+  const shape = ctx.firstShape
+  const recordShape = zed.typeunder(shape) as zed.TypeRecord
+  const values = useTableValues(recordShape, ctx.values)
   const state = useTableState()
   const select = useSelect()
   const initialScrollPosition = useMemo(
@@ -41,7 +43,7 @@ export function Table() {
         setTable(table)
         api.table = table
       }}
-      shape={shape}
+      shape={recordShape}
       values={values}
       width={ctx.width}
       height={ctx.height}
