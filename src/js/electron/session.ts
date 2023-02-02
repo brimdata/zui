@@ -20,6 +20,10 @@ export default function session(path: string) {
       return lib.file(p).write(JSON.stringify({version, data}))
     },
 
+    saveSync(data: SessionState, p: string = path) {
+      return lib.file(p).writeSync(JSON.stringify({version, data}))
+    },
+
     load: async function (): Promise<SessionState | null | undefined> {
       const migrator = await Migrations.init()
       const file = lib.file(path)

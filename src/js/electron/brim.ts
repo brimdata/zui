@@ -12,7 +12,6 @@ import {
 import {getPersistedGlobalState} from "../state/stores/get-persistable"
 import Lakes from "../state/Lakes"
 import {installExtensions} from "./extensions"
-import isDev from "./isDev"
 import {decodeSessionState, encodeSessionState} from "./session-state"
 import {WindowManager} from "./windows/window-manager"
 import * as zdeps from "./zdeps"
@@ -20,10 +19,6 @@ import {MainArgs, mainDefaults} from "./run-main/args"
 import createSession, {Session} from "./session"
 import {getAppMeta, AppMeta} from "./meta"
 import {createMainStore} from "../state/stores/create-main-store"
-
-type QuitOpts = {
-  saveSession?: boolean
-}
 
 export class BrimMain {
   public isQuitting = false
@@ -64,13 +59,6 @@ export class BrimMain {
     await this.lake.stop()
   }
 
-  async activate() {
-    const visibleWindows = this.windows.where((w) => w.name !== "hidden")
-    if (visibleWindows.length === 0) {
-      await this.windows.init()
-    }
-  }
-
   async resetState() {
     // clear keys from secrets storage
     Lakes.all(this.store.getState()).forEach((l) => {
@@ -80,23 +68,12 @@ export class BrimMain {
     })
     await this.session.delete()
     app.relaunch()
-    this.quit({saveSession: false})
   }
 
-  async saveSession() {
+  saveSession() {
     const windowState = this.windows.serialize()
     const mainState = getPersistedGlobalState(this.store.getState())
-
-    await this.session.save(encodeSessionState(windowState, mainState))
-  }
-
-  async deleteSession() {
-    await this.session.delete()
-  }
-
-  async quit(opts: QuitOpts = {saveSession: true}) {
-    if (opts.saveSession) await this.saveSession()
-    app.quit()
+    this.session.saveSync(encodeSessionState(windowState, mainState))
   }
 
   openUrl(uri: string) {
@@ -117,9 +94,5 @@ export class BrimMain {
         errorDesc: error_description,
       })
     }
-  }
-
-  isDev() {
-    return isDev
   }
 }

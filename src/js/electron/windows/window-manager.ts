@@ -7,11 +7,14 @@ import {State} from "src/js/state/types"
 import {ZuiWindow} from "../windows/zui-window"
 import {SerializedWindow, WindowName, WindowsState} from "../windows/types"
 import {createWindow, deserializeWindow} from "./create"
+import {EventEmitter} from "events"
 
-export class WindowManager {
+export class WindowManager extends EventEmitter {
   private windows: WindowsState = {}
 
-  constructor(private session?: SessionState | null | undefined) {}
+  constructor(private session?: SessionState | null | undefined) {
+    super()
+  }
 
   async init() {
     if (this.session) {
@@ -32,6 +35,10 @@ export class WindowManager {
 
   get count(): number {
     return this.all.length
+  }
+
+  get visible() {
+    return this.all.filter((w) => w.name !== "hidden")
   }
 
   create(name: WindowName) {
@@ -69,6 +76,7 @@ export class WindowManager {
 
   private async register(win: ZuiWindow) {
     this.windows[win.id] = win
+    win.ref.on("close", (e) => this.emit("window-will-close", e))
     win.ref.on("closed", () => this.unregister(win))
     await win.load()
     log.debug(`window registered:`, {id: win.id, name: win.name})
@@ -78,15 +86,6 @@ export class WindowManager {
   private unregister(win: ZuiWindow) {
     delete this.windows[win.id]
     log.debug(`window unregistered:`, {id: win.id, name: win.name})
-    // whenever a window is closed in Linux or Windows check if 'hidden' window is last
-    // open, and if so tell it to close so the rest of the app will shutdown
-    if (
-      process.platform !== "darwin" &&
-      this.count === 1 &&
-      this.all[0].name === "hidden"
-    ) {
-      this.all[0].ref.close()
-    }
   }
 
   private getNextDimensFor(name: WindowName) {
