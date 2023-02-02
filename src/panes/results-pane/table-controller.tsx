@@ -55,13 +55,16 @@ export function useTableHandlers() {
   )
 }
 
-export function useTableValues() {
-  const ctx = useResultsPaneContext()
+export function useTableValues(shape: zed.Any, values: zed.Value[]) {
   return useMemo(() => {
-    if (ctx.isSingleShape && !(ctx.firstShape instanceof zed.TypeRecord)) {
-      return ctx.values.map((value) => createRecord({this: value}))
+    if (shape instanceof zed.TypeRecord) {
+      return values
     } else {
-      return ctx.values
+      return values.map((value) => createRecord({this: value}))
     }
-  }, [ctx.values, ctx.isSingleShape, ctx.firstShape])
+  }, [shape, values])
+}
+
+export function useTableShape(shape: zed.Type) {
+  return useMemo(() => zed.typeunder(shape) as zed.Type, [shape])
 }

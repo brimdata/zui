@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from "react"
 import {useResultsContext} from "src/app/query-home"
 import {useResultsPaneContext} from "./context"
-import {useTableState, useTableValues} from "./table-controller"
+import {useTableShape, useTableState, useTableValues} from "./table-controller"
 import {useDispatch} from "src/app/core/state"
 import TableState from "src/js/state/Table"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
@@ -18,7 +18,8 @@ export function Table() {
   const {table, setTable} = useResultsContext()
   const ctx = useResultsPaneContext()
   const api = useBrimApi()
-  const values = useTableValues()
+  const shape = useTableShape(ctx.firstShape)
+  const values = useTableValues(shape, ctx.values)
   const state = useTableState()
   const select = useSelect()
   const initialScrollPosition = useMemo(
@@ -26,7 +27,6 @@ export function Table() {
     []
   )
   const dispatch = useDispatch()
-  const shape = ctx.firstShape
 
   useEffect(() => {
     dispatch(TableState.setLastShape(shape))

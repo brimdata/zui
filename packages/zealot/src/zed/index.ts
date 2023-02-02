@@ -80,4 +80,5 @@ export * from "./utils/true-type"
 export * from "./utils/base-value"
 export * from "./utils/is-container"
 export * from "./utils/is-value"
+export * from "./utils/typeunder"
 export type Any = Type | Value

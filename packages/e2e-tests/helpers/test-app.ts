@@ -58,7 +58,7 @@ export default class TestApp {
     filepaths: string[],
     expectedResult = "Load Successful"
   ): Promise<void> {
-    await this.mainWin.locator('button[aria-label="create"]').click()
+    await this.mainWin.getByRole("button", {name: "create"}).click()
     await this.mainWin.locator('li:has-text("New Pool")').click()
     const [chooser] = await Promise.all([
       this.mainWin.waitForEvent("filechooser"),
@@ -132,6 +132,10 @@ export default class TestApp {
 
   sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms))
+  }
+
+  get results() {
+    return this.mainWin.getByTestId("results-pane")
   }
 }
 
