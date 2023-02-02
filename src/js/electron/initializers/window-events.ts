@@ -50,11 +50,6 @@ export function initialize(main: BrimMain) {
   })
 
   app.on("will-quit", () => {
-    console.log("will quit")
     main.stop()
-  })
-
-  app.on("quit", () => {
-    console.log("quit")
   })
 }
