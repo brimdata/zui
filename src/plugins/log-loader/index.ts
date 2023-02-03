@@ -41,7 +41,7 @@ export const activate = (api: BrimApi) => {
         },
         signal,
       })
-      forEach(get(res, ["value", "warnings"], []), onWarning)
+      forEach(get(res, ["warnings"], []), onWarning)
     }
     await onDetailUpdate()
     onProgressUpdate(1)
