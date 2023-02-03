@@ -17,16 +17,8 @@ jobs:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-zui
-      # - run: yarn lint
-      # - run: yarn test
-      - run: yarn e2e
-      - name: End to end tests
-        if: runner.os == 'Linux'
-        id: playwright
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          options: -screen 0 1280x1024x24
-          run: yarn e2e
+      - run: yarn lint
+      - run: yarn test
       - name: Build and install package
         if: runner.os != 'Windows'
         run: |
