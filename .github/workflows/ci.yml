@@ -19,6 +19,7 @@ jobs:
       - uses: ./.github/actions/setup-zui
       - run: yarn lint
       - run: yarn test
+      - run: yarn e2e
       - name: Build and install package
         if: runner.os != 'Windows'
         run: |

@@ -94,14 +94,24 @@ export default class TestApp {
   // TODO: this method is a wip, it still needs to wait for cells to populate first
   async getViewerResults(includeHeaders = true): Promise<string[]> {
     const fields = await this.mainWin.locator(".zed-table__cell")
-    let results = await fields.evaluateAll<string[], HTMLElement>((nodes) =>
-      nodes.map((n) => n.innerText.trim())
-    )
+
+    let results = null
+    while (!results || results.some((s) => s === "")) {
+      // Wait until something is in the cells
+      results = await fields.evaluateAll<string[], HTMLElement>((nodes) =>
+        nodes.map((n) => n.innerText.trim())
+      )
+    }
+
     if (includeHeaders) {
       const headers = await this.mainWin.locator(".zed-table__header-cell")
-      const headerResults = await headers.evaluateAll<string[], HTMLElement>(
-        (headerCells) => headerCells.map((hc) => hc.innerText.trim())
-      )
+      let headerResults = null
+      while (!headerResults || headerResults.some((s) => s === "")) {
+        // Wait until something is in the cells
+        headerResults = await headers.evaluateAll<string[], HTMLElement>(
+          (headerCells) => headerCells.map((hc) => hc.innerText.trim())
+        )
+      }
       results = headerResults.concat(results)
     }
 
