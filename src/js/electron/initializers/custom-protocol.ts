@@ -2,7 +2,7 @@ import {app} from "electron"
 import {BrimMain} from "../brim"
 
 export function initialize(main: BrimMain) {
-  const brimCustomProtocol = "brim"
+  const brimCustomProtocol = "zui"
   app.setAsDefaultProtocolClient(brimCustomProtocol)
   app.on("second-instance", (e, argv) => {
     for (let arg of argv) {
