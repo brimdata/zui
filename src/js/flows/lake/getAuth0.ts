@@ -10,7 +10,7 @@ export const getAuth0 =
     if (!l.authType || l.authType !== "auth0") return null
     if (!l.authData) throw new Error("authData missing from lake")
 
-    const {clientId, domain} = l.authData
+    const {audience, clientId, domain} = l.authData
 
-    return new Auth0Client(clientId, domain)
+    return new Auth0Client(audience, clientId, domain)
   }

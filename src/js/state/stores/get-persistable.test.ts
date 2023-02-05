@@ -18,13 +18,19 @@ test("deleting access tokens for authType auth0", () => {
       host: "me.com",
       port: "123",
       name: "test",
-      authData: {clientId: "1", accessToken: "SECRET", domain: "me.com"},
+      authData: {
+        audience: "a",
+        clientId: "1",
+        accessToken: "SECRET",
+        domain: "me.com",
+      },
     })
   )
   const persist = getPersistedWindowState(store.getState())
   const persistedLake = Lakes.id("1")(persist)
   expect(persistedLake.authData).toMatchInlineSnapshot(`
     Object {
+      "audience": "a",
       "clientId": "1",
       "domain": "me.com",
     }
@@ -67,13 +73,19 @@ test("global persist", () => {
       host: "me.com",
       port: "123",
       name: "test",
-      authData: {clientId: "1", accessToken: "SECRET", domain: "me.com"},
+      authData: {
+        audience: "a",
+        clientId: "1",
+        accessToken: "SECRET",
+        domain: "me.com",
+      },
     })
   )
   const persist = getPersistedGlobalState(store.getState())
   const persistedLake = Lakes.id("1")(persist)
   expect(persistedLake.authData).toMatchInlineSnapshot(`
     Object {
+      "audience": "a",
       "clientId": "1",
       "domain": "me.com",
     }
