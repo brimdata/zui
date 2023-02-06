@@ -26,9 +26,11 @@ export class MapView extends ContainerView<zed.Map> {
     let i = 0
     for (let key of map.keys()) {
       const last = i === length - 1
+      const value = map.get(key)
       yield createView({
         ...this.args,
-        value: map.get(key),
+        type: value.type,
+        value,
         last,
         key: key,
         indexPath: [...this.args.indexPath, i],

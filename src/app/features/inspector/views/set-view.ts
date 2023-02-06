@@ -27,6 +27,7 @@ export class SetView extends ContainerView<zed.Set> {
       const last = i === length - 1
       yield createView({
         ...this.args,
+        type: items[i].type,
         value: items[i],
         last,
         key: this.isExpanded() ? i.toString() : null,

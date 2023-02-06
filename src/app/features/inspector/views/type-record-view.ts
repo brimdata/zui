@@ -12,11 +12,11 @@ export class TypeRecordView extends ContainerView<zed.TypeRecord> {
   }
 
   openToken() {
-    return "{"
+    return "<{"
   }
 
   closeToken() {
-    return "}"
+    return "}>"
   }
 
   *iterate(n?: number) {
