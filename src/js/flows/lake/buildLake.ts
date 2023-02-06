@@ -21,9 +21,10 @@ export const buildLake =
     if (isEmpty(lake.authType)) {
       const resp = await zealot.authMethod()
       if (resp.kind === "auth0") {
-        const {client_id: clientId, domain} = resp.auth0
+        const {audience, client_id: clientId, domain} = resp.auth0
         lake.authType = "auth0"
         lake.authData = {
+          audience,
           clientId,
           domain,
         }

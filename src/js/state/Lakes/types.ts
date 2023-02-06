@@ -13,6 +13,7 @@ export type AuthType = "none" | "auth0"
 export type AuthData = Auth0Data
 
 export interface Auth0Data {
+  audience: string
   clientId: string
   domain: string
   accessToken?: string

@@ -6,12 +6,15 @@ interface Auth0Response {
 }
 
 export default class Auth0Client {
-  private audience = "https://lake.brimdata.io"
   private redirectUri = "zui://auth/auth0/callback"
   // 'offline_access' ensures we receive a refresh_token
   private scope = "openid offline_access"
 
-  constructor(private clientId: string, private auth0Domain: string) {}
+  constructor(
+    private audience: string,
+    private clientId: string,
+    private auth0Domain: string
+  ) {}
 
   openLoginUrl(state: string): Promise<void> {
     const loginUrl = new URL("authorize", this.auth0Domain)

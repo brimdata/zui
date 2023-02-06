@@ -64,7 +64,12 @@ function getLake() {
   return brim.lake({
     ...defaultLake(),
     authType: "auth0",
-    authData: {domain: "http://test.com", accessToken: "test", clientId: "hi"},
+    authData: {
+      audience: "test",
+      domain: "http://test.com",
+      accessToken: "test",
+      clientId: "hi",
+    },
   })
 }
 
