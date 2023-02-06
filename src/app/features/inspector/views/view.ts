@@ -1,3 +1,4 @@
+import {zed} from "@brimdata/zealot"
 import {ReactNode} from "react"
 import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import {field} from "../templates/field"
@@ -48,6 +49,11 @@ export class View<T = any> {
 
   get isLast() {
     return this.args.last
+  }
+
+  get decorator() {
+    if (zed.isTypeAlias(this.type)) return this.type.name
+    else return null
   }
 
   rowCount() {
