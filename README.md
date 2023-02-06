@@ -1,39 +1,58 @@
-[![Brim CI](https://github.com/brimdata/brim/workflows/Brim%20CI/badge.svg)](https://github.com/brimdata/brim/actions?query=workflow%3A%22Brim+CI%22+branch%3Amain)
+# Zui
 
-# Brim
+_The Official Front-End to the [Zed Lake](https://zed.brimdata.io/docs/commands/zed)_
 
-Brim is an open source desktop application for security and network
-specialists. Brim makes it easy to search and analyze data from:
+![Zui](https://user-images.githubusercontent.com/3460638/216508967-6936f8fd-0579-4e85-8097-f0e22e6ebc27.png)
 
-- packet captures, like those created by [Wireshark](https://www.wireshark.org/), and
-- structured logs, especially from the [Zeek](https://www.zeek.org) network analysis framework.
+Zui is a desktop app for exploring and working with data.
 
-Brim is especially useful to security and network operators that need to handle large packet captures,
-especially those that are cumbersome for Wireshark, tshark, or other packet analyzers.
+Highlights:
 
-[![Brim and Wireshark large pcap file comparison](docs/media/brim-and-wireshark.gif?raw=true)](https://www.youtube.com/watch?v=InT-7WZ5Y2Y)
+- **Drag-and-drop** data ingestion
+- **Automatic detection** of common data formats
+- **Schema inference** during ingestion
+- **Beautiful result views** for nested or tabular data
+- **Named queries** with version history
+- **Query session history** to keep track of your work
+- **Pinnable query fragments** to keep your search box uncluttered
+- **Right-click menus** for pivoting and filtering
 
-Brim is built from open source components, including:
+## Ready To Try It Out?
 
-- [Zed](https://github.com/brimdata/zed), a structured log query engine;
-- [Electron](https://www.electronjs.org/) and [React](https://reactjs.org/) for multi-platform UI;
-- [Zeek](https://www.zeek.org), to generate network analysis data from packet capture files.
+**[Download Zui](https://www.brimdata.io/download/)** for your operating system.
 
-## Installing Brim
+Refer to the [installation guide](https://github.com/brimdata/brim/wiki/Installation) and
+[release notes](https://github.com/brimdata/brim/releases) for more information.
 
-See the [installation guide](https://github.com/brimdata/brim/wiki/Installation)
-in the [wiki](https://github.com/brimdata/brim/wiki). Release notes are
-available at the [releases](https://github.com/brimdata/brim/releases) page.
+## Powered By Zed
 
-## Having a problem?
+[Zed](https://zed.brimdata.io/docs) offers an innovative approach to working with data known as "[Super-Structured Data](https://www.brimdata.io/blog/super-structured-data/)".
+
+Behind Zui is a local Zed lake instance where you can load your data into pools and use the powerful Zed language to search, analyze, and transform it. Use it to:
+
+- Explore deeply nested JSON objects
+- View Parquet and Arrow IPC stream files
+- Clean up CSV files by adding type information
+- Search heterogeneous NDJSON logs
+- Transform data from a legacy database's CDC logs
+- Investigate Zeek security logs
+
+Zed provides a system to makes working with data easier and more efficient. The [storage layer](https://zed.brimdata.io/docs/formats), [type system](https://zed.brimdata.io/docs/formats/zed), [query language](https://zed.brimdata.io/docs/language/overview), and [zq](https://zed.brimdata.io/docs/commands/zq) command-line utility are just a few of the tools Zed offers to the data community.
+
+## Formerly Known as "Brim"
+
+For many years, the app was known as Brim, named after the company [Brim Data](https://www.brimdata.io/) that created it . In 2023, it was renamed to Zui, a play on "Zed User Interface", to better reflect its connection to the Zed technology that powers it.
+
+Zui retains the security-specific features that made Brim popular while expanding its reach to anyone who has data to work with. For example, you'll still find the customized views, histograms, and correlations relevant to the security domain appearing in Zui via our nascent plugin system. In the future, developers will be able to create custom plugins that make Zui even more effective for their specific needs.
+
+## Need Help?
 
 Please browse the [wiki](https://github.com/brimdata/brim/wiki) to review common problems and helpful tips before [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue).
 
-## Development and contributing
+## Contributing
 
-We'd love your help! Please see the [contributing guide](CONTRIBUTING.md) for
-development information like building and testing Brim.
+We welcome your contributions! Please refer to our [contributing guide](CONTRIBUTING.md) for information on how to get involved in development.
 
 ## Join the Community
 
-Join our [Public Slack](https://www.brimdata.io/join-slack/) workspace for announcements, Q&A, and to trade tips!
+[Join our public Slack](https://www.brimdata.io/join-slack/) workspace to stay up to date on announcements, ask questions, and exchange tips with other users.
