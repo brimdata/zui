@@ -4,8 +4,9 @@ import {ZedMap} from "../values/map"
 import {Set} from "../values/set"
 import {Union} from "../values/union"
 import {Error} from "../values/error"
+import {TypeValue} from "../values/type-value"
 
-const containers = [Record, Array, Set, Union, ZedMap, Error]
+const containers = [Record, Array, Set, Union, ZedMap, Error, TypeValue]
 
 export function isContainer(value: unknown) {
   for (let name of containers) {
