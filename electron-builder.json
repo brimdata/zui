@@ -3,7 +3,7 @@
   "asar": true,
   "asarUnpack": ["zdeps", "LICENSE.txt", "acknowledgments.txt"],
   "directories": {"output": "dist/installers"},
-  "protocols": [{"name": "brim", "schemes": ["brim"]}],
+  "protocols": [{"name": "zui", "schemes": ["zui"]}],
   "mac": {
     "binaries": [
       "zdeps/zeek/lib/zeek/plugins/Corelight_CommunityID/lib/Corelight-CommunityID.darwin-x86_64.so"
