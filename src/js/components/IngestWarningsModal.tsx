@@ -33,7 +33,7 @@ export default function IngestWarningsModal({onClose}) {
         <>
           <p>
             {
-              "The data you've attempt to import was not recognized as any supported packet capture or log format. The errors returned by each log parser:"
+              "The data you've attempted to import was not recognized as any supported packet capture or log format. The errors returned by each log parser:"
             }
           </p>
           <Scrollable>
