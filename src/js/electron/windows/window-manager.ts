@@ -74,6 +74,14 @@ export class WindowManager extends EventEmitter {
     )
   }
 
+  get singleHidden() {
+    return this.visible.length === 1 && !this.visible[0].ref.isVisible()
+  }
+
+  unhideAll() {
+    this.visible.forEach((win) => win.ref.show())
+  }
+
   private async register(win: ZuiWindow) {
     this.windows[win.id] = win
     win.ref.on("close", (e) => this.emit("window-will-close", e))
