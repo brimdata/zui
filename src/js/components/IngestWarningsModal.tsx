@@ -31,7 +31,11 @@ export default function IngestWarningsModal({onClose}) {
       <Title>Ingest Warnings</Title>
       {warnings.length ? (
         <>
-          <p>{"Data ingest failed with these warnings."}</p>
+          <p>
+            {
+              "The data you've attempt to import was not recognized as any supported packet capture or log format. The errors returned by each log parser:"
+            }
+          </p>
           <Scrollable>
             <Pre>{warnings.join("\n")}</Pre>
           </Scrollable>
