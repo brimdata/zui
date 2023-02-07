@@ -36,7 +36,7 @@ export class PoolsApi extends ApiDomain {
   async loadFiles(poolId: string, files: File[], format?: string) {
     const fileListData = await detectFileTypes(files)
     const loader = chooseLoader(this, fileListData)
-    const load = createLoad(this, poolId)
+    const load = createLoad(this, this.lakeId, poolId)
     const params = {
       poolId: poolId,
       branch: "main",
@@ -101,10 +101,9 @@ export class PoolsApi extends ApiDomain {
   }
 }
 
-function createLoad(api: PoolsApi, poolId: string) {
+function createLoad(api: PoolsApi, lakeId: string, poolId: string) {
   const ctl = new AbortController()
   const id = nanoid()
-  let warnings = []
 
   return {
     signal: ctl.signal,
@@ -112,7 +111,7 @@ function createLoad(api: PoolsApi, poolId: string) {
     setup: async () => {
       await loadStart.invoke(global.windowId)
       api.abortables.add({id, abort: () => ctl.abort()})
-      api.dispatch(Loads.create({id, poolId, progress: 0, warnings: []}))
+      api.dispatch(Loads.create({id, poolId, progress: 0}))
     },
 
     teardown: async () => {
@@ -126,8 +125,7 @@ function createLoad(api: PoolsApi, poolId: string) {
     },
 
     onWarning: (warning: string) => {
-      warnings = [...warnings, warning]
-      api.dispatch(Loads.update({id, changes: {warnings}}))
+      api.dispatch(Pools.appendWarning({lakeId, poolId, warning}))
     },
 
     onPoolChanged: async () => {

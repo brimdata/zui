@@ -18,6 +18,7 @@ const pool1 = (): PoolState => ({
       dur: 1428917793 * 1000 + 7500,
     },
   },
+  warnings: null,
 })
 
 const lake1 = (): Lake => ({

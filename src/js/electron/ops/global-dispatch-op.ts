@@ -5,9 +5,9 @@ import {ZuiWindow} from "../windows/zui-window"
 export const globalDispatchFromWindow = createOperation(
   "dispatchGlobalFromWindow",
   ({main, event}, action: AnyAction) => {
-    main.store.dispatch(action)
+    main.store.dispatch({...action, remote: true})
     main.windows.all
-      .filter((win) => win.ref.webContents === event.sender)
+      .filter((win) => win.ref.webContents !== event.sender)
       .forEach((win) => dispatchToWindow(win, action))
   }
 )

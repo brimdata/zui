@@ -7,6 +7,20 @@ const slice = createSlice({
   initialState: {} as {[lakeId: string]: {[poolId: string]: Pool}},
   name: "$POOLS_",
   reducers: {
+    appendWarning: (
+      state,
+      action: PA<{lakeId: string; poolId: string; warning: string}>
+    ) => {
+      const {lakeId, poolId, warning} = action.payload
+      const warnings = get(state, [lakeId, poolId, "warnings"], [])
+      set(state, [lakeId, poolId, "warnings"], [...warnings, warning])
+    },
+
+    clearWarnings: (state, action: PA<{lakeId: string; poolId: string}>) => {
+      const {lakeId, poolId} = action.payload
+      unset(state, [lakeId, poolId, "warnings"])
+    },
+
     setData: (state, action: PA<{lakeId: string; data: PoolConfig}>) => {
       const {lakeId, data} = action.payload
       set(state, [lakeId, data.id, "data"], data)
