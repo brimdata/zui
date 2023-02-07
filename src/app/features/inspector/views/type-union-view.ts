@@ -2,35 +2,38 @@ import {zed} from "@brimdata/zealot"
 import {createView} from "../views/create"
 import {ContainerView} from "./container-view"
 
-export class ArrayView extends ContainerView<zed.Array> {
+export class TypeUnionView extends ContainerView<zed.TypeUnion> {
   name() {
-    return "Array"
+    return "Union"
   }
 
   count() {
-    return this.value.items.length
+    return this.value.types.length
   }
 
   openToken() {
-    return "["
+    return "("
   }
 
   closeToken() {
-    return "]"
+    return ")"
   }
 
   *iterate(n?: number) {
-    const items = this.value.items
-    const length = n ? Math.min(n, items.length) : items.length
+    const types = this.value.types
+    const length = n ? Math.min(n, types.length) : types.length
 
-    for (let i = 0; i < items.length; ++i) {
+    for (let i = 0; i < types.length; ++i) {
+      const type = types[i]
       const last = i === length - 1
       yield createView({
         ...this.args,
-        type: items[i].type,
-        value: items[i],
+        value: type,
+        // @ts-ignore need to think about rendering types
+        field: null,
         last,
         key: this.isExpanded() ? i.toString() : null,
+        type: type,
         indexPath: [...this.args.indexPath, i],
       })
       if (last) break
