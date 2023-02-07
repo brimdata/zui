@@ -44,7 +44,9 @@ export function initialize(main: BrimMain) {
     }
   })
 
+  // Looks like this gets called twice on linux and windows
   app.on("before-quit", () => {
+    if (main.isQuitting) return
     main.saveSession()
     main.isQuitting = true
   })
