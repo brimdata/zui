@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $mac-spinner-duration: 800ms;
 $mac-spinner-color: var(--aqua);
 $mac-spinner-size: 24px;
@@ -12,7 +14,7 @@ $mac-spinner-size: 24px;
     position: absolute;
     width: 100%;
     height: 100%;
-    transform: translate(50%, $mac-spinner-size / 4);
+    transform: translate(50%, $mac-spinner-size * 0.25);
   }
 
   .bar {
@@ -20,7 +22,7 @@ $mac-spinner-size: 24px;
     left: 0px;
     top: 0px;
     width: 2px;
-    height: $mac-spinner-size / 4;
+    height: $mac-spinner-size * 0.25;
     background: $mac-spinner-color;
     transform-origin: bottom center;
     border-radius: 2px;
@@ -30,8 +32,8 @@ $mac-spinner-size: 24px;
 
   @for $i from 1 through 12 {
     .bar:nth-child(#{$i}) {
-      transform: rotate(($i - 1) * 30deg) translateY(-$mac-spinner-size / 4);
-      animation-delay: ($i - 1) * ($mac-spinner-duration / 12);
+      transform: rotate(($i - 1) * 30deg) translateY(-$mac-spinner-size * 0.25);
+      animation-delay: ($i - 1) * math.div($mac-spinner-duration, 12);
     }
   }
 
