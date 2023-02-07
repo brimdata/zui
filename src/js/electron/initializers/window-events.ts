@@ -26,10 +26,10 @@ export function initialize(main: BrimMain) {
   })
 
   app.on("activate", () => {
-    if (main.windows.visible.length === 0) {
-      main.windows.init()
-    } else {
-      main.windows.visible.forEach((win) => win.ref.show())
+    if (main.windows.singleHidden) {
+      main.windows.unhideAll()
+    } else if (main.windows.visible.length === 0) {
+      main.windows.create("search")
     }
   })
 
