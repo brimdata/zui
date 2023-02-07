@@ -11,7 +11,7 @@ import {TypeValueView} from "./type-value-view"
 import {TypeRecordView} from "./type-record-view"
 import {TypeUnionView} from "./type-union-view"
 import {View} from "./view"
-import {IntView} from "./int-view"
+import {ExplicitPrimitiveView} from "./explicit-primitive-view"
 
 export function createView(args: InspectArgs): View {
   const CustomView = args.ctx.customViews.find((v) => v.when(args))
@@ -43,7 +43,11 @@ export function createView(args: InspectArgs): View {
     return createView({...args, value: args.value.value})
 
   if (zed.isInt(args.value) && !(args.value instanceof zed.Int64)) {
-    return new IntView(args)
+    return new ExplicitPrimitiveView(args)
+  }
+
+  if (zed.isFloat(args.value) && !(args.value instanceof zed.Float64)) {
+    return new ExplicitPrimitiveView(args)
   }
 
   // TYPES

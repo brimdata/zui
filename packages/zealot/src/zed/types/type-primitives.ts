@@ -2,6 +2,8 @@ import {TypeBool} from "./type-bool"
 import {TypeBString} from "./type-bstring"
 import {TypeBytes} from "./type-bytes"
 import {TypeDuration} from "./type-duration"
+import {TypeFloat16} from "./type-float16"
+import {TypeFloat32} from "./type-float32"
 import {TypeFloat64} from "./type-float64"
 import {TypeInt16} from "./type-int16"
 import {TypeInt32} from "./type-int32"
@@ -38,6 +40,8 @@ export const getPrimitives = () => {
     typename: TypeTypename as typeof TypeTypename,
     net: TypeNet as typeof TypeNet,
     float64: TypeFloat64 as typeof TypeFloat64,
+    float32: TypeFloat32 as typeof TypeFloat32,
+    float16: TypeFloat16 as typeof TypeFloat16,
     int32: TypeInt32 as typeof TypeInt32,
     bool: TypeBool as typeof TypeBool,
     bytes: TypeBytes as typeof TypeBytes,
@@ -63,6 +67,8 @@ export function isPrimitiveType(value: unknown): value is PrimitiveType {
     value === TypeTypename ||
     value === TypeNet ||
     value === TypeFloat64 ||
+    value === TypeFloat32 ||
+    value === TypeFloat16 ||
     value === TypeInt32 ||
     value === TypeBool ||
     value === TypeBytes ||
