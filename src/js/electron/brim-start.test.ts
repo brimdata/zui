@@ -45,7 +45,7 @@ test("activates shows the window", async () => {
   app.emit("activate")
   expect(brim.windows.visible).toHaveLength(1)
   brim.windows.visible.forEach((win) => {
-    expect(win.ref.show).toHaveBeenCalled()
+    expect(win.ref.isVisible()).toBe(true)
   })
 })
 
@@ -81,7 +81,7 @@ test("last window closed hides on mac", async () => {
   brim.windows.emit("window-will-close", {preventDefault})
 
   expect(preventDefault).toHaveBeenCalled()
-  expect(brim.windows.visible[0].ref.hide).toHaveBeenCalled()
+  expect(brim.windows.visible[0].ref.isVisible()).toBe(false)
   expect(app.quit).not.toHaveBeenCalled()
 })
 
@@ -97,6 +97,6 @@ test("last window quits on not mac", async () => {
   brim.windows.emit("window-will-close", {preventDefault})
 
   expect(preventDefault).toHaveBeenCalled()
-  expect(brim.windows.visible[0].ref.hide).not.toHaveBeenCalled()
+  expect(brim.windows.visible[0].ref.isVisible()).toBe(true)
   expect(app.quit).toHaveBeenCalled()
 })

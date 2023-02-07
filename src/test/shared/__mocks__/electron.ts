@@ -27,6 +27,7 @@ export class BrowserWindow {
   webContents = new WebContents()
   isDestroyed = jest.fn(() => false)
   focus = jest.fn()
+  visible = true
   center() {}
   setMenu() {}
   on() {
@@ -52,8 +53,15 @@ export class BrowserWindow {
     return [0, 0]
   }
   destroy() {}
-  hide = jest.fn()
-  show = jest.fn()
+  hide() {
+    this.visible = false
+  }
+  show() {
+    this.visible = true
+  }
+  isVisible() {
+    return this.visible
+  }
 }
 
 class MockApp extends EventEmitter {
