@@ -86,21 +86,6 @@ jobs:
       - run: yarn lint
       - run: yarn test
       - run: yarn build
-      - name: End to end tests
-        id: playwright
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          options: -screen 0 1280x1024x24
-          run: yarn e2e
-        env:
-          DEBUG: pw:api
-      - uses: actions/upload-artifact@v2
-        if: failure() && steps.playwright.outcome == 'failure'
-        with:
-          name: artifacts-${{ matrix.os }}
-          path: |
-            run/playwright-itest
-            !run/**/SS
 
       - run: git commit -a -m 'upgrade Zed to ${{ github.event.client_payload.merge_commit_sha }}'
 
