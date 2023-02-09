@@ -10,6 +10,7 @@ export function DataFormatSelect(props: JSX.IntrinsicElements["select"]) {
       <option value="json">JSON</option>
       <option value="line">Line</option>
       <option value="parquet">Parquet</option>
+      <option value="vng">VNG</option>
       <option value="zeek">Zeek</option>
       <option value="zjson">ZJSON</option>
       <option value="zng">ZNG</option>
