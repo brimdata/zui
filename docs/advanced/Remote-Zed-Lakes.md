@@ -83,7 +83,7 @@ For our example remote host, we'll use a Linux Ubuntu 22.04 VM running in
 Amazon AWS. Because Zui interacts with `zed serve` over a REST API that
 is still evolving, care should be taken to ensure the Zui version being
 installed on the remote side matches the version being run locally. In this
-article we'll use Zui v1.0.0, which includes Zed v1.3.0.
+article we'll use Zui v1.0.0, which includes Zed v1.6.0.
 
 Even though our VM on AWS has no graphical interface, we'll install the full
 Zui package because it includes the compatible Zed binaries as well as a
