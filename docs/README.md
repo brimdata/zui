@@ -14,14 +14,6 @@ specific to the Zui app experience, you may want to browse the separate
 * the [command-line tools](https://zed.brimdata.io/docs/commands) that work alongside Zui, and
 * the [Zed data formats](https://zed.brimdata.io/docs/formats).
 
-:::tip pcap processing
-Functionality related to pcap processing (including the generation of Zeek and
-Suricata summary logs from pcaps and pcap import/extraction workflows) is
-handled by [Brimcap](https://github.com/brimdata/brimcap), which is bundled
-with Zui. A separate [Brimcap wiki](https://github.com/brimdata/brimcap/wiki)
-contains current docs related to pcap processing.
-:::
-
 ## Getting Started
 
 Trying out Zui is easy: just [install](./Installation.md) the package for
@@ -52,6 +44,14 @@ and manage its configuration with the app. It would be a GUI for Zed.
 At this point, having the app named after the company was confusing. We needed
 a name that clearly tied the app to Zed. After many fun naming sessions, we
 played off the word "GUI" and landed on "Zui": Zed user interface.
+
+:::tip pcap processing
+Functionality related to pcap processing (including the generation of Zeek and
+Suricata summary logs from pcaps and pcap import/extraction workflows) is
+handled by [Brimcap](https://github.com/brimdata/brimcap), which is bundled
+with Zui. A separate [Brimcap wiki](https://github.com/brimdata/brimcap/wiki)
+contains current docs related to pcap processing.
+:::
 
 ## Zui Insiders
 
