@@ -8,6 +8,6 @@ export class BareStringView extends StringView {
   }
 
   render() {
-    return this.value.toString()
+    return this.value.toString().replaceAll("\n", "\\n") // Escape all new lines
   }
 }
