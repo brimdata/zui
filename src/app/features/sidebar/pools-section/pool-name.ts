@@ -1,9 +1,9 @@
 export class PoolName {
-  constructor(public name: string, public delimeter: string) {}
+  constructor(public name: string, public delimiter: string) {}
 
   get parts() {
-    if (this.delimeter === "") return [this.name]
-    return this.name.split(this.delimeter)
+    if (this.delimiter === "") return [this.name]
+    return this.name.split(this.delimiter)
   }
 
   get group() {

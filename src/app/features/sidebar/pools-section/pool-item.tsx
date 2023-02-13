@@ -15,8 +15,8 @@ const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
   const pool = node.data
   const progress = useSelector((state) => Loads.getPoolProgress(state, pool.id))
   const afterDelayOf = useAfterDelayOf()
-  const delimeter = useSelector(Config.getPoolNameDelimeter)
-  const poolName = new PoolName(pool.name, delimeter)
+  const delimiter = useSelector(Config.getPoolNameDelimiter)
+  const poolName = new PoolName(pool.name, delimiter)
 
   return (
     <Item

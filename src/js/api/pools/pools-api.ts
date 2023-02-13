@@ -18,13 +18,13 @@ export class PoolsApi extends ApiDomain {
     return this.select(Current.getPools)
   }
 
-  get nameDelimeter() {
-    return this.configs.get("pools", "nameDelimeter")
+  get nameDelimiter() {
+    return this.configs.get("pools", "nameDelimiter")
   }
 
   inGroup(group: string[]) {
     return this.all.filter((pool) =>
-      new PoolName(pool.name, this.nameDelimeter).isIn(group)
+      new PoolName(pool.name, this.nameDelimiter).isIn(group)
     )
   }
 
