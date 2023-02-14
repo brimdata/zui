@@ -1,6 +1,6 @@
 name: Advance Zed
 
-concurrency: ${{ github.workflow }
+concurrency: ${{ github.workflow }}
 
 # This type must match the event type from Zed.
 # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
