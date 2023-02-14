@@ -10,6 +10,6 @@ test("migrating 202302131226_renameDelimeterToDelimiter", async () => {
   for (const s of getAllStates(next)) {
     if (!s.configPropValues) continue
     expect(s.configPropValues.pools.nameDelimeter).toBeUndefined()
-    expect(s.configPropValues.pools.nameDelimiter).toBeDefined()
+    expect(s.configPropValues.pools.nameDelimiter).toBe("/")
   }
 })
