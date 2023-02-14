@@ -1,8 +1,8 @@
-import {groupByDelimeter} from "./group-by"
+import {groupByDelimiter} from "./group-by"
 
 test("group by slash", () => {
   const data = [{name: "mine / query1"}, {name: "base"}, {name: "a/b/c/d/e/f"}]
-  const result = groupByDelimeter(data as any, "/")
+  const result = groupByDelimiter(data as any, "/")
 
   expect(result).toMatchInlineSnapshot(`
     Array [

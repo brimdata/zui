@@ -18,7 +18,7 @@ function replaceLastItem<T>(array: T[], item: T) {
 export const renameGroup = createCommand(
   "pools.renameGroup",
   async ({api}, group: string[], name: string) => {
-    const delimeter = api.configs.get("pools", "nameDelimeter")
+    const delimiter = api.configs.get("pools", "nameDelimiter")
     const index = group.length - 1
     const prevName = group[index]
     const newGroup = replaceLastItem(group, name)
@@ -26,11 +26,11 @@ export const renameGroup = createCommand(
 
     const changes = []
     for (let pool of api.pools.inGroup(group)) {
-      const poolName = new PoolName(pool.name, delimeter)
+      const poolName = new PoolName(pool.name, delimiter)
       const parts = poolName.parts
       // Replace the group part of the full name
       parts[index] = parts[index].replace(prevName, newName)
-      const name = parts.join(delimeter)
+      const name = parts.join(delimiter)
       changes.push({id: pool.id, changes: {name}})
     }
 
@@ -65,7 +65,7 @@ export const deleteGroup = createCommand(
   ({api}, group: string[]) => {
     const decendentIds = api.pools.all
       .filter((pool) => {
-        return new PoolName(pool.name, api.pools.nameDelimeter).isIn(group)
+        return new PoolName(pool.name, api.pools.nameDelimiter).isIn(group)
       })
       .map((pool) => pool.id)
 

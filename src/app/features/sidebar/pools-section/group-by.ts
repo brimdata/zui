@@ -9,11 +9,11 @@ export type Internal = {
   children: (Pool | Internal)[]
 }
 
-export function groupByDelimeter(data: Pool[], delimeter: string) {
+export function groupByDelimiter(data: Pool[], delimiter: string) {
   const tree: (Pool | Internal)[] = []
   for (let pool of data) {
     const poolIndex = data.indexOf(pool)
-    const poolName = new PoolName(pool.name, delimeter)
+    const poolName = new PoolName(pool.name, delimiter)
     let siblings = tree
     poolName.parts
       .map((t) => t.trim())

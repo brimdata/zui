@@ -11,7 +11,7 @@ import Tabs from "src/js/state/Tabs"
 import {Empty} from "./empty"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import PoolItem from "./pool-item"
-import {groupByDelimeter, Internal} from "./group-by"
+import {groupByDelimiter, Internal} from "./group-by"
 import {useBrimApi} from "src/app/core/context"
 import * as poolCmd from "src/app/commands/pools"
 import Config from "src/js/state/Config"
@@ -25,10 +25,10 @@ export function PoolsTree(props: {searchTerm: string}) {
   const lakeId = useLakeId()
   const api = useBrimApi()
   const pools = useSelector(Current.getPools)
-  const delimeter = useSelector(Config.getPoolNameDelimeter)
+  const delimiter = useSelector(Config.getPoolNameDelimiter)
   const data = useMemo(
-    () => groupByDelimeter(pools, delimeter),
-    [pools, delimeter]
+    () => groupByDelimiter(pools, delimiter),
+    [pools, delimiter]
   )
   const initialOpenState = useSelector(Appearance.getPoolsOpenState)
   const tree = useRef<TreeApi<any>>()
@@ -80,7 +80,7 @@ export function PoolsTree(props: {searchTerm: string}) {
               for (let node of args.nodes) {
                 if (isInternal(node)) {
                   for (let pool of api.pools.all) {
-                    const poolName = new PoolName(pool.name, delimeter)
+                    const poolName = new PoolName(pool.name, delimiter)
                     if (poolName.isIn(node.data.group)) ids.add(pool.id)
                   }
                 } else {

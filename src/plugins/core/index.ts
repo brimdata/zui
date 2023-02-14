@@ -6,8 +6,8 @@ export function activate(api: BrimApi) {
     name: "pools",
     title: "Pools",
     properties: {
-      nameDelimeter: {
-        name: "nameDelimeter",
+      nameDelimiter: {
+        name: "nameDelimiter",
         label: "Group Pools By",
         type: "string",
         defaultValue: "/",
