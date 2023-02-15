@@ -76,6 +76,12 @@ export class BrimMain {
     this.session.saveSync(encodeSessionState(windowState, mainState))
   }
 
+  onBeforeQuit() {
+    if (this.isQuitting) return
+    this.saveSession()
+    this.isQuitting = true
+  }
+
   openUrl(uri: string) {
     const urlParts = url.parse(uri, true)
     const {code, state, error, error_description} = urlParts.query as {

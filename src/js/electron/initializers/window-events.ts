@@ -1,4 +1,4 @@
-import {app} from "electron"
+import {app, autoUpdater} from "electron"
 import log from "electron-log"
 import env from "src/app/core/env"
 import {BrimMain} from "../brim"
@@ -45,11 +45,11 @@ export function initialize(main: BrimMain) {
   })
 
   // Looks like this gets called twice on linux and windows
-  app.on("before-quit", () => {
-    if (main.isQuitting) return
-    main.saveSession()
-    main.isQuitting = true
-  })
+  app.on("before-quit", () => main.onBeforeQuit())
+
+  // https://www.electronjs.org/docs/latest/api/auto-updater#event-before-quit-for-update
+  // When autoUpdater.quitAndInstall() is called, the "before-quit" event doesn't fire
+  autoUpdater.on("before-quit-for-update", () => main.onBeforeQuit())
 
   app.on("will-quit", () => {
     main.stop()
