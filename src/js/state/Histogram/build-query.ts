@@ -1,4 +1,3 @@
-import {ZedScript} from "src/app/core/models/zed-script"
 import {BrimQuery} from "src/app/query-home/utils/brim-query"
 import histogramInterval, {timeUnits} from "src/js/lib/histogramInterval"
 import {DateTuple} from "src/js/lib/TimeWindow"
@@ -40,7 +39,7 @@ const getRangeFromQuery = (): Thunk<DateTuple> => (_, getState) => {
   return getCurrentRange(snapshot)
 }
 
-const getCurrentRange = (snapshot: QueryVersion): DateTuple => {
+const getCurrentRange = (snapshot: QueryVersion): DateTuple | null => {
   const rangePin = snapshot.pins.find(
     (p) => p.type === "time-range" && !p.disabled
   ) as TimeRangeQueryPin
@@ -48,6 +47,6 @@ const getCurrentRange = (snapshot: QueryVersion): DateTuple => {
   if (rangePin) {
     return [new Date(rangePin.from), new Date(rangePin.to)]
   } else {
-    return new ZedScript(BrimQuery.versionToZed(snapshot)).range as DateTuple
+    return null
   }
 }
