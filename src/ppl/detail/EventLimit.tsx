@@ -4,7 +4,7 @@ import {useDispatch} from "src/app/core/state"
 import Link from "src/js/components/common/Link"
 import {openNewSearchTab} from "src/js/flows/openNewSearchWindow"
 import submitSearch from "src/app/query-home/flows/submit-search"
-import SearchBar from "src/js/state/SearchBar"
+import Editor from "src/js/state/Editor"
 
 type Props = {
   count: number
@@ -15,8 +15,7 @@ type Props = {
 export default memo<Props>(function EventLimit({query, count, limit}) {
   const dispatch = useDispatch()
   const onClick = useCallback(() => {
-    dispatch(SearchBar.clearSearchBar())
-    dispatch(SearchBar.changeSearchBarInput(query))
+    dispatch(Editor.setValue(query))
     if (global.windowName === "detail") {
       dispatch(openNewSearchTab())
     } else {

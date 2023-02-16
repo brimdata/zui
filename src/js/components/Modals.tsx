@@ -1,6 +1,5 @@
 import {useSelector, useDispatch} from "react-redux"
 import Modal from "../state/Modal"
-import {DebugModal} from "./DebugModal"
 import IngestWarningsModal from "./IngestWarningsModal"
 import WhoisModal from "./WhoisModal"
 import React from "react"
@@ -10,7 +9,6 @@ import ViewLakeModal from "./LakeModals/ViewLakeModal"
 import ExportModal from "./ExportModal"
 
 const MODALS = {
-  debug: DebugModal,
   whois: WhoisModal,
   "ingest-warnings": IngestWarningsModal,
   "new-lake": NewLakeModal,

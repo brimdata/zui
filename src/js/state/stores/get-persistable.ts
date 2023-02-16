@@ -28,7 +28,6 @@ export const TAB_PERSIST: TabKey[] = [
   "lastFocused",
   "layout",
   "search",
-  "searchBar",
 ]
 
 export function getPersistedWindowState(original?: State) {
