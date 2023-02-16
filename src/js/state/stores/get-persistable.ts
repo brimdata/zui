@@ -22,13 +22,7 @@ export const WINDOW_PERSIST: StateKey[] = [
   "tabHistories",
 ]
 
-export const TAB_PERSIST: TabKey[] = [
-  "editor",
-  "id",
-  "lastFocused",
-  "layout",
-  "search",
-]
+export const TAB_PERSIST: TabKey[] = ["editor", "id", "lastFocused", "layout"]
 
 export function getPersistedWindowState(original?: State) {
   if (!original) return

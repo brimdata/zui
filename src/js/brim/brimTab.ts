@@ -1,5 +1,4 @@
 import {whichRoute} from "src/app/router/routes"
-import {decodeSearchParams} from "src/app/search/utils/search-params"
 import get from "lodash/get"
 import {PoolsState} from "../state/Pools/types"
 import {LakesState} from "../state/Lakes/types"
@@ -52,7 +51,5 @@ function compileTitle(route, location, lakes, pools, queryIdNameMap) {
   if (version) {
     title = title.replace("<version>", version)
   }
-  const {program} = decodeSearchParams(location.search)
-  title = title.replace("<program>", program || "Search")
   return title
 }

@@ -1,4 +1,3 @@
-import {SpanArgs} from "../state/Search/types"
 import {TimeUnit} from "../lib"
 import AppError from "../models/AppError"
 import {MenuItemConstructorOptions} from "electron"
@@ -91,14 +90,4 @@ export type LongTimeUnit =
 export type ScrollPosition = {
   x: number
   y: number
-}
-
-export type SearchRecord = {
-  program: string
-  pins: string[]
-  spanArgs: SpanArgs
-  poolId: string
-  poolName: string
-  scrollPos?: ScrollPosition
-  target?: string // deprecated
 }

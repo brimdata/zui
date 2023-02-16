@@ -6,7 +6,6 @@ import {reducer as table} from "../Table/reducer"
 import brim from "../../brim"
 import chart from "../Chart/reducer"
 import logDetails from "../LogDetails/reducer"
-import search from "../Search/reducer"
 import viewer from "../Viewer/reducer"
 import {reducer as results} from "../Results/reducer"
 import {reducer as histogram} from "../Histogram/reducer"
@@ -21,7 +20,6 @@ const tabReducer = combineReducers({
   inspector,
   layout,
   logDetails,
-  search,
   viewer,
   results,
   histogram,
