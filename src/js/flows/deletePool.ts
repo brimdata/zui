@@ -1,6 +1,5 @@
 import {Thunk} from "../state/types"
 import Current from "../state/Current"
-import Investigation from "../state/Investigation"
 import Pools from "../state/Pools"
 import Loads from "../state/Loads"
 
@@ -18,7 +17,6 @@ export const deleteOnePool =
     }
 
     return zealot.deletePool(poolId).then(() => {
-      dispatch(Investigation.clearPoolInvestigation(lakeId, poolId))
       dispatch(Pools.remove({lakeId, poolId}))
     })
   }

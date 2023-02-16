@@ -2,7 +2,6 @@ import {combineReducers} from "@reduxjs/toolkit"
 
 import Lakes from "../Lakes"
 import Errors from "../Errors"
-import Investigation from "../Investigation"
 import Modal from "../Modal"
 import Notice from "../Notice"
 import Pools from "../Pools"
@@ -31,7 +30,6 @@ const rootReducer = combineReducers<any, any>({
   modal: Modal.reducer,
   notice: Notice.reducer,
   tabs: Tabs.reducer,
-  investigation: Investigation.reducer,
   pools: Pools.reducer,
   loads: Loads.reducer,
   pluginStorage: PluginStorage.reducer,

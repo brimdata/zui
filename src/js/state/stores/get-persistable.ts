@@ -18,15 +18,7 @@ export const GLOBAL_PERSIST: StateKey[] = [
 
 export const WINDOW_PERSIST: StateKey[] = [
   "appearance",
-  "configPropValues",
-  "investigation",
-  "lakes",
-  "launches",
-  "pluginStorage",
-  "queries",
-  "queryVersions",
   "sessionHistories",
-  "sessionQueries",
   "tabHistories",
 ]
 
