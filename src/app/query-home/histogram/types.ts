@@ -1,4 +1,4 @@
-import {Interval} from "src/js/types"
+import {Interval} from "src/js/lib/histogramInterval"
 export type DateSpan = [Date, Date]
 
 export type Margins = {
