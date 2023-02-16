@@ -35,7 +35,6 @@ export function getPersistedWindowState(original?: State) {
   if (!original) return
   return {
     ...pick(original, WINDOW_PERSIST),
-    ...getPersistedLakes(original),
     ...getPersistedTabs(original),
     ...getPersistedTabHistories(),
   }
