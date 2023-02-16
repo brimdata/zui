@@ -3,7 +3,6 @@ import {ThunkAction, ThunkDispatch} from "redux-thunk"
 import BrimApi from "../api"
 import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
-import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
 import {LoadsState} from "./Loads/types"
 import {InvestigationState} from "./Investigation/types"
@@ -37,7 +36,6 @@ export type DispatchProps = {dispatch: Dispatch}
 export type State = {
   appearance: AppearanceState
   launches: LaunchesState
-  configs: ConfigsState
   configPropValues: ConfigPropValuesState
   tabHistories: TabHistoriesState
   lakes: LakesState

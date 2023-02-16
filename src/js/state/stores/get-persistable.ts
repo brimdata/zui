@@ -7,7 +7,6 @@ type TabKey = keyof TabState
 
 export const GLOBAL_PERSIST: StateKey[] = [
   "configPropValues",
-  "configs",
   "lakes",
   "launches",
   "pluginStorage",

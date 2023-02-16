@@ -13,7 +13,6 @@ import TabHistories from "../TabHistories"
 import Url from "../Url"
 import Toolbars from "../Toolbars"
 import PluginStorage from "../PluginStorage"
-import Configs from "../Configs"
 import ConfigPropValues from "../ConfigPropValues"
 import Launches from "../Launches"
 import Appearance from "../Appearance"
@@ -26,7 +25,6 @@ import SessionHistories from "../SessionHistories"
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
   launches: Launches.reducer,
-  configs: Configs.reducer,
   configPropValues: ConfigPropValues.reducer,
   errors: Errors.reducer,
   lakes: Lakes.reducer,
