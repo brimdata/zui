@@ -6,38 +6,38 @@ type StateKey = keyof State
 type TabKey = keyof TabState
 
 export const GLOBAL_PERSIST: StateKey[] = [
-  "launches",
-  "lakes",
-  "configs",
   "configPropValues",
+  "configs",
+  "lakes",
+  "launches",
   "pluginStorage",
-  "queryVersions",
   "queries",
-  "sessionQueries",
+  "queryVersions",
   "remoteQueries",
+  "sessionQueries",
 ]
 
 export const WINDOW_PERSIST: StateKey[] = [
   "appearance",
   "configPropValues",
   "investigation",
+  "lakes",
   "launches",
   "pluginStorage",
   "queries",
   "queryVersions",
-  "tabHistories",
   "sessionHistories",
   "sessionQueries",
-  "lakes",
+  "tabHistories",
 ]
 
 export const TAB_PERSIST: TabKey[] = [
+  "editor",
   "id",
+  "lastFocused",
+  "layout",
   "search",
   "searchBar",
-  "layout",
-  "editor",
-  "lastFocused",
 ]
 
 export function getPersistedWindowState(original?: State) {
