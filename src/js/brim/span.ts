@@ -1,10 +1,12 @@
 import moment from "moment"
 
 import {DateTuple} from "../lib/TimeWindow"
-import {SpanArgs, TimeArg} from "../state/Search/types"
 import {isString} from "../lib/is"
 import brim, {Span, Ts} from "./"
 import {isDate} from "lodash"
+
+export type TimeArg = string | Ts
+export type SpanArgs = [TimeArg, TimeArg]
 
 export default function span(args: SpanArgs | Span | [Date, Date]) {
   let computed = compute()

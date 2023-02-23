@@ -10,7 +10,6 @@ import BrimApi from "src/js/api"
 import {IngestParams} from "src/js/brim/ingest/getParams"
 import open from "src/js/lib/open"
 import {toNodeReadable} from "src/js/lib/response"
-import {Config} from "src/js/state/Configs"
 import BrimcapCLI, {analyzeOptions, searchOptions} from "./brimcap-cli"
 import {findConnLog} from "../zui-zeek/queries"
 import {findUid} from "../zui-zeek/util"
@@ -368,7 +367,7 @@ export default class BrimcapPlugin {
   }
 
   private setupConfig() {
-    const brimcapConfig: Config = {
+    this.api.configs.add({
       name: this.pluginNamespace,
       title: "Brimcap Settings",
       properties: {
@@ -383,9 +382,7 @@ export default class BrimcapPlugin {
           },
         },
       },
-    }
-
-    this.api.configs.add(brimcapConfig)
+    })
   }
 
   private async updateSuricata() {

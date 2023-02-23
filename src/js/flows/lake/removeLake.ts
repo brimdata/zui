@@ -3,7 +3,6 @@ import {lakesPath} from "src/app/router/utils/paths"
 import toast from "react-hot-toast"
 import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0/utils"
 import {isDefaultLake} from "../../initializers/initLakeParams"
-import Investigation from "../../state/Investigation"
 import Pools from "../../state/Pools"
 import {Thunk} from "../../state/types"
 import Lakes from "../../state/Lakes"
@@ -23,7 +22,6 @@ const removeLake =
       deleteSecretOp.invoke(toAccessTokenKey(id))
       deleteSecretOp.invoke(toRefreshTokenKey(id))
     }
-    dispatch(Investigation.clearLakeInvestigation(id))
     dispatch(Pools.removeAll(id))
     dispatch(LakeStatuses.remove(id))
     dispatch(Lakes.remove(id))
