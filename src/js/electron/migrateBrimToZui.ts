@@ -2,6 +2,7 @@ import {app} from "electron"
 import path from "path"
 import fs from "fs-extra"
 import log from "electron-log"
+import {getPath} from "./first-run"
 
 export default () => {
   if (app.name !== "Zui") return
@@ -47,6 +48,13 @@ export default () => {
   } catch (err) {
     log.error("migration failed: ", err)
     return
+  }
+
+  try {
+    log.info(`marking that the app has been previously run`)
+    fs.createFile(getPath()).catch((e) => log.error(e))
+  } catch (err) {
+    log.error("failed to leave first-run marker: ", err)
   }
 
   log.info("migration completed")
