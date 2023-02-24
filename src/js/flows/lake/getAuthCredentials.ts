@@ -1,15 +1,15 @@
+import {LakeModel} from "src/js/brim/lake"
 import {getSecretOp, setSecretOp} from "src/js/electron/ops/secrets"
 import {
   toAccessTokenKey,
   toRefreshTokenKey,
   validateToken,
 } from "../../auth0/utils"
-import {BrimLake} from "../../brim"
 import {Thunk} from "../../state/types"
 import {getAuth0} from "./getAuth0"
 
 export const getAuthCredentials =
-  (lake: BrimLake): Thunk<Promise<string | null>> =>
+  (lake: LakeModel): Thunk<Promise<string | null>> =>
   async (dispatch) => {
     if (!lake.authType || lake.authType !== "auth0" || !lake.authData)
       throw new Error("No authentication data set for lake")

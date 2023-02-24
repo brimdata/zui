@@ -6,9 +6,9 @@ import Current from "src/js/state/Current"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Thunk} from "src/js/state/types"
 import {Readable} from "stream"
-import {BrimLake} from "src/js/brim"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {LakeModel} from "src/js/brim/lake"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
@@ -72,7 +72,7 @@ export const getRemotePoolForLake =
   }
 
 export const refreshRemoteQueries =
-  (lake?: BrimLake): Thunk<Promise<void>> =>
+  (lake?: LakeModel): Thunk<Promise<void>> =>
   async (dispatch, gs, {api}) => {
     const zealot = await api.getZealot(lake)
     try {

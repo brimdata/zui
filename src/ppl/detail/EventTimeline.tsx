@@ -4,13 +4,13 @@ import React, {memo, useEffect, useState} from "react"
 import styled from "styled-components"
 import {BrimEventInterface} from "./models/BrimEvent"
 import EventTag from "./EventTag"
-import brim from "src/js/brim"
 import {useDispatch} from "src/app/core/state"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import useResizeEffect from "src/app/core/hooks/useResizeEffect"
 import ReactTooltip from "react-tooltip"
 import {isEqual} from "lodash"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
+import time from "src/js/brim/time"
 
 const Lane = styled.div`
   position: relative;
@@ -133,7 +133,7 @@ export default memo(function EventTimeline({events, current}: Props) {
                 ReactTooltip.hide()
                 onClick(e)
               }}
-              data-tip={brim.time(e.getTime()).format()}
+              data-tip={time(e.getTime()).format()}
               data-place="left"
               data-effect="solid"
               data-delay-show={0}

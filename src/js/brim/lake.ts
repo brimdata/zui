@@ -1,5 +1,7 @@
 import {Lake} from "../state/Lakes/types"
 
+export type LakeModel = ReturnType<typeof lake>
+
 export default function lake(lake: Lake) {
   return {
     ...lake,

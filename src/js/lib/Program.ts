@@ -1,7 +1,7 @@
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
-import brim from "../brim"
 import {parseAst} from "@brimdata/zealot"
+import ast from "../brim/ast"
 
 export type Program = string
 
@@ -22,8 +22,8 @@ export const hasGroupByProc = (program: Program) => {
   return !!getGroupByProc(ast)
 }
 
-export const getGroupByProc = (ast: any) => {
-  return brim.ast(ast).proc("Summarize")
+export const getGroupByProc = (astArg: any) => {
+  return ast(astArg).proc("Summarize")
 }
 
 function joinProcs(procs: string[]) {

@@ -5,7 +5,6 @@ import {Caption, ChartWrap, TableWrap} from "src/app/detail/Shared"
 import {isEqual} from "lodash"
 import {BrimEvent} from "src/ppl/detail/models/BrimEvent"
 import React, {memo, useCallback, useMemo} from "react"
-import brim from "src/js/brim"
 import {showContextMenu} from "src/js/lib/System"
 import {zed} from "@brimdata/zealot"
 import EventLimit from "./EventLimit"
@@ -15,6 +14,7 @@ import formatDur from "./util/formatDur"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
 import {SURICATA_ALERTS} from "src/plugins/zui-suricata"
+import time from "src/js/brim/time"
 
 type Props = {record: zed.Record}
 
@@ -33,8 +33,8 @@ export default memo(function RelatedAlerts({record}: Props) {
   )
   const data = [
     ["Count", events.length],
-    ["First ts", first ? brim.time(first.getTime()).format() : "Not available"],
-    ["Last ts", last ? brim.time(last.getTime()).format() : "Not available"],
+    ["First ts", first ? time(first.getTime()).format() : "Not available"],
+    ["Last ts", last ? time(last.getTime()).format() : "Not available"],
     ["Duration", formatDur(first?.getTime(), last?.getTime())],
   ]
 

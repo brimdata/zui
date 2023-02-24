@@ -1,10 +1,10 @@
+import {LakeModel} from "src/js/brim/lake"
 import Auth0Client from "../../auth0"
-import {BrimLake} from "../../brim"
 import Current from "../../state/Current"
 import {Thunk} from "../../state/types"
 
 export const getAuth0 =
-  (l?: BrimLake): Thunk<Auth0Client> =>
+  (l?: LakeModel): Thunk<Auth0Client> =>
   (dispatch, getState) => {
     if (!l) l = Current.getLake(getState())
     if (!l.authType || l.authType !== "auth0") return null

@@ -6,11 +6,11 @@ import {act, screen, waitFor} from "@testing-library/react"
 import {shell} from "electron"
 import {SystemTest} from "src/test/system"
 import url from "url"
-import brim from "../brim"
 import {defaultLake} from "../initializers/initLakeParams"
 import Login from "./Login"
 import {rest} from "msw"
 import LakeStatuses from "../state/LakeStatuses"
+import lake from "../brim/lake"
 
 const system = new SystemTest("Login.test.ts")
 
@@ -61,7 +61,7 @@ const brimSuccessUrl = (state) =>
   `//brim://auth/auth0/callback?code=SemkqWmI3Tv_NWaI&state=${state}`
 
 function getLake() {
-  return brim.lake({
+  return lake({
     ...defaultLake(),
     authType: "auth0",
     authData: {

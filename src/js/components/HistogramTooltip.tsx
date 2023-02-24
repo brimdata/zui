@@ -1,6 +1,6 @@
 import React from "react"
+import time from "../brim/time"
 
-import brim from "../brim"
 import * as fmt from "../lib/fmt"
 
 type Props = {
@@ -22,7 +22,7 @@ const HistogramTooltip = ({segments, ts}: Props) => {
     ))
   return (
     <div className="histogram-tooltip">
-      <p className="ts">{brim.time(ts).format("MMM D, YYYY • HH:mm")}</p>
+      <p className="ts">{time(ts).format("MMM D, YYYY • HH:mm")}</p>
       <table>
         <tbody>
           {rows}

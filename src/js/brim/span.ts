@@ -2,18 +2,21 @@ import moment from "moment"
 
 import {DateTuple} from "../lib/TimeWindow"
 import {isString} from "../lib/is"
-import brim, {Span, Ts} from "./"
 import {isDate} from "lodash"
+import time from "./time"
+import relTime from "./relTime"
 
+export type Ts = {sec: number; ns: number}
 export type TimeArg = string | Ts
 export type SpanArgs = [TimeArg, TimeArg]
+export type Span = [Ts, Ts]
 
-export default function span(args: SpanArgs | Span | [Date, Date]) {
+export default function span(args: SpanArgs | [Ts, Ts] | [Date, Date]) {
   let computed = compute()
 
   function computeArg(arg: TimeArg | Date, now: Date = new Date()): Ts {
-    if (isString(arg)) return brim.relTime(arg, now).toTs()
-    else if (isDate(arg)) return brim.time(arg).toTs()
+    if (isString(arg)) return relTime(arg, now).toTs()
+    else if (isDate(arg)) return time(arg).toTs()
     else return arg
   }
 
@@ -30,7 +33,7 @@ export default function span(args: SpanArgs | Span | [Date, Date]) {
       return computed
     },
     toDateTuple(): DateTuple {
-      return [brim.time(computed[0]).toDate(), brim.time(computed[1]).toDate()]
+      return [time(computed[0]).toDate(), time(computed[1]).toDate()]
     },
     getDuration() {
       const [from, to] = this.toDateTuple()

@@ -1,6 +1,6 @@
 import {zed} from "@brimdata/zealot"
+import program from "src/js/brim/program"
 import Editor from "src/js/state/Editor"
-import brim from "../../brim"
 import {Thunk} from "../../state/types"
 
 const changeTo =
@@ -12,9 +12,7 @@ const changeTo =
 export function appendQueryInclude(field: zed.Field): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      changeTo(
-        brim.program(Editor.getValue(getState())).include(field).string()
-      )
+      changeTo(program(Editor.getValue(getState())).include(field).string())
     )
   }
 }
@@ -22,9 +20,7 @@ export function appendQueryInclude(field: zed.Field): Thunk {
 export function appendQueryExclude(field: zed.Field): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      changeTo(
-        brim.program(Editor.getValue(getState())).exclude(field).string()
-      )
+      changeTo(program(Editor.getValue(getState())).exclude(field).string())
     )
   }
 }
@@ -32,7 +28,7 @@ export function appendQueryExclude(field: zed.Field): Thunk {
 export function appendQueryCountBy(name: string | string[]): Thunk {
   return function (dispatch, getState) {
     const current = Editor.getValue(getState())
-    dispatch(changeTo(brim.program(current).countBy(name).string()))
+    dispatch(changeTo(program(current).countBy(name).string()))
   }
 }
 
@@ -43,10 +39,7 @@ export function appendQuerySortBy(
   return function (dispatch, getState) {
     dispatch(
       changeTo(
-        brim
-          .program(Editor.getValue(getState()))
-          .sortBy(name, direction)
-          .string()
+        program(Editor.getValue(getState())).sortBy(name, direction).string()
       )
     )
   }
@@ -55,9 +48,7 @@ export function appendQuerySortBy(
 export function appendQueryIn(field: zed.Field, value: zed.Value): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      changeTo(
-        brim.program(Editor.getValue(getState())).in(field, value).string()
-      )
+      changeTo(program(Editor.getValue(getState())).in(field, value).string())
     )
   }
 }
@@ -66,7 +57,7 @@ export function appendQueryNotIn(field: zed.Field, value: zed.Any): Thunk {
   return function (dispatch, getState) {
     dispatch(
       changeTo(
-        brim.program(Editor.getValue(getState())).notIn(field, value).string()
+        program(Editor.getValue(getState())).notIn(field, value).string()
       )
     )
   }

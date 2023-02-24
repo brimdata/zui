@@ -4,22 +4,21 @@ import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
 import BrimApi from "../api"
-import brim from "../brim"
+import program from "../brim/program"
 import Results from "../state/Results"
 import {MAIN_RESULTS} from "../state/Results/types"
 import {Thunk} from "../state/types"
 
 const streamPipeline = util.promisify(pipeline)
 
-function cutColumns(program: string, api: BrimApi) {
+function cutColumns(script: string, api: BrimApi) {
   if (api.table && api.table.hiddenColumnCount > 0) {
     const names = api.table.columns.map((c) => c.columnDef.header as string)
-    return brim
-      .program(program)
+    return program(script)
       .quietCut(...names)
       .string()
   } else {
-    return program
+    return script
   }
 }
 

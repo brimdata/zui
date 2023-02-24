@@ -1,8 +1,8 @@
 import isEqual from "lodash/isEqual"
 import moment from "moment"
+import time from "../brim/time"
 
 import {TimeUnit} from "./"
-import brim from "../brim"
 
 export type DateTuple = [Date, Date]
 
@@ -32,7 +32,7 @@ export const shift = (
   unit: TimeUnit = "ms"
 ): DateTuple => {
   return [
-    brim.time(from).add(amount, unit).toDate(),
-    brim.time(to).add(amount, unit).toDate(),
+    time(from).add(amount, unit).toDate(),
+    time(to).add(amount, unit).toDate(),
   ]
 }

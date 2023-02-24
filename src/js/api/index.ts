@@ -10,7 +10,6 @@ import {LoadersApi} from "./loaders/loaders-api"
 import {Detail, MenusApi, Search} from "./menus/menus-api"
 import {ConfigurationsApi} from "./configurations/configurations-api"
 import {ToolbarsApi} from "./toolbars/toolbars-api"
-import {BrimLake} from "../brim"
 import {query, QueryOptions} from "./core/query"
 import {CurrentApi} from "./current/current-api"
 import {CorrelationsApi} from "./correlations/correlations-api"
@@ -19,6 +18,7 @@ import {NoticeApi} from "./notice/notice-api"
 import {UrlApi} from "./url/url-api"
 import {LayoutApi} from "./layout-api"
 import {TableViewApi} from "src/zui-kit"
+import {LakeModel} from "../brim/lake"
 
 export default class BrimApi {
   table: TableViewApi | null = null
@@ -58,7 +58,7 @@ export default class BrimApi {
     this.layout = new LayoutApi(this)
   }
 
-  getZealot(lake?: BrimLake, env?: "node" | "web") {
+  getZealot(lake?: LakeModel, env?: "node" | "web") {
     return this.dispatch(getZealot(lake, env))
   }
 
