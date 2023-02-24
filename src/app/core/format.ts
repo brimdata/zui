@@ -6,7 +6,7 @@ import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {State} from "src/js/state/types"
 import {zed} from "@brimdata/zealot"
 import {isString} from "lodash"
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 
 /**
  * Preferences object provided by the user.

@@ -17,7 +17,7 @@ import styled from "styled-components"
 import Appearance from "src/js/state/Appearance"
 import env from "src/app/core/env"
 import SidebarToggleButton from "src/app/features/sidebar/sidebar-toggle-button"
-import tab from "src/js/brim/tab"
+import tab from "src/js/models/tab"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200

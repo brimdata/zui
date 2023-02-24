@@ -10,7 +10,7 @@ import useResizeEffect from "src/app/core/hooks/useResizeEffect"
 import ReactTooltip from "react-tooltip"
 import {isEqual} from "lodash"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 
 const Lane = styled.div`
   position: relative;

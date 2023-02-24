@@ -1,5 +1,5 @@
 import React from "react"
-import time from "../brim/time"
+import time from "../models/time"
 
 import * as fmt from "../lib/fmt"
 

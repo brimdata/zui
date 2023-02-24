@@ -1,5 +1,5 @@
 import BrimApi from "src/js/api"
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 
 export function activate(api: BrimApi) {
   api.configs.add({

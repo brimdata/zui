@@ -18,7 +18,7 @@ import {NoticeApi} from "./notice/notice-api"
 import {UrlApi} from "./url/url-api"
 import {LayoutApi} from "./layout-api"
 import {TableViewApi} from "src/zui-kit"
-import {LakeModel} from "../brim/lake"
+import {LakeModel} from "../models/lake"
 
 export default class BrimApi {
   table: TableViewApi | null = null

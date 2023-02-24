@@ -8,7 +8,7 @@ import {Thunk} from "src/js/state/types"
 import {Readable} from "stream"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
-import {LakeModel} from "src/js/brim/lake"
+import {LakeModel} from "src/js/models/lake"
 
 export const remoteQueriesPoolName = "_remote-queries"
 

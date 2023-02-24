@@ -1,5 +1,5 @@
 import * as zealot from "@brimdata/zealot"
-import {fieldExprToName} from "src/js/brim/ast"
+import {fieldExprToName} from "src/js/models/ast"
 import {toFieldPath} from "src/js/zql/toZql"
 
 export class ZedAst {

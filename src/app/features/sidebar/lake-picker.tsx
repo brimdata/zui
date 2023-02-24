@@ -12,7 +12,7 @@ import Modal from "src/js/state/Modal"
 import {AppDispatch} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
 import {Lake} from "src/js/state/Lakes/types"
-import lake from "src/js/brim/lake"
+import lake from "src/js/models/lake"
 
 const LakeNameGroup = styled.div`
   display: flex;

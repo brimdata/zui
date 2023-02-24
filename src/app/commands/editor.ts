@@ -1,5 +1,5 @@
 import {zed} from "packages/zealot/src"
-import program from "src/js/brim/program"
+import program from "src/js/models/program"
 import {
   appendQueryCountBy,
   appendQueryExclude,

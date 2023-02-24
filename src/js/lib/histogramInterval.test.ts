@@ -1,4 +1,4 @@
-import time from "../brim/time"
+import time from "../models/time"
 import histogramInterval from "./histogramInterval"
 import {DateTuple} from "./TimeWindow"
 

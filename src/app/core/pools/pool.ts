@@ -1,6 +1,6 @@
 import {isEqual} from "lodash"
 import {PoolConfig, PoolStats, Ts} from "@brimdata/zealot"
-import span from "src/js/brim/span"
+import span from "src/js/models/span"
 
 export class Pool {
   static from(opts: {data: PoolConfig; stats?: PoolStats}) {

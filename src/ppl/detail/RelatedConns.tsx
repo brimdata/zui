@@ -12,7 +12,7 @@ import formatDur from "./util/formatDur"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
 import {SURICATA_CONNS} from "src/plugins/zui-suricata"
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 
 const id = SURICATA_CONNS
 

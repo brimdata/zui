@@ -22,7 +22,7 @@ import {ActiveQuery} from "src/app/core/models/active-query"
 import SessionQueries from "../SessionQueries"
 import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
-import lake, {LakeModel} from "src/js/brim/lake"
+import lake, {LakeModel} from "src/js/models/lake"
 
 type Id = string | null
 

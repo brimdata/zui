@@ -1,4 +1,4 @@
-import {LakeModel} from "src/js/brim/lake"
+import {LakeModel} from "src/js/models/lake"
 import {getSecretOp, setSecretOp} from "src/js/electron/ops/secrets"
 import {
   toAccessTokenKey,

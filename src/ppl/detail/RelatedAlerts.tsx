@@ -14,7 +14,7 @@ import formatDur from "./util/formatDur"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
 import {SURICATA_ALERTS} from "src/plugins/zui-suricata"
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 
 type Props = {record: zed.Record}
 

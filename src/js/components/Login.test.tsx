@@ -10,7 +10,7 @@ import {defaultLake} from "../initializers/initLakeParams"
 import Login from "./Login"
 import {rest} from "msw"
 import LakeStatuses from "../state/LakeStatuses"
-import lake from "../brim/lake"
+import lake from "../models/lake"
 
 const system = new SystemTest("Login.test.ts")
 

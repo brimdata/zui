@@ -1,7 +1,7 @@
 import React from "react"
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 
-import {FormFieldConfig} from "../../brim/form"
+import {FormFieldConfig} from "../../models/form"
 import InputLabel from "../common/forms/InputLabel"
 import SelectInput from "../common/forms/SelectInput"
 

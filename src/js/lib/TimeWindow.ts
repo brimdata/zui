@@ -1,6 +1,6 @@
 import isEqual from "lodash/isEqual"
 import moment from "moment"
-import time from "../brim/time"
+import time from "../models/time"
 
 import {TimeUnit} from "./"
 

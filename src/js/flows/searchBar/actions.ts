@@ -1,5 +1,5 @@
 import {zed} from "@brimdata/zealot"
-import program from "src/js/brim/program"
+import program from "src/js/models/program"
 import Editor from "src/js/state/Editor"
 import {Thunk} from "../../state/types"
 

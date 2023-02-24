@@ -9,7 +9,7 @@ import {isString} from "lodash"
 import {updateStatus} from "../flows/lake/update-status"
 import {login} from "../flows/lake/login"
 import ToolbarButton from "src/app/query-home/toolbar/actions/button"
-import {LakeModel} from "../brim/lake"
+import {LakeModel} from "../models/lake"
 
 const PageWrap = styled.div`
   width: 100%;

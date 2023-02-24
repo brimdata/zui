@@ -1,6 +1,6 @@
 import React from "react"
 
-import {FormFieldConfig} from "../../brim/form"
+import {FormFieldConfig} from "../../models/form"
 import InputLabel from "../common/forms/InputLabel"
 import Link from "../common/Link"
 import TextInput from "../common/forms/TextInput"

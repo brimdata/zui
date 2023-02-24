@@ -1,5 +1,5 @@
 import {EventEmitter} from "events"
-import {IngestParams} from "src/js/brim/ingest/getParams"
+import {IngestParams} from "src/js/models/ingest/getParams"
 import {remove} from "lodash"
 
 interface Loader {

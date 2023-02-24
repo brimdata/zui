@@ -1,4 +1,4 @@
-import {LakeModel} from "../brim/lake"
+import {LakeModel} from "../models/lake"
 import {Thunk} from "../state/types"
 
 export const subscribeEvents =

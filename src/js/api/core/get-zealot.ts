@@ -1,6 +1,6 @@
 import {Client} from "@brimdata/zealot"
 import {validateToken} from "src/js/auth0/utils"
-import {LakeModel} from "src/js/brim/lake"
+import {LakeModel} from "src/js/models/lake"
 import {getAuthCredentials} from "src/js/flows/lake/getAuthCredentials"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"

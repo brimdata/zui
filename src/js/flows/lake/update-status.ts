@@ -1,6 +1,6 @@
 import {Client} from "@brimdata/zealot"
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
-import lake from "src/js/brim/lake"
+import lake from "src/js/models/lake"
 import {validateToken} from "../../auth0/utils"
 import Lakes from "../../state/Lakes"
 import LakeStatuses from "../../state/LakeStatuses"

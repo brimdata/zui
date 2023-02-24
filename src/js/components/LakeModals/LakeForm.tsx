@@ -3,7 +3,7 @@ import {isEmpty} from "lodash"
 import React, {useEffect, useRef, useState} from "react"
 import {useDispatch} from "react-redux"
 import styled from "styled-components"
-import form, {FormConfig} from "../../brim/form"
+import form, {FormConfig} from "../../models/form"
 import {buildAndAuthenticateLake} from "../../flows/lake/buildAndAuthenticateLake"
 import {AppDispatch} from "../../state/types"
 import {Lake} from "../../state/Lakes/types"
@@ -15,7 +15,7 @@ import useEventListener from "../hooks/useEventListener"
 import {isDefaultLake} from "../../initializers/initLakeParams"
 import {SubmitButton} from "src/components/submit-button"
 import {InputButton} from "src/components/input-button"
-import {LakeModel} from "src/js/brim/lake"
+import {LakeModel} from "src/js/models/lake"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;

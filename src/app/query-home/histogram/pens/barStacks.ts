@@ -2,7 +2,7 @@ import * as d3 from "d3"
 
 import {Pen} from "../types"
 import {innerHeight, innerWidth} from "../dimens"
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 
 export default function (): Pen {
   let chartG

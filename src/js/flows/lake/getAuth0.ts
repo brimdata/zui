@@ -1,4 +1,4 @@
-import {LakeModel} from "src/js/brim/lake"
+import {LakeModel} from "src/js/models/lake"
 import Auth0Client from "../../auth0"
 import Current from "../../state/Current"
 import {Thunk} from "../../state/types"

@@ -1,6 +1,6 @@
 import {CreatePoolOpts, LoadFormat} from "packages/zealot/src"
-import detectFileTypes from "src/js/brim/ingest/detectFileTypes"
-import {derivePoolName} from "src/js/brim/ingest/getParams"
+import detectFileTypes from "src/js/models/ingest/detectFileTypes"
+import {derivePoolName} from "src/js/models/ingest/getParams"
 import errors from "src/js/errors"
 import {BrimError} from "src/js/errors/types"
 import ErrorFactory from "src/js/models/ErrorFactory"

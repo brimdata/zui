@@ -1,4 +1,4 @@
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 import {Chart} from "./types"
 
 export const getPointAt = (left: number, chart: Chart) => {

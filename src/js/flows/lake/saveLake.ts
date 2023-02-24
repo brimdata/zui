@@ -1,6 +1,6 @@
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 import tabHistory from "src/app/router/tab-history"
-import {LakeModel} from "src/js/brim/lake"
+import {LakeModel} from "src/js/models/lake"
 import Lakes from "../../state/Lakes"
 import LakeStatuses from "../../state/LakeStatuses"
 import {LakeStatus} from "../../state/LakeStatuses/types"

@@ -1,5 +1,5 @@
 import BrimApi from "src/js/api"
-import {IngestParams} from "src/js/brim/ingest/getParams"
+import {IngestParams} from "src/js/models/ingest/getParams"
 import {forEach, get} from "lodash"
 import {Readable} from "stream"
 import {LoadFormat} from "packages/zealot/src"

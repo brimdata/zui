@@ -1,4 +1,4 @@
-import time from "src/js/brim/time"
+import time from "src/js/models/time"
 import date from "src/js/lib/date"
 
 export function getTimeString(value: string, zone: string) {

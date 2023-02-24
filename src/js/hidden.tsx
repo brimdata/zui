@@ -6,7 +6,7 @@ import {differenceWith, map} from "lodash"
 import {useEffect} from "react"
 import {Provider, useDispatch, useSelector} from "react-redux"
 import "regenerator-runtime/runtime"
-import lake from "./brim/lake"
+import lake from "./models/lake"
 import {
   getRemotePoolForLake,
   refreshRemoteQueries,

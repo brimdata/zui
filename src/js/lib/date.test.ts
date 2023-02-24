@@ -1,4 +1,4 @@
-import time from "../brim/time"
+import time from "../models/time"
 import lib from "./"
 
 describe("parseInZone", () => {

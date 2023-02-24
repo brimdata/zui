@@ -1,5 +1,5 @@
 import {ipcRenderer} from "electron"
-import {LakeModel} from "src/js/brim/lake"
+import {LakeModel} from "src/js/models/lake"
 import {setSecretOp} from "src/js/electron/ops/secrets"
 import {
   serializeState,

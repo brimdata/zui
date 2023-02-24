@@ -1,7 +1,7 @@
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
 import {parseAst} from "@brimdata/zealot"
-import ast from "../brim/ast"
+import ast from "../models/ast"
 
 export type Program = string
 

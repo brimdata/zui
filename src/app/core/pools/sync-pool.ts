@@ -1,4 +1,4 @@
-import lake from "src/js/brim/lake"
+import lake from "src/js/models/lake"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
 import Pools from "src/js/state/Pools"
