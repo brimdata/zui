@@ -6,7 +6,7 @@ import fsExtra, {pathExistsSync} from "fs-extra"
 import {compact} from "lodash"
 import path, {join} from "path"
 import errors from "src/js/errors"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import {IngestParams} from "src/js/models/ingest/getParams"
 import open from "src/js/lib/open"
 import {toNodeReadable} from "src/js/lib/response"
@@ -43,7 +43,7 @@ export default class BrimcapPlugin {
     },
   }
 
-  constructor(private api: BrimApi) {
+  constructor(private api: ZuiApi) {
     // RFC: what interface do we want the app to provide for this sort of data?
     const dataRoot = api.getPath("app-data")
     const zdepsDirectory = api.getPath("zdeps")
@@ -62,7 +62,7 @@ export default class BrimcapPlugin {
     if (!pathExistsSync(this.brimcapBinPath)) {
       console.error(
         new Error(
-          `Packaging error: brimcap executable could not be found at '${this.brimcapBinPath}', please submit an issue at https://github.com/brimdata/brim/issues/new/choose for assistance`
+          `Packaging error: brimcap executable could not be found at '${this.brimcapBinPath}', please submit an issue at https://github.com/brimdata/zui/issues/new/choose for assistance`
         )
       )
       return
@@ -153,7 +153,7 @@ export default class BrimcapPlugin {
       )
     )
 
-    // add brim-command listeners to update button statuses
+    // add command listeners to update button statuses
     this.cleanupFns.push(
       this.api.commands.add("data-detail:current", ([record]) => {
         if (!record) return
@@ -329,7 +329,7 @@ export default class BrimcapPlugin {
           pool: params.poolId,
           branch: params.branch,
           message: {
-            author: "brim",
+            author: "zui",
             body: "automatic import with brimcap analyze",
           },
           signal,

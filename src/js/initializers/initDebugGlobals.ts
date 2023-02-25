@@ -1,11 +1,11 @@
 import tabHistory from "src/app/router/tab-history"
-import BrimApi from "../api"
+import ZuiApi from "../api/zui-api"
 import Current from "../state/Current"
 import Tabs from "../state/Tabs"
 import {Store} from "../state/types"
 
 export class DevGlobal {
-  constructor(readonly store: Store, readonly api: BrimApi) {}
+  constructor(readonly store: Store, readonly api: ZuiApi) {}
 
   get url() {
     return Current.getLocation(this.store.getState())

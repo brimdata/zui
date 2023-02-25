@@ -1,11 +1,11 @@
 import {zed} from "@brimdata/zealot"
 import {createMenu} from "src/core/menu"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import * as editor from "../commands/editor"
 import * as pins from "../commands/pins"
 import * as values from "../commands/values"
 
-function getWhenContext(api: BrimApi, value: zed.Any) {
+function getWhenContext(api: ZuiApi, value: zed.Any) {
   return {
     isPrimitive: zed.isPrimitive(value),
     isIterable: zed.isIterable(value),

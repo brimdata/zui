@@ -1,9 +1,9 @@
 import {zed} from "@brimdata/zealot"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import {Correlation} from "src/js/api/correlations/types"
 import zql from "src/js/zql"
 
-function hasMd5(api: BrimApi) {
+function hasMd5(api: ZuiApi) {
   const value = api.current.value
   return (
     value instanceof zed.Record &&

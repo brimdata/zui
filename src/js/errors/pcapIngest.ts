@@ -1,6 +1,6 @@
-import {BrimError} from "./types"
+import {ErrorData} from "./types"
 
-export default function (err: string): BrimError {
+export default function (err: string): ErrorData {
   return {
     type: "PCAPIngestError",
     message: "Unable to generate full summary logs from PCAP",
@@ -12,7 +12,7 @@ function getDetails(err) {
   const details = [`Detail: ${err}`]
   if (/sort limit/.test(err)) {
     details.push(
-      "This PCAP contains too much network traffic to load into Brim."
+      "This PCAP contains too much network traffic to load into Zui."
     )
   }
   return details

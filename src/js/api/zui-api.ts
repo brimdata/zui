@@ -20,7 +20,7 @@ import {LayoutApi} from "./layout-api"
 import {TableViewApi} from "src/zui-kit"
 import {LakeModel} from "../models/lake"
 
-export default class BrimApi {
+export default class ZuiApi {
   table: TableViewApi | null = null
   public abortables = new Abortables()
   public commands = new CommandsApi()

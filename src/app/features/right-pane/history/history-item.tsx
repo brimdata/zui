@@ -1,7 +1,7 @@
 import {formatDistanceToNowStrict} from "date-fns"
 import React, {useMemo} from "react"
 import {useSelector} from "react-redux"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import Current from "src/js/state/Current"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
@@ -113,7 +113,7 @@ function getTimestamp(active: ActiveQuery) {
 }
 
 export function HistoryItem({node}: NodeRendererProps<Props>) {
-  const api = useBrimApi()
+  const api = useZuiApi()
   const {index, queryId, version} = node.data
   const onContextMenu = useEntryMenu(index)
   const sessionId = useSelector(Current.getSessionId)

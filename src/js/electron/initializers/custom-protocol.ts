@@ -1,7 +1,7 @@
 import {app} from "electron"
-import {BrimMain} from "../brim"
+import {ZuiMain} from "../zui-main"
 
-export function initialize(main: BrimMain) {
+export function initialize(main: ZuiMain) {
   const brimCustomProtocol = "zui"
   app.setAsDefaultProtocolClient(brimCustomProtocol)
   app.on("second-instance", (e, argv) => {

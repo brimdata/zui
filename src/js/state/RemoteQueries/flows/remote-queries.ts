@@ -125,7 +125,7 @@ const loadRemoteQueries =
         pool: rqPoolId,
         branch: "main",
         message: {
-          author: "brim",
+          author: "zui",
           body:
             "automatic remote query load for id(s): " +
             queries.map((q) => q.id).join(", "),

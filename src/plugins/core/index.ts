@@ -1,7 +1,7 @@
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import time from "src/js/models/time"
 
-export function activate(api: BrimApi) {
+export function activate(api: ZuiApi) {
   api.configs.add({
     name: "pools",
     title: "Pools",

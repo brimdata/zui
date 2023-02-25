@@ -1,7 +1,7 @@
 import React from "react"
 import {useSelector} from "react-redux"
 import {runQuery} from "src/app/commands/run-query"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import useSelect from "src/app/core/hooks/use-select"
 import {useDispatch} from "src/app/core/state"
 import {InputButton} from "src/components/input-button"
@@ -59,7 +59,7 @@ function Create() {
 
 function Update() {
   const active = useActiveQuery()
-  const api = useBrimApi()
+  const api = useZuiApi()
   const select = useSelect()
 
   function onClick() {

@@ -1,8 +1,8 @@
-import BrimApi from "."
+import ZuiApi from "./zui-api"
 import {State} from "../state/types"
 
 export class ApiDomain {
-  constructor(private base: BrimApi) {}
+  constructor(private base: ZuiApi) {}
 
   get current() {
     return this.base.current

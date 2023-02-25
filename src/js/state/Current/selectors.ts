@@ -8,7 +8,7 @@ import {LakesState} from "../Lakes/types"
 import {MemoryHistory} from "history"
 import {Pool} from "src/app/core/pools/pool"
 import Queries from "../Queries"
-import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {QueryModel} from "src/js/models/query-model"
 import QueryVersions from "../QueryVersions"
 import {query, queryVersion} from "src/app/router/routes"
 import SessionHistories from "../SessionHistories"
@@ -86,7 +86,7 @@ export const getSession = createSelector(
   getSessionVersions,
   (query, versions) => {
     if (!query) return null
-    return new BrimQuery(query, versions, "session")
+    return new QueryModel(query, versions, "session")
   }
 )
 

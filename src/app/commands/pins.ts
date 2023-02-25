@@ -1,5 +1,5 @@
 import {zed} from "@brimdata/zealot"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import {DateTuple} from "src/js/lib/TimeWindow"
 import Editor from "src/js/state/Editor"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
@@ -56,7 +56,7 @@ function defaultTo(now: Date) {
   )
 }
 
-async function defaultRange(api: BrimApi): Promise<DateTuple> {
+async function defaultRange(api: ZuiApi): Promise<DateTuple> {
   const range = await api.dispatch(Pools.getTimeRange(api.current.poolName))
   const now = new Date()
   const from = (range && range[0]) || defaultFrom(now)
@@ -81,7 +81,7 @@ export const createTimeRange = createCommand(
   }
 )
 
-function currentRange(api: BrimApi) {
+function currentRange(api: ZuiApi) {
   const pin = api.editor.pins.find(
     (p) => p.type === "time-range"
   ) as TimeRangeQueryPin

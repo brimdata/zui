@@ -7,7 +7,7 @@ import {isEmpty} from "lodash"
 import {EmptyText} from "../common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import {Tree} from "react-arborist"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 
 const BG = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const BG = styled.div`
 `
 
 export function HistorySection() {
-  const api = useBrimApi()
+  const api = useZuiApi()
   const sessionHistory = useSelector(Current.getSessionHistory) || []
   const history = useMemo(
     () =>

@@ -3,7 +3,7 @@ import log from "electron-log"
 import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
-import BrimApi from "../api"
+import ZuiApi from "../api/zui-api"
 import program from "../models/program"
 import Results from "../state/Results"
 import {MAIN_RESULTS} from "../state/Results/types"
@@ -11,7 +11,7 @@ import {Thunk} from "../state/types"
 
 const streamPipeline = util.promisify(pipeline)
 
-function cutColumns(script: string, api: BrimApi) {
+function cutColumns(script: string, api: ZuiApi) {
   if (api.table && api.table.hiddenColumnCount > 0) {
     const names = api.table.columns.map((c) => c.columnDef.header as string)
     return program(script)
@@ -22,7 +22,7 @@ function cutColumns(script: string, api: BrimApi) {
   }
 }
 
-function prepareProgram(format: string, program: string, api: BrimApi) {
+function prepareProgram(format: string, program: string, api: ZuiApi) {
   let p = cutColumns(program, api)
   if (format === "csv" || format === "arrows") p += " | fuse"
   return p

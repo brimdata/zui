@@ -28,7 +28,7 @@ jobs:
           ref: ${{ github.ref }}
           token: ${{ secrets.ZQ_UPDATE_PAT }}
       - run: git config --local user.email 'automation@brimdata.io'
-      - run: git config --local user.name 'Brim Automation'
+      - run: git config --local user.name 'Brim Data Automation'
 
       # This section gets event information.
       - run: jq '.' "${GITHUB_EVENT_PATH}"
@@ -67,7 +67,7 @@ jobs:
       # is no different than the normal CI flow.
       - uses: actions/setup-go@v2
         with:
-          go-version: '1.19'
+          go-version: "1.19"
       - uses: actions/setup-node@v3
         with:
           cache: yarn

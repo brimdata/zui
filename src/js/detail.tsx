@@ -1,9 +1,9 @@
-import {BrimProvider} from "src/app/core/context"
+import {AppProvider} from "src/app/core/context"
 import AppWindowRouter from "src/app/router/app-window-router"
 import React from "react"
 import {createRoot} from "react-dom/client"
 import "regenerator-runtime/runtime"
-import BrimTooltip from "./components/BrimTooltip"
+import Tooltip from "./components/Tooltip"
 import LogDetailsWindow from "./components/LogDetailsWindow"
 import {Modals} from "./components/Modals"
 import lib from "./lib"
@@ -18,14 +18,14 @@ initialize()
     const container = lib.doc.id("app-root")
     const root = createRoot(container!)
     root.render(
-      <BrimProvider store={store} api={api}>
+      <AppProvider store={store} api={api}>
         <AppWindowRouter>
           <div id="modal-dialog-root" />
           <LogDetailsWindow />
           <Modals />
-          <BrimTooltip />
+          <Tooltip />
         </AppWindowRouter>
-      </BrimProvider>
+      </AppProvider>
     )
   })
   .catch((e) => {

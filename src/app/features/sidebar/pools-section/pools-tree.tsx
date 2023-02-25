@@ -12,7 +12,7 @@ import {Empty} from "./empty"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import PoolItem from "./pool-item"
 import {groupByDelimiter, Internal} from "./group-by"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import * as poolCmd from "src/app/commands/pools"
 import Config from "src/js/state/Config"
 import {Pool} from "src/app/core/pools/pool"
@@ -23,7 +23,7 @@ export function PoolsTree(props: {searchTerm: string}) {
   const dispatch = useDispatch()
   const poolId = usePoolId()
   const lakeId = useLakeId()
-  const api = useBrimApi()
+  const api = useZuiApi()
   const pools = useSelector(Current.getPools)
   const delimiter = useSelector(Config.getPoolNameDelimiter)
   const data = useMemo(

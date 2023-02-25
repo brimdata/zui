@@ -1,5 +1,5 @@
 import "src/test/system/real-paths"
-import {BrimMain} from "./brim"
+import {ZuiMain} from "./zui-main"
 import path from "path"
 
 const file = `tmp-boot-test/appState.json`
@@ -9,6 +9,6 @@ test("boot starts lake with defaults", async () => {
     load: () => Promise.resolve(undefined),
   })
   // @ts-ignore
-  const brim = await BrimMain.boot(file, createSession)
-  expect(brim.lake.root).toMatch(path.normalize("data/lake"))
+  const main = await ZuiMain.boot(file, createSession)
+  expect(main.lake.root).toMatch(path.normalize("data/lake"))
 })

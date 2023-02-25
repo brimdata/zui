@@ -3,7 +3,7 @@ import Panel from "src/app/detail/Panel"
 import PanelHeading from "src/app/detail/PanelHeading"
 import {Caption, ChartWrap, TableWrap} from "src/app/detail/Shared"
 import {isEqual} from "lodash"
-import {BrimEvent} from "src/ppl/detail/models/BrimEvent"
+import {SecurityEvent} from "src/ppl/detail/models/security-event"
 import React, {memo, useCallback, useMemo} from "react"
 import {showContextMenu} from "src/js/lib/System"
 import {zed} from "@brimdata/zealot"
@@ -25,7 +25,7 @@ export default memo(function RelatedAlerts({record}: Props) {
   const isFetching = useSelector(Results.isFetching(id))
   const query = useSelector(Results.getQuery(id))
   const perPage = useSelector(Results.getPerPage(id))
-  const events = useMemo(() => records.map(BrimEvent.build), [records])
+  const events = useMemo(() => records.map(SecurityEvent.build), [records])
   const [first, last] = firstLast(events)
   const current = useMemo(
     () => events.findIndex((e) => isEqual(e.getRecord(), record)),

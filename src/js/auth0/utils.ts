@@ -15,7 +15,7 @@ export const validateToken = (token: string): boolean => {
 
   return false
 }
-const keytarServiceSuffix = "brim-oauth"
+const keytarServiceSuffix = "zui-oauth"
 
 // utils for generating auth0 namespaces in os default keychain (facilitated by keytar)
 export const toAccessTokenKey = (id: string): string =>

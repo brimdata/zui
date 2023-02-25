@@ -1,13 +1,13 @@
 import React from "react"
-import {Toaster} from "react-hot-toast"
+import {Toaster as HotToaster} from "react-hot-toast"
 
-const BrimToaster = () => {
+const Toaster = () => {
   return (
-    <Toaster
+    <HotToaster
       position="bottom-right"
       toastOptions={{
         role: "status",
-        className: "brim-toast",
+        className: "toaster",
         loading: {
           // This is so that the loading indicator does not go away.
           duration: 2 ** 31 - 1,
@@ -20,4 +20,4 @@ const BrimToaster = () => {
   )
 }
 
-export default BrimToaster
+export default Toaster

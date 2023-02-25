@@ -1,4 +1,4 @@
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import zql from "src/js/zql"
 import {findCid, whenSuricata} from "./util"
 
@@ -8,7 +8,7 @@ export const SURICATA_ALERTS = "zui-suricata/related-alerts"
 const relatedConns = {
   id: SURICATA_CONNS,
   when: whenSuricata,
-  query: (api: BrimApi) => {
+  query: (api: ZuiApi) => {
     return zql`
         from ${api.current.poolName} 
         | _path=="conn"
@@ -20,7 +20,7 @@ const relatedConns = {
 const relatedAlerts = {
   id: SURICATA_ALERTS,
   when: whenSuricata,
-  query: (api: BrimApi) => {
+  query: (api: ZuiApi) => {
     return zql`
         from ${api.current.poolName} 
         | event_type=="alert" 
@@ -30,12 +30,12 @@ const relatedAlerts = {
   },
 }
 
-export function activate(api: BrimApi) {
+export function activate(api: ZuiApi) {
   api.correlations.add(relatedConns)
   api.correlations.add(relatedAlerts)
 }
 
-export function deactivate(api: BrimApi) {
+export function deactivate(api: ZuiApi) {
   api.correlations.remove(relatedConns.id)
   api.correlations.remove(relatedAlerts.id)
 }

@@ -8,12 +8,12 @@ import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {createAndLoadFiles} from "src/app/commands/pools"
 import {useDispatch} from "src/app/core/state"
 import Tabs from "src/js/state/Tabs"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import {lakePath} from "src/app/router/utils/paths"
 
 const PoolsSection = () => {
   const dispatch = useDispatch()
-  const api = useBrimApi()
+  const api = useZuiApi()
   const [{isOver}, drop] = useFilesDrop({
     onDrop: (files) => {
       dispatch(Tabs.activateUrl(lakePath(api.current.lakeId)))

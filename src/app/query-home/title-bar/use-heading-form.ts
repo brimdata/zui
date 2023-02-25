@@ -1,7 +1,7 @@
 import {FormEvent} from "react"
 import {useSelector} from "react-redux"
 import * as queries from "src/app/commands/queries"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import Layout from "src/js/state/Layout"
 import {useActiveQuery} from "./context"
@@ -9,7 +9,7 @@ import {plusOne} from "./plus-one"
 
 export function useHeadingForm() {
   const active = useActiveQuery()
-  const api = useBrimApi()
+  const api = useZuiApi()
   const dispatch = useDispatch()
   const action = useSelector(Layout.getTitleFormAction)
 

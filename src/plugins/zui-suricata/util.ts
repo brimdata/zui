@@ -1,5 +1,5 @@
 import {zed} from "@brimdata/zealot"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 
 export function isSuricataAlert(value: zed.Value) {
   if (value instanceof zed.Record) {
@@ -16,7 +16,7 @@ export function findCid(value: zed.Record) {
   return value.has("community_id") ? value.get("community_id").toString() : null
 }
 
-export const whenSuricata = (api: BrimApi) => {
+export const whenSuricata = (api: ZuiApi) => {
   return (
     isSuricataAlert(api.current.value) &&
     findCid(api.current.value) &&

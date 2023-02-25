@@ -8,7 +8,7 @@ import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {valueContextMenu} from "src/app/menus/value-context-menu"
 import useSelect from "src/app/core/hooks/use-select"
 import {TableView, TableViewApi} from "src/zui-kit"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import {BareStringView} from "src/app/query-home/results/bare-string-view"
 import {PathView} from "src/app/query-home/results/path-view"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
@@ -18,7 +18,7 @@ import {zed} from "@brimdata/zealot"
 export function Table() {
   const {table, setTable} = useResultsContext()
   const ctx = useResultsPaneContext()
-  const api = useBrimApi()
+  const api = useZuiApi()
   const shape = ctx.firstShape
   const recordShape = zed.typeunder(shape) as zed.TypeRecord
   const values = useTableValues(recordShape, ctx.values)

@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import initGlobals from "src/js/initializers/initGlobals"
 import rootReducer from "src/js/state/stores/root-reducer"
 import {Action, State, Store} from "src/js/state/types"
@@ -13,7 +13,7 @@ export type TestStore = {
 /**
  * @deprecated Use import {setupStore} from "src/test/unit"
  */
-export default (api: BrimApi = new BrimApi()): TestStore => {
+export default (api: ZuiApi = new ZuiApi()): TestStore => {
   const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>

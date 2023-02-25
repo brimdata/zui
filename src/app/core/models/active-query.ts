@@ -1,11 +1,11 @@
 import {ZedAst} from "src/app/core/models/zed-ast"
-import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {QueryModel} from "src/js/models/query-model"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 
 export class ActiveQuery {
   constructor(
-    public session: BrimQuery, // the singleton for the tab
-    public query: BrimQuery | null, // the query from the url param
+    public session: QueryModel, // the singleton for the tab
+    public query: QueryModel | null, // the query from the url param
     public version: QueryVersion | null // the version from the url param
   ) {}
 
@@ -61,10 +61,10 @@ export class ActiveQuery {
   }
 
   toZed() {
-    return BrimQuery.versionToZed(this.version)
+    return QueryModel.versionToZed(this.version)
   }
 
   toAst() {
-    return new ZedAst(BrimQuery.versionToZed(this.version))
+    return new ZedAst(QueryModel.versionToZed(this.version))
   }
 }

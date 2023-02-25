@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux"
 import React, {useEffect, useRef, useState} from "react"
 
-import {BrimError} from "../errors/types"
+import {ErrorData} from "../errors/types"
 import Notice from "../state/Notice"
 import Current from "../state/Current"
 import LakeStatuses from "../state/LakeStatuses"
@@ -9,7 +9,7 @@ import {checkStatus} from "../flows/lake/checkStatus"
 import {useDispatch} from "src/app/core/state"
 
 type Props = {
-  error: BrimError
+  error: ErrorData
 }
 
 const BACKOFF = [16, 32, 64]

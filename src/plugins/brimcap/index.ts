@@ -1,9 +1,9 @@
 import BrimcapPlugin from "./brimcap-plugin"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 
 let brimcap: BrimcapPlugin
 
-export const activate = (api: BrimApi) => {
+export const activate = (api: ZuiApi) => {
   brimcap = new BrimcapPlugin(api)
   brimcap.init()
 }

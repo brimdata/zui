@@ -1,12 +1,12 @@
 import {Query} from "src/js/state/Queries/types"
 import {isEmpty, last} from "lodash"
-import {QueryPinInterface} from "../../../js/state/Editor/types"
+import {QueryPinInterface} from "../state/Editor/types"
 import {parseAst} from "@brimdata/zealot"
 import buildPin from "src/js/state/Editor/models/build-pin"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {QuerySource} from "src/js/api/queries/types"
 
-export class BrimQuery implements Query {
+export class QueryModel implements Query {
   id: string
   name: string
   description?: string
@@ -99,6 +99,6 @@ export class BrimQuery implements Query {
   }
 
   toString(): string {
-    return BrimQuery.versionToZed(this.current)
+    return QueryModel.versionToZed(this.current)
   }
 }
