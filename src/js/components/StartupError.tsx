@@ -83,7 +83,7 @@ export default function StartupError({error}: Props) {
     <Wrap>
       <WindowDragArea />
       <Content>
-        <Title>Zuis Failed to Start</Title>
+        <Title>Zui Failed to Start</Title>
         <Pre>{e}</Pre>
         <Actions>
           <StyledLink href="mailto:support@brimdata.io">
