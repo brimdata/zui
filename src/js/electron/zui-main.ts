@@ -20,7 +20,7 @@ import createSession, {Session} from "./session"
 import {getAppMeta, AppMeta} from "./meta"
 import {createMainStore} from "../state/stores/create-main-store"
 
-export class BrimMain {
+export class ZuiMain {
   public isQuitting = false
 
   static async boot(params: Partial<MainArgs> = {}) {
@@ -36,7 +36,7 @@ export class BrimMain {
       logs: args.lakeLogs,
       bin: zdeps.zed,
     })
-    return new BrimMain(lake, windows, store, session, args, appMeta)
+    return new ZuiMain(lake, windows, store, session, args, appMeta)
   }
 
   // Only call this from boot

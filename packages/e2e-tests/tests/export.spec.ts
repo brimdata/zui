@@ -38,7 +38,7 @@ test.describe("Export tests", () => {
     test(`Exporting in ${label} format succeeds`, async () => {
       const file = path.join(tempDir, `results.${label}`)
 
-      app.brim.evaluate(async ({dialog}, filePath) => {
+      app.zui.evaluate(async ({dialog}, filePath) => {
         dialog.showSaveDialog = () =>
           Promise.resolve({canceled: false, filePath})
       }, file)

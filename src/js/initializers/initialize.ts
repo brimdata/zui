@@ -1,4 +1,4 @@
-import BrimApi from "../api"
+import ZuiApi from "../api/zui-api"
 import initDebugGlobals from "./initDebugGlobals"
 import initDOM from "./initDOM"
 import initGlobals from "./initGlobals"
@@ -13,7 +13,7 @@ import {menus} from "src/core/menu"
 import {windowInitialized} from "../electron/ops/window-initialized-op"
 
 export default async function initialize() {
-  const api = new BrimApi()
+  const api = new ZuiApi()
   const store = await initStore(api)
   api.init(store.dispatch, store.getState)
 

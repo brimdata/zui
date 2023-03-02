@@ -1,6 +1,6 @@
 import React from "react"
-import BrimToaster from "src/js/components/BrimToaster"
-import BrimTooltip from "src/js/components/BrimTooltip"
+import Toaster from "src/js/components/Toaster"
+import Tooltip from "src/js/components/Tooltip"
 import ErrorNotice from "src/js/components/ErrorNotice"
 import HTMLContextMenu from "src/js/components/HTMLContextMenu"
 import {Modals} from "src/js/components/Modals"
@@ -13,8 +13,8 @@ export function AppModals() {
       <Preferences />
       <Modals />
       <HTMLContextMenu />
-      <BrimToaster />
-      <BrimTooltip />
+      <Toaster />
+      <Tooltip />
     </>
   )
 }

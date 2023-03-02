@@ -6,9 +6,9 @@ import got from "got"
 import get from "lodash/get"
 import semver from "semver/preload"
 import open from "../lib/open"
-import {BrimMain} from "./brim"
+import {ZuiMain} from "./zui-main"
 import links from "src/app/core/links"
-import brimPackage from "../../../package.json"
+import pkg from "../../../package.json"
 
 const getFeedURLForPlatform = (repo, platform) => {
   return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
@@ -32,7 +32,7 @@ export const getLatestVersion = async (repo: string): Promise<string> => {
   return latestVersion
 }
 
-const autoUpdateLinux = async (main: BrimMain) => {
+const autoUpdateLinux = async (main: ZuiMain) => {
   const latestVersion = await getLatestVersion(main.appMeta.repo)
 
   // up to date
@@ -48,14 +48,14 @@ const autoUpdateLinux = async (main: BrimMain) => {
 
   dialog.showMessageBox(dialogOpts).then((returnValue) => {
     const navUrl =
-      brimPackage.name == "zui-insiders"
-        ? brimPackage.repository + "/releases/latest"
+      pkg.name == "zui-insiders"
+        ? pkg.repository + "/releases/latest"
         : links.ZUI_DOWNLOAD
     if (returnValue.response === 0) open(navUrl)
   })
 }
 
-export async function setupAutoUpdater(main: BrimMain) {
+export async function setupAutoUpdater(main: ZuiMain) {
   if (env.isLinux) {
     setUpdateRepeater(() => {
       autoUpdateLinux(main).catch((err) => log.error(err))

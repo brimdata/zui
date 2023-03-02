@@ -3,12 +3,12 @@ import React from "react"
 import {main} from "src/js/electron/run-main/run-main"
 import initialize from "src/js/initializers/initialize"
 import fsExtra from "fs-extra"
-import {BrimProvider} from "src/app/core/context"
+import {AppProvider} from "src/app/core/context"
 import {getPort} from "./port-service"
 import {waitFor} from "@testing-library/react"
 import {Store} from "src/js/state/types"
-import BrimApi from "src/js/api"
-import {BrimMain} from "src/js/electron/brim"
+import ZuiApi from "src/js/api/zui-api"
+import {ZuiMain} from "src/js/electron/zui-main"
 
 const defaults = () => ({
   page: "search",
@@ -23,18 +23,18 @@ export function onPage(name: string) {
 
 function createWrapper(
   store: Store,
-  api: BrimApi
+  api: ZuiApi
 ): React.ComponentType<React.PropsWithChildren<any>> {
   return function Wrapper({children}) {
     return (
-      <BrimProvider store={store} api={api}>
+      <AppProvider store={store} api={api}>
         {children}
-      </BrimProvider>
+      </AppProvider>
     )
   }
 }
 
-export async function bootBrim(name: string, args: Partial<BootArgs> = {}) {
+export async function boot(name: string, args: Partial<BootArgs> = {}) {
   args = {...defaults(), ...args}
   const lakeRoot = `./run/system/${name}/root`
   const lakeLogs = `./run/system/${name}/logs`
@@ -52,7 +52,7 @@ export async function bootBrim(name: string, args: Partial<BootArgs> = {}) {
     releaseNotes: false,
     autoUpdater: false,
     singleInstance: false,
-  })) as BrimMain
+  })) as ZuiMain
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
     timeout: 20_000,
   })

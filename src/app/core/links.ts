@@ -1,6 +1,6 @@
-import * as brimPackage from "../../../package.json"
+import * as pkg from "../../../package.json"
 
-const currentZedTag = brimPackage.dependencies.zed.split("#")[1] || "main"
+const currentZedTag = pkg.dependencies.zed.split("#")[1] || "main"
 const zedDocsTag = currentZedTag.startsWith("v") ? currentZedTag : "next"
 
 export default {

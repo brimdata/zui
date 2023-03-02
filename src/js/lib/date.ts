@@ -1,7 +1,7 @@
 import chrono from "chrono-node"
 import moment from "moment-timezone"
-import relTime from "../brim/relTime"
-import time from "../brim/time"
+import relTime from "../models/relTime"
+import time from "../models/time"
 
 const ISO_REGEX =
   /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/

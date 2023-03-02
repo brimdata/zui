@@ -1,20 +1,22 @@
 import React from "react"
-import ReactDOM from "react-dom"
-
-import lib from "../lib"
+import ReactTooltip from "react-tooltip"
+import classNames from "classnames"
 
 type Props = {
-  style: Object
-  children: any
+  children?: any
+  className?: string
+  id?: string
 }
 
-export default class Tooltip extends React.Component<Props> {
-  render() {
-    return ReactDOM.createPortal(
-      <div className="tool-tip" style={this.props.style}>
-        {this.props.children}
-      </div>,
-      lib.doc.id("tooltip-root")
-    )
-  }
+export default function Tooltip({className, children, id, ...rest}: Props) {
+  return (
+    <ReactTooltip
+      {...rest}
+      id={id}
+      insecure={false}
+      className={classNames("tooltip", className)}
+    >
+      {children}
+    </ReactTooltip>
+  )
 }

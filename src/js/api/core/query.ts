@@ -1,6 +1,6 @@
 import {Collector, ResultStream} from "@brimdata/zealot"
 import {Thunk} from "src/js/state/types"
-import BrimApi from ".."
+import ZuiApi from "../zui-api"
 
 export type QueryOptions = {
   id?: string
@@ -26,7 +26,7 @@ export function query(
   }
 }
 
-function createAbortable(api: BrimApi, tab?: string, tag?: string) {
+function createAbortable(api: ZuiApi, tab?: string, tag?: string) {
   api.abortables.abort({tab, tag})
   const ctl = new AbortController()
   const id = api.abortables.add({abort: () => ctl.abort(), tab, tag})

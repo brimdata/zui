@@ -1,4 +1,4 @@
-export type BrimError = {
+export type ErrorData = {
   type: string
   message: string
   details?: string[]

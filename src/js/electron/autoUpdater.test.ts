@@ -15,7 +15,7 @@ global.localStorage = {
 
 const server = setupServer(
   rest.get(
-    "https://update.electronjs.org/brimdata/brim/darwin-x64/0.0.0",
+    "https://update.electronjs.org/brimdata/zui/darwin-x64/0.0.0",
     (req, res, ctx) => {
       return res(ctx.status(200), ctx.json({name: "0.0.1"}))
     }
@@ -27,6 +27,6 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
 test("get latest version", async () => {
-  const version = await getLatestVersion("brimdata/brim")
+  const version = await getLatestVersion("brimdata/zui")
   expect(version).toBe("0.0.1")
 })

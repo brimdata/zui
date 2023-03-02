@@ -3,14 +3,14 @@ import {SuricataEvent} from "./SuricataEvent"
 import {UnknownEvent} from "./UnknownEvent"
 import {ZeekEvent} from "./ZeekEvent"
 
-export interface BrimEventInterface {
+export interface SecurityEventInterface {
   getType: () => string
   getTime: () => Date
   getRecord: () => zed.Record
   getEndTime: () => Date | null
 }
 
-export class BrimEvent {
+export class SecurityEvent {
   static build(r: zed.Record) {
     if (r.has("_path", zed.TypeString) && r.has("ts", zed.TypeTime)) {
       return new ZeekEvent(r)

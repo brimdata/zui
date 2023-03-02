@@ -2,15 +2,15 @@ import useContentRect from "src/app/core/hooks/useContentRect"
 import {scaleTime, extent} from "d3"
 import React, {memo, useEffect, useState} from "react"
 import styled from "styled-components"
-import {BrimEventInterface} from "./models/BrimEvent"
+import {SecurityEventInterface} from "./models/security-event"
 import EventTag from "./EventTag"
-import brim from "src/js/brim"
 import {useDispatch} from "src/app/core/state"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import useResizeEffect from "src/app/core/hooks/useResizeEffect"
 import ReactTooltip from "react-tooltip"
 import {isEqual} from "lodash"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
+import time from "src/js/models/time"
 
 const Lane = styled.div`
   position: relative;
@@ -59,7 +59,7 @@ const Tag = styled(EventTag)`
 `
 
 type Props = {
-  events: BrimEventInterface[]
+  events: SecurityEventInterface[]
   current?: number
 }
 
@@ -108,7 +108,7 @@ export default memo(function EventTimeline({events, current}: Props) {
     }
   }
 
-  const onClick = (event: BrimEventInterface) => {
+  const onClick = (event: SecurityEventInterface) => {
     dispatch(viewLogDetail(event.getRecord()))
   }
 
@@ -133,7 +133,7 @@ export default memo(function EventTimeline({events, current}: Props) {
                 ReactTooltip.hide()
                 onClick(e)
               }}
-              data-tip={brim.time(e.getTime()).format()}
+              data-tip={time(e.getTime()).format()}
               data-place="left"
               data-effect="solid"
               data-delay-show={0}

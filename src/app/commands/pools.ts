@@ -1,8 +1,8 @@
 import {CreatePoolOpts, LoadFormat} from "packages/zealot/src"
-import detectFileTypes from "src/js/brim/ingest/detectFileTypes"
-import {derivePoolName} from "src/js/brim/ingest/getParams"
+import detectFileTypes from "src/js/models/ingest/detectFileTypes"
+import {derivePoolName} from "src/js/models/ingest/getParams"
 import errors from "src/js/errors"
-import {BrimError} from "src/js/errors/types"
+import {ErrorData} from "src/js/errors/types"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import {PoolName} from "../features/sidebar/pools-section/pool-name"
 import {lakePoolPath} from "../router/utils/paths"
@@ -133,7 +133,7 @@ export const loadFiles = createCommand(
   }
 )
 
-function parseError(e: Error): BrimError {
+function parseError(e: Error): ErrorData {
   if (/(Failed to fetch)|(network error)/.test(e && e.message)) {
     return errors.importInterrupt()
   } else if (/format detection error/i.test(e && e.message)) {

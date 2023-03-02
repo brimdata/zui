@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from "react"
 import {toast} from "react-hot-toast"
 import {useDispatch} from "react-redux"
 import styled from "styled-components"
-import {BrimLake} from "../brim"
 import {AppDispatch} from "../state/types"
 import Lakes from "../state/Lakes"
 import MacSpinner from "./MacSpinner"
@@ -10,6 +9,7 @@ import {isString} from "lodash"
 import {updateStatus} from "../flows/lake/update-status"
 import {login} from "../flows/lake/login"
 import ToolbarButton from "src/app/query-home/toolbar/actions/button"
+import {LakeModel} from "../models/lake"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -36,7 +36,7 @@ const StyledButton = styled(ToolbarButton)`
 `
 
 type Props = {
-  lake: BrimLake
+  lake: LakeModel
 }
 
 const Login = ({lake}: Props) => {

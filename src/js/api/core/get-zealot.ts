@@ -1,6 +1,6 @@
 import {Client} from "@brimdata/zealot"
 import {validateToken} from "src/js/auth0/utils"
-import {BrimLake} from "src/js/brim"
+import {LakeModel} from "src/js/models/lake"
 import {getAuthCredentials} from "src/js/flows/lake/getAuthCredentials"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
@@ -8,7 +8,7 @@ import LakeStatuses from "src/js/state/LakeStatuses"
 import {Thunk} from "src/js/state/types"
 
 export const getZealot =
-  (lake?: BrimLake, env?: "node" | "web"): Thunk<Promise<Client>> =>
+  (lake?: LakeModel, env?: "node" | "web"): Thunk<Promise<Client>> =>
   async (dispatch, getState) => {
     const l = lake || Current.mustGetLake(getState())
     const auth = await dispatch(getAuthToken(l))
@@ -16,7 +16,7 @@ export const getZealot =
   }
 
 const getAuthToken =
-  (lake: BrimLake): Thunk<Promise<string>> =>
+  (lake: LakeModel): Thunk<Promise<string>> =>
   async (dispatch) => {
     if (!lake.authType) return null
     if (lake.authType === "none") return null

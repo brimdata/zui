@@ -1,4 +1,4 @@
-import brim from "./"
+import relTime from "./relTime"
 
 const validResults = {
   "now-10m": {op: "-", amount: 10, unit: "m"},
@@ -13,7 +13,7 @@ const validResults = {
 
 for (const [string, expectedAst] of Object.entries(validResults)) {
   test("toAst => " + string, () => {
-    const ast = brim.relTime(string).toAst()
+    const ast = relTime(string).toAst()
 
     expect(ast).toEqual(expectedAst)
   })
@@ -22,7 +22,7 @@ for (const [string, expectedAst] of Object.entries(validResults)) {
 test("case insensitivity", () => {
   const a = ["now", "NOW", "NoW", "   Now", "now   ", " now "]
   a.forEach((string) => {
-    const ast = brim.relTime(string).toAst()
+    const ast = relTime(string).toAst()
 
     expect(ast).toEqual({
       op: null,
@@ -33,17 +33,17 @@ test("case insensitivity", () => {
 })
 
 test("bad result", () => {
-  expect(() => brim.relTime("blah blah").toTs()).toThrow(
+  expect(() => relTime("blah blah").toTs()).toThrow(
     "Invalid relTime expression: blah blah"
   )
 })
 
 test("isValid when false", () => {
-  expect(brim.relTime("nope!").isValid()).toBe(false)
+  expect(relTime("nope!").isValid()).toBe(false)
 })
 
 test("isValid when true", () => {
   for (const string in validResults) {
-    expect(brim.relTime(string).isValid()).toBe(true)
+    expect(relTime(string).isValid()).toBe(true)
   }
 })

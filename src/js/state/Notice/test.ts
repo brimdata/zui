@@ -20,23 +20,23 @@ test("init state", () => {
 test("set an app error", () => {
   const e = new AppError()
   const state = store.dispatchAll([notice.set(e)])
-  const brimError = {
+  const error = {
     type: "AppError",
     message: "Unknown error",
     details: [],
   }
-  expect(notice.getError(state)).toEqual(brimError)
+  expect(notice.getError(state)).toEqual(error)
   expect(notice.getVisible(state)).toBe(true)
 })
 
-test("set a brim error", () => {
-  const brimError = {
+test("set a error", () => {
+  const error = {
     type: "IngestError",
     message: "Pcap is too large to ingest",
     details: ["sort limit reached (10)"],
   }
-  const state = store.dispatchAll([notice.set(brimError)])
-  expect(notice.getError(state)).toEqual(brimError)
+  const state = store.dispatchAll([notice.set(error)])
+  expect(notice.getError(state)).toEqual(error)
   expect(notice.getVisible(state)).toBe(true)
 })
 

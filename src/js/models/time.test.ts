@@ -1,18 +1,18 @@
-import brim from "./"
+import time from "./time"
 
 test("date to ts", () => {
-  const ts = brim.time(new Date(1)).toTs()
+  const ts = time(new Date(1)).toTs()
 
   expect(ts).toEqual({
     ns: 1000000,
     sec: 0,
   })
 
-  expect(brim.time(ts).toDate()).toEqual(new Date(1))
+  expect(time(ts).toDate()).toEqual(new Date(1))
 })
 
 test("add", () => {
-  const ts = brim.time(new Date(1)).add(1, "ms").toTs()
+  const ts = time(new Date(1)).add(1, "ms").toTs()
 
   expect(ts).toEqual({
     ns: 2000000,
@@ -21,7 +21,7 @@ test("add", () => {
 })
 
 test("subtract", () => {
-  const ts = brim.time(new Date(1)).subtract(1, "second").toTs()
+  const ts = time(new Date(1)).subtract(1, "second").toTs()
 
   expect(ts).toEqual({
     ns: 1000000,
@@ -30,7 +30,7 @@ test("subtract", () => {
 })
 
 test("relative time", () => {
-  const ts = brim.time("now - 1y").toTs()
+  const ts = time("now - 1y").toTs()
 
   expect(ts).toEqual({
     ns: expect.any(Number),

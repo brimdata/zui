@@ -2,7 +2,7 @@ import * as d3 from "d3"
 
 import {Pen} from "../types"
 import {innerHeight, innerWidth} from "../dimens"
-import brim from "src/js/brim"
+import time from "src/js/models/time"
 
 export default function (): Pen {
   let chartG
@@ -43,7 +43,7 @@ export default function (): Pen {
       const ts = chart.data.points[0].ts
       const {number, unit} = chart.data.interval
       const a = chart.xScale(ts)
-      const b = chart.xScale(brim.time(ts).add(number, unit).toDate())
+      const b = chart.xScale(time(ts).add(number, unit).toDate())
       width = Math.max(Math.floor(b - a), 1)
     }
 

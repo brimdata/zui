@@ -6,15 +6,15 @@ import {fireEvent} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {dialog} from "electron"
 import React from "react"
-import BrimApi from "src/js/api"
-import {BrimMain} from "src/js/electron/brim"
+import ZuiApi from "src/js/api/zui-api"
+import {ZuiMain} from "src/js/electron/zui-main"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import PluginManager from "src/js/initializers/pluginManager"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
 import data from "src/test/shared/data"
 import {setupServer} from "msw/node"
-import {BootArgs, bootBrim} from "./boot-brim"
+import {BootArgs, boot} from "./boot"
 import Tabs from "src/js/state/Tabs"
 import {createAndLoadFiles} from "src/app/commands/pools"
 
@@ -23,8 +23,8 @@ jest.setTimeout(20_000)
 export class SystemTest {
   store: Store
   plugins: PluginManager
-  main: BrimMain
-  api: BrimApi
+  main: ZuiMain
+  api: ZuiApi
   wrapper: React.ComponentType<React.PropsWithChildren<any>>
   click = userEvent.click
   rightClick = fireEvent.contextMenu
@@ -34,8 +34,8 @@ export class SystemTest {
   assign(args: {
     store: Store
     plugins: PluginManager
-    main: BrimMain
-    api: BrimApi
+    main: ZuiMain
+    api: ZuiApi
     wrapper: React.ComponentType<React.PropsWithChildren<any>>
   }) {
     this.store = args.store
@@ -56,7 +56,7 @@ export class SystemTest {
           )
         },
       })
-      this.assign(await bootBrim(name, opts))
+      this.assign(await boot(name, opts))
       this.store.dispatch(Tabs.create())
       this.navTo(`/lakes/${defaultLake().id}`)
     })

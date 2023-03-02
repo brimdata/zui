@@ -1,9 +1,9 @@
 import log from "electron-log"
 import path from "path"
-import {BrimMain} from "../brim"
+import {ZuiMain} from "../zui-main"
 import {requireDir} from "../utils/require-dir"
 
-export async function runInitializers(main: BrimMain) {
+export async function runInitializers(main: ZuiMain) {
   await requireDir({
     dir: path.join(__dirname, "../initializers"),
     exclude: /\.test/,

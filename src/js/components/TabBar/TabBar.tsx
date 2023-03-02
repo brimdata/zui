@@ -4,7 +4,6 @@ import {useSelector} from "react-redux"
 import {animated} from "react-spring"
 import Lakes from "src/js/state/Lakes"
 import {PoolsState} from "src/js/state/Pools/types"
-import brim from "../../brim"
 import lib from "../../lib"
 import Pools from "../../state/Pools"
 import Tabs from "../../state/Tabs"
@@ -18,6 +17,7 @@ import styled from "styled-components"
 import Appearance from "src/js/state/Appearance"
 import env from "src/app/core/env"
 import SidebarToggleButton from "src/app/features/sidebar/sidebar-toggle-button"
+import tab from "src/js/models/tab"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200
@@ -79,7 +79,7 @@ export default function TabBar() {
       )}
       <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
         {ids.map((id: string) => {
-          const tab = brim.tab(id, lakes, pools, queryIdNameMap)
+          const tabModel = tab(id, lakes, pools, queryIdNameMap)
           return (
             <AnimatedSearchTab
               {...layout.dragBinding({
@@ -90,8 +90,8 @@ export default function TabBar() {
                 onChange: (indices) => ctl.onTabMove(indices),
               })}
               key={id}
-              title={tab.title()}
-              icon={tab.icon()}
+              title={tabModel.title()}
+              icon={tabModel.icon()}
               style={layout.getStyle(id)}
               removeTab={(e) => ctl.onRemoveClick(e, id)}
               active={id === ctl.activeId}

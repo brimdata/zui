@@ -1,5 +1,5 @@
 import {zed} from "packages/zealot/src"
-import brim from "src/js/brim"
+import program from "src/js/models/program"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -84,8 +84,7 @@ export const pivotToValues = createCommand(
     // So this only works if the count() by field is in the editor, not in a pin.
     const record = field.rootRecord
     api.current.query.toZed()
-    const newProgram = brim
-      .program(api.editor.value)
+    const newProgram = program(api.editor.value)
       .drillDown(record as zed.Record)
       .string()
 

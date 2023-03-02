@@ -2,11 +2,11 @@ import {createSelector} from "@reduxjs/toolkit"
 import * as d3 from "d3"
 import {useMemo} from "react"
 import {useSelector} from "react-redux"
-import brim from "src/js/brim"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {State} from "src/js/state/types"
 import {zed} from "@brimdata/zealot"
 import {isString} from "lodash"
+import time from "src/js/models/time"
 
 /**
  * Preferences object provided by the user.
@@ -49,7 +49,7 @@ export function formatValue(
     return formatInt(Number(data.toInt()), config)
   }
   if (zed.isTime(data)) {
-    return brim.time(data.toDate()).format(config.timeFormat, config.timeZone)
+    return time(data.toDate()).format(config.timeFormat, config.timeZone)
   }
   if (zed.isDuration(data)) {
     return replaceDecimal(data.toString(), config.decimal)

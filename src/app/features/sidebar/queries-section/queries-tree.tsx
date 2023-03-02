@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from "react"
 import {Tree, TreeApi} from "react-arborist"
 import {useSelector} from "react-redux"
 import {deleteQueries} from "src/app/commands/delete-queries"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import {queryTreeContextMenu} from "src/app/menus/query-tree-context-menu"
 import Current from "src/js/state/Current"
@@ -54,7 +54,7 @@ function QueryTree(props: {
   type: "local" | "remote"
 }) {
   const dispatch = useDispatch()
-  const api = useBrimApi()
+  const api = useZuiApi()
   const id = useSelector(Current.getQueryId)
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()

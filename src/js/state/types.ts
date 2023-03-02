@@ -1,6 +1,6 @@
 import {Action as ReduxAction, Store as ReduxStore} from "redux"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
-import BrimApi from "../api"
+import ZuiApi from "../api/zui-api"
 import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
 import {ErrorsState} from "./Errors/types"
@@ -21,7 +21,7 @@ import {QueryVersionsState} from "./QueryVersions/types"
 import {SessionHistoriesState} from "./SessionHistories/types"
 
 export type ThunkExtraArg = {
-  api: BrimApi
+  api: ZuiApi
 }
 
 export type Action = ReduxAction<string>

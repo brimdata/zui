@@ -12,7 +12,7 @@ import env from "../../../src/app/core/env"
 import {itestDir} from "./env"
 
 export default class TestApp {
-  brim: ElectronApplication
+  zui: ElectronApplication
   zealot: Client
   mainWin: Page
   testNdx = 1
@@ -41,10 +41,10 @@ export default class TestApp {
 
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin
-    this.brim = await electron.launch(launchOpts)
-    await waitForTrue(() => this.brim.windows().length === 2)
+    this.zui = await electron.launch(launchOpts)
+    await waitForTrue(() => this.zui.windows().length === 2)
     await Promise.all(
-      this.brim.windows().map((page) =>
+      this.zui.windows().map((page) =>
         page.waitForFunction(() => {
           // @ts-ignore
           return global.firstMount
@@ -121,11 +121,11 @@ export default class TestApp {
   }
 
   async shutdown() {
-    await this.brim.close()
+    await this.zui.close()
   }
 
   async getWindowByTitle(title: string): Promise<Page> {
-    const wins = await this.brim.windows()
+    const wins = await this.zui.windows()
     const winTitles = await Promise.all(wins.map((w) => w.title()))
     return wins[winTitles.findIndex((wTitle) => wTitle === title)]
   }
@@ -140,8 +140,8 @@ export default class TestApp {
 }
 
 const getAppInfo = () => {
-  const macInstallPath = "/Applications/Brim.app/Contents/MacOS/Brim"
-  const linuxInstallPath = "/usr/bin/brim"
+  const macInstallPath = "/Applications/Zui.app/Contents/MacOS/Zui"
+  const linuxInstallPath = "/usr/bin/zui"
   const packagedEntryPoint = "app.asar/app/dist/js/electron/main.js"
 
   if (env.isCI && env.isMac && existsSync(macInstallPath)) {

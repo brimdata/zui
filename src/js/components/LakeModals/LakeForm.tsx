@@ -3,8 +3,7 @@ import {isEmpty} from "lodash"
 import React, {useEffect, useRef, useState} from "react"
 import {useDispatch} from "react-redux"
 import styled from "styled-components"
-import brim, {BrimLake} from "../../brim"
-import {FormConfig} from "../../brim/form"
+import form, {FormConfig} from "../../models/form"
 import {buildAndAuthenticateLake} from "../../flows/lake/buildAndAuthenticateLake"
 import {AppDispatch} from "../../state/types"
 import {Lake} from "../../state/Lakes/types"
@@ -16,6 +15,7 @@ import useEventListener from "../hooks/useEventListener"
 import {isDefaultLake} from "../../initializers/initLakeParams"
 import {SubmitButton} from "src/components/submit-button"
 import {InputButton} from "src/components/input-button"
+import {LakeModel} from "src/js/models/lake"
 
 const SignInForm = styled.div`
   margin: 0 auto 24px;
@@ -76,7 +76,7 @@ const StyledTextInput = styled(TextInput)`
 `
 
 type Props = {
-  lake?: BrimLake
+  lake?: LakeModel
   onClose: () => void
 }
 
@@ -141,15 +141,15 @@ const LakeForm = ({onClose, lake}: Props) => {
     if (!formRef) return
     setIsSubmitting(true)
 
-    const form = brim.form(formRef, config)
+    const f = form(formRef, config)
 
-    if (!(await form.isValid())) {
-      setErrors(form.getErrors)
+    if (!(await f.isValid())) {
+      setErrors(f.getErrors)
       setIsSubmitting(false)
       return
     }
 
-    const {host, name} = form.getFields().reduce((obj, field) => {
+    const {host, name} = f.getFields().reduce((obj, field) => {
       obj[field.name] = field.value
       return obj
     }, {})

@@ -1,5 +1,5 @@
 /*
-useStoreExport listens to redux store state changes and 'exports' that data via brim-commands
+useStoreExport listens to redux store state changes and 'exports' that data via zui-commands
  */
 import {useEffect} from "react"
 import {useSelector} from "react-redux"

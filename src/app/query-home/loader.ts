@@ -3,7 +3,7 @@ import Editor from "src/js/state/Editor"
 import {syncPool} from "../core/pools/sync-pool"
 import Results from "src/js/state/Results"
 import {startTransition} from "react"
-import {BrimQuery} from "./utils/brim-query"
+import {QueryModel} from "../../js/models/query-model"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
 import Notice from "src/js/state/Notice"
 import Tabs from "src/js/state/Tabs"
@@ -43,7 +43,7 @@ function fetchData() {
 
     startTransition(() => {
       if (version) {
-        dispatch(Results.fetchFirstPage(BrimQuery.versionToZed(version)))
+        dispatch(Results.fetchFirstPage(QueryModel.versionToZed(version)))
         dispatch(runHistogramQuery())
       }
     })

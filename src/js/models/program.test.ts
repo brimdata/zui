@@ -1,45 +1,42 @@
 import {createField, createRecord} from "src/test/shared/factories/zed-factory"
 import {joinParts, parallelizeProcs, splitParts} from "../lib/Program"
-import brim from "./"
+import program from "./program"
 
 describe("excluding and including", () => {
   const field = createField("uid", "123")
 
   test("excluding a field", () => {
-    const program = brim.program('_path=="weird"').exclude(field).string()
+    const script = program('_path=="weird"').exclude(field).string()
 
-    expect(program).toEqual('_path=="weird" | uid!="123"')
+    expect(script).toEqual('_path=="weird" | uid!="123"')
   })
 
   test("excluding a field with a pipe", () => {
-    const program = brim
-      .program(
-        'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
-      )
+    const script = program(
+      'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort'
+    )
       .exclude(createField("source", "HTTP"))
       .string()
 
-    expect(program).toEqual(
+    expect(script).toEqual(
       'tx_hosts=2606:4700:30::681c:135e fuid!="F2nyqx46YRDAYe4c73" | sort | source!="HTTP"'
     )
   })
 
   test("excluding a field with two pipes", () => {
-    const program = brim
-      .program('_path=="weird" | sort | filter 1')
+    const script = program('_path=="weird" | sort | filter 1')
       .exclude(field)
       .string()
 
-    expect(program).toEqual('_path=="weird" | sort | filter 1 | uid!="123"')
+    expect(script).toEqual('_path=="weird" | sort | filter 1 | uid!="123"')
   })
 
   test("including a field with two pipes", () => {
-    const program = brim
-      .program('_path=="weird" | sort | filter 1')
+    const script = program('_path=="weird" | sort | filter 1')
       .include(field)
       .string()
 
-    expect(program).toEqual('_path=="weird" | sort | filter 1 | uid=="123"')
+    expect(script).toEqual('_path=="weird" | sort | filter 1 | uid=="123"')
   })
 })
 
@@ -53,72 +50,69 @@ describe("drill down", () => {
   })
 
   test("when there is no leading filter", () => {
-    const program = brim
-      .program('count() by this["i d"]["orig h"]')
+    const script = program('count() by this["i d"]["orig h"]')
       .drillDown(result)
       .string()
 
-    expect(program).toBe('this["i d"]["orig h"]==192.168.0.54')
+    expect(script).toBe('this["i d"]["orig h"]==192.168.0.54')
   })
 
   test("when there is a sort on there", () => {
-    const program = brim
-      .program('name=="james" | count() by proto | sort -r count')
+    const script = program('name=="james" | count() by proto | sort -r count')
       .drillDown(result)
       .string()
 
-    expect(program).toBe('name=="james" | proto=="udp"')
+    expect(script).toBe('name=="james" | proto=="udp"')
   })
 
   test("when there is a grep with a star", () => {
-    const program = brim
-      .program('grep(/(*|Elm)/) Category=="Furnishings" | count() by proto')
+    const script = program(
+      'grep(/(*|Elm)/) Category=="Furnishings" | count() by proto'
+    )
       .drillDown(result)
       .string()
 
-    expect(program).toBe(
+    expect(script).toBe(
       'grep(/(*|Elm)/) Category=="Furnishings" | proto=="udp"'
     )
   })
 
   test("combines keys in the group by proc", () => {
-    const program = brim
-      .program('_path=="dns" | count() by id.orig_h, proto, query | sort -r')
+    const script = program(
+      '_path=="dns" | count() by id.orig_h, proto, query | sort -r'
+    )
       .drillDown(result)
       .string()
 
-    expect(program).toBe(
+    expect(script).toBe(
       '_path=="dns" | id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
     )
   })
 
   test("removes *", () => {
-    const program = brim
-      .program("* | count() by id.orig_h")
+    const script = program("* | count() by id.orig_h")
       .drillDown(result)
       .string()
 
-    expect(program).toBe("id.orig_h==192.168.0.54")
+    expect(script).toBe("id.orig_h==192.168.0.54")
   })
 
   test("easy peasy", () => {
-    const program = brim
-      .program("names james | count() by proto")
+    const script = program("names james | count() by proto")
       .drillDown(result)
       .string()
 
-    expect(program).toBe('names james | proto=="udp"')
+    expect(script).toBe('names james | proto=="udp"')
   })
 
   test("count by and filter the same", () => {
     const result = createRecord({md5: "123", count: 1})
 
-    const program = brim
-      .program('md5=="123" | count() by md5 | sort -r | head 5')
+    const script = program('md5=="123" | count() by md5 | sort -r | head 5')
       .drillDown(result)
       .string()
 
-    expect(program).toEqual('md5=="123"')
+    expect(script).toEqual('md5=="123"')
   })
 
   test("filter query", () => {
@@ -127,14 +121,13 @@ describe("drill down", () => {
       count: 21,
     })
 
-    const program = brim
-      .program(
-        '_path=="files" filename!="-" | count() by md5,filename | count() by md5 | sort -r | filter count > 1'
-      )
+    const script = program(
+      '_path=="files" filename!="-" | count() by md5,filename | count() by md5 | sort -r | filter count > 1'
+    )
       .drillDown(result)
       .string()
 
-    expect(program).toEqual(
+    expect(script).toEqual(
       '_path=="files" filename!="-" | md5=="9f51ef98c42df4430a978e4157c43dd5"'
     )
   })
@@ -143,115 +136,106 @@ describe("drill down", () => {
 describe("count by", () => {
   test("empty program", () => {
     const field = createField("_path", "heyo")
-    const program = brim.program().countBy(field.path).string()
+    const script = program().countBy(field.path).string()
 
-    expect(program).toBe("count() by _path")
+    expect(script).toBe("count() by _path")
   })
 
   test("append a count to an existing query", () => {
     const field = createField("query", "heyo")
-    const program = brim.program("dns").countBy(field.path).string()
+    const script = program("dns").countBy(field.path).string()
 
-    expect(program).toBe("dns | count() by query")
+    expect(script).toBe("dns | count() by query")
   })
 })
 
 describe("sort by", () => {
   test("sort asc does not yet exist", () => {
-    const program = brim
-      .program("* | count() by _path")
+    const script = program("* | count() by _path")
       .sortBy("count", "asc")
       .string()
 
-    expect(program).toBe("* | count() by _path | sort count")
+    expect(script).toBe("* | count() by _path | sort count")
   })
 
   test("sort desc does not yet exist", () => {
-    const program = brim
-      .program("* | count() by _path")
+    const script = program("* | count() by _path")
       .sortBy("count", "desc")
       .string()
 
-    expect(program).toBe("* | count() by _path | sort -r count")
+    expect(script).toBe("* | count() by _path | sort -r count")
   })
 
   test("sort asc when one already exists", () => {
-    const program = brim
-      .program("* | sort name")
-      .sortBy("count", "asc")
-      .string()
+    const script = program("* | sort name").sortBy("count", "asc").string()
 
-    expect(program).toBe("* | sort count")
+    expect(script).toBe("* | sort count")
   })
 
   test("sort desc when one already exists", () => {
-    const program = brim
-      .program("* | sort name")
-      .sortBy("count", "desc")
-      .string()
+    const script = program("* | sort name").sortBy("count", "desc").string()
 
-    expect(program).toBe("* | sort -r count")
+    expect(script).toBe("* | sort -r count")
   })
 })
 
 describe("#hasAnalytics()", () => {
   test("head proc does not have analytics", () => {
-    expect(brim.program("* | head 2").hasAnalytics()).toBe(false)
+    expect(program("* | head 2").hasAnalytics()).toBe(false)
   })
 
   test("sort proc does not have analytics", () => {
-    expect(brim.program("* | sort -r id.resp_p").hasAnalytics()).toBe(false)
+    expect(program("* | sort -r id.resp_p").hasAnalytics()).toBe(false)
   })
 
   test("every proc does contain analytics", () => {
-    expect(brim.program("* | count() by every(1h)").hasAnalytics()).toBe(true)
+    expect(program("* | count() by every(1h)").hasAnalytics()).toBe(true)
   })
 
   test("parallel procs when one does have analytics", () => {
     expect(
-      brim
-        .program("* | fork ( => count() by every(1h) => count() by id.resp_h )")
-        .hasAnalytics()
+      program(
+        "* | fork ( => count() by every(1h) => count() by id.resp_h )"
+      ).hasAnalytics()
     ).toBe(true)
   })
 
   test("parallel procs when both do not have analytics", () => {
-    expect(brim.program("* | head 100; head 200").hasAnalytics()).toBe(false)
+    expect(program("* | head 100; head 200").hasAnalytics()).toBe(false)
   })
 
   test("when there are no procs", () => {
-    expect(brim.program("*").hasAnalytics()).toBe(false)
+    expect(program("*").hasAnalytics()).toBe(false)
   })
 
   test("for a crappy string", () => {
-    expect(brim.program("-r").hasAnalytics()).toBe(false)
+    expect(program("-r").hasAnalytics()).toBe(false)
   })
 
   test("for sequential proc", () => {
     expect(
-      brim.program("*google* | head 3 | sort -r id.resp_p").hasAnalytics()
+      program("*google* | head 3 | sort -r id.resp_p").hasAnalytics()
     ).toBe(false)
   })
 
   test("for cut proc", () => {
     expect(
-      brim
-        .program("* | fork ( => cut uid, _path => cut uid ) | tail 1")
-        .hasAnalytics()
+      program(
+        "* | fork ( => cut uid, _path => cut uid ) | tail 1"
+      ).hasAnalytics()
     ).toBe(false)
   })
 
   test("for filter proc", () => {
-    expect(brim.program('* | filter _path=="conn"').hasAnalytics()).toBe(false)
+    expect(program('* | filter _path=="conn"').hasAnalytics()).toBe(false)
   })
 })
 
 describe("Get Parts of Program", () => {
-  const program =
-    'md5=="123" _path=="files" | count() by md5 | sort -r | head 1'
+  const script = 'md5=="123" _path=="files" | count() by md5 | sort -r | head 1'
 
   test("get filter part", () => {
-    expect(splitParts(program)[0]).toBe('md5=="123" _path=="files"')
+    expect(splitParts(script)[0]).toBe('md5=="123" _path=="files"')
   })
 
   test("get filter part when none", () => {
@@ -259,7 +243,7 @@ describe("Get Parts of Program", () => {
   })
 
   test("get proc part", () => {
-    expect(splitParts(program)[1]).toBe("count() by md5 | sort -r | head 1")
+    expect(splitParts(script)[1]).toBe("count() by md5 | sort -r | head 1")
   })
 
   test("get proc part when none", () => {
@@ -302,39 +286,37 @@ describe("Parallelizing multiple programs", () => {
 
 describe("extracting the first filter", () => {
   test("*", () => {
-    expect(brim.program("*").filter()).toEqual("*")
+    expect(program("*").filter()).toEqual("*")
   })
 
   test('_path=="conn"', () => {
-    expect(brim.program('_path=="conn"').filter()).toEqual('_path=="conn"')
+    expect(program('_path=="conn"').filter()).toEqual('_path=="conn"')
   })
 
   test('_path=="conn" | sum(duration)', () => {
-    expect(brim.program('_path=="conn" | sum(duration)').filter()).toEqual(
+    expect(program('_path=="conn" | sum(duration)').filter()).toEqual(
       '_path=="conn"'
     )
   })
 
   test('_path=="conn" | filter a', () => {
-    expect(brim.program('_path=="conn" | filter a').filter()).toEqual(
+    expect(program('_path=="conn" | filter a').filter()).toEqual(
       '_path=="conn" | filter a'
     )
   })
 
   test("count()", () => {
-    expect(brim.program("count()").filter()).toEqual("*")
+    expect(program("count()").filter()).toEqual("*")
   })
 
   test("dns | count() | filter num > 1", () => {
-    expect(brim.program("dns | count() | filter num > 1").filter()).toEqual(
-      "dns"
-    )
+    expect(program("dns | count() | filter num > 1").filter()).toEqual("dns")
   })
 })
 
 describe("cut", () => {
   test("cut some fields", () => {
-    expect(brim.program("my filter").cut("ts", "_path").string()).toBe(
+    expect(program("my filter").cut("ts", "_path").string()).toBe(
       "my filter | cut ts, _path"
     )
   })

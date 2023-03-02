@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 
-import {FileField} from "../../brim/form"
+import {FileField} from "../../models/form"
 import FileInput from "../common/forms/FileInput"
 import InputLabel from "../common/forms/InputLabel"
 import Link from "../common/Link"

@@ -1,4 +1,4 @@
-import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {QueryModel} from "src/js/models/query-model"
 import histogramInterval, {timeUnits} from "src/js/lib/histogramInterval"
 import {DateTuple} from "src/js/lib/TimeWindow"
 import Current from "src/js/state/Current"
@@ -16,7 +16,7 @@ export const buildHistogramQuery =
     const range = await dispatch(getRange(poolName))
     // this doesn't belong here
     dispatch(actions.setRange(range))
-    return histogramZed(BrimQuery.versionToZed(version), range)
+    return histogramZed(QueryModel.versionToZed(version), range)
   }
 
 export const getRange =

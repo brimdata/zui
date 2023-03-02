@@ -1,5 +1,4 @@
-import brim from "./"
-import {FormConfig} from "./form"
+import form, {FormConfig} from "./form"
 
 const sampleConfig = (): FormConfig => ({
   username: {
@@ -28,8 +27,8 @@ const sampleFormElement = (): HTMLFormElement => {
 
 test("isValid when true", async () => {
   // @ts-ignore
-  const form = brim.form(sampleFormElement(), sampleConfig())
-  expect(await form.isValid()).toBe(true)
+  const f = form(sampleFormElement(), sampleConfig())
+  expect(await f.isValid()).toBe(true)
 })
 
 test("isValid when false", async () => {
@@ -38,10 +37,10 @@ test("isValid when false", async () => {
   // @ts-ignore
   config.username.check = failure
 
-  const form = brim.form(sampleFormElement(), config)
+  const f = form(sampleFormElement(), config)
 
-  expect(await form.isValid()).toBe(false)
-  expect(form.getErrors()).toEqual([
+  expect(await f.isValid()).toBe(false)
+  expect(f.getErrors()).toEqual([
     {
       input: {value: "joeshmoe"},
       label: "Username",
@@ -52,9 +51,9 @@ test("isValid when false", async () => {
 
 test("submit", () => {
   const config = sampleConfig()
-  const form = brim.form(sampleFormElement(), config)
+  const f = form(sampleFormElement(), config)
 
-  form.submit()
+  f.submit()
 
   expect(config.username.submit).toHaveBeenCalledWith("joeshmoe")
 })
@@ -62,18 +61,18 @@ test("submit", () => {
 test("a missing field", () => {
   const config = sampleConfig()
   config.username.name = "missing"
-  const form = brim.form(sampleFormElement(), config)
+  const f = form(sampleFormElement(), config)
 
-  return expect(form.isValid()).resolves.toBe(true)
+  return expect(f.isValid()).resolves.toBe(true)
 })
 
 test("when check returns undefined", () => {
   const config = sampleConfig()
   // @ts-ignore
   config.username.check = () => {}
-  const form = brim.form(sampleFormElement(), config)
+  const f = form(sampleFormElement(), config)
 
-  return expect(form.isValid()).rejects.toEqual(
+  return expect(f.isValid()).rejects.toEqual(
     new Error(`username check did not return an array`)
   )
 })

@@ -1,15 +1,15 @@
 import {ipcRenderer} from "electron"
+import {LakeModel} from "src/js/models/lake"
 import {setSecretOp} from "src/js/electron/ops/secrets"
 import {
   serializeState,
   toAccessTokenKey,
   toRefreshTokenKey,
 } from "../../auth0/utils"
-import {BrimLake} from "../../brim"
 import {getAuth0} from "./getAuth0"
 
 export const login =
-  (l: BrimLake, abortSignal: AbortSignal) =>
+  (l: LakeModel, abortSignal: AbortSignal) =>
   (dispatch): Promise<string> => {
     const client = dispatch(getAuth0(l))
 

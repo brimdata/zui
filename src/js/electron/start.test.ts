@@ -1,6 +1,6 @@
 import "src/test/system/real-paths"
 import {app} from "electron"
-import {BrimMain} from "./brim"
+import {ZuiMain} from "./zui-main"
 import {installExtensions} from "./extensions"
 import {main} from "./run-main/run-main"
 import env from "src/app/core/env"
@@ -12,39 +12,39 @@ jest.mock("./extensions", () => ({
 jest.mock("@brimdata/zealot")
 
 test("start is called in zed lake", async () => {
-  const brim = (await main({devtools: false, autoUpdater: false})) as BrimMain
-  expect(brim.lake.start).toHaveBeenCalledTimes(1)
+  const appMain = (await main({devtools: false, autoUpdater: false})) as ZuiMain
+  expect(appMain.lake.start).toHaveBeenCalledTimes(1)
 })
 
 test("app opens a window on startup", async () => {
-  const brim = (await main({
+  const appMain = (await main({
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as BrimMain
-  expect(brim.windows.visible).toHaveLength(1)
+  })) as ZuiMain
+  expect(appMain.windows.visible).toHaveLength(1)
 })
 test("activate creates window if there are none", async () => {
-  const brim = (await main({
+  const appMain = (await main({
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as BrimMain
+  })) as ZuiMain
   // @ts-ignore clear the windows for the test
-  brim.windows.windows = {}
+  appMain.windows.windows = {}
   app.emit("activate")
-  expect(brim.windows.visible).toHaveLength(1)
+  expect(appMain.windows.visible).toHaveLength(1)
 })
 
 test("activates shows the window", async () => {
-  const brim = (await main({
+  const appMain = (await main({
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as BrimMain
+  })) as ZuiMain
   app.emit("activate")
-  expect(brim.windows.visible).toHaveLength(1)
-  brim.windows.visible.forEach((win) => {
+  expect(appMain.windows.visible).toHaveLength(1)
+  appMain.windows.visible.forEach((win) => {
     expect(win.ref.isVisible()).toBe(true)
   })
 })
@@ -72,31 +72,31 @@ test("start does not install dev extensions if not dev", async () => {
 test("last window closed hides on mac", async () => {
   jest.spyOn(env, "isMac", "get").mockReturnValue(true)
 
-  const brim = (await main({
+  const appMain = (await main({
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as BrimMain
+  })) as ZuiMain
   const preventDefault = jest.fn()
-  brim.windows.emit("window-will-close", {preventDefault})
+  appMain.windows.emit("window-will-close", {preventDefault})
 
   expect(preventDefault).toHaveBeenCalled()
-  expect(brim.windows.visible[0].ref.isVisible()).toBe(false)
+  expect(appMain.windows.visible[0].ref.isVisible()).toBe(false)
   expect(app.quit).not.toHaveBeenCalled()
 })
 
 test("last window quits on not mac", async () => {
   jest.spyOn(env, "isMac", "get").mockReturnValue(false)
 
-  const brim = (await main({
+  const appMain = (await main({
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as BrimMain
+  })) as ZuiMain
   const preventDefault = jest.fn()
-  brim.windows.emit("window-will-close", {preventDefault})
+  appMain.windows.emit("window-will-close", {preventDefault})
 
   expect(preventDefault).toHaveBeenCalled()
-  expect(brim.windows.visible[0].ref.isVisible()).toBe(true)
+  expect(appMain.windows.visible[0].ref.isVisible()).toBe(true)
   expect(app.quit).toHaveBeenCalled()
 })

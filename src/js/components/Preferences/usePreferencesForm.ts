@@ -1,7 +1,7 @@
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
-import {FormConfig, FormFieldConfig} from "../../brim/form"
+import {FormConfig, FormFieldConfig} from "../../models/form"
 import {executeCommand} from "../../flows/executeCommand"
 import lib from "../../lib"
 
@@ -15,7 +15,7 @@ const checkFile = (path) => {
 
 export const useConfigsForm = (): FormConfig => {
   const dispatch = useDispatch()
-  const api = useBrimApi()
+  const api = useZuiApi()
   const configs = api.configs.all
   const formConfig: FormConfig = {}
   configs.forEach((config) => {

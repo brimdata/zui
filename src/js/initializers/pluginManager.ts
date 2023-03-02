@@ -1,11 +1,11 @@
 import {forEach} from "lodash"
 import path from "path"
-import BrimApi from "../api"
+import ZuiApi from "../api/zui-api"
 import lib from "../lib"
 
 interface PluginFunctions {
-  activate(api: BrimApi): void
-  deactivate(api: BrimApi): Promise<void>
+  activate(api: ZuiApi): void
+  deactivate(api: ZuiApi): Promise<void>
 }
 
 export default class PluginManager {
@@ -13,7 +13,7 @@ export default class PluginManager {
     [pluginName: string]: Plugin
   } = {}
 
-  constructor(private api: BrimApi) {}
+  constructor(private api: ZuiApi) {}
 
   async load(dir: string) {
     const files = await lib.file(dir).contents()
@@ -77,11 +77,11 @@ class Plugin {
     }
   }
 
-  activate(api: BrimApi) {
+  activate(api: ZuiApi) {
     this.functions.activate(api)
   }
 
-  deactivate(api: BrimApi) {
+  deactivate(api: ZuiApi) {
     if ("deactivate" in this.functions) {
       this.functions.deactivate(api)
     }

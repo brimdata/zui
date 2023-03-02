@@ -1,10 +1,10 @@
-import BrimApi from "src/js/api"
-import {IngestParams} from "src/js/brim/ingest/getParams"
+import ZuiApi from "src/js/api/zui-api"
+import {IngestParams} from "src/js/models/ingest/getParams"
 import {forEach, get} from "lodash"
 import {Readable} from "stream"
 import {LoadFormat} from "packages/zealot/src"
 
-export const activate = (api: BrimApi) => {
+export const activate = (api: ZuiApi) => {
   const load = async (
     params: IngestParams & {
       poolId: string
@@ -36,7 +36,7 @@ export const activate = (api: BrimApi) => {
         branch: params.branch,
         format: params.format,
         message: {
-          author: "brim",
+          author: "zui",
           body: "automatic import of " + file.path,
         },
         signal,

@@ -1,4 +1,4 @@
-import {BrimProvider} from "src/app/core/context"
+import {AppProvider} from "src/app/core/context"
 import "regenerator-runtime/runtime"
 import App from "./components/App"
 import StartupError from "./components/StartupError"
@@ -24,9 +24,9 @@ initialize()
     const container = lib.doc.id("app-root")
     const root = createRoot(container!)
     root.render(
-      <BrimProvider store={store} api={api}>
+      <AppProvider store={store} api={api}>
         <App />
-      </BrimProvider>
+      </AppProvider>
     )
   })
   .catch((e) => {

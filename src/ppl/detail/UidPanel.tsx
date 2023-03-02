@@ -4,7 +4,7 @@ import React, {memo, useCallback, useMemo} from "react"
 import {Caption, ChartWrap, TableWrap} from "src/app/detail/Shared"
 import PanelHeading from "src/app/detail/PanelHeading"
 import EventTimeline from "src/ppl/detail/EventTimeline"
-import {BrimEvent} from "src/ppl/detail/models/BrimEvent"
+import {SecurityEvent} from "src/ppl/detail/models/security-event"
 import {sort} from "src/ppl/detail/util/sort"
 import {Data, Name, Value} from "src/app/core/Data"
 import formatDur from "src/ppl/detail/util/formatDur"
@@ -25,7 +25,7 @@ export default memo(function UidPanel({record}: {record: zed.Record}) {
   const perPage = useSelector(Results.getPerPage(id))
 
   const events = useMemo(() => {
-    return sort(logs).map(BrimEvent.build)
+    return sort(logs).map(SecurityEvent.build)
   }, [logs])
 
   const conn = useMemo(() => {

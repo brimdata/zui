@@ -1,6 +1,6 @@
-import {BrimError} from "./types"
+import {ErrorData} from "./types"
 
-export default function (err: string): BrimError {
+export default function (err: string): ErrorData {
   return {
     type: "LogsIngestError",
     message: "Unable to load these logs",

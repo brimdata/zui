@@ -100,3 +100,8 @@ export abstract class ZuiWindow {
     }
   }
 }
+
+export function getWindowId() {
+  const params = new URLSearchParams(window.location.search)
+  return params.get("id")
+}

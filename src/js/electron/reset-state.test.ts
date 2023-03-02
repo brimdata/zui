@@ -1,6 +1,6 @@
 import "src/test/system/real-paths"
 import {app} from "electron"
-import {BrimMain} from "./brim"
+import {ZuiMain} from "./zui-main"
 
 jest.mock("./session", () => {
   return () => ({
@@ -11,14 +11,14 @@ jest.mock("./session", () => {
 })
 
 test("reset state", async () => {
-  const brim = await BrimMain.boot({
+  const main = await ZuiMain.boot({
     lake: false,
   })
 
-  await brim.start()
-  await brim.resetState()
+  await main.start()
+  await main.resetState()
 
-  expect(brim.session.delete).toHaveBeenCalled()
-  expect(brim.session.save).not.toHaveBeenCalled()
+  expect(main.session.delete).toHaveBeenCalled()
+  expect(main.session.save).not.toHaveBeenCalled()
   expect(app.relaunch).toHaveBeenCalled()
 })

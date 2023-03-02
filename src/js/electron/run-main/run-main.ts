@@ -17,11 +17,11 @@ export async function main(args: Partial<MainArgs> = {}) {
   */
   const mainArgs = {...mainDefaults(), ...args}
   log.info("booting main with:", mainArgs)
-  const brim = await boot(mainArgs)
+  const zuiMain = await boot(mainArgs)
 
   /* 
     AFTER BOOT: Non-critical setup items
   */
-  await afterBoot(brim)
-  return brim
+  await afterBoot(zuiMain)
+  return zuiMain
 }

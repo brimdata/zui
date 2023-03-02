@@ -3,8 +3,8 @@ import moment from "moment-timezone"
 import {TimeUnit} from "../lib"
 import {isBigInt, isDate} from "../lib/is"
 import {DateTuple} from "../lib/TimeWindow"
-import brim, {Span, Ts} from "./"
 import relTime from "./relTime"
+import {Span, Ts} from "./span"
 
 function time(val: Ts | bigint | Date | string = new Date()) {
   let ts: Ts
@@ -37,22 +37,22 @@ function time(val: Ts | bigint | Date | string = new Date()) {
 
     add(amount: number, unit: TimeUnit) {
       const ts = dateToTs(moment(this.toDate()).add(amount, unit).toDate())
-      return brim.time(ts)
+      return time(ts)
     },
 
     subtract(amount: number, unit: TimeUnit) {
       const ts = dateToTs(moment(this.toDate()).subtract(amount, unit).toDate())
-      return brim.time(ts)
+      return time(ts)
     },
 
     addTs(dur: Ts) {
       const added = this.toBigInt() + time(dur).toBigInt()
-      return brim.time(added)
+      return time(added)
     },
 
     subTs(diff: Ts) {
       const dur = this.toBigInt() - time(diff).toBigInt()
-      return brim.time(fromBigInt(dur))
+      return time(fromBigInt(dur))
     },
 
     format(fmt?: string, zone?: string) {
@@ -107,7 +107,7 @@ time.setDefaultFormat = function (format = "") {
 time.convertToSpan = function (tw: DateTuple | null | undefined): Span | null {
   if (tw) {
     const [from, to] = tw
-    return [brim.time(from).toTs(), brim.time(to).toTs()]
+    return [time(from).toTs(), time(to).toTs()]
   } else {
     return null
   }

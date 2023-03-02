@@ -1,4 +1,4 @@
-import brim from "./"
+import time from "./time"
 
 const NOW = /^\s*now\s*$/i
 const AGO = /^\s*now\s*-\s*(\d+)\s*([smhdwMy])\s*$/i
@@ -23,13 +23,13 @@ export default function relTime(expr: string, now: Date = new Date()) {
   }
 
   function execute(ast: Ast) {
-    const time = brim.time(now)
+    const t = time(now)
 
     switch (ast.op) {
       case "-":
-        return time.subtract(ast.amount, ast.unit)
+        return t.subtract(ast.amount, ast.unit)
       default:
-        return time
+        return t
     }
   }
 

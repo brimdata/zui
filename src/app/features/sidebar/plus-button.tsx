@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react"
 import styled from "styled-components"
 
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import {MenuItemConstructorOptions} from "electron"
 import {showContextMenu} from "src/js/lib/System"
 import {useDispatch} from "src/app/core/state"
@@ -33,7 +33,7 @@ export const Button = styled.button`
 `
 
 export default function PlusButton() {
-  const api = useBrimApi()
+  const api = useZuiApi()
   const dispatch = useDispatch()
   const lakeId = useLakeId()
   const [importer, ref] = useCallbackRef<HTMLInputElement>()

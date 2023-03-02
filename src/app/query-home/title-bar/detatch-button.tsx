@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import useSelect from "src/app/core/hooks/use-select"
 import {IconButton} from "./icon-button"
 import Editor from "src/js/state/Editor"
@@ -12,7 +12,7 @@ const Detatch = styled(IconButton)`
 
 export function DetatchButton() {
   const select = useSelect()
-  const api = useBrimApi()
+  const api = useZuiApi()
 
   function onClick() {
     const snapshot = select(Editor.getSnapshot)

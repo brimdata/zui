@@ -1,7 +1,7 @@
 import React from "react"
 import {BoundCommand} from "src/app/commands/command"
 import {IconName} from "src/app/core/icon-temp"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import {Menu} from "./menu"
 
 export type MenuItem = {
@@ -19,7 +19,7 @@ export type MenuItem = {
   htmlAttrs?: React.HTMLAttributes<HTMLElement>
 }
 
-export type MenuContext = {api: BrimApi}
+export type MenuContext = {api: ZuiApi}
 
 export type MenuBuilder<Args extends any[]> = (
   ctx: MenuContext,

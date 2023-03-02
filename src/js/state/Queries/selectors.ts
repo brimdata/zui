@@ -3,7 +3,7 @@ import {State} from "../types"
 import TreeModel from "tree-model"
 import {createSelector} from "reselect"
 import QueryVersions from "../QueryVersions"
-import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {QueryModel} from "src/js/models/query-model"
 import {entitiesToArray} from "../utils"
 import memoizeOne from "memoize-one"
 
@@ -39,9 +39,9 @@ export const build = createSelector(
   findSessionQuery,
   getQueryVersions,
   (localMeta, remoteMeta, sessionMeta, versions) => {
-    if (localMeta) return new BrimQuery(localMeta, versions, "local")
-    if (remoteMeta) return new BrimQuery(remoteMeta, versions, "remote")
-    if (sessionMeta) return new BrimQuery(sessionMeta, versions, "session")
+    if (localMeta) return new QueryModel(localMeta, versions, "local")
+    if (remoteMeta) return new QueryModel(remoteMeta, versions, "remote")
+    if (sessionMeta) return new QueryModel(sessionMeta, versions, "session")
     return null
   }
 )
@@ -49,7 +49,7 @@ export const build = createSelector(
 export const makeBuildSelector = () => {
   return createSelector(find, getQueryVersions, (meta, versions) => {
     if (!meta) return null
-    return new BrimQuery(meta, versions, "local")
+    return new QueryModel(meta, versions, "local")
   })
 }
 

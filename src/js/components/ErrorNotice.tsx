@@ -2,7 +2,7 @@ import {upperFirst} from "lodash"
 import {useDispatch, useSelector} from "react-redux"
 import React from "react"
 
-import {BrimError} from "../errors/types"
+import {ErrorData} from "../errors/types"
 import NetworkErrorNotice from "./NetworkErrorNotice"
 import Notice from "../state/Notice"
 import NoticeBanner from "./NoticeBanner"
@@ -19,14 +19,14 @@ export default function ErrorNotice() {
   )
 }
 
-function ErrorMessage({error}: {error: BrimError}) {
+function ErrorMessage({error}: {error: ErrorData}) {
   const Component = getComponent(error)
   const dispatch = useDispatch()
   useEscapeKey(() => dispatch(Notice.dismiss()))
   return <Component error={error} />
 }
 
-function getComponent(error: BrimError) {
+function getComponent(error: ErrorData) {
   if (error.type === "NetworkError") return NetworkErrorNotice
   else if (error) return Default
   else return None
@@ -36,7 +36,7 @@ function None() {
   return null
 }
 
-function Default({error}: {error: BrimError}) {
+function Default({error}: {error: ErrorData}) {
   const dispatch = useDispatch()
   const msg = upperFirst(error.message)
 
