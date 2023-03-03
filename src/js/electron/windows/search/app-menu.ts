@@ -228,14 +228,20 @@ export function compileTemplate(
         },
       },
       {
-        label: "Show Welcome Page",
-        click: () => runCommandOp.run(showWelcomePage),
+        label: "Zui Docs",
+        click() {
+          shell.openExternal(links.ZUI_DOCS_ROOT)
+        },
       },
       {
         label: "Zed Syntax Docs",
         click() {
           shell.openExternal(links.ZED_DOCS_LANGUAGE)
         },
+      },
+      {
+        label: "Show Welcome Page",
+        click: () => runCommandOp.run(showWelcomePage),
       },
       {
         label: "Slack Support Channel",
