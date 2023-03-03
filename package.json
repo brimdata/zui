@@ -125,7 +125,7 @@
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
-    "chrono-node": "^1.4.8",
+    "chrono-node": "^2.5.0",
     "classnames": "^2.2.6",
     "cross-fetch": "^3.1.4",
     "d3": "^5.16.0",
