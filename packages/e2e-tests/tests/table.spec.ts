@@ -18,7 +18,9 @@ test.describe("Table Testing", () => {
     await app.createPool([path])
     await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
     await app.query("yield value.after") // This is a named type
-    const texts = await app.results.getByRole("columnheader").allInnerTexts()
+    const columnheader = app.results.getByRole("columnheader")
+    await columnheader.first().waitFor()
+    const texts = await columnheader.allInnerTexts()
     expect(texts).toEqual(["Id", "IsDeleted"])
   })
 })
