@@ -5,7 +5,7 @@
   "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/brim",
   "license": "BSD-3-Clause",
-  "version": "0.30.0",
+  "version": "1.0.0",
   "main": "dist/js/electron/main.js",
   "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "workspaces": [
@@ -173,7 +173,7 @@
     "tree-model": "^1.0.7",
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#739e2713faaa1f36f7245c0e4ea7105a73bcc27a"
+    "zed": "brimdata/zed#v1.6.0"
   },
   "peerDependencies": {
     "react": "^18.0.0",
