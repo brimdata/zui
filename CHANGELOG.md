@@ -1,3 +1,63 @@
+## v1.0.0
+
+### The Brim app is now named Zui!
+
+_Pronounced: “zoo-ee”_
+
+### Where are my pools?
+
+If you've upgraded to Zui from Brim, the pools you had in Brim are still
+present but you'll need to run a migration script to convert them to a new
+Zed lake storage format. See the
+[Brim/Zui Transition guide](https://zui.brimdata.io/docs/support/Brim-Zui-Transition) for details.
+
+### Other Changes
+
+- Zui docs now are available at [zui.brimdata.io/docs](https://zui.brimdata.io/docs) rather than the wiki on GitHub (#2531, #2692)
+- Update Zed to [v1.6.0](https://github.com/brimdata/zed/releases/tag/v1.6.0)
+- Update Brimcap to [v1.4.0](https://github.com/brimdata/brimcap/releases/tag/v1.4.0)
+- Introduce a multi-line editor (#2286)
+- Redesign query pins (#2334, #2530)
+- Add a tab in the right panel that stores query history (#2326)
+- Security-related queries are no longer bundled by default, but can be [downloaded from the Brimcap repo](https://github.com/brimdata/brimcap#brimcap-queries) (#2415)
+- Correlations are now part of the plugin system (#2455)
+- The app workflow is now organized around Query Sessions (#2439)
+- Single objects can be recursively expanded/collapsed in Inspector via Alt-click (on Windows/Linux) and Option-click (on macOS) (#2469)
+- Migrate user data from Brim to Zui (#2428, #2680)
+- App state is now auto-saved throughout a session rather than just when quitting (#2496)
+- Allow export in [ZSON](https://zed.brimdata.io/docs/formats/zson) format (#2509)
+- Allow export in [Zeek TSV](https://docs.zeek.org/en/master/log-formats.html#zeek-tsv-format-logs) and [ZJSON](https://zed.brimdata.io/docs/formats/zjson) formats (#2608)
+- Allow load/export of [Arrow IPC Stream format](https://arrow.apache.org/docs/format/Columnar.html#ipc-streaming-format) (#2625, #2630)
+- Redesign the stacked bar chart with a pin for the selected time range (#2472)
+- Redesign the left panel pools/queries views to use [React Arborist](https://github.com/brimdata/react-arborist) (#2568)
+- Allow organization of pools into folders using a configurable delimiter ("/" by default) (#2572)
+- A new user preference toggles whether queries are run when Enter is pressed (#2573)
+- Allow loading of additional data into an existing pool (#2584)
+- Redesign the default Table view (#2626)
+- Per-machine install option is now available on Windows (#2686)
+
+## v0.31.0
+
+### The Brim app will be renamed to Zui!
+
+_Pronounced: “zoo-ee”_
+
+This is the last release under the name Brim. In the next version, the app will be renamed to Zui. The changes in this release improve the auto-update messaging for the name change in the next release.
+
+### Behind the Name Change
+
+When Brim began as a company, we intended to build a security-focused desktop application powered by our backend called [Zed](https://zed.brimdata.io/). The company's main product was the app, so we called it the Brim app.
+
+As we developed Zed, we started to realize we had something big on our hands. Zed's data model, language, query engine, and storage formats provide revolutionary new ways to work with all kinds of data. In April 2021, we decided to pivot, making Zed the company's flagship technology. Brim Security became Brim Data.
+
+This change made us reevaluate the purpose of the app. We were now leading with the [Zed lake](https://zed.brimdata.io/docs/next/commands/zed/), so we decided the app would support the lake. Users would be able to explore a lake's data and manage its configuration with the app. It would be a GUI for Zed.
+
+At this point, having the app named after the company was confusing. We needed a name that clearly tied the app to Zed. After many fun naming sessions, we played off the word "GUI" and landed on "Zui": The Zed user interface.
+
+### Get Zui Today
+
+If you are excited about the next version and want to try it out today, download the [Zui - Insiders](https://github.com/brimdata/zui-insiders) app. It can run side-by-side with Brim, stores data in a different location, and runs Zed on a different port. It receives automatic updates every weekday built from the tip of our main branch. This is our take on a beta program. If you find bugs or think of improvements, please chime in on the [#zui-insiders](https://brimdata.slack.com/archives/C03MW6XT7HC) Slack channel.
+
 ## v0.30.0
 
 In this small release, we've fixed bugs and upgraded some core dependencies like Electron and React.
