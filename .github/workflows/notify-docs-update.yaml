@@ -3,7 +3,7 @@ name: Notify docs update
 on:
   push:
     branches:
-      - zuifi-wiki
+      - main
     paths:
       - 'docs/**'
 
