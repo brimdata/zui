@@ -94,6 +94,7 @@ export default class TestApp {
   // TODO: this method is a wip, it still needs to wait for cells to populate first
   async getViewerResults(includeHeaders = true): Promise<string[]> {
     const fields = await this.mainWin.locator(".zed-table__cell")
+    await fields.waitFor()
     let results = await fields.evaluateAll<string[], HTMLElement>((nodes) =>
       nodes.map((n) => n.innerText.trim())
     )
