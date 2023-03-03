@@ -1,5 +1,4 @@
 import {createAction, createReducer} from "@reduxjs/toolkit"
-import * as selectors from "./selectors"
 
 /**
  * We've got to dispatch the url changed event because useSelector
@@ -17,4 +16,4 @@ const reducer = createReducer(initialState, (builder) => {
   })
 })
 
-export default {...selectors, reducer, changed}
+export default {reducer, changed}

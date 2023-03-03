@@ -18,7 +18,7 @@ test("pcapIngestError (sort limit)", () => {
     message: "Unable to generate full summary logs from PCAP",
     details: [
       "Detail: sort limit reached",
-      "This PCAP contains too much network traffic to load into Brim.",
+      "This PCAP contains too much network traffic to load into Zui.",
     ],
   })
 })

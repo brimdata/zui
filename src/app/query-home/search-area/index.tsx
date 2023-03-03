@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 
-import Error from "./error"
 import Input from "./Input"
 import {useSelector} from "react-redux"
 import {Pins} from "./pins/pins"
@@ -23,7 +22,6 @@ export default function SearchArea() {
       <Pins />
       <Group>
         <Input value={value} disabled={query.isReadOnly()} />
-        <Error />
       </Group>
     </>
   )

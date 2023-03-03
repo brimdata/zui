@@ -1,6 +1,6 @@
 import {isEqual} from "lodash"
-import {PoolConfig, PoolStats} from "@brimdata/zealot"
-import brim, {Span} from "src/js/brim"
+import {PoolConfig, PoolStats, Ts} from "@brimdata/zealot"
+import span from "src/js/models/span"
 
 export class Pool {
   static from(opts: {data: PoolConfig; stats?: PoolStats}) {
@@ -65,9 +65,9 @@ export class Pool {
     return date
   }
 
-  everythingSpan(): Span {
+  everythingSpan(): [Ts, Ts] {
     if (!this.stats) throw new Error("No stats for this pool")
     if (!this.stats.span) throw new Error("Pool has no span")
-    return brim.span([this.minTime(), this.maxTime()]).toSpan()
+    return span([this.minTime(), this.maxTime()]).toSpan()
   }
 }

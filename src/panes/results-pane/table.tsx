@@ -8,17 +8,20 @@ import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {valueContextMenu} from "src/app/menus/value-context-menu"
 import useSelect from "src/app/core/hooks/use-select"
 import {TableView, TableViewApi} from "src/zui-kit"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import {BareStringView} from "src/app/query-home/results/bare-string-view"
 import {PathView} from "src/app/query-home/results/path-view"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
+import {zed} from "@brimdata/zealot"
 
 export function Table() {
   const {table, setTable} = useResultsContext()
   const ctx = useResultsPaneContext()
-  const api = useBrimApi()
-  const values = useTableValues()
+  const api = useZuiApi()
+  const shape = ctx.firstShape
+  const recordShape = zed.typeunder(shape) as zed.TypeRecord
+  const values = useTableValues(recordShape, ctx.values)
   const state = useTableState()
   const select = useSelect()
   const initialScrollPosition = useMemo(
@@ -26,7 +29,6 @@ export function Table() {
     []
   )
   const dispatch = useDispatch()
-  const shape = ctx.firstShape
 
   useEffect(() => {
     dispatch(TableState.setLastShape(shape))
@@ -41,7 +43,7 @@ export function Table() {
         setTable(table)
         api.table = table
       }}
-      shape={shape}
+      shape={recordShape}
       values={values}
       width={ctx.width}
       height={ctx.height}

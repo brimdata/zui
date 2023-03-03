@@ -3,8 +3,7 @@ import get from "lodash/get"
 import React, {useCallback, useState} from "react"
 import {useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
-import brim from "../../brim"
-import {FormConfig} from "../../brim/form"
+import form, {FormConfig} from "../../models/form"
 import FileInput from "../common/forms/FileInput"
 import InputLabel from "../common/forms/InputLabel"
 import SelectInput from "../common/forms/SelectInput"
@@ -120,7 +119,7 @@ function ConfigFormItems(props: {configs: FormConfig}) {
 }
 
 export default function Preferences() {
-  const [f, setForm] = useCallbackRef<HTMLFormElement>()
+  const [formEl, setForm] = useCallbackRef<HTMLFormElement>()
   const [errors, setErrors] = useState([])
 
   const configsForm = useConfigsForm()
@@ -128,18 +127,18 @@ export default function Preferences() {
 
   const onSubmit = useCallback(
     async (closeModal: any) => {
-      if (!f) return
-      const form = brim.form(f, configsForm)
+      if (!formEl) return
+      const f = form(formEl, configsForm)
 
-      if (await form.isValid()) {
+      if (await f.isValid()) {
         setErrors([])
-        form.submit()
+        f.submit()
         closeModal()
       } else {
-        setErrors(form.getErrors())
+        setErrors(f.getErrors())
       }
     },
-    [f, configsForm]
+    [formEl, configsForm]
   )
 
   return (

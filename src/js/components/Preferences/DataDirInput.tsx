@@ -1,6 +1,6 @@
 import React from "react"
 
-import {DirectoryField} from "../../brim/form"
+import {DirectoryField} from "../../models/form"
 import FileInput from "../common/forms/FileInput"
 import InputLabel from "../common/forms/InputLabel"
 

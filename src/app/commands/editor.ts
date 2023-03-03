@@ -1,5 +1,5 @@
 import {zed} from "packages/zealot/src"
-import brim from "src/js/brim"
+import program from "src/js/models/program"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -9,7 +9,7 @@ import {
   appendQuerySortBy,
 } from "src/js/flows/searchBar/actions"
 import {copyToClipboard} from "src/js/lib/doc"
-import SearchBar from "src/js/state/SearchBar"
+import Editor from "src/js/state/Editor"
 import {toZql} from "src/js/zql/toZql"
 import submitSearch from "../query-home/flows/submit-search"
 import {createCommand} from "./command"
@@ -73,8 +73,7 @@ export const filterNotInField = createCommand(
 export const newSearchWithValue = createCommand(
   "newSearchWithValue",
   ({api}, field: zed.Field) => {
-    api.dispatch(SearchBar.clearSearchBar())
-    api.dispatch(SearchBar.changeSearchBarInput(toZql(field.data)))
+    api.dispatch(Editor.setValue(toZql(field.data)))
     api.dispatch(submitSearch())
   }
 )
@@ -85,14 +84,12 @@ export const pivotToValues = createCommand(
     // So this only works if the count() by field is in the editor, not in a pin.
     const record = field.rootRecord
     api.current.query.toZed()
-    const newProgram = brim
-      .program(api.editor.value)
+    const newProgram = program(api.editor.value)
       .drillDown(record as zed.Record)
       .string()
 
     if (newProgram) {
-      api.dispatch(SearchBar.clearSearchBar())
-      api.dispatch(SearchBar.changeSearchBarInput(newProgram))
+      api.dispatch(Editor.setValue(newProgram))
       api.dispatch(submitSearch())
     }
   }

@@ -27,6 +27,7 @@ export class BrowserWindow {
   webContents = new WebContents()
   isDestroyed = jest.fn(() => false)
   focus = jest.fn()
+  visible = true
   center() {}
   setMenu() {}
   on() {
@@ -52,16 +53,24 @@ export class BrowserWindow {
     return [0, 0]
   }
   destroy() {}
+  hide() {
+    this.visible = false
+  }
+  show() {
+    this.visible = true
+  }
+  isVisible() {
+    return this.visible
+  }
 }
 
-class MockApp {
+class MockApp extends EventEmitter {
   isPackaged = true
   quit = jest.fn()
   relaunch = jest.fn()
   disableHardwareAcceleration = jest.fn()
   requestSingleInstanceLock = jest.fn()
   setAsDefaultProtocolClient = jest.fn()
-  on = jest.fn()
   whenReady = jest.fn(() => Promise.resolve())
 
   commandLine = {

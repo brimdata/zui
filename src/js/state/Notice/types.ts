@@ -1,7 +1,7 @@
-import {BrimError} from "src/js/errors/types"
+import {ErrorData} from "src/js/errors/types"
 
 export type NoticeState = {
-  error: BrimError | null | undefined
+  error: ErrorData | null | undefined
   visible: boolean
 }
 export type NoticeAction = NOTICE_SET | NOTICE_CLEAR | NOTICE_DISMISS

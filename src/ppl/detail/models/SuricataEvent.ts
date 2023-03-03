@@ -1,7 +1,7 @@
 import {zed} from "@brimdata/zealot"
-import {BrimEventInterface} from "./BrimEvent"
+import {SecurityEventInterface} from "./security-event"
 
-export class SuricataEvent implements BrimEventInterface {
+export class SuricataEvent implements SecurityEventInterface {
   constructor(private r: zed.Record) {}
 
   getRecord() {

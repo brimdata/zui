@@ -9,7 +9,7 @@ import {IconName} from "../core/icon-temp"
 
 export const root = {
   path: "/",
-  title: "Brim",
+  title: "Zui",
 }
 export const lakeList = {
   path: "/lakes",

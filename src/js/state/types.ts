@@ -1,12 +1,10 @@
 import {Action as ReduxAction, Store as ReduxStore} from "redux"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
-import BrimApi from "../api"
+import ZuiApi from "../api/zui-api"
 import {AppearanceState} from "./Appearance"
 import {ConfigPropValuesState} from "./ConfigPropValues"
-import {ConfigsState} from "./Configs"
 import {ErrorsState} from "./Errors/types"
 import {LoadsState} from "./Loads/types"
-import {InvestigationState} from "./Investigation/types"
 import {LakesState} from "./Lakes/types"
 import {LaunchesState} from "./Launches"
 import {ModalState} from "./Modal/types"
@@ -23,7 +21,7 @@ import {QueryVersionsState} from "./QueryVersions/types"
 import {SessionHistoriesState} from "./SessionHistories/types"
 
 export type ThunkExtraArg = {
-  api: BrimApi
+  api: ZuiApi
 }
 
 export type Action = ReduxAction<string>
@@ -37,14 +35,12 @@ export type DispatchProps = {dispatch: Dispatch}
 export type State = {
   appearance: AppearanceState
   launches: LaunchesState
-  configs: ConfigsState
   configPropValues: ConfigPropValuesState
   tabHistories: TabHistoriesState
   lakes: LakesState
   errors: ErrorsState
   pools: PoolsState
   loads: LoadsState
-  investigation: InvestigationState
   modal: ModalState
   notice: NoticeState
   tabs: TabsState

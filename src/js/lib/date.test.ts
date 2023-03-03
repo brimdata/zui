@@ -1,4 +1,4 @@
-import brim from "../brim"
+import time from "../models/time"
 import lib from "./"
 
 describe("parseInZone", () => {
@@ -13,7 +13,7 @@ describe("parseInZone", () => {
     names.forEach((zone) => {
       const ts = lib.date.parseInZone(strictDate, zone)
       const str = lib
-        .date(brim.time(ts || new Date()).toDate())
+        .date(time(ts || new Date()).toDate())
         .zone(zone)
         .format(fmt)
 
@@ -29,7 +29,7 @@ describe("parseInZone", () => {
       const ref = new Date(0)
       const date = lib.date.parseInZone(referenceDate, zone, ref)
       const str = lib
-        .date(brim.time(date || new Date()).toDate())
+        .date(time(date || new Date()).toDate())
         .zone(zone)
         .format(fmt)
 
@@ -41,8 +41,7 @@ describe("parseInZone", () => {
     names.forEach((zone) => {
       const ref = new Date(0)
       const date = lib.date.parseInZone(casualDate, zone, ref)
-      const str = brim
-        .time(date || new Date())
+      const str = time(date || new Date())
         .toDate()
         .toISOString()
 

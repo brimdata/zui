@@ -82,11 +82,11 @@
   }
 
   .history-packet.arrow-right {
-    padding-right: $space-s/2;
+    padding-right: $space-s*0.5;
   }
 
   .history-packet.arrow-left {
-    padding-left: $space-s/2;
+    padding-left: $space-s*0.5;
     .triangle {
       order: 1;
       transform: rotate(180deg);

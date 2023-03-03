@@ -12,7 +12,7 @@ import {SubmitButton} from "src/components/submit-button"
 import {Scrollable} from "src/components/scrollable"
 import links from "src/app/core/links"
 import {createAndLoadFiles} from "src/app/commands/pools"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 import {FormError} from "src/components/form-error"
 import {useHistory} from "react-router"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
@@ -71,7 +71,7 @@ const Drop = styled(DropZone)`
 export function PoolNew() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const api = useBrimApi()
+  const api = useZuiApi()
   const form = useRef(null)
   const history = useHistory()
   const defaults = history.location.state || {}

@@ -1,5 +1,4 @@
 import {matchPath} from "react-router"
-import brim, {BrimLake} from "../../brim"
 import * as Pools from "../Pools/selectors"
 import {PoolsState} from "../Pools/types"
 import Tabs from "../Tabs"
@@ -9,7 +8,7 @@ import {LakesState} from "../Lakes/types"
 import {MemoryHistory} from "history"
 import {Pool} from "src/app/core/pools/pool"
 import Queries from "../Queries"
-import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {QueryModel} from "src/js/models/query-model"
 import QueryVersions from "../QueryVersions"
 import {query, queryVersion} from "src/app/router/routes"
 import SessionHistories from "../SessionHistories"
@@ -23,6 +22,7 @@ import {ActiveQuery} from "src/app/core/models/active-query"
 import SessionQueries from "../SessionQueries"
 import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
+import lake, {LakeModel} from "src/js/models/lake"
 
 type Id = string | null
 
@@ -86,7 +86,7 @@ export const getSession = createSelector(
   getSessionVersions,
   (query, versions) => {
     if (!query) return null
-    return new BrimQuery(query, versions, "session")
+    return new QueryModel(query, versions, "session")
   }
 )
 
@@ -115,14 +115,14 @@ export const getLakeId = (state: State = undefined) => {
   return match?.params?.lakeId || null
 }
 
-export const mustGetLake = createSelector<State, LakesState, Id, BrimLake>(
+export const mustGetLake = createSelector<State, LakesState, Id, LakeModel>(
   Lakes.raw,
   getLakeId,
   (lakes, id) => {
     if (!id) throw new Error("Current lake id is unset")
     if (!lakes[id]) throw new Error(`Missing lake id: ${id}`)
 
-    return brim.lake(lakes[id])
+    return lake(lakes[id])
   }
 )
 

@@ -1,4 +1,4 @@
-import brim from "src/js/brim"
+import lake from "src/js/models/lake"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
 import Pools from "src/js/state/Pools"
@@ -9,14 +9,14 @@ import {Thunk} from "src/js/state/types"
  */
 export function syncPoolsData(lakeId?: string): Thunk<Promise<void>> {
   return async (dispatch, getState, {api}) => {
-    const lake = lakeId
-      ? brim.lake(Lakes.id(lakeId)(getState()))
+    const lakeModel = lakeId
+      ? lake(Lakes.id(lakeId)(getState()))
       : Current.getLake(getState())
 
-    const zealot = await api.getZealot(lake)
+    const zealot = await api.getZealot(lakeModel)
 
     return zealot.getPools().then((allData) => {
-      dispatch(Pools.setAllData({lakeId: lake.id, allData}))
+      dispatch(Pools.setAllData({lakeId: lakeModel.id, allData}))
     })
   }
 }

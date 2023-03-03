@@ -3,8 +3,8 @@ import {isArray} from "lodash"
 import {CreatePoolOpts} from "packages/zealot/src"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
-import detectFileTypes from "src/js/brim/ingest/detectFileTypes"
-import {FileListData} from "src/js/brim/ingest/fileList"
+import detectFileTypes from "src/js/models/ingest/detectFileTypes"
+import {FileListData} from "src/js/models/ingest/fileList"
 import {loadEnd, loadStart} from "src/js/electron/ops/loads-in-progress-op"
 import deletePools from "src/js/flows/deletePools"
 import Current from "src/js/state/Current"
@@ -18,13 +18,13 @@ export class PoolsApi extends ApiDomain {
     return this.select(Current.getPools)
   }
 
-  get nameDelimeter() {
-    return this.configs.get("pools", "nameDelimeter")
+  get nameDelimiter() {
+    return this.configs.get("pools", "nameDelimiter")
   }
 
   inGroup(group: string[]) {
     return this.all.filter((pool) =>
-      new PoolName(pool.name, this.nameDelimeter).isIn(group)
+      new PoolName(pool.name, this.nameDelimiter).isIn(group)
     )
   }
 
@@ -34,10 +34,9 @@ export class PoolsApi extends ApiDomain {
 
   // TODO: Move to main progress, create a loads domain
   async loadFiles(poolId: string, files: File[], format?: string) {
-    console.log(format)
     const fileListData = await detectFileTypes(files)
     const loader = chooseLoader(this, fileListData)
-    const load = createLoad(this, poolId)
+    const load = createLoad(this, this.lakeId, poolId)
     const params = {
       poolId: poolId,
       branch: "main",
@@ -102,10 +101,9 @@ export class PoolsApi extends ApiDomain {
   }
 }
 
-function createLoad(api: PoolsApi, poolId: string) {
+function createLoad(api: PoolsApi, lakeId: string, poolId: string) {
   const ctl = new AbortController()
   const id = nanoid()
-  let warnings = []
 
   return {
     signal: ctl.signal,
@@ -113,7 +111,7 @@ function createLoad(api: PoolsApi, poolId: string) {
     setup: async () => {
       await loadStart.invoke(global.windowId)
       api.abortables.add({id, abort: () => ctl.abort()})
-      api.dispatch(Loads.create({id, poolId, progress: 0, warnings: []}))
+      api.dispatch(Loads.create({id, poolId, progress: 0}))
     },
 
     teardown: async () => {
@@ -127,8 +125,7 @@ function createLoad(api: PoolsApi, poolId: string) {
     },
 
     onWarning: (warning: string) => {
-      warnings = [...warnings, warning]
-      api.dispatch(Loads.update({id, changes: {warnings}}))
+      api.dispatch(Pools.appendWarning({lakeId, poolId, warning}))
     },
 
     onPoolChanged: async () => {

@@ -4,14 +4,14 @@ import Results from "src/js/state/Results"
 import QueryVersions from "../../../js/state/QueryVersions"
 import {MAIN_RESULTS} from "src/js/state/Results/types"
 import {Thunk} from "src/js/state/types"
-import {BrimQuery} from "../utils/brim-query"
+import {QueryModel} from "../../../js/models/query-model"
 
 const submitSearch =
   (): Thunk =>
   (dispatch, getState, {api}) => {
     const nextVersion = Editor.getSnapshot(getState())
     const active = Current.getActiveQuery(getState())
-    const error = BrimQuery.checkSyntax(nextVersion)
+    const error = QueryModel.checkSyntax(nextVersion)
 
     // An error with the syntax
     if (error) {

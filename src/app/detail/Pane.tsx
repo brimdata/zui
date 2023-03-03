@@ -1,4 +1,4 @@
-import {BrimEvent} from "src/ppl/detail/models/BrimEvent"
+import {SecurityEvent} from "src/ppl/detail/models/security-event"
 import {Correlation} from "src/ppl/detail/models/Correlation"
 import {SuricataEvent} from "src/ppl/detail/models/SuricataEvent"
 import {ZeekEvent} from "src/ppl/detail/models/ZeekEvent"
@@ -28,7 +28,7 @@ type Props = {
 }
 
 const Content = memo<Props>(function Content({record}) {
-  const event = useMemo(() => BrimEvent.build(record), [record])
+  const event = useMemo(() => SecurityEvent.build(record), [record])
   const isZeek = event instanceof ZeekEvent
   const isSuricata = event instanceof SuricataEvent
   const {uid, cid} = new Correlation(record).getIds()

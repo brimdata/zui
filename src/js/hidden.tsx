@@ -6,8 +6,7 @@ import {differenceWith, map} from "lodash"
 import {useEffect} from "react"
 import {Provider, useDispatch, useSelector} from "react-redux"
 import "regenerator-runtime/runtime"
-import brim from "./brim"
-import lake from "./brim/lake"
+import lake from "./models/lake"
 import {
   getRemotePoolForLake,
   refreshRemoteQueries,
@@ -79,7 +78,7 @@ const Hidden = () => {
 
             const remotePool = dispatch(getRemotePoolForLake(l.id))
             if (poolId === remotePool?.id)
-              dispatch(refreshRemoteQueries(brim.lake(l)))
+              dispatch(refreshRemoteQueries(lake(l)))
             dispatch(syncPool(poolId, l.id)).catch((e) => {
               log.error("branch-commit update failed: ", e)
             })

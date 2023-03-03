@@ -118,12 +118,6 @@ const slice = createSlice({
       }
     },
   },
-  extraReducers: {
-    // Remove this when we remove search bar
-    SEARCH_BAR_INPUT_CHANGE: (s, a) => {
-      s.value = a.value
-    },
-  },
 })
 
 export const reducer = slice.reducer

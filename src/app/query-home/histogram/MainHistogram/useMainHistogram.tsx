@@ -31,7 +31,7 @@ import {HistogramProps} from "./Chart"
 const id = HISTOGRAM_RESULTS
 
 // get pool
-// make a new brim query with the values,
+// make a new query with the values,
 // get the pool name
 // get the pool
 // get the full pool range

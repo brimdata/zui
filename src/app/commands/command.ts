@@ -1,4 +1,4 @@
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import {Dispatch, GetState, Store} from "src/js/state/types"
 
 type CommandMeta = {
@@ -8,7 +8,7 @@ type CommandMeta = {
 type CommandContext = {
   dispatch: Dispatch
   getState: GetState
-  api: BrimApi
+  api: ZuiApi
 }
 
 type CommandExecutor<Args extends any[], Return> = (
@@ -19,7 +19,7 @@ type CommandExecutor<Args extends any[], Return> = (
 export class Commands {
   private map = new Map<string, Command<any, any>>()
   private store: Store | null
-  private api: BrimApi | null
+  private api: ZuiApi | null
 
   add(command: Command<any, any>) {
     this.map.set(command.id, command)
@@ -43,7 +43,7 @@ export class Commands {
     }
   }
 
-  setContext(store: Store, api: BrimApi) {
+  setContext(store: Store, api: ZuiApi) {
     this.store = store
     this.api = api
   }

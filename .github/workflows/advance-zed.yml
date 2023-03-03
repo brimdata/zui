@@ -1,4 +1,7 @@
 name: Advance Zed
+
+concurrency: ${{ github.workflow }}
+
 # This type must match the event type from Zed.
 # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
 # These events only trigger on the GitHub default branch (usually main
@@ -13,31 +16,19 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-20.04]
-    timeout-minutes: 60
     steps:
-      # Only one of these should run at a time, and the checkout of brim
-      # has to be in the "protected section". This will poll every 60s
-      # forever. It will be timed out based on any change to
-      # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idtimeout-minutes
-      # It is not possible to time out this step and fail. It's only
-      # possible to time out this step and continue.
-      - name: Turnstyle
-        uses: softprops/turnstyle@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       # Since we intend to push, we must have a a writable token and
       # minimal git config settings to create commits.
       - uses: actions/checkout@v3
         with:
           # ref defaults to github.sha, which is fixed at the time a run
-          # is triggered. Using github.ref ensures a run that waits in
-          # the turnstyle action will see any commits pushed by the runs
+          # is triggered. Using github.ref ensures a run that waits for
+          # the concurrency group will see any commits pushed by the runs
           # that caused it to wait, reducing push failures down below.
           ref: ${{ github.ref }}
           token: ${{ secrets.ZQ_UPDATE_PAT }}
       - run: git config --local user.email 'automation@brimdata.io'
-      - run: git config --local user.name 'Brim Automation'
+      - run: git config --local user.name 'Brim Data Automation'
 
       # This section gets event information.
       - run: jq '.' "${GITHUB_EVENT_PATH}"
@@ -76,7 +67,7 @@ jobs:
       # is no different than the normal CI flow.
       - uses: actions/setup-go@v2
         with:
-          go-version: '1.19'
+          go-version: "1.19"
       - uses: actions/setup-node@v3
         with:
           cache: yarn

@@ -2,8 +2,7 @@ import {lakePath} from "src/app/router/utils/paths"
 import React from "react"
 import {useSelector} from "react-redux"
 import {useHistory} from "react-router"
-import {BrimLake} from "src/js/brim"
-import lake from "src/js/brim/lake"
+import lake, {LakeModel} from "src/js/models/lake"
 import DataStoreIcon from "src/js/icons/DataStoreIcon"
 import Lakes from "src/js/state/Lakes"
 import styled from "styled-components"
@@ -41,7 +40,7 @@ const LakeAddress = styled.div`
 `
 
 type Props = {
-  lake: BrimLake
+  lake: LakeModel
   onClick: () => void
 }
 

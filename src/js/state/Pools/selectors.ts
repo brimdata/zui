@@ -15,6 +15,14 @@ export const get =
     return Pool.from(poolState)
   }
 
+export const getWarnings =
+  (lakeId: string, poolId: string) =>
+  (state: State): string[] | null => {
+    const poolState = getLake(state, lakeId)[poolId]
+    if (!poolState) return null
+    return poolState.warnings
+  }
+
 export const raw = (state: State): PoolsState => state.pools
 
 export const all = createSelector(

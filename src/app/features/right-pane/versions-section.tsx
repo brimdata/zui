@@ -3,10 +3,10 @@ import VersionItem from "./version-item"
 import {Tree} from "react-arborist"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
-import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {QueryModel} from "src/js/models/query-model"
 import {EmptyText} from "./common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
-import {useBrimApi} from "src/app/core/context"
+import {useZuiApi} from "src/app/core/context"
 
 const EmptyMessage = () => {
   return <EmptyText>Open a saved query to see the previous versions.</EmptyText>
@@ -21,8 +21,8 @@ const VersionsSection = () => {
   }
 }
 
-const VersionsList = ({query}: {query: BrimQuery}) => {
-  const api = useBrimApi()
+const VersionsList = ({query}: {query: QueryModel}) => {
+  const api = useZuiApi()
   const data = useMemo(() => {
     return query.versions
       .map((v) => ({...v, id: v.version}))

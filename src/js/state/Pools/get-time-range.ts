@@ -1,4 +1,4 @@
-import span from "src/js/brim/span"
+import span from "src/js/models/span"
 import {DateTuple} from "src/js/lib/TimeWindow"
 import {Thunk} from "src/js/state/types"
 import {ensurePoolLoaded} from "./ensure-pool-loaded"

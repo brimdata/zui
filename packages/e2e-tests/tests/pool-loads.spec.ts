@@ -19,7 +19,7 @@ test.describe("Pool Loads", () => {
     await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
     await app.query("count()")
     const results = await app.getViewerResults()
-    expect(results).toEqual(["count", "1"])
+    expect(results).toEqual(["this", "1"])
     await app.mainWin.getByText("Load Successful").waitFor({state: "hidden"})
   })
 
@@ -33,7 +33,7 @@ test.describe("Pool Loads", () => {
     await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
     await app.query("count()")
     const results = await app.getViewerResults()
-    expect(results).toEqual(["count", "2"])
+    expect(results).toEqual(["this", "2"])
     await app.mainWin.getByText("Load Successful").waitFor({state: "hidden"})
   })
 

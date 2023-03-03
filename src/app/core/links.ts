@@ -1,6 +1,6 @@
-import * as brimPackage from "../../../package.json"
+import * as pkg from "../../../package.json"
 
-const currentZedTag = brimPackage.dependencies.zed.split("#")[1] || "main"
+const currentZedTag = pkg.dependencies.zed.split("#")[1] || "main"
 const zedDocsTag = currentZedTag.startsWith("v") ? currentZedTag : "next"
 
 export default {
@@ -10,5 +10,6 @@ export default {
   ZED_DOCS_FORMATS_ZNG: `https://zed.brimdata.io/docs/${zedDocsTag}/formats/zng`,
   ZED_DOCS_FORMATS_ZSON: `https://zed.brimdata.io/docs/${zedDocsTag}/formats/zson`,
   ZED_DOCS_FORMATS_VNG: `https://zed.brimdata.io/docs/${zedDocsTag}/formats/vng`,
+  ZUI_DOCS_ROOT: `https://zui.brimdata.io/docs`,
   ZUI_DOWNLOAD: `https://www.brimdata.io/download/`,
 }

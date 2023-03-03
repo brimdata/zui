@@ -15,7 +15,3 @@ export const getPoolProgress = createSelector(wherePoolId, (loads) => {
   // Not really accurate
   return sum(progresses) / progresses.length
 })
-
-export const getPoolWarnings = createSelector(wherePoolId, (loads) => {
-  return loads.flatMap((l) => l.warnings)
-})

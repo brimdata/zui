@@ -5,8 +5,6 @@ import {HistoryView, QueriesView, SectionName, OpenMap} from "./types"
 const init = () => ({
   sidebarIsOpen: true,
   sidebarWidth: 230,
-  /* Not used */
-  sidebarSections: [{id: "pools"}, {id: "queries"}, {id: "history"}],
   currentSectionName: "pools" as SectionName,
   queriesView: "local" as QueriesView,
   historyView: "linear" as HistoryView,
@@ -17,7 +15,6 @@ const init = () => ({
 const select = {
   sidebarIsOpen: (state: State) => state.appearance.sidebarIsOpen,
   sidebarWidth: (state: State) => state.appearance.sidebarWidth,
-  sidebarSections: (state: State) => state.appearance.sidebarSections,
   getCurrentSectionName: (state: State) => state.appearance.currentSectionName,
   getQueriesView: (state: State) => state.appearance.queriesView,
   getHistoryView: (state: State) => state.appearance.historyView,

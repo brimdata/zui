@@ -53,7 +53,7 @@ export class Lake {
       windowsHide: true,
     }
     // For unix systems, pass posix pipe read file descriptor into lake process.
-    // In the event of Brim getting shutdown via `SIGKILL`, this will let lake
+    // In the event of Zui getting shutdown via `SIGKILL`, this will let lake
     // know that it has been orphaned and to shutdown.
     if (process.platform !== "win32") {
       // eslint-disable-next-line @typescript-eslint/no-var-requires

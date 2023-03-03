@@ -9,7 +9,7 @@ import {TableInspector} from "./table-inspector"
 export function ResultsPane() {
   const ref = useRef()
   return (
-    <div ref={ref} className="results-pane" data-test-locator="viewer_results">
+    <div ref={ref} className="results-pane" data-testid="results-pane">
       <AppErrorBoundary>
         <ResultsPaneProvider parentRef={ref}>
           <ResultsView />

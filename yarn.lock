@@ -4860,10 +4860,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@brimdata/brimcap#0bcc312e86f6e3d9cfc85033f25a4bae790b15c7":
+"brimcap@brimdata/brimcap#v1.4.0":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=0bcc312e86f6e3d9cfc85033f25a4bae790b15c7"
-  checksum: 19b11c8563df36464a083758067388d9b69ce66eee279d8baee5f8262e1a483d21e4631fe531fc5afdbdb8854db083b52a86de21b213a515be8e9e91897a932a
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=60f7ea4028772f759d1e765a45299363dd2b9ac7"
+  checksum: a0a4e9d729dd5ea6c9722a97ff7d723267fb943f215e2f0024f587897637659a26cb35443e5c35c824df8d49d7cff185d5beee6afe95c784c2e56bddf160b480
   languageName: node
   linkType: hard
 
@@ -5308,13 +5308,6 @@ __metadata:
   version: 0.7.0
   resolution: "chardet@npm:0.7.0"
   checksum: 6fd5da1f5d18ff5712c1e0aed41da200d7c51c28f11b36ee3c7b483f3696dabc08927fc6b227735eb8f0e1215c9a8abd8154637f3eff8cada5959df7f58b024d
-  languageName: node
-  linkType: hard
-
-"charenc@npm:~0.0.1":
-  version: 0.0.2
-  resolution: "charenc@npm:0.0.2"
-  checksum: 81dcadbe57e861d527faf6dd3855dc857395a1c4d6781f4847288ab23cffb7b3ee80d57c15bba7252ffe3e5e8019db767757ee7975663ad2ca0939bb8fcaf2e5
   languageName: node
   linkType: hard
 
@@ -5948,13 +5941,6 @@ __metadata:
     shebang-command: ^2.0.0
     which: ^2.0.1
   checksum: a6863ec15a85db58876228843ea4ebdf6b9c4af8e528bec5ca62ed41854931ea1fbeb94633b0c6ed78625802b8abc638db950da0c2c7e2146409a9f33b714b48
-  languageName: node
-  linkType: hard
-
-"crypt@npm:~0.0.1":
-  version: 0.0.2
-  resolution: "crypt@npm:0.0.2"
-  checksum: baf4c7bbe05df656ec230018af8cf7dbe8c14b36b98726939cef008d473f6fe7a4fad906cfea4062c93af516f1550a3f43ceb4d6615329612c6511378ed9fe34
   languageName: node
   linkType: hard
 
@@ -9329,7 +9315,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-buffer@npm:^1.1.5, is-buffer@npm:~1.1.1":
+"is-buffer@npm:^1.1.5":
   version: 1.1.6
   resolution: "is-buffer@npm:1.1.6"
   checksum: 4a186d995d8bbf9153b4bd9ff9fd04ae75068fe695d29025d25e592d9488911eeece84eefbd8fa41b8ddcc0711058a71d4c466dcf6f1f6e1d83830052d8ca707
@@ -11597,17 +11583,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"md5@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "md5@npm:2.2.1"
-  dependencies:
-    charenc: ~0.0.1
-    crypt: ~0.0.1
-    is-buffer: ~1.1.1
-  checksum: 2237e583f961d04d43c59c2f9383d1e47099427fa37f9dc50e8aec32e770f8b038ad9268c2523a7c8041ab6f4678a742ca533a7f670dbc2857c5b18388cf4d71
-  languageName: node
-  linkType: hard
-
 "mdast-util-definitions@npm:^4.0.0":
   version: 4.0.0
   resolution: "mdast-util-definitions@npm:4.0.0"
@@ -12278,14 +12253,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-abort-controller@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "node-abort-controller@npm:3.0.1"
-  checksum: 2b3d75c65249fea99e8ba22da3a8bc553f034f44dd12f5f4b38b520f718b01c88718c978f0c24c2a460fc01de9a80b567028f547b94440cb47adeacfeb82c2ee
-  languageName: node
-  linkType: hard
-
-"node-addon-api@npm:*, node-addon-api@npm:^3.0.0, node-addon-api@npm:^3.1.0":
+"node-addon-api@npm:*, node-addon-api@npm:^3.0.0":
   version: 3.1.0
   resolution: "node-addon-api@npm:3.1.0"
   dependencies:
@@ -13584,9 +13552,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:2.2.0":
-  version: 2.2.0
-  resolution: "react-arborist@npm:2.2.0"
+"react-arborist@npm:3.0.2":
+  version: 3.0.2
+  resolution: "react-arborist@npm:3.0.2"
   dependencies:
     react-dnd: ^14.0.3
     react-dnd-html5-backend: ^14.0.1
@@ -13596,7 +13564,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: e2262b36bdd980695cc76b1fdcef79b13435bca55eb81796e07a0bb9e11b5c05cd7623751f086326886c6792133a677fd14f3dc28b99775bf3107b62b0d7b6b5
+  checksum: 8fa035db59f3d6adcbf06e0d140cb5a483edb5f55d9db2f2a13e691acb7ba0a45a89d7c24953756b9f2c263d629dbdf1ed1c5d0a116de5587f6abf0c12ecbc3a
   languageName: node
   linkType: hard
 
@@ -13827,16 +13795,6 @@ __metadata:
     react: ">=15.0.0"
     react-dom: ">=15.0.0"
   checksum: d8c9e50aabdc2cfc324e5cdb0ad1c6eecb02e1c0cd007b26d5b30ccf49015e900683dd489348c71fba4055858308d9ba7019e0d37d0e8d37bd46ed098788f670
-  languageName: node
-  linkType: hard
-
-"react-virtualized-auto-sizer@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "react-virtualized-auto-sizer@npm:1.0.6"
-  peerDependencies:
-    react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
-    react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
-  checksum: 81270e9d328e9b779515f42b6aa8dea2f21097f69fc776906d6b7d31ada03706d34408a6318baf59531f180402fbf74fdb9928ab65d53442a134b7ee5ba01265
   languageName: node
   linkType: hard
 
@@ -15783,15 +15741,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tee-1@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "tee-1@npm:0.2.0"
-  dependencies:
-    through: ~1.1.1
-  checksum: dd898c5168df329e0298053c117bc6931e3d1df4facd8063f817919d72abb18687db5a26292f61d55c022af518d559182151b070a6389a2b4889994d7d758a21
-  languageName: node
-  linkType: hard
-
 "temp-file@npm:^3.4.0":
   version: 3.4.0
   resolution: "temp-file@npm:3.4.0"
@@ -15841,13 +15790,6 @@ __metadata:
   version: 2.3.8
   resolution: "through@npm:2.3.8"
   checksum: a38c3e059853c494af95d50c072b83f8b676a9ba2818dcc5b108ef252230735c54e0185437618596c790bbba8fcdaef5b290405981ffa09dce67b1f1bf190cbd
-  languageName: node
-  linkType: hard
-
-"through@npm:~1.1.1":
-  version: 1.1.2
-  resolution: "through@npm:1.1.2"
-  checksum: 738acf63a737c9ee01286cbc3f5e59330c8b8fd1c8edebf0f676def8deaf908683b8976318bb82784f9e7b50bd832c7d32afcc99ba692f6c5fc4c52d5e0c7f46
   languageName: node
   linkType: hard
 
@@ -16504,13 +16446,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"valid-url@npm:^1.0.9":
-  version: 1.0.9
-  resolution: "valid-url@npm:1.0.9"
-  checksum: 3ecb030559404441c2cf104cbabab8770efb0f36d117db03d1081052ef133015a68806148ce954bb4dd0b5c42c14b709a88783c93d66b0916cb67ba771c98702
-  languageName: node
-  linkType: hard
-
 "validate-npm-package-license@npm:^3.0.1":
   version: 3.0.4
   resolution: "validate-npm-package-license@npm:3.0.4"
@@ -17105,12 +17040,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#58606a00f1c1c714daaba5ff4d46d9a9134af25a":
+"zed@brimdata/zed#739e2713faaa1f36f7245c0e4ea7105a73bcc27a":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=58606a00f1c1c714daaba5ff4d46d9a9134af25a"
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=739e2713faaa1f36f7245c0e4ea7105a73bcc27a"
   dependencies:
     zealot: ^0.2.0
-  checksum: 4c204d3e4ea24ef5c368c9406c8c238c8d34f12a8d06b9ea8613f52b90968682aa80b44803fea2bbde2f83cedbcd4ea8dab471aeffeb0bc621d8a443454aec1f
+  checksum: bd8bc8d3569139aec3cbcff0b9c73ca0b0674aea57eb94e586044a74ca56b4217178fee7c40aec71af35abc76fe7925596f7c4f991489063645fa4082b15b1f0
   languageName: node
   linkType: hard
 
@@ -17177,8 +17112,7 @@ __metadata:
     babel-core: ^7.0.0-bridge.0
     babel-eslint: ^10.1.0
     babel-plugin-module-resolver: ^4.0.0
-    base64-js: ^1.3.1
-    brimcap: "brimdata/brimcap#0bcc312e86f6e3d9cfc85033f25a4bae790b15c7"
+    brimcap: "brimdata/brimcap#v1.4.0"
     chalk: ^4.1.0
     chrono-node: ^1.4.8
     classnames: ^2.2.6
@@ -17218,14 +17152,11 @@ __metadata:
     lint-staged: ^12.1.5
     livereload: ^0.9.1
     lodash: ^4.17.21
-    md5: ^2.2.1
     memoize-one: ^6.0.0
     moment: ^2.27.0
     moment-timezone: ^0.5.31
     mousetrap: ^1.6.5
     msw: ^0.36.8
-    node-abort-controller: ^3.0.1
-    node-addon-api: ^3.1.0
     node-fetch: ^2.6.1
     node-pipe: ^0.1.1
     npm-run-all: ^4.1.5
@@ -17235,7 +17166,7 @@ __metadata:
     prettier-eslint: ^8.8.2
     prismjs: ^1.25.0
     react: ^18.0.0
-    react-arborist: 2.2.0
+    react-arborist: 3.0.2
     react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0
@@ -17248,7 +17179,6 @@ __metadata:
     react-spring: ^8.0.27
     react-tooltip: ^4.2.7
     react-transition-group: ^2.9.0
-    react-virtualized-auto-sizer: ^1.0.6
     react-window: ^1.8.7
     regenerator-runtime: ^0.13.6
     resize-observer-polyfill: ^1.5.1
@@ -17258,17 +17188,15 @@ __metadata:
     set-tz: ^0.2.0
     sprintf-js: ^1.1.2
     styled-components: ^5.3.5
-    tee-1: ^0.2.0
     tmp: ^0.1.0
     tree-model: ^1.0.7
     typescript: ^4.6.2
     use-resize-observer: ^8.0.0
-    valid-url: ^1.0.9
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
     whatwg-fetch: ^3.2.0
     win-7zip: ^0.1.0
-    zed: "brimdata/zed#58606a00f1c1c714daaba5ff4d46d9a9134af25a"
+    zed: "brimdata/zed#739e2713faaa1f36f7245c0e4ea7105a73bcc27a"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0

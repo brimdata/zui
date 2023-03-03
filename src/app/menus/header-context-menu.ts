@@ -1,6 +1,6 @@
 import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 import {ZedColumn} from "src/components/zed-table/column"
-import BrimApi from "src/js/api"
+import ZuiApi from "src/js/api/zui-api"
 import {
   appendQueryCountBy,
   appendQuerySortBy,
@@ -8,7 +8,7 @@ import {
 import submitSearch from "../query-home/flows/submit-search"
 import {createMenu} from "src/core/menu"
 
-function getWhenContext(api: BrimApi, column: ZedColumn) {
+function getWhenContext(api: ZuiApi, column: ZedColumn) {
   const query = api.current.query
   const ast = query.toAst()
   return {

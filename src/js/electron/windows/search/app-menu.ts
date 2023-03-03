@@ -39,7 +39,7 @@ export function compileTemplate(
     click: () => app.quit(),
   }
 
-  const aboutBrim: MenuItemConstructorOptions = {
+  const aboutApp: MenuItemConstructorOptions = {
     label: `About ${app.getName()}`,
     click() {
       openAboutWindowOp.run()
@@ -73,9 +73,9 @@ export function compileTemplate(
   }
 
   const brimMenu: MenuItemConstructorOptions = {
-    label: "Brim",
+    label: app.getName(),
     submenu: [
-      aboutBrim,
+      aboutApp,
       __,
       preferences,
       {role: "services", submenu: []},
@@ -228,14 +228,20 @@ export function compileTemplate(
         },
       },
       {
-        label: "Show Welcome Page",
-        click: () => runCommandOp.run(showWelcomePage),
+        label: "Zui Docs",
+        click() {
+          shell.openExternal(links.ZUI_DOCS_ROOT)
+        },
       },
       {
         label: "Zed Syntax Docs",
         click() {
           shell.openExternal(links.ZED_DOCS_LANGUAGE)
         },
+      },
+      {
+        label: "Show Welcome Page",
+        click: () => runCommandOp.run(showWelcomePage),
       },
       {
         label: "Slack Support Channel",
@@ -246,21 +252,21 @@ export function compileTemplate(
       {
         label: "Github Repository",
         click() {
-          shell.openExternal("https://github.com/brimdata/brim")
+          shell.openExternal("https://github.com/brimdata/zui")
         },
       },
       {
         label: "Submit Issue...",
         click() {
           shell.openExternal(
-            "https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue"
+            "https://github.com/brimdata/zui/wiki/Troubleshooting#opening-an-issue"
           )
         },
       },
     ]
 
     if (!mac) {
-      submenu.push(__, aboutBrim)
+      submenu.push(__, aboutApp)
     }
     return submenu
   }

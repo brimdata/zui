@@ -1,7 +1,7 @@
-import BrimApi from ".."
+import ZuiApi from "../zui-api"
 
 export type Correlation = {
   id: string
-  query: (api: BrimApi) => Promise<string> | string
-  when: (api: BrimApi) => boolean
+  query: (api: ZuiApi) => Promise<string> | string
+  when: (api: ZuiApi) => boolean
 }

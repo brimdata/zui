@@ -3,7 +3,6 @@
  */
 
 import Current from "../Current"
-import Search from "../Search"
 import Tabs from "./"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 
@@ -34,12 +33,6 @@ test("cannot activate tab that does not exist in data", () => {
 test("remove tab", () => {
   const state = store.dispatchAll([Tabs.add("1"), Tabs.remove("1")])
   expect(Tabs.getCount(state)).toBe(1)
-})
-
-test("forwards actions to the active tab", () => {
-  const state = store.dispatchAll([Search.setSpanArgs(["now-1m", "now"])])
-  const tab = Tabs.getActiveTab(state)
-  expect(tab.search.spanArgs).toEqual(["now-1m", "now"])
 })
 
 test("remove last, active tab", () => {

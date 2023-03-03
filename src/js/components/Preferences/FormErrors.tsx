@@ -1,7 +1,7 @@
 import {isEmpty} from "lodash"
 import React from "react"
 
-import {FormError} from "../../brim/form"
+import {FormError} from "../../models/form"
 import classNames from "classnames"
 
 type Props = {errors: FormError[]; className?: string}

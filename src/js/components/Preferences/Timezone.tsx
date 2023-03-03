@@ -1,9 +1,9 @@
 import React from "react"
+import time from "src/js/models/time"
 
-import {FormFieldConfig} from "../../brim/form"
+import {FormFieldConfig} from "../../models/form"
 import InputLabel from "../common/forms/InputLabel"
 import SelectInput from "../common/forms/SelectInput"
-import brim from "../../brim"
 
 type Props = {config: FormFieldConfig}
 
@@ -13,7 +13,7 @@ export default function Timezone({config}: Props) {
     <div className="setting-panel">
       <InputLabel htmlFor={name}>{label}</InputLabel>
       <SelectInput name={name} id={name} defaultValue={defaultValue as string}>
-        {brim.time.getZoneNames().map((name) => (
+        {time.getZoneNames().map((name) => (
           <option key={name} value={name}>
             {name}
           </option>

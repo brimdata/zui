@@ -1,7 +1,7 @@
 import {Client} from "@brimdata/zealot"
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
+import lake from "src/js/models/lake"
 import {validateToken} from "../../auth0/utils"
-import brim from "../../brim"
 import Lakes from "../../state/Lakes"
 import LakeStatuses from "../../state/LakeStatuses"
 import {getAuthCredentials} from "./getAuthCredentials"
@@ -13,23 +13,23 @@ import {getAuthCredentials} from "./getAuthCredentials"
 export const updateStatus =
   (lakeId: string) =>
   async (dispatch, getState): Promise<void> => {
-    const lake = brim.lake(Lakes.id(lakeId)(getState()))
-    const zealot = new Client(lake.getAddress())
+    const lakeModel = lake(Lakes.id(lakeId)(getState()))
+    const zealot = new Client(lakeModel.getAddress())
 
     const activate = async () => {
       await dispatch(syncPoolsData())
-      dispatch(LakeStatuses.set(lake.id, "connected"))
+      dispatch(LakeStatuses.set(lakeModel.id, "connected"))
     }
 
     const isDown = async () => {
       try {
         // check version to test that zqd is available, update lake version while doing so
         const {version} = await zealot.version()
-        lake.version = version
+        lakeModel.version = version
         return false
       } catch (e) {
         console.error(e)
-        dispatch(LakeStatuses.set(lake.id, "disconnected"))
+        dispatch(LakeStatuses.set(lakeModel.id, "disconnected"))
         return true
       }
     }
@@ -37,34 +37,34 @@ export const updateStatus =
     if (await isDown()) return
 
     // update version
-    dispatch(Lakes.add(lake.serialize()))
+    dispatch(Lakes.add(lakeModel.serialize()))
 
     // no auth required
-    if (lake.authType === "none") {
+    if (lakeModel.authType === "none") {
       activate()
       return
     }
 
     // auth required, if method is auth0...
-    if (lake.authType === "auth0") {
+    if (lakeModel.authType === "auth0") {
       // ...and we already have the token
-      if (validateToken(lake.authData.accessToken)) {
+      if (validateToken(lakeModel.authData.accessToken)) {
         activate()
         return
       }
 
       // otherwise, need to refresh accessToken
-      const accessToken = await dispatch(getAuthCredentials(lake))
+      const accessToken = await dispatch(getAuthCredentials(lakeModel))
       if (accessToken) {
-        dispatch(Lakes.setLakeToken(lake.id, accessToken))
+        dispatch(Lakes.setLakeToken(lakeModel.id, accessToken))
         activate()
         return
       }
 
       // otherwise login is required, send user to our 'login' page and let them initiate the flow there
-      dispatch(LakeStatuses.set(lake.id, "login-required"))
+      dispatch(LakeStatuses.set(lakeModel.id, "login-required"))
       return
     }
 
-    throw new Error("unknown auth type: " + lake.authType)
+    throw new Error("unknown auth type: " + lakeModel.authType)
   }

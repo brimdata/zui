@@ -18,8 +18,8 @@ export function initialize() {
         arguments: getArguments("--move-to-current-display"),
         iconPath: process.execPath,
         iconIndex: 0,
-        title: "Move Brim to Current Display",
-        description: "Move Brim windows to the current display",
+        title: "Move Zui to Current Display",
+        description: "Move Zui windows to the current display",
       },
     ])
   }

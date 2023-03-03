@@ -19,7 +19,7 @@ const DropBG = styled.div`
   text-align: center;
 `
 
-const DropMessage = styled.p`
+const DropMessage = styled.div`
   animation: updown 1200ms ease-in-out infinite alternate;
 `
 

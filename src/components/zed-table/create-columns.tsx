@@ -10,6 +10,7 @@ export function createColumns(
   indexPath: number[] = []
 ) {
   if (type instanceof zed.TypeRecord) {
+    if (type.fields === null) return []
     return type.fields.map(
       (field, index) =>
         new ZedColumn({

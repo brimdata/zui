@@ -1,7 +1,6 @@
 import ErrorFactory from "src/js/models/ErrorFactory"
 import * as selectors from "./selectors"
 import {Thunk} from "../types"
-import Viewer from "../Viewer"
 import {actions} from "./reducer"
 import Current from "../Current"
 import {MAIN_RESULTS} from "./types"
@@ -13,7 +12,6 @@ export function fetchFirstPage(query: string): Thunk {
     const tabId = Current.getTabId(getState())
     const key = Current.getLocation(getState()).key
 
-    dispatch(Viewer.clear())
     dispatch(actions.init({query, key, id, tabId}))
     dispatch(fetchResults(tabId))
   }
@@ -37,7 +35,6 @@ function fetchResults(tabId: string): Thunk {
       const shapes = {...prevShapes, ...shapesMap}
       dispatch(actions.setValues({id, tabId, values}))
       dispatch(actions.setShapes({id, tabId, shapes}))
-      dispatch(Viewer.updateColumns(tabId, shapesMap))
     }
 
     try {

@@ -12,7 +12,7 @@ import Modal from "src/js/state/Modal"
 import {AppDispatch} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
 import {Lake} from "src/js/state/Lakes/types"
-import brim from "src/js/brim"
+import lake from "src/js/models/lake"
 
 const LakeNameGroup = styled.div`
   display: flex;
@@ -93,7 +93,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
 export default function LakePicker() {
   const dispatch = useDispatch<AppDispatch>()
   const lakeId = useLakeId()
-  const current = brim.lake(useSelector(Lakes.id(lakeId)))
+  const current = lake(useSelector(Lakes.id(lakeId)))
 
   return (
     <LakeNameGroup onClick={() => dispatch(showLakeSelectMenu())}>

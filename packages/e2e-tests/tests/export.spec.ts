@@ -8,9 +8,10 @@ import fsExtra from "fs-extra"
 const tempDir = os.tmpdir()
 const formats = [
   {label: "Arrow IPC Stream", expectedSize: 46512},
-  {label: "CSV", expectedSize: 12208},
+  {label: "CSV", expectedSize: 10851},
   {label: "JSON", expectedSize: 13659},
   {label: "NDJSON", expectedSize: 13657},
+  {label: "VNG", expectedSize: 6794},
   {label: "Zeek", expectedSize: 9772},
   {label: "ZJSON", expectedSize: 18007},
   {label: "ZNG", expectedSize: 3744},
@@ -37,7 +38,7 @@ test.describe("Export tests", () => {
     test(`Exporting in ${label} format succeeds`, async () => {
       const file = path.join(tempDir, `results.${label}`)
 
-      app.brim.evaluate(async ({dialog}, filePath) => {
+      app.zui.evaluate(async ({dialog}, filePath) => {
         dialog.showSaveDialog = () =>
           Promise.resolve({canceled: false, filePath})
       }, file)

@@ -3,13 +3,13 @@ import {Query} from "src/js/state/Queries/types"
 import {Thunk} from "src/js/state/types"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
-import {BrimQuery} from "src/app/query-home/utils/brim-query"
+import {QueryModel} from "src/js/models/query-model"
 import SessionQueries from "."
 import {getNextCount} from "../Queries/helpers"
 import Current from "../Current"
 
 export const create =
-  (attrs: Partial<QueryVersion> = {}): Thunk<BrimQuery> =>
+  (attrs: Partial<QueryVersion> = {}): Thunk<QueryModel> =>
   (dispatch, getState) => {
     const queryId = Current.getTabId(getState())
     const queries = Object.values(SessionQueries.raw(getState()))
@@ -32,7 +32,7 @@ export const create =
     dispatch(Versions.create(version))
     const versions = Versions.all(getState())
 
-    return new BrimQuery(query, versions, "session")
+    return new QueryModel(query, versions, "session")
   }
 
 export const init = (id: string) => (dispatch) => {

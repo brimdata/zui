@@ -1,7 +1,21 @@
 import moment from "moment"
+import {TimeUnit} from "."
 
 import {DateTuple} from "../lib/TimeWindow"
-import {Interval} from "../types"
+
+export type Interval = {
+  number: number
+  unit: LongTimeUnit
+  roundingUnit: TimeUnit
+}
+
+export type LongTimeUnit =
+  | "millisecond"
+  | "second"
+  | "minute"
+  | "hour"
+  | "day"
+  | "month"
 
 export const timeUnits = {
   millisecond: "ms",

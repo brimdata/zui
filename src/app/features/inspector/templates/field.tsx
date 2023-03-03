@@ -1,4 +1,3 @@
-import {zed} from "@brimdata/zealot"
 import {RenderMode} from "../types"
 import {View} from "../views/view"
 import {item} from "./item"
@@ -15,8 +14,8 @@ export function field(view: View, mode: RenderMode) {
 
   nodes.push(item(view, mode))
 
-  if (zed.isTypeAlias(view.type) && view.showDecorator) {
-    nodes.push(typename(view))
+  if (view.decorator && view.showDecorator) {
+    nodes.push(typename(view.decorator))
   }
 
   if (!view.isLast) {

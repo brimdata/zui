@@ -7,8 +7,11 @@ import {NullView} from "./null-view"
 import {RecordView} from "./record-view"
 import {SetView} from "./set-view"
 import {StringView} from "./string-view"
+import {TypeValueView} from "./type-value-view"
 import {TypeRecordView} from "./type-record-view"
+import {TypeUnionView} from "./type-union-view"
 import {View} from "./view"
+import {ExplicitPrimitiveView} from "./explicit-primitive-view"
 
 export function createView(args: InspectArgs): View {
   const CustomView = args.ctx.customViews.find((v) => v.when(args))
@@ -39,13 +42,26 @@ export function createView(args: InspectArgs): View {
   if (args.value instanceof zed.TypeValue)
     return createView({...args, value: args.value.value})
 
+  if (zed.isInt(args.value) && !(args.value instanceof zed.Int64)) {
+    return new ExplicitPrimitiveView(args)
+  }
+
+  if (zed.isFloat(args.value) && !(args.value instanceof zed.Float64)) {
+    return new ExplicitPrimitiveView(args)
+  }
+
   // TYPES
 
-  // * type record
-  if (args.value instanceof zed.TypeRecord) return new TypeRecordView(args)
+  if (args.value instanceof zed.TypeRecord) {
+    return new TypeRecordView(args)
+  }
+
+  if (args.value instanceof zed.TypeUnion) return new TypeUnionView(args)
 
   if (args.value instanceof zed.TypeAlias)
     return createView({...args, value: args.value.type, type: args.value})
+
+  if (zed.isType(args.value)) return new TypeValueView(args)
 
   // * type union
   // * type alias

@@ -11,14 +11,13 @@ import {
 export const ipcRendererReduxMiddleware: Middleware =
   (_store) => (next) => (action) => {
     const result = next(action)
-    if (isGlobalAction(action)) {
-      /* {remote: true} means this was already sent to you from elsewhere */
-      if (!action.remote) {
-        globalDispatchFromWindow.invoke(action).catch((e) => {
-          console.error(e)
-        })
-      }
+
+    if (shouldForward(action)) {
+      globalDispatchFromWindow.invoke(action).catch((e) => {
+        console.error(e)
+      })
     }
+
     return result
   }
 
@@ -29,7 +28,11 @@ export const ipcRendererReduxMiddleware: Middleware =
 export const ipcMainReduxMiddleware: Middleware =
   (_store) => (next) => (action) => {
     const result = next(action)
-    if (isGlobalAction(action)) globalDispatchFromMain.run(action)
+
+    if (shouldForward(action)) {
+      globalDispatchFromMain.run(action)
+    }
+
     return result
   }
 
@@ -37,3 +40,6 @@ export const ipcMainReduxMiddleware: Middleware =
  * A global action starts with a $
  */
 const isGlobalAction = (action: AnyAction) => action.type.startsWith("$")
+const shouldForward = (action: AnyAction) =>
+  isGlobalAction(action) && !action.remote
+/* {remote: true} means this was already sent to you from elsewhere */

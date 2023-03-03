@@ -1,23 +1,18 @@
 import {zed} from "@brimdata/zealot"
-import brim from "../../brim"
-import {onlyWhitespace} from "../../lib/Str"
-import SearchBar from "../../state/SearchBar"
-import {
-  getSearchBar,
-  getSearchBarInputValue,
-} from "../../state/SearchBar/selectors"
+import program from "src/js/models/program"
+import Editor from "src/js/state/Editor"
 import {Thunk} from "../../state/types"
 
-const changeTo = (value) => (dispatch) => {
-  dispatch(SearchBar.changeSearchBarInput(value))
-}
+const changeTo =
+  (value: string): Thunk =>
+  (dispatch) => {
+    dispatch(Editor.setValue(value))
+  }
 
 export function appendQueryInclude(field: zed.Field): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      changeTo(
-        brim.program(getSearchBarInputValue(getState())).include(field).string()
-      )
+      changeTo(program(Editor.getValue(getState())).include(field).string())
     )
   }
 }
@@ -25,20 +20,15 @@ export function appendQueryInclude(field: zed.Field): Thunk {
 export function appendQueryExclude(field: zed.Field): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      changeTo(
-        brim.program(getSearchBarInputValue(getState())).exclude(field).string()
-      )
+      changeTo(program(Editor.getValue(getState())).exclude(field).string())
     )
   }
 }
 
 export function appendQueryCountBy(name: string | string[]): Thunk {
   return function (dispatch, getState) {
-    const {current, pinned} = getSearchBar(getState())
-    const query = [...pinned, current].join(" ")
-    const program = onlyWhitespace(query) ? "*" : current
-
-    dispatch(changeTo(brim.program(program).countBy(name).string()))
+    const current = Editor.getValue(getState())
+    dispatch(changeTo(program(current).countBy(name).string()))
   }
 }
 
@@ -47,23 +37,18 @@ export function appendQuerySortBy(
   direction: "asc" | "desc"
 ): Thunk {
   return function (dispatch, getState) {
-    const {current, pinned} = getSearchBar(getState())
-    const query = [...pinned, current].join(" ")
-    const program = onlyWhitespace(query) ? "*" : current
-
-    dispatch(changeTo(brim.program(program).sortBy(name, direction).string()))
+    dispatch(
+      changeTo(
+        program(Editor.getValue(getState())).sortBy(name, direction).string()
+      )
+    )
   }
 }
 
 export function appendQueryIn(field: zed.Field, value: zed.Value): Thunk {
   return function (dispatch, getState) {
     dispatch(
-      changeTo(
-        brim
-          .program(getSearchBarInputValue(getState()))
-          .in(field, value)
-          .string()
-      )
+      changeTo(program(Editor.getValue(getState())).in(field, value).string())
     )
   }
 }
@@ -72,10 +57,7 @@ export function appendQueryNotIn(field: zed.Field, value: zed.Any): Thunk {
   return function (dispatch, getState) {
     dispatch(
       changeTo(
-        brim
-          .program(getSearchBarInputValue(getState()))
-          .notIn(field, value)
-          .string()
+        program(Editor.getValue(getState())).notIn(field, value).string()
       )
     )
   }

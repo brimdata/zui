@@ -5,7 +5,6 @@ import Current from "../state/Current"
 import {getPersistedWindowState} from "../state/stores/get-persistable"
 import Layout from "../state/Layout"
 import Modal from "../state/Modal"
-import SearchBar from "../state/SearchBar"
 import Tabs from "../state/Tabs"
 import {Store} from "../state/types"
 import initNewSearchTab from "./initNewSearchTab"
@@ -14,6 +13,7 @@ import submitSearch from "src/app/query-home/flows/submit-search"
 import {commands} from "src/app/commands/command"
 import {decode, zed} from "@brimdata/zealot"
 import {viewLogDetail} from "../flows/viewLogDetail"
+import tabHistory from "src/app/router/tab-history"
 
 export default (store: Store) => {
   ipcRenderer.on("focusSearchBar", () => {
@@ -52,16 +52,12 @@ export default (store: Store) => {
     store.dispatch(Modal.show("export"))
   })
 
-  ipcRenderer.on("showAbout", () => {
-    store.dispatch(Modal.show("about"))
-  })
-
   ipcRenderer.on("back", () => {
-    store.dispatch(SearchBar.goBack())
+    store.dispatch(tabHistory.goBack())
   })
 
   ipcRenderer.on("forward", () => {
-    store.dispatch(SearchBar.goForward())
+    store.dispatch(tabHistory.goForward())
   })
 
   ipcRenderer.on("closeTab", () => {

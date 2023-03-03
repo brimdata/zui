@@ -1,36 +1,37 @@
 import isEmpty from "lodash/isEmpty"
-import brim, {BrimLake} from "../../brim"
 import {Thunk} from "../../state/types"
 import {Lake} from "../../state/Lakes/types"
 import {Client} from "@brimdata/zealot"
+import lake, {LakeModel} from "src/js/models/lake"
 
 export const buildLake =
-  (l: Partial<Lake>, _signal: AbortSignal): Thunk<Promise<BrimLake>> =>
+  (l: Partial<Lake>, _signal: AbortSignal): Thunk<Promise<LakeModel>> =>
   async (_dispatch, _getState) => {
     if (!l.host || !l.id || !l.name)
       throw new Error("must provide host, id, and name to build lake")
-    const zealot = new Client(brim.lake(l as Lake).getAddress())
+    const zealot = new Client(lake(l as Lake).getAddress())
 
-    const lake = {...l}
+    const lakeData = {...l}
 
     // check version to test that zqd is available, retrieve/update version while doing so
     const {version} = await zealot.version()
-    lake.version = version
+    lakeData.version = version
 
     // first time connection, need to determine auth type and set authData accordingly
-    if (isEmpty(lake.authType)) {
+    if (isEmpty(lakeData.authType)) {
       const resp = await zealot.authMethod()
       if (resp.kind === "auth0") {
-        const {client_id: clientId, domain} = resp.auth0
-        lake.authType = "auth0"
-        lake.authData = {
+        const {audience, client_id: clientId, domain} = resp.auth0
+        lakeData.authType = "auth0"
+        lakeData.authData = {
+          audience,
           clientId,
           domain,
         }
       } else {
-        lake.authType = "none"
+        lakeData.authType = "none"
       }
     }
 
-    return brim.lake(lake as Lake)
+    return lake(lakeData as Lake)
   }

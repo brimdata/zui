@@ -1,6 +1,6 @@
 import {ipcMain, IpcMainInvokeEvent, ipcRenderer} from "electron"
 import log from "electron-log"
-import {BrimMain} from "./brim"
+import {ZuiMain} from "./zui-main"
 
 export function createOperation<Args extends any[] = never[], Ret = never>(
   channel: string,
@@ -10,19 +10,19 @@ export function createOperation<Args extends any[] = never[], Ret = never>(
 }
 
 type OperationContext = {
-  main: BrimMain
+  main: ZuiMain
   event: IpcMainInvokeEvent | null
 }
 
 export class Operation<Args extends any[], Ret> {
-  private main: BrimMain | null
+  private main: ZuiMain | null
 
   constructor(
     public channel: string,
     private handler: (context: OperationContext, ...args: Args) => Ret
   ) {}
 
-  listen(main: BrimMain) {
+  listen(main: ZuiMain) {
     this.main = main
     ipcMain.handle(this.channel, (event, ...args: Args) => {
       log.debug("IPC Handling:", this.channel)

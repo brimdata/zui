@@ -2,7 +2,7 @@ import {Data, Name, Value} from "src/app/core/Data"
 import {useZedFormatter} from "src/app/core/format"
 import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import React, {memo, useCallback, useMemo, useState} from "react"
-import BrimTooltip from "src/js/components/BrimTooltip"
+import Tooltip from "src/js/components/Tooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
 import {zed} from "@brimdata/zealot"
 import Panel from "./Panel"
@@ -60,14 +60,14 @@ function TooltipAnchor({children}) {
   )
 }
 
-function Tooltip({field, record}) {
+function ColumnTooltip({field, record}) {
   return (
-    <BrimTooltip id="column-description" className="brim-tooltip-show-hover">
+    <Tooltip id="column-description" className="zui-tooltip-show-hover">
       <ColumnDescription
         column={field}
         path={record.try("_path")?.toString()}
       />
-    </BrimTooltip>
+    </Tooltip>
   )
 }
 
@@ -90,7 +90,7 @@ export default memo(function Fields({record}: Props) {
     <section>
       <PanelHeading>Fields</PanelHeading>
       <DataPanel format={format} fields={fields} onHover={onHover} />
-      <Tooltip field={hovered} record={record} />
+      <ColumnTooltip field={hovered} record={record} />
     </section>
   )
 })
