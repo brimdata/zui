@@ -91,7 +91,6 @@ export default class TestApp {
     await this.mainWin.locator('span[aria-label="fetching"]').isHidden()
   }
 
-  // TODO: this method is a wip, it still needs to wait for cells to populate first
   async getViewerResults(includeHeaders = true): Promise<string[]> {
     const fields = await this.mainWin.locator(".zed-table__cell")
     await fields.waitFor()
