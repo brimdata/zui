@@ -130,7 +130,7 @@ The most extensive testing of Zui is provided via automation that is run on
 versions of
 hosted [runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners) are referenced in the automation for Zui's
 [continuous integration tests](https://github.com/brimdata/zui/blob/main/.github/workflows/ci.yml)
-and [release workflow](https://github.com/brimdata/brim/zui/main/.github/workflows/release.yml).
+and [release workflow](https://github.com/brimdata/zui/blob/main/.github/workflows/release.yml).
 
 ### Smoke Testing
 
