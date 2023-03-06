@@ -26,26 +26,24 @@ export class BuiltMenu {
   }
 
   toElectron(): MenuItemConstructorOptions[] {
-    const opts = this.template
-    for (let opt of opts) {
-      if ("command" in opt) {
-        const command = opt.command
-        opt.click =
+    return this.template.map((opt) => {
+      const {command, nestedMenu, checked, ...rest} = opt
+      let option: MenuItemConstructorOptions = {...(rest as any)}
+      if (command) {
+        option.click =
           command instanceof BoundCommand
             ? () => command.run()
             : () => commands.run(command)
       }
-      if ("nestedMenu" in opt) {
-        if (opt.nestedMenu instanceof Menu) {
-          // @ts-ignore
-          opt.submenu = menus.build(opt.nestedMenu.id)
+      if (nestedMenu) {
+        if (nestedMenu instanceof Menu) {
+          option.submenu = menus.build(nestedMenu.id)
         }
       }
-      if ("checked" in opt) {
-        // @ts-ignore
-        opt.type = "checkbox"
+      if (checked !== undefined) {
+        option.type = "checkbox"
       }
-    }
-    return opts as MenuItemConstructorOptions[]
+      return option
+    })
   }
 }
