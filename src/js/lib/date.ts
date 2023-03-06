@@ -1,4 +1,4 @@
-import chrono from "chrono-node"
+import * as chrono from "chrono-node"
 import moment from "moment-timezone"
 import relTime from "../models/relTime"
 import time from "../models/time"
@@ -45,9 +45,9 @@ date.parseInZone = (string, zone, ref?) => {
     return string
   } else {
     if (/^\s*now.*/i.test(string)) return null
-    const d = chrono.casual.parseDate(string, ref)
-    if (d) {
-      return time(d).toTs()
+    const d = chrono.casual.parse(string, ref)
+    if (d && d[0].text == string) {
+      return time(d[0].date()).toTs()
     } else {
       return null
     }
