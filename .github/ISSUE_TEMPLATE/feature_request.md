@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea to improve Brim
+about: Suggest an idea to improve Zui
 title: ''
 labels: ''
 assignees: ''
@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 Before opening a new issue, please make sure you've reviewed the troubleshooting guide:
-https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue
+https://zui.brimdata.io/docs/support/Troubleshooting
 
 **Is your feature request related to a problem? Please describe.**
 [For example: "I'm always frustrated when..."]

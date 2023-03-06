@@ -36,7 +36,7 @@ regarding the transition on your operating system.
 
 Those interested in the technical details of the testing that led to this
 guidance can read more
-[here](https://github.com/brimdata/brim/issues/2459#issuecomment-1442316859).
+[here](https://github.com/brimdata/zui/issues/2459#issuecomment-1442316859).
 
 ### Windows
 

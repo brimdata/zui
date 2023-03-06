@@ -1,4 +1,4 @@
-Copyright (c) 2019-2021, Brim Security, Inc.
+Copyright (c) 2019-2023, Brim Data, Inc.
 All rights reserved.
 
 Source code in this repository is licensed under either the BSD-3-Clause license
@@ -83,7 +83,7 @@ URL for them above, as well as copies of any plain-text lines
 beginning with `Required Notice:` that the licensor provided
 with the software.  For example:
 
-> Required Notice: Copyright Brim Security, Inc. (http://www.brimdata.io)
+> Required Notice: Copyright Brim Data, Inc. (http://www.brimdata.io)
 
 ## Changes and New Works License
 

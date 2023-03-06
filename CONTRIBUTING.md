@@ -1,23 +1,23 @@
-# Brim Development
+# Zui Development
 
-Thank you for contributing to Brim!
+Thank you for contributing to Zui!
 
-Per common practice, please [open an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimdata.io/join-slack/) as well.
+Per common practice, please [open an issue](https://zui.brimdata.io/docs/support/Troubleshooting#opening-an-issue) before sending a pull request. If you think your ideas might benefit from some refinement via Q&A, come talk to us on [Slack](https://www.brimdata.io/join-slack/) as well.
 
 ## Setup
 
 Install these dependencies:
 
 1. [Node](https://nodejs.org/en/download/package-manager/) - the version specified in the `.node-version` file at the root folder.
-2. [Yarn](https://yarnpkg.com/) - a package manager for installing dependencies and starting Brim in dev mode.
+2. [Yarn](https://yarnpkg.com/) - a package manager for installing dependencies and starting Zui in dev mode.
 3. [Go](https://go.dev/doc/install) - to compile some [Zed](https://zed.brimdata.io/) dependencies.
 4. Typical command line tools, such as `make`, `unzip`, and `curl`
 
 Then clone the repo, install the node modules, and start the app.
 
 ```bash
-git clone https://github.com/brimdata/brim
-cd brim
+git clone https://github.com/brimdata/zui
+cd zui
 yarn
 yarn start
 ```
@@ -28,7 +28,7 @@ On subsequent updates, `git pull` and `yarn`.
 
 ## Libraries
 
-Brim is a TypeScript, React, Electron app.
+Zui is a TypeScript, React, Electron app.
 
 - [Electron](https://www.electronjs.org/docs/latest) - it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/latest/tutorial/quick-start#main-and-renderer-processes)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -115,7 +115,7 @@ test("click the button", async () => {
 
 All backend requests are made with Node and hit the local Zed lake. Any browser APIs that are not in JSDOM are mocked or polyfilled. The electron APIs are mocked as well. You can find them in `test/shared/__mocks__/electron`.
 
-The `SystemTest` class comes with a few helper methods for commonly performed actions in the Brim app like _.runQuery(q)_, _.ingestFile_(name), _.navTo(path)_, and _.render(jsx)_. It also re-exports some of the common [userEvent](https://testing-library.com/docs/ecosystem-user-event/) methods like _.click()_ and _.rightClick()_
+The `SystemTest` class comes with a few helper methods for commonly performed actions in the Zui app like _.runQuery(q)_, _.ingestFile_(name), _.navTo(path)_, and _.render(jsx)_. It also re-exports some of the common [userEvent](https://testing-library.com/docs/ecosystem-user-event/) methods like _.click()_ and _.rightClick()_
 
 They can be run like so:
 
@@ -132,7 +132,7 @@ Use the Styled Components library to style new components. Previously, we used s
 
 ## Migrations
 
-Because we persist state on a user's computer, if they upgrade Brim and we've changed the expected state, we need to migrate the old state. If any of the reducers in `src/js/state` are changed, we need to write a migration. There is a tool we built to help with this. You can run, for example:
+Because we persist state on a user's computer, if they upgrade Zui and we've changed the expected state, we need to migrate the old state. If any of the reducers in `src/js/state` are changed, we need to write a migration. There is a tool we built to help with this. You can run, for example:
 
 ```bash
 bin/gen migration addScrollPositionToViewer
@@ -140,11 +140,11 @@ bin/gen migration addScrollPositionToViewer
 
 This creates a file in `src/js/state/migrations` with a function that can manipulate the persisted state from the previous version.
 
-See the [Adding Migrations](https://github.com/brimdata/brim/wiki/Adding-Migrations) page for a more detailed guide.
+See the [Adding Migrations](https://zui.brimdata.io/docs/developer/Adding-Migrations) page for a more detailed guide.
 
 ### Zed
 
-The [Zed service](https://zed.brimdata.io/docs/commands/zed#213-serve) is the daemon responsible for data ingestion and query execution. As a postinstall step, the `zed` binary is downloaded and stored in the `./zdeps` directory. Brim will automatically execute and terminate the service when it starts and stops.
+The [Zed service](https://zed.brimdata.io/docs/commands/zed#213-serve) is the daemon responsible for data ingestion and query execution. As a postinstall step, the `zed` binary is downloaded and stored in the `./zdeps` directory. Zui will automatically execute and terminate the service when it starts and stops.
 
 ## Pull Requests
 
@@ -162,7 +162,7 @@ yarn test:playwright  # Integration tests with jest & playwright
 
 ## Installation Packaging
 
-[Releases](https://github.com/brimdata/brim/releases) with installable artifacts are created automatically by an [Actions Workflow](.github/workflows/release.yml) when a GA release is tagged.
+[Releases](https://github.com/brimdata/zui/releases) with installable artifacts are created automatically by an [Actions Workflow](.github/workflows/release.yml) when a GA release is tagged.
 
 You can installable artifacts based on your own checkout via:
 
@@ -226,8 +226,8 @@ your contribution under those license terms.
 We want to prevent technology giants from using the Polyform Perimeter license
 covered code to create replacement offerings of our projects.
 
-The overwhelming majority of Brim or Zed users and developers will not be
-restricted by this license, including those using Brim or Zed in commercial
+The overwhelming majority of Zui or Zed users and developers will not be
+restricted by this license, including those using Zui or Zed in commercial
 settings.
 
 The use of the source-available Polyform Perimeter license prevents use
@@ -236,7 +236,7 @@ cases like:
 - Marketing a work as a “as-a-service” style offering for server
   components like Zed, while using material covered under the Polyform
   Perimeter license
-- Marketing a work as a replacement for the Brim desktop application,
+- Marketing a work as a replacement for the Zui desktop application,
   while using material covered under the Polyform Perimeter license
 
 We believe users and developers should have access to the source code for our
@@ -246,4 +246,4 @@ of the source code lets us realize both.
 
 ## Questions?
 
-We appreciate your interest in improving Brim. If you've got questions that aren't answered here, please join our [public Slack](https://www.brimdata.io/join-slack/) workspace and ask!
+We appreciate your interest in improving Zui. If you've got questions that aren't answered here, please join our [public Slack](https://www.brimdata.io/join-slack/) workspace and ask!

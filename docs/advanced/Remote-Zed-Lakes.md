@@ -97,7 +97,7 @@ ubuntu# sudo apt install -y ./Zui-1.0.0.deb
 ```
 
 The following additional steps are also currently necessary to work around
-issue [zui/1701](https://github.com/brimdata/brim/issues/1701).
+issue [zui/1701](https://github.com/brimdata/zui/issues/1701).
 
 ```
 ubuntu# sudo find /opt/Zui/resources/app.asar.unpacked/zdeps/suricata -exec chmod go+w {} \;

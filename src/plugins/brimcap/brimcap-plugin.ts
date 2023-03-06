@@ -18,7 +18,7 @@ export default class BrimcapPlugin {
   private pluginNamespace = "brimcap"
   private yamlConfigPropName = "yamlConfigPath"
   private cli: BrimcapCLI
-  // currentConn represents the data detail currently seen in the Brim detail
+  // currentConn represents the data detail currently seen in the Zui detail
   // pane/window
   private currentConn = null
   private yamlConfigPath = ""

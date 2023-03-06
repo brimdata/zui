@@ -1,4 +1,4 @@
-name: Brim CI
+name: Zui CI
 
 on:
   pull_request:

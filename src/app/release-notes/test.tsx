@@ -12,7 +12,7 @@ const system = new SystemTest("release-notes")
 
 system.network.use(
   rest.get(
-    "https://api.github.com/repos/brimdata/brim/releases/tags/v0.0.0",
+    "https://api.github.com/repos/brimdata/zui/releases/tags/v0.0.0",
     (req, res, ctx) => {
       return res(ctx.status(200), ctx.json({body: "Testing Release Notes"}))
     }
