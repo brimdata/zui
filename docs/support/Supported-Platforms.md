@@ -52,7 +52,7 @@ and regularly perform ad hoc testing with it to reproduce reported issues.
 
 Basic [smoke testing](#smoke-testing) has also validated that Zui appears to
 work on macOS Big Sur 11.7.2 as well. We do _not_ recommend attempting to run
-Brim on macOS releases older than macOS Big Sur 11.7.2.
+Zui on macOS releases older than macOS Big Sur 11.7.2.
 
 #### Hardware
 
@@ -75,7 +75,7 @@ will become more popular in the future, please
 for problems you experience with Zui on M1-based Macs as you would any other.
 If we should begin to accumulate bugs that are specific to M1-based hardware,
 this will help guide the prioritization of our goal to deliver M1-specific
-builds ([zui/1266](https://github.com/brimdata/brim/issues/1266)).
+builds ([zui/1266](https://github.com/brimdata/zui/issues/1266)).
 
 ### Linux
 
@@ -129,8 +129,8 @@ The most extensive testing of Zui is provided via automation that is run on
 [GitHub Actions](https://github.com/features/actions). Specific platform
 versions of
 hosted [runners](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners) are referenced in the automation for Zui's
-[continuous integration tests](https://github.com/brimdata/brim/blob/main/.github/workflows/ci.yml)
-and [release workflow](https://github.com/brimdata/brim/blob/main/.github/workflows/release.yml).
+[continuous integration tests](https://github.com/brimdata/zui/blob/main/.github/workflows/ci.yml)
+and [release workflow](https://github.com/brimdata/brim/zui/main/.github/workflows/release.yml).
 
 ### Smoke Testing
 
@@ -147,8 +147,8 @@ confirm basic functionality. Such a smoke test consists of the following:
 
 This exercise was most recently performed in August, 2022 in preparation for
 Zui release v1.0.0. For more details on
-previously-performed smoke testing exercises, review [zui/1263](https://github.com/brimdata/brim/issues/1263),
-[zui/2481](https://github.com/brimdata/brim/pull/2481), and [zui/2482](https://github.com/brimdata/brim/issues/2482).
+previously-performed smoke testing exercises, review [zui/1263](https://github.com/brimdata/zui/issues/1263),
+[zui/2481](https://github.com/brimdata/zui/pull/2481), and [zui/2482](https://github.com/brimdata/zui/issues/2482).
 
 ### Non-Recommended Platforms
 

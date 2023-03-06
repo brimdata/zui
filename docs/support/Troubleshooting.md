@@ -10,7 +10,7 @@ before you [open an issue](#opening-an-issue).
 ## Common Problems
 
 The following are some of the more commonly-reported Zui problems. You may
-also want to review the [current open issues](https://github.com/brimdata/brim/issues).
+also want to review the [current open issues](https://github.com/brimdata/zui/issues).
 
 * [I've clicked to open a packet capture in Zui, but it failed to open](#ive-clicked-to-open-a-packet-capture-in-zui-but-it-failed-to-open)
 * [I've clicked in Zui to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark](#ive-clicked-in-zui-to-extract-a-flow-from-my-pcap-into-wireshark-but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
@@ -21,15 +21,15 @@ also want to review the [current open issues](https://github.com/brimdata/brim/i
 #### I've clicked to open a packet capture in Zui, but it failed to open
 
 Functionality related to pcaps is
-provided via [Brimcap](https://github.com/brimdata/brimcap#usage-with-brim-desktop-app).
-This question is covered [here](https://github.com/brimdata/brimcap/wiki/Troubleshooting#ive-clicked-to-open-a-packet-capture-in-brim-but-it-failed-to-open)
+provided via [Brimcap](https://github.com/brimdata/brimcap#usage-with-zui-desktop-app).
+This question is covered [here](https://github.com/brimdata/brimcap/wiki/Troubleshooting#ive-clicked-to-open-a-packet-capture-in-zui-but-it-failed-to-open)
 in the Brimcap wiki.
 
 #### I've clicked in Zui to extract a flow from my pcap into Wireshark, but the flow looks different than when I isolate it in the original pcap file in Wireshark
 
 Functionality related to pcaps is
-provided via [Brimcap](https://github.com/brimdata/brimcap#usage-with-brim-desktop-app).
-This question is covered [here](https://github.com/brimdata/brimcap/wiki/Troubleshooting#ive-clicked-in-brim-to-extract-a-flow-from-my-pcap-into-wireshark-but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
+provided via [Brimcap](https://github.com/brimdata/brimcap#usage-with-zui-desktop-app).
+This question is covered [here](https://github.com/brimdata/brimcap/wiki/Troubleshooting#ive-clicked-in-zui-to-extract-a-flow-from-my-pcap-into-wireshark-but-the-flow-looks-different-than-when-i-isolate-it-in-the-original-pcap-file-in-wireshark)
 in the Brimcap wiki.
 
 #### Zui seems unable to restart normally, such as after a bad crash
@@ -38,7 +38,7 @@ Though we attempt to fix bad bugs in Zui soon after they're identified,
 occasionally you may encounter a new bug that crashes the app in a way that
 leaves it in a bad state. In these situations Zui will seem "stuck" each time
 it starts, either at a blank white screen (such as in previously-fixed issue
-[zui/1099](https://github.com/brimdata/brim/issues/1099)) or showing an error
+[zui/1099](https://github.com/brimdata/zui/issues/1099)) or showing an error
 dump similar to the one below:
 
 ![Example crash from issue #652](media/Crash-652.png)
@@ -77,12 +77,12 @@ symptoms after an upgrade to a newer Zui release. In each case the users
 ultimately resolved the problem via system reboot. We've unfortunately been
 unable to reproduce this problem or study a system "live" that's in this state
 to determine the root cause or why the reboot fixed it. An issue
-[zui/1490](https://github.com/brimdata/brim/issues/1490) is being kept open to
+[zui/1490](https://github.com/brimdata/zui/issues/1490) is being kept open to
 track this specific case. Even though a reboot might be an effective fix for
 you also, your assistance would be much appreciated in still running
 through the troubleshooting steps below and gathering the debug information.
 If you ultimately find a reboot fixes the symptom for you, please add your logs
-and details to [zui/1490](https://github.com/brimdata/brim/issues/1490).
+and details to [zui/1490](https://github.com/brimdata/zui/issues/1490).
 In all other cases, please [open a new issue](#opening-an-issue).
 
 To begin troubleshooting this, it helps to understand the "backend" of Zui.
@@ -276,8 +276,8 @@ its origin.
   which [downloads the Suricata artifact](https://github.com/brimdata/brimcap/blob/03b90badb7ea1f3a97c793b21f97d4f525cdd65f/Makefile#L39) which is bundled
   into [Brimcap releases](https://github.com/brimdata/brimcap/releases).
 
-* Each Zui release points at a [Brimcap release](https://github.com/brimdata/brim/blob/4c74bdcdb38b84ff15c20926a7a05bfb7fe61d92/package.json#L69)
-  that's bundled by Zui's own [release automation](https://github.com/brimdata/brim/blob/main/.github/workflows/release.yml).
+* Each Zui release points at a [Brimcap release](https://github.com/brimdata/zui/blob/4c74bdcdb38b84ff15c20926a7a05bfb7fe61d92/package.json#L69)
+  that's bundled by Zui's own [release automation](https://github.com/brimdata/zui/blob/main/.github/workflows/release.yml).
 
 To summarize, the executable consists of a minimally-enhanced Suricata-Update that's been
 turned into an executable by other open source tools. If your conclusion
@@ -363,11 +363,11 @@ a link to it in your issue.
 
 ## Opening an Issue
 
-Before/when [opening a new issue](https://github.com/brimdata/brim/issues/new/choose),
+Before/when [opening a new issue](https://github.com/brimdata/zui/issues/new/choose),
 you can help us out by doing the following:
 
 * Review the [common problems](#common-problems) above see if you're hitting one of those.
-* Browse the existing [open issues](https://github.com/brimdata/brim/issues?q=is%3Aissue+is%3Aopen). If you confirm you're hitting one of those, please add a comment to it rather than opening a new issue.
+* Browse the existing [open issues](https://github.com/brimdata/zui/issues?q=is%3Aissue+is%3Aopen). If you confirm you're hitting one of those, please add a comment to it rather than opening a new issue.
 * [Gather info](#gathering-info) that may help in reproducing the issue and testing a fix, and attach it to your issue.
 * Feel free to chat with the team on the [public Slack](https://www.brimdata.io/join-slack/) before/after opening an issue.
 * When you open a new issue, its initial text will include a template with standard info that will almost always be needed. Please include detail for all areas of the template.
