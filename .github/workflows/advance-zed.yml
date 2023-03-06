@@ -41,7 +41,7 @@ jobs:
         # body can be multiline and must be escaped as described here:
         # https://github.community/t5/GitHub-Actions/set-output-Truncates-Multiline-Strings/m-p/37870
         #
-        # Rewrite bare PR numbers as Zed PRs (https://github.com/brimdata/brim/issues/797)
+        # Rewrite bare PR numbers as Zed PRs (https://github.com/brimdata/zui/issues/797)
         run: |
           sha="$(jq -r '.client_payload.merge_commit_sha' "${GITHUB_EVENT_PATH}")"
           echo "sha=$sha" >> $GITHUB_OUTPUT
@@ -97,7 +97,7 @@ jobs:
 
       # If this push fails because a PR was merged while this job was
       # running, you can re-run the failed job via
-      # https://github.com/brimdata/brim/actions.  Or, if you expect
+      # https://github.com/brimdata/zui/actions.  Or, if you expect
       # this workflow to be dispatched again soon, you can simply ignore
       # the failure.
       - run: git push

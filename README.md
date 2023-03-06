@@ -21,8 +21,8 @@ Highlights:
 
 **[Download Zui](https://www.brimdata.io/download/)** for your operating system.
 
-Refer to the [installation guide](https://github.com/brimdata/brim/wiki/Installation) and
-[release notes](https://github.com/brimdata/brim/releases) for more information.
+Refer to the [installation guide](https://zui.brimdata.io/docs/Installation) and
+[release notes](https://github.com/brimdata/zui/releases) for more information.
 
 ## Powered By Zed
 
@@ -47,7 +47,7 @@ Zui retains the security-specific features that made Brim popular while expandin
 
 ## Need Help?
 
-Please browse the [wiki](https://github.com/brimdata/brim/wiki) to review common problems and helpful tips before [opening an issue](https://github.com/brimdata/brim/wiki/Troubleshooting#opening-an-issue).
+Please browse the [support resources](https://zui.brimdata.io/docs/support) to review common problems and helpful tips before [opening an issue](https://zui.brimdata.io/docs/support/Troubleshooting#opening-an-issue).
 
 ## Contributing
 

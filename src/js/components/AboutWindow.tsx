@@ -43,8 +43,8 @@ export default function AboutWindow() {
           </section>
           <section>
             <label>Source</label>
-            <a onClick={() => open("https://github.com/brimdata/brim")}>
-              github.com/brimdata/brim
+            <a onClick={() => open("https://github.com/brimdata/zui")}>
+              github.com/brimdata/zui
             </a>
           </section>
           <hr />
