@@ -1,19 +1,19 @@
 import {zed} from "@brimdata/zealot"
-import zql from "../zql"
-import {toFieldPath} from "../zql/toZql"
+import zedScript from "../zed-script"
+import {toFieldPath} from "../zed-script/toZedScript"
 
 export default {
   exclude(field: zed.Field) {
-    return zql`${field}!=${field.value}`
+    return zedScript`${field}!=${field.value}`
   },
   include(field: zed.Field) {
-    return zql`${field}==${field.value}`
+    return zedScript`${field}==${field.value}`
   },
   in(field: zed.Field, value: zed.Value) {
-    return zql`${value} in ${field}`
+    return zedScript`${value} in ${field}`
   },
   notIn(field: zed.Field, value: zed.Any) {
-    return zql`!${value} in ${field}`
+    return zedScript`!${value} in ${field}`
   },
   countBy(name: string | string[]) {
     return `count() by ${toFieldPath(name)}`

@@ -1,12 +1,12 @@
-import zql from "src/js/zql"
+import zedScript from "src/js/zed-script"
 import {CommunityConnArgs} from "./util"
 
 export function uidQuery(pool: string, uid: string) {
-  return zql`from ${pool} | ${uidFilter(uid)}`
+  return zedScript`from ${pool} | ${uidFilter(uid)}`
 }
 
 export function uidFilter(uid: string) {
-  return zql`uid==${uid} or ${uid} in conn_uids or ${uid} in uids or referenced_file.uid==${uid}`
+  return zedScript`uid==${uid} or ${uid} in conn_uids or ${uid} in uids or referenced_file.uid==${uid}`
 }
 
 export function communityConnFilter(data: CommunityConnArgs) {
@@ -14,13 +14,13 @@ export function communityConnFilter(data: CommunityConnArgs) {
   const tsDate = ts.toDate()
   const dur = duration.asSeconds() + 90 // Add a 1.5 minute buffer for events that get logged late
   const endTsDate = new Date(new Date(tsDate).getTime() + dur * 1000)
-  const cidFilter = zql`community_id == ${cid} and ts >= ${tsDate} and ts < ${endTsDate}`
+  const cidFilter = zedScript`community_id == ${cid} and ts >= ${tsDate} and ts < ${endTsDate}`
   return `${uidFilter(uid)} or (${cidFilter})`
 }
 
 export function findConnLog(pool: string, uid: string) {
   return (
-    zql`
+    zedScript`
   from ${pool}
   | (` +
     uidFilter(uid) +

@@ -1,7 +1,7 @@
 import {zed} from "@brimdata/zealot"
 import ZuiApi from "src/js/api/zui-api"
 import {Correlation} from "src/js/api/correlations/types"
-import zql from "src/js/zql"
+import zedScript from "src/js/zed-script"
 
 function hasMd5(api: ZuiApi) {
   const value = api.current.value
@@ -18,7 +18,7 @@ export const md5Correlation: Correlation = {
   when: hasMd5,
   query: (api) => {
     const md5 = api.current.value.get("md5").toJS()
-    return zql`
+    return zedScript`
         from ${api.current.poolName} 
         | md5==${md5} 
         | count() by md5 
@@ -32,7 +32,7 @@ export const txHostsCorrelation: Correlation = {
   when: hasMd5,
   query: (api) => {
     const md5 = api.current.value.get("md5").toJS()
-    return zql`
+    return zedScript`
         from ${api.current.poolName} 
         | md5==${md5} 
         | count() by tx_hosts 
@@ -46,7 +46,7 @@ export const rxHostsCorrelation: Correlation = {
   when: hasMd5,
   query: (api) => {
     const md5 = api.current.value.get("md5").toJS()
-    return zql`
+    return zedScript`
           from ${api.current.poolName} 
           | md5==${md5} 
           | count() by rx_hosts 
@@ -60,7 +60,7 @@ export const filenameCorrelation: Correlation = {
   when: hasMd5,
   query: (api) => {
     const md5 = api.current.value.get("md5").toJS()
-    return zql`
+    return zedScript`
           from ${api.current.poolName} 
           | md5==${md5} 
           | count() by filename, mime_type

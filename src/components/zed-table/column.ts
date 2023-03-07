@@ -1,7 +1,7 @@
 import {zed} from "@brimdata/zealot"
 import {createColumnHelper} from "@tanstack/react-table"
 import {createColumns} from "./create-columns"
-import {toFieldPath} from "src/js/zql/toZql"
+import {toFieldPath} from "src/js/zed-script/toZedScript"
 import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 
 type Args = {

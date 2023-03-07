@@ -22,14 +22,14 @@ export const toFieldPath = (arg: string | string[] | zed.Field) => {
   return result.join("")
 }
 
-export function toZql(object: unknown): string {
+export function toZedScript(object: unknown): string {
   if (object instanceof zed.Field) return toFieldPath(object)
-  if (object instanceof zed.Primitive) return toZqlZngPrimitive(object)
-  if (isString(object)) return toZqlString(object)
-  if (object instanceof Date) return toZqlDate(object)
-  if (typeof object === "boolean") return toZqlBool(object)
-  if (object === null) return toZqlNull()
-  throw new Error(`Can't convert object to ZQL: ${object}`)
+  if (object instanceof zed.Primitive) return toZedScriptPrimitive(object)
+  if (isString(object)) return toZedScriptString(object)
+  if (object instanceof Date) return toZedScriptDate(object)
+  if (typeof object === "boolean") return toZedScriptBool(object)
+  if (object === null) return toZedScriptNull()
+  throw new Error(`Can't convert object to Zed script: ${object}`)
 }
 
 const DOUBLE_QUOTE = /"/g
@@ -37,29 +37,29 @@ const ESCAPED_DOUBLE_QUOTE = '\\"'
 const BACK_SLASH = /\\/g
 const ESCAPED_BACK_SLASH = "\\\\"
 
-function toZqlNull() {
+function toZedScriptNull() {
   return "null"
 }
 
-function toZqlString(string: string) {
+function toZedScriptString(string: string) {
   return `"${string
     .replace(BACK_SLASH, ESCAPED_BACK_SLASH)
     .replace(DOUBLE_QUOTE, ESCAPED_DOUBLE_QUOTE)}"`
 }
 
-function toZqlDate(date: Date) {
+function toZedScriptDate(date: Date) {
   return date.toISOString()
 }
 
-function toZqlBool(bool: boolean) {
+function toZedScriptBool(bool: boolean) {
   return bool ? "true" : "false"
 }
 
-function toZqlZngPrimitive(data: zed.Primitive) {
+function toZedScriptPrimitive(data: zed.Primitive) {
   if (data.isUnset()) {
     return "null"
   } else if (zed.isStringy(data)) {
-    return toZqlString(data.toString())
+    return toZedScriptString(data.toString())
   } else {
     return data.toString()
   }
