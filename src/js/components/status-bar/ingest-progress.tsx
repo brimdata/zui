@@ -8,12 +8,13 @@ import Loads from "src/js/state/Loads"
 import Modal from "src/js/state/Modal"
 import Pools from "src/js/state/Pools"
 import ProgressIndicator from "../ProgressIndicator"
+import {State} from "src/js/state/types"
 
 export function IngestProgress() {
   const dispatch = useDispatch()
   const lakeId = useSelector(Current.getLakeId)
   const poolId = useSelector(Current.getPoolId)
-  const progress = useSelector((s) => Loads.getPoolProgress(s, poolId))
+  const progress = useSelector((s: State) => Loads.getPoolProgress(s, poolId))
   const warnings = useSelector(Pools.getWarnings(lakeId, poolId))
 
   if (progress === null && !warnings) return null
