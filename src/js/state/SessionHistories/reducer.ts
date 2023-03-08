@@ -33,10 +33,10 @@ const slice = createSlice({
       }
     },
   },
-  extraReducers: {
-    [tabs.remove.toString()]: (s, a: ReturnType<typeof tabs.remove>) => {
+  extraReducers: (builder) => {
+    builder.addCase(tabs.remove, (s, a: ReturnType<typeof tabs.remove>) => {
       delete s[a.payload]
-    },
+    })
   },
 })
 

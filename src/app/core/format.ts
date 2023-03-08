@@ -3,7 +3,6 @@ import * as d3 from "d3"
 import {useMemo} from "react"
 import {useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
-import {State} from "src/js/state/types"
 import {zed} from "@brimdata/zealot"
 import {isString} from "lodash"
 import time from "src/js/models/time"
@@ -18,7 +17,7 @@ export type FormatConfig = {
   decimal: string
 }
 
-export const getFormatConfig = createSelector<State, any, FormatConfig>(
+export const getFormatConfig = createSelector(
   ConfigPropValues.get("display"),
   (values) => ({
     thousands: values.thousandsSeparator,
@@ -28,10 +27,7 @@ export const getFormatConfig = createSelector<State, any, FormatConfig>(
   })
 )
 
-const getTimeZone = createSelector<State, FormatConfig, string>(
-  getFormatConfig,
-  (config) => config.timeZone
-)
+const getTimeZone = createSelector(getFormatConfig, (config) => config.timeZone)
 
 export const useTimeZone = () => useSelector(getTimeZone)
 

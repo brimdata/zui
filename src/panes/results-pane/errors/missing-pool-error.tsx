@@ -9,6 +9,7 @@ import useLakeId from "src/app/router/hooks/use-lake-id"
 import {Content} from "src/js/components/Content"
 import {VirtualList} from "src/js/components/virtual-list"
 import Pools from "src/js/state/Pools"
+import {State} from "src/js/state/types"
 import styled from "styled-components"
 import {Button} from "../../../app/query-home/title-bar/button"
 
@@ -107,7 +108,7 @@ function SomePoolsMessage(props: {pools: Pool[]}) {
 
 export function MissingPoolError() {
   const lakeId = useLakeId()
-  const pools = useSelector((state) => Pools.all(state, lakeId))
+  const pools = useSelector((state: State) => Pools.all(state, lakeId))
   return (
     <BG>
       <h1>No Pool Specified</h1>

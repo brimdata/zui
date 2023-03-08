@@ -10,10 +10,13 @@ import {updateFrom} from "src/app/commands/pins"
 import {useAfterDelayOf} from "src/app/core/hooks/use-after-delay-of"
 import Config from "src/js/state/Config"
 import {PoolName} from "./pool-name"
+import {State} from "src/js/state/types"
 
 const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
   const pool = node.data
-  const progress = useSelector((state) => Loads.getPoolProgress(state, pool.id))
+  const progress = useSelector((state: State) =>
+    Loads.getPoolProgress(state, pool.id)
+  )
   const afterDelayOf = useAfterDelayOf()
   const delimiter = useSelector(Config.getPoolNameDelimiter)
   const poolName = new PoolName(pool.name, delimiter)
