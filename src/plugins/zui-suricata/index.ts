@@ -1,5 +1,5 @@
 import ZuiApi from "src/js/api/zui-api"
-import zql from "src/js/zql"
+import zedScript from "src/js/zed-script"
 import {findCid, whenSuricata} from "./util"
 
 export const SURICATA_CONNS = "zui-suricata/related-conns"
@@ -9,7 +9,7 @@ const relatedConns = {
   id: SURICATA_CONNS,
   when: whenSuricata,
   query: (api: ZuiApi) => {
-    return zql`
+    return zedScript`
         from ${api.current.poolName} 
         | _path=="conn"
         | community_id==${findCid(api.current.value)} 
@@ -21,7 +21,7 @@ const relatedAlerts = {
   id: SURICATA_ALERTS,
   when: whenSuricata,
   query: (api: ZuiApi) => {
-    return zql`
+    return zedScript`
         from ${api.current.poolName} 
         | event_type=="alert" 
         | community_id==${findCid(api.current.value)} 

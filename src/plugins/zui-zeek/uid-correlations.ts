@@ -1,5 +1,5 @@
 import {Correlation} from "src/js/api/correlations/types"
-import zql from "src/js/zql"
+import zedScript from "src/js/zed-script"
 import {communityConnFilter, findConnLog, uidFilter} from "./queries"
 import {findCommunityConnArgs, findUid} from "./util"
 
@@ -13,9 +13,9 @@ export const uidCorrelation: Correlation = {
     const [conn] = await res.zed()
     const args = findCommunityConnArgs(conn)
     if (args) {
-      return zql`from ${pool} | ` + communityConnFilter(args)
+      return zedScript`from ${pool} | ` + communityConnFilter(args)
     } else {
-      return zql`from ${pool} | ` + uidFilter(uid)
+      return zedScript`from ${pool} | ` + uidFilter(uid)
     }
   },
 }

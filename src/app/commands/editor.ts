@@ -10,7 +10,7 @@ import {
 } from "src/js/flows/searchBar/actions"
 import {copyToClipboard} from "src/js/lib/doc"
 import Editor from "src/js/state/Editor"
-import {toZql} from "src/js/zql/toZql"
+import {toZedScript} from "src/js/zed-script/toZedScript"
 import submitSearch from "../query-home/flows/submit-search"
 import {createCommand} from "./command"
 
@@ -73,7 +73,7 @@ export const filterNotInField = createCommand(
 export const newSearchWithValue = createCommand(
   "newSearchWithValue",
   ({api}, field: zed.Field) => {
-    api.dispatch(Editor.setValue(toZql(field.data)))
+    api.dispatch(Editor.setValue(toZedScript(field.data)))
     api.dispatch(submitSearch())
   }
 )
