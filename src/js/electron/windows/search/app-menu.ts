@@ -259,7 +259,7 @@ export function compileTemplate(
         label: "Submit Issue...",
         click() {
           shell.openExternal(
-            "https://github.com/brimdata/zui/wiki/Troubleshooting#opening-an-issue"
+            "https://zui.brimdata.io/docs/support/Troubleshooting#opening-an-issue"
           )
         },
       },
