@@ -6,6 +6,8 @@ import {InputButton} from "src/components/input-button"
 import {Subtitle} from "src/components/subtitle"
 import {Title} from "src/components/title"
 import styled from "styled-components"
+import {shell} from "electron"
+import links from "src/app/core/links"
 
 const BG = styled.div`
   background-image: url(dist/static/welcome-page-background.svg);
@@ -56,6 +58,9 @@ export function WelcomePage() {
           <InputButton onClick={() => newPool.run()}>Import Data</InputButton>
           <InputButton onClick={() => connectToLake.run()}>
             Connect to Lake
+          </InputButton>
+          <InputButton onClick={() => shell.openExternal(links.ZUI_DOCS_ROOT)}>
+            Documentation
           </InputButton>
         </Actions>
       </Card>
