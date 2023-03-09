@@ -5,6 +5,8 @@ import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 import {useDispatch} from "src/app/core/state"
 import {initCurrentTab} from "../flows/initCurrentTab"
 import {Lake} from "../state/Lakes/types"
+import {shell} from "electron"
+import links from "src/app/core/links"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -27,7 +29,7 @@ const StyledP = styled.p`
 `
 
 const StyledButton = styled(ToolbarButton)`
-  margin: 36px 0 0 0;
+  margin: 10px 0 0 0;
 `
 
 type Props = {
@@ -46,6 +48,10 @@ const ConnectionError = ({lake}: Props) => {
     setIsFetching(false)
   }
 
+  const viewTroubleshootingDocs = async () => {
+    shell.openExternal(links.ZUI_DOCS_CONNNECTION_TROUBLESHOOTING)
+  }
+
   const {host, port} = lake
   const errorMsg = isFetching
     ? "Attempting to connect..."
@@ -55,6 +61,10 @@ const ConnectionError = ({lake}: Props) => {
     <PageWrap>
       <StyledHeader>Connection Error</StyledHeader>
       <StyledP>{errorMsg}</StyledP>
+      <StyledButton
+        onClick={viewTroubleshootingDocs}
+        text="View Troubleshooting Docs"
+      />
       <StyledButton
         onClick={onClick}
         text={isFetching ? "" : "Retry"}
