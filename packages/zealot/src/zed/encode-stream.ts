@@ -1,4 +1,5 @@
-import {zed, zjson} from ".."
+import * as zed from "../zed"
+import * as zjson from "../zjson"
 import {Type} from "./types/types"
 import {Value} from "./values/types"
 import {TypeValue} from "./values/type-value"

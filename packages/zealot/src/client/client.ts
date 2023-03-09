@@ -1,6 +1,5 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
 import {isUndefined} from "lodash"
-import nodeFetch, {Headers, HeadersInit} from "node-fetch"
 import {PoolConfig, PoolStats} from ".."
 import {ResultStream} from "../query/result-stream"
 import {createError} from "../util/error"
@@ -17,7 +16,7 @@ import {
 } from "./utils"
 
 export class Client {
-  public fetch: Types.CrossFetch
+  static fetch: Types.CrossFetch
   public auth: string | null
   public timeout = 60_000
 
@@ -25,8 +24,6 @@ export class Client {
     const defaults: Types.ClientOpts = {env: getEnv(), auth: null}
     const options: Types.ClientOpts = {...defaults, ...opts}
     this.auth = options.auth || null
-    this.fetch =
-      options.env === "node" ? nodeFetch : globalThis.fetch.bind(globalThis)
   }
 
   async version() {
@@ -53,8 +50,8 @@ export class Client {
     if (!pool) throw new Error("Missing required option 'pool'")
     const poolId = typeof pool === "string" ? pool : pool.id
     const branch = opts.branch || "main"
-    let headers = new Headers()
-    if (opts.message) headers.set("Zed-Commit", json(opts.message))
+    let headers: Record<string, string> = {}
+    if (opts.message) headers["Zed-Commit"] = json(opts.message)
     const res = await this.send({
       path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: "POST",
@@ -62,7 +59,6 @@ export class Client {
       headers,
       contentType: getLoadContentType(opts.format) ?? "",
       signal: opts.signal,
-      fetch: nodeFetch,
       timeout: Infinity,
     })
     return toJS(res)
@@ -166,8 +162,7 @@ export class Client {
     body?: string | NodeJS.ReadableStream
     format?: Types.ResponseFormat
     signal?: AbortSignal
-    fetch?: Types.CrossFetch
-    headers?: HeadersInit
+    headers?: Record<string, string>
     timeout?: number
     contentType?: string
   }) {
@@ -176,16 +171,15 @@ export class Client {
       console.error("request timed out:", opts)
       abortCtl.abort()
     }, opts.timeout)
-    const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy
-    const headers = new Headers(opts.headers)
-    headers.set("Accept", accept(opts.format || "zjson"))
+    const headers = {...opts.headers}
+    headers["Accept"] = accept(opts.format || "zjson")
     if (opts.contentType !== undefined) {
-      headers.set("Content-Type", opts.contentType)
+      headers["Content-Type"] = opts.contentType
     }
     if (this.auth) {
-      headers.set("Authorization", `Bearer ${this.auth}`)
+      headers["Authorization"] = `Bearer ${this.auth}`
     }
-    const resp = await fetch(this.baseURL + opts.path, {
+    const resp = await Client.fetch(this.baseURL + opts.path, {
       method: opts.method,
       signal: abortCtl.signal as any,
       headers: headers,

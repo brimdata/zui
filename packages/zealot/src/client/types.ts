@@ -1,5 +1,3 @@
-import nodeFetch from "node-fetch"
-
 export type ClientOpts = {
   env: "web" | "node"
   auth: string | null

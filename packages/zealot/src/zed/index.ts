@@ -1,7 +1,7 @@
 import {Type} from "./types/types"
 import {Value} from "./values/types"
 
-export {ZedContext as Context} from "./context"
+export {ZedContext as Context, DefaultContext} from "./context"
 export {TypeAlias} from "./types/type-alias"
 export {TypeArray} from "./types/type-array"
 export {TypeBool} from "./types/type-bool"

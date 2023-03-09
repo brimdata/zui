@@ -1,5 +1,4 @@
 import {isArray, isEmpty, isNull, isNumber, isString} from "lodash"
-import {zed} from "../.."
 import {EncodeStream} from "../encode-stream"
 import {TypeAlias} from "../types/type-alias"
 import {TypeRecord} from "../types/type-record"
@@ -57,7 +56,7 @@ export class Record implements Value {
     return this.fieldAt(index)?.value ?? null
   }
 
-  fieldAt(index: number | number[]): null | zed.Field {
+  fieldAt(index: number | number[]): null | Field {
     if (isNull(this.fields)) return null
     if (isNumber(index)) return this.fields[index]
     if (isArray(index)) {
@@ -66,7 +65,7 @@ export class Record implements Value {
       const value = this.fieldAt(head)?.value
       // Probably bugs in this
       if (!value) return null
-      if (!(value instanceof zed.Record)) {
+      if (!(value instanceof Record)) {
         throw new Error("Not a record")
       }
       return value.fieldAt(tail)

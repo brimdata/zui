@@ -1,7 +1,6 @@
 import {isDate, isInteger, isNumber, isObject, isString} from "lodash"
-import {decode, encode, zed} from "../index"
-import {DefaultContext} from "../zed/context"
-import {TypeRecord} from "../zed/index"
+import {decode, encode} from "../encoder"
+import * as zed from "../zed"
 
 // Convert a js object into a zed record
 
@@ -13,7 +12,7 @@ export function createRecord(object: {[key: string]: unknown}): zed.Record {
   const typeFields = fields.map((f) => new zed.TypeField(f.name, f.value.type))
 
   // This could be more efficient
-  const type: TypeRecord = DefaultContext.lookupTypeRecord(typeFields)
+  const type: zed.TypeRecord = zed.DefaultContext.lookupTypeRecord(typeFields)
   const r = new zed.Record(type, fields)
   // This is necessary at the moment to add field parents,
   // and to match the codepath that runs in production.

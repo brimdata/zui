@@ -1,8 +1,7 @@
-import {Response as NodeResponse} from "node-fetch"
 import {decode} from "../encoder"
 import {LoadContentType, LoadFormat, ResponseFormat} from "./types"
 
-export function parseContent(resp: Response | NodeResponse) {
+export function parseContent(resp: Response) {
   if (resp.status === 204) return Promise.resolve(null)
   const type = resp.headers.get("Content-Type")
   switch (type) {

@@ -1,4 +1,4 @@
-import {zed} from "../.."
+import {baseValue} from "../utils/base-value"
 import {Record} from "./record"
 import {Value} from "./types"
 
@@ -36,6 +36,6 @@ export class Field {
   }
 
   get baseValue() {
-    return zed.baseValue(this.value)
+    return baseValue(this.value)
   }
 }

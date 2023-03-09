@@ -1,11 +1,9 @@
 import {isObject} from "lodash"
-import {Response as NodeResponse} from "node-fetch"
 import {Collector, zjson} from ".."
 import {eachLine} from "../ndjson/lines"
 import {JSOptions} from "../zed/values/types"
 import {Channel} from "./channel"
 
-type CrossResponse = Response | NodeResponse
 export class ResultStream {
   public status: "idle" | "pending" | "error" | "aborted" | "success" = "idle"
 
@@ -13,7 +11,7 @@ export class ResultStream {
   private channelsMap = new Map<number, Channel>()
   private _promise?: Promise<void>
 
-  constructor(public resp: CrossResponse, private ctl: AbortController) {}
+  constructor(public resp: Response, private ctl: AbortController) {}
 
   get body() {
     return this.resp.body
