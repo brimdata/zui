@@ -3444,15 +3444,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-redux@npm:^7.1.9":
-  version: 7.1.9
-  resolution: "@types/react-redux@npm:7.1.9"
+"@types/react-redux@npm:^7.1.25":
+  version: 7.1.25
+  resolution: "@types/react-redux@npm:7.1.25"
   dependencies:
     "@types/hoist-non-react-statics": ^3.3.0
     "@types/react": "*"
     hoist-non-react-statics: ^3.3.0
     redux: ^4.0.0
-  checksum: 9de7513cdb2105798168208c57878bc14539b51ba45639b4b9e1e99544dea506cc0bf4e24e4a25ef2845c1169bc51932462799a4bf763bd9c109232f6516af69
+  checksum: a61ec25cbf8bb3720850402d3c49493fcff4afb73ad447d161460b5d4c600c984ad48708e8564d2fd32052eaa3c3b3f655c5b300ce813429637cce9e5958329f
   languageName: node
   linkType: hard
 
@@ -13685,9 +13685,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:^8.0.1":
-  version: 8.0.1
-  resolution: "react-redux@npm:8.0.1"
+"react-redux@npm:^8.0.5":
+  version: 8.0.5
+  resolution: "react-redux@npm:8.0.5"
   dependencies:
     "@babel/runtime": ^7.12.1
     "@types/hoist-non-react-statics": ^3.3.1
@@ -13713,7 +13713,7 @@ __metadata:
       optional: true
     redux:
       optional: true
-  checksum: d7c004b4bfb4e4cd9a5fc21fa30734cf2fc1c04b1483f0c0ea1446e00b7792e9d7ef16cf62d38254f68f6058bac34f759da6a204772a0982e029d2e83cc80512
+  checksum: a108f4f7ead6ac005e656d46051474a2bbdb31ede481bbbb3d8d779c1a35e1940b8655577cc5021313411864d305f67fc719aa48d6e5ed8288cf9cbe8b7042e4
   languageName: node
   linkType: hard
 
@@ -14144,7 +14144,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^4.0.0":
+"reselect@npm:4.0.0, reselect@npm:^4.0.0":
   version: 4.0.0
   resolution: "reselect@npm:4.0.0"
   checksum: ac7dfc9ef2cdb42b6fc87a856f3ce904c2e4363a2bc1e6fb7eea5f78902a6f506e4388e6509752984877c6dbfe501100c076671d334799eb5a1bfe9936cb2c12
@@ -17074,7 +17074,7 @@ __metadata:
     "@types/prismjs": ^1.16.1
     "@types/react": ^18.0.5
     "@types/react-dom": ^18.0.1
-    "@types/react-redux": ^7.1.9
+    "@types/react-redux": ^7.1.25
     "@types/react-router": ^5.1.11
     "@types/react-transition-group": ^4.4.0
     "@types/react-window": ^1.8.5
@@ -17153,13 +17153,14 @@ __metadata:
     react-input-autosize: ^3.0.0
     react-is: ^17.0.2
     react-markdown: ^6.0.2
-    react-redux: ^8.0.1
+    react-redux: ^8.0.5
     react-router: 5.3.1
     react-spring: ^8.0.27
     react-tooltip: ^4.2.7
     react-transition-group: ^2.9.0
     react-window: ^1.8.7
     regenerator-runtime: ^0.13.6
+    reselect: 4.0.0
     resize-observer-polyfill: ^1.5.1
     rimraf: ^3.0.2
     sass: ^1.51.0
