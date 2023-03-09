@@ -1,4 +1,4 @@
-import {zjson} from "../.."
+import * as zjson from "../../zjson"
 import {EncodeStream} from "../encode-stream"
 import {TypeUnion} from "../types/type-union"
 import {Type} from "../types/types"

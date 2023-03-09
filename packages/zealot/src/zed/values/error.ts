@@ -1,5 +1,5 @@
 import {isNull} from "lodash"
-import {zjson} from "../.."
+import * as zjson from "../../zjson"
 import {EncodeStream} from "../encode-stream"
 import {TypeError} from "../types/type-error"
 import {Value} from "./types"

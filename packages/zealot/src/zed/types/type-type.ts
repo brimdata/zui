@@ -1,4 +1,4 @@
-import {zjson} from "../.."
+import * as zjson from "../../zjson"
 import {DecodeStream} from "../decode-stream"
 import {TypeValue} from "../values/type-value"
 import {BasePrimitive} from "./base-primitive"

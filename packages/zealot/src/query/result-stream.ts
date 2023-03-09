@@ -1,8 +1,9 @@
 import {isObject} from "lodash"
-import {Collector, zjson} from ".."
+import * as zjson from "../zjson"
 import {eachLine} from "../ndjson/lines"
 import {JSOptions} from "../zed/values/types"
 import {Channel} from "./channel"
+import {Collector} from "../types"
 
 export class ResultStream {
   public status: "idle" | "pending" | "error" | "aborted" | "success" = "idle"

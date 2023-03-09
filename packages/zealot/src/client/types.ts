@@ -89,5 +89,3 @@ export type LoadContentType =
   | "application/x-zson"
 
 export type WebFetch = typeof window.fetch
-export type NodeFetch = typeof nodeFetch
-export type CrossFetch = WebFetch | NodeFetch

@@ -10,6 +10,7 @@ export * from "../types"
 // Rig up the client to use node fetch
 import fetch from "node-fetch"
 import {Client as BaseClient} from "../client/client"
+// @ts-ignore
 BaseClient.fetch = fetch
 export const Client = BaseClient
 

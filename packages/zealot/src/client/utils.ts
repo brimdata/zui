@@ -53,7 +53,7 @@ export const getEnv = () => {
   return "fetch" in globalThis && !globalThis.fetch.polyfill ? "web" : "node"
 }
 
-export async function toJS(res: Response | NodeResponse) {
+export async function toJS(res: Response) {
   const j = await res.json()
   return decode(j).toJS()
 }

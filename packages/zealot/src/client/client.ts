@@ -1,6 +1,6 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
 import {isUndefined} from "lodash"
-import {PoolConfig, PoolStats} from ".."
+import {PoolConfig, PoolStats} from "../types"
 import {ResultStream} from "../query/result-stream"
 import {createError} from "../util/error"
 import * as Types from "./types"
@@ -16,7 +16,7 @@ import {
 } from "./utils"
 
 export class Client {
-  static fetch: Types.CrossFetch
+  static fetch: Types.WebFetch
   public auth: string | null
   public timeout = 60_000
 
@@ -183,6 +183,7 @@ export class Client {
       method: opts.method,
       signal: abortCtl.signal as any,
       headers: headers,
+      // @ts-ignore
       body: opts.body,
     })
     clearTimer()

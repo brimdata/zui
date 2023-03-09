@@ -1,4 +1,4 @@
-import {zjson} from "../.."
+import * as zjson from "../../zjson"
 import {DecodeStream} from "../decode-stream"
 import {EncodeStream} from "../encode-stream"
 import {Error} from "../values/error"
