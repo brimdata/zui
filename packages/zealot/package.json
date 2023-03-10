@@ -13,6 +13,7 @@
     "build": "run-p 'build:*'",
     "build:cjs": "swc src -d dist/cjs",
     "build:es": "esbuild src/esm/index.ts --bundle --outfile=dist/esm/index.mjs --format=esm",
+    "build:types": "tsc",
     "support:lake": "node test/support/lake.js",
     "support:seed": "node test/support/seed.js",
     "prepack": "yarn build"
