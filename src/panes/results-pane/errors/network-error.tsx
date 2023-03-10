@@ -32,11 +32,11 @@ export function isNetworkError(e: unknown) {
   return e === "The service could not be reached."
 }
 
-export function NetworkError(props: {error: string}) {
+export function NetworkError() {
   return (
     <BG>
       <h2>Error</h2>
-      <StyledP>{props.error}</StyledP>
+      <StyledP>The service could not be reached.</StyledP>
       <StyledButton
         onClick={viewTroubleshootingDocs}
         text="View Troubleshooting Docs"
