@@ -7,6 +7,6 @@ import {isNetworkError, NetworkError} from "./errors/network-error"
 export function Error(props: {error: string | object}) {
   if (isParseError(props.error)) return <SyntaxError error={props.error} />
   if (isMissingPoolError(props.error)) return <MissingPoolError />
-  if (isNetworkError(props.error)) return <NetworkError error={props.error}/>
+  if (isNetworkError(props.error)) return <NetworkError />
   return <DefaultError {...props} />
 }
