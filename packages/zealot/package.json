@@ -1,6 +1,6 @@
 {
   "name": "@brimdata/zealot",
-  "version": "1.0.2-beta",
+  "version": "1.0.2-beta.2",
   "description": "The Javascript Client for Zed Lakes",
   "main": "dist/cjs/cjs/index.js",
   "module": "dist/esm/index.mjs",
