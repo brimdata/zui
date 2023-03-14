@@ -3,7 +3,6 @@ import * as zjson from "../zjson"
 import {Type} from "./types/types"
 import {Value} from "./values/types"
 import {TypeValue} from "./values/type-value"
-import {isNull} from "lodash"
 
 export class EncodeStream {
   private id = 30
@@ -32,7 +31,7 @@ export class EncodeStream {
   encodeValue(value: Value | null): zjson.Value {
     if (!value) return null
     if (value instanceof TypeValue) {
-      if (isNull(value.value)) return null
+      if (value.value === null) return null
       return this.encodeType(value.value)
     } else {
       return value.serialize(this)

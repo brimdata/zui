@@ -1,4 +1,3 @@
-import {isArray, isEmpty, isNull, isNumber, isString} from "lodash"
 import {EncodeStream} from "../encode-stream"
 import {TypeAlias} from "../types/type-alias"
 import {TypeRecord} from "../types/type-record"
@@ -26,7 +25,7 @@ export class Record implements Value {
   }
 
   get columns() {
-    if (isNull(this.fields)) return []
+    if (this.fields === null) return []
     return this.fields.map((f) => f.name)
   }
 
@@ -35,7 +34,7 @@ export class Record implements Value {
   }
 
   toString() {
-    if (isNull(this.fields)) return "null"
+    if (this.fields === null) return "null"
     let s = "{"
     let sep = ""
     this.fields.forEach((f) => {
@@ -48,7 +47,7 @@ export class Record implements Value {
   }
 
   serialize(stream: EncodeStream) {
-    if (isNull(this.fields)) return null
+    if (this.fields === null) return null
     return this.fields.map((f) => stream.encodeValue(f.value))
   }
 
@@ -57,13 +56,12 @@ export class Record implements Value {
   }
 
   fieldAt(index: number | number[]): null | Field {
-    if (isNull(this.fields)) return null
-    if (isNumber(index)) return this.fields[index]
-    if (isArray(index)) {
+    if (this.fields === null) return null
+    if (typeof index === "number") return this.fields[index]
+    if (Array.isArray(index)) {
       if (index.length === 1) return this.fieldAt(index[0])
       const [head, ...tail] = index
       const value = this.fieldAt(head)?.value
-      // Probably bugs in this
       if (!value) return null
       if (!(value instanceof Record)) {
         throw new Error("Not a record")
@@ -88,8 +86,9 @@ export class Record implements Value {
   }
 
   getField(name: string | string[]): Field | null {
-    if (isString(name)) return this._getField(name)
-    if (isEmpty(name)) throw new Error("No fields specified")
+    if (typeof name === "string") return this._getField(name)
+    if (Array.isArray(name) && name.length === 0)
+      throw new Error("No fields specified")
     if (name.length === 1) return this._getField(name[0])
 
     const [next, ...rest] = name
@@ -125,7 +124,7 @@ export class Record implements Value {
     if (!this.trueType.has(name)) {
       throw new UnknownColumnError(name, this.columns)
     }
-    if (isNull(this.fields)) {
+    if (this.fields === null) {
       return new Field(name, new Null(), parent || this)
     } else {
       return this.fields.find((f) => f.name == name)!
@@ -133,11 +132,11 @@ export class Record implements Value {
   }
 
   isUnset() {
-    return isNull(this.fields)
+    return this.fields === null
   }
 
   toJS(opts: JSOptions = {}) {
-    if (isNull(this.fields)) return null
+    if (this.fields === null) return null
     return this.fields.reduce((obj, field) => {
       obj[field.name] = field.value.toJS(opts)
       return obj

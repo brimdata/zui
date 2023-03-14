@@ -1,4 +1,3 @@
-import {isObject} from "lodash"
 import * as zjson from "../zjson"
 import {eachLine} from "../ndjson/lines"
 import {JSOptions} from "../zed/values/types"
@@ -111,7 +110,7 @@ export class ResultStream {
       case "QueryError":
         throw new Error(json.value.error)
       default:
-        if (isObject(json.type)) {
+        if (typeof json.type === "object") {
           this.channel().consume(json)
           break
         }

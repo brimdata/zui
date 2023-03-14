@@ -1,4 +1,3 @@
-import {isDate, isInteger, isNumber, isObject, isString} from "lodash"
 import {decode, encode} from "../encoder"
 import * as zed from "../zed"
 
@@ -32,27 +31,27 @@ export function createData(value: unknown): zed.Value {
     return new zed.Null()
   }
 
-  if (isDate(value)) {
+  if (value instanceof Date) {
     return new zed.Time((value.getTime() / 1000).toString())
   }
 
-  if (isInteger(value)) {
+  if (Number.isInteger(value)) {
     return new zed.Uint64((value as number).toString())
   }
 
-  if (isNumber(value)) {
+  if (typeof value === "number") {
     return new zed.Float64(value.toString())
   }
 
-  if (isString(value) && isIp(value)) {
+  if (typeof value === "string" && isIp(value)) {
     return new zed.Ip(value)
   }
 
-  if (isString(value)) {
+  if (typeof value === "string") {
     return new zed.String(value)
   }
 
-  if (isObject(value) && value?.constructor === Object) {
+  if (typeof value === "object" && value?.constructor === Object) {
     return createRecord(value as {[k: string]: unknown})
   }
 

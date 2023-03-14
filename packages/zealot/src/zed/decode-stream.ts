@@ -1,4 +1,3 @@
-import {isNull} from "lodash"
 import * as zjson from "../zjson"
 import {TypeDefs, ZedContext} from "./context"
 import {TypeField} from "./types/type-field"
@@ -49,7 +48,7 @@ export class DecodeStream {
         )
       case "record":
         return this.context.lookupTypeRecord(
-          isNull(obj.fields)
+          obj.fields === null
             ? null
             : obj.fields.map(({name, type}) => {
                 return new TypeField(name, this.decodeType(type))

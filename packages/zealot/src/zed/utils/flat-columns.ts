@@ -1,4 +1,3 @@
-import {isNull} from "lodash"
 import {TypeRecord} from "../types/type-record"
 import {Type} from "../types/types"
 import {trueType} from "./true-type"
@@ -11,7 +10,7 @@ export function flatColumns(
   const record = trueType(type)
   if (!(record instanceof TypeRecord)) return columns
 
-  if (isNull(record.fields)) return []
+  if (record.fields === null) return []
   for (let f of record.fields) {
     const type = trueType(f.type)
     if (type instanceof TypeRecord) {

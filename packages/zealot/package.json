@@ -1,6 +1,6 @@
 {
   "name": "@brimdata/zealot",
-  "version": "1.0.1",
+  "version": "1.0.2-beta",
   "description": "The Javascript Client for Zed Lakes",
   "main": "dist/cjs/cjs/index.js",
   "module": "dist/esm/index.mjs",
@@ -12,7 +12,7 @@
     "test:esm": "cypress run",
     "build": "run-p 'build:*'",
     "build:cjs": "swc src -d dist/cjs",
-    "build:es": "esbuild src/esm/index.ts --bundle --outfile=dist/esm/index.mjs --format=esm",
+    "build:es": "esbuild src/esm/index.ts --bundle --outfile=dist/esm/index.mjs --format=esm --metafile=meta.json",
     "build:types": "tsc",
     "support:lake": "node test/support/lake.js",
     "support:seed": "node test/support/seed.js",
@@ -60,7 +60,6 @@
     "@js-joda/core": "^4.3.1",
     "event-source-polyfill": "^1.0.25",
     "events": "^3.3.0",
-    "lodash": "^4.17.21",
     "node-fetch": "2"
   }
 }

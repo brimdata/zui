@@ -1,4 +1,3 @@
-import {isNull} from "lodash"
 import * as zjson from "../../zjson"
 import {EncodeStream} from "../encode-stream"
 import {TypeError} from "../types/type-error"
@@ -12,12 +11,12 @@ export class Error implements Value {
   }
 
   toString(): string {
-    if (isNull(this.value)) return "null"
+    if (this.value === null) return "null"
     return `Error(${this.value.toString()})`
   }
 
   serialize(stream: EncodeStream): zjson.Value {
-    if (isNull(this.value)) {
+    if (this.value === null) {
       return null
     } else {
       return stream.encodeValue(this.value!)
@@ -25,6 +24,6 @@ export class Error implements Value {
   }
 
   isUnset(): boolean {
-    return isNull(this.value)
+    return this.value === null
   }
 }

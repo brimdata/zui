@@ -1,5 +1,4 @@
 import {EventSourcePolyfill} from "event-source-polyfill"
-import {isUndefined} from "lodash"
 import {PoolConfig, PoolStats} from "../types"
 import {ResultStream} from "../query/result-stream"
 import {createError} from "../util/error"
@@ -7,7 +6,6 @@ import * as Types from "./types"
 import {
   accept,
   defaults,
-  getEnv,
   getLoadContentType,
   json,
   parseContent,
@@ -21,7 +19,7 @@ export class Client {
   public timeout = 60_000
 
   constructor(public baseURL: string, opts: Partial<Types.ClientOpts> = {}) {
-    const defaults: Types.ClientOpts = {env: getEnv(), auth: null}
+    const defaults: Types.ClientOpts = {auth: null}
     const options: Types.ClientOpts = {...defaults, ...opts}
     this.auth = options.auth || null
   }
@@ -196,7 +194,7 @@ export class Client {
 
   private setTimeout(fn: () => void, ms?: number) {
     if (ms === Infinity) return () => {}
-    if (isUndefined(ms)) ms = this.timeout
+    if (ms === undefined) ms = this.timeout
     const id = setTimeout(fn, ms)
     return () => clearTimeout(id)
   }
