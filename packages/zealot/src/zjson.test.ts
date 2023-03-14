@@ -1,7 +1,10 @@
 import {zq} from "./cmd/zq"
-import {decode, encode, zed, zjson} from "./index"
+import {decode, encode} from "./encoder"
+import * as zjson from "./zjson"
+import * as zed from "./zed"
+import {getPath} from "zui-test-data"
 
-const file = "testdata/sample.zson" // data.getPath("sample.zson");
+const file = getPath("sample.zson")
 
 test("super simple", async () => {
   const input: zjson.Object[] = await zq({
@@ -100,11 +103,12 @@ test("encode decode a field", async () => {
   })) as zjson.Object[]
 
   const records = decode(input) as zed.Record[]
-  expect.assertions(242)
+  expect.assertions(250)
 
   records.forEach((rec) => {
     rec.flatColumns.forEach((column) => {
       const field = rec.getField(column)
+      if (!field) return
       const after = decode(encode(field))
       expect(field).toEqual(after)
       expect(field.value.type === after.value.type).toBe(true)
@@ -125,7 +129,9 @@ test("encode decode a typeof value", async () => {
   records.forEach((rec) => {
     rec.flatColumns.forEach((column) => {
       const field = rec.getField(column)
+      if (!field) return
       const after = decode(encode(field))
+      if (!field) return
       expect(field).toEqual(after)
       expect(field.value.type === after.value.type).toBe(true)
     })

@@ -1,0 +1,3259 @@
+{
+  "inputs": {
+    "src/zed/types/type-field.ts": {
+      "bytes": 114,
+      "imports": [
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-null.ts": {
+      "bytes": 82,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/zed/values/primitive.ts": {
+      "bytes": 541,
+      "imports": [
+        {
+          "path": "../types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/bool.ts": {
+      "bytes": 275,
+      "imports": [
+        {
+          "path": "src/zed/types/type-bool.ts",
+          "kind": "import-statement",
+          "original": "../types/type-bool"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/base-primitive.ts": {
+      "bytes": 454,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../values/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-bool.ts": {
+      "bytes": 256,
+      "imports": [
+        {
+          "path": "src/zed/values/bool.ts",
+          "kind": "import-statement",
+          "original": "../values/bool"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/bstring.ts": {
+      "bytes": 216,
+      "imports": [
+        {
+          "path": "src/zed/types/type-bstring.ts",
+          "kind": "import-statement",
+          "original": "../types/type-bstring"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-bstring.ts": {
+      "bytes": 280,
+      "imports": [
+        {
+          "path": "src/zed/values/bstring.ts",
+          "kind": "import-statement",
+          "original": "../values/bstring"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/bytes.ts": {
+      "bytes": 206,
+      "imports": [
+        {
+          "path": "src/zed/types/type-bytes.ts",
+          "kind": "import-statement",
+          "original": "../types/type-bytes"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-bytes.ts": {
+      "bytes": 264,
+      "imports": [
+        {
+          "path": "src/zed/values/bytes.ts",
+          "kind": "import-statement",
+          "original": "../values/bytes"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/duration.ts": {
+      "bytes": 2244,
+      "imports": [
+        {
+          "path": "src/zed/types/type-duration.ts",
+          "kind": "import-statement",
+          "original": "../types/type-duration"
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-duration.ts": {
+      "bytes": 288,
+      "imports": [
+        {
+          "path": "src/zed/values/duration.ts",
+          "kind": "import-statement",
+          "original": "../values/duration"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/float16.ts": {
+      "bytes": 348,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/types/type-float16.ts",
+          "kind": "import-statement",
+          "original": "../types/type-float16"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-float16.ts": {
+      "bytes": 287,
+      "imports": [
+        {
+          "path": "src/zed/values/float16.ts",
+          "kind": "import-statement",
+          "original": "../values/float16"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/float32.ts": {
+      "bytes": 348,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/types/type-float32.ts",
+          "kind": "import-statement",
+          "original": "../types/type-float32"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-float32.ts": {
+      "bytes": 287,
+      "imports": [
+        {
+          "path": "src/zed/values/float32.ts",
+          "kind": "import-statement",
+          "original": "../values/float32"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/float64.ts": {
+      "bytes": 348,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/types/type-float64.ts",
+          "kind": "import-statement",
+          "original": "../types/type-float64"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-float64.ts": {
+      "bytes": 287,
+      "imports": [
+        {
+          "path": "src/zed/values/float64.ts",
+          "kind": "import-statement",
+          "original": "../values/float64"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/int16.ts": {
+      "bytes": 332,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/types/type-int16.ts",
+          "kind": "import-statement",
+          "original": "../types/type-int16"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-int16.ts": {
+      "bytes": 271,
+      "imports": [
+        {
+          "path": "src/zed/values/int16.ts",
+          "kind": "import-statement",
+          "original": "../values/int16"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/int32.ts": {
+      "bytes": 332,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/types/type-int32.ts",
+          "kind": "import-statement",
+          "original": "../types/type-int32"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-int32.ts": {
+      "bytes": 271,
+      "imports": [
+        {
+          "path": "src/zed/values/int32.ts",
+          "kind": "import-statement",
+          "original": "../values/int32"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/int64.ts": {
+      "bytes": 549,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/types/type-int64.ts",
+          "kind": "import-statement",
+          "original": "../types/type-int64"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-int64.ts": {
+      "bytes": 271,
+      "imports": [
+        {
+          "path": "src/zed/values/int64.ts",
+          "kind": "import-statement",
+          "original": "../values/int64"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/int8.ts": {
+      "bytes": 327,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/types/type-int8.ts",
+          "kind": "import-statement",
+          "original": "../types/type-int8"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-int8.ts": {
+      "bytes": 263,
+      "imports": [
+        {
+          "path": "src/zed/values/int8.ts",
+          "kind": "import-statement",
+          "original": "../values/int8"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/ip.ts": {
+      "bytes": 191,
+      "imports": [
+        {
+          "path": "src/zed/types/type-ip.ts",
+          "kind": "import-statement",
+          "original": "../types/type-ip"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-ip.ts": {
+      "bytes": 240,
+      "imports": [
+        {
+          "path": "src/zed/values/ip.ts",
+          "kind": "import-statement",
+          "original": "../values/ip"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/net.ts": {
+      "bytes": 196,
+      "imports": [
+        {
+          "path": "src/zed/types/type-net.ts",
+          "kind": "import-statement",
+          "original": "../types/type-net"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-net.ts": {
+      "bytes": 248,
+      "imports": [
+        {
+          "path": "src/zed/values/net.ts",
+          "kind": "import-statement",
+          "original": "../values/net"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/null.ts": {
+      "bytes": 205,
+      "imports": [
+        {
+          "path": "src/zed/types/type-null.ts",
+          "kind": "import-statement",
+          "original": "../types/type-null"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-null.ts": {
+      "bytes": 249,
+      "imports": [
+        {
+          "path": "src/zed/values/null.ts",
+          "kind": "import-statement",
+          "original": "../values/null"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/string.ts": {
+      "bytes": 211,
+      "imports": [
+        {
+          "path": "src/zed/types/type-string.ts",
+          "kind": "import-statement",
+          "original": "../types/type-string"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-string.ts": {
+      "bytes": 271,
+      "imports": [
+        {
+          "path": "src/zed/values/string.ts",
+          "kind": "import-statement",
+          "original": "../values/string"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/time.ts": {
+      "bytes": 409,
+      "imports": [
+        {
+          "path": "src/zed/types/type-time.ts",
+          "kind": "import-statement",
+          "original": "../types/type-time"
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-time.ts": {
+      "bytes": 256,
+      "imports": [
+        {
+          "path": "src/zed/values/time.ts",
+          "kind": "import-statement",
+          "original": "../values/time"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/type-value.ts": {
+      "bytes": 705,
+      "imports": [
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/types/type-type.ts",
+          "kind": "import-statement",
+          "original": "../types/type-type"
+        },
+        {
+          "path": "../types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-type.ts": {
+      "bytes": 447,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/values/type-value.ts",
+          "kind": "import-statement",
+          "original": "../values/type-value"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/typename.ts": {
+      "bytes": 257,
+      "imports": [
+        {
+          "path": "src/zed/types/type-typename.ts",
+          "kind": "import-statement",
+          "original": "../types/type-typename"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-typename.ts": {
+      "bytes": 288,
+      "imports": [
+        {
+          "path": "src/zed/values/typename.ts",
+          "kind": "import-statement",
+          "original": "../values/typename"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/uint16.ts": {
+      "bytes": 337,
+      "imports": [
+        {
+          "path": "src/zed/types/type-uint16.ts",
+          "kind": "import-statement",
+          "original": "../types/type-uint16"
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-uint16.ts": {
+      "bytes": 279,
+      "imports": [
+        {
+          "path": "src/zed/values/uint16.ts",
+          "kind": "import-statement",
+          "original": "../values/uint16"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/uint32.ts": {
+      "bytes": 337,
+      "imports": [
+        {
+          "path": "src/zed/types/type-uint32.ts",
+          "kind": "import-statement",
+          "original": "../types/type-uint32"
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-uint32.ts": {
+      "bytes": 279,
+      "imports": [
+        {
+          "path": "src/zed/values/uint32.ts",
+          "kind": "import-statement",
+          "original": "../values/uint32"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/uint64.ts": {
+      "bytes": 554,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/types/type-uint64.ts",
+          "kind": "import-statement",
+          "original": "../types/type-uint64"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-uint64.ts": {
+      "bytes": 279,
+      "imports": [
+        {
+          "path": "src/zed/values/uint64.ts",
+          "kind": "import-statement",
+          "original": "../values/uint64"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/uint8.ts": {
+      "bytes": 332,
+      "imports": [
+        {
+          "path": "src/zed/types/type-uint8.ts",
+          "kind": "import-statement",
+          "original": "../types/type-uint8"
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-uint8.ts": {
+      "bytes": 271,
+      "imports": [
+        {
+          "path": "src/zed/values/uint8.ts",
+          "kind": "import-statement",
+          "original": "../values/uint8"
+        },
+        {
+          "path": "src/zed/types/base-primitive.ts",
+          "kind": "import-statement",
+          "original": "./base-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-primitives.ts": {
+      "bytes": 2766,
+      "imports": [
+        {
+          "path": "src/zed/types/type-bool.ts",
+          "kind": "import-statement",
+          "original": "./type-bool"
+        },
+        {
+          "path": "src/zed/types/type-bstring.ts",
+          "kind": "import-statement",
+          "original": "./type-bstring"
+        },
+        {
+          "path": "src/zed/types/type-bytes.ts",
+          "kind": "import-statement",
+          "original": "./type-bytes"
+        },
+        {
+          "path": "src/zed/types/type-duration.ts",
+          "kind": "import-statement",
+          "original": "./type-duration"
+        },
+        {
+          "path": "src/zed/types/type-float16.ts",
+          "kind": "import-statement",
+          "original": "./type-float16"
+        },
+        {
+          "path": "src/zed/types/type-float32.ts",
+          "kind": "import-statement",
+          "original": "./type-float32"
+        },
+        {
+          "path": "src/zed/types/type-float64.ts",
+          "kind": "import-statement",
+          "original": "./type-float64"
+        },
+        {
+          "path": "src/zed/types/type-int16.ts",
+          "kind": "import-statement",
+          "original": "./type-int16"
+        },
+        {
+          "path": "src/zed/types/type-int32.ts",
+          "kind": "import-statement",
+          "original": "./type-int32"
+        },
+        {
+          "path": "src/zed/types/type-int64.ts",
+          "kind": "import-statement",
+          "original": "./type-int64"
+        },
+        {
+          "path": "src/zed/types/type-int8.ts",
+          "kind": "import-statement",
+          "original": "./type-int8"
+        },
+        {
+          "path": "src/zed/types/type-ip.ts",
+          "kind": "import-statement",
+          "original": "./type-ip"
+        },
+        {
+          "path": "src/zed/types/type-net.ts",
+          "kind": "import-statement",
+          "original": "./type-net"
+        },
+        {
+          "path": "src/zed/types/type-null.ts",
+          "kind": "import-statement",
+          "original": "./type-null"
+        },
+        {
+          "path": "src/zed/types/type-string.ts",
+          "kind": "import-statement",
+          "original": "./type-string"
+        },
+        {
+          "path": "src/zed/types/type-time.ts",
+          "kind": "import-statement",
+          "original": "./type-time"
+        },
+        {
+          "path": "src/zed/types/type-type.ts",
+          "kind": "import-statement",
+          "original": "./type-type"
+        },
+        {
+          "path": "src/zed/types/type-typename.ts",
+          "kind": "import-statement",
+          "original": "./type-typename"
+        },
+        {
+          "path": "src/zed/types/type-uint16.ts",
+          "kind": "import-statement",
+          "original": "./type-uint16"
+        },
+        {
+          "path": "src/zed/types/type-uint32.ts",
+          "kind": "import-statement",
+          "original": "./type-uint32"
+        },
+        {
+          "path": "src/zed/types/type-uint64.ts",
+          "kind": "import-statement",
+          "original": "./type-uint64"
+        },
+        {
+          "path": "src/zed/types/type-uint8.ts",
+          "kind": "import-statement",
+          "original": "./type-uint8"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/get-primitive-type.ts": {
+      "bytes": 247,
+      "imports": [
+        {
+          "path": "src/zed/types/type-primitives.ts",
+          "kind": "import-statement",
+          "original": "../types/type-primitives"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/decode-stream.ts": {
+      "bytes": 1868,
+      "imports": [
+        {
+          "path": "../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./context",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/types/type-field.ts",
+          "kind": "import-statement",
+          "original": "./types/type-field"
+        },
+        {
+          "path": "./types/type-primitives",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/get-primitive-type.ts",
+          "kind": "import-statement",
+          "original": "./utils/get-primitive-type"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-type-alias.ts": {
+      "bytes": 148,
+      "imports": [
+        {
+          "path": "src/zed/types/type-alias.ts",
+          "kind": "import-statement",
+          "original": "../types/type-alias"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/true-type.ts": {
+      "bytes": 163,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-type-alias.ts",
+          "kind": "import-statement",
+          "original": "./is-type-alias"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/union.ts": {
+      "bytes": 875,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/type-union",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/base-value.ts": {
+      "bytes": 208,
+      "imports": [
+        {
+          "path": "..",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/values/union.ts",
+          "kind": "import-statement",
+          "original": "../values/union"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/flat-columns.ts": {
+      "bytes": 648,
+      "imports": [
+        {
+          "path": "src/zed/types/type-record.ts",
+          "kind": "import-statement",
+          "original": "../types/type-record"
+        },
+        {
+          "path": "../types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/true-type.ts",
+          "kind": "import-statement",
+          "original": "./true-type"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/record.ts": {
+      "bytes": 4018,
+      "imports": [
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/type-alias",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/type-record",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/flat-columns.ts",
+          "kind": "import-statement",
+          "original": "../utils/flat-columns"
+        },
+        {
+          "path": "src/zed/utils/true-type.ts",
+          "kind": "import-statement",
+          "original": "../utils/true-type"
+        },
+        {
+          "path": "src/zed/values/field.ts",
+          "kind": "import-statement",
+          "original": "./field"
+        },
+        {
+          "path": "src/zed/values/null.ts",
+          "kind": "import-statement",
+          "original": "./null"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/field.ts": {
+      "bytes": 802,
+      "imports": [
+        {
+          "path": "src/zed/utils/base-value.ts",
+          "kind": "import-statement",
+          "original": "../utils/base-value"
+        },
+        {
+          "path": "src/zed/values/record.ts",
+          "kind": "import-statement",
+          "original": "./record"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-record.ts": {
+      "bytes": 2370,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/utils/true-type.ts",
+          "kind": "import-statement",
+          "original": "../utils/true-type"
+        },
+        {
+          "path": "src/zed/values/field.ts",
+          "kind": "import-statement",
+          "original": "../values/field"
+        },
+        {
+          "path": "src/zed/values/null.ts",
+          "kind": "import-statement",
+          "original": "../values/null"
+        },
+        {
+          "path": "src/zed/values/record.ts",
+          "kind": "import-statement",
+          "original": "../values/record"
+        },
+        {
+          "path": "./type-field",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-alias.ts": {
+      "bytes": 1079,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../values/field",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../values/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/types/type-record.ts",
+          "kind": "import-statement",
+          "original": "./type-record"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/array.ts": {
+      "bytes": 957,
+      "imports": [
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/type-array",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-array.ts": {
+      "bytes": 948,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/values/array.ts",
+          "kind": "import-statement",
+          "original": "../values/array"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/error.ts": {
+      "bytes": 672,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/type-error",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-error.ts": {
+      "bytes": 792,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/values/error.ts",
+          "kind": "import-statement",
+          "original": "../values/error"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/map.ts": {
+      "bytes": 1200,
+      "imports": [
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/types/type-ip.ts",
+          "kind": "import-statement",
+          "original": "../types/type-ip"
+        },
+        {
+          "path": "../types/type-map",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-map.ts": {
+      "bytes": 1133,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/values/map.ts",
+          "kind": "import-statement",
+          "original": "../values/map"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/set.ts": {
+      "bytes": 951,
+      "imports": [
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/type-set",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-set.ts": {
+      "bytes": 822,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "../utils/is-null"
+        },
+        {
+          "path": "src/zed/values/set.ts",
+          "kind": "import-statement",
+          "original": "../values/set"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-union.ts": {
+      "bytes": 1068,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/values/union.ts",
+          "kind": "import-statement",
+          "original": "../values/union"
+        },
+        {
+          "path": "src/zed/types/type-null.ts",
+          "kind": "import-statement",
+          "original": "./type-null"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/values/types.ts": {
+      "bytes": 1471,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./array",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./bool",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./bstring",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./bytes",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./duration",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./error",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./float64",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./int16",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./int32",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./int64",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./int8",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./ip",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./map",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./net",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./null",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./record",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./set",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./string",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./time",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./type-value",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./uint16",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./uint32",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./uint64",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./uint8",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./union",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/types.ts": {
+      "bytes": 878,
+      "imports": [
+        {
+          "path": "../../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../encode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../index",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../values/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./type-alias",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./type-array",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./type-map",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./type-primitives",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./type-record",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./type-set",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./type-union",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/types/type-containers.ts": {
+      "bytes": 899,
+      "imports": [
+        {
+          "path": "src/zed/types/type-alias.ts",
+          "kind": "import-statement",
+          "original": "./type-alias"
+        },
+        {
+          "path": "src/zed/types/type-array.ts",
+          "kind": "import-statement",
+          "original": "./type-array"
+        },
+        {
+          "path": "src/zed/types/type-map.ts",
+          "kind": "import-statement",
+          "original": "./type-map"
+        },
+        {
+          "path": "src/zed/types/type-record.ts",
+          "kind": "import-statement",
+          "original": "./type-record"
+        },
+        {
+          "path": "src/zed/types/type-set.ts",
+          "kind": "import-statement",
+          "original": "./type-set"
+        },
+        {
+          "path": "src/zed/types/type-union.ts",
+          "kind": "import-statement",
+          "original": "./type-union"
+        },
+        {
+          "path": "src/zed/types/type-error.ts",
+          "kind": "import-statement",
+          "original": "./type-error"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-type.ts": {
+      "bytes": 267,
+      "imports": [
+        {
+          "path": "src/zed/types/type-containers.ts",
+          "kind": "import-statement",
+          "original": "../types/type-containers"
+        },
+        {
+          "path": "src/zed/types/type-primitives.ts",
+          "kind": "import-statement",
+          "original": "../types/type-primitives"
+        },
+        {
+          "path": "../types/types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-alias.ts": {
+      "bytes": 117,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/zed/utils/is-duration.ts": {
+      "bytes": 146,
+      "imports": [
+        {
+          "path": "src/zed/values/duration.ts",
+          "kind": "import-statement",
+          "original": "../values/duration"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-float64.ts": {
+      "bytes": 416,
+      "imports": [
+        {
+          "path": "src/zed/values/float16.ts",
+          "kind": "import-statement",
+          "original": "../values/float16"
+        },
+        {
+          "path": "src/zed/values/float32.ts",
+          "kind": "import-statement",
+          "original": "../values/float32"
+        },
+        {
+          "path": "src/zed/values/float64.ts",
+          "kind": "import-statement",
+          "original": "../values/float64"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-int.ts": {
+      "bytes": 661,
+      "imports": [
+        {
+          "path": "src/zed/values/int16.ts",
+          "kind": "import-statement",
+          "original": "../values/int16"
+        },
+        {
+          "path": "src/zed/values/int32.ts",
+          "kind": "import-statement",
+          "original": "../values/int32"
+        },
+        {
+          "path": "src/zed/values/int64.ts",
+          "kind": "import-statement",
+          "original": "../values/int64"
+        },
+        {
+          "path": "src/zed/values/int8.ts",
+          "kind": "import-statement",
+          "original": "../values/int8"
+        },
+        {
+          "path": "../values/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/values/uint16.ts",
+          "kind": "import-statement",
+          "original": "../values/uint16"
+        },
+        {
+          "path": "src/zed/values/uint32.ts",
+          "kind": "import-statement",
+          "original": "../values/uint32"
+        },
+        {
+          "path": "src/zed/values/uint64.ts",
+          "kind": "import-statement",
+          "original": "../values/uint64"
+        },
+        {
+          "path": "src/zed/values/uint8.ts",
+          "kind": "import-statement",
+          "original": "../values/uint8"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-iterable.ts": {
+      "bytes": 198,
+      "imports": [
+        {
+          "path": "src/zed/values/array.ts",
+          "kind": "import-statement",
+          "original": "../values/array"
+        },
+        {
+          "path": "src/zed/values/set.ts",
+          "kind": "import-statement",
+          "original": "../values/set"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-named.ts": {
+      "bytes": 184,
+      "imports": [
+        {
+          "path": "../types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/utils/is-type-alias.ts",
+          "kind": "import-statement",
+          "original": "./is-type-alias"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-primitive-name.ts": {
+      "bytes": 177,
+      "imports": [
+        {
+          "path": "src/zed/types/type-primitives.ts",
+          "kind": "import-statement",
+          "original": "../types/type-primitives"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-primitive.ts": {
+      "bytes": 151,
+      "imports": [
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "../values/primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-string.ts": {
+      "bytes": 137,
+      "imports": [
+        {
+          "path": "src/zed/values/string.ts",
+          "kind": "import-statement",
+          "original": "../values/string"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-time.ts": {
+      "bytes": 126,
+      "imports": [
+        {
+          "path": "src/zed/values/time.ts",
+          "kind": "import-statement",
+          "original": "../values/time"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-container.ts": {
+      "bytes": 490,
+      "imports": [
+        {
+          "path": "src/zed/values/record.ts",
+          "kind": "import-statement",
+          "original": "../values/record"
+        },
+        {
+          "path": "src/zed/values/array.ts",
+          "kind": "import-statement",
+          "original": "../values/array"
+        },
+        {
+          "path": "src/zed/values/map.ts",
+          "kind": "import-statement",
+          "original": "../values/map"
+        },
+        {
+          "path": "src/zed/values/set.ts",
+          "kind": "import-statement",
+          "original": "../values/set"
+        },
+        {
+          "path": "src/zed/values/union.ts",
+          "kind": "import-statement",
+          "original": "../values/union"
+        },
+        {
+          "path": "src/zed/values/error.ts",
+          "kind": "import-statement",
+          "original": "../values/error"
+        },
+        {
+          "path": "src/zed/values/type-value.ts",
+          "kind": "import-statement",
+          "original": "../values/type-value"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/is-value.ts": {
+      "bytes": 181,
+      "imports": [
+        {
+          "path": "src/zed/utils/is-container.ts",
+          "kind": "import-statement",
+          "original": "./is-container"
+        },
+        {
+          "path": "src/zed/utils/is-primitive.ts",
+          "kind": "import-statement",
+          "original": "./is-primitive"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/utils/typeunder.ts": {
+      "bytes": 224,
+      "imports": [
+        {
+          "path": "../index",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/types/type-alias.ts",
+          "kind": "import-statement",
+          "original": "../types/type-alias"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/index.ts": {
+      "bytes": 3313,
+      "imports": [
+        {
+          "path": "./types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./values/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/context.ts",
+          "kind": "import-statement",
+          "original": "./context"
+        },
+        {
+          "path": "src/zed/types/type-alias.ts",
+          "kind": "import-statement",
+          "original": "./types/type-alias"
+        },
+        {
+          "path": "src/zed/types/type-array.ts",
+          "kind": "import-statement",
+          "original": "./types/type-array"
+        },
+        {
+          "path": "src/zed/types/type-bool.ts",
+          "kind": "import-statement",
+          "original": "./types/type-bool"
+        },
+        {
+          "path": "src/zed/types/type-bstring.ts",
+          "kind": "import-statement",
+          "original": "./types/type-bstring"
+        },
+        {
+          "path": "src/zed/types/type-bytes.ts",
+          "kind": "import-statement",
+          "original": "./types/type-bytes"
+        },
+        {
+          "path": "src/zed/types/type-duration.ts",
+          "kind": "import-statement",
+          "original": "./types/type-duration"
+        },
+        {
+          "path": "src/zed/types/type-error.ts",
+          "kind": "import-statement",
+          "original": "./types/type-error"
+        },
+        {
+          "path": "src/zed/types/type-float64.ts",
+          "kind": "import-statement",
+          "original": "./types/type-float64"
+        },
+        {
+          "path": "src/zed/types/type-int16.ts",
+          "kind": "import-statement",
+          "original": "./types/type-int16"
+        },
+        {
+          "path": "src/zed/types/type-int32.ts",
+          "kind": "import-statement",
+          "original": "./types/type-int32"
+        },
+        {
+          "path": "src/zed/types/type-int64.ts",
+          "kind": "import-statement",
+          "original": "./types/type-int64"
+        },
+        {
+          "path": "src/zed/types/type-int8.ts",
+          "kind": "import-statement",
+          "original": "./types/type-int8"
+        },
+        {
+          "path": "src/zed/types/type-ip.ts",
+          "kind": "import-statement",
+          "original": "./types/type-ip"
+        },
+        {
+          "path": "src/zed/types/type-map.ts",
+          "kind": "import-statement",
+          "original": "./types/type-map"
+        },
+        {
+          "path": "src/zed/types/type-net.ts",
+          "kind": "import-statement",
+          "original": "./types/type-net"
+        },
+        {
+          "path": "src/zed/types/type-null.ts",
+          "kind": "import-statement",
+          "original": "./types/type-null"
+        },
+        {
+          "path": "src/zed/types/type-record.ts",
+          "kind": "import-statement",
+          "original": "./types/type-record"
+        },
+        {
+          "path": "src/zed/types/type-field.ts",
+          "kind": "import-statement",
+          "original": "./types/type-field"
+        },
+        {
+          "path": "src/zed/types/type-set.ts",
+          "kind": "import-statement",
+          "original": "./types/type-set"
+        },
+        {
+          "path": "src/zed/types/type-string.ts",
+          "kind": "import-statement",
+          "original": "./types/type-string"
+        },
+        {
+          "path": "src/zed/types/type-time.ts",
+          "kind": "import-statement",
+          "original": "./types/type-time"
+        },
+        {
+          "path": "src/zed/types/type-type.ts",
+          "kind": "import-statement",
+          "original": "./types/type-type"
+        },
+        {
+          "path": "src/zed/types/type-typename.ts",
+          "kind": "import-statement",
+          "original": "./types/type-typename"
+        },
+        {
+          "path": "src/zed/types/type-uint16.ts",
+          "kind": "import-statement",
+          "original": "./types/type-uint16"
+        },
+        {
+          "path": "src/zed/types/type-uint32.ts",
+          "kind": "import-statement",
+          "original": "./types/type-uint32"
+        },
+        {
+          "path": "src/zed/types/type-uint64.ts",
+          "kind": "import-statement",
+          "original": "./types/type-uint64"
+        },
+        {
+          "path": "src/zed/types/type-uint8.ts",
+          "kind": "import-statement",
+          "original": "./types/type-uint8"
+        },
+        {
+          "path": "src/zed/types/type-union.ts",
+          "kind": "import-statement",
+          "original": "./types/type-union"
+        },
+        {
+          "path": "src/zed/values/array.ts",
+          "kind": "import-statement",
+          "original": "./values/array"
+        },
+        {
+          "path": "src/zed/values/bool.ts",
+          "kind": "import-statement",
+          "original": "./values/bool"
+        },
+        {
+          "path": "src/zed/values/bstring.ts",
+          "kind": "import-statement",
+          "original": "./values/bstring"
+        },
+        {
+          "path": "src/zed/values/bytes.ts",
+          "kind": "import-statement",
+          "original": "./values/bytes"
+        },
+        {
+          "path": "src/zed/values/duration.ts",
+          "kind": "import-statement",
+          "original": "./values/duration"
+        },
+        {
+          "path": "src/zed/values/error.ts",
+          "kind": "import-statement",
+          "original": "./values/error"
+        },
+        {
+          "path": "src/zed/values/field.ts",
+          "kind": "import-statement",
+          "original": "./values/field"
+        },
+        {
+          "path": "src/zed/values/float64.ts",
+          "kind": "import-statement",
+          "original": "./values/float64"
+        },
+        {
+          "path": "src/zed/values/int16.ts",
+          "kind": "import-statement",
+          "original": "./values/int16"
+        },
+        {
+          "path": "src/zed/values/int32.ts",
+          "kind": "import-statement",
+          "original": "./values/int32"
+        },
+        {
+          "path": "src/zed/values/int64.ts",
+          "kind": "import-statement",
+          "original": "./values/int64"
+        },
+        {
+          "path": "src/zed/values/int8.ts",
+          "kind": "import-statement",
+          "original": "./values/int8"
+        },
+        {
+          "path": "src/zed/values/ip.ts",
+          "kind": "import-statement",
+          "original": "./values/ip"
+        },
+        {
+          "path": "src/zed/values/map.ts",
+          "kind": "import-statement",
+          "original": "./values/map"
+        },
+        {
+          "path": "src/zed/values/net.ts",
+          "kind": "import-statement",
+          "original": "./values/net"
+        },
+        {
+          "path": "src/zed/values/null.ts",
+          "kind": "import-statement",
+          "original": "./values/null"
+        },
+        {
+          "path": "src/zed/values/primitive.ts",
+          "kind": "import-statement",
+          "original": "./values/primitive"
+        },
+        {
+          "path": "src/zed/values/record.ts",
+          "kind": "import-statement",
+          "original": "./values/record"
+        },
+        {
+          "path": "src/zed/values/set.ts",
+          "kind": "import-statement",
+          "original": "./values/set"
+        },
+        {
+          "path": "src/zed/values/string.ts",
+          "kind": "import-statement",
+          "original": "./values/string"
+        },
+        {
+          "path": "src/zed/values/time.ts",
+          "kind": "import-statement",
+          "original": "./values/time"
+        },
+        {
+          "path": "src/zed/values/type-value.ts",
+          "kind": "import-statement",
+          "original": "./values/type-value"
+        },
+        {
+          "path": "src/zed/values/typename.ts",
+          "kind": "import-statement",
+          "original": "./values/typename"
+        },
+        {
+          "path": "src/zed/values/uint16.ts",
+          "kind": "import-statement",
+          "original": "./values/uint16"
+        },
+        {
+          "path": "src/zed/values/uint32.ts",
+          "kind": "import-statement",
+          "original": "./values/uint32"
+        },
+        {
+          "path": "src/zed/values/uint64.ts",
+          "kind": "import-statement",
+          "original": "./values/uint64"
+        },
+        {
+          "path": "src/zed/values/uint8.ts",
+          "kind": "import-statement",
+          "original": "./values/uint8"
+        },
+        {
+          "path": "src/zed/values/union.ts",
+          "kind": "import-statement",
+          "original": "./values/union"
+        },
+        {
+          "path": "src/zed/values/types.ts",
+          "kind": "import-statement",
+          "original": "./values/types"
+        },
+        {
+          "path": "src/zed/types/types.ts",
+          "kind": "import-statement",
+          "original": "./types/types"
+        },
+        {
+          "path": "src/zed/types/type-primitives.ts",
+          "kind": "import-statement",
+          "original": "./types/type-primitives"
+        },
+        {
+          "path": "src/zed/utils/is-type.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-type"
+        },
+        {
+          "path": "src/zed/utils/flat-columns.ts",
+          "kind": "import-statement",
+          "original": "./utils/flat-columns"
+        },
+        {
+          "path": "src/zed/utils/get-primitive-type.ts",
+          "kind": "import-statement",
+          "original": "./utils/get-primitive-type"
+        },
+        {
+          "path": "src/zed/utils/is-alias.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-alias"
+        },
+        {
+          "path": "src/zed/utils/is-duration.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-duration"
+        },
+        {
+          "path": "src/zed/utils/is-float64.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-float64"
+        },
+        {
+          "path": "src/zed/utils/is-int.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-int"
+        },
+        {
+          "path": "src/zed/utils/is-iterable.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-iterable"
+        },
+        {
+          "path": "src/zed/utils/is-named.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-named"
+        },
+        {
+          "path": "src/zed/utils/is-null.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-null"
+        },
+        {
+          "path": "src/zed/utils/is-primitive-name.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-primitive-name"
+        },
+        {
+          "path": "src/zed/utils/is-primitive.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-primitive"
+        },
+        {
+          "path": "src/zed/utils/is-string.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-string"
+        },
+        {
+          "path": "src/zed/utils/is-time.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-time"
+        },
+        {
+          "path": "src/zed/utils/is-type-alias.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-type-alias"
+        },
+        {
+          "path": "src/zed/utils/true-type.ts",
+          "kind": "import-statement",
+          "original": "./utils/true-type"
+        },
+        {
+          "path": "src/zed/utils/base-value.ts",
+          "kind": "import-statement",
+          "original": "./utils/base-value"
+        },
+        {
+          "path": "src/zed/utils/is-container.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-container"
+        },
+        {
+          "path": "src/zed/utils/is-value.ts",
+          "kind": "import-statement",
+          "original": "./utils/is-value"
+        },
+        {
+          "path": "src/zed/utils/typeunder.ts",
+          "kind": "import-statement",
+          "original": "./utils/typeunder"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/encode-stream.ts": {
+      "bytes": 1215,
+      "imports": [
+        {
+          "path": "src/zed/index.ts",
+          "kind": "import-statement",
+          "original": "../zed"
+        },
+        {
+          "path": "../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./values/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/values/type-value.ts",
+          "kind": "import-statement",
+          "original": "./values/type-value"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zed/context.ts": {
+      "bytes": 3663,
+      "imports": [
+        {
+          "path": "./values/record",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/decode-stream.ts",
+          "kind": "import-statement",
+          "original": "./decode-stream"
+        },
+        {
+          "path": "src/zed/encode-stream.ts",
+          "kind": "import-statement",
+          "original": "./encode-stream"
+        },
+        {
+          "path": "src/zed/types/type-alias.ts",
+          "kind": "import-statement",
+          "original": "./types/type-alias"
+        },
+        {
+          "path": "src/zed/types/type-array.ts",
+          "kind": "import-statement",
+          "original": "./types/type-array"
+        },
+        {
+          "path": "src/zed/types/type-error.ts",
+          "kind": "import-statement",
+          "original": "./types/type-error"
+        },
+        {
+          "path": "src/zed/types/type-map.ts",
+          "kind": "import-statement",
+          "original": "./types/type-map"
+        },
+        {
+          "path": "src/zed/types/type-record.ts",
+          "kind": "import-statement",
+          "original": "./types/type-record"
+        },
+        {
+          "path": "src/zed/types/type-set.ts",
+          "kind": "import-statement",
+          "original": "./types/type-set"
+        },
+        {
+          "path": "src/zed/types/type-union.ts",
+          "kind": "import-statement",
+          "original": "./types/type-union"
+        },
+        {
+          "path": "./types/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./values/field",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./values/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "./types/type-field",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/encoder.ts": {
+      "bytes": 1658,
+      "imports": [
+        {
+          "path": "src/zed/context.ts",
+          "kind": "import-statement",
+          "original": "./zed/context"
+        },
+        {
+          "path": "./zed/decode-stream",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/index.ts",
+          "kind": "import-statement",
+          "original": "./zed/index"
+        },
+        {
+          "path": "./zjson",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "../../node_modules/zed/pkg/reglob/reglob.js": {
+      "bytes": 3644,
+      "imports": [],
+      "format": "cjs"
+    },
+    "../../node_modules/zed/compiler/parser/parser.js": {
+      "bytes": 403796,
+      "imports": [
+        {
+          "path": "../../node_modules/zed/pkg/reglob/reglob.js",
+          "kind": "require-call",
+          "original": "../../pkg/reglob/reglob"
+        }
+      ],
+      "format": "cjs"
+    },
+    "src/parser.ts": {
+      "bytes": 218,
+      "imports": [
+        {
+          "path": "../../node_modules/zed/compiler/parser/parser.js",
+          "kind": "import-statement",
+          "original": "zed/compiler/parser/parser"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/ndjson/parse.ts": {
+      "bytes": 336,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/ndjson/pipe_json.ts": {
+      "bytes": 513,
+      "imports": [
+        {
+          "path": "src/ndjson/parse.ts",
+          "kind": "import-statement",
+          "original": "./parse"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/ndjson/pipe_text.ts": {
+      "bytes": 1762,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/ndjson/lines.ts": {
+      "bytes": 391,
+      "imports": [
+        {
+          "path": "src/ndjson/parse.ts",
+          "kind": "import-statement",
+          "original": "./parse"
+        },
+        {
+          "path": "src/ndjson/pipe_json.ts",
+          "kind": "import-statement",
+          "original": "./pipe_json"
+        },
+        {
+          "path": "src/ndjson/pipe_text.ts",
+          "kind": "import-statement",
+          "original": "./pipe_text"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../node_modules/events/events.js": {
+      "bytes": 14890,
+      "imports": [],
+      "format": "cjs"
+    },
+    "src/query/channel.ts": {
+      "bytes": 1853,
+      "imports": [
+        {
+          "path": "../../node_modules/events/events.js",
+          "kind": "import-statement",
+          "original": "events"
+        },
+        {
+          "path": "src/zed/index.ts",
+          "kind": "import-statement",
+          "original": "../zed"
+        },
+        {
+          "path": "../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/zed/decode-stream.ts",
+          "kind": "import-statement",
+          "original": "../zed/decode-stream"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/query/result-stream.ts": {
+      "bytes": 2902,
+      "imports": [
+        {
+          "path": "../zjson",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/ndjson/lines.ts",
+          "kind": "import-statement",
+          "original": "../ndjson/lines"
+        },
+        {
+          "path": "../zed/values/types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/query/channel.ts",
+          "kind": "import-statement",
+          "original": "./channel"
+        },
+        {
+          "path": "../types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/zjson.ts": {
+      "bytes": 2048,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/test/factory.ts": {
+      "bytes": 1823,
+      "imports": [
+        {
+          "path": "src/encoder.ts",
+          "kind": "import-statement",
+          "original": "../encoder"
+        },
+        {
+          "path": "src/zed/index.ts",
+          "kind": "import-statement",
+          "original": "../zed"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/client/types.ts": {
+      "bytes": 1365,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/types.ts": {
+      "bytes": 1030,
+      "imports": [
+        {
+          "path": "./zed",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "../../node_modules/event-source-polyfill/src/eventsource.js": {
+      "bytes": 34735,
+      "imports": [],
+      "format": "cjs"
+    },
+    "src/util/utils.ts": {
+      "bytes": 1050,
+      "imports": [
+        {
+          "path": "../types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/util/error.ts": {
+      "bytes": 350,
+      "imports": [
+        {
+          "path": "src/util/utils.ts",
+          "kind": "import-statement",
+          "original": "./utils"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/client/utils.ts": {
+      "bytes": 2435,
+      "imports": [
+        {
+          "path": "src/encoder.ts",
+          "kind": "import-statement",
+          "original": "../encoder"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/client/client.ts": {
+      "bytes": 5454,
+      "imports": [
+        {
+          "path": "../../node_modules/event-source-polyfill/src/eventsource.js",
+          "kind": "import-statement",
+          "original": "event-source-polyfill"
+        },
+        {
+          "path": "../types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/query/result-stream.ts",
+          "kind": "import-statement",
+          "original": "../query/result-stream"
+        },
+        {
+          "path": "src/util/error.ts",
+          "kind": "import-statement",
+          "original": "../util/error"
+        },
+        {
+          "path": "./types",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/client/utils.ts",
+          "kind": "import-statement",
+          "original": "./utils"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/esm/index.ts": {
+      "bytes": 495,
+      "imports": [
+        {
+          "path": "src/encoder.ts",
+          "kind": "import-statement",
+          "original": "../encoder"
+        },
+        {
+          "path": "src/parser.ts",
+          "kind": "import-statement",
+          "original": "../parser"
+        },
+        {
+          "path": "src/query/result-stream.ts",
+          "kind": "import-statement",
+          "original": "../query/result-stream"
+        },
+        {
+          "path": "src/zed/context.ts",
+          "kind": "import-statement",
+          "original": "../zed/context"
+        },
+        {
+          "path": "src/zjson.ts",
+          "kind": "import-statement",
+          "original": "../zjson"
+        },
+        {
+          "path": "src/test/factory.ts",
+          "kind": "import-statement",
+          "original": "../test/factory"
+        },
+        {
+          "path": "src/client/types.ts",
+          "kind": "import-statement",
+          "original": "../client/types"
+        },
+        {
+          "path": "src/types.ts",
+          "kind": "import-statement",
+          "original": "../types"
+        },
+        {
+          "path": "src/client/client.ts",
+          "kind": "import-statement",
+          "original": "../client/client"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "dist/esm/index.mjs": {
+      "imports": [],
+      "exports": [
+        "Client",
+        "DefaultContext",
+        "ResultStream",
+        "TypeDefs",
+        "createData",
+        "createField",
+        "createRecord",
+        "decode",
+        "encode",
+        "parseAst",
+        "zjson"
+      ],
+      "entryPoint": "src/esm/index.ts",
+      "inputs": {
+        "../../node_modules/zed/pkg/reglob/reglob.js": {
+          "bytesInOutput": 846
+        },
+        "../../node_modules/zed/compiler/parser/parser.js": {
+          "bytesInOutput": 92114
+        },
+        "../../node_modules/events/events.js": {
+          "bytesInOutput": 6130
+        },
+        "../../node_modules/event-source-polyfill/src/eventsource.js": {
+          "bytesInOutput": 12431
+        },
+        "src/zed/types/type-field.ts": {
+          "bytesInOutput": 56
+        },
+        "src/zed/utils/is-null.ts": {
+          "bytesInOutput": 30
+        },
+        "src/zed/values/primitive.ts": {
+          "bytesInOutput": 229
+        },
+        "src/zed/values/bool.ts": {
+          "bytesInOutput": 129
+        },
+        "src/zed/types/base-primitive.ts": {
+          "bytesInOutput": 130
+        },
+        "src/zed/types/type-bool.ts": {
+          "bytesInOutput": 113
+        },
+        "src/zed/values/bstring.ts": {
+          "bytesInOutput": 102
+        },
+        "src/zed/types/type-bstring.ts": {
+          "bytesInOutput": 116
+        },
+        "src/zed/values/bytes.ts": {
+          "bytesInOutput": 102
+        },
+        "src/zed/types/type-bytes.ts": {
+          "bytesInOutput": 114
+        },
+        "src/zed/values/duration.ts": {
+          "bytesInOutput": 1017
+        },
+        "src/zed/types/type-duration.ts": {
+          "bytesInOutput": 117
+        },
+        "src/zed/values/float16.ts": {
+          "bytesInOutput": 160
+        },
+        "src/zed/types/type-float16.ts": {
+          "bytesInOutput": 116
+        },
+        "src/zed/values/float32.ts": {
+          "bytesInOutput": 160
+        },
+        "src/zed/types/type-float32.ts": {
+          "bytesInOutput": 116
+        },
+        "src/zed/values/float64.ts": {
+          "bytesInOutput": 160
+        },
+        "src/zed/types/type-float64.ts": {
+          "bytesInOutput": 116
+        },
+        "src/zed/values/int16.ts": {
+          "bytesInOutput": 154
+        },
+        "src/zed/types/type-int16.ts": {
+          "bytesInOutput": 114
+        },
+        "src/zed/values/int32.ts": {
+          "bytesInOutput": 154
+        },
+        "src/zed/types/type-int32.ts": {
+          "bytesInOutput": 114
+        },
+        "src/zed/values/int64.ts": {
+          "bytesInOutput": 239
+        },
+        "src/zed/types/type-int64.ts": {
+          "bytesInOutput": 114
+        },
+        "src/zed/values/int8.ts": {
+          "bytesInOutput": 154
+        },
+        "src/zed/types/type-int8.ts": {
+          "bytesInOutput": 113
+        },
+        "src/zed/values/ip.ts": {
+          "bytesInOutput": 102
+        },
+        "src/zed/types/type-ip.ts": {
+          "bytesInOutput": 111
+        },
+        "src/zed/values/net.ts": {
+          "bytesInOutput": 102
+        },
+        "src/zed/types/type-net.ts": {
+          "bytesInOutput": 112
+        },
+        "src/zed/values/null.ts": {
+          "bytesInOutput": 107
+        },
+        "src/zed/types/type-null.ts": {
+          "bytesInOutput": 110
+        },
+        "src/zed/values/string.ts": {
+          "bytesInOutput": 102
+        },
+        "src/zed/types/type-string.ts": {
+          "bytesInOutput": 115
+        },
+        "src/zed/values/time.ts": {
+          "bytesInOutput": 150
+        },
+        "src/zed/types/type-time.ts": {
+          "bytesInOutput": 113
+        },
+        "src/zed/values/type-value.ts": {
+          "bytesInOutput": 265
+        },
+        "src/zed/types/type-type.ts": {
+          "bytesInOutput": 143
+        },
+        "src/zed/values/typename.ts": {
+          "bytesInOutput": 102
+        },
+        "src/zed/types/type-typename.ts": {
+          "bytesInOutput": 117
+        },
+        "src/zed/values/uint16.ts": {
+          "bytesInOutput": 154
+        },
+        "src/zed/types/type-uint16.ts": {
+          "bytesInOutput": 115
+        },
+        "src/zed/values/uint32.ts": {
+          "bytesInOutput": 154
+        },
+        "src/zed/types/type-uint32.ts": {
+          "bytesInOutput": 115
+        },
+        "src/zed/values/uint64.ts": {
+          "bytesInOutput": 239
+        },
+        "src/zed/types/type-uint64.ts": {
+          "bytesInOutput": 115
+        },
+        "src/zed/values/uint8.ts": {
+          "bytesInOutput": 154
+        },
+        "src/zed/types/type-uint8.ts": {
+          "bytesInOutput": 114
+        },
+        "src/zed/types/type-primitives.ts": {
+          "bytesInOutput": 418
+        },
+        "src/zed/utils/get-primitive-type.ts": {
+          "bytesInOutput": 88
+        },
+        "src/zed/decode-stream.ts": {
+          "bytesInOutput": 979
+        },
+        "src/zed/index.ts": {
+          "bytesInOutput": 0
+        },
+        "src/zed/utils/is-type-alias.ts": {
+          "bytesInOutput": 38
+        },
+        "src/zed/utils/true-type.ts": {
+          "bytesInOutput": 53
+        },
+        "src/zed/values/union.ts": {
+          "bytesInOutput": 355
+        },
+        "src/zed/utils/base-value.ts": {
+          "bytesInOutput": 52
+        },
+        "src/zed/utils/flat-columns.ts": {
+          "bytesInOutput": 229
+        },
+        "src/zed/values/record.ts": {
+          "bytesInOutput": 1901
+        },
+        "src/zed/values/field.ts": {
+          "bytesInOutput": 347
+        },
+        "src/zed/types/type-record.ts": {
+          "bytesInOutput": 794
+        },
+        "src/zed/types/type-alias.ts": {
+          "bytesInOutput": 403
+        },
+        "src/zed/values/array.ts": {
+          "bytesInOutput": 419
+        },
+        "src/zed/types/type-array.ts": {
+          "bytesInOutput": 289
+        },
+        "src/zed/values/error.ts": {
+          "bytesInOutput": 286
+        },
+        "src/zed/types/type-error.ts": {
+          "bytesInOutput": 297
+        },
+        "src/zed/values/map.ts": {
+          "bytesInOutput": 550
+        },
+        "src/zed/types/type-map.ts": {
+          "bytesInOutput": 450
+        },
+        "src/zed/values/set.ts": {
+          "bytesInOutput": 421
+        },
+        "src/zed/types/type-set.ts": {
+          "bytesInOutput": 289
+        },
+        "src/zed/types/type-union.ts": {
+          "bytesInOutput": 409
+        },
+        "src/zed/utils/is-primitive.ts": {
+          "bytesInOutput": 37
+        },
+        "src/zed/utils/is-container.ts": {
+          "bytesInOutput": 97
+        },
+        "src/zed/utils/is-value.ts": {
+          "bytesInOutput": 35
+        },
+        "src/zed/encode-stream.ts": {
+          "bytesInOutput": 478
+        },
+        "src/zed/context.ts": {
+          "bytesInOutput": 1360
+        },
+        "src/encoder.ts": {
+          "bytesInOutput": 307
+        },
+        "src/esm/index.ts": {
+          "bytesInOutput": 45
+        },
+        "src/parser.ts": {
+          "bytesInOutput": 36
+        },
+        "src/ndjson/parse.ts": {
+          "bytesInOutput": 189
+        },
+        "src/ndjson/pipe_json.ts": {
+          "bytesInOutput": 197
+        },
+        "src/ndjson/pipe_text.ts": {
+          "bytesInOutput": 662
+        },
+        "src/ndjson/lines.ts": {
+          "bytesInOutput": 58
+        },
+        "src/query/channel.ts": {
+          "bytesInOutput": 768
+        },
+        "src/query/result-stream.ts": {
+          "bytesInOutput": 1521
+        },
+        "src/zjson.ts": {
+          "bytesInOutput": 10
+        },
+        "src/test/factory.ts": {
+          "bytesInOutput": 714
+        },
+        "src/client/client.ts": {
+          "bytesInOutput": 2570
+        },
+        "src/util/utils.ts": {
+          "bytesInOutput": 51
+        },
+        "src/util/error.ts": {
+          "bytesInOutput": 171
+        },
+        "src/client/utils.ts": {
+          "bytesInOutput": 1551
+        }
+      },
+      "bytes": 139505
+    }
+  }
+}

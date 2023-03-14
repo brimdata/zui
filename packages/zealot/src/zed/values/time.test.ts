@@ -1,6 +1,5 @@
 import {Time} from "./time"
 import {createData} from "../../test/factory"
-import {zed} from "../../index"
 
 test("toDate()", () => {
   new Time("2020-02-25T16:03:13.987654321Z").toDate()
@@ -16,7 +15,7 @@ test("toDate()", () => {
 })
 
 test("create record with time field", () => {
-  const t = createData(new Date(0)) as zed.Time
+  const t = createData(new Date(0)) as Time
   expect(t.toDate()).toEqual(new Date(0))
 })
 

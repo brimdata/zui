@@ -32,7 +32,7 @@ export function createData(value: unknown): zed.Value {
   }
 
   if (value instanceof Date) {
-    return new zed.Time((value.getTime() / 1000).toString())
+    return new zed.Time(value.toISOString())
   }
 
   if (Number.isInteger(value)) {
