@@ -1,0 +1,14 @@
+name: Publish Zealot
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd packages/zealot
+      - run: yarn build
+      - run: yarn test
+      - run: yarn npm publish --access public

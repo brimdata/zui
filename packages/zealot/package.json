@@ -1,9 +1,10 @@
 {
   "name": "@brimdata/zealot",
-  "version": "1.0.2-beta.2",
+  "version": "1.0.2-beta.3",
   "description": "The Javascript Client for Zed Lakes",
   "main": "dist/cjs/cjs/index.js",
   "module": "dist/esm/index.mjs",
+  "browser": "dist/esm/index.mjs",
   "types": "./dist/cjs/cjs/index.d.ts",
   "scripts": {
     "test": "run-s test:unit test:integration",
@@ -14,7 +15,7 @@
     "test:unit": "jest",
     "build": "run-p 'build:*'",
     "build:cjs": "swc src -d dist/cjs",
-    "build:esm": "esbuild src/esm/index.ts --bundle --outfile=dist/esm/index.mjs --format=esm --minify",
+    "build:esm": "esbuild src/esm/index.ts --bundle --outfile=dist/esm/index.mjs --format=esm --minify-syntax --minify-whitespace",
     "build:types": "tsc",
     "support:lake": "node test/support/lake.js",
     "support:seed": "node test/support/seed.js",
