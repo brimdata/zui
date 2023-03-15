@@ -1,4 +1,4 @@
-import {toFieldPath} from "../zql/toZql"
+import {toFieldPath} from "../zed-script/toZedScript"
 
 type ColumnName = string | string[]
 

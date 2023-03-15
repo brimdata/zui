@@ -1,6 +1,6 @@
 import * as zealot from "@brimdata/zealot"
 import {fieldExprToName} from "src/js/models/ast"
-import {toFieldPath} from "src/js/zql/toZql"
+import {toFieldPath} from "src/js/zed-script/toZedScript"
 
 export class ZedAst {
   public tree: any

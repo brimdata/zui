@@ -1,10 +1,8 @@
 import {matchPath} from "react-router"
 import * as Pools from "../Pools/selectors"
-import {PoolsState} from "../Pools/types"
 import Tabs from "../Tabs"
 import {State} from "../types"
 import Lakes from "../Lakes"
-import {LakesState} from "../Lakes/types"
 import {MemoryHistory} from "history"
 import {Pool} from "src/app/core/pools/pool"
 import Queries from "../Queries"
@@ -13,18 +11,12 @@ import QueryVersions from "../QueryVersions"
 import {query, queryVersion} from "src/app/router/routes"
 import SessionHistories from "../SessionHistories"
 import {createSelector} from "@reduxjs/toolkit"
-import {
-  SessionHistoriesState,
-  SessionHistoryEntry,
-} from "../SessionHistories/types"
 import {QueryVersion} from "../QueryVersions/types"
 import {ActiveQuery} from "src/app/core/models/active-query"
 import SessionQueries from "../SessionQueries"
 import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
-import lake, {LakeModel} from "src/js/models/lake"
-
-type Id = string | null
+import lake from "src/js/models/lake"
 
 export const getHistory = (
   state,
@@ -115,18 +107,14 @@ export const getLakeId = (state: State = undefined) => {
   return match?.params?.lakeId || null
 }
 
-export const mustGetLake = createSelector<State, LakesState, Id, LakeModel>(
-  Lakes.raw,
-  getLakeId,
-  (lakes, id) => {
-    if (!id) throw new Error("Current lake id is unset")
-    if (!lakes[id]) throw new Error(`Missing lake id: ${id}`)
+export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
+  if (!id) throw new Error("Current lake id is unset")
+  if (!lakes[id]) throw new Error(`Missing lake id: ${id}`)
 
-    return lake(lakes[id])
-  }
-)
+  return lake(lakes[id])
+})
 
-export const mustGetPool = createSelector<State, PoolsState, Id, Id, Pool>(
+export const mustGetPool = createSelector(
   Pools.raw,
   getLakeId,
   getPoolId,
@@ -171,11 +159,9 @@ export const getTabId = (s: State) => {
   return s.tabs.active
 }
 
-export const getSessionHistory = createSelector<
-  State,
-  string,
-  SessionHistoriesState,
-  SessionHistoryEntry[]
->([getTabId, SessionHistories.raw], (tabId, histories) => histories[tabId])
+export const getSessionHistory = createSelector(
+  [getTabId, SessionHistories.raw],
+  (tabId, histories) => histories[tabId]
+)
 
 export const getSessionId = getTabId
