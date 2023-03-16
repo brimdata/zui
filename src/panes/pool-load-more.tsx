@@ -1,5 +1,5 @@
 import React from "react"
-import {LoadFormat} from "packages/zealot/src"
+import {LoadFormat} from "@brimdata/zealot"
 import {transparentize, cssVar} from "polished"
 import {forwardRef, useImperativeHandle, useState} from "react"
 import {loadFiles} from "src/app/commands/pools"

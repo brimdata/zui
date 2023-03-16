@@ -17,7 +17,7 @@ import {FormError} from "src/components/form-error"
 import {useHistory} from "react-router"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
-import {LoadFormat} from "packages/zealot/src"
+import {LoadFormat} from "@brimdata/zealot"
 import {DataFormatSelect} from "src/components/data-format-select"
 import {H1} from "src/components/h1"
 

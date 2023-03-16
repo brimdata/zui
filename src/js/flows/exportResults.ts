@@ -33,7 +33,7 @@ export default (
     format: ResponseFormat
   ): Thunk<Promise<string>> =>
   async (dispatch, getState, {api}): Promise<string> => {
-    const zealot = await api.getZealot(undefined, "node")
+    const zealot = await api.getZealot(undefined)
     const originalQuery = Results.getQuery(MAIN_RESULTS)(getState())
     const exportQuery = prepareProgram(format, originalQuery, api)
     log.info("Exporting", exportQuery)
@@ -44,6 +44,7 @@ export default (
     })
     try {
       await streamPipeline(
+        // @ts-ignore
         res.body as NodeJS.ReadableStream,
         fs.createWriteStream(filePath)
       )

@@ -1,6 +1,6 @@
 import {nanoid} from "@reduxjs/toolkit"
 import {isArray} from "lodash"
-import {CreatePoolOpts} from "packages/zealot/src"
+import {CreatePoolOpts} from "@brimdata/zealot"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
 import detectFileTypes from "src/js/models/ingest/detectFileTypes"

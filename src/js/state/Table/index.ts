@@ -1,4 +1,4 @@
-import {zed} from "packages/zealot/src"
+import {zed} from "@brimdata/zealot"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"
 import {actions} from "./reducer"

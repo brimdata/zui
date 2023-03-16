@@ -1,5 +1,5 @@
 import React from "react"
-import {zed} from "packages/zealot/src"
+import {zed} from "@brimdata/zealot"
 import {ZedColumn} from "./column"
 import {ColumnSizingInfoState} from "@tanstack/react-table"
 import {Cell} from "./cell"

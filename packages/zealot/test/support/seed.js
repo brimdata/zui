@@ -9,7 +9,9 @@ const readable = fsExtra.createReadStream(file)
 async function main() {
   try {
     await client.deletePool("prs")
-  } catch (e) {}
+  } catch (e) {
+    // don't worry
+  }
 
   await client.createPool("prs")
   await client.load(readable, {pool: "prs"})

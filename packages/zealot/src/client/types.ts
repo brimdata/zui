@@ -61,6 +61,7 @@ export type LoadOpts = {
   signal?: AbortSignal
   format?: LoadFormat
 }
+
 export type LoadFormat =
   | "auto"
   | "arrows"

@@ -2,7 +2,7 @@ import ZuiApi from "src/js/api/zui-api"
 import {IngestParams} from "src/js/models/ingest/getParams"
 import {forEach, get} from "lodash"
 import {Readable} from "stream"
-import {LoadFormat} from "packages/zealot/src"
+import {LoadFormat} from "@brimdata/zealot"
 
 export const activate = (api: ZuiApi) => {
   const load = async (

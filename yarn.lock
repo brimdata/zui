@@ -1402,21 +1402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brimdata/zealot@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@brimdata/zealot@npm:1.0.1"
-  dependencies:
-    "@js-joda/core": ^4.3.1
-    cross-fetch: ^3.1.4
-    event-source-polyfill: ^1.0.25
-    events: ^3.3.0
-    lodash: ^4.17.21
-    node-fetch: 2
-  checksum: 7f51dbfc1436e1be1cd97da2a75a437b31dd690c05ce88aec33d555dbc0b6a8306dff5da597783ee4b03639b08dcccb1f98bb77ea0427aeb3de13ccec4a8840c
-  languageName: node
-  linkType: hard
-
-"@brimdata/zealot@workspace:packages/zealot":
+"@brimdata/zealot@workspace:*, @brimdata/zealot@workspace:packages/zealot":
   version: 0.0.0-use.local
   resolution: "@brimdata/zealot@workspace:packages/zealot"
   dependencies:
@@ -2581,13 +2567,6 @@ __metadata:
   version: 3.2.0
   resolution: "@js-joda/core@npm:3.2.0"
   checksum: 64625c2f22be5d91801faab4488396134a4b58d5b38b5aa268983324c3eca5c7717e28dae3417c74689055c30dcfe1c44ced1e4af6459c95d91411b05186c301
-  languageName: node
-  linkType: hard
-
-"@js-joda/core@npm:^4.3.1":
-  version: 4.3.1
-  resolution: "@js-joda/core@npm:4.3.1"
-  checksum: 6851178585ed0c6f1138b2b71de1abba7502974d9d31c0facae00b01415399882e63a1277ca8511ba050b61a1f2964c9f9a0c266d17e9d8b23518cf2dafe20d2
   languageName: node
   linkType: hard
 
@@ -3878,9 +3857,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^14.14.31":
-  version: 14.18.37
-  resolution: "@types/node@npm:14.18.37"
-  checksum: d21e8c58ddd01ae069b196c2a4eaf9c9749e6666565349667334c60cfc119c1fa280234a8001157dd7ffe73501ce4f4940ca05f9d5c402c5abe78c8dca8376a6
+  version: 14.18.38
+  resolution: "@types/node@npm:14.18.38"
+  checksum: 4f580c5e0f124f44fa6f5d9923bf8fd98f644caabee6171c2dac48160062a91de99f2edd5db5ec59e93fe61f85dd4111df78c9d4f341f3aafca719929362303f
   languageName: node
   linkType: hard
 
@@ -6644,8 +6623,8 @@ __metadata:
   linkType: hard
 
 "cypress@npm:^12.7.0":
-  version: 12.7.0
-  resolution: "cypress@npm:12.7.0"
+  version: 12.8.1
+  resolution: "cypress@npm:12.8.1"
   dependencies:
     "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
@@ -6691,7 +6670,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: a9489f7f254dcee1b8a374d14d175c8f8681a3388e4c02181e0486f064f4de59bfc79dec1f401605332d3a5869bf2ba06b3a1653a5c287e447810d756d470078
+  checksum: a229f2b3ff20b1b533f6d4670303596aef596a394db77ea8eafe2fa8f175b79b9d48ba66262513fa806076be5c857e159539f6d8fd9acf4df9936a2fa649bf1e
   languageName: node
   linkType: hard
 
@@ -14514,10 +14493,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"punycode@npm:^2.1.0, punycode@npm:^2.1.1":
+"punycode@npm:^2.1.0":
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
   checksum: 823bf443c6dd14f669984dea25757b37993f67e8d94698996064035edd43bed8a5a17a9f12e439c2b35df1078c6bec05a6c86e336209eb1061e8025c481168e8
+  languageName: node
+  linkType: hard
+
+"punycode@npm:^2.1.1":
+  version: 2.3.0
+  resolution: "punycode@npm:2.3.0"
+  checksum: 39f760e09a2a3bbfe8f5287cf733ecdad69d6af2fe6f97ca95f24b8921858b91e9ea3c9eeec6e08cede96181b3bb33f95c6ffd8c77e63986508aa2e8159fa200
   languageName: node
   linkType: hard
 
@@ -18177,7 +18163,7 @@ __metadata:
   resolution: "zui@workspace:."
   dependencies:
     "@babel/core": ^7.17.9
-    "@brimdata/zealot": 1.0.1
+    "@brimdata/zealot": "workspace:*"
     "@codemirror/autocomplete": ^0.19.15
     "@codemirror/closebrackets": ^0.19.1
     "@codemirror/commands": ^0.19.8

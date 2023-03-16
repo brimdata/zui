@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 module.exports = ({assert, zealot}) => {
   const client = new zealot.Client("http://localhost:9000")
 

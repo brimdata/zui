@@ -1,4 +1,4 @@
-import {PoolConfig, PoolStats} from "@brimdata/zealot/types"
+import {PoolConfig, PoolStats} from "@brimdata/zealot"
 
 export type PoolState = {
   data: PoolConfig

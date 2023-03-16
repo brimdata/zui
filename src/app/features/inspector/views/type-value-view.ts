@@ -1,7 +1,7 @@
-import {TypeValue} from "packages/zealot/src/zed"
+import {zed} from "@brimdata/zealot"
 import {View} from "./view"
 
-export class TypeValueView extends View<TypeValue> {
+export class TypeValueView extends View<zed.TypeValue> {
   render() {
     return `<${this.value.toString()}>`
   }

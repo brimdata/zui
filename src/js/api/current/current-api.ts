@@ -1,4 +1,4 @@
-import {zed} from "packages/zealot/src"
+import {zed} from "@brimdata/zealot"
 import Current from "src/js/state/Current"
 import LogDetails from "src/js/state/LogDetails"
 import {GetState} from "src/js/state/types"

@@ -8,11 +8,11 @@ import LakeStatuses from "src/js/state/LakeStatuses"
 import {Thunk} from "src/js/state/types"
 
 export const getZealot =
-  (lake?: LakeModel, env?: "node" | "web"): Thunk<Promise<Client>> =>
+  (lake?: LakeModel): Thunk<Promise<Client>> =>
   async (dispatch, getState) => {
     const l = lake || Current.mustGetLake(getState())
     const auth = await dispatch(getAuthToken(l))
-    return new Client(l.getAddress(), {auth, env})
+    return new Client(l.getAddress(), {auth})
   }
 
 const getAuthToken =

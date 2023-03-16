@@ -1,4 +1,4 @@
-import {CreatePoolOpts, LoadFormat} from "packages/zealot/src"
+import {CreatePoolOpts, LoadFormat} from "@brimdata/zealot"
 import detectFileTypes from "src/js/models/ingest/detectFileTypes"
 import {derivePoolName} from "src/js/models/ingest/getParams"
 import errors from "src/js/errors"

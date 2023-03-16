@@ -1,4 +1,4 @@
-import {zed} from "packages/zealot/src"
+import {zed} from "@brimdata/zealot"
 import program from "src/js/models/program"
 import {
   appendQueryCountBy,
