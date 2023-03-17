@@ -37,7 +37,7 @@ and we'll be happy to help.
 * Download the Zui installer via the **Windows** link at the [Zui download](https://www.brimdata.io/download/) page
 * Launch the downloaded `.exe` file to begin installation
 * Choose between installing for only the current user (default) or a machine-wide install
-* Click **Finish** and Zui will launch immediately
+* Click **Finish** and Zui will launch when installation completes
 * Click the Zui icon on the Desktop or Start menu to relaunch in the future
 
 ![Windows Installation](media/Windows-installation.gif)
