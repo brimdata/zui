@@ -13,11 +13,12 @@ data is stored. Below you'll find these details for each supported platform.
 When installed, the binaries and other supporting files that make up the Zui
 application are unpacked to the following path on each platform:
 
-|**OS Platform**|**Location**                                 |
-|---------------|---------------------------------------------|
-| **Windows**   | `%USERPROFILE%\AppData\Local\Programs\Zui`  |
-| **macOS**     | `/Applications/Zui.app`                     |
-| **Linux**     | `/opt/Zui`                                  |
+|**OS Platform**|**Install Type**|**Location**                                |
+|---------------|----------------|--------------------------------------------|
+| **Windows**   | Current user    | `%USERPROFILE%\AppData\Local\Programs\Zui` |
+| **Windows**   | All users      | `%ProgramFiles%\Zui`                       |
+| **macOS**     |                | `/Applications/Zui.app`                    |
+| **Linux**     |                | `/opt/Zui`                                 |
 
 This filesystem location should be treated as read-only and is typically
 only modified when a newer version of the app is being installed.
@@ -30,11 +31,12 @@ bundled with the app, such as [`zq`](https://zed.brimdata.io/docs/commands/zq/),
 [`brimcap`](https://github.com/brimdata/brimcap), and so forth. These can be
 found in the `zdeps` subdirectory as follows:
 
-|**OS Platform**|**Location**|
-|---------------|------------|
-| **Windows**   | `%USERPROFILE%\AppData\Local\Programs\Zui\resources\app.asar.unpacked\zdeps` |
-| **macOS**     | `/Applications/Zui.app/Contents/Resources/app.asar.unpacked/zdeps` |
-| **Linux**     | `/opt/Zui/resources/app.asar.unpacked/zdeps` |
+|**OS Platform**|**Install Type**|**Location**                                                                  |
+|---------------|----------------|------------------------------------------------------------------------------|
+| **Windows**   | Current user    | `%USERPROFILE%\AppData\Local\Programs\Zui\resources\app.asar.unpacked\zdeps` |
+| **Windows**   | All users      | `%ProgramFiles%\Zui\resources\app.asar.unpacked\zdeps`                       |
+| **macOS**     |                | `/Applications/Zui.app/Contents/Resources/app.asar.unpacked/zdeps`           |
+| **Linux**     |                | `/opt/Zui/resources/app.asar.unpacked/zdeps`                                 |
 
 While these binaries are also available for download as standalone release
 packages for [Zed](https://github.com/brimdata/zed/releases) or [Brimcap](https://github.com/brimdata/brimcap/releases), if you're

@@ -28,19 +28,16 @@ updating to a newer version of the app will preserve your existing
 is stored sometimes changes in newer releases, downgrades to older releases are
 _not_ currently supported.
 
-For a walk through some typical operations in Zui to get started, watch the
-[Zui demo video](https://www.youtube.com/watch?v=InT-7WZ5Y2Y).
-
 If you run into any problems, you may want to browse the 
 [troubleshooting docs](./support/Troubleshooting.md). If you get stuck, [join our public Slack](https://www.brimdata.io/join-slack/)
 and we'll be happy to help.
 
 ## Windows Installation
 
-* Download the Zui installer via the Windows link at the [Zui download](https://www.brimdata.io/download/) page
+* Download the Zui installer via the **Windows** link at the [Zui download](https://www.brimdata.io/download/) page
 * Launch the downloaded `.exe` file to begin installation
-* When prompted, click "I Agree" to accept the terms of the license agreement
-* Zui will start automatically when install completes
+* Choose between installing for only the current user (default) or a machine-wide install
+* Click **Finish** and Zui will launch when installation completes
 * Click the Zui icon on the Desktop or Start menu to relaunch in the future
 
 ![Windows Installation](media/Windows-installation.gif)
@@ -50,9 +47,9 @@ and pop up a notification offering to restart the app to apply the update.
 
 ## macOS Installation
 
-* Download the Zui installer via the macOS link at the [Zui download](https://www.brimdata.io/download/) page
+* Download the Zui installer via the **macOS** link at the [Zui download](https://www.brimdata.io/download/) page
 * Launch the downloaded `.dmg` file to begin installation
-* Drag the Zui icon into the Applications folder
+* Click and drag the Zui icon into the Applications folder
 * Click the Zui icon in the Applications folder to start Zui now and in the future
 * You may need to click through an "Are you sure?" prompt the first time Zui is launched
 
@@ -69,10 +66,10 @@ and pop up a notification offering to restart the app to apply the update.
    [user data](./support/Filesystem-Paths.md#user-data)
    path that's separate from the
    [application binaries](support/./Filesystem-Paths.md#application-binaries))
-* Download either the `.deb` or `.rpm` Zui installer at the
+* Download either the **Ubuntu/Debian** (`.deb`) or **Red Hat/Fedora** (`.rpm`) installer at the
   [Zui download](https://www.brimdata.io/download/) page, as appropriate
   for your Linux distribution
-* Open the downloaded `.deb` or `.rpm` file in the Software Install utility and click "Install"
+* Open the downloaded `.deb` or `.rpm` file in the Software Install utility and click **Install**
 * Enter administration credentials, if prompted
 * Click the Zui icon in the applications menu to start the app now and in the future
 
@@ -81,5 +78,5 @@ and pop up a notification offering to restart the app to apply the update.
 As newer Linux releases are published, Zui will pop up a notification of their
 availability, but the Linux releases do _not_ auto-update. Follow the link in
 the pop-up to the [Zui download](https://www.brimdata.io/download/) page to
-get the latest release and update it using the appropriate package manager for
-your distribution.
+get the latest release. After uninstalling the prior version, install the new
+release using the appropriate package manager for your distribution.
