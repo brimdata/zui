@@ -26,14 +26,17 @@ describe("parseInZone", () => {
       // This is very odd, it does 4 minutes and 30 sec instead of 5
       if (zone === "Africa/Monrovia") return
 
-      const ref = new Date(0)
+      // Use "1970-01-02T00:00:00.000Z" instead of 0 because
+      // chrono.strict.parseDate("5 minutes ago", new Date(0)) started returning
+      // 1970-01-01T00:55:00.000Z when daylight saving time began.
+      const ref = new Date("1970-01-02T00:00:00.000Z")
       const date = lib.date.parseInZone(referenceDate, zone, ref)
       const str = lib
         .date(time(date || new Date()).toDate())
         .zone(zone)
         .format(fmt)
 
-      expect(str).toBe("1969 12 31 15 55 00 000")
+      expect(str).toBe("1970 01 01 15 55 00 000")
     })
   })
 
