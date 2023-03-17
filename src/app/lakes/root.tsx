@@ -21,6 +21,7 @@ import PoolShow from "src/pages/pools/show"
 import {QueryRoute} from "../query-home/route"
 import {WelcomePage} from "src/pages/welcome"
 import {PoolNew} from "src/pages/pools/new"
+import {initCurrentTab} from "src/js/flows/initCurrentTab"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -43,7 +44,7 @@ export function InitLake({children}) {
 
   switch (status) {
     case "disconnected":
-      return <ConnectionError lake={lake} />
+      return <ConnectionError onRetry={() => dispatch(initCurrentTab())} />
     case "login-required":
       return <Login lake={lake} />
     case "connected":

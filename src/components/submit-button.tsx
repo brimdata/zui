@@ -8,7 +8,7 @@ export const SubmitButton = styled(InputButton).attrs({type: "submit"})`
   border-color: var(--primary-color-darker);
   font-weight: 500;
   width: min-content;
-  display: flex;
+  display: inline-flex;
   user-select: none;
   line-height: 1;
   align-items: center;
