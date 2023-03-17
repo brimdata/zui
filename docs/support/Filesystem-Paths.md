@@ -15,7 +15,7 @@ application are unpacked to the following path on each platform:
 
 |**OS Platform**|**Install Type**|**Location**                                |
 |---------------|----------------|--------------------------------------------|
-| **Windows**   | Single-user    | `%USERPROFILE%\AppData\Local\Programs\Zui` |
+| **Windows**   | Current user    | `%USERPROFILE%\AppData\Local\Programs\Zui` |
 | **Windows**   | All users      | `%ProgramFiles%\Zui`                       |
 | **macOS**     |                | `/Applications/Zui.app`                    |
 | **Linux**     |                | `/opt/Zui`                                 |
