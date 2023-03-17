@@ -33,7 +33,7 @@ found in the `zdeps` subdirectory as follows:
 
 |**OS Platform**|**Install Type**|**Location**                                                                  |
 |---------------|----------------|------------------------------------------------------------------------------|
-| **Windows**   | Single-user    | `%USERPROFILE%\AppData\Local\Programs\Zui\resources\app.asar.unpacked\zdeps` |
+| **Windows**   | Current user    | `%USERPROFILE%\AppData\Local\Programs\Zui\resources\app.asar.unpacked\zdeps` |
 | **Windows**   | All users      | `%ProgramFiles%\Zui\resources\app.asar.unpacked\zdeps`                       |
 | **macOS**     |                | `/Applications/Zui.app/Contents/Resources/app.asar.unpacked/zdeps`           |
 | **Linux**     |                | `/opt/Zui/resources/app.asar.unpacked/zdeps`                                 |
