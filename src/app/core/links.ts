@@ -11,5 +11,6 @@ export default {
   ZED_DOCS_FORMATS_ZSON: `https://zed.brimdata.io/docs/${zedDocsTag}/formats/zson`,
   ZED_DOCS_FORMATS_VNG: `https://zed.brimdata.io/docs/${zedDocsTag}/formats/vng`,
   ZUI_DOCS_ROOT: `https://zui.brimdata.io/docs`,
+  ZUI_DOCS_CONNNECTION_TROUBLESHOOTING: `https://zui.brimdata.io/docs/support/Troubleshooting#zui-shows-an-error-the-service-could-not-be-reached`,
   ZUI_DOWNLOAD: `https://www.brimdata.io/download/`,
 }

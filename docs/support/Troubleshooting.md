@@ -64,7 +64,13 @@ The following screenshot shows how this error is presented in Zui.
 
 ![Service could not be reached](media/Conn-Err-could-not-be-reached.png)
 
-These failures are quite rare. Zui is regularly tested for successful
+If this error is reported on a connection to a [remote lake](../advanced/Remote-Zed-Lakes.md),
+the cause could very likely be a simple network connectivity issue. The details
+below on how Zui interacts with the Zed lake could prove useful in debugging
+a problem with remote lake connectivity, but is primarily focused on when this
+error happens locally on the desktop.
+
+Such local failures are quite rare. Zui is regularly tested for successful
 installation in "out-of-the-box" configurations of all supported platforms, so
 it's likely that this type of failure may be due to some unique configuration
 on your system that's preventing normal operation. Therefore, even if the tips

@@ -1,48 +1,191 @@
 import React, {useState} from "react"
-import MacSpinner from "./MacSpinner"
 import styled from "styled-components"
-import ToolbarButton from "src/app/query-home/toolbar/actions/button"
-import {useDispatch} from "src/app/core/state"
-import {initCurrentTab} from "../flows/initCurrentTab"
-import {Lake} from "../state/Lakes/types"
+import links from "src/app/core/links"
+import Link from "./common/Link"
+import {H1} from "src/components/h1"
+import {Content} from "./Content"
+import {SubmitButton} from "src/components/submit-button"
+import Current from "../state/Current"
+import {useSelector} from "react-redux"
 
-const PageWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`
-
-const StyledHeader = styled.h1`
-  margin: 110px 0 0 0;
-  color: var(--aqua);
-  ${(p) => p.theme.typography.headingPage}
-`
-
-const StyledP = styled.p`
-  margin: 18px 0 0 0;
-  color: var(--aqua);
-  ${(p) => p.theme.typography.labelNormal}
-`
-
-const StyledButton = styled(ToolbarButton)`
-  margin: 36px 0 0 0;
-`
-
-type Props = {
-  lake: Lake
+const Image = () => {
+  return (
+    <svg width="366" height="157" viewBox="0 0 366 157">
+      <g fill="none" fillRule="evenodd" transform="translate(3.319)">
+        <path
+          fill="#4B91E2"
+          d="M131.686204,156.187311 C144.132223,144.158899 155.263896,138.644297 165.081221,139.643505 C174.898547,140.642712 183.160529,146.094877 189.867167,156 C186.323961,143.54119 192.258895,136.002418 207.671969,133.383686 C223.085042,130.764953 244.864402,135.534339 273.010047,147.691843 C254.141556,128.733612 248.495055,114.425455 256.070545,104.767372 C263.646035,95.1092885 285.425394,88.8494698 321.408624,85.9879154 C298.533954,82.0266838 280.787809,74.5745186 268.170189,63.6314199 C255.55257,52.6883213 252.003341,39.8705972 257.522503,25.1782477 C242.036162,38.0396485 227.193932,44.1504239 212.995812,43.510574 C198.797692,42.8707241 186.088144,28.3671994 174.867167,0 C164.795692,27.7923276 153.144624,42.2958523 139.913962,43.510574 C126.6833,44.7252958 113.454355,39.9559101 100.227129,29.2024169 C109.361483,38.4073181 109.845468,49.8836524 101.679086,63.6314199 C93.5127038,77.3791874 76.0892163,89.8988249 49.4086235,101.190332 C76.129211,97.9519604 97.2632561,101.529 112.810759,111.92145 C128.358261,122.313901 134.650076,137.069188 131.686204,156.187311 Z"
+          opacity=".056"
+        />
+        <path
+          fill="#FFF"
+          stroke="#4A90E2"
+          strokeWidth="5"
+          d="M152.688689,71.3085126 C153.655187,71.3085126 154.530187,71.7002635 155.163563,72.3336389 C155.796938,72.9670143 156.188689,73.8420143 156.188689,74.8085126 C156.188689,75.7750109 155.796938,76.6500109 155.163563,77.2833864 C154.530187,77.9167618 153.655187,78.3085126 152.688689,78.3085126 L126.188689,78.3085126 L126.188689,71.3085126 Z"
+          transform="rotate(-6 141.189 74.809)"
+        />
+        <path
+          fill="#FFF"
+          stroke="#4A90E2"
+          strokeWidth="5"
+          d="M155.688689,91.3085126 C156.655187,91.3085126 157.530187,91.7002635 158.163563,92.3336389 C158.796938,92.9670143 159.188689,93.8420143 159.188689,94.8085126 C159.188689,95.7750109 158.796938,96.6500109 158.163563,97.2833864 C157.530187,97.9167618 156.655187,98.3085126 155.688689,98.3085126 L129.188689,98.3085126 L129.188689,91.3085126 Z"
+          transform="rotate(-6 144.189 94.809)"
+        />
+        <path
+          fill="#FFF"
+          stroke="#4A90E2"
+          strokeWidth="5"
+          d="M116.964276,69.6481676 C119.863771,69.6481676 122.488771,70.8234201 124.388898,72.7235464 C126.289024,74.6236726 127.464276,77.2486726 127.464276,80.1481676 L127.464276,97.1481676 C127.464276,100.047663 126.289024,102.672663 124.388898,104.572789 C122.488771,106.472915 119.863771,107.648168 116.964276,107.648168 L92.4642764,107.648168 L92.4642764,69.6481676 Z"
+          transform="rotate(174 109.964 88.648)"
+        />
+        <path
+          fill="#FFF"
+          stroke="#4A90E2"
+          strokeWidth="5"
+          d="M129.376054,63.8161804 C130.176599,63.8161619 130.926119,64.0877572 131.524763,64.5533427 C132.12337,65.0188985 132.571117,65.6784214 132.76828,66.4547274 C134.535726,73.4085451 135.420674,80.3622622 135.420674,87.3161804 C135.420674,94.2700986 134.535726,101.223816 132.768168,108.178075 C132.571117,108.953939 132.12337,109.613462 131.524763,110.079018 C130.926119,110.544604 130.176599,110.816199 129.375996,110.81618 L125.420674,110.81618 C124.511146,110.81618 123.687723,110.447521 123.091682,109.85148 C122.49564,109.255439 122.126981,108.432016 122.126981,107.522488 C122.126981,107.174974 122.181978,106.82965 122.289831,106.49949 C124.379204,100.105053 125.420674,93.7102842 125.420674,87.3161804 C125.420674,80.9220766 124.379204,74.5273077 122.289842,68.1329046 C122.00736,67.2683414 122.102048,66.3711248 122.483498,65.619426 C122.864942,64.8677371 123.533141,64.2615622 124.397689,63.9790723 C124.727958,63.8711575 125.073222,63.8161804 125.420674,63.8161804 Z"
+          transform="rotate(-6 127.42 87.316)"
+        />
+        <path
+          stroke="#4A90E2"
+          strokeLinecap="round"
+          strokeWidth="5"
+          d="M0.519402644,96.5646712 C5.75266271,88.9850897 19.1463341,87.0320043 40.7004169,90.705415 C62.2544996,94.3788257 79.0216166,91.4964253 91.0017679,82.0582139"
+          transform="rotate(-168 45.76 89.311)"
+        />
+        <path
+          fill="#FFF"
+          stroke="#4A90E2"
+          strokeWidth="5"
+          d="M248.508815,57.0314904 C251.40831,57.0314904 254.03331,58.2067429 255.933436,60.1068692 C257.833562,62.0069954 259.008815,64.6319954 259.008815,67.5314904 L259.008815,84.5314904 C259.008815,87.4309853 257.833562,90.0559853 255.933436,91.9561116 C254.03331,93.8562378 251.40831,95.0314904 248.508815,95.0314904 L232.008815,95.0314904 L232.008815,57.0314904 Z"
+          transform="rotate(-6 245.509 76.031)"
+        />
+        <path
+          fill="#FFF"
+          stroke="#4A90E2"
+          strokeWidth="5"
+          d="M231.033244,53.4976279 C231.851178,53.4976279 232.573072,54.0086261 233.258625,54.7117789 C234.356451,55.8377876 235.314548,57.5056247 236.139761,59.5490092 C237.943132,64.0145001 239.033244,70.1872555 239.033244,76.9976279 C239.033244,83.8080003 237.943132,89.9807556 236.139761,94.4462466 C235.314548,96.4896311 234.356451,98.1574682 233.258625,99.2834769 C232.573072,99.9866297 231.851178,100.497628 231.033244,100.497628 L224.033244,100.497628 L224.033244,53.4976279 Z"
+          transform="rotate(-6 231.533 76.998)"
+        />
+        <ellipse
+          cx="222.085"
+          cy="77.991"
+          fill="#FFF"
+          stroke="#4A90E2"
+          strokeWidth="5"
+          rx="8"
+          ry="23.5"
+          transform="rotate(-6 222.085 77.99)"
+        />
+        <ellipse
+          cx="221.348"
+          cy="70.924"
+          fill="#4A90E2"
+          rx="3.5"
+          ry="4"
+          transform="rotate(-6 221.348 70.924)"
+        />
+        <ellipse
+          cx="223.021"
+          cy="86.837"
+          fill="#4A90E2"
+          rx="3.5"
+          ry="4"
+          transform="rotate(-6 223.02 86.837)"
+        />
+        <path
+          stroke="#4A90E2"
+          strokeLinecap="round"
+          strokeWidth="5"
+          d="M260.531453,69.7697004 C269.864786,72.4363671 281.198119,69.4363671 294.531453,60.7697004 C307.864786,52.1030338 329.198119,55.1030338 358.531453,69.7697004"
+          transform="rotate(-6 309.531 63.326)"
+        />
+        <rect
+          width="5"
+          height="29"
+          x="176.664"
+          y="17.578"
+          fill="#4B91E2"
+          opacity=".4"
+          rx="2.5"
+          transform="rotate(-6 179.164 32.078)"
+        />
+        <rect
+          width="5"
+          height="20"
+          x="201.618"
+          y="31.758"
+          fill="#4B91E2"
+          opacity=".4"
+          rx="2.5"
+          transform="rotate(30 204.118 41.758)"
+        />
+        <rect
+          width="5"
+          height="20"
+          x="154.268"
+          y="36.734"
+          fill="#4B91E2"
+          opacity=".4"
+          rx="2.5"
+          transform="rotate(-42 156.768 46.734)"
+        />
+        <rect
+          width="5"
+          height="20"
+          x="208.048"
+          y="106.992"
+          fill="#4B91E2"
+          opacity=".4"
+          rx="2.5"
+          transform="rotate(138 210.548 116.992)"
+        />
+        <rect
+          width="5"
+          height="29"
+          x="185.652"
+          y="117.148"
+          fill="#4B91E2"
+          opacity=".4"
+          rx="2.5"
+          transform="rotate(174 188.152 131.648)"
+        />
+        <rect
+          width="5"
+          height="20"
+          x="160.698"
+          y="111.968"
+          fill="#4B91E2"
+          opacity=".4"
+          rx="2.5"
+          transform="rotate(-150 163.198 121.968)"
+        />
+      </g>
+    </svg>
+  )
 }
 
-const ConnectionError = ({lake}: Props) => {
-  const dispatch = useDispatch()
+const Wrap = styled.div`
+  line-height: 1.6;
+  margin-top: 3rem;
+  width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+`
+
+const ConnectionError = (props: {onRetry: () => void | Promise<void>}) => {
+  const lake = useSelector(Current.getLake)
   const [isFetching, setIsFetching] = useState(false)
 
   const onClick = async () => {
     setIsFetching(true)
     // add wait here so ui feedback is more visible to user
     await new Promise((res) => setTimeout(res, 500))
-    await dispatch(initCurrentTab())
+    await props.onRetry()
+
     setIsFetching(false)
   }
 
@@ -52,15 +195,23 @@ const ConnectionError = ({lake}: Props) => {
     : `The service at ${host}:${port} could not be reached.`
 
   return (
-    <PageWrap>
-      <StyledHeader>Connection Error</StyledHeader>
-      <StyledP>{errorMsg}</StyledP>
-      <StyledButton
-        onClick={onClick}
-        text={isFetching ? "" : "Retry"}
-        icon={isFetching ? <MacSpinner /> : null}
-      />
-    </PageWrap>
+    <Wrap>
+      <Image />
+      <Content>
+        <H1>Connection Error</H1>
+        <p>{errorMsg}</p>
+      </Content>
+      <Content>
+        <p>
+          <SubmitButton onClick={onClick}>Retry</SubmitButton>
+        </p>
+        <p>
+          <Link href={links.ZUI_DOCS_CONNNECTION_TROUBLESHOOTING}>
+            View Troubleshooting Docs
+          </Link>
+        </p>
+      </Content>
+    </Wrap>
   )
 }
 
