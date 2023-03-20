@@ -15,5 +15,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["scripts", "dist", "run", "packages"]
+  "exclude": ["scripts", "dist", "run"],
+  "references": [{"path": "packages/zealot"}]
 }

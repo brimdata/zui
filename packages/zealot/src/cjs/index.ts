@@ -12,9 +12,10 @@ export * from "../types"
 import fetch from "node-fetch"
 import {Client as BaseClient} from "../client/client"
 
-export class Client extends BaseClient {}
 // @ts-ignore
-Client.fetch = fetch
+BaseClient.fetch = fetch
+
+export class Client extends BaseClient {}
 
 // Node Specific Exports
 

@@ -10,7 +10,8 @@
     "outDir": "dist/cjs",
     "rootDir": "src",
     "declaration": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "composite": true
   },
   "include": ["src"],
   "exclude": ["src/**/*.test.ts"]
