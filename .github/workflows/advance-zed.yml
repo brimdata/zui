@@ -83,8 +83,6 @@ jobs:
         with:
           options: -screen 0 1280x1024x24
           run: yarn e2e
-        env:
-          DEBUG: pw:api
       - uses: actions/upload-artifact@v2
         if: failure() && steps.playwright.outcome == 'failure'
         with:
