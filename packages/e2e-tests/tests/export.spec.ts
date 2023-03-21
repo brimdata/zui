@@ -49,7 +49,7 @@ test.describe("Export tests", () => {
       await dialog.getByRole("radio", {name: `${label}`}).click()
       await dialog.getByRole("button").filter({hasText: "Export"}).click()
       await app.mainWin
-        .getByText(new RegExp("Export Completed: .*results." + label))
+        .getByText(new RegExp("Export Completed: .*results\\." + label))
         .waitFor()
 
       expect(fsExtra.statSync(file).size).toBe(expectedSize)
