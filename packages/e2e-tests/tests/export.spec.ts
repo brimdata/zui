@@ -48,10 +48,9 @@ test.describe("Export tests", () => {
       const dialog = app.mainWin.getByRole("dialog")
       await dialog.getByRole("radio", {name: `${label}`}).click()
       await dialog.getByRole("button").filter({hasText: "Export"}).click()
-
-      await expect(
-        await app.mainWin.locator("text=Export Complete").first()
-      ).toBeVisible()
+      await app.mainWin
+        .getByText(new RegExp("Export Completed: .*results." + label))
+        .waitFor()
 
       expect(fsExtra.statSync(file).size).toBe(expectedSize)
     })
