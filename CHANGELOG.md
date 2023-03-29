@@ -1,3 +1,7 @@
+## v1.0.1
+- Update Zed to [v1.7.0](https://github.com/brimdata/zed/releases/tag/v1.7.0)
+- Update Brimcap to [v1.4.1](https://github.com/brimdata/brimcap/releases/tag/v1.4.1), which fixes issue #2715 with per-machine installs on Windows
+
 ## v1.0.0
 
 ### The Brim app is now named Zui!

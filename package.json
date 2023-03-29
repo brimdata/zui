@@ -5,7 +5,7 @@
   "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/zui",
   "license": "BSD-3-Clause",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/js/electron/main.js",
   "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "workspaces": [
@@ -69,7 +69,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
-    "brimcap": "brimdata/brimcap#41f21afb7dac0d162dbba42f68b4c4cb24152e82",
+    "brimcap": "brimdata/brimcap#v1.4.1",
     "chalk": "^4.1.0",
     "commander": "^2.20.3",
     "cpx": "^1.5.0",
@@ -174,7 +174,7 @@
     "tree-model": "^1.0.7",
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#e5ad1f9998f654496b3038bb9433ca154d01edbc"
+    "zed": "brimdata/zed#v1.7.0"
   },
   "peerDependencies": {
     "react": "^18.0.0",
