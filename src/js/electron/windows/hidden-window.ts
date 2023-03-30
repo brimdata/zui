@@ -3,7 +3,6 @@ import {ZuiWindow} from "./zui-window"
 
 export class HiddenWindow extends ZuiWindow {
   name: WindowName = "hidden"
-  persistable = false
   options = {
     show: false,
     width: 0,

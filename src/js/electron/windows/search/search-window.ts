@@ -5,6 +5,7 @@ import {ZuiWindow} from "../zui-window"
 import {createMenu, SearchAppMenuState} from "./app-menu"
 
 export class SearchWindow extends ZuiWindow {
+  persistable = true
   name: WindowName = "search"
   options: BrowserWindowConstructorOptions = {
     titleBarStyle: env.isMac ? "hidden" : undefined,

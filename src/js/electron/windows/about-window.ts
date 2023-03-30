@@ -2,7 +2,6 @@ import {WindowName} from "../windows/types"
 import {ZuiWindow} from "./zui-window"
 
 export class AboutWindow extends ZuiWindow {
-  persistable: false
   name: WindowName = "about"
   options = {
     width: 360,
