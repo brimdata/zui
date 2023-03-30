@@ -28,6 +28,9 @@ export class BrowserWindow {
   isDestroyed = jest.fn(() => false)
   focus = jest.fn()
   visible = true
+  getBounds() {
+    return {x: 0, y: 0}
+  }
   center() {}
   setMenu() {}
   on() {
@@ -108,27 +111,30 @@ export const Menu = {
   setApplicationMenu: jest.fn(),
 }
 
+const display = {
+  id: 459098087,
+  bounds: {x: 0, y: 0, width: 1920, height: 1080},
+  workArea: {x: 0, y: 23, width: 1920, height: 1057},
+  accelerometerSupport: "unknown",
+  monochrome: false,
+  colorDepth: 24,
+  colorSpace:
+    "{primaries_d50_referred: [[0.6825, 0.3155],  [0.3001, 0.6589],  [0.1589, 0.0529]], transfer:BT709_APPLE, matrix:RGB, range:FULL}",
+  depthPerComponent: 8,
+  size: {width: 1920, height: 1080},
+  workAreaSize: {width: 1920, height: 1057},
+  scaleFactor: 2,
+  rotation: 0,
+  internal: false,
+  touchSupport: "unknown",
+}
+
 export const screen = {
+  getDisplayNearestPoint() {
+    return display
+  },
   getAllDisplays() {
-    return [
-      {
-        id: 459098087,
-        bounds: {x: 0, y: 0, width: 1920, height: 1080},
-        workArea: {x: 0, y: 23, width: 1920, height: 1057},
-        accelerometerSupport: "unknown",
-        monochrome: false,
-        colorDepth: 24,
-        colorSpace:
-          "{primaries_d50_referred: [[0.6825, 0.3155],  [0.3001, 0.6589],  [0.1589, 0.0529]], transfer:BT709_APPLE, matrix:RGB, range:FULL}",
-        depthPerComponent: 8,
-        size: {width: 1920, height: 1080},
-        workAreaSize: {width: 1920, height: 1057},
-        scaleFactor: 2,
-        rotation: 0,
-        internal: false,
-        touchSupport: "unknown",
-      },
-    ]
+    return [display]
   },
 }
 
