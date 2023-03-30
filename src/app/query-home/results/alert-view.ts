@@ -7,13 +7,14 @@ export class AlertView extends View {
     return (
       args.type === zed.TypeString &&
       args.field?.name === "event_type" &&
-      args.value.toString() == "alert"
+      args.value.toString() == "alert" &&
+      args.field.rootRecord?.has(["alert", "severity"])
     )
   }
 
   get severity() {
     try {
-      return this.args.field.parent.get(["alert", "severity"]).toString()
+      return this.args.field.rootRecord.get(["alert", "severity"]).toString()
     } catch (_) {
       return "?"
     }
