@@ -70,7 +70,7 @@ export default class MouseoverWatch {
   startExit = () => {
     if (this.delay > 0) {
       this.state = "EXITING"
-      this.tid = setTimeout(() => this.exit(), this.delay)
+      this.tid = window.setTimeout(() => this.exit(), this.delay)
     } else {
       this.exit()
     }
