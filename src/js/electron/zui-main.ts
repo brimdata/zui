@@ -72,7 +72,6 @@ export class ZuiMain {
 
   saveSession() {
     const windowState = this.windows.serialize()
-    console.log(windowState.map((w) => w.name))
     const mainState = getPersistedGlobalState(this.store.getState())
     this.session.saveSync(encodeSessionState(windowState, mainState))
   }

@@ -69,10 +69,9 @@ export class WindowManager extends EventEmitter {
   }
 
   serialize(): SerializedWindow[] {
-    return this.where((w) => {
-      console.log(w.name, w.persistable, !w.destroyed)
-      return w.persistable && !w.destroyed
-    }).map((w) => w.serialize())
+    return this.where((w) => w.persistable && !w.destroyed).map((w) =>
+      w.serialize()
+    )
   }
 
   get singleHidden() {
