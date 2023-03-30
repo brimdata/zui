@@ -170,3 +170,13 @@ test("#timeout test", async () => {
   jest.advanceTimersByTime(60_000)
   await expect(p).rejects.toEqual("ABORTED IN MOCK TEST")
 })
+
+test("#load with unicode in commit message", async () => {
+  const {
+    pool: {id},
+  } = await client.createPool("unicode")
+  await client.load("1 2 3", {
+    pool: id,
+    message: {author: "🤷‍♂️", body: "中文测试-⛔️"},
+  })
+})
