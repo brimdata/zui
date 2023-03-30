@@ -12140,13 +12140,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prismjs@npm:^1.25.0":
-  version: 1.25.0
-  resolution: "prismjs@npm:1.25.0"
-  checksum: 04d8eae9d1b26b76c350bc65621584c8f8cab80ace7da3953f8aef2f9a8dd4b4f71c1d15bc5c67f126ddc90cd5af613919dc1340589a6c57355bed86fa3ac010
-  languageName: node
-  linkType: hard
-
 "process-exists@npm:^4.0.0":
   version: 4.1.0
   resolution: "process-exists@npm:4.1.0"
@@ -15631,7 +15624,6 @@ __metadata:
     on-idle: ^3.1.4
     polished: ^3.6.5
     prettier: ^2.6.2
-    prismjs: ^1.25.0
     react: ^18.0.0
     react-arborist: 3.0.2
     react-dnd: ^14.0.5
