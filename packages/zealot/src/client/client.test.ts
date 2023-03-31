@@ -159,6 +159,7 @@ test("#load a stream", async () => {
 
 test("#timeout test", async () => {
   jest.useFakeTimers()
+  const client = new Client("http://localhost:9000")
   client.fetch = jest.fn((url, opts = {}) => {
     return new Promise((_, reject) => {
       opts.signal?.addEventListener("abort", () =>
@@ -169,4 +170,14 @@ test("#timeout test", async () => {
   const p = client.version()
   jest.advanceTimersByTime(60_000)
   await expect(p).rejects.toEqual("ABORTED IN MOCK TEST")
+})
+
+test("#load with unicode in commit message", async () => {
+  const {
+    pool: {id},
+  } = await client.createPool("unicode")
+  await client.load("1 2 3", {
+    pool: id,
+    message: {author: "🤷‍♂️", body: "中文测试-⛔️"},
+  })
 })

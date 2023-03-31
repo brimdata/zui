@@ -59,8 +59,13 @@ export async function toJS(res: Response | NodeResponse) {
   return decode(j).toJS()
 }
 
-export function json(obj: any) {
-  return JSON.stringify(obj)
+const charsToEncode = /[\u007f-\uffff]/g
+
+export function jsonHeader(obj: any) {
+  // https://stackoverflow.com/a/40347926
+  return JSON.stringify(obj).replace(charsToEncode, function (c) {
+    return "\\u" + ("000" + c.charCodeAt(0).toString(16)).slice(-4)
+  })
 }
 
 export function wrapAbort(signal?: AbortSignal) {

@@ -10,7 +10,7 @@ import {
   defaults,
   getEnv,
   getLoadContentType,
-  json,
+  jsonHeader,
   parseContent,
   toJS,
   wrapAbort,
@@ -54,7 +54,7 @@ export class Client {
     const poolId = typeof pool === "string" ? pool : pool.id
     const branch = opts.branch || "main"
     let headers = new Headers()
-    if (opts.message) headers.set("Zed-Commit", json(opts.message))
+    if (opts.message) headers.set("Zed-Commit", jsonHeader(opts.message))
     const res = await this.send({
       path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: "POST",
@@ -77,7 +77,7 @@ export class Client {
     const result = await this.send({
       method: "POST",
       path: `/query?ctrl=${options.controlMessages}`,
-      body: json({query}),
+      body: JSON.stringify({query}),
       contentType: "application/json",
       format: options.format,
       signal: abortCtl.signal,
@@ -97,7 +97,7 @@ export class Client {
     return this.send({
       method: "POST",
       path: "/pool",
-      body: json({name, layout}),
+      body: JSON.stringify({name, layout}),
       contentType: "application/json",
     }).then(toJS)
   }
@@ -137,7 +137,7 @@ export class Client {
     await this.send({
       method: "PUT",
       path: `/pool/${poolId}`,
-      body: json(args),
+      body: JSON.stringify(args),
       contentType: "application/json",
     })
     return true
@@ -173,7 +173,6 @@ export class Client {
   }) {
     const abortCtl = wrapAbort(opts.signal)
     const clearTimer = this.setTimeout(() => {
-      console.error("request timed out:", opts)
       abortCtl.abort()
     }, opts.timeout)
     const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy
