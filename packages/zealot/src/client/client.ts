@@ -173,7 +173,6 @@ export class Client {
   }) {
     const abortCtl = wrapAbort(opts.signal)
     const clearTimer = this.setTimeout(() => {
-      console.error("request timed out:", opts)
       abortCtl.abort()
     }, opts.timeout)
     const fetch = (opts.fetch || this.fetch) as Types.NodeFetch // Make typescript happy

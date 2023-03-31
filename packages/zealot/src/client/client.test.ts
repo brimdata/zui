@@ -159,6 +159,7 @@ test("#load a stream", async () => {
 
 test("#timeout test", async () => {
   jest.useFakeTimers()
+  const client = new Client("http://localhost:9000")
   client.fetch = jest.fn((url, opts = {}) => {
     return new Promise((_, reject) => {
       opts.signal?.addEventListener("abort", () =>
