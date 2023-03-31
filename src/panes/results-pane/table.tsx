@@ -14,6 +14,7 @@ import {PathView} from "src/app/query-home/results/path-view"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import {zed} from "@brimdata/zealot"
+import {AlertView} from "src/app/query-home/results/alert-view"
 
 export function Table() {
   const {table, setTable} = useResultsContext()
@@ -84,7 +85,7 @@ export function Table() {
         lineLimit: 2,
         rowLimit: 300,
         rowsPerPage: 50,
-        customViews: [PathView, BareStringView],
+        customViews: [AlertView, PathView, BareStringView],
         hideDecorators: true,
       }}
     />
