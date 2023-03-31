@@ -17,7 +17,7 @@ export abstract class ZuiWindow {
   lastFocused: number
   state: State | undefined
   dimens: Dimens | null = null
-  persistable = true
+  persistable = false
   initialized = new TimedPromise(60_000)
 
   constructor(props: WindowProps = {}) {

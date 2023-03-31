@@ -23,7 +23,7 @@ export class WindowManager extends EventEmitter {
         .map(deserializeWindow)
       await Promise.all(windows.map((w) => this.register(w)))
     }
-    if (this.count === 0) await this.create("search")
+    if (this.byName("search").length === 0) await this.create("search")
     if (this.byName("hidden").length === 0) await this.create("hidden")
   }
 
