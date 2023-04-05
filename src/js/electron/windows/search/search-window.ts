@@ -3,7 +3,7 @@ import env from "src/app/core/env"
 import {WindowName} from "../types"
 import {ZuiWindow} from "../zui-window"
 import {createMenu, SearchAppMenuState} from "./app-menu"
-
+import path from "path"
 export class SearchWindow extends ZuiWindow {
   persistable = true
   name: WindowName = "search"
@@ -16,8 +16,7 @@ export class SearchWindow extends ZuiWindow {
     width: 1250,
     height: 750,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      preload: path.join(__dirname, "../preload.js"),
     },
   }
   loadsInProgress = 0
@@ -42,5 +41,12 @@ export class SearchWindow extends ZuiWindow {
       })
       if (resp === 1) e.preventDefault()
     }
+  }
+
+  load() {
+    this.beforeLoad()
+    return this.ref.loadURL(
+      `http://localhost:3000?id=${this.id}&name=${this.name}`
+    )
   }
 }

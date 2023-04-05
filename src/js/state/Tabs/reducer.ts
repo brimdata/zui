@@ -1,7 +1,6 @@
 import {createSlice, Draft, PayloadAction} from "@reduxjs/toolkit"
 import {original} from "immer"
-import {isEmpty, last} from "lodash"
-import lib from "src/js/lib"
+import {isEmpty, last, uniq} from "lodash"
 import tabReducer from "../Tab/reducer"
 import {TabState} from "../Tab/types"
 
@@ -28,7 +27,7 @@ const isReduxAction = ({type}) => {
     of each tab. */
   return type.startsWith("@@")
 }
-
+const compact = (array: any[]) => array.filter((item) => !!item)
 const firstTab = tabReducer(undefined, {type: "INIT"})
 
 const slice = createSlice({
@@ -74,9 +73,7 @@ const slice = createSlice({
     },
     order(s, a: PayloadAction<number[]>) {
       const indices = a.payload
-      const newTabs = lib.compact(
-        lib.uniq(indices).map((i) => original(s).data[i])
-      )
+      const newTabs = compact(uniq(indices).map((i) => original(s).data[i]))
       if (isEmpty(newTabs)) return
       s.data = newTabs
     },

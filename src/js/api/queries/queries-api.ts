@@ -1,7 +1,6 @@
 import {nanoid} from "@reduxjs/toolkit"
 import tabHistory from "src/app/router/tab-history"
 import {lakeQueryPath} from "src/app/router/utils/paths"
-import {exportQueryGroupOp} from "src/js/electron/ops/export-query-group-op"
 import Current from "src/js/state/Current"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
@@ -32,7 +31,7 @@ export class QueriesApi {
   }
 
   export(groupId: string, filePath: string) {
-    return exportQueryGroupOp.invoke(groupId, filePath)
+    return global.zui.invoke("exportQueries", groupId, filePath)
   }
 
   find(id: string) {

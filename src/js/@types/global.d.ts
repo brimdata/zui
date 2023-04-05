@@ -3,6 +3,7 @@ import {FeatureName} from "../state/Feature"
 import {BrowserHistory} from "history"
 import {MainArgs} from "../electron/main"
 import {AppMeta} from "../electron/meta"
+import {PreloadApi} from "../electron/windows/preload"
 
 declare global {
   namespace NodeJS {
@@ -23,6 +24,7 @@ declare global {
       mainArgs: MainArgs
       firstMount: boolean
       appMeta: AppMeta
+      zui: PreloadApi
     }
   }
 }

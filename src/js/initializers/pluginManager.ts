@@ -1,7 +1,7 @@
 import {forEach} from "lodash"
 import path from "path"
 import ZuiApi from "../api/zui-api"
-import lib from "../lib"
+import file from "../lib/file"
 
 interface PluginFunctions {
   activate(api: ZuiApi): void
@@ -16,7 +16,7 @@ export default class PluginManager {
   constructor(private api: ZuiApi) {}
 
   async load(dir: string) {
-    const files = await lib.file(dir).contents()
+    const files = await file(dir).contents()
     for (let i = 0; i < files.length; i++) {
       const folder = path.join(dir, files[i])
       const plugin = new Plugin(folder)
@@ -61,7 +61,7 @@ class Plugin {
   }
 
   async load() {
-    const d = lib.file(this.folderPath)
+    const d = file(this.folderPath)
     if (!(await d.isDirectory())) {
       throw new Error("Plugin must be contained in a directory.")
     }

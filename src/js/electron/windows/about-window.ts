@@ -1,5 +1,6 @@
 import {WindowName} from "../windows/types"
 import {ZuiWindow} from "./zui-window"
+import path from "path"
 
 export class AboutWindow extends ZuiWindow {
   name: WindowName = "about"
@@ -10,8 +11,7 @@ export class AboutWindow extends ZuiWindow {
     minimizable: false,
     maximizable: false,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      preload: path.join(__dirname, "preload.js"),
     },
   }
 

@@ -3,9 +3,7 @@ import {isArray} from "lodash"
 import {CreatePoolOpts} from "packages/zealot/src"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
-import detectFileTypes from "src/js/models/ingest/detectFileTypes"
 import {FileListData} from "src/js/models/ingest/fileList"
-import {loadEnd, loadStart} from "src/js/electron/ops/loads-in-progress-op"
 import deletePools from "src/js/flows/deletePools"
 import Current from "src/js/state/Current"
 import Loads from "src/js/state/Loads"
@@ -34,32 +32,34 @@ export class PoolsApi extends ApiDomain {
 
   // TODO: Move to main progress, create a loads domain
   async loadFiles(poolId: string, files: File[], format?: string) {
-    const fileListData = await detectFileTypes(files)
-    const loader = chooseLoader(this, fileListData)
-    const load = createLoad(this, this.lakeId, poolId)
-    const params = {
-      poolId: poolId,
-      branch: "main",
-      name: "",
-      fileListData,
-      format,
-    }
-    try {
-      await load.setup()
-      await loader.load(
-        params,
-        load.onProgress,
-        load.onWarning,
-        load.onPoolChanged,
-        load.signal
-      )
-      await waitForPoolStats(this, poolId)
-    } catch (e) {
-      loader.unload && (await loader.unload(params))
-      throw e
-    } finally {
-      load.teardown()
-    }
+    throw new Error("Move to main process")
+    console.error(poolId, files, format)
+    // const fileListData = await detectFileTypes(files)
+    // const loader = chooseLoader(this, fileListData)
+    // const load = createLoad(this, this.lakeId, poolId)
+    // const params = {
+    //   poolId: poolId,
+    //   branch: "main",
+    //   name: "",
+    //   fileListData,
+    //   format,
+    // }
+    // try {
+    //   await load.setup()
+    //   await loader.load(
+    //     params,
+    //     load.onProgress,
+    //     load.onWarning,
+    //     load.onPoolChanged,
+    //     load.signal
+    //   )
+    //   await waitForPoolStats(this, poolId)
+    // } catch (e) {
+    //   loader.unload && (await loader.unload(params))
+    //   throw e
+    // } finally {
+    //   load.teardown()
+    // }
   }
 
   delete(id: string | string[]) {
@@ -109,13 +109,13 @@ function createLoad(api: PoolsApi, lakeId: string, poolId: string) {
     signal: ctl.signal,
 
     setup: async () => {
-      await loadStart.invoke(global.windowId)
+      await global.zui.invoke("loadStart", global.windowId)
       api.abortables.add({id, abort: () => ctl.abort()})
       api.dispatch(Loads.create({id, poolId, progress: 0}))
     },
 
     teardown: async () => {
-      await loadEnd.invoke(global.windowId)
+      await global.zui.invoke("loadEnd", global.windowId)
       api.abortables.remove(id)
       api.dispatch(Loads.delete(id))
     },

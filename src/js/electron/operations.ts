@@ -1,4 +1,4 @@
-import {ipcMain, IpcMainInvokeEvent, ipcRenderer} from "electron"
+import {ipcMain, IpcMainInvokeEvent} from "electron"
 import log from "electron-log"
 import {ZuiMain} from "./zui-main"
 
@@ -32,8 +32,8 @@ export class Operation<Args extends any[], Ret> {
   }
 
   invoke(...args: Args): Promise<Ret> {
-    if (ipcRenderer) {
-      return ipcRenderer.invoke(this.channel, ...args)
+    if (global.zui) {
+      return global.zui.invoke(this.channel, ...args)
     } else {
       throw new Error("You must call operation.run() in the main process")
     }

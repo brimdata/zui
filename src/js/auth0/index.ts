@@ -1,5 +1,3 @@
-import {shell} from "electron"
-
 interface Auth0Response {
   access_token: string
   refresh_token?: string
@@ -28,7 +26,7 @@ export default class Auth0Client {
     loginUrl.searchParams.append("prompt", "login")
     loginUrl.searchParams.append("state", state)
 
-    return shell.openExternal(loginUrl.toString())
+    return global.zui.invoke("openLinkOp", loginUrl.toString())
   }
 
   private getTokenURL(): string {

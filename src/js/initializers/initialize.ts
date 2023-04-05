@@ -7,10 +7,8 @@ import initPlugins from "./initPlugins"
 import initStore from "./initStore"
 import initLakeParams from "./initLakeParams"
 import {initAutosave} from "./initAutosave"
-import {featureFlagsOp} from "../electron/ops/feature-flags-op"
 import {commands} from "src/app/commands/command"
 import {menus} from "src/core/menu"
-import {windowInitialized} from "../electron/ops/window-initialized-op"
 
 export default async function initialize() {
   const api = new ZuiApi()
@@ -18,7 +16,7 @@ export default async function initialize() {
   api.init(store.dispatch, store.getState)
 
   const pluginManager = await initPlugins(api)
-  global.featureFlags = await featureFlagsOp.invoke()
+  global.featureFlags = globalThis.zui.featureFlags
 
   initDOM()
   await initGlobals(store)
@@ -28,7 +26,7 @@ export default async function initialize() {
   initAutosave(store)
   commands.setContext(store, api)
   menus.setContext({api})
-  windowInitialized.invoke(global.windowId)
+  global.zui.invoke("windowInitialized", global.windowId)
 
   return {store, api, pluginManager}
 }

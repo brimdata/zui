@@ -1,7 +1,22 @@
-import {configureStore} from "@reduxjs/toolkit"
+import {Middleware, configureStore} from "@reduxjs/toolkit"
 import rootReducer from "./root-reducer"
 import {State} from "../types"
-import {ipcMainReduxMiddleware} from "./ipc-redux-middleware"
+import {shouldForward} from "./ipc-redux-middleware"
+import {globalDispatchFromMain} from "src/js/electron/ops/global-dispatch-op"
+
+/**
+ * This goes on the main store and will send actions
+ * to all the open windows.
+ */
+const ipcMainReduxMiddleware: Middleware = (_store) => (next) => (action) => {
+  const result = next(action)
+
+  if (shouldForward(action)) {
+    globalDispatchFromMain.run(action)
+  }
+
+  return result
+}
 
 export function createMainStore(initState: Partial<State> | undefined) {
   return configureStore({

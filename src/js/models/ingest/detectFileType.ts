@@ -1,6 +1,5 @@
 import {toNodeReadable} from "../../lib/response"
 import fs from "fs"
-import env from "src/app/core/env"
 
 const PCAP_1_HEX = "d4c3b2a1"
 const PCAP_2_HEX = "a1b2c3d4"
@@ -21,7 +20,6 @@ export default async function (file: File): Promise<IngestFileType> {
 }
 
 function isDirectory(file: File) {
-  if (env.isIntegrationTest) return false // We don't have access to the path in integration tests...
   return fs.lstatSync(file.path).isDirectory()
 }
 

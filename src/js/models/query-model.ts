@@ -1,7 +1,7 @@
 import {Query} from "src/js/state/Queries/types"
 import {isEmpty, last} from "lodash"
 import {QueryPinInterface} from "../state/Editor/types"
-import {parseAst} from "@brimdata/zealot"
+import {parse as parseAst} from "zed/compiler/parser/parser"
 import buildPin from "src/js/state/Editor/models/build-pin"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {QuerySource} from "src/js/api/queries/types"
