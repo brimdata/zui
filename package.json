@@ -161,7 +161,7 @@
     "tree-model": "^1.0.7",
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
-    "zed": "brimdata/zed#729f9c13aab3e60beb2724428a0b52a9fe1a0fea"
+    "zed": "brimdata/zed#56a0c84b6ca317bdb1e77845b80d67e4052fd2b9"
   },
   "peerDependencies": {
     "react": "^18.0.0",
