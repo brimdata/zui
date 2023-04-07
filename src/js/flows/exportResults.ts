@@ -1,5 +1,4 @@
-import {ResponseFormat} from "@brimdata/zealot"
-import log from "electron-log"
+import {ResponseFormat} from "@brimdata/zed-js"
 import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
@@ -36,7 +35,6 @@ export default (
     const zealot = await api.getZealot(undefined, "node")
     const originalQuery = Results.getQuery(MAIN_RESULTS)(getState())
     const exportQuery = prepareProgram(format, originalQuery, api)
-    log.info("Exporting", exportQuery)
     const res = await zealot.query(exportQuery, {
       format,
       controlMessages: false,
@@ -44,6 +42,7 @@ export default (
     })
     try {
       await streamPipeline(
+        // @ts-ignore
         res.body as NodeJS.ReadableStream,
         fs.createWriteStream(filePath)
       )

@@ -2,7 +2,7 @@ import React, {ReactNode} from "react"
 import {ContainerView} from "../views/container-view"
 import Icon from "src/app/core/icon-temp"
 import classNames from "classnames"
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import {note} from "./note"
 
 export function open(view: ContainerView) {

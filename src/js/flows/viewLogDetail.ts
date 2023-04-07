@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import LogDetails from "../state/LogDetails"
 import {Thunk} from "../state/types"
 import {startTransition} from "react"

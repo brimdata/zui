@@ -1,26 +1,19 @@
-import env from "src/app/core/env"
 import {MenuItemConstructorOptions, PopupOptions} from "electron"
-import * as remote from "@electron/remote"
+import {showContextMenu as show} from "src/core/menu/show-context-menu"
 
-export function showContextMenu(
+// Remove this function
+export async function showContextMenu(
   template: MenuItemConstructorOptions[],
   opts: PopupOptions = {}
 ) {
-  if (env.isTest || env.isIntegrationTest) {
-    document.dispatchEvent(
-      new CustomEvent("nativeContextMenu", {detail: template})
-    )
-  } else {
-    // @ts-ignore
-    new remote.Menu.buildFromTemplate(template).popup(opts)
-  }
+  show(template, opts)
 }
 
 export function showMessageBox(opts: Electron.MessageBoxOptions) {
-  if (env.isTest || env.isIntegrationTest) {
+  if (global.zui.env.isTest) {
     return Promise.resolve({response: 0})
     // To do, mock the options and give the test case a way to select some
   } else {
-    return remote.dialog.showMessageBox(opts)
+    return global.zui.invoke("showMessageBoxOp", opts)
   }
 }

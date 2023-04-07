@@ -1,4 +1,4 @@
-import {Collector} from "@brimdata/zealot"
+import {Collector} from "@brimdata/zed-js"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Results from "src/js/state/Results"
 import {Thunk} from "src/js/state/types"

@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import {createView} from "src/app/features/inspector/views/create"
 import {TableViewApi} from "../../zui-kit/core/table-view/table-view-api"
 import {View} from "src/app/features/inspector/views/view"

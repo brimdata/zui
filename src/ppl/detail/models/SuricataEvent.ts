@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import {SecurityEventInterface} from "./security-event"
 
 export class SuricataEvent implements SecurityEventInterface {

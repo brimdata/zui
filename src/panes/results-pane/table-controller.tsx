@@ -1,5 +1,5 @@
 import {useMemo} from "react"
-import {createRecord, zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import {ZedTableHandlers, ZedTableState} from "src/components/zed-table/types"
 import useSelect from "src/app/core/hooks/use-select"
 import Results from "src/js/state/Results"
@@ -60,7 +60,7 @@ export function useTableValues(shape: zed.Any, values: zed.Value[]) {
     if (shape instanceof zed.TypeRecord) {
       return values
     } else {
-      return values.map((value) => createRecord({this: value}))
+      return values.map((value) => zed.createRecord({this: value}))
     }
   }, [shape, values])
 }

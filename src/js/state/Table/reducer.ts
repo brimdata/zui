@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction as Payload} from "@reduxjs/toolkit"
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import {defaultState, ZedTableState} from "src/components/zed-table/types"
 
 const slice = createSlice({

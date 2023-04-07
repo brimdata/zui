@@ -1,6 +1,4 @@
-import {CreatePoolOpts, LoadFormat} from "packages/zealot/src"
-import detectFileTypes from "src/js/models/ingest/detectFileTypes"
-import {derivePoolName} from "src/js/models/ingest/getParams"
+import {CreatePoolOpts, LoadFormat} from "@brimdata/zed-js"
 import errors from "src/js/errors"
 import {ErrorData} from "src/js/errors/types"
 import ErrorFactory from "src/js/models/ErrorFactory"
@@ -90,7 +88,12 @@ export const createAndLoadFiles = createCommand(
     }
     try {
       const name =
-        opts.name || derivePoolName(await detectFileTypes(files), poolNames)
+        opts.name ||
+        (await global.zui.invoke(
+          "derivePoolNameOp",
+          await global.zui.invoke("detectFileTypesOp", files),
+          poolNames
+        ))
       poolId = await api.pools.create(name, opts)
 
       if (files.length === 0) {

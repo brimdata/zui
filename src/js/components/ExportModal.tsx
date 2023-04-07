@@ -1,12 +1,9 @@
 import React from "react"
-import {ResponseFormat} from "@brimdata/zealot"
+import {ResponseFormat} from "@brimdata/zed-js"
 import {ChangeEvent, useState} from "react"
 import {toast} from "react-hot-toast"
-import {useDispatch} from "react-redux"
 import styled from "styled-components"
 import ToolbarButton from "src/app/query-home/toolbar/actions/button"
-import exportResults from "../flows/exportResults"
-import {AppDispatch} from "../state/types"
 import InputLabel from "./common/forms/InputLabel"
 import {
   ButtonGroup,
@@ -14,7 +11,6 @@ import {
   Footer,
   SmallTitle,
 } from "./ModalDialog/ModalDialog"
-import {showSaveDialogOp} from "../electron/ops/show-save-dialog-op"
 
 const RadioButtons = styled.div`
   display: flex;
@@ -51,7 +47,7 @@ const StyledFooter = styled(Footer)`
 `
 
 const showDialog = (format) => {
-  return showSaveDialogOp.invoke({
+  return global.zui.invoke("showSaveDialogOp", {
     title: `Export Results as ${format.toUpperCase()}`,
     buttonLabel: "Export",
     defaultPath: `results.${format}`,
@@ -61,7 +57,6 @@ const showDialog = (format) => {
 }
 
 const ExportModal = ({onClose}) => {
-  const dispatch = useDispatch<AppDispatch>()
   const [format, setFormat] = useState("zng")
 
   const onExport = async () => {
@@ -69,11 +64,18 @@ const ExportModal = ({onClose}) => {
     if (canceled) return
 
     toast
-      .promise(dispatch(exportResults(filePath, format as ResponseFormat)), {
-        loading: "Exporting...",
-        success: "Export Completed: " + filePath,
-        error: "Error Exporting",
-      })
+      .promise(
+        global.zui.invoke(
+          "exportResultsOp",
+          filePath,
+          format as ResponseFormat
+        ),
+        {
+          loading: "Exporting...",
+          success: "Export Completed: " + filePath,
+          error: "Error Exporting",
+        }
+      )
       .catch((e) => {
         console.error(e)
       })

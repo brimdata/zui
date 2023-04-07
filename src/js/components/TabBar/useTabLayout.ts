@@ -1,6 +1,5 @@
 import {useEffect, useRef} from "react"
 import {useSprings} from "react-spring"
-import lib from "../../lib"
 import useDrag from "../hooks/useDrag"
 import useFirst from "../hooks/useFirst"
 
@@ -28,6 +27,12 @@ function mapToSprings(ids) {
   const map = new Map()
   ids.forEach((id, i) => map.set(id, i))
   return map
+}
+
+function move<T>(array: T[], src: number, dest: number): T[] {
+  const copy = [...array]
+  copy.splice(dest, 0, copy.splice(src, 1)[0])
+  return copy
 }
 
 // The are the update function for when not dragging
@@ -119,7 +124,7 @@ export default function (tabIds: string[], width: number) {
     const dragSpringIndex: number = map.current.get(args.id)
     const dragIndex = ids.current.indexOf(args.id)
     const dragOverIndex = getHoverIndex(dragIndex, width, dx)
-    const newOrder: string[] = lib.move(ids.current, dragIndex, dragOverIndex)
+    const newOrder: string[] = move(ids.current, dragIndex, dragOverIndex)
     const newSpringOrder = orderSprings(newOrder, map.current)
     set(dragging(newSpringOrder, dragSpringIndex, dragIndex, width, dx))
 

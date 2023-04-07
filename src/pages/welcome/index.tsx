@@ -6,7 +6,6 @@ import {InputButton} from "src/components/input-button"
 import {Subtitle} from "src/components/subtitle"
 import {Title} from "src/components/title"
 import styled from "styled-components"
-import {shell} from "electron"
 import links from "src/app/core/links"
 
 const BG = styled.div`
@@ -59,7 +58,9 @@ export function WelcomePage() {
           <InputButton onClick={() => connectToLake.run()}>
             Connect to Lake
           </InputButton>
-          <InputButton onClick={() => shell.openExternal(links.ZUI_DOCS_ROOT)}>
+          <InputButton
+            onClick={() => global.zui.invoke("openLinkOp", links.ZUI_DOCS_ROOT)}
+          >
             Documentation
           </InputButton>
         </Actions>

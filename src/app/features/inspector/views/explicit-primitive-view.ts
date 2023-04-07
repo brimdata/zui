@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import {View} from "./view"
 
 export class ExplicitPrimitiveView extends View<zed.Value> {

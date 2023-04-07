@@ -1,5 +1,5 @@
 import {IngestFileType} from "./detectFileType"
-import lib from "../../lib"
+import file from "src/js/lib/file"
 
 export type FileListData = {type: IngestFileType; file: File}[]
 
@@ -40,12 +40,12 @@ export default class FileList {
   inSameDir() {
     return this.list.every(
       (item) =>
-        lib.file(item.file.path).dirName() ===
-        lib.file(this.list[0].file.path).dirName()
+        file(item.file.path).dirName() ===
+        file(this.list[0].file.path).dirName()
     )
   }
 
   dirName() {
-    return lib.file(this.list[0].file.path).dirName()
+    return file(this.list[0].file.path).dirName()
   }
 }

@@ -1,7 +1,7 @@
 import {app} from "electron"
 import keytar from "keytar"
 import os from "os"
-import {Lake} from "@brimdata/zealot"
+import {Lake} from "@brimdata/zed-node"
 import {Store} from "redux"
 import url from "url"
 import {

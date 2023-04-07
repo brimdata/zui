@@ -1,7 +1,6 @@
-const on = document.addEventListener
-const off = document.removeEventListener
-
 export default function useDrag(handler: Function) {
+  const on = window.document.addEventListener
+  const off = window.document.removeEventListener
   return (args: any = {}) => {
     let startX = 0
     let startY = 0

@@ -9,6 +9,27 @@ export function showContextMenu(
       new CustomEvent("nativeContextMenu", {detail: template})
     )
   } else {
-    global.zui.invoke("showContextMenuOp", template, opts)
+    const menu = sanitizeTemplate(template)
+    setupListener(template)
+    global.zui.invoke("showContextMenuOp", menu, opts)
   }
+}
+
+function sanitizeTemplate(template: MenuItemConstructorOptions[]) {
+  return template.map(sanitizeMenuItem)
+}
+
+function sanitizeMenuItem(item) {
+  return {...item, click: undefined}
+}
+
+function findItem(id: string, template: MenuItemConstructorOptions[]) {
+  return template.find((item) => item.id === id || item.label === id)
+}
+
+function setupListener(template) {
+  global.zui.listenOnce("contextMenuResult", (e, id: string) => {
+    const item = findItem(id, template)
+    if (item && "click" in item) item.click()
+  })
 }

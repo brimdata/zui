@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import ZuiApi from "src/js/api/zui-api"
 import {DateTuple} from "src/js/lib/TimeWindow"
 import Editor from "src/js/state/Editor"

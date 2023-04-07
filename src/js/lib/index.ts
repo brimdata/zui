@@ -5,9 +5,7 @@ import {isArray} from "./is"
 import animation from "./animation"
 import date from "./date"
 import doc from "./doc"
-import file from "./file"
 import obj from "./obj"
-import open from "./open"
 import transaction from "./transaction"
 import win from "./win"
 
@@ -20,13 +18,11 @@ const array = {
 }
 
 export default {
-  file,
   obj,
   doc,
   win,
   array,
   animation,
-  open,
   date,
   transaction,
   compact: (array: any[]) => array.filter((item) => !!item),

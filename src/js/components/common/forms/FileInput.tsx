@@ -4,7 +4,6 @@ import classNames from "classnames"
 import TextInput from "./TextInput"
 import useCallbackRef from "../../hooks/useCallbackRef"
 import useDropzone from "../../hooks/useDropzone"
-import {openDirectoryOp} from "src/js/electron/ops/open-directory-op"
 import styled from "styled-components"
 
 type Props = {
@@ -33,7 +32,7 @@ export default function FileInput(props: Props) {
   }
 
   async function openDirPicker() {
-    const {canceled, filePaths} = await openDirectoryOp.invoke()
+    const {canceled, filePaths} = await global.zui.invoke("openDirectory")
     if (canceled) return
     update(filePaths[0])
   }

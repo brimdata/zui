@@ -1,4 +1,4 @@
-import {Collector, ResultStream} from "@brimdata/zealot"
+import {Collector, ResultStream} from "@brimdata/zed-js"
 import {Thunk} from "src/js/state/types"
 import ZuiApi from "../zui-api"
 

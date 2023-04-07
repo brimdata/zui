@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 
 export function findUid(value: zed.Record) {
   const specialUids = {

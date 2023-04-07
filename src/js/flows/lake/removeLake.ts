@@ -8,7 +8,6 @@ import {Thunk} from "../../state/types"
 import Lakes from "../../state/Lakes"
 import {Lake} from "../../state/Lakes/types"
 import LakeStatuses from "../../state/LakeStatuses"
-import {deleteSecretOp} from "src/js/electron/ops/secrets"
 
 const removeLake =
   (l: Lake): Thunk =>
@@ -19,8 +18,8 @@ const removeLake =
 
     // remove creds from keychain
     if (authType === "auth0") {
-      deleteSecretOp.invoke(toAccessTokenKey(id))
-      deleteSecretOp.invoke(toRefreshTokenKey(id))
+      global.zui.invoke("deleteSecretOp", toAccessTokenKey(id))
+      global.zui.invoke("deleteSecretOp", toRefreshTokenKey(id))
     }
     dispatch(Pools.removeAll(id))
     dispatch(LakeStatuses.remove(id))

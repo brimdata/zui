@@ -1,4 +1,4 @@
-import {Client} from "@brimdata/zealot"
+import {Client} from "@brimdata/zed-js"
 import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only"
 import {existsSync} from "fs"
 import {reject} from "lodash"

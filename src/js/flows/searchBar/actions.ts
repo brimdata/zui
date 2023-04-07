@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import program from "src/js/models/program"
 import Editor from "src/js/state/Editor"
 import {Thunk} from "../../state/types"

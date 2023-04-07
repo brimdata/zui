@@ -2,7 +2,7 @@ import {Thunk} from "../../state/types"
 import Current from "../../state/Current"
 import Notice from "../../state/Notice"
 import LakeStatuses from "../../state/LakeStatuses"
-import {Client} from "@brimdata/zealot"
+import {Client} from "@brimdata/zed-js"
 
 export const checkStatus = (): Thunk => (dispatch, getState) => {
   const {host, port, id} = Current.getLake(getState())

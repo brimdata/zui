@@ -1,4 +1,4 @@
-import * as pkg from "../../../package.json"
+import pkg from "../../../package.json"
 
 const currentZedTag = pkg.dependencies.zed.split("#")[1] || "main"
 const zedDocsTag = currentZedTag.startsWith("v") ? currentZedTag : "next"

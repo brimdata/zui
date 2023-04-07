@@ -12,7 +12,7 @@ import {isEqual} from "lodash"
 import Panel from "src/app/detail/Panel"
 import EventLimit from "./EventLimit"
 import {showContextMenu} from "src/js/lib/System"
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import Results from "src/js/state/Results"
 import {uidCorrelation} from "src/plugins/zui-zeek/uid-correlations"
 

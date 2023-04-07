@@ -1,6 +1,4 @@
-import {ipcRenderer} from "electron"
 import {LakeModel} from "src/js/models/lake"
-import {setSecretOp} from "src/js/electron/ops/secrets"
 import {
   serializeState,
   toAccessTokenKey,
@@ -26,8 +24,12 @@ export const login =
         const {accessToken, refreshToken} = await client.exchangeCode(code)
 
         // store both tokens in os default keychain
-        setSecretOp.invoke(toAccessTokenKey(lakeId), accessToken)
-        setSecretOp.invoke(toRefreshTokenKey(lakeId), refreshToken)
+        global.zui.invoke("setSecretOp", toAccessTokenKey(lakeId), accessToken)
+        global.zui.invoke(
+          "setSecretOp",
+          toRefreshTokenKey(lakeId),
+          refreshToken
+        )
 
         resolve(accessToken)
       } catch (e) {
@@ -41,9 +43,9 @@ export const login =
     )
     return new Promise<string | null>((res, rej) => {
       const handleAuthCb = handleAuth(res, rej)
-      ipcRenderer.once("windows:authCallback", handleAuthCb)
+      global.zui.listenOnce("windows:authCallback", handleAuthCb)
       abortSignal.addEventListener("abort", () => {
-        ipcRenderer.removeListener("windows:authCallback", handleAuthCb)
+        global.zui.stopListen("windows:authCallback", handleAuthCb)
         res(null)
       })
     })

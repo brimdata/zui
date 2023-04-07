@@ -1,7 +1,7 @@
 import path from "path"
 
 import {last} from "src/js/lib/Array"
-import lib from "src/js/lib"
+import file from "../lib/file"
 
 const dir = path.join(__dirname, "../state/migrations")
 
@@ -27,7 +27,7 @@ export class Migrations {
     args: {from: string | number; to?: string | number} = {from: 0}
   ) {
     const cv = parseInt(args.from.toString())
-    const files = await lib.file(dir).contents()
+    const files = await file(dir).contents()
     const migrations = files
       .filter(onlyMigrations)
       .map(build)

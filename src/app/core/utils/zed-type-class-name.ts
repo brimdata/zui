@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 
 export function zedTypeClassName(data: zed.Value | zed.Type) {
   if (zed.isType(data)) {

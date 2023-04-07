@@ -1,5 +1,5 @@
 import {Table, createTable} from "@tanstack/table-core"
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import {config} from "../../../components/zed-table/config"
 import {Cell} from "../../../components/zed-table/cell"
 import {Position} from "../../../components/zed-table/position"

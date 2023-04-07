@@ -8,7 +8,7 @@ import HistoryButtons from "src/js/components/common/HistoryButtons"
 import {useDispatch} from "../../core/state"
 import NoSelection from "../../detail/NoSelection"
 import {Left, PaneBody, PaneHeader, Right} from "./common"
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 
 const DetailSection = () => {
   const dispatch = useDispatch()

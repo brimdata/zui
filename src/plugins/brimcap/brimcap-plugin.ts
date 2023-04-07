@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import env from "src/app/core/env"
 import {ChildProcess, spawn} from "child_process"
 import {MenuItemConstructorOptions} from "electron"

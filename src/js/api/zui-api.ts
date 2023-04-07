@@ -58,8 +58,8 @@ export default class ZuiApi {
     this.layout = new LayoutApi(this)
   }
 
-  getZealot(lake?: LakeModel, env?: "node" | "web") {
-    return this.dispatch(getZealot(lake, env))
+  getZealot(lake?: LakeModel) {
+    return this.dispatch(getZealot(lake))
   }
 
   getPath(name: PathName) {

@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import {InspectArgs} from "src/app/features/inspector/types"
 import {View} from "src/app/features/inspector/views/view"
 

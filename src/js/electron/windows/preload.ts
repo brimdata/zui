@@ -11,11 +11,14 @@ const getWindowName = () => {
 }
 
 const preloadApi = {
-  listen: (message: string, callback: any) => ipcRenderer.on(message, callback),
+  listen: ipcRenderer.on.bind(ipcRenderer),
+  listenOnce: ipcRenderer.once.bind(ipcRenderer),
+  stopListen: ipcRenderer.off.bind(ipcRenderer),
+  invoke: ipcRenderer.invoke.bind(ipcRenderer),
   windowId: getWindowId(),
   windowName: getWindowName(),
-  invoke: ipcRenderer.invoke,
   env: {
+    isMac: process.platform === "darwin",
     isTest: process.env.NODE_ENV === "test",
   },
 }

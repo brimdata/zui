@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import {createView} from "../views/create"
 import {ContainerView} from "./container-view"
 

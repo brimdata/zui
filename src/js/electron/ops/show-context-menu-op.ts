@@ -1,10 +1,37 @@
-import {Menu, MenuItemConstructorOptions, PopupOptions} from "electron"
+import {
+  IpcMainInvokeEvent,
+  Menu,
+  MenuItemConstructorOptions,
+  PopupOptions,
+} from "electron"
 import {createOperation} from "../operations"
 
 export const showContextMenuOp = createOperation(
   "showContextMenuOp",
-  (_, template: MenuItemConstructorOptions[], opts: PopupOptions = {}) => {
-    const menu = Menu.buildFromTemplate(template)
-    menu.popup(opts)
+  (
+    {event},
+    template: MenuItemConstructorOptions[],
+    opts: PopupOptions = {}
+  ) => {
+    const menu = Menu.buildFromTemplate(injectClickHandlers(template, event))
+    menu.popup({
+      ...opts,
+      callback: () => {
+        event.sender.send("contextMenuResult", null)
+      },
+    })
   }
 )
+
+function injectClickHandlers(template, event) {
+  return template.map((item) => injectClick(item, event))
+}
+
+function injectClick(item, event: IpcMainInvokeEvent) {
+  return {
+    ...item,
+    click: () => {
+      event.sender.send("contextMenuResult", item.id || item.label)
+    },
+  }
+}

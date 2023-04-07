@@ -1,7 +1,5 @@
 import React from "react"
 
-import {shell} from "electron"
-
 type Props = {href?: string; children: JSX.Element | string; onClick?: Function}
 
 export default function Link({href, onClick, children}: Props) {
@@ -11,7 +9,7 @@ export default function Link({href, onClick, children}: Props) {
   const click = (e) => {
     e.preventDefault()
     if (href) {
-      shell.openExternal(href)
+      global.zui.invoke("openLinkOp", href)
     } else if (onClick) {
       onClick(e)
     }

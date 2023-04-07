@@ -1,7 +1,7 @@
 import PanelHeading from "src/app/detail/PanelHeading"
 import React from "react"
 import {useSelector} from "react-redux"
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import InlineTableLoading from "../InlineTableLoading"
 import HorizontalTable from "../Tables/HorizontalTable"
 import * as md5 from "src/plugins/zui-zeek/md5-correlations"

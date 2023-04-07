@@ -1,5 +1,5 @@
 import * as React from "react"
-import {zed} from "@brimdata/zealot"
+import {zed} from "@brimdata/zed-js"
 import Table, {TableData, TableHeader} from "./Table"
 
 type Props = {

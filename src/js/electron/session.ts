@@ -1,9 +1,9 @@
 import log from "electron-log"
 import {get} from "lodash"
-import lib from "src/js/lib"
 import {isNumber} from "src/js/lib/is"
 import {Migrations} from "./migrations"
 import {SessionState} from "./session-state"
+import file from "../lib/file"
 
 export type Session = ReturnType<typeof session>
 
@@ -17,21 +17,21 @@ export default function session(path: string) {
     },
 
     save(data: SessionState, p: string = path) {
-      return lib.file(p).write(JSON.stringify({version, data}))
+      return file(p).write(JSON.stringify({version, data}))
     },
 
     saveSync(data: SessionState, p: string = path) {
-      return lib.file(p).writeSync(JSON.stringify({version, data}))
+      return file(p).writeSync(JSON.stringify({version, data}))
     },
 
     load: async function (): Promise<SessionState | null | undefined> {
       const migrator = await Migrations.init()
-      const file = lib.file(path)
+      const f = file(path)
 
       version = migrator.getLatestVersion()
 
-      if (await file.exists()) {
-        return await file
+      if (await f.exists()) {
+        return await f
           .read()
           .then(JSON.parse)
           .then((state) => migrate(state, migrator))
@@ -47,9 +47,9 @@ export default function session(path: string) {
     },
 
     async delete() {
-      const file = lib.file(path)
-      if (await file.exists()) {
-        return file.remove()
+      const f = file(path)
+      if (await f.exists()) {
+        return f.remove()
       }
     },
   }
