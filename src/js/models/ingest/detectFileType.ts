@@ -1,4 +1,3 @@
-import {toNodeReadable} from "../../lib/response"
 import fs from "fs"
 
 const PCAP_1_HEX = "d4c3b2a1"
@@ -9,22 +8,22 @@ const PCAP_HEXES = [PCAP_1_HEX, PCAP_2_HEX, PCAPNG_HEX, PCAPNANO_HEX]
 
 export type IngestFileType = "pcap" | "log"
 
-export default async function (file: File): Promise<IngestFileType> {
-  if (isDirectory(file)) {
+export default async function (filePath: string): Promise<IngestFileType> {
+  if (isDirectory(filePath)) {
     throw new Error("EISDIR")
-  } else if (await isPcap(file)) {
+  } else if (await isPcap(filePath)) {
     return "pcap"
   } else {
     return "log"
   }
 }
 
-function isDirectory(file: File) {
-  return fs.lstatSync(file.path).isDirectory()
+function isDirectory(filePath: string) {
+  return fs.lstatSync(filePath).isDirectory()
 }
 
-async function isPcap(file: File) {
-  let bytes = await firstBytes(file, 4)
+async function isPcap(filePath: string) {
+  let bytes = await firstBytes(filePath, 4)
   for (let hex of PCAP_HEXES) {
     if (bytes instanceof Buffer && bytes.equals(Buffer.from(hex, "hex")))
       return true
@@ -32,9 +31,9 @@ async function isPcap(file: File) {
   return false
 }
 
-function firstBytes(file: File, n: number) {
+function firstBytes(filePath: string, n: number) {
   return new Promise((res, rej) => {
-    const stream = toNodeReadable(file.stream().getReader())
+    const stream = fs.createReadStream(filePath)
     stream
       .on("readable", () => {
         let buffer = stream.read(n)

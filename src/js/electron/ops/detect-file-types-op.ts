@@ -3,7 +3,7 @@ import {createOperation} from "../operations"
 
 export const detectFileTypesOp = createOperation(
   "detectFileTypesOp",
-  (ctx, files: File[]) => {
-    return detectFileTypes(files)
+  (ctx, filePaths: string[]) => {
+    return detectFileTypes(filePaths)
   }
 )

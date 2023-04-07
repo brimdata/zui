@@ -35,6 +35,7 @@ export class ZuiMain {
       port: args.lakePort,
       logs: args.lakeLogs,
       bin: zdeps.zed,
+      corsOrigins: ["http://localhost:3000"],
     })
     return new ZuiMain(lake, windows, store, session, args, appMeta)
   }

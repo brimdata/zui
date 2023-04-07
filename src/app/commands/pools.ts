@@ -91,7 +91,10 @@ export const createAndLoadFiles = createCommand(
         opts.name ||
         (await global.zui.invoke(
           "derivePoolNameOp",
-          await global.zui.invoke("detectFileTypesOp", files),
+          await global.zui.invoke(
+            "detectFileTypesOp",
+            files.map((f) => f.path)
+          ),
           poolNames
         ))
       poolId = await api.pools.create(name, opts)
