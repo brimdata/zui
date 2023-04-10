@@ -15,7 +15,7 @@ export const getZealot =
     return new Client(l.getAddress(), {auth})
   }
 
-const getAuthToken =
+export const getAuthToken =
   (lake: LakeModel): Thunk<Promise<string>> =>
   async (dispatch) => {
     if (!lake.authType) return null

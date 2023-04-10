@@ -3,15 +3,19 @@ import path from "path"
 import {requireDir} from "../utils/require-dir"
 import {Operation} from "../operations"
 
+const setup = (main) => (exports) => {
+  for (const key of Object.keys(exports)) {
+    const op = exports[key]
+    if (op instanceof Operation) op.listen(main)
+  }
+}
+
+const opsDir = path.join(__dirname, "../ops")
+
 export function runOpListeners(main: ZuiMain) {
-  return requireDir({
-    dir: path.join(__dirname, "../ops"),
+  requireDir({
+    dir: opsDir,
     exclude: /\.test/,
-    run: (exports) => {
-      for (const key of Object.keys(exports)) {
-        const op = exports[key]
-        if (op instanceof Operation) op.listen(main)
-      }
-    },
+    run: setup(main),
   })
 }

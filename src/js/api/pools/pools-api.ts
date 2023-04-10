@@ -9,6 +9,7 @@ import Current from "src/js/state/Current"
 import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
+import {loadFiles} from "src/js/electron/ops"
 
 type Update = {id: string; changes: {name: string}}
 export class PoolsApi extends ApiDomain {
@@ -32,7 +33,7 @@ export class PoolsApi extends ApiDomain {
 
   // TODO: Move to main progress, create a loads domain
   async loadFiles(poolId: string, files: File[], format?: string) {
-    throw new Error("Move to main process")
+    await loadFiles(poolId)
     console.error(poolId, files, format)
     // const fileListData = await detectFileTypes(files)
     // const loader = chooseLoader(this, fileListData)

@@ -2,7 +2,7 @@ import {app} from "electron"
 import keytar from "keytar"
 import os from "os"
 import {Lake} from "@brimdata/zed-node"
-import {Store} from "redux"
+import {Store as ReduxStore} from "redux"
 import url from "url"
 import {
   deserializeState,
@@ -19,6 +19,7 @@ import {MainArgs, mainDefaults} from "./run-main/args"
 import createSession, {Session} from "./session"
 import {getAppMeta, AppMeta} from "./meta"
 import {createMainStore} from "../state/stores/create-main-store"
+import {AppDispatch, State} from "../state/types"
 
 export class ZuiMain {
   public isQuitting = false
@@ -35,7 +36,7 @@ export class ZuiMain {
       port: args.lakePort,
       logs: args.lakeLogs,
       bin: zdeps.zed,
-      corsOrigins: ["http://localhost:3000"],
+      corsOrigins: ["*"],
     })
     return new ZuiMain(lake, windows, store, session, args, appMeta)
   }
@@ -44,7 +45,7 @@ export class ZuiMain {
   constructor(
     readonly lake: Lake,
     readonly windows: WindowManager,
-    readonly store: Store,
+    readonly store: ReduxStore<State, any>,
     readonly session: Session,
     readonly args: MainArgs,
     readonly appMeta: AppMeta
@@ -101,5 +102,9 @@ export class ZuiMain {
         errorDesc: error_description,
       })
     }
+  }
+
+  get dispatch() {
+    return this.store.dispatch as AppDispatch
   }
 }

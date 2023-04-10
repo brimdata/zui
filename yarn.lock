@@ -1180,37 +1180,26 @@ __metadata:
 
 "@brimdata/zed-js@file:../zealot/dist/packages/zed-js::locator=zui%40workspace%3A.":
   version: 0.0.7
-  resolution: "@brimdata/zed-js@file:../zealot/dist/packages/zed-js#../zealot/dist/packages/zed-js::hash=0f7f35&locator=zui%40workspace%3A."
+  resolution: "@brimdata/zed-js@file:../zealot/dist/packages/zed-js#../zealot/dist/packages/zed-js::hash=b01548&locator=zui%40workspace%3A."
   dependencies:
     "@types/event-source-polyfill": 1.0.1
     event-source-polyfill: 1.0.31
     events: 3.3.0
     tslib: 2.5.0
-  checksum: b4c51d8a4c561da86fc086a9003f5da5135129c89847cc9bb244a66697c81adcc7c40aab0d1f3b81df274af9c24d57edbcd74b5897f4dd178ed772ec5f5aa925
-  languageName: node
-  linkType: hard
-
-"@brimdata/zed-js@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "@brimdata/zed-js@npm:0.0.7"
-  dependencies:
-    "@types/event-source-polyfill": 1.0.1
-    event-source-polyfill: 1.0.31
-    events: 3.3.0
-    tslib: 2.5.0
-  checksum: 2fa33bf37d49035082313a0f626fa83ae9a9c75d8fb4bbcccb1aed5898e8e87eb93465dbcd2c72bb8990e6710ab8cadacf36f5a5543a1dcca94d534f19c9cbdb
+  checksum: 72d37097e31daeb1eb36f14a0562a46ccfc07c983dba2e2262dcf4dd1422581dc9406bba8574067681a82cbcc172d8bb89baee700fe597ace9a6d50c677d349e
   languageName: node
   linkType: hard
 
 "@brimdata/zed-node@file:../zealot/dist/packages/zed-node::locator=zui%40workspace%3A.":
   version: 0.0.7
-  resolution: "@brimdata/zed-node@file:../zealot/dist/packages/zed-node#../zealot/dist/packages/zed-node::hash=109568&locator=zui%40workspace%3A."
+  resolution: "@brimdata/zed-node@file:../zealot/dist/packages/zed-node#../zealot/dist/packages/zed-node::hash=21892e&locator=zui%40workspace%3A."
   dependencies:
-    "@brimdata/zed-js": ^0.0.7
     fs-extra: ^11.1.1
     node-fetch: ^2.6.2
     zed: "github:brimdata/zed#main"
-  checksum: 1690f0c5448b0174a4fd822cb23e56bd5feea2aee9e9fbc086d09420f89b6acc35785cf17218ea4a1774dad7e719c1bd69e08a1708df3b1751f5be780d073ce5
+  peerDependencies:
+    "@brimdata/zed-js": "*"
+  checksum: 3f0d8d86241004e29a7cdc9e0e85cb7bca525d0add4d5f2a0142060d7b91453b97189275fd28e84501db0d599530371d1cba0256f405dc6da358d7b49d0b183f
   languageName: node
   linkType: hard
 
@@ -8149,6 +8138,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:^9.3.4":
+  version: 9.3.5
+  resolution: "glob@npm:9.3.5"
+  dependencies:
+    fs.realpath: ^1.0.0
+    minimatch: ^8.0.2
+    minipass: ^4.2.4
+    path-scurry: ^1.6.1
+  checksum: 94b093adbc591bc36b582f77927d1fb0dbf3ccc231828512b017601408be98d1fe798fc8c0b19c6f2d1a7660339c3502ce698de475e9d938ccbb69b47b647c84
+  languageName: node
+  linkType: hard
+
 "global-agent@npm:^3.0.0":
   version: 3.0.0
   resolution: "global-agent@npm:3.0.0"
@@ -10743,6 +10744,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^9.0.0":
+  version: 9.0.1
+  resolution: "lru-cache@npm:9.0.1"
+  checksum: 48e31a2a059730174d4b9c77c679ff922ee90ed8762376fd7a3ff5a1fae992bca26b9010dd985aff763d8444c3822c0d9ebeaba7d0552c764c200c40dedeaebd
+  languageName: node
+  linkType: hard
+
 "lz-string@npm:^1.4.4":
   version: 1.4.4
   resolution: "lz-string@npm:1.4.4"
@@ -11074,6 +11082,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^8.0.2":
+  version: 8.0.4
+  resolution: "minimatch@npm:8.0.4"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 2e46cffb86bacbc524ad45a6426f338920c529dd13f3a732cc2cf7618988ee1aae88df4ca28983285aca9e0f45222019ac2d14ebd17c1edadd2ee12221ab801a
+  languageName: node
+  linkType: hard
+
 "minimist@npm:^1.2.0, minimist@npm:^1.2.3, minimist@npm:^1.2.5":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
@@ -11147,6 +11164,20 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: 7a609afbf394abfcf9c48e6c90226f471676c8f2a67f07f6838871afb03215ede431d1433feffe1b855455bcb13ef0eb89162841b9796109d6fed8d89790f381
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^4.2.4":
+  version: 4.2.7
+  resolution: "minipass@npm:4.2.7"
+  checksum: 55669510e5ff681889ba30b3bebe7dc70eac687197c9fe119b4d6eee36d96755b240f11b75e81edc2b6f8ce8338154a26896fb0555ae34b4fa4c607d31557ee9
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "minipass@npm:5.0.0"
+  checksum: 425dab288738853fded43da3314a0b5c035844d6f3097a8e3b5b29b328da8f3c1af6fc70618b32c29ff906284cf6406b6841376f21caaadd0793c1d5a6a620ea
   languageName: node
   linkType: hard
 
@@ -12011,6 +12042,16 @@ __metadata:
   version: 1.0.7
   resolution: "path-parse@npm:1.0.7"
   checksum: 49abf3d81115642938a8700ec580da6e830dde670be21893c62f4e10bd7dd4c3742ddc603fe24f898cba7eb0c6bc1777f8d9ac14185d34540c6d4d80cd9cae8a
+  languageName: node
+  linkType: hard
+
+"path-scurry@npm:^1.6.1":
+  version: 1.6.4
+  resolution: "path-scurry@npm:1.6.4"
+  dependencies:
+    lru-cache: ^9.0.0
+    minipass: ^5.0.0
+  checksum: bd5262b51dc35b0d6f0b1d4fa4445789839982bd649904f18fe43717ecc3021d2313a80768b56cd0428f5ca50d740a6c609e747cd6a053efaa802e07eb5b7b18
   languageName: node
   linkType: hard
 
@@ -15708,8 +15749,8 @@ __metadata:
 
 "zed@github:brimdata/zed#main":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=56a0c84b6ca317bdb1e77845b80d67e4052fd2b9"
-  checksum: 9ab8cdbdd70a5979487fd75f15e2c7af2b9f7e7da26879d1d30dffc83162c28d43ef9d39851be2e8c8f4ae91c8ad56f31c7c2864ec11c9c1b689a26269fd1276
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=3a98e7d8a7f85874e069dff7b0d92bc6c88d6720"
+  checksum: b2ced313a16188c6f97d505480abed2a3649d3a65d98a39ba9151dbe5101d4798e89c356ee56442e6795c16f97858befd6d2c82502157c448ff29de63dd92142
   languageName: node
   linkType: hard
 
@@ -15800,7 +15841,7 @@ __metadata:
     event-source-polyfill: ^1.0.25
     filter-console: ^0.1.1
     fs-extra: ^9.0.1
-    glob: ^7.1.6
+    glob: ^9.3.4
     got: ^10.7.0
     husky: ^7.0.4
     is-wsl: ^2.2.0

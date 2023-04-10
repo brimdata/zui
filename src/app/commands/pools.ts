@@ -6,6 +6,7 @@ import {PoolName} from "../features/sidebar/pools-section/pool-name"
 import {lakePoolPath} from "../router/utils/paths"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
+import {createPool} from "src/js/electron/ops"
 
 function replaceLastItem<T>(array: T[], item: T) {
   const next = [...array]
@@ -97,7 +98,8 @@ export const createAndLoadFiles = createCommand(
           ),
           poolNames
         ))
-      poolId = await api.pools.create(name, opts)
+      poolId = await createPool(lakeId, name, opts)
+      // poolId = await api.pools.create(name, opts)
 
       if (files.length === 0) {
         api.toast.success("Pool created: " + name)

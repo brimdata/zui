@@ -31,14 +31,6 @@ export class Operation<Args extends any[], Ret> {
     log.debug("IPC Listening:", this.channel)
   }
 
-  invoke(...args: Args): Promise<Ret> {
-    if (global.zui) {
-      return global.zui.invoke(this.channel, ...args)
-    } else {
-      throw new Error("You must call operation.run() in the main process")
-    }
-  }
-
   run(...args: Args): Ret {
     return this.handler({main: this.main, event: null}, ...args)
   }

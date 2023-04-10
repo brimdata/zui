@@ -7,8 +7,8 @@ export async function requireDir(options: {
   run?: (code: any, file: string) => any
 }) {
   const {dir, exclude, run} = options
-
   let count = 0
+
   for (let name of await fs.readdir(dir)) {
     if (exclude && exclude.test(name)) continue
     const sourceFile = path.join(dir, name)
