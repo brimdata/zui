@@ -1,10 +1,10 @@
-import {zjson} from "@brimdata/zealot"
+import {zjson} from "@brimdata/zed-js"
 import {createOperation} from "../operations"
 import log from "electron-log"
 
 export const openDetailWindow = createOperation(
   "detailWindow.open",
-  async ({main}, opts: {value: zjson.Object; url: string}) => {
+  async ({main}, opts: {value: zjson.Obj; url: string}) => {
     try {
       const win = await main.windows.create("detail")
       await win.whenInitialized()

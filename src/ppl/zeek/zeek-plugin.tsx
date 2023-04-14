@@ -3,7 +3,7 @@
  */
 
 import React from "react"
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 
 export function isPath(name: string | string[], value: zed.Value) {
   return name === "_path" && zed.isStringy(value)

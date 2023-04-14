@@ -5,7 +5,7 @@
 import Fields from "src/app/detail/Fields"
 import React from "react"
 import Modal from "src/js/state/Modal"
-import {createRecord} from "src/test/shared/factories/zed-factory"
+import {createRecord} from "@brimdata/zed-js"
 import {
   fireEvent,
   screen,

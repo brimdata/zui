@@ -1,5 +1,5 @@
 import React from "react"
-import {LoadFormat} from "packages/zealot/src"
+import {LoadFormat} from "@brimdata/zed-js"
 import {transparentize} from "polished"
 import {forwardRef, useImperativeHandle, useState} from "react"
 import {loadFiles} from "src/app/commands/pools"
@@ -44,7 +44,11 @@ export const PoolLoadMore = forwardRef<PoolLoadMoreHandle, Props>(
     const [files, setFiles] = useState<File[]>([])
     const [format, setFormat] = useState<LoadFormat>("auto")
     const submit = (files: File[]) =>
-      loadFiles.run(props.pool.id, files, format)
+      loadFiles.run(
+        props.pool.id,
+        files.map((f) => f.path),
+        format
+      )
 
     useImperativeHandle(ref, () => ({submit}))
 

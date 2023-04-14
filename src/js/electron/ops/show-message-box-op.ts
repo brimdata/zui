@@ -4,6 +4,6 @@ import {createOperation} from "../operations"
 export const showMessageBoxOp = createOperation(
   "showMessageBoxOp",
   (_, opts: MessageBoxOptions) => {
-    dialog.showMessageBox(opts)
+    return dialog.showMessageBox(opts)
   }
 )

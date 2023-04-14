@@ -10,10 +10,12 @@ const saveSession = throttle((main: ZuiMain) => {
 }, 500)
 
 export const autosaveOp = createOperation(
-  "windows.autosave",
+  "autosaveOp",
   async ({main}, windowId: string, windowState: State) => {
     if (main.isQuitting) return
     main.windows.update(windowId, windowState)
     saveSession(main)
   }
 )
+
+export type AutosaveOp = typeof autosaveOp

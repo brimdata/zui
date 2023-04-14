@@ -9,7 +9,7 @@ import styled from "styled-components"
 import links from "src/app/core/links"
 
 const BG = styled.div`
-  background-image: url(dist/static/welcome-page-background.svg);
+  background-image: url(/welcome-page-background.svg);
   height: 100%;
   width: 100%;
   background-position: center center;

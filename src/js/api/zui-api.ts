@@ -4,9 +4,7 @@ import {getZealot} from "./core/get-zealot"
 import {AppDispatch, GetState} from "../state/types"
 import {QueriesApi} from "./queries/queries-api"
 import {PoolsApi} from "./pools/pools-api"
-import {getPath, PathName} from "./core/get-path"
 import {CommandsApi} from "./commands/cmmands-api"
-import {LoadersApi} from "./loaders/loaders-api"
 import {Detail, MenusApi, Search} from "./menus/menus-api"
 import {ConfigurationsApi} from "./configurations/configurations-api"
 import {ToolbarsApi} from "./toolbars/toolbars-api"
@@ -24,7 +22,6 @@ export default class ZuiApi {
   table: TableViewApi | null = null
   public abortables = new Abortables()
   public commands = new CommandsApi()
-  public loaders = new LoadersApi()
   public toolbar: ToolbarsApi
   public configs: ConfigurationsApi
   public queries: QueriesApi
@@ -60,10 +57,6 @@ export default class ZuiApi {
 
   getZealot(lake?: LakeModel) {
     return this.dispatch(getZealot(lake))
-  }
-
-  getPath(name: PathName) {
-    return getPath(name)
   }
 
   query(body: string, opts: QueryOptions = {}) {

@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {InspectArgs} from "../types"
 import {ArrayView} from "./array-view"
 import {ErrorView} from "./error-view"

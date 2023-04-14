@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {SearchStatus} from "../../types/searches"
 
 export type LogDetailsState = {

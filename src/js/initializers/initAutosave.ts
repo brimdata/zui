@@ -9,7 +9,7 @@ export function initAutosave(store) {
     cancel()
     cancel = onIdle(() => {
       global.zui.invoke(
-        "windows.autosave",
+        "autosaveOp",
         global.windowId,
         getPersistedWindowState(store.getState())
       )

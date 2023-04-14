@@ -17,12 +17,12 @@ import {FormError} from "src/components/form-error"
 import {useHistory} from "react-router"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
-import {LoadFormat} from "packages/zealot/src"
+import {LoadFormat} from "@brimdata/zed-js"
 import {DataFormatSelect} from "src/components/data-format-select"
 import {H1} from "src/components/h1"
 
 const BG = styled(Scrollable)`
-  background-image: url(dist/static/welcome-page-background.svg);
+  background-image: url(/welcome-page-background.svg);
   height: 100%;
   width: 100%;
   background-position: center center;
@@ -116,7 +116,8 @@ export function PoolNew() {
           }
           setLoading(true)
           const {name, order, key, format} = formData
-          await createAndLoadFiles.run(files, {name, order, key, format})
+          const paths = files.map((f) => f.path)
+          await createAndLoadFiles.run(paths, {name, order, key, format})
           setLoading(false)
         }}
       >

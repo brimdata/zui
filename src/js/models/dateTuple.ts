@@ -1,5 +1,5 @@
-import {Ts} from "packages/zealot/src/util/time"
 import {DateTuple} from "../lib/TimeWindow"
+import {Ts} from "./span"
 import time from "./time"
 
 export default function dateTuple(dt: DateTuple) {

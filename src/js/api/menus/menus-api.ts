@@ -1,5 +1,5 @@
 import {remove} from "lodash"
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {MenuItemConstructorOptions} from "electron"
 
 export type Search = (data: {

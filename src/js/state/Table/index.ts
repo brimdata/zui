@@ -1,4 +1,4 @@
-import {zed} from "packages/zealot/src"
+import * as zed from "@brimdata/zed-js"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"
 import {actions} from "./reducer"

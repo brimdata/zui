@@ -9,7 +9,7 @@ import initNewSearchTab from "./initNewSearchTab"
 import Editor from "../state/Editor"
 import submitSearch from "src/app/query-home/flows/submit-search"
 import {commands} from "src/app/commands/command"
-import {decode, zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {viewLogDetail} from "../flows/viewLogDetail"
 import tabHistory from "src/app/router/tab-history"
 
@@ -72,7 +72,7 @@ export default (store: Store) => {
   global.zui.listen("detail-window-args", (e, opts) => {
     if (opts) {
       global.windowHistory.replace(opts.url)
-      const value = decode(opts.value) as zed.Record
+      const value = zed.decode(opts.value) as zed.Record
       if (value) {
         store.dispatch(viewLogDetail(value))
       }

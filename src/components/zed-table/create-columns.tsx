@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 import {ZedColumn} from "./column"
 

@@ -17,7 +17,7 @@ const PoolsSection = () => {
   const [{isOver}, drop] = useFilesDrop({
     onDrop: (files) => {
       dispatch(Tabs.activateUrl(lakePath(api.current.lakeId)))
-      createAndLoadFiles.run(files)
+      createAndLoadFiles.run(files.map((f) => f.path))
     },
   })
   const [searchTerm, setSearchTerm] = useState("")

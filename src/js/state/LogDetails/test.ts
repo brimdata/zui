@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import {createRecord} from "src/test/shared/factories/zed-factory"
+import {createRecord} from "@brimdata/zed-js"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import LogDetails from "./"
 

@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import MergeHash from "../../models/MergeHash"
 import UniqArray from "../../models/UniqArray"
 import {SearchStatus} from "../../types/searches"

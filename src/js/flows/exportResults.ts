@@ -32,7 +32,7 @@ export default (
     format: ResponseFormat
   ): Thunk<Promise<string>> =>
   async (dispatch, getState, {api}): Promise<string> => {
-    const zealot = await api.getZealot(undefined, "node")
+    const zealot = await api.getZealot(undefined)
     const originalQuery = Results.getQuery(MAIN_RESULTS)(getState())
     const exportQuery = prepareProgram(format, originalQuery, api)
     const res = await zealot.query(exportQuery, {

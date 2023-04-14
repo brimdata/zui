@@ -13,6 +13,7 @@ export const mainDefaults = () => ({
   releaseNotes: true,
   autoUpdater: true,
   singleInstance: true,
+  pluginsPath: join(__dirname, "../../../plugins"),
 })
 
 export type MainArgs = ReturnType<typeof mainDefaults>

@@ -1,6 +1,6 @@
 import {first, same} from "./Array"
 import {onlyWhitespace, trim} from "./Str"
-import {parseAst} from "@brimdata/zealot"
+import {parse as parseAst} from "zed/compiler/parser/parser"
 import ast from "../models/ast"
 
 export type Program = string

@@ -1,7 +1,7 @@
 import {app} from "electron"
 import keytar from "keytar"
 import os from "os"
-import {Lake} from "@brimdata/zed-node"
+import {Client, Lake} from "@brimdata/zed-node"
 import {Store as ReduxStore} from "redux"
 import url from "url"
 import {
@@ -20,9 +20,16 @@ import createSession, {Session} from "./session"
 import {getAppMeta, AppMeta} from "./meta"
 import {createMainStore} from "../state/stores/create-main-store"
 import {AppDispatch, State} from "../state/types"
+import {PathName, getPath} from "../api/core/get-path"
+import {ConfigurationsApi} from "../api/configurations/configurations-api"
+import createLake from "src/js/models/lake"
+import {getAuthToken} from "../api/core/get-zealot"
+import {Abortables} from "src/app/core/models/abortables"
 
 export class ZuiMain {
   public isQuitting = false
+  configs: ConfigurationsApi
+  abortables: Abortables
 
   static async boot(params: Partial<MainArgs> = {}) {
     const args = {...mainDefaults(), ...params}
@@ -49,7 +56,10 @@ export class ZuiMain {
     readonly session: Session,
     readonly args: MainArgs,
     readonly appMeta: AppMeta
-  ) {}
+  ) {
+    this.configs = new ConfigurationsApi(store.dispatch, store.getState)
+    this.abortables = new Abortables()
+  }
 
   async start() {
     if (this.args.lake) this.lake.start()
@@ -58,6 +68,7 @@ export class ZuiMain {
   }
 
   async stop() {
+    await this.abortables.abortAll()
     await this.lake.stop()
   }
 
@@ -106,5 +117,16 @@ export class ZuiMain {
 
   get dispatch() {
     return this.store.dispatch as AppDispatch
+  }
+
+  getPath(name: PathName) {
+    return getPath(name)
+  }
+
+  async createClient(lakeId: string) {
+    const lakeData = Lakes.id(lakeId)(this.store.getState())
+    const lake = createLake(lakeData)
+    const auth = await this.dispatch(getAuthToken(lake))
+    return new Client(lake.getAddress(), {auth})
   }
 }

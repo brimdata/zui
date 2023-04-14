@@ -30,6 +30,7 @@ function findItem(id: string, template: MenuItemConstructorOptions[]) {
 function setupListener(template) {
   global.zui.listenOnce("contextMenuResult", (e, id: string) => {
     const item = findItem(id, template)
+    // @ts-ignore
     if (item && "click" in item) item.click()
   })
 }

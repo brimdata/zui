@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {ColumnTreeData} from "./types"
 
 export function toTreeData(record: zed.TypeRecord, prevPath: number[] = []) {

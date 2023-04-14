@@ -4,7 +4,7 @@ import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import React, {memo, useCallback, useMemo, useState} from "react"
 import Tooltip from "src/js/components/Tooltip"
 import ColumnDescription from "src/js/components/LogDetails/ColumnDescription"
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import Panel from "./Panel"
 import PanelHeading from "./PanelHeading"
 

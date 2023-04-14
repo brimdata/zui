@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {createColumnHelper} from "@tanstack/react-table"
 import {createColumns} from "./create-columns"
 import {toFieldPath} from "src/js/zed-script/toZedScript"

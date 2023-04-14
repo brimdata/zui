@@ -1,9 +1,5 @@
 import {CreatePoolOpts} from "@brimdata/zed-js"
 import {createOperation} from "../operations"
-import Lakes from "src/js/state/Lakes"
-import createLake from "src/js/models/lake"
-import {Client} from "@brimdata/zed-node"
-import {getAuthToken} from "src/js/api/core/get-zealot"
 
 export const createPoolOp = createOperation(
   "createPoolOp",
@@ -13,13 +9,9 @@ export const createPoolOp = createOperation(
     name: string,
     opts: Partial<CreatePoolOpts>
   ) => {
-    const lakeData = Lakes.id(lakeId)(main.store.getState())
-    const lake = createLake(lakeData)
-    const auth = await main.dispatch(getAuthToken(lake))
-    const client = new Client(lake.getAddress(), {auth})
-    debugger
+    const client = await main.createClient(lakeId)
     const {pool} = await client.createPool(name, opts)
-    return pool.id
+    return pool.id as string
   }
 )
 

@@ -8,18 +8,14 @@ import {getPersistedWindowState} from "./state/stores/get-persistable"
 import TabHistories from "./state/TabHistories"
 import React from "react"
 import {createRoot} from "react-dom/client"
-import {autosaveOp} from "./electron/ops/autosave-op"
+import {autosave} from "./electron/ops"
 
 initialize()
-  .then(({store, api, pluginManager}) => {
+  .then(({store, api}) => {
     window.onbeforeunload = () => {
       api.abortables.abortAll()
-      pluginManager.deactivate()
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))
-      autosaveOp.invoke(
-        global.windowId,
-        getPersistedWindowState(store.getState())
-      )
+      autosave(global.windowId, getPersistedWindowState(store.getState()))
     }
     const container = lib.doc.id("app-root")
     const root = createRoot(container!)

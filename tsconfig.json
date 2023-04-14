@@ -10,35 +10,15 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "baseUrl": "./",
-    "typeRoots": [
-      "src/js/@types",
-      "node_modules/@types"
-    ],
+    "typeRoots": ["src/js/@types", "node_modules/@types"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "incremental": true,
     "isolatedModules": true
   },
-  "exclude": [
-    "scripts",
-    "dist",
-    "run"
-  ],
-  "references": [
-    {
-      "path": "./packages/zealot"
-    }
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["scripts", "dist", "run"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }

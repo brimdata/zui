@@ -9,7 +9,6 @@ import React from "react"
 import ZuiApi from "src/js/api/zui-api"
 import {ZuiMain} from "src/js/electron/zui-main"
 import {defaultLake} from "src/js/initializers/initLakeParams"
-import PluginManager from "src/js/initializers/pluginManager"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
 import data from "src/test/shared/data"
@@ -22,7 +21,6 @@ jest.setTimeout(20_000)
 
 export class SystemTest {
   store: Store
-  plugins: PluginManager
   main: ZuiMain
   api: ZuiApi
   wrapper: React.ComponentType<React.PropsWithChildren<any>>
@@ -33,13 +31,11 @@ export class SystemTest {
 
   assign(args: {
     store: Store
-    plugins: PluginManager
     main: ZuiMain
     api: ZuiApi
     wrapper: React.ComponentType<React.PropsWithChildren<any>>
   }) {
     this.store = args.store
-    this.plugins = args.plugins
     this.main = args.main
     this.api = args.api
     this.wrapper = args.wrapper
@@ -65,7 +61,6 @@ export class SystemTest {
 
     afterAll(async () => {
       if (this.initialized) {
-        await this.plugins.deactivate()
         await this.main.stop()
         tl.cleanup()
         this.network.close()
@@ -83,7 +78,7 @@ export class SystemTest {
 
   async importFile(name: string) {
     const file = data.getWebFile(name)
-    await tl.act(async () => await createAndLoadFiles.run([file]))
+    await tl.act(async () => await createAndLoadFiles.run([file.path]))
     await tl.screen.findByText(/import complete/i)
   }
 

@@ -1,4 +1,4 @@
-import {createRecord} from "src/test/shared/factories/zed-factory"
+import {createRecord} from "@brimdata/zed-js"
 import zedScript from "./index"
 
 test("zedScript when nested with identifiers", () => {

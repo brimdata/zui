@@ -1,6 +1,6 @@
 import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
 import React from "react"
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import FieldCell from "../FieldCell"
 
 export default function Table({className, ...props}: any) {

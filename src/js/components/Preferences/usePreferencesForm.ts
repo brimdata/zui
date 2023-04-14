@@ -3,12 +3,11 @@ import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {FormConfig, FormFieldConfig} from "../../models/form"
 import {executeCommand} from "../../flows/executeCommand"
-import lib from "../../lib"
+import file from "src/js/lib/file"
 
 const checkFile = (path) => {
   if (path === "") return [true, ""]
-  return lib
-    .file(path)
+  return file(path)
     .exists()
     .then((exists) => [exists, "file does not exist."])
 }

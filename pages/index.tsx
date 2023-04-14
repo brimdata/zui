@@ -14,7 +14,7 @@ export default function HomePage() {
         vars.api.abortables.abortAll()
         vars.store.dispatch(TabHistories.save(global.tabHistories.serialize()))
         global.zui.invoke(
-          "windows.autosave",
+          "autosaveOp",
           global.windowId,
           getPersistedWindowState(vars.store.getState())
         )

@@ -36,6 +36,7 @@ export class BrowserWindow {
   on() {
     return this
   }
+  loadURL(_url: string) {}
   loadFile(name: string, params: any = {}) {
     if (name === "search.html" && params?.query) {
       // We can't change the location with jest, so we just

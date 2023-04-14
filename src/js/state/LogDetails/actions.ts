@@ -1,5 +1,5 @@
 import {SearchStatus} from "src/js/types/searches"
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {
   LOG_DETAIL_BACK,
   LOG_DETAIL_CLEAR,

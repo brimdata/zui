@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import ZuiApi from "src/js/api/zui-api"
 
 export function isSuricataAlert(value: zed.Value) {

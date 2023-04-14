@@ -10,10 +10,9 @@ import lib from "./lib"
 import initialize from "./initializers/initialize"
 
 initialize()
-  .then(({store, api, pluginManager}) => {
+  .then(({store, api}) => {
     window.onbeforeunload = () => {
       api.abortables.abortAll()
-      pluginManager.deactivate()
     }
     const container = lib.doc.id("app-root")
     const root = createRoot(container!)

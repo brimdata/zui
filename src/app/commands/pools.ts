@@ -6,7 +6,7 @@ import {PoolName} from "../features/sidebar/pools-section/pool-name"
 import {lakePoolPath} from "../router/utils/paths"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
-import {createPool} from "src/js/electron/ops"
+import {derivePoolName} from "src/js/electron/ops"
 
 function replaceLastItem<T>(array: T[], item: T) {
   const next = [...array]
@@ -76,7 +76,7 @@ export const createAndLoadFiles = createCommand(
   "pools.createAndLoadFiles",
   async (
     {api},
-    files: File[],
+    files: string[],
     opts: {name?: string; format?: LoadFormat} & Partial<CreatePoolOpts> = {}
   ) => {
     let poolId: string | null = null
@@ -88,18 +88,8 @@ export const createAndLoadFiles = createCommand(
       return
     }
     try {
-      const name =
-        opts.name ||
-        (await global.zui.invoke(
-          "derivePoolNameOp",
-          await global.zui.invoke(
-            "detectFileTypesOp",
-            files.map((f) => f.path)
-          ),
-          poolNames
-        ))
-      poolId = await createPool(lakeId, name, opts)
-      // poolId = await api.pools.create(name, opts)
+      const name = opts.name || (await derivePoolName(files, poolNames))
+      poolId = await api.pools.create(name, opts)
 
       if (files.length === 0) {
         api.toast.success("Pool created: " + name)
@@ -115,6 +105,7 @@ export const createAndLoadFiles = createCommand(
 
       api.url.push(lakePoolPath(poolId, lakeId), {tabId})
     } catch (e) {
+      console.error(e)
       if (poolId) await api.pools.delete(poolId)
       api.notice.error(parseError(e))
       api.pools.syncAll()
@@ -124,7 +115,7 @@ export const createAndLoadFiles = createCommand(
 
 export const loadFiles = createCommand(
   "pools.loadFiles",
-  async ({api}, id: string, files: File[], format?: LoadFormat) => {
+  async ({api}, id: string, files: string[], format?: LoadFormat) => {
     try {
       const promise = api.pools.loadFiles(id, files, format)
       api.toast.promise(promise, {
