@@ -3,14 +3,6 @@ import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {FormConfig, FormFieldConfig} from "../../models/form"
 import {executeCommand} from "../../flows/executeCommand"
-import file from "src/js/lib/file"
-
-const checkFile = (path) => {
-  if (path === "") return [true, ""]
-  return file(path)
-    .exists()
-    .then((exists) => [exists, "file does not exist."])
-}
 
 export const useConfigsForm = (): FormConfig => {
   const dispatch = useDispatch()
@@ -34,9 +26,6 @@ export const useConfigsForm = (): FormConfig => {
 
       let check
       switch (prop.type) {
-        case "file":
-          check = checkFile
-          break
         case "string":
           // can validate further if 'pattern' (regex) provided in property here
           break
