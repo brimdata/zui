@@ -7,9 +7,9 @@ import {runPlugins} from "./run-plugins"
 
 export async function boot(args: Partial<MainArgs> = {}) {
   const main = await ZuiMain.boot({...mainDefaults(), ...args})
-  await runInitializers(main)
-  await runOpListeners(main)
-  await runPlugins(main)
+  await runOpListeners(main) // 1. This goes first in case initializers run ops
+  await runInitializers(main) // 2.
+  await runPlugins(main) // 3.
   app.whenReady().then(() => main.start())
   return main
 }

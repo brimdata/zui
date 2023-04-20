@@ -1,6 +1,7 @@
 import React from "react"
 import Icon from "src/app/core/icon-temp"
 import {MenuItem} from "src/core/menu"
+import {invokeCommand} from "src/js/electron/ops"
 import styled from "styled-components"
 
 const BG = styled.button`
@@ -35,7 +36,7 @@ export function IconButton(props: MenuItem & {className?: string}) {
     <BG
       className={props.className}
       title={props.description ?? props.label}
-      onClick={(htmlEvent) => props.click({htmlEvent})}
+      onClick={() => invokeCommand(props.command, props.args)}
       disabled={props.enabled === false}
       aria-label={props.label}
     >

@@ -6,7 +6,6 @@ import * as routes from "src/app/router/routes"
 import AppWrapper from "src/app/routes/app-wrapper/app-wrapper"
 import React from "react"
 import {Redirect, Route, Switch} from "react-router"
-import useStoreExport from "src/app/core/hooks/useStoreExport"
 import useSearchShortcuts from "./useSearchShortcuts"
 import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
 import {WelcomePage} from "src/pages/welcome"
@@ -19,7 +18,6 @@ import {defaultLake} from "../initializers/initLakeParams"
 
 export default function App() {
   useSearchAppMenu()
-  useStoreExport()
   useReleaseNotes()
   useSearchShortcuts()
 

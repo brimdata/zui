@@ -6,7 +6,7 @@ import {
   lakeWelcome,
   poolNew,
 } from "src/app/router/routes"
-import React, {useLayoutEffect} from "react"
+import React, {useEffect, useLayoutEffect} from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import {Redirect, Route, Switch} from "react-router"
@@ -22,6 +22,7 @@ import {QueryRoute} from "../query-home/route"
 import {WelcomePage} from "src/pages/welcome"
 import {PoolNew} from "src/pages/pools/new"
 import {initCurrentTab} from "src/js/flows/initCurrentTab"
+import {updatePluginLake} from "src/js/electron/ops"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -37,10 +38,17 @@ export function InitLake({children}) {
   const status = useSelector(LakeStatuses.get(lake?.id))
 
   useLayoutEffect(() => {
+    if (status) return
     if (lake) dispatch(updateStatus(lake.id))
+  }, [lake?.id, status])
+
+  useEffect(() => {
+    if (lake?.id) updatePluginLake({lakeId: lake.id})
   }, [lake?.id])
 
   if (!lake) return <Redirect to="/lakes" />
+
+  console.log("status", status, lake?.id)
 
   switch (status) {
     case "disconnected":

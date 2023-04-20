@@ -31,11 +31,11 @@ const relatedAlerts = {
 }
 
 export function activate(api: ZuiApi) {
-  api.correlations.add(relatedConns)
-  api.correlations.add(relatedAlerts)
+  // api.correlations.add(relatedConns)
+  // api.correlations.add(relatedAlerts)
 }
 
 export function deactivate(api: ZuiApi) {
-  api.correlations.remove(relatedConns.id)
-  api.correlations.remove(relatedAlerts.id)
+  // api.correlations.remove(relatedConns.id)
+  // api.correlations.remove(relatedAlerts.id)
 }

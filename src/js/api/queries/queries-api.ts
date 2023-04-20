@@ -18,6 +18,10 @@ import {CreateQueryParams, OpenQueryOptions, QueryParams} from "./types"
 import {Query} from "src/js/state/Queries/types"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import SessionQueries from "src/js/state/SessionQueries"
+import {updatePluginSession} from "src/js/electron/ops"
+import {ActiveQuery} from "src/app/core/models/active-query"
+import {QueryModel} from "src/js/models/query-model"
+import {ZedAst} from "src/app/core/models/zed-ast"
 
 export class QueriesApi {
   constructor(private dispatch: AppDispatch, private getState: GetState) {}

@@ -2,7 +2,6 @@ import {useZuiApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {FormConfig, FormFieldConfig} from "../../models/form"
-import {executeCommand} from "../../flows/executeCommand"
 
 export const useConfigsForm = (): FormConfig => {
   const dispatch = useDispatch()
@@ -14,7 +13,7 @@ export const useConfigsForm = (): FormConfig => {
       const {name, label, defaultValue, type, command, helpLink} = prop
 
       const submit = (value) => {
-        if (command) dispatch(executeCommand(command, value))
+        if (command) throw new Error("Fix me" + command)
         dispatch(
           ConfigPropValues.set({
             configName: config.name,

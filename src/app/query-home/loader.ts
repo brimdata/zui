@@ -11,15 +11,23 @@ import {Thunk} from "src/js/state/types"
 import {Location} from "history"
 import {runHistogramQuery} from "src/js/state/Histogram/run-query"
 import Pools from "src/js/state/Pools"
+import {updatePluginSession} from "src/js/electron/ops"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {
+    dispatch(syncPluginContext)
     dispatch(Tabs.loaded(location.key))
     dispatch(Notice.dismiss())
     dispatch(Results.error({id: MAIN_RESULTS, error: null, tabId: ""}))
     dispatch(syncEditor)
     dispatch(fetchData())
   }
+}
+
+function syncPluginContext(dispatch, getState) {
+  const poolName = Current.getActiveQuery(getState()).toAst().poolName
+  const program = QueryModel.versionToZed(Current.getVersion(getState()))
+  updatePluginSession({poolName, program})
 }
 
 function syncEditor(dispatch, getState) {

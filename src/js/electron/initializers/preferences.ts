@@ -1,8 +1,8 @@
-import ZuiApi from "src/js/api/zui-api"
 import time from "src/js/models/time"
+import {ZuiMain} from "../zui-main"
 
-export function activate(api: ZuiApi) {
-  api.configs.add({
+export function initialize(main: ZuiMain) {
+  main.configs.add({
     name: "pools",
     title: "Pools",
     properties: {
@@ -14,7 +14,7 @@ export function activate(api: ZuiApi) {
       },
     },
   })
-  api.configs.add({
+  main.configs.add({
     name: "display",
     title: "Display",
     properties: {
@@ -49,7 +49,7 @@ export function activate(api: ZuiApi) {
       },
     },
   })
-  api.configs.add({
+  main.configs.add({
     name: "editor",
     title: "Editor",
     properties: {
@@ -62,5 +62,3 @@ export function activate(api: ZuiApi) {
     },
   })
 }
-
-export function deactivate() {}

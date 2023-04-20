@@ -93,7 +93,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.17.9",
-    "@brimdata/zealot": "1.0.1",
     "@brimdata/zed-js": "../zealot/dist/packages/zed-js",
     "@brimdata/zed-node": "../zealot/dist/packages/zed-node",
     "@codemirror/autocomplete": "^0.19.15",

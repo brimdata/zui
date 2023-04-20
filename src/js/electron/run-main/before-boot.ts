@@ -11,6 +11,8 @@ import {setLogLevel} from "../set-log-level"
 export async function beforeBoot(
   args: Partial<MainArgs>
 ): Promise<string | null> {
+  // Disable security warnings
+  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
   // Setup app paths, this must be first
   appPathSetup()
   setLogLevel()

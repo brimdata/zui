@@ -17,6 +17,7 @@ import SessionQueries from "../SessionQueries"
 import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
 import lake from "src/js/models/lake"
+import {getActive} from "../Tabs/selectors"
 
 export const getHistory = (
   state,
@@ -165,3 +166,12 @@ export const getSessionHistory = createSelector(
 )
 
 export const getSessionId = getTabId
+
+export function getOpEventContext(state: State) {
+  return {
+    lakeId: getLakeId(state),
+    poolName: getActiveQuery(state).toAst().poolName as string | null,
+  }
+}
+
+export type OpEventContext = ReturnType<typeof getOpEventContext>

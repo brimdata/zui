@@ -1,7 +1,9 @@
 import {app} from "electron"
 import keytar from "keytar"
+import {EventEmitter} from "events"
 import os from "os"
 import {Client, Lake} from "@brimdata/zed-node"
+import * as zed from "@brimdata/zed-js"
 import {Store as ReduxStore} from "redux"
 import url from "url"
 import {
@@ -25,11 +27,13 @@ import {ConfigurationsApi} from "../api/configurations/configurations-api"
 import createLake from "src/js/models/lake"
 import {getAuthToken} from "../api/core/get-zealot"
 import {Abortables} from "src/app/core/models/abortables"
+import {OpEventContext} from "../state/Current/selectors"
 
 export class ZuiMain {
   public isQuitting = false
   configs: ConfigurationsApi
-  abortables: Abortables
+  abortables = new Abortables()
+  emitter = new EventEmitter()
 
   static async boot(params: Partial<MainArgs> = {}) {
     const args = {...mainDefaults(), ...params}
@@ -58,7 +62,6 @@ export class ZuiMain {
     readonly appMeta: AppMeta
   ) {
     this.configs = new ConfigurationsApi(store.dispatch, store.getState)
-    this.abortables = new Abortables()
   }
 
   async start() {

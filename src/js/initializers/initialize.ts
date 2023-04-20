@@ -9,6 +9,7 @@ import initLakeParams from "./initLakeParams"
 import {initAutosave} from "./initAutosave"
 import {commands} from "src/app/commands/command"
 import {menus} from "src/core/menu"
+import {initHandlers} from "./init-handlers"
 
 export default async function initialize() {
   const api = new ZuiApi()
@@ -21,6 +22,7 @@ export default async function initialize() {
   initDOM()
   await initGlobals(store)
   initIpcListeners(store)
+  initHandlers({dispatch: store.dispatch, select: (fn) => fn(store.getState())})
   initLakeParams(store)
   initDebugGlobals(store, api)
   initAutosave(store)

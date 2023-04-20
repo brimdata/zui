@@ -1,6 +1,5 @@
 import {IconName} from "src/app/core/icon-temp"
 import {createMenu, MenuItem} from "src/core/menu"
-import {executeCommand} from "src/js/flows/executeCommand"
 import Inspector from "src/js/state/Inspector"
 import {ResultsView} from "src/js/state/Layout/types"
 import Modal from "src/js/state/Modal"
@@ -20,7 +19,9 @@ export const resultsToolbarMenu = createMenu(
           enabled: !disabled,
           iconName: icon as IconName,
           description: tooltip,
-          click: () => dispatch(executeCommand(command)),
+          click: () => {
+            throw new Error("Fix me" + command)
+          },
           htmlAttrs: buttonProps,
         }
       }
