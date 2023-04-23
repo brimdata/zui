@@ -9,7 +9,7 @@ export async function runInitializers(main: ZuiMain) {
     exclude: /\.test/,
     run: (src, file) => {
       log.debug("Initializing:", path.basename(file))
-      src.initialize(main)
+      src.initialize && src.initialize(main)
     },
   })
   log.info(`initializers loaded`)
