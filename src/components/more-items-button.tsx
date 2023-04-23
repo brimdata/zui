@@ -7,7 +7,7 @@ export function MoreItemsButton(props: {items: MenuItem[]}) {
     <IconButton
       iconName="double-chevron-right"
       iconSize={10}
-      click={({htmlEvent}) => {
+      onClick={(htmlEvent) => {
         new BuiltMenu({id: "more-items"}, props.items).showUnder(
           htmlEvent.currentTarget
         )

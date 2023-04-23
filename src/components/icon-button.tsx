@@ -37,7 +37,7 @@ export function IconButton(props: MenuItem & {className?: string}) {
       className={props.className}
       title={props.description ?? props.label}
       onClick={() => invokeCommand(props.command, props.args)}
-      disabled={props.enabled === false}
+      disabled={props.enabled === false || props.whenResult === false}
       aria-label={props.label}
     >
       <Icon name={props.iconName} size={props.iconSize ?? 16} />

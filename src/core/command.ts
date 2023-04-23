@@ -19,6 +19,10 @@ export class CommandCenter {
     if (!c) throw new Error("Command Not Found: " + id)
     return c
   }
+
+  create<Args extends any[]>(id: string, exec: (...args: Args) => any) {
+    this.add(new Command({id}, exec))
+  }
 }
 
 export const commands = new CommandCenter()

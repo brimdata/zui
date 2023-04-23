@@ -2,16 +2,13 @@ import {createOperation} from "../operations"
 import {LoadContext} from "src/core/loader/load-context"
 import {LoadOptions} from "src/core/loader/types"
 import {syncPoolOp} from "./sync-pool-op"
-import {brimcapLoader} from "src/plugins/brimcap/loader"
-import {defaultLoader} from "src/core/loader/default-loader"
-
-const loaders = [brimcapLoader]
+import {loaders} from "src/zui"
 
 export const loadFilesOp = createOperation(
   "loadFilesOp",
   async ({main, event}, options: LoadOptions) => {
     const context = new LoadContext(main, event, options)
-    const loader = await getLoader(context)
+    const loader = await loaders.getMatch(context)
     try {
       await context.setup()
       await loader.run(context)
@@ -35,15 +32,4 @@ async function waitForPoolStats(context: LoadContext) {
     if (pool.hasStats() && pool.size > 0) break
     await new Promise((r) => setTimeout(r, 300))
   }
-}
-
-async function getLoader(context) {
-  let loader = defaultLoader
-  for (const l of loaders) {
-    if (await l.when(context)) {
-      loader = l
-      break
-    }
-  }
-  return loader
 }

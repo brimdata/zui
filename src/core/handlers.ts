@@ -1,5 +1,5 @@
 import {AppDispatch} from "src/js/state/types"
-import {MessageName, Messages} from "./messages"
+import {MessageName, Messages} from "src/domain/messages"
 
 export type HandlerContext = {
   dispatch: AppDispatch

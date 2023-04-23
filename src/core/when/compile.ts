@@ -1,7 +1,11 @@
 import {AstNode, Scope} from "./ast"
 import {Grammar, Semantics} from "./parser"
 
-export function compile(input: string, context: Record<string, any>): boolean {
+export function compile(
+  input: string | undefined = undefined,
+  context: Record<string, any>
+): boolean {
+  if (!input) return true
   const match = Grammar.match(input)
   if (match.failed()) {
     throw new Error(

@@ -4,6 +4,9 @@ import {useDispatch} from "src/app/core/state"
 import ResultsToolbarMenu from "src/js/state/ResultsToolbar"
 import {BuiltMenu, MenuItem} from "src/core/menu"
 import {getMenuTemplate} from "src/js/electron/ops"
+import {createSelector} from "@reduxjs/toolkit"
+import Layout from "src/js/state/Layout"
+import {compile} from "../when/compile"
 
 /**
  * 1. get the items from redux
@@ -22,11 +25,36 @@ function setMenu(name: string, items: MenuItem[]) {
 export function useMenuInstance(name: string) {
   const dispatch = useDispatch()
   const items = useSelector(ResultsToolbarMenu.get)
+  const whenContext = useSelector(getWhenContext)
 
   useEffect(() => {
-    getMenuTemplate(name).then((items) => dispatch(setMenu(name, items)))
-  }, [])
-  console.log(items)
+    getMenuTemplate(name).then((template) => {
+      const items = compileMenuItems(template, whenContext)
+      dispatch(setMenu(name, items))
+    })
+  }, [whenContext])
 
   return useMemo(() => new BuiltMenu({id: name}, items), [items])
+}
+
+const getWhenContext = createSelector(Layout.getResultsView, (resultsView) => {
+  return {
+    "results.view": resultsView.toLowerCase(),
+  }
+})
+
+function compileMenuItems(items: MenuItem[], context: Record<string, any>) {
+  return items
+    .map<MenuItem>((item) => {
+      return {
+        ...item,
+        whenResult: compile(item.when, context),
+        priority: item.priority ?? 0,
+      }
+    })
+    .sort((a, b) => {
+      if (a.priority > b.priority) return -1
+      if (a.priority < b.priority) return 1
+      return 0
+    })
 }

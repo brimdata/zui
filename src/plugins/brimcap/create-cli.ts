@@ -1,11 +1,9 @@
-import {ZuiMain} from "src/js/electron/zui-main"
+import {env} from "src/zui"
 import BrimcapCLI from "./brimcap-cli"
-import env from "src/app/core/env"
 import path from "path"
 
-export function createCli(main: ZuiMain) {
-  const zdepsDirectory = main.getPath("zdeps")
+export function createCli() {
   const commandName = env.isWindows ? "brimcap.exe" : "brimcap"
-  const bin = path.join(zdepsDirectory, commandName)
+  const bin = path.join(env.zdepsPath, commandName)
   return new BrimcapCLI(bin)
 }

@@ -3,7 +3,7 @@ import {spawnSync, spawn, ChildProcess} from "child_process"
 import {compact, isEmpty} from "lodash"
 import flatMap from "lodash/flatMap"
 
-interface packetOptions {
+interface PacketOptions {
   dstIp?: string
   dstPort?: string
   duration?: string
@@ -13,12 +13,12 @@ interface packetOptions {
   ts?: string
 }
 
-export interface indexOptions {
+export interface IndexOptions {
   root: string
   pcap: string
 }
 
-export interface analyzeOptions {
+export interface AnalyzeOptions {
   config?: string
   suricataDisabled?: boolean
   suricataStderr?: string
@@ -39,7 +39,7 @@ export interface analyzeOptions {
   json?: boolean
 }
 
-export interface searchOptions extends packetOptions {
+export interface SearchOptions extends PacketOptions {
   root: string
   write: string
 }
@@ -70,7 +70,7 @@ const OPTION_NAME_MAP = {
 }
 
 const toCliOpts = (
-  opts: searchOptions | analyzeOptions | indexOptions
+  opts: SearchOptions | AnalyzeOptions | IndexOptions
 ): string[] =>
   compact(
     flatMap(
@@ -93,19 +93,19 @@ export default class BrimcapCLI {
 
   constructor(private binPath: string) {}
 
-  index(opts: indexOptions) {
+  index(opts: IndexOptions) {
     return this.execSpawnSync("index", [...toCliOpts(opts)])
   }
 
   analyze(
     pcapPath: string,
-    opts: analyzeOptions,
+    opts: AnalyzeOptions,
     signal?: AbortSignal
   ): ChildProcess {
     return this.execSpawn("analyze", [...toCliOpts(opts), pcapPath], signal)
   }
 
-  search(opts: searchOptions) {
+  search(opts: SearchOptions) {
     return this.execSpawnSync("search", [...toCliOpts(opts)])
   }
 

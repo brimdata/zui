@@ -17,12 +17,20 @@ class MenusApi {
   add(menu: MenuApi) {
     this.menus.set(menu.name, menu)
   }
+
+  extend(name: string, items: MenuItem[]) {
+    this.get(name).concat(items)
+  }
 }
 class MenuApi {
   constructor(public name: string, public template: MenuItem[]) {}
 
   update(id: string, props: Partial<MenuItem>) {
     sendToFocusedWindow("menus.update", this.name, id, props)
+  }
+
+  concat(items: MenuItem[]) {
+    this.template = this.template.concat(items)
   }
 }
 

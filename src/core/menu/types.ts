@@ -16,6 +16,8 @@ export type MenuItem = {
   checked?: boolean
   htmlAttrs?: any
   when?: string
+  whenResult?: boolean
+  priority?: number
 }
 
 export type MenuContext = {api: ZuiApi}

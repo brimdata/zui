@@ -1,5 +1,5 @@
 import {BrowserWindow} from "electron"
-import {MessageName, Messages} from "./messages"
+import {MessageName, Messages} from "src/domain/messages"
 
 export function sendToFocusedWindow<K extends MessageName>(
   message: K,

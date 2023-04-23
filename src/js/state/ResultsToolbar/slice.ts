@@ -9,9 +9,12 @@ export const slice = createSlice({
       return action.payload
     },
     update(state, action: PayloadAction<Update<MenuItem>>) {
-      let item = state.find((item) => item.id === action.payload.id)
+      let index = state.findIndex((item) => {
+        return item.id === action.payload.id
+      })
+      const item = state[index]
       if (item) {
-        item = {...item, ...action.payload.changes}
+        state[index] = {...item, ...action.payload.changes}
       }
     },
   },
