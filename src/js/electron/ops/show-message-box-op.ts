@@ -1,5 +1,5 @@
 import {MessageBoxOptions, dialog} from "electron"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const showMessageBoxOp = createOperation(
   "showMessageBoxOp",

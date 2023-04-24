@@ -1,4 +1,4 @@
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import {exec} from "child_process"
 
 export const whoisOp = createOperation("whoisOp", (_, addr) => {

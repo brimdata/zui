@@ -1,5 +1,5 @@
 import {dialog} from "electron"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const resetStateOp = createOperation("resetState", async ({main}) => {
   const {response} = await dialog.showMessageBox({

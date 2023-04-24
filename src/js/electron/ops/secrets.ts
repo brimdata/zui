@@ -1,6 +1,6 @@
 import keytar from "keytar"
 import * as os from "os"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const setSecretOp = createOperation(
   "setSecretOp",

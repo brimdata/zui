@@ -1,12 +1,16 @@
 import {ipcMain, IpcMainInvokeEvent} from "electron"
 import log from "electron-log"
-import {ZuiMain} from "./zui-main"
+import {ZuiMain} from "../js/electron/zui-main"
+import {OperationName, Operations} from "src/domain/messages"
 
-export function createOperation<Args extends any[] = never[], Ret = never>(
-  channel: string,
-  handler: (context: OperationContext, ...args: Args) => Ret
+export function createOperation<K extends OperationName>(
+  channel: K,
+  handler: (
+    context: OperationContext,
+    ...args: Parameters<Operations[K]>
+  ) => Promise<ReturnType<Operations[K]>> | ReturnType<Operations[K]>
 ) {
-  return new Operation<Args, Ret>(channel, handler)
+  return new Operation(channel, handler)
 }
 
 type OperationContext = {

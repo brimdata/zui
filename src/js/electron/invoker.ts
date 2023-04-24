@@ -1,4 +1,4 @@
-import {Operation} from "./operations"
+import {Operation} from "../../core/operations"
 
 export function createInvoker<Op extends Operation<unknown[], unknown>>(
   name: string

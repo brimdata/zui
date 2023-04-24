@@ -8,6 +8,7 @@ import {ChildProcess} from "child_process"
 import {Loader} from "src/core/loader/types"
 import {LoadContext} from "src/core/loader/load-context"
 import {isPcap} from "./is-pcap"
+import {configurations} from "src/zui"
 
 export function createLoader(root: string): Loader {
   const processes: Record<number, ChildProcess> = {}
@@ -23,7 +24,7 @@ export function createLoader(root: string): Loader {
 
     const main = ctx.main
     const cliOpts: AnalyzeOptions = {json: true}
-    const yamlConfig = main.configs.get(pluginNamespace, yamlConfigPropName)
+    const yamlConfig = configurations.get(pluginNamespace, yamlConfigPropName)
     cliOpts.config = yamlConfig || ""
     const pcap = ctx.files[0]
     const pcapTotalSize = fs.statSync(pcap).size

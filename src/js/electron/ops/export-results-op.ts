@@ -1,5 +1,5 @@
 import exportResults from "src/js/flows/exportResults"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import {ResponseFormat} from "@brimdata/zed-js"
 
 export const exportResultsOp = createOperation(

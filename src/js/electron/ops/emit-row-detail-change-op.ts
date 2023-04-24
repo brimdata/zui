@@ -1,5 +1,5 @@
 import {zjson, decode} from "@brimdata/zed-js"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import {OpEventContext} from "src/js/state/Current/selectors"
 import {session} from "src/zui"
 

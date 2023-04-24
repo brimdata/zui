@@ -1,4 +1,4 @@
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import {screen} from "electron"
 import {ZuiWindow} from "../windows/zui-window"
 import {stack} from "../windows/dimens"

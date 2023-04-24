@@ -1,5 +1,5 @@
 import {correlations} from "src/zui"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const getCorrelationsOp = createOperation("getCorrelationsOp", () => {
   return correlations.compile()

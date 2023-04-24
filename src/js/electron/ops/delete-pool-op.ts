@@ -1,4 +1,4 @@
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
 import {ZuiMain} from "../zui-main"

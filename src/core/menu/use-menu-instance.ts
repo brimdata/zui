@@ -3,10 +3,10 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import ResultsToolbarMenu from "src/js/state/ResultsToolbar"
 import {BuiltMenu, MenuItem} from "src/core/menu"
-import {getMenuTemplate} from "src/js/electron/ops"
 import {createSelector} from "@reduxjs/toolkit"
 import Layout from "src/js/state/Layout"
 import {compile} from "../when/compile"
+import {invoke} from "../invoke"
 
 /**
  * 1. get the items from redux
@@ -28,7 +28,7 @@ export function useMenuInstance(name: string) {
   const whenContext = useSelector(getWhenContext)
 
   useEffect(() => {
-    getMenuTemplate(name).then((template) => {
+    invoke("getMenuTemplateOp", name).then((template) => {
       const items = compileMenuItems(template, whenContext)
       dispatch(setMenu(name, items))
     })

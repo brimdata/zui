@@ -1,5 +1,5 @@
 import {lake} from "src/zui"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const updatePluginLakeOp = createOperation(
   "updatePluginLakeOp",

@@ -4,7 +4,7 @@ import {
   MenuItemConstructorOptions,
   PopupOptions,
 } from "electron"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const showContextMenuOp = createOperation(
   "showContextMenuOp",

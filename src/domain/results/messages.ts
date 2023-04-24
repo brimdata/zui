@@ -1,4 +1,4 @@
-export type ResultsMessages = {
+export type ResultsHandlers = {
   "results.expandAll": []
   "results.collapseAll": []
   "results.showExportDialog": []

@@ -1,13 +1,13 @@
-import {isArray} from "lodash"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
-import {createPool, deletePool, loadFiles} from "src/js/electron/ops"
+import {deletePool, loadFiles} from "src/js/electron/ops"
 import {CreatePoolOpts, LoadFormat} from "@brimdata/zed-js"
+import {invoke} from "src/core/invoke"
+import {PoolUpdate} from "src/domain/pools/types"
 
-type Update = {id: string; changes: {name: string}}
 export class PoolsApi extends ApiDomain {
   get all() {
     return this.select(Current.getPools)
@@ -45,16 +45,13 @@ export class PoolsApi extends ApiDomain {
   }
 
   async create(name: string, opts: Partial<CreatePoolOpts> = {}) {
-    const id = await createPool(this.lakeId, name, opts)
+    const id = await invoke("pools.create", this.lakeId, name, opts)
     await this.sync(id)
     return id
   }
 
-  async update(update: Update | Update[]) {
-    const client = await this.zealot
-    for (let {id, changes} of isArray(update) ? update : [update]) {
-      await client.updatePool(id, changes)
-    }
+  async update(update: PoolUpdate | PoolUpdate[]) {
+    await invoke("pools.update", this.lakeId, update)
     return this.syncAll()
   }
 

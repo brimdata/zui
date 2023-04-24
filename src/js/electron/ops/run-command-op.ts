@@ -1,7 +1,7 @@
 import log from "electron-log"
 import {isString} from "lodash"
 import {Command} from "src/app/commands/command"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const runCommandOp = createOperation(
   "runCommand",

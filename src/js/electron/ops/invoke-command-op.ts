@@ -1,5 +1,5 @@
 import {commands} from "src/core/command"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const invokeCommandOp = createOperation(
   "invokeCommandOp",

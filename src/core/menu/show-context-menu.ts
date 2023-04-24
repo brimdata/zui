@@ -1,4 +1,5 @@
 import {MenuItemConstructorOptions} from "electron"
+import {BoundCommand} from "src/app/commands/command"
 
 export function showContextMenu(
   template: MenuItemConstructorOptions[],
@@ -11,17 +12,22 @@ export function showContextMenu(
   } else {
     const {callback, x, y} = opts
     const menu = sanitizeTemplate(template)
+    console.log(menu, template)
     setupListener(template, callback)
     global.zui.invoke("showContextMenuOp", menu, {x, y})
   }
 }
 
 function sanitizeTemplate(template: MenuItemConstructorOptions[]) {
-  return template.map(sanitizeMenuItem)
+  return template.map((item) => sanitizeMenuItem(item))
 }
 
-function sanitizeMenuItem(item) {
-  return {...item, click: undefined}
+function sanitizeMenuItem(item: any) {
+  return {
+    ...item,
+    click: undefined,
+    command: item.command instanceof BoundCommand ? undefined : item.command,
+  }
 }
 
 function findItem(id: string, template: MenuItemConstructorOptions[]) {

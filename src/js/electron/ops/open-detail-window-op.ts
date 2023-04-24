@@ -1,5 +1,5 @@
 import {zjson} from "@brimdata/zed-js"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import log from "electron-log"
 
 export const openDetailWindow = createOperation(

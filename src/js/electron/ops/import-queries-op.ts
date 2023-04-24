@@ -2,7 +2,7 @@ import Queries from "src/js/state/Queries"
 import {isGroup, isQuery} from "src/js/state/Queries/helpers"
 import {parseJSONLib} from "src/js/state/Queries/parsers"
 import QueryVersions from "src/js/state/QueryVersions"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const importQueriesOp = createOperation(
   "importQueries",

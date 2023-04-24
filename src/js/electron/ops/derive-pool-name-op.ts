@@ -1,5 +1,5 @@
 import {getUniqName} from "src/js/lib/uniqName"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import path from "path"
 
 export const derivePoolNameOp = createOperation(

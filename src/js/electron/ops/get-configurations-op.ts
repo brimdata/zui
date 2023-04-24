@@ -1,5 +1,5 @@
 import {configurations} from "src/zui"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const getConfigurationsOp = createOperation(
   "getConfigurationsOp",

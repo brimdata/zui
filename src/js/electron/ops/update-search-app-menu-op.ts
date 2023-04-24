@@ -1,4 +1,4 @@
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import {SearchAppMenuState} from "../windows/search/app-menu"
 import {SearchWindow} from "../windows/search/search-window"
 

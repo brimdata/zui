@@ -1,7 +1,10 @@
 import {ZuiMain} from "../zui-main"
 import path from "path"
 import {requireDir} from "../utils/require-dir"
-import {Operation} from "../operations"
+import {Operation} from "../../../core/operations"
+
+// Import all operations in the new folder
+import * as domainOperations from "src/domain/operations"
 
 const setup = (main) => (exports) => {
   for (const key of Object.keys(exports)) {
@@ -13,6 +16,8 @@ const setup = (main) => (exports) => {
 const opsDir = path.join(__dirname, "../ops")
 
 export function runOpListeners(main: ZuiMain) {
+  setup(domainOperations)
+
   return requireDir({
     dir: opsDir,
     exclude: /\.test/,

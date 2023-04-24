@@ -1,5 +1,5 @@
 import log from "electron-log"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const openSearchWindowOp = createOperation(
   "openSearchWindow",

@@ -1,4 +1,4 @@
-export type SessionMessages = {
+export type SessionHandlers = {
   "session.goBack": []
   "session.goForward": []
 }

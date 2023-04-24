@@ -1,5 +1,5 @@
 import {session} from "src/zui"
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 
 export const updatePluginSessionOp = createOperation(
   "updatePluginSessionOp",

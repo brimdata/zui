@@ -2,15 +2,15 @@ import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {FormConfig, FormFieldConfig} from "../../models/form"
 import {useEffect, useState} from "react"
-import {getConfigurations} from "src/js/electron/ops"
 import {Config} from "src/domain/configurations/plugin-api"
+import {invoke} from "src/core/invoke"
 
 export const useConfigsForm = (): FormConfig => {
   const dispatch = useDispatch()
   const [configs, setConfigs] = useState<Config[]>([])
 
   useEffect(() => {
-    getConfigurations().then((configs) => {
+    invoke("getConfigurationsOp").then((configs) => {
       setConfigs(configs)
     })
   }, [])

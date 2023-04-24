@@ -1,4 +1,4 @@
-import {createOperation} from "../operations"
+import {createOperation} from "../../../core/operations"
 import {LoadContext} from "src/core/loader/load-context"
 import {LoadOptions} from "src/core/loader/types"
 import {syncPoolOp} from "./sync-pool-op"
@@ -7,7 +7,6 @@ import {loaders} from "src/zui"
 export const loadFilesOp = createOperation(
   "loadFilesOp",
   async ({main, event}, options: LoadOptions) => {
-    debugger
     const context = new LoadContext(main, event, options)
     const loader = await loaders.getMatch(context)
     try {
