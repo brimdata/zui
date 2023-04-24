@@ -4,7 +4,9 @@ module.exports = {
   },
   setupFiles: ["./src/test/unit/setup/before-env.ts"],
   setupFilesAfterEnv: ["./src/test/unit/setup/after-env/index.ts"],
-  testURL: "http://localhost/search.html",
+  testEnvironmentOptions: {
+    testURL: "http://localhost:3000/?name=search&id=test-1",
+  },
   globalSetup: "./src/test/unit/setup/global.ts",
   modulePaths: ["<rootDir>"],
   roots: ["./src"],

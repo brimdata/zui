@@ -57,6 +57,7 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
     timeout: 20_000,
   })
   const brimRenderer = await initialize()
+  global.windowId = brimMain.windows.byName("search")[0].id
   return {
     main: brimMain,
     store: brimRenderer.store,

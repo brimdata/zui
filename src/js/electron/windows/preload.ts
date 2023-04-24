@@ -10,7 +10,7 @@ const getWindowName = () => {
   return params.get("name")
 }
 
-const preloadApi = {
+export const preloadApi = () => ({
   listen: ipcRenderer.on.bind(ipcRenderer),
   listenOnce: ipcRenderer.once.bind(ipcRenderer),
   stopListen: ipcRenderer.off.bind(ipcRenderer),
@@ -24,7 +24,7 @@ const preloadApi = {
     isMac: process.platform === "darwin",
     isTest: process.env.NODE_ENV === "test",
   },
-}
+})
 
 function cloneCheck(value: any) {
   try {
@@ -35,6 +35,6 @@ function cloneCheck(value: any) {
   }
 }
 
-export type PreloadApi = typeof preloadApi
+export type PreloadApi = ReturnType<typeof preloadApi>
 
-contextBridge.exposeInMainWorld("zui", preloadApi)
+contextBridge.exposeInMainWorld("zui", preloadApi())

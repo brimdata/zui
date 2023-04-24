@@ -30,7 +30,7 @@ export class ConfigurationsApi {
   get all() {
     return this.configs
   }
-  k
+
   get(configName, propName): any {
     return ConfigPropValues.get(configName, propName)(this.getState())
   }

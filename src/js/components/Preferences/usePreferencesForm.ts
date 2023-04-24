@@ -1,12 +1,20 @@
-import {useZuiApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {FormConfig, FormFieldConfig} from "../../models/form"
+import {useEffect, useState} from "react"
+import {getConfigurations} from "src/js/electron/ops"
+import {Config} from "src/domain/configurations/plugin-api"
 
 export const useConfigsForm = (): FormConfig => {
   const dispatch = useDispatch()
-  const api = useZuiApi()
-  const configs = api.configs.all
+  const [configs, setConfigs] = useState<Config[]>([])
+
+  useEffect(() => {
+    getConfigurations().then((configs) => {
+      setConfigs(configs)
+    })
+  }, [])
+
   const formConfig: FormConfig = {}
   configs.forEach((config) => {
     Object.values(config.properties).forEach((prop) => {

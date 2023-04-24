@@ -1,8 +1,8 @@
 import time from "src/js/models/time"
-import {ZuiMain} from "../zui-main"
+import {configurations} from "src/zui"
 
-export function initialize(main: ZuiMain) {
-  main.configs.add({
+export function initialize() {
+  configurations.create({
     name: "pools",
     title: "Pools",
     properties: {
@@ -14,7 +14,7 @@ export function initialize(main: ZuiMain) {
       },
     },
   })
-  main.configs.add({
+  configurations.create({
     name: "display",
     title: "Display",
     properties: {
@@ -49,7 +49,7 @@ export function initialize(main: ZuiMain) {
       },
     },
   })
-  main.configs.add({
+  configurations.create({
     name: "editor",
     title: "Editor",
     properties: {

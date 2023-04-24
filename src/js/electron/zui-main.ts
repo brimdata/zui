@@ -22,14 +22,12 @@ import {getAppMeta, AppMeta} from "./meta"
 import {createMainStore} from "../state/stores/create-main-store"
 import {AppDispatch, State} from "../state/types"
 import {PathName, getPath} from "../api/core/get-path"
-import {ConfigurationsApi} from "../api/configurations/configurations-api"
 import createLake from "src/js/models/lake"
 import {getAuthToken} from "../api/core/get-zealot"
 import {Abortables} from "src/app/core/models/abortables"
 
 export class ZuiMain {
   public isQuitting = false
-  configs: ConfigurationsApi
   abortables = new Abortables()
   emitter = new EventEmitter()
 
@@ -58,9 +56,7 @@ export class ZuiMain {
     readonly session: Session,
     readonly args: MainArgs,
     readonly appMeta: AppMeta
-  ) {
-    this.configs = new ConfigurationsApi(store.dispatch, store.getState)
-  }
+  ) {}
 
   async start() {
     if (this.args.lake) this.lake.start()

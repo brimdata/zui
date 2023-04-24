@@ -9,7 +9,7 @@ jest.mock("./extensions", () => ({
   installExtensions: jest.fn(),
 }))
 
-jest.mock("@brimdata/zealot")
+jest.mock("@brimdata/zed-node")
 
 test("start is called in zed lake", async () => {
   const appMain = (await main({devtools: false, autoUpdater: false})) as ZuiMain

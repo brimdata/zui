@@ -7,6 +7,7 @@ import {loaders} from "src/zui"
 export const loadFilesOp = createOperation(
   "loadFilesOp",
   async ({main, event}, options: LoadOptions) => {
+    debugger
     const context = new LoadContext(main, event, options)
     const loader = await loaders.getMatch(context)
     try {

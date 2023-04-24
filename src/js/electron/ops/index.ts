@@ -4,6 +4,7 @@ import {CreatePoolOp} from "./create-pool-op"
 import {DeletePoolOp} from "./delete-pool-op"
 import {DerivePoolNameOp} from "./derive-pool-name-op"
 import {EmitRowDetailChangeOp} from "./emit-row-detail-change-op"
+import {GetConfigurationsOp} from "./get-configurations-op"
 import {GetCorrelationsOp} from "./get-correlations-op"
 import {GetMenuTemplateOp} from "./get-menu-template-op"
 import {InvokeCommandOp} from "./invoke-command-op"
@@ -30,3 +31,6 @@ export const getMenuTemplate =
 export const invokeCommand = createInvoker<InvokeCommandOp>("invokeCommandOp")
 export const getCorrelations =
   createInvoker<GetCorrelationsOp>("getCorrelationsOp")
+export const getConfigurations = createInvoker<GetConfigurationsOp>(
+  "getConfigurationsOp"
+)

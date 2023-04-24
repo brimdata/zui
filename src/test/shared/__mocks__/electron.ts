@@ -146,3 +146,7 @@ export const autoUpdater = {
 export const shell = {
   openExternal: jest.fn(),
 }
+
+export const contextBridge = {
+  exposeInMainWorld: jest.fn(),
+}

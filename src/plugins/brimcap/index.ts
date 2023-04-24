@@ -4,6 +4,7 @@ import {findConnLog} from "../zui-zeek/queries"
 import {
   PluginContext,
   commands,
+  configurations,
   env,
   lake,
   loaders,
@@ -17,6 +18,7 @@ import {join} from "path"
 import {createCli} from "./create-cli"
 import {ensureDirSync} from "fs-extra"
 import {createLoader} from "./loader"
+import {pluginNamespace, yamlConfigPropName} from "./config"
 
 const DOWNLOAD = "brimcap.downloadPackets"
 
@@ -112,4 +114,21 @@ export function activate(ctx: PluginContext) {
   )
 
   loaders.create("brimcap-loader", createLoader(root))
+
+  configurations.create({
+    name: pluginNamespace,
+    title: "Brimcap Settings",
+    properties: {
+      [yamlConfigPropName]: {
+        name: yamlConfigPropName,
+        type: "file",
+        label: "Brimcap YAML Config File",
+        defaultValue: "",
+        helpLink: {
+          label: "docs",
+          url: "https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config",
+        },
+      },
+    },
+  })
 }

@@ -42,9 +42,11 @@ const $ = {
   },
 }
 
-beforeEach(() => {
+beforeEach(async () => {
   brim.store.dispatch(Modal.show("settings"))
   brim.render(<Preferences />)
+  // Wait for one of the configs to be rendered
+  await screen.findByLabelText("Time Format docs")
 })
 
 test("change time format", async () => {
