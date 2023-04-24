@@ -93,9 +93,9 @@ export function SectionTabs(props: {options: MenuItem[]}) {
         {props.options.map((opts, i) => (
           <button
             key={opts.id ?? i}
-            onClick={(htmlEvent) => {
+            onClick={() => {
               changeCount.current += 1
-              opts.click({htmlEvent})
+              opts.click()
             }}
             aria-pressed={opts.checked}
             data-section-tab-value={opts.label.toLowerCase()}

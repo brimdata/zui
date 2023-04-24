@@ -94,7 +94,7 @@ export const Show = () => {
         <Toolbar>
           <SubmitButton
             icon={queryPool.iconName}
-            onClick={(htmlEvent) => queryPool.click({htmlEvent})}
+            onClick={() => queryPool.click()}
           >
             Query Pool
           </SubmitButton>

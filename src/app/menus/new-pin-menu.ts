@@ -5,7 +5,7 @@ export const newPinMenu = createMenu("newPinMenu", ({api}) => {
   return [
     {
       label: "New 'From' Pin",
-      command: pins.createFrom,
+      command: pins.createFrom.bind(),
     },
     {label: "New 'Time Range' Pin", command: pins.createTimeRange},
     {

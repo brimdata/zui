@@ -1,4 +1,5 @@
-import React from "react"
+import React, {MouseEvent, MouseEventHandler} from "react"
+import {BoundCommand} from "src/app/commands/command"
 import Icon from "src/app/core/icon-temp"
 import {MenuItem} from "src/core/menu"
 import {invokeCommand} from "src/js/electron/ops"
@@ -31,12 +32,26 @@ const BG = styled.button`
   }
 `
 
-export function IconButton(props: MenuItem & {className?: string}) {
+export function IconButton(
+  props: MenuItem & {
+    className?: string
+    onClick?: MouseEventHandler<HTMLButtonElement>
+  }
+) {
+  function onClick(e: MouseEvent<HTMLButtonElement>) {
+    if (props.onClick) {
+      props.onClick && props.onClick(e)
+    } else if (typeof props.command === "string") {
+      invokeCommand(props.command, props.args)
+    } else if (props.command instanceof BoundCommand) {
+      props.command.run()
+    }
+  }
   return (
     <BG
       className={props.className}
       title={props.description ?? props.label}
-      onClick={() => invokeCommand(props.command, props.args)}
+      onClick={onClick}
       disabled={props.enabled === false || props.whenResult === false}
       aria-label={props.label}
     >

@@ -1,6 +1,7 @@
 import {IconName} from "src/app/core/icon-temp"
 import ZuiApi from "src/js/api/zui-api"
 import {Menu} from "./menu"
+import {BoundCommand, Command} from "src/app/commands/command"
 
 export type MenuItem = {
   id?: string
@@ -10,7 +11,8 @@ export type MenuItem = {
   visible?: boolean
   iconName?: IconName
   iconSize?: number
-  command?: string
+  // Moving away from the bound command pattern
+  command?: string | BoundCommand<any, any> | Command<[], any>
   args?: any[]
   nestedMenu?: Menu
   checked?: boolean
@@ -18,6 +20,8 @@ export type MenuItem = {
   when?: string
   whenResult?: boolean
   priority?: number
+  accelerator?: string
+  click?: () => void
 }
 
 export type MenuContext = {api: ZuiApi}
