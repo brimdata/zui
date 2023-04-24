@@ -7,6 +7,7 @@ export const emitRowDetailChangeOp = createOperation(
   "emitRowDetailChangeOp",
   (_, event: OpEventContext, zjson: zjson.Obj) => {
     const row = decode(zjson)
+    session.selectedRow = row
     session.emit("result-selection-change", {row})
   }
 )

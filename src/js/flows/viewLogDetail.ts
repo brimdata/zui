@@ -3,7 +3,7 @@ import * as zed from "@brimdata/zed-js"
 import LogDetails from "../state/LogDetails"
 import {Thunk} from "../state/types"
 import {startTransition} from "react"
-import {runCorrelations} from "../api/correlations/run-correlations"
+import {runCorrelations} from "../../core/correlations"
 import {emitRowDetailChange} from "../electron/ops"
 import Current from "../state/Current"
 

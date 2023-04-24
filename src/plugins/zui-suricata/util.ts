@@ -1,5 +1,5 @@
 import * as zed from "@brimdata/zed-js"
-import ZuiApi from "src/js/api/zui-api"
+import {session} from "src/zui"
 
 export function isSuricataAlert(value: zed.Value) {
   if (value instanceof zed.Record) {
@@ -12,14 +12,16 @@ export function isSuricataAlert(value: zed.Value) {
   return false
 }
 
-export function findCid(value: zed.Record) {
-  return value.has("community_id") ? value.get("community_id").toString() : null
+export function findCid(value: zed.Value) {
+  return value instanceof zed.Record && value.has("community_id")
+    ? value.get("community_id").toString()
+    : null
 }
 
-export const whenSuricata = (api: ZuiApi) => {
-  return (
-    isSuricataAlert(api.current.value) &&
-    findCid(api.current.value) &&
-    api.current.poolName
+export const whenSuricata = () => {
+  return !!(
+    isSuricataAlert(session.selectedRow) &&
+    findCid(session.selectedRow) &&
+    session.poolName
   )
 }

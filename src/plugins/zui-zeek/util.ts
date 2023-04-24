@@ -1,6 +1,11 @@
 import * as zed from "@brimdata/zed-js"
+import {session} from "src/zui"
 
-export function findUid(value: zed.Record) {
+export function findUid(value: zed.Value) {
+  if (!(value instanceof zed.Record)) {
+    throw new Error("Expected value to be a Record")
+  }
+
   const specialUids = {
     files: "conn_uids",
     dhcp: "uids",
@@ -24,7 +29,10 @@ export function findUid(value: zed.Record) {
   return null
 }
 
-export function findCid(value: zed.Record) {
+export function findCid(value: zed.Value) {
+  if (!(value instanceof zed.Record)) {
+    throw new Error("Expected value to be a Record")
+  }
   return value.has("community_id") ? value.get("community_id").toString() : null
 }
 
@@ -55,4 +63,20 @@ export function findCommunityConnArgs(value: zed.Value): CommunityConnArgs {
     }
   }
   return null
+}
+
+export function hasMd5() {
+  const value = session.selectedRow
+  return (
+    value instanceof zed.Record &&
+    value.has("md5", zed.TypeString) &&
+    !value.get("md5").isUnset() &&
+    !!session.poolName
+  )
+}
+
+export function getMd5() {
+  const value = session.selectedRow
+  if (value instanceof zed.Record) return value.get("md5").toJS()
+  throw new Error("Expected value to be a record with an md5 field")
 }

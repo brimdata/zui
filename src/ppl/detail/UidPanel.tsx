@@ -14,9 +14,9 @@ import EventLimit from "./EventLimit"
 import {showContextMenu} from "src/js/lib/System"
 import * as zed from "@brimdata/zed-js"
 import Results from "src/js/state/Results"
-import {uidCorrelation} from "src/plugins/zui-zeek/uid-correlations"
+import {UID_CORRELATION} from "src/plugins/zui-zeek/ids"
 
-const id = uidCorrelation.id
+const id = UID_CORRELATION
 
 export default memo(function UidPanel({record}: {record: zed.Record}) {
   const isLoading = useSelector(Results.getStatus(id)) === "FETCHING"

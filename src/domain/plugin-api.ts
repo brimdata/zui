@@ -1,3 +1,4 @@
+import {CorrelationsApi} from "./correlations/plugin-api"
 import {EnvApi} from "./env/plugin-api"
 import {LoadersApi} from "./loaders/plugin-api"
 import {PanesApi} from "./panes/plugin-api"
@@ -11,3 +12,4 @@ export const window = new WindowApi()
 export const env = new EnvApi()
 export const loaders = new LoadersApi()
 export const session = new SessionApi()
+export const correlations = new CorrelationsApi()

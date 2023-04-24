@@ -20,3 +20,4 @@ yalc.lock
 !.yarn/sdks
 !.yarn/versions
 .next
+tsconfig.tsbuildinfo

@@ -1,21 +1,74 @@
-import ZuiApi from "src/js/api/zui-api"
-import * as md5 from "./md5-correlations"
-import {uidCorrelation} from "./uid-correlations"
+import zedScript from "src/js/zed-script"
+import {communityConnFilter, findConnLog, uidFilter} from "./queries"
+import {findCommunityConnArgs, findUid, getMd5, hasMd5} from "./util"
+import {correlations, lake, session} from "src/zui"
+import {
+  MD5_CORRELATION,
+  TX_HOSTS_CORRELATION,
+  RX_HOSTS_CORRELATION,
+  FILENAME_CORRELATION,
+  UID_CORRELATION,
+} from "./ids"
 
-export function activate(api: ZuiApi) {
-  //   api.correlations.add(md5.md5Correlation)
-  //   api.correlations.add(md5.txHostsCorrelation)
-  //   api.correlations.add(md5.rxHostsCorrelation)
-  //   api.correlations.add(md5.filenameCorrelation)
-  //
-  //   api.correlations.add(uidCorrelation)
-}
+export function activate() {
+  correlations.create(MD5_CORRELATION, {
+    when: hasMd5,
+    query: () => {
+      return zedScript`
+        from ${session.poolName} 
+        | md5==${getMd5()} 
+        | count() by md5 
+        | sort -r 
+        | head 5`
+    },
+  })
 
-export function deactivate(api: ZuiApi) {
-  //   api.correlations.remove(md5.md5Correlation.id)
-  //   api.correlations.remove(md5.txHostsCorrelation.id)
-  //   api.correlations.remove(md5.rxHostsCorrelation.id)
-  //   api.correlations.remove(md5.filenameCorrelation.id)
-  //
-  //   api.correlations.remove(uidCorrelation.id)
+  correlations.create(TX_HOSTS_CORRELATION, {
+    when: hasMd5,
+    query: () => {
+      return zedScript`
+        from ${session.poolName} 
+        | md5==${getMd5()} 
+        | count() by tx_hosts 
+        | sort -r 
+        | head 5`
+    },
+  })
+  correlations.create(RX_HOSTS_CORRELATION, {
+    when: hasMd5,
+    query: () => {
+      return zedScript`
+          from ${session.poolName} 
+          | md5==${getMd5()} 
+          | count() by rx_hosts 
+          | sort -r 
+          | head 5`
+    },
+  })
+  correlations.create(FILENAME_CORRELATION, {
+    when: hasMd5,
+    query: () => {
+      return zedScript`
+          from ${session.poolName} 
+          | md5==${getMd5()} 
+          | count() by filename, mime_type
+          | sort -r 
+          | head 5`
+    },
+  })
+  correlations.create(UID_CORRELATION, {
+    when: () => !!findUid(session.selectedRow),
+    query: async () => {
+      const uid = findUid(session.selectedRow)
+      const pool = session.poolName
+      const res = await lake.query(findConnLog(pool, uid))
+      const [conn] = await res.zed()
+      const args = findCommunityConnArgs(conn)
+      if (args) {
+        return zedScript`from ${pool} | ` + communityConnFilter(args)
+      } else {
+        return zedScript`from ${pool} | ` + uidFilter(uid)
+      }
+    },
+  })
 }

@@ -4,18 +4,23 @@ import {useSelector} from "react-redux"
 import * as zed from "@brimdata/zed-js"
 import InlineTableLoading from "../InlineTableLoading"
 import HorizontalTable from "../Tables/HorizontalTable"
-import * as md5 from "src/plugins/zui-zeek/md5-correlations"
 import Results from "src/js/state/Results"
+import {
+  FILENAME_CORRELATION,
+  MD5_CORRELATION,
+  RX_HOSTS_CORRELATION,
+  TX_HOSTS_CORRELATION,
+} from "src/plugins/zui-zeek/ids"
 
 export const Md5Panel = () => {
   return (
     <section className="hash-correlation detail-panel">
       <PanelHeading isLoading={false}>Md5 Correlation</PanelHeading>
-      <AsyncTable resultId={md5.md5Correlation.id} expect={1} />
-      <AsyncTable resultId={md5.filenameCorrelation.id} expect={1} />
+      <AsyncTable resultId={MD5_CORRELATION} expect={1} />
+      <AsyncTable resultId={FILENAME_CORRELATION} expect={1} />
       <div className="two-column">
-        <AsyncTable resultId={md5.txHostsCorrelation.id} expect={5} />
-        <AsyncTable resultId={md5.rxHostsCorrelation.id} expect={5} />
+        <AsyncTable resultId={TX_HOSTS_CORRELATION} expect={5} />
+        <AsyncTable resultId={RX_HOSTS_CORRELATION} expect={5} />
       </div>
     </section>
   )

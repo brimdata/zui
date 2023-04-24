@@ -9,6 +9,7 @@ type Events = {
 export class SessionApi {
   public poolName: string | null = null
   public program: string | null = null
+  public selectedRow: zed.Value | null = null
   private emitter = new EventEmitter()
 
   on<K extends string & keyof Events>(name: K, handler: Events[K]) {

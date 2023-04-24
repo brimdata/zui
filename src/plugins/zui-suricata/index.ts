@@ -1,41 +1,30 @@
-import ZuiApi from "src/js/api/zui-api"
 import zedScript from "src/js/zed-script"
 import {findCid, whenSuricata} from "./util"
+import {correlations, session} from "src/zui"
+import {SURICATA_CONNS, SURICATA_ALERTS} from "./ids"
 
-export const SURICATA_CONNS = "zui-suricata/related-conns"
-export const SURICATA_ALERTS = "zui-suricata/related-alerts"
-
-const relatedConns = {
-  id: SURICATA_CONNS,
-  when: whenSuricata,
-  query: (api: ZuiApi) => {
-    return zedScript`
-        from ${api.current.poolName} 
+export function activate() {
+  correlations.create(SURICATA_CONNS, {
+    when: whenSuricata,
+    query: () => {
+      debugger
+      return zedScript`
+        from ${session.poolName} 
         | _path=="conn"
-        | community_id==${findCid(api.current.value)} 
+        | community_id==${findCid(session.selectedRow)} 
         | sort ts`
-  },
-}
+    },
+  })
 
-const relatedAlerts = {
-  id: SURICATA_ALERTS,
-  when: whenSuricata,
-  query: (api: ZuiApi) => {
-    return zedScript`
-        from ${api.current.poolName} 
+  correlations.create(SURICATA_ALERTS, {
+    when: whenSuricata,
+    query: () => {
+      return zedScript`
+        from ${session.poolName} 
         | event_type=="alert" 
-        | community_id==${findCid(api.current.value)} 
+        | community_id==${findCid(session.selectedRow)} 
         | sort ts
         `
-  },
-}
-
-export function activate(api: ZuiApi) {
-  // api.correlations.add(relatedConns)
-  // api.correlations.add(relatedAlerts)
-}
-
-export function deactivate(api: ZuiApi) {
-  // api.correlations.remove(relatedConns.id)
-  // api.correlations.remove(relatedAlerts.id)
+    },
+  })
 }

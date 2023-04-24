@@ -4,6 +4,7 @@ import {CreatePoolOp} from "./create-pool-op"
 import {DeletePoolOp} from "./delete-pool-op"
 import {DerivePoolNameOp} from "./derive-pool-name-op"
 import {EmitRowDetailChangeOp} from "./emit-row-detail-change-op"
+import {GetCorrelationsOp} from "./get-correlations-op"
 import {GetMenuTemplateOp} from "./get-menu-template-op"
 import {InvokeCommandOp} from "./invoke-command-op"
 import {LoadFilesOp} from "./load-files-op"
@@ -27,3 +28,5 @@ export const updatePluginLake =
 export const getMenuTemplate =
   createInvoker<GetMenuTemplateOp>("getMenuTemplateOp")
 export const invokeCommand = createInvoker<InvokeCommandOp>("invokeCommandOp")
+export const getCorrelations =
+  createInvoker<GetCorrelationsOp>("getCorrelationsOp")
