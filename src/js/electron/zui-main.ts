@@ -3,7 +3,6 @@ import keytar from "keytar"
 import {EventEmitter} from "events"
 import os from "os"
 import {Client, Lake} from "@brimdata/zed-node"
-import * as zed from "@brimdata/zed-js"
 import {Store as ReduxStore} from "redux"
 import url from "url"
 import {
@@ -27,7 +26,6 @@ import {ConfigurationsApi} from "../api/configurations/configurations-api"
 import createLake from "src/js/models/lake"
 import {getAuthToken} from "../api/core/get-zealot"
 import {Abortables} from "src/app/core/models/abortables"
-import {OpEventContext} from "../state/Current/selectors"
 
 export class ZuiMain {
   public isQuitting = false

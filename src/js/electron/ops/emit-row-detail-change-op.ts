@@ -5,7 +5,7 @@ import {session} from "src/zui"
 
 export const emitRowDetailChangeOp = createOperation(
   "emitRowDetailChangeOp",
-  ({main}, event: OpEventContext, zjson: zjson.Obj) => {
+  (_, event: OpEventContext, zjson: zjson.Obj) => {
     const row = decode(zjson)
     session.emit("result-selection-change", {row})
   }

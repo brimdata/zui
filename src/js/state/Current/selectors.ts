@@ -17,7 +17,6 @@ import SessionQueries from "../SessionQueries"
 import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
 import lake from "src/js/models/lake"
-import {getActive} from "../Tabs/selectors"
 
 export const getHistory = (
   state,
