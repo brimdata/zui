@@ -32,7 +32,6 @@ export const renameGroup = createCommand(
       const name = parts.join(delimiter)
       changes.push({id: pool.id, changes: {name}})
     }
-
     const promise = api.pools.update(changes)
     return api.toast
       .promise(promise, {

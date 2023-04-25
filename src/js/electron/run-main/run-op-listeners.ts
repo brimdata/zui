@@ -16,7 +16,7 @@ const setup = (main) => (exports) => {
 const opsDir = path.join(__dirname, "../ops")
 
 export function runOpListeners(main: ZuiMain) {
-  setup(domainOperations)
+  setup(main)(domainOperations)
 
   return requireDir({
     dir: opsDir,

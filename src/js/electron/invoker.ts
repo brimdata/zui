@@ -1,5 +1,6 @@
 import {Operation} from "../../core/operations"
 
+// This can go
 export function createInvoker<Op extends Operation<unknown[], unknown>>(
   name: string
 ) {

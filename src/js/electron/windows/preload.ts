@@ -28,10 +28,9 @@ export const preloadApi = () => ({
 
 function cloneCheck(value: any) {
   try {
-    window.postMessage(value, "*")
+    if (window.postMessage) window.postMessage(value, "*")
   } catch (e) {
-    console.log("Could not clone", value)
-    throw new Error("Can not clone object")
+    throw new Error("Can not clone object " + e + JSON.stringify(value))
   }
 }
 

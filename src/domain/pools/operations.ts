@@ -2,7 +2,7 @@ import {createOperation} from "src/core/operations"
 
 import {CreatePoolOpts} from "@brimdata/zed-js"
 
-export const createPoolOp = createOperation(
+export const create = createOperation(
   "pools.create",
   async (
     {main},
