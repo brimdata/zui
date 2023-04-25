@@ -15,6 +15,7 @@ import {InitPool, Show} from "src/pages/pools/show"
 import {QueryRoute} from "src/app/query-home/route"
 import {lakePath} from "src/app/router/utils/paths"
 import {defaultLake} from "../initializers/initLakeParams"
+import Head from "next/head"
 
 export default function App() {
   useSearchAppMenu()
@@ -23,6 +24,9 @@ export default function App() {
 
   return (
     <AppTabsRouter>
+      <Head>
+        <title>Zui</title>
+      </Head>
       <Switch>
         <Route path={routes.lakeShow.path}>
           <AppWrapper>

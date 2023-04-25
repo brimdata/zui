@@ -1,1 +1,2 @@
 export * from "./pools/operations"
+export * from "./e2e/operations"

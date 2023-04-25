@@ -25,6 +25,7 @@ declare global {
       firstMount: boolean
       appMeta: AppMeta
       zui: PreloadApi
+      e2eFilePaths: undefined | string[]
     }
   }
 }

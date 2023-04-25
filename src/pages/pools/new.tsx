@@ -20,6 +20,7 @@ import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
 import {LoadFormat} from "@brimdata/zed-js"
 import {DataFormatSelect} from "src/components/data-format-select"
 import {H1} from "src/components/h1"
+import {getFilePaths} from "src/domain/e2e/utils"
 
 const BG = styled(Scrollable)`
   background-image: url(/welcome-page-background.svg);
@@ -116,7 +117,7 @@ export function PoolNew() {
           }
           setLoading(true)
           const {name, order, key, format} = formData
-          const paths = files.map((f) => f.path)
+          const paths = await getFilePaths(files)
           await createAndLoadFiles.run(paths, {name, order, key, format})
           setLoading(false)
         }}
