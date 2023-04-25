@@ -5,9 +5,9 @@ import path from "path"
 export class HiddenWindow extends ZuiWindow {
   name: WindowName = "hidden"
   options = {
-    // show: false,
-    // width: 0,
-    // height: 0,
+    show: false,
+    width: 0,
+    height: 0,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },

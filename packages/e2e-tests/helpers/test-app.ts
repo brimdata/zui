@@ -42,6 +42,7 @@ export default class TestApp {
     this.zui = await electron.launch(launchOpts)
     await waitForTrue(() => this.zui.windows().length === 2)
     await waitForTrue(async () => !!(await this.getWindowByTitle("Zui")))
+    await waitForTrue(async () => !!(await this.getWindowByTitle("Background")))
     this.mainWin = await this.getWindowByTitle("Zui")
   }
 
