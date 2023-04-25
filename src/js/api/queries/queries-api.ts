@@ -18,6 +18,7 @@ import {CreateQueryParams, OpenQueryOptions, QueryParams} from "./types"
 import {Query} from "src/js/state/Queries/types"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import SessionQueries from "src/js/state/SessionQueries"
+import {invoke} from "src/core/invoke"
 
 export class QueriesApi {
   constructor(private dispatch: AppDispatch, private getState: GetState) {}
@@ -31,7 +32,7 @@ export class QueriesApi {
   }
 
   export(groupId: string, filePath: string) {
-    return global.zui.invoke("exportQueries", groupId, filePath)
+    return invoke("exportQueries", groupId, filePath)
   }
 
   find(id: string) {

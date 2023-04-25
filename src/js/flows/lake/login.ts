@@ -5,6 +5,7 @@ import {
   toRefreshTokenKey,
 } from "../../auth0/utils"
 import {getAuth0} from "./getAuth0"
+import {invoke} from "src/core/invoke"
 
 export const login =
   (l: LakeModel, abortSignal: AbortSignal) =>
@@ -24,12 +25,8 @@ export const login =
         const {accessToken, refreshToken} = await client.exchangeCode(code)
 
         // store both tokens in os default keychain
-        global.zui.invoke("setSecretOp", toAccessTokenKey(lakeId), accessToken)
-        global.zui.invoke(
-          "setSecretOp",
-          toRefreshTokenKey(lakeId),
-          refreshToken
-        )
+        invoke("setSecretOp", toAccessTokenKey(lakeId), accessToken)
+        invoke("setSecretOp", toRefreshTokenKey(lakeId), refreshToken)
 
         resolve(accessToken)
       } catch (e) {

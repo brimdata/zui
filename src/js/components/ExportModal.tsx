@@ -1,5 +1,4 @@
 import React from "react"
-import {ResponseFormat} from "@brimdata/zed-js"
 import {ChangeEvent, useState} from "react"
 import {toast} from "react-hot-toast"
 import styled from "styled-components"
@@ -11,6 +10,9 @@ import {
   Footer,
   SmallTitle,
 } from "./ModalDialog/ModalDialog"
+import {invoke} from "src/core/invoke"
+import {useZuiApi} from "src/app/core/context"
+import {prepExportQuery} from "src/domain/results/utils/prep-export-query"
 
 const RadioButtons = styled.div`
   display: flex;
@@ -47,7 +49,7 @@ const StyledFooter = styled(Footer)`
 `
 
 const showDialog = (format) => {
-  return global.zui.invoke("showSaveDialogOp", {
+  return invoke("showSaveDialogOp", {
     title: `Export Results as ${format.toUpperCase()}`,
     buttonLabel: "Export",
     defaultPath: `results.${format}`,
@@ -57,25 +59,20 @@ const showDialog = (format) => {
 }
 
 const ExportModal = ({onClose}) => {
+  const api = useZuiApi()
   const [format, setFormat] = useState("zng")
 
   const onExport = async () => {
     const {canceled, filePath} = await showDialog(format)
     if (canceled) return
-
+    const query = prepExportQuery(api, format)
+    const promise = invoke("results.export", query, format, filePath)
     toast
-      .promise(
-        global.zui.invoke(
-          "exportResultsOp",
-          filePath,
-          format as ResponseFormat
-        ),
-        {
-          loading: "Exporting...",
-          success: "Export Completed: " + filePath,
-          error: "Error Exporting",
-        }
-      )
+      .promise(promise, {
+        loading: "Exporting...",
+        success: "Export Completed: " + filePath,
+        error: "Error Exporting",
+      })
       .catch((e) => {
         console.error(e)
       })

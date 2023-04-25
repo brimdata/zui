@@ -1,13 +1,11 @@
 import {MenusHandlers} from "./menus/messages"
 import {PanesHandlers} from "./panes/messages"
 import {PoolsOperations} from "./pools/messages"
-import {ResultsHandlers} from "./results/messages"
+import {ResultsHandlers, ResultsOperations} from "./results/messages"
 import {SessionHandlers} from "./session/messages"
 import {WindowHandlers} from "./window/messages"
 import {LegacyOperations} from "./legacy-ops/messages"
 import {E2EOperations} from "./e2e/messages"
-
-// All ipc messages and args belong in here
 
 export type Messages = ResultsHandlers &
   MenusHandlers &
@@ -15,8 +13,10 @@ export type Messages = ResultsHandlers &
   WindowHandlers &
   SessionHandlers
 
-export type Operations = PoolsOperations & LegacyOperations & E2EOperations
+export type Operations = PoolsOperations &
+  LegacyOperations &
+  E2EOperations &
+  ResultsOperations
 
 export type OperationName = keyof Operations
-
 export type MessageName = keyof Messages

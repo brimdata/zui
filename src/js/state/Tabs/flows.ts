@@ -5,6 +5,7 @@ import SessionQueries from "../SessionQueries"
 import {Thunk} from "../types"
 import Tabs from "./"
 import {findTabById, findTabByUrl} from "./find"
+import {invoke} from "src/core/invoke"
 
 export const create =
   (url = "/", id = nanoid()): Thunk<string> =>
@@ -66,7 +67,7 @@ export const activateUrl =
 export const closeActive = (): Thunk => (dispatch, getState) => {
   const tabs = Tabs.getData(getState())
   if (tabs.length === 1) {
-    global.zui.invoke("closeWindow")
+    invoke("closeWindow")
   } else {
     const id = Tabs.getActive(getState())
     dispatch(Tabs.remove(id))

@@ -1,14 +1,15 @@
 import {enableMapSet} from "immer"
 import ZuiApi from "../api/zui-api"
 import {createWindowStore} from "../state/stores/create-window-store"
+import {invoke} from "src/core/invoke"
 
 enableMapSet()
 
 // Turn this into a single op to call from the exported function
 function getInitialState(windowId) {
   return Promise.all([
-    global.zui.invoke("getWindowState", windowId),
-    global.zui.invoke("getGlobalState"),
+    invoke("getWindowState", windowId),
+    invoke("getGlobalState"),
   ]).then(([winState, globalState]) => {
     return {...winState, ...globalState}
   })

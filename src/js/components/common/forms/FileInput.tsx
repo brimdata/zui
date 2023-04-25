@@ -5,6 +5,7 @@ import TextInput from "./TextInput"
 import useCallbackRef from "../../hooks/useCallbackRef"
 import useDropzone from "../../hooks/useDropzone"
 import styled from "styled-components"
+import {invoke} from "src/core/invoke"
 
 type Props = {
   defaultValue?: string
@@ -32,7 +33,7 @@ export default function FileInput(props: Props) {
   }
 
   async function openDirPicker() {
-    const {canceled, filePaths} = await global.zui.invoke("openDirectory")
+    const {canceled, filePaths} = await invoke("openDirectory")
     if (canceled) return
     update(filePaths[0])
   }

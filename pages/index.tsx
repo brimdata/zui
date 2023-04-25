@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {AppProvider} from "src/app/core/context"
+import {invoke} from "src/core/invoke"
 import App from "src/js/components/App"
 import initialize from "src/js/initializers/initialize"
 import TabHistories from "src/js/state/TabHistories"
@@ -13,7 +14,7 @@ export default function HomePage() {
       window.onbeforeunload = () => {
         vars.api.abortables.abortAll()
         vars.store.dispatch(TabHistories.save(global.tabHistories.serialize()))
-        global.zui.invoke(
+        invoke(
           "autosaveOp",
           global.windowId,
           getPersistedWindowState(vars.store.getState())

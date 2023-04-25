@@ -7,6 +7,7 @@ import {Subtitle} from "src/components/subtitle"
 import {Title} from "src/components/title"
 import styled from "styled-components"
 import links from "src/app/core/links"
+import {invoke} from "src/core/invoke"
 
 const BG = styled.div`
   background-image: url(/welcome-page-background.svg);
@@ -59,7 +60,7 @@ export function WelcomePage() {
             Connect to Lake
           </InputButton>
           <InputButton
-            onClick={() => global.zui.invoke("openLinkOp", links.ZUI_DOCS_ROOT)}
+            onClick={() => invoke("openLinkOp", links.ZUI_DOCS_ROOT)}
           >
             Documentation
           </InputButton>

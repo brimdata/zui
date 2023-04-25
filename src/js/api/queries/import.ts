@@ -1,11 +1,12 @@
 import {selectQuery} from "src/app/events/select-query-event"
+import {invoke} from "src/core/invoke"
 import Appearance from "src/js/state/Appearance"
 import {Thunk} from "src/js/state/types"
 
 export const queriesImport =
   (file: File): Thunk =>
   async (dispatch, __, {api}) => {
-    const resp = await global.zui.invoke("importQueries", file.path)
+    const resp = await invoke("importQueries", file.path)
 
     if ("error" in resp) {
       api.toast.error(resp.error)

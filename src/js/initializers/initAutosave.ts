@@ -1,6 +1,7 @@
 import {throttle} from "lodash"
 import {getPersistedWindowState} from "../state/stores/get-persistable"
 import onIdle from "on-idle"
+import {invoke} from "src/core/invoke"
 
 export function initAutosave(store) {
   let cancel = () => {}
@@ -8,7 +9,7 @@ export function initAutosave(store) {
   function saveFunction() {
     cancel()
     cancel = onIdle(() => {
-      global.zui.invoke(
+      invoke(
         "autosaveOp",
         global.windowId,
         getPersistedWindowState(store.getState())

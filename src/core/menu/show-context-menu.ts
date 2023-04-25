@@ -1,5 +1,6 @@
 import {MenuItemConstructorOptions} from "electron"
 import {BoundCommand} from "src/app/commands/command"
+import {invoke} from "src/core/invoke"
 
 export function showContextMenu(
   template: MenuItemConstructorOptions[],
@@ -12,9 +13,8 @@ export function showContextMenu(
   } else {
     const {callback, x, y} = opts
     const menu = sanitizeTemplate(template)
-    console.log(menu, template)
     setupListener(template, callback)
-    global.zui.invoke("showContextMenuOp", menu, {x, y})
+    invoke("showContextMenuOp", menu, {x, y})
   }
 }
 

@@ -10,6 +10,7 @@ import {initAutosave} from "./initAutosave"
 import {commands} from "src/app/commands/command"
 import {menus} from "src/core/menu"
 import {initHandlers} from "./init-handlers"
+import {invoke} from "src/core/invoke"
 
 export default async function initialize() {
   const api = new ZuiApi()
@@ -28,7 +29,7 @@ export default async function initialize() {
   initAutosave(store)
   commands.setContext(store, api)
   menus.setContext({api})
-  global.zui.invoke("windowInitialized", global.windowId)
+  invoke("windowInitialized", global.windowId)
 
   return {store, api, pluginManager}
 }

@@ -1,3 +1,5 @@
+import {invoke} from "src/core/invoke"
+
 interface Auth0Response {
   access_token: string
   refresh_token?: string
@@ -26,7 +28,7 @@ export default class Auth0Client {
     loginUrl.searchParams.append("prompt", "login")
     loginUrl.searchParams.append("state", state)
 
-    return global.zui.invoke("openLinkOp", loginUrl.toString())
+    return invoke("openLinkOp", loginUrl.toString())
   }
 
   private getTokenURL(): string {

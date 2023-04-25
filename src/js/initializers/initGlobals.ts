@@ -4,6 +4,7 @@ import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
 import tabHistory from "src/app/router/tab-history"
 import {WindowName} from "../electron/windows/types"
+import {invoke} from "src/core/invoke"
 
 export default async function initGlobals(store: Store) {
   const id = global.zui.windowId
@@ -14,6 +15,6 @@ export default async function initGlobals(store: Store) {
   global.tabHistories = new Histories(TabHistories.selectAll(store.getState()))
   global.windowHistory = createMemoryHistory()
   global.navTo = (path) => store.dispatch(tabHistory.push(path))
-  global.mainArgs = await global.zui.invoke("mainArgs")
-  global.appMeta = await global.zui.invoke("getAppMeta")
+  global.mainArgs = await invoke("mainArgs")
+  global.appMeta = await invoke("getAppMeta")
 }

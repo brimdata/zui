@@ -1,4 +1,5 @@
 import React from "react"
+import {invoke} from "src/core/invoke"
 
 type Props = {href?: string; children: JSX.Element | string; onClick?: Function}
 
@@ -9,7 +10,7 @@ export default function Link({href, onClick, children}: Props) {
   const click = (e) => {
     e.preventDefault()
     if (href) {
-      global.zui.invoke("openLinkOp", href)
+      invoke("openLinkOp", href)
     } else if (onClick) {
       onClick(e)
     }
