@@ -1,4 +1,4 @@
-import {Client} from "@brimdata/zed-js"
+import {Client} from "@brimdata/zed-node"
 import {existsSync} from "fs"
 import {reject} from "lodash"
 import path from "path"

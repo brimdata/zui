@@ -5,9 +5,9 @@ import path from "path"
 export class HiddenWindow extends ZuiWindow {
   name: WindowName = "hidden"
   options = {
-    show: false,
-    width: 0,
-    height: 0,
+    // show: false,
+    // width: 0,
+    // height: 0,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
@@ -19,5 +19,12 @@ export class HiddenWindow extends ZuiWindow {
 
   touch() {
     this.lastFocused = 0
+  }
+
+  load() {
+    this.beforeLoad()
+    return this.ref.loadURL(
+      `http://localhost:3000/background?id=${this.id}&name=${this.name}`
+    )
   }
 }

@@ -1,47 +1,23 @@
-import React from "react"
+import {differenceWith, map} from "lodash"
+import React, {useEffect} from "react"
+import {useSelector} from "react-redux"
 import {syncPool} from "src/app/core/pools/sync-pool"
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
-import log from "electron-log"
-import {differenceWith, map} from "lodash"
-import {useEffect} from "react"
-import {Provider, useDispatch, useSelector} from "react-redux"
-import "regenerator-runtime/runtime"
-import lake from "./models/lake"
+import {useDispatch} from "src/app/core/state"
+import {subscribeEvents} from "src/js/flows/subscribeEvents"
+import lake from "src/js/models/lake"
+import Lakes from "src/js/state/Lakes"
 import {
   getRemotePoolForLake,
   refreshRemoteQueries,
 } from "src/js/state/RemoteQueries/flows/remote-queries"
-import {subscribeEvents} from "./flows/subscribeEvents"
-import initialize from "./initializers/initialize"
-import lib from "./lib"
-import Lakes from "./state/Lakes"
-import {AppDispatch} from "./state/types"
-import {createRoot} from "react-dom/client"
 
-initialize()
-  .then(({store}) => {
-    const container = lib.doc.id("app-root")
-    const root = createRoot(container!)
-    root.render(
-      <Provider store={store}>
-        <Hidden />
-      </Provider>
-    )
-  })
-  .catch((e) => {
-    // window is hidden, so log errors with main process
-    log.error(e)
-  })
+type LakeSourceMap = {[lakeId: string]: EventSource}
+const lakeSourceMap: LakeSourceMap = {}
 
-type lakeSourceMapType = {
-  [lakeId: string]: EventSource
-}
-
-const lakeSourceMap: lakeSourceMapType = {}
-
-const Hidden = () => {
+export function SubscribeToEvents() {
   const lakes = useSelector(Lakes.all)
-  const dispatch = useDispatch() as AppDispatch
+  const dispatch = useDispatch()
 
   useEffect(() => {
     lakes.forEach((l) => {
@@ -51,11 +27,12 @@ const Hidden = () => {
           lakeSourceMap[l.id] = lSource
 
           lSource.addEventListener("pool-new", (_e) => {
+            console.log("pool-new event", l)
             dispatch(syncPoolsData(l.id))
           })
           lSource.addEventListener("pool-update", (_e) => {
             dispatch(syncPoolsData(l.id)).catch((e) =>
-              log.error("refresh error: ", e)
+              console.error("refresh error: ", e)
             )
           })
           lSource.addEventListener("pool-delete", (_e) => {
@@ -66,13 +43,13 @@ const Hidden = () => {
             try {
               eventData = JSON.parse(e["data"])
             } catch (e) {
-              return log.error(
+              return console.error(
                 new Error("Cannot parse branch-commit event data: " + e)
               )
             }
             const poolId = eventData && eventData["pool_id"]
             if (!poolId)
-              return log.error(
+              return console.error(
                 new Error("No 'pool_id' from branch-commit event")
               )
 
@@ -80,12 +57,12 @@ const Hidden = () => {
             if (poolId === remotePool?.id)
               dispatch(refreshRemoteQueries(lake(l)))
             dispatch(syncPool(poolId, l.id)).catch((e) => {
-              log.error("branch-commit update failed: ", e)
+              console.error("branch-commit update failed: ", e)
             })
           })
         })
       } catch (e) {
-        log.error("error establishing event subscription: ", e)
+        console.error("error establishing event subscription: ", e)
       }
     })
 
@@ -103,6 +80,5 @@ const Hidden = () => {
     global.firstMount = true
   }, [])
 
-  // this component is non-visual, only used for the reactive effects above
-  return null
+  return <h1>Background Page</h1>
 }

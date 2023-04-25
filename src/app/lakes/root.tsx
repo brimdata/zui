@@ -48,8 +48,6 @@ export function InitLake({children}) {
 
   if (!lake) return <Redirect to="/lakes" />
 
-  console.log("status", status, lake?.id)
-
   switch (status) {
     case "disconnected":
       return <ConnectionError onRetry={() => dispatch(initCurrentTab())} />
