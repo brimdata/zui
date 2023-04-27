@@ -1,9 +1,6 @@
 import {app as electronApp} from "electron"
 
-const isPackaged = () =>
-  electronApp
-    ? electronApp.isPackaged
-    : require("@electron/remote")?.app?.isPackaged
+const isPackaged = () => electronApp.isPackaged
 
 export default {
   get isCI() {

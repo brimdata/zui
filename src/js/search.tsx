@@ -8,14 +8,18 @@ import {getPersistedWindowState} from "./state/stores/get-persistable"
 import TabHistories from "./state/TabHistories"
 import React from "react"
 import {createRoot} from "react-dom/client"
-import {autosave} from "./electron/ops"
+import {invoke} from "src/core/invoke"
 
 initialize()
   .then(({store, api}) => {
     window.onbeforeunload = () => {
       api.abortables.abortAll()
       store.dispatch(TabHistories.save(global.tabHistories.serialize()))
-      autosave(global.windowId, getPersistedWindowState(store.getState()))
+      invoke(
+        "autosaveOp",
+        global.windowId,
+        getPersistedWindowState(store.getState())
+      )
     }
     const container = lib.doc.id("app-root")
     const root = createRoot(container!)

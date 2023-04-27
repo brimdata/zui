@@ -2,7 +2,6 @@ import React from "react"
 
 import {execSync} from "child_process"
 import {join} from "path"
-import * as remote from "@electron/remote"
 
 import TextContent from "./TextContent"
 import electronIsDev from "../electron/isDev"
@@ -10,7 +9,7 @@ import open from "../lib/open"
 import Icon from "src/app/core/icon-temp"
 
 export default function AboutWindow() {
-  let appVersion = remote.app.getVersion()
+  let appVersion = "todo"
   if (electronIsDev) {
     try {
       appVersion = execSync("git describe --tags --dirty").toString()
@@ -20,9 +19,9 @@ export default function AboutWindow() {
     }
   }
   const year = new Date().getFullYear()
-  const pathRoot = remote.app
-    .getAppPath()
-    .replace("app.asar", "app.asar.unpacked")
+  const pathRoot = "todo"
+  // app.getAppPath()
+  // .replace("app.asar", "app.asar.unpacked")
   const ackFilePath = join(pathRoot, "acknowledgments.txt")
   const licFilePath = join(pathRoot, "LICENSE.txt")
 

@@ -11,7 +11,7 @@ import {Thunk} from "src/js/state/types"
 import {Location} from "history"
 import {runHistogramQuery} from "src/js/state/Histogram/run-query"
 import Pools from "src/js/state/Pools"
-import {updatePluginSession} from "src/js/electron/ops"
+import {invoke} from "src/core/invoke"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {
@@ -27,7 +27,7 @@ export function loadRoute(location: Location): Thunk {
 function syncPluginContext(dispatch, getState) {
   const poolName = Current.getActiveQuery(getState()).toAst().poolName
   const program = QueryModel.versionToZed(Current.getVersion(getState()))
-  updatePluginSession({poolName, program})
+  invoke("updatePluginSessionOp", {poolName, program})
 }
 
 function syncEditor(dispatch, getState) {

@@ -1,16 +1,13 @@
 import log from "electron-log"
-import path from "path"
 import {ZuiMain} from "../zui-main"
-import {requireDir} from "../utils/require-dir"
+import * as initializers from "../initializers"
 
 export async function runInitializers(main: ZuiMain) {
-  await requireDir({
-    dir: path.join(__dirname, "../initializers"),
-    exclude: /\.test/,
-    run: (src, file) => {
-      log.debug("Initializing:", path.basename(file))
-      src.initialize && src.initialize(main)
-    },
-  })
+  for (const name in initializers) {
+    const mod = initializers[name]
+    if ("initialize" in mod) {
+      mod.initialize(main)
+    }
+  }
   log.info(`initializers loaded`)
 }

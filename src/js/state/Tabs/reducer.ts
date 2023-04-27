@@ -100,7 +100,7 @@ const slice = createSlice({
     })
     builder.addMatcher(isReduxAction, (s, a) => {
       // @ts-ignore
-      s.data = original(s).data.map((t) => tabReducer(t, a))
+      s.data = original(s)?.data?.map((t) => tabReducer(t, a))
     })
   },
 })

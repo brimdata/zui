@@ -3,7 +3,6 @@ import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
-import {deletePool, loadFiles} from "src/js/electron/ops"
 import {CreatePoolOpts, LoadFormat} from "@brimdata/zed-js"
 import {invoke} from "src/core/invoke"
 import {PoolUpdate} from "src/domain/pools/types"
@@ -28,7 +27,7 @@ export class PoolsApi extends ApiDomain {
   }
 
   async loadFiles(poolId: string, files: string[], format?: LoadFormat) {
-    await loadFiles({
+    await invoke("loadFilesOp", {
       lakeId: this.lakeId,
       poolId,
       branch: "main",
@@ -40,7 +39,7 @@ export class PoolsApi extends ApiDomain {
   async delete(id: string | string[]) {
     const ids = Array.isArray(id) ? id : [id]
     for (let id of ids) {
-      await deletePool(this.lakeId, id)
+      await invoke("deletePoolOp", this.lakeId, id)
     }
   }
 

@@ -22,7 +22,7 @@ import {QueryRoute} from "../query-home/route"
 import {WelcomePage} from "src/pages/welcome"
 import {PoolNew} from "src/pages/pools/new"
 import {initCurrentTab} from "src/js/flows/initCurrentTab"
-import {updatePluginLake} from "src/js/electron/ops"
+import {invoke} from "src/core/invoke"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -43,7 +43,7 @@ export function InitLake({children}) {
   }, [lake?.id, status])
 
   useEffect(() => {
-    if (lake?.id) updatePluginLake({lakeId: lake.id})
+    if (lake?.id) invoke("updatePluginLakeOp", {lakeId: lake.id})
   }, [lake?.id])
 
   if (!lake) return <Redirect to="/lakes" />

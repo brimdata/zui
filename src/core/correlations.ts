@@ -1,11 +1,11 @@
 import {Collector} from "@brimdata/zed-js"
-import {getCorrelations} from "src/js/electron/ops"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Results from "src/js/state/Results"
 import {Thunk} from "src/js/state/types"
+import {invoke} from "./invoke"
 
 export const runCorrelations = (): Thunk => async (dispatch, _) => {
-  const correlations = await getCorrelations()
+  const correlations = await invoke("getCorrelationsOp")
   correlations.forEach(({id, query}) => dispatch(runCorrelation(id, query)))
 }
 

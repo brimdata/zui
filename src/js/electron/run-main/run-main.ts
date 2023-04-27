@@ -1,4 +1,3 @@
-require("@electron/remote/main").initialize()
 import log from "electron-log"
 import {beforeBoot} from "./before-boot"
 import {MainArgs, mainDefaults} from "./args"

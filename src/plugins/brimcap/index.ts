@@ -1,6 +1,6 @@
 import * as zed from "@brimdata/zed-js"
-import {findUid} from "../zui-zeek/util"
-import {findConnLog} from "../zui-zeek/queries"
+import {findUid} from "../zeek/util"
+import {findConnLog} from "../zeek/queries"
 import {
   PluginContext,
   commands,

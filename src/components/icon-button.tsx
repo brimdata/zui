@@ -1,8 +1,8 @@
 import React, {MouseEvent, MouseEventHandler} from "react"
 import {BoundCommand} from "src/app/commands/command"
 import Icon from "src/app/core/icon-temp"
+import {invoke} from "src/core/invoke"
 import {MenuItem} from "src/core/menu"
-import {invokeCommand} from "src/js/electron/ops"
 import styled from "styled-components"
 
 const BG = styled.button`
@@ -42,7 +42,7 @@ export function IconButton(
     if (props.onClick) {
       props.onClick && props.onClick(e)
     } else if (typeof props.command === "string") {
-      invokeCommand(props.command, props.args)
+      invoke("invokeCommandOp", props.command, props.args)
     } else if (props.command instanceof BoundCommand) {
       props.command.run()
     }

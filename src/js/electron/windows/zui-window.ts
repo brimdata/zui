@@ -1,4 +1,3 @@
-import {enable} from "@electron/remote/main"
 import {nanoid} from "@reduxjs/toolkit"
 import {BrowserWindow, BrowserWindowConstructorOptions} from "electron"
 import {State} from "src/js/state/types"
@@ -41,7 +40,6 @@ export abstract class ZuiWindow {
     this.ref.on("focus", this.onFocus.bind(this))
     this.ref.on("close", this.onClose.bind(this))
     this.ref.on("focus", this.touch.bind(this))
-    enable(this.ref.webContents) // For Remote Module to Work
     return this
   }
 

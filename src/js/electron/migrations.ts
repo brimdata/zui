@@ -1,9 +1,5 @@
-import path from "path"
-
-import {last} from "src/js/lib/Array"
-import file from "../lib/file"
-
-const dir = path.join(__dirname, "../state/migrations")
+import {last} from "lodash"
+import * as migrationMap from "src/js/state/migrations"
 
 type Migration = {
   version: number
@@ -27,9 +23,7 @@ export class Migrations {
     args: {from: string | number; to?: string | number} = {from: 0}
   ) {
     const cv = parseInt(args.from.toString())
-    const files = await file(dir).contents()
-    const migrations = files
-      .filter(onlyMigrations)
+    const migrations = Object.entries(migrationMap)
       .map(build)
       .sort((a, b) => a.version - b.version)
 
@@ -68,16 +62,9 @@ export class Migrations {
   }
 }
 
-function onlyMigrations(file) {
-  // only matching number then words then .ts
-  return /\d{12}_\w+\.(ts|js)/.test(file)
-}
+function build(entry: [string, {default: (state: any) => any}]): Migration {
+  const migrate = entry[1].default
+  const version = parseInt(entry[0].replace("v", ""))
 
-function build(file): Migration {
-  const migrate = require(path.join(dir, file)).default
-  const [version] = file.replace(".js", "").replace(".ts", "").split("_")
-  return {
-    migrate,
-    version: parseInt(version),
-  }
+  return {migrate, version}
 }

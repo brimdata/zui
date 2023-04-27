@@ -13,7 +13,7 @@ import firstLast from "./util/firstLast"
 import formatDur from "./util/formatDur"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
-import {SURICATA_ALERTS} from "src/plugins/zui-suricata/ids"
+import {SURICATA_ALERTS} from "src/plugins/suricata/ids"
 import time from "src/js/models/time"
 
 type Props = {record: zed.Record}

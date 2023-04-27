@@ -1,7 +1,7 @@
 import zedScript from "src/js/zed-script"
 import {communityConnFilter, findConnLog, uidFilter} from "./queries"
 import {findCommunityConnArgs, findUid, getMd5, hasMd5} from "./util"
-import {correlations, lake, session} from "src/zui"
+import {PluginContext, correlations, lake, session} from "src/zui"
 import {
   MD5_CORRELATION,
   TX_HOSTS_CORRELATION,
@@ -10,7 +10,7 @@ import {
   UID_CORRELATION,
 } from "./ids"
 
-export function activate() {
+export function activate(_: PluginContext) {
   correlations.create(MD5_CORRELATION, {
     when: hasMd5,
     query: () => {

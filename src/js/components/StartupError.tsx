@@ -1,8 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import * as remote from "@electron/remote"
 import Link from "./common/Link"
-import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 
 const Wrap = styled.div`
   padding: 24px;
@@ -74,11 +72,6 @@ function format(e) {
 export default function StartupError({error}: Props) {
   const e = format(error)
 
-  function onClick() {
-    remote.app.relaunch()
-    remote.app.exit(0)
-  }
-
   return (
     <Wrap>
       <WindowDragArea />
@@ -89,7 +82,6 @@ export default function StartupError({error}: Props) {
           <StyledLink href="mailto:support@brimdata.io">
             Contact Support
           </StyledLink>
-          <ToolbarButton text="Relaunch" onClick={onClick} />
         </Actions>
       </Content>
     </Wrap>

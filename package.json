@@ -6,7 +6,7 @@
   "repository": "https://github.com/brimdata/zui",
   "license": "BSD-3-Clause",
   "version": "1.0.1",
-  "main": "dist/js/electron/main.js",
+  "main": "dist/main.js",
   "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "workspaces": [
     "./packages/*"
@@ -16,11 +16,13 @@
   },
   "scripts": {
     "start": "node scripts/start",
+    "start:main": "yarn build:main --watch",
+    "start:renderer": "next dev",
+    "start:electron": "nodemon --watch dist node_modules/electron/cli.js .",
     "build": "run-p -l 'build:**'",
+    "build:main": "node scripts/esbuild.mjs",
+    "build:renderer": "next build",
     "clean": "node scripts/clean",
-    "build:js": "swc src -d dist -D",
-    "build:css": "sass src:dist",
-    "build:workspaces": "yarn workspaces foreach --no-private run build",
     "lint": "run-p 'lint:**'",
     "lint:eslint": "eslint . --cache --color",
     "lint:tsc": "tsc -b",
@@ -30,8 +32,7 @@
     "prerelease": "yarn build",
     "release": "electron-builder --publish never",
     "postinstall": "node scripts/post-install",
-    "prepare": "husky install",
-    "watch:types": "yarn lint:tsc --watch"
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.55",
@@ -68,6 +69,8 @@
     "electron-builder": "^23.6.0",
     "electron-builder-notarize": "^1.2.0",
     "electron-mock-ipc": "^0.3.10",
+    "esbuild": "^0.17.18",
+    "esbuild-node-externals": "^1.7.0",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.1.2",
@@ -79,6 +82,7 @@
     "lint-staged": "^12.1.5",
     "livereload": "^0.9.1",
     "msw": "^0.36.8",
+    "nodemon": "^2.0.22",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
     "resize-observer-polyfill": "^1.5.1",
@@ -105,7 +109,6 @@
     "@codemirror/rectangular-selection": "^0.19.1",
     "@codemirror/search": "^0.19.9",
     "@codemirror/state": "^0.19.9",
-    "@electron/remote": "^2.0.1",
     "@js-joda/core": "^3.2.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@tanstack/react-table": "^8.7.0",
@@ -175,5 +178,11 @@
     "electron-installer-redhat": "^3.0.0",
     "node-pipe": "^0.1.1"
   },
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "yarn@3.1.1",
+  "electronmon": {
+    "patterns": [
+      "!*/**",
+      "dist/**"
+    ]
+  }
 }

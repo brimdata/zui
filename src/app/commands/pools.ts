@@ -6,7 +6,7 @@ import {PoolName} from "../features/sidebar/pools-section/pool-name"
 import {lakePoolPath} from "../router/utils/paths"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
-import {derivePoolName} from "src/js/electron/ops"
+import {invoke} from "src/core/invoke"
 
 function replaceLastItem<T>(array: T[], item: T) {
   const next = [...array]
@@ -87,7 +87,8 @@ export const createAndLoadFiles = createCommand(
       return
     }
     try {
-      const name = opts.name || (await derivePoolName(files, poolNames))
+      const name =
+        opts.name || (await invoke("derivePoolNameOp", files, poolNames))
       poolId = await api.pools.create(name, opts)
 
       if (files.length === 0) {

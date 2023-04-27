@@ -1,3 +1,3 @@
-export * from "./pools/operations"
-export * from "./e2e/operations"
-export * from "./results/operations"
+export * as poolOperations from "./pools/operations"
+export * as e2eOperations from "./e2e/operations"
+export * as resultsOperations from "./results/operations"

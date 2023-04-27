@@ -1,12 +1,15 @@
 import {createPluginContext} from "src/core/plugin"
-import {requireDir} from "../utils/require-dir"
-import {ZuiMain} from "../zui-main"
 
-export async function runPlugins(main: ZuiMain) {
-  return requireDir({
-    dir: main.args.pluginsPath,
-    run: (exported, directory) => {
-      exported.activate(createPluginContext(directory))
-    },
-  })
+// These plugins will maybe live a directory not included in
+// the bundle. But for now, bundle them up like all the other
+// main process code.
+
+import * as brimcap from "src/plugins/brimcap"
+import * as suricata from "src/plugins/suricata"
+import * as zeek from "src/plugins/zeek"
+
+export async function runPlugins() {
+  brimcap.activate(createPluginContext("brimcap"))
+  suricata.activate(createPluginContext("suricata"))
+  zeek.activate(createPluginContext("zeek"))
 }
