@@ -40,9 +40,9 @@ export const login =
     )
     return new Promise<string | null>((res, rej) => {
       const handleAuthCb = handleAuth(res, rej)
-      global.zui.listenOnce("windows:authCallback", handleAuthCb)
+      global.zui.once("windows:authCallback", handleAuthCb)
       abortSignal.addEventListener("abort", () => {
-        global.zui.stopListen("windows:authCallback", handleAuthCb)
+        global.zui.off("windows:authCallback", handleAuthCb)
         res(null)
       })
     })

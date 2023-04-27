@@ -2,7 +2,7 @@ import {Middleware, configureStore} from "@reduxjs/toolkit"
 import rootReducer from "./root-reducer"
 import {State} from "../types"
 import {shouldForward} from "./ipc-redux-middleware"
-import {globalDispatchFromMain} from "src/js/electron/ops/global-dispatch-op"
+import {globalDispatchFromMain} from "src/electron/ops/global-dispatch-op"
 
 /**
  * This goes on the main store and will send actions

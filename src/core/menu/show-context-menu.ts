@@ -6,7 +6,7 @@ export function showContextMenu(
   template: MenuItemConstructorOptions[],
   opts: {x?: number; y?: number; callback?: () => void} = {}
 ) {
-  if (global.zui.env.isTest) {
+  if (global.env.isTest) {
     document.dispatchEvent(
       new CustomEvent("nativeContextMenu", {detail: template})
     )
@@ -35,7 +35,7 @@ function findItem(id: string, template: MenuItemConstructorOptions[]) {
 }
 
 function setupListener(template, callback) {
-  global.zui.listenOnce("contextMenuResult", (e, id: string) => {
+  global.zui.once("contextMenuResult", (e, id: string) => {
     const item = findItem(id, template)
     // @ts-ignore
     if (item && "click" in item) item.click()

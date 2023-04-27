@@ -1,5 +1,5 @@
 import {zjson} from "@brimdata/zed-js"
-import {ZuiMain} from "src/js/electron/zui-main"
+import {ZuiMain} from "src/electron/zui-main"
 import {OpEventContext} from "src/js/state/Current/selectors"
 import {State} from "src/js/state/types"
 import {Config} from "../configurations/plugin-api"
@@ -7,7 +7,7 @@ import {CompiledCorrelation} from "../correlations/plugin-api"
 import {MenuItem} from "src/core/menu"
 import {AnyAction} from "@reduxjs/toolkit"
 import {LoadOptions} from "src/core/loader/types"
-import {MainArgs} from "src/js/electron/run-main/args"
+import {MainArgs} from "src/electron/run-main/args"
 import {
   MenuItemConstructorOptions,
   MessageBoxOptions,
@@ -17,7 +17,7 @@ import {
   SaveDialogOptions,
   SaveDialogReturnValue,
 } from "electron"
-import {SearchAppMenuState} from "src/js/electron/windows/search/app-menu"
+import {SearchAppMenuState} from "src/electron/windows/search/app-menu"
 import {Pool} from "src/app/core/pools/pool"
 import {Command} from "src/app/commands/command"
 

@@ -6,6 +6,7 @@ import {SessionHandlers} from "./session/messages"
 import {WindowHandlers} from "./window/messages"
 import {LegacyOperations} from "./legacy-ops/messages"
 import {E2EOperations} from "./e2e/messages"
+import {EnvOperations} from "./env/messages"
 
 export type Messages = ResultsHandlers &
   MenusHandlers &
@@ -16,7 +17,8 @@ export type Messages = ResultsHandlers &
 export type Operations = PoolsOperations &
   LegacyOperations &
   E2EOperations &
-  ResultsOperations
+  ResultsOperations &
+  EnvOperations
 
 export type OperationName = keyof Operations
 export type MessageName = keyof Messages

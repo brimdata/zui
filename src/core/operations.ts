@@ -1,6 +1,6 @@
 import {ipcMain, IpcMainInvokeEvent} from "electron"
 import log from "electron-log"
-import {ZuiMain} from "../js/electron/zui-main"
+import {ZuiMain} from "../electron/zui-main"
 import {OperationName, Operations} from "src/domain/messages"
 
 export function createOperation<K extends OperationName>(

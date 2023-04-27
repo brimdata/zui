@@ -1,5 +1,5 @@
 import path from "path"
-import {ZuiMain} from "src/js/electron/zui-main"
+import {ZuiMain} from "src/electron/zui-main"
 
 export const pluginNamespace = "brimcap"
 export const yamlConfigPropName = "yamlConfigPath"

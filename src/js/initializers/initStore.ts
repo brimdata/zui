@@ -16,7 +16,7 @@ function getInitialState(windowId) {
 }
 
 export default async (api: ZuiApi) => {
-  const windowId = global.zui.windowId
+  const windowId = global.windowId
   const initialState = await getInitialState(windowId)
   const extraArgument = {api}
   return createWindowStore(initialState, extraArgument)

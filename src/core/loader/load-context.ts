@@ -1,10 +1,10 @@
-import {ZuiMain} from "src/js/electron/zui-main"
+import {ZuiMain} from "src/electron/zui-main"
 import {LoadOptions} from "./types"
 import {nanoid} from "@reduxjs/toolkit"
 import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
-import {syncPoolOp} from "src/js/electron/ops/sync-pool-op"
-import {SearchWindow} from "src/js/electron/windows/search/search-window"
+import {syncPoolOp} from "src/electron/ops/sync-pool-op"
+import {SearchWindow} from "src/electron/windows/search/search-window"
 import {IpcMainInvokeEvent} from "electron"
 
 export class LoadContext {

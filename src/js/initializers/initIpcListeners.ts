@@ -14,62 +14,60 @@ import {viewLogDetail} from "../flows/viewLogDetail"
 import tabHistory from "src/app/router/tab-history"
 
 export default (store: Store) => {
-  global.zui.listen("clearPins", () => {
+  global.zui.on("clearPins", () => {
     store.dispatch(Editor.deleteAllPins())
     store.dispatch(Editor.setValue(""))
     store.dispatch(submitSearch())
   })
 
-  global.zui.listen("toggleLeftSidebar", () => {
+  global.zui.on("toggleLeftSidebar", () => {
     store.dispatch(Appearance.toggleSidebar())
   })
 
-  global.zui.listen("toggleRightSidebar", () => {
+  global.zui.on("toggleRightSidebar", () => {
     store.dispatch(Layout.toggleDetailPane())
   })
 
-  global.zui.listen("showPreferences", () => {
+  global.zui.on("showPreferences", () => {
     store.dispatch(Modal.show("settings"))
   })
 
-  global.zui.listen("showExportResults", () => {
+  global.zui.on("showExportResults", () => {
     store.dispatch(Modal.show("export"))
   })
 
-  global.zui.listen("back", () => {
+  global.zui.on("back", () => {
     store.dispatch(tabHistory.goBack())
   })
 
-  global.zui.listen("forward", () => {
+  global.zui.on("forward", () => {
     store.dispatch(tabHistory.goForward())
   })
 
-  global.zui.listen("closeTab", () => {
+  global.zui.on("closeTab", () => {
     store.dispatch(Tabs.closeActive())
   })
 
-  global.zui.listen("windows:newSearchTab", (e, {params}) => {
+  global.zui.on("windows:newSearchTab", (e, {params}) => {
     initNewSearchTab(store, params)
   })
 
-  global.zui.listen("globalStore:dispatch", (e, {action}) =>
-    store.dispatch(action)
-  )
+  global.zui.on("globalStore:dispatch", (e, {action}) => store.dispatch(action))
 
-  global.zui.listen("showReleaseNotes", () => {
+  global.zui.on("showReleaseNotes", () => {
     const id = Current.getLakeId(store.getState())
     store.dispatch(Tabs.create(releaseNotesPath(id)))
   })
 
-  global.zui.listen("toggleHistogram", () => {
+  global.zui.on("toggleHistogram", () => {
     store.dispatch(Layout.toggleHistogram())
   })
 
-  global.zui.listen("runCommand", (e, id, ...args) => {
+  global.zui.on("runCommand", (e, id, ...args) => {
     commands.run(id, ...args)
   })
 
-  global.zui.listen("detail-window-args", (e, opts) => {
+  global.zui.on("detail-window-args", (e, opts) => {
     if (opts) {
       global.windowHistory.replace(opts.url)
       const value = zed.decode(opts.value) as zed.Record

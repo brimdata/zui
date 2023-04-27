@@ -10,7 +10,7 @@ export function maybeShowReleaseNotes(): Thunk {
     const isFirstRunEver = global.appMeta.isFirstRun
 
     if (
-      !global.zui.env.isTest &&
+      !global.env.isTest &&
       !isFirstRunEver &&
       global.mainArgs.releaseNotes &&
       Launches.firstRunOfVersion(getState(), version)

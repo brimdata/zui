@@ -1,9 +1,16 @@
 import "regenerator-runtime/runtime"
 import {configure} from "@testing-library/react"
 import env from "src/app/core/env"
-import {preloadApi} from "src/js/electron/windows/preload"
+import {ipcRenderer} from "electron"
 
-global.zui = {...preloadApi(), windowName: "search"}
+const preloadApi = () => ({
+  on: ipcRenderer.on.bind(ipcRenderer),
+  off: ipcRenderer.off.bind(ipcRenderer),
+  once: ipcRenderer.once.bind(ipcRenderer),
+  invoke: ipcRenderer.invoke.bind(ipcRenderer),
+})
+
+global.zui = preloadApi()
 
 if (env.isCI) {
   configure({asyncUtilTimeout: 5000})

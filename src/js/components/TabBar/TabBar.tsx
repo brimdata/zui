@@ -73,7 +73,7 @@ export default function TabBar() {
   const sidebarCollapsed = !useSelector(Appearance.sidebarIsOpen)
   return (
     <BG>
-      {sidebarCollapsed && global.zui.env.isMac && (
+      {sidebarCollapsed && global.env.isMac && (
         <TrafficLightBG>
           <SidebarToggleButton />
         </TrafficLightBG>

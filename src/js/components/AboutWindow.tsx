@@ -4,7 +4,7 @@ import {execSync} from "child_process"
 import {join} from "path"
 
 import TextContent from "./TextContent"
-import electronIsDev from "../electron/isDev"
+import electronIsDev from "../../electron/isDev"
 import open from "../lib/open"
 import Icon from "src/app/core/icon-temp"
 

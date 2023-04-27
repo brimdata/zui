@@ -16,7 +16,7 @@ export function createHandler<K extends MessageName>(
   message: K,
   handler: (context: HandlerContext, ...args: Messages[K]) => void
 ) {
-  global.zui?.listen(message, (_event, ...args: Messages[K]) => {
+  global.zui?.on(message, (_event, ...args: Messages[K]) => {
     handler(context, ...args)
   })
 }

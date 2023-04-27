@@ -1,6 +1,6 @@
 import "src/test/system/real-paths"
 import React from "react"
-import {main} from "src/js/electron/run-main/run-main"
+import {main} from "src/electron/run-main/run-main"
 import initialize from "src/js/initializers/initialize"
 import fsExtra from "fs-extra"
 import {AppProvider} from "src/app/core/context"
@@ -8,7 +8,7 @@ import {getPort} from "./port-service"
 import {waitFor} from "@testing-library/react"
 import {Store} from "src/js/state/types"
 import ZuiApi from "src/js/api/zui-api"
-import {ZuiMain} from "src/js/electron/zui-main"
+import {ZuiMain} from "src/electron/zui-main"
 
 const defaults = () => ({
   page: "search",

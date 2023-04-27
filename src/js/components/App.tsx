@@ -21,7 +21,6 @@ export default function App() {
   useSearchAppMenu()
   useReleaseNotes()
   useSearchShortcuts()
-
   return (
     <AppTabsRouter>
       <Head>
