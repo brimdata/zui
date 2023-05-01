@@ -2,11 +2,6 @@ import createIPCMock from "electron-mock-ipc"
 import EventEmitter from "events"
 import path from "path"
 const mockIpc = createIPCMock()
-// Remove these 3 lines once this is merged upstream:
-// https://github.com/h3poteto/electron-mock-ipc/pull/402
-mockIpc.ipcRenderer.emitter.setMaxListeners(3)
-mockIpc.ipcRenderer.errorEmitter.setMaxListeners(3)
-mockIpc.ipcMain.emitter.setMaxListeners(1)
 
 export const ipcMain = mockIpc.ipcMain
 export const ipcRenderer = mockIpc.ipcRenderer

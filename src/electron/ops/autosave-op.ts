@@ -13,10 +13,6 @@ export const autosaveOp = createOperation(
   "autosaveOp",
   async ({main}, windowId: string, windowState: State) => {
     if (main.isQuitting) return
-    console.log(
-      main.windows.all.map((w) => w.id),
-      windowId
-    )
     main.windows.update(windowId, windowState)
     saveSession(main)
   }

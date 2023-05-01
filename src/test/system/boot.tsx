@@ -51,12 +51,11 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
     timeout: 20_000,
   })
-  const brimRenderer = await initialize()
-  global.windowId = brimMain.windows.byName("search")[0].id
+  const windowId = brimMain.windows.byName("search")[0].id
+  const brimRenderer = await initialize(windowId, "search")
   return {
     main: brimMain,
     store: brimRenderer.store,
-    plugins: brimRenderer.pluginManager,
     api: brimRenderer.api,
     wrapper: createWrapper(brimRenderer.store, brimRenderer.api),
   }

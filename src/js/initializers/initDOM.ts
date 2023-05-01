@@ -11,8 +11,10 @@ type Args = {
 }
 
 function appendDivId(id: string, args: Partial<Args> = {}) {
-  const div = document.createElement("div")
-  div.id = id
-  if (args.hidden) div.style.visibility = "hidden"
-  if (document.body) document.body.appendChild(div)
+  if ("document" in globalThis) {
+    const div = document.createElement("div")
+    div.id = id
+    if (args.hidden) div.style.visibility = "hidden"
+    if (document.body) document.body.appendChild(div)
+  }
 }

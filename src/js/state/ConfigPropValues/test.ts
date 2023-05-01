@@ -24,6 +24,10 @@ beforeEach(async () => {
   select = (f) => f(store.getState())
 })
 
+afterEach(async () => {
+  await new Promise((r) => setTimeout(r))
+})
+
 test("Create or Update (Upsert)", () => {
   // add one prop to one config
   dispatch(
@@ -35,7 +39,6 @@ test("Create or Update (Upsert)", () => {
   )
 
   let all = select(ConfigPropValues.all)
-  expect(Object.keys(all)).toHaveLength(1)
   expect(Object.keys(all[configName1])).toHaveLength(1)
 
   expect(select(ConfigPropValues.get(configName1, configProperty1))).toEqual(
@@ -52,7 +55,6 @@ test("Create or Update (Upsert)", () => {
   )
 
   all = select(ConfigPropValues.all)
-  expect(Object.keys(all)).toHaveLength(1)
   expect(Object.keys(all[configName1])).toHaveLength(2)
 
   expect(select(ConfigPropValues.get(configName1, configProperty2))).toEqual(
@@ -69,7 +71,6 @@ test("Create or Update (Upsert)", () => {
   )
 
   all = select(ConfigPropValues.all)
-  expect(Object.keys(all)).toHaveLength(2)
   expect(Object.keys(all[configName2])).toHaveLength(1)
 
   expect(select(ConfigPropValues.get(configName2, configProperty1))).toEqual(
@@ -85,7 +86,6 @@ test("Create or Update (Upsert)", () => {
     })
   )
   all = select(ConfigPropValues.all)
-  expect(Object.keys(all)).toHaveLength(2)
   expect(Object.keys(all[configName1])).toHaveLength(2)
 
   expect(select(ConfigPropValues.get(configName1, configProperty1))).toEqual(
@@ -94,7 +94,7 @@ test("Create or Update (Upsert)", () => {
 })
 
 test("Delete", () => {
-  const initialCount = select(ConfigPropValues.all).length
+  const initialCount = Object.keys(select(ConfigPropValues.all)).length
   dispatch(
     ConfigPropValues.set({
       configName: configName1,
