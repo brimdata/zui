@@ -9,7 +9,6 @@ import {LakesState} from "./Lakes/types"
 import {LaunchesState} from "./Launches"
 import {ModalState} from "./Modal/types"
 import {NoticeState} from "./Notice/types"
-import {PluginStorageState} from "./PluginStorage"
 import {PoolsState} from "./Pools/types"
 import {QueriesState} from "./Queries/types"
 import {TabHistoriesState} from "./TabHistories/types"
@@ -44,7 +43,6 @@ export type State = {
   modal: ModalState
   notice: NoticeState
   tabs: TabsState
-  pluginStorage: PluginStorageState
   lakeStatuses: LakeStatusesState
   queries: QueriesState
   remoteQueries: QueriesState

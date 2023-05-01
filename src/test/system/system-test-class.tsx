@@ -7,7 +7,6 @@ import userEvent from "@testing-library/user-event"
 import {dialog} from "electron"
 import React from "react"
 import ZuiApi from "src/js/api/zui-api"
-import {ZuiMain} from "src/js/electron/zui-main"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
@@ -16,6 +15,7 @@ import {setupServer} from "msw/node"
 import {BootArgs, boot} from "./boot"
 import Tabs from "src/js/state/Tabs"
 import {createAndLoadFiles} from "src/app/commands/pools"
+import {ZuiMain} from "src/electron/zui-main"
 
 jest.setTimeout(20_000)
 
