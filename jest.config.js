@@ -3,7 +3,7 @@ module.exports = {
     "^.+\\.(t|j)sx?$": ["@swc/jest"],
   },
   setupFiles: ["./src/test/unit/setup/before-env.ts"],
-  setupFilesAfterEnv: ["./src/test/unit/setup/after-env/index.ts"],
+  setupFilesAfterEnv: ["./src/test/unit/setup/after-env.ts"],
   testEnvironmentOptions: {
     testURL: "http://localhost:3000/?name=search&id=test-1",
   },

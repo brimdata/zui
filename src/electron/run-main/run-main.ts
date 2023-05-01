@@ -3,6 +3,7 @@ import {beforeBoot} from "./before-boot"
 import {MainArgs, mainDefaults} from "./args"
 import {boot} from "./boot"
 import {afterBoot} from "./after-boot"
+import {nanoid} from "@reduxjs/toolkit"
 
 export async function main(args: Partial<MainArgs> = {}) {
   /* 
@@ -22,5 +23,6 @@ export async function main(args: Partial<MainArgs> = {}) {
     AFTER BOOT: Non-critical setup items
   */
   await afterBoot(zuiMain)
+  zuiMain.store.id = nanoid()
   return zuiMain
 }

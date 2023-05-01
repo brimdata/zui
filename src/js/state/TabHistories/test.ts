@@ -7,8 +7,8 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 import TabHistories from "./index"
 
 let store
-beforeEach(() => {
-  store = initTestStore()
+beforeEach(async () => {
+  store = await initTestStore()
 })
 
 test("save and select", () => {

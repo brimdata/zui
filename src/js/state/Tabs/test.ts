@@ -2,13 +2,15 @@
  * @jest-environment jsdom
  */
 
+import dispatchAll from "src/test/unit/helpers/dispatchAll"
 import Current from "../Current"
+import {Store} from "../types"
 import Tabs from "./"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 
-let store
-beforeEach(() => {
-  store = initTestStore()
+let store: Store
+beforeEach(async () => {
+  store = await initTestStore()
 })
 
 test("initial state has one tab", () => {
@@ -16,12 +18,12 @@ test("initial state has one tab", () => {
 })
 
 test("add tab with no data", () => {
-  const state = store.dispatchAll([Tabs.add("1")])
+  const state = dispatchAll(store, [Tabs.add("1")])
   expect(Tabs.getCount(state)).toBe(2)
 })
 
 test("cannot activate tab that does not exist in data", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     Tabs.add("1"),
     Tabs.activate("1"),
     Tabs.activate("does-not-exist"),
@@ -31,12 +33,12 @@ test("cannot activate tab that does not exist in data", () => {
 })
 
 test("remove tab", () => {
-  const state = store.dispatchAll([Tabs.add("1"), Tabs.remove("1")])
+  const state = dispatchAll(store, [Tabs.add("1"), Tabs.remove("1")])
   expect(Tabs.getCount(state)).toBe(1)
 })
 
 test("remove last, active tab", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     Tabs.add("1"),
     Tabs.add("2"),
     Tabs.activate("2"),
@@ -46,7 +48,7 @@ test("remove last, active tab", () => {
 })
 
 test("remove middle, active tab", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     Tabs.add("1"),
     Tabs.add("2"),
     Tabs.add("3"),
@@ -59,7 +61,7 @@ test("remove middle, active tab", () => {
 
 test("remove first, active tab", () => {
   const first = Tabs.getData(store.getState())[0].id as string
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     Tabs.add("1"),
     Tabs.add("2"),
     Tabs.add("3"),
@@ -70,7 +72,7 @@ test("remove first, active tab", () => {
 })
 
 test("remove non-active tab before active tab", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     Tabs.add("1"),
     Tabs.add("2"),
     Tabs.activate("2"),
@@ -80,7 +82,7 @@ test("remove non-active tab before active tab", () => {
 })
 
 test("remove non-active tab after active tab", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     Tabs.add("1"),
     Tabs.add("2"),
     Tabs.activate("1"),
@@ -91,7 +93,7 @@ test("remove non-active tab after active tab", () => {
 
 test("remove tab does nothing if only one tab left", () => {
   const first = Tabs.getData(store.getState())[0].id as string
-  const state = store.dispatchAll([Tabs.remove(first)])
+  const state = dispatchAll(store, [Tabs.remove(first)])
 
   expect(Tabs.getCount(state)).toBe(1)
 })
@@ -99,7 +101,7 @@ test("remove tab does nothing if only one tab left", () => {
 test("reorder tabs", () => {
   const first = Tabs.getData(store.getState())[0].id
 
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     Tabs.add("a"),
     Tabs.add("b"),
     Tabs.add("c"),
@@ -112,7 +114,7 @@ test("reorder tabs", () => {
 test("reorder tabs does not throw error if invalid", () => {
   const first = Tabs.getData(store.getState())[0].id
 
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     Tabs.add("a"),
     Tabs.add("b"),
     Tabs.add("c"),
@@ -123,7 +125,7 @@ test("reorder tabs does not throw error if invalid", () => {
 })
 
 test("reset tab", () => {
-  const state = store.dispatchAll([Tabs.clearActive()])
+  const state = dispatchAll(store, [Tabs.clearActive()])
 
   const tab = Tabs.getActiveTab(state)
   expect(tab.id).toEqual(Tabs.getActive(state))

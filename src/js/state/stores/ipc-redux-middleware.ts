@@ -10,7 +10,7 @@ export const ipcRendererReduxMiddleware: Middleware =
 
     if (shouldForward(action)) {
       global.zui
-        .invoke("dispatchGlobalFromWindow", action)
+        .invoke("dispatchGlobalFromWindow", action, global.windowId)
         .catch((e) => console.error(e))
     }
 

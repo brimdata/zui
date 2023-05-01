@@ -4,6 +4,7 @@
 
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import ConfigPropValues from "./index"
+import {Store} from "../types"
 
 const configName1 = "testconfig1"
 const configName2 = "testconfig2"
@@ -16,9 +17,9 @@ const data1 = {
 
 const data2 = "test2"
 
-let select, dispatch, store
-beforeEach(() => {
-  store = initTestStore()
+let select, dispatch, store: Store
+beforeEach(async () => {
+  store = await initTestStore()
   dispatch = store.dispatch
   select = (f) => f(store.getState())
 })
@@ -93,6 +94,7 @@ test("Create or Update (Upsert)", () => {
 })
 
 test("Delete", () => {
+  const initialCount = select(ConfigPropValues.all).length
   dispatch(
     ConfigPropValues.set({
       configName: configName1,
@@ -109,7 +111,7 @@ test("Delete", () => {
   )
 
   const all = select(ConfigPropValues.all)
-  expect(Object.keys(all)).toHaveLength(0)
+  expect(Object.keys(all)).toHaveLength(initialCount)
   expect(select(ConfigPropValues.get(configName1, configProperty1))).toBe(
     undefined
   )

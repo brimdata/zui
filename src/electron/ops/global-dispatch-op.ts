@@ -1,6 +1,6 @@
 import {AnyAction} from "@reduxjs/toolkit"
-import {createOperation} from "../../core/operations"
 import {ZuiWindow} from "../windows/zui-window"
+import {createOperation} from "src/core/operations"
 
 export const globalDispatchFromWindow = createOperation(
   "dispatchGlobalFromWindow",

@@ -4,22 +4,28 @@ import onIdle from "on-idle"
 import {invoke} from "src/core/invoke"
 
 export function initAutosave(store) {
+  if (!global.mainArgs.autosave) return
+
   let cancel = () => {}
 
-  function saveFunction() {
+  function saveState() {
+    invoke(
+      "autosaveOp",
+      global.windowId,
+      getPersistedWindowState(store.getState())
+    )
+  }
+
+  function saveStateOnIdle() {
     cancel()
     cancel = onIdle(() => {
-      invoke(
-        "autosaveOp",
-        global.windowId,
-        getPersistedWindowState(store.getState())
-      )
+      saveState()
     })
   }
 
-  const save = throttle(saveFunction, 1000)
+  const throttledSaveState = throttle(saveStateOnIdle, 1000)
 
   store.subscribe(() => {
-    save()
+    throttledSaveState()
   })
 }

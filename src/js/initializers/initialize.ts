@@ -3,7 +3,6 @@ import initDebugGlobals from "./initDebugGlobals"
 import initDOM from "./initDOM"
 import initGlobals from "./initGlobals"
 import initIpcListeners from "./initIpcListeners"
-import initPlugins from "./initPlugins"
 import initStore from "./initStore"
 import initLakeParams from "./initLakeParams"
 import {initAutosave} from "./initAutosave"
@@ -11,15 +10,30 @@ import {commands} from "src/app/commands/command"
 import {menus} from "src/core/menu"
 import {initHandlers} from "./init-handlers"
 import {invoke} from "src/core/invoke"
+import {WindowName} from "src/electron/windows/types"
 
-export default async function initialize() {
+const getWindowId = () => {
+  const params = new URLSearchParams(window.location.search)
+  return params.get("id")
+}
+
+const getWindowName = () => {
+  const params = new URLSearchParams(window.location.search)
+  return params.get("name") as WindowName
+}
+
+export default async function initialize(
+  windowId: string = getWindowId(),
+  windowName: WindowName = getWindowName()
+) {
+  global.featureFlags = globalThis.zui.featureFlags
+  global.windowId = windowId
+  global.windowName = windowName
+
   const api = new ZuiApi()
   const store = await initStore(api)
+
   api.init(store.dispatch, store.getState)
-
-  const pluginManager = await initPlugins(api)
-  global.featureFlags = globalThis.zui.featureFlags
-
   initDOM()
   await initGlobals(store)
   initIpcListeners(store)
@@ -31,5 +45,5 @@ export default async function initialize() {
   menus.setContext({api})
   invoke("windowInitialized", global.windowId)
 
-  return {store, api, pluginManager}
+  return {store, api}
 }

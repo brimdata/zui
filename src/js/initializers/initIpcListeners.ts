@@ -52,7 +52,9 @@ export default (store: Store) => {
     initNewSearchTab(store, params)
   })
 
-  global.zui.on("globalStore:dispatch", (e, {action}) => store.dispatch(action))
+  global.zui.on("globalStore:dispatch", (e, {action}) => {
+    store.dispatch(action)
+  })
 
   global.zui.on("showReleaseNotes", () => {
     const id = Current.getLakeId(store.getState())

@@ -28,6 +28,8 @@ export class Operation<Args extends any[], Ret> {
 
   listen(main: ZuiMain) {
     this.main = main
+    ipcMain.removeHandler(this.channel)
+
     ipcMain.handle(this.channel, (event, ...args: Args) => {
       log.debug("IPC Handling:", this.channel)
       return this.handler({main, event}, ...args)

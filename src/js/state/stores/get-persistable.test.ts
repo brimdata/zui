@@ -9,8 +9,13 @@ import {
 import Lakes from "../Lakes"
 import Tabs from "../Tabs"
 
+let store
+
+beforeEach(async () => {
+  store = await initTestStore()
+})
+
 test("deleting access tokens for authType auth0", () => {
-  const store = initTestStore()
   store.dispatch(
     Lakes.add({
       id: "1",
@@ -38,7 +43,6 @@ test("deleting access tokens for authType auth0", () => {
 })
 
 test("delete accessToken for authType none", () => {
-  const store = initTestStore()
   store.dispatch(
     Lakes.add({
       id: "1",
@@ -54,7 +58,6 @@ test("delete accessToken for authType none", () => {
 })
 
 test("keeps the tabs", () => {
-  const store = initTestStore()
   store.dispatch(Tabs.create("/", "1"))
   store.dispatch(Tabs.create("/", "2"))
   store.dispatch(Tabs.create("/", "3"))
@@ -65,7 +68,6 @@ test("keeps the tabs", () => {
 })
 
 test("global persist", () => {
-  const store = initTestStore()
   store.dispatch(
     Lakes.add({
       id: "1",

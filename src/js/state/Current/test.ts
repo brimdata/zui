@@ -8,11 +8,13 @@ import Lakes from "../Lakes"
 import {Lake} from "../Lakes/types"
 import Current from "./"
 import {lakePath} from "src/app/router/utils/paths"
+import {Store} from "../types"
+import dispatchAll from "src/test/unit/helpers/dispatchAll"
 
-let store
+let store: Store
 
-beforeEach(() => {
-  store = initTestStore()
+beforeEach(async () => {
+  store = await initTestStore()
 })
 
 test("setting the lake id", () => {
@@ -29,7 +31,7 @@ test("getting the actual lake", () => {
     port: "123",
     authType: "none",
   }
-  const state = store.dispatchAll([Lakes.add(l)])
+  const state = dispatchAll(store, [Lakes.add(l)])
   store.dispatch(tabHistory.push(lakePath(l.id)))
 
   expect(Current.mustGetLake(state).serialize()).toEqual(l)

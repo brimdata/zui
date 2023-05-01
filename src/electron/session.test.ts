@@ -22,7 +22,7 @@ beforeEach(() => fsExtra.ensureDir(dir))
 afterEach(() => fsExtra.remove(dir))
 
 test("session loading with migrations", async () => {
-  const state = initTestStore().getState()
+  const state = (await initTestStore()).getState()
   const migrations = await Migrations.init()
   const session = createSession(file)
   const data = encodeSessionState([], state)

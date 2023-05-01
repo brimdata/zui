@@ -17,10 +17,6 @@ const defaults = () => ({
 
 export type BootArgs = ReturnType<typeof defaults>
 
-export function onPage(name: string) {
-  window.history.replaceState(null, `Testing Page: ${name}`, `${name}.html`)
-}
-
 function createWrapper(
   store: Store,
   api: ZuiApi
@@ -40,7 +36,6 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
   const lakeLogs = `./run/system/${name}/logs`
   const lakePort = args.port || (await getPort())
   const appState = `./run/system/${name}/appState.json`
-  onPage(args.page)
   fsExtra.removeSync(lakeRoot)
   fsExtra.removeSync(lakeLogs)
   fsExtra.removeSync(appState)

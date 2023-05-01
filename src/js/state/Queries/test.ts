@@ -2,8 +2,12 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 import Queries from "."
 import QueryVersions from "../QueryVersions"
 import {makeBuildSelector} from "./selectors"
+import {Store} from "../types"
 
-const store = initTestStore()
+let store: Store
+beforeEach(async () => {
+  store = await initTestStore()
+})
 
 test("build selector", () => {
   store.dispatch(Queries.addItem({name: "My Queriy", id: "1"}))

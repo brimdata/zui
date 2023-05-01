@@ -7,7 +7,7 @@ import file from "../js/lib/file"
 
 export type Session = ReturnType<typeof session>
 
-export default function session(path: string) {
+export default function session(path: string | null) {
   let version = 0
 
   return {
@@ -17,14 +17,17 @@ export default function session(path: string) {
     },
 
     save(data: SessionState, p: string = path) {
+      if (path === null) return
       return file(p).write(JSON.stringify({version, data}))
     },
 
     saveSync(data: SessionState, p: string = path) {
+      if (path === null) return
       return file(p).writeSync(JSON.stringify({version, data}))
     },
 
     load: async function (): Promise<SessionState | null | undefined> {
+      if (path === null) return null
       const migrator = await Migrations.init()
       const f = file(path)
 
@@ -47,6 +50,7 @@ export default function session(path: string) {
     },
 
     async delete() {
+      if (path === null) return
       const f = file(path)
       if (await f.exists()) {
         return f.remove()

@@ -1,48 +1,19 @@
-import {configureStore} from "@reduxjs/toolkit"
-import ZuiApi from "src/js/api/zui-api"
-import initGlobals from "src/js/initializers/initGlobals"
-import rootReducer from "src/js/state/stores/root-reducer"
-import {Action, State, Store} from "src/js/state/types"
+import {main as runMain} from "src/electron/run-main/run-main"
+import {ZuiMain} from "src/electron/zui-main"
+import initialize from "src/js/initializers/initialize"
+import {Store} from "src/js/state/types"
 
-export type TestStore = {
-  dispatchAll: Function
-  getActions: Function
-  getActionTypes: Function
-  clearActions: Function
-} & Store
-/**
- * @deprecated Use import {setupStore} from "src/test/unit"
- */
-export default (api: ZuiApi = new ZuiApi()): TestStore => {
-  const store = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        thunk: {
-          extraArgument: {api},
-        },
-        serializableCheck: false,
-        immutableCheck: false,
-      }),
-    enhancers: (defaultEnhancers) => [applyDispatchAll(), ...defaultEnhancers],
-  }) as any
-  initGlobals(store)
+export default async (): Promise<Store> => {
+  const main = (await runMain({
+    lake: false,
+    devtools: false,
+    releaseNotes: false,
+    appState: null,
+    autosave: null,
+  })) as ZuiMain
+  const windowId = main.windows.byName("search")[0].id
+  const windowName = "search"
+  const {store} = await initialize(windowId, windowName)
+
   return store
-}
-
-function applyDispatchAll() {
-  return (createStore) =>
-    (...args) => {
-      const store = createStore(...args)
-
-      const dispatchAll = (actions: Action[]): State => {
-        actions.forEach(store.dispatch)
-        return store.getState()
-      }
-
-      return {
-        ...store,
-        dispatchAll,
-      }
-    }
 }

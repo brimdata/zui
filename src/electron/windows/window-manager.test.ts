@@ -2,16 +2,14 @@
  * @jest-environment jsdom
  */
 
-import initIpcListeners from "src/js/initializers/initIpcListeners"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import {encodeSessionState} from "../session-state"
 import {WindowManager} from "./window-manager"
 
-let store = initTestStore()
-initIpcListeners(store)
+let store
 
-beforeEach(() => {
-  store = initTestStore()
+beforeEach(async () => {
+  store = await initTestStore()
 })
 
 test("serialize each window", async () => {

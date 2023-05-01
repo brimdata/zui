@@ -6,10 +6,11 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 import Queries from "./"
 import {Group} from "./types"
 import get from "lodash/get"
+import {Store} from "../types"
 
-let store
-beforeEach(() => {
-  store = initTestStore()
+let store: Store
+beforeEach(async () => {
+  store = await initTestStore()
 })
 
 const testLib = {

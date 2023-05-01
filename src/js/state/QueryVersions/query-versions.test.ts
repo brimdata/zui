@@ -7,8 +7,8 @@ import initTestStore from "../../../test/unit/helpers/initTestStore"
 import {QueryVersion} from "./types"
 
 let store
-beforeEach(() => {
-  store = initTestStore()
+beforeEach(async () => {
+  store = await initTestStore()
 })
 
 const testQueryId = "testQueryId"

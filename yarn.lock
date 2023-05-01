@@ -6138,12 +6138,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-mock-ipc@npm:^0.3.10":
-  version: 0.3.10
-  resolution: "electron-mock-ipc@npm:0.3.10"
+"electron-mock-ipc@npm:^0.3.12":
+  version: 0.3.12
+  resolution: "electron-mock-ipc@npm:0.3.12"
   peerDependencies:
     electron: ">=6.0.0"
-  checksum: 63e44a74a4a726fb6d6d13d24c4efb47dc9ffe9103fcc8673f63967a4d7f9c91d0a024270bb45cedb98732eca83903d144bd1a27e44ac48d43d41ab865f1bb5d
+  checksum: a95872906d6e42f87748accc7f9e6b5b6d7fc513a72b091c043bdcf638b7835d42c0a9d1533946a883c2e1446d331e98f4f290d1ed8ea0370baed085d6628916
   languageName: node
   linkType: hard
 
@@ -13964,7 +13964,7 @@ __metadata:
     electron-installer-redhat: ^3.0.0
     electron-localshortcut: ^3.2.1
     electron-log: 5.0.0-beta.6
-    electron-mock-ipc: ^0.3.10
+    electron-mock-ipc: ^0.3.12
     electron-updater: ^4.3.8
     esbuild: ^0.17.18
     esbuild-node-externals: ^1.7.0

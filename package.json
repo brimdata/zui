@@ -68,7 +68,7 @@
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",
     "electron-builder-notarize": "^1.2.0",
-    "electron-mock-ipc": "^0.3.10",
+    "electron-mock-ipc": "^0.3.12",
     "esbuild": "^0.17.18",
     "esbuild-node-externals": "^1.7.0",
     "eslint": "^8.11.0",
