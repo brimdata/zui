@@ -135,3 +135,7 @@ export const shell = {
 export const contextBridge = {
   exposeInMainWorld: jest.fn(),
 }
+
+export const protocol = {
+  interceptFileProtocol: jest.fn(),
+}
