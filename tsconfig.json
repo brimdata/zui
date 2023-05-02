@@ -19,7 +19,8 @@
     "incremental": true,
     "isolatedModules": true,
     "paths": {
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "packages/*": ["packages/*"]
     }
   },
   "exclude": ["scripts", "dist", "run"],

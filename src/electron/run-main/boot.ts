@@ -5,6 +5,7 @@ import {runInitializers} from "./run-initializers"
 import {runOperations} from "./run-operations"
 import {runPlugins} from "./run-plugins"
 import {runPluginBindings} from "./run-plugin-bindings"
+import {runProtocolHandlers} from "./run-protocol-handlers"
 
 export async function boot(args: Partial<MainArgs> = {}) {
   const main = await ZuiMain.boot({...mainDefaults(), ...args})
@@ -16,7 +17,9 @@ export async function boot(args: Partial<MainArgs> = {}) {
   await runInitializers(main)
   // 4. Activate all plugins in the plugins folder
   await runPlugins()
-  // 5. Start the app
+  // 5. Protocol Handler
+  await runProtocolHandlers()
+  // 6. Start the app
   app.whenReady().then(() => main.start())
   return main
 }

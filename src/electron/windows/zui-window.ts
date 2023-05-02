@@ -65,10 +65,15 @@ export abstract class ZuiWindow {
   }
 
   load() {
-    this.beforeLoad()
-    return this.ref.loadURL(
-      `http://localhost:3000${this.path}?id=${this.id}&name=${this.name}`
-    )
+    this.beforeLoad() // If dev
+    // return this.ref.loadURL(
+    //   `http://localhost:3000${this.path}?id=${this.id}&name=${this.name}`
+    // )
+    // else
+    const appFile = `file:///index.html?id=${this.id}&name=${this.name}`
+    // const file = `file://${path.resolve(__dirname, "../out/", this.path)}`
+    // {query: {id: this.id, name: this.name}
+    return this.ref.loadURL(appFile)
   }
 
   touch() {
