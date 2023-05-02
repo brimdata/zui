@@ -35,9 +35,13 @@ export class ZedAst {
     const list = []
 
     function collectOps(op, list) {
+      if (Array.isArray(op)) {
+        for (const o of op) collectOps(o, list)
+        return
+      }
       list.push(op)
-      if (COMPOUND_PROCS.includes(op.kind)) {
-        for (const p of op.ops) collectOps(p, list)
+      if (op.kind === PARALLEL_PROC) {
+        for (const p of op.paths) collectOps(p, list)
       } else if (op.kind === OP_EXPR_PROC) {
         collectOps(op.expr, list)
       }
@@ -67,5 +71,3 @@ export class ZedAst {
 
 export const OP_EXPR_PROC = "OpExpr"
 export const PARALLEL_PROC = "Parallel"
-export const SEQUENTIAL_PROC = "Sequential"
-export const COMPOUND_PROCS = [PARALLEL_PROC, SEQUENTIAL_PROC]
