@@ -30,8 +30,6 @@ test.describe("Query tests", () => {
     )
 
     expect(entries).toEqual(["3 now", "2 now", "1 now"])
-
-    await expect(await app.mainWin.locator("_react=HeadingSaved")).toBeHidden()
   })
 
   test("named queries' creation, modification, update/save, proper outdated status display", async () => {
@@ -42,7 +40,9 @@ test.describe("Query tests", () => {
       .locator('[placeholder="Query name\\.\\.\\."]')
       .fill("Test Query Name")
     await titleBar.getByRole("button", {name: "Create"}).click()
-    await expect(await app.mainWin.locator("_react=HeadingSaved")).toBeVisible()
+    await expect(
+      app.mainWin.getByRole("heading", {name: "Test Query Name"})
+    ).toBeVisible()
     await expect(
       await titleBar.getByRole("button", {name: "Test Query Name"})
     ).toBeVisible()

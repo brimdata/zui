@@ -7,7 +7,7 @@ import {createMenu, SearchAppMenuState} from "./app-menu"
 export class SearchWindow extends ZuiWindow {
   persistable = true
   name: WindowName = "search"
-  path = "/"
+  path = "/index"
   options: BrowserWindowConstructorOptions = {
     titleBarStyle: env.isMac ? "hidden" : undefined,
     trafficLightPosition: {x: 16, y: 13},

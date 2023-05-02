@@ -3,7 +3,7 @@ import {ZuiWindow} from "./zui-window"
 
 export class HiddenWindow extends ZuiWindow {
   name: WindowName = "hidden"
-  path: "/background"
+  path = "/background"
   options = {
     show: false,
     width: 0,

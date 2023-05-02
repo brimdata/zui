@@ -3,7 +3,7 @@ import {ZuiWindow} from "./zui-window"
 
 export class AboutWindow extends ZuiWindow {
   name: WindowName = "about"
-  path: "/about"
+  path = "/about"
   options = {
     width: 360,
     height: 360,
