@@ -1,30 +1,21 @@
-import React from "react"
-
-import {execSync} from "child_process"
-import {join} from "path"
-
+import React, {useEffect, useState} from "react"
 import TextContent from "./TextContent"
-import electronIsDev from "../../electron/isDev"
-import open from "../lib/open"
 import Icon from "src/app/core/icon-temp"
+import {EnvAboutApp} from "src/domain/env/types"
+import {invoke} from "src/core/invoke"
 
 export default function AboutWindow() {
-  let appVersion = "todo"
-  if (electronIsDev) {
-    try {
-      appVersion = execSync("git describe --tags --dirty").toString()
-    } catch (e) {
-      console.error(e)
-      // swallow this catch and just use release version as is if no git
-    }
-  }
-  const year = new Date().getFullYear()
-  const pathRoot = "todo"
-  // app.getAppPath()
-  // .replace("app.asar", "app.asar.unpacked")
-  const ackFilePath = join(pathRoot, "acknowledgments.txt")
-  const licFilePath = join(pathRoot, "LICENSE.txt")
+  const [data, setData] = useState<EnvAboutApp>(null)
 
+  useEffect(() => {
+    invoke("env.aboutApp").then(setData)
+  }, [])
+
+  if (!data) return null
+  else return <Content {...data} />
+}
+
+export function Content(props: EnvAboutApp) {
   return (
     <div className="about-window">
       <div className="about-logo">
@@ -34,28 +25,36 @@ export default function AboutWindow() {
         <div className="about-content">
           <section>
             <label>Version</label>
-            <p>{appVersion}</p>
+            <p>{props.version}</p>
           </section>
           <section>
             <label>Website</label>
-            <a onClick={() => open("https://www.brimdata.io")}>brimdata.io</a>
+            <a onClick={() => invoke("openLinkOp", props.website)}>
+              {props.website}
+            </a>
           </section>
           <section>
             <label>Source</label>
-            <a onClick={() => open("https://github.com/brimdata/zui")}>
-              github.com/brimdata/zui
+            <a onClick={() => invoke("openLinkOp", props.repository)}>
+              {props.repository}
             </a>
           </section>
           <hr />
           <footer>
             <section>
-              <a onClick={() => open(licFilePath)}>License</a>
+              <a onClick={() => invoke("openLinkOp", props.licensePath)}>
+                License
+              </a>
             </section>
             <section>
-              <a onClick={() => open(ackFilePath)}>Acknowledgments</a>
+              <a
+                onClick={() => invoke("openLinkOp", props.acknowledgementsPath)}
+              >
+                Acknowledgments
+              </a>
             </section>
             <section>
-              <p>Copyright {year} Brim Data, Inc.</p>
+              <p>Copyright {new Date().getFullYear()} Brim Data, Inc.</p>
             </section>
           </footer>
         </div>

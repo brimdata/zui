@@ -6,7 +6,7 @@ import initialize from "src/js/initializers/initialize"
 import TabHistories from "src/js/state/TabHistories"
 import {getPersistedWindowState} from "src/js/state/stores/get-persistable"
 
-export default function HomePage() {
+export default function SearchPage() {
   const [app, setApp] = useState(null)
 
   useEffect(() => {

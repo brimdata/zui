@@ -15,7 +15,7 @@ export default {
   get isDevelopment() {
     const isEnvSet = "ELECTRON_IS_DEV" in process.env
     const getFromEnv = parseInt(process.env.ELECTRON_IS_DEV, 10) === 1
-    return isEnvSet ? getFromEnv : isPackaged()
+    return isEnvSet ? getFromEnv : !isPackaged()
   },
   get isRelease() {
     return isPackaged()
