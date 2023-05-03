@@ -1061,27 +1061,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brimdata/zed-js@npm:0.0.14":
-  version: 0.0.14
-  resolution: "@brimdata/zed-js@npm:0.0.14"
+"@brimdata/zed-js@npm:0.0.15":
+  version: 0.0.15
+  resolution: "@brimdata/zed-js@npm:0.0.15"
   dependencies:
     "@types/event-source-polyfill": 1.0.1
     event-source-polyfill: 1.0.31
     events: 3.3.0
     tslib: 2.5.0
-  checksum: 80adb45c04e2721e2a9d335b0e3a3310896e383bdc95c5a1d082177a0ccbd814832fa622a5cd69459f4c9ddfa52818d827960c6718e91a9d7de977022b457e09
+  checksum: e5960ca4223b5c9f426c6a25695fd7829bb18f082e5bb7abb1ab03a766bf0d9ac32e98acaf678c3fec3263f8941db4c868ac76e2ae6c442864819783385bcb8f
   languageName: node
   linkType: hard
 
-"@brimdata/zed-node@npm:0.0.14":
-  version: 0.0.14
-  resolution: "@brimdata/zed-node@npm:0.0.14"
+"@brimdata/zed-node@npm:0.0.15":
+  version: 0.0.15
+  resolution: "@brimdata/zed-node@npm:0.0.15"
   dependencies:
-    "@brimdata/zed-js": 0.0.14
+    "@brimdata/zed-js": 0.0.15
     fs-extra: ^11.1.1
     node-fetch: ^2.6.2
-    zed: "github:brimdata/zed#main"
-  checksum: 911e33180b7429dccbce3632ee34f330003304def28299c88ea046bee0b74f1b6324db85ed379628405dc01a7c3c8ba4bb198bc088b6abad97b0a9936adaf371
+  peerDependencies:
+    zed: "*"
+  checksum: 7028747553efac0a013ffeb1863fbc05693459a9404b19159dda3c04102a1c2e3ea8e053e8e121acdd6305f00564678c957631f5e68c750f37bcab3289f7782d
   languageName: node
   linkType: hard
 
@@ -13880,13 +13881,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@github:brimdata/zed#main":
-  version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=3a98e7d8a7f85874e069dff7b0d92bc6c88d6720"
-  checksum: b2ced313a16188c6f97d505480abed2a3649d3a65d98a39ba9151dbe5101d4798e89c356ee56442e6795c16f97858befd6d2c82502157c448ff29de63dd92142
-  languageName: node
-  linkType: hard
-
 "zui-test-data@workspace:*, zui-test-data@workspace:packages/zui-test-data":
   version: 0.0.0-use.local
   resolution: "zui-test-data@workspace:packages/zui-test-data"
@@ -13898,8 +13892,8 @@ __metadata:
   resolution: "zui@workspace:."
   dependencies:
     "@babel/core": ^7.17.9
-    "@brimdata/zed-js": 0.0.14
-    "@brimdata/zed-node": 0.0.14
+    "@brimdata/zed-js": 0.0.15
+    "@brimdata/zed-node": 0.0.15
     "@codemirror/autocomplete": ^0.19.15
     "@codemirror/closebrackets": ^0.19.1
     "@codemirror/commands": ^0.19.8

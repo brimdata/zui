@@ -96,8 +96,8 @@
   },
   "dependencies": {
     "@babel/core": "^7.17.9",
-    "@brimdata/zed-js": "0.0.14",
-    "@brimdata/zed-node": "0.0.14",
+    "@brimdata/zed-js": "0.0.15",
+    "@brimdata/zed-node": "0.0.15",
     "@codemirror/autocomplete": "^0.19.15",
     "@codemirror/closebrackets": "^0.19.1",
     "@codemirror/commands": "^0.19.8",
