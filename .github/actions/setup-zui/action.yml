@@ -14,6 +14,9 @@ runs:
         cache: yarn
         node-version-file: .node-version
 
+    - name: Cache NextJS Artifacts
+      uses: jongwooo/next-cache@v1
+
     - name: Yarn Install
       run: yarn --inline-builds
       shell: bash

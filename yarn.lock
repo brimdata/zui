@@ -1061,28 +1061,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brimdata/zed-js@npm:0.0.8":
-  version: 0.0.8
-  resolution: "@brimdata/zed-js@npm:0.0.8"
+"@brimdata/zed-js@npm:0.0.14":
+  version: 0.0.14
+  resolution: "@brimdata/zed-js@npm:0.0.14"
   dependencies:
     "@types/event-source-polyfill": 1.0.1
     event-source-polyfill: 1.0.31
     events: 3.3.0
     tslib: 2.5.0
-  checksum: 7b783966f83b7dfee40f900be60ec00da4cc77b81c95350dabc845df7ddd1928d7ff819259113a7c75a1a3c181a28f12d70025387e0a2af5282c26695d9309c7
+  checksum: 80adb45c04e2721e2a9d335b0e3a3310896e383bdc95c5a1d082177a0ccbd814832fa622a5cd69459f4c9ddfa52818d827960c6718e91a9d7de977022b457e09
   languageName: node
   linkType: hard
 
-"@brimdata/zed-node@npm:0.0.8":
-  version: 0.0.8
-  resolution: "@brimdata/zed-node@npm:0.0.8"
+"@brimdata/zed-node@npm:0.0.14":
+  version: 0.0.14
+  resolution: "@brimdata/zed-node@npm:0.0.14"
   dependencies:
+    "@brimdata/zed-js": 0.0.14
     fs-extra: ^11.1.1
     node-fetch: ^2.6.2
     zed: "github:brimdata/zed#main"
-  peerDependencies:
-    "@brimdata/zed-js": "*"
-  checksum: 7b69cc1e9e80045b814e08c69bd2fd8357fd8795220c062f19b21e5cbe443bcd2a3db321799cb057696a4196715df4510e4b6b63d5e102f8554776eca42e3826
+  checksum: 911e33180b7429dccbce3632ee34f330003304def28299c88ea046bee0b74f1b6324db85ed379628405dc01a7c3c8ba4bb198bc088b6abad97b0a9936adaf371
   languageName: node
   linkType: hard
 
@@ -13899,8 +13898,8 @@ __metadata:
   resolution: "zui@workspace:."
   dependencies:
     "@babel/core": ^7.17.9
-    "@brimdata/zed-js": 0.0.8
-    "@brimdata/zed-node": 0.0.8
+    "@brimdata/zed-js": 0.0.14
+    "@brimdata/zed-node": 0.0.14
     "@codemirror/autocomplete": ^0.19.15
     "@codemirror/closebrackets": ^0.19.1
     "@codemirror/commands": ^0.19.8
