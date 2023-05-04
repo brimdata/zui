@@ -38,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{matrix.platform}}-installer
-          path: dist/installers
+          path: installers

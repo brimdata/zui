@@ -26,6 +26,6 @@ jobs:
           case ${{ runner.os }} in
             Linux )
               yarn electron-builder --linux=deb --publish never
-              sudo apt install -y --no-install-recommends ./dist/installers/*.deb
+              sudo apt install -y --no-install-recommends ./installers/*.deb
               ;;
           esac
