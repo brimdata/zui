@@ -1,6 +1,7 @@
 node_modules
 out
 dist
+installers
 releases
 coverage
 junit.xml

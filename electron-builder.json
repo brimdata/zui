@@ -2,7 +2,7 @@
   "appId": "io.brimdata.zui",
   "asar": true,
   "asarUnpack": ["zdeps", "LICENSE.txt", "acknowledgments.txt"],
-  "directories": {"output": "dist/installers"},
+  "directories": {"output": "installers"},
   "protocols": [{"name": "zui", "schemes": ["zui"]}],
   "mac": {
     "binaries": [
@@ -17,5 +17,14 @@
   "afterSign": "electron-builder-notarize",
   "publish": {
     "provider": "github"
-  }
+  },
+  "files": [
+    "dist/**",
+    "out/**",
+    "build/**",
+    "zdeps/**",
+    "LICENSE.txt",
+    "acknowledgments.txt",
+    "package.json"
+  ]
 }
