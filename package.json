@@ -179,11 +179,5 @@
     "electron-installer-redhat": "^3.0.0",
     "node-pipe": "^0.1.1"
   },
-  "packageManager": "yarn@3.1.1",
-  "electronmon": {
-    "patterns": [
-      "!*/**",
-      "dist/**"
-    ]
-  }
+  "packageManager": "yarn@3.1.1"
 }
