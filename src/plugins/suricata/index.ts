@@ -3,7 +3,9 @@ import {findCid, whenSuricata} from "./util"
 import {PluginContext, correlations, session} from "src/zui"
 import {SURICATA_CONNS, SURICATA_ALERTS} from "./ids"
 
-export function activate(_: PluginContext) {
+export function activate(context: PluginContext) {
+  process.env.BRIM_SURICATA_USER_DIR = context.storagePath
+
   correlations.create(SURICATA_CONNS, {
     when: whenSuricata,
     query: () => {

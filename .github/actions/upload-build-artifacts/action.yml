@@ -1,0 +1,25 @@
+name: Uploade Build Artifacts
+description: Uploade artifacts for each platform
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Mac Artifact
+        path: installers/*.dmg
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Windows Artifact
+        path: installers/*.exe
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Debian Artifact
+        path: installers/*.deb
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: RPM Artifact
+        path: installers/*.rpm

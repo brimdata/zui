@@ -34,8 +34,9 @@ jobs:
           cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
 
+      - name: Show /installers contents
+        shell: bash
+        run: tree -L 2 installers
+
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{matrix.platform}}-installer
-          path: installers
+        uses: ./.github/actions/setup-zui
