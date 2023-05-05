@@ -1073,16 +1073,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brimdata/zed-node@npm:0.0.15":
+"@brimdata/zed-node@file:../zealot/dist/packages/zed-node::locator=zui%40workspace%3A.":
   version: 0.0.15
-  resolution: "@brimdata/zed-node@npm:0.0.15"
+  resolution: "@brimdata/zed-node@file:../zealot/dist/packages/zed-node#../zealot/dist/packages/zed-node::hash=1d97bd&locator=zui%40workspace%3A."
   dependencies:
     "@brimdata/zed-js": 0.0.15
     fs-extra: ^11.1.1
     node-fetch: ^2.6.2
   peerDependencies:
     zed: "*"
-  checksum: 7028747553efac0a013ffeb1863fbc05693459a9404b19159dda3c04102a1c2e3ea8e053e8e121acdd6305f00564678c957631f5e68c750f37bcab3289f7782d
+  checksum: 2409c31ca7f4d5afcb75b1dc7614361f5ddb46dba4bfaf4ecc0c03efdce4d49ca8680c267810b0539b182beed62de0ab152d65f34600208912c7a5ba2ee7ab3e
   languageName: node
   linkType: hard
 
@@ -13718,7 +13718,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.17.9
     "@brimdata/zed-js": 0.0.15
-    "@brimdata/zed-node": 0.0.15
+    "@brimdata/zed-node": ../zealot/dist/packages/zed-node
     "@codemirror/autocomplete": ^0.19.15
     "@codemirror/closebrackets": ^0.19.1
     "@codemirror/commands": ^0.19.8
