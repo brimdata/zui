@@ -28,8 +28,11 @@ const QueryEditor = ({value, disabled}: Props) => {
   const dispatch = useDispatch()
   const onChange = useCallback((s: string) => dispatch(Editor.setValue(s)), [])
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      if ((runOnEnter && !e.shiftKey) || (!runOnEnter && cmdOrCtrl(e))) {
+    if (e.key === "Enter") {
+      if (
+        (runOnEnter && !e.shiftKey) ||
+        (!runOnEnter && (e.shiftKey || cmdOrCtrl(e)))
+      ) {
         e.preventDefault()
         dispatch(submitSearch())
       }
