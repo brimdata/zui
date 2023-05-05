@@ -16,6 +16,10 @@ jobs:
       - name: Checkout Zui
         uses: actions/checkout@v3
 
+      - name: ls works
+        shell: bash
+        run: ls
+
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
 
@@ -36,7 +40,7 @@ jobs:
 
       - name: Show /installers contents
         shell: bash
-        run: tree -L 2 installers
+        run: ls installers
 
       - name: Upload Artifacts
         uses: ./.github/actions/setup-zui
