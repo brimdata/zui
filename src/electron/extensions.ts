@@ -9,9 +9,7 @@ import log from "electron-log"
 export function installExtensions() {
   if (env.isIntegrationTest) return
   // @ts-ignore The types package is not up to date
-  return installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS], {
-    loadExtensionOptions: {allowFileAccess: true},
-  })
+  return installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
     .then(() => log.info("devtools loaded"))
     .catch((err) => log.error("devtools error occurred: ", err))
 }

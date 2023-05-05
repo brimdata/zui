@@ -1,5 +1,4 @@
 import * as esbuild from "esbuild"
-import {nodeExternalsPlugin} from "esbuild-node-externals"
 
 const args = process.argv.slice(2)
 
@@ -10,8 +9,8 @@ const context = await esbuild.context({
   minify: false,
   platform: "node",
   sourcemap: true,
-  target: "node14",
-  plugins: [nodeExternalsPlugin()],
+  target: "node16",
+  external: ["keytar", "electron", "node-pipe"],
 })
 
 if (args.includes("--watch")) {

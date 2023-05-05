@@ -1,6 +1,6 @@
 import pkg from "../../../package.json"
 
-const currentZedTag = pkg.dependencies.zed.split("#")[1] || "main"
+const currentZedTag = pkg.devDependencies.zed.split("#")[1] || "main"
 const zedDocsTag = currentZedTag.startsWith("v") ? currentZedTag : "next"
 
 export default {

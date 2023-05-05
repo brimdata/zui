@@ -5,7 +5,7 @@ const fs = require("fs-extra")
 const got = require("got")
 const path = require("path")
 const tmp = require("tmp")
-const brimPackage = require("../../package.json")
+const zuiPackage = require("../../package.json")
 const decompress = require("decompress")
 const zdepsPath = path.resolve("zdeps")
 
@@ -119,7 +119,7 @@ async function main() {
     // begins with "v*" is expected to be a released artifact, and will
     // be downloaded from the Zed repository. Otherwise, copy Zed
     // artifacts from node_modules via zedDevBuild.
-    const zedVersion = brimPackage.dependencies.zed.split("#")[1]
+    const zedVersion = zuiPackage.devDependencies.zed.split("#")[1]
     if (zedVersion.startsWith("v")) {
       await zedArtifactsDownload(zedVersion, zdepsPath)
       console.log("downloaded Zed artifacts version " + zedVersion)
