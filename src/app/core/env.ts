@@ -7,6 +7,7 @@ export default {
     return process.env.GITHUB_ACTIONS === "true"
   },
   get isIntegrationTest() {
+    // Delete this old thing
     return process.env.BRIM_ITEST === "true"
   },
   get isTest() {

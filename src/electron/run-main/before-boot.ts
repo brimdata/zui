@@ -1,12 +1,10 @@
 import {app} from "electron"
 import {appPathSetup} from "../appPathSetup"
-import {isFirstRun} from "../first-run"
-import isDev from "../isDev"
-import migrateBrimToZui from "../migrateBrimToZui"
 import {handleSquirrelEvent} from "../squirrel"
 import {windowsPre25Exists} from "../windows-pre-25"
 import {MainArgs} from "./args"
 import {setLogLevel} from "../set-log-level"
+import {runMigrations} from "./run-migrations"
 
 export async function beforeBoot(
   args: Partial<MainArgs>
@@ -34,9 +32,7 @@ export async function beforeBoot(
     return "Windows Version Pre 25 Exists"
   }
 
-  // On first ever run of a ZUI release, check if there is existing Brim app
-  // data and if so, copy it into ZUI.
-  if (!isDev && (await isFirstRun())) migrateBrimToZui()
+  await runMigrations()
 
   return null
 }

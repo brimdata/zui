@@ -2,10 +2,17 @@ import {app} from "electron"
 import path from "path"
 import fs from "fs-extra"
 import log from "electron-log"
-import {setFirstRun} from "./first-run"
+import {isFirstRun, setFirstRun} from "../first-run"
+import env from "src/app/core/env"
 
-export default () => {
+// On first ever run of a ZUI release, check if there is existing Brim app
+// data and if so, copy it into ZUI.
+
+export default async () => {
+  if (env.isDevelopment) return
+  if (!(await isFirstRun())) return
   if (app.name !== "Zui") return
+
   const zuiPath = app.getPath("userData")
   const zuiAppStatePath = path.join(zuiPath, "appState.json")
   const zuiAppDataPath = path.join(zuiPath, "data")
