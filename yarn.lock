@@ -1061,28 +1061,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brimdata/zed-js@npm:0.0.15":
-  version: 0.0.15
-  resolution: "@brimdata/zed-js@npm:0.0.15"
+"@brimdata/zed-js@npm:0.0.16":
+  version: 0.0.16
+  resolution: "@brimdata/zed-js@npm:0.0.16"
   dependencies:
     "@types/event-source-polyfill": 1.0.1
     event-source-polyfill: 1.0.31
     events: 3.3.0
     tslib: 2.5.0
-  checksum: e5960ca4223b5c9f426c6a25695fd7829bb18f082e5bb7abb1ab03a766bf0d9ac32e98acaf678c3fec3263f8941db4c868ac76e2ae6c442864819783385bcb8f
+  checksum: e7e44d0f819eefa1ebd21704039644482cc7fb809453d089d790054d42af61fccbaa7f8df1ff9a320bdb77c38da76a9f2a073a89663f2fec073ad284e661b87c
   languageName: node
   linkType: hard
 
-"@brimdata/zed-node@file:../zealot/dist/packages/zed-node::locator=zui%40workspace%3A.":
-  version: 0.0.15
-  resolution: "@brimdata/zed-node@file:../zealot/dist/packages/zed-node#../zealot/dist/packages/zed-node::hash=1d97bd&locator=zui%40workspace%3A."
+"@brimdata/zed-node@npm:0.0.16":
+  version: 0.0.16
+  resolution: "@brimdata/zed-node@npm:0.0.16"
   dependencies:
-    "@brimdata/zed-js": 0.0.15
+    "@brimdata/zed-js": 0.0.16
     fs-extra: ^11.1.1
     node-fetch: ^2.6.2
   peerDependencies:
     zed: "*"
-  checksum: 2409c31ca7f4d5afcb75b1dc7614361f5ddb46dba4bfaf4ecc0c03efdce4d49ca8680c267810b0539b182beed62de0ab152d65f34600208912c7a5ba2ee7ab3e
+  checksum: 4339ebba2d9f404fb713b34b4c6e1dd7a38dc0d316103b092c3b9dc450a7c578497dd14a63ca7ec08b0c2235232c2b6e690b1203888b94effa935edd37b04a8e
   languageName: node
   linkType: hard
 
@@ -13717,8 +13717,8 @@ __metadata:
   resolution: "zui@workspace:."
   dependencies:
     "@babel/core": ^7.17.9
-    "@brimdata/zed-js": 0.0.15
-    "@brimdata/zed-node": ../zealot/dist/packages/zed-node
+    "@brimdata/zed-js": 0.0.16
+    "@brimdata/zed-node": 0.0.16
     "@codemirror/autocomplete": ^0.19.15
     "@codemirror/closebrackets": ^0.19.1
     "@codemirror/commands": ^0.19.8
