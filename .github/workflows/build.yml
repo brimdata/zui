@@ -16,10 +16,6 @@ jobs:
       - name: Checkout Zui
         uses: actions/checkout@v3
 
-      - name: ls works
-        shell: bash
-        run: ls
-
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
 
@@ -37,10 +33,6 @@ jobs:
           apple_team_id: ${{ secrets.APPLE_TEAM_ID }}
           cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
-
-      - name: Show /installers contents
-        shell: bash
-        run: ls installers
 
       - name: Upload Artifacts
         uses: ./.github/actions/upload-build-artifacts
