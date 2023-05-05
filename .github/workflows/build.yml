@@ -43,4 +43,4 @@ jobs:
         run: ls installers
 
       - name: Upload Artifacts
-        uses: ./.github/actions/setup-zui
+        uses: ./.github/actions/upload-build-artifacts
