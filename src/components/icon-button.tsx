@@ -45,6 +45,8 @@ export function IconButton(
       invoke("invokeCommandOp", props.command, props.args)
     } else if (props.command instanceof BoundCommand) {
       props.command.run()
+    } else if (props.click) {
+      props.click()
     }
   }
   return (
