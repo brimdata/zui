@@ -24,7 +24,11 @@ export const showContextMenuOp = createOperation(
 )
 
 function injectClickHandlers(template, event) {
-  return template.map((item) => injectClick(item, event))
+  return template.map((item) => {
+    const fixed = injectClick(item, event)
+    if (fixed.submenu) fixed.submenu = injectClickHandlers(item.submenu, event)
+    return fixed
+  })
 }
 
 function injectClick(item, event: IpcMainInvokeEvent) {

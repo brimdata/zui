@@ -24,15 +24,27 @@ function sanitizeTemplate(template: MenuItemConstructorOptions[]) {
 }
 
 function sanitizeMenuItem(item: any) {
-  return {
+  const sanitizedItem = {
     ...item,
     click: undefined,
     command: item.command instanceof BoundCommand ? undefined : item.command,
   }
+  if (item.submenu) {
+    sanitizedItem.submenu = sanitizeTemplate(item.submenu)
+  }
+  return sanitizedItem
 }
 
 function findItem(id: string, template: MenuItemConstructorOptions[]) {
-  return template.find((item) => item.id === id || item.label === id)
+  console.log(id, template)
+  for (let item of template) {
+    if (item.id === id || item.label === id) return item
+    if (item.submenu) {
+      const result = findItem(id, item.submenu as MenuItemConstructorOptions[])
+      if (result) return result
+    }
+  }
+  return null
 }
 
 function setupListener(template, callback) {
