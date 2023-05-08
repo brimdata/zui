@@ -10,7 +10,7 @@ import {
   MD5_CORRELATION,
   RX_HOSTS_CORRELATION,
   TX_HOSTS_CORRELATION,
-} from "src/plugins/zeek/ids"
+} from "src/plugins/brimcap/zeek/ids"
 
 export const Md5Panel = () => {
   return (

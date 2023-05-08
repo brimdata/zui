@@ -7,6 +7,8 @@ import {ResultsApi} from "./results/plugin-api"
 import {SessionApi} from "./session/plugin-api"
 import {WindowApi} from "./window/plugin-api"
 
+export type {Config} from "./configurations/plugin-api"
+
 export const results = new ResultsApi()
 export const panes = new PanesApi()
 export const window = new WindowApi()

@@ -2,7 +2,6 @@ import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {Store} from "src/js/state/types"
 
 export type ConfigItemType = "file" | "string" | "directory" | "boolean" // | "number" | "boolean"
-
 export type ConfigItem = {
   name: string
   type: ConfigItemType

@@ -14,7 +14,7 @@ import EventLimit from "./EventLimit"
 import {showContextMenu} from "src/js/lib/System"
 import * as zed from "@brimdata/zed-js"
 import Results from "src/js/state/Results"
-import {UID_CORRELATION} from "src/plugins/zeek/ids"
+import {UID_CORRELATION} from "src/plugins/brimcap/zeek/ids"
 
 const id = UID_CORRELATION
 

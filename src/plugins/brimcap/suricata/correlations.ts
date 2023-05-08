@@ -1,11 +1,9 @@
 import zedScript from "src/js/zed-script"
 import {findCid, whenSuricata} from "./util"
-import {PluginContext, correlations, session} from "src/zui"
+import {correlations, session} from "src/zui"
 import {SURICATA_CONNS, SURICATA_ALERTS} from "./ids"
 
-export function activate(context: PluginContext) {
-  process.env.BRIM_SURICATA_USER_DIR = context.storagePath
-
+export function activateSuricataCorrelations() {
   correlations.create(SURICATA_CONNS, {
     when: whenSuricata,
     query: () => {

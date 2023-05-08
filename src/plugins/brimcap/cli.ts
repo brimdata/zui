@@ -1,4 +1,4 @@
-import env from "src/app/core/env"
+import {env} from "src/zui"
 import {spawnSync, spawn, ChildProcess} from "child_process"
 import {compact, isEmpty} from "lodash"
 import flatMap from "lodash/flatMap"
@@ -129,4 +129,8 @@ export default class BrimcapCLI {
   private execSpawnSync(subCommand: string, opts: string[]) {
     return spawnSync(this.binPath, [subCommand, ...opts])
   }
+}
+
+export function createCli() {
+  return new BrimcapCLI(env.getExePath("brimcap"))
 }

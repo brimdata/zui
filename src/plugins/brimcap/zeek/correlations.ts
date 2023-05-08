@@ -1,7 +1,7 @@
 import zedScript from "src/js/zed-script"
 import {communityConnFilter, findConnLog, uidFilter} from "./queries"
 import {findCommunityConnArgs, findUid, getMd5, hasMd5} from "./util"
-import {PluginContext, correlations, lake, session} from "src/zui"
+import {correlations, lake, session} from "src/zui"
 import {
   MD5_CORRELATION,
   TX_HOSTS_CORRELATION,
@@ -10,7 +10,7 @@ import {
   UID_CORRELATION,
 } from "./ids"
 
-export function activate(_: PluginContext) {
+export function activateZeekCorrelations() {
   correlations.create(MD5_CORRELATION, {
     when: hasMd5,
     query: () => {
@@ -34,6 +34,7 @@ export function activate(_: PluginContext) {
         | head 5`
     },
   })
+
   correlations.create(RX_HOSTS_CORRELATION, {
     when: hasMd5,
     query: () => {
@@ -45,6 +46,7 @@ export function activate(_: PluginContext) {
           | head 5`
     },
   })
+
   correlations.create(FILENAME_CORRELATION, {
     when: hasMd5,
     query: () => {
@@ -56,6 +58,7 @@ export function activate(_: PluginContext) {
           | head 5`
     },
   })
+
   correlations.create(UID_CORRELATION, {
     when: () => !!findUid(session.selectedRow),
     query: async () => {

@@ -1,16 +1,15 @@
-import {AnalyzeOptions} from "./brimcap-cli"
+import {AnalyzeOptions, createCli} from "./cli"
 import fs from "fs"
 import {compact} from "lodash"
 import errors from "src/js/errors"
 import {pluginNamespace, yamlConfigPropName} from "./config"
-import {createCli} from "./create-cli"
 import {ChildProcess} from "child_process"
 import {Loader} from "src/core/loader/types"
 import {LoadContext} from "src/core/loader/load-context"
-import {isPcap} from "./is-pcap"
-import {configurations} from "src/zui"
+import {isPcap} from "./packets/is-pcap"
+import {configurations, loaders} from "src/zui"
 
-export function createLoader(root: string): Loader {
+function createLoader(root: string): Loader {
   const processes: Record<number, ChildProcess> = {}
 
   async function when(ctx: LoadContext): Promise<boolean> {
@@ -119,4 +118,8 @@ export function createLoader(root: string): Loader {
 // helpers
 function statusToPercent(status, totalSize): number {
   return status.pcap_read_size / totalSize || 0
+}
+
+export function activateBrimcapLoader(root: string) {
+  loaders.create("brimcap-loader", createLoader(root))
 }

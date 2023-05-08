@@ -5,11 +5,7 @@ import {createPluginContext} from "src/core/plugin"
 // main process code.
 
 import * as brimcap from "src/plugins/brimcap"
-import * as suricata from "src/plugins/suricata"
-import * as zeek from "src/plugins/zeek"
 
 export async function runPlugins() {
   brimcap.activate(createPluginContext("brimcap"))
-  suricata.activate(createPluginContext("suricata"))
-  zeek.activate(createPluginContext("zeek"))
 }
