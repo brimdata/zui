@@ -10,14 +10,14 @@ export const savedQueryMenu = createMenu(
     return [
       {
         label: "Go to Latest Version",
-        command: queries.openLatestVersion,
+        command: queries.openLatestVersion.bind(),
         visible: active.isOutdated(),
       },
       {label: "Switch Query", nestedMenu: openQueryMenu},
       {type: "separator"},
       {
         label: "Duplicate",
-        command: queries.duplicate,
+        command: queries.duplicate.bind(),
         enabled: !query.isReadOnly,
       },
       {
@@ -46,24 +46,24 @@ export const savedQueryMenu = createMenu(
       },
       {
         label: "Lock Query",
-        command: queries.lock,
+        command: queries.lock.bind(),
         visible: !query.isReadOnly,
       },
 
       {type: "separator"},
       {
         label: "Unlock Query",
-        command: queries.unlock,
+        command: queries.unlock.bind(),
         visible: query.isReadOnly,
       },
       {
         label: "Rename...",
-        command: queries.rename,
+        command: queries.rename.bind(),
         enabled: !query.isReadOnly,
       },
       {
         label: "Delete",
-        command: queries.deleteCmd,
+        command: queries.deleteCmd.bind(),
         enabled: !query.isReadOnly,
       },
     ]

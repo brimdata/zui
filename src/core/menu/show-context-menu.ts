@@ -1,6 +1,7 @@
 import {MenuItemConstructorOptions} from "electron"
 import {BoundCommand} from "src/app/commands/command"
 import {invoke} from "src/core/invoke"
+import {MenuItem} from "./types"
 
 export function showContextMenu(
   template: MenuItemConstructorOptions[],
@@ -36,7 +37,7 @@ function findItem(id: string, template: MenuItemConstructorOptions[]) {
 
 function setupListener(template, callback) {
   global.zui.once("contextMenuResult", (e, id: string) => {
-    const item = findItem(id, template)
+    const item = findItem(id, template) as unknown as MenuItem
     if (item && "click" in item) {
       // @ts-ignore
       item.click()
