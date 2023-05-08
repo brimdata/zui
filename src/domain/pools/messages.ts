@@ -1,4 +1,4 @@
-import {CreatePoolOpts} from "@brimdata/zed-js"
+import {CreatePoolOpts, LoadOpts} from "@brimdata/zed-js"
 import {PoolUpdate} from "./types"
 
 export type PoolsOperations = {
@@ -6,10 +6,8 @@ export type PoolsOperations = {
     lakeId: string,
     name: string,
     opts: Partial<CreatePoolOpts>
-  ) => Promise<string> // poolId
+  ) => string // poolId
 
-  "pools.update": (
-    lakeId: string,
-    update: PoolUpdate | PoolUpdate[]
-  ) => Promise<void>
+  "pools.update": (lakeId: string, update: PoolUpdate | PoolUpdate[]) => void
+  "pools.load": (poolId: string, data: string, opts: Partial<LoadOpts>) => void
 }

@@ -1,6 +1,7 @@
 import {createOperation} from "src/core/operations"
 
-import {CreatePoolOpts} from "@brimdata/zed-js"
+import {CreatePoolOpts, LoadOpts} from "@brimdata/zed-js"
+import {lake} from "src/zui"
 
 export const create = createOperation(
   "pools.create",
@@ -23,5 +24,15 @@ export const update = createOperation(
     for (let {id, changes} of Array.isArray(update) ? update : [update]) {
       await client.updatePool(id, changes)
     }
+  }
+)
+
+export const load = createOperation(
+  "pools.load",
+  async (_, poolId: string, data: string, options: Partial<LoadOpts>) => {
+    return lake.client.load(data, {
+      pool: poolId,
+      ...options,
+    })
   }
 )
