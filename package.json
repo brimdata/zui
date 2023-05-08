@@ -37,6 +37,9 @@
   "dependencies": {
     "keytar": "^7.7.0"
   },
+  "optionalDependencies": {
+    "node-pipe": "^0.1.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@brimdata/zed-js": "0.0.16",
@@ -166,17 +169,12 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#f733ef3722f78d988cb94071e5ba8d2539a39da9",
+    "zed": "brimdata/zed#dca775ba9f2907a6d0f411f95572d3935ee78c6b",
     "zui-test-data": "workspace:*"
   },
-  "optionalDependencies": {
-    "node-pipe": "^0.1.1"
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
-  "packageManager": "yarn@3.1.1",
-  "electronmon": {
-    "patterns": [
-      "!*/**",
-      "dist/**"
-    ]
-  }
+  "packageManager": "yarn@3.1.1"
 }
