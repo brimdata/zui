@@ -78,6 +78,7 @@ export class ZuiMain {
     })
     await this.session.delete()
     app.relaunch()
+    app.exit(0)
   }
 
   saveSession() {
