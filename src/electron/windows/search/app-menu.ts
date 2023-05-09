@@ -1,6 +1,5 @@
 import {app, MenuItemConstructorOptions, shell, Menu} from "electron"
 import {createFromEditor} from "src/app/commands/pins"
-import {showWelcomePage} from "src/app/commands/show-welcome-page"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
 import {closeWindowOp} from "../../ops/close-window-op"
@@ -12,6 +11,7 @@ import {runCommandOp} from "../../ops/run-command-op"
 import {showPreferencesOp} from "../../ops/show-preferences-op"
 import {showReleaseNotesOp} from "../../ops/show-release-notes-op"
 import {SearchWindow} from "./search-window"
+import {sendToFocusedWindow} from "src/core/ipc"
 
 export const defaultAppMenuState = () => ({
   showRightPane: true,
@@ -241,7 +241,7 @@ export function compileTemplate(
       },
       {
         label: "Show Welcome Page",
-        click: () => runCommandOp.run(showWelcomePage),
+        click: () => sendToFocusedWindow("window.showWelcomePage"),
       },
       {
         label: "Slack Support Channel",
