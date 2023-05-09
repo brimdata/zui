@@ -12,20 +12,19 @@ export const defaultLoader: Loader = {
     const client = await ctx.createClient()
     const files = ctx.files
     const totalBytes = files.reduce((sum, file) => sum + getFileSize(file), 0)
-
     let readBytes = 0
-    const progress = new Transform({
-      transform(chunk, encoding, callback) {
-        readBytes += Buffer.byteLength(chunk, encoding as BufferEncoding)
-        ctx.onProgress(readBytes / totalBytes)
-        callback(null, chunk)
-      },
-    })
 
     ctx.onProgress(0)
-    for (const file of files) {
-      const data = fs.createReadStream(file).pipe(progress)
 
+    for (const file of files) {
+      const progress = new Transform({
+        transform(chunk, encoding, callback) {
+          readBytes += Buffer.byteLength(chunk, encoding as BufferEncoding)
+          ctx.onProgress(readBytes / totalBytes)
+          callback(null, chunk)
+        },
+      })
+      const data = fs.createReadStream(file).pipe(progress)
       const res = await client.load(data, {
         pool: ctx.poolId,
         branch: ctx.branch,
