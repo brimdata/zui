@@ -1,6 +1,7 @@
 import {app as electronApp} from "electron"
 
-const isPackaged = () => electronApp.isPackaged
+const isPackaged = () =>
+  electronApp.isPackaged || process.env.NODE_ENV === "production"
 
 export default {
   get isCI() {

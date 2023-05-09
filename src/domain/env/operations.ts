@@ -1,10 +1,9 @@
 import {app} from "electron"
 import {execSync} from "child_process"
 import {join} from "path"
-import fs from "fs-extra"
-
 import env from "src/app/core/env"
 import {createOperation} from "src/core/operations"
+import {getPackageJSON} from "./packageJSON"
 
 export const properties = createOperation("env.properties", () => {
   return env
@@ -12,7 +11,7 @@ export const properties = createOperation("env.properties", () => {
 
 export const about = createOperation("env.aboutApp", () => {
   const root = app.getAppPath().replace("app.asar", "app.asar.unpacked")
-  const packageJSON = fs.readJSONSync(join(root, "package.json"))
+  const packageJSON = getPackageJSON()
   return {
     version: getVersion(packageJSON),
     acknowledgementsPath: join(root, "acknowledgments.txt"),
