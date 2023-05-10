@@ -98,6 +98,9 @@ class MockApp extends EventEmitter {
   getAppPath() {
     return `/test/app`
   }
+  exit() {
+    return
+  }
 }
 
 export const app = new MockApp()
