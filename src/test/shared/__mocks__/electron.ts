@@ -84,6 +84,9 @@ class MockApp extends EventEmitter {
   getAppPath() {
     return path.join(__dirname, "../../../../")
   }
+  exit(_n: number) {
+    return
+  }
 }
 
 export const app = new MockApp()
