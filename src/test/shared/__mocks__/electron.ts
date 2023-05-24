@@ -87,6 +87,9 @@ class MockApp extends EventEmitter {
   exit(_n: number) {
     return
   }
+  exit() {
+    return
+  }
 }
 
 export const app = new MockApp()
