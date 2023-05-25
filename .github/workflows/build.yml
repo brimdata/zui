@@ -35,7 +35,4 @@ jobs:
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: zui-installers
-          path: dist/installers
+        uses: ./.github/actions/upload-build-artifacts

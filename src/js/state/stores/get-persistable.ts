@@ -9,7 +9,6 @@ export const GLOBAL_PERSIST: StateKey[] = [
   "configPropValues",
   "lakes",
   "launches",
-  "pluginStorage",
   "queries",
   "queryVersions",
   "remoteQueries",

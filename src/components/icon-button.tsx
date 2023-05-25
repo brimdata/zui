@@ -1,5 +1,7 @@
-import React from "react"
+import React, {MouseEvent, MouseEventHandler} from "react"
+import {BoundCommand} from "src/app/commands/command"
 import Icon from "src/app/core/icon-temp"
+import {invoke} from "src/core/invoke"
 import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
 
@@ -30,13 +32,29 @@ const BG = styled.button`
   }
 `
 
-export function IconButton(props: MenuItem & {className?: string}) {
+export function IconButton(
+  props: MenuItem & {
+    className?: string
+    onClick?: MouseEventHandler<HTMLButtonElement>
+  }
+) {
+  function onClick(e: MouseEvent<HTMLButtonElement>) {
+    if (props.onClick) {
+      props.onClick && props.onClick(e)
+    } else if (typeof props.command === "string") {
+      invoke("invokeCommandOp", props.command, props.args)
+    } else if (props.command instanceof BoundCommand) {
+      props.command.run()
+    } else if (props.click) {
+      props.click()
+    }
+  }
   return (
     <BG
       className={props.className}
       title={props.description ?? props.label}
-      onClick={(htmlEvent) => props.click({htmlEvent})}
-      disabled={props.enabled === false}
+      onClick={onClick}
+      disabled={props.enabled === false || props.whenResult === false}
       aria-label={props.label}
     >
       <Icon name={props.iconName} size={props.iconSize ?? 16} />

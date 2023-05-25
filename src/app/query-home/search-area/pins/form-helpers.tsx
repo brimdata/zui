@@ -1,5 +1,6 @@
-import {cssVar, darken, lighten} from "polished"
+import {darken, lighten} from "polished"
 import {FormEvent} from "react"
+import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
 
 export const Field = styled.div`

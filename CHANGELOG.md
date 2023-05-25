@@ -1,4 +1,5 @@
 ## v1.1.0
+
 - Update Zed to [v1.8.0](https://github.com/brimdata/zed/releases/tag/v1.8.0)
 - Update Brimcap to [v1.5.0](https://github.com/brimdata/brimcap/releases/tag/v1.5.0)
 - Restore "alert" tiles for Suricata events (#2740)
@@ -8,6 +9,7 @@
 - Fix an issue where selecting **Reset State** from the pull-down menu was having no effect (#2767)
 
 ## v1.0.1
+
 - Update Zed to [v1.7.0](https://github.com/brimdata/zed/releases/tag/v1.7.0)
 - Update Brimcap to [v1.4.1](https://github.com/brimdata/brimcap/releases/tag/v1.4.1), which fixes issue #2715 with per-machine installs on Windows
 

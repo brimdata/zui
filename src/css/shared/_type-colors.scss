@@ -6,7 +6,7 @@
   --zed-type: hsla(212, 70%, 50%);
   --interval: #544aa6;
   --bool: #3eaef4;
-  --zed-string: hsl(130, 54%, 38%);
+  --zed-string: var(--foreground-color);
   --zed-key: hsl(212, 20%, 40%);
   --zed-number: #e65835;
   --zed-syntax: hsl(212, 17%, 55%);

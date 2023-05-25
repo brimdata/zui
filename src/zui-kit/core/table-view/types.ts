@@ -1,5 +1,5 @@
 import {ColumnSizingInfoState} from "@tanstack/react-table"
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import {Controller, MakeControllers} from "src/zui-kit/types/utils"
 import {ViewConfig} from "../value-view/types"
 import {ZedColumn} from "src/components/zed-table/column"

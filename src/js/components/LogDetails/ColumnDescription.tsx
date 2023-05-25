@@ -1,8 +1,8 @@
 import zeekLogInfo from "src/ppl/zeek/logInfo"
 import React from "react"
 import ReactMarkdown from "react-markdown"
-import open from "../../lib/open"
 import {Column} from "../../types"
+import {invoke} from "src/core/invoke"
 
 type Props = {
   column: Column
@@ -23,7 +23,9 @@ export default function ColumnDescription({column, path}: Props) {
       </div>
       {info.isKnown() && (
         <div className="tip-footer">
-          <a onClick={() => open(info.docsUrl())}>Link to Docs</a>
+          <a onClick={() => invoke("openLinkOp", info.docsUrl())}>
+            Link to Docs
+          </a>
         </div>
       )}
     </div>

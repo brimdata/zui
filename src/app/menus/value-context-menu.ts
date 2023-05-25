@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import {createMenu} from "src/core/menu"
 import ZuiApi from "src/js/api/zui-api"
 import * as editor from "../commands/editor"

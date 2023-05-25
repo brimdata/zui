@@ -6,9 +6,9 @@ import lib from "src/js/lib"
 import toast from "react-hot-toast"
 import {ipcRenderer, MenuItemConstructorOptions} from "electron"
 import exportQueryLib from "src/js/flows/exportQueryLib"
-import * as remote from "@electron/remote"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
+import {invoke} from "src/core/invoke"
 
 const getQueryItemCtxMenu =
   ({data, tree, handlers}) =>
@@ -23,22 +23,20 @@ const getQueryItemCtxMenu =
 
     const handleDelete = () => {
       const selected = Array.from(new Set([...tree.getSelectedIds(), data.id]))
-      return remote.dialog
-        .showMessageBox({
-          type: "warning",
-          title: "Confirm Delete Query Window",
-          message: `Are you sure you want to delete the ${
-            hasMultiSelected ? selected.length : ""
-          } selected item${hasMultiSelected ? "s" : ""}?`,
-          buttons: ["OK", "Cancel"],
-        })
-        .then(({response}) => {
-          if (response === 0) {
-            selected.forEach((id) => dispatch(QueryVersions.at(id).deleteAll()))
-            if (isRemoteItem) dispatch(deleteRemoteQueries(selected))
-            else dispatch(Queries.removeItems(selected))
-          }
-        })
+      return invoke("showMessageBoxOp", {
+        type: "warning",
+        title: "Confirm Delete Query Window",
+        message: `Are you sure you want to delete the ${
+          hasMultiSelected ? selected.length : ""
+        } selected item${hasMultiSelected ? "s" : ""}?`,
+        buttons: ["OK", "Cancel"],
+      }).then(({response}) => {
+        if (response === 0) {
+          selected.forEach((id) => dispatch(QueryVersions.at(id).deleteAll()))
+          if (isRemoteItem) dispatch(deleteRemoteQueries(selected))
+          else dispatch(Queries.removeItems(selected))
+        }
+      })
     }
 
     if (hasMultiSelected)

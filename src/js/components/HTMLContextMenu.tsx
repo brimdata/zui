@@ -12,10 +12,8 @@
 import React, {useState} from "react"
 import ReactDOM from "react-dom"
 import classNames from "classnames"
-import {ipcRenderer} from "electron"
-import lib from "../lib"
-import env from "src/app/core/env"
 import useListener from "./hooks/useListener"
+import doc from "../lib/doc"
 
 export default function HTMLContextMenu() {
   const [template, setTemplate] = useState(null)
@@ -32,7 +30,7 @@ export default function HTMLContextMenu() {
         ))}
       </ul>
     </div>,
-    lib.doc.id("tooltip-root")
+    doc.id("tooltip-root")
   )
 }
 
@@ -42,7 +40,7 @@ function HTMLMenuItem({item}) {
   } else {
     return (
       <li
-        onClick={() => item.click(item, stubbedBrowserWindow)}
+        onClick={() => item.click(item)}
         className={classNames({disabled: item.enabled === false})}
       >
         {item.label}
@@ -50,26 +48,3 @@ function HTMLMenuItem({item}) {
     )
   }
 }
-
-function stubIpcSend(name, ...args) {
-  if (env.isIntegrationTest) {
-    /*
-    This is for integration tests when we are testing the real ipc communication
-    Since ipcRendere inherits from EventEmitter, we can simply emit this event
-    right here in the renderer to simulate it being sent over from the main
-    processes like it does with the native context menu.
-  */
-    ipcRenderer.emit(
-      name,
-      null,
-      /* event */
-      ...args
-    )
-  } else {
-    // This is for unit tests when the ipcRenderer is mocked
-    // @ts-ignore
-    ipcRenderer.emitter.emit("receive-from-main", name, ...args)
-  }
-}
-
-const stubbedBrowserWindow = {webContents: {send: stubIpcSend}}

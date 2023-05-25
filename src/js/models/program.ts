@@ -1,4 +1,5 @@
-import {parseAst, zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
+import {parse as parseAst} from "zed/compiler/parser/parser"
 import {isEmpty, last} from "lodash"
 import {trim} from "../lib/Str"
 import ast, {ANALYTIC_PROCS} from "./ast"

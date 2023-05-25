@@ -26,7 +26,9 @@ export const getHistory = (
   if (windowName === "search") return global.tabHistories.getOrCreate(id)
   if (windowName === "detail" || windowName === "hidden")
     return global.windowHistory
-  throw new Error("Unknown Window Name (must be search or detail)")
+  throw new Error(
+    "Unknown Window Name (must be search or detail), found " + windowName
+  )
 }
 
 export const getLocation = (state: State) => {
@@ -165,3 +167,12 @@ export const getSessionHistory = createSelector(
 )
 
 export const getSessionId = getTabId
+
+export function getOpEventContext(state: State) {
+  return {
+    lakeId: getLakeId(state),
+    poolName: getActiveQuery(state).toAst().poolName as string | null,
+  }
+}
+
+export type OpEventContext = ReturnType<typeof getOpEventContext>

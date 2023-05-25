@@ -8,6 +8,7 @@ import logDetails from "../LogDetails/reducer"
 import {reducer as results} from "../Results/reducer"
 import {reducer as histogram} from "../Histogram/reducer"
 import {nanoid} from "@reduxjs/toolkit"
+import {reducer as resultsToolbar} from "../ResultsToolbar/slice"
 
 const tabReducer = combineReducers({
   chart,
@@ -20,6 +21,7 @@ const tabReducer = combineReducers({
   layout,
   logDetails,
   results,
+  resultsToolbar,
   histogram,
   table,
 })

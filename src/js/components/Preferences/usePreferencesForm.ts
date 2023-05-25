@@ -1,29 +1,27 @@
-import {useZuiApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {FormConfig, FormFieldConfig} from "../../models/form"
-import {executeCommand} from "../../flows/executeCommand"
-import lib from "../../lib"
-
-const checkFile = (path) => {
-  if (path === "") return [true, ""]
-  return lib
-    .file(path)
-    .exists()
-    .then((exists) => [exists, "file does not exist."])
-}
+import {useEffect, useState} from "react"
+import {Config} from "src/domain/configurations/plugin-api"
+import {invoke} from "src/core/invoke"
 
 export const useConfigsForm = (): FormConfig => {
   const dispatch = useDispatch()
-  const api = useZuiApi()
-  const configs = api.configs.all
+  const [configs, setConfigs] = useState<Config[]>([])
+
+  useEffect(() => {
+    invoke("getConfigurationsOp").then((configs) => {
+      setConfigs(configs)
+    })
+  }, [])
+
   const formConfig: FormConfig = {}
   configs.forEach((config) => {
     Object.values(config.properties).forEach((prop) => {
       const {name, label, defaultValue, type, command, helpLink} = prop
 
       const submit = (value) => {
-        if (command) dispatch(executeCommand(command, value))
+        if (command) throw new Error("Fix me" + command)
         dispatch(
           ConfigPropValues.set({
             configName: config.name,
@@ -35,9 +33,6 @@ export const useConfigsForm = (): FormConfig => {
 
       let check
       switch (prop.type) {
-        case "file":
-          check = checkFile
-          break
         case "string":
           // can validate further if 'pattern' (regex) provided in property here
           break

@@ -1,22 +1,28 @@
-import React from "react"
-import {BoundCommand} from "src/app/commands/command"
 import {IconName} from "src/app/core/icon-temp"
 import ZuiApi from "src/js/api/zui-api"
 import {Menu} from "./menu"
+import {BoundCommand} from "src/app/commands/command"
+import {MenuItemConstructorOptions} from "electron"
 
 export type MenuItem = {
   id?: string
   label?: string
   description?: string
-  click?: (args: {htmlEvent?: React.MouseEvent<HTMLElement>}) => any
   enabled?: boolean
   visible?: boolean
   iconName?: IconName
   iconSize?: number
-  command?: string | {id: string} | BoundCommand<any, any>
+  // Moving away from the bound command pattern
+  command?: string | BoundCommand<any, any>
+  args?: any[]
   nestedMenu?: Menu
   checked?: boolean
-  htmlAttrs?: React.HTMLAttributes<HTMLElement>
+  htmlAttrs?: any
+  when?: string
+  whenResult?: boolean
+  priority?: number
+  accelerator?: MenuItemConstructorOptions["accelerator"]
+  click?: () => void
 }
 
 export type MenuContext = {api: ZuiApi}

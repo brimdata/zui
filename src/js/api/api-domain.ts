@@ -28,10 +28,6 @@ export class ApiDomain {
     return this.base.configs
   }
 
-  get loaders() {
-    return this.base.loaders
-  }
-
   get abortables() {
     return this.base.abortables
   }

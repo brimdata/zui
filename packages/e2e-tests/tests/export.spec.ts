@@ -43,7 +43,7 @@ test.describe("Export tests", () => {
           Promise.resolve({canceled: false, filePath})
       }, file)
 
-      const menu = app.mainWin.getByRole("list", {name: "resultsToolbarMenu"})
+      const menu = app.mainWin.getByRole("list", {name: "results.toolbarMenu"})
       await menu.getByRole("button", {name: "Export"}).click()
       const dialog = app.mainWin.getByRole("dialog")
       await dialog.getByRole("radio", {name: `${label}`}).click()
@@ -51,6 +51,8 @@ test.describe("Export tests", () => {
       await app.mainWin
         .getByText(new RegExp("Export Completed: .*results\\." + label))
         .waitFor()
+
+      await new Promise((r) => setTimeout(r, 5000))
 
       expect(fsExtra.statSync(file).size).toBe(expectedSize)
     })

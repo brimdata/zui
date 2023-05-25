@@ -1,4 +1,3 @@
-import env from "src/app/core/env"
 import {releaseNotesPath} from "src/app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Launches from "src/js/state/Launches"
@@ -11,7 +10,7 @@ export function maybeShowReleaseNotes(): Thunk {
     const isFirstRunEver = global.appMeta.isFirstRun
 
     if (
-      !env.isIntegrationTest &&
+      !global.env.isTest &&
       !isFirstRunEver &&
       global.mainArgs.releaseNotes &&
       Launches.firstRunOfVersion(getState(), version)

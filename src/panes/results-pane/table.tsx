@@ -13,7 +13,7 @@ import {BareStringView} from "src/app/query-home/results/bare-string-view"
 import {PathView} from "src/app/query-home/results/path-view"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import {AlertView} from "src/app/query-home/results/alert-view"
 
 export function Table() {

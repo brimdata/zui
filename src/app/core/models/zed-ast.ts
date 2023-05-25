@@ -1,4 +1,4 @@
-import * as zealot from "@brimdata/zealot"
+import {parse as parseAst} from "zed/compiler/parser/parser"
 import {fieldExprToName} from "src/js/models/ast"
 import {toFieldPath} from "src/js/zed-script/toZedScript"
 
@@ -6,7 +6,7 @@ export class ZedAst {
   public tree: any
 
   constructor(public script: string) {
-    this.tree = zealot.parseAst(script)
+    this.tree = parseAst(script)
   }
 
   get poolName() {

@@ -1,7 +1,6 @@
 import {nanoid} from "@reduxjs/toolkit"
 import tabHistory from "src/app/router/tab-history"
 import {lakeQueryPath} from "src/app/router/utils/paths"
-import {exportQueryGroupOp} from "src/js/electron/ops/export-query-group-op"
 import Current from "src/js/state/Current"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
@@ -19,6 +18,7 @@ import {CreateQueryParams, OpenQueryOptions, QueryParams} from "./types"
 import {Query} from "src/js/state/Queries/types"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import SessionQueries from "src/js/state/SessionQueries"
+import {invoke} from "src/core/invoke"
 
 export class QueriesApi {
   constructor(private dispatch: AppDispatch, private getState: GetState) {}
@@ -32,7 +32,7 @@ export class QueriesApi {
   }
 
   export(groupId: string, filePath: string) {
-    return exportQueryGroupOp.invoke(groupId, filePath)
+    return invoke("exportQueries", groupId, filePath)
   }
 
   find(id: string) {

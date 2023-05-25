@@ -2,9 +2,6 @@ import Current from "../state/Current"
 import Lakes from "../state/Lakes"
 import {Lake} from "../state/Lakes/types"
 import {Store} from "../state/types"
-import os from "os"
-
-const LAKE_NAME = `${os.userInfo().username}'s Zed Lake`
 
 export const defaultLake = (): Lake => {
   const port = global.mainArgs.lakePort.toString()
@@ -12,7 +9,7 @@ export const defaultLake = (): Lake => {
     host: "http://localhost",
     port,
     id: `localhost:${port}`,
-    name: LAKE_NAME,
+    name: `${global.appMeta.userName}'s Zed Lake`,
     authType: "none",
   }
 }

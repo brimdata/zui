@@ -1,4 +1,4 @@
-import {createField, createRecord} from "src/test/shared/factories/zed-factory"
+import {createField, createRecord} from "@brimdata/zed-js"
 import {joinParts, parallelizeProcs, splitParts} from "../lib/Program"
 import program from "./program"
 

@@ -2,8 +2,6 @@
 
 import env from "src/app/core/env"
 
-require("regenerator-runtime/runtime")
-
 const isWsl = require("is-wsl")
 
 const {promisify} = require("util")

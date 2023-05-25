@@ -9,12 +9,12 @@ import StatusLight from "./StatusLight"
 import EditLakeModal from "./EditLakeModal"
 import useEnterKey from "../hooks/useEnterKey"
 import LakeStatuses from "../../state/LakeStatuses"
-import * as remote from "@electron/remote"
 import Link from "../common/Link"
 import ErrorFactory from "../../models/ErrorFactory"
 import Notice from "../../state/Notice"
 import removeLake from "../../flows/lake/removeLake"
 import {useDispatch} from "src/app/core/state"
+import {showMessageBox} from "src/js/lib/System"
 
 const StyledContent = styled(Content)`
   padding-top: 24px;
@@ -132,23 +132,21 @@ const ViewLake = ({onClose, onEdit}) => {
   const {name, host, port, version = "unknown"} = lake
 
   const onRemove = () => {
-    remote.dialog
-      .showMessageBox({
-        type: "warning",
-        title: "Lake Logout",
-        message: `Are you sure you want to log out of ${name}?`,
-        buttons: ["OK", "Cancel"],
-      })
-      .then(({response}) => {
-        if (response === 0) {
-          onClose()
-          try {
-            dispatch(removeLake(lake))
-          } catch (e) {
-            dispatch(Notice.set(ErrorFactory.create(e)))
-          }
+    showMessageBox({
+      type: "warning",
+      title: "Lake Logout",
+      message: `Are you sure you want to log out of ${name}?`,
+      buttons: ["OK", "Cancel"],
+    }).then(({response}) => {
+      if (response === 0) {
+        onClose()
+        try {
+          dispatch(removeLake(lake))
+        } catch (e) {
+          dispatch(Notice.set(ErrorFactory.create(e)))
         }
-      })
+      }
+    })
   }
 
   return (

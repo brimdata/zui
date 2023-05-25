@@ -11,7 +11,6 @@ import LakeStatuses from "../LakeStatuses"
 import TabHistories from "../TabHistories"
 import Url from "../Url"
 import Toolbars from "../Toolbars"
-import PluginStorage from "../PluginStorage"
 import ConfigPropValues from "../ConfigPropValues"
 import Launches from "../Launches"
 import Appearance from "../Appearance"
@@ -32,7 +31,6 @@ const rootReducer = combineReducers<any, any>({
   tabs: Tabs.reducer,
   pools: Pools.reducer,
   loads: Loads.reducer,
-  pluginStorage: PluginStorage.reducer,
   lakeStatuses: LakeStatuses.reducer,
   queries: Queries.reducer,
   queryVersions: QueryVersions.reducer,

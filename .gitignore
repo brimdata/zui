@@ -1,5 +1,7 @@
 node_modules
+out
 dist
+installers
 releases
 coverage
 junit.xml
@@ -18,3 +20,5 @@ yalc.lock
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.next
+tsconfig.tsbuildinfo

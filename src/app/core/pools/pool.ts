@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import {PoolConfig, PoolStats, Ts} from "@brimdata/zealot"
+import {PoolConfig, PoolStats, Ts} from "@brimdata/zed-js"
 import span from "src/js/models/span"
 
 export class Pool {

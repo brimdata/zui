@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import {View} from "src/app/features/inspector/views/view"
 
 export type ViewConfig = {

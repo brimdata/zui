@@ -6,8 +6,8 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 import Modal from "./"
 
 let store
-beforeEach(() => {
-  store = initTestStore()
+beforeEach(async () => {
+  store = await initTestStore()
 })
 
 test("show modal", () => {
@@ -20,10 +20,10 @@ test("show modal", () => {
 })
 
 test("hide Modal", () => {
-  const state = store.dispatchAll([
-    Modal.show("whois", {addr: "129.3.2.1"}),
-    Modal.hide(),
-  ])
+  store.dispatch(Modal.show("whois", {addr: "129.3.2.1"}))
+  store.dispatch(Modal.hide())
+
+  const state = store.getState()
 
   expect(Modal.getName(state)).toBe("")
   expect(Modal.getArgs(state)).toEqual({})

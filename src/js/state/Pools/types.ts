@@ -1,4 +1,4 @@
-import {PoolConfig, PoolStats} from "@brimdata/zealot/types"
+import {PoolConfig, PoolStats} from "@brimdata/zed-js"
 
 export type PoolState = {
   data: PoolConfig

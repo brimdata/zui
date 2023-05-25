@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import zedScript from "../zed-script"
 import {toFieldPath} from "../zed-script/toZedScript"
 

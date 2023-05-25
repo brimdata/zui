@@ -1,15 +1,14 @@
 import {app as electronApp} from "electron"
 
 const isPackaged = () =>
-  electronApp
-    ? electronApp.isPackaged
-    : require("@electron/remote")?.app?.isPackaged
+  electronApp.isPackaged || process.env.NODE_ENV === "production"
 
 export default {
   get isCI() {
     return process.env.GITHUB_ACTIONS === "true"
   },
   get isIntegrationTest() {
+    // Delete this old thing
     return process.env.BRIM_ITEST === "true"
   },
   get isTest() {
@@ -18,7 +17,7 @@ export default {
   get isDevelopment() {
     const isEnvSet = "ELECTRON_IS_DEV" in process.env
     const getFromEnv = parseInt(process.env.ELECTRON_IS_DEV, 10) === 1
-    return isEnvSet ? getFromEnv : isPackaged()
+    return isEnvSet ? getFromEnv : !isPackaged()
   },
   get isRelease() {
     return isPackaged()

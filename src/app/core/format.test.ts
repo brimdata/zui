@@ -1,5 +1,5 @@
-import {createData} from "src/test/shared/factories/zed-factory"
-import {zed} from "@brimdata/zealot"
+import {createData} from "@brimdata/zed-js"
+import * as zed from "@brimdata/zed-js"
 import {formatValue} from "./format"
 
 test("format a long number", () => {

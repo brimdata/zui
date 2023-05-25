@@ -1,4 +1,4 @@
-import {zed} from "packages/zealot/src"
+import * as zed from "@brimdata/zed-js"
 import {ResultsState, ResultsStatus} from "./types"
 
 export const initialResultData = () => ({

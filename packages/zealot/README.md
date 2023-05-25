@@ -1,3 +1,0 @@
-# Zealot Client
-
-Readme coming.

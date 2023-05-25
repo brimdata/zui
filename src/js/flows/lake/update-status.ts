@@ -1,4 +1,4 @@
-import {Client} from "@brimdata/zealot"
+import {Client} from "@brimdata/zed-js"
 import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
 import lake from "src/js/models/lake"
 import {validateToken} from "../../auth0/utils"

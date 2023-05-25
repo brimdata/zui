@@ -37,5 +37,5 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: zui-installers
-          path: dist/installers
+          name: ${{matrix.platform}}-installer
+          path: installers

@@ -1,8 +1,6 @@
 import {releaseNotesPath} from "src/app/router/utils/paths"
-import {ipcRenderer} from "electron"
 import Appearance from "../state/Appearance"
 import Current from "../state/Current"
-import {getPersistedWindowState} from "../state/stores/get-persistable"
 import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import Tabs from "../state/Tabs"
@@ -11,84 +9,70 @@ import initNewSearchTab from "./initNewSearchTab"
 import Editor from "../state/Editor"
 import submitSearch from "src/app/query-home/flows/submit-search"
 import {commands} from "src/app/commands/command"
-import {decode, zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import {viewLogDetail} from "../flows/viewLogDetail"
 import tabHistory from "src/app/router/tab-history"
 
 export default (store: Store) => {
-  ipcRenderer.on("focusSearchBar", () => {
-    const el = document.getElementById("main-search-input")
-
-    if (el) {
-      el.focus()
-      // @ts-ignore
-      el.select()
-    }
-  })
-
-  ipcRenderer.on("clearPins", () => {
+  global.zui.on("clearPins", () => {
     store.dispatch(Editor.deleteAllPins())
     store.dispatch(Editor.setValue(""))
     store.dispatch(submitSearch())
   })
 
-  ipcRenderer.on("toggleLeftSidebar", () => {
+  global.zui.on("toggleLeftSidebar", () => {
     store.dispatch(Appearance.toggleSidebar())
   })
 
-  ipcRenderer.on("toggleRightSidebar", () => {
+  global.zui.on("toggleRightSidebar", () => {
     store.dispatch(Layout.toggleDetailPane())
   })
 
-  ipcRenderer.on("getState", (event, channel) => {
-    ipcRenderer.send(channel, getPersistedWindowState(store.getState()))
-  })
-
-  ipcRenderer.on("showPreferences", () => {
+  global.zui.on("showPreferences", () => {
     store.dispatch(Modal.show("settings"))
   })
 
-  ipcRenderer.on("showExportResults", () => {
+  global.zui.on("showExportResults", () => {
     store.dispatch(Modal.show("export"))
   })
 
-  ipcRenderer.on("back", () => {
+  global.zui.on("back", () => {
     store.dispatch(tabHistory.goBack())
   })
 
-  ipcRenderer.on("forward", () => {
+  global.zui.on("forward", () => {
     store.dispatch(tabHistory.goForward())
   })
 
-  ipcRenderer.on("closeTab", () => {
+  global.zui.on("closeTab", () => {
     store.dispatch(Tabs.closeActive())
   })
 
-  ipcRenderer.on("windows:newSearchTab", (e, {params}) => {
+  global.zui.on("windows:newSearchTab", (e, {params}) => {
     initNewSearchTab(store, params)
   })
 
-  ipcRenderer.on("globalStore:dispatch", (e, {action}) =>
+  global.zui.on("globalStore:dispatch", (e, {action}) => {
     store.dispatch(action)
-  )
+  })
 
-  ipcRenderer.on("showReleaseNotes", () => {
+  global.zui.on("showReleaseNotes", () => {
     const id = Current.getLakeId(store.getState())
     store.dispatch(Tabs.create(releaseNotesPath(id)))
   })
 
-  ipcRenderer.on("toggleHistogram", () => {
+  global.zui.on("toggleHistogram", () => {
     store.dispatch(Layout.toggleHistogram())
   })
 
-  ipcRenderer.on("runCommand", (e, id, ...args) => {
+  global.zui.on("runCommand", (e, id, ...args) => {
     commands.run(id, ...args)
   })
 
-  ipcRenderer.on("detail-window-args", (e, opts) => {
+  global.zui.on("detail-window-args", (e, opts) => {
     if (opts) {
       global.windowHistory.replace(opts.url)
-      const value = decode(opts.value) as zed.Record
+      const value = zed.decode(opts.value) as zed.Record
       if (value) {
         store.dispatch(viewLogDetail(value))
       }

@@ -1,5 +1,4 @@
-import {Client} from "@brimdata/zealot"
-import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only"
+import {Client} from "@brimdata/zed-node"
 import {existsSync} from "fs"
 import {reject} from "lodash"
 import path from "path"
@@ -31,26 +30,19 @@ export default class TestApp {
       path.join(itestDir(), this.name, (this.testNdx++).toString())
     )
     this.currentDataDir = userDataDir
-
     const {bin, entry} = getAppInfo()
     const launchOpts = {
       args: [`--user-data-dir=${userDataDir}`, entry],
       bypassCSP: true,
-      timeout: 60000,
+      timeout: 10000,
     }
 
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin
     this.zui = await electron.launch(launchOpts)
     await waitForTrue(() => this.zui.windows().length === 2)
-    await Promise.all(
-      this.zui.windows().map((page) =>
-        page.waitForFunction(() => {
-          // @ts-ignore
-          return global.firstMount
-        })
-      )
-    )
+    await waitForTrue(async () => !!(await this.getWindowByTitle("Zui")))
+    await waitForTrue(async () => !!(await this.getWindowByTitle("Background")))
     this.mainWin = await this.getWindowByTitle("Zui")
   }
 
@@ -65,6 +57,9 @@ export default class TestApp {
       this.mainWin.locator("text=Choose Files").click(),
     ])
     await chooser.setFiles(filepaths)
+    await this.zui.evaluate((_electron, filePaths) => {
+      global.e2eFilePaths = filePaths
+    }, filepaths)
     await this.mainWin.getByRole("button", {name: "Create Pool"}).click()
     await this.mainWin.getByText(expectedResult).waitFor()
   }
@@ -164,11 +159,11 @@ const getAppInfo = () => {
   return {bin: null, entry: "../.."}
 }
 
-function waitForTrue(check: () => boolean) {
+function waitForTrue(check: () => boolean | Promise<boolean>) {
   return new Promise<void>((resolve) => {
     const id = setTimeout(() => reject("Gave up"), 30000)
-    const run = () => {
-      if (check()) {
+    const run = async () => {
+      if (await check()) {
         clearTimeout(id)
         resolve()
       } else {

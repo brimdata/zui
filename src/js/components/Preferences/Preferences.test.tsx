@@ -5,7 +5,7 @@
 import Fields from "src/app/detail/Fields"
 import React from "react"
 import Modal from "src/js/state/Modal"
-import {createRecord} from "src/test/shared/factories/zed-factory"
+import {createRecord} from "@brimdata/zed-js"
 import {
   fireEvent,
   screen,
@@ -42,9 +42,11 @@ const $ = {
   },
 }
 
-beforeEach(() => {
+beforeEach(async () => {
   brim.store.dispatch(Modal.show("settings"))
   brim.render(<Preferences />)
+  // Wait for one of the configs to be rendered
+  await screen.findByLabelText("Time Format docs")
 })
 
 test("change time format", async () => {

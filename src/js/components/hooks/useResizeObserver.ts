@@ -1,4 +1,3 @@
-import env from "src/app/core/env"
 import {useLayoutEffect, useRef, useState} from "react"
 
 export type Rect = {width: number; height: number; x: number; y: number}
@@ -6,8 +5,8 @@ export type Rect = {width: number; height: number; x: number; y: number}
 export function useResizeObserver() {
   const ref = useRef()
   const [rect, setRect] = useState<Rect>({
-    width: env.isTest ? 1000 : 0,
-    height: env.isTest ? 1000 : 0,
+    width: global.env.isTest ? 1000 : 0,
+    height: global.env.isTest ? 1000 : 0,
     x: 0,
     y: 0,
   })

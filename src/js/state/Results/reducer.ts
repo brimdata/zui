@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction as Pay} from "@reduxjs/toolkit"
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import program from "src/js/models/program"
 import {ResultsState} from "./types"
 import {initialResultData} from "./util"

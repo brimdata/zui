@@ -1,9 +1,9 @@
 import {Group} from "./types"
-import lib from "../../lib"
 import {nanoid} from "@reduxjs/toolkit"
 import {cloneDeep, last} from "lodash"
 import {QueryVersion, QueryVersionsState} from "../QueryVersions/types"
 import {QueryPin} from "../Editor/types"
+import file from "src/js/lib/file"
 
 export type JSONQuery = {
   value: string
@@ -18,7 +18,7 @@ export type JSONGroup = {
 export const parseJSONLib = (
   filePath: string
 ): {libRoot: Group; versions: {[queryId: string]: QueryVersion}} => {
-  const contents = lib.file(filePath).readSync()
+  const contents = file(filePath).readSync()
   const libRoot: Group = JSON.parse(contents)
   const versions = {}
   flattenItemTree(libRoot).forEach((item) => {

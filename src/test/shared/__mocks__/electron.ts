@@ -1,11 +1,7 @@
 import createIPCMock from "electron-mock-ipc"
 import EventEmitter from "events"
+import path from "path"
 const mockIpc = createIPCMock()
-// Remove these 3 lines once this is merged upstream:
-// https://github.com/h3poteto/electron-mock-ipc/pull/402
-mockIpc.ipcRenderer.emitter.setMaxListeners(500)
-mockIpc.ipcRenderer.errorEmitter.setMaxListeners(500)
-mockIpc.ipcMain.emitter.setMaxListeners(500)
 
 export const ipcMain = mockIpc.ipcMain
 export const ipcRenderer = mockIpc.ipcRenderer
@@ -36,18 +32,8 @@ export class BrowserWindow {
   on() {
     return this
   }
-  loadFile(name: string, params: any = {}) {
-    if (name === "search.html" && params?.query) {
-      // We can't change the location with jest, so we just
-      // delete it and make it our own. https://remarkablemark.org/blog/2018/11/17/mock-window-location/
-      delete window.location
-      // @ts-ignore
-      window.location = {
-        pathname: "search.html",
-        search: new URLSearchParams(params.query).toString(),
-      }
-    }
-  }
+  loadURL(_url: string) {}
+  loadFile(_name: string, _params: any) {}
   setSize() {}
   getSize() {
     return [100, 100]
@@ -89,16 +75,16 @@ class MockApp extends EventEmitter {
     return "TestApp"
   }
   getPath(name) {
-    return `/test/app/${name}`
+    return path.join(this.getAppPath(), "run", name)
   }
   setPath() {}
   getVersion() {
     return "0.0.0"
   }
   getAppPath() {
-    return `/test/app`
+    return path.join(__dirname, "../../../../")
   }
-  exit() {
+  exit(_n: number) {
     return
   }
 }
@@ -147,4 +133,12 @@ export const autoUpdater = {
 
 export const shell = {
   openExternal: jest.fn(),
+}
+
+export const contextBridge = {
+  exposeInMainWorld: jest.fn(),
+}
+
+export const protocol = {
+  interceptFileProtocol: jest.fn(),
 }

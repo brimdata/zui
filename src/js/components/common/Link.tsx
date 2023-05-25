@@ -1,6 +1,5 @@
 import React from "react"
-
-import {shell} from "electron"
+import {invoke} from "src/core/invoke"
 
 type Props = {href?: string; children: JSX.Element | string; onClick?: Function}
 
@@ -11,7 +10,7 @@ export default function Link({href, onClick, children}: Props) {
   const click = (e) => {
     e.preventDefault()
     if (href) {
-      shell.openExternal(href)
+      invoke("openLinkOp", href)
     } else if (onClick) {
       onClick(e)
     }

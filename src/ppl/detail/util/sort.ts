@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 
 export const sort = (logs: zed.Record[]) => {
   const findConn = (log) => log.try("_path")?.toString() === "conn"

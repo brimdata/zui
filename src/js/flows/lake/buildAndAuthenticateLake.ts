@@ -1,10 +1,10 @@
-import * as remote from "@electron/remote"
 import {Thunk} from "../../state/types"
 import {Lake} from "../../state/Lakes/types"
 import {buildLake} from "./buildLake"
 import {getAuthCredentials} from "./getAuthCredentials"
 import {saveLake} from "./saveLake"
 import {login} from "./login"
+import {showMessageBox} from "src/js/lib/System"
 
 export class LoginError extends Error {
   readonly name: string = "LoginError"
@@ -56,7 +56,7 @@ export const buildAndAuthenticateLake =
         message:
           "This lake requires authentication. Continue to log in with your browser?",
       }
-      const dialogChoice = await remote.dialog.showMessageBox(dialogOpts)
+      const dialogChoice = await showMessageBox(dialogOpts)
       if (dialogChoice.response === 1) return [true, null]
 
       try {

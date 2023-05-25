@@ -171,7 +171,7 @@ yarn build
 yarn release
 ```
 
-Any platform artifacts created will be found under `./dist/installers`.
+Any platform artifacts created will be found under `./installers`.
 
 This will create packages for the detected OS platform, e.g., `.deb` and `.rpm`
 packages if on Linux. Creation of your own macOS (`.dmg`) and Windows (`.exe`)

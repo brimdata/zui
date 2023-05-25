@@ -1,5 +1,5 @@
 import isString from "lodash/isString"
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 
 const needsQuotes = (fieldName: string) => !/^[a-zA-Z_$][\w]*$/.test(fieldName)
 

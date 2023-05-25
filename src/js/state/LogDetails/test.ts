@@ -2,28 +2,30 @@
  * @jest-environment jsdom
  */
 
-import {createRecord} from "src/test/shared/factories/zed-factory"
+import {createRecord} from "@brimdata/zed-js"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import LogDetails from "./"
+import dispatchAll from "src/test/unit/helpers/dispatchAll"
+import {Store} from "../types"
 
 const record = createRecord({_td: "1", letter: "a"})
 const record2 = createRecord({_td: "1", letter: "b"})
 const record3 = createRecord({_td: "1", letter: "c"})
 
-let store
-beforeEach(() => {
-  store = initTestStore()
+let store: Store
+beforeEach(async () => {
+  store = await initTestStore()
 })
 
 test("viewing a log detail", () => {
-  const state = store.dispatchAll([LogDetails.push(record)])
+  const state = dispatchAll(store, [LogDetails.push(record)])
   const log = LogDetails.build(state)
 
   expect(log && log.get("letter").toString()).toEqual("a")
 })
 
 test("viewing 2 logs", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     LogDetails.push(record),
     LogDetails.push(record2),
   ])
@@ -33,7 +35,7 @@ test("viewing 2 logs", () => {
 })
 
 test("going back to the first log", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     LogDetails.push(record),
     LogDetails.push(record2),
     LogDetails.back(),
@@ -44,7 +46,7 @@ test("going back to the first log", () => {
 })
 
 test("going back and then forward", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     LogDetails.push(record),
     LogDetails.push(record2),
     LogDetails.back(),
@@ -56,7 +58,7 @@ test("going back and then forward", () => {
 })
 
 test("going back, then push, then back", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     LogDetails.push(record),
     LogDetails.push(record2),
     LogDetails.back(),
@@ -68,7 +70,7 @@ test("going back, then push, then back", () => {
 })
 
 test("updating the current log detail", () => {
-  const state = store.dispatchAll([
+  const state = dispatchAll(store, [
     LogDetails.push(record),
     LogDetails.updateUidLogs([record, record2]),
   ])

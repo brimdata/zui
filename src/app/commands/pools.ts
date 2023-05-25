@@ -1,6 +1,4 @@
-import {CreatePoolOpts, LoadFormat} from "packages/zealot/src"
-import detectFileTypes from "src/js/models/ingest/detectFileTypes"
-import {derivePoolName} from "src/js/models/ingest/getParams"
+import {CreatePoolOpts, LoadFormat} from "@brimdata/zed-js"
 import errors from "src/js/errors"
 import {ErrorData} from "src/js/errors/types"
 import ErrorFactory from "src/js/models/ErrorFactory"
@@ -8,6 +6,7 @@ import {PoolName} from "../features/sidebar/pools-section/pool-name"
 import {lakePoolPath} from "../router/utils/paths"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
+import {invoke} from "src/core/invoke"
 
 function replaceLastItem<T>(array: T[], item: T) {
   const next = [...array]
@@ -33,7 +32,6 @@ export const renameGroup = createCommand(
       const name = parts.join(delimiter)
       changes.push({id: pool.id, changes: {name}})
     }
-
     const promise = api.pools.update(changes)
     return api.toast
       .promise(promise, {
@@ -77,7 +75,7 @@ export const createAndLoadFiles = createCommand(
   "pools.createAndLoadFiles",
   async (
     {api},
-    files: File[],
+    files: string[],
     opts: {name?: string; format?: LoadFormat} & Partial<CreatePoolOpts> = {}
   ) => {
     let poolId: string | null = null
@@ -90,7 +88,7 @@ export const createAndLoadFiles = createCommand(
     }
     try {
       const name =
-        opts.name || derivePoolName(await detectFileTypes(files), poolNames)
+        opts.name || (await invoke("derivePoolNameOp", files, poolNames))
       poolId = await api.pools.create(name, opts)
 
       if (files.length === 0) {
@@ -107,6 +105,7 @@ export const createAndLoadFiles = createCommand(
 
       api.url.push(lakePoolPath(poolId, lakeId), {tabId})
     } catch (e) {
+      console.error(e)
       if (poolId) await api.pools.delete(poolId)
       api.notice.error(parseError(e))
       api.pools.syncAll()
@@ -116,7 +115,7 @@ export const createAndLoadFiles = createCommand(
 
 export const loadFiles = createCommand(
   "pools.loadFiles",
-  async ({api}, id: string, files: File[], format?: LoadFormat) => {
+  async ({api}, id: string, files: string[], format?: LoadFormat) => {
     try {
       const promise = api.pools.loadFiles(id, files, format)
       api.toast.promise(promise, {

@@ -1,5 +1,4 @@
 import {LakeModel} from "src/js/models/lake"
-import {getSecretOp, setSecretOp} from "src/js/electron/ops/secrets"
 import {
   toAccessTokenKey,
   toRefreshTokenKey,
@@ -7,6 +6,7 @@ import {
 } from "../../auth0/utils"
 import {Thunk} from "../../state/types"
 import {getAuth0} from "./getAuth0"
+import {invoke} from "src/core/invoke"
 
 export const getAuthCredentials =
   (lake: LakeModel): Thunk<Promise<string | null>> =>
@@ -15,12 +15,12 @@ export const getAuthCredentials =
       throw new Error("No authentication data set for lake")
 
     // first, check if accessToken is in keychain
-    let accessToken = await getSecretOp.invoke(toAccessTokenKey(lake.id))
+    let accessToken = await invoke("getSecretOp", toAccessTokenKey(lake.id))
     // check that token exists, is formatted properly, and not expired
     if (validateToken(accessToken)) return accessToken
 
     // if no accessToken (or expired/malformed), then check for refreshToken
-    const refreshToken = await getSecretOp.invoke(toRefreshTokenKey(lake.id))
+    const refreshToken = await invoke("getSecretOp", toRefreshTokenKey(lake.id))
     if (!refreshToken) {
       // login is required
       return null
@@ -36,7 +36,7 @@ export const getAuthCredentials =
     }
 
     // successfully refreshed, update in keychain and then return
-    await setSecretOp.invoke(toAccessTokenKey(lake.id), accessToken)
+    await invoke("setSecretOp", toAccessTokenKey(lake.id), accessToken)
 
     return accessToken
   }

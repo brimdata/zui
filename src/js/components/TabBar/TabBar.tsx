@@ -4,7 +4,6 @@ import {useSelector} from "react-redux"
 import {animated} from "react-spring"
 import Lakes from "src/js/state/Lakes"
 import {PoolsState} from "src/js/state/Pools/types"
-import lib from "../../lib"
 import Pools from "../../state/Pools"
 import Tabs from "../../state/Tabs"
 import {useResizeObserver} from "../hooks/useResizeObserver"
@@ -15,7 +14,6 @@ import useTabLayout from "./useTabLayout"
 import {useLocation} from "react-router"
 import styled from "styled-components"
 import Appearance from "src/js/state/Appearance"
-import env from "src/app/core/env"
 import SidebarToggleButton from "src/app/features/sidebar/sidebar-toggle-button"
 import tab from "src/js/models/tab"
 
@@ -55,6 +53,10 @@ const TrafficLightBG = styled.div`
   padding-right: 10px;
 `
 
+const bounded = (num: number, [from, to]: [number, number]) => {
+  return Math.max(from, Math.min(num, to))
+}
+
 export default function TabBar() {
   useLocation() // Rerender this when the location changes
   const ids = useSelector(Tabs.getIds)
@@ -65,14 +67,13 @@ export default function TabBar() {
   const {ref, rect} = useResizeObserver()
   const [width, setWidth] = useState(0)
   const layout = useTabLayout(ids, width)
-  const calcWidth = () =>
-    setWidth(lib.bounded(rect.width / count, [0, MAX_WIDTH]))
+  const calcWidth = () => setWidth(bounded(rect.width / count, [0, MAX_WIDTH]))
   const ctl = useTabController(count, calcWidth)
   useEffect(() => calcWidth(), [rect.width])
   const sidebarCollapsed = !useSelector(Appearance.sidebarIsOpen)
   return (
     <BG>
-      {sidebarCollapsed && env.isMac && (
+      {sidebarCollapsed && global.env.isMac && (
         <TrafficLightBG>
           <SidebarToggleButton />
         </TrafficLightBG>

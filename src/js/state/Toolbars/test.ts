@@ -16,8 +16,8 @@ const item1: ToolbarItem = {
 }
 
 let select, dispatch, store
-beforeEach(() => {
-  store = initTestStore()
+beforeEach(async () => {
+  store = await initTestStore()
   dispatch = store.dispatch
   select = (f) => f(store.getState())
 })

@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {cssVar, darken, transparentize} from "polished"
+import {darken, transparentize} from "polished"
 import {ReactNode} from "react"
 import styled from "styled-components"
 import Icon from "src/app/core/icon-temp"
@@ -16,6 +16,7 @@ import {QueryPin} from "src/js/state/Editor/types"
 import buildPin from "src/js/state/Editor/models/build-pin"
 import {isEqual} from "lodash"
 import submitSearch from "../../flows/submit-search"
+import {cssVar} from "src/js/lib/cssVar"
 
 const primary = cssVar("--primary-color") as string
 const buttonColor = transparentize(0.8, primary)

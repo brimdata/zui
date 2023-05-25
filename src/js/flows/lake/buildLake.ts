@@ -1,7 +1,7 @@
 import isEmpty from "lodash/isEmpty"
 import {Thunk} from "../../state/types"
 import {Lake} from "../../state/Lakes/types"
-import {Client} from "@brimdata/zealot"
+import {Client} from "@brimdata/zed-js"
 import lake, {LakeModel} from "src/js/models/lake"
 
 export const buildLake =

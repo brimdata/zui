@@ -6,7 +6,7 @@ import {State} from "../types"
 import {LogDetailHistory, toHistory} from "./reducer"
 import {LogDetailsState} from "./types"
 
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 
 const getLogDetails = activeTabSelect((state: TabState) => {
   return state.logDetails

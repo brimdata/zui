@@ -1,17 +1,17 @@
 import compact from "lodash/compact"
 import states from "src/test/unit/states"
-import {SessionState} from "src/js/electron/session-state"
-import lib from "../../../lib"
+import {SessionState} from "src/electron/session-state"
+import file from "src/js/lib/file"
 
 export default (version: string) => {
   const name = `${version}.json`
-  const file = states.getPath(name)
+  const filePath = states.getPath(name)
   let contents
   try {
-    contents = lib.file(file).readSync()
+    contents = file(filePath).readSync()
   } catch (e) {
     throw new Error(`Missing Test state for Version ${version}
-No File: ${file}
+No File: ${filePath}
 To create test state, run the app and navigate to...
 App Menu => Developer => Save Session for Testing Migrations`)
   }

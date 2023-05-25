@@ -1,4 +1,4 @@
-import {TypeValue} from "packages/zealot/src/zed"
+import {TypeValue} from "@brimdata/zed-js"
 import {View} from "./view"
 
 export class TypeValueView extends View<TypeValue> {

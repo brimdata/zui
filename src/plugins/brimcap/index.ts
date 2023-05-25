@@ -1,13 +1,25 @@
-import BrimcapPlugin from "./brimcap-plugin"
-import ZuiApi from "src/js/api/zui-api"
+import {PluginContext} from "src/zui"
+import {activateBrimcapLoader} from "./loader"
+import {activateSuricataUpdater} from "./suricata/update"
+import {activateDownloadPacketsCommand} from "./packets/download"
+import {activatePacketsMenuItem} from "./packets/menu-item"
+import {activateBrimcapConfigurations} from "./configurations"
+import {activateSuricataCorrelations} from "./suricata/correlations"
+import {activateZeekCorrelations} from "./zeek/correlations"
+import {activateStorage} from "./storage"
 
-let brimcap: BrimcapPlugin
+export function activate(ctx: PluginContext) {
+  const {root, suricata} = activateStorage(ctx)
 
-export const activate = (api: ZuiApi) => {
-  brimcap = new BrimcapPlugin(api)
-  brimcap.init()
-}
+  // suricataupdater and suricatarunner (run by "brimcap analyze")
+  // both consult BRIM_SURICATA_USER_DIR.
+  process.env.BRIM_SURICATA_USER_DIR = suricata
 
-export const deactivate = async () => {
-  brimcap && (await brimcap.cleanup())
+  activatePacketsMenuItem()
+  activateDownloadPacketsCommand(root)
+  activateSuricataCorrelations()
+  activateZeekCorrelations()
+  activateBrimcapLoader(root)
+  activateBrimcapConfigurations()
+  activateSuricataUpdater()
 }

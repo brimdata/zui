@@ -1,6 +1,6 @@
 import {every} from "lodash"
 import React from "react"
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import connHistoryView from "../lib/connHistoryView"
 import VerticalTable from "./Tables/VerticalTable"
 import {Fieldset} from "./Typography"

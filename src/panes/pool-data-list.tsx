@@ -1,5 +1,6 @@
 import React from "react"
-import {transparentize, cssVar} from "polished"
+import {transparentize} from "polished"
+import {cssVar} from "src/js/lib/cssVar"
 import {Pool} from "src/app/core/pools/pool"
 import styled from "styled-components"
 

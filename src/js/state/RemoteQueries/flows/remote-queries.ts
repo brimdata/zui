@@ -5,10 +5,10 @@ import Pools from "src/js/state/Pools"
 import Current from "src/js/state/Current"
 import RemoteQueries from "src/js/state/RemoteQueries"
 import {Thunk} from "src/js/state/types"
-import {Readable} from "stream"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {LakeModel} from "src/js/models/lake"
+import {invoke} from "src/core/invoke"
 
 export const remoteQueriesPoolName = "_remote-queries"
 
@@ -116,13 +116,11 @@ export const appendRemoteQueries =
 
 const loadRemoteQueries =
   (queries: RemoteQueryRecord[]): Thunk<Promise<void>> =>
-  async (dispatch, gs, {api}) => {
-    const zealot = await api.getZealot()
-    const rqPoolId = await dispatch(getOrCreateRemotePoolId())
+  async (dispatch, _gs) => {
+    const poolId = await dispatch(getOrCreateRemotePoolId())
+    const data = queries.map((d) => JSON.stringify(d)).join("\n")
     try {
-      const data = new Readable()
-      const loadPromise = zealot.load(data, {
-        pool: rqPoolId,
+      await invoke("pools.load", poolId, data, {
         branch: "main",
         message: {
           author: "zui",
@@ -131,14 +129,13 @@ const loadRemoteQueries =
             queries.map((q) => q.id).join(", "),
         },
       })
-      queries.forEach((d) => data.push(JSON.stringify(d)))
-      data.push(null)
-      await loadPromise
     } catch (e) {
+      console.error(e)
       throw new Error("error loading remote queries: " + e)
     }
   }
 
+// eslint-disable-next-line
 const getOrCreateRemotePoolId =
   (): Thunk<Promise<string>> =>
   async (dispatch, getState, {api}) => {

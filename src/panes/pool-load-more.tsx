@@ -1,6 +1,6 @@
 import React from "react"
-import {LoadFormat} from "packages/zealot/src"
-import {transparentize, cssVar} from "polished"
+import {LoadFormat} from "@brimdata/zed-js"
+import {transparentize} from "polished"
 import {forwardRef, useImperativeHandle, useState} from "react"
 import {loadFiles} from "src/app/commands/pools"
 import {Pool} from "src/app/core/pools/pool"
@@ -10,6 +10,7 @@ import {Field} from "src/components/field"
 import {FileInput} from "src/components/file-input"
 import InputLabel from "src/js/components/common/forms/InputLabel"
 import styled from "styled-components"
+import {cssVar} from "src/js/lib/cssVar"
 
 const Drop = styled(DropZone)`
   background-color: ${transparentize(
@@ -43,7 +44,11 @@ export const PoolLoadMore = forwardRef<PoolLoadMoreHandle, Props>(
     const [files, setFiles] = useState<File[]>([])
     const [format, setFormat] = useState<LoadFormat>("auto")
     const submit = (files: File[]) =>
-      loadFiles.run(props.pool.id, files, format)
+      loadFiles.run(
+        props.pool.id,
+        files.map((f) => f.path),
+        format
+      )
 
     useImperativeHandle(ref, () => ({submit}))
 

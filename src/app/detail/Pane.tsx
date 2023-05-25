@@ -13,7 +13,7 @@ import LogDetails from "src/js/state/LogDetails"
 import styled from "styled-components"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 
 const BG = styled.div`
   padding: 12px;

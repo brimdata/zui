@@ -1,8 +1,9 @@
 import Histories from "src/app/core/models/histories"
 import {FeatureName} from "../state/Feature"
 import {BrowserHistory} from "history"
-import {MainArgs} from "../electron/main"
-import {AppMeta} from "../electron/meta"
+import {MainArgs} from "../../electron/main"
+import {AppMeta} from "../../electron/meta"
+import {EnvProperties} from "src/domain/env/types"
 
 declare global {
   namespace NodeJS {
@@ -23,6 +24,14 @@ declare global {
       mainArgs: MainArgs
       firstMount: boolean
       appMeta: AppMeta
+      env: EnvProperties
+      zui: {
+        on: (name: string, handler: (...args: any[]) => any) => void
+        off: (name: string, handler: (...args: any[]) => any) => void
+        once: (name: string, handler: (...args: any[]) => any) => void
+        invoke: (name: string, ...args: any[]) => any
+      }
+      e2eFilePaths: undefined | string[]
     }
   }
 }

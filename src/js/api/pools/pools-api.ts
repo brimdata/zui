@@ -1,18 +1,12 @@
-import {nanoid} from "@reduxjs/toolkit"
-import {isArray} from "lodash"
-import {CreatePoolOpts} from "packages/zealot/src"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
-import detectFileTypes from "src/js/models/ingest/detectFileTypes"
-import {FileListData} from "src/js/models/ingest/fileList"
-import {loadEnd, loadStart} from "src/js/electron/ops/loads-in-progress-op"
-import deletePools from "src/js/flows/deletePools"
 import Current from "src/js/state/Current"
-import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"
+import {CreatePoolOpts, LoadFormat} from "@brimdata/zed-js"
+import {invoke} from "src/core/invoke"
+import {PoolUpdate} from "src/domain/pools/types"
 
-type Update = {id: string; changes: {name: string}}
 export class PoolsApi extends ApiDomain {
   get all() {
     return this.select(Current.getPools)
@@ -32,53 +26,31 @@ export class PoolsApi extends ApiDomain {
     return this.select(Pools.get(this.lakeId, id))
   }
 
-  // TODO: Move to main progress, create a loads domain
-  async loadFiles(poolId: string, files: File[], format?: string) {
-    const fileListData = await detectFileTypes(files)
-    const loader = chooseLoader(this, fileListData)
-    const load = createLoad(this, this.lakeId, poolId)
-    const params = {
-      poolId: poolId,
+  async loadFiles(poolId: string, files: string[], format?: LoadFormat) {
+    await invoke("loadFilesOp", {
+      lakeId: this.lakeId,
+      poolId,
       branch: "main",
-      name: "",
-      fileListData,
+      files,
       format,
-    }
-    try {
-      await load.setup()
-      await loader.load(
-        params,
-        load.onProgress,
-        load.onWarning,
-        load.onPoolChanged,
-        load.signal
-      )
-      await waitForPoolStats(this, poolId)
-    } catch (e) {
-      loader.unload && (await loader.unload(params))
-      throw e
-    } finally {
-      load.teardown()
-    }
+    })
   }
 
-  delete(id: string | string[]) {
+  async delete(id: string | string[]) {
     const ids = Array.isArray(id) ? id : [id]
-    return this.dispatch(deletePools(ids))
+    for (let id of ids) {
+      await invoke("deletePoolOp", this.lakeId, id)
+    }
   }
 
   async create(name: string, opts: Partial<CreatePoolOpts> = {}) {
-    const client = await this.zealot
-    const res = await client.createPool(name, opts)
-    await this.sync(res.pool.id)
-    return res.pool.id
+    const id = await invoke("pools.create", this.lakeId, name, opts)
+    await this.sync(id)
+    return id
   }
 
-  async update(update: Update | Update[]) {
-    const client = await this.zealot
-    for (let {id, changes} of isArray(update) ? update : [update]) {
-      await client.updatePool(id, changes)
-    }
+  async update(update: PoolUpdate | PoolUpdate[]) {
+    await invoke("pools.update", this.lakeId, update)
     return this.syncAll()
   }
 
@@ -98,60 +70,5 @@ export class PoolsApi extends ApiDomain {
     const client = await this.zealot
     const allData = await client.getPools()
     this.dispatch(Pools.setAllData({lakeId: this.lakeId, allData}))
-  }
-}
-
-function createLoad(api: PoolsApi, lakeId: string, poolId: string) {
-  const ctl = new AbortController()
-  const id = nanoid()
-
-  return {
-    signal: ctl.signal,
-
-    setup: async () => {
-      await loadStart.invoke(global.windowId)
-      api.abortables.add({id, abort: () => ctl.abort()})
-      api.dispatch(Loads.create({id, poolId, progress: 0}))
-    },
-
-    teardown: async () => {
-      await loadEnd.invoke(global.windowId)
-      api.abortables.remove(id)
-      api.dispatch(Loads.delete(id))
-    },
-
-    onProgress: (progress: number) => {
-      api.dispatch(Loads.update({id, changes: {progress}}))
-    },
-
-    onWarning: (warning: string) => {
-      api.dispatch(Pools.appendWarning({lakeId, poolId, warning}))
-    },
-
-    onPoolChanged: async () => {
-      await api.sync(poolId)
-    },
-  }
-}
-
-function chooseLoader(api: PoolsApi, fileListData: FileListData) {
-  const filesType = fileListData[0]?.type
-  const loaders = api.loaders.getMatches(filesType)
-  if (!loaders || loaders.length === 0) {
-    throw new Error(
-      `No registered loaders match the provided file type: ${filesType}`
-    )
-  }
-  // only supporting one loader at this time
-  return loaders[0]
-}
-
-async function waitForPoolStats(api: PoolsApi, poolId: string) {
-  let tries = 0
-  while (tries < 20) {
-    tries++
-    const pool = await api.sync(poolId)
-    if (pool.hasStats() && pool.size > 0) break
-    await new Promise((r) => setTimeout(r, 300))
   }
 }

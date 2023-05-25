@@ -1,4 +1,4 @@
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import {SecurityEventInterface} from "./security-event"
 
 export class ZeekEvent implements SecurityEventInterface {

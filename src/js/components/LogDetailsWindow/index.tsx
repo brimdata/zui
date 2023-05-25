@@ -1,6 +1,5 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {HTMLProps} from "react"
-import useStoreExport from "src/app/core/hooks/useStoreExport"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"
 import DetailPane from "src/app/detail/Pane"
@@ -16,7 +15,6 @@ const Left = ({className, ...props}: Pass) => (
   <div {...props} className={classNames("left", className)} />
 )
 export default function LogDetailsWindow() {
-  useStoreExport()
   const dispatch = useDispatch()
   const prevExists = useSelector(LogDetails.getHistory).canGoBack()
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()

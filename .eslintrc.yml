@@ -63,3 +63,6 @@ rules:
     - off
   jest/no-done-callback:
     - off
+  prettier/prettier:
+    - error
+    - endOfLine: auto

@@ -1,5 +1,5 @@
-import {cssVar} from "polished"
 import React from "react"
+import {cssVar} from "src/js/lib/cssVar"
 import styled from "styled-components"
 
 const BG = styled.div`

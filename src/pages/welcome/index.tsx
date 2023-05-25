@@ -6,11 +6,11 @@ import {InputButton} from "src/components/input-button"
 import {Subtitle} from "src/components/subtitle"
 import {Title} from "src/components/title"
 import styled from "styled-components"
-import {shell} from "electron"
 import links from "src/app/core/links"
+import {invoke} from "src/core/invoke"
 
 const BG = styled.div`
-  background-image: url(dist/static/welcome-page-background.svg);
+  background-image: url(/welcome-page-background.svg);
   height: 100%;
   width: 100%;
   background-position: center center;
@@ -59,7 +59,9 @@ export function WelcomePage() {
           <InputButton onClick={() => connectToLake.run()}>
             Connect to Lake
           </InputButton>
-          <InputButton onClick={() => shell.openExternal(links.ZUI_DOCS_ROOT)}>
+          <InputButton
+            onClick={() => invoke("openLinkOp", links.ZUI_DOCS_ROOT)}
+          >
             Documentation
           </InputButton>
         </Actions>

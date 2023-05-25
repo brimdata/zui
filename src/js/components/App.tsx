@@ -6,7 +6,6 @@ import * as routes from "src/app/router/routes"
 import AppWrapper from "src/app/routes/app-wrapper/app-wrapper"
 import React from "react"
 import {Redirect, Route, Switch} from "react-router"
-import useStoreExport from "src/app/core/hooks/useStoreExport"
 import useSearchShortcuts from "./useSearchShortcuts"
 import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
 import {WelcomePage} from "src/pages/welcome"
@@ -16,15 +15,17 @@ import {InitPool, Show} from "src/pages/pools/show"
 import {QueryRoute} from "src/app/query-home/route"
 import {lakePath} from "src/app/router/utils/paths"
 import {defaultLake} from "../initializers/initLakeParams"
+import Head from "next/head"
 
 export default function App() {
   useSearchAppMenu()
-  useStoreExport()
   useReleaseNotes()
   useSearchShortcuts()
-
   return (
     <AppTabsRouter>
+      <Head>
+        <title>Zui</title>
+      </Head>
       <Switch>
         <Route path={routes.lakeShow.path}>
           <AppWrapper>

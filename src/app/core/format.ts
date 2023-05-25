@@ -3,7 +3,7 @@ import * as d3 from "d3"
 import {useMemo} from "react"
 import {useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
-import {zed} from "@brimdata/zealot"
+import * as zed from "@brimdata/zed-js"
 import {isString} from "lodash"
 import time from "src/js/models/time"
 
