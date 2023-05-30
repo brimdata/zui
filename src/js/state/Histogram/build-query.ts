@@ -9,14 +9,14 @@ import Pools from "../Pools"
 import {actions} from "./reducer"
 
 export const buildHistogramQuery =
-  (): Thunk<Promise<string | null>> =>
+  (key: string): Thunk<Promise<string | null>> =>
   async (dispatch, getState, {api}) => {
     const poolName = api.current.poolName
     const version = Current.getVersion(getState())
     const range = await dispatch(getRange(poolName))
     // this doesn't belong here
     dispatch(actions.setRange(range))
-    return histogramZed(QueryModel.versionToZed(version), range)
+    return histogramZed(QueryModel.versionToZed(version), range, key)
   }
 
 export const getRange =
@@ -27,11 +27,11 @@ export const getRange =
     else return dispatch(Pools.getTimeRange(name))
   }
 
-function histogramZed(baseQuery: string, range: DateTuple | null) {
+function histogramZed(baseQuery: string, range: DateTuple | null, key: string) {
   if (!range) return null
   const {number, unit} = histogramInterval(range)
   const interval = `${number}${timeUnits[unit]}`
-  return `${baseQuery} | count() by every(${interval}), _path`
+  return `${baseQuery} | count() by every(${interval}), ${key}`
 }
 
 const getRangeFromQuery = (): Thunk<DateTuple> => (_, getState) => {

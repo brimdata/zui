@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {ColumnHeadersViewState, ResultsView, PaneName} from "./types"
 
-// This is tab level appearance stuff
+// This is tab level ui persistence
 const slice = createSlice({
   name: "TAB_LAYOUT",
   initialState: {
@@ -13,6 +13,7 @@ const slice = createSlice({
     isEditingTitle: false,
     titleFormAction: "create" as "create" | "update",
     showHistogram: true,
+    queryPanels: "",
   },
   reducers: {
     showDetailPane: (s) => {
@@ -49,6 +50,9 @@ const slice = createSlice({
     },
     toggleHistogram(s) {
       s.showHistogram = !s.showHistogram
+    },
+    setQueryPanels(s, value: PayloadAction<string>) {
+      s.queryPanels = value.payload
     },
   },
 })

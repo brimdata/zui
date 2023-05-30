@@ -15,7 +15,8 @@ export const runHistogramQuery =
     const tabId = api.current.tabId
     const key = api.current.location.key
     dispatch(Results.init({id, tabId, query: "", key}))
-    const query = await dispatch(buildHistogramQuery())
+    const query = await dispatch(buildHistogramQuery("typeof(this)"))
+    console.log(query)
     if (!query) return
     dispatch(Results.init({id, tabId, query, key}))
     const collect: Collector = ({rows, shapesMap}) => {

@@ -15,7 +15,9 @@ const HistogramTooltip = ({segments, ts}: Props) => {
     .map(([path, count]) => (
       <tr key={path}>
         <td>
-          <span className={`tag path-tag ${path}-bg-color`}>{path}</span>
+          <span className={`tag path-tag ${path}-bg-color`}>
+            {path.substring(0, 30)}
+          </span>
         </td>
         <td className="count">{fmt.withCommas(count)}</td>
       </tr>

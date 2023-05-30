@@ -29,4 +29,5 @@ export default {
   getIsEditingTitle: activeTabSelect((s) => s.layout.isEditingTitle),
   getTitleFormAction: activeTabSelect((s) => s.layout.titleFormAction),
   getShowHistogram: activeTabSelect((s) => s.layout.showHistogram ?? true),
+  getQueryPanels: activeTabSelect((s) => s.layout.queryPanels),
 }

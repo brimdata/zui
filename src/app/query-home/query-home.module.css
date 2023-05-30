@@ -1,0 +1,15 @@
+.resizeHandle {
+    width: 100%;
+    height: 9px;
+    position: relative;
+}
+
+.resizeHandle:after {
+    content: "";
+    position: absolute;
+    background: rgba(0,0,0,0.1);
+    left: 0px;
+    right: 0px;
+    height: 1px;
+    top: 4px;
+}

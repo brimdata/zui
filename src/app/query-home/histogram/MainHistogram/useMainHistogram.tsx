@@ -42,6 +42,7 @@ export default function useMainHistogram(
   const {height, width, range} = props
   const dispatch = useDispatch()
   const chartData = useSelector(Results.getValues(id)) as zed.Record[]
+  console.log(chartData)
   const status = useSelector(Results.getStatus(id))
 
   const pens = useConst<Pen[]>([], () => {
