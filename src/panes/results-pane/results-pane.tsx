@@ -5,11 +5,16 @@ import {Error} from "./error"
 import {Inspector} from "./inspector"
 import {Table} from "./table"
 import {TableInspector} from "./table-inspector"
+import styles from "./results-pane.module.css"
 
 export function ResultsPane() {
   const ref = useRef()
   return (
-    <div ref={ref} className="results-pane" data-testid="results-pane">
+    <div
+      ref={ref}
+      className={"results-pane " + styles.container}
+      data-testid="results-pane"
+    >
       <AppErrorBoundary>
         <ResultsPaneProvider parentRef={ref}>
           <ResultsView />

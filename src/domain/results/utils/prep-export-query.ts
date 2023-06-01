@@ -1,10 +1,10 @@
 import ZuiApi from "src/js/api/zui-api"
 import program from "src/js/models/program"
 import Results from "src/js/state/Results"
-import {MAIN_RESULTS} from "src/js/state/Results/types"
+import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
 
 export function prepExportQuery(api: ZuiApi, format: string) {
-  let query = Results.getQuery(MAIN_RESULTS)(api.getState())
+  let query = Results.getQuery(RESULTS_QUERY)(api.getState())
   query = cutColumns(query, api)
   query = maybeFuse(query, format)
   return query

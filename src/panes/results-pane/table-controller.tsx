@@ -4,7 +4,7 @@ import {ZedTableHandlers, ZedTableState} from "src/components/zed-table/types"
 import useSelect from "src/app/core/hooks/use-select"
 import Results from "src/js/state/Results"
 import {useDispatch} from "src/app/core/state"
-import {MAIN_RESULTS} from "src/js/state/Results/types"
+import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
 import {useResultsContext} from "src/app/query-home"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {useSelector} from "react-redux"
@@ -36,9 +36,9 @@ export function useTableHandlers() {
         dispatch(TableState.setStateForShape({shape, state}))
       },
       onScrollNearBottom: () => {
-        if (select(Results.isFetching(MAIN_RESULTS))) return
-        if (select(Results.isComplete(MAIN_RESULTS))) return
-        if (select(Results.isLimited(MAIN_RESULTS))) return
+        if (select(Results.isFetching(RESULTS_QUERY))) return
+        if (select(Results.isComplete(RESULTS_QUERY))) return
+        if (select(Results.isLimited(RESULTS_QUERY))) return
         dispatch(Results.fetchNextPage())
       },
       onHeaderContextMenu(e, column) {

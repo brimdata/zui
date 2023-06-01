@@ -2,7 +2,6 @@ import {initialResultData} from "./util"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {paginate} from "./paginate"
 import {ResultData, ResultsState} from "./types"
-import {MAIN_RESULTS} from "./types"
 
 const initial = Object.freeze(initialResultData())
 
@@ -70,5 +69,3 @@ export const getError = resultsSelect((results) => results.error)
 export const getPage = resultsSelect((results) => results.page)
 export const getPerPage = resultsSelect((results) => results.perPage)
 export const getCount = resultsSelect((results) => results.values.length)
-
-export const getMainValues = getValues(MAIN_RESULTS)

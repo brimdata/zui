@@ -42,7 +42,7 @@ export default function ({wrapperClassName, render: Component}: Args): Pen {
       if (point && point.count) {
         positionTooltip(div, svg, 30)
         if (!isEqual(lastPoint, point)) {
-          root.render(<Component {...getProps(point)} />)
+          root.render(<Component chart={chart} {...getProps(point)} />)
         }
         lastPoint = point
       } else {

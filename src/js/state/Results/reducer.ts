@@ -23,14 +23,11 @@ const slice = createSlice({
       r.query = a.payload.query
       r.aggregation = program(a.payload.query).hasAnalytics()
       r.key = a.payload.key
-      r.values = []
-      r.shapes = {}
       r.page = 1
       r.status = "FETCHING"
-      r.error = null
     },
 
-    nextPage(s, a: Pay<{id: string; tabId: string}>) {
+    nextPage(s, a: Pay<{id: string}>) {
       const r = access(s, a.payload.id)
       r.page += 1
       r.status = "FETCHING"

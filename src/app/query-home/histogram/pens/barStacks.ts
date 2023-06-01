@@ -24,7 +24,6 @@ export default function (): Pen {
       .selectAll("g")
       .data(series, (d) => d.key)
 
-    const t = d3.transition().duration(500)
     const innerH = innerHeight(chart.height, chart.margins)
     barGroups.exit().selectAll("rect").remove()
 
@@ -32,6 +31,7 @@ export default function (): Pen {
       .enter()
       .append("g")
       .attr("class", (d) => `${d.key}-bg-color`)
+      .style("fill", (d) => chart.color(d.key))
       .merge(barGroups)
       .selectAll("rect")
       .data((d) => d)
@@ -69,7 +69,6 @@ export default function (): Pen {
       .merge(bars)
       .attr("width", clampWidth)
       .attr("x", (d) => Math.max(0, chart.xScale(d.data.ts)))
-      .transition(t)
       .attr("y", (d) => chart.yScale(d[1]))
       .attr("height", (d) => chart.yScale(d[0]) - chart.yScale(d[1]))
   }

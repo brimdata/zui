@@ -25,8 +25,8 @@ import * as zed from "@brimdata/zed-js"
 import UniqArray from "src/js/models/UniqArray"
 import MergeHash from "src/js/models/MergeHash"
 import Editor from "src/js/state/Editor"
-import {HISTOGRAM_RESULTS} from "src/js/state/Histogram/run-query"
 import {HistogramProps} from "./Chart"
+import {HISTOGRAM_RESULTS} from "src/panes/histogram-pane/run-histogram-query"
 
 const id = HISTOGRAM_RESULTS
 
@@ -42,7 +42,6 @@ export default function useMainHistogram(
   const {height, width, range} = props
   const dispatch = useDispatch()
   const chartData = useSelector(Results.getValues(id)) as zed.Record[]
-  console.log(chartData)
   const status = useSelector(Results.getStatus(id))
 
   const pens = useConst<Pen[]>([], () => {
@@ -86,11 +85,13 @@ export default function useMainHistogram(
       top: 20,
       bottom: 28,
     }
+    const color = d3.scaleOrdinal().domain(data.keys).range(d3.schemeTableau10)
     return {
       data,
       width,
       height,
       margins,
+      color,
       state: {
         isFetching: status === "FETCHING",
         isEmpty: data.points.length === 0,

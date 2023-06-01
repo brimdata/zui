@@ -5,18 +5,23 @@ import Current from "src/js/state/Current"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {Thunk} from "src/js/state/types"
-import Pools from "../Pools"
-import {actions} from "./reducer"
+import Histogram from "src/js/state/Histogram"
+import Pools from "src/js/state/Pools"
 
-export const buildHistogramQuery =
-  (key: string): Thunk<Promise<string | null>> =>
+export const buildQuery =
+  (args: {x: string; color: string}): Thunk<Promise<string | null>> =>
   async (dispatch, getState, {api}) => {
     const poolName = api.current.poolName
     const version = Current.getVersion(getState())
     const range = await dispatch(getRange(poolName))
     // this doesn't belong here
-    dispatch(actions.setRange(range))
-    return histogramZed(QueryModel.versionToZed(version), range, key)
+    dispatch(Histogram.setRange(range))
+    return histogramZed(
+      QueryModel.versionToZed(version),
+      range,
+      args.x,
+      args.color
+    )
   }
 
 export const getRange =
@@ -27,11 +32,16 @@ export const getRange =
     else return dispatch(Pools.getTimeRange(name))
   }
 
-function histogramZed(baseQuery: string, range: DateTuple | null, key: string) {
+function histogramZed(
+  baseQuery: string,
+  range: DateTuple | null,
+  x: string,
+  color: string
+) {
   if (!range) return null
   const {number, unit} = histogramInterval(range)
   const interval = `${number}${timeUnits[unit]}`
-  return `${baseQuery} | count() by every(${interval}), ${key}`
+  return `${baseQuery} | count() by bucket(${x}, ${interval}), ${color}`
 }
 
 const getRangeFromQuery = (): Thunk<DateTuple> => (_, getState) => {

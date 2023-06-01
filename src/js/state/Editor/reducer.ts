@@ -9,12 +9,8 @@ const slice = createSlice({
     pins: [] as QueryPin[],
     pinEditIndex: null as null | number,
     pinHoverIndex: null as null | number,
-    height: 96,
   },
   reducers: {
-    setHeight(s, a: PayloadAction<number>) {
-      s.height = a.payload
-    },
     setValue(s, a: PayloadAction<string>) {
       s.value = a.payload
     },

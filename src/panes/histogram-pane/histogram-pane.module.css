@@ -1,3 +1,6 @@
 .pane {
-    height: 80px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
 }

@@ -96,16 +96,16 @@ const QueryHome = () => {
             autoSaveId="queryPanels"
             storage={panelStorage}
           >
-            <Panel minSize={15} id="top">
+            <Panel minSize={15}>
               <TitleBar />
               <SearchArea />
             </Panel>
             <PanelResizeHandle className={styles.resizeHandle} />
-            <Panel id="middle">
+            <Panel>
               <HistogramPane />
             </Panel>
             <PanelResizeHandle className={styles.resizeHandle} />
-            <Panel id="bottom">
+            <Panel>
               <ResultsToolbar />
               <ResultsPane />
             </Panel>
