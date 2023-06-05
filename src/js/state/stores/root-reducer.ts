@@ -19,6 +19,7 @@ import Loads from "../Loads"
 import QueryVersions from "../QueryVersions"
 import SessionQueries from "../SessionQueries"
 import SessionHistories from "../SessionHistories"
+import PoolSettings from "../PoolSettings"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers<any, any>({
   notice: Notice.reducer,
   tabs: Tabs.reducer,
   pools: Pools.reducer,
+  poolSettings: PoolSettings.reducer,
   loads: Loads.reducer,
   lakeStatuses: LakeStatuses.reducer,
   queries: Queries.reducer,

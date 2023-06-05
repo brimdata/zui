@@ -5,6 +5,7 @@ import Histogram from "src/js/state/Histogram"
 import Layout from "src/js/state/Layout"
 import {MainHistogramSvg} from "src/app/query-home/histogram/MainHistogram/Chart"
 import {useMemo} from "react"
+import {SettingsButton} from "./settings-button"
 
 function useParentSize() {
   const {ref, width, height} = useResizeObserver()
@@ -42,6 +43,7 @@ export function HistogramPane() {
     <Parent>
       <div className={styles.pane} data-testid="histogram">
         <MainHistogramSvg width={width} height={height} range={range} />
+        <SettingsButton />
       </div>
     </Parent>
   )

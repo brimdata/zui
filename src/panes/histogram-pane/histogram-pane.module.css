@@ -4,3 +4,14 @@
   overflow: hidden;
   position: relative;
 }
+
+.settingsButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.settingsDialog {
+  z-index: 9999;
+  width: 300px;
+}
