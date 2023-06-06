@@ -15,8 +15,8 @@ export function useOutsideClick(dialog: HTMLDialogElement, props: DialogProps) {
   useEffect(() => {
     let tid: number
     const listener = (e: globalThis.MouseEvent) => callback.current(e)
-    const add = () => document.addEventListener("click", listener)
-    const remove = () => document.removeEventListener("click", listener)
+    const add = () => document.addEventListener("mousedown", listener)
+    const remove = () => document.removeEventListener("mousedown", listener)
 
     if (props.isOpen) tid = setTimeout(add)
     return () => {

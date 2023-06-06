@@ -1,11 +1,16 @@
 import {useRef, useState} from "react"
 import styles from "./histogram-pane.module.css"
 import {Dialog} from "src/components/dialog/dialog"
+import {SettingsForm} from "./settings-form"
+import {useSelector} from "react-redux"
+import Current from "src/js/state/Current"
 
 export function SettingsButton() {
   const [isOpen, setIsOpen] = useState(false)
   const button = useRef()
   const close = () => setIsOpen(false)
+  const poolId = useSelector(Current.getPoolFromQuery)?.id // might be null
+  if (!poolId) return null
 
   return (
     <>
@@ -27,8 +32,7 @@ export function SettingsButton() {
         dialogMargin="0 10px"
         keepOnScreen={false}
       >
-        <h1>Hello World</h1>
-        <button onClick={close}>Close</button>
+        <SettingsForm close={close} poolId={poolId} key={poolId} />
       </Dialog>
     </>
   )

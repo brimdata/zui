@@ -3,9 +3,9 @@ import {createCrudSlice} from "src/core/state/create-crud-slice"
 
 type PoolSettings = {
   id: string
-  timeField: string
-  colorField: string
-  colorMap: Record<string, string>
+  timeField?: string
+  colorField?: string
+  colorMap?: Record<string, string>
 }
 
 const adapter = createEntityAdapter<PoolSettings>()

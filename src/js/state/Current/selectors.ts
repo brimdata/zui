@@ -89,7 +89,6 @@ export const getActiveQuery = createSelector(
   getNamedQuery,
   getVersion,
   (session, query, version) => {
-    // diff(session)
     return new ActiveQuery(session, query, version || QueryVersions.initial())
   }
 )
@@ -176,3 +175,15 @@ export function getOpEventContext(state: State) {
 }
 
 export type OpEventContext = ReturnType<typeof getOpEventContext>
+
+export const getPoolNameFromQuery = createSelector(getActiveQuery, (q) => {
+  return q.toAst().poolName
+})
+
+export const getPoolFromQuery = createSelector(
+  getPoolNameFromQuery,
+  getPools,
+  (name, pools) => {
+    return pools.find((p) => p.data.name === name) ?? null
+  }
+)
