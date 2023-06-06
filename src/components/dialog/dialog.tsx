@@ -1,30 +1,30 @@
-import {useEffect, useRef} from "react"
+import {useRef, MouseEventHandler} from "react"
 import {usePosition} from "./use-position"
 import useListener from "src/js/components/hooks/useListener"
+import {useOpener} from "./use-opener"
+import {useOutsideClick} from "./use-outside-click"
 
 export type DialogProps = {
-  isOpen?: boolean
+  isOpen: boolean
+  onClose: () => void
   modal?: boolean
-  onClose?: () => void
+  onOutsideClick?: (e: globalThis.MouseEvent) => void
+  onClick?: MouseEventHandler<HTMLDialogElement>
   children?: any
   className?: string
-  anchor?: HTMLElement // defaults to body
+  anchor?: HTMLElement
   anchorPoint?: string
   dialogPoint?: string
   dialogMargin?: string
-  keepOnScreen?: boolean // defaults to true
+  keepOnScreen?: boolean
 }
 
 export function Dialog(props: DialogProps) {
   const ref = useRef<HTMLDialogElement>()
   const style = usePosition(ref.current, props)
-
+  useOpener(ref.current, props)
+  useOutsideClick(ref.current, props)
   useListener(ref.current, "close", props.onClose)
-
-  useEffect(() => {
-    const el = ref.current
-    el && props.isOpen ? (props.modal ? el.showModal() : el.show()) : el.close()
-  }, [props.isOpen])
 
   return (
     <dialog ref={ref} style={style} className={props.className}>

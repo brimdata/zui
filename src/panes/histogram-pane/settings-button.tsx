@@ -5,6 +5,8 @@ import {Dialog} from "src/components/dialog/dialog"
 export function SettingsButton() {
   const [isOpen, setIsOpen] = useState(false)
   const button = useRef()
+  const close = () => setIsOpen(false)
+
   return (
     <>
       <button
@@ -15,10 +17,10 @@ export function SettingsButton() {
         Settings
       </button>
       <Dialog
-        modal
+        onOutsideClick={close}
+        onClose={close}
         className={styles.settingsDialog}
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
         anchor={button.current}
         anchorPoint="center left"
         dialogPoint="center right"
@@ -26,7 +28,7 @@ export function SettingsButton() {
         keepOnScreen={false}
       >
         <h1>Hello World</h1>
-        <button onClick={() => setIsOpen(false)}>Close</button>
+        <button onClick={close}>Close</button>
       </Dialog>
     </>
   )

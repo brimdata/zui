@@ -19,16 +19,9 @@ export function usePosition(dialog: HTMLDialogElement, props: DialogProps) {
   })
 
   const run = () => {
-    if (!props.isOpen || !dialog) {
-      return
-    }
+    if (!props.isOpen || !dialog) return
     const anchorRect = anchor.getBoundingClientRect()
     const dialogRect = dialog.getBoundingClientRect()
-    if (notOpen(dialogRect)) {
-      console.log("not yet open")
-      // return
-    }
-
     let left = anchorRect.left
     let top = anchorRect.top
     const leftMin = 0
@@ -119,7 +112,6 @@ export function usePosition(dialog: HTMLDialogElement, props: DialogProps) {
         top = topMin
       }
     }
-    console.log("set", {left, top})
     setPosition((s) => ({...s, left, top}))
   }
 
@@ -138,8 +130,4 @@ export function usePosition(dialog: HTMLDialogElement, props: DialogProps) {
   useListener(global.window, "resize", run)
 
   return position
-}
-
-function notOpen(rect: DOMRect) {
-  return rect.height === 0 && rect.width === 0
 }
