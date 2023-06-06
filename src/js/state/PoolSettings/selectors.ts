@@ -4,6 +4,6 @@ export function getEntities(state: State) {
   return state.poolSettings.entities
 }
 
-export const get = (state: State, id: string) => {
+export const find = (state: State, id: string) => {
   return state.poolSettings.entities[id] ?? null
 }

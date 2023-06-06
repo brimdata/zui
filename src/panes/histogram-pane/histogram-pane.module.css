@@ -11,7 +11,18 @@
   right: 16px;
 }
 
-.settingsDialog {
-  z-index: 9999;
-  width: 300px;
+.dialog {
+  z-index: 99999;
+  position: fixed;
+  width: 180px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: var(--shadow-elevation-medium);
+  background: white;
+}
+
+.settingsForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }

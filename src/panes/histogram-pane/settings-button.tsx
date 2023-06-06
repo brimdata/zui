@@ -10,7 +10,6 @@ export function SettingsButton() {
   const button = useRef()
   const close = () => setIsOpen(false)
   const poolId = useSelector(Current.getPoolFromQuery)?.id // might be null
-  if (!poolId) return null
 
   return (
     <>
@@ -24,7 +23,7 @@ export function SettingsButton() {
       <Dialog
         onOutsideClick={close}
         onClose={close}
-        className={styles.settingsDialog}
+        className={styles.dialog}
         isOpen={isOpen}
         anchor={button.current}
         anchorPoint="center left"

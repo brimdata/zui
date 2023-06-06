@@ -6,6 +6,8 @@ import PoolSettings from "src/js/state/PoolSettings"
 import {useForm} from "react-hook-form"
 import {useDispatch} from "src/app/core/state"
 import {State} from "src/js/state/types"
+import styles from "./histogram-pane.module.css"
+import {runHistogramQuery} from "./run-histogram-query"
 
 type Inputs = {
   timeField: string
@@ -18,17 +20,22 @@ type Props = {
 }
 
 export function SettingsForm(props: Props) {
-  const settings = useSelector((s: State) => PoolSettings.get(s, props.poolId))
+  const settings = useSelector((s: State) => PoolSettings.find(s, props.poolId))
   const dispatch = useDispatch()
   const form = useForm<Inputs>({defaultValues: settings})
 
   function onSubmit(data: Inputs) {
     dispatch(PoolSettings.upsert({id: props.poolId, ...data}))
     props.close()
+    dispatch(runHistogramQuery())
   }
 
   return (
-    <form method="dialog" onSubmit={form.handleSubmit(onSubmit)}>
+    <form
+      method="dialog"
+      onSubmit={form.handleSubmit(onSubmit)}
+      className={styles.settingsForm}
+    >
       <Field>
         <InputLabel>Time Field</InputLabel>
         <TextInput {...form.register("timeField")} />

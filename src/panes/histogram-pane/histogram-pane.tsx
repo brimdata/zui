@@ -37,12 +37,13 @@ export function HistogramPane() {
   const {Parent, width, height} = useParentSize()
   const show = useSelector(Layout.getShowHistogram)
   const range = useSelector(Histogram.getRange)
-  if (!range) return null
   if (!show) return null
   return (
     <Parent>
       <div className={styles.pane} data-testid="histogram">
-        <MainHistogramSvg width={width} height={height} range={range} />
+        {range && (
+          <MainHistogramSvg width={width} height={height} range={range} />
+        )}
         <SettingsButton />
       </div>
     </Parent>
