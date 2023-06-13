@@ -1,93 +1,31 @@
 import {useEffect, useRef} from "react"
-import {Interval} from "./get-interval"
 import * as d3 from "d3"
-
-//. maybe the thresholds go into the get-interval function
-
-type Datum = {time: Date; group: string; count: number}
 
 export function StackedHistogram(props: {
   width: number
   height: number
-  range: [Date, Date]
-  interval: Interval
-  data: Datum[]
+  margin: {left: number; right: number; top: number; bottom: number}
+  xScale: ReturnType<typeof d3.scaleUtc>
+  yScale: ReturnType<typeof d3.scaleLinear>
+  colorScale: ReturnType<typeof d3.scaleOrdinal>
+  data: ReturnType<typeof d3.stack>
+  interval: typeof d3.utcMillisecond
   onBrushPointerEnter?: (e: PointerEvent) => void
   onBrushPointerMove?: (e: PointerEvent) => void
   onBrushPointerLeave?: (e: PointerEvent) => void
   onBrushEnd: (extent: [Date, Date]) => void
   onBrushMove: () => void
 }) {
-  const i = props.interval.fn
-  const start = i(props.range[0])
-  const end = i.offset(i(props.range[1]))
-  /**
-   * Format the data
-   */
-  const {data} = props
-  const xExtent = [start, end]
-  const keysSet = new Set(data.map((d) => d.group))
-  const keys = Array.from(keysSet).sort()
-  /**
-   * 1. Group the data by the time field
-   */
-  const group = (data) => {
-    const map = new Map()
-    data.forEach((d) => {
-      if (!(d.time instanceof Date)) return
-      if (map.has(d.time.getTime())) {
-        map.get(d.time.getTime()).push(d)
-      } else {
-        map.set(d.time.getTime(), [d])
-      }
-    })
-    return map
-  }
-  const grouped = group(data)
-
-  /**
-   * 2. Reduce the arrays into a wide object for each row
-   */
-  const widen = (data, keys) => {
-    const zeros = keys.reduce((obj, k) => ({...obj, [k]: 0}), {})
-    return Array.from(data.values()).map((group) => {
-      const initial = {...zeros, sum: 0}
-      return group.reduce(
-        (row, d) => ({
-          ...row,
-          sum: row.sum + d.count,
-          time: d.time,
-          [d.group]: d.count,
-        }),
-        initial
-      )
-    })
-  }
-  const widened = widen(grouped, keys)
-
-  /**
-   * 3. Create a series of rows per key
-   */
-  const stack = d3.stack().keys(keys)
-  const stacked = stack(widened)
-
-  /**
-   * Set up the dimensions
-   */
-  const {width, height} = props
-  const margin = {top: 10, bottom: 20, right: 20, left: 20}
+  // Dimensions
+  const {width, height, margin} = props
   const innerWidth = width - margin.left - margin.right
   const innerHeight = height - margin.top - margin.bottom
-  /**
-   * Set up the scales
-   */
 
-  // @ts-ignore
-  const yExtent = [0, d3.max(widened, (d) => d.sum)] as [number, number]
-  const xScale = d3.scaleUtc().domain(xExtent).range([0, innerWidth])
-  const yScale = d3.scaleLinear().domain(yExtent).range([innerHeight, 0])
-  const colorScale = d3.scaleOrdinal().domain(keys).range(d3.schemeCategory10)
-  const barWidth = xScale(i.offset(start))
+  // Scales
+  const {xScale, yScale, colorScale, interval} = props
+  xScale.range([0, innerWidth])
+  yScale.range([innerHeight, 0])
+  const barWidth = xScale(interval.offset(xScale.domain()[0]))
 
   // Create the static elements on mount
   const ref = useRef<SVGSVGElement>(null)
@@ -131,7 +69,7 @@ export function StackedHistogram(props: {
       .attr("transform", `translate(${margin.left}, ${margin.top})`)
       .selectAll("g")
       // @ts-ignore
-      .data(stacked, (d) => d.key)
+      .data(props.data, (d) => d.key)
       .join("g")
       // @ts-ignore
       .style("fill", (d) => colorScale(d.key))

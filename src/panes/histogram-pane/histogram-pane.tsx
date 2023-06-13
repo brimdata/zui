@@ -45,16 +45,43 @@ export function HistogramPane() {
   const {Parent, width, height} = useParentSize()
   const show = useSelector(Layout.getShowHistogram)
   const range = useSelector(Histogram.getRange)
-  const interval = useSelector(Histogram.getInterval)
+  const intervalObj = useSelector(Histogram.getInterval)
   const data = useSelector(Histogram.getData)
   const jsData = useMemo(() => data.map((d) => d.toJS()), [data])
   const dispatch = useDispatch()
   const select = useSelect()
   const [tooltipStyle, setTooltipStyle] = useState({})
+  const [tooltipData, setTooltipData] = useState(null)
 
   if (!show) return null
   if (!range) return null
-  if (!interval) return null
+  if (!intervalObj) return null
+
+  const keysSet = new Set(jsData.map((d) => d.group))
+  const keys = Array.from(keysSet).sort()
+  const zeros = keys.reduce((obj, k) => ({...obj, [k]: 0}), {sum: 0})
+  const byTime = d3.rollup(
+    jsData,
+    (values) =>
+      values.reduce(
+        (wide, d) => ({
+          ...wide,
+          sum: wide.sum + d.count,
+          time: d.time,
+          [d.group]: d.count,
+        }),
+        {...zeros}
+      ),
+    (v) => v.time.getTime()
+  )
+
+  const interval = intervalObj.fn
+  const xDomain = [interval(range[0]), interval.offset(interval(range[1]))]
+  const xScale = d3.scaleUtc().domain(xDomain)
+  const yDomain = [0, d3.max(byTime.values(), (v) => v.sum)]
+  const yScale = d3.scaleLinear().domain(yDomain)
+  const colorScale = d3.scaleOrdinal().domain(keys).range(d3.schemeCategory10)
+  const stackedData = d3.stack().keys(keys)(Array.from(byTime.values()))
 
   function onBrushMove() {
     setTooltipStyle((s) => ({...s, opacity: 0}))
@@ -70,7 +97,14 @@ export function HistogramPane() {
 
   function onPointerMove(e) {
     const [x] = d3.pointer(e)
-    setTooltipStyle((s) => ({...s, transform: `translateX(${x}px)`}))
+    const ts = interval.floor(xScale.invert(x))
+    const data = byTime.get(ts.getTime()) ?? null
+    if (!data) return
+    setTooltipData(data)
+    setTooltipStyle((s) => ({
+      ...s,
+      transform: `translateX(${x + 40}px)`,
+    }))
   }
 
   function onPointerLeave() {
@@ -90,7 +124,11 @@ export function HistogramPane() {
             height={height}
             range={range}
             interval={interval}
-            data={jsData}
+            data={stackedData}
+            xScale={xScale}
+            yScale={yScale}
+            colorScale={colorScale}
+            margin={{top: 10, bottom: 20, right: 20, left: 20}}
             onBrushEnd={onBrushEnd}
             onBrushMove={onBrushMove}
             onBrushPointerMove={onPointerMove}
@@ -98,7 +136,11 @@ export function HistogramPane() {
             onBrushPointerLeave={onPointerLeave}
           />
         )}
-        <Tooltip style={tooltipStyle} />
+        <Tooltip
+          style={tooltipStyle}
+          data={tooltipData}
+          colorScale={colorScale}
+        />
         <SettingsButton />
       </div>
     </Parent>
