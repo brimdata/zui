@@ -1,7 +1,7 @@
 import {ChartData} from "src/js/state/Chart/types"
 import {DateTuple} from "src/js/lib/TimeWindow"
 import {HistogramData} from "../types"
-import histogramInterval from "src/js/lib/histogramInterval"
+import {getInterval} from "src/panes/histogram-pane/get-interval"
 
 export type HistogramDataPoint = {
   ts: Date
@@ -15,7 +15,7 @@ export default function format(
   data: ChartData,
   range: DateTuple
 ): HistogramData {
-  const interval = histogramInterval(range)
+  const interval = getInterval(range)
 
   const defaults: {
     [key: string]: number

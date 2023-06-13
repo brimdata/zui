@@ -1,3 +1,4 @@
+import {ResultStream} from "@brimdata/zed-js"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Current from "src/js/state/Current"
 import Results from "src/js/state/Results"
@@ -14,7 +15,10 @@ export function nextPage(id: string): Thunk {
   }
 }
 
-export function run(opts: {id: string; query?: string}): Thunk {
+export function run(opts: {
+  id: string
+  query?: string
+}): Thunk<Promise<ResultStream | null>> {
   return async (dispatch, getState, {api}) => {
     const key = Current.getLocation(getState()).key
     const tabId = api.current.tabId
@@ -41,11 +45,16 @@ export function run(opts: {id: string; query?: string}): Thunk {
         },
       })
       dispatch(Results.success({id, tabId, count: res.rows.length}))
+      return res
     } catch (e) {
-      if (e instanceof DOMException && e.message.match(/user aborted/)) return
-      dispatch(
-        Results.error({id, tabId, error: ErrorFactory.create(e).message})
-      )
+      if (e instanceof DOMException && e.message.match(/user aborted/)) {
+        return null
+      } else {
+        dispatch(
+          Results.error({id, tabId, error: ErrorFactory.create(e).message})
+        )
+      }
+      return null
     }
   }
 }

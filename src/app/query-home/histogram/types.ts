@@ -1,4 +1,5 @@
-import {Interval} from "src/js/lib/histogramInterval"
+import {Interval} from "src/panes/histogram-pane/get-interval"
+
 export type DateSpan = [Date, Date]
 
 export type Margins = {

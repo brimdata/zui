@@ -26,3 +26,9 @@
   flex-direction: column;
   gap: 16px;
 }
+
+.tooltip {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
