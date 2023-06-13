@@ -8,8 +8,8 @@ export function StackedHistogram(props: {
   xScale: ReturnType<typeof d3.scaleUtc>
   yScale: ReturnType<typeof d3.scaleLinear>
   colorScale: ReturnType<typeof d3.scaleOrdinal>
-  data: ReturnType<typeof d3.stack>
-  interval: typeof d3.utcMillisecond
+  data: d3.Series<Record<string, number>, string>[]
+  interval: d3.CountableTimeInterval
   onBrushPointerEnter?: (e: PointerEvent) => void
   onBrushPointerMove?: (e: PointerEvent) => void
   onBrushPointerLeave?: (e: PointerEvent) => void

@@ -2,11 +2,12 @@ import {CSSProperties} from "react"
 import styles from "./histogram-pane.module.css"
 import time from "src/js/models/time"
 import {withCommas} from "src/js/lib/fmt"
+import {WidePoint} from "./types"
 
 export const Tooltip = (props: {
   style: CSSProperties
-  data: unknown
-  colorScale: unknown
+  data: WidePoint
+  colorScale: d3.ScaleOrdinal<string, string>
 }) => {
   if (!props.data) return null
   const entries = Object.entries(props.data)
@@ -27,7 +28,7 @@ export const Tooltip = (props: {
                 >
                   <span>{name.substring(0, 30)}</span>
                 </td>
-                <td className="count">{withCommas(count)}</td>
+                <td className="count">{withCommas(count as number)}</td>
               </tr>
             )
           })}

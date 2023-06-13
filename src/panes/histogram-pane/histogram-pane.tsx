@@ -1,6 +1,5 @@
 import {useSelector} from "react-redux"
 import styles from "./histogram-pane.module.css"
-import useResizeObserver from "use-resize-observer"
 import Histogram from "src/js/state/Histogram"
 import Layout from "src/js/state/Layout"
 import {useMemo, useState} from "react"
@@ -14,42 +13,18 @@ import Current from "src/js/state/Current"
 import PoolSettings from "src/js/state/PoolSettings"
 import * as d3 from "d3"
 import {Tooltip} from "./tooltip"
-
-function useParentSize() {
-  const {ref, width, height} = useResizeObserver()
-
-  const Parent = useMemo(() => {
-    return function Parent({children}) {
-      return (
-        <div style={{position: "relative", height: "100%", width: "100%"}}>
-          <div
-            style={{
-              position: "absolute",
-              left: "0",
-              right: "0",
-              bottom: "0",
-              top: "0",
-            }}
-            ref={ref}
-          />
-          {children}
-        </div>
-      )
-    }
-  }, [ref])
-
-  return {Parent, width, height}
-}
+import {useParentSize} from "src/util/hooks/use-parent-size"
+import {Point, WidePoint} from "./types"
 
 export function HistogramPane() {
+  const dispatch = useDispatch()
+  const select = useSelect()
   const {Parent, width, height} = useParentSize()
   const show = useSelector(Layout.getShowHistogram)
   const range = useSelector(Histogram.getRange)
   const intervalObj = useSelector(Histogram.getInterval)
-  const data = useSelector(Histogram.getData)
-  const jsData = useMemo(() => data.map((d) => d.toJS()), [data])
-  const dispatch = useDispatch()
-  const select = useSelect()
+  const zedData = useSelector(Histogram.getData)
+  const jsData = useMemo<Point[]>(() => zedData.map((d) => d.toJS()), [zedData])
   const [tooltipStyle, setTooltipStyle] = useState({})
   const [tooltipData, setTooltipData] = useState(null)
 
@@ -60,7 +35,7 @@ export function HistogramPane() {
   const keysSet = new Set(jsData.map((d) => d.group))
   const keys = Array.from(keysSet).sort()
   const zeros = keys.reduce((obj, k) => ({...obj, [k]: 0}), {sum: 0})
-  const byTime = d3.rollup(
+  const byTime = d3.rollup<Point, number, WidePoint>(
     jsData,
     (values) =>
       values.reduce(
@@ -71,17 +46,21 @@ export function HistogramPane() {
           [d.group]: d.count,
         }),
         {...zeros}
-      ),
+      ) as WidePoint,
     (v) => v.time.getTime()
   )
 
+  const widePoints = Array.from(byTime.values())
   const interval = intervalObj.fn
   const xDomain = [interval(range[0]), interval.offset(interval(range[1]))]
   const xScale = d3.scaleUtc().domain(xDomain)
-  const yDomain = [0, d3.max(byTime.values(), (v) => v.sum)]
+  const yDomain = [0, d3.max(widePoints, (v) => v.sum)]
   const yScale = d3.scaleLinear().domain(yDomain)
-  const colorScale = d3.scaleOrdinal().domain(keys).range(d3.schemeCategory10)
-  const stackedData = d3.stack().keys(keys)(Array.from(byTime.values()))
+  const colorScale = d3
+    .scaleOrdinal<string, string>()
+    .domain(keys)
+    .range(d3.schemeCategory10)
+  const data = d3.stack().keys(keys)(widePoints)
 
   function onBrushMove() {
     setTooltipStyle((s) => ({...s, opacity: 0}))
@@ -122,9 +101,8 @@ export function HistogramPane() {
           <StackedHistogram
             width={width}
             height={height}
-            range={range}
             interval={interval}
-            data={stackedData}
+            data={data}
             xScale={xScale}
             yScale={yScale}
             colorScale={colorScale}
