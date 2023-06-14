@@ -5,16 +5,16 @@ export function StackedHistogram(props: {
   width: number
   height: number
   margin: {left: number; right: number; top: number; bottom: number}
-  xScale: ReturnType<typeof d3.scaleUtc>
-  yScale: ReturnType<typeof d3.scaleLinear>
-  colorScale: ReturnType<typeof d3.scaleOrdinal>
+  xScale: d3.ScaleTime<number, number>
+  yScale: d3.ScaleLinear<number, number>
+  colorScale: d3.ScaleOrdinal<string, string>
   data: d3.Series<Record<string, number>, string>[]
   interval: d3.CountableTimeInterval
   onBrushPointerEnter?: (e: PointerEvent) => void
   onBrushPointerMove?: (e: PointerEvent) => void
   onBrushPointerLeave?: (e: PointerEvent) => void
   onBrushEnd: (extent: [Date, Date]) => void
-  onBrushMove: () => void
+  onBrushMove: (e: PointerEvent) => void
 }) {
   // Dimensions
   const {width, height, margin} = props
@@ -30,7 +30,9 @@ export function StackedHistogram(props: {
   // Create the static elements on mount
   const ref = useRef<SVGSVGElement>(null)
   useEffect(() => {
-    const svg = d3.select(ref.current)
+    const el = ref.current
+    if (!el) return
+    const svg = d3.select(el)
     svg.append("g").attr("class", "histogram")
     svg.append("g").attr("class", "x-axis")
     svg.append("g").attr("class", "y-axis")
@@ -38,7 +40,7 @@ export function StackedHistogram(props: {
     svg.append("g").attr("class", "brush")
 
     return () => {
-      svg.innerHTML = ""
+      if (el) el.innerHTML = ""
     }
   }, [])
 
@@ -68,13 +70,10 @@ export function StackedHistogram(props: {
       .select(".histogram")
       .attr("transform", `translate(${margin.left}, ${margin.top})`)
       .selectAll("g")
-      // @ts-ignore
-      .data(props.data, (d) => d.key)
+      .data(props.data, (d: {key: string}) => d.key)
       .join("g")
-      // @ts-ignore
       .style("fill", (d) => colorScale(d.key))
-      // @ts-ignore
-      .style("stroke", (d) => d3.rgb(colorScale(d.key)).darker())
+      // .style("stroke", (d) => d3.rgb(colorScale(d.key)).darker())
       .selectAll("rect")
       .data((d) => d)
       .join("rect")
@@ -92,13 +91,16 @@ export function StackedHistogram(props: {
         [0, 0],
         [innerWidth, innerHeight],
       ])
-      .on("end", (e) => {
+      .on("end", (e: d3.D3BrushEvent<unknown>) => {
         if (e.selection) {
-          props.onBrushEnd(e.selection.map(xScale.invert))
-          brush.clear(svg.select(".brush"))
+          props.onBrushEnd([
+            xScale.invert(e.selection[0] as number),
+            xScale.invert(e.selection[1] as number),
+          ])
+          brush.move(svg.selectAll(".brush"), null)
         }
       })
-      .on("brush", (e) => {
+      .on("brush", (e: PointerEvent) => {
         call(props.onBrushMove, e)
       })
 
@@ -113,8 +115,10 @@ export function StackedHistogram(props: {
     const line = svg.select(".hoverline")
     svg
       .select(".brush")
-      .on("pointerenter", (e) => call(props.onBrushPointerEnter, e))
-      .on("pointermove", (e) => {
+      .on("pointerenter", (e: PointerEvent) =>
+        call(props.onBrushPointerEnter, e)
+      )
+      .on("pointermove", (e: PointerEvent) => {
         call(props.onBrushPointerMove, e)
         const [x] = d3.pointer(e)
         line
@@ -124,7 +128,7 @@ export function StackedHistogram(props: {
           .attr("height", innerHeight)
           .attr("opacity", 1)
       })
-      .on("pointerleave", (e) => {
+      .on("pointerleave", (e: PointerEvent) => {
         call(props.onBrushPointerLeave, e)
         line.attr("opacity", 0)
       })
