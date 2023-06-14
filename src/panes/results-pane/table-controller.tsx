@@ -1,8 +1,6 @@
 import {useMemo} from "react"
 import * as zed from "@brimdata/zed-js"
 import {ZedTableHandlers, ZedTableState} from "src/components/zed-table/types"
-import useSelect from "src/app/core/hooks/use-select"
-import Results from "src/js/state/Results"
 import {useDispatch} from "src/app/core/state"
 import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
 import {useResultsContext} from "src/app/query-home"
@@ -12,6 +10,7 @@ import TableState from "src/js/state/Table"
 import {State} from "src/js/state/types"
 import {valueContextMenu} from "src/app/menus/value-context-menu"
 import {useResultsPaneContext} from "./context"
+import {useNextPage} from "src/core/query/use-query"
 
 export function useTableState() {
   const {firstShape} = useResultsPaneContext()
@@ -27,20 +26,15 @@ export function useTableState() {
 
 export function useTableHandlers() {
   const ctx = useResultsPaneContext()
-  const select = useSelect()
   const dispatch = useDispatch()
   const shape = ctx.firstShape
+  const nextPage = useNextPage(RESULTS_QUERY)
   return useMemo<ZedTableHandlers>(
     () => ({
       onStateChange: (state) => {
         dispatch(TableState.setStateForShape({shape, state}))
       },
-      onScrollNearBottom: () => {
-        if (select(Results.isFetching(RESULTS_QUERY))) return
-        if (select(Results.isComplete(RESULTS_QUERY))) return
-        if (select(Results.isLimited(RESULTS_QUERY))) return
-        dispatch(Results.fetchNextPage())
-      },
+      onScrollNearBottom: nextPage,
       onHeaderContextMenu(e, column) {
         headerContextMenu
           .build(this, column)

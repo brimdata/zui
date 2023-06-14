@@ -9,7 +9,7 @@ export function StackedHistogram(props: {
   yScale: d3.ScaleLinear<number, number>
   colorScale: d3.ScaleOrdinal<string, string>
   data: d3.Series<Record<string, number>, string>[]
-  interval: d3.CountableTimeInterval
+  interval: d3.TimeInterval
   onBrushPointerEnter?: (e: PointerEvent) => void
   onBrushPointerMove?: (e: PointerEvent) => void
   onBrushPointerLeave?: (e: PointerEvent) => void

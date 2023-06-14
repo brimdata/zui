@@ -1,6 +1,6 @@
 import {useDispatch} from "src/app/core/state"
 import {run, nextPage} from "./run"
-import {useMemo} from "react"
+import {useCallback, useMemo} from "react"
 import {useResults} from "./use-results"
 
 export function useQuery(opts: {id: string; query?: string}) {
@@ -15,4 +15,9 @@ export function useQuery(opts: {id: string; query?: string}) {
   const results = useResults(opts.id)
 
   return [query, results] as const
+}
+
+export function useNextPage(id: string) {
+  const dispatch = useDispatch()
+  return useCallback(() => dispatch(nextPage(id)), [id])
 }

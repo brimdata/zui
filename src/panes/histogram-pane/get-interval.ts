@@ -5,7 +5,7 @@ import * as d3 from "d3"
 export type Interval = {
   number: number
   unit: LongTimeUnit
-  fn: d3.CountableTimeInterval
+  fn: d3.TimeInterval
 }
 
 export type LongTimeUnit =

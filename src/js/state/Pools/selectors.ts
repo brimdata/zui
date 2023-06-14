@@ -26,7 +26,7 @@ export const getWarnings =
 export const raw = (state: State): PoolsState => state.pools
 
 export const all = createSelector(
-  (_, lakeId: string) => lakeId,
+  (_: State, lakeId: string) => lakeId,
   raw,
   (lakeId, pools) => {
     return Object.keys(pools[lakeId])

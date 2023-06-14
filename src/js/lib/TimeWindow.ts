@@ -1,8 +1,6 @@
 import isEqual from "lodash/isEqual"
 import moment from "moment"
-import time from "../models/time"
-
-import {TimeUnit} from "./"
+import time, {TimeUnit} from "../models/time"
 
 export type DateTuple = [Date, Date]
 
