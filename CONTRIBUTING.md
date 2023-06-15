@@ -194,7 +194,7 @@ Where `APPLE_ID` is the Apple ID user name (typically an email address), `APPLE_
 Notarization can take some time to complete ("typically less than an hour"). If you want to check on the status of the notarization request, run:
 
 ```bash
-xcrun altool --notarization-history 0 -u <user> -p <app-specific-password>
+xcrun notarytool history --apple-id <apple-user-id> --password <app-specific-password> --team-id <apple-team-id>
 ```
 
 ### Windows Code Signing
