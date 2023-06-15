@@ -1,4 +1,9 @@
-import React, {MouseEvent, MouseEventHandler} from "react"
+import React, {
+  MouseEvent,
+  MouseEventHandler,
+  MutableRefObject,
+  forwardRef,
+} from "react"
 import {BoundCommand} from "src/app/commands/command"
 import Icon from "src/app/core/icon-temp"
 import {invoke} from "src/core/invoke"
@@ -32,11 +37,12 @@ const BG = styled.button`
   }
 `
 
-export function IconButton(
+export const IconButton = forwardRef(function IconButton(
   props: MenuItem & {
     className?: string
     onClick?: MouseEventHandler<HTMLButtonElement>
-  }
+  },
+  ref: MutableRefObject<HTMLButtonElement>
 ) {
   function onClick(e: MouseEvent<HTMLButtonElement>) {
     if (props.onClick) {
@@ -51,6 +57,7 @@ export function IconButton(
   }
   return (
     <BG
+      ref={ref}
       className={props.className}
       title={props.description ?? props.label}
       onClick={onClick}
@@ -60,4 +67,4 @@ export function IconButton(
       <Icon name={props.iconName} size={props.iconSize ?? 16} />
     </BG>
   )
-}
+})

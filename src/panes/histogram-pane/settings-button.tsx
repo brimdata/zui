@@ -4,6 +4,7 @@ import {Dialog} from "src/components/dialog/dialog"
 import {SettingsForm} from "./settings-form"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
+import {IconButton} from "src/components/icon-button"
 
 export function SettingsButton() {
   const [isOpen, setIsOpen] = useState(false)
@@ -13,13 +14,13 @@ export function SettingsButton() {
 
   return (
     <>
-      <button
-        ref={button}
+      <IconButton
+        iconName="three-dots-stacked"
         className={styles.settingsButton}
         onClick={() => setIsOpen(true)}
-      >
-        Settings
-      </button>
+        label="Histogram Settings"
+        ref={button}
+      />
       <Dialog
         onOutsideClick={close}
         onClose={close}

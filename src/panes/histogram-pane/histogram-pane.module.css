@@ -31,3 +31,26 @@
   position: absolute;
   top: 0;
 }
+
+.errorContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorMessage {
+  text-align: center;
+  opacity: 0.5;
+}
+
+.graphic {
+  color: var(--foreground-color);
+}
+
+.graphic :global(.domain),
+.graphic line {
+  opacity: 0.2;
+}

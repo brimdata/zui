@@ -145,6 +145,7 @@
     "react-dnd": "^14.0.5",
     "react-dnd-html5-backend": "^14.0.2",
     "react-dom": "^18.0.0",
+    "react-error-boundary": "^4.0.10",
     "react-hook-form": "^7.44.3",
     "react-hot-toast": "^1.0.1",
     "react-input-autosize": "^3.0.0",

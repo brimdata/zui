@@ -4,6 +4,11 @@ import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"
 
 export const getRange = activeTabSelect((t) => t.histogram.range)
+
 export const getInterval = activeTabSelect((t) => t.histogram.interval)
+
 export const getData = (state: State) =>
   Results.getValues(HISTOGRAM_RESULTS)(state)
+
+export const getError = (state: State) =>
+  Results.getError(HISTOGRAM_RESULTS)(state)

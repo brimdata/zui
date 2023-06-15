@@ -10,6 +10,7 @@ export function StackedHistogram(props: {
   colorScale: d3.ScaleOrdinal<string, string>
   data: d3.Series<Record<string, number>, string>[]
   interval: d3.TimeInterval
+  className: string
   onBrushPointerEnter?: (e: PointerEvent) => void
   onBrushPointerMove?: (e: PointerEvent) => void
   onBrushPointerLeave?: (e: PointerEvent) => void
@@ -72,8 +73,8 @@ export function StackedHistogram(props: {
       .selectAll("g")
       .data(props.data, (d: {key: string}) => d.key)
       .join("g")
+      .style("stroke", (d) => d3.rgb(colorScale(d.key)).darker().toString())
       .style("fill", (d) => colorScale(d.key))
-      // .style("stroke", (d) => d3.rgb(colorScale(d.key)).darker())
       .selectAll("rect")
       .data((d) => d)
       .join("rect")
@@ -134,7 +135,14 @@ export function StackedHistogram(props: {
       })
   })
 
-  return <svg height={props.height} width={props.width} ref={ref}></svg>
+  return (
+    <svg
+      height={props.height}
+      width={props.width}
+      ref={ref}
+      className={props.className}
+    ></svg>
+  )
 }
 
 function call<Fn extends (...a: any[]) => any>(

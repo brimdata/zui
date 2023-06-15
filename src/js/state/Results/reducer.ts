@@ -58,7 +58,7 @@ const slice = createSlice({
       r.error = null
     },
 
-    error: (s, a: Pay<{id: string; error: any; tabId: string}>) => {
+    error: (s, a: Pay<{id: string; error: any; tabId?: string}>) => {
       const r = access(s, a.payload.id)
       r.error = a.payload.error
       r.status = "ERROR"

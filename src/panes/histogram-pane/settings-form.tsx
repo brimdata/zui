@@ -8,6 +8,7 @@ import {useDispatch} from "src/app/core/state"
 import {State} from "src/js/state/types"
 import styles from "./histogram-pane.module.css"
 import {runHistogramQuery} from "./run-histogram-query"
+import {getDefaults} from "src/js/state/PoolSettings/selectors"
 
 type Inputs = {
   timeField: string
@@ -19,13 +20,18 @@ type Props = {
   poolId: string
 }
 
+const defaults = getDefaults()
+
 export function SettingsForm(props: Props) {
   const settings = useSelector((s: State) => PoolSettings.find(s, props.poolId))
   const dispatch = useDispatch()
   const form = useForm<Inputs>({defaultValues: settings})
 
   function onSubmit(data: Inputs) {
-    dispatch(PoolSettings.upsert({id: props.poolId, ...data}))
+    const timeField = data.timeField.trim() || defaults.timeField
+    const colorField = data.colorField.trim() || defaults.colorField
+    const id = props.poolId
+    dispatch(PoolSettings.upsert({id, timeField, colorField}))
     props.close()
     dispatch(runHistogramQuery())
   }
@@ -38,11 +44,17 @@ export function SettingsForm(props: Props) {
     >
       <Field>
         <InputLabel>Time Field</InputLabel>
-        <TextInput {...form.register("timeField")} />
+        <TextInput
+          {...form.register("timeField")}
+          placeholder={defaults.timeField}
+        />
       </Field>
       <Field>
         <InputLabel>Color Field</InputLabel>
-        <TextInput {...form.register("colorField")} />
+        <TextInput
+          {...form.register("colorField")}
+          placeholder={defaults.colorField}
+        />
       </Field>
       <button type="submit">save</button>
     </form>

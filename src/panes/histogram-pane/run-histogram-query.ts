@@ -7,6 +7,7 @@ import {getInterval, timeUnits} from "./get-interval"
 import Histogram from "src/js/state/Histogram"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
+import Results from "src/js/state/Results"
 
 export const HISTOGRAM_RESULTS = "histogram"
 export const HISTOGRAM_RANGE = "histogram-range"
@@ -16,10 +17,18 @@ export function runHistogramQuery(): Thunk {
     const version = Current.getVersion(getState())
     const baseQuery = QueryModel.versionToZed(version)
     const poolId = Current.getPoolFromQuery(getState())?.id
-    const settings = PoolSettings.find(getState(), poolId)
-    const timeField = settings?.timeField ?? "ts"
-    const colorField = settings?.colorField ?? "typeof(this)"
+    const settings = PoolSettings.findWithDefaults(getState(), poolId)
+    const {timeField, colorField} = settings
     const range = await dispatch(getHistogramRange(poolId, timeField, version))
+    if (!range) {
+      dispatch(
+        Results.error({
+          id: HISTOGRAM_RESULTS,
+          error: `Unable to determine date range using '${timeField}'.`,
+        })
+      )
+      return
+    }
     const intervalObj = getInterval(range)
     const interval = `${intervalObj.number}${timeUnits[intervalObj.unit]}`
     const query = getHistogramQuery({
