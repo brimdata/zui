@@ -15,6 +15,7 @@ export function useParentSize() {
               right: "0",
               bottom: "0",
               top: "0",
+              pointerEvents: "none",
             }}
             ref={ref}
           />

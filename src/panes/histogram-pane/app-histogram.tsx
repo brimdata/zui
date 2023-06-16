@@ -14,6 +14,7 @@ import {Point, WidePoint} from "./types"
 import {HistogramError} from "./histogram-error"
 import * as zed from "@brimdata/zed-js"
 import styles from "./histogram-pane.module.css"
+import {State} from "src/js/state/types"
 
 function formatData(points: zed.Value[]) {
   const data = points.map((p) => p.toJS()) as Point[]
@@ -55,20 +56,22 @@ export function AppHistogram(props: {width: number; height: number}) {
   const interval = useSelector(Histogram.getInterval)
   const data = useSelector(Histogram.getData) as zed.Record[]
   const poolId = useSelector(Current.getPoolFromQuery)?.id
-  const settings = useSelector((s) => PoolSettings.findWithDefaults(s, poolId))
+  const settings = useSelector((s: State) =>
+    PoolSettings.findWithDefaults(s, poolId)
+  )
   const {timeField, colorField} = settings
   let error = useSelector(Histogram.getError)
 
   if (error) {
     // pass through
   } else if (!range || !interval) {
-    error = `No date range using time field '${timeField}'.`
+    error = `No date range found with '${timeField}'.`
   } else if (data.length === 0) {
     error = "No data."
   } else if (!hasTimeField(data)) {
-    error = `No time values found using time field '${timeField}'.`
+    error = `Field '${timeField}' did not return time values.`
   } else if (!hasGroupField(data)) {
-    error = `No group values found using color field '${colorField}'.`
+    error = `Field '${colorField}' did not return any groups.`
   }
 
   if (error) {
@@ -153,7 +156,7 @@ export function HistogramChart(props: {
         xScale={xScale}
         yScale={yScale}
         colorScale={colorScale}
-        margin={{top: 10, bottom: 20, right: 20, left: 20}}
+        margin={{top: 24, bottom: 24, right: 14, left: 14}}
         onBrushEnd={onBrushEnd}
         onBrushMove={onBrushMove}
         onBrushPointerMove={onPointerMove}

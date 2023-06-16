@@ -1,14 +1,16 @@
 .pane {
-  height: 100%;
+  height: max(100px, 15vh);
   width: 100%;
   overflow: hidden;
   position: relative;
+  border-top: 1px solid var(--border-color);
 }
 
-.settingsButton {
+div.toolbar {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: none;
 }
 
 .dialog {
@@ -47,10 +49,11 @@
 }
 
 .graphic {
+  user-select: none;
   color: var(--foreground-color);
 }
 
 .graphic :global(.domain),
 .graphic line {
-  opacity: 0.2;
+  stroke: var(--border-color);
 }

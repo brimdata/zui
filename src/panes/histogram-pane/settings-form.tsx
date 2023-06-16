@@ -9,6 +9,7 @@ import {State} from "src/js/state/types"
 import styles from "./histogram-pane.module.css"
 import {runHistogramQuery} from "./run-histogram-query"
 import {getDefaults} from "src/js/state/PoolSettings/selectors"
+import {InputButton} from "src/components/input-button"
 
 type Inputs = {
   timeField: string
@@ -56,7 +57,9 @@ export function SettingsForm(props: Props) {
           placeholder={defaults.colorField}
         />
       </Field>
-      <button type="submit">save</button>
+      <Field>
+        <InputButton type="submit">Save</InputButton>
+      </Field>
     </form>
   )
 }

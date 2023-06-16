@@ -1,15 +1,26 @@
-.resizeHandle {
-    width: 100%;
-    height: 9px;
-    position: relative;
+.borderResizeHandle {
+  width: 100%;
+  height: 11px;
+  position: relative;
 }
 
-.resizeHandle:after {
-    content: "";
-    position: absolute;
-    background: rgba(0,0,0,0.1);
-    left: 0px;
-    right: 0px;
-    height: 1px;
-    top: 4px;
+.borderResizeHandle:after {
+  content: "";
+  position: absolute;
+  background: var(--border-color);
+  top: 5px;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.invisibleResizeHandle {
+  width: 100%;
+  height: 11px;
+  position: relative;
+  transform: translateY(5px);
+}
+
+.resultsToolbar {
+  border-top: 1px solid var(--border-color);
 }

@@ -57,6 +57,8 @@ export const isIncomplete = resultsSelect(
   (results) => results.status === "INCOMPLETE"
 )
 
+export const isAggregation = resultsSelect((results) => results.aggregation)
+
 export const getKey = resultsSelect((results) => {
   return results.key
 })
