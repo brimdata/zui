@@ -10,7 +10,7 @@ import {Location} from "history"
 import Pools from "src/js/state/Pools"
 import {invoke} from "src/core/invoke"
 import {runResultsQuery} from "src/panes/results-pane/run-results-query"
-import {runHistogramQuery} from "src/panes/histogram-pane/run-histogram-query"
+import {runHistogramQuery} from "src/panes/histogram-pane/run-query"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {

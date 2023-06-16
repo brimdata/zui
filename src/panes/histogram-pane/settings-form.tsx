@@ -7,7 +7,7 @@ import {useForm} from "react-hook-form"
 import {useDispatch} from "src/app/core/state"
 import {State} from "src/js/state/types"
 import styles from "./histogram-pane.module.css"
-import {runHistogramQuery} from "./run-histogram-query"
+import {runHistogramQuery} from "./run-query"
 import {getDefaults} from "src/js/state/PoolSettings/selectors"
 import {InputButton} from "src/components/input-button"
 

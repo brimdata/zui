@@ -3,7 +3,7 @@ import styles from "./histogram-pane.module.css"
 import Layout from "src/js/state/Layout"
 import {SettingsButton} from "./settings-button"
 import {useParentSize} from "src/util/hooks/use-parent-size"
-import {AppHistogram} from "./app-histogram"
+import {Histogram} from "./histogram"
 import {Toolbar} from "src/components/toolbar"
 
 export function HistogramPane() {
@@ -18,7 +18,7 @@ export function HistogramPane() {
         <Toolbar reverse className={styles.toolbar}>
           <SettingsButton />
         </Toolbar>
-        <AppHistogram width={width} height={height} />
+        <Histogram width={width} height={height} />
       </Parent>
     </div>
   )

@@ -10,7 +10,14 @@ export const Tooltip = (props: {
   colorScale: d3.ScaleOrdinal<string, string>
 }) => {
   if (!props.data) return null
-  const entries = Object.entries(props.data)
+  const segments = Object.entries(props.data)
+    .filter(
+      ([name, count]) =>
+        name !== "time" && name !== "sum" && (count as number) > 0
+    )
+    .map(([name, count]) => ({name, count} as {name: string; count: number}))
+    .sort((a, b) => b.count - a.count)
+
   return (
     <div style={props.style} className={styles.tooltip + " histogram-tooltip"}>
       <p className="ts">
@@ -18,17 +25,18 @@ export const Tooltip = (props: {
       </p>
       <table>
         <tbody>
-          {entries.map(([name, count]) => {
-            if (name === "time" || name === "sum") return null
+          {segments.map(({name, count}) => {
             return (
               <tr key={name}>
-                <td
-                  className="tag path-tag"
-                  style={{backgroundColor: props.colorScale(name)}}
-                >
-                  <span>{name.substring(0, 30)}</span>
+                <td>
+                  <span
+                    className={styles.colorKey}
+                    style={{backgroundColor: props.colorScale(name)}}
+                  >
+                    {name.substring(0, 20)}
+                  </span>
                 </td>
-                <td className="count">{withCommas(count as number)}</td>
+                <td className="count">{withCommas(count)}</td>
               </tr>
             )
           })}
@@ -41,35 +49,4 @@ export const Tooltip = (props: {
       </table>
     </div>
   )
-  //   const total = segments.reduce((sum, [_, count]) => (sum += count), 0)
-  //   const rows = segments
-  //     .sort((a, b) => b[1] - a[1])
-  //     .map(([path, count]) => (
-  //       <tr key={path}>
-  //         <td>
-  //           <span
-  //             className={`tag path-tag`}
-  //             style={{backgroundColor: chart.color(path)}}
-  //           >
-  //             {path.substring(0, 30)}
-  //           </span>
-  //         </td>
-  //         <td className="count">{fmt.withCommas(count)}</td>
-  //       </tr>
-  //     ))
-  //   return (
-  //     <div className="histogram-tooltip">
-  //       <p className="ts">{time(ts).format("MMM D, YYYY • HH:mm")}</p>
-  //       <table>
-  //         <tbody>
-  //           {rows}
-  //           <tr>
-  //             <td colSpan={2} className="total-row">
-  //               {fmt.withCommas(total)}
-  //             </td>
-  //           </tr>
-  //         </tbody>
-  //       </table>
-  //     </div>
-  // )_
 }

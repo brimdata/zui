@@ -1,4 +1,4 @@
-export default function () {
+export default function initDOM() {
   appendDivId("notification-root")
   appendDivId("modal-root")
   appendDivId("tooltip-root")

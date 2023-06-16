@@ -1,9 +1,9 @@
 .pane {
   height: max(100px, 15vh);
   width: 100%;
-  overflow: hidden;
   position: relative;
   border-top: 1px solid var(--border-color);
+  z-index: 9;
 }
 
 div.toolbar {
@@ -32,6 +32,14 @@ div.toolbar {
 .tooltip {
   position: absolute;
   top: 0;
+  left: 0;
+}
+
+.colorKey {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  min-width: 60px;
 }
 
 .errorContainer {

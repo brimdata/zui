@@ -1,7 +1,7 @@
 import {useEffect, useRef} from "react"
 import * as d3 from "d3"
 
-export function StackedHistogram(props: {
+export function D3StackedHistogram(props: {
   width: number
   height: number
   margin: {left: number; right: number; top: number; bottom: number}

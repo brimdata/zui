@@ -1,4 +1,4 @@
-import {HISTOGRAM_RESULTS} from "src/panes/histogram-pane/run-histogram-query"
+import {HISTOGRAM_RESULTS} from "src/panes/histogram-pane/run-query"
 import Results from "../Results"
 import activeTabSelect from "../Tab/activeTabSelect"
 import {State} from "../types"

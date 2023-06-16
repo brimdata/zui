@@ -1,6 +1,6 @@
 import styles from "./histogram-pane.module.css"
 
-export function HistogramError(props: {message: string}) {
+export function Error(props: {message: string}) {
   return (
     <div className={styles.errorContainer}>
       <div className={styles.errorMessage}>
