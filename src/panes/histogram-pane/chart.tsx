@@ -3,7 +3,7 @@ import {D3StackedHistogram} from "./d3-stacked-histogram"
 import {useTooltip} from "./use-tooltip"
 import {formatData} from "./format-data"
 import {DataProps} from "./use-data-props"
-import d3 from "d3"
+import * as d3 from "d3"
 import {createPortal} from "react-dom"
 import submitSearch from "src/app/query-home/flows/submit-search"
 import Editor from "src/js/state/Editor"
@@ -29,7 +29,13 @@ export function Chart(
     .domain(keys)
     .range(d3.schemeCategory10)
 
+  function onBrushMove(e: d3.D3BrushEvent<unknown>) {
+    if (!e.selection) tooltip.show()
+    else tooltip.hide()
+  }
+
   function onBrushEnd([from, to]: [Date, Date]) {
+    tooltip.show()
     const field = props.timeField
     dispatch(Editor.setTimeRange({field, from, to}))
     dispatch(submitSearch())
@@ -54,9 +60,9 @@ export function Chart(
         xScale={xScale}
         yScale={yScale}
         colorScale={colorScale}
-        margin={{top: 24, bottom: 24, right: 14, left: 14}}
+        margin={{top: 29, bottom: 24, right: 14, left: 14}}
         onBrushEnd={onBrushEnd}
-        onBrushMove={tooltip.hide}
+        onBrushMove={onBrushMove}
         onBrushPointerMove={onPointerMove}
         onBrushPointerEnter={tooltip.show}
         onBrushPointerLeave={tooltip.hide}

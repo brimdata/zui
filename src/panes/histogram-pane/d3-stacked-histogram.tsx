@@ -15,7 +15,7 @@ export function D3StackedHistogram(props: {
   onBrushPointerMove?: (e: PointerEvent) => void
   onBrushPointerLeave?: (e: PointerEvent) => void
   onBrushEnd: (extent: [Date, Date]) => void
-  onBrushMove: (e: PointerEvent) => void
+  onBrushMove: (e: d3.D3BrushEvent<unknown>) => void
 }) {
   // Dimensions
   const {width, height, margin} = props
@@ -101,7 +101,7 @@ export function D3StackedHistogram(props: {
           brush.move(svg.selectAll(".brush"), null)
         }
       })
-      .on("brush", (e: PointerEvent) => {
+      .on("brush", (e: d3.D3BrushEvent<unknown>) => {
         call(props.onBrushMove, e)
       })
 

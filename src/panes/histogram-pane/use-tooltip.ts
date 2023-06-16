@@ -2,28 +2,29 @@ import {useState} from "react"
 
 export function useTooltip() {
   const tooltipWidth = 180
+  const yPad = -60
+  const xPad = 20
   const [style, setStyle] = useState({width: tooltipWidth})
   const [data, setData] = useState(null)
+  const updateStyle = (css) => setStyle((prev) => ({...prev, ...css}))
+  const translate = (x: number, y: number) =>
+    updateStyle({transform: `translate(${x}px, ${y}px)`})
+
   return {
     data,
     setData,
     style,
-    hide: () => setStyle((s) => ({...s, opacity: 0})),
-    show: () => setStyle((s) => ({...s, opacity: 1})),
+    hide: () => updateStyle({opacity: 0}),
+    show: () => updateStyle({opacity: 1}),
     move: (e: PointerEvent) => {
-      const y = 0
-      const x = 0
-      const xPadding = 30
-      const yPadding = -20
-      const overflowsRight =
-        e.pageX + xPadding + tooltipWidth >= document.body.clientWidth
-      if (overflowsRight) {
-        const xPos = x - tooltipWidth - xPadding
-        const transform = `translate(${xPos}px, ${y + yPadding}px)`
-        setStyle((s) => ({...s, transform}))
+      const brush = e.currentTarget as SVGGElement
+      const {y} = brush.getBoundingClientRect()
+      const x = e.pageX
+      const docWidth = document.body.clientWidth
+      if (x + xPad + tooltipWidth < docWidth) {
+        translate(x + xPad, y + yPad)
       } else {
-        const transform = `translate(${x + xPadding}px, ${y + yPadding}px)`
-        setStyle((s) => ({...s, transform}))
+        translate(x - tooltipWidth - xPad, y + yPad)
       }
     },
   }

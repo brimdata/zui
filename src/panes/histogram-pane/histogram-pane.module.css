@@ -3,7 +3,6 @@
   width: 100%;
   position: relative;
   border-top: 1px solid var(--border-color);
-  z-index: 9;
 }
 
 div.toolbar {
@@ -11,6 +10,8 @@ div.toolbar {
   width: 100%;
   background-color: transparent;
   border-bottom: none;
+  height: auto;
+  margin-top: 4px;
 }
 
 .dialog {
