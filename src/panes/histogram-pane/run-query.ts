@@ -39,7 +39,13 @@ export function runHistogramQuery(): Thunk {
     })
     dispatch(Histogram.setRange(range))
     dispatch(Histogram.setInterval(intervalObj))
-    dispatch(run({id: HISTOGRAM_RESULTS, query}))
+    dispatch(
+      run({
+        id: HISTOGRAM_RESULTS,
+        query,
+        collectOpts: {every: {ms: 1000, count: Infinity}},
+      })
+    )
   }
 
   function getHistogramRange(

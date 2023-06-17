@@ -1061,6 +1061,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@brimdata/zed-js@file:../zealot/dist/packages/zed-js::locator=zui%40workspace%3A.":
+  version: 0.0.15
+  resolution: "@brimdata/zed-js@file:../zealot/dist/packages/zed-js#../zealot/dist/packages/zed-js::hash=143864&locator=zui%40workspace%3A."
+  dependencies:
+    "@types/event-source-polyfill": 1.0.1
+    event-source-polyfill: 1.0.31
+    events: 3.3.0
+    tslib: 2.5.0
+  checksum: 53af29e7880aabae76bc831155b122ba6d053b5a7922fe560949aba1cf680daffe65522727604443f0e37a69ed676532ef50338fc5e2f694e6dac07ae28ef36c
+  languageName: node
+  linkType: hard
+
 "@brimdata/zed-js@npm:0.0.16":
   version: 0.0.16
   resolution: "@brimdata/zed-js@npm:0.0.16"
@@ -14110,7 +14122,7 @@ __metadata:
   resolution: "zui@workspace:."
   dependencies:
     "@babel/core": ^7.17.9
-    "@brimdata/zed-js": 0.0.16
+    "@brimdata/zed-js": ../zealot/dist/packages/zed-js
     "@brimdata/zed-node": 0.0.16
     "@codemirror/autocomplete": ^0.19.15
     "@codemirror/closebrackets": ^0.19.1

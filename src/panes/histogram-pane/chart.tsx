@@ -9,8 +9,9 @@ import submitSearch from "src/app/query-home/flows/submit-search"
 import Editor from "src/js/state/Editor"
 import {Tooltip} from "./tooltip"
 import styles from "./histogram-pane.module.css"
+import {memo} from "react"
 
-export function Chart(
+export const Chart = memo(function Chart(
   props: {
     width: number
     height: number
@@ -77,4 +78,4 @@ export function Chart(
       )}
     </>
   )
-}
+})

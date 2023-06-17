@@ -1,7 +1,7 @@
-import {useEffect, useRef} from "react"
+import {memo, useLayoutEffect, useRef} from "react"
 import * as d3 from "d3"
 
-export function D3StackedHistogram(props: {
+export const D3StackedHistogram = memo(function D3StackedHistogram(props: {
   width: number
   height: number
   margin: {left: number; right: number; top: number; bottom: number}
@@ -30,9 +30,10 @@ export function D3StackedHistogram(props: {
 
   // Create the static elements on mount
   const ref = useRef<SVGSVGElement>(null)
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
+    console.log("mount")
     const svg = d3.select(el)
     svg.append("g").attr("class", "histogram")
     svg.append("g").attr("class", "x-axis")
@@ -46,7 +47,8 @@ export function D3StackedHistogram(props: {
   }, [])
 
   // Render the chart when things are updated
-  useEffect(() => {
+  useLayoutEffect(() => {
+    console.log("draw")
     const svg = d3.select(ref.current)
     /**
      * Render the x axis
@@ -133,7 +135,7 @@ export function D3StackedHistogram(props: {
         call(props.onBrushPointerLeave, e)
         line.attr("opacity", 0)
       })
-  })
+  }, [props.data])
 
   return (
     <svg
@@ -143,7 +145,7 @@ export function D3StackedHistogram(props: {
       className={props.className}
     ></svg>
   )
-}
+})
 
 function call<Fn extends (...a: any[]) => any>(
   fn: Fn,

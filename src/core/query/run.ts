@@ -1,4 +1,4 @@
-import {ResultStream} from "@brimdata/zed-js"
+import {CollectOpts, ResultStream} from "@brimdata/zed-js"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Current from "src/js/state/Current"
 import Results from "src/js/state/Results"
@@ -18,6 +18,7 @@ export function nextPage(id: string): Thunk {
 export function run(opts: {
   id: string
   query?: string
+  collectOpts?: CollectOpts
 }): Thunk<Promise<ResultStream | null>> {
   return async (dispatch, getState, {api}) => {
     const key = Current.getLocation(getState()).key
@@ -43,6 +44,7 @@ export function run(opts: {
           dispatch(Results.setValues({id, tabId, values}))
           dispatch(Results.setShapes({id, tabId, shapes}))
         },
+        collectOpts: opts.collectOpts,
       })
       dispatch(Results.success({id, tabId, count: res.rows.length}))
       return res

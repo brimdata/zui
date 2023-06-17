@@ -1,4 +1,4 @@
-import {Collector, ResultStream} from "@brimdata/zed-js"
+import {CollectOpts, Collector, ResultStream} from "@brimdata/zed-js"
 import {Thunk} from "src/js/state/types"
 import ZuiApi from "../zui-api"
 
@@ -6,6 +6,7 @@ export type QueryOptions = {
   id?: string
   tabId?: string
   collect?: Collector
+  collectOpts?: CollectOpts
 }
 
 export function query(
@@ -18,7 +19,7 @@ export function query(
     let res: ResultStream
     try {
       res = await zealot.query(body, {signal})
-      if (opts.collect) await res.collect(opts.collect)
+      if (opts.collect) await res.collect(opts.collect, opts.collectOpts)
     } finally {
       cleanup()
     }
