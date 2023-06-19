@@ -24,3 +24,8 @@
 .resultsToolbar {
   border-top: 1px solid var(--border-color);
 }
+
+.panel {
+  display: flex;
+  flex-direction: column;
+}
