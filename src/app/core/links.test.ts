@@ -1,9 +1,21 @@
 import links from "./links"
-import nodeFetch from "node-fetch"
+import fetch from "node-fetch"
+import AbortController from "abort-controller"
 
 const fetchStatusCode = async (link: string): Promise<[string, number]> => {
-  const resp = await nodeFetch(link)
-  return [link, resp.status]
+  const controller = new AbortController()
+  const timeout = setTimeout(() => {
+    controller.abort()
+  }, 1000)
+
+  try {
+    const resp = await fetch(link, {signal: controller.signal})
+    return [link, resp.status]
+  } catch (err) {
+    throw `fetch failed when trying to test link => ${link} (${err})`
+  } finally {
+    clearTimeout(timeout)
+  }
 }
 
 test("no broken links", async () => {
