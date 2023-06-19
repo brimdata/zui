@@ -40,9 +40,13 @@ function widen(wide: WidePoint, point: Point) {
 export function formatDatum(point: zed.Record) {
   return {
     time: point.get("time").toJS(),
-    group: point.get("group").toString(),
+    group: formatGroup(point.get("group")),
     count: point.get("count").toJS(),
   }
+}
+
+export function formatGroup(value: zed.Value) {
+  return value.toString()
 }
 
 export function hasTimeField(data: zed.Record[]) {
@@ -50,5 +54,15 @@ export function hasTimeField(data: zed.Record[]) {
 }
 
 export function hasGroupField(data: zed.Record[]) {
-  return data.every((r) => r.has("group") && !r.get("group").isUnset())
+  return data.every((r) => r.has("group"))
+}
+
+export function hasHighCardinality(data: zed.Record[], max: number) {
+  const set = new Set()
+  for (const record of data) {
+    const key = record.get("group").toString()
+    set.add(key)
+    if (set.size > max) return true
+  }
+  return false
 }

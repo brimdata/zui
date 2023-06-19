@@ -33,7 +33,6 @@ export const D3StackedHistogram = memo(function D3StackedHistogram(props: {
   useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
-    console.log("mount")
     const svg = d3.select(el)
     svg.append("g").attr("class", "histogram")
     svg.append("g").attr("class", "x-axis")
@@ -48,7 +47,6 @@ export const D3StackedHistogram = memo(function D3StackedHistogram(props: {
 
   // Render the chart when things are updated
   useLayoutEffect(() => {
-    console.log("draw")
     const svg = d3.select(ref.current)
     /**
      * Render the x axis
@@ -135,7 +133,7 @@ export const D3StackedHistogram = memo(function D3StackedHistogram(props: {
         call(props.onBrushPointerLeave, e)
         line.attr("opacity", 0)
       })
-  }, [props.data])
+  })
 
   return (
     <svg

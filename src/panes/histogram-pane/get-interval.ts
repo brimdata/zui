@@ -80,5 +80,9 @@ export function getInterval([from, to]: [Date, Date]): Interval {
   if (duration.asMonths() <= 12)
     return {number: 7, unit: "day", fn: d3.utcMillisecond.every(7 * day)}
 
-  return {number: 30, unit: "day", fn: d3.utcMillisecond.every(30 * day)}
+  return {
+    number: 30,
+    unit: "day",
+    fn: d3.utcMillisecond.every(30 * day),
+  }
 }

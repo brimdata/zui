@@ -9,7 +9,7 @@ import submitSearch from "src/app/query-home/flows/submit-search"
 import Editor from "src/js/state/Editor"
 import {Tooltip} from "./tooltip"
 import styles from "./histogram-pane.module.css"
-import {memo} from "react"
+import {memo, useMemo} from "react"
 
 export const Chart = memo(function Chart(
   props: {
@@ -20,35 +20,67 @@ export const Chart = memo(function Chart(
   const {width, height, range, data, interval} = props
   const dispatch = useDispatch()
   const tooltip = useTooltip()
-  const {keys, map, stack, widePoints} = formatData(data)
-  const yScale = d3.scaleLinear().domain([0, d3.max(widePoints, (v) => v.sum)])
-  const xScale = d3
-    .scaleUtc()
-    .domain([interval(range[0]), interval.offset(interval(range[1]))])
-  const colorScale = d3
-    .scaleOrdinal<string, string>()
-    .domain(keys)
-    .range(d3.schemeCategory10)
 
-  function onBrushMove(e: d3.D3BrushEvent<unknown>) {
-    if (!e.selection) tooltip.show()
-    else tooltip.hide()
-  }
+  const histogramProps = useMemo(
+    () => {
+      const margin = {top: 29, bottom: 24, right: 14, left: 14}
+      const {keys, map, stack, widePoints} = formatData(data)
+      const yScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(widePoints, (v) => v.sum)])
+      const xScale = d3
+        .scaleUtc()
+        .domain([interval(range[0]), interval.offset(interval(range[1]))])
+      const colorScale = d3
+        .scaleOrdinal<string, string>()
+        .domain(keys)
+        .range(d3.schemeCategory10)
 
-  function onBrushEnd([from, to]: [Date, Date]) {
-    tooltip.show()
-    const field = props.timeField
-    dispatch(Editor.setTimeRange({field, from, to}))
-    dispatch(submitSearch())
-  }
+      function onBrushMove(e: d3.D3BrushEvent<unknown>) {
+        if (!e.selection) tooltip.show()
+        else tooltip.hide()
+      }
 
-  function onPointerMove(e: PointerEvent) {
-    const [x] = d3.pointer(e)
-    const ts = interval.floor(xScale.invert(x))
-    const data = map.get(ts.getTime()) ?? null
-    tooltip.setData(data)
-    tooltip.move(e)
-  }
+      function onBrushEnd([from, to]: [Date, Date]) {
+        tooltip.show()
+        const field = props.timeField
+        dispatch(Editor.setTimeRange({field, from, to}))
+        dispatch(submitSearch())
+      }
+
+      function onBrushPointerMove(e: PointerEvent) {
+        const [x] = d3.pointer(e)
+        const ts = interval.floor(xScale.invert(x))
+        const data = map.get(ts.getTime()) ?? null
+        tooltip.setData(data)
+        tooltip.move(e)
+      }
+
+      function onBrushPointerEnter() {
+        tooltip.show()
+      }
+
+      function onBrushPointerLeave() {
+        tooltip.hide()
+      }
+
+      return {
+        onBrushPointerMove,
+        onBrushPointerEnter,
+        onBrushPointerLeave,
+        onBrushEnd,
+        onBrushMove,
+        colorScale,
+        xScale,
+        yScale,
+        data: stack,
+        interval,
+        margin,
+      }
+    },
+    // Only re-render the histogram when the data prop changes.
+    [props.data]
+  )
 
   return (
     <>
@@ -56,23 +88,13 @@ export const Chart = memo(function Chart(
         className={styles.graphic}
         width={width}
         height={height}
-        interval={interval}
-        data={stack}
-        xScale={xScale}
-        yScale={yScale}
-        colorScale={colorScale}
-        margin={{top: 29, bottom: 24, right: 14, left: 14}}
-        onBrushEnd={onBrushEnd}
-        onBrushMove={onBrushMove}
-        onBrushPointerMove={onPointerMove}
-        onBrushPointerEnter={tooltip.show}
-        onBrushPointerLeave={tooltip.hide}
+        {...histogramProps}
       />
       {createPortal(
         <Tooltip
           style={tooltip.style}
           data={tooltip.data}
-          colorScale={colorScale}
+          colorScale={histogramProps.colorScale}
         />,
         document.getElementById("tooltip-root")
       )}

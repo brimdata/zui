@@ -1,12 +1,14 @@
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import PoolSettings from "src/js/state/PoolSettings"
-import {hasTimeField, hasGroupField} from "./format-data"
+import {hasTimeField, hasGroupField, hasHighCardinality} from "./format-data"
 import Histogram from "src/js/state/Histogram"
 import * as zed from "@brimdata/zed-js"
 import {State} from "src/js/state/types"
 
 export type DataProps = ReturnType<typeof useDataProps>
+
+const MAX_CARDINALITY = 40
 
 export function useDataProps() {
   const poolId = useSelector(Current.getPoolFromQuery)?.id
@@ -41,6 +43,9 @@ export function validateDataProps(props: DataProps) {
   }
   if (!hasGroupField(data)) {
     return `Field '${colorField}' did not return any groups.`
+  }
+  if (hasHighCardinality(data, MAX_CARDINALITY)) {
+    return `Field '${colorField}' returned too many unique values (>${MAX_CARDINALITY}).`
   }
   return null
 }
