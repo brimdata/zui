@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
-    "@brimdata/zed-js": "../zealot/dist/packages/zed-js",
+    "@brimdata/zed-js": "0.0.16",
     "@brimdata/zed-node": "0.0.16",
     "@codemirror/autocomplete": "^0.19.15",
     "@codemirror/closebrackets": "^0.19.1",
