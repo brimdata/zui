@@ -34,7 +34,7 @@ export const Chart = memo(function Chart(
       const colorScale = d3
         .scaleOrdinal<string, string>()
         .domain(keys)
-        .range(d3.schemeCategory10)
+        .range(d3.schemeTableau10)
 
       function onBrushMove(e: d3.D3BrushEvent<unknown>) {
         if (!e.selection) tooltip.show()
