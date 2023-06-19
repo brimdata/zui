@@ -1062,14 +1062,14 @@ __metadata:
   linkType: hard
 
 "@brimdata/zed-js@file:../zealot/dist/packages/zed-js::locator=zui%40workspace%3A.":
-  version: 0.0.15
-  resolution: "@brimdata/zed-js@file:../zealot/dist/packages/zed-js#../zealot/dist/packages/zed-js::hash=143864&locator=zui%40workspace%3A."
+  version: 0.0.16
+  resolution: "@brimdata/zed-js@file:../zealot/dist/packages/zed-js#../zealot/dist/packages/zed-js::hash=799b14&locator=zui%40workspace%3A."
   dependencies:
     "@types/event-source-polyfill": 1.0.1
     event-source-polyfill: 1.0.31
     events: 3.3.0
     tslib: 2.5.0
-  checksum: 53af29e7880aabae76bc831155b122ba6d053b5a7922fe560949aba1cf680daffe65522727604443f0e37a69ed676532ef50338fc5e2f694e6dac07ae28ef36c
+  checksum: 9c02360830d4e39215bf479ac82dbc1336f1f15129aec62a68fabe4727bcb526799c37030a5b9435b98ffd6912f8bb7623225c0f882530a8fba577499f112123
   languageName: node
   linkType: hard
 
