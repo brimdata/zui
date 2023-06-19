@@ -3585,6 +3585,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"abort-controller@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "abort-controller@npm:3.0.0"
+  dependencies:
+    event-target-shim: ^5.0.0
+  checksum: 170bdba9b47b7e65906a28c8ce4f38a7a369d78e2271706f020849c1bfe0ee2067d4261df8bbb66eb84f79208fd5b710df759d64191db58cfba7ce8ef9c54b75
+  languageName: node
+  linkType: hard
+
 "acorn-globals@npm:^6.0.0":
   version: 6.0.0
   resolution: "acorn-globals@npm:6.0.0"
@@ -6737,6 +6746,13 @@ __metadata:
     stream-combiner: ^0.2.2
     through: ^2.3.8
   checksum: 515cdff30c8dd74d5869cf53133b8851deba012605d2a15a1bc77b777b9d237ebf06d99ec62be2c6fc8adb2c89bf392771e2809239b278e5e70ba2f88cd1955c
+  languageName: node
+  linkType: hard
+
+"event-target-shim@npm:^5.0.0":
+  version: 5.0.1
+  resolution: "event-target-shim@npm:5.0.1"
+  checksum: 1ffe3bb22a6d51bdeb6bf6f7cf97d2ff4a74b017ad12284cc9e6a279e727dc30a5de6bb613e5596ff4dc3e517841339ad09a7eec44266eccb1aa201a30448166
   languageName: node
   linkType: hard
 
@@ -14097,10 +14113,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#96faee2eaa7af25173063b021bc6d6214ca8946f":
+"zed@brimdata/zed#45f3a378ed0f129f61fb7cd3297cfd26b5a52457":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=96faee2eaa7af25173063b021bc6d6214ca8946f"
-  checksum: f2c3819032ce2dd12c6e672657d960f27d8f1e945273628103f6e37ffd1b10c6b8ce21c1e8c5deed6861889a93806afb19f43b86500ff73437da46dbdb71e3ee
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=45f3a378ed0f129f61fb7cd3297cfd26b5a52457"
+  checksum: 8aba55847c2fc7230508bbe78ea85f8204087c2a20f9a9e73ad1ed640bf27943c1e7d5bf344a6d9d259e2faa096abe49ac4ca18e14b0a713464fe6e1c98bc806
   languageName: node
   linkType: hard
 
@@ -14165,6 +14181,7 @@ __metadata:
     "@types/tmp": ^0.2.0
     "@typescript-eslint/eslint-plugin": ^5.16.0
     "@typescript-eslint/parser": ^5.16.0
+    abort-controller: ^3.0.0
     acorn: ^7.4.1
     ajv: ^6.9.1
     animejs: ^3.2.0
@@ -14254,7 +14271,7 @@ __metadata:
     use-resize-observer: ^8.0.0
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#96faee2eaa7af25173063b021bc6d6214ca8946f"
+    zed: "brimdata/zed#45f3a378ed0f129f61fb7cd3297cfd26b5a52457"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0

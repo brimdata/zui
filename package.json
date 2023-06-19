@@ -85,6 +85,7 @@
     "@types/tmp": "^0.2.0",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
+    "abort-controller": "^3.0.0",
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
@@ -172,7 +173,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#96faee2eaa7af25173063b021bc6d6214ca8946f",
+    "zed": "brimdata/zed#45f3a378ed0f129f61fb7cd3297cfd26b5a52457",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {
