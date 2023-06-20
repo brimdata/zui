@@ -17,7 +17,7 @@ export const Chart = memo(function Chart(
     height: number
   } & DataProps
 ) {
-  const {width, height, range, data, interval} = props
+  const {width, height, range, data, interval, colorMap} = props
   const dispatch = useDispatch()
   const tooltip = useTooltip()
 
@@ -31,10 +31,16 @@ export const Chart = memo(function Chart(
       const xScale = d3
         .scaleUtc()
         .domain([interval(range[0]), interval.offset(interval(range[1]))])
-      const colorScale = d3
+
+      const defaultColorScale = d3
         .scaleOrdinal<string, string>()
         .domain(keys)
         .range(d3.schemeTableau10)
+
+      const colorScale = (key: string) => {
+        const color = colorMap && colorMap[key]
+        return color || defaultColorScale(key)
+      }
 
       function onBrushMove(e: d3.D3BrushEvent<unknown>) {
         if (!e.selection) tooltip.show()

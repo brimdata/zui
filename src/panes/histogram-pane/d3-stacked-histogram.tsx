@@ -7,7 +7,7 @@ export const D3StackedHistogram = memo(function D3StackedHistogram(props: {
   margin: {left: number; right: number; top: number; bottom: number}
   xScale: d3.ScaleTime<number, number>
   yScale: d3.ScaleLinear<number, number>
-  colorScale: d3.ScaleOrdinal<string, string>
+  colorScale: (key: string) => string
   data: d3.Series<Record<string, number>, string>[]
   interval: d3.TimeInterval
   className: string

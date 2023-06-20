@@ -7,7 +7,7 @@ import {WidePoint} from "./types"
 export const Tooltip = (props: {
   style: CSSProperties
   data: WidePoint
-  colorScale: d3.ScaleOrdinal<string, string>
+  colorScale: (key: string) => string
 }) => {
   if (!props.data) return null
   const segments = Object.entries(props.data)

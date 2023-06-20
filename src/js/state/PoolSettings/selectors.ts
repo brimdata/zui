@@ -5,6 +5,7 @@ export function getDefaults() {
   return {
     timeField: "ts",
     colorField: "typeof(this)",
+    colorMap: null as Record<string, string> | null,
   }
 }
 

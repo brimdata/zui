@@ -22,6 +22,7 @@ export function useDataProps() {
     data: useSelector(Histogram.getData) as zed.Record[],
     timeField: settings.timeField,
     colorField: settings.colorField,
+    colorMap: settings.colorMap,
     poolId,
     error,
   }

@@ -3,6 +3,7 @@ import {CorrelationsApi} from "./correlations/plugin-api"
 import {EnvApi} from "./env/plugin-api"
 import {LoadersApi} from "./loaders/plugin-api"
 import {PanesApi} from "./panes/plugin-api"
+import {PoolsApi} from "./pools/plugin-api"
 import {ResultsApi} from "./results/plugin-api"
 import {SessionApi} from "./session/plugin-api"
 import {WindowApi} from "./window/plugin-api"
@@ -17,3 +18,4 @@ export const loaders = new LoadersApi()
 export const session = new SessionApi()
 export const correlations = new CorrelationsApi()
 export const configurations = new ConfigurationsApi()
+export const pools = new PoolsApi()

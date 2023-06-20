@@ -7,7 +7,8 @@ import {ChildProcess} from "child_process"
 import {Loader} from "src/core/loader/types"
 import {LoadContext} from "src/core/loader/load-context"
 import {isPcap} from "./packets/is-pcap"
-import {configurations, loaders} from "src/zui"
+import {configurations, loaders, pools} from "src/zui"
+import {zeekColorMap} from "./zeek/colors"
 
 function createLoader(root: string): Loader {
   const processes: Record<number, ChildProcess> = {}
@@ -108,6 +109,13 @@ function createLoader(root: string): Loader {
 
     await ctx.onPoolChanged()
     ctx.onProgress(1)
+
+    // update this pool's settings with zeek specific properties
+    pools
+      .configure(ctx.poolId)
+      .set("timeField", "ts")
+      .set("colorField", "_path")
+      .set("colorMap", zeekColorMap)
   }
 
   function rollback() {}
