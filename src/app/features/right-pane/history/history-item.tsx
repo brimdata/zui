@@ -93,7 +93,7 @@ function getValue(active: ActiveQuery) {
   if (active.isDeleted()) {
     return "(Deleted)"
   } else if (active.isAnonymous() || active.isModified()) {
-    return active.value() || "(Empty)"
+    return active.toZed() || "(Empty)"
   } else {
     return active.name()
   }
