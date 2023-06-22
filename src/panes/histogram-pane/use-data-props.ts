@@ -16,6 +16,8 @@ export function useDataProps() {
   const settings = useSelector((s: State) =>
     PoolSettings.findWithDefaults(s, poolId)
   )
+  const isFetching = useSelector(Histogram.getIsFetching)
+
   return {
     range: useSelector(Histogram.getRange),
     interval: useSelector(Histogram.getInterval)?.fn,
@@ -23,6 +25,7 @@ export function useDataProps() {
     timeField: settings.timeField,
     colorField: settings.colorField,
     colorMap: settings.colorMap,
+    isFetching,
     poolId,
     error,
   }
@@ -30,6 +33,9 @@ export function useDataProps() {
 
 export function validateDataProps(props: DataProps) {
   const {error, range, interval, timeField, colorField, data} = props
+  if (props.isFetching) {
+    return "Loading..."
+  }
   if (error) {
     return error
   }

@@ -25,6 +25,8 @@ const slice = createSlice({
       r.key = a.payload.key
       r.page = 1
       r.status = "FETCHING"
+      r.values = []
+      r.shapes = {}
     },
 
     nextPage(s, a: Pay<{id: string}>) {
@@ -46,7 +48,7 @@ const slice = createSlice({
       r.shapes = a.payload.shapes
     },
 
-    success(s, a: Pay<{id: string; count: number; tabId: string}>) {
+    success(s, a: Pay<{id: string; count?: number; tabId: string}>) {
       const r = access(s, a.payload.id)
       if (r.aggregation && a.payload.count === r.aggregationLimit) {
         r.status = "LIMIT"

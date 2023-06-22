@@ -2,12 +2,16 @@ import React, {ReactNode, useContext, useMemo} from "react"
 import {useSelector} from "react-redux"
 import {useQuery} from "src/core/query/use-query"
 import Layout from "src/js/state/Layout"
+import Results from "src/js/state/Results"
 import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
+import {useDataTransition} from "src/util/hooks/use-data-transition"
 import useResizeObserver from "use-resize-observer"
 
 function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
   const rect = useResizeObserver({ref: parentRef})
-  const [query, results] = useQuery({id: RESULTS_QUERY})
+  const [query, r] = useQuery({id: RESULTS_QUERY})
+  const fetching = useSelector(Results.isFetching(RESULTS_QUERY))
+  const results = useDataTransition(r, r.data.length === 0 && fetching)
   const shapes = useMemo(() => Object.values(results.shapes), [results.shapes])
 
   return {

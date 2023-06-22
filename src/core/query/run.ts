@@ -1,4 +1,4 @@
-import {CollectOpts, ResultStream} from "@brimdata/zed-js"
+import {ResultStream} from "@brimdata/zed-js"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Current from "src/js/state/Current"
 import Results from "src/js/state/Results"
@@ -18,7 +18,6 @@ export function nextPage(id: string): Thunk {
 export function run(opts: {
   id: string
   query?: string
-  collectOpts?: CollectOpts
 }): Thunk<Promise<ResultStream | null>> {
   return async (dispatch, getState, {api}) => {
     const key = Current.getLocation(getState()).key
@@ -38,14 +37,14 @@ export function run(opts: {
       const res = await api.query(paginatedQuery, {
         id,
         tabId,
-        collect: ({rows, shapesMap}) => {
-          const values = isFirstPage ? rows : [...prevVals, ...rows]
-          const shapes = isFirstPage ? shapesMap : {...prevShapes, ...shapesMap}
-          dispatch(Results.setValues({id, tabId, values}))
-          dispatch(Results.setShapes({id, tabId, shapes}))
-        },
-        collectOpts: opts.collectOpts,
       })
+      res.collect(({rows, shapesMap}) => {
+        const values = isFirstPage ? rows : [...prevVals, ...rows]
+        const shapes = isFirstPage ? shapesMap : {...prevShapes, ...shapesMap}
+        dispatch(Results.setValues({id, tabId, values}))
+        dispatch(Results.setShapes({id, tabId, shapes}))
+      })
+      await res.promise
       dispatch(Results.success({id, tabId, count: res.rows.length}))
       return res
     } catch (e) {
