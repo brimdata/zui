@@ -18,11 +18,12 @@ export const Tooltip = (props: {
     .map(([name, count]) => ({name, count} as {name: string; count: number}))
     .sort((a, b) => b.count - a.count)
 
+  const timeLabel = props.data.time
+    ? time(props.data.time).format("MMM D, YYYY • HH:mm")
+    : "null"
   return (
     <div style={props.style} className={styles.tooltip + " histogram-tooltip"}>
-      <p className="ts">
-        {time(props.data.time).format("MMM D, YYYY • HH:mm")}
-      </p>
+      <p className="ts">{timeLabel}</p>
       <table>
         <tbody>
           {segments.map(({name, count}) => {

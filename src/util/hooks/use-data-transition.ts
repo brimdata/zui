@@ -22,6 +22,9 @@ export function useDataTransition<T>(
     return () => clearTimeout(id)
   }, [inTransition])
 
-  if (inTransition && !timeExpired) return prev.current
-  else return real
+  if (inTransition && !timeExpired) {
+    return prev.current
+  } else {
+    return real
+  }
 }

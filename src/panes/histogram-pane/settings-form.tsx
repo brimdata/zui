@@ -10,6 +10,7 @@ import styles from "./histogram-pane.module.css"
 import {runHistogramQuery} from "./run-query"
 import {getDefaults} from "src/js/state/PoolSettings/selectors"
 import {InputButton} from "src/components/input-button"
+import {useZuiApi} from "src/app/core/context"
 
 type Inputs = {
   timeField: string
@@ -26,6 +27,7 @@ const defaults = getDefaults()
 export function SettingsForm(props: Props) {
   const settings = useSelector((s: State) => PoolSettings.find(s, props.poolId))
   const dispatch = useDispatch()
+  const api = useZuiApi()
   const form = useForm<Inputs>({defaultValues: settings})
 
   function onSubmit(data: Inputs) {
@@ -34,7 +36,7 @@ export function SettingsForm(props: Props) {
     const id = props.poolId
     dispatch(PoolSettings.upsert({id, timeField, colorField}))
     props.close()
-    dispatch(runHistogramQuery())
+    runHistogramQuery(api)
   }
 
   return (

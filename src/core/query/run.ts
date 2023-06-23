@@ -3,6 +3,7 @@ import ErrorFactory from "src/js/models/ErrorFactory"
 import Current from "src/js/state/Current"
 import Results from "src/js/state/Results"
 import {Thunk} from "src/js/state/types"
+import {isAbortError} from "src/util/is-abort-error"
 
 export function nextPage(id: string): Thunk {
   return async (dispatch, getState) => {
@@ -48,7 +49,7 @@ export function run(opts: {
       dispatch(Results.success({id, tabId, count: res.rows.length}))
       return res
     } catch (e) {
-      if (e instanceof DOMException && e.message.match(/user aborted/)) {
+      if (isAbortError(e)) {
         return null
       } else {
         dispatch(

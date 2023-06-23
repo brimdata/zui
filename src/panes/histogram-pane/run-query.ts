@@ -6,6 +6,7 @@ import Histogram from "src/js/state/Histogram"
 import {QueryPin, TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Results from "src/js/state/Results"
 import ZuiApi from "src/js/api/zui-api"
+import {isAbortError} from "src/util/is-abort-error"
 
 export const HISTOGRAM_RESULTS = "histogram"
 
@@ -15,12 +16,14 @@ export async function runHistogramQuery(api: ZuiApi) {
   const key = api.current.location.key
   const version = api.select(Current.getVersion)
   const poolId = api.select(Current.getPoolFromQuery)?.id
+  const baseQuery = QueryModel.versionToZed(version)
   const {timeField, colorField} = api.select((s) =>
     PoolSettings.findWithDefaults(s, poolId)
   )
 
   function setup() {
     api.dispatch(Results.init({id, tabId, key, query: ""}))
+    api.dispatch(Histogram.init())
   }
 
   function collect({rows}) {
@@ -28,6 +31,7 @@ export async function runHistogramQuery(api: ZuiApi) {
   }
 
   function error(error: Error) {
+    if (isAbortError(error)) return success()
     api.dispatch(Results.error({id, tabId, error: error.message}))
   }
 
@@ -50,7 +54,16 @@ export async function runHistogramQuery(api: ZuiApi) {
     const query = `from ${poolId} | min(${timeField}), max(${timeField})`
     const resp = await api.query(query, {id, tabId})
     const [{min, max}] = await resp.js()
+    if (!(min instanceof Date && max instanceof Date)) return null
     return [min, max] as [Date, Date]
+  }
+
+  async function getNullTimeCount() {
+    const query = `${baseQuery} | ${timeField} == null or !has(${timeField}) | count()`
+    const id = "null-time-count"
+    const resp = await api.query(query, {id, tabId})
+    const [count] = await resp.js()
+    api.dispatch(Histogram.setNulls(count ?? 0))
   }
 
   async function run() {
@@ -58,14 +71,14 @@ export async function runHistogramQuery(api: ZuiApi) {
     if (!range)
       throw new Error(`Unable to determine date range using '${timeField}'.`)
 
-    const baseQuery = QueryModel.versionToZed(version)
     const {unit, number, fn} = getInterval(range)
     const interval = `${number}${timeUnits[unit]}`
-    const query = `${baseQuery} | count() by time := bucket(${timeField}, ${interval}), group := ${colorField} | sort time`
+    const query = `${baseQuery} | ${timeField} != null | count() by time := bucket(${timeField}, ${interval}), group := ${colorField} | sort time`
     const resp = await api.query(query, {id, tabId})
     api.dispatch(Histogram.setInterval({unit, number, fn}))
     api.dispatch(Histogram.setRange(range))
     resp.collect(collect)
+    getNullTimeCount()
     await resp.promise
   }
 

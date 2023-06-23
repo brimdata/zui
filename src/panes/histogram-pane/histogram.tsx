@@ -1,7 +1,8 @@
 import {useDataTransition} from "src/util/hooks/use-data-transition"
 import {Chart} from "./chart"
 import {Error} from "./error"
-import {useDataProps, validateDataProps} from "./use-data-props"
+import {useDataProps} from "./use-data-props"
+import {validateDataProps} from "./validate-data"
 
 export function Histogram(props: {width: number; height: number}) {
   const data = useDataProps()

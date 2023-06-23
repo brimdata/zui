@@ -23,11 +23,10 @@ export const Chart = memo(function Chart(
 
   const histogramProps = useMemo(
     () => {
-      const margin = {top: 29, bottom: 24, right: 14, left: 14}
-      const {keys, map, stack, widePoints} = formatData(data)
-      const yScale = d3
-        .scaleLinear()
-        .domain([0, d3.max(widePoints, (v) => v.sum)])
+      const {keys, map, widePoints} = formatData(data)
+      const maxY = d3.max(widePoints, (v) => v.sum)
+      const margin = {top: 32, bottom: 24, right: 18, left: 18}
+      const yScale = d3.scaleLinear().domain([0, maxY])
       const xScale = d3
         .scaleUtc()
         .domain([interval(range[0]), interval.offset(interval(range[1]))])
@@ -57,7 +56,7 @@ export const Chart = memo(function Chart(
       function onBrushPointerMove(e: PointerEvent) {
         const [x] = d3.pointer(e)
         const ts = interval.floor(xScale.invert(x))
-        const data = map.get(ts.getTime()) ?? null
+        let data = map.get(ts.getTime()) ?? null
         tooltip.setData(data)
         tooltip.move(e)
       }
@@ -79,7 +78,8 @@ export const Chart = memo(function Chart(
         colorScale,
         xScale,
         yScale,
-        data: stack,
+        data: widePoints,
+        keys,
         interval,
         margin,
       }

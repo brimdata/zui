@@ -7,8 +7,8 @@ export function formatData(points: zed.Value[]) {
   const keys = getKeys(data)
   const map = groupByTimeAndWiden(data, keys)
   const widePoints = Array.from(map.values())
-  const stack = d3.stack().keys(keys)(widePoints)
-  return {keys, map, stack, widePoints}
+
+  return {keys, map, widePoints}
 }
 
 function getKeys(data: Point[]) {
@@ -27,7 +27,7 @@ function groupByTimeAndWiden(data: Point[], keys: string[]) {
   return d3.rollup<Point, number, WidePoint>(
     data,
     (values) => values.reduce(widen, defaults),
-    (v) => v.time.getTime()
+    (v) => (v.time instanceof Date ? v.time.getTime() : null)
   )
 }
 
@@ -47,22 +47,4 @@ export function formatDatum(point: zed.Record) {
 
 export function formatGroup(value: zed.Value) {
   return value.toString()
-}
-
-export function hasTimeField(data: zed.Record[]) {
-  return data.every((r) => r.has("time", zed.TypeTime))
-}
-
-export function hasGroupField(data: zed.Record[]) {
-  return data.every((r) => r.has("group"))
-}
-
-export function hasHighCardinality(data: zed.Record[], max: number) {
-  const set = new Set()
-  for (const record of data) {
-    const key = record.get("group").toString()
-    set.add(key)
-    if (set.size > max) return true
-  }
-  return false
 }
