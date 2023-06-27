@@ -7,11 +7,13 @@ const slice = createSlice({
   initialState: {
     interval: null as null | Interval,
     range: null as null | DateTuple,
-    nulls: 0,
+    nullXCount: 0,
+    missingXCount: 0,
   },
   reducers: {
     init(s) {
-      s.nulls = 0
+      s.nullXCount = 0
+      s.missingXCount = 0
     },
     setRange(s, a: PayloadAction<DateTuple | null>) {
       s.range = a.payload
@@ -19,8 +21,11 @@ const slice = createSlice({
     setInterval(s, a: PayloadAction<Interval | null>) {
       s.interval = a.payload
     },
-    setNulls(s, a: PayloadAction<number>) {
-      s.nulls = a.payload
+    setNullXCount(s, a: PayloadAction<number>) {
+      s.nullXCount = a.payload
+    },
+    setMissingXCount(s, a: PayloadAction<number>) {
+      s.missingXCount = a.payload
     },
   },
 })

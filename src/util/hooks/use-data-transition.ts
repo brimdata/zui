@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react"
 export function useDataTransition<T>(
   real: T,
   inTransition: boolean,
-  timeout = 500
+  timeout = 150
 ) {
   const [timeExpired, setTimeExpired] = useState(false)
   const prev = useRef(real)

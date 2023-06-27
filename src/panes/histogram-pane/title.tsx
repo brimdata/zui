@@ -14,19 +14,32 @@ export function Title() {
   const {timeField, colorField} = useSelector((s: State) =>
     PoolSettings.findWithDefaults(s, poolId)
   )
-  const nullCount = useSelector(Histogram.getNullCount)
+  const nullCount = useSelector(Histogram.getNullXCount)
+  const missingCount = useSelector(Histogram.getMissingXCount)
   const format = d3.format(",")
-  return (
-    <p className={styles.title}>
-      {nullCount !== 0 && (
-        <>
-          <b>
-            {format(nullCount)} null <i>{timeField}</i> values
-          </b>
-          {" • "}
-        </>
-      )}
+
+  const content = []
+
+  if (nullCount) {
+    content.push(
+      <>
+        {format(nullCount)} null {timeField} values •{" "}
+      </>
+    )
+  }
+  if (missingCount) {
+    content.push(
+      <>
+        {format(missingCount)} missing {timeField} values •{" "}
+      </>
+    )
+  }
+
+  content.push(
+    <>
       counts by <i>{timeField}</i> and <i>{colorField}</i>
-    </p>
+    </>
   )
+
+  return <p className={styles.title}>{content}</p>
 }

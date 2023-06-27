@@ -59,11 +59,19 @@ export async function runHistogramQuery(api: ZuiApi) {
   }
 
   async function getNullTimeCount() {
-    const query = `${baseQuery} | ${timeField} == null or !has(${timeField}) | count()`
+    const query = `${baseQuery} | ${timeField} == null | count()`
     const id = "null-time-count"
     const resp = await api.query(query, {id, tabId})
     const [count] = await resp.js()
-    api.dispatch(Histogram.setNulls(count ?? 0))
+    api.dispatch(Histogram.setNullXCount(count ?? 0))
+  }
+
+  async function getMissingTimeCount() {
+    const query = `${baseQuery} | !has(${timeField}) | count()`
+    const id = "missing-time-count"
+    const resp = await api.query(query, {id, tabId})
+    const [count] = await resp.js()
+    api.dispatch(Histogram.setMissingXCount(count ?? 0))
   }
 
   async function run() {
@@ -79,6 +87,7 @@ export async function runHistogramQuery(api: ZuiApi) {
     api.dispatch(Histogram.setRange(range))
     resp.collect(collect, {})
     getNullTimeCount()
+    getMissingTimeCount()
     await resp.promise
   }
 
