@@ -1,7 +1,7 @@
 import {useState} from "react"
 
 export function useTooltip() {
-  const tooltipWidth = 180
+  const tooltipWidth = 200
   const yPad = -60
   const xPad = 20
   const [style, setStyle] = useState({width: tooltipWidth})
