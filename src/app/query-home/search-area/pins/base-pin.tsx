@@ -70,7 +70,7 @@ export const Prefix = styled.span`
 const Label = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 15px;
+  line-height: 17px;
 `
 
 const Dropdown = styled(Icon).attrs({name: "chevron-down"})`
