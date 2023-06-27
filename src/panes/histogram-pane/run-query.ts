@@ -77,7 +77,7 @@ export async function runHistogramQuery(api: ZuiApi) {
     const resp = await api.query(query, {id, tabId})
     api.dispatch(Histogram.setInterval({unit, number, fn}))
     api.dispatch(Histogram.setRange(range))
-    resp.collect(collect)
+    resp.collect(collect, {})
     getNullTimeCount()
     await resp.promise
   }

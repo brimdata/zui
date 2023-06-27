@@ -7,29 +7,28 @@ import {isAbortError} from "src/util/is-abort-error"
 
 export function nextPage(id: string): Thunk {
   return async (dispatch, getState) => {
-    const query = Results.getQuery(id)(getState())
     if (Results.isFetching(id)(getState())) return
     if (Results.isComplete(id)(getState())) return
     if (Results.isLimited(id)(getState())) return
     dispatch(Results.nextPage({id}))
-    dispatch(run({id, query}))
+    dispatch(run(id))
   }
 }
 
-export function run(opts: {
-  id: string
-  query?: string
-}): Thunk<Promise<ResultStream | null>> {
+export function firstPage(opts: {id: string; query: string}): Thunk {
   return async (dispatch, getState, {api}) => {
+    const {id, query} = opts
     const key = Current.getLocation(getState()).key
     const tabId = api.current.tabId
-    const {id} = opts
-    const query = opts.query ?? Results.getQuery(id)(getState())
+    dispatch(Results.init({query, key, id, tabId}))
+    dispatch(run(id))
+  }
+}
+
+function run(id: string): Thunk<Promise<ResultStream | null>> {
+  return async (dispatch, getState, {api}) => {
+    const tabId = api.current.tabId
     const isFirstPage = Results.getPage(id)(getState()) === 1
-    if (isFirstPage) {
-      if (!query) throw new Error("No query provided for id: " + id)
-      dispatch(Results.init({query, key, id, tabId}))
-    }
     const prevVals = Results.getValues(id)(getState())
     const prevShapes = Results.getShapes(id)(getState())
     const paginatedQuery = Results.getPaginatedQuery(id)(getState())
@@ -44,7 +43,7 @@ export function run(opts: {
         const shapes = isFirstPage ? shapesMap : {...prevShapes, ...shapesMap}
         dispatch(Results.setValues({id, tabId, values}))
         dispatch(Results.setShapes({id, tabId, shapes}))
-      })
+      }, {})
       await res.promise
       dispatch(Results.success({id, tabId, count: res.rows.length}))
       return res

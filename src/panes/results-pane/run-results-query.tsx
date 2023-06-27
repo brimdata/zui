@@ -1,4 +1,4 @@
-import {run} from "src/core/query/run"
+import {firstPage} from "src/core/query/run"
 import {QueryModel} from "src/js/models/query-model"
 import Current from "src/js/state/Current"
 import {Thunk} from "src/js/state/types"
@@ -9,6 +9,6 @@ export function runResultsQuery(): Thunk {
   return (dispatch, getState) => {
     const version = Current.getVersion(getState())
     const query = QueryModel.versionToZed(version)
-    dispatch(run({id: RESULTS_QUERY, query}))
+    dispatch(firstPage({id: RESULTS_QUERY, query}))
   }
 }
