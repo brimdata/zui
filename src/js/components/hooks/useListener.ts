@@ -1,7 +1,7 @@
 import {useEffect, useRef} from "react"
 
 export default function useListener<T>(
-  el: Node | null | undefined,
+  et: EventTarget | null | undefined,
   event: keyof DocumentEventMap | "cancel" | "nativeContextMenu",
   callback: (e: T) => void,
   opts: boolean | Object = false
@@ -14,9 +14,9 @@ export default function useListener<T>(
 
   useEffect(() => {
     const listener = (e) => savedCallback.current(e)
-    el && el.addEventListener(event, listener, opts)
+    et && et.addEventListener(event, listener, opts)
     return () => {
-      if (el) el.removeEventListener(event, listener, opts)
+      if (et) et.removeEventListener(event, listener, opts)
     }
-  }, [el, event])
+  }, [et, event])
 }
