@@ -13,7 +13,7 @@ export function useOutsideClick(dialog: HTMLDialogElement, props: DialogProps) {
   }, [dialog, props.onOutsideClick])
 
   useEffect(() => {
-    let tid: number
+    let tid: any
     const listener = (e: globalThis.MouseEvent) => callback.current(e)
     const add = () => document.addEventListener("mousedown", listener)
     const remove = () => document.removeEventListener("mousedown", listener)

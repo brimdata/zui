@@ -13,7 +13,7 @@ export function useDataTransition<T>(
   }, [inTransition, real])
 
   useEffect(() => {
-    let id: number
+    let id: any
     if (inTransition) {
       id = setTimeout(() => setTimeExpired(true), timeout)
     } else {
