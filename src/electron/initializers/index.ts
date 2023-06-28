@@ -1,4 +1,4 @@
-export * from "./auto-update"
+export * as autoUpdate from "./auto-update"
 export * as commands from "./commands"
 export * as customProtocol from "./custom-protocol"
 export * as logFilters from "./log-filters"
