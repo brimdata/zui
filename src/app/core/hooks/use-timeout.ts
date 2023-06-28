@@ -8,6 +8,6 @@ export function useTimeout() {
     }
   }, [])
   return (fn: () => void, ms: number) => {
-    timeoutId.current = setTimeout(fn, ms)
+    timeoutId.current = window.setTimeout(fn, ms)
   }
 }

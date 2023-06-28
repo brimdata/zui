@@ -95,7 +95,7 @@
     "chrono-node": "^2.5.0",
     "classnames": "^2.2.6",
     "commander": "^2.20.3",
-    "cross-fetch": "^3.1.4",
+    "cross-fetch": "^3.1.6",
     "d3": "^6.7.0",
     "date-fns": "^2.16.1",
     "decompress": "^4.2.1",
@@ -163,7 +163,7 @@
     "reselect": "4.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.51.0",
-    "semver": "^7.3.2",
+    "semver": "^7.5.3",
     "set-tz": "^0.2.0",
     "sprintf-js": "^1.1.2",
     "styled-components": "^5.3.5",
@@ -173,7 +173,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#45f3a378ed0f129f61fb7cd3297cfd26b5a52457",
+    "zed": "brimdata/zed#f967c99d5b82c5efba310b5c8b81bb194ff24d18",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {

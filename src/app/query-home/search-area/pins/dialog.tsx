@@ -150,7 +150,7 @@ function useDialogPosition(node: HTMLDialogElement, props: DialogProps) {
     props.left,
   ])
 
-  useListener(global.window, "resize", run)
+  useListener(window, "resize", run)
 
   return position
 }
