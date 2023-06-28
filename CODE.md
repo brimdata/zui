@@ -2,6 +2,19 @@
 
 This is here to document the design patterns chosen by the developers. It documents structures, abstractions, and philosophy in this repo.
 
+# FAQs
+
+How do I add a main process initializer?
+
+1. Create a new file in `src/electron/initializers/`.
+2. Add the following line to `src/electron/initializers/index.ts`.
+
+```
+export * as myNewInitializer from "./my-new-initializer"
+```
+
+Export all symbols as a camel cased alias of the file name. This will now run automatically when the app starts.
+
 ## Glossary of Terms
 
 In no particular order.
@@ -21,3 +34,7 @@ A function that runs in the main process and has the main object in scope. When 
 _Plugin Api_
 
 The plugin api runs in the Node main process and is given to plugin authors to extend the app. It should not have privilaged access to everything. Only what is useful for plugin authors. This means it should not contain references to the full store or the main process. Instead, it exposes methods that in turn call operations. Operations are not exposed to plugins and therefore have the main object and store in scope. The pattern should be: plugin-api exposes a simple method which then runs an operation.
+
+_Main Process Initializers_
+
+Code that needs to be run one time before the app starts up can be put in an initializer. An initializer is a file that lives in the folder `src/electron/initializers/`. It must export a function named _initialize(main)_ that takes the Main Object as it's only argument. See the FAQ for an example of creating a new initializer.
