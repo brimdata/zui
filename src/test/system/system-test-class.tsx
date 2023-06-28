@@ -16,6 +16,7 @@ import {BootArgs, boot} from "./boot"
 import Tabs from "src/js/state/Tabs"
 import {createAndLoadFiles} from "src/app/commands/pools"
 import {ZuiMain} from "src/electron/zui-main"
+import {teardown} from "./teardown"
 
 jest.setTimeout(20_000)
 
@@ -60,6 +61,7 @@ export class SystemTest {
     afterEach(() => this.network.resetHandlers())
 
     afterAll(async () => {
+      teardown()
       if (this.initialized) {
         await this.main.stop()
         tl.cleanup()

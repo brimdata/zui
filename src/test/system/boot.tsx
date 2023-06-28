@@ -9,6 +9,7 @@ import {waitFor} from "@testing-library/react"
 import {Store} from "src/js/state/types"
 import ZuiApi from "src/js/api/zui-api"
 import {ZuiMain} from "src/electron/zui-main"
+import {session} from "src/zui"
 
 const defaults = () => ({
   page: "search",
@@ -59,4 +60,8 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
     api: brimRenderer.api,
     wrapper: createWrapper(brimRenderer.store, brimRenderer.api),
   }
+}
+
+function teardownBoot() {
+  session.emitter.removeAllListeners()
 }

@@ -4,12 +4,15 @@ import {ZuiMain} from "./zui-main"
 import {installExtensions} from "./extensions"
 import {main} from "./run-main/run-main"
 import env from "src/app/core/env"
+import {teardown} from "src/test/system/teardown"
 
 jest.mock("./extensions", () => ({
   installExtensions: jest.fn(),
 }))
 
 jest.mock("@brimdata/zed-node")
+
+afterEach(teardown)
 
 test("start is called in zed lake", async () => {
   const appMain = (await main({devtools: false, autoUpdater: false})) as ZuiMain

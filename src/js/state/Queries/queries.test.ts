@@ -10,6 +10,7 @@ import {Store} from "../types"
 
 let store: Store
 beforeEach(async () => {
+  jest.spyOn(console, "error").mockImplementation(() => {})
   store = await initTestStore()
 })
 
