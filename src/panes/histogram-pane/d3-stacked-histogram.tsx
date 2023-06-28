@@ -17,6 +17,7 @@ export const D3StackedHistogram = memo(function D3StackedHistogram(props: {
   onBrushPointerLeave?: (e: PointerEvent) => void
   onBrushEnd: (extent: [Date, Date]) => void
   onBrushMove: (e: d3.D3BrushEvent<unknown>) => void
+  "aria-label"?: string
 }) {
   // Dimensions
   const {width, height, margin} = props
@@ -155,6 +156,7 @@ export const D3StackedHistogram = memo(function D3StackedHistogram(props: {
       width={props.width}
       ref={ref}
       className={props.className}
+      aria-label={props["aria-label"]}
     ></svg>
   )
 })

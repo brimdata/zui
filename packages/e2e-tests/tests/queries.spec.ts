@@ -28,8 +28,12 @@ test.describe("Query tests", () => {
     const entries = await history.evaluateAll<string[], HTMLElement>((nodes) =>
       nodes.map((n) => n.innerText.trim().replaceAll(/\s+/g, " "))
     )
-
-    expect(entries).toEqual(["3 now", "2 now", "1 now"])
+    const expected = [
+      "from 'sample.tsv' | 3 now",
+      "from 'sample.tsv' | 2 now",
+      "from 'sample.tsv' | 1 now",
+    ]
+    expect(entries).toEqual(expected)
   })
 
   test("named queries' creation, modification, update/save, proper outdated status display", async () => {

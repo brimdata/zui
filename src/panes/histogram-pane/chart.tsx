@@ -91,6 +91,7 @@ export const Chart = memo(function Chart(
   return (
     <>
       <D3StackedHistogram
+        aria-label="histogram"
         className={styles.graphic}
         width={width}
         height={height}
