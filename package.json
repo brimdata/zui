@@ -160,7 +160,7 @@
     "reselect": "4.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.51.0",
-    "semver": "^7.3.2",
+    "semver": "^7.5.3",
     "set-tz": "^0.2.0",
     "sprintf-js": "^1.1.2",
     "styled-components": "^5.3.5",
