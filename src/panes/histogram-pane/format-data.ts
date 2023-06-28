@@ -24,7 +24,7 @@ function getDefaultWidePoint(keys: string[]) {
 
 function groupByTimeAndWiden(data: Point[], keys: string[]) {
   const defaults = getDefaultWidePoint(keys)
-  return d3.rollup<Point, number, WidePoint>(
+  return d3.rollup(
     data,
     (values) => values.reduce(widen, defaults),
     (v) => (v.time instanceof Date ? v.time.getTime() : null)

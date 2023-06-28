@@ -27,5 +27,5 @@ function teardownMockIpc(ipc: typeof ipcRenderer | typeof ipcMain) {
 }
 
 function teardownPluginApi() {
-  session.emitter.removeAllListeners()
+  session._teardown()
 }
