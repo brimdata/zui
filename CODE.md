@@ -18,9 +18,9 @@ Core objects and functions can be used across multiple domains. Like menus and c
 
 This is super generic JavaScript code that knows nothing about Zui, Electron, or Web. It can be copied into another project and work right out of the gate. Code must contain no dependencies in this folder.
 
-## src/plugins
+### src/plugins
 
-This is a directory of plugins that use the plugin api to add functionality to the app. Come of the plugins are prefixed with the word core to indicate they provide core functionality, but only require the plugin api to achieve this. To add a plugin today, create a new directory in the plugins directory, create and index.ts file within it, then export a named function called activate. It will accept the PluginContext object as its only argument. The go to the `run-plugins.ts` file and call the activate function within the body of runPlugins. This could be make automatic one day, but it's hardcoded for now.
+This is a directory of plugins that use the plugin api to add functionality to the app. Some of the plugins are prefixed with the word "core" to indicate they provide core functionality, but only require the plugin api to achieve this. To add a plugin today, create a new directory in the plugins directory, create an `index.ts` file within it, then export a named function called "activate". It will accept the PluginContext object as its only argument. Then go to the `run-plugins.ts` file and call the activate function within the body of runPlugins. This could be made automatic one day, but it's hardcoded for now.
 
 ## Glossary of Terms
 
