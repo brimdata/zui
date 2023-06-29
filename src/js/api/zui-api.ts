@@ -1,14 +1,13 @@
 import {Abortables} from "src/app/core/models/abortables"
 import toast from "react-hot-toast"
 import {getZealot} from "./core/get-zealot"
-import {AppDispatch, GetState} from "../state/types"
+import {AppDispatch, GetState, State} from "../state/types"
 import {QueriesApi} from "./queries/queries-api"
 import {PoolsApi} from "./pools/pools-api"
 import {CommandsApi} from "./commands/cmmands-api"
 import {Detail, MenusApi, Search} from "./menus/menus-api"
 import {ConfigurationsApi} from "./configurations/configurations-api"
 import {ToolbarsApi} from "./toolbars/toolbars-api"
-import {query, QueryOptions} from "./core/query"
 import {CurrentApi} from "./current/current-api"
 import {EditorApi} from "./editor/editor-api"
 import {NoticeApi} from "./notice/notice-api"
@@ -57,7 +56,35 @@ export default class ZuiApi {
     return this.dispatch(getZealot(lake))
   }
 
-  query(body: string, opts: QueryOptions = {}) {
-    return this.dispatch(query(body, opts))
+  createAbortable(tab?: string, tag?: string) {
+    this.abortables.abort({tab, tag})
+    const ctl = new AbortController()
+    const id = this.abortables.add({
+      abort: () => {
+        console.log("aborted", tab, tag)
+        ctl.abort()
+      },
+      tab,
+      tag,
+    })
+    const cleanup = () => this.abortables.remove(id)
+    return [ctl.signal, cleanup] as const
+  }
+
+  async query(body: string, opts: {id?: string; tabId?: string} = {}) {
+    const zealot = await this.getZealot()
+    const [signal, cleanup] = this.createAbortable(opts.tabId, opts.id)
+    try {
+      const resp = await zealot.query(body, {signal})
+      resp.promise.finally(cleanup)
+      return resp
+    } catch (e) {
+      cleanup()
+      throw e
+    }
+  }
+
+  select<T extends (s: State) => ReturnType<T>>(fn: T) {
+    return fn(this.getState())
   }
 }

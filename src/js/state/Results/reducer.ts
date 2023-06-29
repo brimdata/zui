@@ -23,14 +23,13 @@ const slice = createSlice({
       r.query = a.payload.query
       r.aggregation = program(a.payload.query).hasAnalytics()
       r.key = a.payload.key
-      r.values = []
-      r.shapes = {}
       r.page = 1
       r.status = "FETCHING"
-      r.error = null
+      r.values = []
+      r.shapes = {}
     },
 
-    nextPage(s, a: Pay<{id: string; tabId: string}>) {
+    nextPage(s, a: Pay<{id: string}>) {
       const r = access(s, a.payload.id)
       r.page += 1
       r.status = "FETCHING"
@@ -49,7 +48,7 @@ const slice = createSlice({
       r.shapes = a.payload.shapes
     },
 
-    success(s, a: Pay<{id: string; count: number; tabId: string}>) {
+    success(s, a: Pay<{id: string; count?: number; tabId: string}>) {
       const r = access(s, a.payload.id)
       if (r.aggregation && a.payload.count === r.aggregationLimit) {
         r.status = "LIMIT"
@@ -61,7 +60,7 @@ const slice = createSlice({
       r.error = null
     },
 
-    error: (s, a: Pay<{id: string; error: any; tabId: string}>) => {
+    error: (s, a: Pay<{id: string; error: any; tabId?: string}>) => {
       const r = access(s, a.payload.id)
       r.error = a.payload.error
       r.status = "ERROR"

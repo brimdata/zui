@@ -10,10 +10,6 @@ export const getPinEditIndex = activeTabSelect((tab) => {
   return tab.editor.pinEditIndex
 })
 
-export const getHeight = activeTabSelect((tab) => {
-  return tab.editor.height
-})
-
 export const getValue = activeTabSelect((tab) => {
   return tab.editor.value
 })

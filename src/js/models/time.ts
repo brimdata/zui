@@ -1,11 +1,39 @@
 import {isString} from "lodash"
 import moment from "moment-timezone"
-import {TimeUnit} from "../lib"
 import {isBigInt, isDate} from "../lib/is"
 import {DateTuple} from "../lib/TimeWindow"
 import relTime from "./relTime"
 import {Span, Ts} from "./span"
 
+export type TimeUnit =
+  | "years"
+  | "year"
+  | "y"
+  | "months"
+  | "month"
+  | "M"
+  | "weeks"
+  | "week"
+  | "w"
+  | "days"
+  | "day"
+  | "d"
+  | "hours"
+  | "hour"
+  | "h"
+  | "minutes"
+  | "minute"
+  | "m"
+  | "seconds"
+  | "second"
+  | "s"
+  | "milliseconds"
+  | "millisecond"
+  | "ms"
+
+export type TimeObj = {minutes: number; hours: number}
+
+export type EpochObj = {sec: number; ns: number}
 function time(val: Ts | bigint | Date | string = new Date()) {
   let ts: Ts
   if (isBigInt(val)) {

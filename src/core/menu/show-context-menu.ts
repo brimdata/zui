@@ -36,7 +36,6 @@ function sanitizeMenuItem(item: any) {
 }
 
 function findItem(id: string, template: MenuItemConstructorOptions[]) {
-  console.log(id, template)
   for (let item of template) {
     if (item.id === id || item.label === id) return item
     if (item.submenu) {

@@ -13,6 +13,7 @@ export const GLOBAL_PERSIST: StateKey[] = [
   "queryVersions",
   "remoteQueries",
   "sessionQueries",
+  "poolSettings",
 ]
 
 export const WINDOW_PERSIST: StateKey[] = [

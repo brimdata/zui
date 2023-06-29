@@ -2,9 +2,9 @@ import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Results from "src/js/state/Results"
 import QueryVersions from "../../../js/state/QueryVersions"
-import {MAIN_RESULTS} from "src/js/state/Results/types"
 import {Thunk} from "src/js/state/types"
 import {QueryModel} from "../../../js/models/query-model"
+import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
 
 const submitSearch =
   (): Thunk =>
@@ -16,7 +16,7 @@ const submitSearch =
     // An error with the syntax
     if (error) {
       const tabId = Current.getTabId(getState())
-      dispatch(Results.error({id: MAIN_RESULTS, error, tabId}))
+      dispatch(Results.error({id: RESULTS_QUERY, error, tabId}))
       return
     }
 

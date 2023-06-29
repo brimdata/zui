@@ -23,7 +23,7 @@ const Input = styled(TextInput)`
 `
 
 export default function FileInput(props: Props) {
-  const [picker, ref] = useCallbackRef<HTMLButtonElement>()
+  const [picker, ref] = useCallbackRef<HTMLInputElement>()
   const [bindDropzone, dragging] = useDropzone(onDrop)
   const [value, setValue] = useState(props.defaultValue)
 

@@ -1,0 +1,78 @@
+.pane {
+  height: max(100px, 15vh);
+  width: 100%;
+  position: relative;
+  border-top: 1px solid var(--border-color);
+}
+
+
+
+.dialog {
+  z-index: 99999;
+  position: fixed;
+  width: 180px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: var(--shadow-elevation-medium);
+  background: white;
+}
+
+.settingsForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.colorKey {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  min-width: 60px;
+}
+
+.errorContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorMessage {
+  text-align: center;
+  opacity: 0.5;
+}
+
+.graphic {
+  user-select: none;
+  color: var(--foreground-color);
+}
+
+.graphic :global(.domain),
+.graphic line {
+  stroke: var(--border-color);
+}
+
+div.toolbar {
+  position: absolute;
+  width: 100%;
+  background-color: transparent;
+  border-bottom: none;
+  height: auto;
+  margin-top: 2px;
+  gap: 4px;
+  justify-content: end;
+}
+
+.title {
+  font-size: 0.7rem;
+  color: var(--foreground-color-light);
+  /* color: var(--border-color); */
+}

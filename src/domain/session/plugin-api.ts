@@ -30,4 +30,8 @@ export class SessionApi {
   goForward() {
     sendToFocusedWindow("session.goForward")
   }
+
+  _teardown() {
+    this.emitter.removeAllListeners()
+  }
 }

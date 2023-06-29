@@ -1,7 +1,7 @@
 import React from "react"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
-import {MAIN_RESULTS} from "src/js/state/Results/types"
+import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
 import styled from "styled-components"
 
 const Loader = styled.div`
@@ -50,8 +50,8 @@ const Span = styled.span`
 `
 
 export function QueryProgress() {
-  const status = useSelector(Results.getStatus(MAIN_RESULTS))
-  const count = useSelector(Results.getCount(MAIN_RESULTS))
+  const status = useSelector(Results.getStatus(RESULTS_QUERY))
+  const count = useSelector(Results.getCount(RESULTS_QUERY))
   if (status === "FETCHING") {
     return (
       <Span aria-label="fetching">

@@ -1,7 +1,8 @@
 import {createOperation} from "src/core/operations"
 
 import {CreatePoolOpts, LoadOpts} from "@brimdata/zed-js"
-import {lake} from "src/zui"
+import {lake, pools} from "src/zui"
+import PoolSettings from "src/js/state/PoolSettings"
 
 export const create = createOperation(
   "pools.create",
@@ -13,6 +14,7 @@ export const create = createOperation(
   ) => {
     const client = await main.createClient(lakeId)
     const {pool} = await client.createPool(name, opts)
+    pools.emit("create", {pool})
     return pool.id as string
   }
 )
@@ -34,5 +36,21 @@ export const load = createOperation(
       pool: poolId,
       ...options,
     })
+  }
+)
+
+export const updateSettings = createOperation(
+  "pools.updateSettings",
+  async ({main}, update) => {
+    const dispatch = main.store.dispatch
+    dispatch(PoolSettings.create({id: update.id as string}))
+    dispatch(PoolSettings.update(update))
+  }
+)
+
+export const getSettings = createOperation(
+  "pools.getSettings",
+  ({main}, id) => {
+    return PoolSettings.find(main.store.getState(), id)
   }
 )

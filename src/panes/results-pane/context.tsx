@@ -1,34 +1,31 @@
 import React, {ReactNode, useContext, useMemo} from "react"
 import {useSelector} from "react-redux"
-import useSelect from "src/app/core/hooks/use-select"
-import {useDispatch} from "src/app/core/state"
+import {useNextPage} from "src/core/query/use-query"
+import {useResults} from "src/core/query/use-results"
 import Layout from "src/js/state/Layout"
 import Results from "src/js/state/Results"
-import {MAIN_RESULTS} from "src/js/state/Results/types"
+import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
+import {useDataTransition} from "src/util/hooks/use-data-transition"
 import useResizeObserver from "use-resize-observer"
 
 function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
   const rect = useResizeObserver({ref: parentRef})
-  const shapesObj = useSelector(Results.getShapes(MAIN_RESULTS))
-  const shapes = useMemo(() => Object.values(shapesObj), [shapesObj])
-  const select = useSelect()
-  const dispatch = useDispatch()
+  const nextPage = useNextPage(RESULTS_QUERY)
+  const fetching = useSelector(Results.isFetching(RESULTS_QUERY))
+  const r = useResults(RESULTS_QUERY)
+  const results = useDataTransition(r, r.data.length === 0 && fetching)
+  const shapes = useMemo(() => Object.values(results.shapes), [results.shapes])
 
   return {
     width: rect.width ?? 1000,
     height: rect.height ?? 1000,
     view: useSelector(Layout.getResultsView),
-    error: useSelector(Results.getError(MAIN_RESULTS)),
-    values: useSelector(Results.getValues(MAIN_RESULTS)),
+    error: results.error,
+    values: results.data,
     shapes,
     isSingleShape: shapes.length === 1,
     firstShape: shapes[0],
-    loadMore: () => {
-      if (select(Results.isFetching(MAIN_RESULTS))) return
-      if (select(Results.isComplete(MAIN_RESULTS))) return
-      if (select(Results.isLimited(MAIN_RESULTS))) return
-      dispatch(Results.fetchNextPage())
-    },
+    loadMore: nextPage,
   }
 }
 

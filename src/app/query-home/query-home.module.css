@@ -1,0 +1,31 @@
+.borderResizeHandle {
+  width: 100%;
+  height: 11px;
+  position: relative;
+}
+
+.borderResizeHandle:after {
+  content: "";
+  position: absolute;
+  background: var(--border-color);
+  top: 5px;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.invisibleResizeHandle {
+  width: 100%;
+  height: 11px;
+  position: relative;
+  transform: translateY(5px);
+}
+
+.resultsToolbar {
+  border-top: 1px solid var(--border-color);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+}

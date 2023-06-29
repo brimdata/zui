@@ -1,13 +1,13 @@
 import {createSelector} from "@reduxjs/toolkit"
 import activeTabSelect from "../Tab/activeTabSelect"
-import {MAIN_RESULTS} from "../Results/types"
+import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
 import {getShapes} from "../Results/selectors"
 
 const getResultsView = activeTabSelect((s) => s.layout.resultsView)
 
 const getEffectiveResultsView = createSelector(
   getResultsView,
-  getShapes(MAIN_RESULTS),
+  getShapes(RESULTS_QUERY),
   (view, shapes) => {
     const isSingleShape = Object.values(shapes).length === 1
     if (isSingleShape) return view
@@ -29,4 +29,5 @@ export default {
   getIsEditingTitle: activeTabSelect((s) => s.layout.isEditingTitle),
   getTitleFormAction: activeTabSelect((s) => s.layout.titleFormAction),
   getShowHistogram: activeTabSelect((s) => s.layout.showHistogram ?? true),
+  getQueryPanels: activeTabSelect((s) => s.layout.queryPanels),
 }

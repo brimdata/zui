@@ -1,24 +1,22 @@
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import {syncPool} from "../core/pools/sync-pool"
-import Results from "src/js/state/Results"
 import {startTransition} from "react"
 import {QueryModel} from "../../js/models/query-model"
-import {MAIN_RESULTS} from "src/js/state/Results/types"
 import Notice from "src/js/state/Notice"
 import Tabs from "src/js/state/Tabs"
 import {Thunk} from "src/js/state/types"
 import {Location} from "history"
-import {runHistogramQuery} from "src/js/state/Histogram/run-query"
 import Pools from "src/js/state/Pools"
 import {invoke} from "src/core/invoke"
+import {runHistogramQuery} from "src/panes/histogram-pane/run-query"
+import {runResultsQuery} from "src/panes/results-pane/run-results-query"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {
     dispatch(syncPluginContext)
     dispatch(Tabs.loaded(location.key))
     dispatch(Notice.dismiss())
-    dispatch(Results.error({id: MAIN_RESULTS, error: null, tabId: ""}))
     dispatch(syncEditor)
     dispatch(fetchData())
   }
@@ -46,13 +44,13 @@ function syncEditor(dispatch, getState) {
 }
 
 function fetchData() {
-  return (dispatch, getState) => {
+  return (dispatch, getState, {api}) => {
     const version = Current.getVersion(getState())
 
     startTransition(() => {
       if (version) {
-        dispatch(Results.fetchFirstPage(QueryModel.versionToZed(version)))
-        dispatch(runHistogramQuery())
+        dispatch(runResultsQuery())
+        runHistogramQuery(api)
       }
     })
   }

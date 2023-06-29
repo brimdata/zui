@@ -1,8 +1,6 @@
 import {createSelector} from "reselect"
-import {TabState} from "../Tab/types"
 import {State} from "../types"
 import {createIsEqualSelector} from "../utils"
-import {TabsState} from "./types"
 import {findQuerySessionTab} from "./find"
 
 export const getData = (state: State) => state.tabs.data
@@ -10,8 +8,8 @@ export const getActive = (state: State) => state.tabs.active
 export const getCount = (state: State) => state.tabs.data.length
 export const getPreview = (state: State) => state.tabs.preview
 
-export const getActiveTab = createSelector<State, TabsState, TabState>(
-  (state) => state.tabs,
+export const getActiveTab = createSelector(
+  (state: State) => state.tabs,
   (tabs) => {
     const tab = tabs.data.find((t) => t.id === tabs.active)
     if (!tab) throw new Error("Can't find active tab")
@@ -28,11 +26,10 @@ export const getIds = createIsEqualSelector<State, string[], string[]>(
   (ids) => ids
 )
 
-export const findFirstQuerySession = createSelector<
-  State,
-  TabState[],
-  TabState
->((state) => state.tabs.data, findQuerySessionTab)
+export const findFirstQuerySession = createSelector(
+  (state: State) => state.tabs.data,
+  findQuerySessionTab
+)
 
 export const findById = (tabId: string) =>
   createSelector(getData, (tabs) => tabs.find((t) => t.id === tabId))

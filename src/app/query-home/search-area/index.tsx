@@ -11,6 +11,7 @@ const Group = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0;
+  height: 100%;
 `
 
 export default function SearchArea() {
