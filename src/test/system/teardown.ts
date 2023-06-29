@@ -1,5 +1,5 @@
 import {app, ipcMain, ipcRenderer} from "electron"
-import {session} from "src/zui"
+import {pools, session} from "src/zui"
 
 export function teardown() {
   app.removeAllListeners()
@@ -28,4 +28,5 @@ function teardownMockIpc(ipc: typeof ipcRenderer | typeof ipcMain) {
 
 function teardownPluginApi() {
   session._teardown()
+  pools._teardown()
 }

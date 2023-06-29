@@ -6,6 +6,8 @@ import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Pools from "src/js/state/Pools"
 import submitSearch from "../query-home/flows/submit-search"
 import {createCommand} from "./command"
+import Current from "src/js/state/Current"
+import PoolSettings from "src/js/state/PoolSettings"
 
 export const createFromEditor = createCommand(
   "pins.createFromEditor",
@@ -69,10 +71,12 @@ export const createTimeRange = createCommand(
   async ({dispatch, api, getState}) => {
     const pins = Editor.getPins(getState())
     const [from, to] = await defaultRange(api)
+    const poolId = Current.getPoolFromQuery(getState())?.id
+    const {timeField} = PoolSettings.findWithDefaults(getState(), poolId)
     dispatch(
       Editor.addPin({
         type: "time-range",
-        field: "ts",
+        field: timeField,
         from: from.toISOString(),
         to: to.toISOString(),
       })

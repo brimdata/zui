@@ -9,6 +9,15 @@ concurrency: ${{ github.workflow }}
 on:
   repository_dispatch:
     types: [zed-pr-merged]
+  workflow_dispatch:
+    inputs:
+      zed_ref:
+        required: true
+        type: string
+
+env:
+  zed_ref: ${{ github.event.client_payload.merge_commit_sha || inputs.zed_ref }}
+
 jobs:
   advance-zed:
     name: Advance Zed
@@ -17,8 +26,6 @@ jobs:
       matrix:
         os: [ubuntu-20.04]
     steps:
-      # Since we intend to push, we must have a a writable token and
-      # minimal git config settings to create commits.
       - uses: actions/checkout@v3
         with:
           # ref defaults to github.sha, which is fixed at the time a run
@@ -26,54 +33,10 @@ jobs:
           # the concurrency group will see any commits pushed by the runs
           # that caused it to wait, reducing push failures down below.
           ref: ${{ github.ref }}
+          # We need a token with permission to push.
           token: ${{ secrets.ZQ_UPDATE_PAT }}
-      - run: git config --local user.email 'automation@brimdata.io'
-      - run: git config --local user.name 'Brim Data Automation'
-
-      # This section gets event information.
-      - run: jq '.' "${GITHUB_EVENT_PATH}"
-      - name: process pull request event
-        id: zed_pr
-        # $GITHUB_EVENT_PATH is the JSON we posted from Zed.
-        # Variables for other steps get set as described here:
-        # https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-output-parameter
-        #
-        # body can be multiline and must be escaped as described here:
-        # https://github.community/t5/GitHub-Actions/set-output-Truncates-Multiline-Strings/m-p/37870
-        #
-        # Rewrite bare PR numbers as Zed PRs (https://github.com/brimdata/zui/issues/797)
-        run: |
-          sha="$(jq -r '.client_payload.merge_commit_sha' "${GITHUB_EVENT_PATH}")"
-          echo "sha=$sha" >> $GITHUB_OUTPUT
-          branch="$(jq -r '.client_payload.branch' "${GITHUB_EVENT_PATH}")"
-          echo "branch=$branch" >> $GITHUB_OUTPUT
-          number="$(jq -r '.client_payload.number' "${GITHUB_EVENT_PATH}")"
-          echo "number=$number" >> $GITHUB_OUTPUT
-          title="$(jq -r '.client_payload.title' "${GITHUB_EVENT_PATH}")"
-          title="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zed$2$3,g; s,^(#\d+)(\W+),brimdata/zed$1$2,g; s,(\W+)(#\d+),$1brimdata/zed$2,g; s,^(#\d+)$,brimdata/zed$1,g;' <<< "${title}")"
-          echo "title=$title" >> $GITHUB_OUTPUT
-          body="$(jq -r '.client_payload.body' "${GITHUB_EVENT_PATH}")"
-          body="$(perl -pe 's,(\W+)(#\d+)(\W+),$1brimdata/zed$2$3,g; s,^(#\d+)(\W+),brimdata/zed$1$2,g; s,(\W+)(#\d+),$1brimdata/zed$2,g; s,^(#\d+)$,brimdata/zed$1,g;' <<< "${body}")"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> $GITHUB_OUTPUT
-          url="$(jq -r '.client_payload.url' "${GITHUB_EVENT_PATH}")"
-          echo "url=$url" >> $GITHUB_OUTPUT
-          user="$(jq -r '.client_payload.user' "${GITHUB_EVENT_PATH}")"
-          echo "user=$user" >> $GITHUB_OUTPUT
-
-      # This section runs typical CI, with an updated Zed. Most of this
-      # is no different than the normal CI flow.
-      - uses: actions/setup-go@v2
-        with:
-          go-version: "1.19"
-      - uses: actions/setup-node@v3
-        with:
-          cache: yarn
-          node-version-file: .node-version
-      - run: yarn add zed@brimdata/zed#${{ steps.zed_pr.outputs.sha }}
-      - run: yarn --inline-builds
+      - uses: ./.github/actions/setup-zui
+      - run: yarn add zed@brimdata/zed#${{ env.zed_ref }}
       - run: yarn lint
       - run: yarn test
       - run: yarn build
@@ -91,7 +54,7 @@ jobs:
             run/playwright-itest
             !run/**/SS
 
-      - run: git commit -a -m 'upgrade Zed to ${{ github.event.client_payload.merge_commit_sha }}'
+      - run: git -c user.name='Brim Automation' -c user.email=automation@brimdata.io commit -a -m 'upgrade Zed to ${{ env.zed_ref }}'
 
       # If this push fails because a PR was merged while this job was
       # running, you can re-run the failed job via
@@ -99,3 +62,4 @@ jobs:
       # this workflow to be dispatched again soon, you can simply ignore
       # the failure.
       - run: git push
+        if: github.event_name != 'workflow_dispatch'

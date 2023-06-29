@@ -5,7 +5,9 @@ import {createPluginContext} from "src/core/plugin"
 // main process code.
 
 import * as brimcap from "src/plugins/brimcap"
+import * as corePool from "src/plugins/core-pool"
 
 export async function runPlugins() {
+  corePool.activate(createPluginContext("core-pool"))
   brimcap.activate(createPluginContext("brimcap"))
 }
