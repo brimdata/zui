@@ -50,8 +50,7 @@ export const createSettings = createOperation(
 export const updateSettings = createOperation(
   "pools.updateSettings",
   async ({main}, update) => {
-    const {dispatch} = main.store
-    dispatch(PoolSettings.update(update))
+    main.store.dispatch(PoolSettings.update(update))
   }
 )
 
