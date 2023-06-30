@@ -65,4 +65,4 @@ The plugin api runs in the Node main process and is given to plugin authors to e
 
 _Main Process Initializers_
 
-Code that needs to be run one time before the app starts up can be put in an initializer. An initializer is a file that lives in the folder `src/electron/initializers/`. It must export a function named _initialize(main)_ that takes the Main Object as it's only argument. See the FAQ for an example of creating a new initializer.
+Code that needs to be run one time before the app starts up can be put in an initializer. An initializer is a file that lives in the folder `src/electron/initializers/`. It must export a function named _initialize(main)_ that takes the Main Object as its only argument. See the FAQ for an example of creating a new initializer.
