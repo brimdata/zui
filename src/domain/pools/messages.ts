@@ -12,6 +12,7 @@ export type PoolsOperations = {
 
   "pools.update": (lakeId: string, update: PoolUpdate | PoolUpdate[]) => void
   "pools.load": (poolId: string, data: string, opts: Partial<LoadOpts>) => void
+  "pools.createSettings": (id: string) => void
   "pools.updateSettings": (update: Update<PoolSetting>) => void
   "pools.getSettings": (id: string) => PoolSetting | null
 }
