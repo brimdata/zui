@@ -19,6 +19,7 @@ import {SessionQueriesState} from "./SessionQueries/types"
 import {QueryVersionsState} from "./QueryVersions/types"
 import {SessionHistoriesState} from "./SessionHistories/types"
 import {PoolSettingsState} from "./PoolSettings/types"
+import {CurrentState} from "./Current/types"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -33,6 +34,7 @@ export type GetState = () => State
 
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
+  current: CurrentState
   appearance: AppearanceState
   launches: LaunchesState
   configPropValues: ConfigPropValuesState

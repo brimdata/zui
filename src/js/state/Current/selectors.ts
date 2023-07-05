@@ -101,12 +101,7 @@ export const getPoolId = (state) => {
   return match?.params?.poolId || null
 }
 
-// This is weird, we need to get this from the state and not the url.
-export const getLakeId = (state: State = undefined) => {
-  type Params = {lakeId?: string}
-  const match = matchPath<Params>(getLocation(state).pathname, "/lakes/:lakeId")
-  return match?.params?.lakeId || null
-}
+export const getLakeId = (state: State) => state.current.lakeId
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
   if (!id) throw new Error("Current lake id is unset")

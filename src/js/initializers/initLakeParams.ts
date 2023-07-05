@@ -15,7 +15,9 @@ export const defaultLake = (): Lake => {
 }
 
 const setupDefaultLake = () => (dispatch, _) => {
-  dispatch(Lakes.add(defaultLake()))
+  const lake = defaultLake()
+  dispatch(Lakes.add(lake))
+  dispatch(Current.setLakeId(lake.id))
 }
 
 export const isDefaultLake = (l: Lake): boolean => {

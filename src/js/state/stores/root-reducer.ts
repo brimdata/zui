@@ -20,8 +20,10 @@ import QueryVersions from "../QueryVersions"
 import SessionQueries from "../SessionQueries"
 import SessionHistories from "../SessionHistories"
 import PoolSettings from "../PoolSettings"
+import Current from "../Current"
 
 const rootReducer = combineReducers<any, any>({
+  current: Current.reducer,
   appearance: Appearance.reducer,
   launches: Launches.reducer,
   configPropValues: ConfigPropValues.reducer,
