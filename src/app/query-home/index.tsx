@@ -62,16 +62,13 @@ function ResultsProvider({children}) {
 
 const QueryHome = () => {
   const activeQuery = useSelector(Current.getActiveQuery)
-  const lakeId = useSelector(Current.getLakeId)
   const tabId = useSelector(Current.getTabId)
   const select = useSelect()
   const dispatch = useDispatch()
 
   if (activeQuery.isDeleted()) {
     return (
-      <Redirect
-        to={lakeQueryPath(tabId, lakeId, activeQuery.versionId() || "0")}
-      />
+      <Redirect to={lakeQueryPath(tabId, activeQuery.versionId() || "0")} />
     )
   }
 

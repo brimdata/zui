@@ -7,57 +7,50 @@ import {IconName} from "../core/icon-temp"
  * and <query> replaced with the actual values.
  */
 
-export const root = {
+export const root: Route = {
   path: "/",
   title: "Zui",
 }
-export const lakeList = {
+
+export const lakeList: Route = {
   path: "/lakes",
   title: "Choose a Lake",
 }
-export const lakeShow = {
-  title: "Welcome to Zui",
-  path: `${lakeList.path}/:lakeId`,
-}
 
-export const poolShow = {
+export const poolShow: Route = {
   title: "<pool>",
-  path: `${lakeShow.path}/pools/:poolId`,
+  path: `/pools/:poolId`,
   icon: "pool",
 }
 
-export const poolNew = {
+export const poolNew: Route = {
   title: "New Pool",
-  path: `${lakeShow.path}/pools/new`,
+  path: `/pools/new`,
   icon: "pool",
 }
 
-export const query = {
+export const query: Route = {
   title: "<query>",
-  path: `${lakeShow.path}/queries/:queryId`,
+  path: `/queries/:queryId`,
   icon: "query",
 }
-export const queryVersion = {
+export const queryVersion: Route = {
   title: "<query>",
   path: `${query.path}/versions/:version`,
   icon: "query",
 }
 export const lakeReleaseNotes: Route = {
   title: "Release Notes",
-  path: `${lakeShow.path}/release-notes`,
+  path: `/release-notes`,
   icon: "doc-plain",
 }
 
-export const releaseNotes = {
+export const releaseNotes: Route = {
   title: "Release Notes",
   path: "/release-notes",
 }
-export const lakeWelcome: Route = {
-  title: "Welcome to Zui",
-  path: `${lakeShow.path}/welcome`,
-  icon: "zui",
-}
-export const welcome = {
+
+export const welcome: Route = {
   title: "Welcome to Zui",
   path: "/welcome",
   icon: "zui",
@@ -70,9 +63,7 @@ type Route = {
 }
 
 export const allRoutes: Route[] = [
-  lakeWelcome,
   lakeReleaseNotes,
-  lakeShow,
   lakeList,
   poolNew,
   poolShow,

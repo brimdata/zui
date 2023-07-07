@@ -29,7 +29,7 @@ export const all = createSelector(
   (_: State, lakeId: string) => lakeId,
   raw,
   (lakeId, pools) => {
-    return Object.keys(pools[lakeId])
+    return Object.keys(pools[lakeId] ?? {})
       .map((key) => Pool.from(pools[lakeId][key]))
       .sort((a, b) => (a.name < b.name ? -1 : 1))
   }

@@ -3,6 +3,8 @@ import styled from "styled-components"
 import {IngestProgress} from "./ingest-progress"
 import {QueryProgress} from "./query-progress"
 import {TypeCount} from "./type-count"
+import Tabs from "src/js/state/Tabs"
+import {useSelector} from "react-redux"
 
 const BG = styled.footer`
   grid-area: status;
@@ -21,6 +23,7 @@ const BG = styled.footer`
 `
 
 export default function StatusBar() {
+  if (useSelector(Tabs.none)) return null
   return (
     <BG>
       <QueryProgress />

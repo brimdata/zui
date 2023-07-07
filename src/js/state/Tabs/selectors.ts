@@ -7,6 +7,7 @@ export const getData = (state: State) => state.tabs.data
 export const getActive = (state: State) => state.tabs.active
 export const getCount = (state: State) => state.tabs.data.length
 export const getPreview = (state: State) => state.tabs.preview
+export const none = (state: State) => state.tabs.data.length === 0
 
 export const getActiveTab = createSelector(
   (state: State) => state.tabs,

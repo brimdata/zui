@@ -28,14 +28,13 @@ const isReduxAction = ({type}) => {
   return type.startsWith("@@")
 }
 const compact = (array: any[]) => array.filter((item) => !!item)
-const firstTab = tabReducer(undefined, {type: "INIT"})
 
 const slice = createSlice({
   name: "TABS",
   initialState: {
-    active: firstTab.id as string | null,
+    active: null,
     preview: null as string | null,
-    data: [firstTab] as TabState[],
+    data: [] as TabState[],
   },
   reducers: {
     add(s, a: PayloadAction<string>) {
@@ -48,7 +47,6 @@ const slice = createSlice({
       s.data.push(tab)
     },
     remove(s, a: PayloadAction<string>) {
-      if (s.data.length === 1) return
       const id = a.payload
       const index = findTabIndex(s, id)
       const isLast = index === s.data.length - 1

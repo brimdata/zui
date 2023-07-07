@@ -4,7 +4,9 @@ import {HistoryView, QueriesView, SectionName, OpenMap} from "./types"
 
 const init = () => ({
   sidebarIsOpen: true,
-  sidebarWidth: 230,
+  sidebarWidth: 250,
+  secondarySidebarIsOpen: true,
+  secondarySidebarWidth: 250,
   currentSectionName: "pools" as SectionName,
   queriesView: "local" as QueriesView,
   historyView: "linear" as HistoryView,
@@ -15,6 +17,10 @@ const init = () => ({
 const select = {
   sidebarIsOpen: (state: State) => state.appearance.sidebarIsOpen,
   sidebarWidth: (state: State) => state.appearance.sidebarWidth,
+  secondarySidebarIsOpen: (state: State) =>
+    state.appearance.secondarySidebarIsOpen,
+  secondarySidebarWidth: (state: State) =>
+    state.appearance.secondarySidebarWidth,
   getCurrentSectionName: (state: State) => state.appearance.currentSectionName,
   getQueriesView: (state: State) => state.appearance.queriesView,
   getHistoryView: (state: State) => state.appearance.historyView,
@@ -32,6 +38,15 @@ const slice = createSlice({
     },
     resizeSidebar(s, action: PayloadAction<number>) {
       s.sidebarWidth = Math.max(action.payload, 175)
+    },
+    toggleSecondarySidebar(s) {
+      s.secondarySidebarIsOpen = !s.secondarySidebarIsOpen
+    },
+    showSecondarySidebar(s) {
+      s.secondarySidebarIsOpen = true
+    },
+    resizeSecondarySidebar(s, action: PayloadAction<number>) {
+      s.secondarySidebarWidth = Math.max(action.payload, 175)
     },
     setCurrentSectionName(s, action: PayloadAction<SectionName>) {
       s.currentSectionName = action.payload

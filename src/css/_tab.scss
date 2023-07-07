@@ -1,9 +1,9 @@
 $tab-inactive-color: var(--foreground-color);
-$tab-inactive-bg: transparent;
+$tab-inactive-bg: rgba(255, 255, 255, 0.7);
 $tab-hover-color: var(--foreground-color);
 $tab-hover-bg: var(--tab-background-hover);
 $tab-active-color: var(--foreground-color);
-$tab-active-bg: var(--chrome-color);
+$tab-active-bg: white;
 $tab-transition-duration: 200ms;
 
 .tab {

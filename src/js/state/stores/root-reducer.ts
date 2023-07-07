@@ -31,19 +31,21 @@ const rootReducer = combineReducers<any, any>({
   lakes: Lakes.reducer,
   modal: Modal.reducer,
   notice: Notice.reducer,
+  loads: Loads.reducer,
+  lakeStatuses: LakeStatuses.reducer,
+  url: Url.reducer,
+  toolbars: Toolbars.reducer,
+
+  // Under the lake
   tabs: Tabs.reducer,
   pools: Pools.reducer,
   poolSettings: PoolSettings.reducer,
-  loads: Loads.reducer,
-  lakeStatuses: LakeStatuses.reducer,
   queries: Queries.reducer,
   queryVersions: QueryVersions.reducer,
   remoteQueries: RemoteQueries.reducer,
   sessionQueries: SessionQueries.reducer,
   sessionHistories: SessionHistories.reducer,
   tabHistories: TabHistories.reducer,
-  url: Url.reducer,
-  toolbars: Toolbars.reducer,
 })
 
 // A proof of concept. This would be a much nicer way to go

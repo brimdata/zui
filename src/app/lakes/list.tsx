@@ -1,11 +1,11 @@
-import {lakePath} from "src/app/router/utils/paths"
 import React from "react"
 import {useSelector} from "react-redux"
-import {useHistory} from "react-router"
 import lake, {LakeModel} from "src/js/models/lake"
 import DataStoreIcon from "src/js/icons/DataStoreIcon"
 import Lakes from "src/js/state/Lakes"
 import styled from "styled-components"
+import Current from "src/js/state/Current"
+import {useDispatch} from "../core/state"
 
 const StyledLake = styled.li`
   display: flex;
@@ -77,7 +77,7 @@ const LakesWrapper = styled.ul`
 
 const LakeList = () => {
   const lakes = useSelector(Lakes.all)
-  const history = useHistory()
+  const dispatch = useDispatch()
   return (
     <PageWrap>
       <StyledHeader>Choose a Lake</StyledHeader>
@@ -86,7 +86,7 @@ const LakeList = () => {
           <Lake
             key={l.id}
             lake={lake(l)}
-            onClick={() => history.push(lakePath(l.id))}
+            onClick={() => dispatch(Current.setLakeId(l.id))}
           />
         ))}
       </LakesWrapper>

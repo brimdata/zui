@@ -12,12 +12,13 @@ import {HistorySection} from "./history/section"
 import {SectionTabs} from "src/components/section-tabs"
 import {PaneName} from "src/js/state/Layout/types"
 import {ColumnsPane} from "src/panes/columns-pane/columns-pane"
+import Appearance from "src/js/state/Appearance"
 
 const Pane = styled(DraggablePane)`
   display: flex;
   flex-direction: column;
   border-left: 1px solid var(--border-color);
-  background: white;
+  background: var(--chrome-color);
 `
 
 const PaneContentSwitch = ({paneName}) => {
@@ -43,11 +44,11 @@ const BG = styled.div`
   padding: 0 8px;
 `
 
-export function Menu() {
+export function Menu(props: {paneName: string}) {
   const dispatch = useDispatch()
-  const currentPaneName = useSelector(Layout.getCurrentPaneName)
+
   const onChange = (name: string) => {
-    if (name === currentPaneName) return
+    if (name === props.paneName) return
     dispatch(Layout.setCurrentPaneName(name as PaneName))
   }
 
@@ -55,7 +56,7 @@ export function Menu() {
     return {
       label,
       click: () => onChange(value),
-      checked: currentPaneName === value,
+      checked: props.paneName === value,
     }
   }
 
@@ -74,14 +75,14 @@ export function Menu() {
 }
 
 function Container({children}) {
-  const width = useSelector(Layout.getDetailPaneWidth)
   const dispatch = useDispatch()
-  const isOpen = useSelector(Layout.getDetailPaneIsOpen)
+  const width = useSelector(Appearance.secondarySidebarWidth)
+  const isOpen = useSelector(Appearance.secondarySidebarIsOpen)
 
   const onDrag = (e: React.MouseEvent) => {
     const width = window.innerWidth - e.clientX
     const max = window.innerWidth
-    dispatch(Layout.setDetailPaneWidth(Math.min(width, max)))
+    dispatch(Appearance.resizeSecondarySidebar(Math.min(width, max)))
   }
 
   if (!isOpen) return null
@@ -99,7 +100,7 @@ const RightPane = () => {
 
   return (
     <Container>
-      <Menu />
+      <Menu paneName={currentPaneName} />
       <AppErrorBoundary>
         <PaneContentSwitch paneName={currentPaneName} />
       </AppErrorBoundary>

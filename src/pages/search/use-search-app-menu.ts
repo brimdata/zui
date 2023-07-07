@@ -5,11 +5,20 @@ import {invoke} from "src/core/invoke"
 import {SearchAppMenuState} from "src/electron/windows/search/app-menu"
 import Appearance from "src/js/state/Appearance"
 import Layout from "src/js/state/Layout"
+import {State} from "src/js/state/types"
+
+function tryShowHistogram(state: State) {
+  try {
+    return Layout.getShowHistogram(state)
+  } catch {
+    return false
+  }
+}
 
 const getAppMenuState = createSelector(
   Appearance.sidebarIsOpen,
-  Layout.getDetailPaneIsOpen,
-  Layout.getShowHistogram,
+  Appearance.secondarySidebarIsOpen,
+  tryShowHistogram,
   (showLeftPane, showRightPane, showHistogram) => {
     return {
       showLeftPane,

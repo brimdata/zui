@@ -3,7 +3,6 @@ import {NodeApi, Tree, TreeApi} from "react-arborist"
 import {useSelector} from "react-redux"
 import {deletePools} from "src/app/commands/delete-pools"
 import {useDispatch} from "src/app/core/state"
-import useLakeId from "src/app/router/hooks/use-lake-id"
 import usePoolId from "src/app/router/hooks/use-pool-id"
 import {lakePoolPath} from "src/app/router/utils/paths"
 import Current from "src/js/state/Current"
@@ -22,7 +21,6 @@ import Appearance from "src/js/state/Appearance"
 export function PoolsTree(props: {searchTerm: string}) {
   const dispatch = useDispatch()
   const poolId = usePoolId()
-  const lakeId = useLakeId()
   const api = useZuiApi()
   const pools = useSelector(Current.getPools)
   const delimiter = useSelector(Config.getPoolNameDelimiter)
@@ -72,7 +70,7 @@ export function PoolsTree(props: {searchTerm: string}) {
             }}
             onActivate={(node) => {
               if (node.isLeaf) {
-                dispatch(Tabs.previewUrl(lakePoolPath(node.id, lakeId)))
+                dispatch(Tabs.previewUrl(lakePoolPath(node.id)))
               }
             }}
             onDelete={(args) => {

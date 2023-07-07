@@ -61,13 +61,13 @@ export const rename = createCommand(
 export const deleteGroup = createCommand(
   "pools.deleteGroup",
   ({api}, group: string[]) => {
-    const decendentIds = api.pools.all
+    const descendantIds = api.pools.all
       .filter((pool) => {
         return new PoolName(pool.name, api.pools.nameDelimiter).isIn(group)
       })
       .map((pool) => pool.id)
 
-    return deletePools.run(decendentIds)
+    return deletePools.run(descendantIds)
   }
 )
 
@@ -79,7 +79,6 @@ export const createAndLoadFiles = createCommand(
     opts: {name?: string; format?: LoadFormat} & Partial<CreatePoolOpts> = {}
   ) => {
     let poolId: string | null = null
-    const lakeId = api.current.lakeId
     const tabId = api.current.tabId
     const poolNames = api.pools.all.map((p) => p.name)
     if (!opts.name && files.length === 0) {
@@ -103,7 +102,7 @@ export const createAndLoadFiles = createCommand(
         await promise
       }
 
-      api.url.push(lakePoolPath(poolId, lakeId), {tabId})
+      api.url.push(lakePoolPath(poolId), {tabId})
     } catch (e) {
       console.error(e)
       if (poolId) await api.pools.delete(poolId)

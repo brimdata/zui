@@ -96,7 +96,7 @@ export const getActiveQuery = createSelector(
 export const getPoolId = (state) => {
   type Params = {poolId?: string}
   const match = matchPath<Params>(getLocation(state).pathname, [
-    "/lakes/:lakeId/pools/:poolId",
+    "/pools/:poolId",
   ])
   return match?.params?.poolId || null
 }

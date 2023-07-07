@@ -16,6 +16,7 @@ import styled from "styled-components"
 import Appearance from "src/js/state/Appearance"
 import SidebarToggleButton from "src/app/features/sidebar/sidebar-toggle-button"
 import tab from "src/js/models/tab"
+import useLakeId from "src/app/router/hooks/use-lake-id"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200
@@ -62,6 +63,7 @@ export default function TabBar() {
   const ids = useSelector(Tabs.getIds)
   const pools: PoolsState = useSelector(Pools.raw)
   const lakes = useSelector(Lakes.raw)
+  const lakeId = useLakeId()
   const queryIdNameMap = useQueryIdNameMap()
   const count = ids.length
   const {ref, rect} = useResizeObserver()
@@ -80,7 +82,7 @@ export default function TabBar() {
       )}
       <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
         {ids.map((id: string) => {
-          const tabModel = tab(id, lakes, pools, queryIdNameMap)
+          const tabModel = tab(id, lakes, pools, queryIdNameMap, lakeId)
           return (
             <AnimatedSearchTab
               {...layout.dragBinding({

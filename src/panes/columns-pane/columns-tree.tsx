@@ -6,8 +6,7 @@ import {NodeRendererProps, Tree} from "react-arborist"
 import {useResultsContext} from "src/app/query-home"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import classNames from "classnames"
-import {Help} from "src/components/help"
-import styled from "styled-components"
+import {EmptyText} from "src/app/features/right-pane/common"
 
 function Node(props: NodeRendererProps<ZedColumn>) {
   const {node} = props
@@ -37,21 +36,10 @@ function Node(props: NodeRendererProps<ZedColumn>) {
   )
 }
 
-const Wrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-`
-
 export function ColumnsTree() {
   const {table} = useResultsContext()
   if (!table)
-    return (
-      <Wrap>
-        <Help>Columns are shown in the table view.</Help>
-      </Wrap>
-    )
+    return <EmptyText>Only available when results are in Table view.</EmptyText>
 
   return (
     <FillFlexParent>

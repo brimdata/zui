@@ -30,7 +30,11 @@ export const PaneHeader = styled.header`
 
 export const EmptyText = styled.p`
   padding: 24px;
-  margin-top: 33%;
   opacity: 0.5;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `

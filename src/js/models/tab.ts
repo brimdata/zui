@@ -7,7 +7,8 @@ export default function (
   tabId: string,
   lakes: LakesState,
   pools: PoolsState,
-  queryIdNameMap: any
+  queryIdNameMap: any,
+  lakeId: string
 ) {
   const history = global.tabHistories.getOrCreate(tabId)
   const route = whichRoute(history.location.pathname)
@@ -19,7 +20,8 @@ export default function (
           history.location,
           lakes,
           pools,
-          queryIdNameMap
+          queryIdNameMap,
+          lakeId
         )
       } else {
         return "Zui"
@@ -35,9 +37,9 @@ export default function (
  * Replaces keywords like <lake> <pool> <query> with the
  * actual names of the current lake pool and query name.
  */
-function compileTitle(route, location, lakes, pools, queryIdNameMap) {
+function compileTitle(route, location, lakes, pools, queryIdNameMap, lakeId) {
   let title = route.title
-  const {lakeId, queryId, poolId, version} = route.match.params
+  const {queryId, poolId, version} = route.match.params
   title = title.replace("<lake>", get(lakes, [lakeId, "name"], ""))
   if (poolId) {
     title = title.replace(

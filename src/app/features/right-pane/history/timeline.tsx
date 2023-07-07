@@ -31,7 +31,7 @@ const Circle = styled.div<{color: string}>`
 const Line = styled.div`
   width: 2px;
   flex: 1;
-  background: #f6f6f7;
+  background: var(--border-color);
 
   &:first-child {
     border-radius: 0 0 1px 1px;

@@ -1,6 +1,6 @@
-import {useParams} from "react-router"
+import {useSelector} from "react-redux"
+import Current from "src/js/state/Current"
 
 export default function useLakeId() {
-  const {lakeId} = useParams<{lakeId: string}>()
-  return lakeId
+  return useSelector(Current.getLakeId)
 }
