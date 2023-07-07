@@ -10,7 +10,7 @@ export const openDetailWindow = createOperation(
       await win.whenInitialized()
       win.send("detail-window-args", opts)
     } catch (e) {
-      log.error("detail window failed to open")
+      log.error("detail window failed to open", e)
     }
   }
 )

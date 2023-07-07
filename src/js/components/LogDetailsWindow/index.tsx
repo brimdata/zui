@@ -1,4 +1,4 @@
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch, useSelector, useStore} from "react-redux"
 import React, {HTMLProps} from "react"
 import HistoryButtons from "../common/HistoryButtons"
 import LogDetails from "../../state/LogDetails"

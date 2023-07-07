@@ -7,6 +7,7 @@ import {Modals} from "src/js/components/Modals"
 import Tooltip from "src/js/components/Tooltip"
 import initialize from "src/js/initializers/initialize"
 import TabHistories from "src/js/state/TabHistories"
+import Tabs from "src/js/state/Tabs"
 import {getPersistedWindowState} from "src/js/state/stores/get-persistable"
 
 export default function DetailPage() {
@@ -14,6 +15,7 @@ export default function DetailPage() {
 
   useEffect(() => {
     initialize().then((vars) => {
+      vars.store.dispatch(Tabs.create()) // Make a "tab" so that selectors work
       window.onbeforeunload = () => {
         vars.api.abortables.abortAll()
         vars.store.dispatch(TabHistories.save(global.tabHistories.serialize()))
