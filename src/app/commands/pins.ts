@@ -8,6 +8,7 @@ import submitSearch from "../query-home/flows/submit-search"
 import {createCommand} from "./command"
 import Current from "src/js/state/Current"
 import PoolSettings from "src/js/state/PoolSettings"
+import Tabs from "src/js/state/Tabs"
 
 export const createFromEditor = createCommand(
   "pins.createFromEditor",
@@ -40,9 +41,13 @@ export const createFrom = createCommand<[value?: string]>(
 
 export const updateFrom = createCommand(
   "pins.updateFrom",
-  ({dispatch}, value: string) => {
-    dispatch(Editor.setFrom(value))
-    dispatch(submitSearch())
+  ({dispatch, getState, api}, value: string) => {
+    if (Tabs.none(getState())) {
+      api.queries.open({pins: [{type: "from", value}], value: ""})
+    } else {
+      dispatch(Editor.setFrom(value))
+      dispatch(submitSearch())
+    }
   }
 )
 
