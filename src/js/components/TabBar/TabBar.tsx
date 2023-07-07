@@ -22,12 +22,12 @@ const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200
 
 const BG = styled.div`
-  box-shadow: inset 0 -1px 0 var(--border-color);
   background: var(--tab-background);
   display: flex;
   height: 100%;
   grid-area: tabs;
   -webkit-app-region: drag;
+  border-bottom: 1px solid var(--border-color-dark);
 `
 
 const Container = styled.div`
@@ -40,7 +40,6 @@ const Container = styled.div`
   z-index: 2;
   flex: 1;
   margin-right: 86px;
-  margin-left: 4px;
 `
 
 const TrafficLightBG = styled.div`
