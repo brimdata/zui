@@ -64,7 +64,7 @@ export const activateUrl =
 
 export const closeActive = (): Thunk => (dispatch, getState) => {
   const tabs = Tabs.getData(getState())
-  if (tabs.length === 1) {
+  if (tabs.length === 0) {
     invoke("closeWindow")
   } else {
     const id = Tabs.getActive(getState())
