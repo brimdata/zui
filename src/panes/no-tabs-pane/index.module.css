@@ -1,0 +1,7 @@
+.background {
+    background-image: url(/welcome-page-background.svg);
+    height: 100%;
+    width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}

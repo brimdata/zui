@@ -36,10 +36,11 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   flex-shrink: 0;
-  align-items: flex-end;
+  align-items: center;
   z-index: 2;
   flex: 1;
   margin-right: 86px;
+  margin-left: 4px;
 `
 
 const TrafficLightBG = styled.div`

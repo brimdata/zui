@@ -23,7 +23,7 @@ const BG = styled.footer`
 `
 
 export default function StatusBar() {
-  if (useSelector(Tabs.none)) return null
+  if (useSelector(Tabs.none)) return <BG />
   return (
     <BG>
       <QueryProgress />

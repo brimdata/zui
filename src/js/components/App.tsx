@@ -14,6 +14,50 @@ import {PoolNew} from "src/pages/pools/new"
 import {InitPool, Show} from "src/pages/pools/show"
 import {QueryRoute} from "src/app/query-home/route"
 import Head from "next/head"
+import {useTabId} from "src/app/core/hooks/use-tab-id"
+import {NoTabsPane} from "src/panes/no-tabs-pane"
+
+function AppRoutes() {
+  return (
+    <Switch>
+      <Route path={routes.lakeReleaseNotes.path}>
+        <ReleaseNotes />
+      </Route>
+      <Route path={routes.poolNew.path}>
+        <PoolNew />
+      </Route>
+      <Route path={routes.poolShow.path}>
+        <InitPool>
+          <Show />
+        </InitPool>
+      </Route>
+      <Route path={routes.query.path}>
+        <QueryRoute />
+      </Route>
+      <Route path={routes.lakeList.path}>
+        <LakeList />
+      </Route>
+      <Route path={routes.releaseNotes.path}>
+        <ReleaseNotes />
+      </Route>
+      <Route path={routes.welcome.path}>
+        <WelcomePage />
+      </Route>
+      <Route default>
+        <WelcomePage />
+      </Route>
+    </Switch>
+  )
+}
+
+function AppMain() {
+  const tabId = useTabId()
+  if (!tabId) {
+    return <NoTabsPane />
+  } else {
+    return <AppRoutes />
+  }
+}
 
 export default function App() {
   useSearchAppMenu()
@@ -26,34 +70,7 @@ export default function App() {
       </Head>
       <AppWrapper>
         <InitLake>
-          <Switch>
-            <Route path={routes.lakeReleaseNotes.path}>
-              <ReleaseNotes />
-            </Route>
-            <Route path={routes.poolNew.path}>
-              <PoolNew />
-            </Route>
-            <Route path={routes.poolShow.path}>
-              <InitPool>
-                <Show />
-              </InitPool>
-            </Route>
-            <Route path={routes.query.path}>
-              <QueryRoute />
-            </Route>
-            <Route path={routes.lakeList.path}>
-              <LakeList />
-            </Route>
-            <Route path={routes.releaseNotes.path}>
-              <ReleaseNotes />
-            </Route>
-            <Route path={routes.welcome.path}>
-              <WelcomePage />
-            </Route>
-            <Route default>
-              <WelcomePage />
-            </Route>
-          </Switch>
+          <AppMain />
         </InitLake>
       </AppWrapper>
     </AppTabsRouter>

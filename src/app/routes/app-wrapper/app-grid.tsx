@@ -27,7 +27,7 @@ export function AppGrid({children}) {
     "sidebar status"
   `
   const width = sidebarIsOpen ? sidebarWidth : 0
-  const rows = ["42px", "1fr", "28px"]
+  const rows = ["40px", "1fr", "28px"]
   const columns = [width + "px", "1fr"]
 
   return (
