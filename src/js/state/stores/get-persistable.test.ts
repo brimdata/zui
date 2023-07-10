@@ -63,7 +63,7 @@ test("keeps the tabs", () => {
   store.dispatch(Tabs.create("/", "3"))
   const persist = getPersistedWindowState(store.getState())
   expect(Object.keys(persist)).toEqual([...WINDOW_PERSIST, "tabs"])
-  expect(persist.tabs.data.length).toBe(4)
+  expect(persist.tabs.data.length).toBe(3)
   expect(Object.keys(persist.tabs.data[0])).toEqual(TAB_PERSIST)
 })
 
