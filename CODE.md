@@ -4,16 +4,26 @@ This is here to document the design patterns chosen by the developers. It docume
 
 ## FAQs
 
-How do I add a main process initializer?
+### How do I add a main process initializer?
 
 1. Create a new file in `src/electron/initializers/`.
-2. Add the following line to `src/electron/initializers/index.ts`.
+2. Export a function called _initialize_(main) that takes the main object as its only argument.
+3. Add the following line to `src/electron/initializers/index.ts`.
 
 ```
 export * as myNewInitializer from "./my-new-initializer"
 ```
 
 Export all symbols as a camel cased alias of the file name. This will now run automatically when the app starts.
+
+### How do I write a state migration?
+
+1. Run `bin/gen migration my_migration_name`.
+2. Edit the files it produced to perform your migration.
+3. Use the getAllTabs and getAllStates helpers as needed.
+4. Remember that the states are either the main process state or the window states.
+5. Add that file to the src/js/state/migrations/index.ts following the pattern there.
+6. Create a sample state, if needed, by running the app at the latest released version, getting it into the state you want, then copying run/appState.json into src/test/unit/states/v0.0.0.json using the version as the file name.
 
 ## Folders
 
