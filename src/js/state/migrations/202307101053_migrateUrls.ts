@@ -19,7 +19,7 @@ export function getLakeId(pathname: string) {
 export default function migrateUrls(state: any) {
   // set the current window lakeId to the most recent tab's lake id
   for (const window of getAllWindowStates(state)) {
-    const history = window.tabHistories.entities[window.tabs.active]
+    const history = window.tabHistories?.entities[window.tabs.active]
     // If there is no active tab with history
     if (!history) continue
 
@@ -37,6 +37,7 @@ export default function migrateUrls(state: any) {
   // Rewrite all the urls without the lake prefix
   for (const window of getAllWindowStates(state)) {
     const histories = window.tabHistories
+    if (!histories) continue
 
     for (const id in histories.entities) {
       const urls = histories.entities[id].entries
