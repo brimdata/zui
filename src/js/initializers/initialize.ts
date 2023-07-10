@@ -4,7 +4,6 @@ import initDOM from "./initDOM"
 import initGlobals from "./initGlobals"
 import initIpcListeners from "./initIpcListeners"
 import initStore from "./initStore"
-import initLakeParams from "./initLakeParams"
 import {initAutosave} from "./initAutosave"
 import {commands} from "src/app/commands/command"
 import {menus} from "src/core/menu"
@@ -38,7 +37,6 @@ export default async function initialize(
   await initGlobals(store)
   initIpcListeners(store)
   initHandlers({dispatch: store.dispatch, select: (fn) => fn(store.getState())})
-  initLakeParams(store)
   initDebugGlobals(store, api)
   initAutosave(store)
   commands.setContext(store, api)

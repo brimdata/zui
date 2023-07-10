@@ -17,6 +17,7 @@ import SessionQueries from "../SessionQueries"
 import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
 import lake from "src/js/models/lake"
+import {defaultLake} from "src/js/initializers/initLakeParams"
 
 export const getHistory = (
   state,
@@ -101,7 +102,9 @@ export const getPoolId = (state) => {
   return match?.params?.poolId || null
 }
 
-export const getLakeId = (state: State) => state.current.lakeId
+export const getLakeId = (state: State) => {
+  return state.current.lakeId ?? defaultLake().id
+}
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
   if (!id) throw new Error("Current lake id is unset")
