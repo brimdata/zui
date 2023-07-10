@@ -1,5 +1,5 @@
 import {migrate} from "src/test/unit/helpers/migrate"
-import {getAllStates} from "./utils/getTestState"
+import {getAllStates, getAllWindowStates} from "./utils/getTestState"
 import {removeLakeFromUrl} from "./202307101053_migrateUrls"
 
 const expectations = {
@@ -44,4 +44,10 @@ test("migrating 202307101053_migrateUrls", async () => {
     "/queries/vYXJGwpRlfWYc3VEwzwhw/versions/Oy9bEnaX1Ho7dhqakXyNN",
     "/release-notes",
   ])
+
+  const lakeIds = getAllWindowStates(next).map(
+    (window) => window.current.lakeId
+  )
+
+  expect(lakeIds).toEqual(["localhost:9867"])
 })

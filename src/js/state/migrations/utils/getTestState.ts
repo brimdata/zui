@@ -30,6 +30,14 @@ export function getAllStates(sessionState: SessionState): any[] {
   return compact(allStates)
 }
 
+export function getAllWindowStates(sessionState: SessionState): any[] {
+  const states = []
+  for (const key in sessionState.windows) {
+    states.push(sessionState.windows[key].state)
+  }
+  return compact(states)
+}
+
 export function getAllTabs(sessionState: SessionState): any[] {
   let tabs = []
   for (const state of getAllStates(sessionState)) {
