@@ -18,6 +18,7 @@ import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
 import lake from "src/js/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
+import {getActive} from "../Tabs/selectors"
 
 export const getHistory = (
   state,
@@ -154,9 +155,7 @@ export const getPools = createSelector(getLake, Pools.raw, (l, pools) => {
     .sort((a, b) => (a.name > b.name ? 1 : -1))
 })
 
-export const getTabId = (s: State) => {
-  return s.tabs.active
-}
+export const getTabId = getActive
 
 export const getSessionHistory = createSelector(
   [getTabId, SessionHistories.raw],

@@ -17,6 +17,7 @@ import Appearance from "src/js/state/Appearance"
 import SidebarToggleButton from "src/app/features/sidebar/sidebar-toggle-button"
 import tab from "src/js/models/tab"
 import useLakeId from "src/app/router/hooks/use-lake-id"
+import Current from "src/js/state/Current"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200

@@ -76,3 +76,11 @@ The plugin api runs in the Node main process and is given to plugin authors to e
 _Main Process Initializers_
 
 Code that needs to be run one time before the app starts up can be put in an initializer. An initializer is a file that lives in the folder `src/electron/initializers/`. It must export a function named _initialize(main)_ that takes the Main Object as its only argument. See the FAQ for an example of creating a new initializer.
+
+_Query_
+
+A query in the app is like a container object. It holds the name and id of the query. It does not contain the zed code. Those are stored in a QueryVersion. Each Query has many QueryVersions, showing the history of that query.
+
+_Session Query_
+
+A session query is like an unnamed Query. Each session (tab) has exactly one SessionQuery associated with it. The SessionQuery has many QueryVersions associated with it.

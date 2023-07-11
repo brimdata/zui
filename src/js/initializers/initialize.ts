@@ -10,6 +10,7 @@ import {menus} from "src/core/menu"
 import {initHandlers} from "./init-handlers"
 import {invoke} from "src/core/invoke"
 import {WindowName} from "src/electron/windows/types"
+import {initDefaultLake} from "./init-default-lake"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -31,7 +32,7 @@ export default async function initialize(
 
   const api = new ZuiApi()
   const store = await initStore(api)
-
+  initDefaultLake(store)
   api.init(store.dispatch, store.getState)
   initDOM()
   await initGlobals(store)

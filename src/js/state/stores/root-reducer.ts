@@ -5,7 +5,6 @@ import Errors from "../Errors"
 import Modal from "../Modal"
 import Notice from "../Notice"
 import Pools from "../Pools"
-import Tabs from "../Tabs"
 import Queries from "../Queries"
 import LakeStatuses from "../LakeStatuses"
 import TabHistories from "../TabHistories"
@@ -21,6 +20,7 @@ import SessionQueries from "../SessionQueries"
 import SessionHistories from "../SessionHistories"
 import PoolSettings from "../PoolSettings"
 import Current from "../Current"
+import LakeTabs from "../LakeTabs"
 
 const rootReducer = combineReducers<any, any>({
   current: Current.reducer,
@@ -35,16 +35,14 @@ const rootReducer = combineReducers<any, any>({
   lakeStatuses: LakeStatuses.reducer,
   url: Url.reducer,
   toolbars: Toolbars.reducer,
-
-  // Under the lake
-  tabs: Tabs.reducer,
   pools: Pools.reducer,
   poolSettings: PoolSettings.reducer,
   queries: Queries.reducer,
   queryVersions: QueryVersions.reducer,
-  remoteQueries: RemoteQueries.reducer,
   sessionQueries: SessionQueries.reducer,
+  remoteQueries: RemoteQueries.reducer,
   sessionHistories: SessionHistories.reducer,
+  lakeTabs: LakeTabs.reducer,
   tabHistories: TabHistories.reducer,
 })
 

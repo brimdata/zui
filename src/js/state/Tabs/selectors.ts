@@ -2,21 +2,19 @@ import {createSelector} from "reselect"
 import {State} from "../types"
 import {createIsEqualSelector} from "../utils"
 import {findQuerySessionTab} from "./find"
+import {activeTabsSelect, getActiveTabs} from "../LakeTabs/selectors"
 
-export const getData = (state: State) => state.tabs.data
-export const getActive = (state: State) => state.tabs.active
-export const getCount = (state: State) => state.tabs.data.length
-export const getPreview = (state: State) => state.tabs.preview
-export const none = (state: State) => state.tabs.data.length === 0
+export const getData = activeTabsSelect((tabs) => tabs.data)
+export const getActive = activeTabsSelect((tabs) => tabs.active)
+export const getCount = activeTabsSelect((tabs) => tabs.data.length)
+export const getPreview = activeTabsSelect((tabs) => tabs.preview)
+export const none = activeTabsSelect((tabs) => tabs.data.length === 0)
 
-export const getActiveTab = createSelector(
-  (state: State) => state.tabs,
-  (tabs) => {
-    const tab = tabs.data.find((t) => t.id === tabs.active)
-    if (!tab) throw new Error("Can't find active tab")
-    return tab
-  }
-)
+export const getActiveTab = createSelector(getActiveTabs, (tabs) => {
+  const tab = tabs.data.find((t) => t.id === tabs.active)
+  if (!tab) throw new Error("Can't find active tab")
+  return tab
+})
 
 export const _getIds = createSelector(getData, (data) => {
   return data.map((d) => d.id)
@@ -28,7 +26,7 @@ export const getIds = createIsEqualSelector<State, string[], string[]>(
 )
 
 export const findFirstQuerySession = createSelector(
-  (state: State) => state.tabs.data,
+  getData,
   findQuerySessionTab
 )
 

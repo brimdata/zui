@@ -12,7 +12,6 @@ import {NoticeState} from "./Notice/types"
 import {PoolsState} from "./Pools/types"
 import {QueriesState} from "./Queries/types"
 import {TabHistoriesState} from "./TabHistories/types"
-import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
 import {LakeStatusesState} from "./LakeStatuses/types"
 import {SessionQueriesState} from "./SessionQueries/types"
@@ -20,6 +19,7 @@ import {QueryVersionsState} from "./QueryVersions/types"
 import {SessionHistoriesState} from "./SessionHistories/types"
 import {PoolSettingsState} from "./PoolSettings/types"
 import {CurrentState} from "./Current/types"
+import {LakeTabsState} from "./LakeTabs/types"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -46,7 +46,7 @@ export type State = {
   loads: LoadsState
   modal: ModalState
   notice: NoticeState
-  tabs: TabsState
+  lakeTabs: LakeTabsState
   lakeStatuses: LakeStatusesState
   queries: QueriesState
   remoteQueries: QueriesState
