@@ -38,11 +38,24 @@ export function getAllRendererStates(sessionState: SessionState): any[] {
   return compact(states)
 }
 
-export function getAllTabs(sessionState: SessionState): any[] {
+export function getAllTabs_before_202307101053(
+  sessionState: SessionState
+): any[] {
   let tabs = []
   for (const state of getAllStates(sessionState)) {
     if (state.tabs) {
       tabs = tabs.concat(state.tabs.data)
+    }
+  }
+  return tabs
+}
+
+export function getAllTabs(sessionState: SessionState): any[] {
+  let tabs = []
+  for (const renderer of getAllRendererStates(sessionState)) {
+    for (const lakeId in renderer.window.tabs) {
+      const tabGroup = renderer.window.tabs[lakeId]
+      tabs = tabs.concat(tabGroup.data)
     }
   }
   return tabs

@@ -1,4 +1,7 @@
-import {getAllStates, getAllTabs} from "./utils/getTestState"
+import {
+  getAllStates,
+  getAllTabs_before_202307101053,
+} from "./utils/getTestState"
 
 export default function moveSidebarStateToAppearance(state: any) {
   // Get the first active tab we find
@@ -28,7 +31,7 @@ export default function moveSidebarStateToAppearance(state: any) {
   }
 
   // Delete the old state
-  for (let tab of getAllTabs(state)) {
+  for (let tab of getAllTabs_before_202307101053(state)) {
     delete tab.layout.leftSidebarIsOpen
     delete tab.layout.leftSidebarWidth
     delete tab.layout.sidebarSections

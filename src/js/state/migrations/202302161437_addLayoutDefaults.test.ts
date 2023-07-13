@@ -1,6 +1,9 @@
 import {isObject} from "lodash"
 import {migrate} from "src/test/unit/helpers/migrate"
-import {getAllStates, getAllTabs} from "./utils/getTestState"
+import {
+  getAllStates,
+  getAllTabs_before_202307101053,
+} from "./utils/getTestState"
 
 test("migrating 202302161437_addLayoutDefaults", async () => {
   const next = await migrate({
@@ -8,7 +11,7 @@ test("migrating 202302161437_addLayoutDefaults", async () => {
     to: "202302161437",
   })
 
-  for (const tab of getAllTabs(next)) {
+  for (const tab of getAllTabs_before_202307101053(next)) {
     // Add some defaults to layout
     expect(tab.layout.currentPaneName).toBe("history")
     expect(tab.layout.isEditingTitle).toBe(false)

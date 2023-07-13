@@ -1,11 +1,14 @@
 import {migrate} from "src/test/unit/helpers/migrate"
 import moveSidebarStateToAppearance from "./202110050923_moveSidebarStateToAppearance"
-import {getAllStates, getAllTabs} from "./utils/getTestState"
+import {
+  getAllStates,
+  getAllTabs_before_202307101053,
+} from "./utils/getTestState"
 
 test("migrating 202110050923_moveSidebarStateToAppearance", async () => {
   const next = await migrate({state: "v0.24.0", to: "202110050923"})
 
-  for (let tab of getAllTabs(next)) {
+  for (let tab of getAllTabs_before_202307101053(next)) {
     expect(tab.layout.leftSidebarIsOpen).toBe(undefined)
     expect(tab.layout.leftSidebarWidth).toBe(undefined)
     expect(tab.layout.sidebarSections).toBe(undefined)

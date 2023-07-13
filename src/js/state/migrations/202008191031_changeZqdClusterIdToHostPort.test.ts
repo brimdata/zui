@@ -1,6 +1,6 @@
 import {
   getAllStates,
-  getAllTabs,
+  getAllTabs_before_202307101053,
 } from "src/js/state/migrations/utils/getTestState"
 import {migrate} from "src/test/unit/helpers/migrate"
 
@@ -23,7 +23,7 @@ test("migrating 202008191031_changeZqdClusterIdToHostPort", async () => {
     expect(Object.keys(state.clusters)).not.toContain(oldId)
   }
 
-  for (const tab of getAllTabs(next)) {
+  for (const tab of getAllTabs_before_202307101053(next)) {
     expect(tab.current.connectionId).toBe(newId)
   }
 })
