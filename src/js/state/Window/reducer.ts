@@ -3,6 +3,7 @@ import {isTabsAction} from "./is-tabs-action"
 import Tabs from "../Tabs"
 import {TabsState} from "../Tabs/types"
 import {isReduxAction} from "../Tabs/is-redux-action"
+import Lakes from "../Lakes"
 
 const INIT = {type: "@@INIT"}
 
@@ -21,6 +22,15 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(
+      Lakes.remove.toString(),
+      (state, action: {type: string; id: string}) => {
+        ;`~`
+        const id = action.id
+        delete state.tabs[id]
+        if (state.lakeId == id) state.lakeId = null
+      }
+    )
     builder.addMatcher(isTabsAction, (state, action) => {
       const id = state.lakeId
       const next = Tabs.reducer(state.tabs[id], action)
