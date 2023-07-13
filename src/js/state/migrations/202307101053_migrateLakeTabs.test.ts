@@ -1,6 +1,6 @@
 import {migrate} from "src/test/unit/helpers/migrate"
-import {getAllStates, getAllWindowStates} from "./utils/getTestState"
-import {removeLakeFromUrl} from "./202307101053_migrateUrls"
+import {getAllStates, getAllRendererStates} from "./utils/getTestState"
+import {removeLakeFromUrl} from "./202307101053_migrateLakeTabs"
 
 const expectations = {
   "/lakes/localhost:9867": "/",
@@ -32,10 +32,10 @@ function collectAllUrls(state) {
   return urls
 }
 
-test("migrating 202307101053_migrateUrls", async () => {
+test("migrates urls", async () => {
   const next = await migrate({state: "v1.0.1", to: "202307101053"})
-
   const urls = collectAllUrls(next)
+
   expect(urls).toEqual([
     "/",
     "/pools/new",
@@ -44,10 +44,25 @@ test("migrating 202307101053_migrateUrls", async () => {
     "/queries/vYXJGwpRlfWYc3VEwzwhw/versions/Oy9bEnaX1Ho7dhqakXyNN",
     "/release-notes",
   ])
+})
 
-  const lakeIds = getAllWindowStates(next).map(
-    (window) => window.current.lakeId
+test("migrates lakeIds", async () => {
+  const next = await migrate({state: "v1.0.1", to: "202307101053"})
+  const lakeIds = getAllRendererStates(next).map(
+    (renderer) => renderer.window.lakeId
   )
 
   expect(lakeIds).toEqual(["localhost:9867"])
+})
+
+test("migrates tabs", async () => {
+  const next = await migrate({state: "v1.0.1", to: "202307101053"})
+  const renderer = getAllRendererStates(next)[0]
+
+  expect(renderer.window.tabs).toEqual({
+    "localhost:9867": expect.objectContaining({
+      active: "oNUoiOTr6iwTM4FcOMY-9",
+      data: expect.any(Array),
+    }),
+  })
 })

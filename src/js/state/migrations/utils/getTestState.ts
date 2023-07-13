@@ -30,7 +30,7 @@ export function getAllStates(sessionState: SessionState): any[] {
   return compact(allStates)
 }
 
-export function getAllWindowStates(sessionState: SessionState): any[] {
+export function getAllRendererStates(sessionState: SessionState): any[] {
   const states = []
   for (const key in sessionState.windows) {
     states.push(sessionState.windows[key].state)

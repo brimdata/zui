@@ -45,6 +45,9 @@ export function getPersistedGlobalState(original?: State) {
 
 export function getPersistedLakeTabs(original?: State) {
   if (!original) return undefined
+  if (!original.window) return undefined
+  if (!original.window.tabs) return undefined
+
   const tabs = {}
   for (const id in original.window.tabs) {
     tabs[id] = getPersistedTabs(original.window.tabs[id])
