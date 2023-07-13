@@ -4,6 +4,7 @@ import Tabs from "../Tabs"
 import {TabsState} from "../Tabs/types"
 import {isReduxAction} from "../Tabs/is-redux-action"
 import Lakes from "../Lakes"
+import {defaultLake} from "src/js/initializers/initLakeParams"
 
 const INIT = {type: "@@INIT"}
 
@@ -24,11 +25,10 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       Lakes.remove.toString(),
-      (state, action: {type: string; id: string}) => {
-        ;`~`
-        const id = action.id
+      (state, action: ReturnType<typeof Lakes.remove>) => {
+        const id = action.payload
         delete state.tabs[id]
-        if (state.lakeId == id) state.lakeId = null
+        if (state.lakeId == id) state.lakeId = defaultLake().id
       }
     )
     builder.addMatcher(isTabsAction, (state, action) => {
