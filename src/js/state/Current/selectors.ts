@@ -104,7 +104,7 @@ export const getPoolId = (state) => {
 }
 
 export const getLakeId = (state: State) => {
-  return state.current.lakeId ?? defaultLake().id
+  return state.window.lakeId ?? defaultLake().id
 }
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {

@@ -4,8 +4,8 @@ import lake, {LakeModel} from "src/js/models/lake"
 import DataStoreIcon from "src/js/icons/DataStoreIcon"
 import Lakes from "src/js/state/Lakes"
 import styled from "styled-components"
-import Current from "src/js/state/Current"
 import {useDispatch} from "../core/state"
+import Window from "src/js/state/Window"
 
 const StyledLake = styled.li`
   display: flex;
@@ -86,7 +86,7 @@ const LakeList = () => {
           <Lake
             key={l.id}
             lake={lake(l)}
-            onClick={() => dispatch(Current.setLakeId(l.id))}
+            onClick={() => dispatch(Window.setLakeId(l.id))}
           />
         ))}
       </LakesWrapper>

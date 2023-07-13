@@ -84,3 +84,21 @@ A query in the app is like a container object. It holds the name and id of the q
 _Session Query_
 
 A session query is like an unnamed Query. Each session (tab) has exactly one SessionQuery associated with it. The SessionQuery has many QueryVersions associated with it.
+
+_Store_
+
+The store contains the state for the whole application. Parts of the store apply to the whole app (main process and all windows), like the list of lakes, the list of the pools, the list of queries, and the configurations. Then state only relevant to one window, then state that's only relative to the tab.
+
+**State Hierarchy**
+
+1. Application Level
+2. Window Level
+3. Tab Level
+
+Application level state has a `$` prefix to the action names. Actions dispatched with the `$` prefix get dispatched to the main process and all windows.
+
+Window level state is everything that's not in the `tabReducer`, but doesn't have a `$` prefix.
+
+Tabs state is found in the `tabReducer` function.
+
+The tabs are grouped by lakeId within the window state. Each window has a different group of tabs per lakeId. When a user switches lakes, the tabs from the previous lake will be hidden and the tabs from the current lake shown. When switching back, the old tabs will be restored.

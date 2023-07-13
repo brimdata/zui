@@ -1,7 +1,7 @@
 import {createSelector} from "reselect"
 import {State} from "../types"
 import {TabState} from "./types"
-import {getActiveTabs} from "../LakeTabs/selectors"
+import {getActiveTabs} from "../Window/selectors"
 
 const getActiveTab = createSelector(getActiveTabs, (tabs) => {
   const tab = tabs.data.find((t) => t.id === tabs.active)

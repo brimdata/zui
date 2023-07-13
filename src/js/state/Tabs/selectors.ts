@@ -2,7 +2,7 @@ import {createSelector} from "reselect"
 import {State} from "../types"
 import {createIsEqualSelector} from "../utils"
 import {findQuerySessionTab} from "./find"
-import {activeTabsSelect, getActiveTabs} from "../LakeTabs/selectors"
+import {activeTabsSelect, getActiveTabs} from "../Window/selectors"
 
 export const getData = activeTabsSelect((tabs) => tabs.data)
 export const getActive = activeTabsSelect((tabs) => tabs.active)

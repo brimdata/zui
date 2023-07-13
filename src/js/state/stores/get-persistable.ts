@@ -21,7 +21,7 @@ export const WINDOW_PERSIST: StateKey[] = [
   "appearance",
   "sessionHistories",
   "tabHistories",
-  "current",
+  "window",
 ]
 
 export const TAB_PERSIST: TabKey[] = ["editor", "id", "lastFocused", "layout"]
@@ -45,15 +45,14 @@ export function getPersistedGlobalState(original?: State) {
 
 export function getPersistedLakeTabs(original?: State) {
   if (!original) return undefined
-  const data = {}
-  for (const id in original.lakeTabs.data) {
-    const tabs = original.lakeTabs.data[id]
-    data[id] = getPersistedTabs(tabs)
+  const tabs = {}
+  for (const id in original.window.tabs) {
+    tabs[id] = getPersistedTabs(original.window.tabs[id])
   }
   return {
-    lakeTabs: {
-      ...original.lakeTabs,
-      data,
+    window: {
+      ...original.window,
+      tabs,
     },
   }
 }

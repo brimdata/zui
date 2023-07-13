@@ -19,11 +19,9 @@ import QueryVersions from "../QueryVersions"
 import SessionQueries from "../SessionQueries"
 import SessionHistories from "../SessionHistories"
 import PoolSettings from "../PoolSettings"
-import Current from "../Current"
-import LakeTabs from "../LakeTabs"
+import Window from "../Window"
 
 const rootReducer = combineReducers<any, any>({
-  current: Current.reducer,
   appearance: Appearance.reducer,
   launches: Launches.reducer,
   configPropValues: ConfigPropValues.reducer,
@@ -42,8 +40,8 @@ const rootReducer = combineReducers<any, any>({
   sessionQueries: SessionQueries.reducer,
   remoteQueries: RemoteQueries.reducer,
   sessionHistories: SessionHistories.reducer,
-  lakeTabs: LakeTabs.reducer,
   tabHistories: TabHistories.reducer,
+  window: Window.reducer,
 })
 
 // A proof of concept. This would be a much nicer way to go

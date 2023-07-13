@@ -11,6 +11,7 @@ import {AppDispatch} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
 import {Lake} from "src/js/state/Lakes/types"
 import lake from "src/js/models/lake"
+import Window from "src/js/state/Window"
 
 const LakeNameGroup = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
       checked: isCurrent,
       click: () => {
         if (isCurrent) return
-        dispatch(Current.setLakeId(l.id))
+        dispatch(Window.setLakeId(l.id))
       },
     })
   })

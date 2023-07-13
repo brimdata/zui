@@ -24,7 +24,7 @@ test("serialize each window", async () => {
       name: "search",
       position: [0, 0],
       size: [100, 100],
-      state: expect.objectContaining({tabs: expect.any(Object)}),
+      state: expect.objectContaining({window: expect.any(Object)}),
     },
   ])
 })

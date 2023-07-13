@@ -1,6 +1,5 @@
 import {ZuiMain} from "../zui-main"
 import Lakes from "src/js/state/Lakes"
-import Current from "src/js/state/Current"
 
 /**
  * Sets up the default lake if it doesn't exist
@@ -14,5 +13,4 @@ export function initialize(main: ZuiMain) {
   if (exists) return
 
   main.store.dispatch(Lakes.add(lake))
-  main.store.dispatch(Current.setLakeId(lake.id))
 }
