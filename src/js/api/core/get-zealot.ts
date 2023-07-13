@@ -26,7 +26,7 @@ export const getAuthToken =
     } else {
       const newToken = await dispatch(getAuthCredentials(lake))
       if (newToken) {
-        dispatch(Lakes.setLakeToken(lake.id, newToken))
+        dispatch(Lakes.setAccessToken({lakeId: lake.id, accessToken: newToken}))
         return newToken
       } else {
         dispatch(LakeStatuses.set(lake.id, "login-required"))

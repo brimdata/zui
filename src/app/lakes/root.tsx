@@ -1,7 +1,6 @@
 import React, {useEffect, useLayoutEffect} from "react"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
-import {Redirect} from "react-router"
 import ConnectionError from "src/js/components/ConnectionError"
 import Login from "src/js/components/Login"
 import MacSpinner from "src/js/components/MacSpinner"
@@ -33,8 +32,6 @@ export function InitLake({children}) {
   useEffect(() => {
     if (lake?.id) invoke("updatePluginLakeOp", {lakeId: lake.id})
   }, [lake?.id])
-
-  if (!lake) return <Redirect to="/lakes" />
 
   switch (status) {
     case "disconnected":

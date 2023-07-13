@@ -1,7 +1,3 @@
-export const lakesPath = () => {
-  return "/lakes"
-}
-
 export const newPoolPath = () => {
   return `/pools/new`
 }

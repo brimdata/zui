@@ -13,7 +13,7 @@ const slice = createSlice({
       const id = action.payload
       delete state[id]
     },
-    setLakeToken: (
+    setAccessToken: (
       state,
       action: PayloadAction<{lakeId: string; accessToken: string}>
     ) => {

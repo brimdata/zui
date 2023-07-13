@@ -56,7 +56,7 @@ export const updateStatus =
       // otherwise, need to refresh accessToken
       const accessToken = await dispatch(getAuthCredentials(lakeModel))
       if (accessToken) {
-        dispatch(Lakes.setLakeToken(lakeModel.id, accessToken))
+        dispatch(Lakes.setAccessToken({lakeId: lakeModel.id, accessToken}))
         activate()
         return
       }

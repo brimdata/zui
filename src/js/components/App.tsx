@@ -1,4 +1,3 @@
-import LakeList from "src/app/lakes/list"
 import {InitLake} from "src/app/lakes/root"
 import ReleaseNotes from "src/app/release-notes/release-notes"
 import AppTabsRouter from "src/app/router/app-tabs-router"
@@ -33,9 +32,6 @@ function AppRoutes() {
       </Route>
       <Route path={routes.query.path}>
         <QueryRoute />
-      </Route>
-      <Route path={routes.lakeList.path}>
-        <LakeList />
       </Route>
       <Route path={routes.releaseNotes.path}>
         <ReleaseNotes />

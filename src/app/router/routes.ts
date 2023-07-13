@@ -12,11 +12,6 @@ export const root: Route = {
   title: "Zui",
 }
 
-export const lakeList: Route = {
-  path: "/lakes",
-  title: "Choose a Lake",
-}
-
 export const poolShow: Route = {
   title: "<pool>",
   path: `/pools/:poolId`,
@@ -64,7 +59,6 @@ type Route = {
 
 export const allRoutes: Route[] = [
   lakeReleaseNotes,
-  lakeList,
   poolNew,
   poolShow,
   query,
