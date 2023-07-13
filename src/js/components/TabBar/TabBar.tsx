@@ -27,7 +27,6 @@ const BG = styled.div`
   height: 100%;
   grid-area: tabs;
   -webkit-app-region: drag;
-  border-bottom: 1px solid var(--border-color-dark);
 `
 
 const Container = styled.div`
@@ -39,7 +38,8 @@ const Container = styled.div`
   align-items: center;
   z-index: 2;
   flex: 1;
-  margin-right: 86px;
+  margin-right: 44px;
+  margin-left: -1px;
 `
 
 const TrafficLightBG = styled.div`

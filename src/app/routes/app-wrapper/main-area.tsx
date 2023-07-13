@@ -1,6 +1,8 @@
-import React from "react"
+import React, {CSSProperties} from "react"
+import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
+import Appearance from "src/js/state/Appearance"
 import Tabs from "src/js/state/Tabs"
 import styled from "styled-components"
 
@@ -11,6 +13,8 @@ const BG = styled.main`
   display: flex;
   flex-direction: column;
   grid-area: main;
+  overflow: hidden;
+  background: white;
 `
 
 export function isInteractive() {
@@ -26,9 +30,11 @@ export function isInteractive() {
 export function MainArea({children}) {
   const dispatch = useDispatch()
   const touched = () => dispatch(isInteractive())
+  const sidebarIsOpen = useSelector(Appearance.sidebarIsOpen)
+  const style: CSSProperties = {borderTopLeftRadius: sidebarIsOpen ? 6 : 0}
 
   return (
-    <BG onMouseDown={touched} onKeyDown={touched}>
+    <BG onMouseDown={touched} onKeyDown={touched} style={style}>
       <div id="modal-dialog-root" />
       <AppErrorBoundary>{children}</AppErrorBoundary>
     </BG>

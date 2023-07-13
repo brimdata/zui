@@ -24,7 +24,7 @@ const MainContent = styled.div`
   flex-direction: column;
   flex: 1;
   height: 100%;
-  min-width: 0;
+  min-width: 320px;
 `
 
 const ContentWrap = styled.div`
