@@ -5,14 +5,15 @@ export default function moveSecondarySidebarState(state: any) {
     // Find the active tab for the window
     // Use it's width and openness for the Appearance state
     const lakeId = renderer.window.lakeId
-    if (!lakeId) return
+    if (!lakeId) continue
     const tabs = renderer.window.tabs[lakeId]
-    if (!tabs) return
+    if (!tabs) continue
     const active = tabs.data.find((t) => t.id == tabs.active)
-    if (!active) return
+    if (!active) continue
 
     renderer.appearance.secondarySidebarIsOpen =
       active.layout.rightSidebarIsOpen
+
     renderer.appearance.secondarySidebarWidth = active.layout.rightSidebarWidth
   }
 
@@ -20,6 +21,6 @@ export default function moveSecondarySidebarState(state: any) {
     delete tab.layout.rightSidebarIsOpen
     delete tab.layout.rightSidebarWidth
   }
-  // Migrate state here
+
   return state
 }
