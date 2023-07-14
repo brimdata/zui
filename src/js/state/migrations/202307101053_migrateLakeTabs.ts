@@ -41,9 +41,9 @@ function migrateWindowLakeId(state: any) {
 
 function getAssociatedLakeId(tab, history) {
   if (!history || !history.entries) return null
-  const entry = history.entries[tab.id][0]
-  if (!entry) return null
-  return getLakeId(entry)
+  const pathname = history.entries[history.index]
+  if (!pathname) return null
+  return getLakeId(pathname)
 }
 
 function emptyTabs() {
@@ -68,7 +68,7 @@ function migrateWindowTabsUnderLake(state: any) {
     const activeTabId = renderer.tabs.active
     const newTabs = {}
     for (const tab of renderer.tabs.data) {
-      const history = renderer.tabHistories[tab.id]
+      const history = renderer.tabHistories?.entities[tab.id]
       const lakeId = getAssociatedLakeId(tab, history) ?? renderer.window.lakeId
       if (!lakeId) continue // this tab will be lost
 
