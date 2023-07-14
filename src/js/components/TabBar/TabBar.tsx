@@ -48,9 +48,8 @@ const TrafficLightBG = styled.div`
   align-items: center;
   width: 128px;
   flex-shrink: 0;
-  box-shadow: inset -1px -1px var(--border-color);
   background: var(--tab-background);
-  z-index: 100;
+  z-index: 1;
   padding-right: 10px;
 `
 

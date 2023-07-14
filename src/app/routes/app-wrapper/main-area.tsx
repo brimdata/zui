@@ -15,6 +15,8 @@ const BG = styled.main`
   grid-area: main;
   overflow: hidden;
   background: white;
+  z-index: 1;
+  box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.1);
 `
 
 export function isInteractive() {
