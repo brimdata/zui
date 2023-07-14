@@ -38,13 +38,58 @@ function migrateWindowLakeId(state: any) {
     }
   }
 }
+
+function getAssociatedLakeId(tab, history) {
+  if (!history || !history.entries) return null
+  const entry = history.entries[tab.id][0]
+  if (!entry) return null
+  return getLakeId(entry)
+}
+
+function emptyTabs() {
+  return {
+    active: null,
+    preview: null,
+    data: [],
+  }
+}
+
 /**
  * Move all the saved tabs into the new window tabs area
+  For each tab
+  1. Find the associated lake Id
+  2. Put that tab in the lake's tab data
+  3. Find the associated lake for the active tab, and activate that
+  4. Ensure all tabs have one that is active
+  5. Delete the old tabs state
  */
 function migrateWindowTabsUnderLake(state: any) {
   for (const renderer of getAllRendererStates(state)) {
-    const lakeId = renderer.window.lakeId // from above
-    renderer.window.tabs = {[lakeId]: renderer.tabs}
+    const activeTabId = renderer.tabs.active
+    const newTabs = {}
+    for (const tab of renderer.tabs.data) {
+      const history = renderer.tabHistories[tab.id]
+      const lakeId = getAssociatedLakeId(tab, history) ?? renderer.window.lakeId
+      if (!lakeId) continue // this tab will be lost
+
+      // Push this tab to its lake's group
+      newTabs[lakeId] = newTabs[lakeId] ?? emptyTabs()
+      newTabs[lakeId].data.push(tab)
+
+      // If this was the active, migrate that data
+      if (tab.id === activeTabId) newTabs[lakeId].active = activeTabId
+    }
+
+    // Ensure each set of tabs as an active tab
+    for (let lakeId in newTabs) {
+      if (!newTabs[lakeId].active) {
+        // Set the first tab to be active
+        newTabs[lakeId].active = newTabs[lakeId].data[0]?.id
+      }
+    }
+    // Set the new tabs
+    renderer.window.tabs = newTabs
+    // Delete the old tabs
     delete renderer.tabs
   }
 }

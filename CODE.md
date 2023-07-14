@@ -2,6 +2,10 @@
 
 This is here to document the design patterns chosen by the developers. It documents structures, abstractions, and philosophy in this repo.
 
+## Dependencies
+
+**All dependencies should be installed as development.** This app is unlike traditional web or node apps. All dependencies should be development dependencies unless esbuild cannot bundle it. The reason: before we package the app, we bundle all the code into a single file. The bundled JavaScript has no need to look into node_modules because all dependencies are already included in the bundle. When we package the app, it will include all the production dependencies in the app package. So, since we bundle most ourselves, there's no need to have duplicate packages in the packaged app's node_modules.
+
 ## FAQs
 
 ### How do I add a main process initializer?
