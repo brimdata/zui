@@ -78,7 +78,9 @@ export class SystemTest {
 
   async importFile(name: string) {
     const file = data.getWebFile(name)
-    await tl.act(async () => await createAndLoadFiles.run([file.path]))
+    await tl.act(async () => {
+      await createAndLoadFiles.run([file.path])
+    })
     await tl.screen.findByText(/import complete/i)
   }
 
