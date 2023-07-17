@@ -1,6 +1,6 @@
 import {
   getAllStates,
-  getAllTabs,
+  getAllTabs_before_202307101053,
 } from "src/js/state/migrations/utils/getTestState"
 import {parsePath} from "history"
 
@@ -58,7 +58,7 @@ export default function convertHistoryToUrls(state: any) {
   /**
    * Delete tab.history, current, and last
    */
-  for (const tab of getAllTabs(state)) {
+  for (const tab of getAllTabs_before_202307101053(state)) {
     delete tab.history
     delete tab.current
     delete tab.last

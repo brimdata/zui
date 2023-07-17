@@ -34,7 +34,7 @@ beforeEach(async () => {
   system.store.dispatch(Queries.addItem({id: testQueryId, name: "test query"}))
   system.store.dispatch(QueryVersions.at(testQueryId).create(testVersion1))
   system.store.dispatch(QueryVersions.at(testQueryId).create(testVersion2))
-  system.navTo(lakeQueryPath(testQueryId, "testLakeId", testVersion2.version))
+  system.navTo(lakeQueryPath(testQueryId, testVersion2.version))
   system.render(<VersionsSection />)
   await screen.findAllByText(/test value/i)
 })

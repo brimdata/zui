@@ -1,8 +1,7 @@
 import {createHandler} from "src/core/handlers"
 import toast from "react-hot-toast"
 import Tabs from "src/js/state/Tabs"
-import {lakePath} from "src/app/router/utils/paths"
-import Current from "src/js/state/Current"
+import {welcomePath} from "src/app/router/utils/paths"
 
 createHandler("window.showErrorMessage", (_ctx, message) => {
   toast.error(message)
@@ -16,7 +15,6 @@ createHandler("window.showSuccessMessage", (_ctx, message) => {
   toast.success(message)
 })
 
-createHandler("window.showWelcomePage", ({dispatch, select}) => {
-  const lakeId = select(Current.getLakeId)
-  dispatch(Tabs.activateUrl(lakePath(lakeId)))
+createHandler("window.showWelcomePage", ({dispatch}) => {
+  dispatch(Tabs.activateUrl(welcomePath()))
 })

@@ -5,7 +5,6 @@ import Errors from "../Errors"
 import Modal from "../Modal"
 import Notice from "../Notice"
 import Pools from "../Pools"
-import Tabs from "../Tabs"
 import Queries from "../Queries"
 import LakeStatuses from "../LakeStatuses"
 import TabHistories from "../TabHistories"
@@ -20,6 +19,7 @@ import QueryVersions from "../QueryVersions"
 import SessionQueries from "../SessionQueries"
 import SessionHistories from "../SessionHistories"
 import PoolSettings from "../PoolSettings"
+import Window from "../Window"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -29,19 +29,19 @@ const rootReducer = combineReducers<any, any>({
   lakes: Lakes.reducer,
   modal: Modal.reducer,
   notice: Notice.reducer,
-  tabs: Tabs.reducer,
-  pools: Pools.reducer,
-  poolSettings: PoolSettings.reducer,
   loads: Loads.reducer,
   lakeStatuses: LakeStatuses.reducer,
-  queries: Queries.reducer,
-  queryVersions: QueryVersions.reducer,
-  remoteQueries: RemoteQueries.reducer,
-  sessionQueries: SessionQueries.reducer,
-  sessionHistories: SessionHistories.reducer,
-  tabHistories: TabHistories.reducer,
   url: Url.reducer,
   toolbars: Toolbars.reducer,
+  pools: Pools.reducer,
+  poolSettings: PoolSettings.reducer,
+  queries: Queries.reducer,
+  queryVersions: QueryVersions.reducer,
+  sessionQueries: SessionQueries.reducer,
+  remoteQueries: RemoteQueries.reducer,
+  sessionHistories: SessionHistories.reducer,
+  tabHistories: TabHistories.reducer,
+  window: Window.reducer,
 })
 
 // A proof of concept. This would be a much nicer way to go

@@ -1,32 +1,16 @@
-import Current from "../state/Current"
 import Lakes from "../state/Lakes"
 import {Lake} from "../state/Lakes/types"
-import {Store} from "../state/types"
 
+// These need to be moves to some renderer lake model
 export const defaultLake = (): Lake => {
   const port = global.mainArgs.lakePort.toString()
-  return {
-    host: "http://localhost",
-    port,
-    id: `localhost:${port}`,
-    name: `${global.appMeta.userName}'s Zed Lake`,
-    authType: "none",
-  }
+  const user = global.appMeta.userName
+  return Lakes.getDefaultLake(port, user)
 }
 
-const setupDefaultLake = () => (dispatch, _) => {
-  dispatch(Lakes.add(defaultLake()))
-}
-
+// These need to be moves to some renderer lake model
 export const isDefaultLake = (l: Lake): boolean => {
   const {host, port, id} = l
   const d = defaultLake()
   return id === d.id && host === d.host && port === d.port
-}
-
-export default function (store: Store) {
-  const existingLake = Current.getLake(store.getState())
-  if (!existingLake) {
-    store.dispatch(setupDefaultLake())
-  }
 }

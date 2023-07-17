@@ -53,7 +53,7 @@ const Login = ({lake}: Props) => {
     try {
       ctlRef.current = new AbortController()
       const accessToken = await dispatch(login(lake, ctlRef.current.signal))
-      dispatch(Lakes.setLakeToken(lake.id, accessToken))
+      dispatch(Lakes.setAccessToken({lakeId: lake.id, accessToken}))
       await dispatch(updateStatus(lake.id))
     } catch (e) {
       if (e instanceof Error) setError(e.message)

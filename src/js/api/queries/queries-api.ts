@@ -130,7 +130,6 @@ export class QueriesApi {
    */
   open(id: string | QueryParams, options: Partial<OpenQueryOptions> = {}) {
     const opts = openQueryOptions(options)
-    const lakeId = this.select(Current.getLakeId)
     const tab = this.select(Tabs.findFirstQuerySession)
     const tabId = tab ? tab.id : nanoid()
 
@@ -149,7 +148,7 @@ export class QueriesApi {
         ts: new Date().toISOString(),
       })
     }
-    const url = lakeQueryPath(queryId, lakeId, versionId)
+    const url = lakeQueryPath(queryId, versionId)
     if (tab) {
       this.dispatch(Tabs.activate(tabId))
     } else {

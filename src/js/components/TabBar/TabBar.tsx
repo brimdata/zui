@@ -16,12 +16,12 @@ import styled from "styled-components"
 import Appearance from "src/js/state/Appearance"
 import SidebarToggleButton from "src/app/features/sidebar/sidebar-toggle-button"
 import tab from "src/js/models/tab"
+import useLakeId from "src/app/router/hooks/use-lake-id"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200
 
 const BG = styled.div`
-  box-shadow: inset 0 -1px 0 var(--border-color);
   background: var(--tab-background);
   display: flex;
   height: 100%;
@@ -35,10 +35,11 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   flex-shrink: 0;
-  align-items: flex-end;
+  align-items: center;
   z-index: 2;
   flex: 1;
-  margin-right: 86px;
+  margin-right: 44px;
+  margin-left: -1px;
 `
 
 const TrafficLightBG = styled.div`
@@ -47,9 +48,8 @@ const TrafficLightBG = styled.div`
   align-items: center;
   width: 128px;
   flex-shrink: 0;
-  box-shadow: inset -1px -1px var(--border-color);
   background: var(--tab-background);
-  z-index: 100;
+  z-index: 1;
   padding-right: 10px;
 `
 
@@ -62,6 +62,7 @@ export default function TabBar() {
   const ids = useSelector(Tabs.getIds)
   const pools: PoolsState = useSelector(Pools.raw)
   const lakes = useSelector(Lakes.raw)
+  const lakeId = useLakeId()
   const queryIdNameMap = useQueryIdNameMap()
   const count = ids.length
   const {ref, rect} = useResizeObserver()
@@ -80,7 +81,7 @@ export default function TabBar() {
       )}
       <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
         {ids.map((id: string) => {
-          const tabModel = tab(id, lakes, pools, queryIdNameMap)
+          const tabModel = tab(id, lakes, pools, queryIdNameMap, lakeId)
           return (
             <AnimatedSearchTab
               {...layout.dragBinding({

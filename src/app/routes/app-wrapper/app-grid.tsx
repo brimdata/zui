@@ -3,19 +3,11 @@ import {useSelector} from "react-redux"
 import Appearance from "src/js/state/Appearance"
 import styled from "styled-components"
 
-type Props = {
-  areas: string
-  rows: string
-  columns: string
-}
-
-const BG = styled.div<Props>`
+const BG = styled.div`
   min-height: 0;
   height: 100vh;
   display: grid;
-  grid-template-areas: ${(p) => p.areas};
-  grid-template-rows: ${(p) => p.rows};
-  grid-template-columns: ${(p) => p.columns};
+  background: var(--sidebar-background);
 `
 
 export function AppGrid({children}) {
@@ -27,12 +19,13 @@ export function AppGrid({children}) {
     "sidebar status"
   `
   const width = sidebarIsOpen ? sidebarWidth : 0
-  const rows = ["42px", "1fr", "28px"]
-  const columns = [width + "px", "1fr"]
+  const rows = ["40px", "1fr", "28px"]
+  const columns = [`min(${width}px, 80vw)`, "1fr"]
+  const style = {
+    gridTemplateAreas: areas,
+    gridTemplateRows: rows.join(" "),
+    gridTemplateColumns: columns.join(" "),
+  }
 
-  return (
-    <BG areas={areas} rows={rows.join(" ")} columns={columns.join(" ")}>
-      {children}
-    </BG>
-  )
+  return <BG style={style}>{children}</BG>
 }

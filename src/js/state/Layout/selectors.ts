@@ -16,12 +16,6 @@ const getEffectiveResultsView = createSelector(
 )
 
 export default {
-  getDetailPaneWidth: activeTabSelect(
-    (state) => state.layout.rightSidebarWidth
-  ),
-  getDetailPaneIsOpen: activeTabSelect(
-    (state) => state.layout.rightSidebarIsOpen
-  ),
   getResultsView,
   getEffectiveResultsView,
   getCurrentPaneName: activeTabSelect((state) => state.layout.currentPaneName),

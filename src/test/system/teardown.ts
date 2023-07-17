@@ -1,4 +1,5 @@
 import {app, ipcMain, ipcRenderer} from "electron"
+import {autoUpdater} from "electron-updater"
 import {pools, session} from "src/zui"
 
 export function teardown() {
@@ -6,6 +7,7 @@ export function teardown() {
   teardownMockIpc(ipcRenderer)
   teardownMockIpc(ipcMain)
   teardownPluginApi()
+  teardownAutoUpdater()
 }
 
 function teardownMockIpc(ipc: typeof ipcRenderer | typeof ipcMain) {
@@ -29,4 +31,8 @@ function teardownMockIpc(ipc: typeof ipcRenderer | typeof ipcMain) {
 function teardownPluginApi() {
   session._teardown()
   pools._teardown()
+}
+
+function teardownAutoUpdater() {
+  autoUpdater.removeAllListeners()
 }

@@ -21,6 +21,7 @@ import {LoadFormat} from "@brimdata/zed-js"
 import {DataFormatSelect} from "src/components/data-format-select"
 import {H1} from "src/components/h1"
 import {getFilePaths} from "src/domain/e2e/utils"
+import {lakePoolPath} from "src/app/router/utils/paths"
 
 const BG = styled(Scrollable)`
   background-image: url(/welcome-page-background.svg);
@@ -118,7 +119,17 @@ export function PoolNew() {
           setLoading(true)
           const {name, order, key, format} = formData
           const paths = await getFilePaths(files)
-          await createAndLoadFiles.run(paths, {name, order, key, format})
+          try {
+            const poolId = await createAndLoadFiles.run(paths, {
+              name,
+              order,
+              key,
+              format,
+            })
+            api.url.replace(lakePoolPath(poolId), {tabId: api.current.tabId})
+          } catch (e) {
+            // Handled
+          }
           setLoading(false)
         }}
       >

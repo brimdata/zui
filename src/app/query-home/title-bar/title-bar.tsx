@@ -20,7 +20,7 @@ const BG = styled.header.attrs({
   justify-content: space-between;
   padding: 0 16px;
   gap: 10px;
-  background: var(--chrome-color);
+  background: white;
 `
 
 export function TitleBar() {

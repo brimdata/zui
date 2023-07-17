@@ -10,19 +10,20 @@ import Tabs from "./"
 let store
 beforeEach(async () => {
   store = await initTestStore()
+  store.dispatch(Tabs.closeActive())
 })
 
 const currentPathnames = () =>
   Current.getHistory(store.getState(), "search").entries.map((e) => e.pathname)
 
 test("creating a tab creates a history entry", () => {
-  expect(global.tabHistories.count()).toBe(1)
+  expect(global.tabHistories.count()).toBe(0)
   store.dispatch(Tabs.create("/url"))
-  expect(global.tabHistories.count()).toBe(2)
+  expect(global.tabHistories.count()).toBe(1)
 })
 
 test("activate sets the global.tabHistory", () => {
-  expect(global.tabHistories.count()).toBe(1)
+  expect(global.tabHistories.count()).toBe(0)
   store.dispatch(tabHistory.push("/url-for-tab-1"))
   expect(currentPathnames()).toEqual(["/", "/url-for-tab-1"])
 

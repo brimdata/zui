@@ -7,7 +7,7 @@ const BG = styled.div`
   display: flex;
   align-items: center;
   left: 0;
-  height: 80%;
+  height: 100%;
 `
 
 const Button = styled.button`

@@ -25,7 +25,8 @@ export class TimedPromise {
 
   waitFor() {
     if (this.timeout) {
-      this.timeoutId = window.setTimeout(() => this.expire(), this.timeout)
+      // @ts-ignore
+      this.timeoutId = globalThis.setTimeout(() => this.expire(), this.timeout)
     }
     return this.promise
   }

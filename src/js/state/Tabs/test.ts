@@ -11,15 +11,16 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 let store: Store
 beforeEach(async () => {
   store = await initTestStore()
+  store.dispatch(Tabs.closeActive()) // start from a clean slate
 })
 
 test("initial state has one tab", () => {
-  expect(Tabs.getCount(store.getState())).toBe(1)
+  expect(Tabs.getCount(store.getState())).toBe(0)
 })
 
 test("add tab with no data", () => {
   const state = dispatchAll(store, [Tabs.add("1")])
-  expect(Tabs.getCount(state)).toBe(2)
+  expect(Tabs.getCount(state)).toBe(1)
 })
 
 test("cannot activate tab that does not exist in data", () => {
@@ -34,7 +35,7 @@ test("cannot activate tab that does not exist in data", () => {
 
 test("remove tab", () => {
   const state = dispatchAll(store, [Tabs.add("1"), Tabs.remove("1")])
-  expect(Tabs.getCount(state)).toBe(1)
+  expect(Tabs.getCount(state)).toBe(0)
 })
 
 test("remove last, active tab", () => {
@@ -60,15 +61,15 @@ test("remove middle, active tab", () => {
 })
 
 test("remove first, active tab", () => {
-  const first = Tabs.getData(store.getState())[0].id as string
   const state = dispatchAll(store, [
     Tabs.add("1"),
+    Tabs.activate("1"),
     Tabs.add("2"),
     Tabs.add("3"),
     Tabs.add("3"),
-    Tabs.remove(first),
+    Tabs.remove("1"),
   ])
-  expect(Tabs.getActive(state)).toBe("1")
+  expect(Tabs.getActive(state)).toBe("2")
 })
 
 test("remove non-active tab before active tab", () => {
@@ -91,41 +92,37 @@ test("remove non-active tab after active tab", () => {
   expect(Tabs.getActive(state)).toBe("1")
 })
 
-test("remove tab does nothing if only one tab left", () => {
-  const first = Tabs.getData(store.getState())[0].id as string
-  const state = dispatchAll(store, [Tabs.remove(first)])
+test("remove tab with one left", () => {
+  const state = dispatchAll(store, [Tabs.add("1"), Tabs.remove("1")])
 
-  expect(Tabs.getCount(state)).toBe(1)
+  expect(Tabs.getCount(state)).toBe(0)
 })
 
 test("reorder tabs", () => {
-  const first = Tabs.getData(store.getState())[0].id
-
   const state = dispatchAll(store, [
+    Tabs.add("z"),
     Tabs.add("a"),
     Tabs.add("b"),
     Tabs.add("c"),
     Tabs.order([3, 1, 2, 0]),
   ])
 
-  expect(Tabs.getData(state).map((t) => t.id)).toEqual(["c", "a", "b", first])
+  expect(Tabs.getData(state).map((t) => t.id)).toEqual(["c", "a", "b", "z"])
 })
 
 test("reorder tabs does not throw error if invalid", () => {
-  const first = Tabs.getData(store.getState())[0].id
-
   const state = dispatchAll(store, [
     Tabs.add("a"),
     Tabs.add("b"),
     Tabs.add("c"),
     Tabs.order([0, 0, 0, 0]),
   ])
-
-  expect(Tabs.getData(state).map((t) => t.id)).toEqual([first])
+  // This is how it works, but this is weird. It deletes all other tabs...
+  expect(Tabs.getData(state).map((t) => t.id)).toEqual(["a"])
 })
 
 test("reset tab", () => {
-  const state = dispatchAll(store, [Tabs.clearActive()])
+  const state = dispatchAll(store, [Tabs.create(), Tabs.clearActive()])
 
   const tab = Tabs.getActiveTab(state)
   expect(tab.id).toEqual(Tabs.getActive(state))

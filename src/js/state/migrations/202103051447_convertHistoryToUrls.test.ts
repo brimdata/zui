@@ -1,4 +1,4 @@
-import {getAllTabs} from "src/js/state/migrations/utils/getTestState"
+import {getAllTabs_before_202307101053} from "src/js/state/migrations/utils/getTestState"
 import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202103051447_convertHistoryToUrls", async () => {
@@ -6,7 +6,7 @@ test("migrating 202103051447_convertHistoryToUrls", async () => {
 
   const window = next.windows["bfe372abb9"].state
 
-  for (const tab of getAllTabs(next)) {
+  for (const tab of getAllTabs_before_202307101053(next)) {
     expect(tab.history).toBe(undefined)
     expect(tab.current).toBe(undefined)
     expect(tab.last).toBe(undefined)

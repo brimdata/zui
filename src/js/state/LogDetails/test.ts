@@ -7,6 +7,7 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 import LogDetails from "./"
 import dispatchAll from "src/test/unit/helpers/dispatchAll"
 import {Store} from "../types"
+import Tabs from "../Tabs"
 
 const record = createRecord({_td: "1", letter: "a"})
 const record2 = createRecord({_td: "1", letter: "b"})
@@ -15,6 +16,7 @@ const record3 = createRecord({_td: "1", letter: "c"})
 let store: Store
 beforeEach(async () => {
   store = await initTestStore()
+  store.dispatch(Tabs.create())
 })
 
 test("viewing a log detail", () => {

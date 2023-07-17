@@ -1,6 +1,7 @@
 import {omit, pick} from "lodash"
 import {TabState} from "../Tab/types"
 import {State} from "../types"
+import {TabsState} from "../Tabs/types"
 
 type StateKey = keyof State
 type TabKey = keyof TabState
@@ -20,6 +21,7 @@ export const WINDOW_PERSIST: StateKey[] = [
   "appearance",
   "sessionHistories",
   "tabHistories",
+  "window",
 ]
 
 export const TAB_PERSIST: TabKey[] = ["editor", "id", "lastFocused", "layout"]
@@ -28,7 +30,7 @@ export function getPersistedWindowState(original?: State) {
   if (!original) return
   return {
     ...pick(original, WINDOW_PERSIST),
-    ...getPersistedTabs(original),
+    ...getPersistedLakeTabs(original),
     ...getPersistedTabHistories(),
   }
 }
@@ -41,14 +43,29 @@ export function getPersistedGlobalState(original?: State) {
   }
 }
 
-export function getPersistedTabs(original: State) {
-  if (!original.tabs) return undefined
+export function getPersistedLakeTabs(original?: State) {
+  if (!original) return undefined
+  if (!original.window) return undefined
+  if (!original.window.tabs) return undefined
+
+  const tabs = {}
+  for (const id in original.window.tabs) {
+    tabs[id] = getPersistedTabs(original.window.tabs[id])
+  }
+  return {
+    window: {
+      ...original.window,
+      tabs,
+    },
+  }
+}
+
+export function getPersistedTabs(tabs: TabsState) {
+  if (!tabs) return undefined
   const pickKeys = (tab) => pick(tab, TAB_PERSIST) as TabState
   return {
-    tabs: {
-      ...original.tabs,
-      data: original.tabs.data.map(pickKeys),
-    },
+    ...tabs,
+    data: tabs.data.map(pickKeys),
   }
 }
 

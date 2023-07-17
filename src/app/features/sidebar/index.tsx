@@ -34,10 +34,10 @@ const PaneSwitch = ({name}) => {
 
 const Pane = styled(DraggablePane)`
   height: 100%;
+  width: 100%;
   background: var(--sidebar-background);
   overflow-x: unset;
   grid-area: sidebar;
-  border-right: 1px solid var(--border-color-dark);
   display: flex;
   flex-direction: column;
 `
@@ -58,7 +58,6 @@ export function Sidebar() {
   const isOpen = useSelector(Appearance.sidebarIsOpen)
   const currentSectionName = useSelector(Appearance.getCurrentSectionName)
   const l = useSelector(Current.getLake)
-
   const id = get(l, ["id"], "")
   function onDragPane(e: MouseEvent) {
     const width = e.clientX

@@ -3,7 +3,6 @@ import errors from "src/js/errors"
 import {ErrorData} from "src/js/errors/types"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import {PoolName} from "../features/sidebar/pools-section/pool-name"
-import {lakePoolPath} from "../router/utils/paths"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
 import {invoke} from "src/core/invoke"
@@ -61,13 +60,13 @@ export const rename = createCommand(
 export const deleteGroup = createCommand(
   "pools.deleteGroup",
   ({api}, group: string[]) => {
-    const decendentIds = api.pools.all
+    const descendantIds = api.pools.all
       .filter((pool) => {
         return new PoolName(pool.name, api.pools.nameDelimiter).isIn(group)
       })
       .map((pool) => pool.id)
 
-    return deletePools.run(decendentIds)
+    return deletePools.run(descendantIds)
   }
 )
 
@@ -79,8 +78,6 @@ export const createAndLoadFiles = createCommand(
     opts: {name?: string; format?: LoadFormat} & Partial<CreatePoolOpts> = {}
   ) => {
     let poolId: string | null = null
-    const lakeId = api.current.lakeId
-    const tabId = api.current.tabId
     const poolNames = api.pools.all.map((p) => p.name)
     if (!opts.name && files.length === 0) {
       api.toast("No pool name and no files provided.")
@@ -101,14 +98,14 @@ export const createAndLoadFiles = createCommand(
           error: "Load error",
         })
         await promise
+        return poolId
       }
-
-      api.url.push(lakePoolPath(poolId, lakeId), {tabId})
     } catch (e) {
       console.error(e)
       if (poolId) await api.pools.delete(poolId)
       api.notice.error(parseError(e))
       api.pools.syncAll()
+      throw e
     }
   }
 )

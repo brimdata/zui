@@ -1,15 +1,8 @@
 import React from "react"
+import {EmptyText} from "../features/right-pane/common"
 
 const NoSelection = () => (
-  <div className="empty-message-wrapper">
-    <div className="empty-message">
-      <h3>No Log Selected</h3>
-      <p>Click a log line to view details.</p>
-      <p>
-        Toggle this pane with <code>Cmd + ]</code>.
-      </p>
-    </div>
-  </div>
+  <EmptyText>Select a value in the results to view details.</EmptyText>
 )
 
 export default NoSelection

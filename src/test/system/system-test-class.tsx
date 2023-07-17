@@ -7,7 +7,6 @@ import userEvent from "@testing-library/user-event"
 import {dialog} from "electron"
 import React from "react"
 import ZuiApi from "src/js/api/zui-api"
-import {defaultLake} from "src/js/initializers/initLakeParams"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
 import data from "src/test/shared/data"
@@ -55,7 +54,6 @@ export class SystemTest {
       })
       this.assign(await boot(name, opts))
       this.store.dispatch(Tabs.create())
-      this.navTo(`/lakes/${defaultLake().id}`)
     })
 
     afterEach(() => this.network.resetHandlers())
@@ -80,7 +78,9 @@ export class SystemTest {
 
   async importFile(name: string) {
     const file = data.getWebFile(name)
-    await tl.act(async () => await createAndLoadFiles.run([file.path]))
+    await tl.act(async () => {
+      await createAndLoadFiles.run([file.path])
+    })
     await tl.screen.findByText(/import complete/i)
   }
 

@@ -17,6 +17,8 @@ import SessionQueries from "../SessionQueries"
 import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
 import lake from "src/js/models/lake"
+import {defaultLake} from "src/js/initializers/initLakeParams"
+import {getActive} from "../Tabs/selectors"
 
 export const getHistory = (
   state,
@@ -96,16 +98,13 @@ export const getActiveQuery = createSelector(
 export const getPoolId = (state) => {
   type Params = {poolId?: string}
   const match = matchPath<Params>(getLocation(state).pathname, [
-    "/lakes/:lakeId/pools/:poolId",
+    "/pools/:poolId",
   ])
   return match?.params?.poolId || null
 }
 
-// This is weird, we need to get this from the state and not the url.
-export const getLakeId = (state: State = undefined) => {
-  type Params = {lakeId?: string}
-  const match = matchPath<Params>(getLocation(state).pathname, "/lakes/:lakeId")
-  return match?.params?.lakeId || null
+export const getLakeId = (state: State) => {
+  return state.window.lakeId ?? defaultLake().id
 }
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
@@ -156,9 +155,7 @@ export const getPools = createSelector(getLake, Pools.raw, (l, pools) => {
     .sort((a, b) => (a.name > b.name ? 1 : -1))
 })
 
-export const getTabId = (s: State) => {
-  return s.tabs.active
-}
+export const getTabId = getActive
 
 export const getSessionHistory = createSelector(
   [getTabId, SessionHistories.raw],

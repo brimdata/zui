@@ -12,13 +12,13 @@ import {NoticeState} from "./Notice/types"
 import {PoolsState} from "./Pools/types"
 import {QueriesState} from "./Queries/types"
 import {TabHistoriesState} from "./TabHistories/types"
-import {TabsState} from "./Tabs/types"
 import {ToolbarsState} from "./Toolbars"
 import {LakeStatusesState} from "./LakeStatuses/types"
 import {SessionQueriesState} from "./SessionQueries/types"
 import {QueryVersionsState} from "./QueryVersions/types"
 import {SessionHistoriesState} from "./SessionHistories/types"
 import {PoolSettingsState} from "./PoolSettings/types"
+import {WindowState} from "./Window/types"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -34,22 +34,22 @@ export type GetState = () => State
 export type DispatchProps = {dispatch: Dispatch}
 export type State = {
   appearance: AppearanceState
-  launches: LaunchesState
   configPropValues: ConfigPropValuesState
-  tabHistories: TabHistoriesState
-  lakes: LakesState
   errors: ErrorsState
-  pools: PoolsState
-  poolSettings: PoolSettingsState
+  lakes: LakesState
+  lakeStatuses: LakeStatusesState
+  launches: LaunchesState
   loads: LoadsState
   modal: ModalState
   notice: NoticeState
-  tabs: TabsState
-  lakeStatuses: LakeStatusesState
+  pools: PoolsState
+  poolSettings: PoolSettingsState
   queries: QueriesState
-  remoteQueries: QueriesState
   queryVersions: QueryVersionsState
-  sessionQueries: SessionQueriesState
+  remoteQueries: QueriesState
   sessionHistories: SessionHistoriesState
+  sessionQueries: SessionQueriesState
+  tabHistories: TabHistoriesState
   toolbars: ToolbarsState
+  window: WindowState
 }

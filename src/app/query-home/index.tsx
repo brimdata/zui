@@ -24,7 +24,7 @@ const MainContent = styled.div`
   flex-direction: column;
   flex: 1;
   height: 100%;
-  min-width: 0;
+  min-width: 320px;
 `
 
 const ContentWrap = styled.div`
@@ -62,16 +62,13 @@ function ResultsProvider({children}) {
 
 const QueryHome = () => {
   const activeQuery = useSelector(Current.getActiveQuery)
-  const lakeId = useSelector(Current.getLakeId)
   const tabId = useSelector(Current.getTabId)
   const select = useSelect()
   const dispatch = useDispatch()
 
   if (activeQuery.isDeleted()) {
     return (
-      <Redirect
-        to={lakeQueryPath(tabId, lakeId, activeQuery.versionId() || "0")}
-      />
+      <Redirect to={lakeQueryPath(tabId, activeQuery.versionId() || "0")} />
     )
   }
 

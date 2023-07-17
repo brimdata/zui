@@ -5,8 +5,6 @@ import {ColumnHeadersViewState, ResultsView, PaneName} from "./types"
 const slice = createSlice({
   name: "TAB_LAYOUT",
   initialState: {
-    rightSidebarIsOpen: true,
-    rightSidebarWidth: 260,
     columnHeadersView: "AUTO" as ColumnHeadersViewState,
     resultsView: "TABLE" as ResultsView,
     currentPaneName: "history" as PaneName,
@@ -16,18 +14,6 @@ const slice = createSlice({
     queryPanels: "",
   },
   reducers: {
-    showDetailPane: (s) => {
-      s.rightSidebarIsOpen = true
-    },
-    hideDetailPane: (s) => {
-      s.rightSidebarIsOpen = false
-    },
-    toggleDetailPane: (s) => {
-      s.rightSidebarIsOpen = !s.rightSidebarIsOpen
-    },
-    setDetailPaneWidth: (s, a: PayloadAction<number>) => {
-      s.rightSidebarWidth = a.payload
-    },
     setColumnsView: (s, a: PayloadAction<ColumnHeadersViewState>) => {
       s.columnHeadersView = a.payload
     },

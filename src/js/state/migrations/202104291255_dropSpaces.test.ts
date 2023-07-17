@@ -1,4 +1,4 @@
-import {getAllTabs} from "src/js/state/migrations/utils/getTestState"
+import {getAllTabs_before_202307101053} from "src/js/state/migrations/utils/getTestState"
 import {migrate} from "src/test/unit/helpers/migrate"
 
 test("migrating 202104291255_dropSpaces", async () => {
@@ -10,7 +10,7 @@ test("migrating 202104291255_dropSpaces", async () => {
     expect(state.spaces).toBe(undefined)
   }
 
-  for (let tab of getAllTabs(next)) {
+  for (let tab of getAllTabs_before_202307101053(next)) {
     expect(tab.layout.sidebarSections[0].id).toBe("pools")
   }
 })

@@ -1,6 +1,5 @@
 import {releaseNotesPath} from "src/app/router/utils/paths"
 import Appearance from "../state/Appearance"
-import Current from "../state/Current"
 import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import Tabs from "../state/Tabs"
@@ -25,7 +24,7 @@ export default (store: Store) => {
   })
 
   global.zui.on("toggleRightSidebar", () => {
-    store.dispatch(Layout.toggleDetailPane())
+    store.dispatch(Appearance.toggleSecondarySidebar())
   })
 
   global.zui.on("showPreferences", () => {
@@ -57,8 +56,7 @@ export default (store: Store) => {
   })
 
   global.zui.on("showReleaseNotes", () => {
-    const id = Current.getLakeId(store.getState())
-    store.dispatch(Tabs.create(releaseNotesPath(id)))
+    store.dispatch(Tabs.create(releaseNotesPath()))
   })
 
   global.zui.on("toggleHistogram", () => {

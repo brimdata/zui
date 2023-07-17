@@ -58,13 +58,16 @@ test("delete accessToken for authType none", () => {
 })
 
 test("keeps the tabs", () => {
+  store.dispatch(Tabs.closeActive())
   store.dispatch(Tabs.create("/", "1"))
   store.dispatch(Tabs.create("/", "2"))
   store.dispatch(Tabs.create("/", "3"))
   const persist = getPersistedWindowState(store.getState())
-  expect(Object.keys(persist)).toEqual([...WINDOW_PERSIST, "tabs"])
-  expect(persist.tabs.data.length).toBe(4)
-  expect(Object.keys(persist.tabs.data[0])).toEqual(TAB_PERSIST)
+  expect(Object.keys(persist)).toEqual([...WINDOW_PERSIST])
+  expect(Object.values<any>(persist.window.tabs)[0].data.length).toBe(3)
+  expect(
+    Object.keys(Object.values<any>(persist.window.tabs)[0].data[0])
+  ).toEqual(TAB_PERSIST)
 })
 
 test("global persist", () => {

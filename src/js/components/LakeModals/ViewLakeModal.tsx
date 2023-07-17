@@ -136,6 +136,7 @@ const ViewLake = ({onClose, onEdit}) => {
       type: "warning",
       title: "Lake Logout",
       message: `Are you sure you want to log out of ${name}?`,
+      detail: `All the tabs associated with this lake will be closed.`,
       buttons: ["OK", "Cancel"],
     }).then(({response}) => {
       if (response === 0) {

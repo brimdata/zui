@@ -12,6 +12,7 @@ export default async (): Promise<Store> => {
     releaseNotes: false,
     appState: null,
     autosave: null,
+    autoUpdater: false,
   })) as ZuiMain
   const windowId = main.windows.byName("search")[0].id
   const windowName = "search"

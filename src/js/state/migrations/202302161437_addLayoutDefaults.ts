@@ -1,8 +1,11 @@
 import {isObject} from "lodash"
-import {getAllStates, getAllTabs} from "./utils/getTestState"
+import {
+  getAllStates,
+  getAllTabs_before_202307101053,
+} from "./utils/getTestState"
 
 export default function addLayoutDefaults(state: any) {
-  for (const tab of getAllTabs(state)) {
+  for (const tab of getAllTabs_before_202307101053(state)) {
     // Add some defaults to layout
     tab.layout.currentPaneName = tab.layout.currentPaneName ?? "history"
     tab.layout.isEditingTitle = tab.layout.isEditingTitle ?? false

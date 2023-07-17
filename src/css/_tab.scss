@@ -1,9 +1,9 @@
 $tab-inactive-color: var(--foreground-color);
-$tab-inactive-bg: transparent;
+$tab-inactive-bg: rgba(0, 0, 0, 0.06);
 $tab-hover-color: var(--foreground-color);
 $tab-hover-bg: var(--tab-background-hover);
 $tab-active-color: var(--foreground-color);
-$tab-active-bg: var(--chrome-color);
+$tab-active-bg: white;
 $tab-transition-duration: 200ms;
 
 .tab {
@@ -11,14 +11,14 @@ $tab-transition-duration: 200ms;
   left: 0;
   user-select: none;
   -webkit-app-region: no-drag;
-  height: 80%;
-  border-radius: 10px 10px 2px 2px;
+  height: 32px;
+  border-radius: 8px;
   background: $tab-inactive-bg;
   cursor: default;
   will-change: transform;
   transition: none;
-  box-shadow: 1px 0 0 0 var(--border-color),
-    inset 0 -1px 0 0 var(--border-color);
+  margin-top: 1px;
+  border: 1px solid var(--tab-background);
 
   .tab-content {
     overflow: hidden;
@@ -31,7 +31,7 @@ $tab-transition-duration: 200ms;
   }
 
   .icon {
-    margin-left: 24px;
+    margin-left: 16px;
     margin-right: 8px;
   }
 
@@ -62,8 +62,6 @@ $tab-transition-duration: 200ms;
   // The hover state
   &:hover {
     background-color: $tab-hover-bg;
-    box-shadow: inset -1px 0 var(--border-color), -1px 0 var(--border-color),
-      inset 0 -1px var(--border-color);
 
     .title {
       color: $tab-hover-color;
@@ -81,9 +79,8 @@ $tab-transition-duration: 200ms;
   // The active state
   &.active {
     background: $tab-active-bg;
+    box-shadow: none;
     z-index: 1;
-    box-shadow: 1px 0 0 0 var(--border-color), -1px 0 0 0 var(--border-color),
-      inset 0 -1px 0 0 var(--border-color);
 
     .title {
       color: $tab-active-color;
