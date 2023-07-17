@@ -6,11 +6,20 @@ import {SearchBar} from "../search-bar"
 import {Toolbar} from "../toolbar"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {createAndLoadFiles} from "src/app/commands/pools"
+import {useDispatch} from "src/app/core/state"
+import Tabs from "src/js/state/Tabs"
+import {lakePoolPath} from "src/app/router/utils/paths"
 
 const PoolsSection = () => {
+  const dispatch = useDispatch()
   const [{isOver}, drop] = useFilesDrop({
-    onDrop: (files) => {
-      createAndLoadFiles.run(files.map((f) => f.path))
+    onDrop: async (files) => {
+      try {
+        const poolId = await createAndLoadFiles.run(files.map((f) => f.path))
+        dispatch(Tabs.activateUrl(lakePoolPath(poolId)))
+      } catch (e) {
+        // Handled
+      }
     },
   })
   const [searchTerm, setSearchTerm] = useState("")
