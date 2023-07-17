@@ -10,6 +10,7 @@ import Tabs from "./"
 let store
 beforeEach(async () => {
   store = await initTestStore()
+  store.dispatch(Tabs.closeActive())
 })
 
 const currentPathnames = () =>

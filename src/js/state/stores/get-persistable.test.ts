@@ -58,6 +58,7 @@ test("delete accessToken for authType none", () => {
 })
 
 test("keeps the tabs", () => {
+  store.dispatch(Tabs.closeActive())
   store.dispatch(Tabs.create("/", "1"))
   store.dispatch(Tabs.create("/", "2"))
   store.dispatch(Tabs.create("/", "3"))

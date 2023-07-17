@@ -11,6 +11,7 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 let store: Store
 beforeEach(async () => {
   store = await initTestStore()
+  store.dispatch(Tabs.closeActive()) // start from a clean slate
 })
 
 test("initial state has one tab", () => {
