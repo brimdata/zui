@@ -1,5 +1,4 @@
 import get from "lodash/get"
-import React, {MouseEvent} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import Appearance from "src/js/state/Appearance"
 import styled from "styled-components"

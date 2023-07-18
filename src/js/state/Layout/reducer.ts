@@ -11,7 +11,6 @@ const slice = createSlice({
     isEditingTitle: false,
     titleFormAction: "create" as "create" | "update",
     showHistogram: true,
-    queryPanels: "",
     editorHeight: 100,
     chartHeight: 100,
   },
@@ -44,9 +43,6 @@ const slice = createSlice({
     },
     toggleHistogram(s) {
       s.showHistogram = !s.showHistogram
-    },
-    setQueryPanels(s, value: PayloadAction<string>) {
-      s.queryPanels = value.payload
     },
   },
 })
