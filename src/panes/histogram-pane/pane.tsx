@@ -7,12 +7,13 @@ import {Histogram} from "./histogram"
 import {Toolbar} from "src/components/toolbar"
 import {Title} from "./title"
 import {Resizer} from "./resizer"
+import {useRef} from "react"
 
 export function HistogramPane() {
   const {Parent, width, height} = useParentSize()
   const show = useSelector(Layout.getShowHistogram)
   const chartHeight = useSelector(Layout.getChartHeight)
-
+  const ref = useRef<HTMLDivElement>()
   if (!show) return null
 
   return (
@@ -20,6 +21,7 @@ export function HistogramPane() {
       className={styles.pane}
       data-testid="histogram"
       style={{height: chartHeight}}
+      ref={ref}
     >
       <Parent>
         <Toolbar reverse className={styles.toolbar}>
@@ -28,7 +30,7 @@ export function HistogramPane() {
         </Toolbar>
         <Histogram width={width} height={height} />
       </Parent>
-      <Resizer />
+      <Resizer element={ref.current} />
     </div>
   )
 }
