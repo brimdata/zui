@@ -39,8 +39,10 @@ function run(id: string): Thunk<Promise<ResultStream | null>> {
         tabId,
       })
       res.collect(({rows, shapesMap}) => {
-        const values = isFirstPage ? rows : [...prevVals, ...rows]
-        const shapes = isFirstPage ? shapesMap : {...prevShapes, ...shapesMap}
+        const values = isFirstPage ? [...rows] : [...prevVals, ...rows]
+        const shapes = isFirstPage
+          ? {...shapesMap}
+          : {...prevShapes, ...shapesMap}
         dispatch(Results.setValues({id, tabId, values}))
         dispatch(Results.setShapes({id, tabId, shapes}))
       }, {})
