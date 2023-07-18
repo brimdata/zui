@@ -1,6 +1,5 @@
 import {releaseNotesPath} from "src/app/router/utils/paths"
 import Appearance from "../state/Appearance"
-import Layout from "../state/Layout"
 import Modal from "../state/Modal"
 import Tabs from "../state/Tabs"
 import {Store} from "../state/types"
@@ -57,10 +56,6 @@ export default (store: Store) => {
 
   global.zui.on("showReleaseNotes", () => {
     store.dispatch(Tabs.create(releaseNotesPath()))
-  })
-
-  global.zui.on("toggleHistogram", () => {
-    store.dispatch(Layout.toggleHistogram())
   })
 
   global.zui.on("runCommand", (e, id, ...args) => {

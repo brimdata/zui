@@ -10,4 +10,7 @@ export class ResultsApi {
   showExportDialog() {
     sendToFocusedWindow("results.showExportDialog")
   }
+  toggleHistogram() {
+    sendToFocusedWindow("results.toggleHistogram")
+  }
 }

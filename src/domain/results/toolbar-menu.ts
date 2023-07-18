@@ -30,4 +30,10 @@ createMenu("results.toolbarMenu", [
     command: panes.activate.id,
     args: ["columns" as PaneName],
   },
+  {
+    label: "Histogram",
+    iconName: "chart",
+    description: "Toggle the histogram",
+    command: results.toggleHistogram.id,
+  },
 ])

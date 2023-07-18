@@ -210,7 +210,7 @@ export function compileTemplate(
       },
       {
         label: "Show Histogram",
-        click: () => window.send("toggleHistogram"),
+        click: () => window.send("results.toggleHistogram"),
         type: "checkbox",
         checked: state.showHistogram,
       },
