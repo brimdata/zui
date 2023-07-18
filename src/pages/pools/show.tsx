@@ -63,7 +63,6 @@ export function InitPool({children}) {
   const dispatch = useDispatch<AppDispatch>()
   const poolId = usePoolId()
   const pool = useSelector(Current.getPool)
-  console.log(poolId, pool)
 
   useEffect(() => {
     if (poolId) dispatch(syncPool(poolId))

@@ -21,8 +21,8 @@ export const D3StackedHistogram = memo(function D3StackedHistogram(props: {
 }) {
   // Dimensions
   const {width, height, margin} = props
-  const innerWidth = width - margin.left - margin.right
-  const innerHeight = height - margin.top - margin.bottom
+  const innerWidth = Math.max(1, width - margin.left - margin.right)
+  const innerHeight = Math.max(1, height - margin.top - margin.bottom)
 
   // Scales
   const {xScale, yScale, colorScale, interval} = props
