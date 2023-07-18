@@ -8,7 +8,7 @@ import {Toolbar} from "src/components/toolbar"
 import {Title} from "./title"
 
 export function HistogramPane() {
-  const {Parent, width, height} = useParentSize()
+  const {Parent, width = 0, height = 0} = useParentSize()
   const show = useSelector(Layout.getShowHistogram)
 
   if (!show) return null
