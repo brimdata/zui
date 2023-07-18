@@ -4,9 +4,15 @@ import {toFieldPath} from "src/js/zed-script/toZedScript"
 
 export class ZedAst {
   public tree: any
+  public error: Error | null
 
   constructor(public script: string) {
-    this.tree = parseAst(script)
+    try {
+      this.tree = parseAst(script)
+    } catch (e) {
+      this.tree = null
+      this.error = e
+    }
   }
 
   get poolName() {
