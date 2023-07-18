@@ -34,3 +34,8 @@ export const showExportDialogHandler = createHandler(
     dispatch(Modal.show("export"))
   }
 )
+
+export const toggleHistogram = createHandler(
+  "results.toggleHistogram",
+  ({dispatch}) => dispatch(Layout.toggleHistogram())
+)

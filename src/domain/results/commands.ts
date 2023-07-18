@@ -15,3 +15,7 @@ export const showExportDialog = createCommand(
     results.showExportDialog()
   }
 )
+
+export const toggleHistogram = createCommand("results.toggleHistogram", () => {
+  results.toggleHistogram()
+})

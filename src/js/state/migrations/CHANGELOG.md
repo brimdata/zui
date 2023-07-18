@@ -22,4 +22,8 @@ These two properties moved from Layout reducer to Appearance
 
 ## Move Tabs Under Lakes on July 13, 2023
 
-The tabs used to be in the top level state. They are now nested under the window slice state.
+The tabs used to be in the top level state. They are now nested under the window slice state. Migration has been written.
+
+## Move Panel Size on July 18, 2023
+
+Removed react-resizable-panels from project and now keep sizes in redux. No migration needed. All new values have defaults.

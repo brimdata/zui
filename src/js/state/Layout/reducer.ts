@@ -11,9 +11,16 @@ const slice = createSlice({
     isEditingTitle: false,
     titleFormAction: "create" as "create" | "update",
     showHistogram: true,
-    queryPanels: "",
+    editorHeight: 100,
+    chartHeight: 100,
   },
   reducers: {
+    setChartHeight(s, a: PayloadAction<number>) {
+      s.chartHeight = Math.max(a.payload, 80)
+    },
+    setEditorHeight(s, a: PayloadAction<number>) {
+      s.editorHeight = Math.max(a.payload, 40)
+    },
     setColumnsView: (s, a: PayloadAction<ColumnHeadersViewState>) => {
       s.columnHeadersView = a.payload
     },
@@ -36,9 +43,6 @@ const slice = createSlice({
     },
     toggleHistogram(s) {
       s.showHistogram = !s.showHistogram
-    },
-    setQueryPanels(s, value: PayloadAction<string>) {
-      s.queryPanels = value.payload
     },
   },
 })

@@ -153,7 +153,6 @@
     "react-is": "^17.0.2",
     "react-markdown": "^6.0.2",
     "react-redux": "^8.0.5",
-    "react-resizable-panels": "^0.0.45",
     "react-router": "5.3.1",
     "react-spring": "^8.0.27",
     "react-tooltip": "^4.2.7",

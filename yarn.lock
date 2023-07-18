@@ -10091,16 +10091,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable-panels@npm:^0.0.45":
-  version: 0.0.45
-  resolution: "react-resizable-panels@npm:0.0.45"
-  peerDependencies:
-    react: ^16.14.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0
-  checksum: fab2ae429678c3653b469814d1eafffa70568494b9fd7e90ff8e75d938d754d0ed52df408a2e55f6489bb15dedf02a51dd60b1d8bd5ad93592102844126f27a7
-  languageName: node
-  linkType: hard
-
 "react-router@npm:5.3.1":
   version: 5.3.1
   resolution: "react-router@npm:5.3.1"
@@ -12665,7 +12655,6 @@ __metadata:
     react-is: ^17.0.2
     react-markdown: ^6.0.2
     react-redux: ^8.0.5
-    react-resizable-panels: ^0.0.45
     react-router: 5.3.1
     react-spring: ^8.0.27
     react-tooltip: ^4.2.7
