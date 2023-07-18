@@ -6,15 +6,21 @@ import {useParentSize} from "src/util/hooks/use-parent-size"
 import {Histogram} from "./histogram"
 import {Toolbar} from "src/components/toolbar"
 import {Title} from "./title"
+import {Resizer} from "./resizer"
 
 export function HistogramPane() {
   const {Parent, width, height} = useParentSize()
   const show = useSelector(Layout.getShowHistogram)
+  const chartHeight = useSelector(Layout.getChartHeight)
 
   if (!show) return null
 
   return (
-    <div className={styles.pane} data-testid="histogram">
+    <div
+      className={styles.pane}
+      data-testid="histogram"
+      style={{height: chartHeight}}
+    >
       <Parent>
         <Toolbar reverse className={styles.toolbar}>
           <SettingsButton />
@@ -22,6 +28,7 @@ export function HistogramPane() {
         </Toolbar>
         <Histogram width={width} height={height} />
       </Parent>
+      <Resizer />
     </div>
   )
 }

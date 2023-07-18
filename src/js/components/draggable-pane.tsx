@@ -3,8 +3,8 @@ import styled from "styled-components"
 import DragAnchor from "./DragAnchor"
 
 type Props = {
-  onDrag: (e: React.MouseEvent) => void
-  dragAnchor: "right" | "left"
+  onDrag: (e: MouseEvent, args: {dx: number; dy: number}) => void
+  dragAnchor: "right" | "left" | "top" | "bottom"
   children: ReactNode
 }
 

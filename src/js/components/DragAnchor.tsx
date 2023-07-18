@@ -1,55 +1,90 @@
 import React from "react"
+import {call} from "src/util/call"
 import styled from "styled-components"
 
-type Props = {
-  position: "left" | "right"
-  onDrag: Function
-}
-
 const Area = styled.div`
-  width: 9px;
   position: absolute;
-  top: 0;
-  bottom: 0;
   background: transparent;
   pointer-events: all !important;
   z-index: 99;
 
   &.align-left {
+    top: 0;
+    bottom: 0;
+    width: 9px;
     left: -5px;
     cursor: col-resize;
   }
 
   &.align-right {
+    top: 0;
+    bottom: 0;
+    width: 9px;
     right: -5px;
     cursor: col-resize;
   }
-`
 
+  &.align-top {
+    left: 0;
+    right: 0;
+    height: 9px;
+    top: -5px;
+    cursor: row-resize;
+  }
+
+  &.align-bottom {
+    left: 0;
+    right: 0;
+    height: 9px;
+    bottom: -5px;
+    cursor: row-resize;
+  }
+`
+type Props = {
+  position: "left" | "right" | "top" | "bottom"
+  onDrag?: (e: MouseEvent, args: {dy: number; dx: number}) => void
+  onStart?: (e: React.MouseEvent) => void
+}
 export default class DragAnchor extends React.Component<Props> {
+  private startX: number
+  private startY: number
+
   componentWillUnmount() {
     this.up()
   }
 
-  down = () => {
+  down = (e: React.MouseEvent) => {
+    this.startX = e.clientX
+    this.startY = e.clientY
     const body = document.body
-    if (body) {
-      body.classList.add("no-select", "col-resize")
-      document.addEventListener("mousemove", this.move)
-      document.addEventListener("mouseup", this.up)
-    }
+    body.style.cursor = this.getCursor()
+    body.style.userSelect = "none"
+    document.addEventListener("mousemove", this.move)
+    document.addEventListener("mouseup", this.up)
+    call(this.props.onStart, e)
   }
 
-  move = (e: Event) => {
-    this.props.onDrag(e)
+  move = (e: MouseEvent) => {
+    const dx = e.clientX - this.startX
+    const dy = e.clientY - this.startY
+    call(this.props.onDrag, e, {dx, dy})
   }
 
   up = () => {
     const body = document.body
     if (body) {
-      body.classList.remove("no-select", "col-resize")
+      body.style.cursor = ""
+      body.style.userSelect = ""
       document.removeEventListener("mousemove", this.move)
       document.removeEventListener("mouseup", this.up)
+    }
+  }
+
+  getCursor() {
+    if (["left", "right"].includes(this.props.position)) {
+      return "col-resize"
+    } else {
+      return "row-resize"
     }
   }
 

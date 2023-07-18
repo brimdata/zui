@@ -11,6 +11,7 @@ import Editor from "src/js/state/Editor"
 const EditorWrap = styled.div<{isDisabled?: boolean}>`
   height: 100%;
   width: 100%;
+  overflow: hidden;
   ${(p) =>
     p.isDisabled &&
     `

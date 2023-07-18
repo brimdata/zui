@@ -24,4 +24,6 @@ export default {
   getTitleFormAction: activeTabSelect((s) => s.layout.titleFormAction),
   getShowHistogram: activeTabSelect((s) => s.layout.showHistogram ?? true),
   getQueryPanels: activeTabSelect((s) => s.layout.queryPanels),
+  getEditorHeight: activeTabSelect((s) => s.layout.editorHeight ?? 100),
+  getChartHeight: activeTabSelect((s) => s.layout.chartHeight ?? 100),
 }
