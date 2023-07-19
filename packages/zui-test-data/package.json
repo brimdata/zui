@@ -1,7 +1,5 @@
 {
-  "private": true,
-  "version": "1.0.0",
   "name": "zui-test-data",
-  "main": "index.js",
-  "types": "index.d.ts"
+  "version": "0.0.1",
+  "type": "commonjs"
 }
