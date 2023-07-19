@@ -7,7 +7,6 @@
     "noEmit": true,
     "downlevelIteration": true,
     "strict": false,
-    // "strictNullChecks": true, 503 Errors to fix as of (aug 31, 2022)
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "baseUrl": "./",

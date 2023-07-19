@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "zui-test-data": ["packages/zui-test-data/src/index.ts"],
       "@brimdata/demo-typescript": ["packages/demo-typescript/src/index.ts"],
       "@brimdata/sample-data": ["packages/sample-data/src/index.ts"],
       "@brimdata/zed-js": ["packages/zed-js/src/index.ts"],
@@ -24,6 +23,7 @@
       "@brimdata/zui": ["packages/zui/src/index.ts"],
       "@brimdata/zui-render": ["packages/zui-render/src/index.ts"],
       "@brimdata/zui-renderer": ["packages/zui-renderer/src/index.ts"],
+      "zui-test-data": ["packages/zui-test-data/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

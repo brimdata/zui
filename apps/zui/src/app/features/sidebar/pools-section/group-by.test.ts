@@ -5,37 +5,37 @@ test("group by slash", () => {
   const result = groupByDelimiter(data as any, "/")
 
   expect(result).toMatchInlineSnapshot(`
-    Array [
-      Object {
-        "children": Array [
-          Object {
+    [
+      {
+        "children": [
+          {
             "name": "mine / query1",
           },
         ],
-        "group": Array [
+        "group": [
           "mine",
         ],
         "id": "0-0",
         "name": "mine",
       },
-      Object {
+      {
         "name": "base",
       },
-      Object {
-        "children": Array [
-          Object {
-            "children": Array [
-              Object {
-                "children": Array [
-                  Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
                             "name": "a/b/c/d/e/f",
                           },
                         ],
-                        "group": Array [
+                        "group": [
                           "a",
                           "b",
                           "c",
@@ -46,7 +46,7 @@ test("group by slash", () => {
                         "name": "e",
                       },
                     ],
-                    "group": Array [
+                    "group": [
                       "a",
                       "b",
                       "c",
@@ -56,7 +56,7 @@ test("group by slash", () => {
                     "name": "d",
                   },
                 ],
-                "group": Array [
+                "group": [
                   "a",
                   "b",
                   "c",
@@ -65,7 +65,7 @@ test("group by slash", () => {
                 "name": "c",
               },
             ],
-            "group": Array [
+            "group": [
               "a",
               "b",
             ],
@@ -73,7 +73,7 @@ test("group by slash", () => {
             "name": "b",
           },
         ],
-        "group": Array [
+        "group": [
           "a",
         ],
         "id": "2-0",
