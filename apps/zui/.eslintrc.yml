@@ -1,3 +1,13 @@
+extends:
+  - "../../.eslintrc.json"
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+  - plugin:react/recommended
+  - plugin:jest/recommended
+  - plugin:prettier/recommended
+
+ignorePatterns: ["!**/*"]
+
 parser: "@typescript-eslint/parser"
 
 plugins:
@@ -14,13 +24,6 @@ env:
   es6: true
   node: true
   jest: true
-
-extends:
-  - eslint:recommended
-  - plugin:@typescript-eslint/recommended
-  - plugin:react/recommended
-  - plugin:jest/recommended
-  - plugin:prettier/recommended
 
 settings:
   react:
