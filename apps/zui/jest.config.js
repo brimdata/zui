@@ -1,3 +1,12 @@
+const {pathsToModuleNameMapper} = require("ts-jest")
+// In the following statement, replace `./tsconfig` with the path to your `tsconfig` file
+// which contains the path mapping (ie the `compilerOptions.paths` option):
+const config = require("../../tsconfig.base")
+
+const moduleNameMapper = pathsToModuleNameMapper(config.compilerOptions.paths, {
+  prefix: "<rootDir>/../../",
+})
+
 module.exports = {
   transform: {
     "^.+\\.(t|j)sx?$": ["@swc/jest"],
@@ -11,4 +20,5 @@ module.exports = {
   modulePaths: ["<rootDir>"],
   roots: ["./src"],
   maxWorkers: 4,
+  moduleNameMapper,
 }

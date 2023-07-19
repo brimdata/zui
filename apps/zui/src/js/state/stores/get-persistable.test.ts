@@ -34,7 +34,7 @@ test("deleting access tokens for authType auth0", () => {
   const persist = getPersistedGlobalState(store.getState())
   const persistedLake = Lakes.id("1")(persist)
   expect(persistedLake.authData).toMatchInlineSnapshot(`
-    Object {
+    {
       "audience": "a",
       "clientId": "1",
       "domain": "me.com",
@@ -89,7 +89,7 @@ test("global persist", () => {
   const persist = getPersistedGlobalState(store.getState())
   const persistedLake = Lakes.id("1")(persist)
   expect(persistedLake.authData).toMatchInlineSnapshot(`
-    Object {
+    {
       "audience": "a",
       "clientId": "1",
       "domain": "me.com",
