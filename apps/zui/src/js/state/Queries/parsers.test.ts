@@ -1,10 +1,11 @@
 import {parseJSONLib} from "./parsers"
+import * as path from "path"
+
+const fixturePath = path.join(__dirname, "fixtures", "test-query-lib.json")
 
 test("parses json file as query lib with annotations", () => {
   expect.assertions(8)
-  const {libRoot: parsedQueryLib} = parseJSONLib(
-    "src/js/state/Queries/fixtures/test-query-lib.json"
-  )
+  const {libRoot: parsedQueryLib} = parseJSONLib(fixturePath)
   expect(parsedQueryLib["isOpen"]).toEqual(false)
   expect(parsedQueryLib.items[2]["isOpen"]).toEqual(false)
 

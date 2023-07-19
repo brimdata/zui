@@ -53,7 +53,7 @@ test("migrates urls", async () => {
   )
 
   expect(urls).toMatchInlineSnapshot(`
-    Array [
+    [
       "/",
       "/pools/0x113a39e374d0d717f2081ce5dce50c1b02e45596",
       "/queries/jMdii4s7QvQKpX51Vq92f/versions/0",
