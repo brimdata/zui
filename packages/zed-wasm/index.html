@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+  </head>
+  <body>
+    <div id="mocha">
+      <h1>Manual Testing</h1>
+      <div>
+        <h2>Input File</h2>
+        <input type="file" id="file-input" />
+      </div>
+      <div>
+        <h2>Program</h2>
+        <input type="text" value="*" id="program" />
+      </div>
+      <div>
+        <h2>Output Format</h2>
+        <select id="output-format">
+          <option>js</option>
+          <option>zed</option>
+        </select>
+      </div>
+      <div>
+        <button type="button" id="run">Run</button>
+      </div>
+      <div>
+        <h2>View results in the devtools console.</h2>
+      </div>
+      <h1>Unit Tests</h1>
+    </div>
+
+    <script src="https://unpkg.com/chai/chai.js"></script>
+    <script src="https://unpkg.com/mocha/mocha.js"></script>
+
+    <script class="mocha-init" type="module">
+      mocha.setup('bdd');
+      mocha.checkLeaks();
+    </script>
+
+    <script type="module" src="test/zq.test.js"></script>
+
+    <script type="module" class="mocha-exec">
+      const { zq } = await import('../../dist/packages/zed-wasm/index.js');
+      window.zq = zq;
+      mocha.run();
+    </script>
+
+    <script type="module">
+      const input = document.getElementById('file-input');
+      const program = document.getElementById('program');
+      const outputFormat = document.getElementById('output-format');
+      const run = document.getElementById('run');
+
+      run.addEventListener('click', async () => {
+        const file = input.files[0];
+        if (!file) return;
+        const result = await zq({
+          input: file,
+          program: program.value,
+          outputFormat: outputFormat.value,
+        });
+        console.log(result);
+      });
+    </script>
+  </body>
+</html>
