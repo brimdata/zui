@@ -94,7 +94,15 @@ async function zedDevBuild(destPath) {
   }
   const plat = platformDefs[process.platform]
 
-  const zedPackageDir = path.join(__dirname, "..", "..", "node_modules", "zed")
+  const zedPackageDir = path.join(
+    __dirname,
+    "..",
+    "..",
+    "..",
+    "..",
+    "node_modules",
+    "zed"
+  )
 
   fs.mkdirpSync(destPath)
 
@@ -106,7 +114,7 @@ async function zedDevBuild(destPath) {
 async function main() {
   try {
     fs.copySync(
-      path.resolve("node_modules", "brimcap", "build", "dist"),
+      path.resolve("..", "..", "node_modules", "brimcap", "build", "dist"),
       zdepsPath
     )
     const brimcapVersion = child_process
