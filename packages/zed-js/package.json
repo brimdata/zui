@@ -1,0 +1,13 @@
+{
+  "name": "@brimdata/zed-js",
+  "version": "0.0.17",
+  "type": "commonjs",
+  "exports": "./src/index.js",
+  "devDependencies": {
+    "@types/event-source-polyfill": "^1.0.1"
+  },
+  "dependencies": {
+    "event-source-polyfill": "^1.0.31",
+    "events": "^3.3.0"
+  }
+}

@@ -1,0 +1,131 @@
+{
+    _path: "conn",
+    ts: 2018-03-24T17:15:20.600725Z,
+    uid: "C1zOivgBT6dBmknqk",
+    id: {
+        orig_h: 10.47.1.152,
+        orig_p: 49562 (port=uint16),
+        resp_h: 23.217.103.245,
+        resp_p: 80 (port)
+    } (=0),
+    proto: "tcp" (=zenum),
+    service: null ((string, uint64)),
+    duration: 9.698493s (duration),
+    orig_bytes: 0 (uint64),
+    resp_bytes: 90453565 (uint64),
+    conn_state: "SF",
+    local_orig: null,
+    local_resp: null,
+    missed_bytes: 0 (uint64),
+    history: "^dtAttttFf",
+    orig_pkts: 57490 (uint64),
+    orig_ip_bytes: 2358856 (uint64),
+    resp_pkts: 123713 (uint64),
+    resp_ip_bytes: 185470730 (uint64),
+    tunnel_parents: null (=1)
+} (=2)
+{
+    _path: "conn",
+    ts: 2018-03-24T17:15:20.6008Z,
+    uid: "CfbnHCmClhWXY99ui",
+    id: {
+        orig_h: 10.128.0.207,
+        orig_p: 13,
+        resp_h: 10.47.19.254,
+        resp_p: 14
+    },
+    proto: "icmp",
+    service: null,
+    duration: 1.278ms,
+    orig_bytes: 336,
+    resp_bytes: 0,
+    conn_state: "OTH",
+    local_orig: null,
+    local_resp: null,
+    missed_bytes: 0,
+    history: null,
+    orig_pkts: 28,
+    orig_ip_bytes: 1120,
+    resp_pkts: 0,
+    resp_ip_bytes: 0,
+    tunnel_parents: null
+} (2)
+{
+    array: ["1", "2", "3"],
+    set: |["a", "b", "c"]|,
+    union: "hi james" ((string, int64)),
+    map: |{ "best": 1, "worst": 0 }|,
+    null: null
+}
+{ city: "Berkeley", state: "CA", population: 121643 (uint32) } (=city_schema)
+{ city: "Broad Cove", state: "ME", population: 806 } (city_schema)
+{ city: "Baton Rouge", state: "LA", population: 221599 } (city_schema)
+{
+    info: "Connection Example",
+    src: { addr: 10.1.1.2, port: 80 (uint16) } (=socket),
+    dst: { addr: 10.0.1.2, port: 20130 } (socket)
+} (=conn)
+{
+    info: "Connection Example 2",
+    src: { addr: 10.1.1.8, port: 80 },
+    dst: { addr: 10.1.2.88, port: 19801 }
+} (conn)
+{
+    info: "Access List Example",
+    nets: [ 10.1.1.0/24, 10.1.2.0/24 ]
+} (=access_list)
+{ metric: "A", ts: 2020-11-24T08:44:09.586441-08:00, value: 120 }
+{ metric: "B", ts: 2020-11-24T08:44:20.726057-08:00, value: 0.86 }
+{ metric: "A", ts: 2020-11-24T08:44:32.201458-08:00, value: 126 }
+{ metric: "C", ts: 2020-11-24T08:44:43.547506-08:00, value: { x:10, y:101 } }
+// // a record containing all the primitives
+{
+uint8: 8 (uint8),
+uint16: 16 (uint16),
+uint32: 32 (uint32),
+uint64: 64 (uint64),
+int8: -8 (int8),
+int16: -16 (int16),
+int32: -32 (int32),
+int64: -64 (int64),
+duration: 10.1s (duration),
+time: 1937-01-01T12:00:27.87+00:20 (time),
+float16: 16.16 (float16),
+float32: 32.32 (float32),
+float64: 64.64 (float64),
+// decimal: 10.00001 (decimal),
+bool: false (bool),
+bytes: 0xff (bytes),
+string: "Hello world" (string),
+ip: 10.10.10.10 (ip),
+net: 10.1.1.0/24 (net),
+type: <access_list={info:string,nets:[net]}> (type),
+error: error("fatal error"),
+null: null (null)
+} (=every_primitive)
+// 
+// // test when everything is null
+// 
+{
+uint8:null,
+uint16:null,
+uint32:null,
+uint64:null,
+int8:null,
+int16:null,
+int32:null,
+int64:null,
+duration:null,
+time:null,
+float16: null,
+float32: null,
+float64:null,
+bool:null,
+bytes:null,
+string:null,
+ip:null,
+net:null,
+type:null,
+error:null,
+null:null,
+} (every_primitive)

@@ -1,0 +1,9 @@
+{
+    value: {
+        before: null (myValue={Id:int32,IsDeleted:bool}),
+        after: {
+            Id: 1,
+            IsDeleted: false
+        } (myValue)
+    }
+}

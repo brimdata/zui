@@ -1,0 +1,47 @@
+{
+  "name": "zealot",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@swc/helpers": "~0.4.11",
+    "tslib": "^2.3.0"
+  },
+  "scripts": {
+    "set-version": "node tools/scripts/version.mjs",
+    "build-affected": "nx affected --target=build"
+  },
+  "devDependencies": {
+    "@nrwl/esbuild": "^15.8.7",
+    "@nrwl/eslint-plugin-nx": "15.8.7",
+    "@nrwl/jest": "15.8.7",
+    "@nrwl/js": "15.8.7",
+    "@nrwl/linter": "15.8.7",
+    "@nrwl/workspace": "15.8.7",
+    "@nx-go/nx-go": "^2.7.0",
+    "@swc/cli": "~0.1.55",
+    "@swc/core": "^1.2.173",
+    "@swc/jest": "0.2.20",
+    "@types/jest": "^29.4.0",
+    "@types/node": "16.11.7",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
+    "esbuild": "^0.17.12",
+    "eslint": "~8.15.0",
+    "eslint-config-prettier": "8.1.0",
+    "jest": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
+    "jest-environment-node": "^29.4.1",
+    "nx": "15.8.7",
+    "open-cli": "^7.2.0",
+    "prettier": "^2.6.2",
+    "serve": "^14.2.0",
+    "ts-jest": "^29.0.5",
+    "ts-node": "10.9.1",
+    "typescript": "~4.9.5"
+  },
+  "packageManager": "yarn@3.5.0",
+  "workspaces": [
+    "packages/*"
+  ]
+}
