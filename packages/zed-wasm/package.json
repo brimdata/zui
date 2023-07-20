@@ -15,6 +15,6 @@
     "golang-wasm": "github:teamortix/golang-wasm#master"
   },
   "dependencies": {
-    "@brimdata/zed-js": "0.0.17"
+    "@brimdata/zed-js": "workspace:*"
   }
 }
