@@ -30,7 +30,7 @@ export function HistogramPane() {
         </Toolbar>
         <Histogram width={width} height={height} />
       </Parent>
-      <Resizer element={ref.current} />
+      <Resizer outerRef={ref} />
     </div>
   )
 }
