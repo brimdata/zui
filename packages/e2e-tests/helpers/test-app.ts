@@ -157,7 +157,7 @@ const getAppInfo = () => {
     };
   }
 
-  return { bin: null, entry: '../..' };
+  return { bin: null, entry: 'apps/zui' };
 };
 
 function waitForTrue(check: () => boolean | Promise<boolean>) {
