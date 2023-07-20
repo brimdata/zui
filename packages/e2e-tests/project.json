@@ -1,0 +1,18 @@
+{
+  "name": "e2e-tests",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/e2e-tests",
+  "implicitDependencies": ["zui"],
+  "projectType": "library",
+  "targets": {
+    "e2e": {
+      "executor": "@nxkit/playwright:test",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "outputPath": "dist/packages/e2e-tests/test-results",
+        "playwrightConfig": "packages/e2e-tests/playwright.config.js",
+        "baseUrl": "https://example.com"
+      }
+    }
+  }
+}
