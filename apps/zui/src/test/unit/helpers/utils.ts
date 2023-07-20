@@ -1,3 +1,3 @@
 export function flushPromises() {
-  return new Promise(setTimeout)
+  return new Promise((r) => setTimeout(r))
 }
