@@ -12,6 +12,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  transpilePackages: ["@brimdata/zed-js"],
 }
 
 module.exports = nextConfig

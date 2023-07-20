@@ -11,6 +11,7 @@ const context = await esbuild.context({
   sourcemap: true,
   target: "node16",
   external: ["keytar", "electron", "node-pipe"],
+  tsconfig: "./tsconfig.json",
 })
 
 if (args.includes("--watch")) {

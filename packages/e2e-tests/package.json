@@ -3,10 +3,10 @@
   "private": true,
   "packageManager": "yarn@3.1.1",
   "scripts": {
-    "test": "NODE_ENV=test playwright test -c playwright.config.js"
+    "test": "NODE_ENV=test yarn exec playwright test -c playwright.config.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.27.1",
-    "playwright-chromium": "^1.27.1"
+    "playwright-chromium": "^1.36.1"
   }
 }
