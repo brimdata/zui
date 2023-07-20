@@ -1549,7 +1549,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brimdata/zed-js@0.0.17, @brimdata/zed-js@workspace:*, @brimdata/zed-js@workspace:packages/zed-js":
+"@brimdata/zed-js@workspace:*, @brimdata/zed-js@workspace:packages/zed-js":
   version: 0.0.0-use.local
   resolution: "@brimdata/zed-js@workspace:packages/zed-js"
   dependencies:
@@ -1578,7 +1578,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brimdata/zed-wasm@workspace:packages/zed-wasm"
   dependencies:
-    "@brimdata/zed-js": 0.0.17
+    "@brimdata/zed-js": "workspace:*"
     "@types/golang-wasm": ^1.15.0
     golang-wasm: "github:teamortix/golang-wasm#master"
   languageName: unknown
@@ -3550,6 +3550,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nxkit/playwright@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@nxkit/playwright@npm:2.3.0"
+  peerDependencies:
+    "@playwright/test": ^1.25.2
+  checksum: 57fa8cc56cfb17cd1ba5bb51c433c1631a61df96d58836ac7ebab99e8cb62f3bbc2f9709170bb086475d81417951a2cb5a2d62010fb1cef768ffdc531077cd1f
+  languageName: node
+  linkType: hard
+
 "@open-draft/until@npm:^1.0.3":
   version: 1.0.3
   resolution: "@open-draft/until@npm:1.0.3"
@@ -3579,19 +3588,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.27.1":
-  version: 1.36.1
-  resolution: "@playwright/test@npm:1.36.1"
+"@playwright/test@npm:1.27.1":
+  version: 1.27.1
+  resolution: "@playwright/test@npm:1.27.1"
   dependencies:
     "@types/node": "*"
-    fsevents: 2.3.2
-    playwright-core: 1.36.1
-  dependenciesMeta:
-    fsevents:
-      optional: true
+    playwright-core: 1.27.1
   bin:
     playwright: cli.js
-  checksum: a0127e0dccc458e7feb1b5742c90f79db0b895288b135310d056be5e3c6bb2c47c4503d5b7a584db2b1ef518f87020dafa0016c198c98fd3df719d66cd2ab7b7
+  checksum: 92f219a78c21da03c6599d92c313c914e73cc374306366130fb3bd4701555179394ec5a3000d9375ce59f5a03c00f20d1ddaae50c85583ce475e17795a622699
   languageName: node
   linkType: hard
 
@@ -8327,9 +8332,6 @@ __metadata:
 "e2e-tests@workspace:packages/e2e-tests":
   version: 0.0.0-use.local
   resolution: "e2e-tests@workspace:packages/e2e-tests"
-  dependencies:
-    "@playwright/test": ^1.27.1
-    playwright-chromium: ^1.36.1
   languageName: unknown
   linkType: soft
 
@@ -9789,7 +9791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@npm:2.3.2, fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
+"fsevents@npm:^2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
   dependencies:
@@ -9799,7 +9801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
+"fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
   resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
@@ -14539,23 +14541,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-chromium@npm:^1.36.1":
-  version: 1.36.1
-  resolution: "playwright-chromium@npm:1.36.1"
+"playwright-chromium@npm:1.27.1":
+  version: 1.27.1
+  resolution: "playwright-chromium@npm:1.27.1"
   dependencies:
-    playwright-core: 1.36.1
+    playwright-core: 1.27.1
   bin:
     playwright: cli.js
-  checksum: 40c91c54dfc64cd4e98fb55118107467d822dbce8a1388aea7fe76cecba8fe042ed72b39727aa2a8553b6f479580ed8af181566f782afb6655862d6f9c266374
+  checksum: 2ea86a8f7562333bf6bcb8fc7485bd9b084d067087e9a0d0aeaaa116b16cbbd3a7d6f14f509e943a962415a415ee26ef232a51317f0d4d966d0ca55f9de4bdc1
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.36.1":
-  version: 1.36.1
-  resolution: "playwright-core@npm:1.36.1"
+"playwright-core@npm:1.27.1":
+  version: 1.27.1
+  resolution: "playwright-core@npm:1.27.1"
   bin:
-    playwright-core: cli.js
-  checksum: bbde807294053b50f0dbbc81f0dacc43fe525830ce1526e6ca74012582dd1645eae2391719cfb020051abea90704057cfabcbfe45ca530b37becc491e9459790
+    playwright: cli.js
+  checksum: fd65d3eb29978e0e7a755158625e8922a66ca9d599b7c24ddf920822b261d81c51a5964ef8e0e5ed9b2b12dc64541c5949b6a898d965e107f43261964e8c29a0
   languageName: node
   linkType: hard
 
@@ -18255,6 +18257,8 @@ __metadata:
     "@nrwl/linter": 15.8.7
     "@nrwl/workspace": 15.8.7
     "@nx-go/nx-go": ^2.7.0
+    "@nxkit/playwright": ^2.3.0
+    "@playwright/test": 1.27.1
     "@swc/cli": ~0.1.55
     "@swc/core": ^1.2.173
     "@swc/helpers": ~0.4.11
@@ -18271,6 +18275,7 @@ __metadata:
     jest-environment-node: ^29.4.1
     nx: 15.8.7
     open-cli: ^7.2.0
+    playwright-chromium: 1.27.1
     prettier: ^2.6.2
     serve: ^14.2.0
     ts-jest: ^29.0.5

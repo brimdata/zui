@@ -6,9 +6,6 @@ export const repoDir = (): string =>
 export const itestDir = (): string =>
   path.join(process.env.WORKSPACE || 'run', 'playwright-itest');
 
-export const testDataDir = (): string =>
-  path.resolve(path.join(repoDir(), 'src', 'test', 'shared', 'data'));
-
 export const isCI = () => {
   return process.env.GITHUB_ACTIONS === 'true';
 };
