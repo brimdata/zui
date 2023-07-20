@@ -5,6 +5,15 @@
   "implicitDependencies": ["zui"],
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/e2e-tests",
+        "tsConfig": "packages/e2e-tests/tsconfig.json",
+        "main": "packages/e2e-tests/index.ts"
+      }
+    },
     "e2e": {
       "executor": "@nxkit/playwright:test",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
