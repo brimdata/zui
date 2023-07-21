@@ -290,6 +290,11 @@ export class TableViewApi {
   nearBottom(n: number) {
     return this.grid.rowStop >= this.values.length - n
   }
+
+  scrollTo(args: {top: number; left: number}) {
+    const grid = this.element?.querySelector(".zed-table__grid")
+    grid?.scrollTo(args)
+  }
 }
 
 const memoColumns = memoizeOne(

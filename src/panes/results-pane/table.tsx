@@ -38,6 +38,11 @@ export function Table() {
     }
   }, [shape])
 
+  useEffect(() => {
+    const pos = select(TableState.getScrollPosition)
+    table?.scrollTo(pos)
+  }, [ctx.key])
+
   return (
     <TableView
       ref={(table: TableViewApi | null) => {

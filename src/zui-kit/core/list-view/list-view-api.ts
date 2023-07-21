@@ -15,6 +15,7 @@ import {ListViewArgs} from "./types"
  * filled in more and more as you travel (scroll) around.
  */
 export class ListViewApi {
+  element?: HTMLDivElement
   count = 0
   rows = [] as (RowData | null)[]
   rowToValue: number[] = []
@@ -87,5 +88,9 @@ export class ListViewApi {
 
   nearBottom(n: number) {
     return this.rendered.stopIndex >= this.count - n
+  }
+
+  scrollTo(args: {top: number; left: number}) {
+    this.element?.scrollTo(args)
   }
 }

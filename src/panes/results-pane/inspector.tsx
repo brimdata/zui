@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from "react"
+import React, {useEffect, useMemo, useRef} from "react"
 import {useSelector} from "react-redux"
 import {ListView} from "src/zui-kit/react/list-view"
 import {useResultsPaneContext} from "./context"
@@ -13,7 +13,7 @@ import {PathView} from "src/app/query-home/results/path-view"
 import {AlertView} from "src/app/query-home/results/alert-view"
 
 export function Inspector(props: {height?: number}) {
-  const {values, shapes, width, height, loadMore} = useResultsPaneContext()
+  const {values, shapes, width, height, loadMore, key} = useResultsPaneContext()
   const select = useSelect()
   const dispatch = useDispatch()
   const initialScrollPosition = useMemo(
@@ -26,6 +26,12 @@ export function Inspector(props: {height?: number}) {
     dispatch(Slice.setScrollPosition({top, left}))
     if (list.current?.nearBottom(30)) loadMore()
   }
+
+  useEffect(() => {
+    const pos = select(Slice.getScrollPosition)
+    list.current?.scrollTo(pos)
+  }, [key])
+
   return (
     <ListView
       ref={list}
