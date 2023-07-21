@@ -25,12 +25,6 @@ const slice = createSlice({
       state.scrollPosition = action.payload
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase("VIEWER_CLEAR", (state) => {
-      state.expanded = {}
-      state.pages = {}
-    })
-  },
 })
 
 export const reducer = slice.reducer
