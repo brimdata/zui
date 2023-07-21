@@ -74,6 +74,9 @@ const BG = styled.div`
       opacity: 1;
     }
     &:hover {
+      background-color: var(--primary-color);
+    }
+    &:active {
       background-color: var(--primary-color-dark);
     }
     &.selected-start {
