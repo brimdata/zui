@@ -37,12 +37,13 @@ const Nav = styled.nav`
     &:hover:not([aria-pressed="true"]) {
       opacity: 0.7;
       transition: opacity 0.2s;
-      background: rgba(0, 0, 0, 0.04);
+      background: var(--sidebar-item-hover);
     }
 
     &:active:not([aria-pressed="true"]) {
       opacity: 0.8;
-      background: rgba(0, 0, 0, 0.08);
+      background: var(--sidebar-item-active);
+      box-shadow: var(--sidebar-item-active-shadow);
     }
 
     &[aria-pressed="true"] {

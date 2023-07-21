@@ -43,14 +43,15 @@ const Button = styled.button`
   }
 
   &:hover:not([aria-pressed="true"]) {
-    background: var(--button-background-hover);
+    background: var(--sidebar-item-hover);
     span {
       opacity: 0.7;
     }
   }
 
   &:active:not([aria-pressed="true"]) {
-    background: var(--button-background-active);
+    background: var(--sidebar-item-active);
+    box-shadow: var(--sidebar-item-active-shadow);
   }
 
   &:first-child {

@@ -39,8 +39,9 @@
   --input-background: hsl(240, 15%, 92%);
 
   --sidebar-background: hsl(212, 8%, 85%);
-  --sidebar-item-hover: hsl(212, 15%, 85%);
-  --sidebar-item-active: hsl(212, 15%, 83%);
+  --sidebar-item-hover: hsl(200deg 6% 80%);
+  --sidebar-item-active: hsl(200deg 6% 76%);
+  --sidebar-item-active-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
 
   --tab-background: var(--sidebar-background);
   --tab-background-hover: rgba(0, 0, 0, 0.1);

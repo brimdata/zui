@@ -3,7 +3,6 @@ import useLakeId from "src/app/router/hooks/use-lake-id"
 import {MenuItemConstructorOptions} from "electron"
 import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
-import DropdownArrow from "src/js/icons/DropdownArrow"
 import {showContextMenu} from "src/js/lib/System"
 import Current from "src/js/state/Current"
 import Modal from "src/js/state/Modal"
@@ -18,27 +17,18 @@ const LakeNameGroup = styled.div`
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 10px;
-  padding-right: 24px;
+  padding-right: 10px;
   margin: 0 6px;
   border-radius: 6px;
   min-width: 0;
   position: relative;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.04);
-    svg {
-      opacity: 0.5;
-    }
+    background: var(--sidebar-item-hover);
   }
-
-  svg {
-    opacity: 0;
-    position: absolute;
-    bottom: 12px;
-    right: 8px;
-    height: 8px;
-    width: 8px;
-    stroke: var(--foreground-color);
+  &:active {
+    background: var(--sidebar-item-active);
+    box-shadow: var(--sidebar-item-active-shadow);
   }
 `
 
@@ -100,7 +90,6 @@ export default function LakePicker() {
         <label>{`${current?.name}`}</label>
         <label>{`${current?.getAddress()}`}</label>
       </NameColumn>
-      <DropdownArrow />
     </LakeNameGroup>
   )
 }
