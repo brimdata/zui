@@ -5,10 +5,15 @@ import QueryVersions from "../../../js/state/QueryVersions"
 import {Thunk} from "src/js/state/types"
 import {QueryModel} from "../../../js/models/query-model"
 import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
+import Table from "src/js/state/Table"
+import Inspector from "src/js/state/Inspector"
 
 const submitSearch =
   (): Thunk =>
   (dispatch, getState, {api}) => {
+    dispatch(Table.setScrollPosition({top: 0, left: 0}))
+    dispatch(Inspector.setScrollPosition({top: 0, left: 0}))
+
     const nextVersion = Editor.getSnapshot(getState())
     const active = Current.getActiveQuery(getState())
     const error = QueryModel.checkSyntax(nextVersion)

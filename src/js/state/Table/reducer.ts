@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction as Payload} from "@reduxjs/toolkit"
 import * as zed from "@brimdata/zed-js"
-import {defaultState, ZedTableState} from "src/components/zed-table/types"
+import {ZedTableState} from "src/components/zed-table/types"
 
 const slice = createSlice({
   name: "TAB_TABLE",
@@ -29,18 +29,6 @@ const slice = createSlice({
         valueExpanded: action.payload,
       })
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase("VIEWER_CLEAR", (s) => {
-      s.scrollPosition = {top: 0, left: 0}
-      if (s.lastShape) {
-        const state = s.states.get(s.lastShape)
-        if (state) {
-          const {columnExpanded} = state
-          s.states.set(s.lastShape, {...defaultState(), columnExpanded})
-        }
-      }
-    })
   },
 })
 

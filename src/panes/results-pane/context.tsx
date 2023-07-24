@@ -26,6 +26,7 @@ function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
     isSingleShape: shapes.length === 1,
     firstShape: shapes[0],
     loadMore: nextPage,
+    key: useSelector(Results.getKey(RESULTS_QUERY)),
   }
 }
 

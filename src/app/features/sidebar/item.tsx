@@ -47,11 +47,12 @@ const BG = styled.div`
   border-radius: 6px;
 
   &:hover:not(.dragging) {
-    background: rgb(0 0 0 / 0.03);
+    background: var(--sidebar-item-hover);
   }
 
   &:active:not(.dragging) {
-    background: rgb(0 0 0 / 0.05);
+    background: var(--sidebar-item-active);
+    box-shadow: var(--sidebar-item-active-shadow);
   }
 
   &.droppable {
@@ -66,6 +67,7 @@ const BG = styled.div`
     border-radius: 0;
     outline: none;
     background-color: var(--primary-color);
+    box-shadow: var(--sidebar-item-active-shadow);
     color: white;
     svg {
       fill: white;
@@ -73,6 +75,9 @@ const BG = styled.div`
     }
     &:hover {
       background-color: var(--primary-color);
+    }
+    &:active {
+      background-color: var(--primary-color-dark);
     }
     &.selected-start {
       border-top-left-radius: 6px;

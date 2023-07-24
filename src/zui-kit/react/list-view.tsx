@@ -1,6 +1,7 @@
 import {isEqual} from "lodash"
 import React, {
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -74,6 +75,11 @@ export const ListView = forwardRef(function ListView(
   useOnScroll(outerRef, list.onScroll.bind(list))
   useInitialScrollPosition(outerRef, props.initialScrollPosition)
   useImperativeHandle(ref, () => list, [list])
+
+  useEffect(() => {
+    list.element = outerRef.current
+  }, [list])
+
   return (
     <FixedSizeList
       className={props.className}
