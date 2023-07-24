@@ -1,6 +1,4 @@
 {
   "name": "e2e-tests",
-  "private": true,
-  "dependencies": {},
-  "devDependencies": {}
+  "private": true
 }
