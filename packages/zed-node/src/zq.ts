@@ -7,20 +7,16 @@ function execute(bin: string, opts: string[], input?: string) {
 
     const p = spawn(bin, opts)
       .on('error', (e) => reject(e))
-      .on('close', () => resolve(out));
+      .on('exit', () => resolve(out));
 
     p.stdout.on('data', (data: string) => {
-      console.log('stdout', data.toString());
       out += data.toString();
     });
     p.stderr.on('data', (data: string) => {
-      console.log('stderr', data.toString());
       out += data.toString();
     });
     if (input) {
-      console.log('writing', input);
       p.stdin.write(input);
-      console.log('end');
       p.stdin.end();
     }
   });
@@ -48,7 +44,6 @@ export async function zq(opts: {
   // eslint-disable-next-line
 }): Promise<any> {
   const bin = opts.bin || getZqPath();
-  console.log('ZQ BIN', bin);
   const args = [];
   if (opts.format) args.push('-f', opts.format);
   if (opts.query) args.push(opts.query);
