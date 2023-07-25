@@ -5,7 +5,7 @@ function execute(bin: string, opts: string[], input?: string) {
   return new Promise<string>((resolve, reject) => {
     let out = '';
 
-    const p = spawn(bin, opts)
+    const p = spawn(bin, opts, { shell: true })
       .on('error', (e) => reject(e))
       .on('exit', () => resolve(out));
 
