@@ -18246,9 +18246,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zealot@workspace:.":
+"zed@brimdata/zed#b566f6d5297faf6ac6d7c359a7682d59746a9f3f":
+  version: 0.33.0-dev
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=b566f6d5297faf6ac6d7c359a7682d59746a9f3f"
+  checksum: ce3ca3ba642647be48780ed701636b0e4dc061ca769165ee4aa0560d3d30f8e7cbeb66ea8023b85091ddafd58304a9be6fa7e840e412913109636be077a0a184
+  languageName: node
+  linkType: hard
+
+"zed@github:brimdata/zed#main":
+  version: 0.33.0-dev
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=f733ef3722f78d988cb94071e5ba8d2539a39da9"
+  checksum: a6659e318e80becff2616b5fd45378e08440d3c938adb0d05fe5e7da6b46c87464249b77978bed4ce9eca533d2183f55bfe36fbef6cf883762b6827e83dcab69
+  languageName: node
+  linkType: hard
+
+"zod@npm:3.21.4":
+  version: 3.21.4
+  resolution: "zod@npm:3.21.4"
+  checksum: f185ba87342ff16f7a06686767c2b2a7af41110c7edf7c1974095d8db7a73792696bcb4a00853de0d2edeb34a5b2ea6a55871bc864227dace682a0a28de33e1f
+  languageName: node
+  linkType: hard
+
+"zui-monorepo@workspace:.":
   version: 0.0.0-use.local
-  resolution: "zealot@workspace:."
+  resolution: "zui-monorepo@workspace:."
   dependencies:
     "@nrwl/esbuild": ^15.8.7
     "@nrwl/eslint-plugin-nx": 15.8.7
@@ -18284,27 +18305,6 @@ __metadata:
     typescript: 5.1.5
   languageName: unknown
   linkType: soft
-
-"zed@brimdata/zed#f1a5d562e8ff9001bb9ba411d24267b3448eccbb":
-  version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=f1a5d562e8ff9001bb9ba411d24267b3448eccbb"
-  checksum: 9622f41ce16683a0a9b49223c1a74b7b86a32bb2b525a9ff1b418ddddd935daaef1a9f8215c249e99326f72bfde9c0f8ddc6e6159f6c0bdfa25d5e57399954dc
-  languageName: node
-  linkType: hard
-
-"zed@github:brimdata/zed#main":
-  version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=f733ef3722f78d988cb94071e5ba8d2539a39da9"
-  checksum: a6659e318e80becff2616b5fd45378e08440d3c938adb0d05fe5e7da6b46c87464249b77978bed4ce9eca533d2183f55bfe36fbef6cf883762b6827e83dcab69
-  languageName: node
-  linkType: hard
-
-"zod@npm:3.21.4":
-  version: 3.21.4
-  resolution: "zod@npm:3.21.4"
-  checksum: f185ba87342ff16f7a06686767c2b2a7af41110c7edf7c1974095d8db7a73792696bcb4a00853de0d2edeb34a5b2ea6a55871bc864227dace682a0a28de33e1f
-  languageName: node
-  linkType: hard
 
 "zui-test-data@workspace:*, zui-test-data@workspace:packages/zui-test-data":
   version: 0.0.0-use.local
@@ -18446,7 +18446,7 @@ __metadata:
     use-resize-observer: ^8.0.0
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#f1a5d562e8ff9001bb9ba411d24267b3448eccbb"
+    zed: "brimdata/zed#b566f6d5297faf6ac6d7c359a7682d59746a9f3f"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
