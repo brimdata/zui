@@ -3,18 +3,19 @@ import { getZqPath } from './binpath';
 
 function execute(bin: string, opts: string[], input?: string) {
   return new Promise<string>((resolve, reject) => {
+    let out = '';
+
     const p = spawn(bin, opts)
       .on('error', (e) => reject(e))
       .on('close', () => resolve(out));
 
-    let out = '';
     p.stdout.on('data', (data: string) => {
-      console.log('stdout', data);
-      out += data;
+      console.log('stdout', data.toString());
+      out += data.toString();
     });
     p.stderr.on('data', (data: string) => {
-      console.log('stderr', data);
-      out += data;
+      console.log('stderr', data.toString());
+      out += data.toString();
     });
     if (input) {
       console.log('writing', input);
