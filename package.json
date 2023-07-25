@@ -1,5 +1,5 @@
 {
-  "name": "zealot",
+  "name": "zui-monorepo",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -9,7 +9,10 @@
   },
   "scripts": {
     "set-version": "node tools/scripts/version.mjs",
-    "build-affected": "nx affected --target=build"
+    "build-affected": "nx affected --target=build",
+    "build": "nx run-many -t build --all",
+    "lint": "nx run-many -t lint --all",
+    "test": "nx run-many -t test --all"
   },
   "devDependencies": {
     "@nrwl/esbuild": "^15.8.7",
