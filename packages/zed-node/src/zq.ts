@@ -2,10 +2,10 @@ import { spawn } from 'child_process';
 import { getZqPath } from './binpath';
 
 function execute(bin: string, opts: string[], input?: string) {
+  console.log(bin, opts, input);
   return new Promise<string>((resolve, reject) => {
     let out = '';
-
-    const p = spawn(bin, opts, { shell: true })
+    const p = spawn(bin, opts, { shell: true, windowsHide: true })
       .on('error', (e) => reject(e))
       .on('exit', () => resolve(out));
 
