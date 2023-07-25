@@ -1,4 +1,28 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
+node_modules
+out
+dist
+installers
+releases
+coverage
+junit.xml
+zdeps
+.idea
+run
+.vscode
+.DS_Store
+.eslintcache
+.yalc
+yalc.lock
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.next
+tsconfig.tsbuildinfo
 
 # compiled output
 dist

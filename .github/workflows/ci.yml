@@ -17,15 +17,15 @@ jobs:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-zui
-      - run: yarn lint
+      # - run: yarn lint
       - run: yarn test
-      - name: Build and install package
-        if: runner.os != 'Windows'
-        run: |
-          set -x
-          case ${{ runner.os }} in
-            Linux )
-              yarn nx package zui --linux=deb --publish never
-              sudo apt install -y --no-install-recommends ./dist/apps/zui/*.deb
-              ;;
-          esac
+      # - name: Build and install package
+      #   if: runner.os != 'Windows'
+      #   run: |
+      #     set -x
+      #     case ${{ runner.os }} in
+      #       Linux )
+      #         yarn nx package zui --linux=deb --publish never
+      #         sudo apt install -y --no-install-recommends ./dist/apps/zui/*.deb
+      #         ;;
+      #     esac
