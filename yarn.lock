@@ -8512,7 +8512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^22.0.0":
+"electron@npm:22.0.0":
   version: 22.0.0
   resolution: "electron@npm:22.0.0"
   dependencies:
@@ -18372,7 +18372,7 @@ __metadata:
     d3: ^6.7.0
     date-fns: ^2.16.1
     decompress: ^4.2.1
-    electron: ^22.0.0
+    electron: 22.0.0
     electron-builder: ^23.6.0
     electron-builder-notarize: ^1.2.0
     electron-devtools-installer: ^3.2.0
