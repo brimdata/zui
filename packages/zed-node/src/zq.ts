@@ -8,10 +8,18 @@ function execute(bin: string, opts: string[], input?: string) {
       .on('close', () => resolve(out));
 
     let out = '';
-    p.stdout.on('data', (data: string) => (out += data));
-    p.stderr.on('data', (data: string) => (out += data));
+    p.stdout.on('data', (data: string) => {
+      console.log('stdout', data);
+      out += data;
+    });
+    p.stderr.on('data', (data: string) => {
+      console.log('stderr', data);
+      out += data;
+    });
     if (input) {
+      console.log('writing', input);
       p.stdin.write(input);
+      console.log('end');
       p.stdin.end();
     }
   });
@@ -39,6 +47,7 @@ export async function zq(opts: {
   // eslint-disable-next-line
 }): Promise<any> {
   const bin = opts.bin || getZqPath();
+  console.log('ZQ BIN', bin);
   const args = [];
   if (opts.format) args.push('-f', opts.format);
   if (opts.query) args.push(opts.query);
