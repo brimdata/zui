@@ -1,25 +1,25 @@
-name: Uploade Build Artifacts
-description: Uploade artifacts for each platform
+name: Upload Build Artifacts
+description: Upload artifacts for each platform
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - uses: actions/upload-artifact@v3
       with:
         name: Mac Artifact
-        path: installers/*.dmg
+        path: dist/apps/zui/*.dmg
 
     - uses: actions/upload-artifact@v3
       with:
         name: Windows Artifact
-        path: installers/*.exe
+        path: dist/apps/zui/*.exe
 
     - uses: actions/upload-artifact@v3
       with:
         name: Debian Artifact
-        path: installers/*.deb
+        path: dist/apps/zui/*.deb
 
     - uses: actions/upload-artifact@v3
       with:
         name: RPM Artifact
-        path: installers/*.rpm
+        path: dist/apps/zui/*.rpm

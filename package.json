@@ -12,7 +12,8 @@
     "build-affected": "nx affected --target=build",
     "build": "nx run-many -t build --all",
     "lint": "nx run-many -t lint --all",
-    "test": "nx run-many -t test --all"
+    "test": "nx run-many -t test --all",
+    "e2e": "nx e2e e2e-tests"
   },
   "devDependencies": {
     "@nrwl/esbuild": "^15.8.7",
