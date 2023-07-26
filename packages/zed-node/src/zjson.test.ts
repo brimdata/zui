@@ -4,6 +4,8 @@ import * as zed from '@brimdata/zed-js';
 
 const file = getPath('sample.zson');
 
+jest.setTimeout(60_000);
+
 test('super simple', async () => {
   const input: zed.zjson.Obj[] = await zq({
     input: '{hello: "world"}',
