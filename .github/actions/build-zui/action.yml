@@ -26,7 +26,7 @@ inputs:
     required: true
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Install rpm
       if: runner.os == 'Linux'
@@ -61,5 +61,5 @@ runs:
     - name: Check notorization with gatekeeper
       if: runner.os == 'macOS'
       run: |
-        spctl --assess --type execute --verbose --ignore-cache --no-cache installers/mac/*.app
+        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/apps/zui/mac/*.app
       shell: bash
