@@ -1,0 +1,20 @@
+{
+  "name": "zui-insiders",
+  "version": "0.0.1",
+  "productName": "Zui - Insiders",
+  "repository": "https://github.com/brimdata/zui-insiders",
+  "description": "Zui for early adopters with frequent updates.",
+  "lake": {
+    "port": 9988
+  },
+  "type": "commonjs",
+  "scripts": {
+    "inject": "ts-node src/inject",
+    "update-needed": "ts-node src/update-needed"
+  },
+  "devDependencies": {
+    "fs-extra": "^10.1.0",
+    "octokit": "2.1.0",
+    "semver": "^7.3.7"
+  }
+}

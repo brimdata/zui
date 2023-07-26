@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@brimdata/zui-insiders": ["apps/zui-insiders/src/index.ts"],
       "@brimdata/demo-typescript": ["packages/demo-typescript/src/index.ts"],
       "@brimdata/sample-data": ["packages/sample-data/src/index.ts"],
       "@brimdata/zed-js": ["packages/zed-js/src/index.ts"],
