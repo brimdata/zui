@@ -3,7 +3,7 @@ import * as fs from 'fs-extra';
 import * as semver from 'semver';
 import { getCurrentCommitHash } from './commit';
 
-const p = (...args: any[]) => console.log('‣', ...args);
+const p = (...args: unknown[]) => console.log('‣', ...args);
 
 const INSIDERS_ROOT = path.join(__dirname, '..');
 const ZUI_ROOT = path.join(__dirname, '../../zui');
