@@ -17,7 +17,12 @@ async function main() {
   const head = getCurrentCommitHash();
   const lastCommit = extractCommitFromVersion(version);
   const updateNeeded = !(head === lastCommit);
-  console.log(updateNeeded);
+  if (updateNeeded) {
+    console.log('Update needed');
+  } else {
+    console.log('Update not needed');
+    process.exit(1);
+  }
 }
 
 main();
