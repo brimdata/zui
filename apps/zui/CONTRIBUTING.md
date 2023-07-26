@@ -162,7 +162,7 @@ yarn test:playwright  # Integration tests with jest & playwright
 
 ## Installation Packaging
 
-[Releases](https://github.com/brimdata/zui/releases) with installable artifacts are created automatically by an [Actions Workflow](.github/workflows/release.yml) when a GA release is tagged.
+[Releases](https://github.com/brimdata/zui/releases) with installable artifacts are created automatically by an [Actions Workflow](../../.github/workflows/release.yml) when a GA release is tagged.
 
 You can installable artifacts based on your own checkout via:
 
