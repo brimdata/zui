@@ -10,6 +10,7 @@ on:
   push:
     branches:
       - 'build/**'
+      - monorepo
 
 jobs:
   release:
@@ -30,12 +31,12 @@ jobs:
         run: yarn nx inject zui-insiders
 
       - name: Yarn
-        run: yarn config set enableImmutableInstalls false
+        run: yarn
 
       - name: Build Zui
         uses: ./.github/actions/build-zui
         with:
-          cmd: yarn nx package zui -c apps/zui/electron-builder-insiders.json --publish never
+          cmd: yarn nx package zui --config electron-builder-insiders.json --publish never
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
           csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}

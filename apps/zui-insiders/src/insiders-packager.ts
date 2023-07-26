@@ -21,14 +21,12 @@ type Meta = {
 
 export class InsidersPackager {
   root: string;
-  meta: Meta;
   appRoot: string;
   appMeta: Meta;
   lastVersion: string;
   constructor(lastVersion: string) {
     this.root = INSIDERS_ROOT;
     this.appRoot = ZUI_ROOT;
-    this.meta = this.getMeta(this.root);
     this.appMeta = this.getMeta(this.appRoot);
     this.lastVersion = (semver.valid(lastVersion) as string) && lastVersion;
     if (!semver.valid(this.lastVersion))
@@ -58,11 +56,11 @@ export class InsidersPackager {
 
   get injectedProperties() {
     return {
-      name: this.meta.name,
-      productName: this.meta.productName,
-      repository: this.meta.repository,
-      description: this.meta.description,
-      lake: this.meta.lake,
+      name: 'zui-insiders',
+      productName: 'Zui - Insiders',
+      repository: 'https://github.com/brimdata/zui-insiders',
+      description: 'Zui for early adopters with frequent updates.',
+      lake: { port: 9988 },
       version: this.nextVersion,
     };
   }

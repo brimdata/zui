@@ -18709,9 +18709,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zui-insiders@workspace:apps/zui-insiders":
+"zui-insiders-scripts@workspace:apps/zui-insiders":
   version: 0.0.0-use.local
-  resolution: "zui-insiders@workspace:apps/zui-insiders"
+  resolution: "zui-insiders-scripts@workspace:apps/zui-insiders"
   dependencies:
     fs-extra: ^10.1.0
     octokit: 2.1.0

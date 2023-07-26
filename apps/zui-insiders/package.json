@@ -1,12 +1,7 @@
 {
-  "name": "zui-insiders",
+  "name": "zui-insiders-scripts",
+  "private": true,
   "version": "0.0.1",
-  "productName": "Zui - Insiders",
-  "repository": "https://github.com/brimdata/zui-insiders",
-  "description": "Zui for early adopters with frequent updates.",
-  "lake": {
-    "port": 9988
-  },
   "type": "commonjs",
   "scripts": {
     "inject": "ts-node src/inject",

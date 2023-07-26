@@ -20,6 +20,9 @@ jobs:
           repository: brimdata/zui
           ref: main
 
+      - name: Setup Zui
+        uses: ./.github/actions/setup-zui
+
       - name: Check if Update is Needed
         run: yarn nx updated-needed zui-insiders
 
@@ -28,9 +31,6 @@ jobs:
 
       - name: Disable yarn immutable installs
         run: yarn config set enableImmutableInstalls false
-
-      - name: Setup Zui
-        uses: ./.github/actions/setup-zui
 
       - name: Build Zui
         uses: ./.github/actions/build-zui
