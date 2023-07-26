@@ -2,7 +2,7 @@
   "implicitDependencies": {
     "go.mod": "*"
   },
-  "npmScope": "@brimdata",
+  "npmScope": "brimdata",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
