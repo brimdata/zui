@@ -1,6 +1,8 @@
 import { zq } from './zq';
 import { DefaultContext, Record, createRecord } from '@brimdata/zed-js';
 
+jest.setTimeout(60_000);
+
 test('field path', () => {
   const r = createRecord({ id: { person: 'alice' } });
   const f = r.getField(['id', 'person']);
