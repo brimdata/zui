@@ -30,6 +30,9 @@ jobs:
       - name: Inject package.json
         run: yarn nx inject zui-insiders
 
+      - name: Disable yarn immutable installs
+        run: yarn config set enableImmutableInstalls false
+
       - name: Yarn
         run: yarn
 
