@@ -1,0 +1,59 @@
+name: Create New Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 20 * * *' # Every day at 8:15pm UTC
+
+jobs:
+  release:
+    name: Build and Publish
+    strategy:
+      matrix:
+        platform: [windows-2019, macos-12, ubuntu-20.04]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout Zui
+        uses: actions/checkout@v3
+        with:
+          repository: brimdata/zui
+          ref: main
+
+      - name: Check if Update is Needed
+        run: yarn nx updated-needed zui-insiders
+
+      - name: Inject package.json
+        run: yarn nx inject zui-insiders
+
+      - name: Disable yarn immutable installs
+        run: yarn config set enableImmutableInstalls false
+
+      - name: Setup Zui
+        uses: ./.github/actions/setup-zui
+
+      - name: Build Zui
+        uses: ./.github/actions/build-zui
+        with:
+          cmd: yarn nx package zui -c electron-builder-insiders.json --publish always
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          # Windows
+          csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
+          csc_link: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+          # Mac
+          apple_id: ${{ secrets.APPLEID_USER }}
+          apple_id_password: ${{ secrets.APPLEID_PASSWORD }}
+          apple_team_id: ${{ secrets.APPLE_TEAM_ID }}
+          cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
+          cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
+
+      - name: Inform Slack users of failure
+        uses: tiloio/slack-webhook-action@v1.1.2
+        if: ${{ failure() }}
+        with:
+          slack_web_hook_url: ${{ secrets.SLACK_WEBHOOK_BRIMLABS_TEST }}
+          slack_json: |
+            {
+              "username": "{{GITHUB_REPOSITORY}}",
+              "text": "Release failed: https://github.com/{{GITHUB_REPOSITORY}}/actions/runs/{{GITHUB_RUN_ID}}"
+            }
