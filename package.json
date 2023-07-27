@@ -13,6 +13,7 @@
     "build": "nx run-many -t build --all",
     "lint": "nx run-many -t lint --all",
     "test": "nx run-many -t test --all",
+    "start": "nx start zui",
     "e2e": "nx e2e e2e-tests"
   },
   "devDependencies": {

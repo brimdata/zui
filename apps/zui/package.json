@@ -29,6 +29,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.5.1",
     "keytar": "^7.7.0"
   },
   "optionalDependencies": {
