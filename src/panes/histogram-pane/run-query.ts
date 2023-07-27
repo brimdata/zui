@@ -59,8 +59,8 @@ export async function runHistogramQuery(api: ZuiApi) {
   }
 
   async function getNullTimeCount() {
-    const query = `${baseQuery}
-    | ${timeField} == null | count()`
+    // Newline after baseQuery in case it ends with a comment.
+    const query = `${baseQuery}\n | ${timeField} == null | count()`
     const id = "null-time-count"
     const resp = await api.query(query, {id, tabId})
     const [count] = await resp.js()
@@ -68,8 +68,8 @@ export async function runHistogramQuery(api: ZuiApi) {
   }
 
   async function getMissingTimeCount() {
-    const query = `${baseQuery}
-    | !has(${timeField}) | count()`
+    // Newline after baseQuery in case it ends with a comment.
+    const query = `${baseQuery}\n | !has(${timeField}) | count()`
     const id = "missing-time-count"
     const resp = await api.query(query, {id, tabId})
     const [count] = await resp.js()
@@ -83,8 +83,8 @@ export async function runHistogramQuery(api: ZuiApi) {
 
     const {unit, number, fn} = getInterval(range)
     const interval = `${number}${timeUnits[unit]}`
-    const query = `${baseQuery}
-    | ${timeField} != null | count() by time := bucket(${timeField}, ${interval}), group := ${colorField} | sort time`
+    // Newline after baseQuery in case it ends with a comment.
+    const query = `${baseQuery}\n | ${timeField} != null | count() by time := bucket(${timeField}, ${interval}), group := ${colorField} | sort time`
     const resp = await api.query(query, {id, tabId})
     api.dispatch(Histogram.setInterval({unit, number, fn}))
     api.dispatch(Histogram.setRange(range))
