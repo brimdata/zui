@@ -9,6 +9,8 @@ export function ZedEditor(props: {
 }) {
   const ref = useRef<any>()
 
+  // Keep this thing in focus as much as possible.
+  // Probably want to move this into parent.
   useEffect(() => {
     setTimeout(() => {
       if (ref.current) {
@@ -23,6 +25,7 @@ export function ZedEditor(props: {
       width="100%"
       value={props.value}
       onChange={props.onChange}
+      language="zed"
       options={{
         minimap: {enabled: false},
         renderLineHighlightOnlyWhenFocus: true,
