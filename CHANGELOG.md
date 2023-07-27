@@ -1,3 +1,13 @@
+## v1.2.0
+- Update Zed to [v1.9.0](https://github.com/brimdata/zed/releases/tag/v1.9.0)
+- Update Brimcap to [v1.5.1](https://github.com/brimdata/brimcap/releases/tag/v1.5.1)
+- The stacked bar chart is now generalized for any time-based data (not just Zeek-like with `_path` & `ts` fields) (#2785, #2794, #2805)
+- The stacked bar chart is now resizable and can be toggled off/on (#2806, #2810)
+- A single Zui window now shows tabs only for the currently selected Zed lake connection (#2797)
+- Fix an issue where attempting to save a Zed query that contained a parse error caused a stack dump (#2803)
+- Fix an issue where a table of results was sometimes rendered with blank rows (#2813)
+- Fix an issue where comments at the end of a Zed program caused the queries that populate the stacked bar chart to fail (#2822)
+
 ## v1.1.0
 
 - Update Zed to [v1.8.0](https://github.com/brimdata/zed/releases/tag/v1.8.0)
