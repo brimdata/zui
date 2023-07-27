@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - 'build/**'
-      - monorepo
 
 jobs:
   release:
@@ -32,9 +31,6 @@ jobs:
 
       - name: Disable yarn immutable installs
         run: yarn config set enableImmutableInstalls false
-
-      - name: Yarn
-        run: yarn
 
       - name: Build Zui
         uses: ./.github/actions/build-zui

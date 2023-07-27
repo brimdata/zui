@@ -1,4 +1,4 @@
-name: Create New Release
+name: Create Insiders Release
 
 on:
   workflow_dispatch:
@@ -16,14 +16,11 @@ jobs:
     steps:
       - name: Checkout Zui
         uses: actions/checkout@v3
-        with:
-          repository: brimdata/zui
-          ref: main
 
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
 
-      - name: Check if Update is Needed
+      - name: Check if there have been any changes to publish
         run: yarn nx updated-needed zui-insiders
 
       - name: Inject package.json
@@ -35,7 +32,7 @@ jobs:
       - name: Build Zui
         uses: ./.github/actions/build-zui
         with:
-          cmd: yarn nx package zui -c electron-builder-insiders.json --publish always
+          cmd: yarn nx package zui --config electron-builder-insiders.json --publish always
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
           csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
