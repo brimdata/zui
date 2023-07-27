@@ -130,7 +130,7 @@ const builtinAggFuncs = [
 
 const operators = ["+", "-", "*", "/", ">", ">=", "<", "<=", "=", ":="]
 
-const symbols = /[+\-*\/><=:]+/
+const symbols = /[+\-*/><=:]+/
 
 const identifier = /[a-zA-Z][\w$]*/
 
@@ -163,7 +163,7 @@ const integerRule = [/\d+/, "number"]
 const floatRule = [/\d*\.\d+/, "number.float"]
 const stringRule = [/("[^"]*")|('[^']*')/, "string"]
 const commentRule = [/\/\/.*/, "comment"]
-const bracketRule = [/[{}()\[\]]/, "@brackets"]
+const bracketRule = [/[{}()[]]/, "@brackets"]
 
 export async function initializeMonaco() {
   const monaco = await loader.init()
