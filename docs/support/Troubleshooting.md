@@ -92,7 +92,7 @@ and details to [zui/1490](https://github.com/brimdata/zui/issues/1490).
 In all other cases, please [open a new issue](#opening-an-issue).
 
 To begin troubleshooting this, it helps to understand the "backend" of Zui.
-One essential component is a [Zed lake](https://zed.brimdata.io/docs/commands/zed/#1-the-lake-model),
+One essential component is a [Zed lake](https://zed.brimdata.io/docs/commands/zed#the-lake-model),
 a server-style process that manages the storage and querying of imported data.
 Operations in the pools of a Zed lake are invoked via a [REST
 API](https://zed.brimdata.io/docs/lake/api/) that's

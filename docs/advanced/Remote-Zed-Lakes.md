@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Remote Zed Lakes
 
-By default, the Zui application connects to a [Zed lake](https://zed.brimdata.io/docs/commands/zed/#1-the-lake-model)
+By default, the Zui application connects to a [Zed lake](https://zed.brimdata.io/docs/commands/zed#the-lake-model)
 on the system on which it is launched. However, Zui is capable of accessing
 data stored in a Zed lake on a remote system. This article describes the
 available options and current limitations.
@@ -32,7 +32,7 @@ However, the overall app experience is powered by a distributed "backend"
 architecture that includes multiple components.
 
 One essential component is the Zed lake which is accessed via a
-[`zed serve`](https://zed.brimdata.io/docs/commands/zed/#213-serve)
+[`zed serve`](https://zed.brimdata.io/docs/commands/zed#serve)
 process that manages the storage and querying of imported data. Operations on
 the Zed lake are invoked via a [REST API](https://zed.brimdata.io/docs/lake/api/)
 that's utilized by a "client", such as the Zui app. The
@@ -83,7 +83,7 @@ For our example remote host, we'll use a Linux Ubuntu 22.04 VM running in
 Amazon AWS. Because Zui interacts with `zed serve` over a REST API that
 is still evolving, care should be taken to ensure the Zui version being
 installed on the remote side matches the version being run locally. In this
-article we'll use Zui v1.0.0, which includes Zed v1.6.0.
+article we'll use Zui v1.2.0, which includes Zed v1.9.0.
 
 Even though our VM on AWS has no graphical interface, we'll install the full
 Zui package because it includes the compatible Zed binaries as well as a
@@ -91,9 +91,9 @@ bundled [Brimcap](https://github.com/brimdata/brimcap) that will prove useful
 if we want to import packet capture data.
 
 ```
-ubuntu# wget --quiet https://github.com/brimdata/zui/releases/download/v1.0.0/Zui-1.0.0.deb
+ubuntu# wget --quiet https://github.com/brimdata/zui/releases/download/v1.2.0/zui_1.2.0_amd64.deb
 ubuntu# sudo apt update
-ubuntu# sudo apt install -y ./Zui-1.0.0.deb
+ubuntu# sudo apt install -y ./zui_1.2.0_amd64.deb
 ```
 
 The following additional steps are also currently necessary to work around
@@ -121,7 +121,7 @@ see. Therefore we'll start `zed serve` manually from the
 platform as follows:
 
 ```
-ubuntu# mkdir -p ~/.config/Zui/lake ~/.config/Zui/data/brimcap-root ~/.config/Zui/logs
+ubuntu# mkdir -p ~/.config/Zui/lake ~/.config/Zui/plugins/brimcap/storage/root ~/.config/Zui/logs
 ubuntu# /opt/Zui/resources/app.asar.unpacked/zdeps/zed serve \
           -l :9867 \
           -lake $HOME/.config/Zui/lake \
@@ -192,7 +192,7 @@ shown above. See [brimcap/105](https://github.com/brimdata/brimcap/issues/105) f
 Another_User_macOS# wget --quiet https://archive.wrccdc.org/pcaps/2018/wrccdc.2018-03-23.010014000000000.pcap.gz
 Another_User_macOS# gunzip wrccdc.2018-03-23.010014000000000.pcap.gz
 Another_User_macOS# export PATH="/Applications/Zui.app/Contents/Resources/app.asar.unpacked/zdeps:$PATH"
-Another_User_macOS# brimcap index -root "$HOME/Library/Application Support/Zui/data/brimcap-root" -r wrccdc.2018-03-23.010014000000000.pcap
+Another_User_macOS# brimcap index -root "$HOME/Library/Application Support/Zui/plugins/brimcap/storage/root" -r wrccdc.2018-03-23.010014000000000.pcap
 ```
 
 A connection to a remote lake can be removed by selecting the **Get Info**
