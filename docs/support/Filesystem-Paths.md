@@ -60,7 +60,7 @@ each supported platform is:
 Particular categories of saved data are held under this path. Specific
 categories of interest include:
 
-   * `data` (subdirectory) - Storage used by tools bundled with Zui, such as
+   * `plugins` (subdirectory) - Storage used by tools bundled with Zui, such as
      [Brimcap](https://github.com/brimdata/brimcap).
 
    * `lake` (subdirectory) - Storage for the local Zed lake that holds data imported into Zui.
