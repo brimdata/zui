@@ -29,7 +29,6 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.5.1",
     "keytar": "^7.7.0"
   },
   "optionalDependencies": {
@@ -40,6 +39,7 @@
     "@brimdata/zed-js": "workspace:*",
     "@brimdata/zed-node": "workspace:*",
     "@js-joda/core": "^3.2.0",
+    "@monaco-editor/react": "^4.5.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.144",
