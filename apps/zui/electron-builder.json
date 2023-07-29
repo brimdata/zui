@@ -1,0 +1,30 @@
+{
+  "appId": "io.brimdata.zui",
+  "asar": true,
+  "asarUnpack": ["zdeps", "LICENSE.txt", "acknowledgments.txt"],
+  "directories": {"output": "../../dist/apps/zui"},
+  "protocols": [{"name": "zui", "schemes": ["zui"]}],
+  "mac": {
+    "binaries": [
+      "zdeps/zeek/lib/zeek/plugins/Corelight_CommunityID/lib/Corelight-CommunityID.darwin-x86_64.so"
+    ]
+  },
+  "linux": {"target": ["deb", "rpm"]},
+  "rpm": {"depends": ["openssl"]},
+  "deb": {"depends": ["openssl"]},
+  "nsis": {"oneClick": false, "perMachine": false},
+  "forceCodeSigning": true,
+  "afterSign": "electron-builder-notarize",
+  "publish": {
+    "provider": "github"
+  },
+  "files": [
+    "dist/**",
+    "out/**",
+    "build/**",
+    "zdeps/**",
+    "LICENSE.txt",
+    "acknowledgments.txt",
+    "package.json"
+  ]
+}

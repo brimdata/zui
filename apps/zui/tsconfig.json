@@ -1,0 +1,29 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "jsx": "preserve",
+    "noEmit": true,
+    "downlevelIteration": true,
+    "strict": false,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "typeRoots": ["src/js/@types", "node_modules/@types"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "incremental": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@brimdata/zed-js": ["../../packages/zed-js/src/index.ts"],
+      "@brimdata/zed-node": ["../../packages/zed-node/src/index.ts"],
+      "zui-test-data": ["../../packages/zui-test-data/src/index.ts"],
+    }
+  },
+  "exclude": ["scripts", "dist", "run"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+}

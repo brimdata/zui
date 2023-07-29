@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "release/**"
+      - 'release/**'
 
 jobs:
   release:
@@ -22,7 +22,7 @@ jobs:
       - name: Build Zui
         uses: ./.github/actions/build-zui
         with:
-          cmd: yarn electron-builder
+          cmd: yarn nx package zui
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
           csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
@@ -35,7 +35,4 @@ jobs:
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{matrix.platform}}-installer
-          path: installers
+        uses: ./.github/actions/upload-build-artifacts

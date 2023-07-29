@@ -1,0 +1,19 @@
+{
+  "name": "@brimdata/zed-node",
+  "version": "0.0.17",
+  "type": "commonjs",
+  "exports": "./src/index.js",
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/node-fetch": "^2.6.2",
+    "zed": "github:brimdata/zed#main"
+  },
+  "dependencies": {
+    "@brimdata/zed-js": "workspace:*",
+    "fs-extra": "^11.1.1",
+    "node-fetch": "^2.6.2"
+  },
+  "peerDependencies": {
+    "zed": "*"
+  }
+}

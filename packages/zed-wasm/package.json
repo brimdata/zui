@@ -1,0 +1,20 @@
+{
+  "name": "@brimdata/zed-wasm",
+  "version": "0.0.17",
+  "homepage": "https://github.com/brimdata/zed",
+  "type": "module",
+  "keywords": [
+    "zed",
+    "data",
+    "brimdata",
+    "analysis",
+    "wasm"
+  ],
+  "devDependencies": {
+    "@types/golang-wasm": "^1.15.0",
+    "golang-wasm": "github:teamortix/golang-wasm#master"
+  },
+  "dependencies": {
+    "@brimdata/zed-js": "workspace:*"
+  }
+}

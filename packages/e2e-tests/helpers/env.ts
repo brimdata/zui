@@ -1,10 +1,19 @@
-import path from "path"
+import * as path from 'path';
 
 export const repoDir = (): string =>
-  path.resolve(path.join(__dirname, "..", "..", ".."))
+  path.resolve(path.join(__dirname, '..', '..', '..'));
 
 export const itestDir = (): string =>
-  path.join(process.env.WORKSPACE || "run", "playwright-itest")
+  path.join(process.env.WORKSPACE || 'run', 'playwright-itest');
 
-export const testDataDir = (): string =>
-  path.resolve(path.join(repoDir(), "src", "test", "shared", "data"))
+export const isCI = () => {
+  return process.env.GITHUB_ACTIONS === 'true';
+};
+
+export const isMac = () => {
+  return process.platform === 'darwin';
+};
+
+export const isLinux = () => {
+  return process.platform === 'linux';
+};

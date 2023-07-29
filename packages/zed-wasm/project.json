@@ -1,0 +1,55 @@
+{
+  "name": "zed-wasm",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/zed-wasm/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "dependsOn": ["build-go"],
+      "executor": "@nrwl/esbuild:esbuild",
+      "options": {
+        "main": "packages/zed-wasm/src/index.ts",
+        "tsConfig": "packages/zed-wasm/tsconfig.lib.json",
+        "outputPath": "dist/packages/zed-wasm",
+        "assets": ["packages/zed-wasm/*.md"],
+        "format": ["esm"],
+        "deleteOutputPath": false,
+        "esbuildOptions": {
+          "inject": ["packages/zed-wasm/lib/global-shim.js"]
+        }
+      }
+    },
+    "build-go": {
+      "executor": "nx:run-commands",
+      "outputs": ["dist/packages/zed-wasm/main.wasm"],
+      "options": {
+        "command": "go build -tags=noasm -o ../../dist/packages/zed-wasm/main.wasm main.go",
+        "cwd": "packages/zed-wasm"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs zed-wasm {args.ver} {args.tag}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/zed-wasm/**/*.ts"]
+      }
+    },
+    "test-browser": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "serve",
+          "open-cli http://localhost:3000/packages/zed-wasm/"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
