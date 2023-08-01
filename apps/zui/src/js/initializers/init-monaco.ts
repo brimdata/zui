@@ -166,27 +166,31 @@ const commentRule = [/\/\/.*/, "comment"]
 const bracketRule = [/[{}()[]]/, "@brackets"]
 
 export async function initializeMonaco() {
-  const monaco = await loader.init()
-  monaco.languages.register({id: "zed"})
+  try {
+    const monaco = await loader.init()
+    monaco.languages.register({id: "zed"})
 
-  monaco.languages.setMonarchTokensProvider("zed", {
-    keywords,
-    operators,
-    primitiveTypes,
-    builtinAggFuncs,
-    builtinFuncs,
-    builtinOps,
-    symbols,
-    tokenizer: {
-      root: [
-        identifierRule,
-        commentRule,
-        bracketRule,
-        operatorRule,
-        integerRule,
-        floatRule,
-        stringRule,
-      ],
-    },
-  })
+    monaco.languages.setMonarchTokensProvider("zed", {
+      keywords,
+      operators,
+      primitiveTypes,
+      builtinAggFuncs,
+      builtinFuncs,
+      builtinOps,
+      symbols,
+      tokenizer: {
+        root: [
+          identifierRule,
+          commentRule,
+          bracketRule,
+          operatorRule,
+          integerRule,
+          floatRule,
+          stringRule,
+        ],
+      },
+    })
+  } catch (e) {
+    console.error("No window environment")
+  }
 }
