@@ -26,7 +26,6 @@ export function findConnLog(pool: string, uid: string) {
     uidFilter(uid) +
     `)
   | is(ts, <time>) 
-  | is(community_id, <string>) 
   | is(duration, <duration>) 
   | is(uid, <string>)
   | head 1
