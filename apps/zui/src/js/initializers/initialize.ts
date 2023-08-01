@@ -12,6 +12,7 @@ import {invoke} from "src/core/invoke"
 import {WindowName} from "src/electron/windows/types"
 import {initLake} from "./init-lake"
 import {initializeTabs} from "./init-tabs"
+import {initializeMonaco} from "./init-monaco"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -45,5 +46,6 @@ export default async function initialize(
   menus.setContext({api})
   invoke("windowInitialized", global.windowId)
   initializeTabs(store)
+  initializeMonaco()
   return {store, api}
 }

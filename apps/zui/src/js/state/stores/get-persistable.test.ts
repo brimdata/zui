@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import {
   getPersistedGlobalState,

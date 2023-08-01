@@ -4,7 +4,7 @@
   "sourceRoot": "apps/zui",
   "projectType": "app",
   "targets": {
-    "lint:types": {
+    "tsc": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -17,6 +17,7 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
+      "dependsOn": ["tsc"],
       "options": {
         "lintFilePatterns": ["apps/zui/**/*.ts", "apps/zui/**/*.tsx"]
       }
