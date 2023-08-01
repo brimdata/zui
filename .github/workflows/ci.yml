@@ -21,6 +21,8 @@ jobs:
       - run: yarn test
       - name: Build and install package
         if: runner.os != 'Windows'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -x
           case ${{ runner.os }} in
