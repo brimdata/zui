@@ -39,7 +39,7 @@ jobs:
         uses: ./.github/actions/build-zui
         with:
           cmd: yarn nx release-insiders zui
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          gh_token: ${{ secrets.PAT_TOKEN }}
           # Windows
           csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
           csc_link: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
