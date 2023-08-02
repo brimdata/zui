@@ -5,7 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "inject": "ts-node src/inject",
-    "update-needed": "ts-node src/update-needed"
+    "assert-update-needed": "ts-node src/update-needed"
   },
   "devDependencies": {
     "fs-extra": "^10.1.0",
