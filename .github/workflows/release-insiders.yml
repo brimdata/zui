@@ -24,10 +24,10 @@ jobs:
         uses: ./.github/actions/setup-zui
 
       - name: Check if there have been any changes to publish
-        run: yarn nx updated-needed zui-insiders
+        run: yarn nx updated-needed insiders
 
       - name: Inject package.json
-        run: yarn nx inject zui-insiders
+        run: yarn nx inject insiders
 
       - name: Disable yarn immutable installs
         run: yarn config set enableImmutableInstalls false

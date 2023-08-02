@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/setup-zui
 
       - name: Inject package.json
-        run: yarn nx inject zui-insiders
+        run: yarn nx inject insiders
 
       - name: Disable yarn immutable installs
         run: yarn config set enableImmutableInstalls false
