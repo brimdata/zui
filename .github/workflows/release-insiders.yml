@@ -24,7 +24,7 @@ jobs:
         uses: ./.github/actions/setup-zui
 
       - name: Check if there have been any changes to publish
-        run: yarn nx assert-updated-needed insiders
+        run: yarn nx assert-update-needed insiders
 
       - name: Inject package.json
         run: yarn nx inject insiders
