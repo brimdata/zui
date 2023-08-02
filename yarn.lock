@@ -10803,6 +10803,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"insiders@workspace:apps/insiders":
+  version: 0.0.0-use.local
+  resolution: "insiders@workspace:apps/insiders"
+  dependencies:
+    fs-extra: ^10.1.0
+    octokit: 2.1.0
+    semver: ^7.3.7
+  languageName: unknown
+  linkType: soft
+
 "internal-slot@npm:^1.0.3, internal-slot@npm:^1.0.5":
   version: 1.0.5
   resolution: "internal-slot@npm:1.0.5"
@@ -18494,16 +18504,6 @@ __metadata:
   checksum: f185ba87342ff16f7a06686767c2b2a7af41110c7edf7c1974095d8db7a73792696bcb4a00853de0d2edeb34a5b2ea6a55871bc864227dace682a0a28de33e1f
   languageName: node
   linkType: hard
-
-"zui-insiders-scripts@workspace:apps/zui-insiders":
-  version: 0.0.0-use.local
-  resolution: "zui-insiders-scripts@workspace:apps/zui-insiders"
-  dependencies:
-    fs-extra: ^10.1.0
-    octokit: 2.1.0
-    semver: ^7.3.7
-  languageName: unknown
-  linkType: soft
 
 "zui-monorepo@workspace:.":
   version: 0.0.0-use.local

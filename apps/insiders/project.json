@@ -1,7 +1,7 @@
 {
-  "name": "zui-insiders",
+  "name": "insiders",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/zui-insiders/src",
+  "sourceRoot": "apps/insiders/src",
   "projectType": "library",
   "targets": {
     "build": {
