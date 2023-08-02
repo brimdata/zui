@@ -9,7 +9,7 @@ on:
         required: false
   push:
     branches:
-      - 'build/**'
+      - 'build-insiders/**'
 
 jobs:
   release:
