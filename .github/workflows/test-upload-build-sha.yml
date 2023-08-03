@@ -10,5 +10,5 @@ jobs:
     name: Upload the Build Shaw
     runs-on: ubuntu-20.04
     steps:
-      - name: Echo the build sha
-        run: echo ${{ github.sha }}
+      - run: echo ${{ github.sha }} > sha.txt
+      - run: cat sha.txt
