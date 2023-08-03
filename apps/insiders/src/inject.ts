@@ -1,8 +1,9 @@
 import { InsidersPackager } from './insiders-packager';
-import { getLatestInsidersVersion } from './latest';
 
 async function main() {
-  const latest = await getLatestInsidersVersion();
+  const latest = process.argv[2];
+  if (!latest) throw new Error('Provide Latest Version');
+
   const pkg = new InsidersPackager(latest);
   pkg.injectAppPackageJSON();
 }

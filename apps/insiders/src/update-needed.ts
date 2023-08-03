@@ -1,8 +1,10 @@
 import { getLatestInsidersSha } from './latest';
 
 async function main() {
+  const lastVersion = process.argv[2];
+  if (!lastVersion) throw new Error('Provide Latest Version');
   const currentSha = process.env['GITHUB_SHA'];
-  const releaseSha = await getLatestInsidersSha();
+  const releaseSha = await getLatestInsidersSha(lastVersion);
 
   console.log('Last Release:', releaseSha);
   console.log('     Current:', currentSha);
