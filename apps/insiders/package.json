@@ -4,7 +4,6 @@
   "version": "0.0.1",
   "type": "commonjs",
   "scripts": {
-    "latest-version": "ts-node src/latest-version",
     "inject": "ts-node src/inject",
     "assert-update-needed": "ts-node src/update-needed"
   },

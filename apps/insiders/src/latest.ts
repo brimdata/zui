@@ -3,6 +3,8 @@ import fetch from 'node-fetch';
 
 const gh = new Octokit();
 
+const BUILD_SHA_FILE = 'build_sha.txt';
+
 export async function getLatestInsidersVersion() {
   const release = await getRelease();
   // Remove the v
@@ -18,7 +20,7 @@ export async function getLatestInsidersSha() {
 }
 
 function shaUrl(tag: string) {
-  return `https://github.com/brimdata/zui-insiders/releases/download/${tag}/sha.txt`;
+  return `https://github.com/brimdata/zui-insiders/releases/download/${tag}/${BUILD_SHA_FILE}`;
 }
 
 function getRelease() {
