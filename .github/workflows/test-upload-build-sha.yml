@@ -27,3 +27,4 @@ jobs:
           tag: ${{ steps.latest.outputs.release }}
           repo_name: brimdata/zui-insiders
           repo_token: ${{ secrets.PAT_TOKEN }}
+          overwrite: true
