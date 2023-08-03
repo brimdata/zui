@@ -1,27 +1,17 @@
-import { getCurrentCommitHash } from './commit';
-import { getLatestInsidersVersion } from './latest';
-import * as semver from 'semver';
-
-function extractCommitFromVersion(version: string) {
-  const parts = semver.parse(version);
-
-  if (parts && parts.build.length === 1) {
-    return parts.build[0];
-  } else {
-    return null;
-  }
-}
+import { getLatestInsidersSha } from './latest';
 
 async function main() {
-  const version = await getLatestInsidersVersion();
-  const head = getCurrentCommitHash();
-  const lastCommit = extractCommitFromVersion(version);
-  const updateNeeded = !(head === lastCommit);
-  if (updateNeeded) {
-    console.log('Update needed');
-  } else {
-    console.log('Update not needed');
+  const currentSha = process.env['GITHUB_SHA'];
+  const releaseSha = await getLatestInsidersSha();
+
+  console.log('Last Release:', releaseSha);
+  console.log('     Current:', currentSha);
+
+  if (releaseSha.trim() === currentSha) {
+    console.log('No Update Needed');
     process.exit(1);
+  } else {
+    console.log('Continue Update');
   }
 }
 

@@ -1,7 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as semver from 'semver';
-import { getCurrentCommitHash } from './commit';
 
 const p = (...args: unknown[]) => console.log('‣', ...args);
 
@@ -43,7 +42,7 @@ export class InsidersPackager {
         ? this.stableVersion
         : semver.inc(this.lastVersion, 'prerelease');
 
-    return version + '+' + getCurrentCommitHash();
+    return version;
   }
 
   get strategy() {

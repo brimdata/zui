@@ -10807,7 +10807,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "insiders@workspace:apps/insiders"
   dependencies:
+    "@types/node-fetch": ^2.6.2
     fs-extra: ^10.1.0
+    node-fetch: ^2.6.2
     octokit: 2.1.0
     semver: ^7.3.7
   languageName: unknown

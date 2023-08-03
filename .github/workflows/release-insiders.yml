@@ -60,3 +60,6 @@ jobs:
               "username": "{{GITHUB_REPOSITORY}}",
               "text": "Release failed: https://github.com/{{GITHUB_REPOSITORY}}/actions/runs/{{GITHUB_RUN_ID}}"
             }
+  record_sha:
+    name: Record the current build sha on the newly created release
+    runs_on: ubuntu-20.04
