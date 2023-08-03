@@ -1,0 +1,14 @@
+name: Test Uploading to A Insiders Release
+
+on:
+  push:
+    branches:
+      - 'release-insiders/**'
+
+jobs:
+  upload:
+    name: Upload the Build Shaw
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Echo the build sha
+        run: echo ${{ github.sha }}

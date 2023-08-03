@@ -10,8 +10,5 @@
   "publish": {
     "provider": "github",
     "releaseType": "release"
-  },
-  "releaseInfo": {
-    "releaseNotes": "Hello World!"
   }
 }
