@@ -2,9 +2,9 @@ name: Create Insiders Release
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  # - 'release-insiders/**'
+  push:
+    branches:
+      - 'release-insiders/**'
   # schedule:
   #   - cron: '15 20 * * *' # Every day at 8:15pm UTC
 
@@ -60,6 +60,27 @@ jobs:
               "username": "{{GITHUB_REPOSITORY}}",
               "text": "Release failed: https://github.com/{{GITHUB_REPOSITORY}}/actions/runs/{{GITHUB_RUN_ID}}"
             }
-  record_sha:
-    name: Record the current build sha on the newly created release
-    runs_on: ubuntu-20.04
+
+  record_build_sha:
+    needs: release
+    name: Upload the Build Sha
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Create the build_sha file
+        run: echo ${{ github.sha }} > build_sha.txt
+
+      - name: Get The Just Created Release Tag
+        id: latest
+        uses: pozetroninc/github-action-get-latest-release@v0.7.0
+        with:
+          owner: brimdata
+          repo: zui-insiders
+
+      - name: Upload build_sha File to the Latest Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: build_sha.txt
+          tag: ${{ steps.latest.outputs.release }}
+          repo_name: brimdata/zui-insiders
+          repo_token: ${{ secrets.PAT_TOKEN }}
+          overwrite: true
