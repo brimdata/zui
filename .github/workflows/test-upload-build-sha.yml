@@ -11,4 +11,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - run: echo ${{ github.sha }} > sha.txt
-      - run: cat sha.txt
+      - name: Upload Shaw File To Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: sha.txt
+          tag: v1.2.1-0
+          repo_name: brimdata/zui-insiders
+          repo_token: ${{ secrets.PAT_TOKEN }}
