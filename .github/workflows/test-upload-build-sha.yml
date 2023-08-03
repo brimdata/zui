@@ -10,11 +10,12 @@ jobs:
     name: Upload the Build Shaw
     runs-on: ubuntu-20.04
     steps:
-      - run: echo ${{ github.sha }} > sha.txt
-      - name: Upload Shaw File To Release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          file: sha.txt
-          tag: v1.2.1-0
-          repo_name: brimdata/zui-insiders
-          repo_token: ${{ secrets.PAT_TOKEN }}
+      - run: '[[ ${{github.sha}} == $(curl -L https://github.com/brimdata/zui-insiders/releases/download/v1.2.1-0/sha.txt) ]]'
+    #   - run: echo ${{ github.sha }} > sha.txt
+    #   - name: Upload Sha File To Release
+    #     uses: svenstaro/upload-release-action@v2
+    #     with:
+    #       file: sha.txt
+    #       tag: v1.2.1-0
+    #       repo_name: brimdata/zui-insiders
+    #       repo_token: ${{ secrets.PAT_TOKEN }}
