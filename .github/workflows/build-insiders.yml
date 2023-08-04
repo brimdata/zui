@@ -9,7 +9,7 @@ on:
         required: false
   push:
     branches:
-      - 'build/**'
+      - 'build-insiders/**'
 
 jobs:
   release:
@@ -27,15 +27,18 @@ jobs:
         uses: ./.github/actions/setup-zui
 
       - name: Inject package.json
-        run: yarn nx inject zui-insiders
+        run: yarn nx inject insiders
 
       - name: Disable yarn immutable installs
         run: yarn config set enableImmutableInstalls false
 
+      - name: Re-run yarn
+        run: yarn
+
       - name: Build Zui
         uses: ./.github/actions/build-zui
         with:
-          cmd: yarn nx package zui --config electron-builder-insiders.json --publish never
+          cmd: yarn nx package-insiders zui
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
           csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}

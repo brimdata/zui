@@ -21,12 +21,13 @@
     "build:renderer": "next build",
     "clean": "node scripts/clean",
     "test": "jest",
-    "e2e": "yarn workspace e2e-tests test",
     "format": "prettier '**/*.{js,ts,tsx,scss}' --write --loglevel warn",
-    "prerelease": "yarn build",
-    "package": "electron-builder --publish never",
     "postinstall": "node scripts/post-install",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "package": "electron-builder --publish never",
+    "release": "electron-builder",
+    "package-insiders": "electron-builder --config electron-builder-insiders.json --publish never",
+    "release-insiders": "electron-builder --config electron-builder-insiders.json --publish always"
   },
   "dependencies": {
     "keytar": "^7.7.0"

@@ -1,15 +1,13 @@
 {
-  "name": "zui-insiders-scripts",
+  "name": "insiders",
   "private": true,
   "version": "0.0.1",
   "type": "commonjs",
   "scripts": {
-    "inject": "ts-node src/inject",
-    "update-needed": "ts-node src/update-needed"
+    "inject": "ts-node src/inject"
   },
   "devDependencies": {
     "fs-extra": "^10.1.0",
-    "octokit": "2.1.0",
     "semver": "^7.3.7"
   }
 }

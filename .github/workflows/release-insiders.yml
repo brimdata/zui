@@ -1,0 +1,100 @@
+name: Create Insiders Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 20 * * *' # Every day at 8:15pm UTC
+
+jobs:
+  check_latest:
+    name: Check If Release Is Needed
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get last released version
+        id: latest_release
+        uses: pozetroninc/github-action-get-latest-release@v0.7.0
+        with:
+          owner: brimdata
+          repo: zui-insiders
+      - name: Download last build_sha
+        run: curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.release }}/build_sha.txt > build_sha.txt
+      - name: Compare last build_sha to current sha
+        run: |
+          [[ $(cat build_sha.txt) != ${{ github.sha }} ]]
+
+    outputs:
+      version: ${{ steps.latest_release.outputs.release }}
+
+  release:
+    name: Publish Release
+    needs: check_latest
+    strategy:
+      matrix:
+        platform: [windows-2019, macos-12, ubuntu-20.04]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout Zui
+        uses: actions/checkout@v3
+
+      - name: Setup Zui
+        uses: ./.github/actions/setup-zui
+
+      - name: Inject package.json
+        run: yarn nx inject insiders ${{ needs.check_latest.outputs.version }}
+
+      - name: Disable yarn immutable installs
+        run: yarn config set enableImmutableInstalls false
+
+      - name: Re-run yarn
+        run: yarn
+
+      - name: Build Zui
+        uses: ./.github/actions/build-zui
+        with:
+          cmd: yarn nx release-insiders zui
+          gh_token: ${{ secrets.PAT_TOKEN }}
+          # Windows
+          csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
+          csc_link: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+          # Mac
+          apple_id: ${{ secrets.APPLEID_USER }}
+          apple_id_password: ${{ secrets.APPLEID_PASSWORD }}
+          apple_team_id: ${{ secrets.APPLE_TEAM_ID }}
+          cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
+          cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
+
+      - name: Inform Slack users of failure
+        uses: tiloio/slack-webhook-action@v1.1.2
+        if: ${{ failure() }}
+        with:
+          slack_web_hook_url: ${{ secrets.SLACK_WEBHOOK_BRIMLABS_TEST }}
+          slack_json: |
+            {
+              "username": "{{GITHUB_REPOSITORY}}",
+              "text": "Release failed: https://github.com/{{GITHUB_REPOSITORY}}/actions/runs/{{GITHUB_RUN_ID}}"
+            }
+
+  record_build_sha:
+    needs: release
+    name: Upload the Build Sha
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Create the build_sha file
+        run: echo ${{ github.sha }} > build_sha.txt
+
+      - name: Get the just released tag
+        id: just_released
+        uses: pozetroninc/github-action-get-latest-release@v0.7.0
+        with:
+          owner: brimdata
+          repo: zui-insiders
+
+      - name: Upload build_sha file to the latest release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: build_sha.txt
+          tag: ${{ steps.just_released.outputs.release }}
+          repo_name: brimdata/zui-insiders
+          repo_token: ${{ secrets.PAT_TOKEN }}
+          overwrite: true
