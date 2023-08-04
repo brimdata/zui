@@ -9,21 +9,28 @@ on:
   #   - cron: '15 20 * * *' # Every day at 8:15pm UTC
 
 jobs:
-  get_latest:
+  check_latest:
+    name: Check If Release Is Needed
     runs-on: ubuntu-20.04
     steps:
-      - name: Get Last Released Version
+      - name: Get last released version
         id: latest_release
         uses: pozetroninc/github-action-get-latest-release@v0.7.0
         with:
           owner: brimdata
           repo: zui-insiders
+      - name: Download last build_sha
+        run: curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.release }}/build_sha.txt` > build_sha.txt
+      - name: Compare last build_sha to current sha
+        run: |
+          [[ $(cat build_sha.txt) != ${{ github.sha }} ]]
+
     outputs:
       version: ${{ steps.latest_release.outputs.release }}
 
   release:
-    name: Build and Publish
-    needs: get_latest
+    name: Publish Release
+    needs: check_latest
     strategy:
       matrix:
         platform: [windows-2019, macos-12, ubuntu-20.04]
@@ -36,11 +43,8 @@ jobs:
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
 
-      - name: Check if there have been any changes to publish
-        run: yarn nx assert-update-needed insiders ${{ needs.get_latest.outputs.version }}
-
       - name: Inject package.json
-        run: yarn nx inject insiders ${{ needs.get_latest.outputs.version }}
+        run: yarn nx inject insiders ${{ needs.check_latest.outputs.version }}
 
       - name: Disable yarn immutable installs
         run: yarn config set enableImmutableInstalls false
@@ -82,14 +86,14 @@ jobs:
       - name: Create the build_sha file
         run: echo ${{ github.sha }} > build_sha.txt
 
-      - name: Get The Just Released Tag
+      - name: Get the just released tag
         id: just_released
         uses: pozetroninc/github-action-get-latest-release@v0.7.0
         with:
           owner: brimdata
           repo: zui-insiders
 
-      - name: Upload build_sha File to the Latest Release
+      - name: Upload build_sha file to the latest release
         uses: svenstaro/upload-release-action@v2
         with:
           file: build_sha.txt

@@ -4,14 +4,10 @@
   "version": "0.0.1",
   "type": "commonjs",
   "scripts": {
-    "inject": "ts-node src/inject",
-    "assert-update-needed": "ts-node src/update-needed"
+    "inject": "ts-node src/inject"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.6.2",
     "fs-extra": "^10.1.0",
-    "node-fetch": "^2.6.2",
-    "octokit": "2.1.0",
     "semver": "^7.3.7"
   }
 }
