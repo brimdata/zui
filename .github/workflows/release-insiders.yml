@@ -20,7 +20,7 @@ jobs:
           owner: brimdata
           repo: zui-insiders
       - name: Download last build_sha
-        run: curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.release }}/build_sha.txt` > build_sha.txt
+        run: curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.release }}/build_sha.txt > build_sha.txt
       - name: Compare last build_sha to current sha
         run: |
           [[ $(cat build_sha.txt) != ${{ github.sha }} ]]
