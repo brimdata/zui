@@ -2,11 +2,8 @@ name: Create Insiders Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'release-insiders/**'
-  # schedule:
-  #   - cron: '15 20 * * *' # Every day at 8:15pm UTC
+  schedule:
+    - cron: '15 20 * * *' # Every day at 8:15pm UTC
 
 jobs:
   check_latest:
