@@ -21,7 +21,10 @@
 .title {
     font-size: 60px;
     font-weight: 900;
-    animation: 500ms popup ease-out;
+    opacity: 0;
+    animation: 
+        700ms popup 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards, 
+        300ms fade-opacity 200ms ease-in forwards;
 }
 
 .title em {
@@ -39,41 +42,34 @@
     margin: 40px 20px;
     border: 1px dashed var(--foreground-color);
     transform: scale(1.25);
-
-    --duration: 500ms
+    opacity: 0;
+    animation: zoom 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-
-.outline:nth-child(1) {
-    animation: zoom var(--duration) forwards;
-    opacity: 0.2;
-    
-}
 
 .outline:nth-child(2) {
-    animation: zoom var(--duration) 150ms forwards;
-    opacity: 0.5;
+    animation-delay: 50ms;
     margin: 60px 40px;
-    
 }
 
 .outline:nth-child(3) {
-    animation: zoom var(--duration) 300ms forwards;
+    animation-delay: 100ms;
     margin: 80px 60px;
     border-color: var(--orange);
-    
 }
 
 @keyframes zoom {
     from {
+        opacity: 0;
         transform: scale(1.25);
     }
     to {
+        opacity: 1;
         transform: scale(1);
     }
 }
 
-@keyframes fade {
+@keyframes fade-background {
     from {
         background: transparent;
     }
@@ -82,14 +78,21 @@
     }
 }
 
-@keyframes popup {
+@keyframes fade-opacity {
     from {
         opacity: 0;
-        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popup {
+    from {
+        transform: translateY(300px);
     }
 
     to {
-        opacity: 1;
         transform: translateY(0);
     }
 }
