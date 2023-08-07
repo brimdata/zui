@@ -5,6 +5,7 @@ import ErrorNotice from "src/js/components/ErrorNotice"
 import HTMLContextMenu from "src/js/components/HTMLContextMenu"
 import {Modals} from "src/js/components/Modals"
 import Preferences from "src/js/components/Preferences/Preferences"
+import {LoadPane} from "src/panes/load-pane/load-pane"
 
 export function AppModals() {
   return (
@@ -15,6 +16,7 @@ export function AppModals() {
       <HTMLContextMenu />
       <Toaster />
       <Tooltip />
+      <LoadPane />
     </>
   )
 }

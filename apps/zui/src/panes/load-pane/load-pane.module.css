@@ -1,0 +1,18 @@
+.grid {
+    width: 100vw;
+    height: 100vh;
+    border: 5px solid green;
+    background: white;
+    display: grid;
+    grid-template-rows: 44px auto;
+    grid-template-columns: auto 360px;
+}
+
+.grid nav {
+
+}
+
+.grid aside {
+    background: var(--chrome-color);
+    grid-row: span 2;
+}

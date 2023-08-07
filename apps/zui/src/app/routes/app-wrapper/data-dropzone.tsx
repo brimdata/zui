@@ -1,9 +1,12 @@
+import {useDispatch} from "src/app/core/state"
 import styles from "./data-dropzone.module.css"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
+import LoadDataForm from "src/js/state/LoadDataForm"
 
 export function DataDropzone({children}) {
-  const onDrop = (files) => {
-    console.log("dropped", files)
+  const dispatch = useDispatch()
+  const onDrop = (files: File[]) => {
+    dispatch(LoadDataForm.setFiles(files.map((f) => f.path)))
   }
   const [props, ref] = useFilesDrop({onDrop})
 
