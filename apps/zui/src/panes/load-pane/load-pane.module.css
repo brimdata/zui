@@ -1,18 +1,70 @@
 .grid {
     width: 100vw;
     height: 100vh;
-    border: 5px solid green;
     background: white;
     display: grid;
     grid-template-rows: 44px auto;
     grid-template-columns: auto 360px;
 }
 
-.grid nav {
-
-}
-
 .grid aside {
     background: var(--chrome-color);
+    border-left: 1px solid var(--border-color);
     grid-row: span 2;
+    overflow-y: auto;
+}
+
+.aside {
+    padding: 0 18px;
+}
+
+.formTitle {
+    margin: 28px auto;
+    font-size: 15px;
+    font-weight: 500;;
+    color: #6D757E;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    width: max-content;
+}
+
+.formTitle hr {
+    border: none;
+    border-top: 2px solid var(--primary-color);
+}
+
+.form {
+    display: grid;
+    gap: 18px;
+    overflow: hidden;
+}
+
+.form .files {
+    padding: 0;
+    background: white;
+    border: var(--form-border);
+    border-radius: var(--form-border-radius);
+    overflow: hidden;
+}
+
+.fileItem {
+    height: var(--form-height);
+    font-weight: 500;
+    padding: 0 2px 0 8px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    align-items: center;   
+}
+
+.fileItem .fileName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 8px;
+}
+
+.submission {
+    position: sticky;
 }

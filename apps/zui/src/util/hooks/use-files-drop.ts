@@ -9,14 +9,17 @@ type Props = {
 }
 
 export function useFilesDrop({onDrop}: Props) {
-  return useDrop<DragItem, unknown, DragProps>(() => ({
-    accept: [NativeTypes.FILE],
-    drop: ({files}) => {
-      if (files && files.length) onDrop(files)
-    },
-    collect: (m) => ({
-      isOver: m.isOver(),
-      canDrop: m.canDrop(),
+  return useDrop<DragItem, unknown, DragProps>(
+    () => ({
+      accept: [NativeTypes.FILE],
+      drop: ({files}) => {
+        if (files && files.length) onDrop(files)
+      },
+      collect: (m) => ({
+        isOver: m.isOver(),
+        canDrop: m.canDrop(),
+      }),
     }),
-  }))
+    [onDrop]
+  )
 }

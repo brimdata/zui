@@ -1,0 +1,83 @@
+.form label {
+    display: block;
+    font-weight: bold;
+    padding-left: var(--form-border-radius);
+}
+
+.form input,
+.form textarea,
+.form select {
+    display: block;
+    width: 100%;
+    min-height: var(--form-height);
+    border-radius: var(--form-border-radius);
+    background: var(--form-bg-color);
+    border: var(--form-border);
+    line-height: var(--form-line-height);
+    padding: var(--form-padding);
+}
+
+.form fieldset {
+    border: none;
+    border-left: 1px solid var(--border-color);
+    margin-left: 18px;
+    padding: 0;
+    padding-left: 18px;
+    padding-top: 18px;
+    padding-bottom: 4px;
+    display: grid;
+    gap: 18px;
+}
+
+.form ul {
+    list-style-type: none;
+}
+
+.form select {
+    appearance: none;
+    background-image: url(/select-input-arrow.svg);
+    background-repeat: no-repeat;
+    background-size: 1.2em 1.2em;
+    background-position: calc(100% - 10px) center;
+}
+
+.form .submission {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: var(--form-border-radius);
+}
+
+.form .cancel {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.form button[type=submit] {
+    min-height: var(--form-height);
+    border-radius: var(--form-border-radius);
+    background: var(--form-bg-color);
+    line-height: var(--form-line-height);
+    padding: var(--form-padding);
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color-dark);
+    color: white;
+    font-weight: 500;
+    min-width: 80px;
+}
+
+.form button[type=submit]:hover {
+    background: var(--primary-color-dark);
+}
+
+.form .actionLabel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: var(--form-border-radius);
+}
+
+.form .actionLabel a {
+    text-decoration: underline;
+    cursor: pointer;
+}
