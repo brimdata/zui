@@ -75,16 +75,15 @@ test.describe('Query tests', () => {
     await titleBar
       .locator('[placeholder="Query name\\.\\.\\."]')
       .fill('Another Test Query');
-    await app.mainWin
-      .locator('div[role="textbox"]')
-      .fill('another test query zed value');
+
+    await app.setEditor('another test query zed value');
     await titleBar.getByRole('button', { name: 'Create' }).click();
     await expect(
       await app.mainWin.locator('button :text-is("Another Test Query")')
     ).toBeVisible();
     await expect(
       await app.mainWin.locator(
-        'div[role="textbox"]:has-text("another test query zed value")'
+        '[aria-label=main-editor]:has-text("another test query zed value")'
       )
     ).toBeVisible();
   });

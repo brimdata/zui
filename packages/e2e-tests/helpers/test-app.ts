@@ -82,9 +82,15 @@ export default class TestApp {
   }
 
   async query(zed: string): Promise<void> {
-    await this.mainWin.locator('div[role="textbox"]').fill(zed);
+    await this.setEditor(zed);
     await this.mainWin.locator('[aria-label="run-query"]').click();
     await this.mainWin.locator('span[aria-label="fetching"]').isHidden();
+  }
+
+  async setEditor(zed: string) {
+    await this.mainWin.locator('[aria-label=main-editor]').click();
+    await this.mainWin.keyboard.press('Meta+KeyA');
+    await this.mainWin.keyboard.type(zed);
   }
 
   async getViewerResults(includeHeaders = true): Promise<string[]> {

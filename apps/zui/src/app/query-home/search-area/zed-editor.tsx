@@ -34,6 +34,9 @@ export function ZedEditor(props: {
       onMount={(editor) => {
         ref.current = editor
       }}
+      wrapperProps={{
+        "aria-label": "main-editor",
+      }}
       path={props.path}
     />
   )
