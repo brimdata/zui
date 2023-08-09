@@ -3,7 +3,7 @@ name: Create Insiders Release
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 20 * * *' # Every day at 8:15pm UTC
+    - cron: '15 03 * * *' # Every day at 10:15am UTC / 3:15am PT
 
 jobs:
   check_latest:
