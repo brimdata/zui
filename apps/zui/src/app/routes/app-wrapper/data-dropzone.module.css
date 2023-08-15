@@ -21,10 +21,11 @@
 .title {
     font-size: 60px;
     font-weight: 900;
+    text-align: center;
     opacity: 0;
     animation: 
-        700ms popup 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards, 
-        300ms fade-opacity 200ms ease-in forwards;
+        700ms popup cubic-bezier(0.16, 1, 0.3, 1) forwards, 
+        300ms fade-opacity ease-in forwards;
 }
 
 .title em {

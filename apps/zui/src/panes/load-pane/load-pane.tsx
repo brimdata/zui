@@ -10,6 +10,7 @@ import LoadDataForm from "src/js/state/LoadDataForm"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
 import {useRef} from "react"
+import {ScrollShadow} from "./scroll-shadow"
 
 export function LoadPane() {
   const files = useSelector(LoadDataForm.getFiles)
@@ -29,11 +30,11 @@ export function LoadPane() {
     dispatch(LoadDataForm.setFiles([]))
   }
 
-  const [props, ref] = useFilesDrop({
+  const [_props, ref] = useFilesDrop({
     onDrop: (files: File[]) => addFiles(files.map((f) => f.path)),
   })
 
-  const fileInput = useRef()
+  const fileInput = useRef(null)
 
   if (files.length === 0) return null
 
@@ -48,81 +49,89 @@ export function LoadPane() {
             <hr />
           </h2>
           <form className={classNames(styles.form, baseForm.form)}>
-            <div>
-              <div className={baseForm.actionLabel}>
-                <label>Files</label>
-                <a onClick={() => fileInput.current?.click()}>
-                  + Add
-                  <input
-                    ref={fileInput}
-                    type="file"
-                    style={{display: "none"}}
-                    onChange={(e) => {
-                      addFiles(
-                        Array.from(e.currentTarget.files).map((f) => f.path)
-                      )
-                    }}
-                  />
-                </a>
-              </div>
-              <ul className={styles.files}>
-                {files.map((f: string, i) => (
-                  <li key={i} className={styles.fileItem}>
-                    <Icon
-                      name="doc-plain"
-                      size={16}
-                      fill="var(--primary-color)"
-                    />
-                    <span title={f} className={styles.fileName}>
-                      {f}
-                    </span>
-                    <IconButton
-                      iconName="close"
-                      onClick={() => removeFile(f)}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <label>Pool</label>
-              <select>
-                <option>+ Create new with Defaults</option>
-                <option>+ Create new</option>
-                {pools.map((pool) => (
-                  <option key={pool.id} value={pool.id}>
-                    {pool.name}
-                  </option>
-                ))}
-              </select>
-
-              <fieldset>
+            <ScrollShadow threshold={45}>
+              <section className={styles.fields}>
                 <div>
-                  <label>Name</label>
-                  <input type="text" />
+                  <div className={baseForm.actionLabel}>
+                    <label>Files</label>
+                    <a onClick={() => fileInput.current?.click()}>
+                      + Add
+                      <input
+                        ref={fileInput}
+                        type="file"
+                        style={{display: "none"}}
+                        onChange={(e) => {
+                          addFiles(
+                            Array.from(e.currentTarget.files).map((f) => f.path)
+                          )
+                        }}
+                      />
+                    </a>
+                  </div>
+                  <ul className={styles.files}>
+                    {files.map((f: string, i) => (
+                      <li key={i} className={styles.fileItem}>
+                        <Icon
+                          name="doc-plain"
+                          size={16}
+                          fill="var(--primary-color)"
+                        />
+                        <span title={f} className={styles.fileName}>
+                          {f}
+                        </span>
+                        <IconButton
+                          iconName="close"
+                          onClick={() => removeFile(f)}
+                        />
+                      </li>
+                    ))}
+                  </ul>
                 </div>
                 <div>
-                  <label>Pool Key</label>
-                  <input type="text" />
-                </div>
-                <div>
-                  <label>Sort Order</label>
+                  <label>Pool</label>
                   <select>
-                    <option>Ascending</option>
-                    <option>Descending</option>
+                    <option>+ Create new with Defaults</option>
+                    <option>+ Create new</option>
+                    {pools.map((pool) => (
+                      <option key={pool.id} value={pool.id}>
+                        {pool.name}
+                      </option>
+                    ))}
                   </select>
+
+                  <fieldset>
+                    <div>
+                      <label>Name</label>
+                      <input type="text" />
+                    </div>
+                    <div>
+                      <label>Pool Key</label>
+                      <input type="text" />
+                    </div>
+                    <div>
+                      <label>Sort Order</label>
+                      <div className={baseForm.radioInput}>
+                        <input id="ascending" name="order" type="radio" />
+                        <label htmlFor="ascending">Ascending</label>
+                      </div>
+                      <div className={baseForm.radioInput}>
+                        <input id="descending" name="order" type="radio" />
+                        <label htmlFor="descending">Descending</label>
+                      </div>
+                    </div>
+                  </fieldset>
                 </div>
-              </fieldset>
-            </div>
-            <div>
-              <label>Author</label>
-              <input type="text" />
-            </div>
-            <div>
-              <label>Message</label>
-              <textarea></textarea>
-            </div>
-            <div className={classNames(styles.submission, baseForm.submission)}>
+                <div>
+                  <label>Author</label>
+                  <input type="text" />
+                </div>
+                <div>
+                  <label>Message</label>
+                  <textarea></textarea>
+                </div>
+              </section>
+            </ScrollShadow>
+            <div className={classNames(styles.submission)}>
               <a className={baseForm.cancel} onClick={() => clearFiles()}>
                 Cancel
               </a>

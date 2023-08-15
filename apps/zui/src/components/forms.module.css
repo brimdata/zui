@@ -21,12 +21,9 @@
     border: none;
     border-left: 1px solid var(--border-color);
     margin-left: 18px;
-    padding: 0;
-    padding-left: 18px;
-    padding-top: 18px;
-    padding-bottom: 4px;
+    padding: 18px;
     display: grid;
-    gap: 18px;
+    gap: var(--form-field-gap);
 }
 
 .form ul {
@@ -39,13 +36,6 @@
     background-repeat: no-repeat;
     background-size: 1.2em 1.2em;
     background-position: calc(100% - 10px) center;
-}
-
-.form .submission {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: var(--form-border-radius);
 }
 
 .form .cancel {
@@ -80,4 +70,18 @@
 .form .actionLabel a {
     text-decoration: underline;
     cursor: pointer;
+}
+
+.form .radioInput {
+    display: grid;
+    grid-template-columns: 1.1em auto;
+    align-items: center;
+    padding-top: 0;
+    padding: var(--form-padding);
+    height: 1.6em;
+}
+
+
+.form .radioInput label {
+    font-weight: 400;
 }
