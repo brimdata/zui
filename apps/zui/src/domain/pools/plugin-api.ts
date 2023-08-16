@@ -1,6 +1,10 @@
 import {EventEmitter} from "events"
-import {Pool} from "@brimdata/zed-js"
+import {CreatePoolOpts, Pool} from "@brimdata/zed-js"
 import {updateSettings} from "./operations"
+import Pools from "src/js/state/Pools"
+import {select} from "src/core/main/select"
+import {window} from "src/zui"
+import * as ops from "./operations"
 
 type Events = {
   create: (event: {pool: Pool}) => void
@@ -10,6 +14,19 @@ export class PoolsApi {
 
   configure(poolId: string) {
     return new PoolConfiguration(poolId)
+  }
+
+  get all() {
+    return select((s) => Pools.all(s, window.lakeId))
+  }
+
+  get(id: string) {
+    return select(Pools.get(window.lakeId, id))
+  }
+
+  async create(name: string, opts: Partial<CreatePoolOpts> = {}) {
+    const id = await ops.create.run(window.lakeId, name, opts)
+    return this.get(id)
   }
 
   on<K extends string & keyof Events>(name: K, handler: Events[K]) {

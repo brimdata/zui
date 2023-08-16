@@ -1,7 +1,7 @@
 import {ipcMain, IpcMainInvokeEvent} from "electron"
 import log from "electron-log"
-import {ZuiMain} from "../electron/zui-main"
 import {OperationName, Operations} from "src/domain/messages"
+import {MainObject} from "./main/main-object"
 
 export function createOperation<K extends OperationName>(
   channel: K,
@@ -14,19 +14,19 @@ export function createOperation<K extends OperationName>(
 }
 
 type OperationContext = {
-  main: ZuiMain
+  main: MainObject
   event: IpcMainInvokeEvent | null
 }
 
 export class Operation<Args extends any[], Ret> {
-  private main: ZuiMain | null
+  private main: MainObject | null
 
   constructor(
     public channel: string,
     private handler: (context: OperationContext, ...args: Args) => Ret
   ) {}
 
-  listen(main: ZuiMain) {
+  listen(main: MainObject) {
     this.main = main
     ipcMain.removeHandler(this.channel)
 

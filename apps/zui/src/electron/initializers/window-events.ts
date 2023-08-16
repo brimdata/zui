@@ -1,10 +1,10 @@
 import {app, autoUpdater} from "electron"
 import log from "electron-log"
 import env from "src/app/core/env"
-import {ZuiMain} from "../zui-main"
+import {MainObject} from "../../core/main/main-object"
 import {moveToCurrentDisplayOp} from "../ops/move-to-current-display-op"
 
-export function initialize(main: ZuiMain) {
+export function initialize(main: MainObject) {
   app.on("second-instance", (e, argv) => {
     for (let arg of argv) {
       switch (arg) {

@@ -8,9 +8,9 @@ import log from "electron-log"
 
 export const loadFilesOp = createOperation(
   "loadFilesOp",
-  async ({main, event}, options: LoadOptions) => {
+  async ({main}, options: LoadOptions) => {
     const opts = injectTestPaths(options)
-    const context = new LoadContext(main, event, opts)
+    const context = new LoadContext(main, opts)
     const loader = await loaders.getMatch(context)
     try {
       await context.setup()

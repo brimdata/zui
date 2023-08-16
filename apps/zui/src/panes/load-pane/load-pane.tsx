@@ -11,14 +11,21 @@ import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
 import {useRef} from "react"
 import {ScrollShadow} from "./scroll-shadow"
+import {useForm} from "react-hook-form"
+import {invoke} from "src/core/invoke"
 
 export function LoadPane() {
   const files = useSelector(LoadDataForm.getFiles)
   const pools = useSelector(Current.getPools)
   const dispatch = useDispatch()
 
+  const {register, handleSubmit, watch} = useForm()
+  const onSubmit = async (data) => {
+    await invoke("loaders.formAction", {...data, files})
+    clearFiles()
+  }
+
   function addFiles(paths: string[]) {
-    console.log([...files, ...paths])
     dispatch(LoadDataForm.setFiles([...files, ...paths]))
   }
 
@@ -48,7 +55,10 @@ export function LoadPane() {
             Load Data
             <hr />
           </h2>
-          <form className={classNames(styles.form, baseForm.form)}>
+          <form
+            className={classNames(styles.form, baseForm.form)}
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <ScrollShadow threshold={45}>
               <section className={styles.fields}>
                 <div>
@@ -89,37 +99,50 @@ export function LoadPane() {
                 </div>
                 <div>
                   <label>Pool</label>
-                  <select>
-                    <option>+ Create new with Defaults</option>
-                    <option>+ Create new</option>
+                  <select {...register("poolId")}>
+                    <option value="default">Select Pool</option>
+                    <option value="new">+ Create New</option>
                     {pools.map((pool) => (
                       <option key={pool.id} value={pool.id}>
                         {pool.name}
                       </option>
                     ))}
                   </select>
-
-                  <fieldset>
-                    <div>
-                      <label>Name</label>
-                      <input type="text" />
-                    </div>
-                    <div>
-                      <label>Pool Key</label>
-                      <input type="text" />
-                    </div>
-                    <div>
-                      <label>Sort Order</label>
-                      <div className={baseForm.radioInput}>
-                        <input id="ascending" name="order" type="radio" />
-                        <label htmlFor="ascending">Ascending</label>
+                  {watch("poolId") === "new" && (
+                    <fieldset>
+                      <div>
+                        <label>Name</label>
+                        <input type="text" {...register("name")} />
                       </div>
-                      <div className={baseForm.radioInput}>
-                        <input id="descending" name="order" type="radio" />
-                        <label htmlFor="descending">Descending</label>
+                      <div>
+                        <label>Pool Key</label>
+                        <input type="text" {...register("key")} />
                       </div>
-                    </div>
-                  </fieldset>
+                      <div>
+                        <label>Sort Order</label>
+                        <div className={baseForm.radioInput}>
+                          <input
+                            id="ascending"
+                            name="order"
+                            type="radio"
+                            value="asc"
+                            {...register("order")}
+                          />
+                          <label htmlFor="ascending">Ascending</label>
+                        </div>
+                        <div className={baseForm.radioInput}>
+                          <input
+                            id="descending"
+                            name="order"
+                            type="radio"
+                            value="desc"
+                            {...register("order")}
+                          />
+                          <label htmlFor="descending">Descending</label>
+                        </div>
+                      </div>
+                    </fieldset>
+                  )}
                 </div>
                 <div>
                   <label>Author</label>

@@ -1,10 +1,10 @@
 import log from "electron-log"
 import {throttle} from "lodash"
 import {State} from "src/js/state/types"
-import {ZuiMain} from "../zui-main"
+import {MainObject} from "../../core/main/main-object"
 import {createOperation} from "../../core/operations"
 
-const saveSession = throttle((main: ZuiMain) => {
+const saveSession = throttle((main: MainObject) => {
   main.saveSession()
   log.debug("Session Autosaved")
 }, 500)

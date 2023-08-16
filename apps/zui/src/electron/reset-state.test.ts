@@ -1,6 +1,6 @@
 import "src/test/system/real-paths"
 import {app} from "electron"
-import {ZuiMain} from "./zui-main"
+import {MainObject} from "../core/main/main-object"
 
 jest.mock("./session", () => {
   return () => ({
@@ -11,7 +11,7 @@ jest.mock("./session", () => {
 })
 
 test("reset state", async () => {
-  const main = await ZuiMain.boot({
+  const main = await MainObject.boot({
     lake: false,
   })
 

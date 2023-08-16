@@ -9,24 +9,27 @@ import {
   deserializeState,
   toAccessTokenKey,
   toRefreshTokenKey,
-} from "../js/auth0/utils"
-import {getPersistedGlobalState} from "../js/state/stores/get-persistable"
-import Lakes from "../js/state/Lakes"
-import {installExtensions} from "./extensions"
-import {decodeSessionState, encodeSessionState} from "./session-state"
-import {WindowManager} from "./windows/window-manager"
-import * as zdeps from "./zdeps"
-import {MainArgs, mainDefaults} from "./run-main/args"
-import createSession, {Session} from "./session"
-import {getAppMeta, AppMeta} from "./meta"
-import {createMainStore} from "../js/state/stores/create-main-store"
-import {AppDispatch, State} from "../js/state/types"
-import {PathName, getPath} from "../js/api/core/get-path"
+} from "../../js/auth0/utils"
+import {getPersistedGlobalState} from "../../js/state/stores/get-persistable"
+import Lakes from "../../js/state/Lakes"
+import {installExtensions} from "../../electron/extensions"
+import {
+  decodeSessionState,
+  encodeSessionState,
+} from "../../electron/session-state"
+import {WindowManager} from "../../electron/windows/window-manager"
+import * as zdeps from "../../electron/zdeps"
+import {MainArgs, mainDefaults} from "../../electron/run-main/args"
+import createSession, {Session} from "../../electron/session"
+import {getAppMeta, AppMeta} from "../../electron/meta"
+import {createMainStore} from "../../js/state/stores/create-main-store"
+import {AppDispatch, State} from "../../js/state/types"
+import {PathName, getPath} from "../../js/api/core/get-path"
 import createLake from "src/js/models/lake"
-import {getAuthToken} from "../js/api/core/get-zealot"
+import {getAuthToken} from "../../js/api/core/get-zealot"
 import {Abortables} from "src/app/core/models/abortables"
 
-export class ZuiMain {
+export class MainObject {
   public isQuitting = false
   abortables = new Abortables()
   emitter = new EventEmitter()
@@ -45,7 +48,7 @@ export class ZuiMain {
       bin: zdeps.zed,
       corsOrigins: ["*"],
     })
-    return new ZuiMain(lake, windows, store, session, args, appMeta)
+    return new MainObject(lake, windows, store, session, args, appMeta)
   }
 
   // Only call this from boot

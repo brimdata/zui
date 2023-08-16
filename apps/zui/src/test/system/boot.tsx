@@ -8,7 +8,7 @@ import {getPort} from "./port-service"
 import {waitFor} from "@testing-library/react"
 import {Store} from "src/js/state/types"
 import ZuiApi from "src/js/api/zui-api"
-import {ZuiMain} from "src/electron/zui-main"
+import {MainObject} from "src/core/main/main-object"
 
 const defaults = () => ({
   page: "search",
@@ -47,7 +47,7 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
     releaseNotes: false,
     autoUpdater: false,
     singleInstance: false,
-  })) as ZuiMain
+  })) as MainObject
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
     timeout: 20_000,
   })

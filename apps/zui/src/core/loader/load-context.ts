@@ -1,23 +1,18 @@
-import {ZuiMain} from "src/electron/zui-main"
 import {LoadOptions} from "./types"
 import {nanoid} from "@reduxjs/toolkit"
 import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
 import {syncPoolOp} from "src/electron/ops/sync-pool-op"
 import {SearchWindow} from "src/electron/windows/search/search-window"
-import {IpcMainInvokeEvent} from "electron"
+import {MainObject} from "../main/main-object"
 
 export class LoadContext {
   private ctl = new AbortController()
   private id = nanoid()
   private window: SearchWindow
 
-  constructor(
-    public main: ZuiMain,
-    public event: IpcMainInvokeEvent,
-    public opts: LoadOptions
-  ) {
-    this.window = getSenderWindow(main, event)
+  constructor(public main: MainObject, public opts: LoadOptions) {
+    this.window = main.windows.focused as SearchWindow
   }
 
   createClient() {
@@ -79,14 +74,4 @@ export class LoadContext {
   get format() {
     return this.opts.format ?? "auto"
   }
-}
-
-function getSenderWindow(main: ZuiMain, event: IpcMainInvokeEvent) {
-  const window = main.windows.all.find(
-    (w) => w.ref.webContents === event.sender
-  )
-  if (!window || !(window instanceof SearchWindow)) {
-    throw new Error("Could not find sender window")
-  }
-  return window
 }

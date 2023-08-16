@@ -6,7 +6,7 @@ import got from "got"
 import get from "lodash/get"
 import semver from "semver/preload"
 import open from "../js/lib/open"
-import {ZuiMain} from "./zui-main"
+import {MainObject} from "../core/main/main-object"
 import links from "src/app/core/links"
 import pkg from "../../package.json"
 
@@ -32,7 +32,7 @@ export const getLatestVersion = async (repo: string): Promise<string> => {
   return latestVersion
 }
 
-const autoUpdateLinux = async (main: ZuiMain) => {
+const autoUpdateLinux = async (main: MainObject) => {
   const latestVersion = await getLatestVersion(main.appMeta.repo)
 
   // up to date
@@ -55,7 +55,7 @@ const autoUpdateLinux = async (main: ZuiMain) => {
   })
 }
 
-export async function setupAutoUpdater(main: ZuiMain) {
+export async function setupAutoUpdater(main: MainObject) {
   if (env.isLinux) {
     setUpdateRepeater(() => {
       autoUpdateLinux(main).catch((err) => log.error(err))

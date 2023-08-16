@@ -22,6 +22,7 @@
     "clean": "node scripts/clean",
     "test": "jest",
     "format": "prettier '**/*.{js,ts,tsx,scss}' --write --loglevel warn",
+    "tsc": "tsc",
     "postinstall": "node scripts/post-install",
     "prepare": "husky install",
     "package": "electron-builder --publish never",

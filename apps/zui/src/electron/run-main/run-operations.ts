@@ -1,10 +1,10 @@
-import {ZuiMain} from "../zui-main"
+import {MainObject} from "../../core/main/main-object"
 import {Operation} from "../../core/operations"
 import log from "electron-log"
 import * as domainOperations from "src/domain/operations"
 import * as legacyOperations from "src/electron/ops"
 
-const setup = (main: ZuiMain, exports: Record<string, any>) => {
+const setup = (main: MainObject, exports: Record<string, any>) => {
   for (const namespace in exports) {
     const file = exports[namespace]
     for (let name in file) {
@@ -16,7 +16,7 @@ const setup = (main: ZuiMain, exports: Record<string, any>) => {
   }
 }
 
-export function runOperations(main: ZuiMain) {
+export function runOperations(main: MainObject) {
   setup(main, domainOperations)
   setup(main, legacyOperations)
   log.info(`operations loaded`)

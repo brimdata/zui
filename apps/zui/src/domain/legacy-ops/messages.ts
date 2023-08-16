@@ -1,5 +1,5 @@
 import {zjson} from "@brimdata/zed-js"
-import {ZuiMain} from "src/electron/zui-main"
+import {MainObject} from "src/core/main/main-object"
 import {OpEventContext} from "src/js/state/Current/selectors"
 import {State} from "src/js/state/types"
 import {Config} from "../configurations/plugin-api"
@@ -30,7 +30,7 @@ export type LegacyOperations = {
   exportQueries: (groupId: string, filePath: string) => void
   exportResultsOp: (filePath: string, format: string) => void
   featureFlags: () => string[]
-  getAppMeta: () => ZuiMain["appMeta"]
+  getAppMeta: () => MainObject["appMeta"]
   getConfigurationsOp: () => Config[]
   getCorrelationsOp: () => CompiledCorrelation[]
   getGlobalState: () => State

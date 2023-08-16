@@ -1,4 +1,4 @@
-import {screen} from "electron"
+import {BrowserWindow, screen} from "electron"
 import log from "electron-log"
 import {last} from "lodash"
 import {stack} from "./dimens"
@@ -44,6 +44,12 @@ export class WindowManager extends EventEmitter {
   create(name: WindowName) {
     return this.register(
       createWindow(name, {dimens: this.getNextDimensFor(name)})
+    )
+  }
+
+  get focused() {
+    return this.all.find(
+      (f) => f.ref.webContents === BrowserWindow.getFocusedWindow()?.webContents
     )
   }
 
