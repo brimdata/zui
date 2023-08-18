@@ -72,7 +72,7 @@
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
-    "brimcap": "brimdata/brimcap#v1.5.1",
+    "brimcap": "brimdata/brimcap#d6a430d85f426a826276b61f56be1ac8c0259666",
     "chalk": "^4.1.0",
     "chevrotain": "^10.5.0",
     "chrono-node": "^2.5.0",
@@ -154,7 +154,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#b8d056a88a280db254a562e7af42d3087fbfcf32",
+    "zed": "brimdata/zed#08fc271c4191593a7e1d050061b21f3db792b079",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {
