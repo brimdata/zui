@@ -2,6 +2,7 @@ import {LoadContext} from "./load-context"
 import fs from "fs"
 import {Transform} from "stream"
 import {Loader} from "./types"
+import {createStream} from "@brimdata/zed-node"
 
 export const defaultLoader: Loader = {
   when() {
@@ -12,26 +13,29 @@ export const defaultLoader: Loader = {
     const client = await ctx.createClient()
     const files = ctx.files
     const totalBytes = files.reduce((sum, file) => sum + getFileSize(file), 0)
+
     let readBytes = 0
+    function onChunk(chunk: Buffer, encoding: BufferEncoding) {
+      readBytes += Buffer.byteLength(chunk, encoding)
+      ctx.onProgress(readBytes / totalBytes)
+    }
+
+    const zq = createStream({query: ctx.shaper})
 
     ctx.onProgress(0)
-
     for (const file of files) {
-      const progress = new Transform({
-        transform(chunk, encoding, callback) {
-          readBytes += Buffer.byteLength(chunk, encoding as BufferEncoding)
-          ctx.onProgress(readBytes / totalBytes)
-          callback(null, chunk)
-        },
-      })
-      const data = fs.createReadStream(file).pipe(progress)
+      const data = fs
+        .createReadStream(file)
+        .pipe(zq)
+        .pipe(inspectStream(onChunk))
+
       const res = await client.load(data, {
         pool: ctx.poolId,
         branch: ctx.branch,
         format: ctx.format,
         message: {
-          author: "zui",
-          body: "automatic import of " + file,
+          author: ctx.author,
+          body: ctx.body,
         },
         signal: ctx.signal,
       })
@@ -46,4 +50,14 @@ export const defaultLoader: Loader = {
 
 function getFileSize(path: string) {
   return fs.statSync(path).size
+}
+
+function inspectStream(fn) {
+  return new Transform({
+    transform(chunk, encoding, callback) {
+      fn(chunk, encoding)
+
+      callback(null, chunk)
+    },
+  })
 }

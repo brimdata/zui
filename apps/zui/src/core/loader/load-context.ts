@@ -74,4 +74,16 @@ export class LoadContext {
   get format() {
     return this.opts.format ?? "auto"
   }
+
+  get shaper() {
+    return this.opts.shaper ?? "*"
+  }
+
+  get author() {
+    return this.opts.author ?? "(None)"
+  }
+
+  get body() {
+    return this.opts.body ?? "(Empty)"
+  }
 }

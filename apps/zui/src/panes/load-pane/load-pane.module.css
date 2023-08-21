@@ -7,6 +7,21 @@
     grid-template-columns: auto 360px;
 }
 
+.main {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+.shaper {
+    grid-column: span 2;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.original {
+    border-right: 1px solid var(--border-color);
+}
+
 .aside {
     background: var(--chrome-color);
     border-left: 1px solid var(--border-color);

@@ -15,6 +15,7 @@ import {ListViewArgs} from "../core/list-view/types"
 import {ReactAdapterProps} from "./types"
 import {useStateControllers} from "./use-state-controllers"
 import {useInitialScrollPosition, useOnScroll} from "./utils"
+import useResizeObserver from "use-resize-observer"
 
 const padding = 8
 
@@ -68,39 +69,44 @@ export const ListView = forwardRef(function ListView(
   const controllers = useStateControllers(props, defaultListViewState)
   const args = {...props, ...controllers}
   const outerRef = useRef<HTMLDivElement>()
-  const list = useMemo(() => createListView(args), [props])
+  const list = useMemo(() => createListView(args), [props, controllers])
   const [rendered, setRendered] = useState({startIndex: 0, stopIndex: 10})
   list.rendered = rendered
   list.fill()
   useOnScroll(outerRef, list.onScroll.bind(list))
   useInitialScrollPosition(outerRef, props.initialScrollPosition)
   useImperativeHandle(ref, () => list, [list])
-
+  const {width = 0, height = 0, ref: resizeRef} = useResizeObserver()
   useEffect(() => {
     list.element = outerRef.current
   }, [list])
 
   return (
-    <FixedSizeList
-      className={props.className}
-      innerRef={props.innerRef}
-      height={props.height}
-      width={props.width}
-      outerRef={outerRef}
-      itemCount={list.count}
-      itemSize={20}
-      itemData={[...list.rows]}
-      itemKey={(i) => i.toString()}
-      innerElementType={InnerElement}
-      overscanCount={8}
-      onItemsRendered={(args) => {
-        setRendered({
-          startIndex: args.overscanStartIndex,
-          stopIndex: args.overscanStopIndex,
-        })
-      }}
+    <div
+      ref={resizeRef}
+      style={{height: props.height ?? "100%", width: props.width ?? "100%"}}
     >
-      {Row}
-    </FixedSizeList>
+      <FixedSizeList
+        className={props.className}
+        innerRef={props.innerRef}
+        height={height}
+        width={width}
+        outerRef={outerRef}
+        itemCount={list.count}
+        itemSize={20}
+        itemData={[...list.rows]}
+        itemKey={(i) => i.toString()}
+        innerElementType={InnerElement}
+        overscanCount={8}
+        onItemsRendered={(args) => {
+          setRendered({
+            startIndex: args.overscanStartIndex,
+            stopIndex: args.overscanStopIndex,
+          })
+        }}
+      >
+        {Row}
+      </FixedSizeList>
+    </div>
   )
 })

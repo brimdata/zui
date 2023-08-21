@@ -3,6 +3,7 @@ import * as zui from "src/zui"
 import {derivePoolName} from "../pools/utils"
 import {Pool} from "src/app/core/pools/pool"
 import {loadFilesOp} from "src/electron/ops/load-files-op"
+import {zq} from "@brimdata/zed-node"
 
 export const formAction = createOperation(
   "loaders.formAction",
@@ -32,6 +33,9 @@ export const formAction = createOperation(
       lakeId: zui.window.lakeId,
       branch: "main",
       files: data.files,
+      shaper: data.shaper,
+      author: data.author,
+      body: data.message,
     })
 
     // const stream = await zui.zq({files, data.script})
@@ -42,3 +46,13 @@ export const formAction = createOperation(
     })
   }
 )
+
+export const zqOperation = createOperation("zq", async (ctx, files, script) => {
+  if (files.length === 0) return {data: [], error: null}
+  try {
+    const data = await zq({query: script, as: "zjson", file: files[0]})
+    return {error: null, data}
+  } catch (e) {
+    return {error: e, data: []}
+  }
+})

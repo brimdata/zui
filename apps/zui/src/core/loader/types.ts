@@ -6,7 +6,10 @@ export type LoadOptions = {
   poolId: string
   branch: string
   files: string[]
+  shaper: string
   format?: LoadFormat
+  author: string
+  body: string
 }
 
 export interface Loader {

@@ -32,6 +32,9 @@ export class PoolsApi extends ApiDomain {
       poolId,
       branch: "main",
       files,
+      shaper: "*",
+      author: "Zui",
+      body: "App Import",
       format,
     })
   }

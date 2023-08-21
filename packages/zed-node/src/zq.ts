@@ -1,54 +1,100 @@
-import { spawn } from 'child_process';
+import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { getZqPath } from './binpath';
+import { Readable, Stream } from 'stream';
+import { decode, ndjson } from '@brimdata/zed-js';
 
-function execute(bin: string, opts: string[], input?: string) {
-  return new Promise<string>((resolve, reject) => {
-    const p = spawn(bin, opts)
-      .on('error', (e) => reject(e))
-      .on('close', () => resolve(out));
+type ZqArgs = {
+  query?: string;
+  bin?: string;
+  f?: string;
+  i?: string;
+  file?: string;
+  input?: Readable;
+};
 
-    let out = '';
-    p.stdout.on('data', (data: string) => (out += data));
-    p.stderr.on('data', (data: string) => (out += data));
-    if (input) {
-      p.stdin.write(input);
-      p.stdin.end();
+export async function decodeZJSON(stream: Readable) {
+  const values = [];
+  for await (const value of ndjson.eachLine(stream)) values.push(value);
+  return values;
+}
+
+export async function decodeZed(stream: Readable) {
+  return decode(await decodeZJSON(stream));
+}
+
+export async function decodeJS(stream: Readable) {
+  return (await decodeZed(stream)).map((value) => value.toJS());
+}
+
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: 'js' | 'zed' | 'zjson' }
+) {
+  const zq = createProcess({ ...args, f: 'zjson', i: '' });
+  if (args.input) args.input.pipe(createTransform(zq));
+  switch (args.as) {
+    case 'zed':
+      return decodeZed(zq.stdout);
+    case 'zjson':
+      return decodeZJSON(zq.stdout);
+    case 'js':
+    default:
+      return decodeJS(zq.stdout);
+  }
+}
+
+export function createStream(args: Omit<ZqArgs, 'file'>) {
+  const zq = createProcess(args);
+  return createTransform(zq);
+}
+
+export function createTransform(zq: ChildProcessWithoutNullStreams) {
+  const stream = new Stream.Transform({
+    transform(chunk, encoding, callback) {
+      if (!zq.stdin.write(chunk, encoding)) {
+        zq.stdin.once('drain', callback);
+      } else {
+        process.nextTick(callback);
+      }
+    },
+
+    flush(callback) {
+      zq.stdin.end();
+      if (zq.stdout.destroyed) callback();
+      else zq.stdout.on('close', () => callback());
+    },
+  });
+
+  zq.stdin.on('error', (e: Error & { code: string }) => {
+    if (e.code === 'EPIPE') {
+      // zq finished before reading the file finished (i.e. head proc)
+      stream.destroy();
+    } else {
+      stream.emit('error', e);
     }
   });
-}
 
-function parseNDJSON(input: string) {
-  return input
-    .trim()
-    .split('\n')
-    .map((s) => {
-      try {
-        return JSON.parse(s);
-      } catch (_) {
-        throw new Error(s);
-      }
+  zq.stdout
+    .on('data', (data) => stream.push(data))
+    .on('error', (e) => {
+      console.log('stdout error');
+      stream.emit('error', e);
     });
+
+  zq.stderr
+    .on('data', (data) => stream.emit('error', data.toString()))
+    .on('error', (e) => stream.emit('error', e));
+
+  return stream;
 }
 
-export async function zq(opts: {
-  query?: string;
-  file?: string;
-  input?: string;
-  format?: string;
-  bin?: string;
-  // eslint-disable-next-line
-}): Promise<any> {
-  const bin = opts.bin || getZqPath();
-  const args = [];
-  if (opts.format) args.push('-f', opts.format);
-  if (opts.query) args.push(opts.query);
-  if (opts.file) args.push(opts.file);
-  else if (opts.input) args.push('-');
+export function createProcess(args: ZqArgs) {
+  const bin = args.bin || getZqPath();
+  const spawnargs = [];
+  if (args.i) spawnargs.push('-i', args.i);
+  if (args.f) spawnargs.push('-f', args.f);
+  if (args.query) spawnargs.push(args.query);
+  if (args.file) spawnargs.push(args.file);
+  else spawnargs.push('-');
 
-  const result = await execute(bin, args, opts.input);
-  if (opts.format === 'zjson') {
-    return parseNDJSON(result);
-  } else {
-    return result;
-  }
+  return spawn(bin, spawnargs);
 }

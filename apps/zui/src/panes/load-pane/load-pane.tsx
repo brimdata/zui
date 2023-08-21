@@ -9,19 +9,29 @@ import {IconButton} from "src/components/icon-button"
 import LoadDataForm from "src/js/state/LoadDataForm"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
-import {useRef} from "react"
+import {useEffect, useRef, useState, useTransition} from "react"
 import {ScrollShadow} from "./scroll-shadow"
 import {useForm} from "react-hook-form"
 import {invoke} from "src/core/invoke"
+import {Type, decode} from "@brimdata/zed-js"
+import {ListView} from "src/zui-kit"
+import {ZedEditor} from "src/app/query-home/search-area/zed-editor"
+import {cmdOrCtrl} from "src/app/core/utils/keyboard"
+import Config from "src/js/state/Config"
 
 export function LoadPane() {
+  const [original, setOriginal] = useState([])
+  const [shaped, setShaped] = useState([])
+  const [error, setError] = useState("")
+  const [_pending, start] = useTransition()
+  const [shaper, setShaper] = useState("")
   const files = useSelector(LoadDataForm.getFiles)
   const pools = useSelector(Current.getPools)
   const dispatch = useDispatch()
 
   const {register, handleSubmit, watch} = useForm()
   const onSubmit = async (data) => {
-    await invoke("loaders.formAction", {...data, files})
+    await invoke("loaders.formAction", {...data, files, shaper})
     clearFiles()
   }
 
@@ -41,8 +51,55 @@ export function LoadPane() {
     onDrop: (files: File[]) => addFiles(files.map((f) => f.path)),
   })
 
-  const fileInput = useRef(null)
+  function limit(script: string) {
+    const s = script.trim() ? script : "*"
+    return s + " | head 100"
+  }
 
+  const initialize = () => {
+    invoke("zq", files, limit("*")).then(({data, error}) => {
+      if (error) {
+        setError(error)
+      } else {
+        start(() => {
+          setOriginal(decode(data))
+        })
+      }
+    })
+  }
+
+  useEffect(() => {
+    initialize()
+    submit()
+  }, [files])
+
+  const submit = () => {
+    invoke("zq", files, limit(shaper)).then(({data, error}) => {
+      if (error) {
+        setError(error)
+      } else {
+        start(() => {
+          setShaped(decode(data))
+        })
+      }
+    })
+  }
+
+  const shapes = new Set<Type>()
+  original.forEach((o) => shapes.add(o.type))
+
+  const runOnEnter = useSelector(Config.getRunOnEnter)
+  const fileInput = useRef(null)
+  const onKey = (e: React.KeyboardEvent) => {
+    const isEnterKey = e.key === "Enter"
+    const isModKey = e.shiftKey || cmdOrCtrl(e)
+    if (isEnterKey) {
+      if ((runOnEnter && !isModKey) || (!runOnEnter && isModKey)) {
+        e.preventDefault()
+        submit()
+      }
+    }
+  }
   if (files.length === 0) return null
 
   return (
@@ -162,7 +219,25 @@ export function LoadPane() {
             </div>
           </form>
         </aside>
-        <main></main>
+        <main className={styles.main}>
+          <div onKeyDownCapture={onKey} className={styles.shaper}>
+            <ZedEditor
+              path="preview"
+              value={shaper}
+              onChange={(s) => setShaper(s)}
+            />
+          </div>
+          <div className={styles.original}>
+            <ListView values={original} className="zed-list-view" />
+          </div>
+          <div className={styles.shaped}>
+            {error ? (
+              error.toString()
+            ) : (
+              <ListView values={shaped} className="zed-list-view" />
+            )}
+          </div>
+        </main>
       </div>
     </ModalRoot>
   )
