@@ -4634,6 +4634,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/multistream@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@types/multistream@npm:4.1.0"
+  dependencies:
+    "@types/node": "*"
+  checksum: 46c98844e65ccec4fa135bff3e0b3896156409b1149e489c9882cdf3662dfe7cd5ba6c09aaf4a97610fb407ae820b61764041e5cc8ce8a7aeaab385be3bb8b33
+  languageName: node
+  linkType: hard
+
 "@types/node-fetch@npm:^2.6.2":
   version: 2.6.2
   resolution: "@types/node-fetch@npm:2.6.2"
@@ -13152,6 +13161,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"multistream@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "multistream@npm:4.1.0"
+  dependencies:
+    once: ^1.4.0
+    readable-stream: ^3.6.0
+  checksum: 305c49a1aadcb7f63f64d8ca2bb6e7852e5f7dba94c7329e9a72ce53cd0046686b71668dc1adbf123f17d2dd107765fc946e64c36a26b15c470a3146ea3bc923
+  languageName: node
+  linkType: hard
+
 "mute-stream@npm:0.0.8":
   version: 0.0.8
   resolution: "mute-stream@npm:0.0.8"
@@ -18132,6 +18151,7 @@ __metadata:
     "@types/fs-extra": ^9.0.1
     "@types/lodash": ^4.14.161
     "@types/mousetrap": ^1.6.3
+    "@types/multistream": ^4.1.0
     "@types/node-fetch": ^3.0.3
     "@types/react": ^18.0.5
     "@types/react-dom": ^18.0.1
@@ -18192,6 +18212,7 @@ __metadata:
     moment-timezone: ^0.5.31
     mousetrap: ^1.6.5
     msw: ^0.36.8
+    multistream: ^4.1.0
     next: ^13.3.0
     node-fetch: ^2.6.1
     node-pipe: ^0.1.1

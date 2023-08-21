@@ -3,6 +3,7 @@ import fs from "fs"
 import {Transform} from "stream"
 import {Loader} from "./types"
 import {createStream} from "@brimdata/zed-node"
+import MultiStream from "multistream"
 
 export const defaultLoader: Loader = {
   when() {
@@ -23,24 +24,20 @@ export const defaultLoader: Loader = {
     const zq = createStream({query: ctx.shaper})
 
     ctx.onProgress(0)
-    for (const file of files) {
-      const data = fs
-        .createReadStream(file)
-        .pipe(zq)
-        .pipe(inspectStream(onChunk))
+    const input = new MultiStream(files.map((f) => fs.createReadStream(f)))
+    const data = input.pipe(zq).pipe(inspectStream(onChunk))
+    const res = await client.load(data, {
+      pool: ctx.poolId,
+      branch: ctx.branch,
+      format: ctx.format,
+      message: {
+        author: ctx.author,
+        body: ctx.body,
+      },
+      signal: ctx.signal,
+    })
 
-      const res = await client.load(data, {
-        pool: ctx.poolId,
-        branch: ctx.branch,
-        format: ctx.format,
-        message: {
-          author: ctx.author,
-          body: ctx.body,
-        },
-        signal: ctx.signal,
-      })
-      for (const warning of res?.warnings ?? []) ctx.onWarning(warning)
-    }
+    for (const warning of res?.warnings ?? []) ctx.onWarning(warning)
     await ctx.onPoolChanged()
     ctx.onProgress(1)
   },

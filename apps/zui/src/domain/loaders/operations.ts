@@ -4,12 +4,12 @@ import {derivePoolName} from "../pools/utils"
 import {Pool} from "src/app/core/pools/pool"
 import {loadFilesOp} from "src/electron/ops/load-files-op"
 import {zq} from "@brimdata/zed-node"
+import MultiStream from "multistream"
+import {createReadStream} from "fs"
 
 export const formAction = createOperation(
   "loaders.formAction",
   async (ctx, data) => {
-    console.log(data)
-
     let pool: Pool
 
     if (data.poolId === "default") {
@@ -48,9 +48,11 @@ export const formAction = createOperation(
 )
 
 export const zqOperation = createOperation("zq", async (ctx, files, script) => {
+  const input = new MultiStream(files.map((f) => createReadStream(f)))
+
   if (files.length === 0) return {data: [], error: null}
   try {
-    const data = await zq({query: script, as: "zjson", file: files[0]})
+    const data = await zq({query: script, as: "zjson", input})
     return {error: null, data}
   } catch (e) {
     return {error: e, data: []}
