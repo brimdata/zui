@@ -6,6 +6,7 @@ import {loadFilesOp} from "src/electron/ops/load-files-op"
 import {zq} from "@brimdata/zed-node"
 import MultiStream from "multistream"
 import {createReadStream} from "fs"
+import {zjson} from "@brimdata/zed-js"
 
 export const formAction = createOperation(
   "loaders.formAction",
@@ -53,7 +54,7 @@ export const zqOperation = createOperation("zq", async (ctx, files, script) => {
   if (files.length === 0) return {data: [], error: null}
   try {
     const data = await zq({query: script, as: "zjson", input})
-    return {error: null, data}
+    return {error: null, data: data as zjson.Obj[]}
   } catch (e) {
     return {error: e, data: []}
   }

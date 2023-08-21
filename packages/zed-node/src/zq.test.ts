@@ -2,7 +2,6 @@ import * as Stream from 'stream';
 import { createStream, zq } from './zq';
 import { getPath } from '@brimdata/sample-data';
 import { createReadStream } from 'fs';
-import { ndjson } from '@brimdata/zed-js';
 
 test('zq.stream', async () => {
   const input = Stream.Readable.from('1 2 3', { encoding: 'utf-8' });
@@ -79,16 +78,6 @@ test('zq with file', async () => {
   `);
 });
 
-test('doing what the operation does', async () => {
-  const path = getPath('prs.json');
-  const input = createReadStream(path);
-  const zq = createStream({ query: 'over this | head 10', f: 'zjson' });
-  const stream = input.pipe(zq);
-  const data = [];
-  for await (const line of ndjson.eachLine(stream)) data.push(line);
-  expect(data).toHaveLength(10);
-});
-
 test('zq with zjson objects', async () => {
   const path = getPath('prs.json');
   const input = createReadStream(path);
@@ -108,4 +97,26 @@ test('zq with a file ', async () => {
   });
 
   expect(data).toHaveLength(10);
+});
+
+test('zq with a bad zed ', async () => {
+  const path = getPath('prs.json');
+  const promise = zq({
+    query: 'over this | isNull(*) | head 10',
+    as: 'zjson',
+    input: createReadStream(path),
+  });
+
+  expect(promise).rejects.toThrowError('error parsing Zed');
+});
+
+test('zq with a bad zed with file', async () => {
+  const path = getPath('prs.json');
+  const promise = zq({
+    query: 'over this | isNull(*) | head 10',
+    as: 'zjson',
+    file: path,
+  });
+
+  expect(promise).rejects.toThrowError('error parsing Zed');
 });

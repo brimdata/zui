@@ -2,6 +2,7 @@ import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { getZqPath } from './binpath';
 import { Readable, Stream } from 'stream';
 import { decode, ndjson } from '@brimdata/zed-js';
+import { pipeline } from 'stream/promises';
 
 type ZqArgs = {
   query?: string;
@@ -11,6 +12,8 @@ type ZqArgs = {
   file?: string;
   input?: Readable;
 };
+
+type Output = 'js' | 'zed' | 'zjson';
 
 export async function decodeZJSON(stream: Readable) {
   const values = [];
@@ -26,28 +29,35 @@ export async function decodeJS(stream: Readable) {
   return (await decodeZed(stream)).map((value) => value.toJS());
 }
 
-export async function zq(
-  args: Omit<ZqArgs, 'f'> & { as: 'js' | 'zed' | 'zjson' }
-) {
-  const zq = createProcess({ ...args, f: 'zjson', i: '' });
-  if (args.input) args.input.pipe(createTransform(zq));
-  switch (args.as) {
-    case 'zed':
-      return decodeZed(zq.stdout);
-    case 'zjson':
-      return decodeZJSON(zq.stdout);
-    case 'js':
-    default:
-      return decodeJS(zq.stdout);
-  }
+export function decodeStream(as: Output) {
+  return async function (src: AsyncIterable<object>) {
+    switch (as) {
+      case 'zed':
+        return decodeZed(src as Readable);
+      case 'zjson':
+        return decodeZJSON(src as Readable);
+      case 'js':
+      default:
+        return decodeJS(src as Readable);
+    }
+  };
 }
 
-export function createStream(args: Omit<ZqArgs, 'file'>) {
-  const zq = createProcess(args);
-  return createTransform(zq);
+function createReadable(zq: ChildProcessWithoutNullStreams, args: ZqArgs) {
+  if (args.input) return args.input.pipe(createTransformStream(zq));
+  if (args.file) return wrapStdout(zq);
+  throw new Error('Provide input or file arg to zq()');
 }
 
-export function createTransform(zq: ChildProcessWithoutNullStreams) {
+function wrapStdout(zq: ChildProcessWithoutNullStreams) {
+  zq.stderr
+    .on('data', (data) => zq.stdout.destroy(new Error(data.toString())))
+    .on('error', (e) => zq.stdout.destroy(e));
+
+  return zq.stdout;
+}
+
+function createTransformStream(zq: ChildProcessWithoutNullStreams) {
   const stream = new Stream.Transform({
     transform(chunk, encoding, callback) {
       if (!zq.stdin.write(chunk, encoding)) {
@@ -69,24 +79,25 @@ export function createTransform(zq: ChildProcessWithoutNullStreams) {
       // zq finished before reading the file finished (i.e. head proc)
       stream.destroy();
     } else {
-      stream.emit('error', e);
+      stream.destroy(e);
     }
   });
 
   zq.stdout
     .on('data', (data) => stream.push(data))
-    .on('error', (e) => {
-      console.log('stdout error');
-      stream.emit('error', e);
-    });
+    .on('error', (e) => stream.destroy(e));
 
   zq.stderr
-    .on('data', (data) => stream.emit('error', data.toString()))
-    .on('error', (e) => stream.emit('error', e));
+    .on('data', (data) => stream.destroy(new Error(data.toString())))
+    .on('error', (e) => stream.destroy(e));
 
   return stream;
 }
 
+/**
+ * Spawn the zq process with the appropriate arguments and return the
+ * child process object.
+ */
 export function createProcess(args: ZqArgs) {
   const bin = args.bin || getZqPath();
   const spawnargs = [];
@@ -95,6 +106,27 @@ export function createProcess(args: ZqArgs) {
   if (args.query) spawnargs.push(args.query);
   if (args.file) spawnargs.push(args.file);
   else spawnargs.push('-');
-
   return spawn(bin, spawnargs);
+}
+
+/**
+ * Invokes the zq command then wraps the child process in a
+ * transform stream. You can pipe your own input to the
+ * transform stream.
+ */
+export function createStream(args: Omit<ZqArgs, 'file'>) {
+  const zq = createProcess(args);
+  return createTransformStream(zq);
+}
+
+/**
+ * Use this function to invoke the zq cli and receive an array of
+ * results as either Zed objects, JS objects, or zjson objects.
+ */
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: Output }
+): Promise<object[]> {
+  const zq = createProcess({ ...args, f: 'zjson' });
+
+  return await pipeline(createReadable(zq, args), decodeStream(args.as));
 }

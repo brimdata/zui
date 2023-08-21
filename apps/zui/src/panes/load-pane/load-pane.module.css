@@ -58,7 +58,9 @@
     background: white;
     border: var(--form-border);
     border-radius: var(--form-border-radius);
-    overflow: hidden;
+    overflow: hidden auto;
+    max-height: 400px;
+    
 }
 
 .fileItem {
