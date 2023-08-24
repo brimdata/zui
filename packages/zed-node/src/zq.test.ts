@@ -120,3 +120,13 @@ test('zq with a bad zed with file', async () => {
 
   expect(promise).rejects.toThrowError('error parsing Zed');
 });
+
+test('head 100 on guns ', async () => {
+  const path = getPath('background_checks.csv');
+  const data = await zq({
+    query: '* | head 100',
+    as: 'zjson',
+    input: createReadStream(path),
+  });
+  expect(data).toHaveLength(100);
+});

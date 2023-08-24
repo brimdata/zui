@@ -13,8 +13,8 @@ export type LoadFormData = {
 
 export type LoadersOperations = {
   "loaders.formAction": (data: LoadFormData) => void
-  zq: (
+  "loaders.previewShaper": (
     files: string[],
-    script: string
+    shaper: string
   ) => {data: zjson.Obj[]; error: string | null}
 }

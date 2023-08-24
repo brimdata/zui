@@ -15,7 +15,8 @@ import {ListViewArgs} from "../core/list-view/types"
 import {ReactAdapterProps} from "./types"
 import {useStateControllers} from "./use-state-controllers"
 import {useInitialScrollPosition, useOnScroll} from "./utils"
-import useResizeObserver from "use-resize-observer"
+import classNames from "classnames"
+import {useParentSize} from "src/app/core/hooks/use-parent-size"
 
 const padding = 8
 
@@ -76,37 +77,33 @@ export const ListView = forwardRef(function ListView(
   useOnScroll(outerRef, list.onScroll.bind(list))
   useInitialScrollPosition(outerRef, props.initialScrollPosition)
   useImperativeHandle(ref, () => list, [list])
-  const {width = 0, height = 0, ref: resizeRef} = useResizeObserver()
   useEffect(() => {
     list.element = outerRef.current
   }, [list])
 
+  const {width, height} = useParentSize(outerRef)
+
   return (
-    <div
-      ref={resizeRef}
-      style={{height: props.height ?? "100%", width: props.width ?? "100%"}}
+    <FixedSizeList
+      className={classNames(props.className, "zed-list-view")}
+      innerRef={props.innerRef}
+      height={props.height ?? height}
+      width={props.width ?? width}
+      outerRef={outerRef}
+      itemCount={list.count}
+      itemSize={20}
+      itemData={[...list.rows]}
+      itemKey={(i) => i.toString()}
+      innerElementType={InnerElement}
+      overscanCount={8}
+      onItemsRendered={(args) => {
+        setRendered({
+          startIndex: args.overscanStartIndex,
+          stopIndex: args.overscanStopIndex,
+        })
+      }}
     >
-      <FixedSizeList
-        className={props.className}
-        innerRef={props.innerRef}
-        height={height}
-        width={width}
-        outerRef={outerRef}
-        itemCount={list.count}
-        itemSize={20}
-        itemData={[...list.rows]}
-        itemKey={(i) => i.toString()}
-        innerElementType={InnerElement}
-        overscanCount={8}
-        onItemsRendered={(args) => {
-          setRendered({
-            startIndex: args.overscanStartIndex,
-            stopIndex: args.overscanStopIndex,
-          })
-        }}
-      >
-        {Row}
-      </FixedSizeList>
-    </div>
+      {Row}
+    </FixedSizeList>
   )
 })

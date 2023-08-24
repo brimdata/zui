@@ -77,7 +77,7 @@ function createTransformStream(zq: ChildProcessWithoutNullStreams) {
   zq.stdin.on('error', (e: Error & { code: string }) => {
     if (e.code === 'EPIPE') {
       // zq finished before reading the file finished (i.e. head proc)
-      stream.destroy();
+      stream.emit('end');
     } else {
       stream.destroy(e);
     }

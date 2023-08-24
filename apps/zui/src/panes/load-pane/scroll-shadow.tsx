@@ -42,16 +42,20 @@ export function useScrollShadow(threshold: number) {
 type Props = {threshold?: number}
 
 export function ScrollShadow(props: HTMLAttributes<HTMLDivElement> & Props) {
-  const {children, ...rest} = props
+  const {children, className, ...rest} = props
   const {ref, onScroll, top, bottom} = useScrollShadow(props.threshold ?? 30)
 
   return (
-    <div {...rest} className={classNames(rest.className, styles.container)}>
+    <div {...rest} className={classNames(styles.container)}>
       <div
         className={classNames(styles.shadow, styles.top)}
         style={{opacity: top}}
       />
-      <div className={styles.scroll} onScroll={onScroll} ref={ref}>
+      <div
+        className={classNames(styles.scroll, className)}
+        onScroll={onScroll}
+        ref={ref}
+      >
         {children}
       </div>
       <div

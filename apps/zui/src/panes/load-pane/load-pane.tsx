@@ -1,95 +1,108 @@
 import {useSelector} from "react-redux"
 import styles from "./load-pane.module.css"
 import {ModalRoot} from "src/components/modal-root"
-import Current from "src/js/state/Current"
-import baseForm from "src/components/forms.module.css"
+
 import classNames from "classnames"
-import Icon from "src/app/core/icon-temp"
 import {IconButton} from "src/components/icon-button"
 import LoadDataForm from "src/js/state/LoadDataForm"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
-import {useEffect, useRef, useState, useTransition} from "react"
-import {ScrollShadow} from "./scroll-shadow"
-import {useForm} from "react-hook-form"
+import {useEffect, useState, useTransition} from "react"
 import {invoke} from "src/core/invoke"
 import {Type, decode} from "@brimdata/zed-js"
 import {ListView} from "src/zui-kit"
 import {ZedEditor} from "src/app/query-home/search-area/zed-editor"
 import {cmdOrCtrl} from "src/app/core/utils/keyboard"
 import Config from "src/js/state/Config"
+import {Form} from "./form"
+import Link from "src/js/components/common/Link"
+import {ZedScript} from "src/app/core/models/zed-script"
+import Current from "src/js/state/Current"
 
 export function LoadPane() {
   const [original, setOriginal] = useState([])
   const [shaped, setShaped] = useState([])
-  const [error, setError] = useState("")
+  const [originalError, setOriginalError] = useState("")
+  const [shapedError, setShapedError] = useState("")
   const [_pending, start] = useTransition()
-  const [shaper, setShaper] = useState("")
+  const shaper = useSelector(LoadDataForm.getShaper)
   const files = useSelector(LoadDataForm.getFiles)
-  const pools = useSelector(Current.getPools)
   const dispatch = useDispatch()
+  const [shapedTypes, setShapedTypes] = useState([])
+  const [_shapedTypesError, setShapedTypesError] = useState("")
+  const [shapedView, setShapedView] = useState("results")
 
-  const {register, handleSubmit, watch} = useForm()
-  const onSubmit = async (data) => {
-    await invoke("loaders.formAction", {...data, files, shaper})
-    clearFiles()
+  function setShaper(text: string) {
+    dispatch(LoadDataForm.setShaper(text))
   }
 
   function addFiles(paths: string[]) {
-    dispatch(LoadDataForm.setFiles([...files, ...paths]))
-  }
-
-  function removeFile(path: string) {
-    dispatch(LoadDataForm.setFiles(files.filter((p) => p !== path)))
-  }
-
-  function clearFiles() {
-    dispatch(LoadDataForm.setFiles([]))
+    dispatch(LoadDataForm.addFiles(paths))
   }
 
   const [_props, ref] = useFilesDrop({
     onDrop: (files: File[]) => addFiles(files.map((f) => f.path)),
   })
 
-  function limit(script: string) {
-    const s = script.trim() ? script : "*"
-    return s + " | head 100"
+  function append(script: string, suffix: string) {
+    const zed = new ZedScript(script)
+    const s = zed.isEmpty() ? "*" : script
+    return s + "\n" + suffix
   }
 
-  const initialize = () => {
-    invoke("zq", files, limit("*")).then(({data, error}) => {
-      if (error) {
-        setError(error)
-      } else {
-        start(() => {
-          setOriginal(decode(data))
-        })
-      }
+  function limit(script: string) {
+    return append(script, " | head 100")
+  }
+
+  async function run(script, onData, onError) {
+    const {data, error} = await invoke("loaders.previewShaper", files, script)
+    start(() => {
+      error && onError(error)
+      onData(decode(data))
     })
   }
 
+  function runOriginal() {
+    run(limit("*"), setOriginal, setOriginalError)
+  }
+
+  function runShaper() {
+    run(limit(shaper), setShaped, setShapedError)
+  }
+
+  function runShaperTypes() {
+    run(
+      append(shaper, " | by typeof(this)"),
+      setShapedTypes,
+      setShapedTypesError
+    )
+  }
+
+  const [shapedCount, setShapedCount] = useState([])
+  const [_shapedCountError, setShapedCountError] = useState("")
+  function runShaperCount() {
+    const onData = (values) => {
+      console.log(values)
+      setShapedCount(values[0]?.toJS())
+    }
+    run(append(shaper, " | count()"), onData, setShapedCountError)
+  }
+
   useEffect(() => {
-    initialize()
+    runOriginal()
     submit()
   }, [files])
 
   const submit = () => {
-    invoke("zq", files, limit(shaper)).then(({data, error}) => {
-      if (error) {
-        setError(error)
-      } else {
-        start(() => {
-          setShaped(decode(data))
-        })
-      }
-    })
+    runShaper()
+    runShaperTypes()
+    runShaperCount()
   }
 
   const shapes = new Set<Type>()
   original.forEach((o) => shapes.add(o.type))
 
   const runOnEnter = useSelector(Config.getRunOnEnter)
-  const fileInput = useRef(null)
   const onKey = (e: React.KeyboardEvent) => {
     const isEnterKey = e.key === "Enter"
     const isModKey = e.shiftKey || cmdOrCtrl(e)
@@ -100,126 +113,22 @@ export function LoadPane() {
       }
     }
   }
+
   if (files.length === 0) return null
 
   return (
     <ModalRoot>
       <div className={styles.grid} ref={ref}>
-        <nav>{/* <h1>Preview & load</h1> */}</nav>
-
-        <aside className={styles.aside}>
-          <h2 className={styles.formTitle}>
-            Load Data
-            <hr />
-          </h2>
-          <form
-            className={classNames(styles.form, baseForm.form)}
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <ScrollShadow threshold={45}>
-              <section className={styles.fields}>
-                <div>
-                  <div className={baseForm.actionLabel}>
-                    <label>Files</label>
-                    <a onClick={() => fileInput.current?.click()}>
-                      + Add
-                      <input
-                        ref={fileInput}
-                        type="file"
-                        style={{display: "none"}}
-                        onChange={(e) => {
-                          addFiles(
-                            Array.from(e.currentTarget.files).map((f) => f.path)
-                          )
-                        }}
-                      />
-                    </a>
-                  </div>
-                  <ul className={styles.files}>
-                    {files.map((f: string, i) => (
-                      <li key={i} className={styles.fileItem}>
-                        <Icon
-                          name="doc-plain"
-                          size={16}
-                          fill="var(--primary-color)"
-                        />
-                        <span title={f} className={styles.fileName}>
-                          {f}
-                        </span>
-                        <IconButton
-                          iconName="close"
-                          onClick={() => removeFile(f)}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <label>Pool</label>
-                  <select {...register("poolId")}>
-                    <option value="default">Select Pool</option>
-                    <option value="new">+ Create New</option>
-                    {pools.map((pool) => (
-                      <option key={pool.id} value={pool.id}>
-                        {pool.name}
-                      </option>
-                    ))}
-                  </select>
-                  {watch("poolId") === "new" && (
-                    <fieldset>
-                      <div>
-                        <label>Name</label>
-                        <input type="text" {...register("name")} />
-                      </div>
-                      <div>
-                        <label>Pool Key</label>
-                        <input type="text" {...register("key")} />
-                      </div>
-                      <div>
-                        <label>Sort Order</label>
-                        <div className={baseForm.radioInput}>
-                          <input
-                            id="ascending"
-                            name="order"
-                            type="radio"
-                            value="asc"
-                            {...register("order")}
-                          />
-                          <label htmlFor="ascending">Ascending</label>
-                        </div>
-                        <div className={baseForm.radioInput}>
-                          <input
-                            id="descending"
-                            name="order"
-                            type="radio"
-                            value="desc"
-                            {...register("order")}
-                          />
-                          <label htmlFor="descending">Descending</label>
-                        </div>
-                      </div>
-                    </fieldset>
-                  )}
-                </div>
-                <div>
-                  <label>Author</label>
-                  <input type="text" />
-                </div>
-                <div>
-                  <label>Message</label>
-                  <textarea></textarea>
-                </div>
-              </section>
-            </ScrollShadow>
-            <div className={classNames(styles.submission)}>
-              <a className={baseForm.cancel} onClick={() => clearFiles()}>
-                Cancel
-              </a>
-              <button type="submit">Load</button>
-            </div>
-          </form>
-        </aside>
         <main className={styles.main}>
+          <div className={styles.toolbar}>
+            <div></div>
+            <div>
+              <h2 className={styles.title}>Shaper Script</h2>
+            </div>
+            <div className={styles.toolbarActions}>
+              <IconButton iconName="run" onClick={submit} />
+            </div>
+          </div>
           <div onKeyDownCapture={onKey} className={styles.shaper}>
             <ZedEditor
               path="preview"
@@ -227,17 +136,51 @@ export function LoadPane() {
               onChange={(s) => setShaper(s)}
             />
           </div>
-          <div className={styles.original}>
-            <ListView values={original} className="zed-list-view" />
+          <div className={classNames(styles.original, styles.results)}>
+            <header>
+              <label>Original</label>
+            </header>
+            <section>
+              {originalError ? (
+                originalError.toString()
+              ) : (
+                <ListView values={original} />
+              )}
+            </section>
+            <footer>Types</footer>
           </div>
-          <div className={styles.shaped}>
-            {error ? (
-              error.toString()
-            ) : (
-              <ListView values={shaped} className="zed-list-view" />
-            )}
+          <div className={classNames(styles.shaped, styles.results)}>
+            <header>
+              <label>Preview</label>
+            </header>
+            <section>
+              {shapedError ? (
+                shapedError.toString()
+              ) : (
+                <ListView
+                  values={shapedView === "results" ? shaped : shapedTypes}
+                />
+              )}
+            </section>
+            <footer>
+              <Link onClick={() => setShapedView("types")}>
+                Types: {shapedTypes.length.toString()}
+              </Link>
+              <Link onClick={() => setShapedView("results")}>
+                Results: {shaped.length.toString()} of {shapedCount}
+              </Link>
+            </footer>
           </div>
         </main>
+        <aside className={styles.aside}>
+          <header>
+            <h2 className={styles.formTitle}>
+              Load Data
+              <hr />
+            </h2>
+          </header>
+          <Form />
+        </aside>
       </div>
     </ModalRoot>
   )

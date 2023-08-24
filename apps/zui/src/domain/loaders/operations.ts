@@ -13,22 +13,16 @@ export const formAction = createOperation(
   async (ctx, data) => {
     let pool: Pool
 
-    if (data.poolId === "default") {
-      const name = await derivePoolName(
-        data.files,
-        zui.pools.all.map((p) => p.name)
-      )
-      pool = await zui.pools.create(name)
-    } else if (data.poolId === "new") {
-      pool = await zui.pools.create(data.name, {
-        key: data.key,
-        order: data.order,
-      })
-      // pool = zui.pools.create({name: data.name, order: data.order, key: data.key})
+    if (data.poolId === "new") {
+      const poolNames = zui.pools.all.map((pool) => pool.name)
+      const derivedName = await derivePoolName(data.files, poolNames)
+      const name = data.name.trim() || derivedName
+      const key = data.key
+      const order = data.order
+      pool = await zui.pools.create(name, {key, order})
     } else {
       pool = zui.pools.get(data.poolId)
     }
-
     await loadFilesOp.run({
       poolId: pool.id,
       lakeId: zui.window.lakeId,
@@ -48,14 +42,16 @@ export const formAction = createOperation(
   }
 )
 
-export const zqOperation = createOperation("zq", async (ctx, files, script) => {
-  const input = new MultiStream(files.map((f) => createReadStream(f)))
-
-  if (files.length === 0) return {data: [], error: null}
-  try {
-    const data = await zq({query: script, as: "zjson", input})
-    return {error: null, data: data as zjson.Obj[]}
-  } catch (e) {
-    return {error: e, data: []}
+export const zqOperation = createOperation(
+  "loaders.previewShaper",
+  async (_, files, shaper) => {
+    const input = new MultiStream(files.map((f) => createReadStream(f)))
+    if (files.length === 0) return {data: [], error: null}
+    try {
+      const data = await zq({query: shaper, as: "zjson", input})
+      return {error: null, data: data as zjson.Obj[]}
+    } catch (e) {
+      return {error: e, data: []}
+    }
   }
-})
+)

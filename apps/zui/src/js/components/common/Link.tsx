@@ -1,7 +1,7 @@
 import React from "react"
 import {invoke} from "src/core/invoke"
 
-type Props = {href?: string; children: JSX.Element | string; onClick?: Function}
+type Props = {href?: string; children: any; onClick?: Function}
 
 export default function Link({href, onClick, children}: Props) {
   // Anchors can be passed through

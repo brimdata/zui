@@ -1,0 +1,132 @@
+.form {
+    display: contents;
+    --side-padding: 16px;
+}
+
+.formBody {
+    padding-bottom: var(--side-padding);
+}
+
+.formBody > * {
+    padding: 0 var(--side-padding);
+}
+
+.well {
+    padding: 1rem;
+    background: hsla(212deg 51% 12% / 0.04);
+    border-radius: var(--form-border-radius);
+    color: var(--foreground-color-light);
+    margin: 2rem var(--side-padding);
+}
+
+.well p {
+    margin-bottom: 0.5rem;
+}
+
+.well p:last-child {
+    margin-bottom: 0;
+}
+
+
+.files {
+    padding: 0;
+    background: white;
+    border: var(--form-border);
+    border-radius: var(--form-border-radius);
+    overflow: hidden auto;
+    max-height: 400px;
+    
+}
+
+.fileItem {
+    height: var(--form-height);
+    font-weight: 500;
+    padding: 0 2px 0 8px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    align-items: center;
+}
+
+.fileName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 8px;
+}
+
+.submission {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    bottom: 0;
+    padding: var(--side-padding);
+    padding-left: calc(var(--side-padding) + var(--form-border-radius));
+    background: var(--chrome-color);
+    backdrop-filter: blur(3px);
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-field-gap);
+    margin-bottom: calc(var(--form-field-gap) * 2);
+}
+
+
+
+.form summary {
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    color: var(--foreground-color-light);
+    padding: calc(var(--form-field-gap) / 3) 6px ;
+    padding-right: 0;
+    font-weight: 500;
+    user-select: none;
+    transition: none;    
+    white-space: nowrap;
+}
+
+.form summary::marker {
+    display: inline-block;
+    width: 3em;
+    outline: 1px solid blue;
+}
+
+.form summary * {
+    pointer-events: none;
+}
+
+
+.summaryRule {
+    display: inline-flex;
+    align-items: center;
+    width: calc(100% - 1em); /* The em is the marker */
+    gap: 0.5em;
+}
+
+.summaryRule hr {
+    flex: 0;
+    height: 1px;
+    border:none;
+    border-top: 1px solid var(--border-color-dark);
+    transition: all 200ms;
+}
+
+.form details[open] .summaryRule hr {
+    transition: all 400ms;
+    flex: 1;
+}
+
+.form details[open] > summary {
+    margin-bottom: 10px;
+    transition: all 400ms;
+}
+
+.form details[open] {
+    padding-bottom: calc(var(--form-field-gap));
+}
+
+.form details > *:not(summary) {
+    margin-left: var(--side-padding);
+ }
