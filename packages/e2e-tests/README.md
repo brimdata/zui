@@ -2,11 +2,14 @@
 
 > End To End Testing Framework
 
-The zui end-to-end test suite use playwright as the test runner.
+The Zui end-to-end test suite uses [Playwright](https://playwright.dev/) as the test runner.
+
+
+## Writing a test
 
 To write an e2e test, create a file called `[my-test].spec.ts` in the `tests` directory.
 
-Then create a describe block and initialize a new TestApp class within it. That class contain all the helper methods needed for quickly writing an end to end test.
+Then create a describe block and initialize a new TestApp class within it. That class contains all the helper methods needed for quickly writing an end to end test.
 
 Here's a template for getting started.
 
@@ -29,6 +32,20 @@ test.describe("Pool Groups", () => {
     await app.query("1") // and the like...
   })
 })
+```
+
+## Running tests
+
+To run all the e2e tests, at the top level of the Zui repo, execute:
+
+```
+yarn e2e
+```
+
+To run just one of the tests, specify the name of the file in the `tests` directory, e.g.,
+
+```
+yarn e2e -- --grep="pool-loads.spec.ts"
 ```
 
 ## Selecting DOM Nodes
