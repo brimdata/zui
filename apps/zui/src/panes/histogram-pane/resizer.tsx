@@ -1,4 +1,4 @@
-import DragAnchor from "src/js/components/DragAnchor"
+import DragAnchor from "src/components/drag-anchor"
 import Layout from "src/js/state/Layout"
 import {MutableRefObject, useRef} from "react"
 import {useDispatch} from "react-redux"

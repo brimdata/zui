@@ -15,9 +15,25 @@ export function DataDropzone({children}) {
       {children}
       {props.isOver && (
         <div className={styles.overlay}>
-          <div className={styles.outline} />
-          <div className={styles.outline} />
-          <div className={styles.outline} />
+          <div className={styles.hair}>
+            <div />
+            <div />
+          </div>
+
+          <div className={styles.hair}>
+            <div />
+            <div />
+          </div>
+
+          <div className={styles.hair}>
+            <div />
+            <div />
+          </div>
+
+          <div className={styles.hair}>
+            <div />
+            <div />
+          </div>
           <h1 className={styles.title}>
             Preview & Load <em>Data</em>
           </h1>

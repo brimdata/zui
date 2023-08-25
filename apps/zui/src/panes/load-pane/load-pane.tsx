@@ -1,15 +1,16 @@
 import {useSelector} from "react-redux"
+
 import styles from "./load-pane.module.css"
 import {ModalRoot} from "src/components/modal-root"
-
+import * as _ from "lodash"
 import classNames from "classnames"
 import {IconButton} from "src/components/icon-button"
 import LoadDataForm from "src/js/state/LoadDataForm"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
-import {useEffect, useState, useTransition} from "react"
+import {useEffect, useRef, useState, useTransition} from "react"
 import {invoke} from "src/core/invoke"
-import {Type, decode} from "@brimdata/zed-js"
+import {decode} from "@brimdata/zed-js"
 import {ListView} from "src/zui-kit"
 import {ZedEditor} from "src/app/query-home/search-area/zed-editor"
 import {cmdOrCtrl} from "src/app/core/utils/keyboard"
@@ -18,6 +19,9 @@ import {Form} from "./form"
 import Link from "src/js/components/common/Link"
 import {ZedScript} from "src/app/core/models/zed-script"
 import Current from "src/js/state/Current"
+import {pluralize} from "src/util/pluralize"
+import DragAnchor from "src/components/drag-anchor"
+import useSelect from "src/app/core/hooks/use-select"
 
 export function LoadPane() {
   const [original, setOriginal] = useState([])
@@ -78,11 +82,10 @@ export function LoadPane() {
     )
   }
 
-  const [shapedCount, setShapedCount] = useState([])
+  const [shapedCount, setShapedCount] = useState<number>(0)
   const [_shapedCountError, setShapedCountError] = useState("")
   function runShaperCount() {
     const onData = (values) => {
-      console.log(values)
       setShapedCount(values[0]?.toJS())
     }
     run(append(shaper, " | count()"), onData, setShapedCountError)
@@ -99,9 +102,6 @@ export function LoadPane() {
     runShaperCount()
   }
 
-  const shapes = new Set<Type>()
-  original.forEach((o) => shapes.add(o.type))
-
   const runOnEnter = useSelector(Config.getRunOnEnter)
   const onKey = (e: React.KeyboardEvent) => {
     const isEnterKey = e.key === "Enter"
@@ -114,63 +114,96 @@ export function LoadPane() {
     }
   }
 
+  const lake = useSelector(Current.getLake)
+  const editorHeight = useSelector(LoadDataForm.editorSize)
+  const size = useRef(0)
+  const select = useSelect()
+  const onStart = () => {
+    size.current = select(LoadDataForm.editorSize)
+  }
+  const onDrag = (e, {dy}) => {
+    dispatch(LoadDataForm.setEditorSize(size.current + dy))
+  }
   if (files.length === 0) return null
 
   return (
     <ModalRoot>
       <div className={styles.grid} ref={ref}>
         <main className={styles.main}>
-          <div className={styles.toolbar}>
-            <div></div>
-            <div>
-              <h2 className={styles.title}>Shaper Script</h2>
+          <section className={styles.titlebar}>{lake.name}</section>
+          <section className={styles.shaper} style={{height: editorHeight}}>
+            <div className={styles.toolbar}>
+              <div>
+                <h2 className={styles.title}>Shaper Script</h2>
+              </div>
+              <div className={styles.toolbarActions}>
+                <IconButton iconName="run" onClick={submit} />
+              </div>
             </div>
-            <div className={styles.toolbarActions}>
-              <IconButton iconName="run" onClick={submit} />
+            <div onKeyDownCapture={onKey} className={styles.editor}>
+              <ZedEditor
+                path="preview"
+                value={shaper}
+                onChange={(s) => setShaper(s)}
+              />
             </div>
-          </div>
-          <div onKeyDownCapture={onKey} className={styles.shaper}>
-            <ZedEditor
-              path="preview"
-              value={shaper}
-              onChange={(s) => setShaper(s)}
+            <DragAnchor
+              position={"bottom"}
+              debug
+              onStart={onStart}
+              onDrag={onDrag}
             />
-          </div>
-          <div className={classNames(styles.original, styles.results)}>
-            <header>
-              <label>Original</label>
-            </header>
-            <section>
-              {originalError ? (
-                originalError.toString()
-              ) : (
-                <ListView values={original} />
-              )}
-            </section>
-            <footer>Types</footer>
-          </div>
-          <div className={classNames(styles.shaped, styles.results)}>
-            <header>
-              <label>Preview</label>
-            </header>
-            <section>
-              {shapedError ? (
-                shapedError.toString()
-              ) : (
-                <ListView
-                  values={shapedView === "results" ? shaped : shapedTypes}
-                />
-              )}
-            </section>
-            <footer>
-              <Link onClick={() => setShapedView("types")}>
-                Types: {shapedTypes.length.toString()}
-              </Link>
-              <Link onClick={() => setShapedView("results")}>
-                Results: {shaped.length.toString()} of {shapedCount}
-              </Link>
-            </footer>
-          </div>
+          </section>
+
+          <section className={styles.resultsGroup}>
+            <div className={classNames(styles.original, styles.results)}>
+              <header>
+                <label>Original</label>
+              </header>
+              <section>
+                {originalError ? (
+                  <div className={styles.zqError}>
+                    <h3 className={styles.zqErrorTitle}>ZQ Error</h3>
+                    <p>
+                      {originalError.toString().replaceAll("Error:", "").trim()}
+                    </p>
+                  </div>
+                ) : (
+                  <ListView values={original} />
+                )}
+              </section>
+              <footer>Types</footer>
+            </div>
+
+            <div className={classNames(styles.shaped, styles.results)}>
+              <header>
+                <label>Preview</label>
+              </header>
+              <section>
+                {shapedError ? (
+                  <div className={styles.zqError}>
+                    <h3 className={styles.zqErrorTitle}>ZQ Error</h3>
+                    <p>
+                      {shapedError.toString().replaceAll("Error:", "").trim()}
+                    </p>
+                  </div>
+                ) : (
+                  <ListView
+                    values={shapedView === "results" ? shaped : shapedTypes}
+                  />
+                )}
+              </section>
+              <footer>
+                <Link onClick={() => setShapedView("types")}>
+                  <b>{shapedTypes.length.toString()}</b>{" "}
+                  {pluralize("Type", shapedTypes.length)}
+                </Link>
+                <Link onClick={() => setShapedView("results")}>
+                  <b>{shapedCount}</b> {pluralize("Row", shapedCount)}
+                </Link>
+              </footer>
+            </div>
+          </section>
         </main>
         <aside className={styles.aside}>
           <header>

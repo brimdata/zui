@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import React from "react"
 import {call} from "src/util/call"
 import styled from "styled-components"
@@ -7,6 +8,10 @@ const Area = styled.div`
   background: transparent;
   pointer-events: all !important;
   z-index: 99;
+
+  &.debug {
+    outline: 1px dashed blue;
+  }
 
   &.align-left {
     top: 0;
@@ -41,6 +46,7 @@ const Area = styled.div`
   }
 `
 type Props = {
+  debug?: boolean
   position: "left" | "right" | "top" | "bottom"
   onDrag?: (e: MouseEvent, args: {dy: number; dx: number}) => void
   onStart?: (e: React.MouseEvent) => void
@@ -91,7 +97,9 @@ export default class DragAnchor extends React.Component<Props> {
   render() {
     return (
       <Area
-        className={`align-${this.props.position}`}
+        className={classNames(`align-${this.props.position}`, {
+          debug: this.props.debug,
+        })}
         onMouseDown={this.down}
       />
     )

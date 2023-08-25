@@ -6,7 +6,7 @@
     width: 100%;
     height: 100%;
     z-index: 3;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--orange);
     position: absolute;
     top: 0;
     left:0;
@@ -22,7 +22,9 @@
     font-size: 60px;
     font-weight: 900;
     text-align: center;
+    color: white;
     opacity: 0;
+    padding: 3rem;
     animation: 
         700ms popup cubic-bezier(0.16, 1, 0.3, 1) forwards, 
         300ms fade-opacity ease-in forwards;
@@ -30,53 +32,57 @@
 
 .title em {
     font-style: normal;
-    color: var(--orange);
+    color: var(--foreground-color);
     
 }
 
-.outline {
+.hair {
     position: absolute;
+    width: 3rem;
+    height: 3rem;
+    margin: 0;
+    animation: 700ms margin-in cubic-bezier(0.16, 1, 0.3, 1) forwards
+    
+}
+
+.hair div:first-child {
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    height: 100%;
+    width: 100%;
+}
+
+.hair div:last-child {
+    height: 0.5rem;
+    width: 0.5rem;
+    background: white;
+    border-radius: 50%;
+    top: -1rem;
+    left: -1rem;
+    position: absolute;
+}
+
+.hair:nth-child(1) {
     top: 0;
     left: 0;
+}
+
+.hair:nth-child(2) {
+    top: 0;
+    right: 0;
+    transform: rotateZ(90deg);
+}
+
+.hair:nth-child(3) {
     bottom: 0;
     right: 0;
-    margin: 40px 20px;
-    border: 1px dashed var(--foreground-color);
-    transform: scale(1.25);
-    opacity: 0;
-    animation: zoom 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: rotateZ(180deg);
 }
 
-
-.outline:nth-child(2) {
-    animation-delay: 50ms;
-    margin: 60px 40px;
-}
-
-.outline:nth-child(3) {
-    animation-delay: 100ms;
-    margin: 80px 60px;
-    border-color: var(--orange);
-}
-
-@keyframes zoom {
-    from {
-        opacity: 0;
-        transform: scale(1.25);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes fade-background {
-    from {
-        background: transparent;
-    }
-    to {
-        background: white;
-    }
+.hair:nth-child(4) {
+    bottom: 0;
+    left: 0;
+    transform: rotateZ(270deg);
 }
 
 @keyframes fade-opacity {
@@ -95,5 +101,14 @@
 
     to {
         transform: translateY(0);
+    }
+}
+
+@keyframes margin-in {
+    from {
+        margin: 0;
+    } 
+    to {
+        margin: 10vmin;
     }
 }

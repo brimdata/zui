@@ -7,6 +7,7 @@ import {zq} from "@brimdata/zed-node"
 import MultiStream from "multistream"
 import {createReadStream} from "fs"
 import {zjson} from "@brimdata/zed-js"
+import {ZedScript} from "src/app/core/models/zed-script"
 
 export const formAction = createOperation(
   "loaders.formAction",
@@ -23,12 +24,15 @@ export const formAction = createOperation(
     } else {
       pool = zui.pools.get(data.poolId)
     }
+
+    const script = new ZedScript(data.shaper)
+
     await loadFilesOp.run({
       poolId: pool.id,
       lakeId: zui.window.lakeId,
       branch: "main",
       files: data.files,
-      shaper: data.shaper,
+      shaper: script.isEmpty() ? "*" : data.shaper,
       author: data.author,
       body: data.message,
     })
@@ -39,6 +43,7 @@ export const formAction = createOperation(
       pins: [{type: "from", value: pool.name}],
       value: "",
     })
+    zui.window.showSuccessMessage("Successfully loaded into " + pool.name)
   }
 )
 

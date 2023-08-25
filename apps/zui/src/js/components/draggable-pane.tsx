@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react"
 import styled from "styled-components"
-import DragAnchor from "./DragAnchor"
+import DragAnchor from "src/components/drag-anchor"
 
 type Props = {
   onDrag: (e: MouseEvent, args: {dx: number; dy: number}) => void

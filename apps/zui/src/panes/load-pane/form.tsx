@@ -12,7 +12,6 @@ import classNames from "classnames"
 import styles from "./form.module.css"
 import {ChangeEvent, useRef} from "react"
 import {IconButton} from "src/components/icon-button"
-import Lakes from "src/js/state/Lakes"
 
 export function Form() {
   const dispatch = useDispatch()

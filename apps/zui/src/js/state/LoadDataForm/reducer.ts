@@ -1,11 +1,12 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit"
+import {bounded} from "src/util/bounded"
 
 const slice = createSlice({
   name: "LOAD_DATA_FORM",
   initialState: {
     files: [] as string[],
-    shaper:
-      "// The data will run through this script before it's loaded into the lake.\n",
+    shaper: "// Transform the data here before loading it.\n",
+    editorSize: 100,
   },
   reducers: {
     setFiles: (state, action: PayloadAction<string[]>) => {
@@ -16,6 +17,9 @@ const slice = createSlice({
     },
     setShaper: (state, action: PayloadAction<string>) => {
       state.shaper = action.payload
+    },
+    setEditorSize: (state, action: PayloadAction<number>) => {
+      state.editorSize = bounded(action.payload, [20, Infinity])
     },
   },
 })

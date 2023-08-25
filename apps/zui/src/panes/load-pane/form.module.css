@@ -27,7 +27,6 @@
     margin-bottom: 0;
 }
 
-
 .files {
     padding: 0;
     background: white;
@@ -40,7 +39,7 @@
 
 .fileItem {
     height: var(--form-height);
-    font-weight: 500;
+    font-weight: normal;
     padding: 0 2px 0 8px;
     margin: 0;
     display: grid;
@@ -72,8 +71,6 @@
     gap: var(--form-field-gap);
     margin-bottom: calc(var(--form-field-gap) * 2);
 }
-
-
 
 .form summary {
     cursor: pointer;
