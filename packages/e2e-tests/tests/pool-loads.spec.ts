@@ -18,9 +18,9 @@ test.describe("Pool Loads", () => {
     await app.createPool([getPath("prs.json")])
     await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
     await app.query("count()")
+    await app.mainWin.getByText("Load Successful").waitFor({state: "hidden"})
     const results = await app.getViewerResults()
     expect(results).toEqual(["this", "1"])
-    await app.mainWin.getByText("Load Successful").waitFor({state: "hidden"})
   })
 
   test("load more data into the pool", async () => {
@@ -32,9 +32,9 @@ test.describe("Pool Loads", () => {
     await app.mainWin.getByText("Load Successful").waitFor()
     await app.mainWin.getByRole("button", {name: "Query Pool"}).click()
     await app.query("count()")
+    await app.mainWin.getByText("Load Successful").waitFor({state: "hidden"})
     const results = await app.getViewerResults()
     expect(results).toEqual(["this", "2"])
-    await app.mainWin.getByText("Load Successful").waitFor({state: "hidden"})
   })
 
   test("create with bad data deletes pool", async () => {
