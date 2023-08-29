@@ -29,7 +29,10 @@
   --alert-1: #d0250b;
 
   // backgrounds
-  --hover-light-bg: rgba(0, 0, 0, 0.06);
+  --hover-dark: rgba(0, 0, 0, 0.04);
+  --active-dark: rgba(0, 0, 0, 0.06);
+
+  --hover-light-bg: var(--hover-dark);
   --table-stripe-bg: rgba(0, 0, 0, 0.02);
 
   // borders
@@ -46,13 +49,14 @@
   --tab-background: var(--sidebar-background);
   --tab-background-hover: rgba(0, 0, 0, 0.1);
 
-  --primary-color-lighter: hsl(212, 72%, 75%);
+  --primary-color-lighter: hsl(212, 89%, 82%);
   --primary-color-light: hsl(212, 72%, 69%);
   --primary-color: hsl(212, 72%, 59%);
-  --primary-color-dark: hsl(212, 72%, 53%);
-  --primary-color-darker: hsl(212, 72%, 48%);
+  --primary-color-dark: hsl(212, 86%, 33%);
+  --primary-color-darker: hsl(212, 95%, 23%);
 
-  --foreground-color: var(--aqua);
+  --foreground-color-dark: #000811;
+  --foreground-color: #0f1e2e;
   --foreground-color-light: hsl(212, 7%, 46%);
 
   --button-background: hsl(212, 5%, 92%);
@@ -65,6 +69,7 @@
   --border-color-dark: hsl(216, 10%, 80%);
 
   --chrome-color: hsl(212, 10%, 97%);
+  --chrome-color-dark: #E9EAEB;
 
   // Form stuff
   --form-bg-color: white;

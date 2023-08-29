@@ -14,9 +14,16 @@ import {defaultListViewState} from "../core/list-view/state"
 import {ListViewArgs} from "../core/list-view/types"
 import {ReactAdapterProps} from "./types"
 import {useStateControllers} from "./use-state-controllers"
-import {useInitialScrollPosition, useOnScroll} from "./utils"
+import {mergeRefs, useInitialScrollPosition, useOnScroll} from "./utils"
 import classNames from "classnames"
 import {useParentSize} from "src/app/core/hooks/use-parent-size"
+import {
+  BottomShadow,
+  ScrollShadow,
+  TopShadow,
+  useScrollShadow,
+} from "src/panes/load-pane/scroll-shadow"
+import {call} from "src/util/call"
 
 const padding = 8
 
@@ -34,6 +41,34 @@ export const InnerElement = forwardRef<any, any>(function InnerElement(
       }}
       {...rest}
     />
+  )
+})
+
+export const OuterElement = forwardRef(function OuterElement(
+  {children, ...rest},
+  ref
+) {
+  const shadow = useScrollShadow(200)
+  return (
+    <div style={{height: "100%", width: "100%", position: "relative"}}>
+      <TopShadow
+        opacity={shadow.top}
+        style={{
+          height: "2px",
+          background: "linear-gradient(rgba(0,0,0,0.25), transparent)",
+        }}
+      />
+      <div
+        {...rest}
+        ref={mergeRefs(shadow.ref, ref)}
+        onScroll={(e) => {
+          call(rest.onScroll, e)
+          shadow.onScroll(e)
+        }}
+      >
+        {children}
+      </div>
+    </div>
   )
 })
 
@@ -95,6 +130,7 @@ export const ListView = forwardRef(function ListView(
       itemData={[...list.rows]}
       itemKey={(i) => i.toString()}
       innerElementType={InnerElement}
+      outerElementType={OuterElement}
       overscanCount={8}
       onItemsRendered={(args) => {
         setRendered({

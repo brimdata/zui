@@ -86,17 +86,20 @@
 
 .results {
     display: grid;
-    grid-template-rows: 32px 1fr 32px;
+    grid-template-rows: 38px 1fr 30px;
     background :white;
     margin-top: 0;
     margin: 10px;
     box-shadow: var(--shadow-elevation-low);
     border-radius: 6px;
+    min-width: 0;
+    min-height: 0;
 }
 
 .results header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 18px;
     color: var(--foreground-color-light);
 }
@@ -116,30 +119,44 @@
     border-radius: 0 0 6px 6px;
 }
 
-.results footer a {
+.results footer button {
     color: var(--foreground-color-light);
     text-decoration: none;
+    border-radius: 6px;
+    padding: 0 6px;
+    cursor: default;
+    background: none;
+    border: none;
+    transition: all 200ms;
 }
 
-.results footer a:hover {
-    color: var(--foreground-color-light);
-    text-decoration: underline;
+.results footer button:hover {
+    color: var(--foreground-color);
+    background: var(--hover-dark);
+}
+
+.results footer button:active {
+    color: var(--foreground-color);
+    background: var(--active-dark);
 }
 
 .results label {
-    font-weight: bold;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .original {
-    min-width: 0;
-    min-height: 0;
     margin-right: 0;
 }
 
-.shaped {
-    min-width: 0;
-    min-height: 0;
+.original label {
+    background: var(--primary-color-lighter);
+    color: var(--primary-color-darker);
+}
+
+
+.shaped label {
+    background: hsl(30deg 100% 83%);
+    color: hsl(30deg 100% 30%);
 }
 
 .aside {
@@ -154,7 +171,7 @@
 
 .formTitle {
     user-select: none;
-    margin: 2rem auto 0 auto;
+    margin: 2rem auto 1em auto;
     padding: 0 calc(18px + var(--form-border-radius));
     font-size: 15px;
     font-weight: 500;;
@@ -184,4 +201,45 @@
 .zqErrorTitle {
     font-size: 15px;
     font-weight: bold;
+}
+
+.toggleModes {
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    background-color: hsla(212deg 51% 12% / 0.08);
+    position: relative;
+}
+
+.toggleModes button {
+    background: none;
+    height: 22px;
+    padding: 0 8px;
+    color: var(--foreground-color-light);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.toggleModes button:hover {
+    color: var(--foreground-color);
+}
+
+.toggleModes button svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.toggleModes .selection {
+    display: none;
+    background: white;
+    height: 28px;
+    width: 28px;
+    box-shadow: var(--shadow-elevation-low), 0 0 0 0.5px var(--border-color) ;
+    border-radius: 50%;
+    position: absolute;
+    left: 3px;
 }

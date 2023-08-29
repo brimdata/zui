@@ -1,0 +1,64 @@
+.tabs {
+  height: 26px;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  position: relative;
+  background: var(--chrome-color);
+  border-radius: 6px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 2px;
+  height: 100%;
+}
+
+.button {
+  background: none;
+  border: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 1.33em;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1px;
+  z-index: 1;
+  color: var(--foreground-color-light);
+  transition: all 200ms;
+  height: 100%;
+}
+
+.button:hover:not([aria-pressed="true"]) {
+  background: var(--hover-dark);
+  color: var(--foreground-color);
+}
+
+.button:active:not([aria-pressed="true"]) {
+  background: var(--active-dark);
+}
+
+.button[aria-pressed="true"] {
+  color: var(--foreground-color);
+}
+
+.button span {
+  padding: 0 2px;
+  display: block;
+}
+
+.selection {
+  background: white;
+  border-radius: 5px;
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 0px;
+  box-shadow: var(--shadow-elevation-low);
+}

@@ -22,6 +22,7 @@ const BG = styled.button`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: background 200ms;
 
   &:disabled {
     opacity: 0.2;
@@ -29,11 +30,11 @@ const BG = styled.button`
   }
 
   &:hover:not(:disabled) {
-    background: var(--button-background-hover);
+    background: var(--hover-dark);
   }
 
   &:active:not(:disabled) {
-    background: var(--button-background-active);
+    background: var(--active-dark);
   }
 `
 

@@ -13,7 +13,7 @@
 
 .well {
     padding: 1rem;
-    background: hsla(212deg 51% 12% / 0.04);
+    background: var(--chrome-color-dark);
     border-radius: var(--form-border-radius);
     color: var(--foreground-color-light);
     margin: 2rem var(--side-padding);

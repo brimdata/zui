@@ -5,6 +5,7 @@ import {useZedTable} from "./context"
 import {FillFlexParent} from "../fill-flex-parent"
 import {InnerElement} from "./grid-container"
 import {useResizingClasses} from "./utils"
+import {call} from "src/util/call"
 
 /**
  * Auto Size Logic
@@ -85,7 +86,7 @@ export function Grid() {
             innerElementType={InnerElement}
             onScroll={(p) => {
               api.setLastEvent("scroll")
-              api.args.onScroll({top: p.scrollTop, left: p.scrollLeft})
+              call(api.args.onScroll, {top: p.scrollTop, left: p.scrollLeft})
             }}
             onItemsRendered={(state) => {
               api.setGridState({

@@ -1,6 +1,6 @@
 import React from "react"
 import classNames from "classnames"
-import styled, {css} from "styled-components"
+import styled from "styled-components"
 import icons from "./icons"
 
 export type IconName = keyof typeof icons
@@ -22,7 +22,7 @@ const Wrap = styled.i<{
   svg {
     height: ${(p) => p.size || 22}px;
     width: ${(p) => p.size || 22}px;
-    fill: ${(p) => p.fill || css`var(--foreground-color)`};
+    fill: ${(p) => p.fill || "currentColor"};
     stroke: ${(p) => p.stroke || "inherit"};
   }
 `

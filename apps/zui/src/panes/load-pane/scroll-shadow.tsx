@@ -1,5 +1,5 @@
 import {scaleLinear} from "d3"
-import {HTMLAttributes, useRef, useState} from "react"
+import {CSSProperties, HTMLAttributes, useRef, useState} from "react"
 import useResizeObserver from "use-resize-observer"
 import styles from "./scroll-shadow.module.css"
 import classNames from "classnames"
@@ -41,12 +41,31 @@ export function useScrollShadow(threshold: number) {
 
 type Props = {threshold?: number}
 
+export function TopShadow(props: {opacity: number; style?: CSSProperties}) {
+  return (
+    <div
+      className={classNames(styles.shadow, styles.top)}
+      style={{...props.style, opacity: props.opacity}}
+    />
+  )
+}
+
+export function BottomShadow(props: {opacity: number}) {
+  return (
+    <div
+      className={classNames(styles.shadow, styles.bottom)}
+      style={{opacity: props.opacity}}
+    />
+  )
+}
+
 export function ScrollShadow(props: HTMLAttributes<HTMLDivElement> & Props) {
   const {children, className, ...rest} = props
   const {ref, onScroll, top, bottom} = useScrollShadow(props.threshold ?? 30)
 
   return (
     <div {...rest} className={classNames(styles.container)}>
+      <TopShadow opacity={top} />
       <div
         className={classNames(styles.shadow, styles.top)}
         style={{opacity: top}}
@@ -58,10 +77,7 @@ export function ScrollShadow(props: HTMLAttributes<HTMLDivElement> & Props) {
       >
         {children}
       </div>
-      <div
-        className={classNames(styles.shadow, styles.bottom)}
-        style={{opacity: bottom}}
-      />
+      <BottomShadow opacity={bottom} />
     </div>
   )
 }
