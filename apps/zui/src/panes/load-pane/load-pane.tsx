@@ -16,14 +16,13 @@ import {ZedEditor} from "src/app/query-home/search-area/zed-editor"
 import {cmdOrCtrl} from "src/app/core/utils/keyboard"
 import Config from "src/js/state/Config"
 import {Form} from "./form"
-import Link from "src/js/components/common/Link"
 import {ZedScript} from "src/app/core/models/zed-script"
 import Current from "src/js/state/Current"
 import {pluralize} from "src/util/pluralize"
 import DragAnchor from "src/components/drag-anchor"
 import useSelect from "src/app/core/hooks/use-select"
 import {ToolbarTabs} from "src/components/toolbar-tabs"
-import {pill} from "src/components/pill.module.css"
+import pillStyles from "src/components/pill.module.css"
 import {ButtonMenu} from "src/components/button-menu"
 
 export function LoadPane() {
@@ -268,7 +267,7 @@ function Results(
   return (
     <div className={classNames(styles.results, props.className)}>
       <header>
-        <label className={pill}>{props.title}</label>
+        <label className={pillStyles.pill}>{props.title}</label>
         <ToolbarTabs
           options={[
             {
@@ -286,27 +285,25 @@ function Results(
           ]}
         />
         <ButtonMenu
-          menu={{
-            items: [
-              {
-                iconName:
-                  props.display.format === "table"
-                    ? "expand-horizontal"
-                    : "expand",
-                label: "Expand All",
-                click: () => props.display.expandAll(),
-              },
-              {
-                iconName:
-                  props.display.format === "table"
-                    ? "collapse-horizontal"
-                    : "collapse",
-                label: "Collapse",
-                click: () => props.display.collapseAll(),
-              },
-            ],
-            label: "preview-results-menu",
-          }}
+          items={[
+            {
+              iconName:
+                props.display.format === "table"
+                  ? "expand-horizontal"
+                  : "expand",
+              label: "Expand All",
+              click: () => props.display.expandAll(),
+            },
+            {
+              iconName:
+                props.display.format === "table"
+                  ? "collapse-horizontal"
+                  : "collapse",
+              label: "Collapse",
+              click: () => props.display.collapseAll(),
+            },
+          ]}
+          label="preview-results-menu"
         />
       </header>
       <section>
@@ -342,7 +339,7 @@ function ResultsBody(props: {
       <TableView
         values={props.values}
         state={props.state}
-        shape={props.values[0].type}
+        shape={props.values[0]?.type}
       />
     )
   }

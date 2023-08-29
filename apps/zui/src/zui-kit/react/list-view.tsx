@@ -17,12 +17,7 @@ import {useStateControllers} from "./use-state-controllers"
 import {mergeRefs, useInitialScrollPosition, useOnScroll} from "./utils"
 import classNames from "classnames"
 import {useParentSize} from "src/app/core/hooks/use-parent-size"
-import {
-  BottomShadow,
-  ScrollShadow,
-  TopShadow,
-  useScrollShadow,
-} from "src/panes/load-pane/scroll-shadow"
+import {TopShadow, useScrollShadow} from "src/panes/load-pane/scroll-shadow"
 import {call} from "src/util/call"
 
 const padding = 8
@@ -44,7 +39,7 @@ export const InnerElement = forwardRef<any, any>(function InnerElement(
   )
 })
 
-export const OuterElement = forwardRef(function OuterElement(
+export const OuterElement = forwardRef<any, any>(function OuterElement(
   {children, ...rest},
   ref
 ) {
@@ -63,7 +58,7 @@ export const OuterElement = forwardRef(function OuterElement(
         ref={mergeRefs(shadow.ref, ref)}
         onScroll={(e) => {
           call(rest.onScroll, e)
-          shadow.onScroll(e)
+          shadow.onScroll()
         }}
       >
         {children}

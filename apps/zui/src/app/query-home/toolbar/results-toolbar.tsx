@@ -11,7 +11,7 @@ export function ResultsToolbar() {
   return (
     <Toolbar className={styles.resultsToolbar}>
       <ResultsViewSwitch />
-      <ButtonMenu menu={menu} />
+      <ButtonMenu items={menu.items} label={menu.label} />
     </Toolbar>
   )
 }

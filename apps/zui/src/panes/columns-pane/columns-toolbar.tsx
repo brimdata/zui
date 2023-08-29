@@ -10,7 +10,7 @@ export function ColumnsToolbar() {
   const menu = columnsToolbarMenu.build(table)
   return (
     <Toolbar>
-      <ButtonMenu menu={menu} />
+      <ButtonMenu items={menu.items} label={menu.label} />
       <p>
         {table.columnCount} Columns / {table.hiddenColumnCount} Hidden
       </p>
