@@ -12,6 +12,8 @@ import classNames from "classnames"
 import styles from "./form.module.css"
 import {ChangeEvent, useRef} from "react"
 import {IconButton} from "src/components/icon-button"
+import {DataFormatOptions} from "src/components/data-format-select"
+import {LoadFormat} from "@brimdata/zed-js"
 
 export function Form() {
   const dispatch = useDispatch()
@@ -32,6 +34,10 @@ export function Form() {
   const onFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const paths = Array.from(e.currentTarget.files).map((f) => f.path)
     dispatch(LoadDataForm.addFiles(paths))
+  }
+
+  const onFormatChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(LoadDataForm.setFormat(e.currentTarget.value as LoadFormat))
   }
 
   function removeFile(path: string) {
@@ -79,14 +85,19 @@ export function Form() {
                     fill="var(--primary-color)"
                   />
                   <span title={f} className={styles.fileName}>
-                    {f}
+                    {f.split(/[\\/]/).pop()}
                   </span>
                   <IconButton iconName="close" onClick={() => removeFile(f)} />
                 </li>
               ))}
             </ul>
           </div>
-
+          <div>
+            <label>Data Format</label>
+            <select {...register("format")} onChange={onFormatChange}>
+              <DataFormatOptions />
+            </select>
+          </div>
           <div>
             <label>Pool</label>
             <select {...register("poolId")}>
@@ -165,7 +176,7 @@ export function Form() {
             </div>
             <div>
               <label>Message</label>
-              <textarea {...register("body")}>Import from Zui</textarea>
+              <textarea {...register("body")} defaultValue="Import from Zui" />
             </div>
           </section>
         </details>

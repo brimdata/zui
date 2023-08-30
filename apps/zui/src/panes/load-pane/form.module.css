@@ -34,7 +34,6 @@
     border-radius: var(--form-border-radius);
     overflow: hidden auto;
     max-height: 400px;
-    
 }
 
 .fileItem {
@@ -52,6 +51,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-left: 8px;
+    direction: rtl;
 }
 
 .submission {

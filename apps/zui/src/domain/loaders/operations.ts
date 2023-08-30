@@ -28,6 +28,7 @@ export const formAction = createOperation(
     const script = new ZedScript(data.shaper)
 
     await loadFilesOp.run({
+      format: data.format,
       poolId: pool.id,
       lakeId: zui.window.lakeId,
       branch: "main",
@@ -49,11 +50,12 @@ export const formAction = createOperation(
 
 export const zqOperation = createOperation(
   "loaders.previewShaper",
-  async (_, files, shaper) => {
+  async (_, files, shaper, format) => {
     const input = new MultiStream(files.map((f) => createReadStream(f)))
     if (files.length === 0) return {data: [], error: null}
+    console.log(files, shaper, format)
     try {
-      const data = await zq({query: shaper, as: "zjson", input})
+      const data = await zq({query: shaper, as: "zjson", input, i: format})
       return {error: null, data: data as zjson.Obj[]}
     } catch (e) {
       return {error: e, data: []}

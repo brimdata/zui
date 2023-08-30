@@ -21,14 +21,19 @@ function limit(script: string) {
   return append(script, " | head 100")
 }
 
-function useZq(script: string, files: string[]) {
+function useZq(script: string, files: string[], format: zed.LoadFormat) {
   const [_, start] = useTransition()
   const [error, setError] = useState("")
   const [data, setData] = useState<zed.Value[]>([])
   const display = useResultsDisplay()
 
   async function query() {
-    const {data, error} = await invoke("loaders.previewShaper", files, script)
+    const {data, error} = await invoke(
+      "loaders.previewShaper",
+      files,
+      script,
+      format
+    )
     start(() => {
       setError(error)
       setData(zed.decode(data))
@@ -101,10 +106,14 @@ function useResultsDisplay() {
 type ResultDisplay = "list" | "table"
 type ResultDimension = "values" | "types"
 
-export function useResultsControl(script: string, files: string[]) {
-  const values = useZq(limit(script), files)
-  const types = useZq(append(script, " | by typeof(this)"), files)
-  const count = useZq(append(script, " | count()"), files)
+export function useResultsControl(
+  script: string,
+  files: string[],
+  format: zed.LoadFormat
+) {
+  const values = useZq(limit(script), files, format)
+  const types = useZq(append(script, " | by typeof(this)"), files, format)
+  const count = useZq(append(script, " | count()"), files, format)
   const [dimension, setDimension] = useState<ResultDimension>("values")
 
   function queryAll() {

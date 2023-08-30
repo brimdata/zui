@@ -21,8 +21,9 @@ export function LoadPane() {
   const dispatch = useDispatch()
   const shaper = useSelector(LoadDataForm.getShaper)
   const files = useSelector(LoadDataForm.getFiles)
-  const original = useResultsControl("*", files)
-  const preview = useResultsControl(shaper, files)
+  const format = useSelector(LoadDataForm.getFormat)
+  const original = useResultsControl("*", files, format)
+  const preview = useResultsControl(shaper, files, format)
   const [_props, ref] = useFilesDrop({
     onDrop: (files: File[]) => addFiles(files.map((f) => f.path)),
   })
@@ -56,7 +57,7 @@ export function LoadPane() {
     dispatch(LoadDataForm.addFiles(paths))
   }
 
-  useEffect(initialize, [files])
+  useEffect(initialize, [files, format])
 
   if (files.length === 0) return null
 

@@ -21,7 +21,7 @@ export const defaultLoader: Loader = {
       ctx.onProgress(readBytes / totalBytes)
     }
 
-    const zq = createStream({query: ctx.shaper})
+    const zq = createStream({query: ctx.shaper, i: ctx.format})
 
     ctx.onProgress(0)
     const input = new MultiStream(files.map((f) => fs.createReadStream(f)))

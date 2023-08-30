@@ -3,3 +3,4 @@ import {State} from "../types"
 export const getFiles = (state: State) => state.loadDataForm.files
 export const getShaper = (state: State) => state.loadDataForm.shaper
 export const editorSize = (state: State) => state.loadDataForm.editorSize
+export const getFormat = (state: State) => state.loadDataForm.format
