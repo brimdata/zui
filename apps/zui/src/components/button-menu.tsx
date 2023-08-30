@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React, {useState} from "react"
+import React, {useLayoutEffect, useState} from "react"
 import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
 import useResizeObserver from "use-resize-observer"
@@ -8,12 +8,15 @@ import {MoreItemsButton} from "./more-items-button"
 
 const BG = styled.menu`
   display: flex;
+  justify-content: flex-end;
   position: relative;
   padding: 0;
   min-width: 0;
+  width: 100%;
 
   .button-menu__button--hidden {
     visibility: hidden;
+    display: none;
   }
 `
 
@@ -24,19 +27,30 @@ const Buttons = styled.div`
 `
 
 function useVisibleChildrenCount(ref, total) {
+  const [measurements, setMeasurements] = useState([])
   const [visibleCount, setVisibleCount] = useState(total)
+
+  // Cache the right edges when originally rendered
+  useLayoutEffect(() => {
+    const container = ref.current
+    if (!parent) return
+    const buttonParent = container.children[0]
+    setMeasurements(getRightEdges(buttonParent))
+  }, [total])
+
   useResizeObserver({
     ref,
     onResize: (size) => {
       const parent = ref.current
       if (!parent) return
       let visibleCount = 0
-      for (const rightEdge of getRightEdges(parent)) {
+      for (const rightEdge of measurements) {
         if (rightEdge <= size.width) visibleCount++
       }
       setVisibleCount(visibleCount)
     },
   })
+
   return visibleCount
 }
 
@@ -55,12 +69,13 @@ function getRightEdges(parent: HTMLElement) {
 
 export function useResponsiveMenu(ref, items) {
   const visibleCount = useVisibleChildrenCount(ref, items.length)
-  const hiddenItems = items.slice(visibleCount, items.length)
+  const allVisible = visibleCount === items.length
+  const sliceAt = allVisible ? items.length : visibleCount - 1
+  const hiddenItems = items.slice(sliceAt, items.length)
   const hasHiddenItems = !!hiddenItems.length
-
   return {
     items,
-    isHidden: (index: number) => index + 1 > visibleCount,
+    isHidden: (item) => hiddenItems.indexOf(item) != -1,
     hiddenItems,
     hasHiddenItems,
   }
@@ -76,7 +91,7 @@ export function ButtonMenu(props: {label: string; items: MenuItem[]}) {
         {...item}
         key={i}
         className={classNames({
-          "button-menu__button--hidden": menu.isHidden(i),
+          "button-menu__button--hidden": menu.isHidden(item),
         })}
       />
     )
@@ -84,11 +99,13 @@ export function ButtonMenu(props: {label: string; items: MenuItem[]}) {
 
   return (
     <>
-      <BG aria-label={props.label}>
-        <Buttons ref={ref}>{buttons}</Buttons>
-        {menu.hasHiddenItems ? (
-          <MoreItemsButton items={menu.hiddenItems} />
-        ) : null}
+      <BG aria-label={props.label} ref={ref}>
+        <Buttons>
+          {buttons}
+          {menu.hasHiddenItems ? (
+            <MoreItemsButton items={menu.hiddenItems} />
+          ) : null}
+        </Buttons>
       </BG>
     </>
   )

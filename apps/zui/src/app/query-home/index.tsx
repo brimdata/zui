@@ -20,6 +20,7 @@ const MainContent = styled.div`
   flex: 1;
   height: 100%;
   min-width: 320px;
+  background: white;
 `
 
 const ContentWrap = styled.div`

@@ -3,13 +3,13 @@ import {MenuItem} from "src/core/menu"
 import styles from "./toolbar-tabs.module.css"
 import Icon from "src/app/core/icon-temp"
 
-export function ToolbarTabs(props: {options: MenuItem[]}) {
+export function ToolbarTabs(props: {onlyIcon: boolean; options: MenuItem[]}) {
   const changeCount = useRef(0)
   const ref = useRef<HTMLDivElement>()
   const [pos, setPos] = useState({x: 0, width: 10})
   const pressedIndex = props.options.findIndex((opt) => opt.checked)
 
-  useLayoutEffect(() => {
+  function run() {
     const el = ref.current
     if (el) {
       const parent = el.getBoundingClientRect()
@@ -21,7 +21,9 @@ export function ToolbarTabs(props: {options: MenuItem[]}) {
         setPos({x, width})
       }
     }
-  }, [pressedIndex])
+  }
+
+  useLayoutEffect(run, [pressedIndex, props.onlyIcon])
 
   return (
     <div className={styles.tabs}>
@@ -38,7 +40,7 @@ export function ToolbarTabs(props: {options: MenuItem[]}) {
             data-section-tab-value={opts.label.toLowerCase()}
           >
             <Icon name={opts.iconName} size={14} />
-            <span>{opts.label}</span>
+            {!props.onlyIcon && <span>{opts.label}</span>}
           </button>
         ))}
       </nav>
