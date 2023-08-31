@@ -8,7 +8,7 @@ const slice = createSlice({
     format: "auto" as LoadFormat,
     files: [] as string[],
     shaper: "// Transform the data here before loading it.\n",
-    editorSize: 100,
+    editorSize: 200,
   },
   reducers: {
     setFiles: (state, action: PayloadAction<string[]>) => {

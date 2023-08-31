@@ -7,18 +7,34 @@ import {ReactAdapterProps} from "./types"
 import {defaultTableViewState} from "../core/table-view/state"
 import {TableViewApi} from "../core/table-view/table-view-api"
 import {useStateControllers} from "./use-state-controllers"
+import * as zed from "@brimdata/zed-js"
+
+function useEnsureRecord(shape, values) {
+  return useMemo(() => {
+    if (shape instanceof zed.TypeRecord) {
+      return [shape, values]
+    } else {
+      const wrappedValues = values.map((value) =>
+        zed.createRecord({this: value})
+      )
+      const wrappedShape = wrappedValues[0]?.type
+      return [wrappedShape, wrappedValues]
+    }
+  }, [shape, values])
+}
 
 export const TableView = forwardRef(function TableView(
   props: TableViewArgs & ReactAdapterProps,
   ref
 ) {
+  const [shape, values] = useEnsureRecord(props.shape, props.values)
   const controllers = useStateControllers(props, defaultTableViewState)
-  const args = {...props, ...controllers}
+  const args = {...props, ...controllers, shape, values}
   const api = useMemo(
     () => new TableViewApi(args),
     [
-      args.values,
-      args.shape,
+      values,
+      shape,
       args.columnVisibleState.value,
       args.columnExpandedState.value,
     ]

@@ -22,7 +22,13 @@ export function createView(args: InspectArgs): View {
   // VALUES
 
   // * unset
-  if (!zed.isType(args.value) && args.value.isUnset()) return new NullView(args)
+  try {
+    if (!zed.isType(args.value) && args.value.isUnset())
+      return new NullView(args)
+  } catch (e) {
+    console.log(args)
+    throw args.value
+  }
   // * record
   if (args.value instanceof zed.Record) return new RecordView(args)
   // * array

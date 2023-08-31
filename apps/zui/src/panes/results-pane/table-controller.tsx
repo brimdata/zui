@@ -1,5 +1,4 @@
 import {useMemo} from "react"
-import * as zed from "@brimdata/zed-js"
 import {ZedTableHandlers, ZedTableState} from "src/components/zed-table/types"
 import {useDispatch} from "src/app/core/state"
 import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
@@ -47,14 +46,4 @@ export function useTableHandlers() {
     }),
     [shape]
   )
-}
-
-export function useTableValues(shape: zed.Any, values: zed.Value[]) {
-  return useMemo(() => {
-    if (shape instanceof zed.TypeRecord) {
-      return values
-    } else {
-      return values.map((value) => zed.createRecord({this: value}))
-    }
-  }, [shape, values])
 }

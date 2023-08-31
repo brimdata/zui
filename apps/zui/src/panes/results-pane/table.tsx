@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from "react"
 import {useResultsContext} from "src/app/query-home"
 import {useResultsPaneContext} from "./context"
-import {useTableState, useTableValues} from "./table-controller"
+import {useTableState} from "./table-controller"
 import {useDispatch} from "src/app/core/state"
 import TableState from "src/js/state/Table"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
@@ -22,7 +22,6 @@ export function Table() {
   const api = useZuiApi()
   const shape = ctx.firstShape
   const recordShape = zed.typeunder(shape) as zed.TypeRecord
-  const values = useTableValues(recordShape, ctx.values)
   const state = useTableState()
   const select = useSelect()
   const initialScrollPosition = useMemo(
@@ -50,7 +49,7 @@ export function Table() {
         api.table = table
       }}
       shape={recordShape}
-      values={values}
+      values={ctx.values}
       width={ctx.width}
       height={ctx.height}
       initialScrollPosition={initialScrollPosition}
