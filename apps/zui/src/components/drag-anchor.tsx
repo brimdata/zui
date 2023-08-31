@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React from "react"
+import React, {CSSProperties} from "react"
 import {call} from "src/util/call"
 import styled from "styled-components"
 
@@ -74,6 +74,7 @@ type Props = {
   showOnHover?: boolean
   position: "left" | "right" | "top" | "bottom"
   className?: string
+  style?: CSSProperties
   onDrag?: (e: MouseEvent, args: {dy: number; dx: number}) => void
   onStart?: (e: React.MouseEvent) => void
   onEnd?: () => void
@@ -125,6 +126,7 @@ export default class DragAnchor extends React.Component<Props> {
   render() {
     return (
       <Area
+        style={this.props.style}
         className={classNames(
           `align-${this.props.position}`,
           this.props.className,

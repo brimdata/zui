@@ -152,6 +152,7 @@ export function LoadPane() {
             <DragAnchor
               position="bottom"
               showOnHover
+              style={{bottom: -8}}
               {...editorDrag.anchorProps}
             />
           </section>
@@ -171,6 +172,7 @@ export function LoadPane() {
                 position="right"
                 showOnHover
                 {...resultsDrag.anchorProps}
+                style={{right: -8}}
               />
             </div>
             <div className={styles.resultsContainer}>
@@ -190,6 +192,7 @@ export function LoadPane() {
             position="left"
             {...sidebarDrag.anchorProps}
             showOnHover
+            style={{left: -8}}
           />
         </aside>
       </div>
