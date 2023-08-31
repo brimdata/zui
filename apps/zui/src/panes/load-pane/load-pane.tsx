@@ -28,14 +28,22 @@ export function LoadPane() {
     onDrop: (files: File[]) => addFiles(files.map((f) => f.path)),
   })
   const lake = useSelector(Current.getLake)
-  const editorHeight = useSelector(LoadDataForm.editorSize)
   const size = useRef(0)
   const select = useSelect()
+  const mainStyle = useSelector(LoadDataForm.getMainStyle)
+  const editor = useRef<HTMLDivElement>()
+
   const onStart = () => {
-    size.current = select(LoadDataForm.editorSize)
+    size.current = select(LoadDataForm.getEditorSize)
   }
   const onDrag = (e, {dy}) => {
     dispatch(LoadDataForm.setEditorSize(size.current + dy))
+  }
+
+  const onEnd = () => {
+    const el = editor.current
+    if (!el) return
+    dispatch(LoadDataForm.setEditorSize(el.getBoundingClientRect().height))
   }
 
   const initialize = () => {
@@ -64,9 +72,9 @@ export function LoadPane() {
   return (
     <ModalRoot>
       <div className={styles.grid} ref={ref}>
-        <main className={styles.main}>
+        <main className={styles.main} style={mainStyle}>
           <section className={styles.titlebar}>{lake.name}</section>
-          <section className={styles.shaper} style={{height: editorHeight}}>
+          <section className={styles.shaper} ref={editor}>
             <div className={styles.toolbar}>
               <div>
                 <h2 className={styles.title}>Shaper Script</h2>
@@ -82,7 +90,12 @@ export function LoadPane() {
                 onChange={(s) => setShaper(s)}
               />
             </div>
-            <DragAnchor position="bottom" onStart={onStart} onDrag={onDrag} />
+            <DragAnchor
+              position="bottom"
+              onStart={onStart}
+              onDrag={onDrag}
+              onEnd={onEnd}
+            />
           </section>
 
           <section className={styles.resultsGroup}>

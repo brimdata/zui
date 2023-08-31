@@ -50,6 +50,7 @@ type Props = {
   position: "left" | "right" | "top" | "bottom"
   onDrag?: (e: MouseEvent, args: {dy: number; dx: number}) => void
   onStart?: (e: React.MouseEvent) => void
+  onEnd?: () => void
 }
 export default class DragAnchor extends React.Component<Props> {
   private startX: number
@@ -84,6 +85,7 @@ export default class DragAnchor extends React.Component<Props> {
       document.removeEventListener("mousemove", this.move)
       document.removeEventListener("mouseup", this.up)
     }
+    call(this.props.onEnd)
   }
 
   getCursor() {
