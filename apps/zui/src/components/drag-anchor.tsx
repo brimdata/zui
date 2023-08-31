@@ -8,46 +8,72 @@ const Area = styled.div`
   background: transparent;
   pointer-events: all !important;
   z-index: 99;
+  --size: 7px;
+  --padding: 1px;
+  --offset: -5px;
 
   &.debug {
+    background: red;
     outline: 1px dashed blue;
   }
 
   &.align-left {
     top: 0;
     bottom: 0;
-    width: 9px;
-    left: -5px;
+    width: var(--size);
+    left: var(--offset);
     cursor: col-resize;
+    padding: 0 var(--padding);
   }
 
   &.align-right {
     top: 0;
     bottom: 0;
-    width: 9px;
-    right: -5px;
+    width: var(--size);
+    right: var(--offset);
     cursor: col-resize;
+    padding: 0 var(--padding);
   }
 
   &.align-top {
     left: 0;
     right: 0;
-    height: 9px;
-    top: -5px;
+    height: var(--size);
+    top: var(--offset);
     cursor: row-resize;
+    padding: var(--padding) 0;
   }
 
   &.align-bottom {
     left: 0;
     right: 0;
-    height: 9px;
-    bottom: -5px;
+    height: var(--size);
+    bottom: var(--offset);
     cursor: row-resize;
+    padding: var(--padding) 0;
+  }
+
+  &.showOnHover {
+    background-color: transparent;
+    transition: all 0ms;
+  }
+
+  &.showOnHover:hover {
+    transition: all 500ms 200ms;
+    background-color: var(--primary-color);
+  }
+
+  &.showOnHover:active {
+    transition: all 0s;
+    background-color: var(--primary-color-dark);
   }
 `
+
 type Props = {
   debug?: boolean
+  showOnHover?: boolean
   position: "left" | "right" | "top" | "bottom"
+  className?: string
   onDrag?: (e: MouseEvent, args: {dy: number; dx: number}) => void
   onStart?: (e: React.MouseEvent) => void
   onEnd?: () => void
@@ -99,9 +125,15 @@ export default class DragAnchor extends React.Component<Props> {
   render() {
     return (
       <Area
-        className={classNames(`align-${this.props.position}`, {
-          debug: this.props.debug,
-        })}
+        className={classNames(
+          `align-${this.props.position}`,
+          this.props.className,
+
+          {
+            debug: this.props.debug,
+            showOnHover: this.props.showOnHover,
+          }
+        )}
         onMouseDown={this.down}
       />
     )

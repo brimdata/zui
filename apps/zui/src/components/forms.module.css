@@ -68,6 +68,10 @@
     background: var(--primary-color-dark);
 }
 
+.form button[type=submit]:active {
+    background: var(--primary-color-darker);
+}
+
 .form button[type=button] {
     min-height: var(--form-height);
     border-radius: var(--form-border-radius);

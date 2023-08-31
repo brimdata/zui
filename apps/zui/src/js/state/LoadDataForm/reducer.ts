@@ -9,6 +9,8 @@ const slice = createSlice({
     files: [] as string[],
     shaper: "// Transform the data here before loading it.\n",
     editorSize: 200,
+    sidebarSize: 360,
+    resultsRatio: 0.5,
   },
   reducers: {
     setFiles: (state, action: PayloadAction<string[]>) => {
@@ -21,10 +23,16 @@ const slice = createSlice({
       state.shaper = action.payload
     },
     setEditorSize: (state, action: PayloadAction<number>) => {
-      state.editorSize = bounded(action.payload, [20, Infinity])
+      state.editorSize = bounded(action.payload, [100, Infinity])
+    },
+    setSidebarSize: (state, action: PayloadAction<number>) => {
+      state.sidebarSize = bounded(action.payload, [100, Infinity])
     },
     setFormat: (state, action: PayloadAction<LoadFormat>) => {
       state.format = action.payload
+    },
+    setResultsRatio: (state, action: PayloadAction<number>) => {
+      state.resultsRatio = action.payload
     },
   },
 })

@@ -16,6 +16,74 @@ import Current from "src/js/state/Current"
 import DragAnchor from "src/components/drag-anchor"
 import useSelect from "src/app/core/hooks/use-select"
 import {Results, useResultsControl} from "./results"
+import {bounded} from "src/util/bounded"
+
+function useSidebarDrag() {
+  const start = useRef(0)
+  const select = useSelect()
+  const dispatch = useDispatch()
+  const set = LoadDataForm.setSidebarSize
+  const get = LoadDataForm.getSidebarSize
+  const ref = useRef<HTMLElement>()
+
+  const onStart = () => {
+    start.current = select(get)
+  }
+  const onDrag = (e, {dx}) => {
+    dispatch(set(start.current - dx))
+  }
+  const onEnd = () => {
+    const el = ref.current
+    if (!el) return
+    dispatch(set(el.getBoundingClientRect().width))
+  }
+
+  return {anchorProps: {onStart, onDrag, onEnd}, ref}
+}
+
+function useEditorDrag() {
+  const select = useSelect()
+  const dispatch = useDispatch()
+  const ref = useRef<HTMLDivElement>()
+  const size = useRef(0)
+  const onStart = () => {
+    size.current = select(LoadDataForm.getEditorSize)
+  }
+  const onDrag = (e, {dy}) => {
+    dispatch(LoadDataForm.setEditorSize(size.current + dy))
+  }
+
+  const onEnd = () => {
+    const el = ref.current
+    if (!el) return
+    dispatch(LoadDataForm.setEditorSize(el.getBoundingClientRect().height))
+  }
+
+  return {anchorProps: {onStart, onDrag, onEnd}, ref}
+}
+
+function useResultsDrag() {
+  const ref = useRef<HTMLElement>()
+  const dispatch = useDispatch()
+  const total = useRef(0)
+  const left = useRef(0)
+
+  const onStart = () => {
+    const el = ref.current
+    if (!el) return
+    total.current = el.getBoundingClientRect().width
+    left.current = el.children[0].getBoundingClientRect().width
+  }
+
+  const onDrag = (e, {dx}) => {
+    const leftSize = left.current + dx
+    const ratio = bounded(leftSize / total.current, [0.2, 0.8])
+
+    dispatch(LoadDataForm.setResultsRatio(ratio))
+  }
+
+  return {anchorProps: {onStart, onDrag}, ref}
+}
 
 export function LoadPane() {
   const dispatch = useDispatch()
@@ -28,23 +96,14 @@ export function LoadPane() {
     onDrop: (files: File[]) => addFiles(files.map((f) => f.path)),
   })
   const lake = useSelector(Current.getLake)
-  const size = useRef(0)
-  const select = useSelect()
+
   const mainStyle = useSelector(LoadDataForm.getMainStyle)
-  const editor = useRef<HTMLDivElement>()
+  const gridStyle = useSelector(LoadDataForm.getGridStyle)
+  const resultsStyle = useSelector(LoadDataForm.getResultsStyle)
 
-  const onStart = () => {
-    size.current = select(LoadDataForm.getEditorSize)
-  }
-  const onDrag = (e, {dy}) => {
-    dispatch(LoadDataForm.setEditorSize(size.current + dy))
-  }
-
-  const onEnd = () => {
-    const el = editor.current
-    if (!el) return
-    dispatch(LoadDataForm.setEditorSize(el.getBoundingClientRect().height))
-  }
+  const sidebarDrag = useSidebarDrag()
+  const editorDrag = useEditorDrag()
+  const resultsDrag = useResultsDrag()
 
   const initialize = () => {
     original.queryAll()
@@ -71,10 +130,10 @@ export function LoadPane() {
 
   return (
     <ModalRoot>
-      <div className={styles.grid} ref={ref}>
+      <div className={styles.grid} ref={ref} style={gridStyle}>
         <main className={styles.main} style={mainStyle}>
           <section className={styles.titlebar}>{lake.name}</section>
-          <section className={styles.shaper} ref={editor}>
+          <section className={styles.shaper} ref={editorDrag.ref}>
             <div className={styles.toolbar}>
               <div>
                 <h2 className={styles.title}>Shaper Script</h2>
@@ -92,22 +151,34 @@ export function LoadPane() {
             </div>
             <DragAnchor
               position="bottom"
-              onStart={onStart}
-              onDrag={onDrag}
-              onEnd={onEnd}
+              showOnHover
+              {...editorDrag.anchorProps}
             />
           </section>
 
-          <section className={styles.resultsGroup}>
-            <Results
-              className={styles.original}
-              title="Original"
-              {...original}
-            />
-            <Results className={styles.shaped} title="Preview" {...preview} />
+          <section
+            className={styles.resultsGroup}
+            ref={resultsDrag.ref}
+            style={resultsStyle}
+          >
+            <div className={styles.resultsContainer}>
+              <Results
+                className={styles.original}
+                title="Original"
+                {...original}
+              />
+              <DragAnchor
+                position="right"
+                showOnHover
+                {...resultsDrag.anchorProps}
+              />
+            </div>
+            <div className={styles.resultsContainer}>
+              <Results className={styles.shaped} title="Preview" {...preview} />
+            </div>
           </section>
         </main>
-        <aside className={styles.aside}>
+        <aside className={styles.aside} ref={sidebarDrag.ref}>
           <header>
             <h2 className={styles.formTitle}>
               Load Data
@@ -115,6 +186,11 @@ export function LoadPane() {
             </h2>
           </header>
           <Form />
+          <DragAnchor
+            position="left"
+            {...sidebarDrag.anchorProps}
+            showOnHover
+          />
         </aside>
       </div>
     </ModalRoot>

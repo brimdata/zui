@@ -33,6 +33,13 @@
 
 .aside {
   grid-column: 2 / 3;
+  position: relative;
+  min-width: 0;
+  background: var(--chrome-color);
+  grid-row: span 2;
+  padding: 0;
+  display: grid;
+  grid-template-rows: min-content minmax(auto, min-content) min-content;
 }
 
 .toolbar {
@@ -76,14 +83,17 @@
 
 .resultsGroup {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-left: 0px;
-  margin-right: 0px;
+  grid-template-columns: 0.2fr 0.8fr;
+  grid-template-rows: 1fr;
   min-height: 0;
+  padding: 10px;
+  gap: 10px;
 }
 
-.original {
-  margin-right: 0;
+.resultsContainer {
+  display: grid;
+  position: relative;
+  min-height: 0;
 }
 
 .original label {
@@ -96,15 +106,6 @@
   color: hsl(30deg 100% 30%);
 }
 
-.aside {
-  min-width: 0;
-  background: var(--chrome-color);
-  grid-row: span 2;
-  padding: 0;
-  display: grid;
-  grid-template-rows: min-content minmax(auto, min-content) min-content;
-  overflow: hidden;
-}
 
 .formTitle {
   user-select: none;
@@ -122,4 +123,19 @@
 .formTitle hr {
   border: none;
   border-top: 2px solid var(--primary-color);
+}
+
+.sidebarDragAnchor {
+  background-color: transparent;
+  transition: all 0ms;
+}
+
+.sidebarDragAnchor:hover {
+  transition: all 500ms 200ms;
+  background-color: var(--primary-color);
+}
+
+.sidebarDragAnchor:active {
+  transition: all 0s;
+  background-color: var(--primary-color-dark);
 }
