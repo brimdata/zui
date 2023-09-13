@@ -1,6 +1,6 @@
 import * as zed from "@brimdata/zed-js"
 import classNames from "classnames"
-import {useState, useTransition} from "react"
+import {memo, useCallback, useState, useTransition} from "react"
 import {ZedScript} from "src/app/core/models/zed-script"
 import {ButtonMenu} from "src/components/button-menu"
 import {ToolbarTabs} from "src/components/toolbar-tabs"
@@ -10,6 +10,7 @@ import styles from "./results.module.css"
 import {Pill} from "src/components/pill"
 import {invoke} from "src/core/invoke"
 import useResizeObserver from "use-resize-observer"
+import {useMemoObject} from "src/util/hooks/use-memo-object"
 
 function append(script: string, suffix: string) {
   const zed = new ZedScript(script)
@@ -21,31 +22,29 @@ function limit(script: string) {
   return append(script, " | head 100")
 }
 
-function useZq(script: string, files: string[], format: zed.LoadFormat) {
+function useZq(files: string[], format: zed.LoadFormat) {
   const [_, start] = useTransition()
   const [error, setError] = useState("")
   const [data, setData] = useState<zed.Value[]>([])
   const display = useResultsDisplay()
 
-  async function query() {
-    const {data, error} = await invoke(
-      "loaders.previewShaper",
-      files,
-      script,
-      format
-    )
-    start(() => {
-      setError(error)
-      setData(zed.decode(data))
-    })
-  }
+  const query = useCallback(
+    async (script: string) => {
+      const {data, error} = await invoke(
+        "loaders.previewShaper",
+        files,
+        script,
+        format
+      )
+      start(() => {
+        setError(error)
+        setData(zed.decode(data))
+      })
+    },
+    [files, format]
+  )
 
-  return {
-    error,
-    data,
-    query,
-    display,
-  }
+  return useMemoObject({error, data, query, display})
 }
 
 function useResultsDisplay() {
@@ -53,74 +52,75 @@ function useResultsDisplay() {
   const [listState, setListState] = useState({valueExpandedDefault: true})
   const [tableState, setTableState] = useState({})
 
-  function getDisplayState() {
-    if (format === "list") return {value: listState, onChange: setListState}
-    if (format === "table") return {value: tableState, onChange: setTableState}
-    throw new Error("Unknown Format")
-  }
+  const listControl = useMemoObject({value: listState, onChange: setListState})
+  const tableControl = useMemoObject({
+    value: tableState,
+    onChange: setTableState,
+  })
 
-  function expandAll() {
-    if (format === "list") {
-      setListState((prev) => ({
-        ...prev,
-        valueExpanded: {},
-        valueExpandedDefault: true,
-      }))
-    }
-    if (format === "table") {
-      setTableState((prev) => ({
-        ...prev,
-        columnExpanded: {},
-        columnExpandedDefault: true,
-      }))
-    }
-  }
+  const expandAll = useCallback(
+    function expandAll() {
+      if (format === "list") {
+        setListState((prev) => ({
+          ...prev,
+          valueExpanded: {},
+          valueExpandedDefault: true,
+        }))
+      }
+      if (format === "table") {
+        setTableState((prev) => ({
+          ...prev,
+          columnExpanded: {},
+          columnExpandedDefault: true,
+        }))
+      }
+    },
+    [format]
+  )
 
-  function collapseAll() {
-    if (format == "list") {
-      setListState((prev) => ({
-        ...prev,
-        valueExpanded: {},
-        valueExpandedDefault: false,
-      }))
-    }
+  const collapseAll = useCallback(
+    function collapseAll() {
+      if (format == "list") {
+        setListState((prev) => ({
+          ...prev,
+          valueExpanded: {},
+          valueExpandedDefault: false,
+        }))
+      }
 
-    if (format === "table") {
-      setTableState((prev) => ({
-        ...prev,
-        columnExpanded: {},
-        columnExpandedDefault: false,
-      }))
-    }
-  }
+      if (format === "table") {
+        setTableState((prev) => ({
+          ...prev,
+          columnExpanded: {},
+          columnExpandedDefault: false,
+        }))
+      }
+    },
+    [format]
+  )
 
-  return {
-    format,
-    setFormat,
-    state: getDisplayState(),
-    expandAll,
-    collapseAll,
-  }
+  const state = format === "list" ? listControl : tableControl
+
+  return useMemoObject({format, setFormat, state, expandAll, collapseAll})
 }
 
 type ResultDisplay = "list" | "table"
 type ResultDimension = "values" | "types"
 
-export function useResultsControl(
-  script: string,
-  files: string[],
-  format: zed.LoadFormat
-) {
-  const values = useZq(limit(script), files, format)
-  const types = useZq(append(script, " | by typeof(this)"), files, format)
-  const count = useZq(append(script, " | count()"), files, format)
+export function useResultsControl(files: string[], format: zed.LoadFormat) {
+  const values = useZq(files, format)
+  const types = useZq(files, format)
+  const count = useZq(files, format)
   const [dimension, setDimension] = useState<ResultDimension>("values")
 
-  function queryAll() {
-    values.query()
-    types.query()
-    count.query()
-  }
+  const queryAll = useCallback(
+    (script: string) => {
+      values.query(limit(script))
+      types.query(append(script, " | by typeof(this)"))
+      count.query(append(script, " | count()"))
+    },
+    [values, types, count]
+  )
 
   function getDimension() {
     if (dimension === "values") return values
@@ -130,7 +130,7 @@ export function useResultsControl(
 
   const current = getDimension()
 
-  return {
+  return useMemoObject({
     queryAll,
     dimension,
     setDimension,
@@ -139,12 +139,68 @@ export function useResultsControl(
     error: current.error,
     rowCount: count.data[0]?.toJS(),
     typeCount: types.data.length,
-  }
+  })
 }
 
-type ResultsControl = ReturnType<typeof useResultsControl>
+export type ResultsControl = ReturnType<typeof useResultsControl>
 
-export function Results(
+function Toolbar(props: {
+  title: string
+  display: ResultsControl["display"]
+  smallWidth: boolean
+}) {
+  return (
+    <header className={styles.toolbar}>
+      <div className={styles.left}>
+        <Pill>{props.title}</Pill>
+      </div>
+      <div className={styles.middle}>
+        <ToolbarTabs
+          onlyIcon={props.smallWidth}
+          options={[
+            {
+              label: "Table",
+              iconName: "columns",
+              checked: props.display.format === "table",
+              click: () => props.display.setFormat("table"),
+            },
+            {
+              label: "Inspector",
+              iconName: "braces",
+              checked: props.display.format === "list",
+              click: () => props.display.setFormat("list"),
+            },
+          ]}
+        />
+      </div>
+      <div className={styles.right}>
+        <ButtonMenu
+          items={[
+            {
+              iconName:
+                props.display.format === "table"
+                  ? "expand-horizontal"
+                  : "expand",
+              label: "Expand All",
+              click: () => props.display.expandAll(),
+            },
+            {
+              iconName:
+                props.display.format === "table"
+                  ? "collapse-horizontal"
+                  : "collapse",
+              label: "Collapse All",
+              click: () => props.display.collapseAll(),
+            },
+          ]}
+          label="preview-results-menu"
+        />
+      </div>
+    </header>
+  )
+}
+
+export const Results = memo(function Results(
   props: {
     title: string
     className?: string
@@ -154,53 +210,11 @@ export function Results(
   const smallWidth = width && width < 400
   return (
     <div className={classNames(styles.results, props.className)} ref={ref}>
-      <header className={styles.toolbar}>
-        <div className={styles.left}>
-          <Pill>{props.title}</Pill>
-        </div>
-        <div className={styles.middle}>
-          <ToolbarTabs
-            onlyIcon={smallWidth}
-            options={[
-              {
-                label: "Table",
-                iconName: "columns",
-                checked: props.display.format === "table",
-                click: () => props.display.setFormat("table"),
-              },
-              {
-                label: "Inspector",
-                iconName: "braces",
-                checked: props.display.format === "list",
-                click: () => props.display.setFormat("list"),
-              },
-            ]}
-          />
-        </div>
-        <div className={styles.right}>
-          <ButtonMenu
-            items={[
-              {
-                iconName:
-                  props.display.format === "table"
-                    ? "expand-horizontal"
-                    : "expand",
-                label: "Expand All",
-                click: () => props.display.expandAll(),
-              },
-              {
-                iconName:
-                  props.display.format === "table"
-                    ? "collapse-horizontal"
-                    : "collapse",
-                label: "Collapse All",
-                click: () => props.display.collapseAll(),
-              },
-            ]}
-            label="preview-results-menu"
-          />
-        </div>
-      </header>
+      <Toolbar
+        display={props.display}
+        title={props.title}
+        smallWidth={smallWidth}
+      />
       <section>
         {props.error ? (
           <ResultsError error={props.error} />
@@ -222,9 +236,9 @@ export function Results(
       </footer>
     </div>
   )
-}
+})
 
-function ResultsBody(props: {
+const ResultsBody = memo(function ResultsBody(props: {
   format: ResultDisplay
   state: {value; onChange}
   values: zed.Value[]
@@ -242,7 +256,7 @@ function ResultsBody(props: {
     return <ListView values={props.values} state={props.state} />
   }
   throw new Error("Unknown Display")
-}
+})
 
 function ResultsError(props: {error: string}) {
   return (

@@ -1,22 +1,18 @@
 import {syncPool} from "src/app/core/pools/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
 import {poolShow} from "src/app/router/routes"
-import React, {useEffect, useRef} from "react"
+import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Route, Switch} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import {bytes} from "src/js/lib/fmt"
 import styled from "styled-components"
-import {useFilesDrop} from "src/util/hooks/use-files-drop"
-import classNames from "classnames"
-import {DropOverlay} from "src/app/features/sidebar/drop-overlay"
-import {PoolDataList} from "src/panes/pool-data-list"
 import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
 import {H1} from "src/components/h1"
-import {PoolLoadMore, PoolLoadMoreHandle} from "src/panes/pool-load-more"
 import {NotFound} from "./404"
 import {SubmitButton} from "src/components/submit-button"
+import {EmptyPoolPane} from "src/panes/empty-pool-pane"
 
 const BG = styled.div`
   --page-padding: 32px;
@@ -46,6 +42,7 @@ const Subtitle = styled.p`
 `
 
 const Body = styled.section`
+  height: 100%;
   h4 {
     margin-bottom: 6px;
     opacity: 0.6;
@@ -79,13 +76,9 @@ export function InitPool({children}) {
 
 export const Show = () => {
   const pool = useSelector(Current.mustGetPool)
-  const loadForm = useRef<PoolLoadMoreHandle>()
-  const [{isOver}, dropRef] = useFilesDrop({
-    onDrop: (files) => loadForm.current?.submit(files),
-  })
   const queryPool = poolToolbarMenu.build(pool).items[0]
   return (
-    <BG ref={dropRef} className={classNames({isOver})}>
+    <BG>
       <Header>
         <div>
           <H1>{pool.name}</H1>
@@ -101,13 +94,8 @@ export const Show = () => {
         </Toolbar>
       </Header>
       <Body>
-        <PoolDataList pool={pool} />
-        <PoolLoadMore pool={pool} ref={loadForm} />
+        <EmptyPoolPane />
       </Body>
-      <DropOverlay show={isOver}>
-        <p>Drop To Load Files Into:</p>
-        <p>{pool.name}</p>
-      </DropOverlay>
     </BG>
   )
 }

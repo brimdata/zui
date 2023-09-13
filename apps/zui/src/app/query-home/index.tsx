@@ -10,9 +10,9 @@ import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
 import {ActiveQuery} from "../core/models/active-query"
-import {ResultsPane} from "src/panes/results-pane/results-pane"
+import {ResultsPane} from "src/panes/results-pane"
 import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
-import {HistogramPane} from "src/panes/histogram-pane/pane"
+import {HistogramPane} from "src/panes/histogram-pane"
 
 const MainContent = styled.div`
   display: flex;

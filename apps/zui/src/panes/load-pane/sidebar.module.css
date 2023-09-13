@@ -1,0 +1,39 @@
+.aside {
+    grid-column: 2 / 3;
+    position: relative;
+    min-width: 0;
+    grid-row: span 2;
+    padding: 0;
+    display: grid;
+    grid-template-rows: min-content minmax(auto, min-content) min-content;
+}
+
+.formTitle {
+    user-select: none;
+    margin: 2rem auto 1em auto;
+    padding: 0 calc(18px + var(--form-border-radius));
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+    width: max-content;
+}
+
+.formTitle hr {
+    border: none;
+    border-top: 2px solid var(--primary-color);
+}
+
+.sidebarDragAnchor {
+    background-color: transparent;
+    transition: all 0ms;
+}
+
+.sidebarDragAnchor:hover {
+    transition: all 500ms 200ms;
+    background-color: var(--primary-color);
+}
+
+.sidebarDragAnchor:active {
+    transition: all 0s;
+    background-color: var(--primary-color-dark);
+}

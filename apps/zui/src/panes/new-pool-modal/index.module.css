@@ -1,0 +1,22 @@
+
+
+
+.form {
+    padding: 0 30px 30px 30px;
+    width: 360px;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.submission {
+    margin-top: calc(var(--form-field-gap) * 2) ;
+}
+
+.title {
+    text-align: center;
+    margin: 20px 0 ;
+}

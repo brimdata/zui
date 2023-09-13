@@ -1,0 +1,14 @@
+.modal {
+    background: white;
+    box-shadow: 0 20px 50px 10px rgb(0 0 0 /0.25);
+    border-radius: 8px;
+    border: none;
+    padding: 0;
+    will-change: opacity, transform;
+}
+
+.modal::backdrop {
+    background-color: black;
+    opacity: 1;
+    will-change: opacity;
+}

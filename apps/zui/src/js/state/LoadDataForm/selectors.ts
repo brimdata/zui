@@ -7,10 +7,11 @@ export const getEditorSize = (state: State) => state.loadDataForm.editorSize
 export const getSidebarSize = (state: State) => state.loadDataForm.sidebarSize
 export const getFormat = (state: State) => state.loadDataForm.format
 export const getResultsRatio = (state: State) => state.loadDataForm.resultsRatio
+export const getPoolId = (state: State) => state.loadDataForm.poolId
 
 export const getMainStyle = createSelector(getEditorSize, (editorSize) => {
   return {
-    gridTemplateRows: `44px minmax(100px, ${editorSize}px) minmax(200px, 1fr)`,
+    gridTemplateRows: `minmax(100px, ${editorSize}px) minmax(200px, 1fr)`,
   }
 })
 

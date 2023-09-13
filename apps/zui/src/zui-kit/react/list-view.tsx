@@ -71,6 +71,7 @@ export const Row: React.ComponentType<
   React.PropsWithChildren<ListChildComponentProps>
 > = React.memo(
   function Row({style, index, data}) {
+    console.log("Row Rendered", index)
     if (!data[index]) return null
     const {render, indent} = data[index]
     const innerStyle = {
@@ -112,7 +113,7 @@ export const ListView = forwardRef(function ListView(
   }, [list])
 
   const {width, height} = useParentSize(outerRef)
-
+  console.log("ListView Render")
   return (
     <FixedSizeList
       className={classNames(props.className, "zed-list-view")}

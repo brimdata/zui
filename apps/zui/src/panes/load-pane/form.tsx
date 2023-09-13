@@ -15,19 +15,22 @@ import {IconButton} from "src/components/icon-button"
 import {DataFormatOptions} from "src/components/data-format-select"
 import {LoadFormat} from "@brimdata/zed-js"
 
-export function Form() {
+export function Form(props: {onClose}) {
   const dispatch = useDispatch()
   const select = useSelect()
   const pools = useSelector(Current.getPools)
   const lake = useSelector(Current.getLake)
   const files = useSelector(LoadDataForm.getFiles)
+  const poolId = useSelector(LoadDataForm.getPoolId)
   const fileInput = useRef(null)
   const defaultUser = globalThis.appMeta.userName
   const {register, handleSubmit, watch} = useForm()
 
   const onSubmit = async (data) => {
     const shaper = select(LoadDataForm.getShaper)
-    await invoke("loaders.formAction", {...data, files, shaper})
+    // @ts-ignore
+    const windowId = window.windowId
+    await invoke("loaders.formAction", {...data, files, shaper, windowId})
     dispatch(LoadDataForm.setFiles([]))
   }
 
@@ -42,10 +45,6 @@ export function Form() {
 
   function removeFile(path: string) {
     dispatch(LoadDataForm.setFiles(files.filter((p) => p !== path)))
-  }
-
-  function clearFiles() {
-    dispatch(LoadDataForm.setFiles([]))
   }
 
   return (
@@ -100,7 +99,7 @@ export function Form() {
           </div>
           <div>
             <label>Pool</label>
-            <select {...register("poolId")}>
+            <select {...register("poolId")} defaultValue={poolId}>
               <option value="new">+ New Pool</option>
               {pools.map((pool) => (
                 <option key={pool.id} value={pool.id}>
@@ -182,7 +181,7 @@ export function Form() {
         </details>
       </ScrollShadow>
       <div className={classNames(styles.submission)}>
-        <button type="button" onClick={() => clearFiles()}>
+        <button type="button" onClick={props.onClose}>
           Cancel
         </button>
         <button type="submit">Load</button>

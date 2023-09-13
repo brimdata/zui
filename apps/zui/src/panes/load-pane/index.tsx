@@ -1,0 +1,103 @@
+// @refresh reset
+
+import {useSelector} from "react-redux"
+
+import styles from "./index.module.css"
+import * as _ from "lodash"
+import LoadDataForm from "src/js/state/LoadDataForm"
+import {useFilesDrop} from "src/util/hooks/use-files-drop"
+import {useDispatch} from "src/app/core/state"
+import {useCallback, useEffect, useState, useTransition} from "react"
+import {useResultsControl} from "./results"
+import modal from "src/components/modal.module.css"
+import {Shaper} from "./shaper"
+import {Sidebar} from "./sidebar"
+import {ResultsGroup} from "./results-group"
+import useSelect from "src/app/core/hooks/use-select"
+import {Debut, useDebut} from "src/components/debut"
+import {Dialog} from "src/components/dialog/dialog"
+
+export function LoadPane() {
+  const dispatch = useDispatch()
+  const files = useSelector(LoadDataForm.getFiles)
+  const hide = () => {
+    dispatch(LoadDataForm.setFiles([]))
+  }
+  const [isPending, startTransition] = useTransition()
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    startTransition(() => {
+      setShow(files.length > 0)
+    })
+  }, [files])
+
+  if (!show) return null
+  else return <Pane onClose={hide} isPending={isPending} />
+}
+
+function Main(props: {isPending: boolean}) {
+  const files = useSelector(LoadDataForm.getFiles)
+  const format = useSelector(LoadDataForm.getFormat)
+  const mainStyle = useSelector(LoadDataForm.getMainStyle)
+  const original = useResultsControl(files, format)
+  const preview = useResultsControl(files, format)
+  const select = useSelect()
+
+  const initialize = () => {
+    if (props.isPending) return
+    const script = select(LoadDataForm.getShaper)
+    original.queryAll(script)
+    preview.queryAll(script)
+  }
+
+  const submit = useCallback(() => {
+    const script = select(LoadDataForm.getShaper)
+    preview.queryAll(script)
+  }, [files, format])
+
+  useEffect(initialize, [files, format, props.isPending])
+
+  return (
+    <main className={styles.main} style={mainStyle}>
+      <Shaper onSubmit={submit} />
+      <ResultsGroup original={original} preview={preview} />
+    </main>
+  )
+}
+
+function Grid(props: {children: any}) {
+  const gridStyle = useSelector(LoadDataForm.getGridStyle)
+  const dispatch = useDispatch()
+  const [_props, ref] = useFilesDrop({
+    onDrop: (files: File[]) =>
+      dispatch(LoadDataForm.addFiles(files.map((f) => f.path))),
+  })
+
+  return (
+    <div className={styles.grid} ref={ref} style={gridStyle}>
+      {props.children}
+    </div>
+  )
+}
+
+function Pane(props: {onClose: any; isPending: boolean}) {
+  const debut = useDebut({afterExit: props.onClose})
+
+  return (
+    <Debut {...debut.props} classNames="modal">
+      <Dialog
+        onClose={() => debut.exit()}
+        dialogPoint="center center"
+        isOpen={true}
+        className={modal.modal}
+        modal
+      >
+        <Grid>
+          <Main isPending={props.isPending} />
+          <Sidebar onClose={debut.exit} />
+        </Grid>
+      </Dialog>
+    </Debut>
+  )
+}

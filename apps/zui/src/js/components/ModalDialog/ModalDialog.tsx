@@ -5,6 +5,7 @@ import styled from "styled-components"
 import doc from "../../lib/doc"
 import useEscapeKey from "../hooks/useEscapeKey"
 import {useFreezeBody} from "../hooks/useFreezeBody"
+import {NewPoolModal} from "src/panes/new-pool-modal"
 
 const Overlay = styled.div`
   position: fixed;
@@ -12,48 +13,74 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   top: 0;
-  padding-top: 42px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
+  padding-top: 10vh;
   z-index: 200;
   overflow: hidden;
+  background-color: hsla(212 10% 10% / 0.3);
+
+  opacity: 0;
+
+  &.appear-active {
+    opacity: 1;
+    transition: all 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &.enter-done {
+    opacity: 1;
+  }
+
+  &.exit {
+    opacity: 1;
+  }
+
+  &.exit-active {
+    opacity: 0;
+    transition: all 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
 `
 
 const Background = styled.div`
   pointer-events: all;
+  background: white;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
-  overflow: hidden;
-  min-height: 100px;
-  min-width: 300px;
-  max-width: 80%;
-  max-height: 80%;
-  background: var(--cloudy);
-  box-shadow: 0 0 1px hsla(28, 5%, 20%, 0.75),
-    0 12px 45px hsla(28, 5%, 20%, 0.6);
-  border-radius: 0 0 2px 2px;
-  opacity: 1;
+  flex-direction: column;
+  gap: 28px;
+  box-shadow: 0 22px 80px hsla(0 0% 72% / 0.8);
+  border-radius: 8px;
+  border: 1px solid hsl(0 0% 85%);
 
-  &.appear {
-    transform: translateY(-100%);
-  }
+  // start
+  opacity: 0;
+  transform: scale(0.8) translateY(-136px);
 
   &.appear-active {
-    transition: all 300ms ease-out;
-    transform: translateY(0%);
+    transform: scale(1) translateY(0px);
+    opacity: 1;
+
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &.appear-done {
+    opacity: 1;
+    transform: translateY(0px);
   }
 
   &.exit {
-    transform: translateY(0);
+    transform: scale(1);
+    opacity: 1;
   }
 
   &.exit-active {
-    transition: transform 300ms;
-    transform: translateY(-100%);
-  }
-
-  &.exit-done {
-    display: none;
+    transform: scale(0.5);
+    opacity: 0;
+    transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 `
 
@@ -125,17 +152,29 @@ export function ModalDialog(props: Props) {
   useEscapeKey(onClose)
 
   return ReactDOM.createPortal(
-    <Overlay>
-      <CSSTransition
-        in={show}
-        appear
-        classNames=""
-        timeout={310}
-        onExited={() => setTimeout(props.onClosed, 100)}
-      >
-        <Background role="dialog">{props.children({onClose})}</Background>
-      </CSSTransition>
-    </Overlay>,
-    doc.id("modal-dialog-root")
+    <CSSTransition
+      addEndListener={(node, done) => {
+        node.addEventListener("transitionend", done, false)
+      }}
+      in={show}
+      classNames={""}
+      appear
+      onExited={() => setTimeout(props.onClosed, 100)}
+    >
+      <Overlay>
+        <CSSTransition
+          in={show}
+          addEndListener={(node, done) => {
+            node.addEventListener("transitionend", done, false)
+          }}
+          appear
+        >
+          <Background role="dialog">
+            <NewPoolModal onClose={onClose} />
+          </Background>
+        </CSSTransition>
+      </Overlay>
+    </CSSTransition>,
+    doc.id("modal-root")
   )
 }

@@ -12,7 +12,8 @@ export class LoadContext {
   private window: SearchWindow
 
   constructor(public main: MainObject, public opts: LoadOptions) {
-    this.window = main.windows.focused as SearchWindow
+    this.window = main.windows.find(opts.windowId) as SearchWindow
+    if (!this.window) throw new Error("No window with id " + opts.windowId)
   }
 
   createClient() {

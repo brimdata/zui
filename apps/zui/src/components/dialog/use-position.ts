@@ -22,6 +22,8 @@ export function usePosition(dialog: HTMLDialogElement, props: DialogProps) {
     if (!props.isOpen || !dialog) return
     const anchorRect = anchor.getBoundingClientRect()
     const dialogRect = dialog.getBoundingClientRect()
+    dialogRect.width = dialog.clientWidth
+    dialogRect.height = dialog.clientHeight
     let left = anchorRect.left
     let top = anchorRect.top
     const leftMin = 0

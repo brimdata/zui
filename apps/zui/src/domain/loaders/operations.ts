@@ -8,10 +8,12 @@ import MultiStream from "multistream"
 import {createReadStream} from "fs"
 import {zjson} from "@brimdata/zed-js"
 import {ZedScript} from "src/app/core/models/zed-script"
+import {isPcap} from "src/plugins/brimcap/packets/is-pcap"
 
 export const formAction = createOperation(
   "loaders.formAction",
   async (ctx, data) => {
+    console.log(data)
     let pool: Pool
 
     if (data.poolId === "new") {
@@ -28,6 +30,7 @@ export const formAction = createOperation(
     const script = new ZedScript(data.shaper)
 
     await loadFilesOp.run({
+      windowId: data.windowId,
       format: data.format,
       poolId: pool.id,
       lakeId: zui.window.lakeId,
@@ -48,7 +51,7 @@ export const formAction = createOperation(
   }
 )
 
-export const zqOperation = createOperation(
+export const previewShaper = createOperation(
   "loaders.previewShaper",
   async (_, files, shaper, format) => {
     const input = new MultiStream(files.map((f) => createReadStream(f)))
@@ -60,5 +63,19 @@ export const zqOperation = createOperation(
     } catch (e) {
       return {error: e, data: []}
     }
+  }
+)
+
+async function getFileType(path: string) {
+  if (await isPcap(path)) return {type: "pcap", path}
+  else return {type: "text", path}
+}
+
+export const getFileTypes = createOperation(
+  "loaders.getFileTypes",
+  async (_, paths: string[]) => {
+    const data = []
+    for (const path of paths) data.push(await getFileType(path))
+    return data
   }
 )

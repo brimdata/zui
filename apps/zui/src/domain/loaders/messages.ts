@@ -1,6 +1,7 @@
 import {LoadFormat, zjson} from "@brimdata/zed-js"
 
 export type LoadFormData = {
+  windowId: string
   poolId: string
   name: string | null
   key: string | null
@@ -19,4 +20,5 @@ export type LoadersOperations = {
     shaper: string,
     format: LoadFormat
   ) => {data: zjson.Obj[]; error: string | null}
+  "loaders.getFileTypes": (paths: string[]) => {type: string; path: string}[]
 }

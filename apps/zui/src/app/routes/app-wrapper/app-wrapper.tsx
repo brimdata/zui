@@ -17,7 +17,6 @@ export default function AppWrapper({children}) {
         <Sidebar />
         <MainArea>{children}</MainArea>
         <StatusBar />
-
         <AppModals />
       </AppGrid>
     </DataDropzone>

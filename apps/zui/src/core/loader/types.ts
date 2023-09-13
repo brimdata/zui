@@ -2,6 +2,7 @@ import {LoadFormat} from "@brimdata/zed-js"
 import {LoadContext} from "./load-context"
 
 export type LoadOptions = {
+  windowId: string
   lakeId: string
   poolId: string
   branch: string

@@ -11,7 +11,7 @@ import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {HistorySection} from "./history/section"
 import {SectionTabs} from "src/components/section-tabs"
 import {PaneName} from "src/js/state/Layout/types"
-import {ColumnsPane} from "src/panes/columns-pane/columns-pane"
+import {ColumnsPane} from "src/panes/columns-pane"
 import Appearance from "src/js/state/Appearance"
 
 const Pane = styled(DraggablePane)`

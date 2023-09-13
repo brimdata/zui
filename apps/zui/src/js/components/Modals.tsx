@@ -7,6 +7,7 @@ import {ModalDialog} from "./ModalDialog/ModalDialog"
 import NewLakeModal from "./LakeModals/NewLakeModal"
 import ViewLakeModal from "./LakeModals/ViewLakeModal"
 import ExportModal from "./ExportModal"
+import {NewPoolModal} from "src/panes/new-pool-modal"
 
 const MODALS = {
   whois: WhoisModal,
@@ -14,6 +15,7 @@ const MODALS = {
   "new-lake": NewLakeModal,
   "view-lake": ViewLakeModal,
   export: ExportModal,
+  "new-pool": NewPoolModal,
 }
 
 export function Modals() {

@@ -11,8 +11,12 @@ const slice = createSlice({
     editorSize: 200,
     sidebarSize: 360,
     resultsRatio: 0.5,
+    poolId: null,
   },
   reducers: {
+    setPoolId: (state, action: PayloadAction<string>) => {
+      state.poolId = action.payload
+    },
     setFiles: (state, action: PayloadAction<string[]>) => {
       state.files = action.payload
     },

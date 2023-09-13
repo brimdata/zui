@@ -1,0 +1,39 @@
+.modal-appear {
+    transition: opacity 700ms, transform 700ms;
+    opacity: 0;
+    transform: translateY(-30px);
+
+    &::backdrop {
+        transition: opacity 700ms;
+        opacity: 0;
+    }
+}
+
+.modal-appear-active {
+    opacity: 1;
+    transform: translateY(0px);
+
+    &::backdrop {
+        opacity: 1;
+    }
+}
+
+.modal-exit {
+    transition: all 700ms var(--pop-easing);
+    opacity: 1;
+    transform: scale(1);
+
+    &::backdrop {
+        transition: background 700ms;
+        opacity: 1;
+    }
+}
+
+.modal-exit-active {
+    opacity: 0;
+    transform: scale(0.75);
+
+    &::backdrop {
+        opacity: 0;
+    }
+}

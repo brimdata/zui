@@ -87,7 +87,7 @@
     "electron": "22.0.0",
     "electron-builder": "^23.6.0",
     "electron-builder-notarize": "^1.2.0",
-    "electron-devtools-installer": "^3.2.0",
+    "electron-devtools-assembler": "^1.2.0",
     "electron-dl": "^3.0.1",
     "electron-localshortcut": "^3.2.1",
     "electron-log": "5.0.0-beta.6",

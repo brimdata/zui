@@ -11,6 +11,7 @@ import Tabs from "src/js/state/Tabs"
 import Icon from "src/app/core/icon-temp"
 import {newPool} from "src/app/commands/new-pool"
 import {connectToLake} from "src/app/commands/connect-to-lake"
+import Modal from "src/js/state/Modal"
 
 export const Button = styled.button`
   display: flex;
@@ -54,7 +55,7 @@ export default function PlusButton() {
       },
       {
         label: "New Pool",
-        click: () => newPool.run(),
+        click: () => dispatch(Modal.show("new-pool")),
         enabled: !!lakeId,
       },
       {type: "separator"},
@@ -72,7 +73,7 @@ export default function PlusButton() {
   }
   return (
     <>
-      <Button aria-label="create" onClick={() => onClick()}>
+      <Button aria-label="create" onMouseDown={() => onClick()}>
         <Icon name="plus" size={18} fill="white" />
       </Button>
       <input

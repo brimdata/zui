@@ -128,3 +128,18 @@
     min-height: var(--form-height);
     line-height: var(--form-height);
 }
+
+.form .submission {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form .error {
+    background: #fde2d8;
+    color: #a81f07;
+    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
