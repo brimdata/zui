@@ -9,6 +9,5 @@
 
 .modal::backdrop {
     background-color: black;
-    opacity: 1;
     will-change: opacity;
 }

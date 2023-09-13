@@ -23,7 +23,7 @@ export function LoadPane() {
   const hide = () => {
     dispatch(LoadDataForm.setFiles([]))
   }
-  const [isPending, startTransition] = useTransition()
+  const [_isPending, startTransition] = useTransition()
   const [show, setShow] = useState(false)
 
   useEffect(() => {
@@ -33,10 +33,10 @@ export function LoadPane() {
   }, [files])
 
   if (!show) return null
-  else return <Pane onClose={hide} isPending={isPending} />
+  else return <Pane onClose={hide} />
 }
 
-function Main(props: {isPending: boolean}) {
+function Main() {
   const files = useSelector(LoadDataForm.getFiles)
   const format = useSelector(LoadDataForm.getFormat)
   const mainStyle = useSelector(LoadDataForm.getMainStyle)
@@ -45,7 +45,6 @@ function Main(props: {isPending: boolean}) {
   const select = useSelect()
 
   const initialize = () => {
-    if (props.isPending) return
     const script = select(LoadDataForm.getShaper)
     original.queryAll(script)
     preview.queryAll(script)
@@ -56,7 +55,7 @@ function Main(props: {isPending: boolean}) {
     preview.queryAll(script)
   }, [files, format])
 
-  useEffect(initialize, [files, format, props.isPending])
+  useEffect(initialize, [files, format])
 
   return (
     <main className={styles.main} style={mainStyle}>
@@ -81,7 +80,7 @@ function Grid(props: {children: any}) {
   )
 }
 
-function Pane(props: {onClose: any; isPending: boolean}) {
+function Pane(props: {onClose: any}) {
   const debut = useDebut({afterExit: props.onClose})
 
   return (
@@ -94,7 +93,7 @@ function Pane(props: {onClose: any; isPending: boolean}) {
         modal
       >
         <Grid>
-          <Main isPending={props.isPending} />
+          <Main />
           <Sidebar onClose={debut.exit} />
         </Grid>
       </Dialog>

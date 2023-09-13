@@ -31,7 +31,7 @@ export function Form(props: {onClose}) {
     // @ts-ignore
     const windowId = window.windowId
     await invoke("loaders.formAction", {...data, files, shaper, windowId})
-    dispatch(LoadDataForm.setFiles([]))
+    props.onClose()
   }
 
   const onFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -53,14 +53,6 @@ export function Form(props: {onClose}) {
       className={classNames(styles.form, baseForm.form)}
     >
       <ScrollShadow threshold={45} className={styles.formBody}>
-        <section className={styles.well}>
-          <p>
-            Data will load into <b title={lake.getAddress()}>{lake.name}</b>.
-          </p>
-          <p>
-            Use the shaper script to transform the data before it is loaded.
-          </p>
-        </section>
         <section className={styles.fields}>
           <div>
             <div className={baseForm.actionLabel}>
@@ -179,6 +171,12 @@ export function Form(props: {onClose}) {
             </div>
           </section>
         </details>
+        <section className={styles.well}>
+          <p>
+            Data will be loaded into{" "}
+            <b title={lake.getAddress()}>{lake.name}</b>.
+          </p>
+        </section>
       </ScrollShadow>
       <div className={classNames(styles.submission)}>
         <button type="button" onClick={props.onClose}>

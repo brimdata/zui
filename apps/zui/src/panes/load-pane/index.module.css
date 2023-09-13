@@ -1,6 +1,6 @@
 .grid {
-  width: 80vw;
-  height: 80vh;
+  width: 92vw;
+  height: 92vh;
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 360px;
@@ -10,6 +10,7 @@
 }
 
 .main {
+  z-index: 1;
   display: grid;
   grid-template-rows: auto 1fr;
   grid-template-columns: 1fr;

@@ -1,6 +1,7 @@
 import {isEqual} from "lodash"
 import React, {
   forwardRef,
+  memo,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -19,30 +20,19 @@ import classNames from "classnames"
 import {useParentSize} from "src/app/core/hooks/use-parent-size"
 import {TopShadow, useScrollShadow} from "src/panes/load-pane/scroll-shadow"
 import {call} from "src/util/call"
+import {shallowEqual} from "react-redux"
 
 const padding = 8
 
-export const InnerElement = forwardRef<any, any>(function InnerElement(
-  {style, ...rest},
-  ref
-) {
-  return (
-    <div
-      role="list"
-      ref={ref}
-      style={{
-        ...style,
-        height: `${parseFloat(style.height) + (padding ?? 0) * 2}px`,
-      }}
-      {...rest}
-    />
-  )
+export const InnerElement = forwardRef<any, any>(function Inner(props, ref) {
+  const {style, ...rest} = props
+  const height = `${parseFloat(style.height) + (padding ?? 0) * 2}px`
+
+  return <div role="list" ref={ref} style={{...style, height}} {...rest} />
 })
 
-export const OuterElement = forwardRef<any, any>(function OuterElement(
-  {children, ...rest},
-  ref
-) {
+export const OuterElement = forwardRef<any, any>(function Outer(props, ref) {
+  const {children, ...rest} = props
   const shadow = useScrollShadow(200)
   return (
     <div style={{height: "100%", width: "100%", position: "relative"}}>
@@ -71,7 +61,6 @@ export const Row: React.ComponentType<
   React.PropsWithChildren<ListChildComponentProps>
 > = React.memo(
   function Row({style, index, data}) {
-    console.log("Row Rendered", index)
     if (!data[index]) return null
     const {render, indent} = data[index]
     const innerStyle = {
@@ -87,7 +76,7 @@ export const Row: React.ComponentType<
   },
   (prev, next) => {
     return (
-      prev.data === next.data &&
+      prev.data[prev.index] === next.data[next.index] &&
       prev.index === next.index &&
       isEqual(prev.style, next.style)
     )
@@ -101,7 +90,7 @@ export const ListView = forwardRef(function ListView(
   const controllers = useStateControllers(props, defaultListViewState)
   const args = {...props, ...controllers}
   const outerRef = useRef<HTMLDivElement>()
-  const list = useMemo(() => createListView(args), [props, controllers])
+  const list = useMemo(() => createListView(args), [props])
   const [rendered, setRendered] = useState({startIndex: 0, stopIndex: 10})
   list.rendered = rendered
   list.fill()
@@ -113,7 +102,7 @@ export const ListView = forwardRef(function ListView(
   }, [list])
 
   const {width, height} = useParentSize(outerRef)
-  console.log("ListView Render")
+
   return (
     <FixedSizeList
       className={classNames(props.className, "zed-list-view")}
@@ -126,7 +115,7 @@ export const ListView = forwardRef(function ListView(
       itemData={[...list.rows]}
       itemKey={(i) => i.toString()}
       innerElementType={InnerElement}
-      outerElementType={OuterElement}
+      // outerElementType={OuterElement}
       overscanCount={8}
       onItemsRendered={(args) => {
         setRendered({

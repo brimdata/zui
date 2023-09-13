@@ -107,6 +107,7 @@
 .form .actionLabel a {
     text-decoration: underline;
     cursor: pointer;
+    color: var(--foreground-color-light);
 }
 
 .form .radioInput {

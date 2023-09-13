@@ -4,6 +4,8 @@
 }
 
 .formBody {
+    display: flex;
+    flex-direction: column;
     padding-bottom: var(--side-padding);
 }
 
@@ -12,11 +14,17 @@
 }
 
 .well {
-    padding: 1rem;
-    background: var(--chrome-color-dark);
+    padding: 1em var(--form-border-radius);
     border-radius: var(--form-border-radius);
+    margin: var(--side-padding);
+    margin-top: auto;
+    margin-bottom: 1em;
     color: var(--foreground-color-light);
-    margin: 2rem var(--side-padding);
+    text-align: center;
+    font-size: 13px;
+    box-shadow: inset 0 0 10px -2px rgb(0 0 0 / 0.15);
+    border: 1px solid var(--border-color-dark);
+    background: transparent;
 }
 
 .well p {
@@ -34,6 +42,7 @@
     border-radius: var(--form-border-radius);
     overflow: hidden auto;
     max-height: 400px;
+    min-height: var(--form-height);
 }
 
 .fileItem {
@@ -60,9 +69,8 @@
     align-items: center;
     bottom: 0;
     padding: var(--side-padding);
-    padding-left: calc(var(--side-padding) + var(--form-border-radius));
     background: var(--chrome-color);
-    backdrop-filter: blur(3px);
+    padding-bottom: 10px;
 }
 
 .fields {
@@ -94,6 +102,9 @@
     pointer-events: none;
 }
 
+.form summary label {
+    font-weight: 500;
+}
 
 .summaryRule {
     display: inline-flex;

@@ -5,7 +5,7 @@
     grid-row: span 2;
     padding: 0;
     display: grid;
-    grid-template-rows: min-content minmax(auto, min-content) min-content;
+    grid-template-rows: min-content 1fr min-content;
 }
 
 .formTitle {
