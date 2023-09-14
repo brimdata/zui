@@ -13,7 +13,6 @@ import {isPcap} from "src/plugins/brimcap/packets/is-pcap"
 export const formAction = createOperation(
   "loaders.formAction",
   async (ctx, data) => {
-    console.log(data)
     let pool: Pool
 
     if (data.poolId === "new") {

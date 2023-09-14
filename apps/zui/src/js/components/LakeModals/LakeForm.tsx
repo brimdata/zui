@@ -16,64 +16,10 @@ import {isDefaultLake} from "../../initializers/initLakeParams"
 import {SubmitButton} from "src/components/submit-button"
 import {InputButton} from "src/components/input-button"
 import {LakeModel} from "src/js/models/lake"
-
-const SignInForm = styled.div`
-  margin: 0 auto 24px;
-  padding-left: 24px;
-
-  ${InputField} {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 0 18px;
-
-    input {
-      background: rgba(255, 255, 255, 0.83);
-    }
-
-    &:last-child {
-      margin: 0;
-    }
-  }
-
-  ${InputLabel} {
-    margin-bottom: 0;
-    margin-right: 10px;
-  }
-`
-
-const Errors = styled.ul`
-  list-style: none;
-  margin: 0 0 12px;
-  line-height: 1.5;
-
-  a {
-    color: var(--red);
-    cursor: pointer;
-    text-decoration: underline;
-  }
-
-  p {
-    ${(p) => p.theme.typography.labelSmall}
-    margin: 0;
-  }
-`
-
-const StyledFooter = styled.footer`
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  background: transparent;
-  margin-bottom: 12px;
-
-  button {
-    margin-left: 12px;
-  }
-`
-
-const StyledTextInput = styled(TextInput)`
-  width: 280px;
-`
+import forms from "src/components/forms.module.css"
+import modals from "src/components/modal.module.css"
+import classNames from "classnames"
+import {ErrorWell} from "src/components/error-well"
 
 type Props = {
   lake?: LakeModel
@@ -206,51 +152,58 @@ const LakeForm = ({onClose, lake}: Props) => {
   }
 
   return (
-    <>
-      {errors.length > 0 && (
-        <Errors>
-          {errors.map(({label, message, input, cause}, i) => {
-            const maybePadded = label && input ? " " : ""
-            cause && console.error(cause)
-            return (
-              <li key={i}>
-                {maybePadded && <a onClick={() => input.focus()}>{label}</a>}
-                {maybePadded + message}
-              </li>
-            )
-          })}
-        </Errors>
-      )}
-      <SignInForm>
-        <form ref={setFormRef}>
-          <InputField>
-            <InputLabel>{config.name.label}</InputLabel>
-            <StyledTextInput
-              name={config.name.name}
-              defaultValue={defaultName}
-              disabled={isSubmitting}
-              autoFocus
-            />
-          </InputField>
-          <InputField>
-            <InputLabel>{config.host.label}</InputLabel>
-            <StyledTextInput
-              name={config.host.name}
-              defaultValue={getDefaultHost()}
-              disabled={isSubmitting}
-            />
-          </InputField>
-        </form>
-      </SignInForm>
-      <StyledFooter>
-        <SubmitButton disabled={isSubmitting} onClick={onSave}>
-          {isSubmitting ? "Conecting..." : isNewLake ? "Connect" : "Save"}
-        </SubmitButton>
-        <InputButton onClick={isSubmitting ? onCancel : onClickClose}>
-          {isSubmitting ? "Cancel" : "Close"}
-        </InputButton>
-      </StyledFooter>
-    </>
+    <form ref={setFormRef} className={forms.form}>
+      <section className={modals.fields}>
+        <div>
+          <label>{config.name.label}</label>
+          <input
+            type="text"
+            name={config.name.name}
+            defaultValue={defaultName}
+            disabled={isSubmitting}
+            autoFocus
+          />
+        </div>
+        <div>
+          <label>{config.host.label}</label>
+          <input
+            type="text"
+            name={config.host.name}
+            defaultValue={getDefaultHost()}
+            disabled={isSubmitting}
+          />
+        </div>
+        <FormErrors errors={errors} />
+      </section>
+      <section className={classNames(modals.submission, forms.submission)}>
+        <button type="button" onClick={isSubmitting ? onCancel : onClickClose}>
+          Close
+        </button>
+        <button type="submit" disabled={isSubmitting} onClick={onSave}>
+          {isSubmitting ? "Connecting..." : isNewLake ? "Connect" : "Save"}
+        </button>
+      </section>
+    </form>
+  )
+}
+
+function FormErrors({errors}: {errors: any[]}) {
+  if (errors.length === 0) return null
+
+  return (
+    <ErrorWell>
+      <ul>
+        {errors.map(({label, message, input}, i) => {
+          const maybePadded = label && input ? " " : ""
+          return (
+            <li key={i}>
+              {maybePadded && <a onClick={() => input.focus()}>{label}</a>}
+              {maybePadded + message}
+            </li>
+          )
+        })}
+      </ul>
+    </ErrorWell>
   )
 }
 

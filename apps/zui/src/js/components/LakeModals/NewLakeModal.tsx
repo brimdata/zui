@@ -1,14 +1,14 @@
 import React from "react"
 import {H1} from "src/components/h1"
-import {Content} from "../ModalDialog/ModalDialog"
 import LakeForm from "./LakeForm"
+import modals from "src/components/modal.module.css"
 
 const NewLakeModal = ({onClose}) => {
   return (
-    <Content>
-      <H1>New Lake</H1>
+    <div className={modals.form}>
+      <H1 className={modals.title}>New Lake</H1>
       <LakeForm onClose={onClose} />
-    </Content>
+    </div>
   )
 }
 export default NewLakeModal

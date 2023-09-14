@@ -10,10 +10,12 @@ import LoadDataForm from "src/js/state/LoadDataForm"
 import useSelect from "src/app/core/hooks/use-select"
 import classNames from "classnames"
 import styles from "./form.module.css"
-import {ChangeEvent, useRef} from "react"
+import {ChangeEvent, useRef, useState} from "react"
 import {IconButton} from "src/components/icon-button"
 import {DataFormatOptions} from "src/components/data-format-select"
 import {LoadFormat} from "@brimdata/zed-js"
+import {ErrorWell} from "src/components/error-well"
+import {errorToString} from "src/util/error-to-string"
 
 export function Form(props: {onClose}) {
   const dispatch = useDispatch()
@@ -22,16 +24,22 @@ export function Form(props: {onClose}) {
   const lake = useSelector(Current.getLake)
   const files = useSelector(LoadDataForm.getFiles)
   const poolId = useSelector(LoadDataForm.getPoolId)
+  const format = useSelector(LoadDataForm.getFormat)
   const fileInput = useRef(null)
   const defaultUser = globalThis.appMeta.userName
   const {register, handleSubmit, watch} = useForm()
+  const [error, setError] = useState(null)
 
   const onSubmit = async (data) => {
     const shaper = select(LoadDataForm.getShaper)
     // @ts-ignore
     const windowId = window.windowId
-    await invoke("loaders.formAction", {...data, files, shaper, windowId})
-    props.onClose()
+    try {
+      await invoke("loaders.formAction", {...data, files, shaper, windowId})
+      props.onClose()
+    } catch (e) {
+      setError(humanizeFormError(e))
+    }
   }
 
   const onFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +93,11 @@ export function Form(props: {onClose}) {
           </div>
           <div>
             <label>Data Format</label>
-            <select {...register("format")} onChange={onFormatChange}>
+            <select
+              {...register("format")}
+              onChange={onFormatChange}
+              defaultValue={format}
+            >
               <DataFormatOptions />
             </select>
           </div>
@@ -178,12 +190,24 @@ export function Form(props: {onClose}) {
           </p>
         </section>
       </ScrollShadow>
-      <div className={classNames(styles.submission)}>
-        <button type="button" onClick={props.onClose}>
-          Cancel
-        </button>
-        <button type="submit">Load</button>
+      <div>
+        {error && <ErrorWell error={error} />}
+        <div className={classNames(styles.submission)}>
+          <button type="button" onClick={props.onClose}>
+            Cancel
+          </button>
+          <button type="submit">Load</button>
+        </div>
       </div>
     </form>
   )
+}
+
+function humanizeFormError(e: unknown) {
+  const error = errorToString(e)
+  if (/pool already exist/.test(error)) {
+    return "A pool with this name already exists."
+  }
+
+  return error
 }

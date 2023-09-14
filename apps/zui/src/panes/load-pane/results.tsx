@@ -11,6 +11,7 @@ import {Pill} from "src/components/pill"
 import {invoke} from "src/core/invoke"
 import useResizeObserver from "use-resize-observer"
 import {useMemoObject} from "src/util/hooks/use-memo-object"
+import {ErrorWell} from "src/components/error-well"
 
 function append(script: string, suffix: string) {
   const zed = new ZedScript(script)
@@ -217,7 +218,7 @@ export const Results = memo(function Results(
       />
       <section>
         {props.error ? (
-          <ResultsError error={props.error} />
+          <ErrorWell title="ZQ Error" error={props.error} />
         ) : (
           <ResultsBody
             values={props.values}
@@ -257,12 +258,3 @@ const ResultsBody = memo(function ResultsBody(props: {
   }
   throw new Error("Unknown Display")
 })
-
-function ResultsError(props: {error: string}) {
-  return (
-    <div className={styles.error}>
-      <h3 className={styles.errorTitle}>ZQ Error</h3>
-      <p>{props.error.toString().replaceAll("Error:", "").trim()}</p>
-    </div>
-  )
-}

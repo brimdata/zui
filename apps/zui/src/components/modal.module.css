@@ -11,3 +11,23 @@
     background-color: black;
     will-change: opacity;
 }
+
+.modal .form {
+    padding: 0 30px 30px 30px;
+    width: 360px;
+}
+
+.modal .fields {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.modal .submission {
+    margin-top: calc(var(--form-field-gap) * 2);
+}
+
+.modal .title {
+    text-align: center;
+    margin: 20px 0;
+}

@@ -28,8 +28,8 @@ export const defaultLoader: Loader = {
     const data = input.pipe(zq).pipe(inspectStream(onChunk))
     const res = await client.load(data, {
       pool: ctx.poolId,
+
       branch: ctx.branch,
-      format: ctx.format,
       message: {
         author: ctx.author,
         body: ctx.body,

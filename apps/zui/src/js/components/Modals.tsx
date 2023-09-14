@@ -3,11 +3,13 @@ import Modal from "../state/Modal"
 import IngestWarningsModal from "./IngestWarningsModal"
 import WhoisModal from "./WhoisModal"
 import React from "react"
-import {ModalDialog} from "./ModalDialog/ModalDialog"
 import NewLakeModal from "./LakeModals/NewLakeModal"
 import ViewLakeModal from "./LakeModals/ViewLakeModal"
 import ExportModal from "./ExportModal"
 import {NewPoolModal} from "src/panes/new-pool-modal"
+import {Debut, useDebut} from "src/components/debut"
+import {Dialog} from "src/components/dialog/dialog"
+import modalStyle from "src/components/modal.module.css"
 
 const MODALS = {
   whois: WhoisModal,
@@ -21,10 +23,21 @@ const MODALS = {
 export function Modals() {
   const name = useSelector(Modal.getName)
   const dispatch = useDispatch()
-  const modal = MODALS[name]
+  const Component = MODALS[name]
+  const debut = useDebut({afterExit: () => dispatch(Modal.hide())})
 
-  if (!modal) return null
+  if (!Component) return null
   return (
-    <ModalDialog onClosed={() => dispatch(Modal.hide())}>{modal}</ModalDialog>
+    <Debut {...debut.props} classNames="modal">
+      <Dialog
+        onClose={() => debut.exit()}
+        dialogPoint="center center"
+        isOpen={true}
+        className={modalStyle.modal}
+        modal
+      >
+        <Component onClose={() => debut.exit()} />
+      </Dialog>
+    </Debut>
   )
 }

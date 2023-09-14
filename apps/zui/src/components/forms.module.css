@@ -33,10 +33,6 @@
     gap: var(--form-field-gap);
 }
 
-.form ul {
-    list-style-type: none;
-}
-
 .form select {
     appearance: none;
     background-image: url(/select-input-arrow.svg);
