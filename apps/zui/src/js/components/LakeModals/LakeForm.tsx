@@ -17,7 +17,7 @@ import {SubmitButton} from "src/components/submit-button"
 import {InputButton} from "src/components/input-button"
 import {LakeModel} from "src/js/models/lake"
 import forms from "src/components/forms.module.css"
-import modals from "src/components/modal.module.css"
+import modals from "src/components/modals.module.css"
 import classNames from "classnames"
 import {ErrorWell} from "src/components/error-well"
 

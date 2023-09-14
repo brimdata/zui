@@ -9,6 +9,7 @@
 
 .modal::backdrop {
     background-color: black;
+    opacity: 0.4;
     will-change: opacity;
 }
 
@@ -24,10 +25,16 @@
 }
 
 .modal .submission {
-    margin-top: calc(var(--form-field-gap) * 2);
+    margin-top: calc(var(--form-field-gap) * 4);
 }
 
 .modal .title {
     text-align: center;
-    margin: 20px 0;
+    margin: 20px 0 30px 0;
+}
+
+.modal .pre {
+    overflow-x: visible;
+    overflow-y: visible;
+    padding: 12px var(--form-border-radius);
 }

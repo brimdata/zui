@@ -1,7 +1,7 @@
 import React from "react"
 import {H1} from "src/components/h1"
 import LakeForm from "./LakeForm"
-import modals from "src/components/modal.module.css"
+import modals from "src/components/modals.module.css"
 
 const NewLakeModal = ({onClose}) => {
   return (

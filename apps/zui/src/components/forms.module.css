@@ -33,6 +33,12 @@
     gap: var(--form-field-gap);
 }
 
+.form .fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-field-gap);
+}
+
 .form select {
     appearance: none;
     background-image: url(/select-input-arrow.svg);
@@ -139,4 +145,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.form input[readonly] {
+    border: none;
+    padding: 0 var(--form-border-radius);
 }

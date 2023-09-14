@@ -1,52 +1,13 @@
 import React from "react"
 import {ChangeEvent, useState} from "react"
 import {toast} from "react-hot-toast"
-import styled from "styled-components"
-import ToolbarButton from "src/app/query-home/toolbar/actions/button"
-import InputLabel from "./common/forms/InputLabel"
-import {
-  ButtonGroup,
-  Content,
-  Footer,
-  SmallTitle,
-} from "./ModalDialog/ModalDialog"
 import {invoke} from "src/core/invoke"
 import {useZuiApi} from "src/app/core/context"
 import {prepExportQuery} from "src/domain/results/utils/prep-export-query"
-
-const RadioButtons = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  cursor: default;
-`
-
-const RadioItem = styled.div<{isDisabled?: boolean}>`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 3px;
-  margin-left: 8px;
-
-  input {
-    margin: 0 6px 0 0;
-  }
-`
-
-const FormatContent = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  margin: 0 12px 24px;
-`
-
-const StyledFooter = styled(Footer)`
-  background: transparent;
-  margin: 0 12px 12px 12px;
-  padding: 0;
-`
+import classNames from "classnames"
+import forms from "src/components/forms.module.css"
+import modals from "src/components/modals.module.css"
+import {H1} from "src/components/h1"
 
 const showDialog = (format) => {
   return invoke("showSaveDialogOp", {
@@ -81,66 +42,70 @@ const ExportModal = ({onClose}) => {
   }
 
   return (
-    <Content width={330}>
-      <SmallTitle>Export Results</SmallTitle>
-      <FormatContent>
-        <InputLabel>Format</InputLabel>
-        <RadioButtons
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setFormat(e.target.value)
-          }}
-        >
-          <RadioItem>
-            <input type="radio" id="arrows" value="arrows" name="format" />
-            <label htmlFor="arrows">Arrow IPC Stream</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="csv" value="csv" name="format" />
-            <label htmlFor="csv">CSV</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="json" value="json" name="format" />
-            <label htmlFor="json">JSON</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="ndjson" value="ndjson" name="format" />
-            <label htmlFor="ndjson">NDJSON</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="vng" value="vng" name="format" />
-            <label htmlFor="vng">VNG</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="zeek" value="zeek" name="format" />
-            <label htmlFor="zeek">Zeek</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="zjson" value="zjson" name="format" />
-            <label htmlFor="zjson">ZJSON</label>
-          </RadioItem>
-          <RadioItem>
-            <input
-              type="radio"
-              id="zng"
-              value="zng"
-              name="format"
-              defaultChecked
-            />
-            <label htmlFor="zng">ZNG</label>
-          </RadioItem>
-          <RadioItem>
-            <input type="radio" id="zson" value="zson" name="format" />
-            <label htmlFor="zson">ZSON</label>
-          </RadioItem>
-        </RadioButtons>
-      </FormatContent>
-      <StyledFooter>
-        <ButtonGroup>
-          <ToolbarButton text="Close" onClick={onClose} />
-          <ToolbarButton isPrimary text={"Export"} onClick={onExport} />
-        </ButtonGroup>
-      </StyledFooter>
-    </Content>
+    <form className={classNames(modals.form, forms.form)}>
+      <H1 className={modals.title}>Export Results</H1>
+      <section className={forms.fields}>
+        <div>
+          <label>Format</label>
+          <div
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setFormat(e.target.value)
+            }}
+          >
+            <div className={forms.radioInput}>
+              <input type="radio" id="arrows" value="arrows" name="format" />
+              <label htmlFor="arrows">Arrow IPC Stream</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input type="radio" id="csv" value="csv" name="format" />
+              <label htmlFor="csv">CSV</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input type="radio" id="json" value="json" name="format" />
+              <label htmlFor="json">JSON</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input type="radio" id="ndjson" value="ndjson" name="format" />
+              <label htmlFor="ndjson">NDJSON</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input type="radio" id="vng" value="vng" name="format" />
+              <label htmlFor="vng">VNG</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input type="radio" id="zeek" value="zeek" name="format" />
+              <label htmlFor="zeek">Zeek</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input type="radio" id="zjson" value="zjson" name="format" />
+              <label htmlFor="zjson">ZJSON</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input
+                type="radio"
+                id="zng"
+                value="zng"
+                name="format"
+                defaultChecked
+              />
+              <label htmlFor="zng">ZNG</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input type="radio" id="zson" value="zson" name="format" />
+              <label htmlFor="zson">ZSON</label>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className={classNames(modals.submission, forms.submission)}>
+        <button type="button" onClick={onClose}>
+          Close
+        </button>
+        <button type="submit" onClick={onExport}>
+          Export
+        </button>
+      </div>
+    </form>
   )
 }
 

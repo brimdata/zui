@@ -1,0 +1,10 @@
+.logout {
+    margin-top: 2em;
+    text-align: center;
+    
+}
+
+.logout a {
+    font-size: 1rem;
+    color: var(--red);
+}

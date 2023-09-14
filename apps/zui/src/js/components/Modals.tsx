@@ -9,7 +9,7 @@ import ExportModal from "./ExportModal"
 import {NewPoolModal} from "src/panes/new-pool-modal"
 import {Debut, useDebut} from "src/components/debut"
 import {Dialog} from "src/components/dialog/dialog"
-import modalStyle from "src/components/modal.module.css"
+import modalStyle from "src/components/modals.module.css"
 
 const MODALS = {
   whois: WhoisModal,

@@ -1,4 +1,4 @@
-import styles from "./modal.module.css"
+import styles from "./modals.module.css"
 import {Debut, useDebut} from "src/components/debut"
 import {Dialog} from "src/components/dialog/dialog"
 
