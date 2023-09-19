@@ -7,7 +7,7 @@ import * as _ from "lodash"
 import LoadDataForm from "src/js/state/LoadDataForm"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
-import {useCallback, useEffect, useState, useTransition} from "react"
+import {useCallback, useEffect} from "react"
 import {useResultsControl} from "./results"
 import modal from "src/components/modals.module.css"
 import {Shaper} from "./shaper"
@@ -16,21 +16,15 @@ import {ResultsGroup} from "./results-group"
 import useSelect from "src/app/core/hooks/use-select"
 import {Debut, useDebut} from "src/components/debut"
 import {Dialog} from "src/components/dialog/dialog"
+import {DataDropzone} from "src/app/routes/app-wrapper/data-dropzone"
 
 export function LoadPane() {
   const dispatch = useDispatch()
-  const files = useSelector(LoadDataForm.getFiles)
-  const hide = () => {
-    dispatch(LoadDataForm.setFiles([]))
-  }
-  const [_isPending, startTransition] = useTransition()
-  const [show, setShow] = useState(false)
+  const show = useSelector(LoadDataForm.getShow)
 
-  useEffect(() => {
-    startTransition(() => {
-      setShow(files.length > 0)
-    })
-  }, [files])
+  const hide = () => {
+    dispatch(LoadDataForm.setShow(false))
+  }
 
   if (!show) return null
   else return <Pane onClose={hide} />

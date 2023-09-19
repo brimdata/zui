@@ -2,6 +2,7 @@ import {MenuItemConstructorOptions} from "electron"
 import {BoundCommand} from "src/app/commands/command"
 import {invoke} from "src/core/invoke"
 import {MenuItem} from "./types"
+import {commands} from "../command"
 
 export function showContextMenu(
   template: MenuItemConstructorOptions[],
@@ -58,6 +59,8 @@ function setupListener(template, callback) {
       item.command instanceof BoundCommand
     ) {
       item.command.run()
+    } else if (item && "command" in item && typeof item.command === "string") {
+      invoke("invokeCommandOp", item.command, item.args)
     }
     callback && callback()
   })

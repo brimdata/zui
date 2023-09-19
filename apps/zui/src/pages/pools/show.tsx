@@ -1,9 +1,7 @@
 import {syncPool} from "src/app/core/pools/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import {poolShow} from "src/app/router/routes"
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {Route, Switch} from "react-router"
 import Current from "src/js/state/Current"
 import {AppDispatch} from "src/js/state/types"
 import {bytes} from "src/js/lib/fmt"
@@ -11,8 +9,9 @@ import styled from "styled-components"
 import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
 import {H1} from "src/components/h1"
 import {NotFound} from "./404"
-import {SubmitButton} from "src/components/submit-button"
 import {EmptyPoolPane} from "src/panes/empty-pool-pane"
+import {PoolDataList} from "src/panes/pool-data-list"
+import {ButtonMenu} from "src/components/button-menu"
 
 const BG = styled.div`
   --page-padding: 32px;
@@ -76,7 +75,8 @@ export function InitPool({children}) {
 
 export const Show = () => {
   const pool = useSelector(Current.mustGetPool)
-  const queryPool = poolToolbarMenu.build(pool).items[0]
+  const menu = poolToolbarMenu.build(pool)
+  const isEmpty = pool.empty()
   return (
     <BG>
       <Header>
@@ -85,29 +85,13 @@ export const Show = () => {
           <Subtitle>{bytes(pool.stats.size)}</Subtitle>
         </div>
         <Toolbar>
-          <SubmitButton
-            icon={queryPool.iconName}
-            onClick={() => queryPool.click()}
-          >
-            Query Pool
-          </SubmitButton>
+          <ButtonMenu label={menu.label} items={menu.items} />
         </Toolbar>
       </Header>
       <Body>
-        <EmptyPoolPane />
+        {isEmpty && <EmptyPoolPane />}
+        <PoolDataList pool={pool} />
       </Body>
     </BG>
-  )
-}
-
-export default function PoolShow() {
-  return (
-    <Switch>
-      <Route path={poolShow.path}>
-        <InitPool>
-          <Show />
-        </InitPool>
-      </Route>
-    </Switch>
   )
 }

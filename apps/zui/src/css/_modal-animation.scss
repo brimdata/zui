@@ -1,7 +1,7 @@
 .modal-appear {
-    transition: opacity 500ms var(--pop-easing), transform 500ms var(--pop-easing);
+    transition: opacity 200ms ease-in, transform 500ms var(--pop-easing);
     transform: translateY(-30px);
-    opacity: 0;
+    opacity: 0.5;
 
     &::backdrop {
         transition: opacity 500ms ease-out;
@@ -23,11 +23,11 @@
 }
 
 .modal-exit {
-    transition: opacity 500ms ease-out, transform 500ms var(--pop-easing);
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
     transform: scale(1);
 
     &::backdrop {
-        transition: opacity 1s;
+        transition: opacity 300ms;
         opacity: 0.4;
     }
 }

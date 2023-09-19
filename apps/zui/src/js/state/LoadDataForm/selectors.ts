@@ -8,6 +8,7 @@ export const getSidebarSize = (state: State) => state.loadDataForm.sidebarSize
 export const getFormat = (state: State) => state.loadDataForm.format
 export const getResultsRatio = (state: State) => state.loadDataForm.resultsRatio
 export const getPoolId = (state: State) => state.loadDataForm.poolId
+export const getShow = (state: State) => state.loadDataForm.show
 
 export const getMainStyle = createSelector(getEditorSize, (editorSize) => {
   return {

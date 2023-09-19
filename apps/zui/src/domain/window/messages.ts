@@ -1,3 +1,4 @@
+import {OpenDialogOptions, OpenDialogReturnValue} from "electron"
 import {QueryParams} from "src/js/api/queries/types"
 
 export type WindowHandlers = {
@@ -10,4 +11,7 @@ export type WindowHandlers = {
 
 export type WindowOperations = {
   "window.sync": (props: {lakeId: string}) => void
+  "window.showOpenDialog": (
+    options?: OpenDialogOptions
+  ) => OpenDialogReturnValue
 }

@@ -1,8 +1,8 @@
 import React, {useLayoutEffect, useRef, useState} from "react"
 import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
-import {useResponsiveMenu} from "./button-menu"
 import {MoreItemsButton} from "./more-items-button"
+import {useResponsiveMenu} from "src/js/components/hooks/use-responsive-menu"
 
 const BG = styled.div`
   display: flex;
@@ -68,12 +68,12 @@ const Underline = styled.div`
 
 export function SectionTabs(props: {options: MenuItem[]}) {
   const changeCount = useRef(0)
-  const ref = useRef<HTMLDivElement>()
   const [pos, setPos] = useState({x: 0, width: 10})
   const pressedIndex = props.options.findIndex((opt) => opt.checked)
+  const menu = useResponsiveMenu(props.options)
 
   useLayoutEffect(() => {
-    const el = ref.current
+    const el = menu.containerRef.current
     if (el) {
       const parent = el.getBoundingClientRect()
       const pressed = el.querySelector(`[aria-pressed="true"] span`)
@@ -84,29 +84,31 @@ export function SectionTabs(props: {options: MenuItem[]}) {
         setPos({x, width})
       }
     }
-  }, [pressedIndex])
-
-  const menu = useResponsiveMenu(ref, props.options)
+  }, [pressedIndex, menu])
 
   return (
-    <BG>
-      <Nav ref={ref}>
-        {props.options.map((opts, i) => (
+    <BG ref={menu.containerRef}>
+      <Nav>
+        {menu.items.map((item, index) => (
           <button
-            key={opts.id ?? i}
+            key={item.id ?? index}
             onClick={() => {
               changeCount.current += 1
-              opts.click()
+              item.click()
             }}
-            aria-pressed={opts.checked}
-            data-section-tab-value={opts.label.toLowerCase()}
+            aria-pressed={item.checked}
+            data-section-tab-value={item.label.toLowerCase()}
             style={{
-              visibility: menu.isHidden(i) ? "hidden" : "visible",
+              display: menu.isHidden(item) ? "none" : "block",
             }}
           >
-            <span>{opts.label}</span>
+            <span>{item.label}</span>
           </button>
         ))}
+
+        {menu.hasHiddenItems ? (
+          <MoreItemsButton items={menu.hiddenItems} ref={menu.moreRef} />
+        ) : null}
       </Nav>
       <Underline
         style={{
@@ -117,9 +119,6 @@ export function SectionTabs(props: {options: MenuItem[]}) {
           visibility: menu.isHidden(pressedIndex) ? "hidden" : "visible",
         }}
       />
-      {menu.hasHiddenItems ? (
-        <MoreItemsButton items={menu.hiddenItems} />
-      ) : null}
     </BG>
   )
 }

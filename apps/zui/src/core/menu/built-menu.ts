@@ -35,6 +35,7 @@ export class BuiltMenu {
       }
       if (checked !== undefined) {
         option.type = "checkbox"
+        option.checked = checked
       }
       return option
     })
