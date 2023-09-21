@@ -11,7 +11,7 @@ export function Histogram(props: {width: number; height: number}) {
     data.isFetching && data.data.length === 0
   )
   const error = validateDataProps(dataProps)
-
+  console.log(error, dataProps, data)
   if (error) {
     return <Error message={error} />
   } else {

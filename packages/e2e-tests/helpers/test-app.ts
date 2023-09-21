@@ -86,7 +86,7 @@ export default class TestApp {
   }
 
   async setEditor(zed: string) {
-    await this.mainWin.locator('[aria-label=main-editor]').click();
+    await this.mainWin.getByTestId('main-editor').click();
     await this.mainWin.keyboard.press(isMac() ? 'Meta+KeyA' : 'Control+KeyA');
     await this.mainWin.keyboard.type(zed);
   }

@@ -27,7 +27,12 @@ export function Form(props: {onClose}) {
   const format = useSelector(LoadDataForm.getFormat)
   const fileInput = useRef(null)
   const defaultUser = globalThis.appMeta.userName
-  const {register, handleSubmit, watch} = useForm()
+  const {register, handleSubmit, watch} = useForm<any>({
+    defaultValues: {
+      poolId: poolId || "new",
+    },
+  })
+
   const [error, setError] = useState(null)
 
   const onSubmit = async (data) => {
@@ -103,7 +108,7 @@ export function Form(props: {onClose}) {
           </div>
           <div>
             <label>Pool</label>
-            <select {...register("poolId")} defaultValue={poolId}>
+            <select {...register("poolId")}>
               <option value="new">+ New Pool</option>
               {pools.map((pool) => (
                 <option key={pool.id} value={pool.id}>

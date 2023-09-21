@@ -3,7 +3,7 @@ name: Create Insiders Release
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 20 * * *' # Every day at 8:15pm UTC
+    - cron: '15 03 * * *' # Every day at 10:15am UTC / 3:15am PT
 
 jobs:
   check_latest:
@@ -17,17 +17,19 @@ jobs:
           owner: brimdata
           repo: zui-insiders
       - name: Download last build_sha
-        run: curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.release }}/build_sha.txt > build_sha.txt
-      - name: Compare last build_sha to current sha
+        id: latest_sha
         run: |
-          [[ $(cat build_sha.txt) != ${{ github.sha }} ]]
+          curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.release }}/build_sha.txt > build_sha.txt
+          echo "sha=$(cat build_sha.txt)" >> $GITHUB_OUTPUT
 
     outputs:
       version: ${{ steps.latest_release.outputs.release }}
+      latest_sha: ${{ steps.latest_sha.outputs.sha }}
 
   release:
     name: Publish Release
     needs: check_latest
+    if: ${{ needs.check_latest.outputs.latest_sha != github.sha }}
     strategy:
       matrix:
         platform: [windows-2019, macos-12, ubuntu-20.04]
