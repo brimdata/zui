@@ -24,6 +24,7 @@ export function useZedEditorKeyboardSubmit(onSubmit: () => void) {
 }
 
 export function ZedEditor(props: {
+  testId?: string
   path: string
   value: string
   onChange: (value: string | undefined, ev: any) => void
@@ -43,6 +44,9 @@ export function ZedEditor(props: {
 
   return (
     <Editor
+      wrapperProps={{
+        "data-testid": props.testId,
+      }}
       height="100%"
       width="100%"
       value={props.value}

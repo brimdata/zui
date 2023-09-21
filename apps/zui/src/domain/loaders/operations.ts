@@ -18,7 +18,7 @@ export const formAction = createOperation(
     if (data.poolId === "new") {
       const poolNames = zui.pools.all.map((pool) => pool.name)
       const derivedName = await derivePoolName(data.files, poolNames)
-      const name = data.name.trim() || derivedName
+      const name = data.name?.trim() || derivedName
       const key = data.key
       const order = data.order
       pool = await zui.pools.create(name, {key, order})
@@ -55,7 +55,6 @@ export const previewShaper = createOperation(
   async (_, files, shaper, format) => {
     const input = new MultiStream(files.map((f) => createReadStream(f)))
     if (files.length === 0) return {data: [], error: null}
-    console.log(files, shaper, format)
     try {
       const data = await zq({query: shaper, as: "zjson", input, i: format})
       return {error: null, data: data as zjson.Obj[]}

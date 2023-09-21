@@ -13,7 +13,7 @@ export function NotFound() {
   return (
     <BG>
       <H1>Pool Not Found</H1>
-      <p>This pool has been deleted or never existed.</p>
+      <p>This pool has been deleted.</p>
     </BG>
   )
 }

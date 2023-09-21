@@ -24,7 +24,6 @@ test.describe('Export tests', () => {
   test.beforeAll(async () => {
     await app.init();
     await app.createPool([getPath('sample.tsv')]);
-    await app.mainWin.getByRole('button', { name: 'Query Pool' }).click();
     await app.query('sort ts');
   });
 
@@ -35,7 +34,6 @@ test.describe('Export tests', () => {
   formats.forEach(({ label, expectedSize }) => {
     test(`Exporting in ${label} format succeeds`, async () => {
       const file = path.join(tempDir, `results.${label}`);
-
       app.zui.evaluate(async ({ dialog }, filePath) => {
         dialog.showSaveDialog = () =>
           Promise.resolve({ canceled: false, filePath });
@@ -51,8 +49,6 @@ test.describe('Export tests', () => {
       await app.mainWin
         .getByText(new RegExp('Export Completed: .*results\\.' + label))
         .waitFor();
-
-      await new Promise((r) => setTimeout(r, 5000));
 
       expect(fsExtra.statSync(file).size).toBe(expectedSize);
     });

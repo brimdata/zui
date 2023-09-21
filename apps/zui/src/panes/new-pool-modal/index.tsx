@@ -15,7 +15,7 @@ export function NewPoolModal(props) {
   const api = useZuiApi()
   const dispatch = useDispatch()
   const [error, setError] = useState("")
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (data: any) => {
     try {
       const id = await api.pools.create(data.name, data)
       dispatch(Tabs.activateUrl(lakePoolPath(id)))

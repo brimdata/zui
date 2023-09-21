@@ -41,8 +41,15 @@ const ExportModal = ({onClose}) => {
     onClose()
   }
 
+  function preventDefault(e) {
+    e.preventDefault()
+  }
+
   return (
-    <form className={classNames(modals.form, forms.form)}>
+    <form
+      className={classNames(modals.form, forms.form)}
+      onSubmit={preventDefault}
+    >
       <H1 className={modals.title}>Export Results</H1>
       <section className={forms.fields}>
         <div>

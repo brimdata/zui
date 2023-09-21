@@ -45,7 +45,12 @@ export default function SearchArea() {
     <>
       <Pins />
       <Group style={{height}} onKeyDownCapture={onKey}>
-        <ZedEditor value={value} onChange={onChange} path={tabId} />
+        <ZedEditor
+          value={value}
+          onChange={onChange}
+          path={tabId}
+          testId="main-editor"
+        />
         <EditorResizer />
       </Group>
     </>

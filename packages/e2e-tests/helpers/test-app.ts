@@ -49,19 +49,16 @@ export default class TestApp {
 
   async createPool(
     filepaths: string[],
-    expectedResult = 'Load Successful'
+    expectedResult = /Successfully loaded/
   ): Promise<void> {
-    await this.mainWin.getByRole('button', { name: 'create' }).click();
-    await this.mainWin.locator('li:has-text("New Pool")').click();
-    const [chooser] = await Promise.all([
-      this.mainWin.waitForEvent('filechooser'),
-      this.mainWin.locator('text=Choose Files').click(),
-    ]);
-    await chooser.setFiles(filepaths);
-    await this.zui.evaluate((_electron, filePaths) => {
-      global.e2eFilePaths = filePaths;
+    await this.mainWin.evaluate((filepaths) => {
+      globalThis.dropFiles(filepaths);
     }, filepaths);
-    await this.mainWin.getByRole('button', { name: 'Create Pool' }).click();
+    await this.mainWin.getByRole('button', { name: 'Load' }).click();
+    await this.mainWin
+      .getByRole('dialog', { name: 'preview-load' })
+      .waitFor({ state: 'detached' });
+
     await this.mainWin.getByText(expectedResult).waitFor();
   }
 
@@ -82,9 +79,16 @@ export default class TestApp {
   }
 
   async query(zed: string): Promise<void> {
-    await this.mainWin.locator('div[role="textbox"]').fill(zed);
-    await this.mainWin.locator('[aria-label="run-query"]').click();
-    await this.mainWin.locator('span[aria-label="fetching"]').isHidden();
+    await this.setEditor(zed);
+    await this.mainWin.getByRole('button', { name: 'run-query' }).click();
+    await this.mainWin.getByRole('status', { name: 'fetching' }).isHidden();
+    await this.sleep(500);
+  }
+
+  async setEditor(zed: string) {
+    await this.mainWin.locator('[aria-label=main-editor]').click();
+    await this.mainWin.keyboard.press(isMac() ? 'Meta+KeyA' : 'Control+KeyA');
+    await this.mainWin.keyboard.type(zed);
   }
 
   async getViewerResults(includeHeaders = true): Promise<string[]> {

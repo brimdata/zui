@@ -1,13 +1,11 @@
 import {ChangeEvent, useRef} from "react"
 import styles from "./index.module.css"
-import LoadDataForm from "src/js/state/LoadDataForm"
-import {useDispatch} from "src/app/core/state"
 import usePoolId from "src/app/router/hooks/use-pool-id"
 import {IconButton} from "src/components/icon-button"
+import {loadFiles} from "src/domain/loaders/handlers"
 
 export function EmptyPoolPane() {
   const input = useRef<HTMLInputElement>()
-  const dispatch = useDispatch()
   const poolId = usePoolId()
 
   function onClick() {
@@ -16,11 +14,7 @@ export function EmptyPoolPane() {
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.currentTarget.files).map((f) => f.path)
-    if (files.length) {
-      dispatch(LoadDataForm.setPoolId(poolId))
-      dispatch(LoadDataForm.setFiles(files))
-      dispatch(LoadDataForm.setShow(true))
-    }
+    loadFiles({files, poolId})
   }
 
   return (
@@ -32,7 +26,7 @@ export function EmptyPoolPane() {
       <IconButton
         onClick={onClick}
         iconName="doc-plain"
-        type="icon-label"
+        display="icon-label"
         label="Choose Files"
       />
       <input

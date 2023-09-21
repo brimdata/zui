@@ -40,7 +40,11 @@ export default async function initialize(
   api.init(store.dispatch, store.getState)
   initDOM()
   initIpcListeners(store)
-  initHandlers({dispatch: store.dispatch, select: (fn) => fn(store.getState())})
+  initHandlers({
+    dispatch: store.dispatch,
+    select: (fn) => fn(store.getState()),
+    invoke: invoke,
+  })
   initDebugGlobals(store, api)
   initAutosave(store)
   commands.setContext(store, api)

@@ -1,6 +1,5 @@
 import React from "react"
 import {connectToLake} from "src/app/commands/connect-to-lake"
-import {newPool} from "src/app/commands/new-pool"
 import {H1} from "src/components/h1"
 import {InputButton} from "src/components/input-button"
 import {Subtitle} from "src/components/subtitle"
@@ -8,6 +7,7 @@ import {Title} from "src/components/title"
 import styled from "styled-components"
 import links from "src/app/core/links"
 import {invoke} from "src/core/invoke"
+import {chooseAndLoadFiles} from "src/domain/loaders/handlers"
 
 const BG = styled.div`
   background-image: url(/welcome-page-background.svg);
@@ -55,7 +55,9 @@ export function WelcomePage() {
       <Card>
         <H1>Get Started</H1>
         <Actions>
-          <InputButton onClick={() => newPool.run()}>Import Data</InputButton>
+          <InputButton onClick={() => chooseAndLoadFiles()}>
+            Import Data
+          </InputButton>
           <InputButton onClick={() => connectToLake.run()}>
             Connect to Lake
           </InputButton>

@@ -9,7 +9,6 @@ import useSearchShortcuts from "./useSearchShortcuts"
 import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
 import {WelcomePage} from "src/pages/welcome"
 import {useReleaseNotes} from "src/application/use-release-notes"
-import {PoolNew} from "src/pages/pools/new"
 import {InitPool, Show} from "src/pages/pools/show"
 import {QueryRoute} from "src/app/query-home/route"
 import Head from "next/head"
@@ -21,9 +20,6 @@ function AppRoutes() {
     <Switch>
       <Route path={routes.lakeReleaseNotes.path}>
         <ReleaseNotes />
-      </Route>
-      <Route path={routes.poolNew.path}>
-        <PoolNew />
       </Route>
       <Route path={routes.poolShow.path}>
         <InitPool>

@@ -1,7 +1,6 @@
 import {isEqual} from "lodash"
 import React, {
   forwardRef,
-  memo,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -20,7 +19,6 @@ import classNames from "classnames"
 import {useParentSize} from "src/app/core/hooks/use-parent-size"
 import {TopShadow, useScrollShadow} from "src/panes/load-pane/scroll-shadow"
 import {call} from "src/util/call"
-import {shallowEqual} from "react-redux"
 
 const padding = 8
 

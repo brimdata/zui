@@ -1,4 +1,4 @@
-import {MouseEventHandler} from "react"
+import {HTMLAttributes, MouseEventHandler} from "react"
 import {usePosition} from "./use-position"
 import useListener from "src/js/components/hooks/useListener"
 import {useOpener} from "./use-opener"
@@ -18,7 +18,7 @@ export type DialogProps = {
   dialogPoint?: string
   dialogMargin?: string
   keepOnScreen?: boolean
-}
+} & HTMLAttributes<HTMLDialogElement>
 
 const nonHTMLProps: (keyof DialogProps)[] = [
   "isOpen",

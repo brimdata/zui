@@ -6,7 +6,7 @@ import {MenuItemConstructorOptions} from "electron"
 
 export type MenuItem = {
   id?: string
-  type?: "icon" | "icon-label"
+  display?: "icon" | "icon-label"
   label?: string
   description?: string
   enabled?: boolean

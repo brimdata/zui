@@ -54,7 +54,7 @@ export function QueryProgress() {
   const count = useSelector(Results.getCount(RESULTS_QUERY))
   if (status === "FETCHING") {
     return (
-      <Span aria-label="fetching">
+      <Span aria-label="fetching" role="status">
         Fetching
         <Loader />
       </Span>

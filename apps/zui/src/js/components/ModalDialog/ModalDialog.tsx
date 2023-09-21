@@ -153,6 +153,7 @@ export function ModalDialog(props: Props) {
 
   return ReactDOM.createPortal(
     <CSSTransition
+      // @ts-ignore
       addEndListener={(node, done) => {
         node.addEventListener("transitionend", done, false)
       }}
@@ -164,7 +165,8 @@ export function ModalDialog(props: Props) {
       <Overlay>
         <CSSTransition
           in={show}
-          addEndListener={(node, done) => {
+          // @ts-ignore
+          addEndListener={(node: HTMLElement, done: () => void) => {
             node.addEventListener("transitionend", done, false)
           }}
           appear

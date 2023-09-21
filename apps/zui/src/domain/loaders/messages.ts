@@ -1,4 +1,5 @@
 import {LoadFormat, zjson} from "@brimdata/zed-js"
+import {chooseAndLoadFiles, loadFiles} from "./handlers"
 
 export type LoadFormData = {
   windowId: string
@@ -21,4 +22,9 @@ export type LoadersOperations = {
     format: LoadFormat
   ) => {data: zjson.Obj[]; error: string | null}
   "loaders.getFileTypes": (paths: string[]) => {type: string; path: string}[]
+}
+
+export type LoadersHandlers = {
+  "loaders.loadFiles": typeof loadFiles
+  "loaders.chooseAndLoadFiles": typeof chooseAndLoadFiles
 }

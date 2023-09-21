@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { getZqPath } from './binpath';
 import { Readable, Stream } from 'stream';
-import { decode, ndjson } from '@brimdata/zed-js';
+import { Value, decode, ndjson, zjson } from '@brimdata/zed-js';
 import { pipeline } from 'stream/promises';
 
 type ZqArgs = {
@@ -10,7 +11,7 @@ type ZqArgs = {
   f?: string;
   i?: string;
   file?: string;
-  input?: Readable;
+  input?: Readable | string;
 };
 
 type Output = 'js' | 'zed' | 'zjson';
@@ -44,9 +45,14 @@ export function decodeStream(as: Output) {
 }
 
 function createReadable(zq: ChildProcessWithoutNullStreams, args: ZqArgs) {
-  if (args.input) return args.input.pipe(createTransformStream(zq));
+  if (args.input) return wrapInput(args.input).pipe(createTransformStream(zq));
   if (args.file) return wrapStdout(zq);
   throw new Error('Provide input or file arg to zq()');
+}
+
+function wrapInput(input: string | Readable) {
+  if (typeof input === 'string') return Readable.from([input]);
+  return input;
 }
 
 function wrapStdout(zq: ChildProcessWithoutNullStreams) {
@@ -57,24 +63,24 @@ function wrapStdout(zq: ChildProcessWithoutNullStreams) {
   return zq.stdout;
 }
 
-function createTransformStream(zq: ChildProcessWithoutNullStreams) {
+function createTransformStream(child: ChildProcessWithoutNullStreams) {
   const stream = new Stream.Transform({
     transform(chunk, encoding, callback) {
-      if (!zq.stdin.write(chunk, encoding)) {
-        zq.stdin.once('drain', callback);
+      if (!child.stdin.write(chunk, encoding)) {
+        child.stdin.once('drain', callback);
       } else {
         process.nextTick(callback);
       }
     },
 
     flush(callback) {
-      zq.stdin.end();
-      if (zq.stdout.destroyed) callback();
-      else zq.stdout.on('close', () => callback());
+      child.stdin.end();
+      if (child.stdout.destroyed) callback();
+      else child.stdout.on('close', () => callback());
     },
   });
 
-  zq.stdin.on('error', (e: Error & { code: string }) => {
+  child.stdin.on('error', (e: Error & { code: string }) => {
     if (e.code === 'EPIPE') {
       // zq finished before reading the file finished (i.e. head proc)
       stream.emit('end');
@@ -83,11 +89,11 @@ function createTransformStream(zq: ChildProcessWithoutNullStreams) {
     }
   });
 
-  zq.stdout
+  child.stdout
     .on('data', (data) => stream.push(data))
     .on('error', (e) => stream.destroy(e));
 
-  zq.stderr
+  child.stderr
     .on('data', (data) => stream.destroy(new Error(data.toString())))
     .on('error', (e) => stream.destroy(e));
 
@@ -123,6 +129,15 @@ export function createStream(args: Omit<ZqArgs, 'file'>) {
  * Use this function to invoke the zq cli and receive an array of
  * results as either Zed objects, JS objects, or zjson objects.
  */
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: 'zjson' }
+): Promise<zjson.Obj[]>;
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: 'js' }
+): Promise<any[]>;
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: 'zed' }
+): Promise<Value[]>;
 export async function zq(
   args: Omit<ZqArgs, 'f'> & { as: Output }
 ): Promise<object[]> {

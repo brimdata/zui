@@ -1,6 +1,5 @@
 import React from "react"
 import {useSelector} from "react-redux"
-import {newPool} from "src/app/commands/new-pool"
 import {createFrom} from "src/app/commands/pins"
 import Icon from "src/app/core/icon-temp"
 import {Pool} from "src/app/core/pools/pool"
@@ -12,6 +11,7 @@ import Pools from "src/js/state/Pools"
 import {State} from "src/js/state/types"
 import styled from "styled-components"
 import {Button} from "../../../app/query-home/title-bar/button"
+import {newPool} from "src/domain/pools/handlers"
 
 const BG = styled.div`
   width: 100%;
@@ -87,7 +87,7 @@ function NoPoolsMessage() {
         }
       </Message>
       <Message>
-        <Button onClick={() => newPool.run()}>Create Pool</Button>
+        <Button onClick={() => newPool()}>Create Pool</Button>
       </Message>
     </>
   )

@@ -1,4 +1,4 @@
 export type SessionHandlers = {
-  "session.goBack": []
-  "session.goForward": []
+  "session.goBack": () => void
+  "session.goForward": () => void
 }

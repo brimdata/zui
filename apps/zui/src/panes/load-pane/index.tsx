@@ -16,7 +16,6 @@ import {ResultsGroup} from "./results-group"
 import useSelect from "src/app/core/hooks/use-select"
 import {Debut, useDebut} from "src/components/debut"
 import {Dialog} from "src/components/dialog/dialog"
-import {DataDropzone} from "src/app/routes/app-wrapper/data-dropzone"
 
 export function LoadPane() {
   const dispatch = useDispatch()
@@ -80,6 +79,7 @@ function Pane(props: {onClose: any}) {
   return (
     <Debut {...debut.props} classNames="modal">
       <Dialog
+        aria-label="preview-load"
         onClose={() => debut.exit()}
         dialogPoint="center center"
         isOpen={true}

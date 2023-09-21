@@ -1,9 +1,9 @@
 import {BrowserWindow} from "electron"
-import {MessageName, Messages} from "src/domain/messages"
+import {HandlerName, Handlers} from "src/domain/messages"
 
-export function sendToFocusedWindow<K extends MessageName>(
+export function sendToFocusedWindow<K extends HandlerName>(
   message: K,
-  ...args: Messages[K]
+  ...args: Parameters<Handlers[K]>
 ) {
   const win = BrowserWindow.getFocusedWindow()
   if (win) {

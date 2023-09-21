@@ -2,7 +2,6 @@ import {MenuItemConstructorOptions} from "electron"
 import {BoundCommand} from "src/app/commands/command"
 import {invoke} from "src/core/invoke"
 import {MenuItem} from "./types"
-import {commands} from "../command"
 
 export function showContextMenu(
   template: MenuItemConstructorOptions[],

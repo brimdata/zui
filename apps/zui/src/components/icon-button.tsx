@@ -70,14 +70,14 @@ export const IconButton = forwardRef(function IconButton(
   return (
     <BG
       ref={ref}
-      className={classNames(props.className, props.type)}
+      className={classNames(props.className, props.display)}
       title={props.description ?? props.label}
       onClick={onClick}
       disabled={props.enabled === false || props.whenResult === false}
       aria-label={props.label}
     >
       <Icon name={props.iconName} size={props.iconSize ?? 16} />
-      {props.type === "icon-label" ? props.label : null}
+      {props.display === "icon-label" ? props.label : null}
     </BG>
   )
 })
