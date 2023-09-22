@@ -9,6 +9,7 @@ import {
 } from 'playwright-chromium';
 import { isCI, isLinux, isMac, itestDir } from './env';
 
+type Role = Parameters<Page['getByRole']>[0];
 export default class TestApp {
   zui: ElectronApplication;
   zealot: Client;
@@ -47,6 +48,16 @@ export default class TestApp {
     this.mainWin = await this.getWindowByTitle('Zui');
   }
 
+  async dropFile(file: string) {
+    await this.mainWin.evaluate((file) => {
+      globalThis.dropFiles([file]);
+    }, file);
+  }
+
+  get page() {
+    return this.mainWin;
+  }
+
   async createPool(
     filepaths: string[],
     expectedResult = /Successfully loaded/
@@ -54,12 +65,9 @@ export default class TestApp {
     await this.mainWin.evaluate((filepaths) => {
       globalThis.dropFiles(filepaths);
     }, filepaths);
-    await this.mainWin.getByRole('button', { name: 'Load' }).click();
-    await this.mainWin
-      .getByRole('dialog', { name: 'preview-load' })
-      .waitFor({ state: 'detached' });
-
-    await this.mainWin.getByText(expectedResult).waitFor();
+    await this.click('button', 'Load');
+    await this.detached('dialog', 'preview-load');
+    await this.attached(expectedResult);
   }
 
   async chooseFiles(locator, paths: string[]) {
@@ -136,6 +144,34 @@ export default class TestApp {
 
   get results() {
     return this.mainWin.getByTestId('results-pane');
+  }
+
+  async click(role: Role | RegExp, name?: string) {
+    return this.locate(role, name).click();
+  }
+
+  async attached(role: Role | RegExp, name?: string) {
+    this.locate(role, name).waitFor();
+  }
+
+  async detached(role: Role | RegExp, name?: string) {
+    return this.locate(role, name).waitFor({ state: 'detached' });
+  }
+
+  async hidden(role: Role | RegExp, name?: string) {
+    return this.locate(role, name).waitFor({ state: 'hidden' });
+  }
+
+  async visible(role: Role | RegExp, name?: string) {
+    return this.locate(role, name).waitFor({ state: 'visible' });
+  }
+
+  private locate(role: Role | RegExp, name?: string) {
+    if (role instanceof RegExp) {
+      return this.mainWin.getByText(role);
+    } else {
+      return this.mainWin.getByRole(role, { name });
+    }
   }
 }
 

@@ -107,8 +107,8 @@ export function Form(props: {onClose}) {
             </select>
           </div>
           <div>
-            <label>Pool</label>
-            <select {...register("poolId")}>
+            <label htmlFor="poolId">Pool</label>
+            <select {...register("poolId")} id="poolId">
               <option value="new">+ New Pool</option>
               {pools.map((pool) => (
                 <option key={pool.id} value={pool.id}>
@@ -128,7 +128,7 @@ export function Form(props: {onClose}) {
             </summary>
             <section className={styles.fields}>
               <div>
-                <label>Name</label>
+                <label htmlFor="name">Name</label>
                 <input
                   type="text"
                   {...register("name")}
@@ -136,7 +136,7 @@ export function Form(props: {onClose}) {
                 />
               </div>
               <div>
-                <label>Pool Key</label>
+                <label htmlFor="key">Pool Key</label>
                 <input type="text" {...register("key")} defaultValue={"ts"} />
               </div>
               <div>
@@ -175,7 +175,7 @@ export function Form(props: {onClose}) {
           </summary>
           <section className={styles.fields}>
             <div>
-              <label>Author</label>
+              <label htmlFor="author">Author</label>
               <input
                 type="text"
                 defaultValue={defaultUser}
@@ -183,7 +183,7 @@ export function Form(props: {onClose}) {
               />
             </div>
             <div>
-              <label>Message</label>
+              <label htmlFor="body">Message</label>
               <textarea {...register("body")} defaultValue="Import from Zui" />
             </div>
           </section>
