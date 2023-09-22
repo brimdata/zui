@@ -12,7 +12,7 @@ export function initialize(main: MainObject) {
           main.windows.create("search")
           break
         case "--move-to-current-display":
-          moveToCurrentDisplayOp.run()
+          moveToCurrentDisplayOp()
           break
       }
     }

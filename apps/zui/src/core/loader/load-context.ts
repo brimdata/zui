@@ -49,7 +49,11 @@ export class LoadContext {
   }
 
   async onPoolChanged() {
-    await syncPoolOp.run(this.opts.lakeId, this.opts.poolId)
+    await syncPoolOp(this.opts.lakeId, this.opts.poolId)
+  }
+
+  abort() {
+    this.ctl.abort()
   }
 
   get signal() {

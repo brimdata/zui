@@ -23,3 +23,8 @@
   padding: 10px;
   padding-right: 0px;
 }
+
+.error {
+  margin: 18px;
+  box-shadow: var(--shadow-elevation-low);
+}

@@ -1,5 +1,6 @@
-import {LoadFormat, zjson} from "@brimdata/zed-js"
+import {LoadFormat} from "@brimdata/zed-js"
 import {chooseAndLoadFiles, loadFiles} from "./handlers"
+import * as ops from "./operations"
 
 export type LoadFormData = {
   windowId: string
@@ -15,13 +16,9 @@ export type LoadFormData = {
 }
 
 export type LoadersOperations = {
-  "loaders.formAction": (data: LoadFormData) => void
-  "loaders.previewShaper": (
-    files: string[],
-    shaper: string,
-    format: LoadFormat
-  ) => {data: zjson.Obj[]; error: string | null}
-  "loaders.getFileTypes": (paths: string[]) => {type: string; path: string}[]
+  "loaders.formAction": typeof ops.formAction
+  "loaders.previewShaper": typeof ops.previewShaper
+  "loaders.getFileTypes": typeof ops.getFileTypes
 }
 
 export type LoadersHandlers = {

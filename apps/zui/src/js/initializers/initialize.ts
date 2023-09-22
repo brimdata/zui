@@ -36,7 +36,7 @@ export default async function initialize(
   const api = new ZuiApi()
   const store = await initStore(api)
   await initGlobals(store)
-  initLake(store)
+  await initLake(store)
   api.init(store.dispatch, store.getState)
   initDOM()
   initIpcListeners(store)

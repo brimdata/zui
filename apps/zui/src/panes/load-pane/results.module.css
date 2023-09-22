@@ -82,3 +82,7 @@
 .toolbar {
     display: grid
 }
+
+.error {
+    margin: 18px;
+}

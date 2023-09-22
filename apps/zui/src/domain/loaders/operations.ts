@@ -6,53 +6,64 @@ import {loadFilesOp} from "src/electron/ops/load-files-op"
 import {zq} from "@brimdata/zed-node"
 import MultiStream from "multistream"
 import {createReadStream} from "fs"
-import {zjson} from "@brimdata/zed-js"
+import {LoadFormat, zjson} from "@brimdata/zed-js"
 import {ZedScript} from "src/app/core/models/zed-script"
 import {isPcap} from "src/plugins/brimcap/packets/is-pcap"
+import {LoadFormData} from "./messages"
+import {errorToString} from "src/util/error-to-string"
+
+async function createPool(
+  data: LoadFormData
+): Promise<[Pool, () => Promise<void> | void]> {
+  if (data.poolId === "new") {
+    const poolNames = zui.pools.all.map((pool) => pool.name)
+    const derivedName = await derivePoolName(data.files, poolNames)
+    const name = data.name?.trim() || derivedName
+    const key = data.key
+    const order = data.order
+    const pool = await zui.pools.create(name, {key, order})
+    const undo = () => zui.pools.delete(pool.id)
+    return [pool, undo]
+  } else {
+    const pool = zui.pools.get(data.poolId)
+    return [pool, () => {}]
+  }
+}
 
 export const formAction = createOperation(
   "loaders.formAction",
-  async (ctx, data) => {
-    let pool: Pool
-
-    if (data.poolId === "new") {
-      const poolNames = zui.pools.all.map((pool) => pool.name)
-      const derivedName = await derivePoolName(data.files, poolNames)
-      const name = data.name?.trim() || derivedName
-      const key = data.key
-      const order = data.order
-      pool = await zui.pools.create(name, {key, order})
-    } else {
-      pool = zui.pools.get(data.poolId)
-    }
-
+  async (ctx, data: LoadFormData) => {
+    const [pool, undoPool] = await createPool(data)
     const script = new ZedScript(data.shaper)
 
-    await loadFilesOp.run({
-      windowId: data.windowId,
-      format: data.format,
-      poolId: pool.id,
-      lakeId: zui.window.lakeId,
-      branch: "main",
-      files: data.files,
-      shaper: script.isEmpty() ? "*" : data.shaper,
-      author: data.author,
-      body: data.message,
-    })
-
-    // const stream = await zui.zq({files, data.script})
-    // await zui.pools.load({id: pool.id, data: stream})
-    zui.window.query({
-      pins: [{type: "from", value: pool.name}],
-      value: "",
-    })
-    zui.window.showSuccessMessage("Successfully loaded into " + pool.name)
+    try {
+      await loadFilesOp({
+        windowId: data.windowId,
+        format: data.format,
+        poolId: pool.id,
+        lakeId: zui.window.lakeId,
+        branch: "main",
+        files: data.files,
+        shaper: script.isEmpty() ? "*" : data.shaper,
+        author: data.author,
+        body: data.message,
+      })
+      zui.window.query({
+        pins: [{type: "from", value: pool.name}],
+        value: "",
+      })
+      zui.window.showSuccessMessage("Successfully loaded into " + pool.name)
+    } catch (e) {
+      console.log("catching an error", e)
+      await undoPool()
+      zui.window.showErrorMessage("Load error " + errorToString(e))
+    }
   }
 )
 
 export const previewShaper = createOperation(
   "loaders.previewShaper",
-  async (_, files, shaper, format) => {
+  async (_, files: string[], shaper: string, format: LoadFormat) => {
     const input = new MultiStream(files.map((f) => createReadStream(f)))
     if (files.length === 0) return {data: [], error: null}
     try {

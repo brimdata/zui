@@ -25,8 +25,12 @@ export class PoolsApi {
   }
 
   async create(name: string, opts: Partial<CreatePoolOpts> = {}) {
-    const id = await ops.create.run(window.lakeId, name, opts)
+    const id = await ops.create(window.lakeId, name, opts)
     return this.get(id)
+  }
+
+  async delete(id: string) {
+    await ops.deletePool(window.lakeId, id)
   }
 
   on<K extends string & keyof Events>(name: K, handler: Events[K]) {
@@ -55,7 +59,7 @@ class PoolConfiguration {
   constructor(public id: string) {}
 
   set<K extends keyof ConfigMap>(key: K, value: ConfigMap[K]) {
-    updateSettings.run({id: this.id, changes: {[key]: value}})
+    updateSettings({id: this.id, changes: {[key]: value}})
     return this
   }
 }

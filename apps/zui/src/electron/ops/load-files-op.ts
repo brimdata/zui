@@ -28,7 +28,7 @@ async function waitForPoolStats(context: LoadContext) {
   let tries = 0
   while (tries < 20) {
     tries++
-    const pool = await syncPoolOp.run(context.lakeId, context.poolId)
+    const pool = await syncPoolOp(context.lakeId, context.poolId)
     if (pool.hasStats() && pool.size > 0) break
     await new Promise((r) => setTimeout(r, 300))
   }

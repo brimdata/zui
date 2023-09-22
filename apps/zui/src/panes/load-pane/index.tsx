@@ -16,6 +16,8 @@ import {ResultsGroup} from "./results-group"
 import useSelect from "src/app/core/hooks/use-select"
 import {Debut, useDebut} from "src/components/debut"
 import {Dialog} from "src/components/dialog/dialog"
+import {ErrorWell} from "src/components/error-well"
+import {errorToString} from "src/util/error-to-string"
 
 export function LoadPane() {
   const dispatch = useDispatch()
@@ -49,6 +51,11 @@ function Main() {
   }, [files, format])
 
   useEffect(initialize, [files, format])
+
+  if (original.error)
+    return (
+      <ErrorWell {...humanizeError(original.error)} className={styles.error} />
+    )
 
   return (
     <main className={styles.main} style={mainStyle}>
@@ -93,4 +100,20 @@ function Pane(props: {onClose: any}) {
       </Dialog>
     </Debut>
   )
+}
+
+function humanizeError(e: unknown) {
+  const error = errorToString(e)
+
+  if (error.includes("stdio:stdin: format detection error")) {
+    return {
+      title: "Format Detection Error",
+      error: error.replace(
+        "stdio:stdin: format detection error",
+        "The auto-detector returned these errors for each format attempted:"
+      ),
+    }
+  }
+
+  return {error, title: "Error Reading Data"}
 }

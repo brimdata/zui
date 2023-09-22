@@ -218,7 +218,11 @@ export const Results = memo(function Results(
       />
       <section>
         {props.error ? (
-          <ErrorWell title="ZQ Error" error={props.error} />
+          <ErrorWell
+            title="ZQ Error"
+            error={props.error}
+            className={styles.error}
+          />
         ) : (
           <ResultsBody
             values={props.values}

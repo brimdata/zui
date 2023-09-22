@@ -20,6 +20,9 @@ export class BrowserWindow {
   static fromWebContents() {
     return new BrowserWindow()
   }
+  static getFocusedWindow() {
+    return new BrowserWindow()
+  }
   webContents = new WebContents()
   isDestroyed = jest.fn(() => false)
   focus = jest.fn()

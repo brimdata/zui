@@ -1,21 +1,14 @@
-import {CreatePoolOpts, LoadOpts} from "@brimdata/zed-js"
-import {PoolUpdate} from "./types"
-import {Update} from "@reduxjs/toolkit"
-import {PoolSetting} from "src/js/state/PoolSettings/types"
 import {newPool} from "./handlers"
+import * as ops from "./operations"
 
 export type PoolsOperations = {
-  "pools.create": (
-    lakeId: string,
-    name: string,
-    opts: Partial<CreatePoolOpts>
-  ) => string // poolId
-
-  "pools.update": (lakeId: string, update: PoolUpdate | PoolUpdate[]) => void
-  "pools.load": (poolId: string, data: string, opts: Partial<LoadOpts>) => void
-  "pools.createSettings": (id: string) => void
-  "pools.updateSettings": (update: Update<PoolSetting>) => void
-  "pools.getSettings": (id: string) => PoolSetting | null
+  "pools.create": typeof ops.create
+  "pools.delete": typeof ops.deletePool
+  "pools.update": typeof ops.update
+  "pools.load": typeof ops.load
+  "pools.createSettings": typeof ops.createSettings
+  "pools.updateSettings": typeof ops.updateSettings
+  "pools.getSettings": typeof ops.getSettings
 }
 
 export type PoolsHandlers = {

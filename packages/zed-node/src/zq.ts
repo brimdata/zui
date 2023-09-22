@@ -94,7 +94,9 @@ function createTransformStream(child: ChildProcessWithoutNullStreams) {
     .on('error', (e) => stream.destroy(e));
 
   child.stderr
-    .on('data', (data) => stream.destroy(new Error(data.toString())))
+    .on('data', (data) => {
+      stream.destroy(new Error(data.toString()));
+    })
     .on('error', (e) => stream.destroy(e));
 
   return stream;

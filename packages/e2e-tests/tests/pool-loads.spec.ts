@@ -14,7 +14,7 @@ test.describe('Pool Loads', () => {
   });
 
   // These depend on the order in which they run. They must all be run together.
-  test.only('load data into a pool', async () => {
+  test('load data into a pool', async () => {
     await app.createPool([getPath('prs.json')]);
     await app.query('count()');
     await app.hidden('generic', 'Load Successful');
@@ -24,7 +24,7 @@ test.describe('Pool Loads', () => {
     await app.hidden(/successfully loaded/i);
   });
 
-  test.only('load more data into the pool', async () => {
+  test('load more data into the pool', async () => {
     await app.click('treeitem', 'prs.json');
     await app.dropFile(getPath('prs.json'));
     await app.page.getByLabel('Pool').selectOption({ label: 'prs.json' });

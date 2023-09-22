@@ -12,7 +12,7 @@ const ipcMainReduxMiddleware: Middleware = (_store) => (next) => (action) => {
   const result = next(action)
 
   if (shouldForward(action)) {
-    globalDispatchFromMain.run(action)
+    globalDispatchFromMain(action)
   }
 
   return result
