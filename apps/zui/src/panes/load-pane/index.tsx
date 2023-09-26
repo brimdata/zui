@@ -8,7 +8,7 @@ import LoadDataForm from "src/js/state/LoadDataForm"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
 import {useCallback, useEffect} from "react"
-import {useResultsControl} from "./results"
+import {ResultsControl, useResultsControl} from "./results"
 import modal from "src/components/modals.module.css"
 import {Shaper} from "./shaper"
 import {Sidebar} from "./sidebar"
@@ -31,26 +31,13 @@ export function LoadPane() {
   else return <Pane onClose={hide} />
 }
 
-function Main() {
-  const files = useSelector(LoadDataForm.getFiles)
-  const format = useSelector(LoadDataForm.getFormat)
+function Main(props: {
+  original: ResultsControl
+  preview: ResultsControl
+  onSubmit: () => any
+}) {
+  const {original, preview, onSubmit} = props
   const mainStyle = useSelector(LoadDataForm.getMainStyle)
-  const original = useResultsControl(files, format)
-  const preview = useResultsControl(files, format)
-  const select = useSelect()
-
-  const initialize = () => {
-    const script = select(LoadDataForm.getShaper)
-    original.queryAll(script)
-    preview.queryAll(script)
-  }
-
-  const submit = useCallback(() => {
-    const script = select(LoadDataForm.getShaper)
-    preview.queryAll(script)
-  }, [files, format])
-
-  useEffect(initialize, [files, format])
 
   if (original.error)
     return (
@@ -59,7 +46,7 @@ function Main() {
 
   return (
     <main className={styles.main} style={mainStyle}>
-      <Shaper onSubmit={submit} />
+      <Shaper onSubmit={onSubmit} />
       <ResultsGroup original={original} preview={preview} />
     </main>
   )
@@ -81,7 +68,24 @@ function Grid(props: {children: any}) {
 }
 
 function Pane(props: {onClose: any}) {
+  const select = useSelect()
   const debut = useDebut({afterExit: props.onClose})
+  const files = useSelector(LoadDataForm.getFiles)
+  const format = useSelector(LoadDataForm.getFormat)
+  const original = useResultsControl(files, format)
+  const preview = useResultsControl(files, format)
+
+  const initialize = () => {
+    const script = select(LoadDataForm.getShaper)
+    original.queryAll("*")
+    preview.queryAll(script)
+  }
+  useEffect(initialize, [files, format])
+
+  const onSubmit = useCallback(() => {
+    const script = select(LoadDataForm.getShaper)
+    preview.queryAll(script)
+  }, [files, format])
 
   return (
     <Debut {...debut.props} classNames="modal">
@@ -94,8 +98,11 @@ function Pane(props: {onClose: any}) {
         modal
       >
         <Grid>
-          <Main />
-          <Sidebar onClose={debut.exit} />
+          <Main original={original} preview={preview} onSubmit={onSubmit} />
+          <Sidebar
+            onClose={debut.exit}
+            isValid={!original.error && !preview.error}
+          />
         </Grid>
       </Dialog>
     </Debut>

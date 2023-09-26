@@ -66,11 +66,11 @@
     min-width: 80px;
 }
 
-.form button[type=submit]:hover {
+.form button[type=submit]:hover:not(:disabled) {
     background: var(--primary-color-dark);
 }
 
-.form button[type=submit]:active {
+.form button[type=submit]:active:not(:disabled) {
     background: var(--primary-color-darker);
 }
 
@@ -86,17 +86,22 @@
     min-width: 80px;
 }
 
-.form button[type=button]:hover {
+.form button[type=button]:hover:not(:disabled) {
     background: var(--form-bg-color-dark);
 }
 
-.form button[type=button]:active {
+.form button[type=button]:active:not(:disabled) {
     background: var(--form-bg-color-darker);
 }
 
-.form button:active {
+.form button:active:not(:disabled) {
     box-shadow: none;
     transform: translateY(1px);
+}
+
+.form button:disabled {
+    opacity: 0.4;
+    cursor: no-drop
 }
 
 .form .actionLabel {

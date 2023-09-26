@@ -17,7 +17,7 @@ import {LoadFormat} from "@brimdata/zed-js"
 import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
 
-export function Form(props: {onClose}) {
+export function Form(props: {onClose: () => any; isValid: boolean}) {
   const dispatch = useDispatch()
   const select = useSelect()
   const pools = useSelector(Current.getPools)
@@ -201,7 +201,9 @@ export function Form(props: {onClose}) {
           <button type="button" onClick={props.onClose}>
             Cancel
           </button>
-          <button type="submit">Load</button>
+          <button type="submit" disabled={!props.isValid}>
+            Load
+          </button>
         </div>
       </div>
     </form>

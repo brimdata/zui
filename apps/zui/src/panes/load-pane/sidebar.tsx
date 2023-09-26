@@ -29,7 +29,7 @@ function useSidebarDrag() {
   return {anchorProps: {onStart, onDrag, onEnd}, ref}
 }
 
-export function Sidebar(props: {onClose}) {
+export function Sidebar(props: {onClose: () => any; isValid: boolean}) {
   const sidebarDrag = useSidebarDrag()
   return (
     <aside className={styles.aside} ref={sidebarDrag.ref}>
@@ -39,7 +39,7 @@ export function Sidebar(props: {onClose}) {
           <hr />
         </h2>
       </header>
-      <Form onClose={props.onClose} />
+      <Form onClose={props.onClose} isValid={props.isValid} />
       <DragAnchor
         position="left"
         {...sidebarDrag.anchorProps}

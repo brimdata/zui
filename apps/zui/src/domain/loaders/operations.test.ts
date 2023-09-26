@@ -25,7 +25,7 @@ async function submit(file) {
   })
 }
 
-test.only("good data", async () => {
+test("good data", async () => {
   await submit(getPath("zillow.csv"))
 
   expect(await zui.pools.all.length).toBe(1)
@@ -35,6 +35,7 @@ test.only("good data", async () => {
   expect(js).toEqual([40])
 })
 
-test.only("bad data", async () => {
-  await submit(getPath("zed-logo.svg"))
+test("bad data", async () => {
+  const err = await submit(getPath("zed-logo.svg"))
+  expect(err.message).toContain("format detection error")
 })

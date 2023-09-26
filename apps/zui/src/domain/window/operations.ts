@@ -3,7 +3,6 @@ import {window} from "src/zui"
 import {dialog} from "electron"
 
 export const sync = createOperation("window.sync", (ctx, props) => {
-  console.log("calling sync", props.lakeId)
   window.lakeId = props.lakeId
 })
 

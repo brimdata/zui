@@ -17,7 +17,6 @@ export const create = createOperation(
     name: string,
     opts: Partial<CreatePoolOpts>
   ) => {
-    console.log("creating a pool in lakeId", lakeId)
     const client = await main.createClient(lakeId)
     const {pool} = await client.createPool(name, opts)
     main.dispatch(Pools.setData({lakeId, data: pool}))

@@ -53,10 +53,11 @@ export const formAction = createOperation(
         value: "",
       })
       zui.window.showSuccessMessage("Successfully loaded into " + pool.name)
+      return null
     } catch (e) {
-      console.log("catching an error", e)
       await undoPool()
       zui.window.showErrorMessage("Load error " + errorToString(e))
+      return e
     }
   }
 )

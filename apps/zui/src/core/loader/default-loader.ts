@@ -1,7 +1,6 @@
 import {LoadContext} from "./load-context"
 import fs from "fs"
-import {PassThrough, Transform} from "stream"
-import {pipeline} from "stream/promises"
+import {pipeline, Transform} from "stream"
 import {Loader} from "./types"
 import {createStream} from "@brimdata/zed-node"
 import MultiStream from "multistream"
@@ -24,22 +23,27 @@ export const defaultLoader: Loader = {
 
     const input = new MultiStream(files.map((f) => fs.createReadStream(f)))
     const zq = createStream({query: ctx.shaper, i: ctx.format})
-    const pass = new PassThrough()
-    // const stream = input.pipe(zq).pipe(inspectStream(onChunk))
-    const promise = pipeline(input, zq, inspectStream(onChunk), pass)
-    const res = await client.load(pass, {
-      pool: ctx.poolId,
-      branch: ctx.branch,
-      message: {
-        author: ctx.author,
-        body: ctx.body,
-      },
-      signal: ctx.signal,
+    let streamError = null
+    const body = pipeline(input, zq, inspectStream(onChunk), (err) => {
+      streamError = err
+      if (err) ctx.abort()
     })
+    let res
+    try {
+      res = await client.load(body, {
+        pool: ctx.poolId,
+        branch: ctx.branch,
+        message: {
+          author: ctx.author,
+          body: ctx.body,
+        },
+        signal: ctx.signal,
+      })
+    } catch (e) {
+      if (streamError) throw new Error(streamError)
+      else throw e
+    }
 
-    console.log("waiting for promise")
-    await promise
-    console.log("finished waiting for promise")
     ctx.onProgress(0)
     for (const warning of res?.warnings ?? []) ctx.onWarning(warning)
     await ctx.onPoolChanged()

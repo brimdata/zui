@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { getZqPath } from './binpath';
-import { Readable, Stream } from 'stream';
+import { Readable, Stream, pipeline } from 'stream';
+import { pipeline as promisePipeline } from 'stream/promises';
 import { Value, decode, ndjson, zjson } from '@brimdata/zed-js';
-import { pipeline } from 'stream/promises';
 
 type ZqArgs = {
   query?: string;
@@ -82,8 +82,7 @@ function createTransformStream(child: ChildProcessWithoutNullStreams) {
 
   child.stdin.on('error', (e: Error & { code: string }) => {
     if (e.code === 'EPIPE') {
-      // zq finished before reading the file finished (i.e. head proc)
-      stream.emit('end');
+      stream.destroy();
     } else {
       stream.destroy(e);
     }
@@ -94,9 +93,7 @@ function createTransformStream(child: ChildProcessWithoutNullStreams) {
     .on('error', (e) => stream.destroy(e));
 
   child.stderr
-    .on('data', (data) => {
-      stream.destroy(new Error(data.toString()));
-    })
+    .on('data', (data) => stream.destroy(new Error(data.toString())))
     .on('error', (e) => stream.destroy(e));
 
   return stream;
@@ -145,5 +142,5 @@ export async function zq(
 ): Promise<object[]> {
   const zq = createProcess({ ...args, f: 'zjson' });
 
-  return await pipeline(createReadable(zq, args), decodeStream(args.as));
+  return await promisePipeline(createReadable(zq, args), decodeStream(args.as));
 }
