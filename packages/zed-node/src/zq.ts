@@ -82,7 +82,7 @@ function createTransformStream(child: ChildProcessWithoutNullStreams) {
 
   child.stdin.on('error', (e: Error & { code: string }) => {
     if (e.code === 'EPIPE') {
-      stream.destroy();
+      stream.push(null);
     } else {
       stream.destroy(e);
     }
