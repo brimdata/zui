@@ -16,7 +16,6 @@ test.describe('Table Testing', () => {
   test('named type shows columns', async () => {
     const path = getPath('named-type.zson');
     await app.createPool([path]);
-    await app.mainWin.getByRole('button', { name: 'Query Pool' }).click();
     await app.query('yield value.after'); // This is a named type
     const columnheader = app.results.getByRole('columnheader');
     await columnheader.first().waitFor();

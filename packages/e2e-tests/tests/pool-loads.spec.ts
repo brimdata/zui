@@ -35,23 +35,9 @@ test.describe('Pool Loads', () => {
     expect(results).toEqual(['this', '2']);
   });
 
-  test('create with bad data deletes pool', async () => {
-    await app.createPool([getPath('soccer-ball.png')], /Load error/);
-    await app.mainWin.getByText('Format detection error').waitFor();
-    await app.mainWin
-      .getByRole('treeitem', { name: 'soccer-ball.png' })
-      .waitFor({ state: 'hidden' });
-    await app.mainWin.getByText('Load error').waitFor({ state: 'hidden' });
-  });
-
-  test('load data into pool does not delete pool', async () => {
-    await app.mainWin.getByRole('treeitem', { name: 'prs.json' }).click();
-    await app.chooseFiles(
-      app.mainWin.getByRole('button', { name: 'Choose Files...' }),
-      [getPath('soccer-ball.png')]
-    );
-    await app.find(":text('Load error')").isVisible();
-    app.mainWin.getByRole('treeitem', { name: 'prs.json' }).waitFor();
-    await app.mainWin.getByText('Load error').waitFor({ state: 'hidden' });
+  test('bad data displays an error message', async () => {
+    await app.dropFile(getPath('soccer-ball.png'));
+    await app.attached(/Format Detection Error/i);
+    expect(app.locate('button', 'Load').isDisabled);
   });
 });

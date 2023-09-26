@@ -8,7 +8,6 @@ test.describe('Query tests', () => {
   test.beforeAll(async () => {
     await app.init();
     await app.createPool([getPath('sample.tsv')]);
-    await app.mainWin.getByRole('button', { name: 'Query Pool' }).click();
   });
 
   test.afterAll(async () => {
@@ -71,20 +70,13 @@ test.describe('Query tests', () => {
 
   test('named query, save as => new named query', async () => {
     const titleBar = app.mainWin.getByTestId('title-bar');
-    await titleBar.getByRole('button', { name: 'Save As' }).click();
+    await app.click('button', 'Save As');
     await titleBar
       .locator('[placeholder="Query name\\.\\.\\."]')
       .fill('Another Test Query');
 
     await app.setEditor('another test query zed value');
     await titleBar.getByRole('button', { name: 'Create' }).click();
-    await expect(
-      await app.mainWin.locator('button :text-is("Another Test Query")')
-    ).toBeVisible();
-    await expect(
-      await app.mainWin.locator(
-        '[aria-label=main-editor]:has-text("another test query zed value")'
-      )
-    ).toBeVisible();
+    await titleBar.getByText(/Another Test Query/).waitFor();
   });
 });

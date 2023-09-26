@@ -151,7 +151,7 @@ export default class TestApp {
   }
 
   async attached(role: Role | RegExp, name?: string) {
-    this.locate(role, name).waitFor();
+    return this.locate(role, name).waitFor();
   }
 
   async detached(role: Role | RegExp, name?: string) {
@@ -166,7 +166,7 @@ export default class TestApp {
     return this.locate(role, name).waitFor({ state: 'visible' });
   }
 
-  private locate(role: Role | RegExp, name?: string) {
+  locate(role: Role | RegExp, name?: string) {
     if (role instanceof RegExp) {
       return this.mainWin.getByText(role);
     } else {
