@@ -12,6 +12,7 @@ import {invoke} from "src/core/invoke"
 import useResizeObserver from "use-resize-observer"
 import {useMemoObject} from "src/util/hooks/use-memo-object"
 import {ErrorWell} from "src/components/error-well"
+import {errorToString} from "src/util/error-to-string"
 
 function append(script: string, suffix: string) {
   const zed = new ZedScript(script)
@@ -27,18 +28,24 @@ function useZq(files: string[], format: zed.LoadFormat, id: string) {
   const [_, start] = useTransition()
   const [error, setError] = useState("")
   const [data, setData] = useState<zed.Value[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const display = useResultsDisplay()
 
   const query = useCallback(
     (script: string) => {
-      invoke("loaders.preview", files, script, format, id).then(
-        ({error, data}) => {
+      setIsLoading(true)
+      invoke("loaders.preview", files, script, format, id)
+        .then(({error, data}) => {
           start(() => {
             setError(error)
             setData(zed.decode(data))
           })
-        }
-      )
+        })
+        .catch((e) => {
+          setError(errorToString(e))
+        })
+        .finally(() => setIsLoading(false))
+
       return () => {
         invoke("loaders.abortPreview", id)
       }
@@ -46,7 +53,7 @@ function useZq(files: string[], format: zed.LoadFormat, id: string) {
     [files, format]
   )
 
-  return useMemoObject({error, data, query, display})
+  return useMemoObject({error, data, query, display, isLoading})
 }
 
 function useResultsDisplay() {
@@ -148,6 +155,7 @@ export function useResultsControl(
     display: current.display,
     values: current.data,
     error: current.error,
+    isLoading: current.isLoading,
     rowCount: count.data[0]?.toJS(),
     typeCount: types.data.length,
   })
@@ -219,6 +227,7 @@ export const Results = memo(function Results(
 ) {
   const {width, ref} = useResizeObserver()
   const smallWidth = width && width < 400
+  console.log(props.isLoading)
   return (
     <div className={classNames(styles.results, props.className)} ref={ref}>
       <Toolbar
@@ -233,6 +242,8 @@ export const Results = memo(function Results(
             error={props.error}
             className={styles.error}
           />
+        ) : props.isLoading ? (
+          <Loading />
         ) : (
           <ResultsBody
             values={props.values}
@@ -272,3 +283,7 @@ const ResultsBody = memo(function ResultsBody(props: {
   }
   throw new Error("Unknown Display")
 })
+
+export function Loading() {
+  return <p>Loading...</p>
+}

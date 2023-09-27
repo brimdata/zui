@@ -4,6 +4,7 @@ import MultiStream from "multistream"
 import {createReadStream} from "fs"
 import {LoadFormat, zjson} from "@brimdata/zed-js"
 import {errorToString} from "src/util/error-to-string"
+import {isAbortError} from "src/util/is-abort-error"
 
 export const preview = createOperation(
   "loaders.preview",
@@ -14,7 +15,7 @@ export const preview = createOperation(
     format: LoadFormat,
     id: string
   ) => {
-    main.abortables.abort(id)
+    await main.abortables.abort(id)
     const input = new MultiStream(files.map((f) => createReadStream(f)))
     if (files.length === 0) return {data: [], error: null}
     const ctl = main.abortables.create(id)
@@ -28,7 +29,11 @@ export const preview = createOperation(
       })
       return {error: null, data: data as zjson.Obj[]}
     } catch (e) {
-      return {error: errorToString(e), data: [] as zjson.Obj[]}
+      if (isAbortError(e)) {
+        return {error: null, data: [] as zjson.Obj[]}
+      } else {
+        return {error: errorToString(e), data: [] as zjson.Obj[]}
+      }
     } finally {
       main.abortables.remove(id)
     }
