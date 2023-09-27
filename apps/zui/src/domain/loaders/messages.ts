@@ -16,9 +16,10 @@ export type LoadFormData = {
 }
 
 export type LoadersOperations = {
-  "loaders.formAction": typeof ops.formAction
-  "loaders.previewShaper": typeof ops.previewShaper
+  "loaders.submit": typeof ops.submit
+  "loaders.preview": typeof ops.preview
   "loaders.getFileTypes": typeof ops.getFileTypes
+  "loaders.abortPreview": typeof ops.abortPreview
 }
 
 export type LoadersHandlers = {

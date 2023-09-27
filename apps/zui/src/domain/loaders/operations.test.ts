@@ -3,15 +3,15 @@
  */
 
 import {SystemTest} from "src/test/system"
-import {formAction} from "./operations"
+import {submit} from "./operations"
 import {getPath} from "zui-test-data"
 import * as zui from "src/zui"
 const system = new SystemTest("loaders.operations")
 
 jest.setTimeout(5000)
 
-async function submit(file) {
-  return await formAction({
+async function onSubmit(file: string) {
+  return await submit({
     name: "",
     poolId: "new",
     windowId: system.main.windows.byName("search")[0].id,
@@ -26,7 +26,7 @@ async function submit(file) {
 }
 
 test("good data", async () => {
-  await submit(getPath("zillow.csv"))
+  await onSubmit(getPath("zillow.csv"))
 
   expect(await zui.pools.all.length).toBe(1)
   const client = await system.main.createClient(zui.window.lakeId)
@@ -36,6 +36,6 @@ test("good data", async () => {
 })
 
 test("bad data", async () => {
-  const err = await submit(getPath("zed-logo.svg"))
+  const err = await onSubmit(getPath("zed-logo.svg"))
   expect(err.message).toContain("format detection error")
 })

@@ -18,19 +18,24 @@ export class Abortables {
     if (isString(predicate)) {
       const a = this.get(predicate)
       if (a) {
+        this.remove(predicate)
         return await a.abort()
       }
     } else {
-      return Promise.all(
-        this.filter(predicate).map((a) => {
-          return a.abort()
-        })
-      )
+      const aborts = this.filter(predicate)
+      this.remove(predicate)
+      return await Promise.all(aborts.map((a) => a.abort()))
     }
   }
 
   async abortAll() {
     return Promise.all(this.all().map((a) => a.abort()))
+  }
+
+  create(id: string) {
+    const ctl = new AbortController()
+    this.add({id, abort: () => ctl.abort()})
+    return ctl
   }
 
   add(a: Abortable | NewAbortable) {

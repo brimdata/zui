@@ -23,24 +23,25 @@ function limit(script: string) {
   return append(script, " | head 100")
 }
 
-function useZq(files: string[], format: zed.LoadFormat) {
+function useZq(files: string[], format: zed.LoadFormat, id: string) {
   const [_, start] = useTransition()
   const [error, setError] = useState("")
   const [data, setData] = useState<zed.Value[]>([])
   const display = useResultsDisplay()
 
   const query = useCallback(
-    async (script: string) => {
-      const {data, error} = await invoke(
-        "loaders.previewShaper",
-        files,
-        script,
-        format
+    (script: string) => {
+      invoke("loaders.preview", files, script, format, id).then(
+        ({error, data}) => {
+          start(() => {
+            setError(error)
+            setData(zed.decode(data))
+          })
+        }
       )
-      start(() => {
-        setError(error)
-        setData(zed.decode(data))
-      })
+      return () => {
+        invoke("loaders.abortPreview", id)
+      }
     },
     [files, format]
   )
@@ -108,17 +109,26 @@ function useResultsDisplay() {
 type ResultDisplay = "list" | "table"
 type ResultDimension = "values" | "types"
 
-export function useResultsControl(files: string[], format: zed.LoadFormat) {
-  const values = useZq(files, format)
-  const types = useZq(files, format)
-  const count = useZq(files, format)
+export function useResultsControl(
+  files: string[],
+  format: zed.LoadFormat,
+  id: string
+) {
+  const values = useZq(files, format, id + ":values")
+  const types = useZq(files, format, id + ":types")
+  const count = useZq(files, format, id + ":count")
   const [dimension, setDimension] = useState<ResultDimension>("values")
 
   const queryAll = useCallback(
     (script: string) => {
-      values.query(limit(script))
-      types.query(append(script, " | by typeof(this)"))
-      count.query(append(script, " | count()"))
+      const abortValues = values.query(limit(script))
+      const abortTypes = types.query(append(script, " | by typeof(this)"))
+      const abortCount = count.query(append(script, " | count()"))
+      return () => {
+        abortValues()
+        abortTypes()
+        abortCount()
+      }
     },
     [values, types, count]
   )

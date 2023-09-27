@@ -40,7 +40,7 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
     // @ts-ignore
     const windowId = window.windowId
     try {
-      await invoke("loaders.formAction", {...data, files, shaper, windowId})
+      await invoke("loaders.submit", {...data, files, shaper, windowId})
       props.onClose()
     } catch (e) {
       setError(humanizeFormError(e))

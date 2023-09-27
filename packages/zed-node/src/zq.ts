@@ -12,6 +12,7 @@ type ZqArgs = {
   i?: string;
   file?: string;
   input?: Readable | string;
+  signal?: AbortSignal;
 };
 
 type Output = 'js' | 'zed' | 'zjson';
@@ -45,7 +46,10 @@ export function decodeStream(as: Output) {
 }
 
 function createReadable(zq: ChildProcessWithoutNullStreams, args: ZqArgs) {
-  if (args.input) return wrapInput(args.input).pipe(createTransformStream(zq));
+  if (args.input)
+    return pipeline(wrapInput(args.input), createTransformStream(zq), (err) => {
+      err; // There was an error in the pipeline, but users can listen for the event
+    });
   if (args.file) return wrapStdout(zq);
   throw new Error('Provide input or file arg to zq()');
 }
@@ -78,6 +82,10 @@ function createTransformStream(child: ChildProcessWithoutNullStreams) {
       if (child.stdout.destroyed) callback();
       else child.stdout.on('close', () => callback());
     },
+  });
+
+  stream.on('error', () => {
+    child.kill();
   });
 
   child.stdin.on('error', (e: Error & { code: string }) => {
@@ -142,5 +150,9 @@ export async function zq(
 ): Promise<object[]> {
   const zq = createProcess({ ...args, f: 'zjson' });
 
-  return await promisePipeline(createReadable(zq, args), decodeStream(args.as));
+  return await promisePipeline(
+    createReadable(zq, args),
+    decodeStream(args.as),
+    { signal: args.signal as AbortSignal }
+  );
 }

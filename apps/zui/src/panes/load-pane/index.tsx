@@ -72,13 +72,18 @@ function Pane(props: {onClose: any}) {
   const debut = useDebut({afterExit: props.onClose})
   const files = useSelector(LoadDataForm.getFiles)
   const format = useSelector(LoadDataForm.getFormat)
-  const original = useResultsControl(files, format)
-  const preview = useResultsControl(files, format)
+  const original = useResultsControl(files, format, "original")
+  const preview = useResultsControl(files, format, "preview")
 
   const initialize = () => {
     const script = select(LoadDataForm.getShaper)
-    original.queryAll("*")
-    preview.queryAll(script)
+    const abortOriginal = original.queryAll("*")
+    const abortPreview = preview.queryAll(script)
+
+    return () => {
+      abortOriginal()
+      abortPreview()
+    }
   }
   useEffect(initialize, [files, format])
 
