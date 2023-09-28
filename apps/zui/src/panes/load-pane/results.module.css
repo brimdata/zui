@@ -63,6 +63,9 @@
     background: none;
     border: none;
     transition: all 200ms;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .results footer button:hover {
@@ -85,4 +88,14 @@
 
 .error {
     margin: 18px;
+}
+
+.loading {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--foreground-color-light);
+    font-weight: bold;;
 }

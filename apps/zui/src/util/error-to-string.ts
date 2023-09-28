@@ -1,4 +1,8 @@
 export function errorToString(e: unknown) {
+  if (e === null) return ""
+
+  if (e === undefined) return ""
+
   if (e instanceof Error) {
     return e.message
   }

@@ -1,6 +1,6 @@
 import * as zed from "@brimdata/zed-js"
 import classNames from "classnames"
-import {memo, useCallback, useState, useTransition} from "react"
+import {memo, useCallback, useState} from "react"
 import {ZedScript} from "src/app/core/models/zed-script"
 import {ButtonMenu} from "src/components/button-menu"
 import {ToolbarTabs} from "src/components/toolbar-tabs"
@@ -8,11 +8,12 @@ import {pluralize} from "src/util/pluralize"
 import {TableView, ListView} from "src/zui-kit"
 import styles from "./results.module.css"
 import {Pill} from "src/components/pill"
-import {invoke} from "src/core/invoke"
 import useResizeObserver from "use-resize-observer"
 import {useMemoObject} from "src/util/hooks/use-memo-object"
 import {ErrorWell} from "src/components/error-well"
-import {errorToString} from "src/util/error-to-string"
+import {isNumber} from "lodash"
+import {useZq} from "./use-zq"
+import {ResultDimension, ResultDisplay} from "./use-results-display"
 
 function append(script: string, suffix: string) {
   const zed = new ZedScript(script)
@@ -24,106 +25,10 @@ function limit(script: string) {
   return append(script, " | head 100")
 }
 
-function useZq(files: string[], format: zed.LoadFormat, id: string) {
-  const [_, start] = useTransition()
-  const [error, setError] = useState("")
-  const [data, setData] = useState<zed.Value[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const display = useResultsDisplay()
-
-  const query = useCallback(
-    (script: string) => {
-      setIsLoading(true)
-      invoke("loaders.preview", files, script, format, id)
-        .then(({error, data}) => {
-          start(() => {
-            setError(error)
-            setData(zed.decode(data))
-          })
-        })
-        .catch((e) => {
-          setError(errorToString(e))
-        })
-        .finally(() => setIsLoading(false))
-
-      return () => {
-        invoke("loaders.abortPreview", id)
-      }
-    },
-    [files, format]
-  )
-
-  return useMemoObject({error, data, query, display, isLoading})
-}
-
-function useResultsDisplay() {
-  const [format, setFormat] = useState<ResultDisplay>("list")
-  const [listState, setListState] = useState({valueExpandedDefault: true})
-  const [tableState, setTableState] = useState({})
-
-  const listControl = useMemoObject({value: listState, onChange: setListState})
-  const tableControl = useMemoObject({
-    value: tableState,
-    onChange: setTableState,
-  })
-
-  const expandAll = useCallback(
-    function expandAll() {
-      if (format === "list") {
-        setListState((prev) => ({
-          ...prev,
-          valueExpanded: {},
-          valueExpandedDefault: true,
-        }))
-      }
-      if (format === "table") {
-        setTableState((prev) => ({
-          ...prev,
-          columnExpanded: {},
-          columnExpandedDefault: true,
-        }))
-      }
-    },
-    [format]
-  )
-
-  const collapseAll = useCallback(
-    function collapseAll() {
-      if (format == "list") {
-        setListState((prev) => ({
-          ...prev,
-          valueExpanded: {},
-          valueExpandedDefault: false,
-        }))
-      }
-
-      if (format === "table") {
-        setTableState((prev) => ({
-          ...prev,
-          columnExpanded: {},
-          columnExpandedDefault: false,
-        }))
-      }
-    },
-    [format]
-  )
-
-  const state = format === "list" ? listControl : tableControl
-
-  return useMemoObject({format, setFormat, state, expandAll, collapseAll})
-}
-
-type ResultDisplay = "list" | "table"
-type ResultDimension = "values" | "types"
-
-export function useResultsControl(
-  files: string[],
-  format: zed.LoadFormat,
-  id: string
-) {
-  const values = useZq(files, format, id + ":values")
-  const types = useZq(files, format, id + ":types")
-  const count = useZq(files, format, id + ":count")
+export function useResultsControl(files: string[], format: zed.LoadFormat) {
+  const values = useZq(files, format)
+  const types = useZq(files, format)
+  const count = useZq(files, format)
   const [dimension, setDimension] = useState<ResultDimension>("values")
 
   const queryAll = useCallback(
@@ -147,7 +52,6 @@ export function useResultsControl(
   }
 
   const current = getDimension()
-
   return useMemoObject({
     queryAll,
     dimension,
@@ -156,8 +60,8 @@ export function useResultsControl(
     values: current.data,
     error: current.error,
     isLoading: current.isLoading,
-    rowCount: count.data[0]?.toJS(),
-    typeCount: types.data.length,
+    rowCount: count.isLoading ? undefined : count.data[0]?.toJS(),
+    typeCount: types.isLoading ? undefined : types.data.length,
   })
 }
 
@@ -227,7 +131,7 @@ export const Results = memo(function Results(
 ) {
   const {width, ref} = useResizeObserver()
   const smallWidth = width && width < 400
-  console.log(props.isLoading)
+
   return (
     <div className={classNames(styles.results, props.className)} ref={ref}>
       <Toolbar
@@ -254,10 +158,22 @@ export const Results = memo(function Results(
       </section>
       <footer>
         <button onClick={() => props.setDimension("types")}>
-          <b>{props.typeCount}</b> {pluralize("Type", props.typeCount)}
+          {isNumber(props.typeCount) ? (
+            <>
+              <b>{props.typeCount}</b> {pluralize("Type", props.typeCount)}
+            </>
+          ) : (
+            "Loading Types..."
+          )}
         </button>
         <button onClick={() => props.setDimension("values")}>
-          <b>{props.rowCount}</b> {pluralize("Row", props.rowCount)}
+          {isNumber(props.rowCount) ? (
+            <>
+              <b>{props.rowCount}</b> {pluralize("Row", props.rowCount)}
+            </>
+          ) : (
+            "Loading Count..."
+          )}
         </button>
       </footer>
     </div>
@@ -285,5 +201,9 @@ const ResultsBody = memo(function ResultsBody(props: {
 })
 
 export function Loading() {
-  return <p>Loading...</p>
+  return (
+    <div className={styles.loading}>
+      <p>Loading...</p>
+    </div>
+  )
 }

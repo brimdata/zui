@@ -7,7 +7,7 @@ import * as _ from "lodash"
 import LoadDataForm from "src/js/state/LoadDataForm"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
-import {useCallback, useEffect} from "react"
+import {useCallback, useEffect, useRef} from "react"
 import {ResultsControl, useResultsControl} from "./results"
 import modal from "src/components/modals.module.css"
 import {Shaper} from "./shaper"
@@ -18,6 +18,7 @@ import {Debut, useDebut} from "src/components/debut"
 import {Dialog} from "src/components/dialog/dialog"
 import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
+import {call} from "src/util/call"
 
 export function LoadPane() {
   const dispatch = useDispatch()
@@ -72,25 +73,19 @@ function Pane(props: {onClose: any}) {
   const debut = useDebut({afterExit: props.onClose})
   const files = useSelector(LoadDataForm.getFiles)
   const format = useSelector(LoadDataForm.getFormat)
-  const original = useResultsControl(files, format, "original")
-  const preview = useResultsControl(files, format, "preview")
+  const original = useResultsControl(files, format)
+  const preview = useResultsControl(files, format)
 
-  const initialize = () => {
-    const script = select(LoadDataForm.getShaper)
-    const abortOriginal = original.queryAll("*")
-    const abortPreview = preview.queryAll(script)
-
-    return () => {
-      abortOriginal()
-      abortPreview()
-    }
-  }
-  useEffect(initialize, [files, format])
-
+  const abortSubmit = useRef(null)
+  const cancelSubmit = () => call(abortSubmit.current)
   const onSubmit = useCallback(() => {
+    cancelSubmit()
     const script = select(LoadDataForm.getShaper)
-    preview.queryAll(script)
+    abortSubmit.current = preview.queryAll(script)
   }, [files, format])
+
+  useEffect(() => cancelSubmit, [files, format])
+  useEffect(() => original.queryAll("*"), [files, format])
 
   return (
     <Debut {...debut.props} classNames="modal">
