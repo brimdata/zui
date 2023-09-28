@@ -1,3 +1,12 @@
+## v1.3.0
+- Update Zed to [v1.10.0](https://github.com/brimdata/zed/releases/tag/v1.10.0)
+- Update Brimcap to [v1.5.2](https://github.com/brimdata/brimcap/releases/tag/v1.5.2)
+- The [Zui GitHub repo](https://github.com/brimdata/zui) is now structured as a monorepo (#2818)
+- Fix an issue where a `community_id` field was incorrectly being treated as a prerequisite to activating the **Packets** button (#2830)
+- Zui now uses the [Monaco editor](https://github.com/microsoft/monaco-editor), which provides a monospace font and minimal Zed syntax highlighting (#2824, #2836)
+- Fix an issue where invoking the `-version` option on the bundled `zed` and `brimcap` binaries was producing incorrect output (#2841)
+- Upgrade Electron dependency to 22.3.25 (#2848)
+
 ## v1.2.0
 - Update Zed to [v1.9.0](https://github.com/brimdata/zed/releases/tag/v1.9.0)
 - Update Brimcap to [v1.5.1](https://github.com/brimdata/brimcap/releases/tag/v1.5.1)
