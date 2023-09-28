@@ -72,7 +72,7 @@
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
-    "brimcap": "brimdata/brimcap#66ed56619535890a78aee6b461d9da16ae563b22",
+    "brimcap": "brimdata/brimcap#v1.5.2",
     "chalk": "^4.1.0",
     "chevrotain": "^10.5.0",
     "chrono-node": "^2.5.0",
