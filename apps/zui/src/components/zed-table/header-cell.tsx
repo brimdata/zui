@@ -13,6 +13,7 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
   const def = header.column.columnDef
   const column = def.meta as ZedColumn
   const width = header.getSize()
+  const hasContextMenu = api.args.headerCellProps?.onContextMenu
   return (
     <div
       role="columnheader"
@@ -41,15 +42,20 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
             )}
           </div>
 
-          <button
-            className="zed-table__header-cell-menu-button"
-            aria-label={`${def.header} Header Menu`}
-            onClick={(e) =>
-              api.args.headerCellProps?.onContextMenu(e, def.meta as ZedColumn)
-            }
-          >
-            <Icon name="chevron-down" size={16} />
-          </button>
+          {hasContextMenu && (
+            <button
+              className="zed-table__header-cell-menu-button"
+              aria-label={`${def.header} Header Menu`}
+              onClick={(e) =>
+                api.args.headerCellProps?.onContextMenu(
+                  e,
+                  def.meta as ZedColumn
+                )
+              }
+            >
+              <Icon name="chevron-down" size={16} />
+            </button>
+          )}
         </>
       )}
       <HeaderResizeArea header={header} />
