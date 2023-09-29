@@ -42,6 +42,13 @@ const slice = createSlice({
     setResultsRatio: (state, action: PayloadAction<number>) => {
       state.resultsRatio = action.payload
     },
+    reset: (state) => {
+      state.show = false
+      state.format = "auto"
+      state.files = []
+      state.shaper = ""
+      state.poolId = null
+    },
   },
 })
 

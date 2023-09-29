@@ -25,7 +25,7 @@ export function LoadPane() {
   const show = useSelector(LoadDataForm.getShow)
 
   const hide = () => {
-    dispatch(LoadDataForm.setShow(false))
+    dispatch(LoadDataForm.reset())
   }
 
   if (!show) return null
@@ -84,6 +84,7 @@ function Pane(props: {onClose: any}) {
     abortSubmit.current = preview.queryAll(script)
   }, [files, format])
 
+  useEffect(() => onSubmit(), [files, format])
   useEffect(() => cancelSubmit, [files, format])
   useEffect(() => original.queryAll("*"), [files, format])
 
