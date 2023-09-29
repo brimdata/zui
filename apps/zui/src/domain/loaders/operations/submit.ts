@@ -13,7 +13,6 @@ export const submit = createOperation(
   async (ctx, data: LoadFormData) => {
     const [pool, undoPool] = await createPool(data)
     const script = new ZedScript(data.shaper)
-
     try {
       await loadFilesOp({
         windowId: data.windowId,
@@ -24,7 +23,7 @@ export const submit = createOperation(
         files: data.files,
         shaper: script.isEmpty() ? "*" : data.shaper,
         author: data.author,
-        body: data.message,
+        body: data.body,
       })
       zui.window.query({
         pins: [{type: "from", value: pool.name}],

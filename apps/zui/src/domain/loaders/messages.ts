@@ -10,7 +10,7 @@ export type LoadFormData = {
   order: "asc" | "desc" | null
   files: string[]
   author: string
-  message: string
+  body: string
   shaper: string
   format: LoadFormat
 }
