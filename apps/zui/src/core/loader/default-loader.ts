@@ -2,8 +2,7 @@ import {LoadContext} from "./load-context"
 import fs from "fs"
 import {pipeline, Transform} from "stream"
 import {Loader} from "./types"
-import {createStream} from "@brimdata/zed-node"
-import MultiStream from "multistream"
+import {createReadableStream} from "@brimdata/zed-node"
 
 export const defaultLoader: Loader = {
   when() {
@@ -21,10 +20,13 @@ export const defaultLoader: Loader = {
       ctx.onProgress(readBytes / totalBytes)
     }
 
-    const input = new MultiStream(files.map((f) => fs.createReadStream(f)))
-    const zq = createStream({query: ctx.shaper, i: ctx.format})
+    const zq = createReadableStream({
+      query: ctx.shaper,
+      i: ctx.format,
+      file: files,
+    })
     let streamError = null
-    const body = pipeline(input, zq, inspectStream(onChunk), (err) => {
+    const body = pipeline(zq, inspectStream(onChunk), (err) => {
       streamError = err
       if (err) ctx.abort()
     })

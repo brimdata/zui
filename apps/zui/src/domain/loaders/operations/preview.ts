@@ -1,7 +1,5 @@
 import {createOperation} from "src/core/operations"
 import {zq} from "@brimdata/zed-node"
-import MultiStream from "multistream"
-import {createReadStream} from "fs"
 import {LoadFormat, zjson} from "@brimdata/zed-js"
 
 export const preview = createOperation(
@@ -17,15 +15,14 @@ export const preview = createOperation(
       return {data: [], error: null, id}
     }
 
-    const input = new MultiStream(files.map((f) => createReadStream(f)))
     const ctl = main.abortables.create(id)
     try {
       const data = await zq({
         query: shaper,
         as: "zjson",
-        input,
         i: format,
         signal: ctl.signal,
+        file: files,
       })
       return {error: null, data: data as zjson.Obj[], id}
     } catch (e) {

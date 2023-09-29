@@ -4,13 +4,14 @@ import { getZqPath } from './binpath';
 import { Readable, Stream, pipeline } from 'stream';
 import { pipeline as promisePipeline } from 'stream/promises';
 import { Value, decode, ndjson, zjson } from '@brimdata/zed-js';
+import { arrayWrap } from './util';
 
 type ZqArgs = {
   query?: string;
   bin?: string;
   f?: string;
   i?: string;
-  file?: string;
+  file?: string | string[];
   input?: Readable | string;
   signal?: AbortSignal;
 };
@@ -45,9 +46,9 @@ export function decodeStream(as: Output) {
   };
 }
 
-function createReadable(zq: ChildProcessWithoutNullStreams, args: ZqArgs) {
+function readableStream(zq: ChildProcessWithoutNullStreams, args: ZqArgs) {
   if (args.input)
-    return pipeline(wrapInput(args.input), createTransformStream(zq), (err) => {
+    return pipeline(wrapInput(args.input), transformStream(zq), (err) => {
       err; // There was an error in the pipeline, but users can listen for the event
     });
   if (args.file) return wrapStdout(zq);
@@ -67,7 +68,7 @@ function wrapStdout(zq: ChildProcessWithoutNullStreams) {
   return zq.stdout;
 }
 
-function createTransformStream(child: ChildProcessWithoutNullStreams) {
+function transformStream(child: ChildProcessWithoutNullStreams) {
   const stream = new Stream.Transform({
     transform(chunk, encoding, callback) {
       if (!child.stdin.write(chunk, encoding)) {
@@ -117,8 +118,9 @@ export function createProcess(args: ZqArgs) {
   if (args.i) spawnargs.push('-i', args.i);
   if (args.f) spawnargs.push('-f', args.f);
   if (args.query) spawnargs.push(args.query);
-  if (args.file) spawnargs.push(args.file);
+  if (args.file) spawnargs.push(...arrayWrap(args.file));
   else spawnargs.push('-');
+
   return spawn(bin, spawnargs);
 }
 
@@ -127,9 +129,18 @@ export function createProcess(args: ZqArgs) {
  * transform stream. You can pipe your own input to the
  * transform stream.
  */
-export function createStream(args: Omit<ZqArgs, 'file'>) {
+export function createTransformStream(args: ZqArgs) {
   const zq = createProcess(args);
-  return createTransformStream(zq);
+  return transformStream(zq);
+}
+
+/**
+ * Invokes the zq command then wraps the child process in a
+ * readable stream to be used as the source a pipeline.
+ */
+export function createReadableStream(args: ZqArgs) {
+  const zq = createProcess(args);
+  return readableStream(zq, args);
 }
 
 /**
@@ -151,7 +162,7 @@ export async function zq(
   const zq = createProcess({ ...args, f: 'zjson' });
 
   return await promisePipeline(
-    createReadable(zq, args),
+    readableStream(zq, args),
     decodeStream(args.as),
     { signal: args.signal as AbortSignal }
   );

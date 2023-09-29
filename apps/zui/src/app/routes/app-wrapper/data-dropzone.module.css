@@ -18,6 +18,10 @@
     animation: 250ms fade-opacity;
 }
 
+.message {
+    
+}
+
 .title {
     font-size: 60px;
     font-weight: 900;
@@ -33,7 +37,6 @@
 .title em {
     font-style: normal;
     color: var(--foreground-color);
-    
 }
 
 .hair {

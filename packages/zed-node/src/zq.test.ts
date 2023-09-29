@@ -1,11 +1,11 @@
 import * as Stream from 'stream';
-import { createStream, zq } from './zq';
+import { createTransformStream, zq } from './zq';
 import { getPath } from '@brimdata/sample-data';
 import { createReadStream } from 'fs';
 
 test('zq.stream', async () => {
   const input = Stream.Readable.from('1 2 3', { encoding: 'utf-8' });
-  const zq = createStream({ query: '{num: this}', f: 'zson' });
+  const zq = createTransformStream({ query: '{num: this}', f: 'zson' });
   let text = '';
   for await (const chunk of input.pipe(zq)) {
     if (chunk) text += chunk.toString();
@@ -129,4 +129,26 @@ test('head 100 on guns ', async () => {
     input: createReadStream(path),
   });
   expect(data).toHaveLength(100);
+});
+
+test('two files with different types', async () => {
+  const file1 = getPath('background_checks.csv');
+  const file2 = getPath('prs.json');
+  const data = await zq({
+    query: 'count()',
+    as: 'js',
+    file: [file1, file2],
+  });
+  expect(data).toEqual([16226]);
+});
+
+test('two files with different types as readable stream', async () => {
+  const file1 = getPath('background_checks.csv');
+  const file2 = getPath('prs.json');
+  const data = await zq({
+    query: 'count()',
+    as: 'js',
+    file: [file1, file2],
+  });
+  expect(data).toEqual([16226]);
 });
