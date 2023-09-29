@@ -15,6 +15,8 @@ import {isNumber} from "lodash"
 import {useZq} from "./use-zq"
 import {ResultDimension, ResultDisplay} from "./use-results-display"
 
+const HEAD_LIMIT = 100
+
 function append(script: string, suffix: string) {
   const zed = new ZedScript(script)
   const s = zed.isEmpty() ? "*" : script
@@ -22,7 +24,7 @@ function append(script: string, suffix: string) {
 }
 
 function limit(script: string) {
-  return append(script, " | head 100")
+  return append(script, ` | head ${HEAD_LIMIT}`)
 }
 
 export function useResultsControl(files: string[], format: zed.LoadFormat) {
@@ -170,6 +172,7 @@ export const Results = memo(function Results(
           {isNumber(props.rowCount) ? (
             <>
               <b>{props.rowCount}</b> {pluralize("Row", props.rowCount)}
+              {props.rowCount > HEAD_LIMIT && ` (First ${HEAD_LIMIT} Shown)`}
             </>
           ) : (
             "Loading Count..."
