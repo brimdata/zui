@@ -1,27 +1,19 @@
 import {isArray} from "lodash"
 import get from "lodash/get"
-import React, {useCallback, useState} from "react"
+import React from "react"
 import {useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
-import form, {FormConfig} from "../../models/form"
-import FileInput from "../common/forms/FileInput"
-import InputLabel from "../common/forms/InputLabel"
-import SelectInput from "../common/forms/SelectInput"
-import TextInput from "../common/forms/TextInput"
-import Link from "../common/Link"
-import useCallbackRef from "../hooks/useCallbackRef"
-import ModalBox from "../ModalBox/ModalBox"
-import TextContent from "../TextContent"
-import FormErrors from "./FormErrors"
-import {useConfigsForm} from "./usePreferencesForm"
+import {FormConfig} from "src/js/models/form"
+import Link from "src/js/components/common/Link"
 
-function ConfigFormItems(props: {configs: FormConfig}) {
+export function Form(props: {configs: FormConfig}) {
   const {configs} = props
   if (!configs) return null
   const configVals = useSelector(ConfigPropValues.all)
 
   const formInputs = Object.values(configs).map((c) => {
     const {label, defaultValue, name, helpLink} = c
+
     if (!c.type) return
 
     const maybeHelpLinkLabel = () => {
@@ -36,10 +28,10 @@ function ConfigFormItems(props: {configs: FormConfig}) {
     }
 
     const itemLabel = (
-      <InputLabel htmlFor={name}>
+      <label htmlFor={name}>
         {label}
         {maybeHelpLinkLabel()}
-      </InputLabel>
+      </label>
     )
 
     const val = get(configVals, [c.configName, c.name], undefined)
@@ -60,7 +52,8 @@ function ConfigFormItems(props: {configs: FormConfig}) {
         return (
           <div key={name} className="setting-panel">
             {itemLabel}
-            <FileInput
+            <input
+              type="file"
               id={name}
               name={name}
               defaultValue={val === undefined ? defaultValue : val}
@@ -72,8 +65,10 @@ function ConfigFormItems(props: {configs: FormConfig}) {
         return (
           <div key={name} className="setting-panel">
             {itemLabel}
-            <FileInput
-              isDirInput
+            <input
+              type="file"
+              // @ts-ignore
+              webkitdirectory
               id={name}
               name={name}
               defaultValue={val === undefined ? defaultValue : val}
@@ -86,24 +81,28 @@ function ConfigFormItems(props: {configs: FormConfig}) {
           return (
             <div className="setting-panel" key={name}>
               {itemLabel}
-              <SelectInput
+              <select
                 id={name}
                 name={name}
                 defaultValue={val === undefined ? defaultValue : val}
               >
-                {c.enum.map((e) => (
-                  <option key={e} value={e}>
-                    {e}
-                  </option>
-                ))}
-              </SelectInput>
+                {c.enum.map((e) => {
+                  const label = isArray(e) ? e[0] : e
+                  const value = isArray(e) ? e[1] : e
+                  return (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  )
+                })}
+              </select>
             </div>
           )
         }
         return (
           <div key={name} className="setting-panel">
             {itemLabel}
-            <TextInput
+            <input
               id={name}
               name={name}
               type="text"
@@ -116,45 +115,4 @@ function ConfigFormItems(props: {configs: FormConfig}) {
   })
 
   return <>{formInputs}</>
-}
-
-export default function Preferences() {
-  const [formEl, setForm] = useCallbackRef<HTMLFormElement>()
-  const [errors, setErrors] = useState([])
-
-  const configsForm = useConfigsForm()
-  const onClose = () => setErrors([])
-
-  const onSubmit = useCallback(
-    async (closeModal: any) => {
-      if (!formEl) return
-      const f = form(formEl, configsForm)
-
-      if (await f.isValid()) {
-        setErrors([])
-        f.submit()
-        closeModal()
-      } else {
-        setErrors(f.getErrors())
-      }
-    },
-    [formEl, configsForm]
-  )
-
-  return (
-    <ModalBox
-      onClose={onClose}
-      name="settings"
-      title="Preferences"
-      buttons={[{label: "OK", click: onSubmit}]}
-      className="settings-modal"
-    >
-      <TextContent>
-        <FormErrors errors={errors} />
-        <form ref={setForm} className="settings-form">
-          <ConfigFormItems configs={configsForm} />
-        </form>
-      </TextContent>
-    </ModalBox>
-  )
 }

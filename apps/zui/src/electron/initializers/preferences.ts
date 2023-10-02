@@ -55,9 +55,13 @@ export function initialize() {
     properties: {
       runQueryOnEnter: {
         name: "runQueryOnEnter",
-        label: "Run Query on Enter",
-        type: "boolean",
-        defaultValue: true,
+        label: "Run Query On...",
+        type: "string",
+        enum: [
+          ["Shift + Enter", "shift-enter"],
+          ["Enter", "enter"],
+        ],
+        defaultValue: "shift-enter",
       },
     },
   })

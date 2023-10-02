@@ -5,6 +5,7 @@ import {useOpener} from "./use-opener"
 import {useOutsideClick} from "./use-outside-click"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {omit} from "lodash"
+
 export type DialogProps = {
   isOpen: boolean
   onClose: () => void
@@ -35,11 +36,24 @@ const nonHTMLProps: (keyof DialogProps)[] = [
 export function Dialog(props: DialogProps) {
   const [node, setNode] = useCallbackRef<HTMLDialogElement>()
   const style = usePosition(node, props)
+
   useOpener(node, props)
   useOutsideClick(node, props)
-  useListener(node, "close", props.onClose)
+
+  function onClose(e) {
+    e.preventDefault()
+    props.onClose()
+  }
+
   return (
-    <dialog ref={setNode} style={style} {...omit(props, ...nonHTMLProps)}>
+    <dialog
+      // @ts-ignore
+      onClose={onClose}
+      onCancel={onClose}
+      ref={setNode}
+      style={style}
+      {...omit(props, ...nonHTMLProps)}
+    >
       {props.children}
     </dialog>
   )

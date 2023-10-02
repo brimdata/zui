@@ -12,7 +12,7 @@ export type ConfigItem = {
   }
   command?: string
   defaultValue?: string | boolean
-  enum?: string[]
+  enum?: string[] | [string, string][]
 }
 
 export type Config = {

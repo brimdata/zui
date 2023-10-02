@@ -4,14 +4,14 @@ import Tooltip from "src/js/components/Tooltip"
 import ErrorNotice from "src/js/components/ErrorNotice"
 import HTMLContextMenu from "src/js/components/HTMLContextMenu"
 import {Modals} from "src/js/components/Modals"
-import Preferences from "src/js/components/Preferences/Preferences"
+import {PreferencesModal} from "src/panes/preferences-modal"
 import {LoadPane} from "src/panes/load-pane"
 
 export function AppModals() {
   return (
     <>
       <ErrorNotice />
-      <Preferences />
+      <PreferencesModal />
       <Modals />
       <HTMLContextMenu />
       <Toaster />
