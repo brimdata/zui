@@ -9,12 +9,17 @@
 .form select {
     display: block;
     width: 100%;
-    min-height: var(--form-height);
+    height: var(--form-height);
     border-radius: var(--form-border-radius);
     background: var(--form-bg-color);
     border: var(--form-border);
     line-height: var(--form-line-height);
     padding: var(--form-padding);
+}
+
+.form input:focus-visible {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 .form input:disabled {
@@ -69,7 +74,7 @@
 }
 
 .form button[type=submit] {
-    min-height: var(--form-height);
+    height: var(--form-height);
     border-radius: var(--form-border-radius);
     background: var(--form-bg-color);
     line-height: var(--form-line-height);
@@ -90,8 +95,9 @@
     background: var(--primary-color-darker);
 }
 
-.form button[type=button] {
-    min-height: var(--form-height);
+.form button[type=button],
+.form button[type=reset] {
+    height: var(--form-height);
     border-radius: var(--form-border-radius);
     background: var(--form-bg-color);
     line-height: var(--form-line-height);
@@ -152,12 +158,6 @@
 
 .form .radioInput label {
     font-weight: 400;
-}
-
-.form .readonly {
-    margin-left: var(--form-border-radius);
-    min-height: var(--form-height);
-    line-height: var(--form-height);
 }
 
 .form .submission {

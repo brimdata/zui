@@ -11,7 +11,7 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "src/test/unit/helpers"
-import Preferences from "./Preferences"
+import {PreferencesModal} from "./index"
 import {act} from "react-dom/test-utils"
 import {SystemTest} from "src/test/system"
 
@@ -44,7 +44,7 @@ const $ = {
 
 beforeEach(async () => {
   brim.store.dispatch(Modal.show("settings"))
-  brim.render(<Preferences />)
+  brim.render(<PreferencesModal />)
   // Wait for one of the configs to be rendered
   await screen.findByLabelText("Time Format docs")
 })

@@ -1,12 +1,12 @@
 import {isEmpty} from "lodash"
 import React from "react"
 
-import {FormError} from "../../models/form"
+import {FormError} from "src/js/models/form"
 import classNames from "classnames"
 
 type Props = {errors: FormError[]; className?: string}
 
-export default function FormErrors({errors, className}: Props) {
+export function FormErrors({errors, className}: Props) {
   if (isEmpty(errors)) return null
   const hasInputFocus = errors.some((err) => err.label && err.input)
   return (

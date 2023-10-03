@@ -1,7 +1,4 @@
 import {useSelector} from "react-redux"
-import {Field} from "src/components/field"
-import InputLabel from "src/js/components/common/forms/InputLabel"
-import TextInput from "src/js/components/common/forms/TextInput"
 import PoolSettings from "src/js/state/PoolSettings"
 import {useForm} from "react-hook-form"
 import {useDispatch} from "src/app/core/state"
@@ -9,8 +6,9 @@ import {State} from "src/js/state/types"
 import styles from "./histogram-pane.module.css"
 import {runHistogramQuery} from "./run-query"
 import {getDefaults} from "src/js/state/PoolSettings/selectors"
-import {InputButton} from "src/components/input-button"
 import {useZuiApi} from "src/app/core/context"
+import forms from "src/components/forms.module.css"
+import classNames from "classnames"
 
 type Inputs = {
   timeField: string
@@ -43,25 +41,30 @@ export function SettingsForm(props: Props) {
     <form
       method="dialog"
       onSubmit={form.handleSubmit(onSubmit)}
-      className={styles.settingsForm}
+      className={classNames(styles.settingsForm, forms.form)}
     >
-      <Field>
-        <InputLabel>Time Field</InputLabel>
-        <TextInput
-          {...form.register("timeField")}
-          placeholder={defaults.timeField}
-        />
-      </Field>
-      <Field>
-        <InputLabel>Color Field</InputLabel>
-        <TextInput
-          {...form.register("colorField")}
-          placeholder={defaults.colorField}
-        />
-      </Field>
-      <Field>
-        <InputButton type="submit">Save</InputButton>
-      </Field>
+      <section className={forms.fields}>
+        <div>
+          <label>Time Field</label>
+          <input
+            type="text"
+            {...form.register("timeField")}
+            placeholder={defaults.timeField}
+          />
+        </div>
+        <div>
+          <label>Color Field</label>
+          <input
+            type="text"
+            {...form.register("colorField")}
+            placeholder={defaults.colorField}
+          />
+        </div>
+      </section>
+      <div className={forms.submission}>
+        <div></div>
+        <button type="submit">Save</button>
+      </div>
     </form>
   )
 }

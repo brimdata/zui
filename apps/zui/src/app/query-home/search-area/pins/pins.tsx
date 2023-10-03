@@ -12,7 +12,7 @@ import {PlaceholderFromPin} from "./placeholder-pin"
 
 const Container = styled.section`
   display: flex;
-  padding: 16px 16px 4px 16px;
+  padding: 12px 16px 4px 16px;
   flex-wrap: wrap;
   background: var(--editor-background);
   align-items: center;

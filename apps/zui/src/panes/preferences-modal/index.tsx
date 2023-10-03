@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react"
 import form, {FormConfig} from "src/js/models/form"
-import FormErrors from "src/js/components/Preferences/FormErrors"
+import {FormErrors} from "./form-errors"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {Form} from "./form"
 import forms from "src/components/forms.module.css"

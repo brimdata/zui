@@ -1,5 +1,4 @@
 import React from "react"
-import SelectInput from "src/js/components/common/forms/SelectInput"
 
 export function DataFormatOptions() {
   return (
@@ -16,13 +15,5 @@ export function DataFormatOptions() {
       <option value="zng">ZNG</option>
       <option value="zson">ZSON</option>
     </>
-  )
-}
-
-export function DataFormatSelect(props: JSX.IntrinsicElements["select"]) {
-  return (
-    <SelectInput {...props}>
-      <DataFormatOptions />
-    </SelectInput>
   )
 }
