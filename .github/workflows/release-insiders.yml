@@ -22,7 +22,7 @@ jobs:
           echo "sha=$(cat build_sha.txt)" >> $GITHUB_OUTPUT
 
     outputs:
-      version: ${{ steps.latest_release.outputs.release }}
+      version: ${{ steps.latest_release.outputs.tag_name }}
       latest_sha: ${{ steps.latest_sha.outputs.sha }}
 
   release:
