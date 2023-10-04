@@ -46,7 +46,7 @@ date.parseInZone = (string, zone, ref?) => {
   } else {
     if (/^\s*now.*/i.test(string)) return null
     const d = chrono.casual.parse(string, ref)
-    if (d && d[0].text == string) {
+    if (d && d.length > 0 && d[0].text == string) {
       return time(d[0].date()).toTs()
     } else {
       return null
