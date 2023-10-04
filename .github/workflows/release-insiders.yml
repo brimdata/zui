@@ -12,18 +12,17 @@ jobs:
     steps:
       - name: Get last released version
         id: latest_release
-        uses: pozetroninc/github-action-get-latest-release@v0.7.0
+        uses: thebritican/fetch-latest-release@v2.0.0
         with:
-          owner: brimdata
-          repo: zui-insiders
+          repo_path: brimdata/zui-insiders
       - name: Download last build_sha
         id: latest_sha
         run: |
-          curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.release }}/build_sha.txt > build_sha.txt
+          curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.tag_name }}/build_sha.txt > build_sha.txt
           echo "sha=$(cat build_sha.txt)" >> $GITHUB_OUTPUT
 
     outputs:
-      version: ${{ steps.latest_release.outputs.release }}
+      version: ${{ steps.latest_release.outputs.tag_name }}
       latest_sha: ${{ steps.latest_sha.outputs.sha }}
 
   release:
@@ -87,16 +86,15 @@ jobs:
 
       - name: Get the just released tag
         id: just_released
-        uses: pozetroninc/github-action-get-latest-release@v0.7.0
+        uses: thebritican/fetch-latest-release@v2.0.0
         with:
-          owner: brimdata
-          repo: zui-insiders
+          repo_path: brimdata/zui-insiders
 
       - name: Upload build_sha file to the latest release
         uses: svenstaro/upload-release-action@v2
         with:
           file: build_sha.txt
-          tag: ${{ steps.just_released.outputs.release }}
+          tag: ${{ steps.just_released.outputs.tag_name }}
           repo_name: brimdata/zui-insiders
           repo_token: ${{ secrets.PAT_TOKEN }}
           overwrite: true
