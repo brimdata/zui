@@ -3,8 +3,12 @@ import {CreatePoolOpts, Pool} from "@brimdata/zed-js"
 import {updateSettings} from "./operations"
 import Pools from "src/js/state/Pools"
 import {select} from "src/core/main/select"
-import {window} from "src/zui"
+import {loaders, window} from "src/zui"
 import * as ops from "./operations"
+import {LoadContext} from "src/domain/loaders/load-context"
+import {syncPoolOp} from "src/electron/ops/sync-pool-op"
+import {LoadOptions} from "src/core/loader/types"
+import {getMainObject} from "src/core/main"
 
 type Events = {
   create: (event: {pool: Pool}) => void
@@ -31,6 +35,22 @@ export class PoolsApi {
 
   async delete(id: string) {
     await ops.deletePool(window.lakeId, id)
+  }
+
+  async load(opts: LoadOptions) {
+    const main = getMainObject()
+    const context = new LoadContext(main, opts)
+    const loader = await loaders.getMatch(context)
+    try {
+      await context.setup()
+      await loader.run(context)
+      await waitForPoolStats(context)
+    } catch (e) {
+      await loader.rollback(context)
+      throw e
+    } finally {
+      context.teardown()
+    }
   }
 
   on<K extends string & keyof Events>(name: K, handler: Events[K]) {
@@ -61,5 +81,15 @@ class PoolConfiguration {
   set<K extends keyof ConfigMap>(key: K, value: ConfigMap[K]) {
     updateSettings({id: this.id, changes: {[key]: value}})
     return this
+  }
+}
+
+async function waitForPoolStats(context: LoadContext) {
+  let tries = 0
+  while (tries < 20) {
+    tries++
+    const pool = await syncPoolOp(context.lakeId, context.poolId)
+    if (pool.hasStats() && pool.size > 0) break
+    await new Promise((r) => setTimeout(r, 300))
   }
 }

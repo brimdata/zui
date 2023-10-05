@@ -1,6 +1,6 @@
 import * as path from "path"
 
-export async function derivePoolName(files: string[], existingNames: string[]) {
+export function deriveName(files: string[], existingNames: string[]) {
   let name: string
   if (files.length === 0) {
     name = "Pool 1"

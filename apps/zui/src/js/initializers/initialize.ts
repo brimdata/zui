@@ -14,6 +14,7 @@ import {initLake} from "./init-lake"
 import {initializeTabs} from "./init-tabs"
 import {initializeMonaco} from "./init-monaco"
 import {initializePluginContextSync} from "./init-plugin-context-sync"
+import toast from "react-hot-toast"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -44,6 +45,7 @@ export default async function initialize(
     dispatch: store.dispatch,
     select: (fn) => fn(store.getState()),
     invoke: invoke,
+    toast: toast,
   })
   initDebugGlobals(store, api)
   initAutosave(store)

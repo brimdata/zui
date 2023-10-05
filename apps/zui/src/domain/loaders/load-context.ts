@@ -4,7 +4,7 @@ import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
 import {syncPoolOp} from "src/electron/ops/sync-pool-op"
 import {SearchWindow} from "src/electron/windows/search/search-window"
-import {MainObject} from "../main/main-object"
+import {MainObject} from "../../core/main/main-object"
 
 export class LoadContext {
   private ctl = new AbortController()

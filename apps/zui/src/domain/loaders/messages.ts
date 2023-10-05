@@ -1,5 +1,5 @@
 import {LoadFormat} from "@brimdata/zed-js"
-import {chooseAndLoadFiles, loadFiles} from "./handlers"
+import * as handlers from "./handlers"
 import * as ops from "./operations"
 
 export type LoadFormData = {
@@ -20,9 +20,11 @@ export type LoadersOperations = {
   "loaders.preview": typeof ops.preview
   "loaders.getFileTypes": typeof ops.getFileTypes
   "loaders.abortPreview": typeof ops.abortPreview
+  "loaders.quickLoad": typeof ops.quickLoad
 }
 
 export type LoadersHandlers = {
-  "loaders.loadFiles": typeof loadFiles
-  "loaders.chooseAndLoadFiles": typeof chooseAndLoadFiles
+  "loaders.previewLoadFiles": typeof handlers.previewLoadFiles
+  "loaders.chooseFiles": typeof handlers.chooseFiles
+  "loaders.quickLoadFiles": typeof handlers.quickLoadFiles
 }

@@ -15,7 +15,7 @@ export const create = createOperation(
     {main},
     lakeId: string,
     name: string,
-    opts: Partial<CreatePoolOpts>
+    opts: Partial<CreatePoolOpts> = {}
   ) => {
     const client = await main.createClient(lakeId)
     const {pool} = await client.createPool(name, opts)

@@ -1,11 +1,10 @@
 import {createOperation} from "src/core/operations"
 import * as zui from "src/zui"
 import {Pool} from "src/app/core/pools/pool"
-import {loadFilesOp} from "src/electron/ops/load-files-op"
 import {ZedScript} from "src/app/core/models/zed-script"
 import {LoadFormData} from "../messages"
 import {errorToString} from "src/util/error-to-string"
-import {derivePoolName} from "src/domain/pools/utils"
+import {deriveName} from "src/domain/pools/utils"
 
 /* Called when the user submits the preview & load form */
 export const submit = createOperation(
@@ -14,7 +13,7 @@ export const submit = createOperation(
     const [pool, undoPool] = await createPool(data)
     const script = new ZedScript(data.shaper)
     try {
-      await loadFilesOp({
+      await zui.pools.load({
         windowId: data.windowId,
         format: data.format,
         poolId: pool.id,
@@ -44,7 +43,7 @@ async function createPool(
 ): Promise<[Pool, () => Promise<void> | void]> {
   if (data.poolId === "new") {
     const poolNames = zui.pools.all.map((pool) => pool.name)
-    const derivedName = await derivePoolName(data.files, poolNames)
+    const derivedName = await deriveName(data.files, poolNames)
     const name = data.name?.trim() || derivedName
     const key = data.key
     const order = data.order

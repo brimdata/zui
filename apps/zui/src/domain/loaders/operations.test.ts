@@ -6,6 +6,7 @@ import {SystemTest} from "src/test/system"
 import {submit} from "./operations"
 import {getPath} from "zui-test-data"
 import * as zui from "src/zui"
+
 const system = new SystemTest("loaders.operations")
 
 jest.setTimeout(5000)
@@ -19,7 +20,7 @@ async function onSubmit(file: string) {
     order: "asc",
     files: [file],
     author: "test",
-    message: "import",
+    body: "import",
     shaper: "*",
     format: "auto",
   })

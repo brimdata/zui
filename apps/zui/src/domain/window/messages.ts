@@ -1,5 +1,5 @@
-import {OpenDialogOptions, OpenDialogReturnValue} from "electron"
 import {QueryParams} from "src/js/api/queries/types"
+import {showOpenDialog, sync} from "./operations"
 
 export type WindowHandlers = {
   "window.showErrorMessage": (message: string) => void
@@ -10,8 +10,6 @@ export type WindowHandlers = {
 }
 
 export type WindowOperations = {
-  "window.sync": (props: {lakeId: string}) => void
-  "window.showOpenDialog": (
-    options?: OpenDialogOptions
-  ) => OpenDialogReturnValue
+  "window.sync": typeof sync
+  "window.showOpenDialog": typeof showOpenDialog
 }

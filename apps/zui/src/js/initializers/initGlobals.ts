@@ -4,7 +4,7 @@ import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
 import tabHistory from "src/app/router/tab-history"
 import {invoke} from "src/core/invoke"
-import {loadFiles} from "src/domain/loaders/handlers"
+import {previewLoadFiles} from "src/domain/loaders/handlers"
 
 export default async function initGlobals(store: Store) {
   global.env = await invoke("env.properties")
@@ -15,6 +15,6 @@ export default async function initGlobals(store: Store) {
   global.navTo = (path) => store.dispatch(tabHistory.push(path))
 
   global.dropFiles = (files: string[]) => {
-    loadFiles({files})
+    previewLoadFiles({files})
   }
 }

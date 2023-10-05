@@ -1,5 +1,5 @@
-import {defaultLoader} from "src/core/loader/default-loader"
-import {LoadContext} from "src/core/loader/load-context"
+import {defaultLoader} from "./default-loader"
+import {LoadContext} from "./load-context"
 import {Loader} from "src/core/loader/types"
 
 export class LoadersApi {

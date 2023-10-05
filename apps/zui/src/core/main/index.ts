@@ -9,3 +9,7 @@ export function withMain<T>(fn: (main: MainObject) => T): T {
 export function bindMain(main: MainObject) {
   _main = main
 }
+
+export function getMainObject() {
+  return _main
+}

@@ -1,6 +1,6 @@
 import {Pool} from "../core/pools/pool"
 import {createMenu} from "src/core/menu"
-import {chooseAndLoadFiles} from "src/domain/loaders/handlers"
+import {chooseFiles} from "src/domain/loaders/handlers"
 
 export const poolToolbarMenu = createMenu(
   "poolToolbarMenu",
@@ -11,7 +11,7 @@ export const poolToolbarMenu = createMenu(
         label: "Load Data",
         iconName: "doc-plain",
         click: async () => {
-          chooseAndLoadFiles(pool.id)
+          chooseFiles(pool.id)
         },
         title: "Load data into this pool.",
       },

@@ -55,7 +55,10 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
   })
   const windowId = mainObject.windows.byName("search")[0].id
   const brimRenderer = await initialize(windowId, "search")
-  window.lakeId = Current.getLakeId(mainObject.store.getState())
+  window.sync({
+    id: windowId,
+    lakeId: Current.getLakeId(mainObject.store.getState()),
+  })
   return {
     main: mainObject,
     store: brimRenderer.store,

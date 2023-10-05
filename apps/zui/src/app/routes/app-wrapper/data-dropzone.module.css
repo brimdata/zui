@@ -19,7 +19,13 @@
 }
 
 .message {
-    
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    animation:
+                700ms popup cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                300ms fade-opacity ease-in forwards;
 }
 
 .title {
@@ -27,16 +33,37 @@
     font-weight: 900;
     text-align: center;
     color: white;
-    opacity: 0;
-    padding: 3rem;
-    animation: 
-        700ms popup cubic-bezier(0.16, 1, 0.3, 1) forwards, 
-        300ms fade-opacity ease-in forwards;
+    
+    margin: 0;
 }
 
 .title em {
     font-style: normal;
     color: var(--foreground-color);
+}
+
+.note {
+    color: white;
+    text-align: center;
+    font-size: 1.3rem;
+    margin: 0;
+    font-weight: 300
+}
+
+.note b {
+    font-family: var(--mono-font);
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0 0.4em;
+    border-radius: 3px;
+    margin: 0 0.2em;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+    text-transform: uppercase;
+    font-size: 0.85em;
+    font-weight: 500;
+    letter-spacing: 1px;;
+
 }
 
 .hair {

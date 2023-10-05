@@ -6,7 +6,10 @@ export function initializePluginContextSync(store: Store) {
   let lakeId = null
 
   const syncWindow = () =>
-    invoke("window.sync", {lakeId: Current.getLakeId(store.getState())})
+    invoke("window.sync", {
+      lakeId: Current.getLakeId(store.getState()),
+      id: globalThis.windowId,
+    })
 
   store.subscribe(() => {
     const nextId = Current.getLakeId(store.getState())

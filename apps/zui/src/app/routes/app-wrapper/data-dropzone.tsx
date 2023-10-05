@@ -1,17 +1,23 @@
 import styles from "./data-dropzone.module.css"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import {loadFiles} from "src/domain/loaders/handlers"
+import {previewLoadFiles} from "src/domain/loaders/handlers"
 import useListener from "src/js/components/hooks/useListener"
-import {useState} from "react"
+import {useEffect, useState} from "react"
+import {invoke} from "src/core/invoke"
 
 export function DataDropzone({children}) {
   const poolId = usePoolId()
   const [shiftKey, setShiftKey] = useState(false)
   const onDrop = async (webFiles: File[]) => {
     const files = webFiles.map((f) => f.path)
-    loadFiles({files, poolId})
+    if (shiftKey) {
+      invoke("loaders.quickLoad", files)
+    } else {
+      previewLoadFiles({files, poolId})
+    }
   }
+
   let [props, ref] = useFilesDrop({onDrop})
 
   useListener(document.body, "keydown", (e: KeyboardEvent) => {
@@ -23,6 +29,10 @@ export function DataDropzone({children}) {
     if (!props.isOver) return
     setShiftKey(e.shiftKey)
   })
+
+  useEffect(() => {
+    if (!props.isOver) setShiftKey(false)
+  }, [props.isOver])
 
   return (
     <div className={styles.dropzone} ref={ref}>
@@ -47,14 +57,29 @@ export function DataDropzone({children}) {
           </div>
           <div className={styles.message}>
             <h1 className={styles.title}>
-              Preview & Load <em>Data</em>
+              {shiftKey ? (
+                <>
+                  Quick Load <em>Data</em>
+                </>
+              ) : (
+                <>
+                  Preview & Load <em>Data</em>
+                </>
+              )}
             </h1>
-            <p>
-              Hold down 'Shift' to load into a new pool with default settings.
+            <p className={styles.note}>
+              {shiftKey ? (
+                <>
+                  Release <b>{"Shift"}</b> to preview data first.
+                </>
+              ) : (
+                <>
+                  Hold <b>{"Shift"}</b> to quick load into new pool with
+                  defaults.
+                </>
+              )}
             </p>
           </div>
-
-          {shiftKey && <p>Holding Shift!</p>}
         </div>
       )}
     </div>

@@ -5,8 +5,7 @@ import {
 import {createHandler} from "src/core/handlers"
 import LoadDataForm from "src/js/state/LoadDataForm"
 
-export const loadFiles = createHandler(
-  "loaders.loadFiles",
+export const previewLoadFiles = createHandler(
   async ({dispatch, invoke}, opts: {files: string[]; poolId?: string}) => {
     const files = await invoke("loaders.getFileTypes", opts.files)
 
@@ -20,18 +19,6 @@ export const loadFiles = createHandler(
       dispatch(LoadDataForm.setPoolId(opts.poolId))
       dispatch(LoadDataForm.setFiles(opts.files))
       dispatch(LoadDataForm.setShow(true))
-    }
-  }
-)
-
-export const chooseAndLoadFiles = createHandler(
-  "loaders.chooseAndLoadFiles",
-  async ({invoke}, poolId?: string) => {
-    const result = await invoke("window.showOpenDialog", {
-      properties: ["openFile", "multiSelections"],
-    })
-    if (!result.canceled && result.filePaths.length) {
-      loadFiles({files: result.filePaths, poolId})
     }
   }
 )
