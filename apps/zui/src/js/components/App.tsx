@@ -13,7 +13,7 @@ import {InitPool, Show} from "src/pages/pools/show"
 import {QueryRoute} from "src/app/query-home/route"
 import Head from "next/head"
 import {useTabId} from "src/app/core/hooks/use-tab-id"
-import {NoTabsPane} from "src/panes/no-tabs-pane"
+import {NoTabsPane} from "src/views/no-tabs-pane"
 
 function AppRoutes() {
   return (

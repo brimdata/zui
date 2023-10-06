@@ -1,7 +1,7 @@
 import {useMemo} from "react"
 import {ZedTableHandlers, ZedTableState} from "src/components/zed-table/types"
 import {useDispatch} from "src/app/core/state"
-import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
+import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import {useResultsContext} from "src/app/query-home"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {useSelector} from "react-redux"

@@ -5,7 +5,7 @@ import styled from "styled-components"
 import doc from "../../lib/doc"
 import useEscapeKey from "../hooks/useEscapeKey"
 import {useFreezeBody} from "../hooks/useFreezeBody"
-import {NewPoolModal} from "src/panes/new-pool-modal"
+import {NewPoolModal} from "src/views/new-pool-modal"
 
 const Overlay = styled.div`
   position: fixed;

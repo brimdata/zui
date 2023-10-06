@@ -1,7 +1,7 @@
 import ZuiApi from "src/js/api/zui-api"
 import program from "src/js/models/program"
 import Results from "src/js/state/Results"
-import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
+import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 
 export function prepExportQuery(api: ZuiApi, format: string) {
   let query = Results.getQuery(RESULTS_QUERY)(api.getState())

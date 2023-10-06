@@ -80,6 +80,7 @@
     margin-bottom: calc(var(--form-field-gap) * 2);
 }
 
+
 .form summary {
     cursor: pointer;
     letter-spacing: 0.3px;

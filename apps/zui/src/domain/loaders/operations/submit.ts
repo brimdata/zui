@@ -12,8 +12,10 @@ export const submit = createOperation(
   async (ctx, data: LoadFormData) => {
     const [pool, undoPool] = await createPool(data)
     const script = new ZedScript(data.shaper)
-    try {
-      await zui.pools.load({
+
+    // Async so that we can return this and subscribe to updates on the pool.
+    zui.pools
+      .load({
         windowId: data.windowId,
         format: data.format,
         poolId: pool.id,
@@ -24,17 +26,19 @@ export const submit = createOperation(
         author: data.author,
         body: data.body,
       })
-      zui.window.query({
-        pins: [{type: "from", value: pool.name}],
-        value: "",
+      .then(() => {
+        zui.window.query({
+          pins: [{type: "from", value: pool.name}],
+          value: "",
+        })
+        zui.window.showSuccessMessage("Successfully loaded into " + pool.name)
       })
-      zui.window.showSuccessMessage("Successfully loaded into " + pool.name)
-      return null
-    } catch (e) {
-      await undoPool()
-      zui.window.showErrorMessage("Load error " + errorToString(e))
-      return e
-    }
+      .catch((e) => {
+        undoPool()
+        zui.window.showErrorMessage("Load error " + errorToString(e))
+      })
+
+    return {id: pool.id, name: pool.name}
   }
 )
 

@@ -4,7 +4,7 @@ import {useNextPage} from "src/core/query/use-query"
 import {useResults} from "src/core/query/use-results"
 import Layout from "src/js/state/Layout"
 import Results from "src/js/state/Results"
-import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
+import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import {useDataTransition} from "src/util/hooks/use-data-transition"
 import useResizeObserver from "use-resize-observer"
 

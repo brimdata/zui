@@ -24,7 +24,7 @@ function inSameDir(paths: string[]) {
 }
 
 function join(name: string, num: number) {
-  return num === 0 ? name : [name, `(${num})`].join(" ")
+  return num === 0 ? name : [name, num.toString()].join("_")
 }
 
 function getUniqName(proposal: string, existing: string[]) {

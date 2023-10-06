@@ -9,8 +9,8 @@ import styled from "styled-components"
 import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
 import {H1} from "src/components/h1"
 import {NotFound} from "./404"
-import {EmptyPoolPane} from "src/panes/empty-pool-pane"
-import {PoolDataList} from "src/panes/pool-data-list"
+import {EmptyPoolPane} from "src/views/empty-pool-pane"
+import {PoolDataList} from "src/views/pool-data-list"
 import {ButtonMenu} from "src/components/button-menu"
 
 const BG = styled.div`

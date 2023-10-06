@@ -4,8 +4,8 @@ import Tooltip from "src/js/components/Tooltip"
 import ErrorNotice from "src/js/components/ErrorNotice"
 import HTMLContextMenu from "src/js/components/HTMLContextMenu"
 import {Modals} from "src/js/components/Modals"
-import {PreferencesModal} from "src/panes/preferences-modal"
-import {LoadPane} from "src/panes/load-pane"
+import {PreferencesModal} from "src/views/preferences-modal"
+import {LoadPane} from "src/views/load-pane"
 
 export function AppModals() {
   return (

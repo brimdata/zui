@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {DateTuple} from "src/js/lib/TimeWindow"
-import {Interval} from "src/panes/histogram-pane/get-interval"
+import {Interval} from "src/views/histogram-pane/get-interval"
 
 const slice = createSlice({
   name: "TAB_HISTOGRAM",

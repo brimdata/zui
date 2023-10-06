@@ -17,7 +17,7 @@ import {useStateControllers} from "./use-state-controllers"
 import {mergeRefs, useInitialScrollPosition, useOnScroll} from "./utils"
 import classNames from "classnames"
 import {useParentSize} from "src/app/core/hooks/use-parent-size"
-import {TopShadow, useScrollShadow} from "src/panes/load-pane/scroll-shadow"
+import {TopShadow, useScrollShadow} from "src/views/load-pane/scroll-shadow"
 import {call} from "src/util/call"
 
 const padding = 8
