@@ -152,7 +152,6 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
                     name="order"
                     type="radio"
                     value="asc"
-                    defaultChecked
                     {...register("order")}
                   />
                   <label htmlFor="ascending">Ascending</label>
@@ -163,6 +162,7 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
                     name="order"
                     type="radio"
                     value="desc"
+                    defaultChecked
                     {...register("order")}
                   />
                   <label htmlFor="descending">Descending</label>
