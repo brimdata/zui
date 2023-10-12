@@ -6,12 +6,13 @@ import {LoadFormData} from "../messages"
 import {errorToString} from "src/util/error-to-string"
 import {deriveName} from "src/domain/pools/utils"
 import {poolPath} from "src/app/router/utils/paths"
+import {isAbortError} from "src/util/is-abort-error"
 
 /* Called when the user submits the preview & load form */
 export const submit = createOperation(
   "loaders.submit",
   async (ctx, data: LoadFormData) => {
-    const [pool, undoPool] = await createPool(data)
+    const pool = await createPool(data)
     const script = new ZedScript(data.shaper)
 
     // Async so that we can return this and subscribe to updates on the load.
@@ -31,7 +32,7 @@ export const submit = createOperation(
         zui.window.showSuccessMessage("Successfully loaded into " + pool.name)
       })
       .catch((e) => {
-        undoPool()
+        if (isAbortError(e)) return
         zui.window.showErrorMessage("Load error " + errorToString(e))
       })
 
@@ -39,20 +40,15 @@ export const submit = createOperation(
   }
 )
 
-async function createPool(
-  data: LoadFormData
-): Promise<[Pool, () => Promise<void> | void]> {
+async function createPool(data: LoadFormData): Promise<Pool> {
   if (data.poolId === "new") {
     const poolNames = zui.pools.all.map((pool) => pool.name)
     const derivedName = await deriveName(data.files, poolNames)
     const name = data.name?.trim() || derivedName
     const key = data.key
     const order = data.order
-    const pool = await zui.pools.create(name, {key, order})
-    const undo = () => zui.pools.delete(pool.id)
-    return [pool, undo]
+    return zui.pools.create(name, {key, order})
   } else {
-    const pool = zui.pools.get(data.poolId)
-    return [pool, () => {}]
+    return zui.pools.get(data.poolId)
   }
 }
