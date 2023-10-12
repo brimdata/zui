@@ -81,12 +81,16 @@ function Pane(props: {onClose: any}) {
   const onSubmit = useCallback(() => {
     cancelSubmit()
     const script = select(LoadDataForm.getShaper)
-    abortSubmit.current = preview.queryAll(script)
+    const abort = preview.queryAll(script)
+    abortSubmit.current = abort
   }, [files, format])
 
   useEffect(() => onSubmit(), [files, format])
   useEffect(() => cancelSubmit, [files, format])
-  useEffect(() => original.queryAll("*"), [files, format])
+  useEffect(() => {
+    const abort = original.queryAll("*")
+    return abort
+  }, [files, format])
 
   return (
     <Debut {...debut.props} classNames="modal">

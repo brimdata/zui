@@ -24,7 +24,6 @@ export function useZq(files: string[], format: zed.LoadFormat) {
       setIsLoading(true)
       invoke("loaders.preview", files, script, format, invokeId)
         .then(({error, data, id}) => {
-          // console.log(id, "  ::  FINISHED", script.replaceAll("\n", ""))
           if (lastId.current !== id) return
 
           start(() => {
@@ -37,10 +36,8 @@ export function useZq(files: string[], format: zed.LoadFormat) {
           setIsLoading(false)
           setError(errorToString(e))
         })
-      // console.log(invokeId, "  ::  INVOKED", script.replaceAll("\n", ""))
 
       return () => {
-        // console.log(invokeId, "  ::  CANCELLED", script.replaceAll("\n", ""))
         setIsLoading(false)
         invoke("loaders.abortPreview", invokeId)
       }

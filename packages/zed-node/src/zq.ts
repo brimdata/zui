@@ -121,7 +121,9 @@ export function createProcess(args: ZqArgs) {
   if (args.file) spawnargs.push(...arrayWrap(args.file));
   else spawnargs.push('-');
 
-  return spawn(bin, spawnargs);
+  return spawn(bin, spawnargs, { signal: args.signal }).on('error', () => {
+    // This error must be caught in order to not throw an exception in main process
+  });
 }
 
 /**
