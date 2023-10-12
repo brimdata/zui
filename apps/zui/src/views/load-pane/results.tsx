@@ -14,6 +14,8 @@ import {ErrorWell} from "src/components/error-well"
 import {isNumber} from "lodash"
 import {useZq} from "./use-zq"
 import {ResultDimension, ResultDisplay} from "./use-results-display"
+import {BareStringView} from "src/app/query-home/results/bare-string-view"
+import {PathView} from "src/app/query-home/results/path-view"
 
 const HEAD_LIMIT = 100
 
@@ -207,11 +209,20 @@ const ResultsBody = memo(function ResultsBody(props: {
         values={props.values}
         state={props.state}
         shape={props.values[0]?.type}
+        viewConfig={{
+          customViews: [PathView, BareStringView],
+        }}
       />
     )
   }
   if (props.format === "list") {
-    return <ListView values={props.values} state={props.state} />
+    return (
+      <ListView
+        values={props.values}
+        state={props.state}
+        viewConfig={{customViews: [PathView]}}
+      />
+    )
   }
   throw new Error("Unknown Display")
 })
