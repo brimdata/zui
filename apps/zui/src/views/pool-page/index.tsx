@@ -82,9 +82,9 @@ export const Show = () => {
         </div>
       </header>
       <Body>
+        {isEmpty && <EmptyPoolPane />}
         <RecentLoads id={pool.id} />
         <Details pool={pool} />
-        {isEmpty && <EmptyPoolPane />}
       </Body>
     </div>
   )
