@@ -74,7 +74,9 @@ export const Show = () => {
         <div className={classNames(styles.wrap, styles.headerContent)}>
           <div>
             <H1>{pool.name}</H1>
-            <Subtitle>{bytes(pool.stats.size)}</Subtitle>
+            <Subtitle>
+              {isEmpty ? "This pool is empty." : bytes(pool.stats.size)}
+            </Subtitle>
           </div>
           <Toolbar>
             <ButtonMenu label={menu.label} items={menu.items} />
@@ -82,7 +84,6 @@ export const Show = () => {
         </div>
       </header>
       <Body>
-        {isEmpty && <EmptyPoolPane />}
         <RecentLoads id={pool.id} />
         <Details pool={pool} />
       </Body>

@@ -6,7 +6,10 @@ import {slice} from "./slice"
 export const wherePoolId = createSelector(
   slice.all,
   (_: State, poolId: string) => poolId,
-  (loads, poolId) => loads.filter((load) => load.poolId === poolId)
+  (loads, poolId) => {
+    console.log("selecting from", loads, poolId)
+    return loads.filter((load) => load.poolId === poolId)
+  }
 )
 
 export const getPoolProgress = createSelector(wherePoolId, (loads) => {

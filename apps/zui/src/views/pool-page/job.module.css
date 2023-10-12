@@ -1,12 +1,13 @@
 .job {
     display: grid;
     grid-template-columns: 3rem 1fr min-content;
-    grid-template-rows: repeat(min-content, 3);
+    grid-template-rows: min-content min-content;
+    align-content: center;
     align-items: center;
     column-gap: 1em;
-    row-gap: 0.25em;
-    grid-template-areas: "icon info actions";
-    height: 86px;
+    grid-template-areas: "icon info actions"
+    ". details .";
+    min-height: 86px;
 }
 
 .icon {
@@ -94,4 +95,12 @@
 .errorIcon {
     color: white;
     background: var(--error-color);
+}
+
+.details {
+    border-top: 1px solid var(--border-color);
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    color: var(--foreground-color-light);
+    grid-area: details;
 }

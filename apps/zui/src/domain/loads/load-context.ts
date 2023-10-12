@@ -39,12 +39,19 @@ export class LoadContext {
   async teardown() {
     this.window.loadsInProgress = Math.max(0, this.window.loadsInProgress - 1)
     this.main.abortables.remove(this.id)
+    console.log("teardown", {
+      id: this.id,
+      changes: {finishedAt: new Date().toISOString()},
+    })
+
     this.main.dispatch(
       Loads.update({
         id: this.id,
         changes: {finishedAt: new Date().toISOString()},
       })
     )
+    const load = Loads.find(this.main.store.getState(), this.id)
+    console.log(load)
   }
 
   onProgress(progress: number) {
@@ -53,7 +60,9 @@ export class LoadContext {
 
   onWarning(warning: string) {
     const load = Loads.find(this.main.store.getState(), this.id)
+    console.log(load)
     const errors = [...load.errors, warning]
+    console.log("on warning", errors)
     this.main.dispatch(Loads.update({id: this.id, changes: {errors}}))
   }
 

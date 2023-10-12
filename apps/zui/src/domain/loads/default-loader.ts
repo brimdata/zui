@@ -4,6 +4,7 @@ import {pipeline, Transform} from "stream"
 import {Loader} from "./types"
 import {createReadableStream} from "@brimdata/zed-node"
 import {throttle} from "lodash"
+import {errorToString} from "src/util/error-to-string"
 
 export const defaultLoader: Loader = {
   when() {
@@ -18,7 +19,9 @@ export const defaultLoader: Loader = {
     let streamError = null
     const body = pipeline(shaper, progress, (err) => {
       streamError = err
-      if (err) ctx.abort()
+      if (err) {
+        ctx.abort()
+      }
     })
 
     let res
@@ -34,9 +37,10 @@ export const defaultLoader: Loader = {
         signal: ctx.signal,
       })
     } catch (e) {
+      const error = streamError ? new Error(streamError) : e
+      ctx.onWarning(errorToString(error))
       ctx.onProgress(null)
-      if (streamError) throw new Error(streamError)
-      else throw e
+      throw error
     }
     for (const warning of res?.warnings ?? []) ctx.onWarning(warning)
     await ctx.onPoolChanged()

@@ -1,5 +1,4 @@
 import {LoadReference} from "src/js/state/Loads/types"
-import * as fmt from "date-fns"
 
 export class LoadModel {
   constructor(private ref: LoadReference) {}
@@ -20,27 +19,6 @@ export class LoadModel {
       else return "success"
     }
     return "loading"
-  }
-
-  get statusMessage() {
-    switch (this.status) {
-      case "aborted":
-        return `Aborted ${fmt.formatDistanceToNow(this.abortedAt)} ago`
-      case "loading":
-        return `Started ${fmt.formatDistanceToNow(this.startedAt)} ago`
-      case "error":
-        return `Finished in ${fmt.formatDistanceStrict(
-          this.startedAt,
-          this.finishedAt
-        )} with ${this.errors.length} errors.`
-      case "success":
-        return `Finished ${fmt.formatDistanceToNow(
-          this.finishedAt
-        )} ago in ${fmt.formatDistanceStrict(
-          this.startedAt,
-          this.finishedAt
-        )} with no errors. `
-    }
   }
 
   get startedAt() {

@@ -3,6 +3,7 @@ import styles from "./job.module.css"
 import {IconButton} from "src/components/icon-button"
 import {ThreeUpArrows} from "./three-up-arrows"
 import Icon from "src/app/core/icon-temp"
+import {ReactNode} from "react"
 
 type JobStatus = "loading" | "error" | "success" | "aborted"
 
@@ -12,9 +13,9 @@ export function Job(props: {
   onCancel: () => any
   message: string
   status: JobStatus
+  details: string | string[] | ReactNode
 }) {
   const isLoading = props.status === "loading"
-
   return (
     <div className={styles.job}>
       <div className={styles.icon}>
@@ -37,6 +38,7 @@ export function Job(props: {
           className={styles.cancel}
         />
       </div>
+      {props.details && <div className={styles.details}>{props.details}</div>}
     </div>
   )
 }
