@@ -34,17 +34,22 @@
   height: 100%;
 }
 
-.button:hover:not([aria-pressed="true"]) {
+.button:hover:not([aria-pressed="true"]):not(:disabled) {
   background: var(--hover-dark);
   color: var(--foreground-color);
 }
 
-.button:active:not([aria-pressed="true"]) {
+.button:active:not([aria-pressed="true"]):not(:disabled) {
   background: var(--active-dark);
 }
 
 .button[aria-pressed="true"] {
   color: var(--foreground-color);
+}
+
+.button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .button span {

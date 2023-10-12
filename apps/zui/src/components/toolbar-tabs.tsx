@@ -38,6 +38,7 @@ export function ToolbarTabs(props: {onlyIcon: boolean; options: MenuItem[]}) {
             }}
             aria-pressed={opts.checked}
             data-section-tab-value={opts.label.toLowerCase()}
+            disabled={opts.enabled === false}
           >
             <Icon name={opts.iconName} size={14} />
             {!props.onlyIcon && <span>{opts.label}</span>}

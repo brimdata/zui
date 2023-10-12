@@ -155,6 +155,7 @@ export const Results = memo(function Results(
             values={props.values}
             state={props.display.state}
             format={props.display.format}
+            typeCount={props.typeCount}
           />
         )}
       </section>
@@ -187,8 +188,20 @@ const ResultsBody = memo(function ResultsBody(props: {
   format: ResultDisplay
   state: {value; onChange}
   values: zed.Value[]
+  typeCount: number
 }) {
   if (props.format === "table") {
+    if (props.typeCount > 1) {
+      return (
+        <ErrorWell
+          title="Unable To Render Table"
+          error={
+            "This data has more than one type.\nUse the 'fuse' operator to combine the types into one."
+          }
+          className={styles.error}
+        />
+      )
+    }
     return (
       <TableView
         values={props.values}
