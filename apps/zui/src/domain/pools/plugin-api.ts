@@ -3,9 +3,9 @@ import {CreatePoolOpts, Pool} from "@brimdata/zed-js"
 import {updateSettings} from "./operations"
 import Pools from "src/js/state/Pools"
 import {select} from "src/core/main/select"
-import {loaders, window} from "src/zui"
+import {loads, window} from "src/zui"
 import * as ops from "./operations"
-import {LoadContext} from "src/domain/loaders/load-context"
+import {LoadContext} from "src/domain/loads/load-context"
 import {syncPoolOp} from "src/electron/ops/sync-pool-op"
 import {LoadOptions} from "src/core/loader/types"
 import {getMainObject} from "src/core/main"
@@ -40,7 +40,7 @@ export class PoolsApi {
   async load(opts: LoadOptions) {
     const main = getMainObject()
     const context = new LoadContext(main, opts)
-    const loader = await loaders.getMatch(context)
+    const loader = await loads.getMatch(context)
     try {
       await context.setup()
       await loader.run(context)

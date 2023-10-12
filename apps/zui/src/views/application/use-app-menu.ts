@@ -28,7 +28,7 @@ const getAppMenuState = createSelector(
   }
 )
 
-export function useSearchAppMenu() {
+export function useAppMenu() {
   const state = useSelector(getAppMenuState)
 
   useEffect(() => {

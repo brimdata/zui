@@ -4,7 +4,7 @@ import {Store} from "../state/types"
 import {createMemoryHistory} from "history"
 import tabHistory from "src/app/router/tab-history"
 import {invoke} from "src/core/invoke"
-import {previewLoadFiles} from "src/domain/loaders/handlers"
+import {previewLoadFiles} from "src/domain/loads/handlers"
 
 export default async function initGlobals(store: Store) {
   global.env = await invoke("env.properties")

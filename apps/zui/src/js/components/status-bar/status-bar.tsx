@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import {IngestProgress} from "./ingest-progress"
 import {QueryProgress} from "./query-progress"
 import {TypeCount} from "./type-count"
 import Tabs from "src/js/state/Tabs"
@@ -27,7 +26,6 @@ export default function StatusBar() {
   return (
     <BG>
       <QueryProgress />
-      <IngestProgress />
       <TypeCount />
     </BG>
   )

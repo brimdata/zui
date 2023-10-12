@@ -4,7 +4,7 @@ import {useSelector} from "react-redux"
 import {deletePools} from "src/app/commands/delete-pools"
 import {useDispatch} from "src/app/core/state"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import {lakePoolPath} from "src/app/router/utils/paths"
+import {poolPath} from "src/app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Tabs from "src/js/state/Tabs"
 import {Empty} from "./empty"
@@ -70,7 +70,7 @@ export function PoolsTree(props: {searchTerm: string}) {
             }}
             onActivate={(node) => {
               if (node.isLeaf) {
-                dispatch(Tabs.previewUrl(lakePoolPath(node.id)))
+                dispatch(Tabs.previewUrl(poolPath(node.id)))
               }
             }}
             onDelete={(args) => {

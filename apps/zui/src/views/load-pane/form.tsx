@@ -16,8 +16,6 @@ import {DataFormatOptions} from "src/components/data-format-select"
 import {LoadFormat} from "@brimdata/zed-js"
 import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
-import Loads from "src/js/state/Loads"
-import {State} from "src/js/state/types"
 
 export function Form(props: {onClose: () => any; isValid: boolean}) {
   const dispatch = useDispatch()
@@ -34,26 +32,21 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
       poolId: poolId || "new",
     },
   })
-  const [loading, setLoading] = useState(false)
-  const [pool, setPool] = useState(null)
+
   const [error, setError] = useState(null)
-  const progress = useSelector((s: State) => Loads.getPoolProgress(s, pool?.id))
 
   const onSubmit = async (data) => {
     const shaper = select(LoadDataForm.getShaper)
     // @ts-ignore
     const windowId = window.windowId
     try {
-      setLoading(true)
-      const pool = await invoke("loaders.submit", {
+      await invoke("loaders.submit", {
         ...data,
         files,
         shaper,
         windowId,
       })
-      setPool(pool)
-      // await subscribeToProgress(pool.id)
-      // props.onClose()
+      props.onClose()
     } catch (e) {
       setError(humanizeFormError(e))
     }
@@ -213,8 +206,8 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
           <button type="button" onClick={props.onClose}>
             Cancel
           </button>
-          <button type="submit" disabled={!props.isValid || loading}>
-            {loading ? "Loading..." : "Load"}
+          <button type="submit" disabled={!props.isValid}>
+            Load
           </button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import {LoadFormat} from "@brimdata/zed-js"
-import {LoadContext} from "../../domain/loaders/load-context"
+import {LoadContext} from "../../domain/loads/load-context"
 
 export type LoadOptions = {
   windowId: string

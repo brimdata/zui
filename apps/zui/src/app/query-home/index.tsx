@@ -3,7 +3,7 @@ import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 
 import styled from "styled-components"
-import {lakeQueryPath} from "../router/utils/paths"
+import {queryPath} from "../router/utils/paths"
 import SearchArea from "./search-area"
 import RightPane from "../features/right-pane"
 import {TitleBar} from "./title-bar/title-bar"
@@ -61,9 +61,7 @@ const QueryHome = () => {
   const tabId = useSelector(Current.getTabId)
 
   if (activeQuery.isDeleted()) {
-    return (
-      <Redirect to={lakeQueryPath(tabId, activeQuery.versionId() || "0")} />
-    )
+    return <Redirect to={queryPath(tabId, activeQuery.versionId() || "0")} />
   }
 
   return (

@@ -1,5 +1,5 @@
 import {nanoid} from "@reduxjs/toolkit"
-import {lakeQueryPath} from "src/app/router/utils/paths"
+import {queryPath} from "src/app/router/utils/paths"
 import SessionQueries from "../SessionQueries"
 import {Thunk} from "../types"
 import Tabs from "./"
@@ -22,7 +22,7 @@ export const createQuerySession =
     const sessionId = nanoid()
     const version = "0"
     api.queries.addVersion(sessionId, {version, value: "", pins: []})
-    const url = lakeQueryPath(sessionId, version)
+    const url = queryPath(sessionId, version)
     return dispatch(create(url, sessionId))
   }
 

@@ -1,8 +1,8 @@
-export const lakePoolPath = (poolId: string) => {
+export const poolPath = (poolId: string) => {
   return `/pools/${poolId}`
 }
 
-export function lakeQueryPath(queryId: string, version: string) {
+export function queryPath(queryId: string, version: string) {
   return `/queries/${queryId}/versions/${version}`
 }
 

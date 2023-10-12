@@ -1,0 +1,97 @@
+.job {
+    display: grid;
+    grid-template-columns: 3rem 1fr min-content;
+    grid-template-rows: repeat(min-content, 3);
+    align-items: center;
+    column-gap: 1em;
+    row-gap: 0.25em;
+    grid-template-areas: "icon info actions";
+    height: 86px;
+}
+
+.icon {
+    grid-area: icon;
+}
+
+.info {
+    grid-area: info;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+}
+
+.actions {
+    grid-area: actions;
+}
+
+.name {
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.progress {
+    grid-area: progress;
+    display: flex;
+    gap: 0.25em;
+}
+
+.status {
+    grid-area: status;
+    color: var(--foreground-color-light);
+    font-size: 0.8rem;
+}
+
+.loadingIcon,
+.successIcon,
+.errorIcon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loadingIcon path:nth-child(1) {
+    animation: upload 1.6s 532ms infinite  var(--pop-easing);
+}
+.loadingIcon path:nth-child(2) {
+    animation: upload 1.6s 266ms infinite var(--pop-easing);
+}
+.loadingIcon path:nth-child(3) {
+    animation: upload 1.6s  infinite var(--pop-easing);
+}
+@keyframes upload {
+    from {
+        transform: translateY(80%);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-80%);
+    }
+    
+}
+
+.loadingIcon {
+    color: var(--foreground-color-light);
+    color: var(--blue);
+    background: var(--chrome-color-dark);
+}
+
+.successIcon {
+    color: white;
+    background: var(--success-color);
+}
+
+.errorIcon {
+    color: white;
+    background: var(--error-color);
+}

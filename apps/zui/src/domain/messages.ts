@@ -7,7 +7,7 @@ import {WindowHandlers, WindowOperations} from "./window/messages"
 import {LegacyOperations} from "./legacy-ops/messages"
 import {E2EOperations} from "./e2e/messages"
 import {EnvOperations} from "./env/messages"
-import {LoadersHandlers, LoadersOperations} from "./loaders/messages"
+import {LoadersHandlers, LoadersOperations} from "./loads/messages"
 
 export type Handlers = ResultsHandlers &
   MenusHandlers &

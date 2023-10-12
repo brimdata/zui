@@ -1,6 +1,5 @@
 import {HTMLAttributes, MouseEventHandler} from "react"
 import {usePosition} from "./use-position"
-import useListener from "src/js/components/hooks/useListener"
 import {useOpener} from "./use-opener"
 import {useOutsideClick} from "./use-outside-click"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"

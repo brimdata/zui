@@ -21,6 +21,7 @@ export type LoadersOperations = {
   "loaders.getFileTypes": typeof ops.getFileTypes
   "loaders.abortPreview": typeof ops.abortPreview
   "loaders.quickLoad": typeof ops.quickLoad
+  "loaders.abort": typeof ops.abort
 }
 
 export type LoadersHandlers = {

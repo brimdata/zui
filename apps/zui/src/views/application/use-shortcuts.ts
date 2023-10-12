@@ -1,8 +1,8 @@
 import {useEffect} from "react"
 import Mousetrap from "mousetrap"
 
-import Modal from "../state/Modal"
-import Tabs from "../state/Tabs"
+import Modal from "../../js/state/Modal"
+import Tabs from "../../js/state/Tabs"
 import {newTab} from "src/app/query-home/flows/new-tab"
 import {useDispatch} from "src/app/core/state"
 

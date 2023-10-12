@@ -1,6 +1,6 @@
 :root {
   // colors
-  --red: #cd1313;
+  --red: #F13737;
   --green: #399c81;
   --green-bright: #4ef567;
   --orange: #ff7f00;
@@ -11,6 +11,8 @@
   --havelock: #4b91e2;
   --hawkes-blue: rgba(206, 228, 253, 0.5);
   --pecan: #9c692f;
+  --blue: hsl(212, 72%, 59%);
+
 
   // shades of gray
   --snow: #fcfcfd;
@@ -38,6 +40,9 @@
   // borders
 
   // Colors by name
+
+  --success-color: #1ADB91;
+  --error-color: #F13737;
 
   --input-background: hsl(240, 15%, 92%);
 

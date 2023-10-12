@@ -25,4 +25,8 @@ export class WindowApi {
     this.id = args.id
     this.lakeId = args.lakeId
   }
+
+  openTab(path: string) {
+    sendToFocusedWindow("window.openTab", path)
+  }
 }

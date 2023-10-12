@@ -1,6 +1,6 @@
 import {nanoid} from "@reduxjs/toolkit"
 import tabHistory from "src/app/router/tab-history"
-import {lakeQueryPath} from "src/app/router/utils/paths"
+import {queryPath} from "src/app/router/utils/paths"
 import Current from "src/js/state/Current"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
@@ -148,7 +148,7 @@ export class QueriesApi {
         ts: new Date().toISOString(),
       })
     }
-    const url = lakeQueryPath(queryId, versionId)
+    const url = queryPath(queryId, versionId)
     if (tab) {
       this.dispatch(Tabs.activate(tabId))
     } else {

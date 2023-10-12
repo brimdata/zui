@@ -10,7 +10,11 @@ export const wherePoolId = createSelector(
 )
 
 export const getPoolProgress = createSelector(wherePoolId, (loads) => {
-  const progresses = loads.map((l) => l.progress).filter((p) => isNumber(p))
+  const progresses = loads
+    .filter((l) => !l.finishedAt)
+    .map((l) => l.progress)
+    .filter((p) => isNumber(p))
+
   if (isEmpty(progresses)) return null
   // Not really accurate
   return sum(progresses) / progresses.length

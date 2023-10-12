@@ -4,6 +4,9 @@
   "sourceRoot": "apps/zui",
   "projectType": "app",
   "targets": {
+    "watch-tsc": {
+      "command": "tsc -p apps/zui/tsconfig.json --watch"
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

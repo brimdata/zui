@@ -2,7 +2,7 @@ import {ChangeEvent, useRef} from "react"
 import styles from "./index.module.css"
 import usePoolId from "src/app/router/hooks/use-pool-id"
 import {IconButton} from "src/components/icon-button"
-import {previewLoadFiles} from "src/domain/loaders/handlers"
+import {previewLoadFiles} from "src/domain/loads/handlers"
 
 export function EmptyPoolPane() {
   const input = useRef<HTMLInputElement>()

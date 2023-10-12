@@ -1,7 +1,7 @@
 import styles from "./data-dropzone.module.css"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import {previewLoadFiles} from "src/domain/loaders/handlers"
+import {previewLoadFiles} from "src/domain/loads/handlers"
 import useListener from "src/js/components/hooks/useListener"
 import {useEffect, useState} from "react"
 import {invoke} from "src/core/invoke"

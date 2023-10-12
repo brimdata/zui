@@ -61,7 +61,7 @@ export function initialize() {
           ["Shift + Enter", "shift-enter"],
           ["Enter", "enter"],
         ],
-        defaultValue: "shift-enter",
+        defaultValue: "enter",
       },
     },
   })

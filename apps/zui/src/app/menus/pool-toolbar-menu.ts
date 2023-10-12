@@ -1,6 +1,6 @@
 import {Pool} from "../core/pools/pool"
 import {createMenu} from "src/core/menu"
-import {chooseFiles} from "src/domain/loaders/handlers"
+import {chooseFiles} from "src/domain/loads/handlers"
 
 export const poolToolbarMenu = createMenu(
   "poolToolbarMenu",

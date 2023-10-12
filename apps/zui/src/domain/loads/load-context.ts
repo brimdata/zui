@@ -1,7 +1,6 @@
 import {LoadOptions} from "./types"
 import {nanoid} from "@reduxjs/toolkit"
 import Loads from "src/js/state/Loads"
-import Pools from "src/js/state/Pools"
 import {syncPoolOp} from "src/electron/ops/sync-pool-op"
 import {SearchWindow} from "src/electron/windows/search/search-window"
 import {MainObject} from "../../core/main/main-object"
@@ -24,14 +23,28 @@ export class LoadContext {
     this.window.loadsInProgress++
     this.main.abortables.add({id: this.id, abort: () => this.ctl.abort()})
     this.main.dispatch(
-      Loads.create({id: this.id, poolId: this.opts.poolId, progress: 0})
+      Loads.create({
+        id: this.id,
+        poolId: this.opts.poolId,
+        progress: 0,
+        files: this.opts.files,
+        startedAt: new Date().toISOString(),
+        finishedAt: null,
+        abortedAt: null,
+        errors: [],
+      })
     )
   }
 
   async teardown() {
     this.window.loadsInProgress = Math.max(0, this.window.loadsInProgress - 1)
     this.main.abortables.remove(this.id)
-    this.main.dispatch(Loads.delete(this.id))
+    this.main.dispatch(
+      Loads.update({
+        id: this.id,
+        changes: {finishedAt: new Date().toISOString()},
+      })
+    )
   }
 
   onProgress(progress: number) {
@@ -39,13 +52,9 @@ export class LoadContext {
   }
 
   onWarning(warning: string) {
-    this.main.dispatch(
-      Pools.appendWarning({
-        lakeId: this.opts.lakeId,
-        poolId: this.opts.poolId,
-        warning,
-      })
-    )
+    const load = Loads.find(this.main.store.getState(), this.id)
+    const errors = [...load.errors, warning]
+    this.main.dispatch(Loads.update({id: this.id, changes: {errors}}))
   }
 
   async onPoolChanged() {

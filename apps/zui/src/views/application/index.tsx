@@ -5,11 +5,11 @@ import * as routes from "src/app/router/routes"
 import AppWrapper from "src/app/routes/app-wrapper/app-wrapper"
 import React from "react"
 import {Route, Switch} from "react-router"
-import useSearchShortcuts from "./useSearchShortcuts"
-import {useSearchAppMenu} from "src/pages/search/use-search-app-menu"
-import {WelcomePage} from "src/pages/welcome"
-import {useReleaseNotes} from "src/application/use-release-notes"
-import {InitPool, Show} from "src/pages/pools/show"
+import useShortcuts from "./use-shortcuts"
+import {useAppMenu} from "./use-app-menu"
+import {WelcomePage} from "src/views/welcome-page"
+import {useReleaseNotes} from "./use-release-notes"
+import {InitPool, Show} from "src/views/pool-page"
 import {QueryRoute} from "src/app/query-home/route"
 import Head from "next/head"
 import {useTabId} from "src/app/core/hooks/use-tab-id"
@@ -51,10 +51,10 @@ function AppMain() {
   }
 }
 
-export default function App() {
-  useSearchAppMenu()
+export default function Application() {
+  useAppMenu()
   useReleaseNotes()
-  useSearchShortcuts()
+  useShortcuts()
   return (
     <AppTabsRouter>
       <Head>

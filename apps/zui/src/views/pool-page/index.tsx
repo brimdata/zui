@@ -10,20 +10,11 @@ import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
 import {H1} from "src/components/h1"
 import {NotFound} from "./404"
 import {EmptyPoolPane} from "src/views/empty-pool-pane"
-import {PoolDataList} from "src/views/pool-data-list"
 import {ButtonMenu} from "src/components/button-menu"
-
-const BG = styled.div`
-  --page-padding: 32px;
-  position: relative;
-  flex: 1;
-`
-
-const Header = styled.header`
-  padding: 24px var(--page-padding);
-  display: flex;
-  justify-content: space-between;
-`
+import {RecentLoads} from "./recent-loads"
+import {Details} from "./details"
+import styles from "./index.module.css"
+import classNames from "classnames"
 
 const Toolbar = styled.div`
   display: flex;
@@ -78,20 +69,23 @@ export const Show = () => {
   const menu = poolToolbarMenu.build(pool)
   const isEmpty = pool.empty()
   return (
-    <BG>
-      <Header>
-        <div>
-          <H1>{pool.name}</H1>
-          <Subtitle>{bytes(pool.stats.size)}</Subtitle>
+    <div className={styles.page}>
+      <header className={styles.header}>
+        <div className={classNames(styles.wrap, styles.headerContent)}>
+          <div>
+            <H1>{pool.name}</H1>
+            <Subtitle>{bytes(pool.stats.size)}</Subtitle>
+          </div>
+          <Toolbar>
+            <ButtonMenu label={menu.label} items={menu.items} />
+          </Toolbar>
         </div>
-        <Toolbar>
-          <ButtonMenu label={menu.label} items={menu.items} />
-        </Toolbar>
-      </Header>
+      </header>
       <Body>
+        <RecentLoads id={pool.id} />
+        <Details pool={pool} />
         {isEmpty && <EmptyPoolPane />}
-        <PoolDataList pool={pool} />
       </Body>
-    </BG>
+    </div>
   )
 }

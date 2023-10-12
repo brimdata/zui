@@ -7,7 +7,7 @@ import {Title} from "src/components/title"
 import styled from "styled-components"
 import links from "src/app/core/links"
 import {invoke} from "src/core/invoke"
-import {chooseFiles} from "src/domain/loaders/handlers"
+import {chooseFiles} from "src/domain/loads/handlers"
 
 const BG = styled.div`
   background-image: url(/welcome-page-background.svg);

@@ -5,6 +5,7 @@ import {ZedScript} from "src/app/core/models/zed-script"
 import {LoadFormData} from "../messages"
 import {errorToString} from "src/util/error-to-string"
 import {deriveName} from "src/domain/pools/utils"
+import {poolPath} from "src/app/router/utils/paths"
 
 /* Called when the user submits the preview & load form */
 export const submit = createOperation(
@@ -13,7 +14,7 @@ export const submit = createOperation(
     const [pool, undoPool] = await createPool(data)
     const script = new ZedScript(data.shaper)
 
-    // Async so that we can return this and subscribe to updates on the pool.
+    // Async so that we can return this and subscribe to updates on the load.
     zui.pools
       .load({
         windowId: data.windowId,
@@ -27,10 +28,6 @@ export const submit = createOperation(
         body: data.body,
       })
       .then(() => {
-        zui.window.query({
-          pins: [{type: "from", value: pool.name}],
-          value: "",
-        })
         zui.window.showSuccessMessage("Successfully loaded into " + pool.name)
       })
       .catch((e) => {
@@ -38,7 +35,7 @@ export const submit = createOperation(
         zui.window.showErrorMessage("Load error " + errorToString(e))
       })
 
-    return {id: pool.id, name: pool.name}
+    zui.window.openTab(poolPath(pool.id))
   }
 )
 

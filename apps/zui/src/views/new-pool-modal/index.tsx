@@ -4,7 +4,7 @@ import styles from "./index.module.css"
 import classNames from "classnames"
 import {H1} from "src/components/h1"
 import {useZuiApi} from "src/app/core/context"
-import {lakePoolPath} from "src/app/router/utils/paths"
+import {poolPath} from "src/app/router/utils/paths"
 import Tabs from "src/js/state/Tabs"
 import {useDispatch} from "src/app/core/state"
 import {useState} from "react"
@@ -18,7 +18,7 @@ export function NewPoolModal(props) {
   const onSubmit = handleSubmit(async (data: any) => {
     try {
       const id = await api.pools.create(data.name, data)
-      dispatch(Tabs.activateUrl(lakePoolPath(id)))
+      dispatch(Tabs.activateUrl(poolPath(id)))
       api.toast.success("Pool Created")
       props.onClose()
     } catch (e) {
