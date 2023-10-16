@@ -3,7 +3,7 @@ import {zq} from "@brimdata/zed-node"
 import {LoadFormat, zjson} from "@brimdata/zed-js"
 
 export const preview = createOperation(
-  "loaders.preview",
+  "loads.preview",
   async (
     {main},
     files: string[],
@@ -34,7 +34,7 @@ export const preview = createOperation(
 )
 
 export const abortPreview = createOperation(
-  "loaders.abortPreview",
+  "loads.abortPreview",
   async ({main}, id: string) => {
     await main.abortables.abort(id)
   }

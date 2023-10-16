@@ -7,7 +7,7 @@ import {submit} from "./operations"
 import {getPath} from "zui-test-data"
 import * as zui from "src/zui"
 
-const system = new SystemTest("loaders.operations")
+const system = new SystemTest("loads.operations")
 
 jest.setTimeout(5000)
 

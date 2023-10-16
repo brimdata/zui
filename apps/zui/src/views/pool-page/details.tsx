@@ -3,7 +3,7 @@ import {Pool} from "src/app/core/pools/pool"
 import styles from "./details.module.css"
 
 export function Details({pool}: {pool: Pool}) {
-  const keys = pool.keys.map((k) => k.join("."))
+  const keys = pool.keys.map((k) => (k ? k.join(".") : "null"))
   return (
     <section className={styles.details}>
       <h2 className={styles.title}>Pool Details</h2>

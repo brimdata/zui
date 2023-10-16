@@ -40,7 +40,7 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
     // @ts-ignore
     const windowId = window.windowId
     try {
-      await invoke("loaders.submit", {
+      await invoke("loads.create", {
         ...data,
         files,
         shaper,

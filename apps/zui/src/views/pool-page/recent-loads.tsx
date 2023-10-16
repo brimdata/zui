@@ -18,7 +18,7 @@ export function RecentLoads(props: {id: string}) {
       load.status == "loading" &&
       confirm("Are you sure you want to abort this load?")
     ) {
-      await invoke("loaders.abort", load.id)
+      await invoke("loads.abort", load.id)
     } else {
       dispatch(Loads.delete(load.id))
     }

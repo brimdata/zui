@@ -10,11 +10,10 @@ import {isAbortError} from "src/util/is-abort-error"
 
 /* Called when the user submits the preview & load form */
 export const submit = createOperation(
-  "loaders.submit",
+  "loads.create",
   async (ctx, data: LoadFormData) => {
     const pool = await createPool(data)
-    const script = new ZedScript(data.shaper)
-
+    const script = new ZedScript(data.shaper || "")
     // Async so that we can return this and subscribe to updates on the load.
     zui.pools
       .load({

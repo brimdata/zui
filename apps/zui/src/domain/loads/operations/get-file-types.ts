@@ -7,7 +7,7 @@ async function getFileType(path: string) {
 }
 
 export const getFileTypes = createOperation(
-  "loaders.getFileTypes",
+  "loads.getFileTypes",
   async (_, paths: string[]) => {
     const data = []
     for (const path of paths) data.push(await getFileType(path))

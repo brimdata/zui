@@ -1,11 +1,18 @@
 import {createHandler} from "src/core/handlers"
-import {errorToString} from "src/util/error-to-string"
 
 export const quickLoadFiles = createHandler((ctx, files: string[]) => {
-  const promise = ctx.invoke("loaders.quickLoad", files)
-  ctx.toast.promise(promise, {
-    loading: `Loading data...`,
-    success: (result) => `Successfully loaded data into ${result.name}`,
-    error: (e) => "Load error: " + errorToString(e),
+  if (files.length === 0) {
+    ctx.toast.error("No Files Provided")
+    return
+  }
+
+  ctx.invoke("loads.create", {
+    windowId: globalThis.windowId,
+    poolId: "new",
+    files: files,
+    author: "Zui",
+    body: "Quick Load",
+    shaper: "",
+    format: "auto",
   })
 })

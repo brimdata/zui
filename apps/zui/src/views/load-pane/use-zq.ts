@@ -22,7 +22,7 @@ export function useZq(files: string[], format: zed.LoadFormat) {
       lastId.current = invokeId
 
       setIsLoading(true)
-      invoke("loaders.preview", files, script, format, invokeId)
+      invoke("loads.preview", files, script, format, invokeId)
         .then(({error, data, id}) => {
           if (lastId.current !== id) return
 
@@ -39,7 +39,7 @@ export function useZq(files: string[], format: zed.LoadFormat) {
 
       return () => {
         setIsLoading(false)
-        invoke("loaders.abortPreview", invokeId)
+        invoke("loads.abortPreview", invokeId)
       }
     },
     [files, format]

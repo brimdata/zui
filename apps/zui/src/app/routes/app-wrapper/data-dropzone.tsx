@@ -1,10 +1,9 @@
 import styles from "./data-dropzone.module.css"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import {previewLoadFiles} from "src/domain/loads/handlers"
+import {previewLoadFiles, quickLoadFiles} from "src/domain/loads/handlers"
 import useListener from "src/js/components/hooks/useListener"
 import {useEffect, useState} from "react"
-import {invoke} from "src/core/invoke"
 
 export function DataDropzone({children}) {
   const poolId = usePoolId()
@@ -12,7 +11,7 @@ export function DataDropzone({children}) {
   const onDrop = async (webFiles: File[]) => {
     const files = webFiles.map((f) => f.path)
     if (shiftKey) {
-      invoke("loaders.quickLoad", files)
+      quickLoadFiles(files)
     } else {
       previewLoadFiles({files, poolId})
     }
@@ -20,12 +19,7 @@ export function DataDropzone({children}) {
 
   let [props, ref] = useFilesDrop({onDrop})
 
-  useListener(document.body, "keydown", (e: KeyboardEvent) => {
-    if (!props.isOver) return
-    setShiftKey(e.shiftKey)
-  })
-
-  useListener(document.body, "keyup", (e: KeyboardEvent) => {
+  useListener(document.body, "dragover", (e: KeyboardEvent) => {
     if (!props.isOver) return
     setShiftKey(e.shiftKey)
   })
