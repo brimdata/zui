@@ -1,11 +1,8 @@
-import {
-  createAndLoadFiles,
-  loadFiles as poolsLoadFiles,
-} from "src/app/commands/pools"
 import {createHandler} from "src/core/handlers"
 import Current from "src/js/state/Current"
 import LoadDataForm from "src/js/state/LoadDataForm"
 import Pools from "src/js/state/Pools"
+import {quickLoadFiles} from "./quick-load-files"
 
 export const previewLoadFiles = createHandler(
   async (
@@ -13,18 +10,14 @@ export const previewLoadFiles = createHandler(
     opts: {files: string[]; poolId?: string}
   ) => {
     const files = await invoke("loads.getFileTypes", opts.files)
+    const lakeId = select(Current.getLakeId)
+    const pool = select(Pools.get(lakeId, opts.poolId))
+    const poolId = pool ? pool.id : null
 
-    // This is wrong
     if (files.length === 1 && files[0].type === "pcap") {
-      if (opts.poolId) {
-        poolsLoadFiles.run(opts.poolId, opts.files)
-      } else {
-        createAndLoadFiles.run(opts.files)
-      }
+      quickLoadFiles({files, poolId})
     } else {
-      const lakeId = select(Current.getLakeId)
-      const pool = select(Pools.get(lakeId, opts.poolId))
-      dispatch(LoadDataForm.setPoolId(pool ? pool.id : null))
+      dispatch(LoadDataForm.setPoolId(poolId))
       dispatch(LoadDataForm.setFiles(opts.files))
       dispatch(LoadDataForm.setShow(true))
     }
