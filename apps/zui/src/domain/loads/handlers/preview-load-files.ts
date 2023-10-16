@@ -15,7 +15,7 @@ export const previewLoadFiles = createHandler(
     const poolId = pool ? pool.id : null
 
     if (files.length === 1 && files[0].type === "pcap") {
-      quickLoadFiles({files, poolId})
+      quickLoadFiles({files: files.map((f) => f.path), poolId})
     } else {
       dispatch(LoadDataForm.setPoolId(poolId))
       dispatch(LoadDataForm.setFiles(opts.files))

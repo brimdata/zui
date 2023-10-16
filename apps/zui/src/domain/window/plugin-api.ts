@@ -1,4 +1,4 @@
-import {sendToFocusedWindow} from "src/core/ipc"
+import {sendToWindow} from "src/core/ipc"
 import {QueryParams} from "src/js/api/queries/types"
 
 export class WindowApi {
@@ -6,19 +6,19 @@ export class WindowApi {
   lakeId: string | null = null
 
   showErrorMessage(message: string) {
-    sendToFocusedWindow("window.showErrorMessage", message)
+    sendToWindow(this.id, "window.showErrorMessage", message)
   }
 
   showMessage(message: string) {
-    sendToFocusedWindow("window.showMessage", message)
+    sendToWindow(this.id, "window.showMessage", message)
   }
 
   showSuccessMessage(message: string) {
-    sendToFocusedWindow("window.showSuccessMessage", message)
+    sendToWindow(this.id, "window.showSuccessMessage", message)
   }
 
   query(params: QueryParams) {
-    sendToFocusedWindow("window.query", params)
+    sendToWindow(this.id, "window.query", params)
   }
 
   sync(args: {id: string; lakeId: string}) {
@@ -27,6 +27,6 @@ export class WindowApi {
   }
 
   openTab(path: string) {
-    sendToFocusedWindow("window.openTab", path)
+    sendToWindow(this.id, "window.openTab", path)
   }
 }
