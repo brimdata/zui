@@ -111,11 +111,24 @@ async function zedDevBuild(destPath) {
   }
 }
 
+// Suricata rules are dropped from the Windows build to fix a false positive
+// malware flagging. See https://github.com/brimdata/zui/issues/2857.
+const filterBrimcapZdeps = (src, dest) => {
+  if (process.platform == "win32" &&
+      (/suricata\.rules$/.test(src) || /emerging\.rules\.tar\.gz$/.test(src)) &&
+      fs.statSync(src).isFile()) {
+    return false
+  } else {
+    return true
+  }
+}
+
 async function main() {
   try {
     fs.copySync(
       path.resolve("..", "..", "node_modules", "brimcap", "build", "dist"),
-      zdepsPath
+      zdepsPath,
+      { filter: filterBrimcapZdeps }
     )
     const brimcapVersion = child_process
       .execSync(path.join(zdepsPath, "brimcap") + " -version")
