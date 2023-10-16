@@ -1,3 +1,6 @@
+## v1.3.1
+- Due to malware false positives, Windows releases no longer include a full initial set of Suricata rules (as always, up-to-date rules will be downloaded on first Internet-connected launch of Zui) (#2858)
+
 ## v1.3.0
 - Update Zed to [v1.10.0](https://github.com/brimdata/zed/releases/tag/v1.10.0)
 - Update Brimcap to [v1.5.2](https://github.com/brimdata/brimcap/releases/tag/v1.5.2)
