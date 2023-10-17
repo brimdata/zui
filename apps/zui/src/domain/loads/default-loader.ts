@@ -59,6 +59,7 @@ function createShaper(ctx) {
     query: ctx.shaper,
     i: ctx.format,
     file: ctx.files,
+    signal: ctx.signal,
   })
 }
 

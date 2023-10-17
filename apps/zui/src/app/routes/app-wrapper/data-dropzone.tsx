@@ -11,7 +11,7 @@ export function DataDropzone({children}) {
   const onDrop = async (webFiles: File[]) => {
     const files = webFiles.map((f) => f.path)
     if (shiftKey) {
-      quickLoadFiles(files)
+      quickLoadFiles({files})
     } else {
       previewLoadFiles({files, poolId})
     }

@@ -68,28 +68,28 @@ function wrapStdout(zq: ChildProcessWithoutNullStreams) {
   return zq.stdout;
 }
 
-function transformStream(child: ChildProcessWithoutNullStreams) {
+function transformStream(sub: ChildProcessWithoutNullStreams) {
   const stream = new Stream.Transform({
     transform(chunk, encoding, callback) {
-      if (!child.stdin.write(chunk, encoding)) {
-        child.stdin.once('drain', callback);
+      if (!sub.stdin.write(chunk, encoding)) {
+        sub.stdin.once('drain', callback);
       } else {
         process.nextTick(callback);
       }
     },
 
     flush(callback) {
-      child.stdin.end();
-      if (child.stdout.destroyed) callback();
-      else child.stdout.on('close', () => callback());
+      sub.stdin.end();
+      if (sub.stdout.destroyed) callback();
+      else sub.stdout.on('close', () => callback());
     },
   });
 
   stream.on('error', () => {
-    child.kill();
+    sub.kill('SIGKILL');
   });
 
-  child.stdin.on('error', (e: Error & { code: string }) => {
+  sub.stdin.on('error', (e: Error & { code: string }) => {
     if (e.code === 'EPIPE') {
       stream.push(null);
     } else {
@@ -97,11 +97,11 @@ function transformStream(child: ChildProcessWithoutNullStreams) {
     }
   });
 
-  child.stdout
+  sub.stdout
     .on('data', (data) => stream.push(data))
     .on('error', (e) => stream.destroy(e));
 
-  child.stderr
+  sub.stderr
     .on('data', (data) => stream.destroy(new Error(data.toString())))
     .on('error', (e) => stream.destroy(e));
 
@@ -121,9 +121,12 @@ export function createProcess(args: ZqArgs) {
   if (args.file) spawnargs.push(...arrayWrap(args.file));
   else spawnargs.push('-');
 
-  return spawn(bin, spawnargs, { signal: args.signal }).on('error', () => {
+  const zq = spawn(bin, spawnargs, { signal: args.signal }).on('error', (e) => {
     // This error must be caught in order to not throw an exception in main process
+    // Also, really make sure this process is killed. It wasn't with only the SIGTERM
+    if (e?.name == 'AbortError') zq.kill('SIGKILL');
   });
+  return zq;
 }
 
 /**

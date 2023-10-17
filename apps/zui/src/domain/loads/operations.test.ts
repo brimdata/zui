@@ -26,7 +26,7 @@ async function onSubmit(file: string) {
   })
 }
 
-test.only("good data", async () => {
+test("good data", async () => {
   await onSubmit(getPath("zillow.csv"))
 
   expect(zui.pools.all.length).toBe(1)
