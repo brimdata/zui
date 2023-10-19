@@ -107,6 +107,7 @@
     "husky": "^7.0.4",
     "is-wsl": "^2.2.0",
     "jest": "^28.0.0",
+    "jest-css-modules-transform": "^4.4.2",
     "jest-environment-jsdom": "^28.0.0",
     "jwt-decode": "^3.1.2",
     "lint-staged": "^12.1.5",

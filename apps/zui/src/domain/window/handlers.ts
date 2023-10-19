@@ -44,7 +44,6 @@ export const query = createHandler(
 export const openTab = createHandler(
   "window.openTab",
   ({dispatch}, path: string) => {
-    console.log("Opening the tab", path)
     dispatch(Tabs.activateUrl(path))
   }
 )
