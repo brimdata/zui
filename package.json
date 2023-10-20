@@ -12,9 +12,9 @@
     "build-affected": "nx affected --target=build",
     "build": "nx run-many -t build --all",
     "lint": "nx run-many -t lint --all",
-    "test": "nx run-many -t test --all",
+    "test": "nx run-many -t test --all --exclude zui-player",
     "start": "nx start zui",
-    "e2e": "nx e2e e2e-tests"
+    "e2e": "nx test zui-player"
   },
   "devDependencies": {
     "@nrwl/esbuild": "^15.8.7",
