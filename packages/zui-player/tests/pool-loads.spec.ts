@@ -30,6 +30,7 @@ test.describe('Pool Loads', () => {
     await app.page.getByLabel('Pool').selectOption({ label: 'prs.json' });
     await app.click('button', 'Load');
     await app.attached(/successfully loaded/i);
+    await app.click('button', 'Query Pool');
     await app.query('count()');
     const results = await app.getViewerResults();
     expect(results).toEqual(['this', '2']);

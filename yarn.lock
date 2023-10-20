@@ -8148,12 +8148,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"e2e-tests@workspace:packages/e2e-tests":
-  version: 0.0.0-use.local
-  resolution: "e2e-tests@workspace:packages/e2e-tests"
-  languageName: unknown
-  linkType: soft
-
 "eastasianwidth@npm:^0.2.0":
   version: 0.2.0
   resolution: "eastasianwidth@npm:0.2.0"
@@ -18193,6 +18187,12 @@ __metadata:
     ts-node: 10.9.1
     tslib: ^2.3.0
     typescript: 5.1.5
+  languageName: unknown
+  linkType: soft
+
+"zui-player@workspace:packages/zui-player":
+  version: 0.0.0-use.local
+  resolution: "zui-player@workspace:packages/zui-player"
   languageName: unknown
   linkType: soft
 

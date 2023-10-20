@@ -1,9 +1,8 @@
-# e2e-tests
+# Zui Player
 
 > End To End Testing Framework
 
 The Zui end-to-end test suite uses [Playwright](https://playwright.dev/) as the test runner.
-
 
 ## Writing a test
 
@@ -14,24 +13,24 @@ Then create a describe block and initialize a new TestApp class within it. That 
 Here's a template for getting started.
 
 ```ts
-import {expect, test} from "@playwright/test"
-import TestApp from "../helpers/test-app"
+import { expect, test } from '@playwright/test';
+import TestApp from '../helpers/test-app';
 
-test.describe("Pool Groups", () => {
-  const app = new TestApp("Pool Groups")
+test.describe('Pool Groups', () => {
+  const app = new TestApp('Pool Groups');
 
   test.beforeAll(async () => {
-    await app.init()
-  })
+    await app.init();
+  });
 
   test.afterAll(async () => {
-    await app.shutdown()
-  })
+    await app.shutdown();
+  });
 
-  test("cases", async () => {
-    await app.query("1") // and the like...
-  })
-})
+  test('cases', async () => {
+    await app.query('1'); // and the like...
+  });
+});
 ```
 
 ## Running tests
@@ -45,17 +44,35 @@ yarn e2e
 To run just one of the tests, specify the name of the file in the `tests` directory, e.g.,
 
 ```
-yarn e2e -- --grep="pool-loads.spec.ts"
+nx test zui-player -g pool-loads.spec.ts
 ```
 
 ## Selecting DOM Nodes
 
-These are common ways to select nodes.
+These are the four methods you need to know to get most work done.
 
 ```ts
-await app.find("role=button[name=create]").click()
-await app.find(':text("New Query Session")').click()
+await app.click();
+await app.attached();
+await app.detacted();
+await app.hidden();
+await app.visible();
+await app.locate();
 ```
+
+They all have the same two signatures.
+
+The first selects by aria role and aria name.
+
+The second selects using regex for any text on the page.
+
+```ts
+await app.click(aria - role, aria - name);
+// or
+await app.click(regexp);
+```
+
+### Helpful Playwright Doc Links
 
 https://playwright.dev/docs/api/class-locator
 
@@ -63,4 +80,5 @@ https://playwright.dev/docs/other-locators (formerly "Selectors")
 
 https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques
 
-https://playwright.dev/docs/api/class-page
+https://playwright.dev/docs/api/class-pa
+ge

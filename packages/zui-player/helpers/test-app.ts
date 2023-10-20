@@ -40,16 +40,21 @@ export default class TestApp {
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin;
     this.zui = await electron.launch(launchOpts);
-    this.zui.process().stdout.on('data', (data) => {
-      console.log(data.toString());
-    });
+
     await waitForTrue(() => this.zui.windows().length === 2);
     await waitForTrue(async () => !!(await this.getWindowByTitle('Zui')));
     await waitForTrue(
       async () => !!(await this.getWindowByTitle('Background'))
     );
     this.mainWin = await this.getWindowByTitle('Zui');
-    this.mainWin.on('console', console.log);
+
+    const debug = false;
+    if (debug) {
+      this.mainWin.on('console', console.log);
+      this.zui.process().stdout.on('data', (data) => {
+        console.log(data.toString());
+      });
+    }
   }
 
   async dropFile(file: string) {

@@ -55,7 +55,7 @@ test.describe('Query tests', () => {
     ).toBeVisible();
 
     // update
-    await titleBar.getByRole('button', { name: 'Save' }).click();
+    await titleBar.getByRole('button', { name: 'Update' }).click();
     await expect(
       await titleBar.getByRole('button', { name: 'Test Query Name' })
     ).toBeVisible();
