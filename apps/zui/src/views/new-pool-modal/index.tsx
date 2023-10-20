@@ -51,7 +51,6 @@ export function NewPoolModal(props) {
               name="order"
               type="radio"
               value="asc"
-              defaultChecked
               {...register("order")}
             />
             <label htmlFor="ascending">Ascending</label>
@@ -62,6 +61,7 @@ export function NewPoolModal(props) {
               name="order"
               type="radio"
               value="desc"
+              defaultChecked
               {...register("order")}
             />
             <label htmlFor="descending">Descending</label>
