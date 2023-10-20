@@ -88,6 +88,12 @@ export class WindowManager extends EventEmitter {
     this.visible.forEach((win) => win.ref.show())
   }
 
+  isHidden(id: string) {
+    const win = this.find(id)
+    if (!win) throw new Error("Could not find window with id: " + id)
+    return win.options.show === false
+  }
+
   private async register(win: ZuiWindow) {
     this.windows[win.id] = win
     win.ref.on("close", (e) => this.emit("window-will-close", e))

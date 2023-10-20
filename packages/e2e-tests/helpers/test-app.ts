@@ -40,12 +40,16 @@ export default class TestApp {
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin;
     this.zui = await electron.launch(launchOpts);
+    this.zui.process().stdout.on('data', (data) => {
+      console.log(data.toString());
+    });
     await waitForTrue(() => this.zui.windows().length === 2);
     await waitForTrue(async () => !!(await this.getWindowByTitle('Zui')));
     await waitForTrue(
       async () => !!(await this.getWindowByTitle('Background'))
     );
     this.mainWin = await this.getWindowByTitle('Zui');
+    this.mainWin.on('console', console.log);
   }
 
   async dropFile(file: string) {
@@ -60,7 +64,7 @@ export default class TestApp {
 
   async createPool(
     filepaths: string[],
-    expectedResult = /Successfully loaded/
+    expectedResult = /Successfully finished loading/
   ): Promise<void> {
     await this.mainWin.evaluate((filepaths) => {
       globalThis.dropFiles(filepaths);
@@ -88,9 +92,8 @@ export default class TestApp {
 
   async query(zed: string): Promise<void> {
     await this.setEditor(zed);
-    await this.mainWin.getByRole('button', { name: 'run-query' }).click();
+    await this.mainWin.getByRole('button', { name: 'run' }).click();
     await this.mainWin.getByRole('status', { name: 'fetching' }).isHidden();
-    await this.sleep(500);
   }
 
   async setEditor(zed: string) {

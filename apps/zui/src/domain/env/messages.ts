@@ -1,6 +1,6 @@
-import {EnvAboutApp, EnvProperties} from "./types"
+import {aboutApp, properties} from "./operations"
 
 export type EnvOperations = {
-  "env.properties": () => EnvProperties
-  "env.aboutApp": () => EnvAboutApp
+  "env.properties": typeof properties
+  "env.aboutApp": typeof aboutApp
 }

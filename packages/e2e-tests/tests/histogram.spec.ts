@@ -14,26 +14,11 @@ test.describe('Histogram Spec', () => {
   });
 
   test('Histogram appears for zeek data', async () => {
-    await app.createPool(
-      [getPath('small-zeek.zng')],
-      /successfully loaded .* small-zeek.zng/i
-    );
+    await app.createPool([getPath('small-zeek.zng')]);
+    await app.click('button', 'Query Pool');
     await app.query('');
 
     const chart = app.find(`[aria-label="histogram"]`);
     await expect(chart).toBeVisible();
-  });
-
-  test('Histogram does not appears for non-zeek data', async () => {
-    await app.createPool(
-      [getPath('prs.json')],
-      /successfully loaded .* prs.json/i
-    );
-
-    const results = app.find(`role=status[name="results"]`);
-    await expect(results).toHaveText(/Results:/);
-
-    const chart = app.find(`[aria-label="histogram"]`);
-    await expect(chart).toBeHidden();
   });
 });

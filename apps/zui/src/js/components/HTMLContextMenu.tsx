@@ -42,6 +42,7 @@ function HTMLMenuItem({item}) {
       <li
         onClick={() => item.click(item)}
         className={classNames({disabled: item.enabled === false})}
+        aria-label={item.label}
       >
         {item.label}
       </li>

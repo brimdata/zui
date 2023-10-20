@@ -7,7 +7,8 @@ import {invoke} from "src/core/invoke"
 import {previewLoadFiles} from "src/domain/loads/handlers"
 
 export default async function initGlobals(store: Store) {
-  global.env = await invoke("env.properties")
+  // @ts-ignore
+  global.env = await invoke("env.properties", windowId)
   global.mainArgs = await invoke("mainArgs")
   global.appMeta = await invoke("getAppMeta")
   global.tabHistories = new Histories(TabHistories.selectAll(store.getState()))

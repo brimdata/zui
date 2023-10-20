@@ -5,11 +5,17 @@ import env from "src/app/core/env"
 import {createOperation} from "src/core/operations"
 import {getPackageJSON} from "./packageJSON"
 
-export const properties = createOperation("env.properties", () => {
-  return env
-})
+export const properties = createOperation(
+  "env.properties",
+  ({main}, windowId: string) => {
+    return {
+      ...env,
+      isHiddenWindow: main.windows.isHidden(windowId),
+    }
+  }
+)
 
-export const about = createOperation("env.aboutApp", () => {
+export const aboutApp = createOperation("env.aboutApp", () => {
   const root = app.getAppPath().replace("app.asar", "app.asar.unpacked")
   const packageJSON = getPackageJSON()
   return {

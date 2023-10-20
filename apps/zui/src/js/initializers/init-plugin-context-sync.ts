@@ -3,6 +3,8 @@ import Current from "../state/Current"
 import {Store} from "../state/types"
 
 export function initializePluginContextSync(store: Store) {
+  if (globalThis.env.isHiddenWindow) return
+
   let lakeId = null
 
   const syncWindow = () =>

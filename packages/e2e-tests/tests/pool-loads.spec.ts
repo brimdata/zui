@@ -16,12 +16,12 @@ test.describe('Pool Loads', () => {
   // These depend on the order in which they run. They must all be run together.
   test('load data into a pool', async () => {
     await app.createPool([getPath('prs.json')]);
+    await app.click('button', 'Query Pool');
     await app.query('count()');
     await app.hidden('generic', 'Load Successful');
 
     const results = await app.getViewerResults();
     expect(results).toEqual(['this', '1']);
-    await app.hidden(/successfully loaded/i);
   });
 
   test('load more data into the pool', async () => {

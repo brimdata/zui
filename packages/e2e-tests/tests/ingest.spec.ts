@@ -32,6 +32,7 @@ test.describe('Ingest tests', () => {
   test.beforeAll(async () => {
     await app.init();
     await app.createPool([getPath('sample.tsv')]);
+    await app.click('button', 'Query Pool');
   });
 
   test.afterAll(async () => {
@@ -41,7 +42,6 @@ test.describe('Ingest tests', () => {
   testQueries.forEach(({ zed, expectedStats }, i) => {
     const testId = sprintf('%03d', i);
     test(`query${testId}: "${zed}"`, async () => {
-      await app.sleep(3000);
       await app.query(zed);
       const resultStats = await app.getViewerStats();
       expect(resultStats).toEqual(expectedStats);

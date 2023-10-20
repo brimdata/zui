@@ -8,6 +8,7 @@ test.describe('Query tests', () => {
   test.beforeAll(async () => {
     await app.init();
     await app.createPool([getPath('sample.tsv')]);
+    await app.click('button', 'Query Pool');
   });
 
   test.afterAll(async () => {
