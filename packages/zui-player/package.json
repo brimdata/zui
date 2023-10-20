@@ -1,4 +1,6 @@
 {
   "name": "zui-player",
-  "private": true
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {}
 }

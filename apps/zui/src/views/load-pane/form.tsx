@@ -36,6 +36,7 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
   const [error, setError] = useState(null)
 
   const onSubmit = async (data) => {
+    console.log("on submit")
     const shaper = select(LoadDataForm.getShaper)
     // @ts-ignore
     const windowId = window.windowId
@@ -65,9 +66,13 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
     dispatch(LoadDataForm.setFiles(files.filter((p) => p !== path)))
   }
 
+  function formSubmit(e) {
+    console.log("Form Submitted")
+    return handleSubmit(onSubmit)(e)
+  }
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={formSubmit}
       className={classNames(styles.form, baseForm.form)}
     >
       <ScrollShadow threshold={45} className={styles.formBody}>
