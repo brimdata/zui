@@ -45,7 +45,5 @@ test("bad data", async () => {
   await waitFor(() => expect(zui.loads.all.length).toBe(2))
   const load = last(zui.loads.all)
 
-  expect(load.errors[0]).toContain(
-    "Error: /Users/jkerr/brimdata/zui/packages/zui-test-data/data/zed-logo.svg: format detection error"
-  )
+  expect(load.errors[0]).toContain("zed-logo.svg: format detection error")
 })
