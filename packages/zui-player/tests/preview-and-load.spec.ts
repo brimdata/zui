@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { test } from '@playwright/test';
 import TestApp from '../helpers/test-app';
 import { getPath } from 'zui-test-data';
 
@@ -14,7 +14,6 @@ test.describe('Preview and Load', () => {
   });
 
   test('create new pool, change key, type <enter>', async () => {
-    await app.sleep(5000);
     await app.dropFile(getPath('sample.tsv'));
     await app.click('button', 'Pool Settings');
     await app.fill('Pool Key', 'my_new_key');
