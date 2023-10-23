@@ -1,18 +1,7 @@
-import { test } from '@playwright/test';
-import TestApp from '../helpers/test-app';
+import { play } from 'zui-player';
 import { getPath } from 'zui-test-data';
 
-test.describe('Preview and Load', () => {
-  const app = new TestApp('Preview and Load');
-
-  test.beforeAll(async () => {
-    await app.init();
-  });
-
-  test.afterAll(async () => {
-    await app.shutdown();
-  });
-
+play('Preview & Load', (app, test) => {
   test('create new pool, change key, type <enter>', async () => {
     await app.dropFile(getPath('sample.tsv'));
     await app.click('button', 'Pool Settings');

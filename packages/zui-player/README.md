@@ -41,30 +41,27 @@ NODE_ENV=production nx test zui-player
 
 To write an e2e test, create a file called `[my-test].spec.ts` in the `tests` directory.
 
-Then create a describe block and initialize a new TestApp class within it. That class contains all the helper methods needed for quickly writing an end to end test.
+Import the `play` function from the "zui-player" package.
 
 Here's a template for getting started.
 
 ```ts
-import { expect, test } from '@playwright/test';
-import TestApp from '../helpers/test-app';
+import { play } from 'zui-player';
+import { getPath } from 'zui-test-data';
 
-test.describe('Pool Groups', () => {
-  const app = new TestApp('Pool Groups');
+play('Preview & Load', (app, test) => {
+  test('create new pool, change key, type <enter>', async () => {
+    await app.dropFile(getPath('sample.tsv'));
+    await app.click('button', 'Pool Settings');
+    await app.fill('Pool Key', 'my_new_key');
+    await app.press('Enter');
 
-  test.beforeAll(async () => {
-    await app.init();
-  });
-
-  test.afterAll(async () => {
-    await app.shutdown();
-  });
-
-  test('cases', async () => {
-    await app.query('1'); // and the like...
+    await app.attached(/successfully finished loading/i);
   });
 });
 ```
+
+The app argument is a TestApp instance. Look at the TestApp class body for all the functions available. It wraps the playwright api.
 
 ## Selecting DOM Nodes
 

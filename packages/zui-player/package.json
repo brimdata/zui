@@ -1,6 +1,7 @@
 {
   "name": "zui-player",
   "private": true,
+  "main": "./index.ts",
   "dependencies": {},
   "devDependencies": {}
 }
