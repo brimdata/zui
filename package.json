@@ -24,7 +24,6 @@
     "@nx/js": "16.10.0",
     "@nx/linter": "16.10.0",
     "@nx/workspace": "16.10.0",
-    "@nx/package.json": "16.10.0",
     "@nxkit/playwright": "^2.3.0",
     "@playwright/test": "1.27.1",
     "@swc/cli": "~0.1.55",
