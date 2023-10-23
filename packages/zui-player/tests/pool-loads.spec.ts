@@ -27,7 +27,10 @@ test.describe('Pool Loads', () => {
   test('load more data into the pool', async () => {
     await app.click('treeitem', 'prs.json');
     await app.dropFile(getPath('prs.json'));
-    await app.page.getByLabel('Pool').selectOption({ label: 'prs.json' });
+    await app.page
+      .getByLabel('Pool')
+      .nth(0)
+      .selectOption({ label: 'prs.json' });
     await app.click('button', 'Load');
     await app.attached(/successfully loaded/i);
     await app.click('button', 'Query Pool');

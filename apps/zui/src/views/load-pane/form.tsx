@@ -107,8 +107,9 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
             </ul>
           </div>
           <div>
-            <label>Data Format</label>
+            <label htmlFor="format">Data Format</label>
             <select
+              id="format"
               {...register("format")}
               onChange={onFormatChange}
               defaultValue={format}
