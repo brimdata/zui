@@ -75,6 +75,7 @@ export const IconButton = forwardRef(function IconButton(
       onClick={onClick}
       disabled={props.enabled === false || props.whenResult === false}
       aria-label={props.label}
+      type="button"
     >
       <Icon name={props.iconName} size={props.iconSize ?? 16} />
       {props.display === "icon-label" ? props.label : null}

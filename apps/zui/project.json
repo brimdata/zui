@@ -22,6 +22,13 @@
         "jestConfig": "apps/zui/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "build": {
+      "executor": "nx:run-script",
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/out"],
+      "options": {
+        "script": "build"
+      }
     }
   }
 }

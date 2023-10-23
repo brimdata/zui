@@ -174,6 +174,14 @@ export default class TestApp {
     return this.locate(role, name).waitFor({ state: 'visible' });
   }
 
+  async fill(label: string, value: string) {
+    return this.page.getByLabel(label).fill(value);
+  }
+
+  async press(key: string) {
+    return this.page.keyboard.press(key);
+  }
+
   locate(role: Role | RegExp, name?: string) {
     if (role instanceof RegExp) {
       return this.mainWin.getByText(role);

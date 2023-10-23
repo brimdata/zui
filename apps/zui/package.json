@@ -16,6 +16,7 @@
     "start:main": "yarn build:main --watch",
     "start:renderer": "next dev",
     "start:electron": "nodemon --watch dist ../../node_modules/electron/cli.js .",
+    "watch-code": "run-p start:main start:renderer",
     "build": "run-p -l 'build:**'",
     "build:main": "node scripts/esbuild.mjs",
     "build:renderer": "next build",

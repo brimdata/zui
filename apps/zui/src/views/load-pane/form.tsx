@@ -130,7 +130,7 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
         </section>
         {watch("poolId") === "new" && (
           <details>
-            <summary>
+            <summary role="button" aria-label="Pool Settings">
               <div className={styles.summaryRule}>
                 <label>Pool Settings</label>
                 <hr />
@@ -141,13 +141,19 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
                 <label htmlFor="name">Name</label>
                 <input
                   type="text"
+                  id="name"
                   {...register("name")}
                   placeholder="Derive from filenames..."
                 />
               </div>
               <div>
                 <label htmlFor="key">Pool Key</label>
-                <input type="text" {...register("key")} defaultValue={"ts"} />
+                <input
+                  id="key"
+                  type="text"
+                  {...register("key")}
+                  defaultValue={"ts"}
+                />
               </div>
               <div>
                 <label>Sort Order</label>
