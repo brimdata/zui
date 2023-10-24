@@ -12,6 +12,18 @@ on:
       - 'build-insiders/**'
 
 jobs:
+  check_latest:
+    name: Get last released version
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get last released version
+        id: latest_release
+        uses: thebritican/fetch-latest-release@v2.0.0
+        with:
+          repo_path: brimdata/zui-insiders
+    outputs:
+      version: ${{ steps.latest_release.outputs.tag_name }}
+
   release:
     name: Build
     strategy:
@@ -27,7 +39,7 @@ jobs:
         uses: ./.github/actions/setup-zui
 
       - name: Inject package.json
-        run: yarn nx inject insiders
+        run: yarn nx inject insiders ${{ needs.check_latest.outputs.version }}
 
       - name: Disable yarn immutable installs
         run: yarn config set enableImmutableInstalls false
@@ -39,7 +51,7 @@ jobs:
         uses: ./.github/actions/build-zui
         with:
           cmd: yarn nx package-insiders zui
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
+          gh_token: ${{ secrets.PAT_TOKEN }}
           # Windows
           csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
           csc_link: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
