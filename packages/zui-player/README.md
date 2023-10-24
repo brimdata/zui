@@ -96,5 +96,4 @@ https://playwright.dev/docs/other-locators (formerly "Selectors")
 
 https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques
 
-https://playwright.dev/docs/api/class-pa
-ge
+https://playwright.dev/docs/api/class-page
