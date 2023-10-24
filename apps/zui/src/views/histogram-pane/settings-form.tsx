@@ -63,7 +63,9 @@ export function SettingsForm(props: Props) {
       </section>
       <div className={forms.submission}>
         <div></div>
-        <button type="submit">Save</button>
+        <button type="submit" className={forms.submit}>
+          Save
+        </button>
       </div>
     </form>
   )

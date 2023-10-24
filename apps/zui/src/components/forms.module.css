@@ -25,7 +25,7 @@
 .form input:disabled {
     background: var(--border-color);
     background: transparent;
-    border-color: transparent; 
+    border-color: transparent;
     color: currentColor;
 }
 
@@ -50,13 +50,13 @@
     display: flex;
 }
 
-.form .horizontalFields > * {
+.form .horizontalFields>* {
     display: flex;
     justify-content: space-between;
-    width: 100%;    
+    width: 100%;
 }
 
-.form .horizontalFields > * > *:not(label) {
+.form .horizontalFields>*>*:not(label) {
     max-width: 50%;
 }
 
@@ -73,7 +73,7 @@
     cursor: pointer;
 }
 
-.form button[type=submit] {
+.form .submit {
     height: var(--form-height);
     border-radius: var(--form-border-radius);
     background: var(--form-bg-color);
@@ -87,16 +87,20 @@
     min-width: 80px;
 }
 
-.form button[type=submit]:hover:not(:disabled) {
+.form .submit:hover:not(:disabled) {
     background: var(--primary-color-dark);
 }
 
-.form button[type=submit]:active:not(:disabled) {
+.form .submit:active:not(:disabled) {
+    box-shadow: none;
+    transform: translateY(1px);
+}
+
+.form .button:active:not(:disabled) {
     background: var(--primary-color-darker);
 }
 
-.form button[type=button],
-.form button[type=reset] {
+.form .button {
     height: var(--form-height);
     border-radius: var(--form-border-radius);
     background: var(--form-bg-color);
@@ -108,20 +112,21 @@
     min-width: 80px;
 }
 
-.form button[type=button]:hover:not(:disabled) {
+.form .button:hover:not(:disabled) {
     background: var(--form-bg-color-dark);
 }
 
-.form button[type=button]:active:not(:disabled) {
+.form .button:active:not(:disabled) {
     background: var(--form-bg-color-darker);
 }
 
-.form button:active:not(:disabled) {
+.form .button:active:not(:disabled) {
     box-shadow: none;
     transform: translateY(1px);
 }
 
-.form button:disabled {
+.form .button:disabled,
+.form .submit:disabled {
     opacity: 0.4;
     cursor: no-drop
 }

@@ -105,10 +105,10 @@ const ExportModal = ({onClose}) => {
         </div>
       </section>
       <div className={classNames(modals.submission, forms.submission)}>
-        <button type="button" onClick={onClose}>
+        <button type="button" onClick={onClose} className={forms.button}>
           Close
         </button>
-        <button type="submit" onClick={onExport}>
+        <button type="submit" onClick={onExport} className={forms.submit}>
           Export
         </button>
       </div>

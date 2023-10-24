@@ -6,14 +6,13 @@ import {PinFormProps} from "../base-pin"
 import {
   Actions,
   ActionsGroup,
-  Button,
   Field,
   getFormData,
   Input,
   Label,
-  PrimaryButton,
   RedLink,
 } from "../form-helpers"
+import forms from "src/components/forms.module.css"
 import {getTimeString} from "./get-time-string"
 
 const Preview = styled.time`
@@ -29,6 +28,7 @@ export default function Form(props: PinFormProps<TimeRangeQueryPin>) {
   const [toValue, setToValue] = useState(props.pin.to)
   return (
     <form
+      className={forms.form}
       method="dialog"
       onSubmit={(e) => {
         const raw = getFormData(e)
@@ -72,13 +72,15 @@ export default function Form(props: PinFormProps<TimeRangeQueryPin>) {
         <Preview>{getTimeString(fromValue, zone)}</Preview>
         <Preview>{getTimeString(toValue, zone)}</Preview>
       </Field>
-      <Actions>
+      <Actions className={forms.submission}>
+        <RedLink onClick={props.onDelete}>Delete</RedLink>
         <ActionsGroup>
-          <RedLink onClick={props.onDelete}>Delete</RedLink>
-        </ActionsGroup>
-        <ActionsGroup>
-          <Button type="reset">Cancel</Button>
-          <PrimaryButton type="submit">OK</PrimaryButton>
+          <button className={forms.button} type="reset">
+            Cancel
+          </button>
+          <button type="submit" className={forms.submit}>
+            OK
+          </button>
         </ActionsGroup>
       </Actions>
     </form>

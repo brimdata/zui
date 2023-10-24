@@ -1,5 +1,5 @@
 import {createOperation} from "src/core/operations"
-import {zq} from "@brimdata/zed-node"
+import {zq} from "src/core/zq"
 import {LoadFormat, zjson} from "@brimdata/zed-js"
 
 export const preview = createOperation(

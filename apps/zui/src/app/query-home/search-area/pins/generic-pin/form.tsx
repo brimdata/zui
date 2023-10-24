@@ -3,20 +3,20 @@ import {GenericQueryPin} from "src/js/state/Editor/types"
 import {PinFormProps} from "../base-pin"
 import {
   Actions,
-  Button,
   Field,
   getFormData,
   Input,
   Label,
-  PrimaryButton,
   TextArea,
   RedLink,
   ActionsGroup,
 } from "../form-helpers"
+import forms from "src/components/forms.module.css"
 
 export function Form(props: PinFormProps<GenericQueryPin>) {
   return (
     <form
+      className={forms.form}
       method="dialog"
       onSubmit={(e) => props.onSubmit(getFormData(e))}
       onReset={props.onReset}
@@ -40,8 +40,12 @@ export function Form(props: PinFormProps<GenericQueryPin>) {
         </ActionsGroup>
 
         <ActionsGroup>
-          <Button type="reset">Cancel</Button>
-          <PrimaryButton type="submit">OK</PrimaryButton>
+          <button className={forms.button} type="reset">
+            Cancel
+          </button>
+          <button className={forms.submit} type="submit">
+            OK
+          </button>
         </ActionsGroup>
       </Actions>
     </form>

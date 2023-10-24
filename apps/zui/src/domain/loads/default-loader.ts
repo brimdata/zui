@@ -2,7 +2,7 @@ import {LoadContext} from "./load-context"
 import fs from "fs"
 import {pipeline, Transform} from "stream"
 import {Loader} from "./types"
-import {createReadableStream} from "@brimdata/zed-node"
+import {createReadableStream} from "src/core/zq"
 import {throttle} from "lodash"
 import {errorToString} from "src/util/error-to-string"
 
