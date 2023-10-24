@@ -2,7 +2,7 @@ import { eachLine } from '../ndjson/lines';
 import { JSOptions } from '../values/types';
 import * as zjson from '../zjson';
 import { Channel } from './channel';
-import { CollectOpts, Collector } from '../types';
+import { Collector } from '../types';
 import { IsoResponse } from '../client/types';
 
 export class ResultStream {
@@ -59,7 +59,7 @@ export class ResultStream {
     return channel.rows;
   }
 
-  collect(collector: Collector, opts: CollectOpts) {
+  collect(collector: Collector) {
     this.consume();
     this.channel(0).collect(collector);
     return this.promise;

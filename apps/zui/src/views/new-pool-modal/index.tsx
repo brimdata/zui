@@ -69,10 +69,16 @@ export function NewPoolModal(props) {
         </div>
         {error && <div className={forms.error}>{formatError(error)}</div>}
         <div className={classNames(forms.submission, styles.submission)}>
-          <button type="button" onClick={props.onClose}>
+          <button
+            type="button"
+            onClick={props.onClose}
+            className={forms.button}
+          >
             Cancel
           </button>
-          <button type="submit">Create</button>
+          <button type="submit" className={forms.submit}>
+            Create
+          </button>
         </div>
       </section>
     </form>

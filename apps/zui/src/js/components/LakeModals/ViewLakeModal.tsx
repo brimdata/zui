@@ -80,10 +80,10 @@ const ViewLake = ({onClose, onEdit}) => {
         </div>
       </section>
       <div className={classNames(forms.submission, modals.submission)}>
-        <button type="button" onClick={onClose}>
+        <button type="button" onClick={onClose} className={forms.button}>
           OK
         </button>
-        <button type="submit" onClick={onEdit}>
+        <button type="submit" onClick={onEdit} className={forms.submit}>
           Edit
         </button>
       </div>

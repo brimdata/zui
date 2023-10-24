@@ -10,6 +10,7 @@ import LoadDataForm from "src/js/state/LoadDataForm"
 import useSelect from "src/app/core/hooks/use-select"
 import classNames from "classnames"
 import styles from "./form.module.css"
+import forms from "src/components/forms.module.css"
 import {ChangeEvent, useRef, useState} from "react"
 import {IconButton} from "src/components/icon-button"
 import {DataFormatOptions} from "src/components/data-format-select"
@@ -215,10 +216,18 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
       <div>
         {error && <ErrorWell error={error} />}
         <div className={classNames(styles.submission)}>
-          <button type="button" onClick={props.onClose}>
+          <button
+            type="button"
+            onClick={props.onClose}
+            className={forms.button}
+          >
             Cancel
           </button>
-          <button type="submit" disabled={!props.isValid}>
+          <button
+            type="submit"
+            disabled={!props.isValid}
+            className={forms.submit}
+          >
             Load
           </button>
         </div>

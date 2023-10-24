@@ -71,15 +71,17 @@ export function ModalDialog(props: {fields: FormConfig}) {
           onSubmit={onSubmit}
           className={classNames(forms.form, "settings-form")}
         >
-          <H1 className={classNames(forms.title, styles.title)}>Preferences</H1>
+          <H1 className={classNames(forms.title, styles.title)}>Settings</H1>
           <div className={forms.horizontalFields}>
             <Form configs={props.fields} />
           </div>
           <div className={forms.submission}>
-            <button type="button" onClick={onCancel}>
+            <button type="button" onClick={onCancel} className={forms.button}>
               Cancel
             </button>
-            <button type="submit">Save</button>
+            <button type="submit" className={forms.submit}>
+              Save
+            </button>
           </div>
         </form>
       </Dialog>

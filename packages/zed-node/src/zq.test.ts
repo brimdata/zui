@@ -3,6 +3,10 @@ import { createTransformStream, zq } from './zq';
 import { getPath } from '@brimdata/sample-data';
 import { createReadStream } from 'fs';
 
+if (process.env['GITHUB_ACTIONS'] === 'true') {
+  jest.setTimeout(30_000);
+}
+
 test('zq.stream', async () => {
   const input = Stream.Readable.from('1 2 3', { encoding: 'utf-8' });
   const zq = createTransformStream({ query: '{num: this}', f: 'zson' });
@@ -113,7 +117,7 @@ test('zq with a bad zed ', async () => {
 test('zq with a bad zed with file', async () => {
   const path = getPath('prs.json');
   const promise = zq({
-    query: 'over this | isNull(*) | head 10',
+    query: 'over this | isNull(*)) | head 10',
     as: 'zjson',
     file: path,
   });

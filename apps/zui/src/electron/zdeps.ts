@@ -13,3 +13,4 @@ function getBin(name) {
 }
 
 export const zed = getBin("zed")
+export const zq = getBin("zq")

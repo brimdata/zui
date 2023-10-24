@@ -39,8 +39,12 @@ export default function HeadingForm() {
         placeholder="Query name..."
         ref={ref}
       />
-      <button type="reset">Cancel</button>
-      <button type="submit">{form.buttonText}</button>
+      <button type="reset" className={forms.button}>
+        Cancel
+      </button>
+      <button type="submit" className={forms.submit}>
+        {form.buttonText}
+      </button>
     </Form>
   )
 }

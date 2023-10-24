@@ -170,10 +170,19 @@ const LakeForm = ({onClose, lake}: Props) => {
         <FormErrors errors={errors} />
       </section>
       <section className={classNames(modals.submission, forms.submission)}>
-        <button type="button" onClick={isSubmitting ? onCancel : onClickClose}>
+        <button
+          type="button"
+          onClick={isSubmitting ? onCancel : onClickClose}
+          className={forms.button}
+        >
           Close
         </button>
-        <button type="submit" disabled={isSubmitting} onClick={onSave}>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          onClick={onSave}
+          className={forms.submit}
+        >
           {isSubmitting ? "Connecting..." : isNewLake ? "Connect" : "Save"}
         </button>
       </section>

@@ -45,7 +45,7 @@ function run(id: string): Thunk<Promise<ResultStream | null>> {
           : {...prevShapes, ...shapesMap}
         dispatch(Results.setValues({id, tabId, values}))
         dispatch(Results.setShapes({id, tabId, shapes}))
-      }, {})
+      })
       await res.promise
       dispatch(Results.success({id, tabId, count: res.rows.length}))
       return res
