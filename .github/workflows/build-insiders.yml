@@ -26,6 +26,7 @@ jobs:
 
   release:
     name: Build
+    needs: check_latest
     strategy:
       matrix:
         platform: [windows-2019, macos-12, ubuntu-20.04]
