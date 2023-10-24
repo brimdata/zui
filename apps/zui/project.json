@@ -4,15 +4,8 @@
   "sourceRoot": "apps/zui",
   "projectType": "app",
   "targets": {
-    "tsc": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/apps/zui",
-        "main": "apps/zui/src/index.ts",
-        "tsConfig": "apps/zui/tsconfig.json",
-        "assets": ["apps/zui/*.md"]
-      }
+    "watch-tsc": {
+      "command": "tsc -p apps/zui/tsconfig.json --watch"
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -28,6 +21,13 @@
       "options": {
         "jestConfig": "apps/zui/jest.config.js",
         "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "nx:run-script",
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/out"],
+      "options": {
+        "script": "build"
       }
     }
   }

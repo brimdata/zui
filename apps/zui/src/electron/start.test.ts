@@ -1,6 +1,6 @@
 import "src/test/system/real-paths"
 import {app} from "electron"
-import {ZuiMain} from "./zui-main"
+import {MainObject} from "../core/main/main-object"
 import {installExtensions} from "./extensions"
 import {main} from "./run-main/run-main"
 import env from "src/app/core/env"
@@ -15,7 +15,10 @@ jest.mock("@brimdata/zed-node")
 afterEach(teardown)
 
 test("start is called in zed lake", async () => {
-  const appMain = (await main({devtools: false, autoUpdater: false})) as ZuiMain
+  const appMain = (await main({
+    devtools: false,
+    autoUpdater: false,
+  })) as MainObject
   expect(appMain.lake.start).toHaveBeenCalledTimes(1)
 })
 
@@ -24,7 +27,7 @@ test("app opens a window on startup", async () => {
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as ZuiMain
+  })) as MainObject
   expect(appMain.windows.visible).toHaveLength(1)
 })
 test("activate creates window if there are none", async () => {
@@ -32,7 +35,7 @@ test("activate creates window if there are none", async () => {
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as ZuiMain
+  })) as MainObject
   // @ts-ignore clear the windows for the test
   appMain.windows.windows = {}
   app.emit("activate")
@@ -44,7 +47,7 @@ test("activates shows the window", async () => {
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as ZuiMain
+  })) as MainObject
   app.emit("activate")
   expect(appMain.windows.visible).toHaveLength(1)
   appMain.windows.visible.forEach((win) => {
@@ -79,7 +82,7 @@ test("last window closed hides on mac", async () => {
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as ZuiMain
+  })) as MainObject
   const preventDefault = jest.fn()
   appMain.windows.emit("window-will-close", {preventDefault})
 
@@ -95,7 +98,7 @@ test("last window quits on not mac", async () => {
     devtools: false,
     autoUpdater: false,
     lake: false,
-  })) as ZuiMain
+  })) as MainObject
   const preventDefault = jest.fn()
   appMain.windows.emit("window-will-close", {preventDefault})
 

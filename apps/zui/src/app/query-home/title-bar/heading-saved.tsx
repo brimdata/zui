@@ -8,6 +8,8 @@ import {DetatchButton} from "./detatch-button"
 import {HeadingButton} from "./heading-button"
 import {HeadingMenu} from "./heading-menu"
 import {OrangeTag} from "./orange-tag"
+import {NavActions} from "./nav-actions"
+import {QueryActions} from "./query-actions"
 
 const BG = styled.div`
   display: flex;
@@ -35,14 +37,35 @@ const Title = styled.h2`
   }
 `
 
+const Wrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 16px;
+  gap: 12px;
+  background: white;
+`
+
 export function HeadingSaved() {
+  return (
+    <Wrap>
+      <NavActions />
+      <SavedQuery />
+      <QueryActions />
+    </Wrap>
+  )
+}
+
+function SavedQuery() {
   const dispatch = useDispatch()
   const active = useActiveQuery()
+
+  if (!active.isSaved()) return null
 
   function onClick() {
     dispatch(Layout.showTitleForm("create"))
   }
-
   return (
     <BG>
       <DetatchButton />

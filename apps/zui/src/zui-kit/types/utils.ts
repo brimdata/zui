@@ -12,5 +12,5 @@ export type ControllerOpts<T> = {
 
 export type MakeControllers<T> = {
   // @ts-ignore
-  [K in keyof T as `${K}State`]: Controller<T[K]>
+  [K in keyof T as `${K}State`]?: Controller<T[K]>
 }

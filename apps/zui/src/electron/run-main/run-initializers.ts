@@ -1,8 +1,8 @@
 import log from "electron-log"
-import {ZuiMain} from "../zui-main"
+import {MainObject} from "../../core/main/main-object"
 import * as initializers from "../initializers"
 
-export async function runInitializers(main: ZuiMain) {
+export async function runInitializers(main: MainObject) {
   for (const name in initializers) {
     const mod = initializers[name]
     if ("initialize" in mod) {

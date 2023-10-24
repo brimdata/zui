@@ -1,11 +1,6 @@
-import {CreatePoolOpts, LoadFormat} from "@brimdata/zed-js"
-import errors from "src/js/errors"
-import {ErrorData} from "src/js/errors/types"
-import ErrorFactory from "src/js/models/ErrorFactory"
 import {PoolName} from "../features/sidebar/pools-section/pool-name"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
-import {invoke} from "src/core/invoke"
 
 function replaceLastItem<T>(array: T[], item: T) {
   const next = [...array]
@@ -28,6 +23,7 @@ export const renameGroup = createCommand(
       const parts = poolName.parts
       // Replace the group part of the full name
       parts[index] = parts[index].replace(prevName, newName)
+
       const name = parts.join(delimiter)
       changes.push({id: pool.id, changes: {name}})
     }
@@ -69,78 +65,3 @@ export const deleteGroup = createCommand(
     return deletePools.run(descendantIds)
   }
 )
-
-export const createAndLoadFiles = createCommand(
-  "pools.createAndLoadFiles",
-  async (
-    {api},
-    files: string[],
-    opts: {name?: string; format?: LoadFormat} & Partial<CreatePoolOpts> = {}
-  ) => {
-    let poolId: string | null = null
-    const poolNames = api.pools.all.map((p) => p.name)
-    if (!opts.name && files.length === 0) {
-      api.toast("No pool name and no files provided.")
-      return
-    }
-    try {
-      const name =
-        opts.name || (await invoke("derivePoolNameOp", files, poolNames))
-      poolId = await api.pools.create(name, opts)
-
-      if (files.length === 0) {
-        api.toast.success("Pool created: " + name)
-      } else {
-        const promise = api.pools.loadFiles(poolId, files, opts.format)
-        api.toast.promise(promise, {
-          loading: `Loading data into pool: ${name}...`,
-          success: "Load successful",
-          error: "Load error",
-        })
-        await promise
-        return poolId
-      }
-    } catch (e) {
-      console.error(e)
-      if (poolId) await api.pools.delete(poolId)
-      api.notice.error(parseError(e))
-      api.pools.syncAll()
-      throw e
-    }
-  }
-)
-
-export const loadFiles = createCommand(
-  "pools.loadFiles",
-  async ({api}, id: string, files: string[], format?: LoadFormat) => {
-    try {
-      const promise = api.pools.loadFiles(id, files, format)
-      api.toast.promise(promise, {
-        loading: "Loading data into pool...",
-        success: "Load successful",
-        error: "Load error",
-      })
-      await promise
-    } catch (e) {
-      api.notice.error(parseError(e))
-      api.pools.syncAll()
-      console.error(e)
-    }
-  }
-)
-
-function parseError(e: Error): ErrorData {
-  if (/(Failed to fetch)|(network error)/.test(e && e.message)) {
-    return errors.importInterrupt()
-  } else if (/format detection error/i.test(e && e.message)) {
-    return errors.formatDetection(e.message)
-  } else if (/EISDIR/.test(e && e.message)) {
-    return ErrorFactory.create(
-      new Error(
-        "Importing directories is not yet supported. Select multiple files."
-      )
-    )
-  } else {
-    return ErrorFactory.create(e)
-  }
-}

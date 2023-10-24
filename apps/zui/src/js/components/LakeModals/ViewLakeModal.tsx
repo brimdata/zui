@@ -1,11 +1,7 @@
 import React, {useState} from "react"
-import {Content, Title} from "../ModalDialog/ModalDialog"
 import {useSelector} from "react-redux"
 import Current from "../../state/Current"
 import Pools from "../../state/Pools"
-import ToolbarButton from "src/app/query-home/toolbar/actions/button"
-import styled from "styled-components"
-import StatusLight from "./StatusLight"
 import EditLakeModal from "./EditLakeModal"
 import useEnterKey from "../hooks/useEnterKey"
 import LakeStatuses from "../../state/LakeStatuses"
@@ -15,112 +11,19 @@ import Notice from "../../state/Notice"
 import removeLake from "../../flows/lake/removeLake"
 import {useDispatch} from "src/app/core/state"
 import {showMessageBox} from "src/js/lib/System"
-
-const StyledContent = styled(Content)`
-  padding-top: 24px;
-  min-width: 360px;
-  width: 100%;
-`
-
-const StyledFooter = styled.footer`
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  margin-bottom: 12px;
-
-  button {
-    margin-left: 12px;
-  }
-
-  a {
-    margin-right: auto;
-    color: var(--red);
-  }
-`
-
-const StyledLakeDetail = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`
-
-const LakeFields = styled.div`
-  display: flex;
-  background: rgba(255, 255, 255, 0.75);
-  flex-direction: column;
-  border-radius: 8px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  margin-bottom: 24px;
-  width: 100%;
-`
-
-const FieldWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-right: 12px;
-  margin-left: 12px;
-  height: 30px;
-  position: relative;
-
-  &:last-child:after {
-    display: none;
-  }
-
-  &:after {
-    width: 100%;
-    height: 1px;
-    box-shadow: 0 0.5px 0 var(--aqua);
-    opacity: 0.1;
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
-
-  label {
-    ${(p) => p.theme.typography.labelNormal}
-  }
-
-  p {
-    color: var(--slate);
-    ${(p) => p.theme.typography.labelNormal};
-    margin: 0;
-  }
-`
-
-const Status = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  p {
-    text-transform: capitalize;
-    margin: 0 0 0 6px;
-  }
-`
-
-type FieldProps = {
-  label: string
-  value: string
-}
-
-const Field = ({label, value}: FieldProps) => {
-  return (
-    <FieldWrapper>
-      <label>{label}</label>
-      <p>{value}</p>
-    </FieldWrapper>
-  )
-}
+import forms from "src/components/forms.module.css"
+import modals from "src/components/modals.module.css"
+import {H1} from "src/components/h1"
+import classNames from "classnames"
+import styles from "./lake-modal.module.css"
+import {capitalize} from "lodash"
 
 const ViewLake = ({onClose, onEdit}) => {
   const dispatch = useDispatch()
   const lake = useSelector(Current.getLake)
   const lakeId = lake ? lake.id : null
   const poolIds = useSelector(Pools.ids(lakeId))
-  const wsStatus = useSelector(LakeStatuses.get(lakeId))
+  const status = useSelector(LakeStatuses.get(lakeId))
 
   useEnterKey(onClose)
 
@@ -151,28 +54,45 @@ const ViewLake = ({onClose, onEdit}) => {
   }
 
   return (
-    <StyledContent>
-      <StyledLakeDetail>
-        <Title>{name}</Title>
-        <Status>
-          <StatusLight status={wsStatus} />
-          <p>{wsStatus || "unknown"}</p>
-        </Status>
-        <LakeFields>
-          <Field
-            label="Lake URL"
+    <div className={classNames(forms.form, modals.form)}>
+      <H1 className={modals.title}>{name}</H1>
+
+      <section className={forms.fields}>
+        <div>
+          <label>Lake URL</label>
+          <input
+            type="text"
+            readOnly
             value={port ? [host, port].join(":") : host}
           />
-          <Field label="Zed Version" value={version} />
-          <Field label="Pools" value={`${poolCount}`} />
-        </LakeFields>
-      </StyledLakeDetail>
-      <StyledFooter>
-        <ToolbarButton text="OK" onClick={onClose} />
-        <ToolbarButton text="Edit" onClick={onEdit} />
-        {!isDefault && <Link onClick={onRemove}>Logout</Link>}
-      </StyledFooter>
-    </StyledContent>
+        </div>
+        <div>
+          <label>Status</label>
+          <input type="text" readOnly value={capitalize(status)} />
+        </div>
+        <div>
+          <label>Zed Version</label>
+          <input type="text" readOnly value={version} />
+        </div>
+        <div>
+          <label>Pool Count</label>
+          <input type="text" readOnly value={poolCount.toString()} />
+        </div>
+      </section>
+      <div className={classNames(forms.submission, modals.submission)}>
+        <button type="button" onClick={onClose}>
+          OK
+        </button>
+        <button type="submit" onClick={onEdit}>
+          Edit
+        </button>
+      </div>
+      {!isDefault && (
+        <div className={styles.logout}>
+          <Link onClick={onRemove}>Logout</Link>
+        </div>
+      )}
+    </div>
   )
 }
 

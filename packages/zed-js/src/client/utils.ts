@@ -51,7 +51,11 @@ export function accept(format: ResponseFormat) {
 }
 
 export function defaults<T>(opts: Partial<T>, defs: T): T {
-  return { ...defs, ...opts };
+  const options = { ...opts } as T;
+  for (const key in defs) {
+    if (options[key] === undefined) options[key] = defs[key];
+  }
+  return options;
 }
 
 export async function toJS(res: IsoResponse) {

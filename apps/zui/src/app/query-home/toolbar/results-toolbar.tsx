@@ -7,11 +7,10 @@ import styles from "../query-home.module.css"
 
 export function ResultsToolbar() {
   const menu = useMenuInstance("results.toolbarMenu")
-
   return (
     <Toolbar className={styles.resultsToolbar}>
       <ResultsViewSwitch />
-      <ButtonMenu menu={menu} />
+      <ButtonMenu items={menu.items} label={menu.label} />
     </Toolbar>
   )
 }

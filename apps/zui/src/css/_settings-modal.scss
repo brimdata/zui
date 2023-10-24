@@ -1,4 +1,5 @@
 .settings-modal {
+  z-index: 99;
   min-width: 500px;
 
   .settings-form {
@@ -34,15 +35,18 @@
     h4 {
       margin-bottom: 0.25rem;
     }
+
     ul {
       margin-top: 1rem;
       line-height: 1.5;
     }
+
     a {
       color: var(--red);
       cursor: pointer;
       text-decoration: underline;
     }
+
     p {
       margin: 0;
       @include label-small;

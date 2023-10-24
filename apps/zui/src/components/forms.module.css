@@ -1,0 +1,182 @@
+.form label {
+    display: block;
+    font-weight: bold;
+    padding-left: var(--form-border-radius);
+}
+
+.form input,
+.form textarea,
+.form select {
+    display: block;
+    width: 100%;
+    height: var(--form-height);
+    border-radius: var(--form-border-radius);
+    background: var(--form-bg-color);
+    border: var(--form-border);
+    line-height: var(--form-line-height);
+    padding: var(--form-padding);
+}
+
+.form input:focus-visible {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.form input:disabled {
+    background: var(--border-color);
+    background: transparent;
+    border-color: transparent; 
+    color: currentColor;
+}
+
+.form fieldset {
+    border: none;
+    margin-left: 6px;
+    border-left: 1px solid var(--border-color);
+    padding: 18px;
+    display: grid;
+    gap: var(--form-field-gap);
+}
+
+.form .fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--form-field-gap);
+}
+
+.form .horizontalFields {
+    flex-direction: column;
+    gap: var(--form-field-gap);
+    display: flex;
+}
+
+.form .horizontalFields > * {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;    
+}
+
+.form .horizontalFields > * > *:not(label) {
+    max-width: 50%;
+}
+
+.form select {
+    appearance: none;
+    background-image: url(/select-input-arrow.svg);
+    background-repeat: no-repeat;
+    background-size: 1.2em 1.2em;
+    background-position: calc(100% - 10px) center;
+}
+
+.form .cancel {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.form button[type=submit] {
+    height: var(--form-height);
+    border-radius: var(--form-border-radius);
+    background: var(--form-bg-color);
+    line-height: var(--form-line-height);
+    padding: var(--form-padding);
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color-dark);
+    box-shadow: 0 3px 3px -3px var(--foreground-color);
+    color: white;
+    font-weight: 500;
+    min-width: 80px;
+}
+
+.form button[type=submit]:hover:not(:disabled) {
+    background: var(--primary-color-dark);
+}
+
+.form button[type=submit]:active:not(:disabled) {
+    background: var(--primary-color-darker);
+}
+
+.form button[type=button],
+.form button[type=reset] {
+    height: var(--form-height);
+    border-radius: var(--form-border-radius);
+    background: var(--form-bg-color);
+    line-height: var(--form-line-height);
+    padding: var(--form-padding);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 3px 4px -4px var(--foreground-color-light);
+    font-weight: 500;
+    min-width: 80px;
+}
+
+.form button[type=button]:hover:not(:disabled) {
+    background: var(--form-bg-color-dark);
+}
+
+.form button[type=button]:active:not(:disabled) {
+    background: var(--form-bg-color-darker);
+}
+
+.form button:active:not(:disabled) {
+    box-shadow: none;
+    transform: translateY(1px);
+}
+
+.form button:disabled {
+    opacity: 0.4;
+    cursor: no-drop
+}
+
+.form input[type=checkbox] {
+    appearance: none;
+    margin: 0;
+    width: 1.15em;
+    height: 1.15em;
+    border-radius: 0.15em;
+}
+
+.form .actionLabel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: var(--form-border-radius);
+}
+
+.form .actionLabel a {
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--foreground-color-light);
+}
+
+.form .radioInput {
+    display: grid;
+    grid-template-columns: 1.1em auto;
+    align-items: center;
+    padding-top: 0;
+    padding: var(--form-padding);
+    height: 1.6em;
+}
+
+.form .radioInput label {
+    font-weight: 400;
+}
+
+.form .submission {
+    display: flex;
+    justify-content: space-between;
+    margin-top: calc(var(--form-field-gap) * 3)
+}
+
+.form .error {
+    background: #fde2d8;
+    color: #a81f07;
+    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form input[readonly] {
+    border: none;
+    padding: 0 var(--form-border-radius);
+}

@@ -10,6 +10,7 @@ const moduleNameMapper = pathsToModuleNameMapper(config.compilerOptions.paths, {
 module.exports = {
   transform: {
     "^.+\\.(t|j)sx?$": ["@swc/jest"],
+    ".+\\.(css|styl|less|sass|scss)$": "jest-css-modules-transform",
   },
   setupFiles: ["./src/test/unit/setup/before-env.ts"],
   setupFilesAfterEnv: ["./src/test/unit/setup/after-env.ts"],

@@ -1,0 +1,42 @@
+.modal-appear {
+    transition: opacity 200ms ease-in, transform 500ms var(--pop-easing);
+    transform: translateY(-30px);
+    opacity: 0.5;
+
+    &::backdrop {
+        transition: opacity 500ms ease-out;
+        opacity: 0;
+    }
+}
+
+.modal-appear-active {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+
+    &::backdrop {
+        opacity: 0.4;
+    }
+}
+
+.modal-appear-done::backdrop {
+    opacity: 0.4;
+}
+
+.modal-exit {
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
+    transform: scale(1);
+
+    &::backdrop {
+        transition: opacity 300ms;
+        opacity: 0.4;
+    }
+}
+
+.modal-exit-active {
+    transform: translateY(-30px);
+    opacity: 0;
+
+    &::backdrop {
+        opacity: 0 !important;
+    }
+}

@@ -1,0 +1,18 @@
+.error {
+    background: #fde2d8;
+    color: #a81f07;
+    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.errorTitle {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.error ul {
+    padding-left: 1.6em;
+}

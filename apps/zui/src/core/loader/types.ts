@@ -1,12 +1,16 @@
 import {LoadFormat} from "@brimdata/zed-js"
-import {LoadContext} from "./load-context"
+import {LoadContext} from "../../domain/loads/load-context"
 
 export type LoadOptions = {
+  windowId: string
   lakeId: string
   poolId: string
   branch: string
   files: string[]
+  shaper: string
   format?: LoadFormat
+  author: string
+  body: string
 }
 
 export interface Loader {

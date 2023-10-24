@@ -4,12 +4,12 @@ import {runQuery} from "src/app/commands/run-query"
 import {useZuiApi} from "src/app/core/context"
 import useSelect from "src/app/core/hooks/use-select"
 import {useDispatch} from "src/app/core/state"
-import {InputButton} from "src/components/input-button"
-import {SubmitButton} from "src/components/submit-button"
 import Editor from "src/js/state/Editor"
 import Layout from "src/js/state/Layout"
 import styled from "styled-components"
 import {useActiveQuery} from "./context"
+import forms from "src/components/forms.module.css"
+import {IconButton} from "src/components/icon-button"
 
 const Actions = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ export function QueryActions() {
   const isEditing = useSelector(Layout.getIsEditingTitle)
   if (isEditing) return null
   return (
-    <Actions>
+    <Actions className={forms.form}>
       {active.isModified() && <Update />}
       <Create />
       <Run />
@@ -31,14 +31,13 @@ export function QueryActions() {
 
 function Run() {
   return (
-    <SubmitButton
+    <IconButton
       aria-label="run-query"
-      onClick={() => runQuery.run()} // 🎶
-      icon="run"
+      click={() => runQuery.run()} // 🎶
+      iconName="run"
       iconSize={16}
-    >
-      Run
-    </SubmitButton>
+      label={"Run"}
+    />
   )
 }
 
@@ -50,10 +49,15 @@ function Create() {
   function onClick() {
     dispatch(Layout.showTitleForm("create"))
   }
+
   return (
-    <InputButton onClick={onClick} disabled={isEmpty}>
-      {text}
-    </InputButton>
+    <IconButton
+      label={text}
+      iconName="plus"
+      enabled={!isEmpty}
+      click={onClick}
+      display="icon-label"
+    />
   )
 }
 
@@ -69,5 +73,12 @@ function Update() {
     api.queries.open(id, {history: "replace"})
   }
 
-  return <SubmitButton onClick={onClick}>Save</SubmitButton>
+  return (
+    <IconButton
+      click={onClick}
+      label="Update"
+      iconName="check"
+      display="icon-label"
+    />
+  )
 }

@@ -43,8 +43,7 @@ export class Pool {
   }
 
   empty() {
-    if (this.stats && this.stats.span) return this.stats.span.dur === 0
-    else return true
+    return this.size === 0
   }
 
   minTime(): Date {

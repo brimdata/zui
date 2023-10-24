@@ -1,0 +1,24 @@
+.resultsGroup {
+    display: grid;
+    grid-template-columns: 0.2fr 0.8fr;
+    grid-template-rows: 1fr;
+    min-height: 0;
+    padding-top: 10px;
+    gap: 10px;
+}
+
+.resultsContainer {
+    display: grid;
+    position: relative;
+    min-height: 0;
+}
+
+.original label {
+    background: var(--primary-color-lighter);
+    color: var(--primary-color-darker);
+}
+
+.shaped label {
+    background: hsl(30deg 100% 83%);
+    color: hsl(30deg 100% 30%);
+}

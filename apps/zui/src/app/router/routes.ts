@@ -18,12 +18,6 @@ export const poolShow: Route = {
   icon: "pool",
 }
 
-export const poolNew: Route = {
-  title: "New Pool",
-  path: `/pools/new`,
-  icon: "pool",
-}
-
 export const query: Route = {
   title: "<query>",
   path: `/queries/:queryId`,
@@ -59,7 +53,6 @@ type Route = {
 
 export const allRoutes: Route[] = [
   lakeReleaseNotes,
-  poolNew,
   poolShow,
   query,
   queryVersion,

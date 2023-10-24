@@ -1,11 +1,22 @@
 import {Pool} from "../core/pools/pool"
 import {createMenu} from "src/core/menu"
+import {chooseFiles} from "src/domain/loads/handlers"
 
 export const poolToolbarMenu = createMenu(
   "poolToolbarMenu",
   ({api}, pool: Pool) => {
     return [
       {
+        display: "icon-label",
+        label: "Load Data",
+        iconName: "doc-plain",
+        click: async () => {
+          chooseFiles(pool.id)
+        },
+        title: "Load data into this pool.",
+      },
+      {
+        display: "icon-label",
         label: "Query Pool",
         iconName: "query",
         click: () => {

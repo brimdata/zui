@@ -3,16 +3,16 @@ import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 
 import styled from "styled-components"
-import {lakeQueryPath} from "../router/utils/paths"
+import {queryPath} from "../router/utils/paths"
 import SearchArea from "./search-area"
 import RightPane from "../features/right-pane"
 import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
 import {ActiveQuery} from "../core/models/active-query"
-import {ResultsPane} from "src/panes/results-pane/results-pane"
+import {ResultsPane} from "src/views/results-pane"
 import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
-import {HistogramPane} from "src/panes/histogram-pane/pane"
+import {HistogramPane} from "src/views/histogram-pane"
 
 const MainContent = styled.div`
   display: flex;
@@ -20,6 +20,7 @@ const MainContent = styled.div`
   flex: 1;
   height: 100%;
   min-width: 320px;
+  background: white;
 `
 
 const ContentWrap = styled.div`
@@ -60,9 +61,7 @@ const QueryHome = () => {
   const tabId = useSelector(Current.getTabId)
 
   if (activeQuery.isDeleted()) {
-    return (
-      <Redirect to={lakeQueryPath(tabId, activeQuery.versionId() || "0")} />
-    )
+    return <Redirect to={queryPath(tabId, activeQuery.versionId() || "0")} />
   }
 
   return (

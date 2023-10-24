@@ -1,22 +1,19 @@
 import React from "react"
-import {useSelector} from "react-redux"
-import styled from "styled-components"
-import Current from "../../state/Current"
-import {Content, SmallTitle} from "../ModalDialog/ModalDialog"
 import LakeForm from "./LakeForm"
 
-const StyledContent = styled(Content)`
-  min-width: 360px;
-`
+import modals from "src/components/modals.module.css"
+import {H1} from "src/components/h1"
+import {useSelector} from "react-redux"
+import Current from "src/js/state/Current"
 
 const EditLakeModal = ({onClose}) => {
   const lake = useSelector(Current.getLake)
 
   return (
-    <StyledContent>
-      <SmallTitle>Edit Lake</SmallTitle>
+    <div className={modals.form}>
+      <H1 className={modals.title}>Edit Lake</H1>
       <LakeForm onClose={onClose} lake={lake} />
-    </StyledContent>
+    </div>
   )
 }
 

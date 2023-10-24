@@ -147,6 +147,7 @@ export abstract class BaseClient {
     if (this.auth) {
       headers['Authorization'] = `Bearer ${this.auth}`;
     }
+
     const resp = await this.fetch(this.baseURL + opts.path, {
       method: opts.method,
       headers: headers,

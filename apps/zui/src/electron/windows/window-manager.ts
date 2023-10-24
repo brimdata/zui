@@ -1,4 +1,4 @@
-import {screen} from "electron"
+import {BrowserWindow, screen} from "electron"
 import log from "electron-log"
 import {last} from "lodash"
 import {stack} from "./dimens"
@@ -47,6 +47,12 @@ export class WindowManager extends EventEmitter {
     )
   }
 
+  get focused() {
+    return this.all.find(
+      (f) => f.ref.webContents === BrowserWindow.getFocusedWindow()?.webContents
+    )
+  }
+
   find(id: string): ZuiWindow {
     return this.windows[id]
   }
@@ -80,6 +86,12 @@ export class WindowManager extends EventEmitter {
 
   unhideAll() {
     this.visible.forEach((win) => win.ref.show())
+  }
+
+  isHidden(id: string) {
+    const win = this.find(id)
+    if (!win) throw new Error("Could not find window with id: " + id)
+    return win.options.show === false
   }
 
   private async register(win: ZuiWindow) {

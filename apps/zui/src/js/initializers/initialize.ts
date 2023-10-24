@@ -13,6 +13,8 @@ import {WindowName} from "src/electron/windows/types"
 import {initLake} from "./init-lake"
 import {initializeTabs} from "./init-tabs"
 import {initializeMonaco} from "./init-monaco"
+import {initializePluginContextSync} from "./init-plugin-context-sync"
+import toast from "react-hot-toast"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -35,11 +37,16 @@ export default async function initialize(
   const api = new ZuiApi()
   const store = await initStore(api)
   await initGlobals(store)
-  initLake(store)
+  await initLake(store)
   api.init(store.dispatch, store.getState)
   initDOM()
   initIpcListeners(store)
-  initHandlers({dispatch: store.dispatch, select: (fn) => fn(store.getState())})
+  initHandlers({
+    dispatch: store.dispatch,
+    select: (fn) => fn(store.getState()),
+    invoke: invoke,
+    toast: toast,
+  })
   initDebugGlobals(store, api)
   initAutosave(store)
   commands.setContext(store, api)
@@ -47,5 +54,6 @@ export default async function initialize(
   invoke("windowInitialized", global.windowId)
   initializeTabs(store)
   initializeMonaco()
+  initializePluginContextSync(store)
   return {store, api}
 }

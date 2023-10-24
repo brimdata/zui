@@ -7,7 +7,7 @@ export function showContextMenu(
   template: MenuItemConstructorOptions[],
   opts: {x?: number; y?: number; callback?: () => void} = {}
 ) {
-  if (global.env.isTest) {
+  if (global.env.isIntegrationTest) {
     document.dispatchEvent(
       new CustomEvent("nativeContextMenu", {detail: template})
     )
@@ -58,6 +58,8 @@ function setupListener(template, callback) {
       item.command instanceof BoundCommand
     ) {
       item.command.run()
+    } else if (item && "command" in item && typeof item.command === "string") {
+      invoke("invokeCommandOp", item.command, item.args)
     }
     callback && callback()
   })

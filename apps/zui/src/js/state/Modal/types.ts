@@ -16,4 +16,5 @@ export type ModalName =
   | "ingest-warnings"
   | "new-lake"
   | "view-lake"
+  | "new-pool"
   | "whois"

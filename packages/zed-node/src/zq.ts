@@ -1,54 +1,174 @@
-import { spawn } from 'child_process';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { getZqPath } from './binpath';
+import { Readable, Stream, pipeline } from 'stream';
+import { pipeline as promisePipeline } from 'stream/promises';
+import { Value, decode, ndjson, zjson } from '@brimdata/zed-js';
+import { arrayWrap } from './util';
 
-function execute(bin: string, opts: string[], input?: string) {
-  return new Promise<string>((resolve, reject) => {
-    const p = spawn(bin, opts)
-      .on('error', (e) => reject(e))
-      .on('close', () => resolve(out));
+type ZqArgs = {
+  query?: string;
+  bin?: string;
+  f?: string;
+  i?: string;
+  file?: string | string[];
+  input?: Readable | string;
+  signal?: AbortSignal;
+};
 
-    let out = '';
-    p.stdout.on('data', (data: string) => (out += data));
-    p.stderr.on('data', (data: string) => (out += data));
-    if (input) {
-      p.stdin.write(input);
-      p.stdin.end();
+type Output = 'js' | 'zed' | 'zjson';
+
+export async function decodeZJSON(stream: Readable) {
+  const values = [];
+  for await (const value of ndjson.eachLine(stream)) values.push(value);
+  return values;
+}
+
+export async function decodeZed(stream: Readable) {
+  return decode(await decodeZJSON(stream));
+}
+
+export async function decodeJS(stream: Readable) {
+  return (await decodeZed(stream)).map((value) => value.toJS());
+}
+
+export function decodeStream(as: Output) {
+  return async function (src: AsyncIterable<object>) {
+    switch (as) {
+      case 'zed':
+        return decodeZed(src as Readable);
+      case 'zjson':
+        return decodeZJSON(src as Readable);
+      case 'js':
+      default:
+        return decodeJS(src as Readable);
+    }
+  };
+}
+
+function readableStream(zq: ChildProcessWithoutNullStreams, args: ZqArgs) {
+  if (args.input)
+    return pipeline(wrapInput(args.input), transformStream(zq), (err) => {
+      err; // There was an error in the pipeline, but users can listen for the event
+    });
+  if (args.file) return wrapStdout(zq);
+  throw new Error('Provide input or file arg to zq()');
+}
+
+function wrapInput(input: string | Readable) {
+  if (typeof input === 'string') return Readable.from([input]);
+  return input;
+}
+
+function wrapStdout(zq: ChildProcessWithoutNullStreams) {
+  zq.stderr
+    .on('data', (data) => zq.stdout.destroy(new Error(data.toString())))
+    .on('error', (e) => zq.stdout.destroy(e));
+
+  return zq.stdout;
+}
+
+function transformStream(sub: ChildProcessWithoutNullStreams) {
+  const stream = new Stream.Transform({
+    transform(chunk, encoding, callback) {
+      if (!sub.stdin.write(chunk, encoding)) {
+        sub.stdin.once('drain', callback);
+      } else {
+        process.nextTick(callback);
+      }
+    },
+
+    flush(callback) {
+      sub.stdin.end();
+      if (sub.stdout.destroyed) callback();
+      else sub.stdout.on('close', () => callback());
+    },
+  });
+
+  stream.on('error', () => {
+    sub.kill('SIGKILL');
+  });
+
+  sub.stdin.on('error', (e: Error & { code: string }) => {
+    if (e.code === 'EPIPE') {
+      stream.push(null);
+    } else {
+      stream.destroy(e);
     }
   });
+
+  sub.stdout
+    .on('data', (data) => stream.push(data))
+    .on('error', (e) => stream.destroy(e));
+
+  sub.stderr
+    .on('data', (data) => stream.destroy(new Error(data.toString())))
+    .on('error', (e) => stream.destroy(e));
+
+  return stream;
 }
 
-function parseNDJSON(input: string) {
-  return input
-    .trim()
-    .split('\n')
-    .map((s) => {
-      try {
-        return JSON.parse(s);
-      } catch (_) {
-        throw new Error(s);
-      }
-    });
+/**
+ * Spawn the zq process with the appropriate arguments and return the
+ * child process object.
+ */
+export function createProcess(args: ZqArgs) {
+  const bin = args.bin || getZqPath();
+  const spawnargs = [];
+  if (args.i) spawnargs.push('-i', args.i);
+  if (args.f) spawnargs.push('-f', args.f);
+  if (args.query) spawnargs.push(args.query);
+  if (args.file) spawnargs.push(...arrayWrap(args.file));
+  else spawnargs.push('-');
+
+  const zq = spawn(bin, spawnargs, { signal: args.signal }).on('error', (e) => {
+    // This error must be caught in order to not throw an exception in main process
+    // Also, really make sure this process is killed. It wasn't with only the SIGTERM
+    if (e?.name == 'AbortError') zq.kill('SIGKILL');
+  });
+  return zq;
 }
 
-export async function zq(opts: {
-  query?: string;
-  file?: string;
-  input?: string;
-  format?: string;
-  bin?: string;
-  // eslint-disable-next-line
-}): Promise<any> {
-  const bin = opts.bin || getZqPath();
-  const args = [];
-  if (opts.format) args.push('-f', opts.format);
-  if (opts.query) args.push(opts.query);
-  if (opts.file) args.push(opts.file);
-  else if (opts.input) args.push('-');
+/**
+ * Invokes the zq command then wraps the child process in a
+ * transform stream. You can pipe your own input to the
+ * transform stream.
+ */
+export function createTransformStream(args: ZqArgs) {
+  const zq = createProcess(args);
+  return transformStream(zq);
+}
 
-  const result = await execute(bin, args, opts.input);
-  if (opts.format === 'zjson') {
-    return parseNDJSON(result);
-  } else {
-    return result;
-  }
+/**
+ * Invokes the zq command then wraps the child process in a
+ * readable stream to be used as the source a pipeline.
+ */
+export function createReadableStream(args: ZqArgs) {
+  const zq = createProcess(args);
+  return readableStream(zq, args);
+}
+
+/**
+ * Use this function to invoke the zq cli and receive an array of
+ * results as either Zed objects, JS objects, or zjson objects.
+ */
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: 'zjson' }
+): Promise<zjson.Obj[]>;
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: 'js' }
+): Promise<any[]>;
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: 'zed' }
+): Promise<Value[]>;
+export async function zq(
+  args: Omit<ZqArgs, 'f'> & { as: Output }
+): Promise<object[]> {
+  const zq = createProcess({ ...args, f: 'zjson' });
+
+  return await promisePipeline(
+    readableStream(zq, args),
+    decodeStream(args.as),
+    { signal: args.signal as AbortSignal }
+  );
 }

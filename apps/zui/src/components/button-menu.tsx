@@ -1,74 +1,34 @@
 import classNames from "classnames"
-import React, {useState} from "react"
-import {BuiltMenu, MenuItem} from "src/core/menu"
+import React from "react"
+import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
-import useResizeObserver from "use-resize-observer"
 import {IconButton} from "./icon-button"
 import {MoreItemsButton} from "./more-items-button"
+import {useResponsiveMenu} from "src/js/components/hooks/use-responsive-menu"
 
 const BG = styled.menu`
   display: flex;
+  justify-content: flex-end;
   position: relative;
   padding: 0;
   min-width: 0;
+  width: 100%;
+  overflow: hidden;
 
   .button-menu__button--hidden {
     visibility: hidden;
+    display: none;
   }
 `
 
 const Buttons = styled.div`
   display: flex;
   gap: 8px;
-  overflow: hidden;
+  min-width: 0;
 `
 
-function useVisibleChildrenCount(ref, total) {
-  const [visibleCount, setVisibleCount] = useState(total)
-  useResizeObserver({
-    ref,
-    onResize: (size) => {
-      const parent = ref.current
-      if (!parent) return
-      let visibleCount = 0
-      for (const rightEdge of getRightEdges(parent)) {
-        if (rightEdge <= size.width) visibleCount++
-      }
-      setVisibleCount(visibleCount)
-    },
-  })
-  return visibleCount
-}
-
-function getRightEdges(parent: HTMLElement) {
-  const parentBox = parent.getBoundingClientRect()
-  const rightEdges = []
-  for (let i = 0; i < parent.children.length; i++) {
-    const child = parent.children[i]
-    const box = child.getBoundingClientRect()
-    const left = box.left - parentBox.left
-    const right = left + box.width
-    rightEdges.push(right)
-  }
-  return rightEdges
-}
-
-export function useResponsiveMenu(ref, items) {
-  const visibleCount = useVisibleChildrenCount(ref, items.length)
-  const hiddenItems = items.slice(visibleCount, items.length)
-  const hasHiddenItems = !!hiddenItems.length
-
-  return {
-    items,
-    isHidden: (index: number) => index + 1 > visibleCount,
-    hiddenItems,
-    hasHiddenItems,
-  }
-}
-
-export function ButtonMenu(props: {menu: BuiltMenu}) {
-  const ref = React.useRef<HTMLDivElement>()
-  const menu = useResponsiveMenu(ref, props.menu.items)
+export function ButtonMenu(props: {label: string; items: MenuItem[]}) {
+  const menu = useResponsiveMenu(props.items)
 
   const buttons = menu.items.map((item: MenuItem, i: number) => {
     return (
@@ -76,20 +36,19 @@ export function ButtonMenu(props: {menu: BuiltMenu}) {
         {...item}
         key={i}
         className={classNames({
-          "button-menu__button--hidden": menu.isHidden(i),
+          "button-menu__button--hidden": menu.isHidden(item),
         })}
       />
     )
   })
-
   return (
-    <>
-      <BG aria-label={props.menu.label}>
-        <Buttons ref={ref}>{buttons}</Buttons>
+    <BG aria-label={props.label} ref={menu.containerRef}>
+      <Buttons>
+        {buttons}
         {menu.hasHiddenItems ? (
-          <MoreItemsButton items={menu.hiddenItems} />
+          <MoreItemsButton items={menu.hiddenItems} ref={menu.moreRef} />
         ) : null}
-      </BG>
-    </>
+      </Buttons>
+    </BG>
   )
 }

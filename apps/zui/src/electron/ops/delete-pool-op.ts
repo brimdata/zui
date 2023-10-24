@@ -1,7 +1,7 @@
 import {createOperation} from "../../core/operations"
 import Loads from "src/js/state/Loads"
 import Pools from "src/js/state/Pools"
-import {ZuiMain} from "../zui-main"
+import {MainObject} from "../../core/main/main-object"
 
 export const deletePoolOp = createOperation(
   "deletePoolOp",
@@ -13,7 +13,7 @@ export const deletePoolOp = createOperation(
   }
 )
 
-function abortLoadsForPool(main: ZuiMain, poolId: string) {
+function abortLoadsForPool(main: MainObject, poolId: string) {
   const loads = Loads.all(main.store.getState()).filter(
     (l) => l.poolId === poolId
   )

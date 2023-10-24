@@ -1,0 +1,28 @@
+.recentLoads {
+    padding: var(--page-padding);
+    padding-top: calc(var(--page-padding) * 1.5);
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.title {
+    margin-bottom: 1em;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.list > * {
+    padding: 1rem;
+    border-radius: 16px;
+    cursor: default;
+    background: var(--chrome-color);
+}
+
+.list > *:hover {
+    background: var(--hover-dark);
+}

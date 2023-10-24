@@ -1,7 +1,7 @@
 import React from "react"
 import {useSelector} from "react-redux"
 import Results from "src/js/state/Results"
-import {RESULTS_QUERY} from "src/panes/results-pane/run-results-query"
+import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import styled from "styled-components"
 
 const Loader = styled.div`
@@ -54,7 +54,7 @@ export function QueryProgress() {
   const count = useSelector(Results.getCount(RESULTS_QUERY))
   if (status === "FETCHING") {
     return (
-      <Span aria-label="fetching">
+      <Span aria-label="fetching" role="status">
         Fetching
         <Loader />
       </Span>

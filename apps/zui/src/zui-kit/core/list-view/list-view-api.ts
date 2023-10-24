@@ -4,6 +4,7 @@ import {ViewContext} from "../value-view/view-context"
 import {RowData} from "../../../app/features/inspector/types"
 import {createView} from "../../../app/features/inspector/views/create"
 import {ListViewArgs} from "./types"
+import {call} from "src/util/call"
 
 /**
  * This calculates the total number of
@@ -83,7 +84,7 @@ export class ListViewApi {
   }
 
   onScroll(pos: {top: number; left: number}) {
-    return this.args?.onScroll(pos, this)
+    return call(this.args?.onScroll, pos, this)
   }
 
   nearBottom(n: number) {

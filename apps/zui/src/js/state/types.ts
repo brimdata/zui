@@ -19,6 +19,7 @@ import {QueryVersionsState} from "./QueryVersions/types"
 import {SessionHistoriesState} from "./SessionHistories/types"
 import {PoolSettingsState} from "./PoolSettings/types"
 import {WindowState} from "./Window/types"
+import {LoadDataFormState} from "./LoadDataForm/types"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -39,6 +40,7 @@ export type State = {
   lakes: LakesState
   lakeStatuses: LakeStatusesState
   launches: LaunchesState
+  loadDataForm: LoadDataFormState
   loads: LoadsState
   modal: ModalState
   notice: NoticeState

@@ -1,6 +1,6 @@
 :root {
   // colors
-  --red: #cd1313;
+  --red: #F13737;
   --green: #399c81;
   --green-bright: #4ef567;
   --orange: #ff7f00;
@@ -11,6 +11,8 @@
   --havelock: #4b91e2;
   --hawkes-blue: rgba(206, 228, 253, 0.5);
   --pecan: #9c692f;
+  --blue: hsl(212, 72%, 59%);
+
 
   // shades of gray
   --snow: #fcfcfd;
@@ -29,12 +31,18 @@
   --alert-1: #d0250b;
 
   // backgrounds
-  --hover-light-bg: rgba(0, 0, 0, 0.06);
+  --hover-dark: rgba(0, 0, 0, 0.04);
+  --active-dark: rgba(0, 0, 0, 0.06);
+
+  --hover-light-bg: var(--hover-dark);
   --table-stripe-bg: rgba(0, 0, 0, 0.02);
 
   // borders
 
   // Colors by name
+
+  --success-color: #1ADB91;
+  --error-color: #F13737;
 
   --input-background: hsl(240, 15%, 92%);
 
@@ -46,14 +54,15 @@
   --tab-background: var(--sidebar-background);
   --tab-background-hover: rgba(0, 0, 0, 0.1);
 
-  --primary-color-lighter: hsl(212, 72%, 75%);
+  --primary-color-lighter: hsl(212, 89%, 82%);
   --primary-color-light: hsl(212, 72%, 69%);
   --primary-color: hsl(212, 72%, 59%);
-  --primary-color-dark: hsl(212, 72%, 53%);
-  --primary-color-darker: hsl(212, 72%, 48%);
+  --primary-color-dark: hsl(212, 78%, 50%);
+  --primary-color-darker: hsl(212, 88%, 35%);
 
-  --foreground-color: var(--aqua);
-  --foreground-color-light: #8b8f94;
+  --foreground-color-dark: #000811;
+  --foreground-color: #0f1e2e;
+  --foreground-color-light: hsl(210, 4%, 40%);
 
   --button-background: hsl(212, 5%, 92%);
   --button-background-hover: hsl(212, 5%, 90%);
@@ -65,4 +74,20 @@
   --border-color-dark: hsl(216, 10%, 80%);
 
   --chrome-color: hsl(212, 10%, 97%);
+  --chrome-color-dark: #E9EAEB;
+
+  // Form stuff
+  --form-bg-color: white;
+  --form-bg-color-dark: #f8f8f8;
+  --form-bg-color-darker: #e6e6e6;
+  --form-border: 1px solid #c0c0c0;
+  --form-font-size: 14px;
+  --form-line-height: 20px;
+  --form-border-radius: 6px;
+  --form-padding: 3px 10px;
+  --form-height: 2rem;
+  --form-field-gap: 12px;
+
+  // Easing
+  --pop-easing: cubic-bezier(0.16, 1, 0.3, 1);
 }

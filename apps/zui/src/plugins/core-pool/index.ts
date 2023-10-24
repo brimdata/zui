@@ -4,7 +4,7 @@ import {pools, PluginContext} from "src/zui"
 
 export function activate(_ctx: PluginContext) {
   pools.on("create", ({pool}) => {
-    createSettings.run(pool.id)
+    createSettings(pool.id)
 
     pools
       .configure(pool.id)

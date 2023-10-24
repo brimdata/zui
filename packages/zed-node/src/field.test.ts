@@ -15,7 +15,7 @@ test('field path', () => {
 test('field path with nested named types', async () => {
   const objects = await zq({
     input: '{a: {b: {c: "foo"}(=c)}(=b)}(=a)',
-    format: 'zjson',
+    as: 'zjson',
   });
   const rows = DefaultContext.decode(objects) as Record[];
   const field = rows[0].getField(['a', 'b', 'c']);
@@ -24,7 +24,7 @@ test('field path with nested named types', async () => {
 });
 
 test('field path with nested unnamed types', async () => {
-  const objects = await zq({ input: '{a: {b: {c: "foo"}}}', format: 'zjson' });
+  const objects = await zq({ input: '{a: {b: {c: "foo"}}}', as: 'zjson' });
   const rows = DefaultContext.decode(objects) as Record[];
   const field = rows[0].getField(['a', 'b', 'c']);
   expect(field?.path).toEqual(['a', 'b', 'c']);

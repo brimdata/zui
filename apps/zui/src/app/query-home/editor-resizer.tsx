@@ -1,4 +1,4 @@
-import DragAnchor from "src/js/components/DragAnchor"
+import DragAnchor from "src/components/drag-anchor"
 import {useDispatch} from "../core/state"
 import Layout from "src/js/state/Layout"
 import {useRef} from "react"

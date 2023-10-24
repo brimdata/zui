@@ -1,8 +1,8 @@
 export type ResultsHandlers = {
-  "results.expandAll": []
-  "results.collapseAll": []
-  "results.showExportDialog": []
-  "results.toggleHistogram": []
+  "results.expandAll": () => void
+  "results.collapseAll": () => void
+  "results.showExportDialog": () => void
+  "results.toggleHistogram": () => void
 }
 
 export type ResultsOperations = {

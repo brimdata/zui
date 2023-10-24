@@ -1,5 +1,5 @@
 import {main as runMain} from "src/electron/run-main/run-main"
-import {ZuiMain} from "src/electron/zui-main"
+import {MainObject} from "src/core/main/main-object"
 import initialize from "src/js/initializers/initialize"
 import {Store} from "src/js/state/types"
 import {teardown} from "src/test/system/teardown"
@@ -13,7 +13,7 @@ export default async (): Promise<Store> => {
     appState: null,
     autosave: null,
     autoUpdater: false,
-  })) as ZuiMain
+  })) as MainObject
   const windowId = main.windows.byName("search")[0].id
   const windowName = "search"
   const {store} = await initialize(windowId, windowName)

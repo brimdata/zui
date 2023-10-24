@@ -9,19 +9,17 @@ import React from "react"
 import ZuiApi from "src/js/api/zui-api"
 import Current from "src/js/state/Current"
 import {Store} from "src/js/state/types"
-import data from "src/test/shared/data"
 import {setupServer} from "msw/node"
 import {BootArgs, boot} from "./boot"
 import Tabs from "src/js/state/Tabs"
-import {createAndLoadFiles} from "src/app/commands/pools"
-import {ZuiMain} from "src/electron/zui-main"
+import {MainObject} from "src/core/main/main-object"
 import {teardown} from "./teardown"
 
 jest.setTimeout(20_000)
 
 export class SystemTest {
   store: Store
-  main: ZuiMain
+  main: MainObject
   api: ZuiApi
   wrapper: React.ComponentType<React.PropsWithChildren<any>>
   click = userEvent.click
@@ -31,7 +29,7 @@ export class SystemTest {
 
   assign(args: {
     store: Store
-    main: ZuiMain
+    main: MainObject
     api: ZuiApi
     wrapper: React.ComponentType<React.PropsWithChildren<any>>
   }) {
@@ -74,14 +72,6 @@ export class SystemTest {
 
   render(ui: JSX.Element) {
     return tl.render(ui, {wrapper: this.wrapper})
-  }
-
-  async importFile(name: string) {
-    const file = data.getWebFile(name)
-    await tl.act(async () => {
-      await createAndLoadFiles.run([file.path])
-    })
-    await tl.screen.findByText(/import complete/i)
   }
 
   mockSaveDialog(result: {canceled: boolean; filePath: string}) {

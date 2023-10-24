@@ -12,8 +12,9 @@ $high-box-shadow: 0 2px 15px 0px rgba(0, 0, 0, 0.3);
 @mixin shadow-small {
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 }
+
 :root {
-  --shadow-color: 0deg 0% 68%;
+  --shadow-color: 0deg 0% 55%;
   --shadow-elevation-low: 0.4px 0.5px 1px hsl(var(--shadow-color) / 0),
     0.7px 1px 1.8px hsl(var(--shadow-color) / 0.19),
     1.3px 1.9px 3.5px hsl(var(--shadow-color) / 0.38);

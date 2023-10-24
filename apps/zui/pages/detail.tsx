@@ -34,7 +34,6 @@ export default function DetailPage() {
   return (
     <AppProvider store={app.store} api={app.api}>
       <AppWindowRouter>
-        <div id="modal-dialog-root" />
         <LogDetailsWindow />
         <Modals />
         <Tooltip />

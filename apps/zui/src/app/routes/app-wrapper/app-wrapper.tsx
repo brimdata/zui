@@ -6,17 +6,19 @@ import {AppModals} from "./app-modals"
 import {MainArea} from "./main-area"
 import {AppGrid} from "./app-grid"
 import useLakeId from "src/app/router/hooks/use-lake-id"
+import {DataDropzone} from "./data-dropzone"
 
 export default function AppWrapper({children}) {
   const lakeId = useLakeId()
   return (
-    <AppGrid>
-      <TabBar key={lakeId} />
-      <Sidebar />
-      <MainArea>{children}</MainArea>
-      <StatusBar />
-
-      <AppModals />
-    </AppGrid>
+    <DataDropzone>
+      <AppGrid>
+        <TabBar key={lakeId} />
+        <Sidebar />
+        <MainArea>{children}</MainArea>
+        <StatusBar />
+        <AppModals />
+      </AppGrid>
+    </DataDropzone>
   )
 }

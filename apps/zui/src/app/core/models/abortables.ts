@@ -10,27 +10,25 @@ export type Abortable<Meta = any> = {
 }
 
 type NewAbortable = Omit<Abortable, "id">
+type Predicate = string | Partial<Abortable>
 
 export class Abortables {
   registry: Abortable[] = []
 
   async abort(predicate: string | Partial<Abortable>) {
-    if (isString(predicate)) {
-      const a = this.get(predicate)
-      if (a) {
-        return await a.abort()
-      }
-    } else {
-      return Promise.all(
-        this.filter(predicate).map((a) => {
-          return a.abort()
-        })
-      )
-    }
+    const aborts = this.filter(predicate)
+    this.remove(predicate)
+    return await Promise.all(aborts.map((a) => a.abort()))
   }
 
   async abortAll() {
     return Promise.all(this.all().map((a) => a.abort()))
+  }
+
+  create(id: string) {
+    const ctl = new AbortController()
+    this.add({id, abort: () => ctl.abort()})
+    return ctl
   }
 
   add(a: Abortable | NewAbortable) {
@@ -43,7 +41,7 @@ export class Abortables {
     return [...this.registry]
   }
 
-  filter(predicate?: Partial<Abortable>) {
+  filter(predicate?: Predicate) {
     if (!predicate) return this.all()
     return this.registry.filter(this.matchFn(predicate))
   }
@@ -52,18 +50,21 @@ export class Abortables {
     return this.registry.find((a) => a.id === id) || null
   }
 
-  remove(predicate?: string | Partial<Abortable>) {
+  remove(predicate?: Predicate) {
     if (!predicate) {
       this.registry = []
-    } else if (isString(predicate)) {
-      remove(this.registry, (a) => a.id === predicate)
     } else {
       remove(this.registry, this.matchFn(predicate))
     }
   }
 
-  private matchFn(predicate) {
-    return (a) =>
-      Object.keys(predicate).every((key) => a[key] === predicate[key])
+  private matchFn(predicate: Predicate) {
+    return (a: Abortable) => {
+      if (isString(predicate)) {
+        return a.id === predicate
+      } else {
+        return Object.keys(predicate).every((key) => a[key] === predicate[key])
+      }
+    }
   }
 }

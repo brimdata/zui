@@ -5,9 +5,9 @@ import errors from "src/js/errors"
 import {pluginNamespace, yamlConfigPropName} from "./config"
 import {ChildProcess} from "child_process"
 import {Loader} from "src/core/loader/types"
-import {LoadContext} from "src/core/loader/load-context"
+import {LoadContext} from "src/domain/loads/load-context"
 import {isPcap} from "./packets/is-pcap"
-import {configurations, loaders, pools} from "src/zui"
+import {configurations, loads, pools} from "src/zui"
 import {zeekColorMap} from "./zeek/colors"
 
 function createLoader(root: string): Loader {
@@ -129,5 +129,5 @@ function statusToPercent(status, totalSize): number {
 }
 
 export function activateBrimcapLoader(root: string) {
-  loaders.create("brimcap-loader", createLoader(root))
+  loads.create("brimcap-loader", createLoader(root))
 }

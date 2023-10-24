@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {AppProvider} from "src/app/core/context"
 import {invoke} from "src/core/invoke"
-import App from "src/js/components/App"
+import Application from "src/views/application"
 import initialize from "src/js/initializers/initialize"
 import TabHistories from "src/js/state/TabHistories"
 import {getPersistedWindowState} from "src/js/state/stores/get-persistable"
@@ -28,7 +28,7 @@ export default function SearchPage() {
 
   return (
     <AppProvider store={app.store} api={app.api}>
-      <App />
+      <Application />
     </AppProvider>
   )
 }

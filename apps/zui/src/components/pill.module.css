@@ -1,0 +1,12 @@
+.pill {
+    padding: 0 0.67em;
+    font-weight: bold;
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+    background: var(--primary-color-lighter);
+    color: var(--primary-color-darker);
+    border-radius: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

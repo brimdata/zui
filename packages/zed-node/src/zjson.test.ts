@@ -7,10 +7,10 @@ const file = getPath('sample.zson');
 jest.setTimeout(60_000);
 
 test('super simple', async () => {
-  const input: zed.zjson.Obj[] = await zq({
+  const input = (await zq({
     input: '{hello: "world"}',
-    format: 'zjson',
-  });
+    as: 'zjson',
+  })) as zed.zjson.Obj[];
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
   for (let i = 0; i < input.length; ++i) {
@@ -19,10 +19,10 @@ test('super simple', async () => {
 });
 
 test('super simple 2 typedefs', async () => {
-  const input: zed.zjson.Obj[] = await zq({
+  const input: zed.zjson.Obj[] = (await zq({
     input: '{hello: ["world"]}',
-    format: 'zjson',
-  });
+    as: 'zjson',
+  })) as zed.zjson.Obj[];
 
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
@@ -32,10 +32,10 @@ test('super simple 2 typedefs', async () => {
 });
 
 test('simply type value', async () => {
-  const input: zed.zjson.Obj[] = await zq({
+  const input: zed.zjson.Obj[] = (await zq({
     input: '{hello: <string>}',
-    format: 'zjson',
-  });
+    as: 'zjson',
+  })) as zed.zjson.Obj[];
 
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
@@ -45,7 +45,10 @@ test('simply type value', async () => {
 });
 
 test('decode, then encode', async () => {
-  const input: zed.zjson.Obj[] = await zq({ file, format: 'zjson' });
+  const input: zed.zjson.Obj[] = (await zq({
+    file,
+    as: 'zjson',
+  })) as zed.zjson.Obj[];
 
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
@@ -56,11 +59,11 @@ test('decode, then encode', async () => {
 });
 
 test('decode, then encode a fused input', async () => {
-  const input: zed.zjson.Obj[] = await zq({
+  const input: zed.zjson.Obj[] = (await zq({
     query: 'fuse',
     file,
-    format: 'zjson',
-  });
+    as: 'zjson',
+  })) as zed.zjson.Obj[];
 
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
@@ -71,11 +74,11 @@ test('decode, then encode a fused input', async () => {
 });
 
 test('decode, encode with type values', async () => {
-  const input: zed.zjson.Obj[] = await zq({
+  const input: zed.zjson.Obj[] = (await zq({
     query: '* | count() by typeof(this) | sort count, typeof',
     file,
-    format: 'zjson',
-  });
+    as: 'zjson',
+  })) as zed.zjson.Obj[];
 
   expect(zed.encode(zed.decode(input))).toEqual(input);
 });
@@ -84,9 +87,10 @@ test('types from one search are the same', async () => {
   const groupBy = (await zq({
     query: '* | count() by typeof(this) | sort count, typeof',
     file,
-    format: 'zjson',
+    as: 'zjson',
   })) as zed.zjson.Obj[];
-  const list = (await zq({ file, format: 'zjson' })) as zed.zjson.Obj[];
+
+  const list = (await zq({ file, as: 'zjson' })) as zed.zjson.Obj[];
 
   const [row1] = zed.decode(groupBy) as zed.Record[];
   const accessType = row1.get<zed.TypeValue>('typeof').value;
@@ -103,7 +107,7 @@ test('encode decode a field', async () => {
   const input: zed.zjson.Obj[] = (await zq({
     query: '*',
     file,
-    format: 'zjson',
+    as: 'zjson',
   })) as zed.zjson.Obj[];
 
   const records = zed.decode(input) as zed.Record[];
@@ -124,7 +128,7 @@ test('encode decode a typeof value', async () => {
   const input: zed.zjson.Obj[] = (await zq({
     query: 'count() by typeof(this) | sort typeof',
     file,
-    format: 'zjson',
+    as: 'zjson',
   })) as zed.zjson.Obj[];
 
   const records = zed.decode(input) as zed.Record[];

@@ -31,7 +31,7 @@ export function compileTemplate(
   const newWindow: MenuItemConstructorOptions = {
     label: "New Window",
     accelerator: "CmdOrCtrl+N",
-    click: () => openSearchWindowOp.run(),
+    click: () => openSearchWindowOp(),
   }
 
   const exit: MenuItemConstructorOptions = {
@@ -42,13 +42,13 @@ export function compileTemplate(
   const aboutApp: MenuItemConstructorOptions = {
     label: `About ${app.getName()}`,
     click() {
-      openAboutWindowOp.run()
+      openAboutWindowOp()
     },
   }
 
   const closeWindow: MenuItemConstructorOptions = {
     label: "Close Window",
-    click: () => closeWindowOp.run(),
+    click: () => closeWindowOp(),
   }
 
   const closeTab: MenuItemConstructorOptions = {
@@ -59,12 +59,12 @@ export function compileTemplate(
   const preferences: MenuItemConstructorOptions = {
     id: "preferences",
     label: env.isMac ? "Preferences..." : "Settings",
-    click: () => showPreferencesOp.run(),
+    click: () => showPreferencesOp(),
   }
 
   const resetState: MenuItemConstructorOptions = {
     label: "Reset State",
-    click: () => resetStateOp.run(),
+    click: () => resetStateOp(),
   }
 
   const exportResults: MenuItemConstructorOptions = {
@@ -145,7 +145,7 @@ export function compileTemplate(
         },
         {
           label: "Organize Windows",
-          click: () => moveToCurrentDisplayOp.run(),
+          click: () => moveToCurrentDisplayOp(),
         }
       )
     }
@@ -158,7 +158,7 @@ export function compileTemplate(
       {
         label: "Pin Search",
         accelerator: "CmdOrCtrl+K",
-        click: () => runCommandOp.run(createFromEditor),
+        click: () => runCommandOp(createFromEditor),
       },
       {
         label: "Clear Pins",
@@ -224,7 +224,7 @@ export function compileTemplate(
       {
         label: "Release Notes",
         click() {
-          showReleaseNotesOp.run()
+          showReleaseNotesOp()
         },
       },
       {

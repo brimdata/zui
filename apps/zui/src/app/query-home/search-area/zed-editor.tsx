@@ -1,7 +1,30 @@
 import {Editor} from "@monaco-editor/react"
 import {useEffect, useRef} from "react"
+import {useSelector} from "react-redux"
+import {cmdOrCtrl} from "src/app/core/utils/keyboard"
+import Config from "src/js/state/Config"
+
+/**
+ *
+ * @param onSubmit Function
+ * @returns onKeyDownListener attach to parent in capture phase
+ */
+export function useZedEditorKeyboardSubmit(onSubmit: () => void) {
+  const runOnEnter = useSelector(Config.getRunOnEnter)
+  return (e: React.KeyboardEvent) => {
+    const isEnterKey = e.key === "Enter"
+    const isModKey = e.shiftKey || cmdOrCtrl(e)
+    if (isEnterKey) {
+      if ((runOnEnter && !isModKey) || (!runOnEnter && isModKey)) {
+        e.preventDefault()
+        onSubmit()
+      }
+    }
+  }
+}
 
 export function ZedEditor(props: {
+  testId?: string
   path: string
   value: string
   onChange: (value: string | undefined, ev: any) => void
@@ -21,6 +44,9 @@ export function ZedEditor(props: {
 
   return (
     <Editor
+      wrapperProps={{
+        "data-testid": props.testId,
+      }}
       height="100%"
       width="100%"
       value={props.value}
@@ -33,9 +59,6 @@ export function ZedEditor(props: {
       }}
       onMount={(editor) => {
         ref.current = editor
-      }}
-      wrapperProps={{
-        "aria-label": "main-editor",
       }}
       path={props.path}
     />

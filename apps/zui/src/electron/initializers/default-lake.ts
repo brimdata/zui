@@ -1,10 +1,10 @@
-import {ZuiMain} from "../zui-main"
+import {MainObject} from "../../core/main/main-object"
 import Lakes from "src/js/state/Lakes"
 
 /**
  * Sets up the default lake if it doesn't exist
  */
-export function initialize(main: ZuiMain) {
+export function initialize(main: MainObject) {
   const port = main.args.lakePort
   const user = main.appMeta.userName
   const lake = Lakes.getDefaultLake(port, user)

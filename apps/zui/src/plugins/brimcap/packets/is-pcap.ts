@@ -22,7 +22,6 @@ function firstBytes(filePath: string, n: number) {
 export async function isPcap(filePath: string) {
   let bytes = await firstBytes(filePath, 4)
   for (let hex of PCAP_HEXES) {
-    debugger
     if (bytes instanceof Buffer && bytes.equals(Buffer.from(hex, "hex")))
       return true
   }

@@ -38,16 +38,16 @@ export function useOnScroll(
 
 export function useInitialScrollPosition(
   ref: MutableRefObject<HTMLDivElement>,
-  position?: {top: number; left: number}
+  position?: {top?: number; left?: number}
 ) {
   useEffect(() => {
     const el = ref.current
     let id
     if (position && el) {
-      el.scrollTop = position.top
+      el.scrollTop = position.top ?? 0
       // First scroll down so that the rows can render, then scroll to the right
       id = setTimeout(() => {
-        el.scrollLeft = position.left
+        el.scrollLeft = position.left ?? 0
       })
     }
     return () => clearTimeout(id)

@@ -37,7 +37,6 @@ export function MainArea({children}) {
 
   return (
     <BG onMouseDown={touched} onKeyDown={touched} style={style}>
-      <div id="modal-dialog-root" />
       <AppErrorBoundary>{children}</AppErrorBoundary>
     </BG>
   )

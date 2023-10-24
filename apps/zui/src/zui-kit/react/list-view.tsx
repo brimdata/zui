@@ -14,24 +14,44 @@ import {defaultListViewState} from "../core/list-view/state"
 import {ListViewArgs} from "../core/list-view/types"
 import {ReactAdapterProps} from "./types"
 import {useStateControllers} from "./use-state-controllers"
-import {useInitialScrollPosition, useOnScroll} from "./utils"
+import {mergeRefs, useInitialScrollPosition, useOnScroll} from "./utils"
+import classNames from "classnames"
+import {useParentSize} from "src/app/core/hooks/use-parent-size"
+import {TopShadow, useScrollShadow} from "src/views/load-pane/scroll-shadow"
+import {call} from "src/util/call"
 
 const padding = 8
 
-export const InnerElement = forwardRef<any, any>(function InnerElement(
-  {style, ...rest},
-  ref
-) {
+export const InnerElement = forwardRef<any, any>(function Inner(props, ref) {
+  const {style, ...rest} = props
+  const height = `${parseFloat(style.height) + (padding ?? 0) * 2}px`
+
+  return <div role="list" ref={ref} style={{...style, height}} {...rest} />
+})
+
+export const OuterElement = forwardRef<any, any>(function Outer(props, ref) {
+  const {children, ...rest} = props
+  const shadow = useScrollShadow(200)
   return (
-    <div
-      role="list"
-      ref={ref}
-      style={{
-        ...style,
-        height: `${parseFloat(style.height) + (padding ?? 0) * 2}px`,
-      }}
-      {...rest}
-    />
+    <div style={{height: "100%", width: "100%", position: "relative"}}>
+      <TopShadow
+        opacity={shadow.top}
+        style={{
+          height: "2px",
+          background: "linear-gradient(rgba(0,0,0,0.25), transparent)",
+        }}
+      />
+      <div
+        {...rest}
+        ref={mergeRefs(shadow.ref, ref)}
+        onScroll={(e) => {
+          call(rest.onScroll, e)
+          shadow.onScroll()
+        }}
+      >
+        {children}
+      </div>
+    </div>
   )
 })
 
@@ -54,7 +74,7 @@ export const Row: React.ComponentType<
   },
   (prev, next) => {
     return (
-      prev.data === next.data &&
+      prev.data[prev.index] === next.data[next.index] &&
       prev.index === next.index &&
       isEqual(prev.style, next.style)
     )
@@ -75,23 +95,25 @@ export const ListView = forwardRef(function ListView(
   useOnScroll(outerRef, list.onScroll.bind(list))
   useInitialScrollPosition(outerRef, props.initialScrollPosition)
   useImperativeHandle(ref, () => list, [list])
-
   useEffect(() => {
     list.element = outerRef.current
   }, [list])
 
+  const {width, height} = useParentSize(outerRef)
+
   return (
     <FixedSizeList
-      className={props.className}
+      className={classNames(props.className, "zed-list-view")}
       innerRef={props.innerRef}
-      height={props.height}
-      width={props.width}
+      height={props.height ?? height}
+      width={props.width ?? width}
       outerRef={outerRef}
       itemCount={list.count}
       itemSize={20}
       itemData={[...list.rows]}
       itemKey={(i) => i.toString()}
       innerElementType={InnerElement}
+      // outerElementType={OuterElement}
       overscanCount={8}
       onItemsRendered={(args) => {
         setRendered({

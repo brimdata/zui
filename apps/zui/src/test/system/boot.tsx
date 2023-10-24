@@ -8,7 +8,9 @@ import {getPort} from "./port-service"
 import {waitFor} from "@testing-library/react"
 import {Store} from "src/js/state/types"
 import ZuiApi from "src/js/api/zui-api"
-import {ZuiMain} from "src/electron/zui-main"
+import {MainObject} from "src/core/main/main-object"
+import Current from "src/js/state/Current"
+import {window} from "src/zui"
 
 const defaults = () => ({
   page: "search",
@@ -39,7 +41,7 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
   fsExtra.removeSync(lakeRoot)
   fsExtra.removeSync(lakeLogs)
   fsExtra.removeSync(appState)
-  const brimMain = (await main({
+  const mainObject = (await main({
     lakePort,
     lakeRoot,
     lakeLogs,
@@ -47,14 +49,18 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
     releaseNotes: false,
     autoUpdater: false,
     singleInstance: false,
-  })) as ZuiMain
+  })) as MainObject
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
     timeout: 20_000,
   })
-  const windowId = brimMain.windows.byName("search")[0].id
+  const windowId = mainObject.windows.byName("search")[0].id
   const brimRenderer = await initialize(windowId, "search")
+  window.sync({
+    id: windowId,
+    lakeId: Current.getLakeId(mainObject.store.getState()),
+  })
   return {
-    main: brimMain,
+    main: mainObject,
     store: brimRenderer.store,
     api: brimRenderer.api,
     wrapper: createWrapper(brimRenderer.store, brimRenderer.api),

@@ -3,15 +3,11 @@ import React, {useEffect, useState} from "react"
 
 import modal from "../state/Modal"
 import whois from "../services/whois"
-import {
-  Content,
-  Footer,
-  Pre,
-  Scrollable,
-  Title,
-} from "./ModalDialog/ModalDialog"
-import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 import useEnterKey from "./hooks/useEnterKey"
+import modals from "src/components/modals.module.css"
+import {H1} from "src/components/h1"
+import forms from "src/components/forms.module.css"
+import classNames from "classnames"
 
 export default function WhoisModal({onClose}) {
   useEnterKey(onClose)
@@ -25,15 +21,23 @@ export default function WhoisModal({onClose}) {
   }, [])
 
   return (
-    <Content width={600}>
-      <Title>Whois Lookup</Title>
-      <span>{addr}</span>
-      <Scrollable>
-        <Pre>{text}</Pre>
-      </Scrollable>
-      <Footer>
-        <ToolbarButton text="Done" onClick={onClose} />
-      </Footer>
-    </Content>
+    <div style={{width: 600}} className={classNames(modals.form, forms.form)}>
+      <H1 className={modals.title}>Whois Lookup</H1>
+      <div>
+        <label>Address</label>
+        <input type="text" readOnly value={addr} />
+      </div>
+      <div>
+        <label>Whois Result</label>
+      </div>
+      <div style={{overflow: "auto"}}>
+        <pre className={modals.pre}>{text}</pre>
+      </div>
+      <div className={classNames(forms.submission, modals.submission)}>
+        <button type="button" onClick={onClose} style={{marginLeft: "auto"}}>
+          Done
+        </button>
+      </div>
+    </div>
   )
 }

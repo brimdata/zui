@@ -24,7 +24,6 @@ export function useStateControllers<State>(
   // It will also be used as a place to keep the default values
   const [value, onChange] = useState<State>(defaultState)
   const fallbackController = {value, onChange}
-
   const [keys] = useState(() => Object.keys(defaultState()))
   const controllers = {}
   for (let key of keys) {

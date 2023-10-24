@@ -12,11 +12,16 @@ const ipcMainReduxMiddleware: Middleware = (_store) => (next) => (action) => {
   const result = next(action)
 
   if (shouldForward(action)) {
-    globalDispatchFromMain.run(action)
+    globalDispatchFromMain(action)
   }
 
   return result
 }
+
+// The main store has all of the reducers but many of them are not
+// used. Only the ones with a $ in front of them should be used
+// Some reducers only make sense in terms of a window.
+// Maybe we should mark which reducers are global somehow.
 
 export function createMainStore(initState: Partial<State> | undefined) {
   return configureStore({

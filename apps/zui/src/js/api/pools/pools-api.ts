@@ -28,10 +28,14 @@ export class PoolsApi extends ApiDomain {
 
   async loadFiles(poolId: string, files: string[], format?: LoadFormat) {
     await invoke("loadFilesOp", {
+      windowId: globalThis.windowId,
       lakeId: this.lakeId,
       poolId,
       branch: "main",
       files,
+      shaper: "*",
+      author: "Zui",
+      body: "App Import",
       format,
     })
   }

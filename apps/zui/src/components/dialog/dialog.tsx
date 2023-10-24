@@ -1,8 +1,9 @@
-import {useRef, MouseEventHandler} from "react"
+import {HTMLAttributes, MouseEventHandler} from "react"
 import {usePosition} from "./use-position"
-import useListener from "src/js/components/hooks/useListener"
 import {useOpener} from "./use-opener"
 import {useOutsideClick} from "./use-outside-click"
+import useCallbackRef from "src/js/components/hooks/useCallbackRef"
+import {omit} from "lodash"
 
 export type DialogProps = {
   isOpen: boolean
@@ -17,17 +18,41 @@ export type DialogProps = {
   dialogPoint?: string
   dialogMargin?: string
   keepOnScreen?: boolean
-}
+} & HTMLAttributes<HTMLDialogElement>
+
+const nonHTMLProps: (keyof DialogProps)[] = [
+  "isOpen",
+  "onClose",
+  "modal",
+  "onOutsideClick",
+  "anchor",
+  "anchorPoint",
+  "dialogMargin",
+  "dialogPoint",
+  "keepOnScreen",
+]
 
 export function Dialog(props: DialogProps) {
-  const ref = useRef<HTMLDialogElement>()
-  const style = usePosition(ref.current, props)
-  useOpener(ref.current, props)
-  useOutsideClick(ref.current, props)
-  useListener(ref.current, "close", props.onClose)
+  const [node, setNode] = useCallbackRef<HTMLDialogElement>()
+  const style = usePosition(node, props)
+
+  useOpener(node, props)
+  useOutsideClick(node, props)
+
+  function onClose(e) {
+    e.preventDefault()
+    props.onClose()
+  }
 
   return (
-    <dialog ref={ref} style={style} className={props.className}>
+    <dialog
+      // @ts-ignore
+      onClose={onClose}
+      onCancel={onClose}
+      ref={setNode}
+      style={style}
+      {...omit(props, ...nonHTMLProps)}
+    >
       {props.children}
     </dialog>
   )
