@@ -35,6 +35,8 @@ jobs:
     steps:
       - name: Checkout Zui
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.zui-branch }}
 
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
