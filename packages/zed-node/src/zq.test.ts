@@ -113,7 +113,7 @@ test('zq with a bad zed ', async () => {
 test('zq with a bad zed with file', async () => {
   const path = getPath('prs.json');
   const promise = zq({
-    query: 'over this | isNull(*) | head 10',
+    query: 'over this | isNull(*)) | head 10',
     as: 'zjson',
     file: path,
   });
