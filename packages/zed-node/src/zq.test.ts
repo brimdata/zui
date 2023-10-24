@@ -3,6 +3,10 @@ import { createTransformStream, zq } from './zq';
 import { getPath } from '@brimdata/sample-data';
 import { createReadStream } from 'fs';
 
+if (process.env['GITHUB_ACTIONS'] === 'true') {
+  jest.setTimeout(30_000);
+}
+
 test('zq.stream', async () => {
   const input = Stream.Readable.from('1 2 3', { encoding: 'utf-8' });
   const zq = createTransformStream({ query: '{num: this}', f: 'zson' });
