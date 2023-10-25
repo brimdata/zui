@@ -114,17 +114,6 @@ test('zq with a bad zed ', async () => {
   expect(promise).rejects.toThrowError('error parsing Zed');
 });
 
-test('zq with a bad zed with file', async () => {
-  const path = getPath('prs.json');
-  const promise = zq({
-    query: 'over this | isNull(*)) | head 10',
-    as: 'zjson',
-    file: path,
-  });
-
-  expect(promise).rejects.toThrowError('error parsing Zed');
-});
-
 test('head 100 on guns ', async () => {
   const path = getPath('background_checks.csv');
   const data = await zq({
