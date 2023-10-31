@@ -79,6 +79,12 @@ export function compileTemplate(
     click: () => openUpdateWindow(),
   }
 
+  const openFile: MenuItemConstructorOptions = {
+    label: "Open Data File...",
+    click: () => sendToFocusedWindow("loads.chooseFiles"),
+    accelerator: "CmdOrCtrl+O",
+  }
+
   const brimMenu: MenuItemConstructorOptions = {
     label: app.getName(),
     submenu: [
@@ -98,11 +104,12 @@ export function compileTemplate(
 
   function fileSubmenu(): MenuItemConstructorOptions[] {
     if (mac) {
-      return [newWindow, __, exportResults, __, closeTab, closeWindow]
+      return [newWindow, __, openFile, exportResults, __, closeTab, closeWindow]
     } else {
       return [
         newWindow,
         __,
+        openFile,
         exportResults,
         __,
         preferences,

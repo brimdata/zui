@@ -7,15 +7,15 @@ import {WindowHandlers, WindowOperations} from "./window/messages"
 import {LegacyOperations} from "./legacy-ops/messages"
 import {E2EOperations} from "./e2e/messages"
 import {EnvOperations} from "./env/messages"
-import {LoadersHandlers, LoadersOperations} from "./loads/messages"
 import {UpdatesOperations} from "./updates/messages"
+import {LoadsHandlers, LoadsOperations} from "./loads/messages"
 
 export type Handlers = ResultsHandlers &
   MenusHandlers &
   PanesHandlers &
   WindowHandlers &
   SessionHandlers &
-  LoadersHandlers &
+  LoadsHandlers &
   PoolsHandlers
 
 export type Operations = PoolsOperations &
@@ -23,9 +23,10 @@ export type Operations = PoolsOperations &
   E2EOperations &
   ResultsOperations &
   EnvOperations &
-  LoadersOperations &
   WindowOperations &
-  UpdatesOperations
+  UpdatesOperations &
+  LoadsOperations &
+  WindowOperations
 
 export type OperationName = keyof Operations
 export type HandlerName = keyof Handlers
