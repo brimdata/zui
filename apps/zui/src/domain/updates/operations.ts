@@ -9,9 +9,17 @@ export const check = createOperation("updates.check", async () => {
   appUpdater.check()
 })
 
-export const install = createOperation("updates.install", async () => {
-  appUpdater.download()
-})
+export const downloadAndInstall = createOperation(
+  "updates.downloadAndInstall",
+  async () => {
+    try {
+      await appUpdater.download()
+      appUpdater.install()
+    } catch (e) {
+      console.log("Error", e)
+    }
+  }
+)
 
 //  MANUAL FLOW
 // 1. user click check for updates
