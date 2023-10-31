@@ -1,6 +1,5 @@
 import {useSelector} from "react-redux"
 import Updates from "src/js/state/Updates"
-import Image from "next/image"
 import styles from "./index.module.css"
 import forms from "src/components/forms.module.css"
 import classNames from "classnames"
@@ -71,7 +70,7 @@ export function UpdateWindow() {
   return (
     <div className={styles.window}>
       <header className={styles.header}>
-        <Image src="/zui-icon.svg" width={80} height={80} alt="fuck you" />
+        <img src="/zui-icon.svg" width={80} height={80} alt="Zui Logo" />
         <p className={styles.subtext}>v{version}</p>
       </header>
       <main className={styles.main}>
