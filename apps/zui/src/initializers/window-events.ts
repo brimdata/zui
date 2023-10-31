@@ -1,8 +1,8 @@
 import {app, autoUpdater} from "electron"
 import log from "electron-log"
 import env from "src/app/core/env"
-import {MainObject} from "../../core/main/main-object"
-import {moveToCurrentDisplayOp} from "../ops/move-to-current-display-op"
+import {MainObject} from "../core/main/main-object"
+import {moveToCurrentDisplayOp} from "../electron/ops/move-to-current-display-op"
 
 export function initialize(main: MainObject) {
   app.on("second-instance", (e, argv) => {

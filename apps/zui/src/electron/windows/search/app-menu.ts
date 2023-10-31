@@ -12,6 +12,7 @@ import {showPreferencesOp} from "../../ops/show-preferences-op"
 import {showReleaseNotesOp} from "../../ops/show-release-notes-op"
 import {SearchWindow} from "./search-window"
 import {sendToFocusedWindow} from "src/core/ipc"
+import {open as openUpdateWindow} from "src/domain/updates/operations"
 
 export const defaultAppMenuState = () => ({
   showRightPane: true,
@@ -72,10 +73,17 @@ export function compileTemplate(
     click: () => window.send("showExportResults"),
   }
 
+  const checkForUpdates: MenuItemConstructorOptions = {
+    id: "check-for-updates",
+    label: "Check For Updates...",
+    click: () => openUpdateWindow(),
+  }
+
   const brimMenu: MenuItemConstructorOptions = {
     label: app.getName(),
     submenu: [
       aboutApp,
+      checkForUpdates,
       __,
       preferences,
       {role: "services", submenu: []},

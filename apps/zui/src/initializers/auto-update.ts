@@ -1,7 +1,8 @@
 import log from "electron-log"
-import {setupAutoUpdater} from "../autoUpdater"
-import {MainObject} from "../../core/main/main-object"
-import isDev from "../isDev"
+import {setupAutoUpdater} from "../electron/autoUpdater"
+import {MainObject} from "../core/main/main-object"
+import isDev from "../electron/isDev"
+import {appUpdater} from "src/domain/updates/app-updater"
 
 export function initialize(main: MainObject) {
   // autoUpdater should not run in dev, and will fail if the code has not been signed
@@ -10,4 +11,6 @@ export function initialize(main: MainObject) {
       log.error("Failed to initiate autoUpdater: " + err)
     })
   }
+
+  appUpdater.initialize(main.store)
 }

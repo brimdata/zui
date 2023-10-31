@@ -1,5 +1,5 @@
 import {app} from "electron"
-import {MainObject} from "../../core/main/main-object"
+import {MainObject} from "../core/main/main-object"
 
 export function initialize(main: MainObject) {
   const brimCustomProtocol = "zui"

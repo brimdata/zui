@@ -8,6 +8,7 @@ import {LegacyOperations} from "./legacy-ops/messages"
 import {E2EOperations} from "./e2e/messages"
 import {EnvOperations} from "./env/messages"
 import {LoadersHandlers, LoadersOperations} from "./loads/messages"
+import {UpdatesOperations} from "./updates/messages"
 
 export type Handlers = ResultsHandlers &
   MenusHandlers &
@@ -23,7 +24,8 @@ export type Operations = PoolsOperations &
   ResultsOperations &
   EnvOperations &
   LoadersOperations &
-  WindowOperations
+  WindowOperations &
+  UpdatesOperations
 
 export type OperationName = keyof Operations
 export type HandlerName = keyof Handlers

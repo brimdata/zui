@@ -13,3 +13,10 @@ export const showOpenDialog = createOperation(
   "window.showOpenDialog",
   (ctx, options: OpenDialogOptions = {}) => dialog.showOpenDialog(options)
 )
+
+export const close = createOperation(
+  "window.close",
+  ({main}, windowId: string) => {
+    main.windows.find(windowId)?.close()
+  }
+)

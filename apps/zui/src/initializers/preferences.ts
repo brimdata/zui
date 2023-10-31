@@ -3,6 +3,24 @@ import {configurations} from "src/zui"
 
 export function initialize() {
   configurations.create({
+    name: "application",
+    title: "Application",
+    properties: {
+      updateMode: {
+        name: "updateMode",
+        label: "Check for updates...",
+        type: "string",
+        enum: [
+          ["On Startup & Daily", "default"],
+          ["On Startup", "startup"],
+          ["Manually", "manual"],
+          ["Disabled", "disabled"],
+        ],
+        defaultValue: "startup",
+      },
+    },
+  })
+  configurations.create({
     name: "pools",
     title: "Pools",
     properties: {
