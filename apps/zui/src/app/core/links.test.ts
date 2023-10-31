@@ -6,7 +6,7 @@ const fetchStatusCode = async (link: string): Promise<[string, number]> => {
   const controller = new AbortController()
   const timeout = setTimeout(() => {
     controller.abort()
-  }, 1000)
+  }, 10_000)
 
   try {
     const resp = await fetch(link, {signal: controller.signal})
