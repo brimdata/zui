@@ -5,6 +5,7 @@ import env from "src/app/core/env"
 import links from "src/app/core/links"
 import pkg from "src/electron/pkg"
 import {Updater} from "./types"
+import {getMainObject} from "src/core/main"
 
 export class LinuxUpdater implements Updater {
   async check() {
@@ -29,14 +30,14 @@ export class LinuxUpdater implements Updater {
   }
 
   private latestUrl() {
-    const repo = pkg.repo
+    const repo = getMainObject().appMeta.repo
     const platform = "darwin-x64" // If the mac version exists, the linux does too
     return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
   }
 
   private downloadUrl() {
     if (env.isInsiders) {
-      return pkg.repo + "/releases/latest"
+      return pkg.repository + "/releases/latest"
     } else {
       return links.ZUI_DOWNLOAD
     }

@@ -22,25 +22,17 @@ export class MacWinUpdater implements Updater {
     const progress = (r) => {
       onProgress(r.percent / 100)
     }
+    autoUpdater.on("error", (e) => {
+      throw e
+    })
+    autoUpdater.on("download-progress", progress)
 
-    let resolve
-    let reject
-
-    return new Promise((res, rej) => {
-      resolve = res
-      reject = rej
+    return new Promise((resolve, reject) => {
       autoUpdater.on("update-downloaded", resolve)
-      autoUpdater.on("download-progress", progress)
       autoUpdater.on("error", reject)
       autoUpdater.downloadUpdate()
+    }).then(() => {
+      autoUpdater.quitAndInstall()
     })
-      .finally(() => {
-        autoUpdater.off("download-progress", onProgress)
-        autoUpdater.off("update-downloaded", resolve)
-        autoUpdater.off("error", reject)
-      })
-      .then(() => {
-        autoUpdater.quitAndInstall()
-      })
   }
 }

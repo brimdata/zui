@@ -10,13 +10,17 @@ export const open = createOperation("updates.open", ({main}) => {
 export const check = createOperation(
   "updates.check",
   async ({main, dispatch}) => {
-    dispatch(Updates.setIsChecking(true))
-    const newVersion = await updater.check()
-    dispatch(Updates.setIsChecking(false))
-
-    if (newVersion) {
-      dispatch(Updates.setNextVersion(newVersion))
-      main.windows.activate("update")
+    try {
+      dispatch(Updates.setIsChecking(true))
+      const newVersion = await updater.check()
+      if (newVersion) {
+        dispatch(Updates.setNextVersion(newVersion))
+        main.windows.activate("update")
+      }
+    } catch (e) {
+      dispatch(Updates.setError(errorToString(e)))
+    } finally {
+      dispatch(Updates.setIsChecking(false))
     }
   }
 )
