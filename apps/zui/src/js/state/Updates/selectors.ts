@@ -1,7 +1,8 @@
-import {isNumber} from "lodash"
+import {State} from "../types"
 
-export const isChecking = (state) => state.updates.isChecking
-export const getNextVersion = (state) => state.updates.nextVersion
-export const getDownloadProgress = (state) => state.updates.downloadProgress
-export const isDownloading = (state) => isNumber(state.updates.downloadProgress)
-export const getError = (state) => state.updates.error
+export const isChecking = (state: State) => state.updates.isChecking
+export const getNextVersion = (state: State) => state.updates.nextVersion
+export const getDownloadProgress = (state: State) =>
+  state.updates.downloadProgress
+export const isDownloading = (state: State) => state.updates.isDownloading
+export const getError = (state: State) => state.updates.error

@@ -1,0 +1,6 @@
+export type UpdateMode = "disabled" | "manual" | "startup" | "default"
+
+export interface Updater {
+  check(): Promise<string | null>
+  install(onProgress: (percent: number) => void): Promise<void>
+}

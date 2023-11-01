@@ -1,16 +1,14 @@
 import env from "src/app/core/env"
 import {MainObject} from "../core/main/main-object"
-import {appUpdater} from "src/domain/updates/app-updater"
-import {configurations} from "src/zui"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
+import {Scheduler} from "src/domain/updates/scheduler"
+import {check} from "src/domain/updates/operations"
+import {select} from "src/core/main/select"
 
-export function initialize(main: MainObject) {
+export function initialize(_main: MainObject) {
   if (env.isTest) return
 
-  let prev = null
-  main.store.subscribe(() => {
-    const mode = configurations.get("application", "updateMode")
-    if (mode !== prev) {
-      appUpdater.initialize(main.store, mode)
-    }
-  })
+  const mode = select(ConfigPropValues.get("application", "updateMode"))
+  const schedule = new Scheduler()
+  schedule.start(mode, check)
 }

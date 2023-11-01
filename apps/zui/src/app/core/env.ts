@@ -1,4 +1,5 @@
 import {app as electronApp} from "electron"
+import pkg from "src/electron/pkg"
 
 const isPackaged = () =>
   electronApp.isPackaged || process.env.NODE_ENV === "production"
@@ -30,5 +31,8 @@ export default {
   },
   get isLinux() {
     return process.platform === "linux"
+  },
+  get isInsiders() {
+    return pkg.name === "zui-insiders"
   },
 }

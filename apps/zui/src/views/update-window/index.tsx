@@ -27,9 +27,8 @@ function useTemplate() {
   const downloadProgress = useSelector(Updates.getDownloadProgress)
   const error = useSelector(Updates.getError)
   const closeWindow = () => invoke("window.close", globalThis.windowId)
-  const install = () => invoke("updates.downloadAndInstall")
+  const install = () => invoke("updates.install")
   const check = () => invoke("updates.check")
-
   switch (status) {
     case "error":
       return {

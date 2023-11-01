@@ -1,42 +1,38 @@
 import {createOperation} from "src/core/operations"
-import {appUpdater} from "./app-updater"
+import {updater} from "./updater"
+import Updates from "src/js/state/Updates"
+import {errorToString} from "src/util/error-to-string"
 
 export const open = createOperation("updates.open", ({main}) => {
-  main.windows.create("update")
-})
-//
-export const check = createOperation("updates.check", async () => {
-  appUpdater.check()
+  main.windows.activate("update")
 })
 
-export const downloadAndInstall = createOperation(
-  "updates.downloadAndInstall",
-  async () => {
-    try {
-      await appUpdater.download()
-      appUpdater.install()
-    } catch (e) {
-      console.log("Error", e)
+export const check = createOperation(
+  "updates.check",
+  async ({main, dispatch}) => {
+    dispatch(Updates.setIsChecking(true))
+    const newVersion = await updater.check()
+    dispatch(Updates.setIsChecking(false))
+
+    if (newVersion) {
+      dispatch(Updates.setNextVersion(newVersion))
+      main.windows.activate("update")
     }
   }
 )
 
-//  MANUAL FLOW
-// 1. user click check for updates
-// 2. app triggers update check
-// 3. app opens update window
-
-// 4. update window checks state
-// 5. renders progress bar if state.isChecking
-// 8. renders up to date if state.isUpToDate
-// 9. renders new version available if state.newVersionAvailable
-// 10. Button to Install
-// 11. Button to Cancel
-// 12. Note that you can change update settings in Settings
-
-// AUTO FLOW
-// app auto checks on startup,
-// app downloads update in the background
-// app waits until restart to install
-// app udates menu with "New Version Available..."
-// when the auu quits it will be updated
+export const install = createOperation(
+  "updates.install",
+  async ({dispatch}) => {
+    const onProgress = (n: number) => dispatch(Updates.setDownloadProgress(n))
+    try {
+      dispatch(Updates.setIsDownloading(true))
+      dispatch(Updates.setDownloadProgress(0))
+      await updater.install(onProgress)
+    } catch (e) {
+      dispatch(Updates.setError(errorToString(e)))
+    } finally {
+      dispatch(Updates.setIsDownloading(false))
+    }
+  }
+)

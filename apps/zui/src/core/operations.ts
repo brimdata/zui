@@ -1,10 +1,14 @@
 import {ipcMain, IpcMainInvokeEvent} from "electron"
 import {OperationName} from "src/domain/messages"
 import {MainObject} from "./main/main-object"
+import {Dispatch} from "src/js/state/types"
+import {select} from "./main/select"
 
 type OperationContext = {
+  dispatch: Dispatch
   main: MainObject
   event?: IpcMainInvokeEvent | null
+  select: typeof select
 }
 
 let context: OperationContext | null = null

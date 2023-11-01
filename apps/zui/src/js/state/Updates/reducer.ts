@@ -5,10 +5,14 @@ export const slice = createSlice({
   initialState: {
     nextVersion: null as null | string,
     isChecking: false,
+    isDownloading: false,
     downloadProgress: null as null | number,
     error: null,
   },
   reducers: {
+    reset() {
+      return slice.initialState()
+    },
     setNextVersion(s, a: PayloadAction<string | null>) {
       s.nextVersion = a.payload
     },
@@ -17,6 +21,9 @@ export const slice = createSlice({
     },
     setDownloadProgress(s, a: PayloadAction<number>) {
       s.downloadProgress = a.payload
+    },
+    setIsDownloading(s, a: PayloadAction<boolean>) {
+      s.isDownloading = a.payload
     },
     setError(s, a: PayloadAction<string>) {
       s.error = a.payload
