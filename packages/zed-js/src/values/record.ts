@@ -134,7 +134,7 @@ export class Record implements Value {
   }
 
   isUnset() {
-    return this.fields === null;
+    return false;
   }
 
   toJS(opts: JSOptions = {}) {

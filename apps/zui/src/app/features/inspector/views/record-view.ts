@@ -8,7 +8,7 @@ export class RecordView extends ContainerView<zed.Record> {
   }
 
   count() {
-    return this.value.fields.length
+    return this.value.fields?.length || 0
   }
 
   openToken() {
@@ -20,7 +20,7 @@ export class RecordView extends ContainerView<zed.Record> {
   }
 
   *iterate(n?: number) {
-    const fields = this.value.fields
+    const fields = this.value.fields || []
     const length = n ? Math.min(n, fields.length) : fields.length
 
     for (let i = 0; i < fields.length; ++i) {
