@@ -4,6 +4,7 @@
   font-style: oblique 0deg 15deg;
   font-weight: 300 1000;
   font-display: block;
+
 }
 
 $heading-font: system-ui, sans-serif;
@@ -21,18 +22,11 @@ $line-height-2: 1.125rem;
   --mono-font: "Recursive";
   --body-font: "system-ui";
 
-  /* Recursive settings */
-  --mono: "MONO" 1;
-  /* Monospace: Sans (natural-width) or Mono (fixed-width) */
 
-  --casl: "CASL" 0;
-  /* Casual: Linear to Casual */
-  --slnt: "slnt" 0;
+}
 
-  /* Slant: 0 to -15 degrees, auto cursive at -14 */
-  --CRSV: "CRSV" 0.5;
-  // off  auto  on
-  /* Cursive: always roman, auto substitution, or always cursive */
-  font-variation-settings: var(--mono), var(--casl), var(--wght), var(--slnt),
-    var(--CRSV);
+html,
+body {
+  // Tweek these here https: //www.recursive.design/
+  font-variation-settings: "MONO" 1, "CASL" 0.3, "CRSV" 0.5;
 }
