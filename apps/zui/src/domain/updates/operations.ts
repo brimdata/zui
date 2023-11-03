@@ -38,6 +38,7 @@ export const install = createOperation(
       dispatch(Updates.setIsDownloading(true))
       dispatch(Updates.setDownloadProgress(0))
       await updater.install(onProgress)
+      info("Finished calling install")
     } catch (e) {
       info("Error Installing")
       dispatch(Updates.setError(errorToString(e)))
