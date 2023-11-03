@@ -31,7 +31,7 @@ export const check = createOperation(
 
 export const install = createOperation(
   "updates.install",
-  async ({dispatch}) => {
+  async ({dispatch, main}) => {
     info("Installing Update")
     const onProgress = (n: number) => dispatch(Updates.setDownloadProgress(n))
     try {
@@ -39,6 +39,7 @@ export const install = createOperation(
       dispatch(Updates.setDownloadProgress(0))
       await updater.install(onProgress)
       info("Finished calling install")
+      main.windows.byName("update").forEach((w) => w.close())
     } catch (e) {
       info("Error Installing")
       dispatch(Updates.setError(errorToString(e)))
