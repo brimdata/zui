@@ -14,6 +14,8 @@ export function initialize(_main: MainObject) {
 
   const mode = select(ConfigPropValues.get("application", "updateMode"))
   const schedule = new Scheduler()
-  info("Starting updater in mode: ", mode)
-  schedule.start(mode, check)
+  setTimeout(() => {
+    info("Starting updater in mode: ", mode)
+    schedule.start(mode, check)
+  }, 15_000) // wait 15 seconds before checking for updates
 }
