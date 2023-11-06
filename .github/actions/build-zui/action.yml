@@ -48,9 +48,7 @@ runs:
       shell: bash
 
     - name: Build & Publish
-      run: |
-        python3 -m pip install packaging    # Workaround for https://github.com/brimdata/zui/issues/2882
-        ${{ inputs.cmd }}
+      run: ${{ inputs.cmd }}
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.gh_token }}
