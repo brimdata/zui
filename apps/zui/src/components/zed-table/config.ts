@@ -1,7 +1,8 @@
 export const config = {
-  rowHeight: 20,
-  lineHeight: 20,
-  headerHeight: 28,
+  rowHeight: 26,
+  lineHeight: 26,
+  headerHeight: 34,
   defaultCellWidth: 80,
+  maxCellAutoWidth: 700,
   placeholderHeaderHeight: 28,
 }
