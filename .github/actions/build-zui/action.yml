@@ -48,7 +48,9 @@ runs:
       shell: bash
 
     - name: Build & Publish
-      run: ${{ inputs.cmd }}
+      run: |
+        python3 -m pip install packaging
+        ${{ inputs.cmd }}
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.gh_token }}
