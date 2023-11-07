@@ -11,6 +11,7 @@ import Pools from "src/js/state/Pools"
 import {invoke} from "src/core/invoke"
 import {runHistogramQuery} from "src/views/histogram-pane/run-query"
 import {runResultsQuery} from "src/views/results-pane/run-results-query"
+import Layout from "src/js/state/Layout"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {
@@ -46,11 +47,14 @@ function syncEditor(dispatch, getState) {
 function fetchData() {
   return (dispatch, getState, {api}) => {
     const version = Current.getVersion(getState())
+    const histogramVisible = Layout.getShowHistogram(getState())
 
     startTransition(() => {
       if (version) {
         dispatch(runResultsQuery())
-        runHistogramQuery(api)
+        if (histogramVisible) {
+          runHistogramQuery(api)
+        }
       }
     })
   }

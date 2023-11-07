@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as zjson from '../zjson';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
@@ -32,7 +33,7 @@ export class TypeRecord implements Type {
   }
 
   toString() {
-    if (isNull(this.fields)) return 'null';
+    if (isNull(this.fields)) return '{}';
     let s = '{';
     let sep = '';
     this.fields.forEach((f) => {
@@ -48,17 +49,19 @@ export class TypeRecord implements Type {
     stream: DecodeStream,
     parent?: Field
   ) {
-    if (values === null || isNull(this.fields)) return new Record(this, null);
+    // If this.fields == null that means it's an empty record type
+    if (values === null) return new Record(this, null);
     const record = new Record(this, null /* temp */);
     // If a parent was passed in, then we are constructing a nested record
     // and the parent is a Field. If no parent, then we are creating the
     // root record and the parent is this record.
     const progenitor = parent || record; // just needed another variable name for parent
 
-    record.fields = this.fields.map((f, i) => {
+    record.fields = values.map((value, i) => {
+      const f = this.fields![i];
       if (trueType(f.type) instanceof TypeRecord) {
         const field = new Field(f.name, new Null() /* temp */, progenitor);
-        field.value = f.type.create(values[i], stream, field);
+        field.value = f.type.create(value, stream, field);
         return field;
       } else {
         return new Field(f.name, f.type.create(values[i], stream), progenitor);
