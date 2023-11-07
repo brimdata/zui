@@ -6,7 +6,7 @@ import { ZedMap } from '../values/map';
 import { Type } from './types';
 
 export class TypeMap implements Type {
-  kind = 'union';
+  kind = 'map';
 
   constructor(public keyType: Type, public valType: Type) {}
 

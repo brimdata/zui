@@ -8,7 +8,7 @@ export class RecordView extends ContainerView<zed.Record> {
   }
 
   count() {
-    return this.value.fields.length
+    return this.value.fields?.length || 0
   }
 
   openToken() {
