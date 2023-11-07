@@ -14,7 +14,10 @@ import useTabLayout from "./useTabLayout"
 import {useLocation} from "react-router"
 import styled from "styled-components"
 import Appearance from "src/js/state/Appearance"
-import SidebarToggleButton from "src/app/features/sidebar/sidebar-toggle-button"
+import {
+  SidebarToggleButton,
+  RightSidebarToggleButton,
+} from "src/app/features/sidebar/sidebar-toggle-button"
 import tab from "src/js/models/tab"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import {bounded} from "src/util/bounded"
@@ -25,6 +28,8 @@ const MAX_WIDTH = 200
 const BG = styled.div`
   background: var(--tab-background);
   display: flex;
+  align-items: center;
+  padding-right: 16px;
   height: 100%;
   grid-area: tabs;
   -webkit-app-region: drag;
@@ -101,6 +106,7 @@ export default function TabBar() {
         })}
         <AddTab onClick={ctl.onAddClick} left={width * count} />
       </Container>
+      <RightSidebarToggleButton />
     </BG>
   )
 }

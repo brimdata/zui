@@ -2,6 +2,7 @@ import {max} from "lodash"
 import React, {useEffect} from "react"
 import {config} from "./config"
 import {useZedTable} from "./context"
+import {bounded} from "src/util/bounded"
 
 export function useListStyle(style: React.CSSProperties) {
   const api = useZedTable()
@@ -32,7 +33,10 @@ export function getMaxCellSizes(container: HTMLDivElement, ids: string[]) {
     cells.forEach((el) => (el.style.width = "auto"))
     const widths = cells.map((cell) => cell.scrollWidth + 8)
     cells.forEach((el, i) => (el.style.width = oldWidths[i]))
-    const maxWidth = Math.max(config.defaultCellWidth, max(widths))
+    const maxWidth = bounded(max(widths), [
+      config.defaultCellWidth,
+      config.maxCellAutoWidth,
+    ])
     if (isNaN(maxWidth)) continue
     maxWidths[id] = maxWidth
   }
