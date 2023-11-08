@@ -1,0 +1,23 @@
+.toolbar {
+    height: 38px;
+    background: var(--chrome-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.left,
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.toolbar nav {
+    display: flex;
+}
+
+.toolbar h1 {
+    font-size: 1rem;
+    padding: 0 1rem;
+}

@@ -1,5 +1,4 @@
 import React from "react"
-import StatusBar from "src/js/components/status-bar/status-bar"
 import TabBar from "src/js/components/TabBar/TabBar"
 import {Sidebar} from "src/app/features/sidebar"
 import {AppModals} from "./app-modals"
@@ -16,7 +15,6 @@ export default function AppWrapper({children}) {
         <TabBar key={lakeId} />
         <Sidebar />
         <MainArea>{children}</MainArea>
-        <StatusBar />
         <AppModals />
       </AppGrid>
     </DataDropzone>

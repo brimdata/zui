@@ -2,14 +2,14 @@ import React, {useLayoutEffect} from "react"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import Tab from "src/js/state/Tab"
-import {useDispatch} from "../core/state"
-import QueryHome from "./index"
-import {loadRoute} from "./loader"
+import {useDispatch} from "src/app/core/state"
+import {loadRoute} from "src/app/query-home/loader"
+import {SessionPage} from "."
 
 // If this is a nice pattern for routes,
 // we could make it a generic component.
 
-export function QueryRoute() {
+export function SessionRoute() {
   const location = useSelector(Current.getLocation)
   const lastKey = useSelector(Tab.getLastLocationKey)
   const dispatch = useDispatch()
@@ -20,5 +20,5 @@ export function QueryRoute() {
     }
   }, [location.key, lastKey])
 
-  return <QueryHome />
+  return <SessionPage />
 }

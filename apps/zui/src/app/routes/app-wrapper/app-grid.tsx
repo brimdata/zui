@@ -16,10 +16,9 @@ export function AppGrid({children}) {
   const areas = `
     "sidebar tabs"
     "sidebar main"
-    "sidebar status"
   `
   const width = sidebarIsOpen ? sidebarWidth : 0
-  const rows = ["40px", "1fr", "28px"]
+  const rows = ["40px", "1fr"]
   const columns = [`min(${width}px, 80vw)`, "1fr"]
   const style = {
     gridTemplateAreas: areas,

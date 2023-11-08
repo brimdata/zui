@@ -9,14 +9,16 @@ import styled from "styled-components"
 const BG = styled.main`
   min-height: 0;
   min-width: 0;
-  height: 100%;
   display: flex;
   flex-direction: column;
   grid-area: main;
   overflow: hidden;
   background: white;
   z-index: 1;
-  box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  margin-top: 2px;
+  border-radius: 6px;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
 `
 
 export function isInteractive() {
@@ -33,7 +35,7 @@ export function MainArea({children}) {
   const dispatch = useDispatch()
   const touched = () => dispatch(isInteractive())
   const sidebarIsOpen = useSelector(Appearance.sidebarIsOpen)
-  const style: CSSProperties = {borderTopLeftRadius: sidebarIsOpen ? 6 : 0}
+  const style: CSSProperties = {marginLeft: sidebarIsOpen ? 0 : "inherit"}
 
   return (
     <BG onMouseDown={touched} onKeyDown={touched} style={style}>
