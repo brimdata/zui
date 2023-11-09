@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 18px;
-    color: var(--fg-color-light);
+    color: var(--fg-color-less);
     contain: inline-size;
     gap: 4px;
 }
@@ -55,7 +55,7 @@
 }
 
 .results footer button {
-    color: var(--fg-color-light);
+    color: var(--fg-color-less);
     text-decoration: none;
     border-radius: 6px;
     padding: 0 6px;
@@ -96,7 +96,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--fg-color-light);
+    color: var(--fg-color-less);
     font-weight: bold;
     ;
 }

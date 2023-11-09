@@ -52,6 +52,7 @@ export function ZedEditor(props: {
       value={props.value}
       onChange={props.onChange}
       language="zed"
+      theme="vs-dark"
       options={{
         minimap: {enabled: false},
         renderLineHighlight: "none",

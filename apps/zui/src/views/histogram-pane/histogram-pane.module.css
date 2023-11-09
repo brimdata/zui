@@ -66,6 +66,6 @@ div.toolbar {
 
 .title {
   font-size: 0.7rem;
-  color: var(--fg-color-light);
+  color: var(--fg-color-less);
   /* color: var(--border-color); */
 }

@@ -31,11 +31,11 @@ const BG = styled.button`
   }
 
   &:hover:not(:disabled) {
-    background: var(--emphasis-bg-less);
+    background: var(--emphasis-bg);
   }
 
   &:active:not(:disabled) {
-    background: var(--emphasis-bg);
+    background: var(--emphasis-bg-more);
   }
 
   &.icon-label {

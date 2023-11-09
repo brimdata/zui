@@ -31,7 +31,7 @@
   font-size: 11px;
   letter-spacing: 0.1px;
   z-index: 1;
-  color: var(--fg-color-light);
+  color: var(--fg-color-less);
   transition: all 200ms;
   height: 100%;
 }

@@ -15,7 +15,6 @@
 .header {
     position: sticky;
     top: 0;
-    background: white;
     border-bottom: 1px solid var(--border-color);
 }
 

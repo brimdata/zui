@@ -13,7 +13,7 @@ const BG = styled.main`
   flex-direction: column;
   grid-area: main;
   overflow: hidden;
-  background: white;
+  background: var(--bg-color);
   z-index: 1;
   margin: 10px;
   margin-top: 2px;

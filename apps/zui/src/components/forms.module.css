@@ -107,7 +107,7 @@
     line-height: var(--form-line-height);
     padding: var(--form-padding);
     border: 1px solid var(--border-color);
-    box-shadow: 0 3px 4px -4px var(--fg-color-light);
+    box-shadow: 0 3px 4px -4px var(--fg-color-less);
     font-weight: 500;
     min-width: 80px;
 }
@@ -149,7 +149,7 @@
 .form .actionLabel a {
     text-decoration: underline;
     cursor: pointer;
-    color: var(--fg-color-light);
+    color: var(--fg-color-less);
 }
 
 .form .radioInput {

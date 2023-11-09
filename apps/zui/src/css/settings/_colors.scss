@@ -54,7 +54,7 @@
 
   --fg-color-dark: #000811;
   --fg-color: #0f1e2e;
-  --fg-color-light: hsl(210, 4%, 40%);
+  --fg-color-less: hsl(210, 4%, 40%);
 
   --bg-color: white;
 
@@ -67,8 +67,7 @@
   --border-color: hsl(216, 10%, 87%);
   --border-color-more: hsl(216, 10%, 80%);
 
-  --chrome-color: hsl(212, 10%, 97%);
-  --chrome-color-dark: #E9EAEB;
+
 
   // Form stuff
   --form-bg-color: white;
@@ -107,13 +106,17 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --fg-color-less: rgba(255, 255, 255, 0.7);
     --fg-color: white;
-    --bg-color: #0f1e2el;
+    --bg-color: hsl(44deg 8% 10%);
 
     --emphasis-bg-less: rgba(255, 255, 255, 0.05);
     --emphasis-bg: rgba(255, 255, 255, 0.15);
     --emphasis-bg-more: rgba(255, 255, 255, 0.2);
     --emphasis-bg-most: rgba(255, 255, 255, 0.3);
+
+    --chrome-color: rgba(255, 255, 255, 0.15);
+    --chrome-color-dark: #E9EAEB;
 
     --selected-bg: rgba(255, 255, 255, 0.2);
     --selected-bg-active: rgba(255, 255, 255, 0.25);
