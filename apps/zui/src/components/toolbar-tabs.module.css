@@ -16,6 +16,7 @@
 }
 
 .button {
+  white-space: nowrap;
   background: none;
   border: none;
   user-select: none;

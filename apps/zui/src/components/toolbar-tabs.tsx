@@ -2,8 +2,9 @@ import React, {useLayoutEffect, useRef, useState} from "react"
 import {MenuItem} from "src/core/menu"
 import styles from "./toolbar-tabs.module.css"
 import Icon from "src/app/core/icon-temp"
+import {call} from "src/util/call"
 
-export function ToolbarTabs(props: {onlyIcon: boolean; options: MenuItem[]}) {
+export function ToolbarTabs(props: {onlyIcon?: boolean; options: MenuItem[]}) {
   const changeCount = useRef(0)
   const ref = useRef<HTMLDivElement>()
   const [pos, setPos] = useState({x: 0, width: 10})
@@ -34,13 +35,13 @@ export function ToolbarTabs(props: {onlyIcon: boolean; options: MenuItem[]}) {
             key={opts.id ?? i}
             onClick={() => {
               changeCount.current += 1
-              opts.click()
+              call(opts.click)
             }}
             aria-pressed={opts.checked}
             data-section-tab-value={opts.label.toLowerCase()}
             disabled={opts.enabled === false}
           >
-            <Icon name={opts.iconName} size={14} />
+            {opts.iconName && <Icon name={opts.iconName} size={14} />}
             {!props.onlyIcon && <span>{opts.label}</span>}
           </button>
         ))}

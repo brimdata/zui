@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+
+}
+
+.pin {
+    font-family: var(--mono-font);
+    font-weight: 500;
+    font-size: 0.75rem;
+    height: 1.375rem;
+    background: var(--chrome-color);
+    border: none;
+    padding: 0 1.25rem;
+
+    --indent: 0.5rem;
+    --end: calc(100% - var(--indent));
+    --start: var(--indent);
+    --right-point: polygon(0% 0%, var(--end) 0%, 100% 50%, var(--end) 100%, 0% 100%);
+    --right-chevron: polygon(var(--end) 0%, 100% 50%, var(--end) 100%, 0% 100%, var(--start) 50%, 0% 0%);
+    clip-path: var(--right-chevron);
+    margin-left: calc(calc(var(--indent) * -1) + 4px);
+}
+
+.pin span {
+    color: var(--orange);
+}
+
+.pin:first-child {
+    margin-left: 0;
+    padding-left: 1.225rem;
+    clip-path: var(--right-point);
+}

@@ -43,7 +43,7 @@ export function useResultsContext() {
   return value
 }
 
-function ResultsProvider({children}) {
+export function ResultsProvider({children}) {
   const [table, setTable] = useState<TableViewApi | null>(null)
   const query = useSelector(Current.getActiveQuery)
   const value = {
