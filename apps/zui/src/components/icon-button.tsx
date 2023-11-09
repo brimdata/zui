@@ -31,17 +31,17 @@ const BG = styled.button`
   }
 
   &:hover:not(:disabled) {
-    background: var(--darken-less);
+    background: var(--emphasis-bg-less);
   }
 
   &:active:not(:disabled) {
-    background: var(--darken);
+    background: var(--emphasis-bg);
   }
 
   &.icon-label {
     gap: 6px;
     padding: 0 8px;
-    border: 1px solid var(--border-color-dark);
+    border: 1px solid var(--border-color-more);
     font-weight: 500;
     font-size: 14px;
     height: 28px;

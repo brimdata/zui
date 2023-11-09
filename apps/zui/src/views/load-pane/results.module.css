@@ -16,7 +16,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 18px;
-    color: var(--foreground-color-light);
+    color: var(--fg-color-light);
     contain: inline-size;
     gap: 4px;
 }
@@ -55,7 +55,7 @@
 }
 
 .results footer button {
-    color: var(--foreground-color-light);
+    color: var(--fg-color-light);
     text-decoration: none;
     border-radius: 6px;
     padding: 0 6px;
@@ -69,13 +69,13 @@
 }
 
 .results footer button:hover {
-    color: var(--foreground-color);
-    background: var(--darken-less);
+    color: var(--fg-color);
+    background: var(--emphasis-bg-less);
 }
 
 .results footer button:active {
-    color: var(--foreground-color);
-    background: var(--darken);
+    color: var(--fg-color);
+    background: var(--emphasis-bg);
 }
 
 .results label {
@@ -96,7 +96,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--foreground-color-light);
+    color: var(--fg-color-light);
     font-weight: bold;
     ;
 }

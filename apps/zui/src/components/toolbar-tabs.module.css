@@ -31,22 +31,22 @@
   font-size: 11px;
   letter-spacing: 0.1px;
   z-index: 1;
-  color: var(--foreground-color-light);
+  color: var(--fg-color-light);
   transition: all 200ms;
   height: 100%;
 }
 
 .button:hover:not([aria-pressed="true"]):not(:disabled) {
-  background: var(--darken-less);
-  color: var(--foreground-color);
+  background: var(--emphasis-bg-less);
+  color: var(--fg-color);
 }
 
 .button:active:not([aria-pressed="true"]):not(:disabled) {
-  background: var(--darken);
+  background: var(--emphasis-bg);
 }
 
 .button[aria-pressed="true"] {
-  color: var(--foreground-color);
+  color: var(--fg-color);
 }
 
 .button:disabled {

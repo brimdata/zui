@@ -25,7 +25,7 @@ const BG = styled.div`
 
 const Input = styled.input`
   &::placeholder {
-    color: var(--foreground-color);
+    color: var(--fg-color);
     opacity: 0.4;
   }
   height: 22px;

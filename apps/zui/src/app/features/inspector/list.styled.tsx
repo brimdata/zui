@@ -47,7 +47,7 @@ export const List: ComponentType<PropsWithChildren<any>> = styled(
     padding: 0 12px;
     &:hover {
       background: var(--button-background-hover);
-      color: var(--foreground-color);
+      color: var(--fg-color);
     }
     &:active {
       background: var(--button-background-active);

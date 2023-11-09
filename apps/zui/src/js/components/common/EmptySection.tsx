@@ -10,7 +10,7 @@ const EmptyWrapper = styled.div`
   user-select: none;
 
   svg {
-    fill: var(--foreground-color);
+    fill: var(--fg-color);
     opacity: 0.1;
   }
 

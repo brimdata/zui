@@ -6,7 +6,7 @@
     align-items: center;
     column-gap: 1em;
     grid-template-areas: "icon info actions"
-    ". details .";
+        ". details .";
     min-height: 86px;
 }
 
@@ -41,7 +41,7 @@
 
 .status {
     grid-area: status;
-    color: var(--foreground-color-light);
+    color: var(--fg-color-light);
     font-size: 0.8rem;
 }
 
@@ -57,32 +57,37 @@
 }
 
 .loadingIcon path:nth-child(1) {
-    animation: upload 1.6s 532ms infinite  var(--pop-easing);
+    animation: upload 1.6s 532ms infinite var(--pop-easing);
 }
+
 .loadingIcon path:nth-child(2) {
     animation: upload 1.6s 266ms infinite var(--pop-easing);
 }
+
 .loadingIcon path:nth-child(3) {
-    animation: upload 1.6s  infinite var(--pop-easing);
+    animation: upload 1.6s infinite var(--pop-easing);
 }
+
 @keyframes upload {
     from {
         transform: translateY(80%);
         opacity: 0;
     }
+
     50% {
         opacity: 1;
         transform: translateY(0);
     }
+
     to {
         opacity: 0;
         transform: translateY(-80%);
     }
-    
+
 }
 
 .loadingIcon {
-    color: var(--foreground-color-light);
+    color: var(--fg-color-light);
     color: var(--blue);
     background: var(--chrome-color-dark);
 }
@@ -101,6 +106,6 @@
     border-top: 1px solid var(--border-color);
     margin-top: 0.5rem;
     padding-top: 0.75rem;
-    color: var(--foreground-color-light);
+    color: var(--fg-color-light);
     grid-area: details;
 }

@@ -31,9 +31,9 @@
   --alert-1: #d0250b;
 
   // backgrounds
-  --darken-less: rgba(0, 0, 0, 0.03);
-  --darken: rgba(0, 0, 0, 0.06);
-  --darken-more: rgba(0, 0, 0, 0.09);
+  --emphasis-bg-less: rgba(0, 0, 0, 0.03);
+  --emphasis-bg: rgba(0, 0, 0, 0.06);
+  --emphasis-bg-more: rgba(0, 0, 0, 0.09);
 
   --table-stripe-bg: rgba(0, 0, 0, 0.02);
 
@@ -52,11 +52,11 @@
   --primary-color-dark: hsl(212, 78%, 50%);
   --primary-color-darker: hsl(212, 88%, 35%);
 
-  --foreground-color-dark: #000811;
-  --foreground-color: #0f1e2e;
-  --foreground-color-light: hsl(210, 4%, 40%);
+  --fg-color-dark: #000811;
+  --fg-color: #0f1e2e;
+  --fg-color-light: hsl(210, 4%, 40%);
 
-  --background-color: white;
+  --bg-color: white;
 
   --button-background: hsl(212, 5%, 92%);
   --button-background-hover: hsl(212, 5%, 90%);
@@ -65,7 +65,7 @@
   --editor-background: white;
 
   --border-color: hsl(216, 10%, 87%);
-  --border-color-dark: hsl(216, 10%, 80%);
+  --border-color-more: hsl(216, 10%, 80%);
 
   --chrome-color: hsl(212, 10%, 97%);
   --chrome-color-dark: #E9EAEB;
@@ -86,4 +86,38 @@
 
   // Easing
   --pop-easing: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --fg-color: white;
+    --bg-color: #0f1e2el;
+
+    --emphasis-bg-less: rgba(255, 255, 255, 0.05);
+    --emphasis-bg: rgba(255, 255, 255, 0.15);
+    --emphasis-bg-more: rgba(255, 255, 255, 0.2);
+
+    --selected-bg: rgba(255, 255, 255, 0.4);
+
+    --border-color: hsl(216, 10%, 87%);
+    --border-color-more: hsl(216, 10%, 80%);
+  }
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg-color: white;
+    --bg-color: #0f1e2el;
+
+    --emphasis-bg-less: rgba(255, 255, 255, 0.05);
+    --emphasis-bg: rgba(255, 255, 255, 0.15);
+    --emphasis-bg-more: rgba(255, 255, 255, 0.2);
+    --emphasis-bg-most: rgba(255, 255, 255, 0.3);
+
+    --selected-bg: rgba(255, 255, 255, 0.4);
+
+    --border-color: rgba(255, 255, 255, 0.3);
+    --border-color-more: rgba(255, 255, 255, 0.5);
+  }
 }

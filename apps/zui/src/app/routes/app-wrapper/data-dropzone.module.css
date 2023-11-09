@@ -1,5 +1,5 @@
 .dropzone {
-    position: relative;    
+    position: relative;
 }
 
 .overlay {
@@ -9,9 +9,9 @@
     background: var(--orange);
     position: absolute;
     top: 0;
-    left:0;
-    right:0;
-    bottom:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,8 +24,8 @@
     flex-direction: column;
     gap: 1em;
     animation:
-                700ms popup cubic-bezier(0.16, 1, 0.3, 1) forwards,
-                300ms fade-opacity ease-in forwards;
+        700ms popup cubic-bezier(0.16, 1, 0.3, 1) forwards,
+        300ms fade-opacity ease-in forwards;
 }
 
 .title {
@@ -33,13 +33,13 @@
     font-weight: 900;
     text-align: center;
     color: white;
-    
+
     margin: 0;
 }
 
 .title em {
     font-style: normal;
-    color: var(--foreground-color);
+    color: var(--fg-color);
 }
 
 .note {
@@ -58,11 +58,12 @@
     border-radius: 3px;
     margin: 0 0.2em;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
     text-transform: uppercase;
     font-size: 0.85em;
     font-weight: 500;
-    letter-spacing: 1px;;
+    letter-spacing: 1px;
+    ;
 
 }
 
@@ -72,7 +73,6 @@
     height: 3rem;
     margin: 0;
     animation: 700ms margin-in cubic-bezier(0.16, 1, 0.3, 1) forwards
-    
 }
 
 .hair div:first-child {
@@ -119,6 +119,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -137,7 +138,8 @@
 @keyframes margin-in {
     from {
         margin: 0;
-    } 
+    }
+
     to {
         margin: 10vmin;
     }

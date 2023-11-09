@@ -55,7 +55,7 @@ export const Button = styled.button`
   justify-content: center;
   border: none;
   border-radius: 4px;
-  color: var(--foreground-color);
+  color: var(--fg-color);
   padding: 0 8px;
   min-width: 60px;
   font-weight: 500;

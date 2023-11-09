@@ -1,8 +1,8 @@
-$tab-inactive-color: var(--foreground-color);
+$tab-inactive-color: var(--fg-color);
 $tab-inactive-bg: rgba(0, 0, 0, 0.06);
-$tab-hover-color: var(--foreground-color);
+$tab-hover-color: var(--fg-color);
 $tab-hover-bg: var(--tab-background-hover);
-$tab-active-color: var(--foreground-color);
+$tab-active-color: var(--fg-color);
 $tab-active-bg: white;
 $tab-transition-duration: 200ms;
 

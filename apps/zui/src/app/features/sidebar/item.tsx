@@ -47,11 +47,11 @@ const BG = styled.div`
   border-radius: 6px;
 
   &:hover:not(.dragging) {
-    background: var(--darken-less);
+    background: var(--emphasis-bg-less);
   }
 
   &:active:not(.dragging) {
-    background: var(--darken);
+    background: var(--emphasis-bg);
     box-shadow: var(--sidebar-item-active-shadow);
   }
 
@@ -64,18 +64,26 @@ const BG = styled.div`
   }
 
   &[aria-selected="true"] {
+    --background: var(--bg-color);
+    --active: var(--emphasis-bg);
+    @media (prefers-color-scheme: dark) {
+      --background: var(--emphasis-bg-more);
+      --active: var(--emphasis-bg-most);
+    }
+
     border-radius: 0;
     outline: none;
-    background-color: var(--background-color);
     box-shadow: var(--shadow-small);
+    background: var(--background);
+
     svg {
       opacity: 1;
     }
     &:hover {
-      background-color: var(--background-color);
+      background-color: var(--background);
     }
     &:active {
-      background-color: var(--background-color);
+      background-color: var(--active);
     }
     &.selected-start {
       border-top-left-radius: 6px;
@@ -105,7 +113,7 @@ const ItemIconBG = styled.div<{isFolder: boolean}>`
     width: 14px;
     height: 14px;
     opacity: 0.5;
-    fill: var(--foreground-color);
+    fill: var(--fg-color);
   }
 `
 

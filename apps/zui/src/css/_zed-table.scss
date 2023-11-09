@@ -49,7 +49,7 @@
   justify-content: space-between;
   padding: 0 10px;
   border-right: 1px solid transparent;
-  color: var(--foreground-color-light);
+  color: var(--fg-color-light);
   background: var(--chrome-color);
   border-right-color: var(--border-color);
 
@@ -103,13 +103,13 @@
 }
 
 .zed-table__cell {
-  --background-color: #f9f9f9;
+  --bg-color: #f9f9f9;
 
   &.even {
-    --background-color: white;
+    --bg-color: white;
   }
 
-  background-color: var(--background-color);
+  background-color: var(--bg-color);
   overflow: hidden;
   white-space: nowrap;
   padding: 0 10px;

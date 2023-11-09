@@ -10,7 +10,7 @@ type Props = {
 
 const CloseButton = ({light, ...rest}: Props) => (
   <button {...rest} className={classNames("close-button", {light})}>
-    <Icon name="close" fill="var(--foreground-color)" />
+    <Icon name="close" fill="var(--fg-color)" />
   </button>
 )
 

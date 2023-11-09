@@ -9,7 +9,7 @@
     padding-bottom: var(--side-padding);
 }
 
-.formBody > * {
+.formBody>* {
     padding: 0 var(--side-padding);
 }
 
@@ -19,11 +19,11 @@
     margin: var(--side-padding);
     margin-top: auto;
     margin-bottom: 1em;
-    color: var(--foreground-color-light);
+    color: var(--fg-color-light);
     text-align: center;
     font-size: 13px;
     box-shadow: inset 0 0 6px -2px rgb(0 0 0 / 0.15);
-    border: 1px solid var(--border-color-dark);
+    border: 1px solid var(--border-color-more);
     background: transparent;
 }
 
@@ -84,12 +84,12 @@
 .form summary {
     cursor: pointer;
     letter-spacing: 0.3px;
-    color: var(--foreground-color-light);
-    padding: calc(var(--form-field-gap) / 3) 6px ;
+    color: var(--fg-color-light);
+    padding: calc(var(--form-field-gap) / 3) 6px;
     padding-right: 0;
     font-weight: 500;
     user-select: none;
-    transition: none;    
+    transition: none;
     white-space: nowrap;
 }
 
@@ -110,15 +110,16 @@
 .summaryRule {
     display: inline-flex;
     align-items: center;
-    width: calc(100% - 1em); /* The em is the marker */
+    width: calc(100% - 1em);
+    /* The em is the marker */
     gap: 0.5em;
 }
 
 .summaryRule hr {
     flex: 0;
     height: 1px;
-    border:none;
-    border-top: 1px solid var(--border-color-dark);
+    border: none;
+    border-top: 1px solid var(--border-color-more);
     transition: all 200ms;
 }
 
@@ -127,7 +128,7 @@
     flex: 1;
 }
 
-.form details[open] > summary {
+.form details[open]>summary {
     margin-bottom: 10px;
     transition: all 400ms;
 }
@@ -136,6 +137,6 @@
     padding-bottom: calc(var(--form-field-gap));
 }
 
-.form details > *:not(summary) {
+.form details>*:not(summary) {
     margin-left: var(--side-padding);
- }
+}

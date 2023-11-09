@@ -10,7 +10,7 @@ export const Text = styled(Prefix)`
 `
 
 export const PlaceholderPin = styled(Button)`
-  --placeholder-color: var(--foreground-color);
+  --placeholder-color: var(--fg-color);
 
   background: transparent;
   border: 1px dashed var(--placeholder-color);

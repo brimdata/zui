@@ -48,7 +48,7 @@
   --alert-3: #fbc00e;
   --alert-2: #f4912f;
   --alert-1: #d0250b;
-  --darken-less: rgba(0, 0, 0, 0.06);
+  --emphasis-bg-less: rgba(0, 0, 0, 0.06);
   --table-stripe-bg: rgba(0, 0, 0, 0.02);
   --input-background: hsl(240, 15%, 92%);
   --sidebar-background: hsl(212, 8%, 85%);
@@ -61,13 +61,13 @@
   --primary-color: hsl(212, 72%, 59%);
   --primary-color-dark: hsl(212, 72%, 53%);
   --primary-color-darker: hsl(212, 72%, 48%);
-  --foreground-color: var(--aqua);
+  --fg-color: var(--aqua);
   --button-background: hsl(212, 5%, 92%);
   --button-background-hover: hsl(212, 5%, 90%);
   --button-background-active: hsl(212, 5%, 87%);
   --editor-background: white;
   --border-color: hsl(216, 10%, 87%);
-  --border-color-dark: hsl(216, 10%, 80%);
+  --border-color-more: hsl(216, 10%, 80%);
   --chrome-color: hsl(212, 10%, 97%);
 }
 
@@ -106,7 +106,7 @@
   --zed-number: #e65835;
   --zed-syntax: hsl(212, 17%, 55%);
   --zed-note: hsl(212, 17%, 80%);
-  --zed-container: var(--foreground-color);
+  --zed-container: var(--fg-color);
 }
 
 .zed-syntax {
@@ -383,8 +383,8 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: var(--body-font);
-  color: var(--foreground-color);
-  background-color: var(--background-color);
+  color: var(--fg-color);
+  background-color: var(--bg-color);
   font-size: 14px;
 }
 
@@ -869,7 +869,7 @@ body>div {
 }
 
 .filter-tree-parent:hover {
-  background: var(--darken-less);
+  background: var(--emphasis-bg-less);
 }
 
 .filter-tree-node {
@@ -1040,7 +1040,7 @@ body>div {
 }
 
 .viewer .log-row:hover {
-  background: var(--darken-less);
+  background: var(--emphasis-bg-less);
 }
 
 .viewer .log-row.highlight {
@@ -2016,7 +2016,7 @@ body>div {
 }
 
 .inline-table tbody tr:hover {
-  background: var(--darken-less);
+  background: var(--emphasis-bg-less);
 }
 
 .inline-table th,
@@ -2086,7 +2086,7 @@ body>div {
 
   60% {
     transform: scaleX(0.85);
-    background-color: var(--darken-less);
+    background-color: var(--emphasis-bg-less);
   }
 
   70% {
@@ -2105,7 +2105,7 @@ body>div {
 }
 
 .table tbody tr:hover {
-  background: var(--darken-less);
+  background: var(--emphasis-bg-less);
 }
 
 .table th,
@@ -2625,7 +2625,7 @@ body>div {
 }
 
 .input-suggestions .suggestion:hover {
-  background: var(--darken-less);
+  background: var(--emphasis-bg-less);
 }
 
 .input-suggestions .suggestion.active,
@@ -2684,7 +2684,7 @@ body>div {
   line-height: 16px;
   margin: 0;
   font-weight: 400;
-  color: var(--foreground-color);
+  color: var(--fg-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2707,11 +2707,11 @@ body>div {
 }
 
 .tab:hover .title {
-  color: var(--foreground-color);
+  color: var(--fg-color);
 }
 
 .tab:hover .close-button svg {
-  fill: var(--foreground-color);
+  fill: var(--fg-color);
 }
 
 .tab:hover .tab-content {
@@ -2726,7 +2726,7 @@ body>div {
 }
 
 .tab.active .title {
-  color: var(--foreground-color);
+  color: var(--fg-color);
 }
 
 .tab.active .tab-content {
@@ -2734,7 +2734,7 @@ body>div {
 }
 
 .tab.active .close-button svg {
-  fill: var(--foreground-color);
+  fill: var(--fg-color);
 }
 
 .tab.active .close-button:after {
@@ -3924,8 +3924,8 @@ div.load-files-input.dragging button {
 }
 
 .zed-table__cell {
-  --background-color: #f9f9f9;
-  background-color: var(--background-color);
+  --bg-color: #f9f9f9;
+  background-color: var(--bg-color);
   overflow: hidden;
   white-space: nowrap;
   padding: 0 10px;
@@ -3934,7 +3934,7 @@ div.load-files-input.dragging button {
 }
 
 .zed-table__cell.even {
-  --background-color: white;
+  --bg-color: white;
 }
 
 .zed-table__cell a {
@@ -4372,7 +4372,7 @@ div.load-files-input.dragging button {
 
 .zed-view__more-link:hover {
   background: var(--button-background-hover);
-  color: var(--foreground-color);
+  color: var(--fg-color);
 }
 
 .zed-view__more-link:active {

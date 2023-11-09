@@ -17,7 +17,7 @@ const Loader = styled.div`
     border-top: 0.2em solid rgba(0, 0, 0, 0.1);
     border-right: 0.2em solid rgba(0, 0, 0, 0.1);
     border-bottom: 0.2em solid rgba(0, 0, 0, 0.1);
-    border-left: 0.2em solid var(--foreground-color);
+    border-left: 0.2em solid var(--fg-color);
     transform: translateZ(0);
     animation: load8 1.1s infinite linear;
   }
