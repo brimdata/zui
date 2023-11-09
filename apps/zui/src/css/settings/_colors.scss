@@ -31,10 +31,10 @@
   --alert-1: #d0250b;
 
   // backgrounds
-  --hover-dark: rgba(0, 0, 0, 0.06);
-  --active-dark: rgba(0, 0, 0, 0.09);
+  --darken-less: rgba(0, 0, 0, 0.03);
+  --darken: rgba(0, 0, 0, 0.06);
+  --darken-more: rgba(0, 0, 0, 0.09);
 
-  --hover-light-bg: var(--hover-dark);
   --table-stripe-bg: rgba(0, 0, 0, 0.02);
 
   // borders
@@ -46,14 +46,6 @@
 
   --input-background: hsl(240, 15%, 92%);
 
-  --sidebar-background: hsl(212, 8%, 85%);
-  --sidebar-item-hover: hsl(200deg 6% 80%);
-  --sidebar-item-active: hsl(200deg 6% 76%);
-  --sidebar-item-active-shadow: inset 0 0 1px rgba(0, 0, 0, 0.2);
-
-  --tab-background: var(--sidebar-background);
-  --tab-background-hover: rgba(0, 0, 0, 0.1);
-
   --primary-color-lighter: hsl(212, 89%, 82%);
   --primary-color-light: hsl(212, 72%, 69%);
   --primary-color: hsl(212, 72%, 59%);
@@ -63,6 +55,8 @@
   --foreground-color-dark: #000811;
   --foreground-color: #0f1e2e;
   --foreground-color-light: hsl(210, 4%, 40%);
+
+  --background-color: white;
 
   --button-background: hsl(212, 5%, 92%);
   --button-background-hover: hsl(212, 5%, 90%);
@@ -87,6 +81,8 @@
   --form-padding: 3px 10px;
   --form-height: 2rem;
   --form-field-gap: 12px;
+
+  --shadow-small: 0px 0px 3px 0px rgb(0 0 0 / 30%);
 
   // Easing
   --pop-easing: cubic-bezier(0.16, 1, 0.3, 1);

@@ -26,7 +26,6 @@ const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200
 
 const BG = styled.div`
-  background: var(--tab-background);
   display: flex;
   align-items: center;
   padding-right: 16px;
@@ -54,7 +53,6 @@ const TrafficLightBG = styled.div`
   align-items: center;
   width: 128px;
   flex-shrink: 0;
-  background: var(--tab-background);
   z-index: 1;
   padding-right: 10px;
 `

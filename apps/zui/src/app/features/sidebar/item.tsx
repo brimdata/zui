@@ -47,11 +47,11 @@ const BG = styled.div`
   border-radius: 6px;
 
   &:hover:not(.dragging) {
-    background: var(--sidebar-item-hover);
+    background: var(--darken-less);
   }
 
   &:active:not(.dragging) {
-    background: var(--sidebar-item-active);
+    background: var(--darken);
     box-shadow: var(--sidebar-item-active-shadow);
   }
 
@@ -66,18 +66,16 @@ const BG = styled.div`
   &[aria-selected="true"] {
     border-radius: 0;
     outline: none;
-    background-color: var(--primary-color);
-    box-shadow: var(--sidebar-item-active-shadow);
-    color: white;
+    background-color: var(--background-color);
+    box-shadow: var(--shadow-small);
     svg {
-      fill: white;
       opacity: 1;
     }
     &:hover {
-      background-color: var(--primary-color);
+      background-color: var(--background-color);
     }
     &:active {
-      background-color: var(--primary-color-dark);
+      background-color: var(--background-color);
     }
     &.selected-start {
       border-top-left-radius: 6px;

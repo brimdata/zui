@@ -18,7 +18,7 @@ const BG = styled.main`
   margin: 10px;
   margin-top: 2px;
   border-radius: 6px;
-  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-small);
 `
 
 export function isInteractive() {
@@ -35,7 +35,7 @@ export function MainArea({children}) {
   const dispatch = useDispatch()
   const touched = () => dispatch(isInteractive())
   const sidebarIsOpen = useSelector(Appearance.sidebarIsOpen)
-  const style: CSSProperties = {marginLeft: sidebarIsOpen ? 0 : "inherit"}
+  const style: CSSProperties = {marginLeft: sidebarIsOpen ? 0 : "10px"}
 
   return (
     <BG onMouseDown={touched} onKeyDown={touched} style={style}>

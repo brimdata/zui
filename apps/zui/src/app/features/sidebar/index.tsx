@@ -34,7 +34,6 @@ const PaneSwitch = ({name}) => {
 const Pane = styled(DraggablePane)`
   height: 100%;
   width: 100%;
-  background: var(--sidebar-background);
   overflow-x: unset;
   grid-area: sidebar;
   display: flex;

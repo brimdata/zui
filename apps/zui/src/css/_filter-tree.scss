@@ -15,7 +15,7 @@ $filter-tree-line-color: var(--cloudy);
 }
 
 .filter-tree-parent:hover {
-  background: var(--hover-light-bg);
+  background: var(--darken-less);
 }
 
 .filter-tree-node {
@@ -33,7 +33,7 @@ $filter-tree-line-color: var(--cloudy);
     left: 0;
   }
 
-  &:last-of-type > .filter-tree-parent::before {
+  &:last-of-type>.filter-tree-parent::before {
     height: 17px;
   }
 
@@ -47,7 +47,7 @@ $filter-tree-line-color: var(--cloudy);
     left: 0;
   }
 
-  &:last-of-type > .filter-tree-children::before {
+  &:last-of-type>.filter-tree-children::before {
     display: none;
   }
 
@@ -79,15 +79,17 @@ $filter-tree-line-color: var(--cloudy);
     }
   }
 
-  &.pinned > .filter-tree-parent > .filter-node {
+  &.pinned>.filter-tree-parent>.filter-node {
     background: var(--green);
+
     p {
       color: white;
     }
   }
 
-  &.active > .filter-tree-parent > .filter-node {
+  &.active>.filter-tree-parent>.filter-node {
     background: var(--slate);
+
     p {
       color: white;
     }

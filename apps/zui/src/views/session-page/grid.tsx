@@ -6,7 +6,7 @@ export function Grid({children}) {
   const title = "min-content"
   const pins = "min-content"
   const editor = useSelector(Layout.getEditorHeight) + "px"
-  const results = "1fr"
+  const results = "minmax(0, 1fr)"
   const footer = "min-content"
   const rows = [title, pins, editor, results, footer]
   const style = {gridTemplateRows: rows.join(" ")}

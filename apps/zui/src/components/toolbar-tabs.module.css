@@ -13,6 +13,7 @@
   min-width: 0;
   padding: 2px;
   height: 100%;
+  gap: 0.25rem;
 }
 
 .button {
@@ -36,12 +37,12 @@
 }
 
 .button:hover:not([aria-pressed="true"]):not(:disabled) {
-  background: var(--hover-dark);
+  background: var(--darken-less);
   color: var(--foreground-color);
 }
 
 .button:active:not([aria-pressed="true"]):not(:disabled) {
-  background: var(--active-dark);
+  background: var(--darken);
 }
 
 .button[aria-pressed="true"] {

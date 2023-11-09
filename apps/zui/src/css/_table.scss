@@ -8,7 +8,7 @@
   }
 
   tbody tr:hover {
-    background: var(--hover-light-bg);
+    background: var(--darken-less);
   }
 
   th,
@@ -38,6 +38,7 @@
 }
 
 .vertical-table {
+
   th,
   td {
     word-break: break-word;

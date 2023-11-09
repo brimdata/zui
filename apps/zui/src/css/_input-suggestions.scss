@@ -18,7 +18,7 @@
     cursor: default;
 
     &:hover {
-      background: var(--hover-light-bg);
+      background: var(--darken-less);
     }
 
     &.active,
@@ -26,9 +26,11 @@
       &:first-child {
         border-radius: 3px 3px 0 0;
       }
+
       &:last-child {
         border-radius: 0 0 3px 3px;
       }
+
       background: var(--havelock);
       color: white;
     }

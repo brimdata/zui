@@ -1,3 +1,4 @@
+import {DetailBar} from "./detail-bar"
 import {Editor} from "./editor"
 import {Footer} from "./footer"
 import {Grid} from "./grid"

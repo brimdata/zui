@@ -4,7 +4,11 @@ import styles from "./toolbar-tabs.module.css"
 import Icon from "src/app/core/icon-temp"
 import {call} from "src/util/call"
 
-export function ToolbarTabs(props: {onlyIcon?: boolean; options: MenuItem[]}) {
+export function ToolbarTabs(props: {
+  onlyIcon?: boolean
+  labelClassName?: string
+  options: MenuItem[]
+}) {
   const changeCount = useRef(0)
   const ref = useRef<HTMLDivElement>()
   const [pos, setPos] = useState({x: 0, width: 10})
@@ -42,7 +46,9 @@ export function ToolbarTabs(props: {onlyIcon?: boolean; options: MenuItem[]}) {
             disabled={opts.enabled === false}
           >
             {opts.iconName && <Icon name={opts.iconName} size={14} />}
-            {!props.onlyIcon && <span>{opts.label}</span>}
+            {!props.onlyIcon && (
+              <span className={props.labelClassName}>{opts.label}</span>
+            )}
           </button>
         ))}
       </nav>

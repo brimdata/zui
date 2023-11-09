@@ -70,12 +70,12 @@
 
 .results footer button:hover {
     color: var(--foreground-color);
-    background: var(--hover-dark);
+    background: var(--darken-less);
 }
 
 .results footer button:active {
     color: var(--foreground-color);
-    background: var(--active-dark);
+    background: var(--darken);
 }
 
 .results label {
@@ -97,5 +97,6 @@
     align-items: center;
     justify-content: center;
     color: var(--foreground-color-light);
-    font-weight: bold;;
+    font-weight: bold;
+    ;
 }

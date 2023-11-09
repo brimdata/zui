@@ -31,11 +31,11 @@ const BG = styled.button`
   }
 
   &:hover:not(:disabled) {
-    background: var(--hover-dark);
+    background: var(--darken-less);
   }
 
   &:active:not(:disabled) {
-    background: var(--active-dark);
+    background: var(--darken);
   }
 
   &.icon-label {

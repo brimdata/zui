@@ -7,7 +7,7 @@ const BG = styled.div`
   min-height: 0;
   height: 100vh;
   display: grid;
-  background: var(--sidebar-background);
+  transition: grid-template-columns 300ms var(--pop-easing);
 `
 
 export function AppGrid({children}) {

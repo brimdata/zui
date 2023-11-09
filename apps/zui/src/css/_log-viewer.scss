@@ -43,7 +43,7 @@
   }
 
   &:hover {
-    background: var(--hover-light-bg);
+    background: var(--darken-less);
   }
 
   &.highlight {
@@ -63,6 +63,7 @@
 }
 
 .viewer {
+
   .count,
   .duration,
   .uint8,

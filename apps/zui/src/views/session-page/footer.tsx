@@ -20,6 +20,7 @@ export function Footer() {
       />
       <ToolbarTabs
         onlyIcon={false}
+        labelClassName={styles.label}
         options={[
           {label: "2 Columns", checked: false},
           {label: "4 Types", checked: false},
