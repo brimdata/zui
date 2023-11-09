@@ -7,7 +7,10 @@ const BG = styled.div`
   min-height: 0;
   height: 100vh;
   display: grid;
-  transition: grid-template-columns 300ms var(--pop-easing);
+
+  body:not(.is-dragging) & {
+    transition: grid-template-columns 300ms var(--pop-easing);
+  }
 `
 
 export function AppGrid({children}) {

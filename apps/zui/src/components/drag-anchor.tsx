@@ -93,6 +93,7 @@ export default class DragAnchor extends React.Component<Props> {
     const body = document.body
     body.style.cursor = this.getCursor()
     body.style.userSelect = "none"
+    body.classList.add("is-dragging")
     document.addEventListener("mousemove", this.move)
     document.addEventListener("mouseup", this.up)
     call(this.props.onStart, e)
@@ -109,6 +110,7 @@ export default class DragAnchor extends React.Component<Props> {
     if (body) {
       body.style.cursor = ""
       body.style.userSelect = ""
+      body.classList.remove("is-dragging")
       document.removeEventListener("mousemove", this.move)
       document.removeEventListener("mouseup", this.up)
     }
