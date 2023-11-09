@@ -97,7 +97,7 @@
     --emphasis-bg: rgba(255, 255, 255, 0.15);
     --emphasis-bg-more: rgba(255, 255, 255, 0.2);
 
-    --selected-bg: rgba(255, 255, 255, 0.4);
+    --selected-bg: var(--fg-color);
 
     --border-color: hsl(216, 10%, 87%);
     --border-color-more: hsl(216, 10%, 80%);
@@ -115,7 +115,8 @@
     --emphasis-bg-more: rgba(255, 255, 255, 0.2);
     --emphasis-bg-most: rgba(255, 255, 255, 0.3);
 
-    --selected-bg: rgba(255, 255, 255, 0.4);
+    --selected-bg: rgba(255, 255, 255, 0.2);
+    --selected-bg-active: rgba(255, 255, 255, 0.25);
 
     --border-color: rgba(255, 255, 255, 0.3);
     --border-color-more: rgba(255, 255, 255, 0.5);

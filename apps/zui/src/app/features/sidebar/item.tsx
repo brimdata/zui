@@ -64,26 +64,19 @@ const BG = styled.div`
   }
 
   &[aria-selected="true"] {
-    --background: var(--bg-color);
-    --active: var(--emphasis-bg);
-    @media (prefers-color-scheme: dark) {
-      --background: var(--emphasis-bg-more);
-      --active: var(--emphasis-bg-most);
-    }
-
     border-radius: 0;
     outline: none;
     box-shadow: var(--shadow-small);
-    background: var(--background);
+    background: var(--selected-bg);
 
     svg {
       opacity: 1;
     }
     &:hover {
-      background-color: var(--background);
+      background-color: var(--selected-bg);
     }
     &:active {
-      background-color: var(--active);
+      background-color: var(--selected-bg-active);
     }
     &.selected-start {
       border-top-left-radius: 6px;
