@@ -26,8 +26,8 @@
     "tsc": "tsc",
     "postinstall": "node scripts/post-install",
     "prepare": "husky install",
-    "package": "electron-builder --publish never",
-    "release": "electron-builder",
+    "package-zui": "electron-builder --publish never",
+    "release-zui": "electron-builder",
     "package-insiders": "electron-builder --config electron-builder-insiders.json --publish never",
     "release-insiders": "electron-builder --config electron-builder-insiders.json --publish always"
   },
