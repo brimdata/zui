@@ -20,7 +20,7 @@
     padding: 1rem;
     border-radius: 16px;
     cursor: default;
-    background: var(--chrome-color);
+    background: var(--chrome-bg);
 }
 
 .list>*:hover {

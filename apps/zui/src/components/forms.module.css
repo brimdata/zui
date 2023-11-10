@@ -107,7 +107,7 @@
     line-height: var(--form-line-height);
     padding: var(--form-padding);
     border: 1px solid var(--border-color);
-    box-shadow: 0 3px 4px -4px var(--fg-color-less);
+    box-shadow: 0 3px 4px -4px var(--bg-color-less);
     font-weight: 500;
     min-width: 80px;
 }

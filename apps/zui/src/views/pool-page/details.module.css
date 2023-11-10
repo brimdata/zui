@@ -1,4 +1,4 @@
-.details { 
+.details {
     padding: var(--page-padding);
     max-width: var(--page-max-width);
     width: 100%;
@@ -10,7 +10,7 @@
 }
 
 .list {
-    background: var(--chrome-color);
+    background: var(--chrome-bg);
     padding: 1rem;
     border-radius: 16px;
     max-width: max-content;

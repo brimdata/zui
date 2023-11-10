@@ -32,7 +32,7 @@ const Lane = styled.div`
 const Axis = styled.div`
   height: 1px;
   background: none;
-  box-shadow: 0 0.5px 0 var(--cloudy);
+  box-shadow: 0 0.5px 0 var(--border-color);
   width: 100%;
 `
 

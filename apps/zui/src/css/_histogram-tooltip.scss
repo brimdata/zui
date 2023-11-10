@@ -11,7 +11,7 @@
 .histogram-tooltip {
   pointer-events: none;
   color: white;
-  background: var(--cello-transparent);
+  background: var(--bg-color);
   font-size: 11px;
   border-radius: 8px;
 
@@ -28,7 +28,6 @@
     white-space: nowrap;
     height: 22px;
     line-height: 22px;
-    background: var(--cello);
     border-radius: 8px 8px 0 0;
     padding: 0 10px;
     text-align: center;

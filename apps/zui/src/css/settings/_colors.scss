@@ -2,25 +2,11 @@
   // colors
   --red: #F13737;
   --green: #399c81;
-  --green-bright: #4ef567;
   --orange: #ff7f00;
   --yellow: #ffc933;
-  --azure: #2f629c;
-  --cello: hsl(212, 100%, 14%);
-  --cello-transparent: hsla(212, 100%, 14%, 0.92);
-  --havelock: #4b91e2;
-  --hawkes-blue: rgba(206, 228, 253, 0.5);
-  --pecan: #9c692f;
   --blue: hsl(212, 72%, 59%);
 
 
-  // shades of gray
-  --snow: #fcfcfd;
-  --coconut: #f7f7f8;
-  --ivory: #f3f3f4;
-  --cloudy: #e2e6e9;
-  --lead: #abadaf;
-  --slate: #717375;
   --wet-cement: #4c5661;
   --aqua: #0f1e2e;
   --aqua-transparent: rgba(15, 30, 46, 0.2);
@@ -52,28 +38,13 @@
   --primary-color-dark: hsl(212, 78%, 50%);
   --primary-color-darker: hsl(212, 88%, 35%);
 
-  --fg-color-dark: #000811;
-  --fg-color: #0f1e2e;
-  --fg-color-less: hsl(210, 4%, 40%);
-
-  --bg-color: white;
-
   --button-background: hsl(212, 5%, 92%);
   --button-background-hover: hsl(212, 5%, 90%);
   --button-background-active: hsl(212, 5%, 87%);
 
   --editor-background: white;
-
-  --border-color: hsl(216, 10%, 87%);
-  --border-color-more: hsl(216, 10%, 80%);
-
-
-
   // Form stuff
-  --form-bg-color: white;
-  --form-bg-color-dark: #f8f8f8;
-  --form-bg-color-darker: #e6e6e6;
-  --form-border: 1px solid #c0c0c0;
+
   --form-font-size: 14px;
   --form-line-height: 20px;
   --form-border-radius: 6px;
@@ -87,41 +58,88 @@
   --pop-easing: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
+/**
+ * FOREGROUND & BACKGROUND
+ */
+:root {
+  --fg-color: #0f1e2e;
+  --fg-color-less: hsl(210, 4%, 40%);
+  --bg-color: white;
+
+  @media (prefers-color-scheme: dark) {
     --fg-color: white;
-    --bg-color: #0f1e2el;
-
-    --emphasis-bg-less: rgba(255, 255, 255, 0.05);
-    --emphasis-bg: rgba(255, 255, 255, 0.15);
-    --emphasis-bg-more: rgba(255, 255, 255, 0.2);
-
-    --selected-bg: var(--fg-color);
-
-    --border-color: hsl(216, 10%, 87%);
-    --border-color-more: hsl(216, 10%, 80%);
+    --fg-color-less: rgba(255, 255, 255, 0.7);
+    --bg-color: hsl(44deg 8% 10%);
   }
 }
 
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --fg-color-less: rgba(255, 255, 255, 0.7);
-    --fg-color: white;
-    --bg-color: hsl(44deg 8% 10%);
+/**
+ * Emphasis
+ */
+:root {
+  --emphasis-bg-less: rgba(0, 0, 0, 0.03);
+  --emphasis-bg: rgba(0, 0, 0, 0.06);
+  --emphasis-bg-more: rgba(0, 0, 0, 0.09);
+  --emphasis-bg-most: rgba(0, 0, 0, 0.11);
 
+  @media (prefers-color-scheme: dark) {
     --emphasis-bg-less: rgba(255, 255, 255, 0.05);
     --emphasis-bg: rgba(255, 255, 255, 0.15);
     --emphasis-bg-more: rgba(255, 255, 255, 0.2);
     --emphasis-bg-most: rgba(255, 255, 255, 0.3);
+  }
+}
 
-    --chrome-color: rgba(255, 255, 255, 0.15);
-    --chrome-color-dark: #E9EAEB;
+/**
+ * Selection
+ */
+:root {
+  --selected-bg: var(--fg-color);
+  --selected-bg-active: var(--emphasis-bg);
 
+  @media (prefers-color-scheme: dark) {
     --selected-bg: rgba(255, 255, 255, 0.2);
     --selected-bg-active: rgba(255, 255, 255, 0.25);
+  }
+}
 
+/**
+ * Borders
+ */
+:root {
+  --border-color: hsl(216, 10%, 87%);
+  --border-color-more: hsl(216, 10%, 80%);
+
+  @media (prefers-color-scheme: dark) {
     --border-color: rgba(255, 255, 255, 0.3);
     --border-color-more: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/**
+ * Chrome / Grays
+ */
+
+:root {
+  @media (prefers-color-scheme: dark) {
+    --chrome-bg: rgba(255, 255, 255, 0.15);
+    --chrome-bg-more: #E9EAEB;
+  }
+}
+
+/**
+ * Form Input Colors
+ */
+:root {
+  --form-bg-color: white;
+  --form-bg-color-dark: #f8f8f8;
+  --form-bg-color-darker: #e6e6e6;
+  --form-border: 1px solid #c0c0c0;
+
+  @media (prefers-color-scheme: dark) {
+    --form-bg-color: var(--emphasis-bg-less);
+    --form-bg-color-dark: var(--emphasis-bg);
+    --form-bg-color-darker: var(--emphasis-bg-more);
   }
 }

@@ -14,7 +14,7 @@ import {Body} from "./body"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
-  color: var(--slate);
+  color: var(--fg-color-less);
   margin-top: 110px;
   padding: 0 24px;
   text-align: center;

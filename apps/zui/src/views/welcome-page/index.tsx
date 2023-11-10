@@ -8,6 +8,7 @@ import styled from "styled-components"
 import links from "src/app/core/links"
 import {invoke} from "src/core/invoke"
 import {chooseFiles} from "src/domain/loads/handlers"
+import forms from "src/components/forms.module.css"
 
 const BG = styled.div`
   background-image: url(/welcome-page-background.svg);
@@ -26,7 +27,7 @@ const BG = styled.div`
 `
 
 const Card = styled.section`
-  background: white;
+  background: var(--bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,8 +35,7 @@ const Card = styled.section`
   width: 400px;
   border-radius: 8px;
   padding: 30px 50px 50px;
-  box-shadow: 0 22px 80px hsla(0 0% 72% / 0.8);
-  border: 1px solid hsl(0 0% 85%);
+  border: 1px solid var(--border-color);
 `
 
 const Actions = styled.section`
@@ -54,16 +54,19 @@ export function WelcomePage() {
       <Subtitle>Zed User Interface</Subtitle>
       <Card>
         <H1>Get Started</H1>
-        <Actions>
-          <InputButton onClick={() => chooseFiles()}>Import Data</InputButton>
-          <InputButton onClick={() => connectToLake.run()}>
+        <Actions className={forms.form}>
+          <button className={forms.button} onClick={() => chooseFiles()}>
+            Import Data
+          </button>
+          <button className={forms.button} onClick={() => connectToLake.run()}>
             Connect to Lake
-          </InputButton>
-          <InputButton
+          </button>
+          <button
+            className={forms.button}
             onClick={() => invoke("openLinkOp", links.ZUI_DOCS_ROOT)}
           >
             Documentation
-          </InputButton>
+          </button>
         </Actions>
       </Card>
     </BG>

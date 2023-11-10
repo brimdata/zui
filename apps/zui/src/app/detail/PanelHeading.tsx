@@ -14,7 +14,7 @@ const BG = styled.div`
 
   .burst-1,
   .burst-2 {
-    background-color: var(--lead);
+    background-color: var(--chrome-bg);
   }
 `
 

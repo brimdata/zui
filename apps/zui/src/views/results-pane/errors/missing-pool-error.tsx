@@ -33,7 +33,6 @@ const Message = styled(Content)`
 `
 
 const Card = styled.section`
-  background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,7 +50,7 @@ export function isMissingPoolError(e: unknown) {
 }
 
 function PoolsList({pools}: {pools: Pool[]}) {
-  const rowHeight = 26
+  const rowHeight = 32
 
   return (
     <Card style={{maxHeight: rowHeight * pools.length + 20 + "px"}}>

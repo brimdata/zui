@@ -6,7 +6,7 @@ import {ChartWrap} from "./Shared"
 export const BG = styled.div`
   background: white;
   border-radius: 8px;
-  box-shadow: 0 0 1px var(--slate);
+  box-shadow: var(--shadow-low);
 `
 
 type Props = {

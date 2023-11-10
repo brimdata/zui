@@ -50,7 +50,7 @@
   padding: 0 10px;
   border-right: 1px solid transparent;
   color: var(--fg-color-less);
-  background: var(--chrome-color);
+  background: var(--chrome-bg);
   border-right-color: var(--border-color);
 
   &:not(.isPlaceholder).hasChildren {
@@ -147,11 +147,11 @@
   position: absolute;
   right: 10px;
   opacity: 0;
-  background: var(--chrome-color);
+  background: var(--chrome-bg);
   border: 1px solid var(--border-color);
 
   &:active {
-    background: var(--chrome-color-dark);
+    background: var(--chrome-bg-more);
   }
 
   .zed-table__header-cell:hover & {

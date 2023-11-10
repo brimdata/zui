@@ -3,8 +3,8 @@
   position: relative;
 
   .selection {
-    fill: var(--havelock);
-    stroke: var(--havelock);
+    fill: var(--primary-color);
+    stroke: var(--primary-color);
     stroke-dasharray: 3px;
   }
 
@@ -19,10 +19,10 @@
     left: 50%;
     top: 47%;
     transform: translate(-50%, -50%);
-    color: var(--lead);
+    color: var(--fg-color-less);
 
     .burst {
-      background-color: var(--lead);
+      background-color: var(--chrome-bg-more);
     }
   }
 
@@ -64,7 +64,7 @@
   display: block;
 
   .tick line {
-    stroke: var(--cloudy);
+    stroke: var(--border-color);
   }
 
   .tick text {
@@ -77,12 +77,12 @@
   }
 
   .domain {
-    stroke: var(--cloudy);
+    stroke: var(--border-color);
   }
 
   text {
     font-family: var(--mono-font);
-    fill: var(--lead);
+    fill: var(--fg-less);
     font-size: 9px;
   }
 }

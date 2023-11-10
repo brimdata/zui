@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  background: var(--chrome-color);
+  background: var(--chrome-bg);
   border-radius: 6px;
 }
 

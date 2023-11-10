@@ -3,6 +3,7 @@
   display: flex;
   justify-content: space-between;
   user-select: none;
+
   td,
   th {
     white-space: nowrap;
@@ -10,7 +11,7 @@
   }
 
   .host {
-    border: 1px solid var(--cloudy);
+    border: 1px solid var(--fg-color-less);
     border-radius: 3px;
   }
 
@@ -23,7 +24,7 @@
   .port {
     margin: 0;
     color: white;
-    background: var(--havelock);
+    background: var(--primary-color);
     font-size: 12px;
     text-align: center;
     line-height: 20px;
@@ -43,6 +44,7 @@
     .ip {
       background: var(--green);
     }
+
     .port {
       background: #5ec4a8;
     }
@@ -87,13 +89,16 @@
 
   .history-packet.arrow-left {
     padding-left: $space-s*0.5;
+
     .triangle {
       order: 1;
       transform: rotate(180deg);
     }
+
     hr {
       order: 2;
     }
+
     span {
       order: 3;
     }

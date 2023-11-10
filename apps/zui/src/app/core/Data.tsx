@@ -17,7 +17,6 @@ export const Data = styled.dl`
     left: 12px;
     right: 0;
     height: 1px;
-    box-shadow: 0 0.5px 0 var(--cloudy);
   }
 
   &:last-of-type:after {
@@ -42,7 +41,6 @@ export const Value = styled.dd`
   flex: 1;
   text-align: right;
   margin: 0 0 0 8px;
-  color: var(--slate);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

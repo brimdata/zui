@@ -16,7 +16,7 @@ const EmptyWrapper = styled.div`
 
   p {
     ${(props) => props.theme.typography.labelSmall};
-    color: var(--slate);
+    color: var(--fg-color-less);
     text-align: center;
     margin: 16px 14px 0;
   }

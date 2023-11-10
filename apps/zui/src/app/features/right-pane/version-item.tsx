@@ -48,7 +48,7 @@ const Container = styled.div`
       left: 2px;
       top: 16px;
       margin-top: 7px;
-      border-left: 1px solid var(--hawkes-blue);
+      border-left: 1px solid var(--primary-color-dark);
       height: 14px;
       width: 1px;
     }
