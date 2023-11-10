@@ -1,10 +1,23 @@
 import tabHistory from "src/app/router/tab-history"
 import {createHandler} from "src/core/handlers"
+import Current from "src/js/state/Current"
 
-createHandler("session.goBack", ({dispatch}) => {
+export const goBack = createHandler("session.goBack", ({dispatch}) => {
+  console.log("going back")
   dispatch(tabHistory.goBack())
 })
 
-createHandler("session.goForward", ({dispatch}) => {
+export const goForward = createHandler("session.goForward", ({dispatch}) => {
   dispatch(tabHistory.goForward())
 })
+
+export const canGoBack = createHandler("session.canGoBack", ({select}) => {
+  return select(Current.getHistory).canGo(-1)
+})
+
+export const canGoForward = createHandler(
+  "session.canGoForward",
+  ({select}) => {
+    return select(Current.getHistory).canGo(1)
+  }
+)

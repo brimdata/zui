@@ -19,6 +19,7 @@ const BG = styled.main`
   margin-top: 2px;
   border-radius: 6px;
   box-shadow: var(--shadow-small);
+  border: 1px solid var(--border-color);
 `
 
 export function isInteractive() {
