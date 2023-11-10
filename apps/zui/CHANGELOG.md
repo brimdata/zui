@@ -1,3 +1,12 @@
+## v1.4.0
+- Update Zed to [v1.11.0](https://github.com/brimdata/zed/releases/tag/v1.11.0)
+- Update Brimcap to [v1.5.3](https://github.com/brimdata/brimcap/releases/tag/v1.5.3)
+- Zui has a new [Preview & Load](https://zui.brimdata.io/docs/features/Preview-Load) workflow that allows for shaping data as it's loaded in to a Zed lake (#2834, #2864)
+- Fix an issue where editing the "month" portion of a time range pin caused a crash (#2854)
+- Fix issues where `null` values were incorrectly rendered (#2875, #2876)
+- Use monospace fonts in more places (#2877)
+- Limit column width for large values and add grid lines in the table view (#2881)
+
 ## v1.3.1
 - Due to malware false positives, Windows releases no longer include a full initial set of Suricata rules (as always, up-to-date rules will be downloaded on first Internet-connected launch of Zui) (#2858)
 
