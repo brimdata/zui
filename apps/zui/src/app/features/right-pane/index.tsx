@@ -18,7 +18,7 @@ const Pane = styled(DraggablePane)`
   display: flex;
   flex-direction: column;
   border-left: 1px solid var(--border-color);
-  background: var(--chrome-bg);
+  background: var(--chrome-color);
 `
 
 const PaneContentSwitch = ({paneName}) => {
@@ -38,7 +38,7 @@ const PaneContentSwitch = ({paneName}) => {
 
 const BG = styled.div`
   height: 37px;
-  background: var(--chrome-bg);
+  background: var(--chrome-color);
   border-bottom: 1px solid var(--border-color);
   flex-shrink: 0;
   padding: 0 8px;

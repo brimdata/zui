@@ -69,7 +69,7 @@
     align-items: center;
     bottom: 0;
     padding: var(--side-padding);
-    background: var(--chrome-bg);
+    background: var(--chrome-color);
     padding-bottom: 10px;
 }
 

@@ -1,16 +1,23 @@
 .modal {
-    background: white;
+    background: var(--bg-color);
     box-shadow: 0 20px 50px 10px rgb(0 0 0 /0.25);
     border-radius: 8px;
     border: none;
     padding: 0;
     will-change: opacity, transform;
+    color: var(--fg-color);
 }
 
 .modal::backdrop {
     background-color: black;
-    opacity: 0.4;
+    opacity: 0.25;
     will-change: opacity;
+}
+
+@media (prefers-color-scheme: dark) {
+    .modal::backdrop {
+        background-color: white;
+    }
 }
 
 .modal .form {

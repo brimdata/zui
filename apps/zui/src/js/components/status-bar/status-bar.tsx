@@ -8,7 +8,7 @@ import {useSelector} from "react-redux"
 const BG = styled.footer`
   grid-area: status;
   user-select: none;
-  background: var(--chrome-bg);
+  background: var(--chrome-color);
   border-top: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;

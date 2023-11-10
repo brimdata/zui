@@ -10,7 +10,7 @@
 }
 
 .list {
-    background: var(--chrome-bg);
+    background: var(--chrome-color);
     padding: 1rem;
     border-radius: 16px;
     max-width: max-content;

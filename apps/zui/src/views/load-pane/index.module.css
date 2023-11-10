@@ -6,7 +6,7 @@
   grid-template-columns: 1fr 360px;
   border-radius: 8px 8px 0 0;
   overflow: hidden;
-  background-color: var(--chrome-bg);
+  background-color: var(--chrome-color);
 }
 
 .main {

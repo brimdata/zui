@@ -21,13 +21,11 @@ const PageWrap = styled.div`
 
 const StyledHeader = styled.h1`
   margin: 110px 0 0 0;
-  color: var(--aqua);
   ${(p) => p.theme.typography.headingPage}
 `
 
 const StyledP = styled.p`
   margin: 18px 0 0 0;
-  color: var(--aqua);
   ${(p) => p.theme.typography.labelNormal}
 `
 

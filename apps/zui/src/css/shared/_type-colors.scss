@@ -12,6 +12,11 @@
   --zed-syntax: hsl(212, 17%, 55%);
   --zed-note: hsl(212, 17%, 80%);
   --zed-container: var(--fg-color);
+
+  // Suricata Alerts
+  --alert-3: #fbc00e;
+  --alert-2: #f4912f;
+  --alert-1: #d0250b;
 }
 
 .zed-syntax {

@@ -89,7 +89,7 @@
 .loadingIcon {
     color: var(--fg-color-less);
     color: var(--blue);
-    background: var(--chrome-bg-more);
+    background: var(--chrome-color-more);
 }
 
 .successIcon {

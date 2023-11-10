@@ -1,50 +1,15 @@
+/**
+ * Constants
+ */
 :root {
-  // colors
+  /* Colors */
   --red: #F13737;
-  --green: #399c81;
+  --green: #1ADB91;
   --orange: #ff7f00;
   --yellow: #ffc933;
   --blue: hsl(212, 72%, 59%);
 
-
-  --wet-cement: #4c5661;
-  --aqua: #0f1e2e;
-  --aqua-transparent: rgba(15, 30, 46, 0.2);
-
-  // alert severities
-  --alert-3: #fbc00e;
-  --alert-2: #f4912f;
-  --alert-1: #d0250b;
-
-  // backgrounds
-  --emphasis-bg-less: rgba(0, 0, 0, 0.03);
-  --emphasis-bg: rgba(0, 0, 0, 0.06);
-  --emphasis-bg-more: rgba(0, 0, 0, 0.09);
-
-  --table-stripe-bg: rgba(0, 0, 0, 0.02);
-
-  // borders
-
-  // Colors by name
-
-  --success-color: #1ADB91;
-  --error-color: #F13737;
-
-  --input-background: hsl(240, 15%, 92%);
-
-  --primary-color-lighter: hsl(212, 89%, 82%);
-  --primary-color-light: hsl(212, 72%, 69%);
-  --primary-color: hsl(212, 72%, 59%);
-  --primary-color-dark: hsl(212, 78%, 50%);
-  --primary-color-darker: hsl(212, 88%, 35%);
-
-  --button-background: hsl(212, 5%, 92%);
-  --button-background-hover: hsl(212, 5%, 90%);
-  --button-background-active: hsl(212, 5%, 87%);
-
-  --editor-background: white;
-  // Form stuff
-
+  /* Forms */
   --form-font-size: 14px;
   --form-line-height: 20px;
   --form-border-radius: 6px;
@@ -52,14 +17,12 @@
   --form-height: 2rem;
   --form-field-gap: 12px;
 
-  --shadow-small: 0px 0px 3px 0px rgb(0 0 0 / 30%);
-
-  // Easing
+  /*  Easings */
   --pop-easing: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /**
- * FOREGROUND & BACKGROUND
+ * Foregrounds & Backgrounds
  */
 :root {
   --fg-color: #0f1e2e;
@@ -73,6 +36,29 @@
   }
 }
 
+/**
+ * Chrome / Grays
+ */
+:root {
+  --chrome-color: hsl(212, 10%, 97%);
+  --chrome-color-more: #E9EAEB;
+
+  @media (prefers-color-scheme: dark) {
+    --chrome-color: rgba(255, 255, 255, 0.15);
+    --chrome-color-more: rgba(255, 255, 255, 0.4);
+  }
+}
+
+/**
+ * Primary Color Variations
+ */
+:root {
+  --primary-color-lighter: hsl(212, 89%, 82%);
+  --primary-color-light: hsl(212, 72%, 69%);
+  --primary-color: hsl(212, 72%, 59%);
+  --primary-color-dark: hsl(212, 78%, 50%);
+  --primary-color-darker: hsl(212, 88%, 35%);
+}
 
 /**
  * Emphasis
@@ -92,19 +78,6 @@
 }
 
 /**
- * Selection
- */
-:root {
-  --selected-bg: var(--fg-color);
-  --selected-bg-active: var(--emphasis-bg);
-
-  @media (prefers-color-scheme: dark) {
-    --selected-bg: rgba(255, 255, 255, 0.2);
-    --selected-bg-active: rgba(255, 255, 255, 0.25);
-  }
-}
-
-/**
  * Borders
  */
 :root {
@@ -118,20 +91,29 @@
 }
 
 /**
- * Chrome / Grays
+ * Statuses
  */
-
 :root {
-  @media (prefers-color-scheme: dark) {
-    --chrome-bg: rgba(255, 255, 255, 0.15);
-    --chrome-bg-more: #E9EAEB;
-  }
+  --success-color: var(--green);
+  --error-color: var(--red);
+  --info-color: var(--blue);
 }
 
 /**
- * Form Input Colors
+ * Buttons
  */
 :root {
+  --button-background: hsl(212, 5%, 92%);
+  --button-background-hover: hsl(212, 5%, 90%);
+  --button-background-active: hsl(212, 5%, 87%);
+}
+
+/**
+ * Form Inputs
+ */
+:root {
+  --editor-background: white;
+  --input-background: hsl(240, 15%, 92%);
   --form-bg-color: white;
   --form-bg-color-dark: #f8f8f8;
   --form-bg-color-darker: #e6e6e6;
@@ -141,5 +123,38 @@
     --form-bg-color: var(--emphasis-bg-less);
     --form-bg-color-dark: var(--emphasis-bg);
     --form-bg-color-darker: var(--emphasis-bg-more);
+  }
+}
+
+/**
+ * Shadows
+ */
+:root {
+  --shadow-small: 0px 0px 3px 0px rgb(0 0 0 / 30%);
+}
+
+
+
+/**
+ * Selection
+ */
+:root {
+  --selected-bg: white;
+  --selected-bg-active: hsl(0deg, 0%, 95%);
+
+  @media (prefers-color-scheme: dark) {
+    --selected-bg: rgba(255, 255, 255, 0.2);
+    --selected-bg-active: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/**
+ * Tables
+ */
+:root {
+  --table-stripe-bg: rgba(0, 0, 0, 0.02);
+
+  @media (prefers-color-scheme: dark) {
+    --table-stripe-bg: rgba(255, 255, 255, 0.01);
   }
 }
