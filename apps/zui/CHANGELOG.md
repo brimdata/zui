@@ -1,3 +1,6 @@
+## v1.4.1
+- Update Zed to [v1.11.1](https://github.com/brimdata/zed/releases/tag/v1.11.1)
+
 ## v1.4.0
 - Update Zed to [v1.11.0](https://github.com/brimdata/zed/releases/tag/v1.11.0)
 - Update Brimcap to [v1.5.3](https://github.com/brimdata/brimcap/releases/tag/v1.5.3)
