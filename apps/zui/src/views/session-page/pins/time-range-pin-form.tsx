@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {useTimeZone} from "src/app/core/format"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import styled from "styled-components"
-import {PinFormProps} from "../base-pin"
+import {PinFormProps} from "./base-pin"
 import {
   Actions,
   ActionsGroup,
@@ -11,7 +11,7 @@ import {
   Input,
   Label,
   RedLink,
-} from "../form-helpers"
+} from "./form-helpers"
 import forms from "src/components/forms.module.css"
 import {getTimeString} from "./get-time-string"
 
@@ -22,7 +22,9 @@ const Preview = styled.time`
   whitespace: nowrap;
 `
 
-export default function Form(props: PinFormProps<TimeRangeQueryPin>) {
+export default function TimeRangePinForm(
+  props: PinFormProps<TimeRangeQueryPin>
+) {
   const zone = useTimeZone()
   const [fromValue, setFromValue] = useState(props.pin.from)
   const [toValue, setToValue] = useState(props.pin.to)

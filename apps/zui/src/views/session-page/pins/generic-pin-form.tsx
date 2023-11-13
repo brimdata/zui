@@ -1,6 +1,6 @@
 import React from "react"
 import {GenericQueryPin} from "src/js/state/Editor/types"
-import {PinFormProps} from "../base-pin"
+import {PinFormProps} from "./base-pin"
 import {
   Actions,
   Field,
@@ -10,10 +10,10 @@ import {
   TextArea,
   RedLink,
   ActionsGroup,
-} from "../form-helpers"
+} from "./form-helpers"
 import forms from "src/components/forms.module.css"
 
-export function Form(props: PinFormProps<GenericQueryPin>) {
+export function GenericPinForm(props: PinFormProps<GenericQueryPin>) {
   return (
     <form
       className={forms.form}

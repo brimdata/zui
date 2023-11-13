@@ -91,15 +91,26 @@ export const BasePin = React.forwardRef(function BasePin(
 
   function onClick() {
     const menu = pinMenu(props.index)
-    call(props.onMenu, menu)
+    if (props.form) {
+      menu.unshift(
+        {
+          label: "Edit",
+          click: () => dispatch(Editor.editPin(props.index)),
+        },
+        {type: "separator"}
+      )
+    } else {
+      call(props.onMenu, menu)
+    }
     showContextMenu(menu, popupPosition(button))
   }
-  console.log({isHovering, isHoveringLastItem})
+
   return (
     <>
       <button
         title={buildPin(props.pin).toZed()}
         onClick={onClick}
+        onContextMenu={onClick}
         ref={mergeRefs(forwardedRef, setButton, dndRef)}
         className={className}
         onKeyUp={(e) => {

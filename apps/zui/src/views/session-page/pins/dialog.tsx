@@ -23,10 +23,17 @@ export type DialogProps = {
 
 const BG = styled.dialog`
   border: none;
-  box-shadow: var(--shadow-elevation-medium);
-  border-radius: 10px;
+  box-shadow: var(--shadow-medium);
+  border-radius: 6px;
+  background: var(--bg-color);
+  color: var(--fg-color);
+
   &::backdrop {
     opacity: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border: 1px solid var(--border-color);
   }
 `
 
@@ -70,7 +77,7 @@ export function Dialog(props: DialogProps) {
 
   useEffect(() => {
     if (!node) return
-    if (props.open) {
+    if (props.open && !node.open) {
       node.showModal()
     } else {
       node.close()

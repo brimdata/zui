@@ -120,11 +120,11 @@
   --form-bg-color: white;
   --form-bg-color-dark: #f8f8f8;
   --form-bg-color-darker: #e6e6e6;
-  --form-border: 1px solid #c0c0c0;
+  --form-border: 1px solid var(--border-color);
 
   @media (prefers-color-scheme: dark) {
-    --form-bg-color: var(--emphasis-bg-less);
-    --form-bg-color-dark: var(--emphasis-bg);
+    --form-bg-color: var(--emphasis-bg);
+    --form-bg-color-dark: var(--emphasis-bg-more);
     --form-bg-color-darker: var(--emphasis-bg-more);
   }
 }
@@ -134,6 +134,7 @@
  */
 :root {
   --shadow-small: 0px 0px 3px 0px rgb(0 0 0 / 30%);
+  --shadow-medium: 0px 3px 3px 6px rgb(0 0 0 / 30%);
 }
 
 
