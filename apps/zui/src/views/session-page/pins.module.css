@@ -1,8 +1,12 @@
 .container {
     display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
 }
 
 .pin {
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
     display: relative;
     font-family: var(--mono-font);
     font-weight: 500;
