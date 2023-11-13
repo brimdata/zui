@@ -9,9 +9,15 @@ import {
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import {newPinMenu} from "src/app/menus/new-pin-menu"
+import {editQuery} from "src/domain/session/handlers"
+import Layout from "src/js/state/Layout"
+import classNames from "classnames"
+import {useTitleForm} from "./use-title-form"
 
 export function Toolbar() {
   const query = useSelector(Current.getActiveQuery)
+  const isEditing = useSelector(Layout.getIsEditingTitle)
+  const form = useTitleForm()
 
   return (
     <div className={styles.toolbar}>
@@ -30,11 +36,26 @@ export function Toolbar() {
             enabled={canGoForward()}
           />
         </nav>
-        <h1>{query.name()}</h1>
+        {!isEditing && <h1 onClick={editQuery}>{query.name()}</h1>}
+        {isEditing && (
+          <form
+            className={classNames(styles.form)}
+            onSubmit={form.onSubmit}
+            onReset={form.onReset}
+            onBlur={form.onSubmit}
+          >
+            <input
+              className={styles.input}
+              defaultValue={form.defaultValue}
+              onBlur={form.onSubmit}
+            />
+            <button style={{display: "none"}} type="submit" />
+          </form>
+        )}
       </div>
       <div className={styles.right}>
         <nav>
-          <IconButton iconName="plus" />
+          <IconButton iconName="plus" click={editQuery} />
           <IconButton iconName="history" />
           <IconButton iconName="export" />
           <IconButton iconName="pin" buildMenu={() => newPinMenu.build()} />

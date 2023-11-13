@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
+    gap: 6px;
 }
 
 .left,
@@ -20,7 +21,36 @@
     gap: 6px;
 }
 
+.left {
+    flex: 1;
+}
+
 .toolbar h1 {
     font-size: 1rem;
     padding: 0 1rem;
+}
+
+.form {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    gap: 6px;
+}
+
+.input {
+    background: transparent;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px dashed var(--border-color);
+    background: var(--emphasis-bg);
+    outline: none;
+    padding: 0 6px;
+    max-width: 400px;
+}
+
+.input:focus-visible {
+    outline: none;
 }
