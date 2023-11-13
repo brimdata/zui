@@ -21,6 +21,12 @@
     margin-left: calc(calc(var(--indent) * -1) + 4px);
 }
 
+.pin:hover {
+    transition: all var(--quick);
+    background: var(--chrome-color-more);
+    cursor: pointer;
+}
+
 .pin span {
     color: var(--orange);
 }
@@ -29,4 +35,8 @@
     margin-left: 0;
     padding-left: 1.225rem;
     clip-path: var(--right-point);
+}
+
+.disabled {
+    text-decoration: line-through;
 }

@@ -3,6 +3,7 @@ import {useEffect, useRef} from "react"
 import {useSelector} from "react-redux"
 import {cmdOrCtrl} from "src/app/core/utils/keyboard"
 import Config from "src/js/state/Config"
+import {useColorScheme} from "src/util/hooks/use-color-scheme"
 
 /**
  *
@@ -31,6 +32,7 @@ export function ZedEditor(props: {
   autoFocus?: boolean
 }) {
   const ref = useRef<any>()
+  const {isDark} = useColorScheme()
 
   // Keep this thing in focus as much as possible.
   // Probably want to move this into parent.
@@ -52,7 +54,7 @@ export function ZedEditor(props: {
       value={props.value}
       onChange={props.onChange}
       language="zed"
-      theme="vs-dark"
+      theme={isDark ? "vs-dark" : "vs-light"}
       options={{
         minimap: {enabled: false},
         renderLineHighlight: "none",

@@ -11,7 +11,11 @@
 
 .label {
     text-transform: none;
-    font-size: 0.9rem;
-    font-weight: bold;
     letter-spacing: normal;
+    font-weight: normal;
+    font-size: 0.8rem;
+}
+
+.footer [aria-pressed=true] .label {
+    font-weight: bold;
 }

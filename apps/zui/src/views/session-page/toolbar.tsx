@@ -5,9 +5,13 @@ import {
   canGoForward,
   goBack,
   goForward,
-} from "src/domain/session/handlers"
+} from "src/domain/session/handlers/navigation"
+import {useSelector} from "react-redux"
+import Current from "src/js/state/Current"
 
 export function Toolbar() {
+  const query = useSelector(Current.getActiveQuery)
+
   return (
     <div className={styles.toolbar}>
       <div className={styles.left}>
@@ -25,14 +29,14 @@ export function Toolbar() {
             enabled={canGoForward()}
           />
         </nav>
-        <h1>Checking CSV Shaper</h1>
+        <h1>{query.name()}</h1>
       </div>
       <div className={styles.right}>
         <nav>
+          <IconButton iconName="plus" />
           <IconButton iconName="history" />
           <IconButton iconName="export" />
           <IconButton iconName="pin" />
-          <IconButton iconName="plus" />
           <IconButton iconName="run" />
         </nav>
       </div>

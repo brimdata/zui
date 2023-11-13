@@ -20,6 +20,10 @@ const BG = styled.main`
   border-radius: 6px;
   box-shadow: var(--shadow-small);
   border: 1px solid var(--border-color);
+
+  @media (prefers-color-scheme: light) {
+    border: none;
+  }
 `
 
 export function isInteractive() {

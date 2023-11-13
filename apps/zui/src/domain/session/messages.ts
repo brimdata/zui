@@ -1,4 +1,4 @@
-import * as handlers from "./handlers"
+import * as handlers from "./handlers/navigation"
 
 export type SessionHandlers = {
   "session.goBack": typeof handlers.goBack

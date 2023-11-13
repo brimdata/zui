@@ -3,7 +3,6 @@ import {createHandler} from "src/core/handlers"
 import Current from "src/js/state/Current"
 
 export const goBack = createHandler("session.goBack", ({dispatch}) => {
-  console.log("going back")
   dispatch(tabHistory.goBack())
 })
 

@@ -38,7 +38,9 @@ export const getPools =
   (lakeId: string | null) =>
   (state: State): Pool[] => {
     const l = getLake(state, lakeId)
-    return Object.keys(l).map((key) => Pool.from(l[key]))
+    return Object.keys(l)
+      .map((key) => Pool.from(l[key]))
+      .sort((a, b) => (a.name > b.name ? 1 : -1))
   }
 
 export const getPoolNames =

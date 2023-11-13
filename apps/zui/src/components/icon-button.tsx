@@ -23,7 +23,7 @@ const BG = styled.button`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background 100ms;
+  transition: background var(--quick);
 
   &:disabled {
     opacity: 0.2;
