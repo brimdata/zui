@@ -8,6 +8,7 @@ import {
 } from "src/domain/session/handlers/navigation"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
+import {newPinMenu} from "src/app/menus/new-pin-menu"
 
 export function Toolbar() {
   const query = useSelector(Current.getActiveQuery)
@@ -36,7 +37,7 @@ export function Toolbar() {
           <IconButton iconName="plus" />
           <IconButton iconName="history" />
           <IconButton iconName="export" />
-          <IconButton iconName="pin" />
+          <IconButton iconName="pin" buildMenu={() => newPinMenu.build()} />
           <IconButton iconName="run" />
         </nav>
       </div>

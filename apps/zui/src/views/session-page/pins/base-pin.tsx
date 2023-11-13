@@ -79,12 +79,13 @@ export const BasePin = React.forwardRef(function BasePin(
   const pinCount = useSelector(Editor.getPinCount)
   const hoverIndex = useSelector(Editor.getPinHoverIndex)
   const lastPin = props.index + 1 === pinCount
-  const _isHovering = hoverIndex === props.index
-  const _isHoveringLastItem = lastPin && hoverIndex === pinCount
+  const isHovering = hoverIndex === props.index
+  const isHoveringLastItem = lastPin && hoverIndex === pinCount
   const dispatch = useDispatch()
   const isEditing = useSelector(Editor.getPinEditIndex) === props.index
   const className = classNames(
     {[styles.disabled]: props.pin.disabled},
+    {[styles.hovering]: isHovering || isHoveringLastItem},
     styles.pin
   )
 
@@ -93,7 +94,7 @@ export const BasePin = React.forwardRef(function BasePin(
     call(props.onMenu, menu)
     showContextMenu(menu, popupPosition(button))
   }
-
+  console.log({isHovering, isHoveringLastItem})
   return (
     <>
       <button
@@ -107,7 +108,15 @@ export const BasePin = React.forwardRef(function BasePin(
       >
         {props.prefix && <span>{props.prefix} </span>}
         {props.label}
+        {true && (
+          <div
+            className={classNames(styles.dropCursor, {
+              [styles.dropCursorRight]: isHoveringLastItem,
+            })}
+          />
+        )}
       </button>
+
       {props.form && (
         <Dialog
           open={isEditing}

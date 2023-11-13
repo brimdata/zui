@@ -8,7 +8,7 @@ import React, {
 import {BoundCommand} from "src/app/commands/command"
 import Icon from "src/app/core/icon-temp"
 import {invoke} from "src/core/invoke"
-import {MenuItem} from "src/core/menu"
+import {BuiltMenu, MenuItem} from "src/core/menu"
 import styled from "styled-components"
 
 const BG = styled.button`
@@ -52,6 +52,7 @@ export const IconButton = forwardRef(function IconButton(
   props: MenuItem & {
     className?: string
     onClick?: MouseEventHandler<HTMLButtonElement>
+    buildMenu?: () => BuiltMenu
   },
   ref: MutableRefObject<HTMLButtonElement>
 ) {
@@ -64,6 +65,8 @@ export const IconButton = forwardRef(function IconButton(
       props.command.run()
     } else if (props.click) {
       props.click()
+    } else if (props.buildMenu) {
+      props.buildMenu().showUnder(e.currentTarget)
     }
   }
 

@@ -1,9 +1,9 @@
 .container {
     display: flex;
-
 }
 
 .pin {
+    display: relative;
     font-family: var(--mono-font);
     font-weight: 500;
     font-size: 0.75rem;
@@ -39,4 +39,8 @@
 
 .disabled {
     text-decoration: line-through;
+}
+
+.hovering {
+    background: var(--primary-color-lighter);
 }
