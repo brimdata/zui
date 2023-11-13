@@ -5,7 +5,7 @@
   "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/zui",
   "license": "BSD-3-Clause",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "dist/main.js",
   "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "lake": {
@@ -26,8 +26,8 @@
     "tsc": "tsc",
     "postinstall": "node scripts/post-install",
     "prepare": "husky install",
-    "package": "electron-builder --publish never",
-    "release": "electron-builder",
+    "package-zui": "electron-builder --publish never",
+    "release-zui": "electron-builder",
     "package-insiders": "electron-builder --config electron-builder-insiders.json --publish never",
     "release-insiders": "electron-builder --config electron-builder-insiders.json --publish always"
   },
@@ -74,7 +74,7 @@
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
-    "brimcap": "brimdata/brimcap#v1.5.2",
+    "brimcap": "brimdata/brimcap#v1.5.4",
     "chalk": "^4.1.0",
     "chevrotain": "^10.5.0",
     "chrono-node": "^2.5.0",
@@ -157,7 +157,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#07893a2b850bcb200c779162b74e070bf46f05f0",
+    "zed": "brimdata/zed#3b0b0103d7d5a7d4d2ec9c7f90386e47a909aa60",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {

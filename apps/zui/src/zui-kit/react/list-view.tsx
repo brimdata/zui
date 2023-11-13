@@ -19,6 +19,7 @@ import classNames from "classnames"
 import {useParentSize} from "src/app/core/hooks/use-parent-size"
 import {TopShadow, useScrollShadow} from "src/views/load-pane/scroll-shadow"
 import {call} from "src/util/call"
+import {config} from "src/components/zed-table/config"
 
 const padding = 8
 
@@ -109,7 +110,7 @@ export const ListView = forwardRef(function ListView(
       width={props.width ?? width}
       outerRef={outerRef}
       itemCount={list.count}
-      itemSize={20}
+      itemSize={config.rowHeight}
       itemData={[...list.rows]}
       itemKey={(i) => i.toString()}
       innerElementType={InnerElement}

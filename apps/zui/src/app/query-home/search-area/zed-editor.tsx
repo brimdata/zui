@@ -56,6 +56,9 @@ export function ZedEditor(props: {
         minimap: {enabled: false},
         renderLineHighlightOnlyWhenFocus: true,
         renderControlCharacters: false,
+        fontSize: "14px",
+        fontFamily: "var(--mono-font)",
+        fontVariations: "inherit",
       }}
       onMount={(editor) => {
         ref.current = editor

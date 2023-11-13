@@ -11,7 +11,7 @@ export function ColumnsToolbar() {
   return (
     <Toolbar>
       <ButtonMenu items={menu.items} label={menu.label} />
-      <p>
+      <p style={{whiteSpace: "nowrap"}}>
         {table.columnCount} Columns / {table.hiddenColumnCount} Hidden
       </p>
     </Toolbar>

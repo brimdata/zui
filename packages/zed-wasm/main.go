@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"io"
+	"slices"
 	"strings"
 	"syscall/js"
 
@@ -16,7 +17,6 @@ import (
 	"github.com/brimdata/zed/zio"
 	"github.com/brimdata/zed/zio/anyio"
 	"github.com/teamortix/golang-wasm/wasm"
-	"golang.org/x/exp/slices"
 )
 
 func main() {

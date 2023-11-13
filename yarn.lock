@@ -6816,12 +6816,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@brimdata/brimcap#v1.5.2":
+"brimcap@brimdata/brimcap#v1.5.4":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=56ba70dd5f9aa699ca2fc1b64053f8befd79b9a1"
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=8fd3044a01ec04b952ce0e9c258bcde2a1a009fb"
   bin:
     brimcap: build/dist/brimcap
-  checksum: 737dd82be0fe8bd2b6b6e5b89683a9cd777b3226a577d638f12e3935f096c8ffb8c672e084363224dbb670e43c94cf29808609e9a122c55d10f5e39e851538ae
+  checksum: 9f660924d186da63a256151b94ae1a19a10f6811678db378883c0ec92482b7753670c256c3f24bf7b1ab03192e64feb0f26ea39e0e55427114d67ecb21f9c838
   languageName: node
   linkType: hard
 
@@ -19067,10 +19067,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#07893a2b850bcb200c779162b74e070bf46f05f0":
+"zed@brimdata/zed#3b0b0103d7d5a7d4d2ec9c7f90386e47a909aa60":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=07893a2b850bcb200c779162b74e070bf46f05f0"
-  checksum: 8bd1d71ca593e20b96ce798a972aab9b70d0ea795a50a0cffffa9993ad7f598b64973a049df0d8d2168231a8e1835d6f67d2bb37771f344b2f24053de70239f2
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=3b0b0103d7d5a7d4d2ec9c7f90386e47a909aa60"
+  checksum: a163323c91539271fe52469ef0c4a1157dd58cd89c224ac7ae8b6ef35cbcbb9a804e61b47bb21d1c699b49af747cb5c6b26fc628b20010ccd36b98c8c7f15eb7
   languageName: node
   linkType: hard
 
@@ -19179,7 +19179,7 @@ __metadata:
     acorn: ^7.4.1
     ajv: ^6.9.1
     animejs: ^3.2.0
-    brimcap: "brimdata/brimcap#v1.5.2"
+    brimcap: "brimdata/brimcap#v1.5.4"
     chalk: ^4.1.0
     chevrotain: ^10.5.0
     chrono-node: ^2.5.0
@@ -19264,7 +19264,7 @@ __metadata:
     use-resize-observer: ^8.0.0
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#07893a2b850bcb200c779162b74e070bf46f05f0"
+    zed: "brimdata/zed#3b0b0103d7d5a7d4d2ec9c7f90386e47a909aa60"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0

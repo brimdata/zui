@@ -43,6 +43,7 @@ import show from "./show"
 import hide from "./hide"
 import SortAsc from "./sort-asc"
 import SortDesc from "./sort-desc"
+import RightSidebarToggle from "./right-sidebar-toggle"
 
 export default {
   check,
@@ -73,6 +74,7 @@ export default {
   query,
   run,
   "sidebar-toggle": sidebarToggle,
+  "right-sidebar-toggle": RightSidebarToggle,
   "file-border": fileBorder,
   "file-filled": fileFilled,
   "doc-plain": docPlain,

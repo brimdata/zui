@@ -1,40 +1,26 @@
 import React from "react"
 import {useDispatch} from "src/app/core/state"
 import Appearance from "src/js/state/Appearance"
-import styled from "styled-components"
-import Icon from "../../core/icon-temp"
+import {IconButton} from "src/components/icon-button"
 
-const Button = styled.button`
-  display: flex;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background-color: transparent;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  -webkit-app-region: no-drag;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-    transition: background-color 300ms;
-  }
-
-  &:active {
-    background-color: rgba(0, 0, 0, 0.12);
-    transition: background-color 0ms;
-  }
-`
-
-const SidebarToggleButton = () => {
+export const SidebarToggleButton = () => {
   const dispatch = useDispatch()
   return (
-    <Button onClick={() => dispatch(Appearance.toggleSidebar())}>
-      <Icon size={16} name="sidebar-toggle" />
-    </Button>
+    <IconButton
+      iconName="sidebar-toggle"
+      iconSize={16}
+      click={() => dispatch(Appearance.toggleSidebar())}
+    />
   )
 }
 
-export default SidebarToggleButton
+export const RightSidebarToggleButton = () => {
+  const dispatch = useDispatch()
+  return (
+    <IconButton
+      iconName="right-sidebar-toggle"
+      iconSize={16}
+      click={() => dispatch(Appearance.toggleSecondarySidebar())}
+    />
+  )
+}

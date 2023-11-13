@@ -6,8 +6,8 @@
   width: 100%;
   font-family: var(--mono-font);
 
-  --header-height: 28px;
-  --row-height: 20px;
+  --header-height: 34px;
+  --row-height: 26px;
 }
 
 .zed-table__header {
@@ -17,7 +17,6 @@
   left: 0;
   background: white;
   z-index: 1;
-  font-family: var(--body-font);
 }
 
 .zed-table__header-group {
@@ -42,19 +41,17 @@
   height: 100%;
   white-space: nowrap;
   text-align: left;
-  font-weight: 700;
-  font-size: 11px;
+  font-size: 14px;
+  font-weight: 500;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 10px;
   border-right: 1px solid transparent;
-  transition: border-right-color 200ms;
-
-  &:hover {
-    border-right-color: var(--border-color)
-  }
+  color: var(--foreground-color-light);
+  background: var(--chrome-color);
+  border-right-color: var(--border-color);
 
   &:not(.isPlaceholder).hasChildren {
     border-bottom: 1px solid var(--border-color);
@@ -102,7 +99,7 @@
   bottom: 0;
   right: -8px;
   z-index: 2;
-  border: 1px solid white;
+  border: none;
 }
 
 .zed-table__cell {
@@ -117,7 +114,8 @@
   white-space: nowrap;
   padding: 0 10px;
   padding-right: 0;
-  border-right: 2px solid white;
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 
   a {
     display: flex;
@@ -148,14 +146,15 @@
   border-radius: 6px;
   border: none;
   z-index: 1;
-  opacity: 0;
   background: none;
-  transition: all 200ms;
-  position: sticky;
+  position: absolute;
   right: 10px;
+  opacity: 0;
+  background: var(--chrome-color);
+  border: 1px solid var(--border-color);
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.08);
+  &:active {
+    background: var(--chrome-color-dark);
   }
 
   .zed-table__header-cell:hover & {
