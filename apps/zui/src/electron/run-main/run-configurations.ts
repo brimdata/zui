@@ -1,7 +1,7 @@
 import time from "src/js/models/time"
 import {configurations} from "src/zui"
 
-export function initialize() {
+export function runConfigurations() {
   configurations.create({
     name: "application",
     title: "Application",
