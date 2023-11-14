@@ -3,22 +3,26 @@ import {MainObject} from "../core/main/main-object"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {Scheduler} from "src/domain/updates/scheduler"
 import {check} from "src/domain/updates/operations"
-import {select} from "src/core/main/select"
 import {info} from "src/core/log"
 import {app} from "electron"
+import {onStateChange} from "src/core/on-state-change"
 
-export function initialize(_main: MainObject) {
+export function initialize(main: MainObject) {
   if (env.isTest) {
     info("Not Checking for Updates when env.isTest")
     return
   }
 
-  const mode = select(ConfigPropValues.get("application", "updateMode"))
-  const schedule = new Scheduler()
   app.whenReady().then(() => {
-    setTimeout(() => {
-      info("Starting updater in mode: ", mode)
-      schedule.start(mode, check)
-    }, 15_000) // wait 15 seconds before checking for updates
+    const schedule = new Scheduler()
+    onStateChange(
+      main.store,
+      ConfigPropValues.get("application", "updateMode"),
+      (mode) => {
+        info("Running Updater in Mode:", mode)
+        schedule.stop()
+        schedule.start(mode, check, {delay: 15_000})
+      }
+    )
   })
 }

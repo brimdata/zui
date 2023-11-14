@@ -6,12 +6,17 @@ export function onStateChange(
   selector: Selector,
   onChange: (value: any) => void
 ) {
-  let first = true
-  let prev = undefined
-  store.subscribe(() => {
+  let current = undefined
+
+  function listener() {
     const next = selector(store.getState())
-    if (prev !== next || first) onChange(next)
-    prev = next
-    first = false
-  })
+    if (next !== current) {
+      current = next
+      onChange(current)
+    }
+  }
+
+  const unsubscribe = store.subscribe(listener)
+  listener()
+  return unsubscribe
 }

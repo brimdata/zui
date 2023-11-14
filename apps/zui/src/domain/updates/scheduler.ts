@@ -3,15 +3,20 @@ import {UpdateMode} from "./types"
 export class Scheduler {
   static interval = 1000 * 60 * 60 * 24 // 1 day
 
-  start(mode: UpdateMode, check: () => any) {
+  start(mode: UpdateMode, check: () => any, args: {delay?: number} = {}) {
     switch (mode) {
       case "default":
-        check()
+        this.delay(check, args.delay)
         this.schedule(check)
         break
       case "startup":
-        check()
+        this.delay(check, args.delay)
     }
+  }
+
+  private delayedId: any
+  private delay(check, ms = 0) {
+    this.delayedId = setTimeout(check, ms)
   }
 
   private scheduleId: any
@@ -23,6 +28,7 @@ export class Scheduler {
   }
 
   stop() {
+    clearTimeout(this.delayedId)
     clearTimeout(this.scheduleId)
   }
 }
