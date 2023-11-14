@@ -1,8 +1,9 @@
-import React from "react"
+import {useContext} from "react"
 import {Scrollable} from "src/components/scrollable"
 import styled from "styled-components"
 import {ColumnsToolbar} from "./columns-toolbar"
 import {ColumnsTree} from "./columns-tree"
+import {ResultsContext} from "src/app/query-home"
 
 const BG = styled.div`
   display: flex;
@@ -12,6 +13,9 @@ const BG = styled.div`
 `
 
 export function ColumnsPane() {
+  const value = useContext(ResultsContext)
+  if (!value) return null
+
   return (
     <BG>
       <ColumnsToolbar />

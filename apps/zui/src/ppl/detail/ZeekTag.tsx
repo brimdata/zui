@@ -4,7 +4,7 @@ import styled from "styled-components"
 import {SecurityEventInterface} from "./models/security-event"
 
 const BG = styled.div`
-  height: 18px;
+  height: 22px;
   border-radius: 3px;
   display: inline-flex;
   color: white;
@@ -16,7 +16,7 @@ const BG = styled.div`
 
 const Type = styled.span`
   padding: 0 8px;
-  ${(p) => p.theme.typography.labelSmall}
+  font-family: var(--mono-font);
 `
 
 type Props = {event: SecurityEventInterface; className?: string}

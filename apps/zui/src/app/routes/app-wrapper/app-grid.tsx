@@ -16,13 +16,17 @@ const BG = styled.div`
 export function AppGrid({children}) {
   const sidebarIsOpen = useSelector(Appearance.sidebarIsOpen)
   const sidebarWidth = useSelector(Appearance.sidebarWidth)
+  const secondarySidebarIsOpen = useSelector(Appearance.secondarySidebarIsOpen)
+  const secondarySidebarWidth = useSelector(Appearance.secondarySidebarWidth)
+
   const areas = `
-    "sidebar tabs"
-    "sidebar main"
+    "sidebar tabs secondary-sidebar"
+    "sidebar main secondary-sidebar"
   `
   const width = sidebarIsOpen ? sidebarWidth : 0
+  const width2 = secondarySidebarIsOpen ? secondarySidebarWidth : 0
   const rows = ["40px", "1fr"]
-  const columns = [`min(${width}px, 80vw)`, "1fr"]
+  const columns = [`min(${width}px, 70vw)`, "1fr", `min(${width2}px, 30vw)`]
   const style = {
     gridTemplateAreas: areas,
     gridTemplateRows: rows.join(" "),

@@ -8,9 +8,9 @@ const Area = styled.div`
   background: transparent;
   pointer-events: all !important;
   z-index: 99;
-  --size: 7px;
+  --size: 11px;
   --padding: 1px;
-  --offset: -5px;
+  --offset: -4px;
 
   &.debug {
     background: red;

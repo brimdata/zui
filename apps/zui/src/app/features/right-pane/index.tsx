@@ -17,8 +17,7 @@ import Appearance from "src/js/state/Appearance"
 const Pane = styled(DraggablePane)`
   display: flex;
   flex-direction: column;
-  border-left: 1px solid var(--border-color);
-  background: var(--chrome-color);
+  grid-area: secondary-sidebar;
 `
 
 const PaneContentSwitch = ({paneName}) => {
@@ -37,9 +36,7 @@ const PaneContentSwitch = ({paneName}) => {
 }
 
 const BG = styled.div`
-  height: 37px;
-  background: var(--chrome-color);
-  border-bottom: 1px solid var(--border-color);
+  height: 41px;
   flex-shrink: 0;
   padding: 0 8px;
 `
@@ -76,7 +73,6 @@ export function Menu(props: {paneName: string}) {
 
 function Container({children}) {
   const dispatch = useDispatch()
-  const width = useSelector(Appearance.secondarySidebarWidth)
   const isOpen = useSelector(Appearance.secondarySidebarIsOpen)
 
   const onDrag = (e: React.MouseEvent) => {
@@ -89,7 +85,7 @@ function Container({children}) {
 
   return (
     // @ts-ignore
-    <Pane onDrag={onDrag} dragAnchor="left" style={{width}}>
+    <Pane onDrag={onDrag} dragAnchor="left">
       {children}
     </Pane>
   )

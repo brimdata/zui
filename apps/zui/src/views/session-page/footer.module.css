@@ -19,3 +19,10 @@
 .footer [aria-pressed=true] .label {
     font-weight: bold;
 }
+
+.counts {
+    font-family: var(--mono-font);
+    display: flex;
+    white-space: nowrap;
+    gap: 1.5rem;
+}

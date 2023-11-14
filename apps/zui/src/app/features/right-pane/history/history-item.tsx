@@ -6,7 +6,6 @@ import Current from "src/js/state/Current"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
 import styled from "styled-components"
-import {Timeline} from "./timeline"
 import {useEntryMenu} from "./use-entry-menu"
 import {State} from "src/js/state/types"
 import {ActiveQuery} from "src/app/core/models/active-query"
@@ -14,7 +13,7 @@ import {NodeRendererProps} from "react-arborist"
 
 const Wrap = styled.div`
   height: 28px;
-  padding: 0 10px;
+  padding: 0 0.25rem;
   cursor: default;
 `
 const BG = styled.div`
@@ -23,13 +22,12 @@ const BG = styled.div`
   border-radius: 6px;
   display: flex;
   align-items: center;
-  padding-left: 20px;
-  padding-right: 6px;
+  padding: 0 1rem;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: var(--emphasis-bg-less);
   }
   &:active {
-    background-color: rgba(0, 0, 0, 0.06);
+    background-color: var(--emphasis-bg-more);
   }
   &.deleted {
     cursor: not-allowed;
@@ -37,16 +35,16 @@ const BG = styled.div`
 `
 
 const Text = styled.p`
+  font-family: var(--mono-font);
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 12px;
   flex: 1;
   .anonymous &,
   .modified &,
   .deleted & {
-    opacity: 0.65;
+    opacity: 0.7;
     font-weight: 400;
   }
 `
@@ -62,17 +60,6 @@ export type EntryType =
   | "anonymous"
   | "deleted"
   | "modified"
-
-function getColor(type: EntryType) {
-  switch (type) {
-    case "latest":
-      return "var(--primary-color)"
-    case "outdated":
-      return "var(--yellow)"
-    default:
-      return "var(--border-color)"
-  }
-}
 
 type Props = {
   version: string
@@ -133,14 +120,12 @@ export function HistoryItem({node}: NodeRendererProps<Props>) {
     api.queries.open(active.id(), {version: active.versionId(), history: false})
   }
   const type = getType(active)
-  const color = getColor(type)
   const value = getValue(active)
   const timestamp = getTimestamp(active)
 
   return (
     <Wrap onClick={onClick} onContextMenu={onContextMenu}>
       <BG className={type}>
-        <Timeline color={color} />
         <Text>{value}</Text>
         <Timestamp>{timestamp}</Timestamp>
       </BG>

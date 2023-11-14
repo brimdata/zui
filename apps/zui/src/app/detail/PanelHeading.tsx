@@ -9,7 +9,9 @@ const BG = styled.div`
 
   h4 {
     margin: 0;
-    ${(p) => p.theme.typography.headingList}
+    font-weight: bold;
+    font-size: 1rem;
+    padding-left: 0.5rem;
   }
 
   .burst-1,

@@ -31,7 +31,7 @@ const ContentWrap = styled.div`
   min-width: 0;
 `
 
-const ResultsContext = React.createContext<{
+export const ResultsContext = React.createContext<{
   table: TableViewApi | null
   setTable: (v: TableViewApi | null) => void
   query: ActiveQuery

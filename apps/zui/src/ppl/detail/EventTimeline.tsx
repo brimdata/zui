@@ -16,7 +16,7 @@ const Lane = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  height: 18px;
+  height: 26px;
   margin-bottom: 3px;
   &:last-of-type {
     margin-bottom: 0px;

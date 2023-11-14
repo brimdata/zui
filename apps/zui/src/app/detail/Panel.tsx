@@ -1,18 +1,19 @@
 import React, {memo, ReactNode} from "react"
 import InlineTableLoading from "src/js/components/InlineTableLoading"
-import styled from "styled-components"
 import {ChartWrap} from "./Shared"
-
-export const BG = styled.div`
-  background: white;
-  border-radius: 8px;
-  box-shadow: var(--shadow-low);
-`
+import styled from "styled-components"
 
 type Props = {
   isLoading?: boolean
   children: ReactNode
 }
+
+const BG = styled.div`
+  background: var(--bg-color);
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+`
 
 export default memo<Props>(function Panel({isLoading, children}: Props) {
   return (

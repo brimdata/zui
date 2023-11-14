@@ -40,7 +40,11 @@ export function MainArea({children}) {
   const dispatch = useDispatch()
   const touched = () => dispatch(isInteractive())
   const sidebarIsOpen = useSelector(Appearance.sidebarIsOpen)
-  const style: CSSProperties = {marginLeft: sidebarIsOpen ? 0 : "10px"}
+  const secondarySidebarIsOpen = useSelector(Appearance.secondarySidebarIsOpen)
+  const style: CSSProperties = {
+    marginLeft: sidebarIsOpen ? 0 : "10px",
+    marginRight: secondarySidebarIsOpen ? 0 : "10px",
+  }
 
   return (
     <BG onMouseDown={touched} onKeyDown={touched} style={style}>
