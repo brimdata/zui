@@ -64,7 +64,7 @@ function SavedQuery() {
   if (!active.isSaved()) return null
 
   function onClick() {
-    dispatch(Layout.showTitleForm("create"))
+    dispatch(Layout.showTitleForm())
   }
   return (
     <BG>

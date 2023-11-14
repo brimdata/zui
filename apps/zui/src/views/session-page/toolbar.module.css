@@ -23,11 +23,11 @@
 
 .left {
     flex: 1;
+    gap: 6px;
 }
 
 .toolbar h1 {
     font-size: 1rem;
-    padding: 0 1rem;
 }
 
 .form {
@@ -53,4 +53,24 @@
 
 .input:focus-visible {
     outline: none;
+}
+
+.untitled {
+    opacity: 0.3;
+}
+
+.modified {
+    font-style: italic;
+}
+
+.outdated {
+    display: flex;
+    background: var(--emphasis-bg-more);
+    border-radius: 6px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.66rem;
+    padding: 0 0.5rem;
+    color: var(--fg-color-less);
 }

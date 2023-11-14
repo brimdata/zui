@@ -5,59 +5,27 @@ import {useZuiApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import Layout from "src/js/state/Layout"
 import Current from "src/js/state/Current"
-import {plusOne} from "src/util/plus-one"
 
 export function useTitleForm() {
   const active = useSelector(Current.getActiveQuery)
   const api = useZuiApi()
   const dispatch = useDispatch()
-  const action = useSelector(Layout.getTitleFormAction)
-
-  async function createNewQuery(name: string) {
-    queries.save.run(name)
-  }
-
-  function renameQuery(name: string) {
-    api.queries.rename(active.query.id, name)
-  }
-
-  function getInput(e: FormEvent<HTMLFormElement>) {
-    return e.currentTarget.elements.namedItem("query-name") as HTMLInputElement
-  }
-
-  function getDefaultValue() {
-    if (action === "create" && active.name()) {
-      return plusOne(active.name())
-    } else {
-      return active.name()
-    }
-  }
-
-  function getButtonText() {
-    return action === "create" ? "Create" : "Update"
-  }
 
   return {
     onSubmit: (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      const input = getInput(e)
-      if (!input) {
-        dispatch(Layout.hideTitleForm())
-        return
-      }
-      if (action === "update" && input.value === getDefaultValue()) {
-        dispatch(Layout.hideTitleForm())
-        return
-      }
-      if (active.isAnonymous() || action === "create") {
-        createNewQuery(input.value)
-      } else {
-        renameQuery(input.value)
+      const input = e.currentTarget.elements.namedItem("query-name") as any
+      const name = input.value.trim() || ""
+
+      if (name.length) {
+        if (active.isSaved()) {
+          api.queries.rename(active.query.id, name)
+        } else {
+          queries.save.run(name)
+        }
       }
       dispatch(Layout.hideTitleForm())
     },
     onReset: () => dispatch(Layout.hideTitleForm()),
-    defaultValue: getDefaultValue(),
-    buttonText: getButtonText(),
   }
 }

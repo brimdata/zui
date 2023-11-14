@@ -15,6 +15,7 @@ import {initializeTabs} from "./init-tabs"
 import {initializeMonaco} from "./init-monaco"
 import {initializePluginContextSync} from "./init-plugin-context-sync"
 import toast from "react-hot-toast"
+import {startTransition} from "react"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -42,6 +43,8 @@ export default async function initialize(
   initDOM()
   initIpcListeners(store)
   initHandlers({
+    transition: startTransition,
+    oldApi: api,
     dispatch: store.dispatch,
     select: (fn) => fn(store.getState()),
     invoke: invoke,

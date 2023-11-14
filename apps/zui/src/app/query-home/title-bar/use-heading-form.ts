@@ -26,7 +26,7 @@ export function useHeadingForm() {
   }
 
   function getDefaultValue() {
-    if (action === "create" && active.name()) {
+    if (active.name()) {
       return plusOne(active.name())
     } else {
       return active.name()
@@ -41,18 +41,12 @@ export function useHeadingForm() {
     onSubmit: (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       const input = getInput(e)
-      if (!input) {
-        dispatch(Layout.hideTitleForm())
-        return
-      }
-      if (action === "update" && input.value === getDefaultValue()) {
-        dispatch(Layout.hideTitleForm())
-        return
-      }
-      if (active.isAnonymous() || action === "create") {
-        createNewQuery(input.value)
-      } else {
-        renameQuery(input.value)
+      if (input && input.value.trim() !== "") {
+        if (active.isSaved()) {
+          renameQuery(input.value)
+        } else {
+          createNewQuery(input.value)
+        }
       }
       dispatch(Layout.hideTitleForm())
     },

@@ -28,7 +28,7 @@ export const collapseAllHandler = createHandler(
   }
 )
 
-export const showExportDialogHandler = createHandler(
+export const showExportDialog = createHandler(
   "results.showExportDialog",
   ({dispatch}) => {
     dispatch(Modal.show("export"))
@@ -39,3 +39,21 @@ export const toggleHistogram = createHandler(
   "results.toggleHistogram",
   ({dispatch}) => dispatch(Layout.toggleHistogram())
 )
+
+export const showTableView = createHandler((ctx) => {
+  ctx.transition(() => {
+    ctx.dispatch(Layout.setResultsView("TABLE"))
+  })
+})
+
+export const showInspectorView = createHandler((ctx) => {
+  ctx.transition(() => {
+    ctx.dispatch(Layout.setResultsView("INSPECTOR"))
+  })
+})
+
+export const showChartView = createHandler((ctx) => {
+  ctx.transition(() => {
+    ctx.dispatch(Layout.setResultsView("CHART"))
+  })
+})

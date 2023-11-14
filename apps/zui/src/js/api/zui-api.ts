@@ -16,7 +16,7 @@ import {LayoutApi} from "./layout-api"
 import {TableViewApi} from "src/zui-kit"
 import {LakeModel} from "../models/lake"
 
-// This should start to be deprecated maybe...
+// This is deprecated in favor of domain handlers and operations
 export default class ZuiApi {
   table: TableViewApi | null = null
   public abortables = new Abortables()
