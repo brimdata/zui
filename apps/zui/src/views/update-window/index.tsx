@@ -43,7 +43,7 @@ function useTemplate() {
       }
     case "not-available":
       return {
-        title: "Update to Date!",
+        title: "Up to Date!",
         button: ["OK", closeWindow],
       }
     case "available":

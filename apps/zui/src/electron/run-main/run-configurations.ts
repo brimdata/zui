@@ -14,7 +14,6 @@ export function runConfigurations() {
           ["On Startup & Daily", "default"],
           ["On Startup", "startup"],
           ["Manually", "manual"],
-          ["Disabled", "disabled"],
         ],
         defaultValue: "startup",
       },

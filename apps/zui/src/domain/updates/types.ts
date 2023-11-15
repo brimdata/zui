@@ -1,4 +1,4 @@
-export type UpdateMode = "disabled" | "manual" | "startup" | "default"
+export type UpdateMode = "manual" | "startup" | "default"
 
 export interface Updater {
   check(): Promise<string | null>
