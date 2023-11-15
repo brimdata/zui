@@ -5,6 +5,7 @@ import {errorToString} from "src/util/error-to-string"
 import {info} from "src/core/log"
 
 export const open = createOperation("updates.open", ({main}) => {
+  check()
   main.windows.activate("update")
 })
 
