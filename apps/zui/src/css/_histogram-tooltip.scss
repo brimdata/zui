@@ -5,13 +5,15 @@
   pointer-events: none;
   transition: opacity 200ms 50ms, right 75ms, left 75ms;
   opacity: 1;
-  font-family: var(--mono-font);
+
 }
 
 .histogram-tooltip {
   pointer-events: none;
-  color: white;
+  color: var(--fg-color);
   background: var(--bg-color);
+  box-shadow: var(--shadow-small);
+  font-family: var(--mono-font);
   font-size: 11px;
   border-radius: 8px;
 
@@ -34,12 +36,12 @@
   }
 
   .total-row {
-    border-top: 1px solid white;
+    border-top: 1px solid var(--border-color);
     text-align: right;
     font-weight: bold;
   }
 
-  .path-tag {
+  td .path-tag {
     border-radius: 3px;
     padding: 0 6px;
   }

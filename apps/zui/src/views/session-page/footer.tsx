@@ -6,15 +6,16 @@ import Layout from "src/js/state/Layout"
 import {
   collapseAllHandler,
   expandAllHandler,
-  showChartView,
   showInspectorView,
   showTableView,
+  toggleHistogram,
 } from "src/domain/results/handlers"
 import React from "react"
 import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import styled from "styled-components"
 import Results from "src/js/state/Results"
 import {pluralize} from "src/util/pluralize"
+import ExpandHorizontal from "src/app/core/icons/expand-horizontal"
 
 export function Footer() {
   const view = useSelector(Layout.getResultsView)
@@ -36,18 +37,13 @@ export function Footer() {
             checked: view === "TABLE",
             click: showTableView,
           },
-          {
-            label: "Chart",
-            iconName: "chart",
-            checked: view === "CHART",
-            click: showChartView,
-          },
         ]}
       />
       <ButtonMenu
         justify="flex-start"
         label="Result Nesting"
         items={[
+          {iconName: "chart", click: toggleHistogram},
           {iconName: "expand", click: expandAllHandler},
           {iconName: "collapse", click: collapseAllHandler},
         ]}

@@ -6,7 +6,6 @@ import {Inspector} from "./inspector"
 import {Table} from "./table"
 import {TableInspector} from "./table-inspector"
 import styles from "./results-pane.module.css"
-import Icon from "src/app/core/icon-temp"
 
 export function ResultsPane() {
   const ref = useRef()
@@ -34,12 +33,5 @@ function ResultsView() {
     return <TableInspector />
   }
   if (ctx.view === "INSPECTOR") return <Inspector />
-  if (ctx.view === "CHART")
-    return (
-      <div className={styles.comingSoon}>
-        <Icon name="chart" size={36} fill="var(--primary-color)" />
-        <h2>Visualizations Coming Soon</h2>
-      </div>
-    )
   return null
 }

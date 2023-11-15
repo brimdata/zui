@@ -3,6 +3,7 @@ import Inspector from "src/js/state/Inspector"
 import Layout from "src/js/state/Layout"
 import Modal from "src/js/state/Modal"
 import Table from "src/js/state/Table"
+import {runHistogramQuery} from "src/views/histogram-pane/run-query"
 
 export const expandAllHandler = createHandler(
   "results.expandAll",
@@ -15,10 +16,8 @@ export const expandAllHandler = createHandler(
 export const collapseAllHandler = createHandler(
   "results.collapseAll",
   ({dispatch, select}) => {
-    console.log("collapseAllHandler")
     const view = select(Layout.getEffectiveResultsView)
 
-    console.log(view)
     if (view === "INSPECTOR") {
       dispatch(Inspector.setExpanded({}))
       dispatch(Inspector.setExpandedDefault(false))
@@ -37,7 +36,11 @@ export const showExportDialog = createHandler(
 
 export const toggleHistogram = createHandler(
   "results.toggleHistogram",
-  ({dispatch}) => dispatch(Layout.toggleHistogram())
+  ({dispatch, select, oldApi}) => {
+    const isShown = select(Layout.getShowHistogram)
+    if (!isShown) runHistogramQuery(oldApi)
+    dispatch(Layout.toggleHistogram())
+  }
 )
 
 export const showTableView = createHandler((ctx) => {

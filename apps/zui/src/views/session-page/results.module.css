@@ -1,3 +1,5 @@
 .container {
     border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
 }
