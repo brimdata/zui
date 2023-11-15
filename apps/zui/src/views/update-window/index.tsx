@@ -7,6 +7,7 @@ import ProgressIndicator from "src/js/components/ProgressIndicator"
 import {isNumber} from "lodash"
 import {invoke} from "src/core/invoke"
 import {errorToString} from "src/util/error-to-string"
+import Link from "src/js/components/common/Link"
 
 function useStatus() {
   const nextVersion = useSelector(Updates.getNextVersion)
@@ -44,6 +45,11 @@ function useTemplate() {
     case "not-available":
       return {
         title: "Up to Date!",
+        text: (
+          <Link href="https://github.com/brimdata/zui/releases">
+            View releases
+          </Link>
+        ),
         button: ["OK", closeWindow],
       }
     case "available":

@@ -26,6 +26,10 @@
     overflow: hidden;
 }
 
+.main a {
+    color: var(--primary-color);
+}
+
 .footer {
     display: flex;
     width: 100%;

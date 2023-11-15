@@ -12,7 +12,7 @@ export class MacWinUpdater implements Updater {
     const {updateInfo} = await autoUpdater.checkForUpdates()
     const latest = updateInfo.version
     const current = app.getVersion()
-    if (semver.lte(current, latest)) {
+    if (semver.lt(current, latest)) {
       return latest
     } else {
       return null
