@@ -1,7 +1,7 @@
 .results {
     display: grid;
     grid-template-rows: 38px 1fr 30px;
-    background: white;
+    background: var(--bg-color);
     margin-top: 0;
     box-shadow: var(--shadow-elevation-low);
     border-radius: 6px;
@@ -49,7 +49,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background-color: white;
+    background-color: var(--bg-color);
     gap: 12px;
     border-radius: 0 0 6px 6px;
 }

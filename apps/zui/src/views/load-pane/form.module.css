@@ -37,7 +37,7 @@
 
 .files {
     padding: 0;
-    background: white;
+    background: var(--form-bg-color);
     border: var(--form-border);
     border-radius: var(--form-border-radius);
     overflow: hidden auto;

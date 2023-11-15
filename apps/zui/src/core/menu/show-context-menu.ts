@@ -7,6 +7,7 @@ export function showContextMenu(
   template: MenuItemConstructorOptions[],
   opts: {x?: number; y?: number; callback?: () => void} = {}
 ) {
+  debugger
   if (global.env.isIntegrationTest) {
     document.dispatchEvent(
       new CustomEvent("nativeContextMenu", {detail: template})

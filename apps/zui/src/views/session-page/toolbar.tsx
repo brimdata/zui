@@ -9,7 +9,13 @@ import {
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import {newPinMenu} from "src/app/menus/new-pin-menu"
-import {editQuery, runQuery, updateQuery} from "src/domain/session/handlers"
+import {
+  editQuery,
+  resetQuery,
+  runQuery,
+  saveAsNewQuery,
+  updateQuery,
+} from "src/domain/session/handlers"
 import Layout from "src/js/state/Layout"
 import classNames from "classnames"
 import {useTitleForm} from "./use-title-form"
@@ -18,6 +24,7 @@ import {showExportDialog} from "src/domain/results/handlers"
 import {showHistoryPane} from "src/app/commands/show-history-pane"
 
 export function Toolbar() {
+  const query = useSelector(Current.getActiveQuery)
   return (
     <div className={styles.toolbar}>
       <div className={styles.left}>
@@ -39,8 +46,11 @@ export function Toolbar() {
       </div>
       <div className={styles.right}>
         <nav>
-          <IconButton iconName="close" iconSize={20} />
-          <IconButton iconName="plus" click={editQuery} />
+          {query.isSaved() && (
+            <IconButton iconName="close" iconSize={20} click={resetQuery} />
+          )}
+
+          <IconButton iconName="plus" click={saveAsNewQuery} />
           <IconButton iconName="history" click={() => showHistoryPane.run()} />
           <IconButton iconName="export" click={showExportDialog} />
           <IconButton iconName="pin" buildMenu={() => newPinMenu.build()} />
@@ -88,9 +98,6 @@ function QueryTitle() {
           )}
           {query.isModified() && "*"}
         </h1>
-        {query.isOutdated() && (
-          <span className={styles.outdated}>Outdated</span>
-        )}
         {query.isModified() && (
           <IconButton iconName="check" click={updateQuery} />
         )}

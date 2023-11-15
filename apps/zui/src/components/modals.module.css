@@ -16,7 +16,11 @@
 
 @media (prefers-color-scheme: dark) {
     .modal::backdrop {
-        background-color: white;
+        opacity: 0.8;
+    }
+
+    .modal {
+        border: 1px solid var(--border-color);
     }
 }
 

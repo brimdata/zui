@@ -16,7 +16,7 @@ const BG = styled.main`
   background: var(--bg-color);
   z-index: 1;
   margin: 10px;
-  margin-top: 2px;
+  margin-top: 0;
   border-radius: 6px;
   box-shadow: var(--shadow-small);
   border: 1px solid var(--border-color);

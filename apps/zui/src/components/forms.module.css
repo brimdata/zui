@@ -81,7 +81,6 @@
     padding: var(--form-padding);
     background: var(--primary-color);
     border: 1px solid var(--primary-color-dark);
-    box-shadow: 0 3px 3px -3px var(--fg-color);
     color: white;
     font-weight: 500;
     min-width: 80px;

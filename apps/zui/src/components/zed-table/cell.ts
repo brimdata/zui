@@ -93,8 +93,10 @@ export class Cell {
         },
       },
       onClick: () => {},
-      onContextMenu: (...args) =>
-        api.args.cellProps.onContextMenu(...args, this),
+      onContextMenu: (...args) => {
+        args[0].stopPropagation()
+        api.args.cellProps.onContextMenu(...args, this)
+      },
       viewIdPrefix: `${this.id}_val:`,
       onDidChange: () => {
         api.cellChanged(this)

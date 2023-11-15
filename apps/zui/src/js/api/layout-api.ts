@@ -1,4 +1,3 @@
-import {flashElement} from "src/app/commands/flash-element"
 import Layout from "../state/Layout"
 import {PaneName} from "../state/Layout/types"
 import {ApiDomain} from "./api-domain"
@@ -11,7 +10,7 @@ export class LayoutApi extends ApiDomain {
       Appearance.secondarySidebarIsOpen(state) &&
       Layout.getCurrentPaneName(state) === name
     ) {
-      flashElement.run(`[data-section-tab-value='${name}']`)
+      dispatch(Appearance.toggleSecondarySidebar())
     } else {
       dispatch(Appearance.showSecondarySidebar())
       dispatch(Layout.setCurrentPaneName(name))

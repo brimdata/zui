@@ -36,7 +36,7 @@ export class ActiveQuery {
   }
 
   isModified() {
-    return !this.isAnonymous() && !this.query.hasVersion(this.versionId())
+    return !this.isAnonymous() && !this.isLatest()
   }
 
   isOutdated() {
