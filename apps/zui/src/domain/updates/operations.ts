@@ -39,7 +39,6 @@ export const install = createOperation(
       dispatch(Updates.setIsDownloading(true))
       dispatch(Updates.setDownloadProgress(0))
       await updater.install(onProgress)
-      info("Finished calling install")
       main.windows.byName("update").forEach((w) => w.close())
     } catch (e) {
       info("Error Installing")
