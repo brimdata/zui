@@ -1,7 +1,24 @@
 import time from "src/js/models/time"
 import {configurations} from "src/zui"
 
-export function initialize() {
+export function runConfigurations() {
+  configurations.create({
+    name: "application",
+    title: "Application",
+    properties: {
+      updateMode: {
+        name: "updateMode",
+        label: "Check for updates...",
+        type: "string",
+        enum: [
+          ["On Startup & Daily", "default"],
+          ["On Startup", "startup"],
+          ["Manually", "manual"],
+        ],
+        defaultValue: "startup",
+      },
+    },
+  })
   configurations.create({
     name: "pools",
     title: "Pools",

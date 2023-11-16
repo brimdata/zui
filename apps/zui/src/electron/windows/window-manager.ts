@@ -47,6 +47,12 @@ export class WindowManager extends EventEmitter {
     )
   }
 
+  activate(name: WindowName) {
+    const [window] = this.byName(name)
+    if (window) window.ref.focus()
+    else this.create(name)
+  }
+
   get focused() {
     return this.all.find(
       (f) => f.ref.webContents === BrowserWindow.getFocusedWindow()?.webContents

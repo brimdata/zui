@@ -16,7 +16,6 @@ import {newPool} from "src/domain/pools/handlers"
 const BG = styled.div`
   width: 100%;
   height: 100%;
-  background-image: url(dist/static/pool-wall-background.svg);
   background-repeat: no-repeat;
   background-position-x: 95%;
   background-position-y: 250px;

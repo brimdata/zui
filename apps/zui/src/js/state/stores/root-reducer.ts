@@ -21,6 +21,7 @@ import SessionHistories from "../SessionHistories"
 import PoolSettings from "../PoolSettings"
 import Window from "../Window"
 import LoadDataForm from "../LoadDataForm"
+import Updates from "../Updates"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -44,6 +45,7 @@ const rootReducer = combineReducers<any, any>({
   toolbars: Toolbars.reducer,
   url: Url.reducer,
   window: Window.reducer,
+  updates: Updates.reducer,
 })
 
 // A proof of concept. This would be a much nicer way to go
