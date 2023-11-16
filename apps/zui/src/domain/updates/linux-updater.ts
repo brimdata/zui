@@ -11,10 +11,10 @@ export class LinuxUpdater implements Updater {
   async check() {
     const latest = await this.latest()
     const current = app.getVersion()
-    if (semver.gte(current, latest)) {
-      return null
-    } else {
+    if (semver.lt(current, latest)) {
       return latest
+    } else {
+      return null
     }
   }
 
