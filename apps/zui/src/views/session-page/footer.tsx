@@ -4,7 +4,9 @@ import {ToolbarTabs} from "src/components/toolbar-tabs"
 import {useSelector} from "react-redux"
 import Layout from "src/js/state/Layout"
 import {
+  collapseAllColumns,
   collapseAllHandler,
+  expandAllColumns,
   expandAllHandler,
   showInspectorView,
   showTableView,
@@ -15,10 +17,21 @@ import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import styled from "styled-components"
 import Results from "src/js/state/Results"
 import {pluralize} from "src/util/pluralize"
-import ExpandHorizontal from "src/app/core/icons/expand-horizontal"
+import {MenuItem} from "src/core/menu"
 
 export function Footer() {
   const view = useSelector(Layout.getResultsView)
+
+  const tableItems: MenuItem[] = [
+    {iconName: "chart", click: toggleHistogram},
+    {iconName: "expand-horizontal", click: expandAllColumns},
+    {iconName: "collapse-horizontal", click: collapseAllColumns},
+  ]
+  const inspectorItems: MenuItem[] = [
+    {iconName: "chart", click: toggleHistogram},
+    {iconName: "expand", click: expandAllHandler},
+    {iconName: "collapse", click: collapseAllHandler},
+  ]
 
   return (
     <footer className={styles.footer}>
@@ -42,11 +55,7 @@ export function Footer() {
       <ButtonMenu
         justify="flex-start"
         label="Result Nesting"
-        items={[
-          {iconName: "chart", click: toggleHistogram},
-          {iconName: "expand", click: expandAllHandler},
-          {iconName: "collapse", click: collapseAllHandler},
-        ]}
+        items={view === "TABLE" ? tableItems : inspectorItems}
       />
       <div className={styles.counts}>
         <ShapeCount />

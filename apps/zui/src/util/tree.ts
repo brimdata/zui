@@ -19,3 +19,10 @@ export function getDecendents(data) {
 export function getDecendentIds(data) {
   return getDecendents(data).map((d) => d.id)
 }
+
+export function walk(data, fn) {
+  for (let item of data) {
+    fn(item)
+    if (item.children) walk(item.children, fn)
+  }
+}

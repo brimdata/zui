@@ -3,7 +3,8 @@ import Inspector from "src/js/state/Inspector"
 import Layout from "src/js/state/Layout"
 import Modal from "src/js/state/Modal"
 import Table from "src/js/state/Table"
-import {find, getDecendentIds} from "src/util/tree"
+import {objectify} from "src/util/objectify"
+import {find, getDecendentIds, walk} from "src/util/tree"
 import {runHistogramQuery} from "src/views/histogram-pane/run-query"
 
 export const expandAllHandler = createHandler(
@@ -75,8 +76,7 @@ export const showColumn = createHandler(({select, dispatch}, id: string) => {
   const column = find(all, id)
   if (!column) throw new Error("No Column Found with id " + id)
   const ids = getDecendentIds(column)
-  const state = {}
-  for (id of ids) state[id] = true
+  const state = objectify(ids, true)
   dispatch(Table.setColumnVisible(state))
 })
 
@@ -85,8 +85,7 @@ export const hideColumn = createHandler(({select, dispatch}, id: string) => {
   const column = find(all, id)
   if (!column) throw new Error("No Column Found with id " + id)
   const ids = getDecendentIds(column)
-  const state = {}
-  for (id of ids) state[id] = false
+  const state = objectify(ids, false)
   dispatch(Table.setColumnVisible(state))
 })
 
@@ -94,8 +93,7 @@ export const showAllColumns = createHandler(({select, dispatch}) => {
   const cols = select(Table.getNestedColumns)
   let ids = []
   for (let col of cols) ids = ids.concat(getDecendentIds(col))
-  let state = {}
-  for (let id of ids) state[id] = true
+  let state = objectify(ids, true)
   dispatch(Table.setColumnVisible(state))
 })
 
@@ -103,7 +101,26 @@ export const hideAllColumns = createHandler(({select, dispatch}) => {
   const cols = select(Table.getNestedColumns)
   let ids = []
   for (let col of cols) ids = ids.concat(getDecendentIds(col))
-  let state = {}
-  for (let id of ids) state[id] = false
+  let state = objectify(ids, false)
   dispatch(Table.setColumnVisible(state))
+})
+
+export const expandAllColumns = createHandler(({select, dispatch}) => {
+  const cols = select(Table.getNestedColumns)
+  const ids = []
+  walk(cols, (col) => {
+    if (col.children) ids.push(col.id)
+  })
+  let state = objectify(ids, true)
+  dispatch(Table.setColumnExpanded(state))
+})
+
+export const collapseAllColumns = createHandler(({select, dispatch}) => {
+  const cols = select(Table.getNestedColumns)
+  const ids = []
+  walk(cols, (col) => {
+    if (col.children) ids.push(col.id)
+  })
+  let state = objectify(ids, false)
+  dispatch(Table.setColumnExpanded(state))
 })
