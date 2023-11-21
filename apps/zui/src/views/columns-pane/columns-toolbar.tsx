@@ -1,18 +1,23 @@
 import React from "react"
 import {Toolbar} from "src/components/toolbar"
 import {ButtonMenu} from "src/components/button-menu"
-import {useResultsContext} from "src/app/query-home"
 import {columnsToolbarMenu} from "src/app/menus/columns-toolbar-menu"
+import Table from "src/js/state/Table"
+import {useSelector} from "react-redux"
 
 export function ColumnsToolbar() {
-  const {table} = useResultsContext()
-  if (!table) return null
-  const menu = columnsToolbarMenu.build(table)
+  const shape = useSelector(Table.getShape)
+  const columnCount = useSelector(Table.getVisibleColumnCount)
+  const hiddenCount = useSelector(Table.getHiddenColumnCount)
+
+  if (!shape) return null
+
+  const menu = columnsToolbarMenu.build(shape)
   return (
     <Toolbar>
       <ButtonMenu items={menu.items} label={menu.label} />
       <p style={{whiteSpace: "nowrap"}}>
-        {table.columnCount} Columns / {table.hiddenColumnCount} Hidden
+        {columnCount} Columns / {hiddenCount} Hidden
       </p>
     </Toolbar>
   )

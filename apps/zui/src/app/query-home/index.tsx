@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useState} from "react"
+import React from "react"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 
@@ -9,9 +9,7 @@ import RightPane from "../features/right-pane"
 import {TitleBar} from "./title-bar/title-bar"
 import {ResultsToolbar} from "./toolbar/results-toolbar"
 import {Redirect} from "react-router"
-import {ActiveQuery} from "../core/models/active-query"
 import {ResultsPane} from "src/views/results-pane"
-import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
 import {HistogramPane} from "src/views/histogram-pane"
 
 const MainContent = styled.div`
@@ -31,31 +29,6 @@ const ContentWrap = styled.div`
   min-width: 0;
 `
 
-export const ResultsContext = React.createContext<{
-  table: TableViewApi | null
-  setTable: (v: TableViewApi | null) => void
-  query: ActiveQuery
-}>(null)
-
-export function useResultsContext() {
-  const value = useContext(ResultsContext)
-  if (!value) throw new Error("Provide MainTableContext")
-  return value
-}
-
-export function ResultsProvider({children}) {
-  const [table, setTable] = useState<TableViewApi | null>(null)
-  const query = useSelector(Current.getActiveQuery)
-  const value = {
-    query,
-    table,
-    setTable: useCallback((table: TableViewApi | null) => setTable(table), []),
-  }
-  return (
-    <ResultsContext.Provider value={value}>{children}</ResultsContext.Provider>
-  )
-}
-
 const QueryHome = () => {
   const activeQuery = useSelector(Current.getActiveQuery)
   const tabId = useSelector(Current.getTabId)
@@ -65,18 +38,16 @@ const QueryHome = () => {
   }
 
   return (
-    <ResultsProvider>
-      <ContentWrap>
-        <MainContent>
-          <TitleBar />
-          <SearchArea />
-          <ResultsToolbar />
-          <HistogramPane />
-          <ResultsPane />
-        </MainContent>
-        <RightPane />
-      </ContentWrap>
-    </ResultsProvider>
+    <ContentWrap>
+      <MainContent>
+        <TitleBar />
+        <SearchArea />
+        <ResultsToolbar />
+        <HistogramPane />
+        <ResultsPane />
+      </MainContent>
+      <RightPane />
+    </ContentWrap>
   )
 }
 

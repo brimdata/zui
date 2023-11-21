@@ -4,7 +4,7 @@
   "sourceRoot": "apps/zui",
   "projectType": "app",
   "targets": {
-    "watch-tsc": {
+    "tsc-watch": {
       "command": "tsc -p apps/zui/tsconfig.json --watch"
     },
     "lint": {

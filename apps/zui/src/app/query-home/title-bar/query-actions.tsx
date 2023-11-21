@@ -47,7 +47,7 @@ function Create() {
   const text = active.isAnonymous() ? "Save" : "Save As"
   const isEmpty = useSelector(Editor.isEmpty)
   function onClick() {
-    dispatch(Layout.showTitleForm("create"))
+    dispatch(Layout.showTitleForm())
   }
 
   return (

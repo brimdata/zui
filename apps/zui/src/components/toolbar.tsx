@@ -1,8 +1,7 @@
 import styled from "styled-components"
 
 export const Toolbar = styled.div<{reverse?: boolean}>`
-  background: var(--chrome-color);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color-more);
   display: flex;
   flex-direction: ${(props) => (props.reverse ? "row-reverse" : "row")};
   align-items: center;

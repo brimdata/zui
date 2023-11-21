@@ -1,20 +1,17 @@
 import {createMenu, MenuItem} from "src/core/menu"
-import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
+import {hideAllColumns, showAllColumns} from "src/domain/results/handlers"
 
-export const columnsToolbarMenu = createMenu(
-  "columnsToolbarMenu",
-  (ctx, table: TableViewApi) => {
-    return [
-      {
-        label: "Show All",
-        iconName: "show",
-        click: () => table.showAllColumns(),
-      },
-      {
-        label: "Hide All",
-        iconName: "hide",
-        click: () => table.hideAllColumns(),
-      },
-    ] as MenuItem[]
-  }
-)
+export const columnsToolbarMenu = createMenu("columnsToolbarMenu", () => {
+  return [
+    {
+      label: "Show All",
+      iconName: "show",
+      click: () => showAllColumns(),
+    },
+    {
+      label: "Hide All",
+      iconName: "hide",
+      click: () => hideAllColumns(),
+    },
+  ] as MenuItem[]
+})

@@ -1,63 +1,62 @@
-import React, {useEffect, useMemo} from "react"
-import {useResultsContext} from "src/app/query-home"
+import React, {useState} from "react"
 import {useResultsPaneContext} from "./context"
-import {useTableState} from "./table-controller"
 import {useDispatch} from "src/app/core/state"
-import TableState from "src/js/state/Table"
+import Slice from "src/js/state/Table"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {valueContextMenu} from "src/app/menus/value-context-menu"
-import useSelect from "src/app/core/hooks/use-select"
 import {TableView, TableViewApi} from "src/zui-kit"
-import {useZuiApi} from "src/app/core/context"
 import {BareStringView} from "src/app/query-home/results/bare-string-view"
 import {PathView} from "src/app/query-home/results/path-view"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
-import * as zed from "@brimdata/zed-js"
 import {AlertView} from "src/app/query-home/results/alert-view"
+import {useSelector} from "react-redux"
+import {useScrollPosition} from "./table-controller"
+
+// 1. Don't forget to save the shape using zed.typeunder
 
 export function Table() {
-  const {table, setTable} = useResultsContext()
-  const ctx = useResultsPaneContext()
-  const api = useZuiApi()
-  const shape = ctx.firstShape
-  const recordShape = zed.typeunder(shape) as zed.TypeRecord
-  const state = useTableState()
-  const select = useSelect()
-  const initialScrollPosition = useMemo(
-    () => select(TableState.getScrollPosition),
-    []
-  )
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(TableState.setLastShape(shape))
-    return () => {
-      dispatch(TableState.setLastShape(null))
-    }
-  }, [shape])
-
-  useEffect(() => {
-    const pos = select(TableState.getScrollPosition)
-    table?.scrollTo(pos)
-  }, [ctx.key])
+  const [table, setTable] = useState<TableViewApi | null>(null)
+  const ctx = useResultsPaneContext()
+  const settings = useSelector(Slice.getShapeSettings)
+  const shape = useSelector(Slice.getShape)
+  const initialScrollPosition = useScrollPosition(table)
 
   return (
     <TableView
-      ref={(table: TableViewApi | null) => {
-        setTable(table)
-        api.table = table
-      }}
-      shape={recordShape}
+      ref={setTable}
+      shape={shape}
       values={ctx.values}
       width={ctx.width}
       height={ctx.height}
       initialScrollPosition={initialScrollPosition}
-      state={{
-        value: state,
-        onChange: (state) => {
-          dispatch(TableState.setStateForShape({shape, state}))
-        },
+      valuePageState={{
+        value: settings.valuePage,
+        onChange: (next) => dispatch(Slice.setValuePage(next)),
+      }}
+      valueExpandedState={{
+        value: settings.valueExpanded,
+        onChange: (next) => dispatch(Slice.setValueExpanded(next)),
+      }}
+      columnExpandedDefaultState={{
+        value: useSelector(Slice.getColumnExpandedDefault),
+      }}
+      columnExpandedState={{
+        value: settings.columnExpanded,
+        onChange: (next) => dispatch(Slice.setColumnExpanded(next)),
+      }}
+      columnSortedState={{
+        value: settings.columnSorted,
+        onChange: (next) => dispatch(Slice.setColumnSorted(next)),
+      }}
+      columnWidthState={{
+        value: settings.columnWidth,
+        onChange: (next) => dispatch(Slice.setColumnWidth(next)),
+      }}
+      columnVisibleState={{
+        value: settings.columnVisible,
+        onChange: (next) => dispatch(Slice.setColumnVisible(next)),
       }}
       headerCellProps={{
         onContextMenu: (e, column) => {
@@ -81,7 +80,7 @@ export function Table() {
         },
       }}
       onScroll={(pos) => {
-        dispatch(TableState.setScrollPosition(pos))
+        dispatch(Slice.setScrollPosition(pos))
         if (table.nearBottom(30)) ctx.loadMore()
       }}
       viewConfig={{

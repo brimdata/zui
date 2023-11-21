@@ -31,7 +31,6 @@ export type ZedTableProps = {
 } & ZedTableHandlers
 
 export type ZedTableHandlers = {
-  onStateChange: (nextState: ZedTableState) => void
   onScrollNearBottom: () => void
   onHeaderContextMenu: (e: React.MouseEvent, column: ZedColumn) => void
   onValueContextMenu: (
