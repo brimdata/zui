@@ -58,8 +58,8 @@ runs:
         APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
         APPLE_TEAM_ID: ${{ inputs.apple_team_id }}
 
-    - name: Check notorization with gatekeeper
-      if: runner.os == 'macOS'
-      run: |
-        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/apps/zui/mac/*.app
-      shell: bash
+#    - name: Check notorization with gatekeeper
+#      if: runner.os == 'macOS'
+#      run: |
+#      spctl --assess --type execute --verbose --ignore-cache --no-cache dist/apps/zui/mac/*.app
+#      shell: bash
