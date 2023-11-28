@@ -15,14 +15,20 @@ type Props = {
 const CloseButton = styled.button`
   background: none;
   border: none;
-  padding: 0;
-  margin-right: 8px;
+  padding: 4px;
   border-radius: 6px;
+  margin-right: 6px;
+
   &:hover {
     background: rgba(0, 0, 0, 0.08);
   }
   &:active {
     background: rgba(0, 0, 0, 0.12);
+  }
+
+  svg {
+    width: 0.95rem;
+    height: 0.95rem;
   }
 `
 

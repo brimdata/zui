@@ -38,6 +38,7 @@ const Pane = styled(DraggablePane)`
   grid-area: sidebar;
   display: flex;
   flex-direction: column;
+  font-size: 15px;
 `
 
 const SidebarTop = styled.div`

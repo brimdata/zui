@@ -13,6 +13,7 @@ import {SectionTabs} from "src/components/section-tabs"
 import {PaneName} from "src/js/state/Layout/types"
 import {ColumnsPane} from "src/views/columns-pane"
 import Appearance from "src/js/state/Appearance"
+import Current from "src/js/state/Current"
 
 const Pane = styled(DraggablePane)`
   display: flex;
@@ -104,4 +105,10 @@ const RightPane = () => {
   )
 }
 
-export default RightPane
+const WithRightPane = () => {
+  const tab = useSelector(Current.getTabId)
+  if (!tab) return null
+  return <RightPane />
+}
+
+export default WithRightPane

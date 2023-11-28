@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useRef} from "react"
 
 import {useSelector} from "react-redux"
 import MainEditor from "src/js/state/Editor"
@@ -16,6 +16,7 @@ export function Editor() {
   const runOnEnter = useSelector(Config.getRunOnEnter)
   const dispatch = useDispatch()
   const tabId = useTabId()
+  const container = useRef()
   const onChange = (v: string) => {
     dispatch(MainEditor.setValue(v))
   }
@@ -32,14 +33,14 @@ export function Editor() {
   }
 
   return (
-    <div className={styles.container} onKeyDownCapture={onKey}>
+    <div ref={container} className={styles.container} onKeyDownCapture={onKey}>
       <ZedEditor
         value={value}
         onChange={onChange}
         path={tabId}
         testId="main-editor"
       />
-      <EditorResizer />
+      <EditorResizer container={container} />
     </div>
   )
 }

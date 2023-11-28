@@ -5,7 +5,8 @@ import Layout from "src/js/state/Layout"
 export function Grid({children}) {
   const title = "min-content"
   const pins = "min-content"
-  const editor = useSelector(Layout.getEditorHeight) + "px"
+  const editorPx = useSelector(Layout.getEditorHeight) + "px"
+  const editor = `minmax(10vh, min(${editorPx}, 65vh))`
   const results = "minmax(0, 1fr)"
   const footer = "min-content"
   const rows = [title, pins, editor, results, footer]

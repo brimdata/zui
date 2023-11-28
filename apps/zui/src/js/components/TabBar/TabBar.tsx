@@ -28,7 +28,6 @@ const MAX_WIDTH = 200
 const BG = styled.div`
   display: flex;
   align-items: center;
-  padding-right: 16px;
   height: 100%;
   grid-area: tabs;
   -webkit-app-region: drag;
@@ -72,8 +71,9 @@ export default function TabBar() {
   const ctl = useTabController(count, calcWidth)
   useEffect(() => calcWidth(), [rect.width])
   const sidebarCollapsed = !useSelector(Appearance.sidebarIsOpen)
+  const rightbarCollapse = !useSelector(Appearance.secondarySidebarIsOpen)
   return (
-    <BG>
+    <BG style={{paddingRight: rightbarCollapse ? 20 : 10}}>
       {sidebarCollapsed && global.env.isMac && (
         <TrafficLightBG>
           <SidebarToggleButton />

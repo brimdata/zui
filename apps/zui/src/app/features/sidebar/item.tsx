@@ -102,11 +102,9 @@ const Input = styled.input`
 
 const ItemIconBG = styled.div<{isFolder: boolean}>`
   margin-left: ${(p) => (p.isFolder ? 0 : 16)}px;
+  display: flex;
   svg {
-    width: 14px;
-    height: 14px;
     opacity: 0.5;
-    fill: var(--fg-color);
   }
 `
 

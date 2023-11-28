@@ -16,6 +16,7 @@ import {initializeMonaco} from "./init-monaco"
 import {initializePluginContextSync} from "./init-plugin-context-sync"
 import toast from "react-hot-toast"
 import {startTransition} from "react"
+import {initResizeListener} from "./init-resize-listener"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -58,5 +59,6 @@ export default async function initialize(
   initializeTabs(store)
   initializeMonaco()
   initializePluginContextSync(store)
+  initResizeListener()
   return {store, api}
 }

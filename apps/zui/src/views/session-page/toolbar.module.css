@@ -5,6 +5,13 @@
     justify-content: space-between;
     padding: 0 10px;
     gap: 6px;
+    min-inline-size: 0;
+}
+
+.toolbar h1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .left,

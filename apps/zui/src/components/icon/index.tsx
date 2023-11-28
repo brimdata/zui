@@ -1,6 +1,7 @@
 import React from "react"
 import styles from "./icon.module.css"
 import {IconName as Name, customIconNames, iconNames} from "./icon-names"
+import classNames from "classnames"
 
 type Props = {
   name: Name
@@ -20,7 +21,7 @@ export function Icon(props: Props) {
     : `/icons.svg#${name}_${style}`
 
   return (
-    <svg className={styles.icon} fill="currentColor">
+    <svg className={classNames("icon", styles.icon)} fill={"currentColor"}>
       <use href={path}></use>
     </svg>
   )

@@ -4,7 +4,7 @@ import Layout from "src/js/state/Layout"
 import {useRef} from "react"
 import useSelect from "../core/hooks/use-select"
 
-export function EditorResizer() {
+export function EditorResizer({container}) {
   const dispatch = useDispatch()
   const select = useSelect()
   const start = useRef<number>(0)
@@ -17,5 +17,17 @@ export function EditorResizer() {
     dispatch(Layout.setEditorHeight(start.current + dy))
   }
 
-  return <DragAnchor onDrag={onDrag} onStart={onStart} position="bottom" />
+  const onEnd = () => {
+    const height = container.current.clientHeight
+    dispatch(Layout.setEditorHeight(height + 10 /* Margin */))
+  }
+
+  return (
+    <DragAnchor
+      onDrag={onDrag}
+      onStart={onStart}
+      onEnd={onEnd}
+      position="bottom"
+    />
+  )
 }
