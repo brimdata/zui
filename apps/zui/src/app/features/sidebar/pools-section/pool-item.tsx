@@ -1,6 +1,6 @@
 import React from "react"
 import {useSelector} from "react-redux"
-import Icon from "src/app/core/icon-temp"
+import Icon from "src/components/icon"
 import {Pool} from "src/app/core/pools/pool"
 import Loads from "src/js/state/Loads"
 import {Item} from "../item"
@@ -27,7 +27,9 @@ const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
       text={node.isInternal ? poolName.name : poolName.basename}
       inputValue={pool.name}
       isFolder={node.isInternal}
-      icon={node.isInternal ? <Icon name="folder" /> : <Icon name="pool" />}
+      icon={
+        node.isInternal ? <Icon name="folder" /> : <Icon name="polkadot_DOT" />
+      }
       state={node.state}
       innerStyle={style}
       onContextMenu={() => poolContextMenu.build(tree, node).show()}

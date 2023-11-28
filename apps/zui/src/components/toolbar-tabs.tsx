@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useRef, useState} from "react"
 import {MenuItem} from "src/core/menu"
 import styles from "./toolbar-tabs.module.css"
-import Icon from "src/app/core/icon-temp"
+import Icon from "src/components/icon"
 import {call} from "src/util/call"
 
 export function ToolbarTabs(props: {

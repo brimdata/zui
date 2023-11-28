@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react"
 import {ContainerView} from "../views/container-view"
-import Icon from "src/app/core/icon-temp"
+import Icon from "src/components/icon"
 import classNames from "classnames"
 import * as zed from "@brimdata/zed-js"
 import {note} from "./note"

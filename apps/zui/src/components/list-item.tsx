@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import React from "react"
 import {ReactNode} from "react-markdown"
-import Icon, {IconName} from "src/app/core/icon-temp"
+import Icon, {IconName} from "src/components/icon"
 import {BuiltMenu} from "src/core/menu"
 import {IconButton} from "./icon-button"
 

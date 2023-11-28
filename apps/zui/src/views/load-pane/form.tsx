@@ -1,6 +1,6 @@
 import baseForm from "src/components/forms.module.css"
 import {ScrollShadow} from "./scroll-shadow"
-import Icon from "src/app/core/icon-temp"
+import Icon from "src/components/icon"
 import Current from "src/js/state/Current"
 import {useForm} from "react-hook-form"
 import {useSelector} from "react-redux"

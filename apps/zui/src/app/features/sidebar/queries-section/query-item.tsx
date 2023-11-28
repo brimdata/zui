@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import Icon from "src/app/core/icon-temp"
+import Icon from "src/components/icon"
 import {Item} from "../item"
 import {NodeRendererProps} from "react-arborist"
 import {Query} from "src/js/state/Queries/types"
@@ -8,7 +8,7 @@ import {queryContextMenu} from "src/app/menus/query-context-menu"
 import {useAfterDelayOf} from "src/app/core/hooks/use-after-delay-of"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
-const QueryIcon = styled(Icon).attrs({name: "query"})``
+const QueryIcon = styled(Icon).attrs({name: "search_3"})``
 
 const QueryItem = ({
   dragHandle,

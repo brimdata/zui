@@ -1,7 +1,7 @@
 import React from "react"
 import {useSelector} from "react-redux"
 import {createFrom} from "src/app/commands/pins"
-import Icon from "src/app/core/icon-temp"
+import Icon from "src/components/icon"
 import {Pool} from "src/app/core/pools/pool"
 import {Item} from "src/app/features/sidebar/item"
 import useLakeId from "src/app/router/hooks/use-lake-id"
@@ -66,7 +66,7 @@ function PoolsList({pools}: {pools: Pool[]}) {
             <Item
               text={props.item.name}
               style={props.style}
-              icon={<Icon name="pool" />}
+              icon={<Icon name="polkadot_DOT" />}
               onClick={() => createFrom.run(props.item.name)}
               aria={props.aria}
             />

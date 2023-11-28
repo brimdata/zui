@@ -30,13 +30,13 @@ export function Toolbar() {
       <div className={styles.left}>
         <nav>
           <IconButton
-            iconName="chevron-left"
+            iconName="arrow_left"
             iconSize={24}
             click={() => goBack()}
             enabled={canGoBack()}
           />
           <IconButton
-            iconName="chevron-right"
+            iconName="arrow_right"
             iconSize={24}
             click={goForward}
             enabled={canGoForward()}
@@ -50,11 +50,11 @@ export function Toolbar() {
             <IconButton iconName="close" iconSize={20} click={resetQuery} />
           )}
 
-          <IconButton iconName="plus" click={saveAsNewQuery} />
+          <IconButton iconName="add" click={saveAsNewQuery} />
           <IconButton iconName="history" click={() => showHistoryPane.run()} />
-          <IconButton iconName="export" click={showExportDialog} />
-          <IconButton iconName="pin" buildMenu={() => newPinMenu.build()} />
-          <IconButton iconName="run" click={runQuery} />
+          <IconButton iconName="file_export" click={showExportDialog} />
+          <IconButton iconName="pin_2" buildMenu={() => newPinMenu.build()} />
+          <IconButton iconName="play" click={runQuery} />
         </nav>
       </div>
     </div>

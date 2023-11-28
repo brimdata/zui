@@ -1,6 +1,6 @@
 import classNames from "classnames"
 import React, {ReactNode} from "react"
-import Icon, {IconName} from "src/app/core/icon-temp"
+import Icon, {IconName} from "src/components/icon"
 import styled from "styled-components"
 
 const Button = styled.button`

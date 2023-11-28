@@ -1,4 +1,4 @@
-import {IconName} from "src/app/core/icon-temp"
+import {IconName} from "src/components/icon"
 import ZuiApi from "src/js/api/zui-api"
 import {Menu} from "./menu"
 import {BoundCommand} from "src/app/commands/command"

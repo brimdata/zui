@@ -34,7 +34,7 @@ function Run() {
     <IconButton
       aria-label="run-query"
       click={() => runQuery.run()} // 🎶
-      iconName="run"
+      iconName="play"
       iconSize={16}
       label={"Run"}
     />

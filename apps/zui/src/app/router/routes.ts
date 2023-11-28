@@ -1,5 +1,5 @@
 import {matchPath} from "react-router"
-import {IconName} from "../core/icon-temp"
+import {IconName} from "../../components/icon"
 
 /**
  * A single place to store all app route information. The title field is

@@ -2,7 +2,7 @@ import ProgressIndicator from "src/js/components/ProgressIndicator"
 import styles from "./job.module.css"
 import {IconButton} from "src/components/icon-button"
 import {ThreeUpArrows} from "./three-up-arrows"
-import Icon from "src/app/core/icon-temp"
+import Icon from "src/components/icon"
 import {ReactNode} from "react"
 
 type JobStatus = "loading" | "error" | "success" | "aborted"

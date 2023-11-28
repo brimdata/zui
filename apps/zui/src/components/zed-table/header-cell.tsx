@@ -1,7 +1,7 @@
 import {Header} from "@tanstack/react-table"
 import classNames from "classnames"
 import React from "react"
-import Icon from "src/app/core/icon-temp"
+import Icon from "src/components/icon"
 import {ZedColumn} from "./column"
 import {useZedTable} from "./context"
 import {HeaderResizeArea} from "./header-resize-area"
@@ -53,7 +53,7 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
                 )
               }
             >
-              <Icon name="chevron-down" size={16} />
+              <Icon name="down_small" size={16} />
             </button>
           )}
         </>
