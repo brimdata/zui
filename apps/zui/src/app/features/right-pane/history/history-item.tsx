@@ -12,7 +12,7 @@ import {ActiveQuery} from "src/app/core/models/active-query"
 import {NodeRendererProps} from "react-arborist"
 
 const Wrap = styled.div`
-  height: 28px;
+  height: 100%;
   padding: 0 0.25rem;
   cursor: default;
 `

@@ -73,20 +73,22 @@ export const collapseColumn = createHandler((ctx, id: string) => {
 
 export const showColumn = createHandler(({select, dispatch}, id: string) => {
   const all = select(Table.getNestedColumns)
+  const prev = select(Table.getColumnVisible)
   const column = find(all, id)
   if (!column) throw new Error("No Column Found with id " + id)
   const ids = getDecendentIds(column)
   const state = objectify(ids, true)
-  dispatch(Table.setColumnVisible(state))
+  dispatch(Table.setColumnVisible({...prev, ...state}))
 })
 
 export const hideColumn = createHandler(({select, dispatch}, id: string) => {
   const all = select(Table.getNestedColumns)
+  const prev = select(Table.getColumnVisible)
   const column = find(all, id)
   if (!column) throw new Error("No Column Found with id " + id)
   const ids = getDecendentIds(column)
   const state = objectify(ids, false)
-  dispatch(Table.setColumnVisible(state))
+  dispatch(Table.setColumnVisible({...prev, ...state}))
 })
 
 export const showAllColumns = createHandler(({select, dispatch}) => {

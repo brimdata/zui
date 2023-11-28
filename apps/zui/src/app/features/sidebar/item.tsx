@@ -13,8 +13,10 @@ import {Icon} from "src/components/icon"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
 import styled, {CSSProperties} from "styled-components"
 
+export const TREE_ITEM_HEIGHT = 32
+
 const Container = styled.div`
-  height: 28px;
+  height: ${TREE_ITEM_HEIGHT}px;
   display: flex;
   align-items: center;
   cursor: default;

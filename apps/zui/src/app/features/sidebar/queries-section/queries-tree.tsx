@@ -17,6 +17,7 @@ import QueryItem from "./query-item"
 import {selectQuery} from "src/app/events/select-query-event"
 import Appearance from "src/js/state/Appearance"
 import {Empty} from "./empty"
+import {TREE_ITEM_HEIGHT} from "../item"
 
 type Props = {
   source: "local" | "remote"
@@ -93,7 +94,7 @@ function QueryTree(props: {
                 node.data.name.toLowerCase().includes(term.toLowerCase())
               }
               indent={16}
-              rowHeight={28}
+              rowHeight={TREE_ITEM_HEIGHT}
               data={props.queries}
               childrenAccessor="items"
               onActivate={(node) => {

@@ -17,6 +17,7 @@ import Config from "src/js/state/Config"
 import {Pool} from "src/app/core/pools/pool"
 import {PoolName} from "./pool-name"
 import Appearance from "src/js/state/Appearance"
+import {TREE_ITEM_HEIGHT} from "../item"
 
 export function PoolsTree(props: {searchTerm: string}) {
   const dispatch = useDispatch()
@@ -51,7 +52,7 @@ export function PoolsTree(props: {searchTerm: string}) {
             disableDrag
             disableDrop
             indent={16}
-            rowHeight={28}
+            rowHeight={TREE_ITEM_HEIGHT}
             padding={8}
             height={dimens.height}
             width={dimens.width}

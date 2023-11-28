@@ -18,8 +18,10 @@ export function EditorResizer({container}) {
   }
 
   const onEnd = () => {
-    const height = container.current.clientHeight
-    dispatch(Layout.setEditorHeight(height + 10 /* Margin */))
+    if (container.current) {
+      const height = container.current.clientHeight
+      dispatch(Layout.setEditorHeight(height + 10 /* Margin */))
+    }
   }
 
   return (
