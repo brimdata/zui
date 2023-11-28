@@ -48,7 +48,7 @@ export const Shaper = memo(function Shaper(props: {onSubmit: () => any}) {
           <h2 className={styles.title}>Shaper Script</h2>
         </div>
         <div className={styles.toolbarActions}>
-          <IconButton iconName="play" onClick={props.onSubmit} />
+          <IconButton iconName="run" onClick={props.onSubmit} />
         </div>
       </div>
       <div onKeyDownCapture={onKeyDown} className={styles.editor}>

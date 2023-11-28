@@ -7,9 +7,10 @@ import {useSelector} from "react-redux"
 export const SidebarToggleButton = () => {
   const dispatch = useDispatch()
   const open = useSelector(Appearance.sidebarIsOpen)
+  const name = open ? "layout_leftbar_close" : "layout_leftbar_open"
   return (
     <IconButton
-      iconName={"layout_leftbar_" + (open ? "close" : "open")}
+      iconName={name}
       iconSize={16}
       click={() => dispatch(Appearance.toggleSidebar())}
     />
@@ -19,9 +20,10 @@ export const SidebarToggleButton = () => {
 export const RightSidebarToggleButton = () => {
   const dispatch = useDispatch()
   const open = useSelector(Appearance.secondarySidebarIsOpen)
+  const name = open ? "layout_rightbar_close" : "layout_rightbar_open"
   return (
     <IconButton
-      iconName={"layout_rightbar_" + (open ? "close" : "open")}
+      iconName={name}
       iconSize={16}
       click={() => dispatch(Appearance.toggleSecondarySidebar())}
     />

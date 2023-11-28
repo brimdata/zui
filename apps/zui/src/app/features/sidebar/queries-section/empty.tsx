@@ -1,5 +1,5 @@
 import React from "react"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import EmptySection from "src/js/components/common/EmptySection"
 import styled from "styled-components"
 

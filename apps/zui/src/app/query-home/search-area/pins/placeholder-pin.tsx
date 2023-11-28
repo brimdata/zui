@@ -1,6 +1,6 @@
 import React from "react"
 import {createFrom} from "src/app/commands/pins"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import styled from "styled-components"
 import {Button, Prefix} from "./base-pin"
 

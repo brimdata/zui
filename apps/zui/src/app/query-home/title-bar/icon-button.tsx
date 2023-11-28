@@ -1,5 +1,5 @@
 import React, {ButtonHTMLAttributes} from "react"
-import Icon, {IconName} from "src/components/icon"
+import {Icon, IconName} from "src/components/icon"
 import styled from "styled-components"
 
 const Button = styled.button`

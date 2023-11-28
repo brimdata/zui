@@ -15,7 +15,7 @@ export function SettingsButton() {
   return (
     <>
       <IconButton
-        iconName="three-dots-stacked"
+        iconName="three_dots_stacked"
         onClick={() => setIsOpen(true)}
         label="Histogram Settings"
         ref={button}

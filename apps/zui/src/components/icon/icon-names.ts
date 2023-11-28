@@ -1,0 +1,60 @@
+import {MingCuteIconName} from "./ming-cute-names"
+
+export type IconMapping = {[name: string]: MingCuteIconName}
+
+export type IconName = keyof typeof iconNames | keyof typeof customIconNames
+
+export const iconNames = {
+  chevron_down: "down",
+  chevron_left: "left",
+  chevron_right: "right",
+  chevron_up: "up",
+  collapse_horizontal: "fold_horizontal",
+  doc_plain: "document",
+  double_chevron_right: "arrows_right",
+  expand_horizontal: "unfold_horizontal",
+  file_border: "document",
+  file_filled: "document",
+  left_arrow: "arrow_left",
+  right_arrow: "arrow_right",
+  sort_asc: "sort_ascending",
+  sort_desc: "sort_descending",
+  three_dots_stacked: "more_1",
+  three_dots: "more_1",
+  braces: "braces",
+  chart: "chart_line",
+  check: "check",
+  close: "close",
+  collapse: "fold_vertical",
+  columns: "table",
+  detach: "delete_back",
+  expand: "unfold_vertical",
+  export: "file_export",
+  folder: "folder",
+  grid: "grid",
+  hide: "eye_close",
+  history: "history",
+  list: "list_ordered",
+  lock: "lock",
+  pin: "pin_2",
+  plus: "add",
+  pool: "polkadot_DOT",
+  query: "search_2",
+  reload: "refresh_1",
+  run: "play",
+  show: "eye",
+  tag: "tag",
+  update: "upload",
+  view: "layout",
+  warning: "warning",
+  layout_rightbar_open: "layout_rightbar_open",
+  layout_rightbar_close: "layout_rightbar_close",
+  layout_leftbar_open: "layout_leftbar_open",
+  layout_leftbar_close: "layout_leftbar_close",
+  file_upload: "file_upload",
+}
+
+export const customIconNames = {
+  zui: "zui",
+  wireshark: "wireshark",
+}

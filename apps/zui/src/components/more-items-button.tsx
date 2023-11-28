@@ -7,7 +7,7 @@ export const MoreItemsButton = forwardRef<any, {items: MenuItem[]}>(
     return (
       <IconButton
         ref={ref}
-        iconName="double-chevron-right"
+        iconName="double_chevron_right"
         iconSize={10}
         onClick={(e) => {
           new BuiltMenu({id: "more-items"}, props.items).showUnder(

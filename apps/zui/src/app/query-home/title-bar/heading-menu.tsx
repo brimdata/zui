@@ -14,7 +14,7 @@ export function HeadingMenu() {
 
   return (
     <MenuButton
-      icon="three-dots-stacked"
+      icon="three_dots_stacked"
       onClick={(e) => savedQueryMenu.build(active).showUnder(e.currentTarget)}
     />
   )

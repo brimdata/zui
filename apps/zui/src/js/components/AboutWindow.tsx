@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import TextContent from "./TextContent"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import {EnvAboutApp} from "src/domain/env/types"
 import {invoke} from "src/core/invoke"
 

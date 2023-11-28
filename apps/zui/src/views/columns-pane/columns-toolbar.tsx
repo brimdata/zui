@@ -12,7 +12,7 @@ export function ColumnsToolbar() {
 
   if (!shape) return null
 
-  const menu = columnsToolbarMenu.build(shape)
+  const menu = columnsToolbarMenu.build()
   return (
     <Toolbar>
       <ButtonMenu items={menu.items} label={menu.label} />

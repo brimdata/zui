@@ -2,7 +2,7 @@ import React, {useEffect} from "react"
 import {darken, transparentize} from "polished"
 import {ReactNode} from "react"
 import styled from "styled-components"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import {Dialog, useDialog} from "./dialog"
 import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
@@ -73,7 +73,7 @@ const Label = styled.span`
   line-height: 17px;
 `
 
-const Dropdown = styled(Icon).attrs({name: "chevron-down"})`
+const Dropdown = styled(Icon).attrs({name: "chevron_down"})`
   flex: 0 0 13px;
   flex-basis: 13px;
   margin-left: 4px;

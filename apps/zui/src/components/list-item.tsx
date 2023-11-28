@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import React from "react"
 import {ReactNode} from "react-markdown"
-import Icon, {IconName} from "src/components/icon"
+import {Icon, IconName} from "src/components/icon"
 import {BuiltMenu} from "src/core/menu"
 import {IconButton} from "./icon-button"
 
@@ -43,7 +43,7 @@ export function ListItem(props: {
               "list-item__toggle--open": props.isOpen,
             })}
             click={() => props.onToggle()}
-            iconName="chevron-right"
+            iconName="chevron_right"
             iconSize={14}
           />
         )}

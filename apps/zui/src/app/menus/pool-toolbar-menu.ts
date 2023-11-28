@@ -9,7 +9,7 @@ export const poolToolbarMenu = createMenu(
       {
         display: "icon-label",
         label: "Load Data",
-        iconName: "doc-plain",
+        iconName: "file_upload",
         click: async () => {
           chooseFiles(pool.id)
         },

@@ -31,7 +31,7 @@ export const queryVersion: Route = {
 export const lakeReleaseNotes: Route = {
   title: "Release Notes",
   path: `/release-notes`,
-  icon: "doc-plain",
+  icon: "doc_plain",
 }
 
 export const releaseNotes: Route = {

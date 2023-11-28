@@ -1,6 +1,6 @@
 import baseForm from "src/components/forms.module.css"
 import {ScrollShadow} from "./scroll-shadow"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import Current from "src/js/state/Current"
 import {useForm} from "react-hook-form"
 import {useSelector} from "react-redux"
@@ -95,7 +95,7 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
               {files.map((f: string, i) => (
                 <li key={i} className={styles.fileItem}>
                   <Icon
-                    name="doc-plain"
+                    name="doc_plain"
                     size={16}
                     fill="var(--primary-color)"
                   />

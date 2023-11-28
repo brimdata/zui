@@ -8,7 +8,7 @@ const MENU_NAME = "results.toolbarMenu"
 
 const packetsMenuItem: MenuItem = {
   id: "packets",
-  iconName: "sharkfin",
+  iconName: "wireshark",
   label: "Packets",
   description: "Download Packets",
   command: DOWNLOAD,

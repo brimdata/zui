@@ -106,7 +106,7 @@ function Toolbar(props: {
             {
               iconName:
                 props.display.format === "table"
-                  ? "expand-horizontal"
+                  ? "expand_horizontal"
                   : "expand",
               label: "Expand All",
               click: () => props.display.expandAll(),
@@ -114,7 +114,7 @@ function Toolbar(props: {
             {
               iconName:
                 props.display.format === "table"
-                  ? "collapse-horizontal"
+                  ? "collapse_horizontal"
                   : "collapse",
               label: "Collapse All",
               click: () => props.display.collapseAll(),

@@ -1,7 +1,7 @@
 import {Header} from "@tanstack/react-table"
 import classNames from "classnames"
 import React from "react"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import {ZedColumn} from "./column"
 import {useZedTable} from "./context"
 import {HeaderResizeArea} from "./header-resize-area"
@@ -35,10 +35,10 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
             </span>
 
             {column.isSortedAsc && width > 75 && (
-              <Icon name="sort-asc" className="zed-table__sort-icon" />
+              <Icon name="sort_asc" className="zed-table__sort-icon" />
             )}
             {column.isSortedDesc && width > 75 && (
-              <Icon name="sort-desc" className="zed-table__sort-icon" />
+              <Icon name="sort_desc" className="zed-table__sort-icon" />
             )}
           </div>
 
@@ -53,7 +53,7 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
                 )
               }
             >
-              <Icon name="down_small" size={16} />
+              <Icon name="chevron_down" size={16} />
             </button>
           )}
         </>

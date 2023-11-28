@@ -9,7 +9,7 @@ import React, {
   useRef,
 } from "react"
 import {NodeState} from "react-arborist"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
 import styled, {CSSProperties} from "styled-components"
 
@@ -146,7 +146,7 @@ function Toggle(props: ItemProps) {
         props.onToggle()
       }}
     >
-      <Icon name={`chevron-${props.state.isOpen ? "down" : "right"}`} />
+      <Icon name={`chevron_${props.state.isOpen ? "down" : "right"}`} />
     </ToggleLink>
   )
 }

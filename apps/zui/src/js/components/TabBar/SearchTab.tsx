@@ -1,6 +1,6 @@
 import React, {HTMLProps} from "react"
 import classNames from "classnames"
-import Icon, {IconName} from "src/components/icon"
+import {Icon, IconName} from "src/components/icon"
 import styled from "styled-components"
 
 type Props = {

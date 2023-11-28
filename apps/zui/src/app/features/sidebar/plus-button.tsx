@@ -8,7 +8,7 @@ import {showContextMenu} from "src/js/lib/System"
 import {useDispatch} from "src/app/core/state"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import Tabs from "src/js/state/Tabs"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import {connectToLake} from "src/app/commands/connect-to-lake"
 import Modal from "src/js/state/Modal"
 
@@ -74,7 +74,7 @@ export default function PlusButton() {
   return (
     <>
       <Button aria-label="create" onMouseDown={() => onClick()}>
-        <Icon name="add" />
+        <Icon name="plus" />
       </Button>
       <input
         ref={ref}

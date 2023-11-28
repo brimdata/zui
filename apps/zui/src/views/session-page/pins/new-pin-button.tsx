@@ -1,5 +1,5 @@
 import React from "react"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import {newPinMenu} from "src/app/menus/new-pin-menu"
 import styled from "styled-components"
 
@@ -27,7 +27,7 @@ export function NewPinButton() {
   return (
     <Button onClick={(e) => newPinMenu.build().showUnder(e.currentTarget)}>
       <Icon name="pin" size={12} />
-      <Icon name="chevron-down" size={11} />
+      <Icon name="chevron_down" size={11} />
     </Button>
   )
 }

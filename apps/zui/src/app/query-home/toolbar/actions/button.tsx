@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import * as React from "react"
 
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import styled from "styled-components"
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
   onClick: React.MouseEventHandler
 }
 
-const DropdownIcon = styled(Icon).attrs({name: "chevron-down"})`
+const DropdownIcon = styled(Icon).attrs({name: "chevron_down"})`
   width: 9px;
   height: 9px;
   display: flex;

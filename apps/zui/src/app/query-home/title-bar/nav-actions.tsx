@@ -21,14 +21,14 @@ export function NavActions() {
     <Nav>
       <IconButton
         label="Back"
-        iconName="left-arrow"
+        iconName="left_arrow"
         iconSize={18}
         command="session.goBack"
         enabled={history.canGo(-1)}
       />
       <IconButton
         label="Forward"
-        iconName="right-arrow"
+        iconName="right_arrow"
         iconSize={18}
         enabled={history.canGo(1)}
         command="session.goForward"

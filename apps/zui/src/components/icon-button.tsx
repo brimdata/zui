@@ -6,7 +6,7 @@ import React, {
   forwardRef,
 } from "react"
 import {BoundCommand} from "src/app/commands/command"
-import Icon from "src/components/icon"
+import {Icon} from "src/components/icon"
 import {invoke} from "src/core/invoke"
 import {BuiltMenu, MenuItem} from "src/core/menu"
 import styled from "styled-components"

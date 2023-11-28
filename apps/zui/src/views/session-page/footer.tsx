@@ -23,14 +23,14 @@ export function Footer() {
   const view = useSelector(Layout.getResultsView)
 
   const tableItems: MenuItem[] = [
-    {iconName: "chart_line", click: toggleHistogram},
-    {iconName: "fold_horizontal", click: expandAllColumns},
-    {iconName: "unfold_horizontal", click: collapseAllColumns},
+    {iconName: "chart", click: toggleHistogram},
+    {iconName: "expand_horizontal", click: expandAllColumns},
+    {iconName: "collapse_horizontal", click: collapseAllColumns},
   ]
   const inspectorItems: MenuItem[] = [
-    {iconName: "chart_line", click: toggleHistogram},
-    {iconName: "fold_vertical", click: expandAllHandler},
-    {iconName: "unfold_vertical", click: collapseAllHandler},
+    {iconName: "chart", click: toggleHistogram},
+    {iconName: "expand", click: expandAllHandler},
+    {iconName: "collapse", click: collapseAllHandler},
   ]
 
   return (
@@ -46,7 +46,7 @@ export function Footer() {
           },
           {
             label: "Table",
-            iconName: "table",
+            iconName: "columns",
             checked: view === "TABLE",
             click: showTableView,
           },
