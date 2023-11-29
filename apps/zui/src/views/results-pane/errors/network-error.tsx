@@ -1,6 +1,5 @@
 import React from "react"
-import {useDispatch} from "src/app/core/state"
-import submitSearch from "src/app/query-home/flows/submit-search"
+import {submitSearch} from "src/domain/session/handlers"
 import ConnectionError from "src/js/components/ConnectionError"
 
 export function isNetworkError(e: unknown) {
@@ -8,6 +7,5 @@ export function isNetworkError(e: unknown) {
 }
 
 export function NetworkError() {
-  const dispatch = useDispatch()
-  return <ConnectionError onRetry={async () => dispatch(submitSearch())} />
+  return <ConnectionError onRetry={async () => submitSearch()} />
 }

@@ -11,7 +11,7 @@ import {
 import {copyToClipboard} from "src/js/lib/doc"
 import Editor from "src/js/state/Editor"
 import {toZedScript} from "src/js/zed-script/toZedScript"
-import submitSearch from "../query-home/flows/submit-search"
+import {submitSearch} from "src/domain/session/handlers"
 import {createCommand} from "./command"
 
 type ColumnName = string | string[]
@@ -30,7 +30,7 @@ export const countByField = createCommand(
   "countByField",
   ({api}, field: zed.Field) => {
     api.dispatch(appendQueryCountBy(field.path))
-    api.dispatch(submitSearch())
+    submitSearch()
   }
 )
 
@@ -38,7 +38,7 @@ export const filterEqualsValue = createCommand(
   "filterEqualsValue",
   ({api}, field: zed.Field) => {
     api.dispatch(appendQueryInclude(field))
-    api.dispatch(submitSearch())
+    submitSearch()
   }
 )
 
@@ -46,7 +46,7 @@ export const filterNotEqualsValue = createCommand(
   "filterNotEqualsValue",
   ({api}, field: zed.Field) => {
     api.dispatch(appendQueryExclude(field))
-    api.dispatch(submitSearch())
+    submitSearch()
   }
 )
 
@@ -55,7 +55,7 @@ export const filterInField = createCommand(
   ({api}, field: zed.Field, value: zed.Any) => {
     if (value) {
       api.dispatch(appendQueryIn(field, value as zed.Value))
-      api.dispatch(submitSearch())
+      submitSearch()
     }
   }
 )
@@ -65,7 +65,7 @@ export const filterNotInField = createCommand(
   ({api}, field: zed.Field, value: zed.Any) => {
     if (value) {
       api.dispatch(appendQueryNotIn(field, value))
-      api.dispatch(submitSearch())
+      submitSearch()
     }
   }
 )
@@ -74,7 +74,7 @@ export const newSearchWithValue = createCommand(
   "newSearchWithValue",
   ({api}, field: zed.Field) => {
     api.dispatch(Editor.setValue(toZedScript(field.data)))
-    api.dispatch(submitSearch())
+    submitSearch()
   }
 )
 
@@ -90,7 +90,7 @@ export const pivotToValues = createCommand(
 
     if (newProgram) {
       api.dispatch(Editor.setValue(newProgram))
-      api.dispatch(submitSearch())
+      submitSearch()
     }
   }
 )
@@ -99,7 +99,7 @@ export const sortAsc = createCommand(
   "sortAsc",
   ({api}, columnName: ColumnName) => {
     api.dispatch(appendQuerySortBy(columnName, "asc"))
-    api.dispatch(submitSearch())
+    submitSearch()
   }
 )
 
@@ -107,11 +107,11 @@ export const sortDesc = createCommand(
   "sortDesc",
   ({api}, columnName: ColumnName) => {
     api.dispatch(appendQuerySortBy(columnName, "desc"))
-    api.dispatch(submitSearch())
+    submitSearch()
   }
 )
 
 export const fuse = createCommand("fuse", ({api}) => {
   api.editor.append(api.editor.value.trim().length === 0 ? "fuse" : " | fuse")
-  api.dispatch(submitSearch())
+  submitSearch()
 })

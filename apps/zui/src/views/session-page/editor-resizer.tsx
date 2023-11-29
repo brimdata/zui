@@ -1,8 +1,8 @@
 import DragAnchor from "src/components/drag-anchor"
-import {useDispatch} from "../core/state"
+import {useDispatch} from "../../app/core/state"
 import Layout from "src/js/state/Layout"
 import {useRef} from "react"
-import useSelect from "../core/hooks/use-select"
+import useSelect from "../../app/core/hooks/use-select"
 
 export function EditorResizer({container}) {
   const dispatch = useDispatch()

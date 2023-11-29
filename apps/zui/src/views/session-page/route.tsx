@@ -3,7 +3,7 @@ import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
 import Tab from "src/js/state/Tab"
 import {useDispatch} from "src/app/core/state"
-import {loadRoute} from "src/app/query-home/loader"
+import {loadRoute} from "./loader"
 import {SessionPage} from "."
 
 // If this is a nice pattern for routes,

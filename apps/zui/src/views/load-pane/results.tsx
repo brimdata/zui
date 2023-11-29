@@ -14,8 +14,8 @@ import {ErrorWell} from "src/components/error-well"
 import {isNumber} from "lodash"
 import {useZq} from "./use-zq"
 import {ResultDimension, ResultDisplay} from "./use-results-display"
-import {BareStringView} from "src/app/query-home/results/bare-string-view"
-import {PathView} from "src/app/query-home/results/path-view"
+import {PathView} from "../results-pane/path-view"
+import {BareStringView} from "../results-pane/bare-string-view"
 
 const HEAD_LIMIT = 100
 

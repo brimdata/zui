@@ -9,8 +9,8 @@ import * as zed from "@brimdata/zed-js"
 import {valueContextMenu} from "src/app/menus/value-context-menu"
 import useSelect from "src/app/core/hooks/use-select"
 import {ListViewApi} from "src/zui-kit"
-import {PathView} from "src/app/query-home/results/path-view"
-import {AlertView} from "src/app/query-home/results/alert-view"
+import {PathView} from "./path-view"
+import {AlertView} from "./alert-view"
 
 export function Inspector(props: {height?: number}) {
   const {values, shapes, width, height, loadMore, key} = useResultsPaneContext()

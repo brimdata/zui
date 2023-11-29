@@ -5,17 +5,17 @@ import Tabs from "../state/Tabs"
 import {Store} from "../state/types"
 import initNewSearchTab from "./initNewSearchTab"
 import Editor from "../state/Editor"
-import submitSearch from "src/app/query-home/flows/submit-search"
 import {commands} from "src/app/commands/command"
 import * as zed from "@brimdata/zed-js"
 import {viewLogDetail} from "../flows/viewLogDetail"
 import tabHistory from "src/app/router/tab-history"
+import {submitSearch} from "src/domain/session/handlers"
 
 export default (store: Store) => {
   global.zui.on("clearPins", () => {
     store.dispatch(Editor.deleteAllPins())
     store.dispatch(Editor.setValue(""))
-    store.dispatch(submitSearch())
+    submitSearch()
   })
 
   global.zui.on("toggleLeftSidebar", () => {

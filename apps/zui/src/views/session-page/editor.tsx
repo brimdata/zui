@@ -6,10 +6,10 @@ import {useDispatch} from "src/app/core/state"
 import {cmdOrCtrl} from "src/app/core/utils/keyboard"
 import Config from "src/js/state/Config"
 import {useTabId} from "src/app/core/hooks/use-tab-id"
-import {ZedEditor} from "src/app/query-home/search-area/zed-editor"
-import {EditorResizer} from "src/app/query-home/editor-resizer"
-import submitSearch from "src/app/query-home/flows/submit-search"
+import {ZedEditor} from "src/components/zed-editor"
+import {EditorResizer} from "src/views/session-page/editor-resizer"
 import styles from "./editor.module.css"
+import {submitSearch} from "src/domain/session/handlers"
 
 export function Editor() {
   const value = useSelector(MainEditor.getValue)
@@ -27,7 +27,7 @@ export function Editor() {
     if (isEnterKey) {
       if ((runOnEnter && !isModKey) || (!runOnEnter && isModKey)) {
         e.preventDefault()
-        dispatch(submitSearch())
+        submitSearch()
       }
     }
   }

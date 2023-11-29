@@ -1,9 +1,9 @@
 import {MenuItemConstructorOptions} from "electron"
-import submitSearch from "src/app/query-home/flows/submit-search"
 import {createHandler} from "src/core/handlers"
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Pools from "src/js/state/Pools"
+import {submitSearch} from "./submit-search"
 
 export const choosePoolMenu = createHandler(({select, dispatch}) => {
   const lakeId = select(Current.getLakeId)
@@ -15,7 +15,7 @@ export const choosePoolMenu = createHandler(({select, dispatch}) => {
       label: pool.name,
       click: () => {
         dispatch(Editor.setFrom(pool.name))
-        dispatch(submitSearch())
+        submitSearch()
       },
     }))
   }
@@ -30,7 +30,7 @@ export const pinMenu = createHandler(({select, dispatch}, index) => {
       enabled: !pin.disabled,
       click: () => {
         dispatch(Editor.disablePin(index))
-        dispatch(submitSearch())
+        submitSearch()
       },
     },
     {
@@ -38,7 +38,7 @@ export const pinMenu = createHandler(({select, dispatch}, index) => {
       enabled: pins.some((p) => !p.disabled),
       click: () => {
         dispatch(Editor.disableOtherPins(index))
-        dispatch(submitSearch())
+        submitSearch()
       },
     },
     {type: "separator"},
@@ -47,7 +47,7 @@ export const pinMenu = createHandler(({select, dispatch}, index) => {
       enabled: !!pin.disabled,
       click: () => {
         dispatch(Editor.enablePin(index))
-        dispatch(submitSearch())
+        submitSearch()
       },
     },
     {
@@ -55,7 +55,7 @@ export const pinMenu = createHandler(({select, dispatch}, index) => {
       enabled: pins.some((p) => p.disabled),
       click: () => {
         dispatch(Editor.enableOtherPins(index))
-        dispatch(submitSearch())
+        submitSearch()
       },
     },
     {type: "separator"},
@@ -63,21 +63,21 @@ export const pinMenu = createHandler(({select, dispatch}, index) => {
       label: "Delete",
       click: () => {
         dispatch(Editor.deletePin(index))
-        dispatch(submitSearch())
+        submitSearch()
       },
     },
     {
       label: "Delete to the Right",
       click: () => {
         dispatch(Editor.deletePinsToTheRight(index))
-        dispatch(submitSearch())
+        submitSearch()
       },
     },
     {
       label: "Delete All",
       click: () => {
         dispatch(Editor.deleteAllPins())
-        dispatch(submitSearch())
+        submitSearch()
       },
     },
   ] as MenuItemConstructorOptions[]

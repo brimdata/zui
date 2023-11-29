@@ -1,7 +1,7 @@
 import tabHistory from "src/app/router/tab-history"
 import Tabs from "../state/Tabs"
 import {Store} from "../state/types"
-import submitSearch from "../../app/query-home/flows/submit-search"
+import {submitSearch} from "src/domain/session/handlers"
 
 export default function (store: Store, params: any) {
   const {href, isNewWin} = params
@@ -10,5 +10,5 @@ export default function (store: Store, params: any) {
   } else {
     store.dispatch(tabHistory.replace(href))
   }
-  store.dispatch(submitSearch())
+  submitSearch()
 }

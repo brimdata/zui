@@ -1,9 +1,9 @@
-import submitSearch from "src/app/query-home/flows/submit-search"
 import {createHandler} from "src/core/handlers"
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Layout from "src/js/state/Layout"
 import {plusOne} from "src/util/plus-one"
+import {submitSearch} from "./submit-search"
 
 export const editQuery = createHandler(({dispatch}) => {
   dispatch(Layout.showTitleForm())
@@ -17,8 +17,8 @@ export const updateQuery = createHandler(({select, oldApi}) => {
   oldApi.queries.open(id, {history: "replace"})
 })
 
-export const runQuery = createHandler(({dispatch}) => {
-  dispatch(submitSearch())
+export const runQuery = createHandler(() => {
+  submitSearch()
 })
 
 export const saveAsNewQuery = createHandler(

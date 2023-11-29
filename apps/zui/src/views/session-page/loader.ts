@@ -1,6 +1,5 @@
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
-import {syncPool} from "../core/pools/sync-pool"
 import {startTransition} from "react"
 import {QueryModel} from "../../js/models/query-model"
 import Notice from "src/js/state/Notice"
@@ -12,6 +11,7 @@ import {invoke} from "src/core/invoke"
 import {runHistogramQuery} from "src/views/histogram-pane/run-query"
 import {runResultsQuery} from "src/views/results-pane/run-results-query"
 import Layout from "src/js/state/Layout"
+import {syncPool} from "src/app/core/pools/sync-pool"
 
 export function loadRoute(location: Location): Thunk {
   return (dispatch) => {

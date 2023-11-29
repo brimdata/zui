@@ -5,13 +5,13 @@ import Slice from "src/js/state/Table"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {valueContextMenu} from "src/app/menus/value-context-menu"
 import {TableView, TableViewApi} from "src/zui-kit"
-import {BareStringView} from "src/app/query-home/results/bare-string-view"
-import {PathView} from "src/app/query-home/results/path-view"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
-import {AlertView} from "src/app/query-home/results/alert-view"
 import {useSelector} from "react-redux"
 import {useScrollPosition} from "./table-controller"
+import {AlertView} from "./alert-view"
+import {BareStringView} from "./bare-string-view"
+import {PathView} from "./path-view"
 
 // 1. Don't forget to save the shape using zed.typeunder
 

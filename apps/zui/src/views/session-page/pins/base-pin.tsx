@@ -11,13 +11,13 @@ import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {QueryPin} from "src/js/state/Editor/types"
 import buildPin from "src/js/state/Editor/models/build-pin"
 import {isEqual} from "lodash"
-import submitSearch from "src/app/query-home/flows/submit-search"
 import styles from "../pins.module.css"
 import {showContextMenu} from "src/core/menu/show-context-menu"
 import {popupPosition} from "src/core/menu/popup-position"
 import {MenuItemConstructorOptions} from "electron"
 import {pinMenu} from "src/domain/session/handlers/pins"
 import {call} from "src/util/call"
+import {submitSearch} from "src/domain/session/handlers"
 
 function BaseForm(props: PinProps<QueryPin>) {
   const dispatch = useDispatch()
@@ -25,12 +25,12 @@ function BaseForm(props: PinProps<QueryPin>) {
   function onSubmit(pin: QueryPin) {
     if (isEqual(pin, props.pin)) return
     dispatch(Editor.updatePin(pin))
-    dispatch(submitSearch())
+    submitSearch()
   }
 
   function onDelete() {
     dispatch(Editor.deletePin(props.index))
-    dispatch(submitSearch())
+    submitSearch()
   }
 
   function onReset() {

@@ -2,7 +2,6 @@ import {useSelector} from "react-redux"
 import {startTransition, useEffect, useRef, useState} from "react"
 
 import Tabs from "../../state/Tabs"
-import {newTab} from "src/app/query-home/flows/new-tab"
 import {useDispatch} from "src/app/core/state"
 
 export default function (count: number, calcWidths: Function) {
@@ -24,7 +23,7 @@ export default function (count: number, calcWidths: Function) {
     previewId: useSelector(Tabs.getPreview),
 
     onAddClick() {
-      dispatch(newTab())
+      dispatch(Tabs.createQuerySession())
     },
 
     onRemoveClick(event: MouseEvent, id: string) {

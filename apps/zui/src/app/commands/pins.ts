@@ -4,18 +4,18 @@ import {DateTuple} from "src/js/lib/TimeWindow"
 import Editor from "src/js/state/Editor"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Pools from "src/js/state/Pools"
-import submitSearch from "../query-home/flows/submit-search"
 import {createCommand} from "./command"
 import Current from "src/js/state/Current"
 import PoolSettings from "src/js/state/PoolSettings"
 import Tabs from "src/js/state/Tabs"
+import {submitSearch} from "src/domain/session/handlers"
 
 export const createFromEditor = createCommand(
   "pins.createFromEditor",
   ({dispatch, api}) => {
     if (api.editor.value.trim() === "") return
     dispatch(Editor.pinValue())
-    dispatch(submitSearch())
+    submitSearch()
   }
 )
 
@@ -34,7 +34,7 @@ export const createFrom = createCommand<[value?: string]>(
     if (value.length === 0) {
       dispatch(Editor.editPin(api.editor.pins.length - 1))
     } else {
-      dispatch(submitSearch())
+      submitSearch()
     }
   }
 )
@@ -46,7 +46,7 @@ export const updateFrom = createCommand(
       api.queries.open({pins: [{type: "from", value}], value: ""})
     } else {
       dispatch(Editor.setFrom(value))
-      dispatch(submitSearch())
+      submitSearch()
     }
   }
 )
@@ -107,7 +107,7 @@ export const setTimeRangeFrom = createCommand(
     const from = value.toDate()
     const to = current ? current[1] : defaults[1]
     api.dispatch(Editor.setTimeRange({from, to}))
-    api.dispatch(submitSearch())
+    submitSearch()
   }
 )
 
@@ -120,6 +120,6 @@ export const setTimeRangeTo = createCommand(
     const from = current ? current[0] : defaults[0]
     const to = value.toDate()
     api.dispatch(Editor.setTimeRange({from, to}))
-    api.dispatch(submitSearch())
+    submitSearch()
   }
 )
