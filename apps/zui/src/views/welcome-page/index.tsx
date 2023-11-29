@@ -1,7 +1,6 @@
 import React from "react"
 import {connectToLake} from "src/app/commands/connect-to-lake"
 import {H1} from "src/components/h1"
-import {InputButton} from "src/components/input-button"
 import {Subtitle} from "src/components/subtitle"
 import {Title} from "src/components/title"
 import styled from "styled-components"

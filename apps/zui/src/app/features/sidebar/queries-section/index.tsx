@@ -1,6 +1,5 @@
 import React, {useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {SwitchButton} from "src/app/core/components/switch-button"
 import Appearance from "src/js/state/Appearance"
 import {Content} from "../content"
 import {SearchBar} from "../search-bar"

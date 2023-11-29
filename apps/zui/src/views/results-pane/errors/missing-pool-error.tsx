@@ -10,7 +10,6 @@ import {VirtualList} from "src/js/components/virtual-list"
 import Pools from "src/js/state/Pools"
 import {State} from "src/js/state/types"
 import styled from "styled-components"
-import {Button} from "../../../app/query-home/title-bar/button"
 import {newPool} from "src/domain/pools/handlers"
 
 const BG = styled.div`
@@ -86,7 +85,7 @@ function NoPoolsMessage() {
         }
       </Message>
       <Message>
-        <Button onClick={() => newPool()}>Create Pool</Button>
+        <button onClick={() => newPool()}>Create Pool</button>
       </Message>
     </>
   )
