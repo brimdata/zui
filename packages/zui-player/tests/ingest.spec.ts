@@ -31,7 +31,7 @@ test.describe('Ingest tests', () => {
 
   test.beforeAll(async () => {
     await app.init();
-    await app.createPool([getPath('sample.tsv')]);
+    await app.createPool([getPath('sample.zeektsv')]);
     await app.click('button', 'Query Pool');
   });
 

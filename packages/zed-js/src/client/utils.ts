@@ -36,6 +36,7 @@ export function accept(format: ResponseFormat) {
     csv: 'text/csv',
     json: 'application/json',
     ndjson: 'application/x-ndjson',
+    tsv: 'text/tab-separated-values',
     vng: 'application/x-vng',
     zeek: 'application/x-zeek',
     zjson: 'application/x-zjson',

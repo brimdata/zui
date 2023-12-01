@@ -9,6 +9,7 @@ export function DataFormatOptions() {
       <option value="json">JSON</option>
       <option value="line">Line</option>
       <option value="parquet">Parquet</option>
+      <option value="tsv">TSV</option>
       <option value="vng">VNG</option>
       <option value="zeek">Zeek</option>
       <option value="zjson">ZJSON</option>
