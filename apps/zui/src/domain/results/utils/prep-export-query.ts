@@ -22,6 +22,7 @@ function cutColumns(query: string, api: ZuiApi) {
 }
 
 function maybeFuse(query: string, format: string) {
-  if (format === "csv" || format == "tsv" || format === "arrows") query += " | fuse"
+  if (format === "csv" || format == "tsv" || format === "arrows")
+    query += " | fuse"
   return query
 }
