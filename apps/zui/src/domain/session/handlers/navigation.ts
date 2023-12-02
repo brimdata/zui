@@ -36,7 +36,7 @@ export const toggleHistoryPane = createHandler(
 
 export const showValueDetails = createHandler(
   "session.showValueDetails",
-  ({dispatch}, value: zed.Type) => {
+  ({dispatch}, value: zed.Value) => {
     dispatch(viewLogDetail(value as zed.Record))
     activatePane("detail")
   }

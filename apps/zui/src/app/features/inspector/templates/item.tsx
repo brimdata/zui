@@ -7,11 +7,11 @@ export function clickHandlers(view: View) {
   return {
     onContextMenu: (e: React.MouseEvent) => {
       const fn = ctx.onContextMenu
-      fn && fn(e as any, value, field)
+      fn && fn(e as any, value as any, field)
     },
     onClick: (e: React.MouseEvent) => {
       const fn = ctx.onClick
-      fn && fn(e as any, value, field)
+      fn && fn(e as any, value as any, field)
     },
   }
 }

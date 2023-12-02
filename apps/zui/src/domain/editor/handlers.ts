@@ -61,7 +61,7 @@ export const filterInField = createHandler(
     const value = select(Selection.getValue)
     const field = select(Selection.getField)
     if (value) {
-      dispatch(appendQueryIn(field, value as zed.Type))
+      dispatch(appendQueryIn(field, value as zed.Value))
       submitSearch()
     }
   }

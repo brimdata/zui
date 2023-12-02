@@ -11,7 +11,7 @@ import {invoke} from "src/core/invoke"
 export function useZq(files: string[], format: zed.LoadFormat) {
   const [_, start] = useTransition()
   const [error, setError] = useState("")
-  const [data, setData] = useState<zed.Type[]>([])
+  const [data, setData] = useState<zed.Value[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const display = useResultsDisplay()
   const lastId = useRef(null)
