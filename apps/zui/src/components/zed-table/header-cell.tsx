@@ -53,7 +53,7 @@ export function HeaderCell({header}: {header: Header<any, any>}) {
                 )
               }
             >
-              <Icon name="chevron_down" size={16} />
+              <Icon name="chevron_down" size="16px" />
             </button>
           )}
         </>

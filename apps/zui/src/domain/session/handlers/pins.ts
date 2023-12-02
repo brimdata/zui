@@ -1,84 +1,165 @@
-import {MenuItemConstructorOptions} from "electron"
-import {createHandler} from "src/core/handlers"
-import Current from "src/js/state/Current"
+import * as zed from "@brimdata/zed-js"
+import {DateTuple} from "src/js/lib/TimeWindow"
 import Editor from "src/js/state/Editor"
+import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Pools from "src/js/state/Pools"
-import {submitSearch} from "./submit-search"
+import Current from "src/js/state/Current"
+import PoolSettings from "src/js/state/PoolSettings"
+import Tabs from "src/js/state/Tabs"
+import {submitSearch} from "src/domain/session/handlers"
+import {createHandler} from "src/core/handlers"
+import ZuiApi from "src/js/api/zui-api"
+import Selection from "src/js/state/Selection"
 
-export const choosePoolMenu = createHandler(({select, dispatch}) => {
-  const lakeId = select(Current.getLakeId)
-  const pools = select(Pools.getPools(lakeId)).sort()
-  if (!pools.length) {
-    return [{label: "No Pools", enabled: false}]
-  } else {
-    return pools.map((pool) => ({
-      label: pool.name,
-      click: () => {
-        dispatch(Editor.setFrom(pool.name))
-        submitSearch()
-      },
-    }))
+export const createPinFromEditor = createHandler(
+  "session.createPinFromEditor",
+  ({dispatch, oldApi}) => {
+    if (oldApi.editor.value.trim() === "") return
+    dispatch(Editor.pinValue())
+    submitSearch()
   }
+)
+
+export const createPin = createHandler(
+  "session.createPin",
+  ({dispatch, oldApi}) => {
+    dispatch(Editor.addPin({type: "generic", value: ""}))
+    dispatch(Editor.editPin(oldApi.editor.pins.length - 1))
+  }
+)
+
+export const createFromPin = createHandler(
+  "session.createFromPin",
+  ({dispatch, oldApi}, value = "") => {
+    dispatch(Editor.addPin({type: "from", value}))
+    if (value.length === 0) {
+      dispatch(Editor.editPin(oldApi.editor.pins.length - 1))
+    } else {
+      submitSearch()
+    }
+  }
+)
+
+export const setFromPin = createHandler(
+  "session.setFromPin",
+  ({dispatch, select, oldApi}, value: string) => {
+    if (select(Tabs.none)) {
+      oldApi.queries.open({pins: [{type: "from", value}], value: ""})
+    } else {
+      dispatch(Editor.setFrom(value))
+      submitSearch()
+    }
+  }
+)
+
+function defaultFrom(now: Date) {
+  return new Date(
+    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0)
+  )
+}
+
+function defaultTo(now: Date) {
+  return new Date(
+    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0)
+  )
+}
+
+async function defaultRange(oldApi: ZuiApi): Promise<DateTuple> {
+  const range = await oldApi.dispatch(
+    Pools.getTimeRange(oldApi.current.poolName)
+  )
+  const now = new Date()
+  const from = (range && range[0]) || defaultFrom(now)
+  const to = (range && range[1]) || defaultTo(now)
+  return [from, to]
+}
+
+export const createTimeRangePin = createHandler(
+  "session.createTimeRangePin",
+  async ({dispatch, oldApi, select}) => {
+    const pins = select(Editor.getPins)
+    const [from, to] = await defaultRange(oldApi)
+    const poolId = select(Current.getPoolFromQuery)?.id
+    const {timeField} = select((s) => PoolSettings.findWithDefaults(s, poolId))
+    dispatch(
+      Editor.addPin({
+        type: "time-range",
+        field: timeField,
+        from: from.toISOString(),
+        to: to.toISOString(),
+      })
+    )
+    dispatch(Editor.editPin(pins.length))
+  }
+)
+
+function currentRange(oldApi: ZuiApi) {
+  const pin = oldApi.editor.pins.find(
+    (p) => p.type === "time-range"
+  ) as TimeRangeQueryPin
+  if (pin) return [new Date(pin.from), new Date(pin.to)] as const
+  else return null
+}
+
+export const setTimeRangeFrom = createHandler(
+  "session.setTimeRangeFrom",
+  async ({oldApi, select}) => {
+    const value = select(Selection.getValue)
+    if (!(value instanceof zed.Time)) return
+    const current = currentRange(oldApi)
+    const defaults = await defaultRange(oldApi)
+    const from = value.toDate()
+    const to = current ? current[1] : defaults[1]
+    oldApi.dispatch(Editor.setTimeRange({from, to}))
+    submitSearch()
+  }
+)
+
+export const setTimeRangeTo = createHandler(
+  "session.setTimeRangeTo",
+  async ({oldApi, select}) => {
+    const value = select(Selection.getValue)
+    if (!(value instanceof zed.Time)) return
+    const current = currentRange(oldApi)
+    const defaults = await defaultRange(oldApi)
+    const from = current ? current[0] : defaults[0]
+    const to = value.toDate()
+    oldApi.dispatch(Editor.setTimeRange({from, to}))
+    submitSearch()
+  }
+)
+
+export const disablePin = createHandler(({dispatch}, index: number) => {
+  dispatch(Editor.disablePin(index))
+  submitSearch()
 })
 
-export const pinMenu = createHandler(({select, dispatch}, index) => {
-  const pins = select(Editor.getPins)
-  const pin = pins[index]
-  return [
-    {
-      label: "Disable",
-      enabled: !pin.disabled,
-      click: () => {
-        dispatch(Editor.disablePin(index))
-        submitSearch()
-      },
-    },
-    {
-      label: "Disable Others",
-      enabled: pins.some((p) => !p.disabled),
-      click: () => {
-        dispatch(Editor.disableOtherPins(index))
-        submitSearch()
-      },
-    },
-    {type: "separator"},
-    {
-      label: "Enable",
-      enabled: !!pin.disabled,
-      click: () => {
-        dispatch(Editor.enablePin(index))
-        submitSearch()
-      },
-    },
-    {
-      label: "Enable Others",
-      enabled: pins.some((p) => p.disabled),
-      click: () => {
-        dispatch(Editor.enableOtherPins(index))
-        submitSearch()
-      },
-    },
-    {type: "separator"},
-    {
-      label: "Delete",
-      click: () => {
-        dispatch(Editor.deletePin(index))
-        submitSearch()
-      },
-    },
-    {
-      label: "Delete to the Right",
-      click: () => {
-        dispatch(Editor.deletePinsToTheRight(index))
-        submitSearch()
-      },
-    },
-    {
-      label: "Delete All",
-      click: () => {
-        dispatch(Editor.deleteAllPins())
-        submitSearch()
-      },
-    },
-  ] as MenuItemConstructorOptions[]
+export const disableOthers = createHandler(({dispatch}, index: number) => {
+  dispatch(Editor.disableOtherPins(index))
+  submitSearch()
+})
+
+export const enablePin = createHandler(({dispatch}, index: number) => {
+  dispatch(Editor.enablePin(index))
+  submitSearch()
+})
+
+export const enableOthers = createHandler(({dispatch}, index: number) => {
+  dispatch(Editor.enableOtherPins(index))
+  submitSearch()
+})
+
+export const deletePin = createHandler(({dispatch}, index: number) => {
+  dispatch(Editor.deletePin(index))
+  submitSearch()
+})
+
+export const deleteToTheRight = createHandler(({dispatch}, index: number) => {
+  dispatch(Editor.deletePinsToTheRight(index))
+  submitSearch()
+})
+
+export const deleteAll = createHandler(({dispatch}) => {
+  dispatch(Editor.deleteAllPins())
+  submitSearch()
 })

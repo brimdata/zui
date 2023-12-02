@@ -61,7 +61,7 @@ function JobIcon(props: {status: JobStatus}) {
     case "aborted":
       return (
         <div className={styles.errorIcon}>
-          <Icon name="close" fill="white" size={26} />
+          <Icon name="close" fill="white" />
         </div>
       )
   }

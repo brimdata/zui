@@ -3,9 +3,9 @@ import styles from "./pins.module.css"
 import {useSelector} from "react-redux"
 import Editor from "src/js/state/Editor"
 import {BasePin} from "./pins/base-pin"
-import {choosePoolMenu} from "src/domain/session/handlers/pins"
 import {GenericPinForm} from "./pins/generic-pin-form"
 import TimeRangePinForm from "./pins/time-range-pin-form"
+import {choosePoolMenu} from "src/domain/session/menus/choose-pool-menu"
 
 export function Pins() {
   const pins = useSelector(Editor.getPins)
@@ -24,7 +24,7 @@ function renderPin(pin: QueryPin, index: number) {
           label={pin.value || "Select pool"}
           onMenu={(menu) =>
             menu.unshift(
-              {label: "Switch Pool", submenu: choosePoolMenu()},
+              {label: "Switch Pool", nestedMenu: choosePoolMenu()},
               {type: "separator"}
             )
           }

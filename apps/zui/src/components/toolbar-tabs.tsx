@@ -45,7 +45,7 @@ export function ToolbarTabs(props: {
             data-section-tab-value={opts.label.toLowerCase()}
             disabled={opts.enabled === false}
           >
-            {opts.iconName && <Icon name={opts.iconName} size={14} />}
+            {opts.iconName && <Icon name={opts.iconName} size="14px" />}
             {!props.onlyIcon && (
               <span className={props.labelClassName}>{opts.label}</span>
             )}

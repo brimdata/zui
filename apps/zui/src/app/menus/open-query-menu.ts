@@ -2,7 +2,7 @@ import {MenuItemConstructorOptions} from "electron"
 import {Item} from "src/js/state/Queries/types"
 import {createMenu} from "src/core/menu"
 
-export const openQueryMenu = createMenu("openQueryMenu", ({api}) => {
+export const openQueryMenu = createMenu(({api}) => {
   function createMenuItems(items: Item[]) {
     return items.map((query) => {
       if ("items" in query) {

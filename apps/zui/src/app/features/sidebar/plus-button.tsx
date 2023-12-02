@@ -3,8 +3,7 @@ import styled from "styled-components"
 
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {useZuiApi} from "src/app/core/context"
-import {MenuItemConstructorOptions} from "electron"
-import {showContextMenu} from "src/js/lib/System"
+import {MenuItem, showContextMenu} from "src/core/menu"
 import {useDispatch} from "src/app/core/state"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import Tabs from "src/js/state/Tabs"
@@ -48,7 +47,7 @@ export default function PlusButton() {
   }
 
   const onClick = () => {
-    const template: MenuItemConstructorOptions[] = [
+    const template: MenuItem[] = [
       {
         label: "New Query Session",
         click: () => dispatch(Tabs.createQuerySession()),

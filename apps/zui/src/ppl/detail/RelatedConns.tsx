@@ -7,7 +7,7 @@ import {
   SecurityEventInterface,
 } from "src/ppl/detail/models/security-event"
 import React, {memo, useCallback, useMemo} from "react"
-import {showContextMenu} from "src/js/lib/System"
+import {showContextMenu} from "src/core/menu"
 import EventLimit from "./EventLimit"
 import EventTimeline from "./EventTimeline"
 import firstLast from "./util/firstLast"

@@ -14,7 +14,7 @@ import {TREE_ITEM_HEIGHT} from "src/app/features/sidebar/item"
 function Node(props: NodeRendererProps<TableColumn>) {
   const {node} = props
   const column = node.data
-  const menu = columnListItemMenu.build(column)
+  const menu = columnListItemMenu(column)
 
   return (
     <ListItem

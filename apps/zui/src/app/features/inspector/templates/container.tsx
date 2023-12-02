@@ -76,9 +76,9 @@ export function name(view: ContainerView) {
 
 export function icon(view: ContainerView) {
   if (view.isExpanded()) {
-    return <Icon name="chevron_down" key="arrow" size={16} />
+    return <Icon name="chevron_down" key="arrow" size={"16px"} />
   } else {
-    return <Icon name="chevron_right" key="arrow" size={16} />
+    return <Icon name="chevron_right" key="arrow" size={"16px"} />
   }
 }
 

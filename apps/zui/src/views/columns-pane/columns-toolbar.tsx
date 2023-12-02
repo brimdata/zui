@@ -12,10 +12,10 @@ export function ColumnsToolbar() {
 
   if (!shape) return null
 
-  const menu = columnsToolbarMenu.build()
+  const items = columnsToolbarMenu()
   return (
     <Toolbar>
-      <ButtonMenu items={menu.items} label={menu.label} />
+      <ButtonMenu items={items} label={"Columns Toolbar Menu"} />
       <p style={{whiteSpace: "nowrap"}}>
         {columnCount} Columns / {hiddenCount} Hidden
       </p>

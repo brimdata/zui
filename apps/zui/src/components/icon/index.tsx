@@ -6,22 +6,27 @@ import classNames from "classnames"
 type Props = {
   name: Name
   className?: string
-  size?: number
+  size?: string
   fill?: string
   stroke?: string
 }
 
-const style: "line" | "fill" = "line"
+const iconStyle: "line" | "fill" = "line"
 
 export function Icon(props: Props) {
   const customName = customIconNames[props.name]
   const name = iconNames[props.name]
   const path = customName
     ? `/custom-icons.svg#${customName}`
-    : `/icons.svg#${name}_${style}`
+    : `/icons.svg#${name}_${iconStyle}`
+  const style = props.size ? {width: props.size, height: props.size} : undefined
 
   return (
-    <svg className={classNames("icon", styles.icon)} fill={"currentColor"}>
+    <svg
+      className={classNames("icon", styles.icon)}
+      fill={"currentColor"}
+      style={style}
+    >
       <use href={path}></use>
     </svg>
   )

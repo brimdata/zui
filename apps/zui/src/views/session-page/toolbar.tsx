@@ -8,23 +8,29 @@ import {
 } from "src/domain/session/handlers/navigation"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
-import {newPinMenu} from "src/app/menus/new-pin-menu"
-import {
-  editQuery,
-  resetQuery,
-  runQuery,
-  saveAsNewQuery,
-  updateQuery,
-} from "src/domain/session/handlers"
+import {editQuery, updateQuery} from "src/domain/session/handlers"
 import Layout from "src/js/state/Layout"
 import classNames from "classnames"
 import {useTitleForm} from "./use-title-form"
 import useSelect from "src/app/core/hooks/use-select"
-import {showExportDialog} from "src/domain/results/handlers"
-import {showHistoryPane} from "src/app/commands/show-history-pane"
+import {ButtonMenu} from "src/components/button-menu"
+import {useMenuExtension} from "src/core/menu"
+import {createSelector} from "reselect"
+import {sessionToolbarMenu} from "src/domain/session/menus/toolbar-menu"
+import {useMemo} from "react"
+
+const getWhenContext = createSelector(Layout.getResultsView, (resultsView) => {
+  return {
+    "results.view": resultsView.toLowerCase(),
+  }
+})
 
 export function Toolbar() {
+  const context = useSelector(getWhenContext)
   const query = useSelector(Current.getActiveQuery)
+  const defaultItems = useMemo(() => sessionToolbarMenu(query), [query])
+  const items = useMenuExtension("results.toolbarMenu", defaultItems, context)
+
   return (
     <div className={styles.toolbar}>
       <div className={styles.left}>
@@ -45,17 +51,7 @@ export function Toolbar() {
         <QueryTitle />
       </div>
       <div className={styles.right}>
-        <nav>
-          {query.isSaved() && (
-            <IconButton iconName="close" iconSize={20} click={resetQuery} />
-          )}
-
-          <IconButton iconName="plus" click={saveAsNewQuery} />
-          <IconButton iconName="history" click={() => showHistoryPane.run()} />
-          <IconButton iconName="export" click={showExportDialog} />
-          <IconButton iconName="pin" buildMenu={() => newPinMenu.build()} />
-          <IconButton iconName="run" click={runQuery} />
-        </nav>
+        <ButtonMenu items={items} label={"Results Toolbar Menu"} />
       </div>
     </div>
   )

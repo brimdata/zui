@@ -96,7 +96,7 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
                 <li key={i} className={styles.fileItem}>
                   <Icon
                     name="doc_plain"
-                    size={16}
+                    size={"16px"}
                     fill="var(--primary-color)"
                   />
                   <span title={f} className={styles.fileName}>

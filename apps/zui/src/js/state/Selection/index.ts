@@ -1,7 +1,8 @@
+import {reducer, actions} from "./reducer"
 import * as selectors from "./selectors"
-import {slice} from "./slice"
 
 export default {
-  ...slice.actions,
+  reducer,
+  ...actions,
   ...selectors,
 }

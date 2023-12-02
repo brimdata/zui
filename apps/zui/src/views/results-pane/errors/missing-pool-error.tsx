@@ -1,6 +1,5 @@
 import React from "react"
 import {useSelector} from "react-redux"
-import {createFrom} from "src/app/commands/pins"
 import {Icon} from "src/components/icon"
 import {Pool} from "src/app/core/pools/pool"
 import {Item} from "src/app/features/sidebar/item"
@@ -11,6 +10,7 @@ import Pools from "src/js/state/Pools"
 import {State} from "src/js/state/types"
 import styled from "styled-components"
 import {newPool} from "src/domain/pools/handlers"
+import {setFromPin} from "src/domain/session/handlers"
 
 const BG = styled.div`
   width: 100%;
@@ -66,7 +66,7 @@ function PoolsList({pools}: {pools: Pool[]}) {
               text={props.item.name}
               style={props.style}
               icon={<Icon name="pool" />}
-              onClick={() => createFrom.run(props.item.name)}
+              onClick={() => setFromPin(props.item.name)}
               aria={props.aria}
             />
           )

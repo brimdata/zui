@@ -53,7 +53,7 @@ export function InputButton(
       })}
       {...(buttonProps as any)}
     >
-      {icon && <Icon name={icon} size={iconSize ?? 16} />}
+      {icon && <Icon name={icon} size={(iconSize ?? 16) + "px"} />}
       {children}
     </Button>
   )

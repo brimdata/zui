@@ -12,7 +12,7 @@ type Args = {
   parent?: ZedColumn
 }
 
-const helper = createColumnHelper<zed.Value>()
+const helper = createColumnHelper<zed.Type>()
 
 export class ZedColumn {
   children: null | ZedColumn[]
@@ -66,7 +66,7 @@ export class ZedColumn {
 
   get leafDef() {
     return helper.accessor(
-      (row: zed.Any) => {
+      (row: zed.Type) => {
         if (row instanceof zed.Record) return row.fieldAt(this.args.indexPath)
         else {
           return row

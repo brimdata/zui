@@ -1,10 +1,10 @@
 import {IconName} from "src/components/icon"
-import ZuiApi from "src/js/api/zui-api"
-import {Menu} from "./menu"
-import {BoundCommand} from "src/app/commands/command"
 import {MenuItemConstructorOptions} from "electron"
+import {HandlerName} from "src/domain/messages"
 
 export type MenuItem = {
+  role?: string
+  type?: string
   id?: string
   display?: "icon" | "icon-label"
   label?: string
@@ -13,10 +13,9 @@ export type MenuItem = {
   visible?: boolean
   iconName?: IconName
   iconSize?: number
-  // Moving away from the bound command pattern
-  command?: string | BoundCommand<any, any>
+  command?: HandlerName
   args?: any[]
-  nestedMenu?: Menu
+  nestedMenu?: MenuItem[]
   checked?: boolean
   htmlAttrs?: any
   when?: string
@@ -24,16 +23,4 @@ export type MenuItem = {
   priority?: number
   accelerator?: MenuItemConstructorOptions["accelerator"]
   click?: () => void
-}
-
-export type MenuContext = {api: ZuiApi}
-
-export type MenuBuilder<Args extends any[]> = (
-  ctx: MenuContext,
-  ...args: Args
-) => MenuItem[]
-
-export type MenuInfo = {
-  id: string
-  label?: string
 }

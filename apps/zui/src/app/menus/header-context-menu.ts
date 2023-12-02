@@ -21,7 +21,6 @@ function getWhenContext(api: ZuiApi, column: ZedColumn) {
 }
 
 export const headerContextMenu = createMenu(
-  "headerContextMenu",
   (ctx, api: TableViewApi, column: ZedColumn) => {
     const when = getWhenContext(ctx.api, column)
     const dispatch = ctx.api.dispatch

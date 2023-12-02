@@ -1,4 +1,4 @@
-import {MenusHandlers} from "./menus/messages"
+import {MenusHandlers, MenusOperations} from "./menus/messages"
 import {PanesHandlers} from "./panes/messages"
 import {PoolsHandlers, PoolsOperations} from "./pools/messages"
 import {ResultsHandlers, ResultsOperations} from "./results/messages"
@@ -8,6 +8,8 @@ import {LegacyOperations} from "./legacy-ops/messages"
 import {E2EOperations} from "./e2e/messages"
 import {EnvOperations} from "./env/messages"
 import {LoadsHandlers, LoadsOperations} from "./loads/messages"
+import {CommandsOperations} from "./commands/messages"
+import {EditorHandlers} from "./editor/messages"
 
 export type Handlers = ResultsHandlers &
   MenusHandlers &
@@ -15,7 +17,8 @@ export type Handlers = ResultsHandlers &
   WindowHandlers &
   SessionHandlers &
   LoadsHandlers &
-  PoolsHandlers
+  PoolsHandlers &
+  EditorHandlers
 
 export type Operations = PoolsOperations &
   LegacyOperations &
@@ -23,7 +26,9 @@ export type Operations = PoolsOperations &
   ResultsOperations &
   EnvOperations &
   LoadsOperations &
-  WindowOperations
+  WindowOperations &
+  MenusOperations &
+  CommandsOperations
 
 export type OperationName = keyof Operations
 export type HandlerName = keyof Handlers

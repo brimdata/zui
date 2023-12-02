@@ -15,9 +15,10 @@ import styles from "../pins.module.css"
 import {showContextMenu} from "src/core/menu/show-context-menu"
 import {popupPosition} from "src/core/menu/popup-position"
 import {MenuItemConstructorOptions} from "electron"
-import {pinMenu} from "src/domain/session/handlers/pins"
 import {call} from "src/util/call"
 import {submitSearch} from "src/domain/session/handlers"
+import {editPinMenu} from "src/domain/session/menus/edit-pin.menu"
+import {MenuItem} from "src/core/menu"
 
 function BaseForm(props: PinProps<QueryPin>) {
   const dispatch = useDispatch()
@@ -54,7 +55,7 @@ export type PinProps<T extends QueryPin> = {
   label: ReactNode
   pin: QueryPin
   prefix?: string
-  onMenu?: (menu: MenuItemConstructorOptions[]) => void
+  onMenu?: (items: MenuItem[]) => void
   form?: React.FC<PinFormProps<T>>
 }
 
@@ -90,7 +91,7 @@ export const BasePin = React.forwardRef(function BasePin(
   )
 
   function onClick() {
-    const menu = pinMenu(props.index)
+    const menu = editPinMenu(props.index)
     if (props.form) {
       menu.unshift(
         {

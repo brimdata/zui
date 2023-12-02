@@ -5,10 +5,9 @@ import React, {
   MutableRefObject,
   forwardRef,
 } from "react"
-import {BoundCommand} from "src/app/commands/command"
 import {Icon} from "src/components/icon"
-import {invoke} from "src/core/invoke"
-import {BuiltMenu, MenuItem} from "src/core/menu"
+import {MenuItem} from "src/core/menu"
+import {handleClick} from "src/core/menu/handle-click"
 import styled from "styled-components"
 
 const BG = styled.button`
@@ -52,21 +51,16 @@ export const IconButton = forwardRef(function IconButton(
   props: MenuItem & {
     className?: string
     onClick?: MouseEventHandler<HTMLButtonElement>
-    buildMenu?: () => BuiltMenu
+    buildMenu?: () => MenuItem[]
   },
   ref: MutableRefObject<HTMLButtonElement>
 ) {
+  // I think this needs to move into some core place
   function onClick(e: MouseEvent<HTMLButtonElement>) {
     if (props.onClick) {
       props.onClick && props.onClick(e)
-    } else if (typeof props.command === "string") {
-      invoke("invokeCommandOp", props.command, props.args)
-    } else if (props.command instanceof BoundCommand) {
-      props.command.run()
-    } else if (props.click) {
-      props.click()
-    } else if (props.buildMenu) {
-      props.buildMenu().showUnder(e.currentTarget)
+    } else {
+      handleClick(props, e.currentTarget)
     }
   }
 
@@ -80,7 +74,8 @@ export const IconButton = forwardRef(function IconButton(
       aria-label={props.label}
       type="button"
     >
-      <Icon name={props.iconName} size={props.iconSize ?? 16} />
+      <Icon name={props.iconName} />
+      {props?.nestedMenu?.length && <Icon name="chevron_down" size="0.9rem" />}
       {props.display === "icon-label" ? props.label : null}
     </BG>
   )

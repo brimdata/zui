@@ -19,7 +19,7 @@ export function Content(props: EnvAboutApp) {
   return (
     <div className="about-window">
       <div className="about-logo">
-        <Icon name="zui" fill="var(--orange)" size={64} />
+        <Icon name="zui" fill="var(--orange)" size="64px" />
       </div>
       <TextContent>
         <div className="about-content">

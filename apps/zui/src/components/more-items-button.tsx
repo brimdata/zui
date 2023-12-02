@@ -1,5 +1,5 @@
 import React, {forwardRef} from "react"
-import {BuiltMenu, MenuItem} from "src/core/menu"
+import {MenuItem, showMenu} from "src/core/menu"
 import {IconButton} from "./icon-button"
 
 export const MoreItemsButton = forwardRef<any, {items: MenuItem[]}>(
@@ -9,11 +9,7 @@ export const MoreItemsButton = forwardRef<any, {items: MenuItem[]}>(
         ref={ref}
         iconName="double_chevron_right"
         iconSize={10}
-        onClick={(e) => {
-          new BuiltMenu({id: "more-items"}, props.items).showUnder(
-            e.currentTarget
-          )
-        }}
+        onClick={(e) => showMenu(props.items, e.currentTarget)}
       />
     )
   }

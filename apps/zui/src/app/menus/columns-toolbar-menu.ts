@@ -1,7 +1,7 @@
 import {createMenu, MenuItem} from "src/core/menu"
 import {hideAllColumns, showAllColumns} from "src/domain/results/handlers"
 
-export const columnsToolbarMenu = createMenu("columnsToolbarMenu", () => {
+export const columnsToolbarMenu = createMenu(() => {
   return [
     {
       label: "Show All",

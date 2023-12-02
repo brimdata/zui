@@ -7,11 +7,13 @@ import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import Table from "src/js/state/Table"
 import Inspector from "src/js/state/Inspector"
 import {createHandler} from "src/core/handlers"
+import Selection from "src/js/state/Selection"
 
 export const submitSearch = createHandler((ctx) => {
   const {dispatch, select, oldApi} = ctx
   const api = oldApi
 
+  dispatch(Selection.reset())
   dispatch(Table.setScrollPosition({top: 0, left: 0}))
   dispatch(Inspector.setScrollPosition({top: 0, left: 0}))
 

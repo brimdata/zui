@@ -11,6 +11,8 @@ import useSelect from "src/app/core/hooks/use-select"
 import {ListViewApi} from "src/zui-kit"
 import {PathView} from "./path-view"
 import {AlertView} from "./alert-view"
+import {showMenu} from "src/core/menu"
+import Selection from "src/js/state/Selection"
 
 export function Inspector(props: {height?: number}) {
   const {values, shapes, width, height, loadMore, key} = useResultsPaneContext()
@@ -59,14 +61,18 @@ export function Inspector(props: {height?: number}) {
       }}
       valueProps={{
         onClick: (e, value, field) => {
+          const rootValue = field.rootRecord
+          dispatch(Selection.set({value, field, rootValue}))
           if (field && field instanceof zed.Field) {
             dispatch(viewLogDetail(field.rootRecord))
           }
         },
         onContextMenu: (e, value, field) => {
           e.preventDefault()
+          const rootValue = field.rootRecord
+          dispatch(Selection.set({value, field, rootValue}))
           if (field && field instanceof zed.Field) {
-            valueContextMenu.build(value, field, field.rootRecord).show()
+            showMenu(valueContextMenu(value, field, field.rootRecord))
           }
         },
       }}

@@ -12,7 +12,6 @@ import {CurrentApi} from "./current/current-api"
 import {EditorApi} from "./editor/editor-api"
 import {NoticeApi} from "./notice/notice-api"
 import {UrlApi} from "./url/url-api"
-import {LayoutApi} from "./layout-api"
 import {TableViewApi} from "src/zui-kit"
 import {LakeModel} from "../models/lake"
 
@@ -36,7 +35,6 @@ export default class ZuiApi {
   public dispatch: AppDispatch
   public getState: GetState
   public notice: NoticeApi
-  public layout: LayoutApi
 
   init(d: AppDispatch, gs: GetState) {
     this.dispatch = d
@@ -49,7 +47,6 @@ export default class ZuiApi {
     this.editor = new EditorApi(d, gs)
     this.notice = new NoticeApi(this)
     this.url = new UrlApi(this)
-    this.layout = new LayoutApi(this)
   }
 
   getZealot(lake?: LakeModel) {

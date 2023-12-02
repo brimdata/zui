@@ -12,6 +12,8 @@ import {useScrollPosition} from "./table-controller"
 import {AlertView} from "./alert-view"
 import {BareStringView} from "./bare-string-view"
 import {PathView} from "./path-view"
+import {showMenu} from "src/core/menu"
+import Selection from "src/js/state/Selection"
 
 // 1. Don't forget to save the shape using zed.typeunder
 
@@ -60,18 +62,23 @@ export function Table() {
       }}
       headerCellProps={{
         onContextMenu: (e, column) => {
-          headerContextMenu
-            .build(table, column)
-            .showUnder(e.currentTarget as HTMLElement)
+          showMenu(
+            headerContextMenu(table, column),
+            e.currentTarget as HTMLElement
+          )
         },
       }}
       cellProps={{
         onContextMenu: (e, value, field, cell) => {
           e.preventDefault()
-          valueContextMenu.build(value, field, cell.value).show()
+          const rootValue = field.rootRecord
+          dispatch(Selection.set({value, field, rootValue}))
+          valueContextMenu(value, field, cell.value)
         },
-        onClick: (e, _value, field) => {
+        onClick: (e, value, field) => {
           e.preventDefault()
+          const rootValue = field.rootRecord
+          dispatch(Selection.set({value, field, rootValue}))
           dispatch(viewLogDetail(field.rootRecord))
         },
         onDoubleClick: (e, _value, field) => {

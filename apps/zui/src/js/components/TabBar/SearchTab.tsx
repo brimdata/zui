@@ -43,7 +43,7 @@ const SearchTab = React.forwardRef<HTMLAnchorElement, Props>(function SearchTab(
       className={classNames("tab", {active, "is-new": isNew, preview})}
     >
       <div className="tab-content">
-        <Icon className="icon" name={icon || "zui"} size={13} />
+        <Icon className="icon" name={icon || "zui"} size="13px" />
         <p className="title">{title}</p>
         <CloseButton onClick={(e) => removeTab(e)} className="no-drag">
           <Icon name="close" className="no-drag" />

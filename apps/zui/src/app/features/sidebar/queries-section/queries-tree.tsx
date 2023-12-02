@@ -18,6 +18,7 @@ import {selectQuery} from "src/app/events/select-query-event"
 import Appearance from "src/js/state/Appearance"
 import {Empty} from "./empty"
 import {TREE_ITEM_HEIGHT} from "../item"
+import {showMenu} from "src/core/menu"
 
 type Props = {
   source: "local" | "remote"
@@ -127,7 +128,7 @@ function QueryTree(props: {
               }}
               onContextMenu={() => {
                 if (tree.current) {
-                  queryTreeContextMenu.build(tree.current).show()
+                  showMenu(queryTreeContextMenu(tree.current))
                 }
               }}
             >

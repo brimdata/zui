@@ -2,8 +2,8 @@ import classNames from "classnames"
 import React from "react"
 import {ReactNode} from "react-markdown"
 import {Icon, IconName} from "src/components/icon"
-import {BuiltMenu} from "src/core/menu"
 import {IconButton} from "./icon-button"
+import {MenuItem} from "src/core/menu"
 
 export function ListItem(props: {
   className?: string
@@ -19,7 +19,7 @@ export function ListItem(props: {
   isSelected?: boolean
   isDragging?: boolean
   isOverFolder?: boolean
-  menu?: BuiltMenu
+  menu?: MenuItem[]
 }) {
   const indentation = 16
   let left = (props.indent ?? 0) * indentation
@@ -51,12 +51,12 @@ export function ListItem(props: {
           <Icon
             className="list-item__icon"
             name={props.iconName}
-            size={props.iconSize ?? 14}
+            size={(props.iconSize ?? 14) + "px"}
           />
         )}
         <div className="list-item__content">{props.children}</div>
         <menu className="list-item__menu">
-          {props.menu.items.map((item, i) => {
+          {props.menu.map((item, i) => {
             if (!item.visible) return null
             return (
               <IconButton key={i} className="list-item__menu-item" {...item} />

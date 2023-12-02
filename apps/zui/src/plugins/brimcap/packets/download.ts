@@ -4,7 +4,7 @@ import {createCli} from "../cli"
 import os from "os"
 import {window, env, commands} from "src/zui"
 import {queryForConnLog} from "./query-conn-log"
-import {DOWNLOAD, DownloadArgs} from "./types"
+import {DOWNLOAD} from "./types"
 
 function getSearchArgsFromConn(conn: zed.Record) {
   const dur = conn.try("duration") as zed.Duration
@@ -45,7 +45,7 @@ export async function downloadPackets(root: string, pool: string, uid: string) {
 }
 
 export function activateDownloadPacketsCommand(packetsDir: string) {
-  commands.create<DownloadArgs>(DOWNLOAD, (pool: string, uid: string) =>
+  commands.create(DOWNLOAD, (pool: string, uid: string) =>
     downloadPackets(packetsDir, pool, uid)
   )
 }
