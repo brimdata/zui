@@ -39,11 +39,7 @@ test.describe('Export tests', () => {
         dialog.showSaveDialog = () =>
           Promise.resolve({ canceled: false, filePath });
       }, file);
-
-      const menu = app.mainWin.getByRole('list', {
-        name: 'results.toolbarMenu',
-      });
-      await menu.getByRole('button', { name: 'Export' }).click();
+      app.click('button', 'Export Results');
       const dialog = app.mainWin.getByRole('dialog');
       await dialog.getByRole('radio', { name: `${label}` }).click();
       await dialog.getByRole('button').filter({ hasText: 'Export' }).click();

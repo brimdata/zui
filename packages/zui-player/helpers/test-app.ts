@@ -97,7 +97,7 @@ export default class TestApp {
 
   async query(zed: string): Promise<void> {
     await this.setEditor(zed);
-    await this.mainWin.getByRole('button', { name: 'run' }).click();
+    await this.mainWin.getByRole('button', { name: 'Run Query' }).click();
     await this.mainWin.getByRole('status', { name: 'fetching' }).isHidden();
   }
 
