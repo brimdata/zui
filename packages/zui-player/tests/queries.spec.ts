@@ -7,7 +7,7 @@ test.describe('Query tests', () => {
 
   test.beforeAll(async () => {
     await app.init();
-    await app.createPool([getPath('sample.tsv')]);
+    await app.createPool([getPath('sample.zeektsv')]);
     await app.click('button', 'Query Pool');
   });
 
@@ -26,9 +26,9 @@ test.describe('Query tests', () => {
       nodes.map((n) => n.innerText.trim().replaceAll(/\s+/g, ' '))
     );
     const expected = [
-      "from 'sample.tsv' | 3 now",
-      "from 'sample.tsv' | 2 now",
-      "from 'sample.tsv' | 1 now",
+      "from 'sample.zeektsv' | 3 now",
+      "from 'sample.zeektsv' | 2 now",
+      "from 'sample.zeektsv' | 1 now",
     ];
     expect(entries).toEqual(expected);
   });

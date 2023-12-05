@@ -76,6 +76,10 @@ const ExportModal = ({onClose}) => {
               <label htmlFor="ndjson">NDJSON</label>
             </div>
             <div className={forms.radioInput}>
+              <input type="radio" id="tsv" value="tsv" name="format" />
+              <label htmlFor="tsv">TSV</label>
+            </div>
+            <div className={forms.radioInput}>
               <input type="radio" id="vng" value="vng" name="format" />
               <label htmlFor="vng">VNG</label>
             </div>
