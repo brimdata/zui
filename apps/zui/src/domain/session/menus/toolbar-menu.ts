@@ -6,19 +6,16 @@ export const sessionToolbarMenu = createMenu((_, query: ActiveQuery) => {
     {
       label: "Reset Query Session",
       command: "session.resetQuery",
-      iconName: "close",
+      iconName: "close_circle",
       visible: query.isSaved(),
     },
+
     {
       label: "Save as New Query",
       command: "session.saveAsNewQuery",
-      iconName: "plus",
+      iconName: "add",
     },
-    {
-      label: "Toggle History Pane",
-      iconName: "history",
-      command: "session.toggleHistoryPane",
-    },
+
     {
       label: "Export Results",
       iconName: "export",
@@ -46,6 +43,12 @@ export const sessionToolbarMenu = createMenu((_, query: ActiveQuery) => {
           command: "session.createPinFromEditor",
         },
       ],
+    },
+    {
+      label: "Clear Query",
+      // command: "session.resetQuery",
+      iconName: "reset",
+      visible: query.isSaved(),
     },
     {
       label: "Run Query",

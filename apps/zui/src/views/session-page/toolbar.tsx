@@ -37,12 +37,14 @@ export function Toolbar() {
         <nav>
           <IconButton
             iconName="left_arrow"
+            label="Go Back"
             iconSize={24}
             click={() => goBack()}
             enabled={canGoBack()}
           />
           <IconButton
             iconName="right_arrow"
+            label="Go Right"
             iconSize={24}
             click={goForward}
             enabled={canGoForward()}
@@ -83,19 +85,31 @@ function QueryTitle() {
   if (!isEditing) {
     return (
       <>
-        <h1
-          onClick={editQuery}
-          className={classNames({[styles.modified]: query.isModified()})}
-        >
-          {query.isSaved() ? (
-            query.name()
-          ) : (
-            <span className={styles.untitled}>Untitled</span>
-          )}
-          {query.isModified() && "*"}
-        </h1>
+        <IconButton
+          iconName="three_dots_stacked"
+          click={updateQuery}
+          label="Update Query"
+        />
+        <button className={styles.button}>
+          <h1
+            onClick={editQuery}
+            className={classNames({[styles.modified]: query.isModified()})}
+          >
+            {query.isSaved() ? (
+              query.name()
+            ) : (
+              <span className={styles.untitled}>Untitled</span>
+            )}
+            {query.isModified() && "*"}
+          </h1>
+        </button>
+
         {query.isModified() && (
-          <IconButton iconName="check" click={updateQuery} />
+          <IconButton
+            iconName="check"
+            click={updateQuery}
+            label="Update Query"
+          />
         )}
       </>
     )
@@ -106,7 +120,11 @@ function QueryTitle() {
         onBlur={onBlur}
         onKeyUp={onKeyUp}
       >
+        <label htmlFor="query-name" style={{display: "none"}}>
+          Query Name
+        </label>
         <input
+          id="query-name"
           name="query-name"
           placeholder="Name your query..."
           autoFocus

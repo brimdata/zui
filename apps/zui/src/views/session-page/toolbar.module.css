@@ -81,3 +81,11 @@
     padding: 0 0.5rem;
     color: var(--fg-color-less);
 }
+
+.button {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: text
+}

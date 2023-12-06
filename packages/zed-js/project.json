@@ -7,10 +7,10 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "outputPath": "dist/packages/zed-js",
         "commands": []
       },
-      "dependsOn": ["build-node", "build-browser"]
+      "dependsOn": ["build-node", "build-browser"],
+      "outputs": ["{workspaceRoot}/dist/packages/zed-js"]
     },
     "build-node": {
       "executor": "@nrwl/js:tsc",
