@@ -14,7 +14,7 @@
   "scripts": {
     "start": "node scripts/start",
     "start:main": "yarn build:main --watch",
-    "start:renderer": "next dev",
+    "start:renderer": "next dev -p 4567",
     "start:electron": "nodemon --watch dist ../../node_modules/electron/cli.js .",
     "watch-code": "run-p start:main start:renderer",
     "build": "run-p -l 'build:**'",
