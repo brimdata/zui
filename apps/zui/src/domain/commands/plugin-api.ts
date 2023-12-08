@@ -18,4 +18,8 @@ export class Commands {
     }
     return this.get(name)
   }
+
+  _teardown() {
+    this.cmds = new Map()
+  }
 }
