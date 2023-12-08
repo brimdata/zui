@@ -10,6 +10,7 @@ import {showPreferencesOp} from "../../ops/show-preferences-op"
 import {showReleaseNotesOp} from "../../ops/show-release-notes-op"
 import {SearchWindow} from "./search-window"
 import {sendToFocusedWindow} from "src/core/ipc"
+import {open as openUpdateWindow} from "src/domain/updates/operations"
 
 export const defaultAppMenuState = () => ({
   showRightPane: true,
@@ -54,9 +55,9 @@ export function compileTemplate(
     click: () => window.send("closeTab"),
   }
 
-  const preferences: MenuItemConstructorOptions = {
+  const settings: MenuItemConstructorOptions = {
     id: "preferences",
-    label: env.isMac ? "Preferences..." : "Settings",
+    label: "Settings...",
     click: () => showPreferencesOp(),
   }
 
@@ -70,18 +71,25 @@ export function compileTemplate(
     click: () => window.send("showExportResults"),
   }
 
+  const checkForUpdates: MenuItemConstructorOptions = {
+    id: "check-for-updates",
+    label: "Check For Updates...",
+    click: () => openUpdateWindow(),
+  }
+
   const openFile: MenuItemConstructorOptions = {
     label: "Open Data File...",
     click: () => sendToFocusedWindow("loads.chooseFiles"),
     accelerator: "CmdOrCtrl+O",
   }
 
-  const brimMenu: MenuItemConstructorOptions = {
+  const appNameMenu: MenuItemConstructorOptions = {
     label: app.getName(),
     submenu: [
       aboutApp,
+      checkForUpdates,
       __,
-      preferences,
+      settings,
       {role: "services", submenu: []},
       __,
       {role: "hide"},
@@ -102,7 +110,7 @@ export function compileTemplate(
         openFile,
         exportResults,
         __,
-        preferences,
+        settings,
         __,
         closeTab,
         closeWindow,
@@ -227,27 +235,29 @@ export function compileTemplate(
   function helpSubmenu() {
     const submenu: MenuItemConstructorOptions[] = [
       {
-        label: "Release Notes",
-        click() {
-          showReleaseNotesOp()
-        },
+        label: "Welcome",
+        click: () => sendToFocusedWindow("window.showWelcomePage"),
       },
       {
-        label: "Zui Docs",
+        label: "Zui Documentation",
         click() {
           shell.openExternal(links.ZUI_DOCS_ROOT)
         },
       },
       {
-        label: "Zed Syntax Docs",
+        label: "Zed Language Documentation",
         click() {
           shell.openExternal(links.ZED_DOCS_LANGUAGE)
         },
       },
+
       {
-        label: "Show Welcome Page",
-        click: () => sendToFocusedWindow("window.showWelcomePage"),
+        label: "Show Release Notes",
+        click() {
+          showReleaseNotesOp()
+        },
       },
+      __,
       {
         label: "Slack Support Channel",
         click() {
@@ -261,7 +271,7 @@ export function compileTemplate(
         },
       },
       {
-        label: "Submit Issue...",
+        label: "Report Issue",
         click() {
           shell.openExternal(
             "https://zui.brimdata.io/docs/support/Troubleshooting#opening-an-issue"
@@ -271,7 +281,7 @@ export function compileTemplate(
     ]
 
     if (!mac) {
-      submenu.push(__, aboutApp)
+      submenu.push(__, checkForUpdates, __, aboutApp)
     }
     return submenu
   }
@@ -284,7 +294,7 @@ export function compileTemplate(
     {role: "window", submenu: windowSubmenu()},
     {role: "help", submenu: helpSubmenu()},
   ]
-  if (mac) template.unshift(brimMenu)
+  if (mac) template.unshift(appNameMenu)
   return template
 }
 

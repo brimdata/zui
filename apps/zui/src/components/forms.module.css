@@ -84,6 +84,7 @@
     color: white;
     font-weight: 500;
     min-width: 80px;
+    user-select: none;
 }
 
 .form .submit:hover:not(:disabled) {
@@ -109,6 +110,7 @@
     box-shadow: 0 3px 4px -4px var(--bg-color-less);
     font-weight: 500;
     min-width: 80px;
+    user-select: none;
 }
 
 .form .button:hover:not(:disabled) {

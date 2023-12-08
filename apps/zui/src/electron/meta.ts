@@ -9,6 +9,7 @@ export async function getAppMeta() {
     version: app.getVersion(),
     isFirstRun: await isFirstRun(),
     userName: os.userInfo().username,
+    name: pkg.name,
   }
 }
 

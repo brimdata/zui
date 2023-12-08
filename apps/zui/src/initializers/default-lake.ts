@@ -1,4 +1,4 @@
-import {MainObject} from "../../core/main/main-object"
+import {MainObject} from "../core/main/main-object"
 import Lakes from "src/js/state/Lakes"
 
 /**

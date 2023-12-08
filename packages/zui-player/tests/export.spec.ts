@@ -11,7 +11,8 @@ const formats = [
   { label: 'CSV', expectedSize: 10851 },
   { label: 'JSON', expectedSize: 13659 },
   { label: 'NDJSON', expectedSize: 13657 },
-  { label: 'VNG', expectedSize: 8029 },
+  { label: 'TSV', expectedSize: 10797 },
+  { label: 'VNG', expectedSize: 8053 },
   { label: 'Zeek', expectedSize: 10138 },
   { label: 'ZJSON', expectedSize: 18007 },
   { label: 'ZNG', expectedSize: 3745 },
@@ -23,7 +24,7 @@ test.describe('Export tests', () => {
 
   test.beforeAll(async () => {
     await app.init();
-    await app.createPool([getPath('sample.tsv')]);
+    await app.createPool([getPath('sample.zeektsv')]);
     await app.click('button', 'Query Pool');
     await app.query('sort ts, _path');
   });

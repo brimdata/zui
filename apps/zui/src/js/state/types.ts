@@ -20,6 +20,7 @@ import {SessionHistoriesState} from "./SessionHistories/types"
 import {PoolSettingsState} from "./PoolSettings/types"
 import {WindowState} from "./Window/types"
 import {LoadDataFormState} from "./LoadDataForm/types"
+import {UpdatesState} from "./Updates/types"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -54,4 +55,5 @@ export type State = {
   tabHistories: TabHistoriesState
   toolbars: ToolbarsState
   window: WindowState
+  updates: UpdatesState
 }

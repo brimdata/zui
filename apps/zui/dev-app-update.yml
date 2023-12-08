@@ -1,0 +1,4 @@
+owner: brimdata
+repo: zui
+provider: github
+updaterCacheDirName: zui-dev-updater

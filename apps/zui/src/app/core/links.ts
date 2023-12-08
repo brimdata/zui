@@ -1,7 +1,9 @@
 import pkg from "../../../package.json"
 
 const currentZedTag = pkg.devDependencies.zed.split("#")[1] || "main"
-const zedDocsTag = currentZedTag.startsWith("v") ? currentZedTag : "next"
+const zedDocsTag = currentZedTag.startsWith("v")
+  ? currentZedTag.replace(/\.\d+$/, ".0")
+  : "next"
 
 export default {
   ZED_DOCS_ROOT: `https://zed.brimdata.io/docs/${zedDocsTag}/commands/zed`,

@@ -1,7 +1,7 @@
 {
   "appId": "io.brimdata.zui",
   "asar": true,
-  "asarUnpack": ["zdeps", "LICENSE.txt", "acknowledgments.txt"],
+  "asarUnpack": ["zdeps", "LICENSE.txt", "acknowledgments.txt", "**/*.node"],
   "directories": {"output": "../../dist/apps/zui"},
   "protocols": [{"name": "zui", "schemes": ["zui"]}],
   "mac": {

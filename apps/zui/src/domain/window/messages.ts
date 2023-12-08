@@ -1,4 +1,4 @@
-import {showOpenDialog, sync} from "./operations"
+import * as ops from "./operations"
 import * as handlers from "./handlers"
 
 export type WindowHandlers = {
@@ -11,6 +11,7 @@ export type WindowHandlers = {
 }
 
 export type WindowOperations = {
-  "window.sync": typeof sync
-  "window.showOpenDialog": typeof showOpenDialog
+  "window.sync": typeof ops.sync
+  "window.showOpenDialog": typeof ops.showOpenDialog
+  "window.close": typeof ops.close
 }

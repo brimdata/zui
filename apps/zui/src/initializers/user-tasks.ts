@@ -1,4 +1,4 @@
-import electronIsDev from "../isDev"
+import electronIsDev from "../electron/isDev"
 import path from "path"
 import {app} from "electron"
 

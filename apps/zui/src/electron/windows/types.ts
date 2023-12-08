@@ -16,7 +16,7 @@ export type SerializedWindow = {
   state: any
 }
 
-export type WindowName = "search" | "about" | "detail" | "hidden"
+export type WindowName = "search" | "about" | "detail" | "hidden" | "update"
 
 export type WindowsState = {
   [key: string]: ZuiWindow

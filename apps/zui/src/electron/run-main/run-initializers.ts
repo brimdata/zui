@@ -1,6 +1,6 @@
 import log from "electron-log"
 import {MainObject} from "../../core/main/main-object"
-import * as initializers from "../initializers"
+import * as initializers from "../../initializers"
 
 export async function runInitializers(main: MainObject) {
   for (const name in initializers) {

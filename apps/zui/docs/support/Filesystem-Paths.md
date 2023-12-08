@@ -69,7 +69,7 @@ categories of interest include:
      that it launches for data storage and query.
 
    * `appState.json` (file) - Persistent app settings such as changes you've
-     made to **Preferences**, contents of the **Query Library**, entries
+     made to **Settings**, contents of the **Query Library**, entries
      in the **History** panel, and so forth.
 
 Generally you should not need to directly access the saved user data, though

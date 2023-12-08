@@ -120,8 +120,6 @@ export class MainObject {
     return this.store.dispatch as AppDispatch
   }
 
-  select
-
   getPath(name: PathName) {
     return getPath(name)
   }
