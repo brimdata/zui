@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React from "react"
+import React, {useMemo} from "react"
 import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
 import {IconButton} from "./icon-button"
@@ -32,7 +32,11 @@ export function ButtonMenu(props: {
   items: MenuItem[]
   justify?: "flex-start" | "flex-end" | "center"
 }) {
-  const menu = useResponsiveMenu(props.items)
+  const items = useMemo(
+    () => props.items.filter((i) => i.visible !== false),
+    [props.items]
+  )
+  const menu = useResponsiveMenu(items)
 
   const buttons = menu.items.map((item: MenuItem, i: number) => {
     return (

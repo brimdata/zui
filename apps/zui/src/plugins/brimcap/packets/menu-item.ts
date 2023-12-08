@@ -13,7 +13,6 @@ const packetsMenuItem: MenuItem = {
   description: "Download Packets",
   command: DOWNLOAD as any,
   enabled: false,
-  priority: 1,
 }
 
 async function onSelectionChange({row}) {
@@ -38,6 +37,9 @@ async function onSelectionChange({row}) {
 export function activatePacketsMenuItem() {
   session.on("result-selection-change", onSelectionChange)
   menus.extend(MENU_NAME, (menu: MenuItem[]) => {
-    menu.unshift(packetsMenuItem)
+    const index = menu.findIndex((item) => item.id == "export-results")
+    menu.splice(index, 0, packetsMenuItem)
+    console.log(index, menu)
+    return menu
   })
 }

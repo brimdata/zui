@@ -2,35 +2,35 @@
     height: 38px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 0 10px;
     gap: 6px;
     min-inline-size: 0;
+    overflow: hidden;
+}
+
+.toolbar> :nth-child(1) {
+    flex: 0 0 auto
+}
+
+.toolbar>:nth-child(2) {
+    flex: 1 0 0;
+}
+
+.toolbar>:nth-child(3) {
+    flex: 0 1 auto;
+    width: auto;
+    min-width: 32px;
+}
+
+.nav {
+    display: inline-flex;
 }
 
 .toolbar h1 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.left,
-.right {
-    display: flex;
-    align-items: center;
-}
-
-.toolbar nav {
-    display: flex;
-}
-
-.right nav {
-    gap: 6px;
-}
-
-.left {
-    flex: 1;
-    gap: 6px;
 }
 
 .toolbar h1 {
@@ -55,7 +55,6 @@
     background: var(--emphasis-bg);
     outline: none;
     padding: 0 6px;
-    max-width: 400px;
 }
 
 .input:focus-visible {
@@ -87,5 +86,9 @@
     margin: 0;
     background: none;
     border: none;
-    cursor: text
+    cursor: text;
+    text-align: left;
+    flex: 1;
+    overflow: hidden;
+    min-inline-size: 5ch;
 }

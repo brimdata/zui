@@ -8,7 +8,7 @@ import {
 } from "src/domain/session/handlers/navigation"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
-import {editQuery, updateQuery} from "src/domain/session/handlers"
+import {editQuery} from "src/domain/session/handlers"
 import Layout from "src/js/state/Layout"
 import classNames from "classnames"
 import {useTitleForm} from "./use-title-form"
@@ -33,28 +33,24 @@ export function Toolbar() {
 
   return (
     <div className={styles.toolbar}>
-      <div className={styles.left}>
-        <nav>
-          <IconButton
-            iconName="left_arrow"
-            label="Go Back"
-            iconSize={24}
-            click={() => goBack()}
-            enabled={canGoBack()}
-          />
-          <IconButton
-            iconName="right_arrow"
-            label="Go Right"
-            iconSize={24}
-            click={goForward}
-            enabled={canGoForward()}
-          />
-        </nav>
-        <QueryTitle />
-      </div>
-      <div className={styles.right}>
-        <ButtonMenu items={items} label={"Results Toolbar Menu"} />
-      </div>
+      <nav className={styles.nav}>
+        <IconButton
+          iconName="left_arrow"
+          label="Go Back"
+          iconSize={24}
+          click={() => goBack()}
+          enabled={canGoBack()}
+        />
+        <IconButton
+          iconName="right_arrow"
+          label="Go Right"
+          iconSize={24}
+          click={goForward}
+          enabled={canGoForward()}
+        />
+      </nav>
+      <QueryTitle />
+      <ButtonMenu items={items} label={"Results Toolbar Menu"} />
     </div>
   )
 }
@@ -85,11 +81,6 @@ function QueryTitle() {
   if (!isEditing) {
     return (
       <>
-        <IconButton
-          iconName="three_dots_stacked"
-          click={updateQuery}
-          label="Update Query"
-        />
         <button className={styles.button}>
           <h1
             onClick={editQuery}
@@ -103,14 +94,6 @@ function QueryTitle() {
             {query.isModified() && "*"}
           </h1>
         </button>
-
-        {query.isModified() && (
-          <IconButton
-            iconName="check"
-            click={updateQuery}
-            label="Update Query"
-          />
-        )}
       </>
     )
   } else {
