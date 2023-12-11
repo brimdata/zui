@@ -39,7 +39,6 @@ export function activatePacketsMenuItem() {
   menus.extend(MENU_NAME, (menu: MenuItem[]) => {
     const index = menu.findIndex((item) => item.id == "export-results")
     menu.splice(index, 0, packetsMenuItem)
-    console.log(index, menu)
     return menu
   })
 }

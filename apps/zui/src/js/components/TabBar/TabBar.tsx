@@ -30,6 +30,7 @@ const BG = styled.div`
   align-items: center;
   height: 100%;
   grid-area: tabs;
+  gap: 10px;
   -webkit-app-region: drag;
 `
 
@@ -72,13 +73,16 @@ export default function TabBar() {
   useEffect(() => calcWidth(), [rect.width])
   const sidebarCollapsed = !useSelector(Appearance.sidebarIsOpen)
   const rightbarCollapse = !useSelector(Appearance.secondarySidebarIsOpen)
+  const paddingInlineEnd = rightbarCollapse ? 20 : 10
+  const paddingInlineStart = sidebarCollapsed ? 20 : 0
   return (
-    <BG style={{paddingRight: rightbarCollapse ? 20 : 10}}>
+    <BG style={{paddingInlineStart, paddingInlineEnd}}>
       {sidebarCollapsed && global.env.isMac && (
         <TrafficLightBG>
           <SidebarToggleButton />
         </TrafficLightBG>
       )}
+      {sidebarCollapsed && !global.env.isMac && <SidebarToggleButton />}
       <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
         {ids.map((id: string) => {
           const tabModel = tab(id, lakes, pools, queryIdNameMap, lakeId)
