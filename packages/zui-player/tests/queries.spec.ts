@@ -34,7 +34,6 @@ test.describe('Query tests', () => {
   });
 
   test("named queries' creation, modification, update/save, proper outdated status display", async () => {
-    const titleBar = app.mainWin.getByTestId('title-bar');
     // creation
     await app.click('button', 'Save as New Query');
     await app.fill('Query Name', 'Test Query Name');
@@ -55,6 +54,6 @@ test.describe('Query tests', () => {
     await app.click('button', 'Save as New Query');
     await app.fill('Query Name', 'Another Test Query');
     await app.press('Enter');
-    await app.attached('treeitem', 'Another Query Name');
+    await app.attached('treeitem', 'Another Test Query');
   });
 });
