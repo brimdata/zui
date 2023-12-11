@@ -11,7 +11,7 @@ export class SearchWindow extends ZuiWindow {
   options: BrowserWindowConstructorOptions = {
     titleBarStyle: env.isMac ? "hidden" : undefined,
     vibrancy: "sidebar",
-    backgroundColor: env.isMac ? undefined : "hsl(212, 8%, 85%)",
+    backgroundColor: env.isMac ? undefined : "#F3F3F3",
     trafficLightPosition: {x: 16, y: 13},
     resizable: true,
     minWidth: 480,
