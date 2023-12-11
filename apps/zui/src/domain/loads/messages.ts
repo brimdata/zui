@@ -21,8 +21,10 @@ export type LoadsOperations = {
   "loads.getFileTypes": typeof ops.getFileTypes
   "loads.abortPreview": typeof ops.abortPreview
   "loads.abort": typeof ops.abort
+  "loads.paste": typeof ops.paste
 }
 
 export type LoadsHandlers = {
   "loads.chooseFiles": typeof handlers.chooseFiles
+  "loads.previewLoadFiles": typeof handlers.previewLoadFiles
 }

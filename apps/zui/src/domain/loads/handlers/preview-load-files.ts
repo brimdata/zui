@@ -5,6 +5,7 @@ import Pools from "src/js/state/Pools"
 import {quickLoadFiles} from "./quick-load-files"
 
 export const previewLoadFiles = createHandler(
+  "loads.previewLoadFiles",
   async (
     {dispatch, invoke, select},
     opts: {files: string[]; poolId?: string}
