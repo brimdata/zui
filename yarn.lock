@@ -15657,23 +15657,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-arborist@npm:3.0.2":
-  version: 3.0.2
-  resolution: "react-arborist@npm:3.0.2"
+"react-arborist@npm:next":
+  version: 3.3.1-0
+  resolution: "react-arborist@npm:3.3.1-0"
   dependencies:
     react-dnd: ^14.0.3
-    react-dnd-html5-backend: ^14.0.1
-    react-window: ^1.8.6
-    redux: ^4.1.1
+    react-dnd-html5-backend: ^14.0.3
+    react-window: ^1.8.10
+    redux: ^5.0.0
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: 8fa035db59f3d6adcbf06e0d140cb5a483edb5f55d9db2f2a13e691acb7ba0a45a89d7c24953756b9f2c263d629dbdf1ed1c5d0a116de5587f6abf0c12ecbc3a
+  checksum: 9e9165088f87bc6231d8d20b0b800fea06984df929c59224ff83a04cadb887c88a9cf407982a9e7724ea12ad1f8601afe5b4586e9a8b7f9a1e63870bd906f5ce
   languageName: node
   linkType: hard
 
-"react-dnd-html5-backend@npm:^14.0.1, react-dnd-html5-backend@npm:^14.0.2":
+"react-dnd-html5-backend@npm:^14.0.2, react-dnd-html5-backend@npm:^14.0.3":
   version: 14.1.0
   resolution: "react-dnd-html5-backend@npm:14.1.0"
   dependencies:
@@ -15900,7 +15900,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-window@npm:^1.8.6, react-window@npm:^1.8.7":
+"react-window@npm:^1.8.10":
+  version: 1.8.10
+  resolution: "react-window@npm:1.8.10"
+  dependencies:
+    "@babel/runtime": ^7.0.0
+    memoize-one: ">=3.1.1 <6"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: e8830f32e3ad4bf91af9cdc5cead84148c7694ce6abd9fdb447fb609da6cd4bbd0bbc75ff985f78828f4bbbd3ba4cbc98235cc9c056b5e5787578518f7fafbb9
+  languageName: node
+  linkType: hard
+
+"react-window@npm:^1.8.7":
   version: 1.8.7
   resolution: "react-window@npm:1.8.7"
   dependencies:
@@ -16086,6 +16099,13 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.9.2
   checksum: f63b9060c3a1d930ae775252bb6e579b42415aee7a23c4114e21a0b4ba7ec12f0ec76936c00f546893f06e139819f0e2855e0d55ebfce34ca9c026241a6950dd
+  languageName: node
+  linkType: hard
+
+"redux@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "redux@npm:5.0.0"
+  checksum: be49160d4bd01e10108c425ade999f1b456204895c4bdd0c7825ab09efffded51955c5c242847406a7b3f273e9011a9c102848c512a099a75617b97b13d2cca8
   languageName: node
   linkType: hard
 
@@ -19235,7 +19255,7 @@ __metadata:
     polished: ^3.6.5
     prettier: ^2.6.2
     react: ^18.0.0
-    react-arborist: 3.0.2
+    react-arborist: next
     react-dnd: ^14.0.5
     react-dnd-html5-backend: ^14.0.2
     react-dom: ^18.0.0
