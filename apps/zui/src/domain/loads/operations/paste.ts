@@ -10,5 +10,5 @@ export const paste = createOperation("loads.paste", () => {
   const file = path.join(os.tmpdir(), "clipboard.txt")
   writeFileSync(file, data)
   sendToFocusedWindow("loads.previewLoadFiles", {files: [file]})
-  return path
+  return file
 })
