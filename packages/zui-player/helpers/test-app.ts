@@ -194,7 +194,7 @@ export default class TestApp {
     return await this.page.evaluate(
       ({ name, args }) => {
         // @ts-ignore
-        window.zui.invoke(name, ...args);
+        return window.zui.invoke(name, ...args);
       },
       { name, args }
     );

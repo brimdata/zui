@@ -1,14 +1,38 @@
 import { play } from 'zui-player';
+import * as fs from 'fs-extra';
 
 play('Copy Paste Data', (app, test) => {
-  test('copy data from the clipboard', async () => {
-    app.debugLogs();
+  test('paste cleans up after itself', async () => {
+    await app.evalMain(({ clipboard }) => clipboard.writeText('{a: 1}'));
+    const file = await app.invoke('loads.paste');
+    test.expect(fs.existsSync(file)).toBe(true);
+    await app.click('button', 'Load');
+    await app.attached(/Successfully loaded/);
+    await app.click('button', 'Query Pool');
+    test.expect(fs.existsSync(file)).toBe(false);
+  });
+
+  test('pasting data loads into pool', async () => {
     await app.evalMain(({ clipboard }) => clipboard.writeText('{a: 1}'));
     await app.invoke('loads.paste');
     await app.click('button', 'Load');
     await app.click('button', 'Query Pool');
     const results = await app.getViewerResults();
     test.expect(results).toEqual(['a', '1']);
-    app.sleep(10);
+  });
+
+  test('pasting multiple times', async () => {
+    await app.evalMain(({ clipboard }) => clipboard.writeText('{a: 1}'));
+    await app.invoke('loads.paste');
+    await app.evalMain(({ clipboard }) => clipboard.writeText('{b: 2}'));
+    await app.invoke('loads.paste');
+    await app.evalMain(({ clipboard }) => clipboard.writeText('{c: 3}'));
+    await app.invoke('loads.paste');
+
+    await app.attached('listitem', 'paste');
+    await app.attached('listitem', 'paste_1');
+    await app.attached('listitem', 'paste_2');
+    await app.click('button', 'Load');
+    await app.attached(/Successfully loaded into jkerr_pastes/);
   });
 });
