@@ -1,4 +1,5 @@
 import * as path from "path"
+import {getUniqName} from "src/util/get-uniq-name"
 
 export function deriveName(files: string[], existingNames: string[]) {
   let name: string
@@ -21,14 +22,4 @@ function inSameDir(paths: string[]) {
     if (dirName !== path.dirname(p)) return false
   }
   return true
-}
-
-function join(name: string, num: number) {
-  return num === 0 ? name : [name, num.toString()].join("_")
-}
-
-function getUniqName(proposal: string, existing: string[]) {
-  let i = 0
-  while (existing.includes(join(proposal, i))) i++
-  return join(proposal, i)
 }

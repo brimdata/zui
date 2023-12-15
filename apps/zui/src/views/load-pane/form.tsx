@@ -18,7 +18,11 @@ import {LoadFormat} from "@brimdata/zed-js"
 import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
 
-export function Form(props: {onClose: () => any; isValid: boolean}) {
+export function Form(props: {
+  onClose: () => any
+  onCancel: () => any
+  isValid: boolean
+}) {
   const dispatch = useDispatch()
   const select = useSelect()
   const pools = useSelector(Current.getPools)
@@ -37,7 +41,6 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
   const [error, setError] = useState(null)
 
   const onSubmit = async (data) => {
-    console.log("on submit")
     const shaper = select(LoadDataForm.getShaper)
     // @ts-ignore
     const windowId = window.windowId
@@ -218,7 +221,10 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
         <div className={classNames(styles.submission)}>
           <button
             type="button"
-            onClick={props.onClose}
+            onClick={() => {
+              props.onCancel()
+              props.onClose()
+            }}
             className={forms.button}
           >
             Cancel

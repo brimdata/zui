@@ -8,6 +8,7 @@ import {omit} from "lodash"
 export type DialogProps = {
   isOpen: boolean
   onClose: () => void
+  onCancel: () => void
   modal?: boolean
   onOutsideClick?: (e: globalThis.MouseEvent) => void
   onClick?: MouseEventHandler<HTMLDialogElement>
@@ -44,11 +45,17 @@ export function Dialog(props: DialogProps) {
     props.onClose()
   }
 
+  function onCancel(e) {
+    e.preventDefault()
+    props.onCancel()
+    props.onClose()
+  }
+
   return (
     <dialog
       // @ts-ignore
       onClose={onClose}
-      onCancel={onClose}
+      onCancel={onCancel}
       ref={setNode}
       style={style}
       {...omit(props, ...nonHTMLProps)}

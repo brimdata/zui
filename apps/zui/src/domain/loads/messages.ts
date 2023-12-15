@@ -22,6 +22,7 @@ export type LoadsOperations = {
   "loads.abortPreview": typeof ops.abortPreview
   "loads.abort": typeof ops.abort
   "loads.paste": typeof ops.paste
+  "loads.cancel": typeof ops.cancel
 }
 
 export type LoadsHandlers = {

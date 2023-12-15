@@ -5,7 +5,6 @@ import {useSelector} from "react-redux"
 import styles from "./index.module.css"
 import * as _ from "lodash"
 import LoadDataForm from "src/js/state/LoadDataForm"
-import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import {useDispatch} from "src/app/core/state"
 import {useCallback, useEffect, useRef} from "react"
 import {ResultsControl, useResultsControl} from "./results"
@@ -19,6 +18,7 @@ import {Dialog} from "src/components/dialog/dialog"
 import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
 import {call} from "src/util/call"
+import {invoke} from "src/core/invoke"
 
 export function LoadPane() {
   const dispatch = useDispatch()
@@ -55,14 +55,9 @@ function Main(props: {
 
 function Grid(props: {children: any}) {
   const gridStyle = useSelector(LoadDataForm.getGridStyle)
-  const dispatch = useDispatch()
-  const [_props, ref] = useFilesDrop({
-    onDrop: (files: File[]) =>
-      dispatch(LoadDataForm.addFiles(files.map((f) => f.path))),
-  })
 
   return (
-    <div className={styles.grid} ref={ref} style={gridStyle}>
+    <div className={styles.grid} style={gridStyle}>
       {props.children}
     </div>
   )
@@ -85,6 +80,13 @@ function Pane(props: {onClose: any}) {
     abortSubmit.current = abort
   }, [files, format])
 
+  const onCancel = () => {
+    const files = select(LoadDataForm.getFiles)
+    const poolId = select(LoadDataForm.getPoolId)
+    invoke("loads.cancel", poolId, files)
+    debut.exit()
+  }
+
   useEffect(() => onSubmit(), [files, format])
   useEffect(() => cancelSubmit, [files, format])
   useEffect(() => {
@@ -96,7 +98,8 @@ function Pane(props: {onClose: any}) {
     <Debut {...debut.props} classNames="modal">
       <Dialog
         aria-label="preview-load"
-        onClose={() => debut.exit()}
+        onClose={debut.exit}
+        onCancel={onCancel}
         dialogPoint="center center"
         isOpen={true}
         className={modal.modal}
@@ -106,6 +109,7 @@ function Pane(props: {onClose: any}) {
           <Main original={original} preview={preview} onSubmit={onSubmit} />
           <Sidebar
             onClose={debut.exit}
+            onCancel={onCancel}
             isValid={!original.error && !preview.error}
           />
         </Grid>

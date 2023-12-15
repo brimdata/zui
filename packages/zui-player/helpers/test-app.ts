@@ -146,8 +146,8 @@ export default class TestApp {
     return wins[winTitles.findIndex((wTitle) => wTitle === title)];
   }
 
-  sleep(s: number) {
-    return new Promise((resolve) => setTimeout(resolve, s * 1000));
+  sleep(sec: number) {
+    return new Promise((resolve) => setTimeout(resolve, sec * 1000));
   }
 
   get results() {
@@ -209,8 +209,8 @@ export default class TestApp {
   }
 
   debugLogs() {
-    this.zui.process().stdout.on('data', console.log);
-    this.zui.process().stderr.on('data', console.log);
+    this.zui.process().stdout.on('data', (d) => console.log(d.toString()));
+    this.zui.process().stderr.on('data', (d) => console.log(d.toString()));
   }
 }
 

@@ -3,8 +3,16 @@ import {LoadContext} from "./load-context"
 import {Loader} from "src/core/loader/types"
 import Loads from "src/js/state/Loads"
 import {select} from "src/core/main/select"
+import {TypedEmitter} from "src/util/typed-emitter"
+import {LoadReference} from "src/js/state/Loads/types"
 
-export class LoadsApi {
+type Events = {
+  success: (load: LoadReference) => void
+  abort: (load: LoadReference) => void
+  error: (load: LoadReference) => void
+}
+
+export class LoadsApi extends TypedEmitter<Events> {
   private list: LoaderApi[] = []
 
   // Don't use this...or rename to addLoader
