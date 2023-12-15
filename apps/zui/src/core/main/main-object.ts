@@ -28,6 +28,7 @@ import {PathName, getPath} from "../../js/api/core/get-path"
 import createLake from "src/js/models/lake"
 import {getAuthToken} from "../../js/api/core/get-zealot"
 import {Abortables} from "src/app/core/models/abortables"
+import * as zui from "src/zui"
 
 export class MainObject {
   public isQuitting = false
@@ -92,6 +93,7 @@ export class MainObject {
 
   onBeforeQuit() {
     if (this.isQuitting) return
+    zui.app.emit("quit")
     this.saveSession()
     this.isQuitting = true
   }

@@ -24,5 +24,4 @@ function removeFiles(loadFiles: string[]) {
 zui.loads.on("error", (load) => removeFiles(load.files))
 zui.loads.on("abort", (load) => removeFiles(load.files))
 zui.loads.on("success", (load) => removeFiles(load.files))
-
-// TODO zui.app.on("quit", () => pastes.destroy())
+zui.app.on("quit", () => pastes.destroy())
