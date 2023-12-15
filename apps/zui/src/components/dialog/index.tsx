@@ -1,14 +1,15 @@
 import {HTMLAttributes, MouseEventHandler} from "react"
-import {usePosition} from "./use-position"
 import {useOpener} from "./use-opener"
 import {useOutsideClick} from "./use-outside-click"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {omit} from "lodash"
+import {call} from "src/util/call"
+import {useFixedPosition} from "src/util/hooks/use-fixed-position"
 
 export type DialogProps = {
   isOpen: boolean
-  onClose: () => void
-  onCancel: () => void
+  onClose?: () => void
+  onCancel?: () => void
   modal?: boolean
   onOutsideClick?: (e: globalThis.MouseEvent) => void
   onClick?: MouseEventHandler<HTMLDialogElement>
@@ -35,20 +36,26 @@ const nonHTMLProps: (keyof DialogProps)[] = [
 
 export function Dialog(props: DialogProps) {
   const [node, setNode] = useCallbackRef<HTMLDialogElement>()
-  const style = usePosition(node, props)
-
-  useOpener(node, props)
+  useOpener(node, props) // Make sure we open it before positioning it
   useOutsideClick(node, props)
+  const style = useFixedPosition({
+    anchor: props.anchor,
+    anchorPoint: props.anchorPoint,
+    target: node && props.isOpen ? node : null,
+    targetPoint: props.dialogPoint,
+    targetMargin: props.dialogMargin,
+    keepOnScreen: props.keepOnScreen,
+  })
 
   function onClose(e) {
     e.preventDefault()
-    props.onClose()
+    call(props.onClose)
   }
 
   function onCancel(e) {
     e.preventDefault()
-    props.onCancel()
-    props.onClose()
+    call(props.onCancel)
+    call(props.onClose)
   }
 
   return (

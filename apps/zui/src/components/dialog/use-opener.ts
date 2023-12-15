@@ -1,5 +1,5 @@
 import {useLayoutEffect} from "react"
-import {DialogProps} from "./dialog"
+import {DialogProps} from "."
 
 export function useOpener(dialog: HTMLDialogElement, props: DialogProps) {
   useLayoutEffect(() => {
