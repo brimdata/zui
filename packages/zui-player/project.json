@@ -16,7 +16,6 @@
     },
     "test": {
       "executor": "@nxkit/playwright:test",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "outputPath": "dist/packages/zui-player/test-results",
         "playwrightConfig": "packages/zui-player/playwright.config.js",
