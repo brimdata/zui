@@ -31,11 +31,14 @@
   --fg-color: #0f1e2e;
   --fg-color-less: hsl(210, 4%, 40%);
   --bg-color: white;
+  --window-color: hsl(212, 8%, 85%);
+
 
   @media (prefers-color-scheme: dark) {
     --fg-color: white;
     --fg-color-less: rgba(255, 255, 255, 0.7);
     --bg-color: hsl(44deg 8% 10%);
+    --window-color: #303231;
   }
 }
 

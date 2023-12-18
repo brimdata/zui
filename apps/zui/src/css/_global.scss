@@ -20,6 +20,10 @@ body {
   font-family: var(--body-font);
   color: var(--fg-color);
   font-size: 14px;
+
+  &:not(.is-mac) {
+    background-color: var(--window-color);
+  }
 }
 
 input,
