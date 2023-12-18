@@ -12,8 +12,19 @@
   width: 260px;
   border: none;
   border-radius: 8px;
-  box-shadow: var(--shadow-elevation-medium);
-  background: white;
+  box-shadow: 0 20px 50px 10px rgb(0 0 0 /0.25);
+  background: var(--bg-color);
+  color: var(--fg-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dialog::backdrop {
+    opacity: 0.8;
+  }
+
+  .dialog {
+    border: 1px solid var(--border-color);
+  }
 }
 
 .tooltip {
