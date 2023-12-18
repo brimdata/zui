@@ -24,7 +24,7 @@ export function Icon(props: Props) {
   return (
     <svg
       className={classNames("icon", styles.icon)}
-      fill={"currentColor"}
+      fill={props.fill || "currentColor"}
       style={style}
     >
       <use href={path}></use>
