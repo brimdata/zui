@@ -26,8 +26,6 @@ export function fixedPositioner(props: {
   const [targetX, targetY] = parsePoint(targetPoint)
   const margin = parseMargin(targetMargin)
 
-  console.log({a: anchorRect, t: targetRect})
-
   /* 1. Start with the anchor's top left position */
   let left = anchorRect.left
   let top = anchorRect.top

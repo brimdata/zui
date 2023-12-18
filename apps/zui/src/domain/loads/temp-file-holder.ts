@@ -1,4 +1,3 @@
-import os from "os"
 import path from "path"
 import * as fs from "fs-extra"
 import {getUniqName} from "src/util/get-uniq-name"
@@ -7,8 +6,7 @@ export class TempFileHolder {
   dir: string
 
   constructor(namespace: string) {
-    this.dir = path.join(os.tmpdir(), namespace)
-    fs.ensureDirSync(this.dir)
+    this.dir = fs.mkdtempSync(namespace)
   }
 
   createFile(prefix: string, data: string) {
