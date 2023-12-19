@@ -7,9 +7,9 @@ const BG = styled.div`
   align-items: center;
   border: none;
   border-radius: 5px;
-  border: 1px solid var(--border-color);
-  padding: 2px 12px;
+  padding: 5px 12px;
   width: 100%;
+  background: var(--emphasis-bg);
 
   svg {
     width: 16px;

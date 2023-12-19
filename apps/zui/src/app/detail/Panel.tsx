@@ -10,7 +10,7 @@ type Props = {
 
 const BG = styled.div`
   background: var(--bg-color);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--emphasis-bg-less);
   border-radius: 8px;
   padding: 0.5rem 1rem;
 `

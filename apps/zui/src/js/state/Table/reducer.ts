@@ -7,6 +7,7 @@ import * as zed from "@brimdata/zed-js"
 import {TableSettingsState} from "./types"
 import {ColumnSizingInfoState} from "@tanstack/react-table"
 import {actions as results} from "../Results/reducer"
+import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 
 const table = createSlice({
   name: "TAB_TABLE",
@@ -27,9 +28,11 @@ const table = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(results.setShapes, (state, action) => {
-      const shapes = Object.values(action.payload.shapes)
-      state.shape =
-        shapes.length === 1 ? (zed.typeunder(shapes[0]) as zed.Type) : null
+      if (action.payload.id == RESULTS_QUERY) {
+        const shapes = Object.values(action.payload.shapes)
+        state.shape =
+          shapes.length === 1 ? (zed.typeunder(shapes[0]) as zed.Type) : null
+      }
     })
     builder.addMatcher(
       (action) => action.type.startsWith(settings.name),
