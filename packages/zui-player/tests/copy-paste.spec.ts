@@ -33,6 +33,7 @@ play('Copy Paste Data', (app, test) => {
     await app.attached('listitem', 'paste_1');
     await app.attached('listitem', 'paste_2');
     await app.click('button', 'Load');
+    await app.click('button', 'Query Pool');
     await app.attached(/Successfully loaded into .*_pastes/);
   });
 });
