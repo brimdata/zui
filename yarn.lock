@@ -8908,26 +8908,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< Updated upstream
 "electron@npm:^28.0.0":
   version: 28.0.0
   resolution: "electron@npm:28.0.0"
-=======
-"electron@npm:23.0.0":
-  version: 23.0.0
-  resolution: "electron@npm:23.0.0"
->>>>>>> Stashed changes
   dependencies:
     "@electron/get": ^2.0.0
     "@types/node": ^18.11.18
     extract-zip: ^2.0.1
   bin:
     electron: cli.js
-<<<<<<< Updated upstream
   checksum: 5e0da4f3a8b6746cc597b20453cec89a346c9b64b6d3e3dbc7ba015c1e7d1dcaf43c2fc7c3115fc57f68853724049a6b21e40a82becb49df2d8207cbf6cbc3ea
-=======
-  checksum: 3452f034a9804b5041bd3bb57707f49b782a1bc3deebd3a75290afff04313c223a56abd6177c8b2b847a7c636f30191a77772172841caa9f2b6c26bc2182951f
->>>>>>> Stashed changes
   languageName: node
   linkType: hard
 
@@ -19228,11 +19218,7 @@ __metadata:
     d3: ^6.7.0
     date-fns: ^2.16.1
     decompress: ^4.2.1
-<<<<<<< Updated upstream
     electron: ^28.0.0
-=======
-    electron: 23.0.0
->>>>>>> Stashed changes
     electron-builder: ^23.6.0
     electron-builder-notarize: ^1.2.0
     electron-devtools-assembler: ^1.2.0
