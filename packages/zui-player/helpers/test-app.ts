@@ -186,7 +186,7 @@ export default class TestApp {
     if (role instanceof RegExp) {
       return this.mainWin.getByText(role);
     } else {
-      return this.mainWin.getByRole(role, { name });
+      return this.mainWin.getByRole(role, { name, exact: true });
     }
   }
 
