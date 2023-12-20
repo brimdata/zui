@@ -1,27 +1,22 @@
 import styles from "./data-dropzone.module.css"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 import usePoolId from "src/app/router/hooks/use-pool-id"
-import {previewLoadFiles, quickLoadFiles} from "src/domain/loads/handlers"
 import useListener from "src/js/components/hooks/useListener"
 import {useEffect, useState} from "react"
+import {Dialog} from "src/components/dialog"
+import LoadDataForm from "src/js/state/LoadDataForm"
+import {useSelector} from "react-redux"
+import {DataDropzoneController} from "./data-dropzone-controller"
 
 export function DataDropzone({children}) {
   const poolId = usePoolId()
   const [shiftKey, setShiftKey] = useState(false)
-  const onDrop = async (webFiles: File[]) => {
-    const files = webFiles.map((f) => f.path)
-    if (shiftKey) {
-      quickLoadFiles({files})
-    } else {
-      previewLoadFiles({files, poolId})
-    }
-  }
-
-  let [props, ref] = useFilesDrop({onDrop})
+  const previewing = useSelector(LoadDataForm.getShow)
+  const dropzone = new DataDropzoneController(shiftKey, previewing, poolId)
+  let [props, ref] = useFilesDrop({onDrop: (files) => dropzone.onDrop(files)})
 
   useListener(document.body, "dragover", (e: KeyboardEvent) => {
-    if (!props.isOver) return
-    setShiftKey(e.shiftKey)
+    if (props.isOver) setShiftKey(e.shiftKey)
   })
 
   useEffect(() => {
@@ -32,49 +27,18 @@ export function DataDropzone({children}) {
     <div className={styles.dropzone} ref={ref}>
       {children}
       {props.isOver && (
-        <div className={styles.overlay}>
-          <div className={styles.hair}>
-            <div />
-            <div />
-          </div>
-          <div className={styles.hair}>
-            <div />
-            <div />
-          </div>
-          <div className={styles.hair}>
-            <div />
-            <div />
-          </div>
-          <div className={styles.hair}>
-            <div />
-            <div />
-          </div>
+        <Dialog modal isOpen className={styles.overlay}>
+          {[1, 2, 3, 4].map((i) => (
+            <div className={styles.hair} key={i}>
+              <div />
+              <div />
+            </div>
+          ))}
           <div className={styles.message}>
-            <h1 className={styles.title}>
-              {shiftKey ? (
-                <>
-                  Quick Load <em>Data</em>
-                </>
-              ) : (
-                <>
-                  Preview & Load <em>Data</em>
-                </>
-              )}
-            </h1>
-            <p className={styles.note}>
-              {shiftKey ? (
-                <>
-                  Release <b>{"Shift"}</b> to preview data first.
-                </>
-              ) : (
-                <>
-                  Hold <b>{"Shift"}</b> to quick load into new pool with
-                  defaults.
-                </>
-              )}
-            </p>
+            <h1 className={styles.title}>{dropzone.title}</h1>
+            <p className={styles.note}>{dropzone.note}</p>
           </div>
-        </div>
+        </Dialog>
       )}
     </div>
   )

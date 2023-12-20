@@ -1,4 +1,5 @@
 import {LoadReference} from "src/js/state/Loads/types"
+import {basename} from "src/util/basename"
 
 export class LoadModel {
   constructor(private ref: LoadReference) {}
@@ -8,8 +9,7 @@ export class LoadModel {
   }
 
   get humanizeFiles() {
-    // basename
-    return this.ref.files.join(", ")
+    return this.ref.files.map(basename).join(", ")
   }
 
   get status() {

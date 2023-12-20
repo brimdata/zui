@@ -4,6 +4,8 @@ import Loads from "src/js/state/Loads"
 import {syncPoolOp} from "src/electron/ops/sync-pool-op"
 import {SearchWindow} from "src/electron/windows/search/search-window"
 import {MainObject} from "../../core/main/main-object"
+import {createLoadRef} from "./load-ref"
+import {select} from "src/core/main/select"
 
 export class LoadContext {
   private ctl = new AbortController()
@@ -23,16 +25,7 @@ export class LoadContext {
     this.window.loadsInProgress++
     this.main.abortables.add({id: this.id, abort: () => this.ctl.abort()})
     this.main.dispatch(
-      Loads.create({
-        id: this.id,
-        poolId: this.opts.poolId,
-        progress: 0,
-        files: this.opts.files,
-        startedAt: new Date().toISOString(),
-        finishedAt: null,
-        abortedAt: null,
-        errors: [],
-      })
+      Loads.create(createLoadRef(this.id, this.opts.poolId, this.opts.files))
     )
   }
 
@@ -64,6 +57,10 @@ export class LoadContext {
 
   abort() {
     this.ctl.abort()
+  }
+
+  get ref() {
+    return select((s) => Loads.find(s, this.id))
   }
 
   get signal() {

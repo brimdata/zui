@@ -146,8 +146,8 @@ export default class TestApp {
     return wins[winTitles.findIndex((wTitle) => wTitle === title)];
   }
 
-  sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  sleep(sec: number) {
+    return new Promise((resolve) => setTimeout(resolve, sec * 1000));
   }
 
   get results() {
@@ -188,6 +188,29 @@ export default class TestApp {
     } else {
       return this.mainWin.getByRole(role, { name });
     }
+  }
+
+  async invoke(name: string, ...args: any[]) {
+    return await this.page.evaluate(
+      ({ name, args }) => {
+        // @ts-ignore
+        return window.zui.invoke(name, ...args);
+      },
+      { name, args }
+    );
+  }
+
+  get evalMain() {
+    return this.zui.evaluate.bind(this.zui);
+  }
+
+  get evalPage() {
+    return this.page.evaluate.bind(this.page);
+  }
+
+  debugLogs() {
+    this.zui.process().stdout.on('data', (d) => console.log(d.toString()));
+    this.zui.process().stderr.on('data', (d) => console.log(d.toString()));
   }
 }
 

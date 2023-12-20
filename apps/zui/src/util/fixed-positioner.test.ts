@@ -1,4 +1,4 @@
-import {parsePoint} from "./parse-point"
+import {parsePoint} from "./fixed-positioner"
 
 test("left top", () => {
   expect(parsePoint("left top")).toEqual(["left", "top"])
