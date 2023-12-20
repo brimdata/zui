@@ -1,6 +1,5 @@
 import {app, clipboard} from "electron"
 import {createOperation} from "src/core/operations"
-import os from "os"
 import * as zui from "src/zui"
 import {sendToFocusedWindow} from "src/core/ipc"
 import {TempFileHolder} from "../temp-file-holder"
