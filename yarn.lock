@@ -3777,15 +3777,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nxkit/playwright@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@nxkit/playwright@npm:2.3.0"
-  peerDependencies:
-    "@playwright/test": ^1.25.2
-  checksum: 57fa8cc56cfb17cd1ba5bb51c433c1631a61df96d58836ac7ebab99e8cb62f3bbc2f9709170bb086475d81417951a2cb5a2d62010fb1cef768ffdc531077cd1f
-  languageName: node
-  linkType: hard
-
 "@open-draft/until@npm:^1.0.3":
   version: 1.0.3
   resolution: "@open-draft/until@npm:1.0.3"
@@ -19140,8 +19131,6 @@ __metadata:
     "@nx/js": 16.10.0
     "@nx/linter": 16.10.0
     "@nx/workspace": 16.10.0
-    "@nxkit/playwright": ^2.3.0
-    "@playwright/test": next
     "@swc/cli": ~0.1.55
     "@swc/core": ^1.2.173
     "@swc/helpers": ~0.4.11
@@ -19158,8 +19147,6 @@ __metadata:
     jest-environment-node: ^29.4.1
     nx: 16.10.0
     open-cli: ^7.2.0
-    playwright: next
-    playwright-chromium: next
     prettier: ^2.6.2
     serve: ^14.2.0
     ts-jest: ^29.0.5
@@ -19173,7 +19160,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "zui-player@workspace:packages/zui-player"
   dependencies:
+    "@playwright/test": next
     fs-extra: ^11.2.0
+    playwright: next
+    playwright-chromium: next
   languageName: unknown
   linkType: soft
 
