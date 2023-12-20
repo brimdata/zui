@@ -1,11 +1,12 @@
-import {app, clipboard} from "electron"
+import {clipboard} from "electron"
 import {createOperation} from "src/core/operations"
 import * as zui from "src/zui"
 import {sendToFocusedWindow} from "src/core/ipc"
 import {TempFileHolder} from "../temp-file-holder"
 import {join} from "path"
+import os from "os"
 
-const pasteDirPrefix = join(app.getPath("temp"), "zui_pastes_")
+const pasteDirPrefix = join(os.tmpdir(), "zui_pastes_")
 const pastes = new TempFileHolder(pasteDirPrefix)
 
 function removeFiles(loadFiles: string[]) {
