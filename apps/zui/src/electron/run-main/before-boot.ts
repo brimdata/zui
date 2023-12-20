@@ -6,16 +6,18 @@ import {MainArgs} from "./args"
 import {setLogLevel} from "../set-log-level"
 import {runMigrations} from "./run-migrations"
 
+app.disableHardwareAcceleration()
+
 export async function beforeBoot(
   args: Partial<MainArgs>
 ): Promise<string | null> {
   // Disable security warnings
-  process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
+  // process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "true"
   // Setup app paths, this must be first
   appPathSetup()
   setLogLevel()
   // Disable for certain platforms
-  app.disableHardwareAcceleration()
+
   // Ensure only one instance of the app is ever on (windows)
   const lock = app.requestSingleInstanceLock()
   if (args.singleInstance && !lock) {

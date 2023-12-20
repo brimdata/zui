@@ -28,7 +28,7 @@ export class Lake {
   }
 
   addr(): string {
-    return `localhost:${this.port}`;
+    return `:${this.port}`;
   }
 
   start() {
