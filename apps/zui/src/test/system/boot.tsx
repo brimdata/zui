@@ -50,6 +50,7 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
     autoUpdater: false,
     singleInstance: false,
   })) as MainObject
+
   await waitFor(async () => fetch(`http://localhost:${lakePort}/version`), {
     timeout: 20_000,
   })

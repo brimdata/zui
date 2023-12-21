@@ -13,14 +13,6 @@
         "tsConfig": "packages/zui-player/tsconfig.json",
         "main": "packages/zui-player/index.ts"
       }
-    },
-    "test": {
-      "executor": "@nxkit/playwright:test",
-      "options": {
-        "outputPath": "dist/packages/zui-player/test-results",
-        "playwrightConfig": "packages/zui-player/playwright.config.js",
-        "baseUrl": "https://example.com"
-      }
     }
   }
 }

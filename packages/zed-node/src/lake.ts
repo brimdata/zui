@@ -38,7 +38,7 @@ export class Lake {
     const args = [
       'serve',
       '-l',
-      this.addr(),
+      ':' + this.port,
       '-lake',
       this.root,
       '-log.level=info',

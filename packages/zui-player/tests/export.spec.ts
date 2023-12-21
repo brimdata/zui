@@ -46,7 +46,9 @@ test.describe('Export tests', () => {
       });
       await menu.getByRole('button', { name: 'Export' }).click();
       const dialog = app.mainWin.getByRole('dialog');
-      await dialog.getByRole('radio', { name: `${label}` }).click();
+      await dialog
+        .getByRole('radio', { name: `${label}`, exact: true })
+        .click();
       await dialog.getByRole('button').filter({ hasText: 'Export' }).click();
       await app.mainWin
         .getByText(new RegExp('Export Completed: .*results\\.' + label))
