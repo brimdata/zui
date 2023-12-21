@@ -46,7 +46,7 @@ function useTemplate() {
       return {
         title: "Up to Date!",
         text: (
-          <Link href="https://github.com/brimdata/zui/releases">
+          <Link href={globalThis.appMeta.repository + "/releases"}>
             View releases
           </Link>
         ),
