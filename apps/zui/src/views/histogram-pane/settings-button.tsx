@@ -1,6 +1,6 @@
 import {useRef, useState} from "react"
 import styles from "./histogram-pane.module.css"
-import {Dialog} from "src/components/dialog/dialog"
+import {Dialog} from "src/components/dialog"
 import {SettingsForm} from "./settings-form"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"

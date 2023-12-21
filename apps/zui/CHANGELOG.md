@@ -1,3 +1,12 @@
+## v1.5.0
+- Update Zed to [v1.12.0](https://github.com/brimdata/zed/releases/tag/v1.12.0)
+- Update Brimcap to [v1.5.5](https://github.com/brimdata/brimcap/releases/tag/v1.5.5)
+- A new option in **Settings** now determines if checks for available Zui updates are performed at startup (default), at startup & daily, or manually (#2866)
+- Add functionality to load data from the paste buffer (#2928)
+- Add support for [TSV](https://en.wikipedia.org/wiki/Tab-separated_values) load/export (#2916)
+- Fix an issue with Chromium binaries being created in temporary storage (#2917)
+- Fix an issue where the cursor position could become inaccurate while typing in the editor (#2922)
+
 ## v1.4.1
 - Update Zed to [v1.11.1](https://github.com/brimdata/zed/releases/tag/v1.11.1)
 

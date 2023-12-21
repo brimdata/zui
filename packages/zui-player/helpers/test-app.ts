@@ -146,8 +146,8 @@ export default class TestApp {
     return wins[winTitles.findIndex((wTitle) => wTitle === title)];
   }
 
-  sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  sleep(sec: number) {
+    return new Promise((resolve) => setTimeout(resolve, sec * 1000));
   }
 
   get results() {
@@ -186,8 +186,31 @@ export default class TestApp {
     if (role instanceof RegExp) {
       return this.mainWin.getByText(role);
     } else {
-      return this.mainWin.getByRole(role, { name });
+      return this.mainWin.getByRole(role, { name, exact: true });
     }
+  }
+
+  async invoke(name: string, ...args: any[]) {
+    return await this.page.evaluate(
+      ({ name, args }) => {
+        // @ts-ignore
+        return window.zui.invoke(name, ...args);
+      },
+      { name, args }
+    );
+  }
+
+  get evalMain() {
+    return this.zui.evaluate.bind(this.zui);
+  }
+
+  get evalPage() {
+    return this.page.evaluate.bind(this.page);
+  }
+
+  debugLogs() {
+    this.zui.process().stdout.on('data', (d) => console.log(d.toString()));
+    this.zui.process().stderr.on('data', (d) => console.log(d.toString()));
   }
 }
 
@@ -213,7 +236,7 @@ const getAppInfo = () => {
     };
   }
 
-  return { bin: null, entry: 'apps/zui' };
+  return { bin: null, entry: '../../apps/zui' };
 };
 
 function waitForTrue(check: () => boolean | Promise<boolean>) {

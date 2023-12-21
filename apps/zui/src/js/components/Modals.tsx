@@ -7,7 +7,7 @@ import ViewLakeModal from "./LakeModals/ViewLakeModal"
 import ExportModal from "./ExportModal"
 import {NewPoolModal} from "src/views/new-pool-modal"
 import {Debut, useDebut} from "src/components/debut"
-import {Dialog} from "src/components/dialog/dialog"
+import {Dialog} from "src/components/dialog"
 import modalStyle from "src/components/modals.module.css"
 
 const MODALS = {

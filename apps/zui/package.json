@@ -5,7 +5,7 @@
   "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/zui",
   "license": "BSD-3-Clause",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "main": "dist/main.js",
   "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "lake": {
@@ -14,8 +14,9 @@
   "scripts": {
     "start": "node scripts/start",
     "start:main": "yarn build:main --watch",
-    "start:renderer": "next dev",
+    "start:renderer": "next dev -p 4567",
     "start:electron": "nodemon --watch dist ../../node_modules/electron/cli.js .",
+    "start:production": "node ../../node_modules/electron/cli.js .",
     "watch-code": "run-p start:main start:renderer",
     "build": "run-p -l 'build:**'",
     "build:main": "node scripts/esbuild.mjs",
@@ -74,7 +75,7 @@
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
-    "brimcap": "brimdata/brimcap#v1.5.4",
+    "brimcap": "brimdata/brimcap#v1.5.5",
     "chalk": "^4.1.0",
     "chevrotain": "^10.5.0",
     "chrono-node": "^2.5.0",
@@ -84,7 +85,7 @@
     "d3": "^6.7.0",
     "date-fns": "^2.16.1",
     "decompress": "^4.2.1",
-    "electron": "22.3.25",
+    "electron": "28.0.0",
     "electron-builder": "^23.6.0",
     "electron-builder-notarize": "^1.2.0",
     "electron-devtools-assembler": "^1.2.0",
@@ -157,7 +158,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#afba2551dede5bebba707aed52ed82b655815447",
+    "zed": "brimdata/zed#6d6283173714df9381db7aeefcb981a549878281",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {

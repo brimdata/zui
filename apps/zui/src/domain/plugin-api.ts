@@ -1,4 +1,4 @@
-import {Commands} from "./commands/plugin-api"
+import {AppApi} from "./app/plugin-api"
 import {ConfigurationsApi} from "./configurations/plugin-api"
 import {CorrelationsApi} from "./correlations/plugin-api"
 import {EnvApi} from "./env/plugin-api"
@@ -22,4 +22,4 @@ export const correlations = new CorrelationsApi()
 export const configurations = new ConfigurationsApi()
 export const pools = new PoolsApi()
 export const menus = new MenusApi()
-export const commands = new Commands()
+export const app = new AppApi()

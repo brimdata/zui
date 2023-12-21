@@ -28,7 +28,7 @@ test.describe('Pool Loads', () => {
     await app.click('treeitem', 'prs.json');
     await app.dropFile(getPath('prs.json'));
     await app.page
-      .getByLabel('Pool')
+      .getByLabel('Pool', { exact: true })
       .nth(0)
       .selectOption({ label: 'prs.json' });
     await app.click('button', 'Load');

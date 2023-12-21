@@ -11,6 +11,7 @@ import {showReleaseNotesOp} from "../../ops/show-release-notes-op"
 import {SearchWindow} from "./search-window"
 import {sendToFocusedWindow} from "src/core/ipc"
 import {open as openUpdateWindow} from "src/domain/updates/operations"
+import {paste} from "src/domain/loads/operations"
 
 export const defaultAppMenuState = () => ({
   showRightPane: true,
@@ -83,6 +84,12 @@ export function compileTemplate(
     accelerator: "CmdOrCtrl+O",
   }
 
+  const pasteData: MenuItemConstructorOptions = {
+    label: "Paste Data...",
+    click: paste,
+    accelerator: "CmdOrCtrl+Shift+V",
+  }
+
   const appNameMenu: MenuItemConstructorOptions = {
     label: app.getName(),
     submenu: [
@@ -102,12 +109,22 @@ export function compileTemplate(
 
   function fileSubmenu(): MenuItemConstructorOptions[] {
     if (mac) {
-      return [newWindow, __, openFile, exportResults, __, closeTab, closeWindow]
+      return [
+        newWindow,
+        __,
+        openFile,
+        pasteData,
+        exportResults,
+        __,
+        closeTab,
+        closeWindow,
+      ]
     } else {
       return [
         newWindow,
         __,
         openFile,
+        pasteData,
         exportResults,
         __,
         settings,

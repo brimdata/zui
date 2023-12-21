@@ -12,13 +12,12 @@ recommendations on which to run Zui:
   - Windows 10 or newer
   - Windows Server 2019 or newer
 - macOS
-  - macOS Big Sur 11.7.2 or newer (see [below](#hardware) for hardware considerations)
+  - macOS Monterey 12.6.5 or newer (see [below](#hardware) for hardware considerations)
 - Linux
   - Ubuntu 20.04 or newer
-  - Debian 10.0.0 or newer
-  - Fedora 29 or newer
-  - Rocky 8.3 or newer
-  - CentOS 8.0 1905 (deprecated)
+  - Debian 11.0.0 or newer
+  - Fedora 31 or newer
+  - Rocky 9.0 or newer
 
 The sections below provide details regarding these guidelines and how they are
 established.
@@ -36,10 +35,9 @@ expectations between Windows 10 and Windows Server 2019 are equivalent. Several
 Zui developers also run Windows 10 desktops and regularly perform ad hoc
 testing with it to reproduce reported issues.
 
-Basic [smoke testing](#smoke-testing) has also validated that Zui appears to
-work on Windows 8.1 as well. Similar testing has also confirmed that Zui does
-_not_ work on Windows 7. Therefore we do _not_ recommend attempting to run Zui
-on releases older than Windows 8.1.
+As Microsoft has announced
+[end of support for Windows 8.1](https://learn.microsoft.com/en-us/lifecycle/products/windows-81)
+we do _not_ recommend attempting to run Zui on Windows 8.1 or older.
 
 ### macOS
 
@@ -47,35 +45,23 @@ on releases older than Windows 8.1.
 
 Zui's [test automation](#automated-testing) runs on Monterey 12 and
 therefore this is the macOS version on which we are best able to ensure quality
-and prevent regressions. Several Zui developers also run macOS Ventura 13.1
+and prevent regressions. Several Zui developers also run macOS Sonoma 14.1
 and regularly perform ad hoc testing with it to reproduce reported issues.
-
-Basic [smoke testing](#smoke-testing) has also validated that Zui appears to
-work on macOS Big Sur 11.7.2 as well. We do _not_ recommend attempting to run
-Zui on macOS releases older than macOS Big Sur 11.7.2.
 
 #### Hardware
 
 The build procedure for Zui's macOS releases creates binaries intended to
-run on the Intel-based Mac hardware that make up many of the Macs in
-use today. Zui releases are not yet available that are built specifically for
-the recently-released [M1-based hardware](https://en.wikipedia.org/wiki/Apple_M1).
+run on Intel-based Mac hardware. Zui releases are not yet available that
+are built specifically for [M1-based hardware](https://en.wikipedia.org/wiki/Apple_M1).
 However, Apple's [Rosetta 2](https://support.apple.com/en-us/HT211861) makes
-it possible to run Intel-targeted binaries on M1-based Macs, and
-[smoke testing](#smoke-testing) has indicated that current Zui releases can
-leverage this to run on M1-based Macs.
+it possible to run Intel-targeted binaries on M1-based Macs.
 
-Due to issues of
-[availability](https://github.com/actions/virtual-environments/issues/2187),
-our automated tests for macOS run today on Apple hardware that is Intel-based
-but not M1-based. Therefore if you have your choice of Mac hardware platform,
-Intel-based is more strongly recommended. However, as we know the M1-based Macs
-will become more popular in the future, please
-[open issues](./Troubleshooting.md#opening-an-issue)
-for problems you experience with Zui on M1-based Macs as you would any other.
-If we should begin to accumulate bugs that are specific to M1-based hardware,
-this will help guide the prioritization of our goal to deliver M1-specific
-builds ([zui/1266](https://github.com/brimdata/zui/issues/1266)).
+M1-based hardware has only recently become
+[available](https://github.com/actions/virtual-environments/issues/2187) for
+our automation where we run tests and create builds for Zui. Therefore our
+planned work to deliver M1-specific builds ([zui/1266](https://github.com/brimdata/zui/issues/1266))
+is still ongoing. In the meantime, please [open an issue](./Troubleshooting.md#opening-an-issue)
+if you experience a problem specific to M1-based Macs.
 
 ### Linux
 
@@ -84,7 +70,7 @@ package) and therefore this is the Linux distribution on which we are best able
 to ensure quality and prevent regressions.
 
 An `.rpm` package is also provided that is periodically [smoke tested](#smoke-testing)
-on Rocky 8.3. The [Rocky Linux site](https://rockylinux.org/about) explains that Rocky
+on Rocky 9.0. The [Rocky Linux site](https://rockylinux.org/about) explains that Rocky
 seeks to maintain the [RHEL](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux)-compatibility
 mission formerly championed by [CentOS](https://www.centos.org/). Therefore the Rocky versions
 listed in this article provide the basis of the Zui supportability expectation for the
@@ -95,10 +81,9 @@ release on which Zui appeared to work for each common distribution, as
 follows:
 
 - Ubuntu 20.04
-- Debian 10.0.0
-- Fedora 29
-- Rocky 8.3
-- CentOS 8 1905 (deprecated)
+- Debian 11.0.0
+- Fedora 31
+- Rocky 9.0
 
 Therefore we do _not_ recommend attempting to run Zui on distributions older
 than those listed above.
@@ -108,7 +93,7 @@ than those listed above.
 The determination of the specific versions of platforms for which we can set
 expectations of quality are based on multiple factors. These include:
 
-- Support for the platform in dependent [development tools](#development-tools)
+- Support for the platform in [development tools](#development-tools)
 - Availability of the platform for [automated testing](#automated-testing)
   and/or [smoke testing](#smoke-testing)
 
@@ -145,10 +130,8 @@ confirm basic functionality. Such a smoke test consists of the following:
 - Import a test pcap into Zui and confirm the bundled Zeek and Suricata both produce records from it
 - Click the **Packets** button to extract a slice from the pcap into Wireshark
 
-This exercise was most recently performed in August, 2022 in preparation for
-Zui release v1.0.0. For more details on
-previously-performed smoke testing exercises, review [zui/1263](https://github.com/brimdata/zui/issues/1263),
-[zui/2481](https://github.com/brimdata/zui/pull/2481), and [zui/2482](https://github.com/brimdata/zui/issues/2482).
+This exercise was most recently performed in November, 2023 with Zui release
+[v1.4.1](https://github.com/brimdata/zui/releases/tag/v1.4.1).
 
 ### Non-Recommended Platforms
 

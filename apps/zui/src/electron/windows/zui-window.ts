@@ -68,7 +68,7 @@ export abstract class ZuiWindow {
   load() {
     this.beforeLoad()
     const url = env.isDevelopment
-      ? `http://localhost:3000${this.path}?id=${this.id}&name=${this.name}`
+      ? `http://localhost:4567${this.path}?id=${this.id}&name=${this.name}`
       : `file://${this.path}.html?id=${this.id}&name=${this.name}`
     return this.ref.loadURL(url)
   }

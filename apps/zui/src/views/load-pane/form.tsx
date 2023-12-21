@@ -17,8 +17,13 @@ import {DataFormatOptions} from "src/components/data-format-select"
 import {LoadFormat} from "@brimdata/zed-js"
 import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
+import {basename} from "src/util/basename"
 
-export function Form(props: {onClose: () => any; isValid: boolean}) {
+export function Form(props: {
+  onClose: () => any
+  onCancel: () => any
+  isValid: boolean
+}) {
   const dispatch = useDispatch()
   const select = useSelect()
   const pools = useSelector(Current.getPools)
@@ -37,7 +42,6 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
   const [error, setError] = useState(null)
 
   const onSubmit = async (data) => {
-    console.log("on submit")
     const shaper = select(LoadDataForm.getShaper)
     // @ts-ignore
     const windowId = window.windowId
@@ -93,14 +97,18 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
             </div>
             <ul className={styles.files}>
               {files.map((f: string, i) => (
-                <li key={i} className={styles.fileItem}>
+                <li
+                  key={i}
+                  className={styles.fileItem}
+                  aria-label={basename(f)}
+                >
                   <Icon
                     name="doc_plain"
                     size={"16px"}
                     fill="var(--primary-color)"
                   />
                   <span title={f} className={styles.fileName}>
-                    {f.split(/[\\/]/).pop()}
+                    {basename(f)}
                   </span>
                   <IconButton iconName="close" onClick={() => removeFile(f)} />
                 </li>
@@ -218,7 +226,10 @@ export function Form(props: {onClose: () => any; isValid: boolean}) {
         <div className={classNames(styles.submission)}>
           <button
             type="button"
-            onClick={props.onClose}
+            onClick={() => {
+              props.onCancel()
+              props.onClose()
+            }}
             className={forms.button}
           >
             Cancel

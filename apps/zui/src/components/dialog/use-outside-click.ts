@@ -1,6 +1,6 @@
 import {useEffect, useRef} from "react"
 import {clickIsWithinElement} from "./click-is-within-element"
-import {DialogProps} from "./dialog"
+import {DialogProps} from "."
 
 export function useOutsideClick(dialog: HTMLDialogElement, props: DialogProps) {
   const callback = useRef<(e: globalThis.MouseEvent) => void>(() => {})

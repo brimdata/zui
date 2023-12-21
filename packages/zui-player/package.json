@@ -1,5 +1,14 @@
 {
   "name": "zui-player",
   "private": true,
-  "main": "./index.ts"
+  "main": "./index.ts",
+  "scripts": {
+    "test": "playwright test --config playwright.config.js"
+  },
+  "dependencies": {
+    "@playwright/test": "next",
+    "fs-extra": "^11.2.0",
+    "playwright": "next",
+    "playwright-chromium": "next"
+  }
 }

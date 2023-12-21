@@ -1,6 +1,6 @@
 import styles from "./modals.module.css"
 import {Debut, useDebut} from "src/components/debut"
-import {Dialog} from "src/components/dialog/dialog"
+import {Dialog} from "src/components/dialog"
 
 export function Modal(props: {children: any; onClose: () => any}) {
   const debut = useDebut({afterExit: props.onClose})

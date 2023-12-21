@@ -1,4 +1,3 @@
-import {EventEmitter} from "events"
 import {CreatePoolOpts, Pool} from "@brimdata/zed-js"
 import {updateSettings} from "./operations"
 import Pools from "src/js/state/Pools"
@@ -9,13 +8,13 @@ import {LoadContext} from "src/domain/loads/load-context"
 import {syncPoolOp} from "src/electron/ops/sync-pool-op"
 import {LoadOptions} from "src/core/loader/types"
 import {getMainObject} from "src/core/main"
+import {TypedEmitter} from "src/util/typed-emitter"
 
 type Events = {
   create: (event: {pool: Pool}) => void
 }
-export class PoolsApi {
-  private emitter = new EventEmitter()
 
+export class PoolsApi extends TypedEmitter<Events> {
   configure(poolId: string) {
     return new PoolConfiguration(poolId)
   }
@@ -45,27 +44,14 @@ export class PoolsApi {
       await context.setup()
       await loader.run(context)
       await waitForPoolStats(context)
+      loads.emit("success", context.ref)
     } catch (e) {
       await loader.rollback(context)
+      loads.emit("error", context.ref)
       throw e
     } finally {
       context.teardown()
     }
-  }
-
-  on<K extends string & keyof Events>(name: K, handler: Events[K]) {
-    this.emitter.on(name, handler)
-  }
-
-  emit<K extends string & keyof Events>(
-    name: K,
-    ...args: Parameters<Events[K]>
-  ) {
-    this.emitter.emit(name, ...args)
-  }
-
-  _teardown() {
-    this.emitter.removeAllListeners()
   }
 }
 

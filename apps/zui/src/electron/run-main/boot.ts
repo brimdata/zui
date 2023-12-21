@@ -24,7 +24,7 @@ export async function boot(args: Partial<MainArgs> = {}) {
   // 6. Protocol Handler
   runProtocolHandlers()
   // 7. Start the app
-  app.whenReady().then(() => main.start())
-
+  await app.whenReady()
+  await main.start()
   return main
 }

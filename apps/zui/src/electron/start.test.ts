@@ -14,14 +14,6 @@ jest.mock("@brimdata/zed-node")
 
 afterEach(teardown)
 
-test("start is called in zed lake", async () => {
-  const appMain = (await main({
-    devtools: false,
-    autoUpdater: false,
-  })) as MainObject
-  expect(appMain.lake.start).toHaveBeenCalledTimes(1)
-})
-
 test("app opens a window on startup", async () => {
   const appMain = (await main({
     devtools: false,

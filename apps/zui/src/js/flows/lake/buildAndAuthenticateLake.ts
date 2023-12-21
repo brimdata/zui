@@ -49,14 +49,13 @@ export const buildAndAuthenticateLake =
         return [false, null]
       }
 
-      const dialogOpts = {
+      const dialogChoice = await showMessageBox({
         type: "info",
         buttons: ["Continue", "Cancel"],
         title: "Redirect to Browser",
         message:
           "This lake requires authentication. Continue to log in with your browser?",
-      }
-      const dialogChoice = await showMessageBox(dialogOpts)
+      })
       if (dialogChoice.response === 1) return [true, null]
 
       try {

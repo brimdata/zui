@@ -5,6 +5,7 @@ import Pools from "src/js/state/Pools"
 import {quickLoadFiles} from "./quick-load-files"
 
 export const previewLoadFiles = createHandler(
+  "loads.previewLoadFiles",
   async (
     {dispatch, invoke, select},
     opts: {files: string[]; poolId?: string}
@@ -17,9 +18,14 @@ export const previewLoadFiles = createHandler(
     if (files.length === 1 && files[0].type === "pcap") {
       quickLoadFiles({files: files.map((f) => f.path), poolId})
     } else {
-      dispatch(LoadDataForm.setPoolId(poolId))
-      dispatch(LoadDataForm.setFiles(opts.files))
-      dispatch(LoadDataForm.setShow(true))
+      if (select(LoadDataForm.getShow)) {
+        // The preview load is already opened
+        dispatch(LoadDataForm.addFiles(opts.files))
+      } else {
+        dispatch(LoadDataForm.setFiles(opts.files))
+        dispatch(LoadDataForm.setShow(true))
+        dispatch(LoadDataForm.setPoolId(poolId))
+      }
     }
   }
 )

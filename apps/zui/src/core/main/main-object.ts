@@ -28,6 +28,8 @@ import {PathName, getPath} from "../../js/api/core/get-path"
 import createLake from "src/js/models/lake"
 import {getAuthToken} from "../../js/api/core/get-zealot"
 import {Abortables} from "src/app/core/models/abortables"
+import * as zui from "src/zui"
+import log from "electron-log"
 
 export class MainObject {
   public isQuitting = false
@@ -62,7 +64,11 @@ export class MainObject {
   ) {}
 
   async start() {
-    if (this.args.lake) this.lake.start()
+    if (this.args.lake) {
+      if (!(await this.lake.start())) {
+        log.error("Failed to start lake process after 5 seconds")
+      }
+    }
     if (this.args.devtools) await installExtensions()
     await this.windows.init()
   }
@@ -92,6 +98,7 @@ export class MainObject {
 
   onBeforeQuit() {
     if (this.isQuitting) return
+    zui.app.emit("quit")
     this.saveSession()
     this.isQuitting = true
   }
