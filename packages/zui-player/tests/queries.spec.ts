@@ -38,7 +38,7 @@ test.describe('Query tests', () => {
     await app.click('button', 'Save as New Query');
     await app.fill('Query Name', 'Test Query Name');
     await app.press('Enter');
-    await app.click('button', 'QUERIES');
+    await app.click('button', 'Queries');
     await app.attached('treeitem', 'Test Query Name');
 
     // modification
