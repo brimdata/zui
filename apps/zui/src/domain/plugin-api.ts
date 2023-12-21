@@ -1,3 +1,4 @@
+import {CommandsApi} from "./commands/plugin-api"
 import {AppApi} from "./app/plugin-api"
 import {ConfigurationsApi} from "./configurations/plugin-api"
 import {CorrelationsApi} from "./correlations/plugin-api"
@@ -23,3 +24,4 @@ export const configurations = new ConfigurationsApi()
 export const pools = new PoolsApi()
 export const menus = new MenusApi()
 export const app = new AppApi()
+export const commands = new CommandsApi()

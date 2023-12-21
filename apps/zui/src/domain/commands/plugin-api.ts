@@ -1,4 +1,4 @@
-export class Commands {
+export class CommandsApi {
   cmds = new Map()
 
   create(name: string, handler: (...args: any[]) => any) {

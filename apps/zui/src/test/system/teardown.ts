@@ -1,6 +1,6 @@
 import {app, ipcMain, ipcRenderer} from "electron"
 import {autoUpdater} from "electron-updater"
-import {commands, pools, session} from "src/zui"
+import {pools, session, commands} from "src/zui"
 
 export function teardown() {
   app.removeAllListeners()
