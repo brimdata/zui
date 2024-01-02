@@ -47,7 +47,7 @@ export const TableView = forwardRef(function TableView(
   return (
     <Provider value={api}>
       <div
-        role="table"
+        role="grid"
         className={classNames("zed-table", {
           "zed-table--resizing": api.isResizing,
         })}

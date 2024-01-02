@@ -184,9 +184,9 @@ export default class TestApp {
 
   locate(role: Role | RegExp, name?: string) {
     if (role instanceof RegExp) {
-      return this.mainWin.getByText(role);
+      return this.mainWin.getByText(role).first();
     } else {
-      return this.mainWin.getByRole(role, { name, exact: true });
+      return this.mainWin.getByRole(role, { name, exact: true }).first();
     }
   }
 

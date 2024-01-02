@@ -16,7 +16,7 @@ export class CommandsApi {
     if (!this.has(name)) {
       throw new Error("Command not found: " + name)
     }
-    return this.get(name)
+    return this.cmds.get(name)
   }
 
   _teardown() {
