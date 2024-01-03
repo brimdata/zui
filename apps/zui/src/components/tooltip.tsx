@@ -1,4 +1,4 @@
-import {useLayoutEffect, useRef, useState} from "react"
+import {useRef, useState} from "react"
 import useListener from "../js/components/hooks/useListener"
 import {Debut, useDebut} from "./debut"
 import styles from "./tooltip.module.css"

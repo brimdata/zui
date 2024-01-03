@@ -3,7 +3,8 @@ import useListener from "src/js/components/hooks/useListener"
 import {CSSProperties} from "react"
 import {fixedPositioner} from "../fixed-positioner"
 
-type Props = Parameters<typeof fixedPositioner>[0] & {
+type Props = Partial<Parameters<typeof fixedPositioner>[0]> & {
+  target?: HTMLElement
   targetRef?: MutableRefObject<Element>
 }
 
