@@ -68,7 +68,9 @@ export const IconButton = forwardRef(function IconButton(
     <BG
       ref={ref}
       className={classNames(props.className, props.display)}
-      title={props.description ?? props.label}
+      data-tooltip={
+        props.display === "icon-label" ? null : props.description ?? props.label
+      }
       onClick={onClick}
       disabled={props.enabled === false || props.whenResult === false}
       aria-label={props.label}

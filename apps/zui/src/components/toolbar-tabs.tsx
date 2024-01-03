@@ -35,6 +35,7 @@ export function ToolbarTabs(props: {
       <nav className={styles.nav} ref={ref}>
         {props.options.map((opts, i) => (
           <button
+            data-tooltip={props.onlyIcon ? opts.label : null}
             className={styles.button}
             key={opts.id ?? i}
             onClick={() => {

@@ -1,0 +1,27 @@
+.tooltip {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding-inline: 0.5rem;
+    background: var(--bg-color);
+    border-radius: 3px;
+    width: fit-content;
+    z-index: 999;
+    pointer-events: none;
+    box-shadow: var(--shadow-elevation-low);
+    border: 1px solid var(--border-color);
+    animation: scale-in 100ms;
+    max-inline-size: var(--measure);
+}
+
+@keyframes scale-in {
+    from {
+        transform: translateY(-20%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
