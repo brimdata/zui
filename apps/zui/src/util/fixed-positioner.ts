@@ -1,6 +1,6 @@
 export function fixedPositioner(props: {
-  target: HTMLElement
-  anchor?: HTMLElement
+  target: Element
+  anchor?: Element
   targetPoint?: string
   anchorPoint?: string
   targetMargin?: string

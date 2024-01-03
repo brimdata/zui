@@ -22,7 +22,7 @@ const BG = styled.button`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background var(--quick);
+  transition: background var(--quick), transform var(--quick);
 
   &:disabled {
     opacity: 0.2;
@@ -31,10 +31,16 @@ const BG = styled.button`
 
   &:hover:not(:disabled) {
     background: var(--emphasis-bg);
+    svg {
+      transform: scale(1.1);
+    }
   }
 
   &:active:not(:disabled) {
     background: var(--emphasis-bg-more);
+    svg {
+      transform: scale(1.05);
+    }
   }
 
   &.icon-label {

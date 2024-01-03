@@ -1,48 +1,55 @@
 import {useLayoutEffect, useRef, useState} from "react"
 import useListener from "../js/components/hooks/useListener"
+import {Debut, useDebut} from "./debut"
 import styles from "./tooltip.module.css"
-import {fixedPositioner} from "src/util/fixed-positioner"
+import {useFixedPosition} from "src/util/hooks/use-fixed-position"
+import {findAncestor} from "src/util/find-ancestor"
 
 const attr = "data-tooltip"
 
 export function Tooltip() {
   const [title, setTitle] = useState(null)
   const [anchor, setAnchor] = useState(null)
-  const [style, setStyle] = useState({top: 0, left: 0})
   const ref = useRef()
-  useListener(document.body, "mouseover", (e: any) => {
-    let node = e.target
-    while (node) {
-      if (node instanceof HTMLElement && node.hasAttribute(attr)) {
-        setTitle(node.getAttribute(attr))
-        setAnchor(node)
-        return
-      }
-      node = node.parentNode
-    }
-    setTitle(null)
+
+  function set(node: Element) {
+    debut.cancelExit()
+    setAnchor(node)
+    setTitle(node.getAttribute(attr))
+  }
+
+  function reset() {
     setAnchor(null)
+    setTitle(null)
+  }
+
+  function needsTooltip(node: Element) {
+    return node.matches(`[${attr}]`)
+  }
+
+  const debut = useDebut({afterExit: reset})
+
+  useListener(document.body, "mouseover", (e: any) => {
+    const node = findAncestor(e.target, needsTooltip)
+    if (node) set(node)
+    else debut.exit()
   })
 
-  useLayoutEffect(() => {
-    if (anchor && title && ref.current) {
-      const style = fixedPositioner({
-        target: ref.current,
-        anchor: anchor,
-        anchorPoint: "bottom center",
-        targetPoint: "top center",
-        targetMargin: "2px",
-        overflow: "flip",
-      })
-      setStyle(style)
-    }
-  }, [anchor, title])
+  const style = useFixedPosition({
+    targetRef: ref,
+    anchor: anchor,
+    anchorPoint: "bottom center",
+    targetPoint: "top center",
+    targetMargin: "3px",
+    overflow: "flip",
+  })
 
   if (!anchor) return null
-
   return (
-    <div ref={ref} className={styles.tooltip} style={style}>
-      {title}
-    </div>
+    <Debut {...debut.props} classNames="tooltip">
+      <div ref={ref} style={style} className={styles.tooltip}>
+        {title}
+      </div>
+    </Debut>
   )
 }
