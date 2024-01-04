@@ -35,9 +35,6 @@
   "dependencies": {
     "keytar": "^7.7.0"
   },
-  "optionalDependencies": {
-    "node-pipe": "^0.1.1"
-  },
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@brimdata/zed-js": "workspace:*",
@@ -158,7 +155,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#98d319dcdc7a9a7399d3f4705ef2eecc02d7e8b9",
+    "zed": "brimdata/zed#e397900638445fc88852e518a57117bccb6f7673",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {

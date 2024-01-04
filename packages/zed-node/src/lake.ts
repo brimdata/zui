@@ -1,8 +1,9 @@
 import { ChildProcess, spawn, SpawnOptions } from 'child_process';
 import { mkdirpSync } from 'fs-extra';
 import { join } from 'path';
-import fetch from 'node-fetch';
 import { getZedPath } from './binpath';
+import { get } from 'http';
+import { Socket } from 'net';
 
 type ConstructorOpts = {
   root: string;
@@ -18,6 +19,7 @@ export class Lake {
   logs: string;
   bin: string;
   cors: string[];
+  keepAliveSocket?: Socket;
 
   constructor(opts: ConstructorOpts) {
     this.root = opts.root;
@@ -31,7 +33,7 @@ export class Lake {
     return `localhost:${this.port}`;
   }
 
-  start() {
+  async start() {
     mkdirpSync(this.root, { mode: 0o755 });
     mkdirpSync(this.logs, { mode: 0o755 });
 
@@ -45,6 +47,7 @@ export class Lake {
       '-log.filemode=rotate',
       '-log.path',
       join(this.logs, 'zlake.log'),
+      '-keepalive',
     ];
     for (const origin of this.cors) {
       args.push(`--cors.origin=${origin}`);
@@ -54,32 +57,45 @@ export class Lake {
       stdio: ['inherit', 'inherit', 'inherit'],
       windowsHide: true,
     };
-    // For unix systems, pass posix pipe read file descriptor into lake process.
-    // In the event of Zui getting shutdown via `SIGKILL`, this will let lake
-    // know that it has been orphaned and to shutdown.
-
-    if (process.platform !== 'win32') {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { readfd } = require('node-pipe').pipeSync();
-      opts.stdio.push(readfd);
-      args.push(`-brimfd=${opts.stdio.length - 1}`);
-    }
-
     this.lake = spawn(this.bin, args, opts as SpawnOptions);
     this.lake.on('error', (err) => {
       console.error('lake spawn error', err);
     });
 
-    return waitFor(async () => this.isUp());
+    const ok = await waitFor(async () => this.isUp());
+    if (ok) {
+      // Poll the keepalive endpoint for the life of the program. If the
+      // connection goes away the Zed process know that it has been orphaned and
+      // will shutdown.
+      get(`http://${this.addr()}/keepalive`, (res) => {
+        if (res.statusCode !== 200) {
+          console.error(`error polling keepalive endpoint: ${res.statusCode} ${res.statusMessage}`)
+        } else {
+          this.keepAliveSocket = res.socket
+        }
+      })
+    }
+    return ok
   }
 
   async stop(): Promise<boolean> {
+    await this.stopPoll()
     if (this.lake) {
-      this.lake.kill('SIGTERM');
       return waitFor(() => this.isDown());
     } else {
       return true;
     }
+  }
+
+  stopPoll(): Promise<void> {
+    return new Promise(resolve => {
+      if (this.keepAliveSocket) {
+        this.keepAliveSocket?.on('close', resolve)
+        this.keepAliveSocket?.end()
+      } else {
+        resolve()
+      }
+    })
   }
 
   async isUp() {
