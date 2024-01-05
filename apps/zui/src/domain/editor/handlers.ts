@@ -15,8 +15,6 @@ import {submitSearch} from "src/domain/session/handlers"
 import {createHandler} from "src/core/handlers"
 import Selection from "src/js/state/Selection"
 
-type ColumnName = string | string[]
-
 export const copyValueToClipboard = createHandler(
   "editor.copyValueToClipboard",
   ({select}) => {
