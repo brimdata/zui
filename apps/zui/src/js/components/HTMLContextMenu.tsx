@@ -14,6 +14,7 @@ import ReactDOM from "react-dom"
 import classNames from "classnames"
 import useListener from "./hooks/useListener"
 import doc from "../lib/doc"
+import {handleClick} from "src/core/menu/handle-click"
 
 export default function HTMLContextMenu() {
   const [template, setTemplate] = useState(null)
@@ -40,7 +41,7 @@ function HTMLMenuItem({item}) {
   } else {
     return (
       <li
-        onClick={() => item.click(item)}
+        onClick={() => handleClick(item)}
         className={classNames({disabled: item.enabled === false})}
         aria-label={item.label}
       >

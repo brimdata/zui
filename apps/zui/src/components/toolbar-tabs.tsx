@@ -43,6 +43,7 @@ export function ToolbarTabs(props: {
               call(opts.click)
             }}
             aria-pressed={opts.checked}
+            aria-label={opts.label}
             data-section-tab-value={opts.label.toLowerCase()}
             disabled={opts.enabled === false}
           >

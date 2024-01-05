@@ -107,6 +107,10 @@ export default class TestApp {
     await this.mainWin.keyboard.type(zed);
   }
 
+  async getEditorText() {
+    return await this.mainWin.getByTestId('main-editor').textContent();
+  }
+
   async getViewerResults(includeHeaders = true): Promise<string[]> {
     const fields = await this.mainWin.locator('.zed-table__cell');
     await fields.waitFor();
@@ -156,6 +160,10 @@ export default class TestApp {
 
   async click(role: Role | RegExp, name?: string) {
     return this.locate(role, name).click();
+  }
+
+  async rightClick(role: Role | RegExp, name?: string) {
+    return this.locate(role, name).click({ button: 'right' });
   }
 
   async attached(role: Role | RegExp, name?: string) {

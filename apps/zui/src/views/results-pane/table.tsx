@@ -73,7 +73,7 @@ export function Table() {
           e.preventDefault()
           const rootValue = field.rootRecord
           dispatch(Selection.set({value, field, rootValue}))
-          valueContextMenu(value, field, cell.value)
+          showMenu(valueContextMenu(value, field, cell.value))
         },
         onClick: (e, value, field) => {
           e.preventDefault()
