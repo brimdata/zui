@@ -28,11 +28,11 @@ play('right-click-menus', (app, test) => {
     await app.attached(/count\(\) by this\["Property URL"\]/);
   });
 
-  test.only('table header menu', async () => {
+  test('table header menu', async () => {
     await app.query('fuse');
     await app.click('button', 'Table');
     await app.click('button', 'Property URL Header Menu');
     await app.click(/Hide Column/);
-    await app.detached(/Property URL/);
+    await app.detached('columnheader', 'Property URL');
   });
 });
