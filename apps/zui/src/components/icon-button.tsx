@@ -24,6 +24,7 @@ const BG = styled.button`
   justify-content: center;
   flex-shrink: 0;
   transition: background 100ms;
+  -webkit-app-region: no-drag;
 
   &:disabled {
     opacity: 0.2;
