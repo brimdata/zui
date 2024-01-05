@@ -28,6 +28,22 @@ play('right-click-menus', (app, test) => {
     await app.attached(/count\(\) by this\["Property URL"\]/);
   });
 
+  test('sort asc', async () => {
+    await app.query('fuse');
+    await app.click('button', 'Table');
+    await app.rightClick(/zillow\.com/);
+    await app.click(/Sort Asc/);
+    await app.attached(/sort this\["Property URL"\]/);
+  });
+
+  test('sort desc', async () => {
+    await app.query('fuse');
+    await app.click('button', 'Inspector');
+    await app.rightClick(/zillow\.com/);
+    await app.click(/Sort Desc/);
+    await app.attached(/sort -r this\["Property URL"\]/);
+  });
+
   test('table header menu', async () => {
     await app.query('fuse');
     await app.click('button', 'Table');

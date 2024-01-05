@@ -106,18 +106,17 @@ export const pivotToValues = createHandler(
   }
 )
 
-export const sortAsc = createHandler(
-  "editor.sortAsc",
-  ({dispatch}, columnName: ColumnName) => {
-    dispatch(appendQuerySortBy(columnName, "asc"))
-    submitSearch()
-  }
-)
+export const sortAsc = createHandler("editor.sortAsc", ({dispatch, select}) => {
+  const field = select(Selection.getField)
+  dispatch(appendQuerySortBy(field.path, "asc"))
+  submitSearch()
+})
 
 export const sortDesc = createHandler(
   "editor.sortDesc",
-  ({dispatch}, columnName: ColumnName) => {
-    dispatch(appendQuerySortBy(columnName, "desc"))
+  ({dispatch, select}) => {
+    const field = select(Selection.getField)
+    dispatch(appendQuerySortBy(field.path, "desc"))
     submitSearch()
   }
 )
