@@ -1,5 +1,4 @@
 import {createField, createRecord} from "@brimdata/zed-js"
-import {joinParts, parallelizeProcs, splitParts} from "../lib/Program"
 import program from "./program"
 
 describe("excluding and including", () => {
@@ -228,59 +227,6 @@ describe("#hasAnalytics()", () => {
 
   test("for filter proc", () => {
     expect(program('* | filter _path=="conn"').hasAnalytics()).toBe(false)
-  })
-})
-
-describe("Get Parts of Program", () => {
-  const script = 'md5=="123" _path=="files" | count() by md5 | sort -r | head 1'
-
-  test("get filter part", () => {
-    expect(splitParts(script)[0]).toBe('md5=="123" _path=="files"')
-  })
-
-  test("get filter part when none", () => {
-    expect(splitParts("* | count()")[0]).toBe("*")
-  })
-
-  test("get proc part", () => {
-    expect(splitParts(script)[1]).toBe("count() by md5 | sort -r | head 1")
-  })
-
-  test("get proc part when none", () => {
-    expect(splitParts('_path=="files"')[1]).toEqual("")
-  })
-})
-
-describe("Join Parts of Program", () => {
-  const filter = 'md5=="123"'
-  const proc = "count() by _path"
-
-  test("#joinParts", () => {
-    expect(joinParts(filter, proc)).toBe('md5=="123" | count() by _path')
-  })
-
-  test("#joinParts when empty filter", () => {
-    expect(joinParts("", proc)).toBe("* | count() by _path")
-  })
-})
-
-describe("Parallelizing multiple programs", () => {
-  const a = 'md5=="123" | count()'
-  const b = 'md5=="123" | head 5'
-  const c = 'md5=="123" | count() by _path'
-
-  test("#parallelizeProcs when programs have same filter", () => {
-    expect(parallelizeProcs([a, b, c])).toEqual(
-      'md5=="123" | fork ( => count() => head 5 => count() by _path )'
-    )
-  })
-
-  test("#parallelizeProcs when programs do not have same filter", () => {
-    expect(() => {
-      parallelizeProcs([a, b, c, '_path=="conn"'])
-    }).toThrow(
-      'Filters must be the same in all programs: md5=="123", md5=="123", md5=="123", _path=="conn"'
-    )
   })
 })
 
