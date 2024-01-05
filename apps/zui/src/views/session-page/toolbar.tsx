@@ -43,7 +43,7 @@ export function Toolbar() {
         />
         <IconButton
           iconName="right_arrow"
-          label="Go Right"
+          label="Go Forward"
           iconSize={24}
           click={goForward}
           enabled={canGoForward()}
