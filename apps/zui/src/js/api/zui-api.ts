@@ -54,13 +54,14 @@ export default class ZuiApi {
   }
 
   createAbortable(tab?: string, tag?: string) {
-    this.abortables.abort({tab, tag})
+    try {
+      this.abortables.abort({tab, tag})
+    } catch (e) {
+      console.log("Abort Handled", e)
+    }
     const ctl = new AbortController()
     const id = this.abortables.add({
-      abort: () => {
-        console.log("aborted", tab, tag)
-        ctl.abort()
-      },
+      abort: () => ctl.abort(),
       tab,
       tag,
     })
