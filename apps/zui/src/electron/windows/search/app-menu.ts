@@ -1,6 +1,7 @@
 import {app, MenuItemConstructorOptions, shell, Menu} from "electron"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
+import pkg from "src/electron/pkg"
 import {closeWindowOp} from "../../ops/close-window-op"
 import {moveToCurrentDisplayOp} from "../../ops/move-to-current-display-op"
 import {openAboutWindowOp} from "../../ops/open-about-window-op"
@@ -284,7 +285,7 @@ export function compileTemplate(
       {
         label: "Github Repository",
         click() {
-          shell.openExternal("https://github.com/brimdata/zui")
+          shell.openExternal(pkg.repository)
         },
       },
       {

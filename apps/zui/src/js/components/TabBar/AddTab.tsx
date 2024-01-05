@@ -18,7 +18,12 @@ type Props = {
 export default function AddTab({onClick, left}: Props) {
   return (
     <BG style={{transform: `translateX(${left}px)`}}>
-      <IconButton iconName="plus" iconSize={18} click={onClick} />
+      <IconButton
+        label="New Tab"
+        iconName="plus"
+        iconSize={18}
+        click={onClick}
+      />
     </BG>
   )
 }

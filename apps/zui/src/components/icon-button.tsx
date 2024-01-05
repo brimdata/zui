@@ -23,6 +23,7 @@ const BG = styled.button`
   justify-content: center;
   flex-shrink: 0;
   transition: background var(--quick), transform var(--quick);
+  -webkit-app-region: no-drag;
 
   &:disabled {
     opacity: 0.2;

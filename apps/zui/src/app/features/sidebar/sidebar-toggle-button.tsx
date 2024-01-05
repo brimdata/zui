@@ -11,6 +11,8 @@ export const SidebarToggleButton = () => {
   return (
     <IconButton
       iconName={name}
+      label="Toggle Left Sidebar"
+      data-tooltip="Toggle Left Sidebar"
       iconSize={16}
       click={() => dispatch(Appearance.toggleSidebar())}
     />
@@ -24,6 +26,8 @@ export const RightSidebarToggleButton = () => {
   return (
     <IconButton
       iconName={name}
+      label="Toggle Right Sidebar"
+      data-tooltip="Toggle Right Sidebar"
       iconSize={16}
       click={() => dispatch(Appearance.toggleSecondarySidebar())}
     />
