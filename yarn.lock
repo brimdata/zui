@@ -15923,19 +15923,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-tooltip@npm:^4.2.7":
-  version: 4.2.7
-  resolution: "react-tooltip@npm:4.2.7"
-  dependencies:
-    prop-types: ^15.7.2
-    uuid: ^7.0.3
-  peerDependencies:
-    react: ">=16.0.0"
-    react-dom: ">=16.0.0"
-  checksum: f2f6a6ac1b924e30becfb200574b49abf23c31e79eeec72643643e2f64c620a77e4991e01e3482e3d4f692780ab15c0864118dc77980a9ce15fe2d1a3898d28c
-  languageName: node
-  linkType: hard
-
 "react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
@@ -18536,15 +18523,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^7.0.3":
-  version: 7.0.3
-  resolution: "uuid@npm:7.0.3"
-  bin:
-    uuid: dist/bin/uuid
-  checksum: f5b7b5cc28accac68d5c083fd51cca64896639ebd4cca88c6cfb363801aaa83aa439c86dfc8446ea250a7a98d17afd2ad9e88d9d4958c79a412eccb93bae29de
-  languageName: node
-  linkType: hard
-
 "v8-compile-cache-lib@npm:^3.0.1":
   version: 3.0.1
   resolution: "v8-compile-cache-lib@npm:3.0.1"
@@ -19317,7 +19295,6 @@ __metadata:
     react-redux: ^8.0.5
     react-router: 5.3.1
     react-spring: ^8.0.27
-    react-tooltip: ^4.2.7
     react-transition-group: ^4.4.5
     react-window: ^1.8.7
     regenerator-runtime: ^0.13.6
