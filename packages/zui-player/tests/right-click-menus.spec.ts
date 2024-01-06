@@ -3,7 +3,7 @@ import { getPath } from 'zui-test-data';
 
 play('right-click-menus', (app, test) => {
   test.beforeAll(async () => {
-    await app.dropFile(getPath('zillow.csv'));
+    await app.dropFile(getPath('small-zeek.zng'));
     await app.click('button', 'Load');
     await app.attached(/Successfully/);
     await app.click('button', 'Query Pool');
@@ -12,43 +12,61 @@ play('right-click-menus', (app, test) => {
   test('Inspector node menu', async () => {
     await app.click('button', 'Inspector');
     await app.click('button', 'Expand Rows');
-    await app.rightClick(/Days on Zillow/);
+    await app.rightClick(/_path/);
     await app.click(/Filter == Value/);
-    await app.attached(/this\["Days on Zillow"\]==55\./);
-    await app.rightClick(/"Auction"/);
+    await app.attached(/_path=="capture_loss"/);
+    await app.rightClick(/acks/);
     await app.click(/Count By Field/);
-    await app.attached(/count\(\) by this\["Listing description"\]/);
+    await app.attached(/| count\(\) by acks/);
   });
 
   test('table cell menu', async () => {
     await app.query('fuse');
     await app.click('button', 'Table');
-    await app.rightClick(/zillow\.com/);
+    await app.rightClick('gridcell', 'files');
     await app.click(/Count By Field/);
-    await app.attached(/count\(\) by this\["Property URL"\]/);
+    await app.attached(/count\(\) by _path/);
   });
 
   test('sort asc', async () => {
     await app.query('fuse');
     await app.click('button', 'Table');
-    await app.rightClick(/zillow\.com/);
+    await app.rightClick('gridcell', 'conn');
     await app.click(/Sort Asc/);
-    await app.attached(/sort this\["Property URL"\]/);
+    await app.attached(/sort _path/);
   });
 
   test('sort desc', async () => {
     await app.query('fuse');
     await app.click('button', 'Inspector');
-    await app.rightClick(/zillow\.com/);
+    await app.click('button', 'Collapse Rows');
+    await app.rightClick(/files/);
     await app.click(/Sort Desc/);
-    await app.attached(/sort -r this\["Property URL"\]/);
+    await app.attached(/sort -r _path/);
   });
 
-  test('table header menu', async () => {
+  test('hide table column', async () => {
     await app.query('fuse');
     await app.click('button', 'Table');
-    await app.click('button', 'Property URL Header Menu');
+    await app.click('button', 'ts Header Menu');
     await app.click(/Hide Column/);
-    await app.detached('columnheader', 'Property URL');
+    await app.detached('columnheader', 'ts');
+  });
+
+  test('virus total', async () => {
+    await app.query('cut id.orig_h');
+    await app.click('button', 'Inspector');
+    await app.click('button', 'Expand Rows');
+    await app.rightClick(/192.168.1.110/);
+    await app.click('listitem', 'Virus Total');
+  });
+
+  test('who is', async () => {
+    await app.query('cut id.orig_h');
+    await app.click('button', 'Inspector');
+    await app.click('button', 'Expand Rows');
+    await app.rightClick(/192.168.1.110/);
+    await app.click('listitem', 'Whois Lookup');
+    await app.attached(/Whois Result/);
   });
 });

@@ -69,7 +69,7 @@ function QueryTree(props: {
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()
   const initialOpenState = useSelector(Appearance.getQueriesOpenState)
-  selectQuery.useListener((id) => tree.current.select(id))
+  selectQuery.useListener((id) => tree.current?.select(id))
 
   return (
     <>

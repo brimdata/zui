@@ -26,7 +26,7 @@ export const headerContextMenu = createMenu(
     const dispatch = ctx.api.dispatch
     return [
       {
-        label: "Sort Ascending",
+        label: "Sort Asc",
         enabled: !when.isSortedAsc,
         click: () => {
           dispatch(appendQuerySortBy(column.path, "asc"))
@@ -34,7 +34,7 @@ export const headerContextMenu = createMenu(
         },
       },
       {
-        label: "Sort Descending",
+        label: "Sort Desc",
         enabled: !when.isSortedDesc,
         click: () => {
           dispatch(appendQuerySortBy(column.path, "desc"))

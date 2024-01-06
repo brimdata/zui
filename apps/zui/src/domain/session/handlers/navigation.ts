@@ -50,6 +50,8 @@ export const openVirusTotal = createHandler(
     const value = select(Selection.getValue)
     if (value instanceof zed.Primitive && !value.isUnset()) {
       invoke("openLinkOp", virusTotal.url(value.toString()))
+    } else {
+      console.error("Could not open this value with virus total")
     }
   }
 )
