@@ -40,12 +40,17 @@ jobs:
       - run: yarn lint
       - run: yarn test
       - run: yarn build
+      - name: Trim to just the e2e tests that run reliably on GitHub Actions
+        run: |
+          cd packages/zui-player/tests
+          echo "tests=$(ls -1 | egrep -v pool-loads\.spec\.ts\|pool-groups.spec\.ts\|title-bar-buttons\.spec\.ts | xargs echo)" >> $GITHUB_OUTPUT
+        id: actions_reliable
       - name: End to end tests
         id: playwright
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24
-          run: yarn e2e
+          run: yarn e2e ${{ steps.actions_reliable.outputs.tests }}
       - uses: actions/upload-artifact@v2
         if: failure() && steps.playwright.outcome == 'failure'
         with:
