@@ -43,6 +43,9 @@ function createLoader(root: string): Loader {
     analyzeP.on("error", (err) => {
       analyzeErr = err
     })
+    analyzeP.stdin.on("error", (err) => {
+      analyzeErr = err
+    })
 
     const handleRespMsg = async (jsonMsg) => {
       const {type, ...status} = jsonMsg
