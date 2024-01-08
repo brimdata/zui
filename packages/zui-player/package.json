@@ -3,7 +3,8 @@
   "private": true,
   "main": "./index.ts",
   "scripts": {
-    "test": "playwright test --config playwright.config.js"
+    "test": "playwright test -c playwright.config.js",
+    "ci": "playwright test -c ci.config.js"
   },
   "dependencies": {
     "@playwright/test": "next",
