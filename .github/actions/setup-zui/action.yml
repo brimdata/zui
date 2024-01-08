@@ -14,13 +14,6 @@ runs:
         cache: yarn
         node-version-file: .node-version
 
-    # Python version is pinned to something <3.12 to work around:
-    # https://github.com/brimdata/zui/issues/2882
-    - name: Install Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-
     - name: Cache NextJS Artifacts
       uses: jongwooo/next-cache@v1
 
