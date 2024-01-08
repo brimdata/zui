@@ -53,20 +53,21 @@ play('right-click-menus', (app, test) => {
     await app.detached('columnheader', 'ts');
   });
 
-  test('virus total', async () => {
-    await app.query('cut id.orig_h');
-    await app.click('button', 'Inspector');
-    await app.click('button', 'Expand Rows');
-    await app.rightClick(/192.168.1.110/);
-    await app.click('listitem', 'Virus Total');
-  });
-
   test('who is', async () => {
-    await app.query('cut id.orig_h');
+    await app.query('has(id.orig_h) | cut id.orig_h | head 1');
     await app.click('button', 'Inspector');
     await app.click('button', 'Expand Rows');
     await app.rightClick(/192.168.1.110/);
     await app.click('listitem', 'Whois Lookup');
     await app.attached(/Whois Result/);
+    await app.click('button', 'Done');
+  });
+
+  test('virus total', async () => {
+    await app.query('cut id.orig_h');
+    await app.click('button', 'Inspector');
+    await app.click('button', 'Expand Rows');
+    await app.rightClick(/192.168.1.110/);
+    await app.attached('listitem', 'Virus Total');
   });
 });
