@@ -14,7 +14,7 @@ import {Body} from "./body"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
-  color: var(--slate);
+  color: var(--fg-color-less);
   margin-top: 110px;
   padding: 0 24px;
   text-align: center;
@@ -34,11 +34,11 @@ const PaneSwitch = ({name}) => {
 const Pane = styled(DraggablePane)`
   height: 100%;
   width: 100%;
-  background: var(--sidebar-background);
   overflow-x: unset;
   grid-area: sidebar;
   display: flex;
   flex-direction: column;
+  font-size: 15px;
 `
 
 const SidebarTop = styled.div`

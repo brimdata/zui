@@ -1,7 +1,6 @@
 import React from "react"
 import {useSelector} from "react-redux"
-import {createFrom} from "src/app/commands/pins"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 import {Pool} from "src/app/core/pools/pool"
 import {Item} from "src/app/features/sidebar/item"
 import useLakeId from "src/app/router/hooks/use-lake-id"
@@ -10,8 +9,8 @@ import {VirtualList} from "src/js/components/virtual-list"
 import Pools from "src/js/state/Pools"
 import {State} from "src/js/state/types"
 import styled from "styled-components"
-import {Button} from "../../../app/query-home/title-bar/button"
 import {newPool} from "src/domain/pools/handlers"
+import {setFromPin} from "src/domain/session/handlers"
 
 const BG = styled.div`
   width: 100%;
@@ -32,7 +31,6 @@ const Message = styled(Content)`
 `
 
 const Card = styled.section`
-  background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,7 +48,7 @@ export function isMissingPoolError(e: unknown) {
 }
 
 function PoolsList({pools}: {pools: Pool[]}) {
-  const rowHeight = 26
+  const rowHeight = 32
 
   return (
     <Card style={{maxHeight: rowHeight * pools.length + 20 + "px"}}>
@@ -67,7 +65,7 @@ function PoolsList({pools}: {pools: Pool[]}) {
               text={props.item.name}
               style={props.style}
               icon={<Icon name="pool" />}
-              onClick={() => createFrom.run(props.item.name)}
+              onClick={() => setFromPin(props.item.name)}
               aria={props.aria}
             />
           )
@@ -86,7 +84,7 @@ function NoPoolsMessage() {
         }
       </Message>
       <Message>
-        <Button onClick={() => newPool()}>Create Pool</Button>
+        <button onClick={() => newPool()}>Create Pool</button>
       </Message>
     </>
   )

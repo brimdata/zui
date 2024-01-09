@@ -1,0 +1,17 @@
+.tooltip {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding-inline: 0.5rem;
+    padding-block: 0.1rem;
+    background: var(--bg-color);
+    border-radius: 3px;
+    width: fit-content;
+    z-index: 999;
+    pointer-events: none;
+    max-inline-size: var(--measure);
+    border: 1px solid var(--border-color-more);
+    box-shadow:
+        hsl(212 20% 10% / 0.25) 0 1px 3px -1px,
+        hsl(0 0% 0% / 0.21) 0 2px 10px -1px;
+}

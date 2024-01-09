@@ -11,6 +11,7 @@ export function useDebut(args: {afterExit?: () => any}) {
       setIsExiting,
     },
     exit: () => setIsExiting(true),
+    cancelExit: () => setIsExiting(false),
     isExiting,
   }
 

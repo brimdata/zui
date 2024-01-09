@@ -7,7 +7,6 @@ export function activateSuricataCorrelations() {
   correlations.create(SURICATA_CONNS, {
     when: whenSuricata,
     query: () => {
-      debugger
       return zedScript`
         from ${session.poolName} 
         | _path=="conn"

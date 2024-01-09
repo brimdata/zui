@@ -1,22 +1,20 @@
-import {ZedColumn} from "src/components/zed-table/column"
 import {createMenu} from "src/core/menu"
+import {hideColumn, showColumn} from "src/domain/results/handlers"
+import {TableColumn} from "src/js/state/Table/selectors"
 
-export const columnListItemMenu = createMenu(
-  "columnListItemMenu",
-  (ctx, column: ZedColumn) => {
-    return [
-      {
-        label: "Hide Column",
-        iconName: "show",
-        click: () => column.hide(),
-        visible: column.isVisible,
-      },
-      {
-        label: "Show Column",
-        iconName: "hide",
-        click: () => column.show(),
-        visible: !column.isVisible,
-      },
-    ]
-  }
-)
+export const columnListItemMenu = createMenu((ctx, column: TableColumn) => {
+  return [
+    {
+      label: "Hide Column",
+      iconName: "show",
+      click: () => hideColumn(column.id),
+      visible: column.isVisible,
+    },
+    {
+      label: "Show Column",
+      iconName: "hide",
+      click: () => showColumn(column.id),
+      visible: !column.isVisible,
+    },
+  ]
+})

@@ -8,9 +8,9 @@ const Area = styled.div`
   background: transparent;
   pointer-events: all !important;
   z-index: 99;
-  --size: 7px;
+  --size: 11px;
   --padding: 1px;
-  --offset: -5px;
+  --offset: -4px;
 
   &.debug {
     background: red;
@@ -93,6 +93,7 @@ export default class DragAnchor extends React.Component<Props> {
     const body = document.body
     body.style.cursor = this.getCursor()
     body.style.userSelect = "none"
+    body.classList.add("is-dragging")
     document.addEventListener("mousemove", this.move)
     document.addEventListener("mouseup", this.up)
     call(this.props.onStart, e)
@@ -109,6 +110,7 @@ export default class DragAnchor extends React.Component<Props> {
     if (body) {
       body.style.cursor = ""
       body.style.userSelect = ""
+      body.classList.remove("is-dragging")
       document.removeEventListener("mousemove", this.move)
       document.removeEventListener("mouseup", this.up)
     }

@@ -1,6 +1,5 @@
 import {matchPath} from "react-router"
 import * as Pools from "../Pools/selectors"
-import Tabs from "../Tabs"
 import {State} from "../types"
 import Lakes from "../Lakes"
 import {MemoryHistory} from "history"
@@ -24,7 +23,7 @@ export const getHistory = (
   state,
   windowName = global.windowName
 ): MemoryHistory => {
-  const id = Tabs.getActive(state)
+  const id = getActive(state)
   if (windowName === "search") return global.tabHistories.getOrCreate(id)
   if (windowName === "detail" || windowName === "hidden")
     return global.windowHistory

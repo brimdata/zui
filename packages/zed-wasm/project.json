@@ -5,7 +5,7 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "dependsOn": ["build-go"],
+"dependsOn": ["build-go"],
       "executor": "@nrwl/esbuild:esbuild",
       "options": {
         "main": "packages/zed-wasm/src/index.ts",
@@ -21,7 +21,7 @@
     },
     "build-go": {
       "executor": "nx:run-commands",
-      "outputs": ["dist/packages/zed-wasm/main.wasm"],
+      "outputs": ["{workspaceRoot}/dist/packages/zed-wasm/main.wasm"],
       "options": {
         "command": "go build -tags=noasm -o ../../dist/packages/zed-wasm/main.wasm main.go",
         "cwd": "packages/zed-wasm"

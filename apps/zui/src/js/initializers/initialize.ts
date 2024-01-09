@@ -6,7 +6,6 @@ import initIpcListeners from "./initIpcListeners"
 import initStore from "./initStore"
 import {initAutosave} from "./initAutosave"
 import {commands} from "src/app/commands/command"
-import {menus} from "src/core/menu"
 import {initHandlers} from "./init-handlers"
 import {invoke} from "src/core/invoke"
 import {WindowName} from "src/electron/windows/types"
@@ -15,6 +14,9 @@ import {initializeTabs} from "./init-tabs"
 import {initializeMonaco} from "./init-monaco"
 import {initializePluginContextSync} from "./init-plugin-context-sync"
 import toast from "react-hot-toast"
+import {startTransition} from "react"
+import {initResizeListener} from "./init-resize-listener"
+import {setMenuContext} from "src/core/menu"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -42,18 +44,21 @@ export default async function initialize(
   initDOM()
   initIpcListeners(store)
   initHandlers({
+    transition: startTransition,
+    oldApi: api,
     dispatch: store.dispatch,
     select: (fn) => fn(store.getState()),
     invoke: invoke,
     toast: toast,
   })
+  setMenuContext({select: (fn) => fn(store.getState()), api})
   initDebugGlobals(store, api)
   initAutosave(store)
   commands.setContext(store, api)
-  menus.setContext({api})
   invoke("windowInitialized", global.windowId)
   initializeTabs(store)
   initializeMonaco()
   initializePluginContextSync(store)
+  initResizeListener()
   return {store, api}
 }

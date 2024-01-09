@@ -9,12 +9,14 @@ import React, {
   useRef,
 } from "react"
 import {NodeState} from "react-arborist"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
 import styled, {CSSProperties} from "styled-components"
 
+export const TREE_ITEM_HEIGHT = 32
+
 const Container = styled.div`
-  height: 28px;
+  height: ${TREE_ITEM_HEIGHT}px;
   display: flex;
   align-items: center;
   cursor: default;
@@ -47,11 +49,11 @@ const BG = styled.div`
   border-radius: 6px;
 
   &:hover:not(.dragging) {
-    background: var(--sidebar-item-hover);
+    background: var(--emphasis-bg-less);
   }
 
   &:active:not(.dragging) {
-    background: var(--sidebar-item-active);
+    background: var(--emphasis-bg);
     box-shadow: var(--sidebar-item-active-shadow);
   }
 
@@ -66,18 +68,17 @@ const BG = styled.div`
   &[aria-selected="true"] {
     border-radius: 0;
     outline: none;
-    background-color: var(--primary-color);
-    box-shadow: var(--sidebar-item-active-shadow);
-    color: white;
+    box-shadow: var(--shadow-small);
+    background: var(--selected-bg);
+
     svg {
-      fill: white;
       opacity: 1;
     }
     &:hover {
-      background-color: var(--primary-color);
+      background-color: var(--selected-bg);
     }
     &:active {
-      background-color: var(--primary-color-dark);
+      background-color: var(--selected-bg-active);
     }
     &.selected-start {
       border-top-left-radius: 6px;
@@ -103,11 +104,9 @@ const Input = styled.input`
 
 const ItemIconBG = styled.div<{isFolder: boolean}>`
   margin-left: ${(p) => (p.isFolder ? 0 : 16)}px;
+  display: flex;
   svg {
-    width: 14px;
-    height: 14px;
     opacity: 0.5;
-    fill: var(--foreground-color);
   }
 `
 
@@ -124,9 +123,6 @@ const ToggleLink = styled.a`
 const ProgressBG = styled.div`
   .progress-track {
     background-color: rgba(0, 0, 0, 0.15);
-  }
-  .progress-fill {
-    background-color: white;
   }
   flex: 0.5;
   max-width: 50px;
@@ -147,7 +143,7 @@ function Toggle(props: ItemProps) {
         props.onToggle()
       }}
     >
-      <Icon name={`chevron-${props.state.isOpen ? "down" : "right"}`} />
+      <Icon name={`chevron_${props.state.isOpen ? "down" : "right"}`} />
     </ToggleLink>
   )
 }

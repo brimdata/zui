@@ -17,7 +17,7 @@
     font-weight: 400;
 
     &:hover {
-      color: var(--slate);
+      color: var(--fg-color-less);
     }
 
     &:active {
@@ -27,6 +27,7 @@
 
   .error-details {
     margin-top: 12px;
+
     p {
       font-size: 12px;
       font-weight: 400;

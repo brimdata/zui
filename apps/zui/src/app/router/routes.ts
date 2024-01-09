@@ -1,5 +1,5 @@
 import {matchPath} from "react-router"
-import {IconName} from "../core/icon-temp"
+import {IconName} from "../../components/icon"
 
 /**
  * A single place to store all app route information. The title field is
@@ -31,7 +31,7 @@ export const queryVersion: Route = {
 export const lakeReleaseNotes: Route = {
   title: "Release Notes",
   path: `/release-notes`,
-  icon: "doc-plain",
+  icon: "doc_plain",
 }
 
 export const releaseNotes: Route = {

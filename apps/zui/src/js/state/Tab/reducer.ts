@@ -6,8 +6,8 @@ import {reducer as table} from "../Table/reducer"
 import logDetails from "../LogDetails/reducer"
 import {reducer as results} from "../Results/reducer"
 import {reducer as histogram} from "../Histogram/reducer"
+import {reducer as selection} from "../Selection/reducer"
 import {nanoid} from "@reduxjs/toolkit"
-import {reducer as resultsToolbar} from "../ResultsToolbar/slice"
 
 const tabReducer = combineReducers({
   editor,
@@ -19,9 +19,9 @@ const tabReducer = combineReducers({
   layout,
   logDetails,
   results,
-  resultsToolbar,
   histogram,
   table,
+  selection,
 })
 
 export type TabReducer = typeof tabReducer

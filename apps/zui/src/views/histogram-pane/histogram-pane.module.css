@@ -1,7 +1,7 @@
 .pane {
   width: 100%;
   position: relative;
-  border-bottom: 1px solid var(--border-color-dark);
+  border-bottom: 1px solid var(--border-color-more);
 }
 
 
@@ -12,8 +12,19 @@
   width: 260px;
   border: none;
   border-radius: 8px;
-  box-shadow: var(--shadow-elevation-medium);
-  background: white;
+  box-shadow: 0 20px 50px 10px rgb(0 0 0 /0.25);
+  background: var(--bg-color);
+  color: var(--fg-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dialog::backdrop {
+    opacity: 0.8;
+  }
+
+  .dialog {
+    border: 1px solid var(--border-color);
+  }
 }
 
 .tooltip {
@@ -45,7 +56,7 @@
 
 .graphic {
   user-select: none;
-  color: var(--foreground-color);
+  color: var(--fg-color);
 }
 
 .graphic :global(.domain),
@@ -66,6 +77,6 @@ div.toolbar {
 
 .title {
   font-size: 0.7rem;
-  color: var(--foreground-color-light);
+  color: var(--fg-color-less);
   /* color: var(--border-color); */
 }

@@ -18,15 +18,19 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   font-family: var(--body-font);
-  color: var(--foreground-color);
-  background-color: var(--background-color);
+  color: var(--fg-color);
   font-size: 14px;
+
+  &:not(.is-mac) {
+    background-color: var(--window-color);
+  }
 }
 
 input,
 button,
 textarea,
 select {
+  color: var(--fg-color);
   font: inherit;
 }
 
@@ -60,4 +64,32 @@ body.no-select {
 
 body.col-resize {
   cursor: col-resize;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+button {
+  user-select: none;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--emphasis-bg-less);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--emphasis-bg);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+*::-webkit-scrollbar-corner {
+  background-color: var(--emphasis-bg-less);
 }

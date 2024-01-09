@@ -1,6 +1,6 @@
+import {submitSearch} from "src/domain/session/handlers"
 import {createCommand} from "./command"
-import submitSearch from "src/app/query-home/flows/submit-search"
 
-export const runQuery = createCommand("submitSearch", ({dispatch}) => {
-  dispatch(submitSearch())
+export const runQuery = createCommand("submitSearch", () => {
+  submitSearch()
 })

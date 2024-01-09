@@ -97,7 +97,7 @@ export default class TestApp {
 
   async query(zed: string): Promise<void> {
     await this.setEditor(zed);
-    await this.mainWin.getByRole('button', { name: 'run' }).click();
+    await this.mainWin.getByRole('button', { name: 'Run Query' }).click();
     await this.mainWin.getByRole('status', { name: 'fetching' }).isHidden();
   }
 
@@ -105,6 +105,10 @@ export default class TestApp {
     await this.mainWin.getByTestId('main-editor').click();
     await this.mainWin.keyboard.press(isMac() ? 'Meta+KeyA' : 'Control+KeyA');
     await this.mainWin.keyboard.type(zed);
+  }
+
+  async getEditorText() {
+    return await this.mainWin.getByTestId('main-editor').textContent();
   }
 
   async getViewerResults(includeHeaders = true): Promise<string[]> {
@@ -158,6 +162,10 @@ export default class TestApp {
     return this.locate(role, name).click();
   }
 
+  async rightClick(role: Role | RegExp, name?: string) {
+    return this.locate(role, name).click({ button: 'right' });
+  }
+
   async attached(role: Role | RegExp, name?: string) {
     return this.locate(role, name).waitFor();
   }
@@ -184,9 +192,9 @@ export default class TestApp {
 
   locate(role: Role | RegExp, name?: string) {
     if (role instanceof RegExp) {
-      return this.mainWin.getByText(role);
+      return this.mainWin.getByText(role).first();
     } else {
-      return this.mainWin.getByRole(role, { name, exact: true });
+      return this.mainWin.getByRole(role, { name, exact: true }).first();
     }
   }
 

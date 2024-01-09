@@ -9,7 +9,7 @@
     font-size: 14px;
     font-weight: 600;
     text-align: center;
-    color: var(--foreground-color-light);
+    color: var(--fg-color-less);
 }
 
 .toolbarActions {
@@ -24,7 +24,7 @@
     min-width: 0;
     display: grid;
     grid-template-rows: 44px 1fr;
-    background: white;
+    background: var(--bg-color);
     border-radius: 6px;
     box-shadow: var(--shadow-elevation-low);
 }
