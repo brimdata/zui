@@ -124,9 +124,6 @@ const ProgressBG = styled.div`
   .progress-track {
     background-color: rgba(0, 0, 0, 0.15);
   }
-  .progress-fill {
-    background-color: white;
-  }
   flex: 0.5;
   max-width: 50px;
   margin: 0 10px;
