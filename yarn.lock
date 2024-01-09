@@ -14290,15 +14290,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-addon-api@npm:*":
-  version: 6.1.0
-  resolution: "node-addon-api@npm:6.1.0"
-  dependencies:
-    node-gyp: latest
-  checksum: 3a539510e677cfa3a833aca5397300e36141aca064cdc487554f2017110709a03a95da937e98c2a14ec3c626af7b2d1b6dabe629a481f9883143d0d5bff07bf2
-  languageName: node
-  linkType: hard
-
 "node-addon-api@npm:^1.6.3":
   version: 1.7.2
   resolution: "node-addon-api@npm:1.7.2"
@@ -14382,16 +14373,6 @@ __metadata:
   version: 1.1.12
   resolution: "node-machine-id@npm:1.1.12"
   checksum: e23088a0fb4a77a1d6484b7f09a22992fd3e0054d4f2e427692b4c7081e6cf30118ba07b6113b6c89f1ce46fd26ec5ab1d76dcaf6c10317717889124511283a5
-  languageName: node
-  linkType: hard
-
-"node-pipe@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "node-pipe@npm:0.1.1"
-  dependencies:
-    node-addon-api: "*"
-    node-gyp: latest
-  conditions: (os=darwin | os=linux)
   languageName: node
   linkType: hard
 
@@ -19112,10 +19093,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#98d319dcdc7a9a7399d3f4705ef2eecc02d7e8b9":
+"zed@brimdata/zed#efe60d08c47257a0689ee9ce218fcad80f0e7ecb":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=98d319dcdc7a9a7399d3f4705ef2eecc02d7e8b9"
-  checksum: 0352ecf9fa565af22de1d2cc8a515d7df94340c6dfe543f87424d3410a6c07dcb4802a2876311e0677d65e18d7063958d097c239902da28932e8342dadd64e18
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=efe60d08c47257a0689ee9ce218fcad80f0e7ecb"
+  checksum: c03952147dc1ec44c5962a1d883ea8b3df56264058d1e95a215edb8c96d87a52a430651f85e4296f0d18dce1342186ac7d1191a3868a488fc11c996c9af30433
   languageName: node
   linkType: hard
 
@@ -19274,7 +19255,6 @@ __metadata:
     msw: ^0.36.8
     next: ^13.3.0
     node-fetch: ^2.6.1
-    node-pipe: ^0.1.1
     nodemon: ^2.0.22
     npm-run-all: ^4.1.5
     ohm-js: ^17.0.4
@@ -19310,13 +19290,10 @@ __metadata:
     use-resize-observer: ^8.0.0
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#98d319dcdc7a9a7399d3f4705ef2eecc02d7e8b9"
+    zed: "brimdata/zed#efe60d08c47257a0689ee9ce218fcad80f0e7ecb"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  dependenciesMeta:
-    node-pipe:
-      optional: true
   languageName: unknown
   linkType: soft

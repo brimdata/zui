@@ -54,14 +54,12 @@ export class Lake {
       stdio: ['inherit', 'inherit', 'inherit'],
       windowsHide: true,
     };
-    // For unix systems, pass posix pipe read file descriptor into lake process.
+    // For unix systems, pass a pipe file descriptor into the lake process.
     // In the event of Zui getting shutdown via `SIGKILL`, this will let lake
     // know that it has been orphaned and to shutdown.
 
     if (process.platform !== 'win32') {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { readfd } = require('node-pipe').pipeSync();
-      opts.stdio.push(readfd);
+      opts.stdio.push('pipe');
       args.push(`-brimfd=${opts.stdio.length - 1}`);
     }
 
