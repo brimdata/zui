@@ -111,7 +111,7 @@ test('zq with a bad zed ', async () => {
     input: createReadStream(path),
   });
 
-  expect(promise).rejects.toThrowError('error parsing Zed');
+  await expect(promise).rejects.toThrowError('error parsing Zed');
 });
 
 test('head 100 on guns ', async () => {
