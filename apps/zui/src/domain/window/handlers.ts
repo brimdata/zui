@@ -51,7 +51,12 @@ export const openTab = createHandler(
   }
 )
 
-export const activatePane = createHandler(
+export const activatePane = createHandler(({dispatch}, name: PaneName) => {
+  dispatch(Appearance.showSecondarySidebar())
+  dispatch(Layout.setCurrentPaneName(name))
+})
+
+export const togglePane = createHandler(
   ({select, dispatch}, name: PaneName) => {
     if (
       select(Appearance.secondarySidebarIsOpen) &&

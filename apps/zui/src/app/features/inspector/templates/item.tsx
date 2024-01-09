@@ -18,6 +18,7 @@ export function clickHandlers(view: View) {
 
 export function item(view: View, mode: RenderMode) {
   const props = {
+    role: "gridcell",
     key: "item-" + view.id,
     className: view.className,
     ...clickHandlers(view),

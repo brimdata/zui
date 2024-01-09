@@ -7,6 +7,7 @@ import Modal from "src/js/state/Modal"
 import {invoke} from "src/core/invoke"
 import {activatePane} from "src/domain/window/handlers"
 import Selection from "src/js/state/Selection"
+import LogDetails from "src/js/state/LogDetails"
 
 export const goBack = createHandler("session.goBack", ({dispatch}) => {
   dispatch(tabHistory.goBack())
@@ -32,8 +33,13 @@ export const toggleHistoryPane = createHandler(
   () => activatePane("history")
 )
 
-export const showValueDetails = createHandler("session.showValueDetails", () =>
-  activatePane("detail")
+export const showValueDetails = createHandler(
+  "session.showValueDetails",
+  ({dispatch, select}) => {
+    const value = select(Selection.getRootValue)
+    dispatch(LogDetails.push(value as any))
+    activatePane("detail")
+  }
 )
 
 export const showWhoIs = createHandler(

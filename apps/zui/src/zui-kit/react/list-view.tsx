@@ -68,7 +68,7 @@ export const Row: React.ComponentType<
     }
 
     return (
-      <div className="zed-view" style={{...style, ...innerStyle}}>
+      <div role="row" className="zed-view" style={{...style, ...innerStyle}}>
         {render}
       </div>
     )

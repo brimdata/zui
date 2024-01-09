@@ -70,4 +70,23 @@ play('right-click-menus', (app, test) => {
     await app.rightClick(/192.168.1.110/);
     await app.attached('listitem', 'Virus Total');
   });
+
+  test('inspector show details', async () => {
+    await app.query('_path=="conn" | head 1');
+    await app.click('button', 'Inspector');
+    await app.click('button', 'Expand Rows');
+    await app.rightClick('gridcell', 'conn');
+    await app.click('listitem', 'Show In Detail Pane');
+    await app.attached('heading', 'Fields');
+    await app.click('button', 'Toggle Right Sidebar'); // Hide It Again
+  });
+
+  test('table show details', async () => {
+    await app.query('_path=="conn" | head 1');
+    await app.click('button', 'Table');
+    await app.rightClick('gridcell', 'conn');
+    await app.click('listitem', 'Show In Detail Pane');
+    await app.attached('heading', 'Fields');
+    await app.click('button', 'Toggle Right Sidebar'); // Hide It Again
+  });
 });
