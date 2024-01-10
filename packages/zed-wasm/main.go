@@ -11,6 +11,7 @@ import (
 
 	"github.com/brimdata/zed"
 	"github.com/brimdata/zed/compiler"
+	"github.com/brimdata/zed/compiler/parser"
 	"github.com/brimdata/zed/pkg/storage"
 	"github.com/brimdata/zed/runtime"
 	"github.com/brimdata/zed/zbuf"
@@ -21,6 +22,7 @@ import (
 
 func main() {
 	wasm.Expose("zq", zq)
+	wasm.Expose("parse", parse)
 	wasm.Ready()
 	<-make(chan struct{})
 }
@@ -59,7 +61,7 @@ func zq(opts opts) wasm.Promise {
 			return "", errInvalidInput
 		}
 		zctx := zed.NewContext()
-		zr, err := anyio.NewReaderWithOpts(zctx, r, anyio.ReaderOpts{
+		zr, err := anyio.NewReaderWithOpts(zctx, r, nil, anyio.ReaderOpts{
 			Format: opts.InputFormat,
 		})
 		if err != nil {
@@ -87,6 +89,24 @@ func zq(opts opts) wasm.Promise {
 		}
 		return buf.String(), nil
 	})
+}
+
+func parse(program string) (interface{}, error) {
+	ast, err := parser.ParseZed(nil, program)
+	result := ParseResult{AST: ast}
+	if err != nil {
+		var ok bool
+		result.Error, ok = err.(*parser.Error)
+		if !ok {
+			return nil, err
+		}
+	}
+	return result, nil
+}
+
+type ParseResult struct {
+	AST   interface{}   `wasm:"ast"`
+	Error *parser.Error `wasm:"error"`
 }
 
 func readableStream(readable js.Value) io.Reader {

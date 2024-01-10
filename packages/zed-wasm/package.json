@@ -2,7 +2,11 @@
   "name": "@brimdata/zed-wasm",
   "version": "0.0.17",
   "homepage": "https://github.com/brimdata/zed",
-  "type": "module",
+  "type": "commonjs",
+  "exports": "./src/index.js",
+  "browser": {
+    "./src/index.js": "./src/browser.js"
+  },
   "keywords": [
     "zed",
     "data",

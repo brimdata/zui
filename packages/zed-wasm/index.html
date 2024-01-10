@@ -43,9 +43,12 @@
 
     <script type="module" src="test/zq.test.js"></script>
 
+    <script type="module" src="test/parse.test.js"></script>
+
     <script type="module" class="mocha-exec">
-      const { zq } = await import('../../dist/packages/zed-wasm/index.js');
+      const { zq, parse } = await import('../../dist/packages/zed-wasm/index.js');
       window.zq = zq;
+      window.parse = parse;
       mocha.run();
     </script>
 

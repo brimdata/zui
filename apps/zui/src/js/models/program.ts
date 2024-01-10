@@ -1,5 +1,5 @@
 import * as zed from "@brimdata/zed-js"
-import {parse as parseAst} from "zed/compiler/parser/parser"
+import {parse as parseAst} from "@brimdata/zed-wasm"
 import {isEmpty, last} from "lodash"
 import {trim} from "../lib/Str"
 import ast, {ANALYTIC_PROCS} from "./ast"
@@ -64,10 +64,12 @@ export default function (p = "") {
       return this
     },
 
-    ast() {
+    async ast() {
       let tree
       try {
-        tree = parseAst(p)
+        let res = await parseAst(p)
+        if (res.error) throw res.error
+        tree = res.ast
       } catch (error) {
         tree = {error}
       }

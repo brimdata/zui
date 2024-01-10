@@ -1,13 +1,16 @@
-import '../lib/wasm_exec_node';
+import '../lib/wasm_exec';
 import bridge from 'golang-wasm/src/bridge';
 import { LoadFormat, decode, ndjson } from '@brimdata/zed-js';
 import { getInput } from './input';
-import { readFile } from 'fs/promises';
 
 let go: any;
 
 async function loadWasm() {
-  go = bridge(readFile('./main.wasm'));
+  const url = new URL('.', import.meta.url);
+  const path = url.href + 'main.wasm';
+  const wasm = await fetch(path);
+  console.log('wasm', wasm);
+  go = bridge(wasm.arrayBuffer());
 }
 
 export async function zq(opts: {
@@ -33,3 +36,4 @@ export async function parse(query: string) {
   if (!go) await loadWasm();
   return go.parse(query);
 }
+
