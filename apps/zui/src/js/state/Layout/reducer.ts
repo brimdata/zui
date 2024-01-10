@@ -30,16 +30,11 @@ const slice = createSlice({
     setCurrentPaneName(s, action: PayloadAction<PaneName>) {
       s.currentPaneName = action.payload
     },
-    showTitleForm: {
-      prepare: (action: "create" | "update") => ({payload: {action}}),
-      reducer: (s, a: PayloadAction<{action: "create" | "update"}>) => {
-        s.isEditingTitle = true
-        s.titleFormAction = a.payload.action
-      },
+    showTitleForm(s) {
+      s.isEditingTitle = true
     },
     hideTitleForm(s) {
       s.isEditingTitle = false
-      s.titleFormAction = "create"
     },
     toggleHistogram(s) {
       s.showHistogram = !s.showHistogram

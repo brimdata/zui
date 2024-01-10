@@ -4,5 +4,4 @@ export const config = {
   headerHeight: 34,
   defaultCellWidth: 80,
   maxCellAutoWidth: 700,
-  placeholderHeaderHeight: 28,
 }

@@ -8,7 +8,6 @@ import MacSpinner from "./MacSpinner"
 import {isString} from "lodash"
 import {updateStatus} from "../flows/lake/update-status"
 import {login} from "../flows/lake/login"
-import ToolbarButton from "src/app/query-home/toolbar/actions/button"
 import {LakeModel} from "../models/lake"
 
 const PageWrap = styled.div`
@@ -21,17 +20,15 @@ const PageWrap = styled.div`
 
 const StyledHeader = styled.h1`
   margin: 110px 0 0 0;
-  color: var(--aqua);
   ${(p) => p.theme.typography.headingPage}
 `
 
 const StyledP = styled.p`
   margin: 18px 0 0 0;
-  color: var(--aqua);
   ${(p) => p.theme.typography.labelNormal}
 `
 
-const StyledButton = styled(ToolbarButton)`
+const StyledButton = styled.button`
   margin: 36px 0 0 0;
 `
 
@@ -76,11 +73,9 @@ const Login = ({lake}: Props) => {
         This lake requires authentication. Please log in to continue.
       </StyledP>
       {error && <StyledP>Error: {error}</StyledP>}
-      <StyledButton
-        onClick={isFetching ? onCancel : onClick}
-        text={isFetching ? "Cancel" : "Login"}
-        icon={isFetching ? <MacSpinner /> : null}
-      />
+      <StyledButton onClick={isFetching ? onCancel : onClick}>
+        {isFetching ? <MacSpinner /> : null} {isFetching ? "Cancel" : "Login"}
+      </StyledButton>
     </PageWrap>
   )
 }

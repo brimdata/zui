@@ -1,6 +1,7 @@
 .inline-table-loading {
   tr {
     height: 20px;
+
     &:hover {
       background: initial !important;
     }
@@ -37,7 +38,7 @@
 
   60% {
     transform: scaleX(0.85);
-    background-color: var(--hover-light-bg);
+    background-color: var(--emphasis-bg-less);
   }
 
   70% {

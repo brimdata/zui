@@ -1,5 +1,5 @@
 .list-item {
-  height: 28px;
+  height: 100%;
   display: flex;
   align-items: center;
   cursor: default;
@@ -28,7 +28,7 @@
   width: 100%;
   height: 100%;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 15px;
 
   &:hover:not(.dragging) {
     background: rgb(0 0 0 / 0.03);
@@ -89,7 +89,6 @@
 
 .list-item__icon {
   width: 22px;
-  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -119,6 +118,7 @@
 }
 
 .list-item__menu-item {
+
   &:hover,
   &:active {
     background: none !important;

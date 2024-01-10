@@ -5,8 +5,8 @@ import {
   appendQueryCountBy,
   appendQuerySortBy,
 } from "src/js/flows/searchBar/actions"
-import submitSearch from "../query-home/flows/submit-search"
 import {createMenu} from "src/core/menu"
+import {submitSearch} from "src/domain/session/handlers"
 
 function getWhenContext(api: ZuiApi, column: ZedColumn) {
   const query = api.current.query
@@ -21,25 +21,24 @@ function getWhenContext(api: ZuiApi, column: ZedColumn) {
 }
 
 export const headerContextMenu = createMenu(
-  "headerContextMenu",
   (ctx, api: TableViewApi, column: ZedColumn) => {
     const when = getWhenContext(ctx.api, column)
     const dispatch = ctx.api.dispatch
     return [
       {
-        label: "Sort Ascending",
+        label: "Sort Asc",
         enabled: !when.isSortedAsc,
         click: () => {
           dispatch(appendQuerySortBy(column.path, "asc"))
-          dispatch(submitSearch())
+          submitSearch()
         },
       },
       {
-        label: "Sort Descending",
+        label: "Sort Desc",
         enabled: !when.isSortedDesc,
         click: () => {
           dispatch(appendQuerySortBy(column.path, "desc"))
-          dispatch(submitSearch())
+          submitSearch()
         },
       },
       {
@@ -50,7 +49,7 @@ export const headerContextMenu = createMenu(
         enabled: !when.isSummarized,
         click: () => {
           dispatch(appendQueryCountBy(column.path))
-          dispatch(submitSearch())
+          submitSearch()
         },
       },
       {

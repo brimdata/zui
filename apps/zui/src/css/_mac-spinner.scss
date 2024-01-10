@@ -1,7 +1,7 @@
 @use "sass:math";
 
 $mac-spinner-duration: 800ms;
-$mac-spinner-color: var(--aqua);
+$mac-spinner-color: var(--fg-color);
 $mac-spinner-size: 24px;
 
 .mac-spinner {

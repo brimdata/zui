@@ -1,7 +1,7 @@
 import React from "react"
 import classNames from "classnames"
 
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 
 type Props = {
   light?: boolean
@@ -10,7 +10,7 @@ type Props = {
 
 const CloseButton = ({light, ...rest}: Props) => (
   <button {...rest} className={classNames("close-button", {light})}>
-    <Icon name="close" fill="var(--foreground-color)" />
+    <Icon name="close" fill="var(--fg-color)" />
   </button>
 )
 

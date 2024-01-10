@@ -12,7 +12,7 @@ const PoolsSection = () => {
       <Content>
         <Contents searchTerm={searchTerm} />
       </Content>
-      <Toolbar>
+      <Toolbar style={{marginBottom: 2}}>
         <SearchBar
           placeholder="Search pools..."
           onChange={(e) => setSearchTerm(e.currentTarget.value)}

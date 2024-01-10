@@ -23,4 +23,10 @@ test.describe('Table Testing', () => {
     const texts = await columnheader.allInnerTexts();
     expect(texts).toEqual(['Id', 'IsDeleted']);
   });
+
+  test('right click on a table cell shows menu', async () => {
+    await app.query('');
+    await app.rightClick('gridcell', 'false');
+    await app.attached(/Filter == Value/);
+  });
 });

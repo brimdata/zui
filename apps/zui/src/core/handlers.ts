@@ -3,12 +3,16 @@ import {HandlerName} from "src/domain/messages"
 import {invoke} from "./invoke"
 import toast from "react-hot-toast"
 import {isFunction, isString} from "lodash"
+import ZuiApi from "src/js/api/zui-api"
+import {startTransition} from "react"
 
 export type HandlerContext = {
   dispatch: AppDispatch
   select<Fn extends (...a: any[]) => any>(selector: Fn): ReturnType<Fn>
   invoke: typeof invoke
   toast: typeof toast
+  oldApi: ZuiApi
+  transition: typeof startTransition
 }
 
 let context: HandlerContext | null = null

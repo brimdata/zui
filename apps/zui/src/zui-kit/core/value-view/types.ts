@@ -21,6 +21,6 @@ export type RenderMode = "single" | "peek" | "line" | "expanded"
 
 export type ValueMouseEventHandler = (
   e: React.MouseEvent,
-  value: zed.Any,
+  value: zed.Value,
   field: zed.Field | null
 ) => void

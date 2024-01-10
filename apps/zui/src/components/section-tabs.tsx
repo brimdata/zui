@@ -31,7 +31,7 @@ const Nav = styled.nav`
 
     text-transform: uppercase;
     font-weight: 500;
-    font-size: 11px;
+    font-size: 12px;
     opacity: 0.5;
 
     &:hover:not([aria-pressed="true"]) {

@@ -1,9 +1,14 @@
 import React, {useLayoutEffect, useRef, useState} from "react"
 import {MenuItem} from "src/core/menu"
 import styles from "./toolbar-tabs.module.css"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
+import {call} from "src/util/call"
 
-export function ToolbarTabs(props: {onlyIcon: boolean; options: MenuItem[]}) {
+export function ToolbarTabs(props: {
+  onlyIcon?: boolean
+  labelClassName?: string
+  options: MenuItem[]
+}) {
   const changeCount = useRef(0)
   const ref = useRef<HTMLDivElement>()
   const [pos, setPos] = useState({x: 0, width: 10})
@@ -30,18 +35,22 @@ export function ToolbarTabs(props: {onlyIcon: boolean; options: MenuItem[]}) {
       <nav className={styles.nav} ref={ref}>
         {props.options.map((opts, i) => (
           <button
+            data-tooltip={props.onlyIcon ? opts.label : null}
             className={styles.button}
             key={opts.id ?? i}
             onClick={() => {
               changeCount.current += 1
-              opts.click()
+              call(opts.click)
             }}
             aria-pressed={opts.checked}
+            aria-label={opts.label}
             data-section-tab-value={opts.label.toLowerCase()}
             disabled={opts.enabled === false}
           >
-            <Icon name={opts.iconName} size={14} />
-            {!props.onlyIcon && <span>{opts.label}</span>}
+            {opts.iconName && <Icon name={opts.iconName} size="14px" />}
+            {!props.onlyIcon && (
+              <span className={props.labelClassName}>{opts.label}</span>
+            )}
           </button>
         ))}
       </nav>

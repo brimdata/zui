@@ -16,13 +16,13 @@
     gap: .5rem;
 }
 
-.list > * {
+.list>* {
     padding: 1rem;
     border-radius: 16px;
     cursor: default;
     background: var(--chrome-color);
 }
 
-.list > *:hover {
-    background: var(--hover-dark);
+.list>*:hover {
+    background: var(--emphasis-bg-less);
 }

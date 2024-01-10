@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux"
 import useSelect from "src/app/core/hooks/use-select"
-import {showContextMenu} from "src/js/lib/System"
+import {showContextMenu} from "src/core/menu"
 import Current from "src/js/state/Current"
 import SessionHistories from "src/js/state/SessionHistories"
 

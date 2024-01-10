@@ -13,7 +13,7 @@ export const Content = styled.div`
     right: 0;
     width: 100%;
     height: 1px;
-    box-shadow: inset 0 0.5px 0 0 var(--aqua);
+    box-shadow: inset 0 0.5px 0 0 var(--border-color);
     opacity: 0.12;
   }
 `

@@ -7,7 +7,6 @@ import {openQuery} from "../commands/open-query"
 import {createMenu} from "src/core/menu"
 
 export const queryContextMenu = createMenu(
-  "queryContextMenu",
   (_, tree: TreeApi<Query | Group>, node: NodeApi<Query | Group>) => {
     const ids = tree.selectedIds
     const multi = ids.has(node.id) && ids.size > 1
@@ -33,18 +32,18 @@ export const queryContextMenu = createMenu(
       {
         label: "Open Query",
         visible: node.isLeaf,
-        command: openQuery.bind(node.id),
+        click: () => openQuery.run(node.id),
       },
       {type: "separator"},
       {
         label: "Export Query Group...",
-        command: exportQueryGroup.bind(node as NodeApi<Group>),
+        click: () => exportQueryGroup.run(node as NodeApi<Group>),
         visible: node.isInternal,
       },
       {
         label: "Copy Query Value",
         visible: node.isLeaf,
-        command: copyQueryToClipboard.bind(node.data.id),
+        click: () => copyQueryToClipboard.run(node.data.id),
       },
       {type: "separator"},
       {
@@ -55,7 +54,7 @@ export const queryContextMenu = createMenu(
       {
         label: "Delete",
         accelerator: "Backspace",
-        command: deleteQueries.bind(multi ? Array.from(ids) : [node.id]),
+        click: () => deleteQueries.run(multi ? Array.from(ids) : [node.id]),
       },
     ]
   }

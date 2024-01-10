@@ -5,10 +5,9 @@ import React, {
   MutableRefObject,
   forwardRef,
 } from "react"
-import {BoundCommand} from "src/app/commands/command"
-import Icon from "src/app/core/icon-temp"
-import {invoke} from "src/core/invoke"
+import {Icon} from "src/components/icon"
 import {MenuItem} from "src/core/menu"
+import {handleClick} from "src/core/menu/handle-click"
 import styled from "styled-components"
 
 const BG = styled.button`
@@ -23,7 +22,7 @@ const BG = styled.button`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background 100ms;
+  transition: background var(--quick), transform var(--quick);
   -webkit-app-region: no-drag;
 
   &:disabled {
@@ -32,17 +31,23 @@ const BG = styled.button`
   }
 
   &:hover:not(:disabled) {
-    background: var(--hover-dark);
+    background: var(--emphasis-bg);
+    svg {
+      transform: scale(1.1);
+    }
   }
 
   &:active:not(:disabled) {
-    background: var(--active-dark);
+    background: var(--emphasis-bg-more);
+    svg {
+      transform: scale(1.05);
+    }
   }
 
   &.icon-label {
     gap: 6px;
     padding: 0 8px;
-    border: 1px solid var(--border-color-dark);
+    border: 1px solid var(--border-color-more);
     font-weight: 500;
     font-size: 14px;
     height: 28px;
@@ -53,18 +58,16 @@ export const IconButton = forwardRef(function IconButton(
   props: MenuItem & {
     className?: string
     onClick?: MouseEventHandler<HTMLButtonElement>
+    buildMenu?: () => MenuItem[]
   },
   ref: MutableRefObject<HTMLButtonElement>
 ) {
+  // I think this needs to move into some core place
   function onClick(e: MouseEvent<HTMLButtonElement>) {
     if (props.onClick) {
       props.onClick && props.onClick(e)
-    } else if (typeof props.command === "string") {
-      invoke("invokeCommandOp", props.command, props.args)
-    } else if (props.command instanceof BoundCommand) {
-      props.command.run()
-    } else if (props.click) {
-      props.click()
+    } else {
+      handleClick(props, e.currentTarget)
     }
   }
 
@@ -72,13 +75,16 @@ export const IconButton = forwardRef(function IconButton(
     <BG
       ref={ref}
       className={classNames(props.className, props.display)}
-      title={props.description ?? props.label}
+      data-tooltip={
+        props.display === "icon-label" ? null : props.description ?? props.label
+      }
       onClick={onClick}
       disabled={props.enabled === false || props.whenResult === false}
       aria-label={props.label}
       type="button"
     >
-      <Icon name={props.iconName} size={props.iconSize ?? 16} />
+      <Icon name={props.iconName} />
+      {props?.nestedMenu?.length && <Icon name="chevron_down" size="0.9rem" />}
       {props.display === "icon-label" ? props.label : null}
     </BG>
   )

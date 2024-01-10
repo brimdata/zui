@@ -1,24 +1,16 @@
-$tab-inactive-color: var(--foreground-color);
-$tab-inactive-bg: rgba(0, 0, 0, 0.06);
-$tab-hover-color: var(--foreground-color);
-$tab-hover-bg: var(--tab-background-hover);
-$tab-active-color: var(--foreground-color);
-$tab-active-bg: white;
-$tab-transition-duration: 200ms;
-
 .tab {
   position: absolute;
   left: 0;
   user-select: none;
   -webkit-app-region: no-drag;
   height: 32px;
-  border-radius: 8px;
-  background: $tab-inactive-bg;
+  border-radius: 6px;
+  background: var(--emphasis-bg-less);
   cursor: default;
   will-change: transform;
   transition: none;
   margin-top: 1px;
-  border: 1px solid var(--tab-background);
+  color: var(--fg-color);
 
   .tab-content {
     overflow: hidden;
@@ -28,11 +20,12 @@ $tab-transition-duration: 200ms;
     height: 100%;
     position: relative;
     opacity: 0.75;
+    padding-inline-start: 8px;
+    gap: 4px;
   }
 
   .icon {
-    margin-left: 16px;
-    margin-right: 8px;
+    display: flex;
   }
 
   // Title
@@ -42,33 +35,23 @@ $tab-transition-duration: 200ms;
     line-height: 16px;
     margin: 0;
     font-weight: 400;
-    color: $tab-inactive-color;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     flex: 1;
-  }
-
-  // Close x icon
-  .close-button {
-    margin-right: 10px;
-    position: relative;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.3);
-    }
+    opacity: 0.7;
   }
 
   // The hover state
   &:hover {
-    background-color: $tab-hover-bg;
+    background-color: var(--emphasis-bg);
 
     .title {
-      color: $tab-hover-color;
+      opacity: 1;
     }
 
-    .close-button svg {
-      fill: $tab-hover-color;
+    .close-button {
+      opacity: 1
     }
 
     .tab-content {
@@ -78,12 +61,12 @@ $tab-transition-duration: 200ms;
 
   // The active state
   &.active {
-    background: $tab-active-bg;
+    background: var(--selected-bg);
     box-shadow: none;
     z-index: 1;
 
     .title {
-      color: $tab-active-color;
+      opacity: 1;
     }
 
     .tab-content {
@@ -91,9 +74,7 @@ $tab-transition-duration: 200ms;
     }
 
     .close-button {
-      svg {
-        fill: $tab-active-color;
-      }
+      opacity: 1;
 
       &:after {
         background: rgba(0, 0, 0, 0.1);

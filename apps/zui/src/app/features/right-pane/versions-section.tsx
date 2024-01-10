@@ -7,6 +7,7 @@ import {QueryModel} from "src/js/models/query-model"
 import {EmptyText} from "./common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import {useZuiApi} from "src/app/core/context"
+import {TREE_ITEM_HEIGHT} from "../sidebar/item"
 
 const EmptyMessage = () => {
   return <EmptyText>Open a saved query to see the previous versions.</EmptyText>
@@ -38,7 +39,7 @@ const VersionsList = ({query}: {query: QueryModel}) => {
             {...dimens}
             disableDrag
             indent={16}
-            rowHeight={28}
+            rowHeight={TREE_ITEM_HEIGHT}
             padding={8}
             data={data}
             selection={currentId}

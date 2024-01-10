@@ -1,9 +1,8 @@
 import React from "react"
 import useLakeId from "src/app/router/hooks/use-lake-id"
-import {MenuItemConstructorOptions} from "electron"
 import {useDispatch, useSelector} from "react-redux"
 import styled from "styled-components"
-import {showContextMenu} from "src/js/lib/System"
+import {MenuItem, showContextMenu} from "src/core/menu"
 import Current from "src/js/state/Current"
 import Modal from "src/js/state/Modal"
 import {AppDispatch} from "src/js/state/types"
@@ -36,7 +35,7 @@ const NameColumn = styled.div`
   overflow: hidden;
   label {
     display: block;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -44,9 +43,9 @@ const NameColumn = styled.div`
   }
 
   label:last-child {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal;
-    font-family: var(--moo-font);
+    font-family: var(--mono-font);
     opacity: 0.5;
   }
 `
@@ -55,7 +54,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
   const lakes = Lakes.all(getState())
   const currentId = Current.getLakeId(getState())
 
-  const template: MenuItemConstructorOptions[] = [
+  const template: MenuItem[] = [
     {
       label: "Get Info",
       click: () => dispatch(Modal.show("view-lake")),

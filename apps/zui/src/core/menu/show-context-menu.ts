@@ -2,11 +2,23 @@ import {MenuItemConstructorOptions} from "electron"
 import {BoundCommand} from "src/app/commands/command"
 import {invoke} from "src/core/invoke"
 import {MenuItem} from "./types"
+import {toElectron} from "./to-electron"
+import {popupPosition} from "./popup-position"
+import {handleClick} from "./handle-click"
+
+export function showMenu(menu: MenuItem[], target?: HTMLElement) {
+  if (target) {
+    showContextMenu(menu, popupPosition(target))
+  } else {
+    showContextMenu(menu)
+  }
+}
 
 export function showContextMenu(
-  template: MenuItemConstructorOptions[],
+  items: MenuItem[],
   opts: {x?: number; y?: number; callback?: () => void} = {}
 ) {
+  const template = toElectron(items)
   if (global.env.isIntegrationTest) {
     document.dispatchEvent(
       new CustomEvent("nativeContextMenu", {detail: template})
@@ -49,17 +61,8 @@ function findItem(id: string, template: MenuItemConstructorOptions[]) {
 function setupListener(template, callback) {
   global.zui.once("contextMenuResult", (e, id: string) => {
     const item = findItem(id, template) as unknown as MenuItem
-    if (item && "click" in item) {
-      // @ts-ignore
-      item.click()
-    } else if (
-      item &&
-      "command" in item &&
-      item.command instanceof BoundCommand
-    ) {
-      item.command.run()
-    } else if (item && "command" in item && typeof item.command === "string") {
-      invoke("invokeCommandOp", item.command, item.args)
+    if (item) {
+      handleClick(item)
     }
     callback && callback()
   })

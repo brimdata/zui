@@ -4,7 +4,7 @@ export const Content = styled.section`
   line-height: 1.6;
 
   a {
-    color: var(--havelock);
+    color: var(--primary-color);
     text-decoration: underline;
     cursor: pointer;
   }

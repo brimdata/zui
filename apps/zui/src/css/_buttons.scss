@@ -10,7 +10,7 @@
   border-radius: 3px;
 
   svg {
-    fill: var(--slate);
+    fill: var(--fg-color-less);
     height: 100%;
     width: 100%;
   }
@@ -27,11 +27,13 @@
 
   &:disabled {
     svg {
-      fill: var(--cloudy);
+      opacity: 0.5;
     }
+
     &:hover {
       background: none;
     }
+
     &:active {
       box-shadow: none;
       transform: none;
@@ -59,19 +61,19 @@
     height: 10px;
     width: 10px;
     stroke: none;
-    fill: var(--slate);
+    fill: var(--fg-color-less);
     transition: fill 50ms;
   }
 
   &:hover {
     svg {
-      fill: var(--aqua);
+      fill: var(--fg-color);
     }
   }
 
   &:active {
     svg {
-      fill: var(--slate);
+      fill: var(--fg-color);
     }
   }
 }

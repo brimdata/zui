@@ -22,7 +22,7 @@ export function FileInput(
     <BG>
       <InputButton
         type="button"
-        icon="doc-plain"
+        icon="doc_plain"
         autoFocus={autoFocus}
         onClick={() => {
           input.current?.click()

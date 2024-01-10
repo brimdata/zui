@@ -1,15 +1,14 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import "src/test/system/real-paths"
 import {getPath} from "zui-test-data"
-import {main} from "../run-main/run-main"
 import {importQueriesOp} from "./import-queries-op"
+import initTestStore from "src/test/unit/helpers/initTestStore"
 
 beforeEach(async () => {
-  await main({
-    lake: false,
-    devtools: false,
-    releaseNotes: false,
-    autoUpdater: false,
-  })
+  await initTestStore()
 })
 
 test("import valid queries", () => {

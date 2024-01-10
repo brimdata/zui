@@ -101,7 +101,7 @@ export const deleteCmd = createCommand(
 )
 
 export const rename = createCommand("queries.rename", ({dispatch}) => {
-  dispatch(Layout.showTitleForm("update"))
+  dispatch(Layout.showTitleForm())
 })
 
 export const openLatestVersion = createCommand(

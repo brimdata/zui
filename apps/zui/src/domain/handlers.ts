@@ -2,9 +2,8 @@
 // This gets imported in an initializer
 
 import "./results/handlers"
-import "./menus/handlers"
 import "./panes/handlers"
 import "./window/handlers"
-import "./session/handlers"
+import "./session/handlers/navigation"
 import "./loads/handlers"
 import "./pools/handlers"

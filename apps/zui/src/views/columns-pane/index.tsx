@@ -1,4 +1,3 @@
-import React from "react"
 import {Scrollable} from "src/components/scrollable"
 import styled from "styled-components"
 import {ColumnsToolbar} from "./columns-toolbar"

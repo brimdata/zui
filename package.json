@@ -14,7 +14,8 @@
     "lint": "nx run-many -t lint --all --exclude zui-player",
     "test": "nx run-many -t test --all --exclude zui-player --skip-nx-cache",
     "start": "nx start zui",
-    "e2e": "NODE_ENV=production nx test zui-player"
+    "e2e": "NODE_ENV=production nx test zui-player",
+    "e2e:ci": "NODE_ENV=production nx ci zui-player"
   },
   "devDependencies": {
     "@nx-go/nx-go": "^2.7.0",
@@ -29,8 +30,8 @@
     "@swc/jest": "0.2.20",
     "@types/jest": "^29.4.0",
     "@types/node": "16.11.7",
-    "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "@typescript-eslint/parser": "^5.36.1",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
     "esbuild": "^0.17.12",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",

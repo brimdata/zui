@@ -13,9 +13,11 @@
   min-width: 0;
   padding: 2px;
   height: 100%;
+  gap: 0.25rem;
 }
 
 .button {
+  white-space: nowrap;
   background: none;
   border: none;
   user-select: none;
@@ -29,22 +31,22 @@
   font-size: 11px;
   letter-spacing: 0.1px;
   z-index: 1;
-  color: var(--foreground-color-light);
+  color: var(--fg-color-less);
   transition: all 200ms;
   height: 100%;
 }
 
 .button:hover:not([aria-pressed="true"]):not(:disabled) {
-  background: var(--hover-dark);
-  color: var(--foreground-color);
+  background: var(--emphasis-bg-less);
+  color: var(--fg-color);
 }
 
 .button:active:not([aria-pressed="true"]):not(:disabled) {
-  background: var(--active-dark);
+  background: var(--emphasis-bg);
 }
 
 .button[aria-pressed="true"] {
-  color: var(--foreground-color);
+  color: var(--fg-color);
 }
 
 .button:disabled {
@@ -58,7 +60,7 @@
 }
 
 .selection {
-  background: white;
+  background: var(--selected-bg);
   border-radius: 5px;
   position: absolute;
   top: 2px;

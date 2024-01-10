@@ -12,6 +12,6 @@ export const Caption = styled.p`
   ${(p) => p.theme.typography.labelSmall}
   font-style: italic;
   text-align: right;
-  color: var(--slate);
+  color: var(--fg-color-less);
   margin-right: 4px;
 `

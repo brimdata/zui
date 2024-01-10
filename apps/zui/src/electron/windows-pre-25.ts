@@ -1,8 +1,7 @@
-import {app} from "electron"
+import {app, dialog} from "electron"
 import fs from "fs-extra"
 import os from "os"
 import {join} from "path"
-import htmlDialog from "./html-dialog"
 
 const VAR = "LocalAppData"
 
@@ -35,11 +34,12 @@ export async function windowsPre25Exists() {
   if (!fs.existsSync(exe)) return false
 
   await app.whenReady()
-  await htmlDialog.showErrorBox(
+  dialog.showErrorBox(
     "Previous Version Detected",
     `Please uninstall it before before launching the new version.
 
-[Show me how...](https://github.com/brimdata/brim/wiki/Installation#windows-installation-v0250)`
+Show me how...
+https://github.com/brimdata/brim/wiki/Installation#windows-installation-v0250`
   )
   return true
 }

@@ -1,0 +1,22 @@
+.tooltip-enter,
+.tooltip-appear {
+    transition: opacity 450ms var(--pop-easing);
+    opacity: 0;
+}
+
+.tooltip-enter-active,
+.tooltip-appear-active {
+    transition: opacity 450ms var(--pop-easing);
+    opacity: 1;
+}
+
+.tooltip-exit {
+    transition: opacity 450ms var(--pop-easing);
+    opacity: 1;
+}
+
+.tooltip-exit-active {
+    opacity: 0;
+    transition: all 250ms var(--pop-easing);
+    transition-delay: 150ms;
+}
