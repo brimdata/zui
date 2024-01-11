@@ -21,6 +21,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-zui
+      - name: Install dependencies (Linux)
+        if: startsWith(matrix.os, 'ubuntu-')
+        run: sudo apt-get -y install whois
+      - name: Install dependencies (Windows)
+        if: startsWith(matrix.os, 'windows-')
+        run: choco install -y --no-progress whois
       - run: yarn lint
       - run: yarn test
       - run: yarn build
