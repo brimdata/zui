@@ -19,6 +19,12 @@ jobs:
       matrix:
         os: ${{ fromJSON(inputs.platforms) }}
     steps:
+      - name: Install dependencies (Linux)
+        if: startsWith(matrix.os, 'ubuntu-')
+        run: sudo apt-get -y install whois
+      - name: Install dependencies (Windows)
+        if: startsWith(matrix.os, 'windows-')
+        run: choco install -y --no-progress whois
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-zui
       - run: yarn lint
