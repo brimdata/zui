@@ -12,35 +12,6 @@
       },
       "dependsOn": ["build-node", "build-browser"]
     },
-    "build-browser": {
-      "dependsOn": ["build-go"],
-      "executor": "@nrwl/esbuild:esbuild",
-      "options": {
-        "main": "packages/zed-wasm/src/browser.ts",
-        "tsConfig": "packages/zed-wasm/tsconfig.lib.json",
-        "outputPath": "dist/packages/zed-wasm",
-        "assets": ["packages/zed-wasm/*.md"],
-        "format": ["esm"],
-        "deleteOutputPath": false,
-        "thirdParty": true,
-        "esbuildOptions": {
-          "inject": ["packages/zed-wasm/lib/global-shim.js"]
-        }
-      }
-    },
-    "build-node": {
-      "dependsOn": ["build-go"],
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "main": "packages/zed-wasm/src/index.ts",
-        "tsConfig": "packages/zed-wasm/tsconfig.lib.json",
-        "outputPath": "dist/packages/zed-wasm",
-        "assets": ["packages/zed-wasm/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies",
-        "clean": false
-      }
-    },
     "build-go": {
       "executor": "nx:run-commands",
       "outputs": ["dist/packages/zed-wasm/main.wasm"],

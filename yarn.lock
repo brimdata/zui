@@ -1905,6 +1905,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@brimdata/zed-js@file:../../dist/packages/zed-js::locator=%40brimdata%2Fzed-wasm%40workspace%3Apackages%2Fzed-wasm":
+  version: 0.0.17
+  resolution: "@brimdata/zed-js@file:../../dist/packages/zed-js#../../dist/packages/zed-js::hash=26f5d8&locator=%40brimdata%2Fzed-wasm%40workspace%3Apackages%2Fzed-wasm"
+  dependencies:
+    event-source-polyfill: ^1.0.31
+    events: ^3.3.0
+  checksum: fa05674353d07285fab6352a2b13fb182d1d5f766b4608673813eaf3beeb0847b613bd3635fda1180d662d0a947b89c113b726bd1e993a23cf441f8ee5cfec8f
+  languageName: node
+  linkType: hard
+
 "@brimdata/zed-js@workspace:*, @brimdata/zed-js@workspace:packages/zed-js":
   version: 0.0.0-use.local
   resolution: "@brimdata/zed-js@workspace:packages/zed-js"
@@ -1934,9 +1944,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brimdata/zed-wasm@workspace:packages/zed-wasm"
   dependencies:
-    "@brimdata/zed-js": "workspace:*"
+    "@brimdata/zed-js": ../../dist/packages/zed-js
+    "@playwright/test": ^1.40.1
     "@types/golang-wasm": ^1.15.0
+    "@types/node": ^20.11.0
+    esbuild: ^0.17.12
     golang-wasm: "github:teamortix/golang-wasm#master"
+    jest: ^29.4.1
+    npm-run-all: ^4.1.5
+    polyfill-crypto.getrandomvalues: ^1.0.0
+    serve: ^14.2.1
   languageName: unknown
   linkType: soft
 
@@ -3806,6 +3823,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@playwright/test@npm:^1.40.1":
+  version: 1.40.1
+  resolution: "@playwright/test@npm:1.40.1"
+  dependencies:
+    playwright: 1.40.1
+  bin:
+    playwright: cli.js
+  checksum: ae094e6cb809365c0707ee2b184e42d2a2542569ada020d2d44ca5866066941262bd9a67af185f86c2fb0133c9b712ea8cb73e2959a289e4261c5fd17077283c
+  languageName: node
+  linkType: hard
+
 "@playwright/test@npm:next":
   version: 1.41.0-alpha-dec-20-2023
   resolution: "@playwright/test@npm:1.41.0-alpha-dec-20-2023"
@@ -5097,6 +5125,15 @@ __metadata:
   dependencies:
     undici-types: ~5.26.4
   checksum: 58c4fa45a78fcec75c78182a4b266395905957633654eb0311c5f9c30ac15c179ea2287ab1af034e46c2db7bb0589ef0000ee64c1de8f568a0aad29eaadb100c
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.11.0":
+  version: 20.11.0
+  resolution: "@types/node@npm:20.11.0"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: 1bd6890db7e0404d11c33d28f46f19f73256f0ba35d19f0ef2a0faba09f366f188915fb9338eebebcc472075c1c4941e17c7002786aa69afa44980737846b200
   languageName: node
   linkType: hard
 
@@ -13735,6 +13772,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mersenne-twister@npm:^1.0.1":
+  version: 1.1.0
+  resolution: "mersenne-twister@npm:1.1.0"
+  checksum: 7de1940ded117f2aad9320ae4d21d647b0ecf0667abbadcfe6a2835c669feb674ef46cb7a72da7af69a56d8b19e50e95e2fb7ef6d780efab7a6acd4d87f4cb2d
+  languageName: node
+  linkType: hard
+
 "micromark@npm:~2.11.0":
   version: 2.11.4
   resolution: "micromark@npm:2.11.4"
@@ -15270,12 +15314,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.40.1":
+  version: 1.40.1
+  resolution: "playwright-core@npm:1.40.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 84d92fb9b86e3c225b16b6886bf858eb5059b4e60fa1205ff23336e56a06dcb2eac62650992dede72f406c8e70a7b6a5303e511f9b4bc0b85022ede356a01ee0
+  languageName: node
+  linkType: hard
+
 "playwright-core@npm:1.41.0-alpha-dec-20-2023":
   version: 1.41.0-alpha-dec-20-2023
   resolution: "playwright-core@npm:1.41.0-alpha-dec-20-2023"
   bin:
     playwright-core: cli.js
   checksum: 4d07324fbd42753a9c5ba0606c619b4d0c79209b9f8d6c385da62eee3c7992ac247b4ac9bc3af0dcfe8c44b5be48c2172aac54dd4fc173dfd97ff3ea2b769eaa
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.40.1":
+  version: 1.40.1
+  resolution: "playwright@npm:1.40.1"
+  dependencies:
+    fsevents: 2.3.2
+    playwright-core: 1.40.1
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: 9e36791c1b4a649c104aa365fdd9d049924eeb518c5967c0e921aa38b9b00994aa6ee54784d6c2af194b3b494b6f69772673081ef53c6c4a4b2065af9955c4ba
   languageName: node
   linkType: hard
 
@@ -15310,6 +15378,15 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.9.2
   checksum: 25d3869feb5275feeeb72833c3b5c42fc417c44c697213fb9d9b2f9c6e7e41a3637d0933757f337aeaf91dcef342b6a2fe47996fee8f70e8b2e539a9b77c6cc5
+  languageName: node
+  linkType: hard
+
+"polyfill-crypto.getrandomvalues@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "polyfill-crypto.getrandomvalues@npm:1.0.0"
+  dependencies:
+    mersenne-twister: ^1.0.1
+  checksum: 73f0880b022af0c5930ef2d34a83a25e03196081082d8ceb204a3e5609a1a3d0dd1656a183073b17bc069a2c5749e44689cebdc4254dae6ed7e4e8b83f451964
   languageName: node
   linkType: hard
 
@@ -16778,6 +16855,27 @@ __metadata:
   bin:
     serve: build/main.js
   checksum: a1c26e6c3dd0c482589b39a105e2f09bebf20ee8a0358accd5d64b313952ad3e1a56b8af2bdfef269f9fd37140b4f6c940d12395c851e4a46dfdace8f97616e4
+  languageName: node
+  linkType: hard
+
+"serve@npm:^14.2.1":
+  version: 14.2.1
+  resolution: "serve@npm:14.2.1"
+  dependencies:
+    "@zeit/schemas": 2.29.0
+    ajv: 8.11.0
+    arg: 5.0.2
+    boxen: 7.0.0
+    chalk: 5.0.1
+    chalk-template: 0.4.0
+    clipboardy: 3.0.0
+    compression: 1.7.4
+    is-port-reachable: 4.0.0
+    serve-handler: 6.1.5
+    update-check: 1.5.4
+  bin:
+    serve: build/main.js
+  checksum: c39a517b5d795a0a5c2f9fb9ff088b7e4962c579e34ace5b85dd62f93e0eacbc8a90359792c153c444a83258ffda392113dff7bfd10d41ced574a2d1886c2994
   languageName: node
   linkType: hard
 

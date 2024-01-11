@@ -1,6 +1,4 @@
-export function getInput(
-  input: string | File | Blob | ReadableStream | Response | undefined | any[]
-) {
+export function getInput(input) {
   if (typeof input === 'string') return input;
   if (input instanceof File) return input.stream();
   if (input instanceof Blob) return input.stream();
@@ -12,7 +10,7 @@ export function getInput(
   throw new Error(`Unsupported input type provided to zq ${input}`);
 }
 
-function arrayStream(input: any[]) {
+function arrayStream(input) {
   const encoder = new TextEncoder();
   return new ReadableStream({
     start(ctl) {
