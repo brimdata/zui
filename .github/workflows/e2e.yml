@@ -19,6 +19,8 @@ jobs:
       matrix:
         os: ${{ fromJSON(inputs.platforms) }}
     steps:
+      - name: Output inputs
+        run: echo "${{ toJSON(inputs) }}"
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-zui
       - run: yarn lint
