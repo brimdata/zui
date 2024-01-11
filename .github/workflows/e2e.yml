@@ -21,6 +21,7 @@ jobs:
     steps:
       - name: Output inputs
         run: echo "${{ toJSON(inputs) }}"
+        shell: sh
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-zui
       - run: yarn lint
