@@ -51,8 +51,10 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}
           path: |
-            run/playwright-itest
-            !run/**/SS
+            packages/zui-player/run/playwright-itest
+            !packages/zui-player/run/**/SS
+            /var/log/sys*log*
+            /var/log/kern.log*
 
       - run: git -c user.name='Brim Automation' -c user.email=automation@brimdata.io commit -a -m 'upgrade Zed to ${{ env.zed_ref }}'
 
