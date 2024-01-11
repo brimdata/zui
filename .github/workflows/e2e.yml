@@ -35,5 +35,7 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}
           path: |
-            run/playwright-itest
-            !run/**/SS
+            packages/zui-player/run/playwright-itest
+            packages/zui-player/test-results
+            /var/log/sys*log*
+            /var/log/kern.log*
