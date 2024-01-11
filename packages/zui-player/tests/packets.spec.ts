@@ -15,4 +15,9 @@ play('packets.spec', (app, test) => {
     await app.click('button', 'Packets');
     await app.attached(/Packets extracted. Opening.../);
   });
+
+  test('loading a bad pcap displays an error message', async () => {
+    await app.dropFile(getPath('bad.pcapng'));
+    await app.attached(/Unable to generate full summary logs from PCAP/);
+  });
 });
