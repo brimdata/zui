@@ -1,11 +1,10 @@
 import * as zed from "@brimdata/zed-js"
-import {parse as parseAst} from "@brimdata/zed-wasm"
 import {isEmpty, last} from "lodash"
 import {trim} from "../lib/Str"
-import ast, {ANALYTIC_PROCS} from "./ast"
+import ast from "./ast"
 import syntax from "./syntax"
 
-export default function (p = "") {
+export default function program(p = "") {
   return {
     exclude(field: zed.Field) {
       p = appendWithPipe(p, syntax.exclude(field))
@@ -36,23 +35,6 @@ export default function (p = "") {
       return this.cut(fields.map((fieldName) => "quiet(" + fieldName + ")"))
     },
 
-    drillDown(log: zed.Record) {
-      let filter = this.filter()
-
-      const newFilters = this.ast()
-        .groupByKeys()
-        .map((name) => log.tryField(name))
-        .filter((f) => !!f)
-        .map(syntax.include)
-        .join(" ")
-
-      if (/^\s*\*\s*$/.test(filter)) filter = ""
-      if (newFilters.includes(filter)) filter = ""
-
-      p = appendWithPipe(filter, newFilters)
-      return this
-    },
-
     countBy(name: string | string[]) {
       p = appendWithPipe(p, syntax.countBy(name))
       return this
@@ -64,31 +46,6 @@ export default function (p = "") {
       return this
     },
 
-    async ast() {
-      let tree
-      try {
-        let res = await parseAst(p)
-        if (res.error) throw res.error
-        tree = res.ast
-      } catch (error) {
-        tree = {error}
-      }
-      return ast(tree)
-    },
-
-    filter() {
-      const [head, ...tail] = p.split(
-        /\|?\s*(summarize|count|countdistinct|sum)/i
-      )
-
-      if (isEmpty(tail) && this.hasAnalytics()) {
-        return "*"
-      } else {
-        if (isEmpty(trim(head))) return "*"
-        return trim(head)
-      }
-    },
-
     procs() {
       const [_, ...procs] = p.split("|")
       return procs.join("|")
@@ -97,14 +54,37 @@ export default function (p = "") {
     string() {
       return p.trim() === "" ? "*" : p
     },
-
-    hasAnalytics() {
-      for (const proc of this.ast().getProcs()) {
-        if (ANALYTIC_PROCS.includes(proc.kind)) return true
-      }
-      return false
-    },
   }
+}
+
+export async function getFilter(string) {
+  const [head, ...tail] = string.split(
+    /\|?\s*(summarize|count|countdistinct|sum)/i
+  )
+  const tree = await ast(string)
+  if (isEmpty(tail) && tree.hasAnalytics()) {
+    return "*"
+  } else {
+    if (isEmpty(trim(head))) return "*"
+    return trim(head)
+  }
+}
+
+export async function drillDown(script: string, log: zed.Record) {
+  let filter = await getFilter(script)
+
+  const newFilters = (await ast(script))
+    .groupByKeys()
+    .map((name) => log.tryField(name))
+    .filter((f) => !!f)
+    .map(syntax.include)
+    .join(" ")
+
+  if (/^\s*\*\s*$/.test(filter)) filter = ""
+  if (newFilters.includes(filter)) filter = ""
+
+  script = appendWithPipe(filter, newFilters)
+  return script
 }
 
 function appendWithPipe(program, filter) {

@@ -1,9 +1,4 @@
-global.require = require;
-global.fs = require('fs');
-global.TextEncoder = require('util').TextEncoder;
-global.TextDecoder = require('util').TextDecoder;
-global.performance ??= require('performance');
-global.crypto ??= require('crypto');
+
 const path = require('path');
 require('./wasm_exec');
 

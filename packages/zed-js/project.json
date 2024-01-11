@@ -6,21 +6,17 @@
   "targets": {
     "build": {
       "executor": "nx:run-commands",
-      "options": {
-        "outputPath": "dist/packages/zed-js",
-        "commands": []
-      },
+      "options": { "commands": [] },
       "dependsOn": ["build-node", "build-browser"]
     },
     "build-node": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/zed-js",
+        "outputPath": "packages/zed-js/dist/cjs",
         "main": "packages/zed-js/src/index.ts",
         "tsConfig": "packages/zed-js/tsconfig.lib.json",
         "assets": ["packages/zed-js/*.md"],
-        "buildableProjectDepsInPackageJsonType": "dependencies",
         "clean": false
       }
     },
@@ -28,7 +24,7 @@
       "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/zed-js",
+        "outputPath": "packages/zed-js/dist/browser",
         "bundle": true,
         "minify": true,
         "format": ["esm"],

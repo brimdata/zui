@@ -29,7 +29,9 @@ export function toZedScript(object: unknown): string {
   if (object instanceof Date) return toZedScriptDate(object)
   if (typeof object === "boolean") return toZedScriptBool(object)
   if (object === null) return toZedScriptNull()
-  throw new Error(`Can't convert object to Zed script: ${object}`)
+  throw new Error(
+    `Can't convert object to Zed script: ${JSON.stringify(object)}`
+  )
 }
 
 const DOUBLE_QUOTE = /"/g

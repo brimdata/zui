@@ -1,8 +1,18 @@
 import {toFieldPath} from "../zed-script/toZedScript"
+import {parse} from "@brimdata/zed-wasm"
 
 type ColumnName = string | string[]
 
-export default function ast(tree: any) {
+export default async function ast(string: string) {
+  let tree
+  try {
+    let res = await parse(string)
+    if (res.error) throw res.error
+    tree = res.ast
+  } catch (error) {
+    tree = {error}
+  }
+
   return {
     valid() {
       return !tree.error
@@ -26,6 +36,12 @@ export default function ast(tree: any) {
     },
     self() {
       return tree
+    },
+    hasAnalytics() {
+      for (const proc of this.getProcs()) {
+        if (ANALYTIC_PROCS.includes(proc.kind)) return true
+      }
+      return false
     },
   }
 }

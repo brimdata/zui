@@ -1905,16 +1905,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brimdata/zed-js@file:../../dist/packages/zed-js::locator=%40brimdata%2Fzed-wasm%40workspace%3Apackages%2Fzed-wasm":
-  version: 0.0.17
-  resolution: "@brimdata/zed-js@file:../../dist/packages/zed-js#../../dist/packages/zed-js::hash=26f5d8&locator=%40brimdata%2Fzed-wasm%40workspace%3Apackages%2Fzed-wasm"
-  dependencies:
-    event-source-polyfill: ^1.0.31
-    events: ^3.3.0
-  checksum: fa05674353d07285fab6352a2b13fb182d1d5f766b4608673813eaf3beeb0847b613bd3635fda1180d662d0a947b89c113b726bd1e993a23cf441f8ee5cfec8f
-  languageName: node
-  linkType: hard
-
 "@brimdata/zed-js@workspace:*, @brimdata/zed-js@workspace:packages/zed-js":
   version: 0.0.0-use.local
   resolution: "@brimdata/zed-js@workspace:packages/zed-js"
@@ -1944,7 +1934,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@brimdata/zed-wasm@workspace:packages/zed-wasm"
   dependencies:
-    "@brimdata/zed-js": ../../dist/packages/zed-js
+    "@brimdata/zed-js": "workspace:*"
     "@playwright/test": ^1.40.1
     "@types/golang-wasm": ^1.15.0
     "@types/node": ^20.11.0

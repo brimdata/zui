@@ -10,11 +10,6 @@
     "src/**/*.js"
   ],
   "main": "./dist/index.cjs",
-  "module": "./src/index.js",
-  "exports": {
-    "require": "./dist/index.cjs",
-    "default": "./src/index.js"
-  },
   "jsdelivr": "./dist/browser.js",
   "scripts": {
     "test": "run-s 'test:*'",
@@ -45,7 +40,7 @@
     "serve": "^14.2.1"
   },
   "dependencies": {
-    "@brimdata/zed-js": "../../dist/packages/zed-js",
+    "@brimdata/zed-js": "workspace:*",
     "polyfill-crypto.getrandomvalues": "^1.0.0"
   }
 }
