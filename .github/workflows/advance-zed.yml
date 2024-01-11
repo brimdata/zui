@@ -36,7 +36,6 @@ jobs:
           # We need a token with permission to push.
           token: ${{ secrets.ZQ_UPDATE_PAT }}
       - uses: ./.github/actions/setup-zui
-      - run: sudo apt-get -y install whois
       - run: yarn workspace zui add zed@brimdata/zed#${{ env.zed_ref }}
       - run: yarn lint
       - run: yarn test
