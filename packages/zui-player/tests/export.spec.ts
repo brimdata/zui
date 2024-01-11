@@ -40,7 +40,7 @@ test.describe('Export tests', () => {
         dialog.showSaveDialog = () =>
           Promise.resolve({ canceled: false, filePath });
       }, file);
-      app.click('button', 'Export Results');
+      await app.click('button', 'Export Results');
       const dialog = app.mainWin.getByRole('dialog');
       await dialog
         .getByRole('radio', { name: `${label}`, exact: true })
