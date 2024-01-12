@@ -41,11 +41,13 @@ test.describe('Export tests', () => {
           Promise.resolve({ canceled: false, filePath });
       }, file);
       await app.click('button', 'Export Results');
+      await app.attached('dialog');
       const dialog = app.mainWin.getByRole('dialog');
       await dialog
         .getByRole('radio', { name: `${label}`, exact: true })
         .click();
       await dialog.getByRole('button').filter({ hasText: 'Export' }).click();
+      await app.detached('dialog');
       await app.mainWin
         .getByText(new RegExp('Export Completed: .*results\\.' + label))
         .waitFor();
