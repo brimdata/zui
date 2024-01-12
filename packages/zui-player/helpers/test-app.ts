@@ -35,6 +35,9 @@ export default class TestApp {
       args: [`--user-data-dir=${userDataDir}`, entry],
       bypassCSP: true,
       timeout: 10000,
+      recordVideo: {
+        dir: path.join('run', 'videos'),
+      }
     };
 
     // @ts-ignore
