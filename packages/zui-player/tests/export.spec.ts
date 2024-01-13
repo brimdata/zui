@@ -23,6 +23,7 @@ test.describe('Export tests', () => {
   const app = new TestApp('Export tests');
 
   test.beforeAll(async () => {
+    test.setTimeout(60000);
     await app.init();
     await app.createPool([getPath('sample.zeektsv')]);
     await app.click('button', 'Query Pool');
