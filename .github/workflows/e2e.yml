@@ -13,7 +13,11 @@ on:
         required: true
       video:
         description: Whether to record videos of Playwright test runs
+        type: choice
         default: 'true'
+        options:
+        - 'true'
+        - 'false'
         required: true
 
 jobs:
