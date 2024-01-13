@@ -11,6 +11,15 @@ on:
         description: OS platforms to test on (list of strings in JSON format)"
         default: '["ubuntu-20.04"]'
         required: true
+      video:
+        description: Whether to record videos of Playwright test runs
+        type: choice
+        default: 'true'
+        options:
+        - 'true'
+        - 'false'
+        required: true
+
 jobs:
   run-e2e-tests:
     name: Run e2e tests
@@ -39,12 +48,15 @@ jobs:
         with:
           options: -screen 0 1280x1024x24
           run: ${{ inputs.run-target }}
+        env:
+          VIDEO: ${{ inputs.video }}
       - uses: actions/upload-artifact@v2
         if: failure() && steps.playwright.outcome == 'failure'
         with:
           name: artifacts-${{ matrix.os }}
           path: |
             packages/zui-player/run/playwright-itest
+            packages/zui-player/run/videos
             packages/zui-player/test-results
             /var/log/sys*log*
             /var/log/kern.log*

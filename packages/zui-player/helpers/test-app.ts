@@ -35,7 +35,11 @@ export default class TestApp {
       args: [`--user-data-dir=${userDataDir}`, entry],
       bypassCSP: true,
       timeout: 10000,
-    };
+    } as any;
+
+    if (process.env.VIDEO == 'true') {
+      launchOpts.recordVideo = { dir: path.join('run', 'videos') };
+    }
 
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin;
