@@ -50,6 +50,11 @@ jobs:
           run: ${{ inputs.run-target }}
         env:
           VIDEO: ${{ inputs.video }}
+      - name: Put system logs alongside other artifacts
+        run: |
+          mkdir -p packages/zui-player/run/var_log
+          cp /var/log/sys*log* /var/log/kern.log* packages/zui-player/run/var_log || true
+        shell: sh
       - uses: actions/upload-artifact@v2
         if: failure() && steps.playwright.outcome == 'failure'
         with:
@@ -57,6 +62,5 @@ jobs:
           path: |
             packages/zui-player/run/playwright-itest
             packages/zui-player/run/videos
+            packages/zui-player/run/var_log
             packages/zui-player/test-results
-            /var/log/sys*log*
-            /var/log/kern.log*
