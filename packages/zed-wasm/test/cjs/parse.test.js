@@ -1,7 +1,14 @@
-const { parse, zq } = require('@brimdata/zed-wasm');
+const { initZedWasm } = require('@brimdata/zed-wasm');
+
+let wasm;
+beforeAll(async () => {
+  wasm = await initZedWasm(
+    require.resolve('@brimdata/zed-wasm/dist/main.wasm')
+  );
+});
 
 test('parse works in cjs env', async () => {
-  const resp = await parse('n := "james"');
+  const resp = await wasm.parse('n := "james"');
   expect(resp).toMatchInlineSnapshot(`
     {
       "ast": [
@@ -29,7 +36,7 @@ test('parse works in cjs env', async () => {
 });
 
 test('zq works in cjs env', async () => {
-  const resp = await zq({
+  const resp = await wasm.zq({
     input: '1 2 3',
     program: 'this * 10',
   });

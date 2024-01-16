@@ -7,4 +7,3 @@ globalThis.require = require;
 globalThis.fs = require('fs');
 globalThis.TextEncoder = require('util').TextEncoder;
 globalThis.TextDecoder = require('util').TextDecoder;
-globalThis.performance ??= require('performance');

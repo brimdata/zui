@@ -1,14 +1,11 @@
 import { test, expect } from '@playwright/test';
 
-test('page loads', async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto('/test/pages/zq.html');
-  await expect(
-    page.getByRole('heading', { name: 'Parse Test' })
-  ).toBeAttached();
+  await page.getByText('Wasm Ready').waitFor({ state: 'attached' });
 });
 
 test('run zq', async ({ page }) => {
-  await page.goto('/test/pages/zq.html');
   await page.fill('[name=input]', '1 2 3');
   await page.fill('[name=script]', 'this * 10');
   await page.click('button');
