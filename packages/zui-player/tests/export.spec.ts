@@ -23,6 +23,11 @@ test.describe('Export tests', () => {
   const app = new TestApp('Export tests');
 
   test.beforeAll(async () => {
+
+    // Increase timeout due to observed long load times on test data in CI.
+    // See https://github.com/brimdata/zui/pull/2967
+    test.setTimeout(60000);
+
     await app.init();
     await app.createPool([getPath('sample.zeektsv')]);
     await app.click('button', 'Query Pool');
@@ -40,12 +45,14 @@ test.describe('Export tests', () => {
         dialog.showSaveDialog = () =>
           Promise.resolve({ canceled: false, filePath });
       }, file);
-      app.click('button', 'Export Results');
+      await app.click('button', 'Export Results');
+      await app.attached('dialog');
       const dialog = app.mainWin.getByRole('dialog');
       await dialog
         .getByRole('radio', { name: `${label}`, exact: true })
         .click();
       await dialog.getByRole('button').filter({ hasText: 'Export' }).click();
+      await app.detached('dialog');
       await app.mainWin
         .getByText(new RegExp('Export Completed: .*results\\.' + label))
         .waitFor();
