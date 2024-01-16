@@ -196,6 +196,7 @@ describe("#hasAnalytics()", () => {
   })
 
   test("parallel procs when both do not have analytics", async () => {
+    jest.spyOn(global.console, "error").mockImplementation(() => {})
     const tree = await ast("* | head 100; head 200")
     expect(tree.hasAnalytics()).toBe(false)
   })

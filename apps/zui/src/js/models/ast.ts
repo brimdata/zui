@@ -1,5 +1,8 @@
 import {toFieldPath} from "../zed-script/toZedScript"
-import {parse} from "@brimdata/zed-wasm"
+
+function parse(s: string) {
+  return globalThis.zedWasm.parse(s)
+}
 
 type ColumnName = string | string[]
 
@@ -10,6 +13,7 @@ export default async function ast(string: string) {
     if (res.error) throw res.error
     tree = res.ast
   } catch (error) {
+    console.error(error)
     tree = {error}
   }
 

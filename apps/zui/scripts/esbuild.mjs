@@ -10,7 +10,7 @@ const context = await esbuild.context({
   platform: "node",
   sourcemap: true,
   target: "node16",
-  external: ["keytar", "electron"],
+  external: ["keytar", "electron", "@brimdata/zed-wasm"],
   tsconfig: "./tsconfig.json",
 })
 

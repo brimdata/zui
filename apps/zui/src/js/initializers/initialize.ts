@@ -14,6 +14,7 @@ import {initLake} from "./init-lake"
 import {initializeTabs} from "./init-tabs"
 import {initializeMonaco} from "./init-monaco"
 import {initializePluginContextSync} from "./init-plugin-context-sync"
+import {initializeZedWasm} from "./init-zed-wasm"
 import toast from "react-hot-toast"
 
 const getWindowId = () => {
@@ -55,5 +56,6 @@ export default async function initialize(
   initializeTabs(store)
   initializeMonaco()
   initializePluginContextSync(store)
+  await initializeZedWasm()
   return {store, api}
 }

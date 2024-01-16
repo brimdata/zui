@@ -144,4 +144,6 @@ export const contextBridge = {
 
 export const protocol = {
   interceptFileProtocol: jest.fn(),
+  registerSchemesAsPrivileged: jest.fn(),
+  handle: jest.fn(),
 }
