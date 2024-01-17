@@ -224,6 +224,10 @@ export default class TestApp {
     this.zui.process().stdout.on('data', (d) => console.log(d.toString()));
     this.zui.process().stderr.on('data', (d) => console.log(d.toString()));
   }
+
+  async takeScreenshot(filename: string) {
+    return await this.page.screenshot({ path: path.join('run', 'screenshots', filename), fullPage: true });
+  }
 }
 
 const getAppInfo = () => {
