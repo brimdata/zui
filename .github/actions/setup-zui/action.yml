@@ -22,7 +22,7 @@ runs:
       shell: bash
 
     - name: Install Playwright Deps
-      run: yarn playwright install
+      run: yarn workspace @brimdata/zed-wasm run playwright install
       shell: bash
 
     - name: Yarn Build
