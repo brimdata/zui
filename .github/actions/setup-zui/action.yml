@@ -1,7 +1,7 @@
 name: Setup Zui
 description: Shared steps for setting up Zui in workflows
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Install Go
       uses: actions/setup-go@v2
@@ -19,6 +19,10 @@ runs:
 
     - name: Yarn Install
       run: yarn --inline-builds
+      shell: bash
+
+    - name: Install Playwright Deps
+      run: yarn playwright install
       shell: bash
 
     - name: Yarn Build
