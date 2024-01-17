@@ -19,6 +19,10 @@ on:
         - 'true'
         - 'false'
         required: true
+      always-upload:
+        description: Whether to always upload artifacts even if tests don't fail
+        type: boolean
+        required: false
 
 jobs:
   run-e2e-tests:
@@ -56,7 +60,7 @@ jobs:
           cp /var/log/sys*log* /var/log/kern.log* packages/zui-player/run/var_log || true
         shell: sh
       - uses: actions/upload-artifact@v2
-        if: failure() && steps.playwright.outcome == 'failure'
+        if: (failure() && steps.playwright.outcome == 'failure') || inputs.always-upload
         with:
           name: artifacts-${{ matrix.os }}
           path: |
