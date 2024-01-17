@@ -1,5 +1,5 @@
 import * as zed from "@brimdata/zed-js"
-import program from "src/js/models/program"
+import {drillDown} from "src/js/models/program"
 import {
   appendQueryCountBy,
   appendQueryExclude,
@@ -88,14 +88,12 @@ export const newSearchWithValue = createHandler(
 
 export const pivotToValues = createHandler(
   "editor.pivotToValues",
-  ({select, dispatch}) => {
+  async ({select, dispatch}) => {
     const field = select(Selection.getField)
     const query = select(Editor.getValue)
     // So this only works if the count() by field is in the editor, not in a pin.
     const record = field.rootRecord
-    const newProgram = program(query)
-      .drillDown(record as zed.Record)
-      .string()
+    const newProgram = await drillDown(query, record as zed.Record)
 
     if (newProgram) {
       dispatch(Editor.setValue(newProgram))
