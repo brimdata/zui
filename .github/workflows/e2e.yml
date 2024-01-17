@@ -20,7 +20,7 @@ on:
         - 'false'
         required: true
       always-upload:
-        description: Whether to always upload artifacts even if tests don't fail
+        description: Always upload artifacts even if tests don't fail?
         type: boolean
         required: false
 
