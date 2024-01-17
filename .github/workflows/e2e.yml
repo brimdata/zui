@@ -60,7 +60,5 @@ jobs:
         with:
           name: artifacts-${{ matrix.os }}
           path: |
-            packages/zui-player/run/playwright-itest
-            packages/zui-player/run/videos
-            packages/zui-player/run/var_log
+            packages/zui-player/run/**
             packages/zui-player/test-results
