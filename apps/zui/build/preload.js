@@ -1,8 +1,12 @@
 const {contextBridge, ipcRenderer} = require("electron")
 
 const preloadApi = () => ({
-  on: ipcRenderer.on.bind(ipcRenderer),
-  off: ipcRenderer.off.bind(ipcRenderer),
+  on: (channel, handler) => {
+    ipcRenderer.on(channel, handler)
+    return () => {
+      ipcRenderer.off(channel, handler)
+    }
+  },
   once: ipcRenderer.once.bind(ipcRenderer),
   invoke: ipcRenderer.invoke.bind(ipcRenderer),
 })

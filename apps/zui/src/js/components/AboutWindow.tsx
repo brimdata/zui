@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import TextContent from "./TextContent"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 import {EnvAboutApp} from "src/domain/env/types"
 import {invoke} from "src/core/invoke"
 
@@ -19,7 +19,7 @@ export function Content(props: EnvAboutApp) {
   return (
     <div className="about-window">
       <div className="about-logo">
-        <Icon name="zui" fill="var(--orange)" size={64} />
+        <Icon name="zui" fill="var(--orange)" size="64px" />
       </div>
       <TextContent>
         <div className="about-content">

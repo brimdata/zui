@@ -2,6 +2,23 @@ name: Run e2e tests
 
 on:
   workflow_dispatch:
+    inputs:
+      run-target:
+        description: Command line for running e2e tests
+        default: 'yarn e2e:ci'
+        required: true
+      platforms:
+        description: OS platforms to test on (list of strings in JSON format)"
+        default: '["ubuntu-20.04"]'
+        required: true
+      video:
+        description: Whether to record videos of Playwright test runs
+        type: choice
+        default: 'true'
+        options:
+        - 'true'
+        - 'false'
+        required: true
 
 jobs:
   run-e2e-tests:
@@ -9,10 +26,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: ${{ fromJSON(inputs.platforms) }}
     steps:
+      - name: Output inputs
+        run: echo "${{ toJSON(inputs) }}"
+        shell: sh
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-zui
+      - name: Install dependencies (Linux)
+        if: startsWith(matrix.os, 'ubuntu-')
+        run: sudo apt-get -y install whois
+      - name: Install dependencies (Windows)
+        if: startsWith(matrix.os, 'windows-')
+        run: choco install -y --no-progress whois
       - run: yarn lint
       - run: yarn test
       - run: yarn build
@@ -21,11 +47,20 @@ jobs:
         uses: GabrielBB/xvfb-action@v1
         with:
           options: -screen 0 1280x1024x24
-          run: yarn e2e:ci
+          run: ${{ inputs.run-target }}
+        env:
+          VIDEO: ${{ inputs.video }}
+      - name: Put system logs alongside other artifacts
+        run: |
+          mkdir -p packages/zui-player/run/var_log
+          cp /var/log/sys*log* /var/log/kern.log* packages/zui-player/run/var_log || true
+        shell: sh
       - uses: actions/upload-artifact@v2
         if: failure() && steps.playwright.outcome == 'failure'
         with:
           name: artifacts-${{ matrix.os }}
           path: |
-            run/playwright-itest
-            !run/**/SS
+            packages/zui-player/run/playwright-itest
+            packages/zui-player/run/videos
+            packages/zui-player/run/var_log
+            packages/zui-player/test-results

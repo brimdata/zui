@@ -4,7 +4,7 @@
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 1fr 360px;
-  border-radius: 8px 8px 0 0 ;
+  border-radius: 8px 8px 0 0;
   overflow: hidden;
   background-color: var(--chrome-color);
 }
@@ -19,7 +19,7 @@
   height: 100%;
   width: 100%;
   grid-row: 1 / 2;
-  grid-column: 1 / 2;  
+  grid-column: 1 / 2;
   padding: 10px;
   padding-right: 0px;
 }

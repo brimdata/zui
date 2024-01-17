@@ -1,11 +1,11 @@
 import React, {useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {SwitchButton} from "src/app/core/components/switch-button"
 import Appearance from "src/js/state/Appearance"
 import {Content} from "../content"
 import {SearchBar} from "../search-bar"
 import {Toolbar} from "../toolbar"
 import {QueriesTree} from "./queries-tree"
+import {ToolbarTabs} from "src/components/toolbar-tabs"
 
 export function QueriesSection() {
   const dispatch = useDispatch()
@@ -18,17 +18,17 @@ export function QueriesSection() {
         <QueriesTree source={view} searchTerm={searchTerm} />
       </Content>
       <Toolbar>
-        <SwitchButton
+        <ToolbarTabs
           options={[
             {
               label: "Local",
               click: () => dispatch(Appearance.setQueriesView("local")),
-              active: "local" === view,
+              checked: "local" === view,
             },
             {
               label: "Remote",
               click: () => dispatch(Appearance.setQueriesView("remote")),
-              active: "remote" === view,
+              checked: "remote" === view,
             },
           ]}
         />

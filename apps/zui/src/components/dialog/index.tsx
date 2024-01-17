@@ -44,7 +44,6 @@ export function Dialog(props: DialogProps) {
     target: node && props.isOpen ? node : null,
     targetPoint: props.dialogPoint,
     targetMargin: props.dialogMargin,
-    keepOnScreen: props.keepOnScreen,
   })
 
   function onClose(e) {
@@ -64,7 +63,7 @@ export function Dialog(props: DialogProps) {
       onClose={onClose}
       onCancel={onCancel}
       ref={setNode}
-      style={style}
+      style={{...style, position: "fixed"}}
       {...omit(props, ...nonHTMLProps)}
     >
       {props.children}

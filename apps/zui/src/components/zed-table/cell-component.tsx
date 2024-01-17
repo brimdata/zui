@@ -44,6 +44,7 @@ export const Cell = React.memo(function Cell({
 
   return (
     <div
+      role="gridcell"
       className={classNames("zed-table__cell", {even: rowIndex % 2 == 0})}
       style={useCellStyle(style)}
       id={cell.id}

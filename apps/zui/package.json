@@ -73,7 +73,7 @@
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
-    "brimcap": "brimdata/brimcap#v1.5.5",
+    "brimcap": "brimdata/brimcap#v1.6.0-beta1",
     "chalk": "^4.1.0",
     "chevrotain": "^10.5.0",
     "chrono-node": "^2.5.0",
@@ -140,7 +140,6 @@
     "react-redux": "^8.0.5",
     "react-router": "5.3.1",
     "react-spring": "^8.0.27",
-    "react-tooltip": "^4.2.7",
     "react-transition-group": "^4.4.5",
     "react-window": "^1.8.7",
     "regenerator-runtime": "^0.13.6",
@@ -156,7 +155,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#efe60d08c47257a0689ee9ce218fcad80f0e7ecb",
+    "zed": "brimdata/zed#8a48163f2eb3c6e0e5db2dc2fec4c6585ea428c3",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {

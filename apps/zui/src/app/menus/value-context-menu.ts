@@ -1,9 +1,6 @@
 import * as zed from "@brimdata/zed-js"
 import {createMenu} from "src/core/menu"
 import ZuiApi from "src/js/api/zui-api"
-import * as editor from "../commands/editor"
-import * as pins from "../commands/pins"
-import * as values from "../commands/values"
 
 function getWhenContext(api: ZuiApi, value: zed.Any) {
   return {
@@ -16,7 +13,6 @@ function getWhenContext(api: ZuiApi, value: zed.Any) {
 }
 
 export const valueContextMenu = createMenu(
-  "valueContextMenu",
   ({api}, value: zed.Any, field: zed.Field | null, rootValue: zed.Value) => {
     const when = getWhenContext(api, value)
 
@@ -24,77 +20,77 @@ export const valueContextMenu = createMenu(
       {
         label: "Filter == Value",
         visible: when.isPrimitive,
-        command: editor.filterEqualsValue.bind(field),
+        command: "editor.filterEqualsValue",
       },
       {
         label: "Filter != Value",
         visible: when.isPrimitive,
-        command: editor.filterNotEqualsValue.bind(field),
+        command: "editor.filterNotEqualsValue",
       },
       {
         label: "Filter In Field",
         visible: when.isIterable,
-        command: editor.filterInField.bind(field, value),
+        command: "editor.filterInField",
       },
       {
         label: "Filter Not In Field",
         visible: when.isIterable,
-        command: editor.filterNotInField.bind(field, value),
+        command: "editor.filterNotInField",
       },
       {
         label: "New Search With Value",
-        command: editor.newSearchWithValue.bind(field),
+        command: "editor.newSearchWithValue",
       },
       {type: "separator"},
       {
         label: "Pivot to Values",
-        command: editor.pivotToValues.bind(field),
+        command: "editor.pivotToValues",
         enabled: when.isGroupBy,
       },
       {
         label: "Count By Field",
-        command: editor.countByField.bind(field),
+        command: "editor.countByField",
         enabled: !when.isGroupBy,
       },
       {type: "separator"},
       {
         label: "Copy",
-        command: editor.copyValueToClipboard.bind(value),
+        command: "editor.copyValueToClipboard",
       },
       {
         label: "Copy Full Value",
-        command: editor.copyValueToClipboard.bind(value),
+        command: "editor.copyValueToClipboard",
         visible: value !== rootValue,
       },
       {type: "separator"},
       {
         label: "Sort Asc",
-        command: editor.sortAsc.bind(field.path),
+        command: "editor.sortAsc",
       },
-      {label: "Sort Desc", command: editor.sortDesc.bind(field.path)},
+      {label: "Sort Desc", command: "editor.sortDesc"},
       {type: "separator"},
       {
         label: "Set Time Range From",
-        command: pins.setTimeRangeFrom.bind(value),
+        command: "session.setTimeRangeFrom",
       },
       {
         label: "Set Time Range To",
-        command: pins.setTimeRangeTo.bind(value),
+        command: "session.setTimeRangeTo",
       },
       {type: "separator"},
       {
         label: "Show In Detail Pane",
-        command: values.showValueDetails.bind(rootValue),
+        command: "session.showValueDetails",
       },
       {type: "separator"},
       {
         label: "Whois Lookup",
-        command: values.showWhoIs.bind(value),
+        command: "session.showWhoIs",
         enabled: when.isIp,
       },
       {
         label: "Virus Total",
-        command: values.openVirusTotal.bind(value),
+        command: "session.openVirusTotal",
       },
     ]
   }

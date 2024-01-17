@@ -17,9 +17,6 @@ export const PaneBody = styled.div`
 export const PaneHeader = styled.header`
   user-select: none;
   position: relative;
-  svg {
-    fill: var(--slate);
-  }
   flex-shrink: 0;
   display: flex;
   align-items: center;

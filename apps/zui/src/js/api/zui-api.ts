@@ -12,11 +12,10 @@ import {CurrentApi} from "./current/current-api"
 import {EditorApi} from "./editor/editor-api"
 import {NoticeApi} from "./notice/notice-api"
 import {UrlApi} from "./url/url-api"
-import {LayoutApi} from "./layout-api"
 import {TableViewApi} from "src/zui-kit"
 import {LakeModel} from "../models/lake"
 
-// This should start to be deprecated maybe...
+// This is deprecated in favor of domain handlers and operations
 export default class ZuiApi {
   table: TableViewApi | null = null
   public abortables = new Abortables()
@@ -36,7 +35,6 @@ export default class ZuiApi {
   public dispatch: AppDispatch
   public getState: GetState
   public notice: NoticeApi
-  public layout: LayoutApi
 
   init(d: AppDispatch, gs: GetState) {
     this.dispatch = d
@@ -49,7 +47,6 @@ export default class ZuiApi {
     this.editor = new EditorApi(d, gs)
     this.notice = new NoticeApi(this)
     this.url = new UrlApi(this)
-    this.layout = new LayoutApi(this)
   }
 
   getZealot(lake?: LakeModel) {
@@ -57,13 +54,14 @@ export default class ZuiApi {
   }
 
   createAbortable(tab?: string, tag?: string) {
-    this.abortables.abort({tab, tag})
+    try {
+      this.abortables.abort({tab, tag})
+    } catch (e) {
+      console.log("Abort Handled", e)
+    }
     const ctl = new AbortController()
     const id = this.abortables.add({
-      abort: () => {
-        console.log("aborted", tab, tag)
-        ctl.abort()
-      },
+      abort: () => ctl.abort(),
       tab,
       tag,
     })

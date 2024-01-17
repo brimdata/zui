@@ -8,6 +8,7 @@
     &:first-child {
       border-radius: 3px 0 0 3px;
     }
+
     &:last-child {
       border-radius: 0 3px 3px 0;
     }
@@ -18,12 +19,13 @@
   }
 
   tbody tr:hover {
-    background: var(--hover-light-bg);
+    background: var(--emphasis-bg-less);
   }
 
   th,
   td {
     padding: 3px 6px;
+
     &.count {
       text-align: right;
     }
@@ -34,6 +36,6 @@
     @extend .label;
     font-size: 9px;
     font-weight: bold;
-    color: var(--slate);
+    color: var(--fg-color-less);
   }
 }

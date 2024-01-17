@@ -5,11 +5,11 @@ import {formatData} from "./format-data"
 import {DataProps} from "./use-data-props"
 import * as d3 from "d3"
 import {createPortal} from "react-dom"
-import submitSearch from "src/app/query-home/flows/submit-search"
 import Editor from "src/js/state/Editor"
 import {Tooltip} from "./tooltip"
 import styles from "./histogram-pane.module.css"
 import {memo, useMemo} from "react"
+import {submitSearch} from "src/domain/session/handlers"
 
 export const Chart = memo(function Chart(
   props: {
@@ -50,7 +50,7 @@ export const Chart = memo(function Chart(
         tooltip.show()
         const field = props.timeField
         dispatch(Editor.setTimeRange({field, from, to}))
-        dispatch(submitSearch())
+        submitSearch()
       }
 
       function onBrushPointerMove(e: PointerEvent) {

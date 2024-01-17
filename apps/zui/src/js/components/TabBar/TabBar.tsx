@@ -1,4 +1,4 @@
-import {useQueryIdNameMap} from "src/app/query-home/hooks/use-query-id-name-map"
+import {useQueryIdNameMap} from "./use-query-id-name-map"
 import React, {useEffect, useState} from "react"
 import {useSelector} from "react-redux"
 import {animated} from "react-spring"
@@ -26,12 +26,11 @@ const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200
 
 const BG = styled.div`
-  background: var(--tab-background);
   display: flex;
   align-items: center;
-  padding-right: 16px;
   height: 100%;
   grid-area: tabs;
+  gap: 10px;
   -webkit-app-region: drag;
 `
 
@@ -54,7 +53,6 @@ const TrafficLightBG = styled.div`
   align-items: center;
   width: 128px;
   flex-shrink: 0;
-  background: var(--tab-background);
   z-index: 1;
   padding-right: 10px;
 `
@@ -74,13 +72,17 @@ export default function TabBar() {
   const ctl = useTabController(count, calcWidth)
   useEffect(() => calcWidth(), [rect.width])
   const sidebarCollapsed = !useSelector(Appearance.sidebarIsOpen)
+  const rightbarCollapse = !useSelector(Appearance.secondarySidebarIsOpen)
+  const paddingInlineEnd = rightbarCollapse ? 20 : 10
+  const paddingInlineStart = sidebarCollapsed ? 20 : 0
   return (
-    <BG>
+    <BG style={{paddingInlineStart, paddingInlineEnd}}>
       {sidebarCollapsed && global.env.isMac && (
         <TrafficLightBG>
           <SidebarToggleButton />
         </TrafficLightBG>
       )}
+      {sidebarCollapsed && !global.env.isMac && <SidebarToggleButton />}
       <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
         {ids.map((id: string) => {
           const tabModel = tab(id, lakes, pools, queryIdNameMap, lakeId)

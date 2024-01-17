@@ -1,8 +1,6 @@
 export * as autoUpdate from "./auto-update"
-export * as commands from "./commands"
 export * as customProtocol from "./custom-protocol"
 export * as logFilters from "./log-filters"
-export * as menus from "./menus"
 export * as secureWebContents from "./secure-web-contents"
 export * as shortcuts from "./shortcuts"
 export * as userTasks from "./user-tasks"

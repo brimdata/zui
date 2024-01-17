@@ -1,5 +1,5 @@
 import React from "react"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 import styled from "styled-components"
 
 const BG = styled.div`
@@ -7,9 +7,9 @@ const BG = styled.div`
   align-items: center;
   border: none;
   border-radius: 5px;
-  border: 1px solid var(--border-color);
-  padding: 2px 12px;
+  padding: 5px 12px;
   width: 100%;
+  background: var(--emphasis-bg);
 
   svg {
     width: 16px;
@@ -25,7 +25,7 @@ const BG = styled.div`
 
 const Input = styled.input`
   &::placeholder {
-    color: var(--foreground-color);
+    color: var(--fg-color);
     opacity: 0.4;
   }
   height: 22px;

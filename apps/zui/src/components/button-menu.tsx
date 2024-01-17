@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React from "react"
+import React, {useMemo} from "react"
 import {MenuItem} from "src/core/menu"
 import styled from "styled-components"
 import {IconButton} from "./icon-button"
@@ -27,8 +27,16 @@ const Buttons = styled.div`
   min-width: 0;
 `
 
-export function ButtonMenu(props: {label: string; items: MenuItem[]}) {
-  const menu = useResponsiveMenu(props.items)
+export function ButtonMenu(props: {
+  label: string
+  items: MenuItem[]
+  justify?: "flex-start" | "flex-end" | "center"
+}) {
+  const items = useMemo(
+    () => props.items.filter((i) => i.visible !== false),
+    [props.items]
+  )
+  const menu = useResponsiveMenu(items)
 
   const buttons = menu.items.map((item: MenuItem, i: number) => {
     return (
@@ -41,8 +49,9 @@ export function ButtonMenu(props: {label: string; items: MenuItem[]}) {
       />
     )
   })
+  const style = {justifyContent: props.justify ?? "flex-end"}
   return (
-    <BG aria-label={props.label} ref={menu.containerRef}>
+    <BG aria-label={props.label} ref={menu.containerRef} style={style}>
       <Buttons>
         {buttons}
         {menu.hasHiddenItems ? (

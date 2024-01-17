@@ -10,13 +10,13 @@ const EmptyWrapper = styled.div`
   user-select: none;
 
   svg {
-    fill: var(--foreground-color);
+    fill: var(--fg-color);
     opacity: 0.1;
   }
 
   p {
     ${(props) => props.theme.typography.labelSmall};
-    color: var(--slate);
+    color: var(--fg-color-less);
     text-align: center;
     margin: 16px 14px 0;
   }

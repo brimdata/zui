@@ -8,6 +8,7 @@ import {EmptyText} from "../common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import {Tree} from "react-arborist"
 import {useZuiApi} from "src/app/core/context"
+import {TREE_ITEM_HEIGHT} from "../../sidebar/item"
 
 const BG = styled.div`
   display: flex;
@@ -41,7 +42,7 @@ export function HistorySection() {
               {...dimens}
               data={history}
               padding={8}
-              rowHeight={26}
+              rowHeight={TREE_ITEM_HEIGHT}
               indent={8}
               disableDrag
               disableDrop

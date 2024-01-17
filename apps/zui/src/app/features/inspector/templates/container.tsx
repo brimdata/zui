@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react"
 import {ContainerView} from "../views/container-view"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 import classNames from "classnames"
 import * as zed from "@brimdata/zed-js"
 import {note} from "./note"
@@ -76,9 +76,9 @@ export function name(view: ContainerView) {
 
 export function icon(view: ContainerView) {
   if (view.isExpanded()) {
-    return <Icon name="chevron-down" key="arrow" size={16} />
+    return <Icon name="chevron_down" key="arrow" size={"16px"} />
   } else {
-    return <Icon name="chevron-right" key="arrow" size={16} />
+    return <Icon name="chevron_right" key="arrow" size={"16px"} />
   }
 }
 

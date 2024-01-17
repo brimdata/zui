@@ -1,16 +1,17 @@
 import React from "react"
 import {useSelector} from "react-redux"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 import {Pool} from "src/app/core/pools/pool"
 import Loads from "src/js/state/Loads"
 import {Item} from "../item"
 import {NodeRendererProps} from "react-arborist"
 import {poolContextMenu} from "src/app/menus/pool-context-menu"
-import {updateFrom} from "src/app/commands/pins"
 import {useAfterDelayOf} from "src/app/core/hooks/use-after-delay-of"
 import Config from "src/js/state/Config"
 import {PoolName} from "./pool-name"
 import {State} from "src/js/state/types"
+import {showMenu} from "src/core/menu"
+import {setFromPin} from "src/domain/session/handlers"
 
 const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
   const pool = node.data
@@ -30,7 +31,7 @@ const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
       icon={node.isInternal ? <Icon name="folder" /> : <Icon name="pool" />}
       state={node.state}
       innerStyle={style}
-      onContextMenu={() => poolContextMenu.build(tree, node).show()}
+      onContextMenu={() => showMenu(poolContextMenu(tree, node))}
       onSubmit={(name: string) => node.submit(name)}
       onReset={() => node.reset()}
       onToggle={() => node.toggle()}
@@ -38,7 +39,7 @@ const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
       onClick={(e) => {
         if (e.altKey) {
           e.stopPropagation()
-          updateFrom.run(node.data.name)
+          setFromPin(node.data.name)
         } else {
           afterDelayOf(480, () => {
             node.isOnlySelection && node.edit()

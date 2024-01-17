@@ -8,12 +8,11 @@ const MENU_NAME = "results.toolbarMenu"
 
 const packetsMenuItem: MenuItem = {
   id: "packets",
-  iconName: "sharkfin",
+  iconName: "wireshark",
   label: "Packets",
   description: "Download Packets",
-  command: DOWNLOAD,
+  command: DOWNLOAD as any,
   enabled: false,
-  priority: 1,
 }
 
 async function onSelectionChange({row}) {
@@ -27,7 +26,8 @@ async function onSelectionChange({row}) {
         enabled = true
       }
     }
-    menus.get(MENU_NAME).update(packetsMenuItem.id, {
+    const id = packetsMenuItem.id
+    menus.updateItem(MENU_NAME, id, {
       enabled,
       args: [pool, uid] as DownloadArgs,
     })
@@ -36,5 +36,9 @@ async function onSelectionChange({row}) {
 
 export function activatePacketsMenuItem() {
   session.on("result-selection-change", onSelectionChange)
-  menus.extend(MENU_NAME, [packetsMenuItem])
+  menus.extend(MENU_NAME, (menu: MenuItem[]) => {
+    const index = menu.findIndex((item) => item.id == "export-results")
+    menu.splice(index, 0, packetsMenuItem)
+    return menu
+  })
 }

@@ -12,8 +12,9 @@ protocol.registerSchemesAsPrivileged([
 export function runProtocolHandlers() {
   app.whenReady().then(() => {
     protocol.interceptFileProtocol("file", (request, callback) => {
+      const url = new URL(request.url)
       const rootPath = path.join(__dirname, "..", "out")
-      const relPath = request.url.slice("file://".length).split("?")[0]
+      const relPath = url.pathname
       const absPath = path.join(rootPath, relPath)
       callback(absPath)
     })

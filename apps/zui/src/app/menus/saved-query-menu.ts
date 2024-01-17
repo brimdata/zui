@@ -3,69 +3,66 @@ import {ActiveQuery} from "../core/models/active-query"
 import {createMenu} from "src/core/menu"
 import {openQueryMenu} from "./open-query-menu"
 
-export const savedQueryMenu = createMenu(
-  "savedQueryMenu",
-  (_, active: ActiveQuery) => {
-    const query = active.query
-    return [
-      {
-        label: "Go to Latest Version",
-        command: queries.openLatestVersion.bind(),
-        visible: active.isOutdated(),
-      },
-      {label: "Switch Query", nestedMenu: openQueryMenu},
-      {type: "separator"},
-      {
-        label: "Duplicate",
-        command: queries.duplicate.bind(),
-        enabled: !query.isReadOnly,
-      },
-      {
-        label: "Move To Remote",
-        command: queries.moveToSource.bind("remote"),
-        enabled: !query.isReadOnly,
-        visible: query.isLocal,
-      },
-      {
-        label: "Move To Local",
-        command: queries.moveToSource.bind("local"),
-        enabled: !query.isReadOnly,
-        visible: query.isRemote,
-      },
-      {
-        label: "Copy To Remote",
-        command: queries.copyToSource.bind("remote"),
-        enabled: !query.isReadOnly,
-        visible: query.isLocal,
-      },
-      {
-        label: "Copy To Local",
-        command: queries.copyToSource.bind("local"),
-        enabled: !query.isReadOnly,
-        visible: query.isRemote,
-      },
-      {
-        label: "Lock Query",
-        command: queries.lock.bind(),
-        visible: !query.isReadOnly,
-      },
+export const savedQueryMenu = createMenu((_, active: ActiveQuery) => {
+  const query = active.query
+  return [
+    {
+      label: "Go to Latest Version",
+      click: () => queries.openLatestVersion.run(),
+      visible: active.isOutdated(),
+    },
+    {label: "Switch Query", nestedMenu: openQueryMenu()},
+    {type: "separator"},
+    {
+      label: "Duplicate",
+      click: () => queries.duplicate.run(),
+      enabled: !query.isReadOnly,
+    },
+    {
+      label: "Move To Remote",
+      click: () => queries.moveToSource.run("remote"),
+      enabled: !query.isReadOnly,
+      visible: query.isLocal,
+    },
+    {
+      label: "Move To Local",
+      click: () => queries.moveToSource.run("local"),
+      enabled: !query.isReadOnly,
+      visible: query.isRemote,
+    },
+    {
+      label: "Copy To Remote",
+      click: () => queries.copyToSource.run("remote"),
+      enabled: !query.isReadOnly,
+      visible: query.isLocal,
+    },
+    {
+      label: "Copy To Local",
+      click: () => queries.copyToSource.run("local"),
+      enabled: !query.isReadOnly,
+      visible: query.isRemote,
+    },
+    {
+      label: "Lock Query",
+      click: () => queries.lock.run(),
+      visible: !query.isReadOnly,
+    },
 
-      {type: "separator"},
-      {
-        label: "Unlock Query",
-        command: queries.unlock.bind(),
-        visible: query.isReadOnly,
-      },
-      {
-        label: "Rename...",
-        command: queries.rename.bind(),
-        enabled: !query.isReadOnly,
-      },
-      {
-        label: "Delete",
-        command: queries.deleteCmd.bind(),
-        enabled: !query.isReadOnly,
-      },
-    ]
-  }
-)
+    {type: "separator"},
+    {
+      label: "Unlock Query",
+      click: () => queries.unlock.run(),
+      visible: query.isReadOnly,
+    },
+    {
+      label: "Rename...",
+      click: () => queries.rename.run(),
+      enabled: !query.isReadOnly,
+    },
+    {
+      label: "Delete",
+      click: () => queries.deleteCmd.run(),
+      enabled: !query.isReadOnly,
+    },
+  ]
+})

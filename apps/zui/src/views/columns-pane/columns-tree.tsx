@@ -1,17 +1,20 @@
 import React from "react"
 import {columnListItemMenu} from "src/app/menus/column-list-item-menu"
 import {ListItem} from "src/components/list-item"
-import {ZedColumn} from "src/components/zed-table/column"
 import {NodeRendererProps, Tree} from "react-arborist"
-import {useResultsContext} from "src/app/query-home"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import classNames from "classnames"
 import {EmptyText} from "src/app/features/right-pane/common"
+import {useSelector} from "react-redux"
+import Table from "src/js/state/Table"
+import {TableColumn} from "src/js/state/Table/selectors"
+import {collapseColumn, expandColumn} from "src/domain/results/handlers"
+import {TREE_ITEM_HEIGHT} from "src/app/features/sidebar/item"
 
-function Node(props: NodeRendererProps<ZedColumn>) {
+function Node(props: NodeRendererProps<TableColumn>) {
   const {node} = props
   const column = node.data
-  const menu = columnListItemMenu.build(column)
+  const menu = columnListItemMenu(column)
 
   return (
     <ListItem
@@ -19,9 +22,9 @@ function Node(props: NodeRendererProps<ZedColumn>) {
       innerRef={props.dragHandle}
       indent={node.level}
       isOpen={node.isOpen}
-      canToggle={column.isRecordType}
+      canToggle={column.children != null}
       onToggle={() => {
-        node.isOpen ? column.collapse() : column.expand()
+        node.isOpen ? collapseColumn(column.id) : expandColumn(column.id)
         node.toggle()
       }}
       menu={menu}
@@ -37,8 +40,9 @@ function Node(props: NodeRendererProps<ZedColumn>) {
 }
 
 export function ColumnsTree() {
-  const {table} = useResultsContext()
-  if (!table)
+  const columns = useSelector(Table.getNestedColumns)
+  const openState = useSelector(Table.getColumnExpanded)
+  if (columns.length == 0)
     return <EmptyText>Only available when results are in Table view.</EmptyText>
 
   return (
@@ -47,12 +51,12 @@ export function ColumnsTree() {
         return (
           <Tree
             className="columns-tree"
-            rowHeight={28}
+            rowHeight={TREE_ITEM_HEIGHT}
             width={width}
             height={height}
-            data={table.baseColumns}
+            data={columns}
             openByDefault={false}
-            initialOpenState={table.args.columnExpandedState.value}
+            initialOpenState={openState}
             disableDrag
             disableDrop
             padding={10}

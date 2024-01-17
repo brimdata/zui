@@ -3,8 +3,8 @@ import React, {memo, useCallback} from "react"
 import {useDispatch} from "src/app/core/state"
 import Link from "src/js/components/common/Link"
 import {openNewSearchTab} from "src/js/flows/openNewSearchWindow"
-import submitSearch from "src/app/query-home/flows/submit-search"
 import Editor from "src/js/state/Editor"
+import {submitSearch} from "src/domain/session/handlers"
 
 type Props = {
   count: number
@@ -19,7 +19,7 @@ export default memo<Props>(function EventLimit({query, count, limit}) {
     if (global.windowName === "detail") {
       dispatch(openNewSearchTab())
     } else {
-      dispatch(submitSearch())
+      submitSearch()
     }
   }, [query])
 

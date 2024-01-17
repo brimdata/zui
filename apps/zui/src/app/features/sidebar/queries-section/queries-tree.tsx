@@ -16,6 +16,9 @@ import {FillFlexParent} from "src/components/fill-flex-parent"
 import QueryItem from "./query-item"
 import {selectQuery} from "src/app/events/select-query-event"
 import Appearance from "src/js/state/Appearance"
+import {Empty} from "./empty"
+import {TREE_ITEM_HEIGHT} from "../item"
+import {showMenu} from "src/core/menu"
 
 type Props = {
   source: "local" | "remote"
@@ -35,8 +38,11 @@ export function QueriesTree(props: Props) {
 
 function LocalQueriesTree({searchTerm}: Props) {
   const queries = useSelector(Queries.raw).items
-
-  return <QueryTree queries={queries} searchTerm={searchTerm} type="local" />
+  if (queries.length) {
+    return <QueryTree queries={queries} searchTerm={searchTerm} type="local" />
+  } else {
+    return <Empty message="Local queries you've saved will be listed here." />
+  }
 }
 
 function RemoteQueriesTree({searchTerm}) {
@@ -45,7 +51,11 @@ function RemoteQueriesTree({searchTerm}) {
   useEffect(() => {
     dispatch(refreshRemoteQueries())
   }, [])
-  return <QueryTree queries={queries} searchTerm={searchTerm} type="remote" />
+  if (queries.length) {
+    return <QueryTree queries={queries} searchTerm={searchTerm} type="remote" />
+  } else {
+    return <Empty message="Remove queries from the lake will be listed here." />
+  }
 }
 
 function QueryTree(props: {
@@ -59,7 +69,7 @@ function QueryTree(props: {
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()
   const initialOpenState = useSelector(Appearance.getQueriesOpenState)
-  selectQuery.useListener((id) => tree.current.select(id))
+  selectQuery.useListener((id) => tree.current?.select(id))
 
   return (
     <>
@@ -85,7 +95,7 @@ function QueryTree(props: {
                 node.data.name.toLowerCase().includes(term.toLowerCase())
               }
               indent={16}
-              rowHeight={28}
+              rowHeight={TREE_ITEM_HEIGHT}
               data={props.queries}
               childrenAccessor="items"
               onActivate={(node) => {
@@ -118,7 +128,7 @@ function QueryTree(props: {
               }}
               onContextMenu={() => {
                 if (tree.current) {
-                  queryTreeContextMenu.build(tree.current).show()
+                  showMenu(queryTreeContextMenu(tree.current))
                 }
               }}
             >

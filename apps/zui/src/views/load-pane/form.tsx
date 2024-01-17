@@ -1,6 +1,6 @@
 import baseForm from "src/components/forms.module.css"
 import {ScrollShadow} from "./scroll-shadow"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 import Current from "src/js/state/Current"
 import {useForm} from "react-hook-form"
 import {useSelector} from "react-redux"
@@ -103,8 +103,8 @@ export function Form(props: {
                   aria-label={basename(f)}
                 >
                   <Icon
-                    name="doc-plain"
-                    size={16}
+                    name="doc_plain"
+                    size={"16px"}
                     fill="var(--primary-color)"
                   />
                   <span title={f} className={styles.fileName}>

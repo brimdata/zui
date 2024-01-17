@@ -53,7 +53,7 @@ export function appendQueryIn(field: zed.Field, value: zed.Value): Thunk {
   }
 }
 
-export function appendQueryNotIn(field: zed.Field, value: zed.Any): Thunk {
+export function appendQueryNotIn(field: zed.Field, value: zed.Value): Thunk {
   return function (dispatch, getState) {
     dispatch(
       changeTo(

@@ -1,9 +1,6 @@
 import {IconButton} from "src/components/icon-button"
 import styles from "./shaper.module.css"
-import {
-  ZedEditor,
-  useZedEditorKeyboardSubmit,
-} from "src/app/query-home/search-area/zed-editor"
+import {ZedEditor, useZedEditorKeyboardSubmit} from "src/components/zed-editor"
 import DragAnchor from "src/components/drag-anchor"
 import useSelect from "src/app/core/hooks/use-select"
 import {useDispatch} from "src/app/core/state"

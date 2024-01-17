@@ -65,7 +65,7 @@ export function InitPool({children}) {
 
 export const Show = () => {
   const pool = useSelector(Current.mustGetPool)
-  const menu = poolToolbarMenu.build(pool)
+  const menu = poolToolbarMenu(pool)
   const isEmpty = pool.empty()
   return (
     <div className={styles.page}>
@@ -78,7 +78,7 @@ export const Show = () => {
             </Subtitle>
           </div>
           <Toolbar>
-            <ButtonMenu label={menu.label} items={menu.items} />
+            <ButtonMenu label={"Pool Menu"} items={menu} />
           </Toolbar>
         </div>
       </header>

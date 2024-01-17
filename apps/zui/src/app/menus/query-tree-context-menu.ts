@@ -3,7 +3,6 @@ import {Group, Query} from "src/js/state/Queries/types"
 import {createMenu} from "src/core/menu"
 
 export const queryTreeContextMenu = createMenu(
-  "queryTreeContextMenu",
   (_, tree: TreeApi<Query | Group>) => {
     return [
       {

@@ -21,7 +21,7 @@ export type TableViewController = Controller<TableViewState>
 
 type CellMouseEventHandler = (
   e: React.MouseEvent,
-  value: zed.Any,
+  value: zed.Value,
   field: zed.Field | null,
   cell: Cell
 ) => void

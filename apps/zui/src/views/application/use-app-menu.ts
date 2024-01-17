@@ -37,9 +37,6 @@ export function useAppMenu() {
     }
 
     update()
-    global.zui.on("updateSearchAppMenu", update)
-    return () => {
-      global.zui.off("updateSearchAppMenu", update)
-    }
+    return global.zui.on("updateSearchAppMenu", update)
   }, [state])
 }

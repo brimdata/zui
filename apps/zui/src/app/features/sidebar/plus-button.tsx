@@ -3,16 +3,16 @@ import styled from "styled-components"
 
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {useZuiApi} from "src/app/core/context"
-import {MenuItemConstructorOptions} from "electron"
-import {showContextMenu} from "src/js/lib/System"
+import {MenuItem, showContextMenu} from "src/core/menu"
 import {useDispatch} from "src/app/core/state"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import Tabs from "src/js/state/Tabs"
-import Icon from "src/app/core/icon-temp"
+import {Icon} from "src/components/icon"
 import {connectToLake} from "src/app/commands/connect-to-lake"
 import Modal from "src/js/state/Modal"
 
 export const Button = styled.button`
+  color: white;
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -47,7 +47,7 @@ export default function PlusButton() {
   }
 
   const onClick = () => {
-    const template: MenuItemConstructorOptions[] = [
+    const template: MenuItem[] = [
       {
         label: "New Query Session",
         click: () => dispatch(Tabs.createQuerySession()),
@@ -73,7 +73,7 @@ export default function PlusButton() {
   return (
     <>
       <Button aria-label="create" onMouseDown={() => onClick()}>
-        <Icon name="plus" size={18} fill="white" />
+        <Icon name="plus" />
       </Button>
       <input
         ref={ref}

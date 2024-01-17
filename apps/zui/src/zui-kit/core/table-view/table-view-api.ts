@@ -103,10 +103,7 @@ export class TableViewApi {
   }
 
   get totalHeaderHeight() {
-    return (
-      (this.headerGroups.length - 1) * config.placeholderHeaderHeight +
-      config.headerHeight
-    )
+    return this.headerGroups.length * config.headerHeight
   }
 
   get isResizing() {

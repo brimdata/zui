@@ -1,13 +1,12 @@
 import useContentRect from "src/app/core/hooks/useContentRect"
 import {scaleTime, extent} from "d3"
-import React, {memo, useEffect, useState} from "react"
+import React, {memo, useState} from "react"
 import styled from "styled-components"
 import {SecurityEventInterface} from "./models/security-event"
 import EventTag from "./EventTag"
 import {useDispatch} from "src/app/core/state"
 import {viewLogDetail} from "src/js/flows/viewLogDetail"
 import useResizeEffect from "src/app/core/hooks/useResizeEffect"
-import ReactTooltip from "react-tooltip"
 import {isEqual} from "lodash"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import time from "src/js/models/time"
@@ -16,7 +15,7 @@ const Lane = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  height: 18px;
+  height: 26px;
   margin-bottom: 3px;
   &:last-of-type {
     margin-bottom: 0px;
@@ -32,7 +31,7 @@ const Lane = styled.div`
 const Axis = styled.div`
   height: 1px;
   background: none;
-  box-shadow: 0 0.5px 0 var(--cloudy);
+  box-shadow: 0 0.5px 0 var(--border-color);
   width: 100%;
 `
 
@@ -77,13 +76,6 @@ function getDomain(events) {
 }
 
 export default memo(function EventTimeline({events, current}: Props) {
-  useEffect(() => {
-    // This is silly, but ReactTooltip cannot handle this component rerendering
-    // with new data. On their docs they have a case for this and suggest this
-    // workaround. They also have us hiding all the tooltips manually when this
-    // re-renders. Not very "react".
-    ReactTooltip.rebuild()
-  }, [events])
   const dispatch = useDispatch()
   const [width, setWidth] = useState(0)
   const [lastItem, lastItemRef] = useContentRect()
@@ -130,13 +122,9 @@ export default memo(function EventTimeline({events, current}: Props) {
             <div
               ref={getRef(i)}
               onClick={() => {
-                ReactTooltip.hide()
                 onClick(e)
               }}
-              data-tip={time(e.getTime()).format()}
-              data-place="left"
-              data-effect="solid"
-              data-delay-show={0}
+              data-tooltip={time(e.getTime()).format()}
               style={{...getX(e)}}
             >
               <Tag

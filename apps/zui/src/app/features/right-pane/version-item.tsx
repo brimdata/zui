@@ -33,13 +33,14 @@ const Dot = styled.div`
 `
 
 const Container = styled.div`
-  height: 28px;
+  height: 100%;
   width: 100%;
   cursor: default;
   user-select: none;
   outline: none;
   white-space: nowrap;
   padding: 0 10px;
+  font-size: 15px;
 
   &:not(:last-child) {
     ${Dot}:before {
@@ -48,7 +49,7 @@ const Container = styled.div`
       left: 2px;
       top: 16px;
       margin-top: 7px;
-      border-left: 1px solid var(--hawkes-blue);
+      border-left: 1px solid var(--primary-color-dark);
       height: 14px;
       width: 1px;
     }
