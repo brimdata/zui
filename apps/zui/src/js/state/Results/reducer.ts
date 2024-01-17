@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction as Pay} from "@reduxjs/toolkit"
 import * as zed from "@brimdata/zed-js"
-import program from "src/js/models/program"
 import {ResultsState} from "./types"
 import {initialResultData} from "./util"
 
@@ -18,10 +17,19 @@ const slice = createSlice({
   name: "TAB_RESULTS",
   initialState: {} as ResultsState,
   reducers: {
-    init(s, a: Pay<{id: string; query: string; key: string; tabId: string}>) {
+    init(
+      s,
+      a: Pay<{
+        id: string
+        query: string
+        aggregation: boolean
+        key: string
+        tabId: string
+      }>
+    ) {
       const r = access(s, a.payload.id)
       r.query = a.payload.query
-      r.aggregation = program(a.payload.query).hasAnalytics()
+      r.aggregation = a.payload.aggregation
       r.key = a.payload.key
       r.page = 1
       r.status = "FETCHING"

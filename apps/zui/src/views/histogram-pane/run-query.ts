@@ -22,7 +22,7 @@ export async function runHistogramQuery(api: ZuiApi) {
   )
 
   function setup() {
-    api.dispatch(Results.init({id, tabId, key, query: ""}))
+    api.dispatch(Results.init({id, tabId, key, query: "", aggregation: false}))
     api.dispatch(Histogram.init())
   }
 

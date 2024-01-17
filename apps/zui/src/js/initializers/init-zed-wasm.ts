@@ -1,4 +1,5 @@
-import {initZedWasm} from "@brimdata/zed-wasm"
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {initZedWasm} from "@brimdata/zed-wasm/src/browser.js"
 
 export async function initializeZedWasm() {
   if (!globalThis.zedWasm) {
