@@ -58,7 +58,6 @@ test.describe('Export tests', () => {
         .waitFor();
 
       expect(fsExtra.statSync(file).size).toBe(expectedSize);
-      await app.takeScreenshot('export-' + label + '.png');
     });
   });
 });
