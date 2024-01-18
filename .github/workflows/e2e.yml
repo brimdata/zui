@@ -49,7 +49,7 @@ jobs:
       - name: End to end tests
         id: playwright
         run: |
-          if [ "$RUNNER_OS" == "Linux" ]; then
+          if [ "$RUNNER_OS" = "Linux" ]; then
             /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" ${{ inputs.run-target }}
           else
             ${{ inputs.run-target }}
