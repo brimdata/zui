@@ -48,12 +48,15 @@ jobs:
       - run: yarn build
       - name: End to end tests
         id: playwright
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          options: -screen 0 1280x1024x24
-          run: ${{ inputs.run-target }}
+        run: |
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" ${{ inputs.run-target }}
+          else
+            ${{ inputs.run-target }}
+          fi
         env:
           VIDEO: ${{ inputs.video }}
+        shell: sh
       - name: Put system logs alongside other artifacts
         run: |
           mkdir -p packages/zui-player/run/var_log
