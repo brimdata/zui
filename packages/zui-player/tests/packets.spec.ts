@@ -3,7 +3,7 @@ import { getPath } from 'zui-test-data';
 import { isCI } from '../helpers/env';
 
 // Timeouts are increased due to observed long pcap load times in CI.
-// See
+// See https://github.com/brimdata/zui/pull/2978
 play('packets.spec', (app, test) => {
   test('dropping a pcap does not pop up preview and load', async () => {
     if (isCI()) {
