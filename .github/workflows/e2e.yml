@@ -19,6 +19,12 @@ on:
         - 'true'
         - 'false'
         required: true
+      debug:
+        description: Playwright debug logging
+        type: choice
+        options:
+        - 'pw:api'
+        - ''
       always-upload:
         description: Always upload artifacts even if tests don't fail?
         type: boolean
@@ -56,6 +62,7 @@ jobs:
           fi
         env:
           VIDEO: ${{ inputs.video }}
+          DEBUG: ${{ inputs.debug }}
         shell: sh
       - name: Put system logs alongside other artifacts
         run: |
