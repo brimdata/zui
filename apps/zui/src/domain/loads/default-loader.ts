@@ -6,12 +6,15 @@ import {createReadableStream} from "src/core/zq"
 import {throttle} from "lodash"
 import {errorToString} from "src/util/error-to-string"
 
-export const defaultLoader: Loader = {
+export class DefaultLoader implements Loader {
+  constructor(private ctx: LoadContext) {}
+
   when() {
     return true
-  },
+  }
 
-  async run(ctx: LoadContext) {
+  async run() {
+    const {ctx} = this
     const client = await ctx.createClient()
     const progress = createProgressTracker(ctx)
     const shaper = createShaper(ctx)
@@ -45,9 +48,9 @@ export const defaultLoader: Loader = {
     for (const warning of res?.warnings ?? []) ctx.onWarning(warning)
     await ctx.onPoolChanged()
     ctx.onProgress(1)
-  },
+  }
 
-  rollback() {},
+  rollback() {}
 }
 
 function getFileSize(path: string) {

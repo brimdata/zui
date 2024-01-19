@@ -39,14 +39,14 @@ export class PoolsApi extends TypedEmitter<Events> {
   async load(opts: LoadOptions) {
     const main = getMainObject()
     const context = new LoadContext(main, opts)
-    const loader = await loads.getMatch(context)
+    const loader = await loads.initialize(context)
     try {
       await context.setup()
-      await loader.run(context)
+      await loader.run()
       await waitForPoolStats(context)
       loads.emit("success", context.ref)
     } catch (e) {
-      await loader.rollback(context)
+      await loader.rollback()
       loads.emit("error", context.ref)
       throw e
     } finally {

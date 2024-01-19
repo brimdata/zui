@@ -1,5 +1,4 @@
 import {LoadFormat} from "@brimdata/zed-js"
-import {LoadContext} from "../../domain/loads/load-context"
 
 export type LoadOptions = {
   windowId: string
@@ -14,7 +13,7 @@ export type LoadOptions = {
 }
 
 export interface Loader {
-  when(context: LoadContext): PromiseLike<boolean> | boolean
-  run(context: LoadContext): PromiseLike<void> | void
-  rollback(context: LoadContext): PromiseLike<void> | void
+  when(): PromiseLike<boolean> | boolean
+  run(): PromiseLike<void> | void
+  rollback(): PromiseLike<void> | void
 }

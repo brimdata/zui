@@ -7,7 +7,7 @@ export const quickLoadFiles = createHandler(
       return
     }
 
-    ctx.invoke("loads.create", {
+    return ctx.invoke("loads.create", {
       windowId: globalThis.windowId,
       poolId: args.poolId || "new",
       files: args.files,
