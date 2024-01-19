@@ -70,6 +70,7 @@ export function compileTemplate(
 
   const exportResults: MenuItemConstructorOptions = {
     label: "Export Results As...",
+    accelerator: "CmdOrCtrl+Shift+E",
     click: () => window.send("showExportResults"),
   }
 
