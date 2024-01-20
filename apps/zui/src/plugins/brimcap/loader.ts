@@ -40,8 +40,21 @@ class BrimcapLoader implements Loader {
   analyze() {
     const process = createAnalyzeProcess(this.ctx.signal)
     const stream = createTransform(process)
-
-    trackProgress(process)
+    const totalSize = fs.statSync(this.pcap).size
+    trackProgress(process, ({type, ...status}) => {
+      switch (type) {
+        case "status":
+          this.ctx.onProgress(status.pcap_read_size / totalSize || 0)
+          this.ctx.onPoolChanged()
+          break
+        case "warning":
+          if (status.warning) this.ctx.onWarning(status.warning)
+          break
+        case "error":
+          if (status.error) stream.destroy(status.error)
+          break
+      }
+    })
     return stream
   }
 
