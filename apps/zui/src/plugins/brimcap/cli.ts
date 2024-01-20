@@ -109,21 +109,11 @@ export default class BrimcapCLI {
     return this.execSpawnSync("search", [...toCliOpts(opts)])
   }
 
-  private execSpawn(
-    subCommand: string,
-    optsAndArgs: string[],
-    signal?: AbortSignal
-  ) {
-    // don't detach if is windows
-    const p = spawn(this.binPath, [subCommand, ...optsAndArgs], this.spawnOpts)
-    signal?.addEventListener("abort", () => {
-      if (this.isWin) {
-        spawnSync("taskkill", ["/pid", p.pid.toString(), "/f", "/t"])
-      } else {
-        process.kill(-p.pid, "SIGINT")
-      }
+  private execSpawn(subCommand: string, optsAndArgs: string[], signal) {
+    return spawn(this.binPath, [subCommand, ...optsAndArgs], {
+      ...this.spawnOpts,
+      signal,
     })
-    return p
   }
 
   private execSpawnSync(subCommand: string, opts: string[]) {

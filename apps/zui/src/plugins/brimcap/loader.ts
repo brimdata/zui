@@ -6,10 +6,10 @@ import {loads} from "src/zui"
 import {pipeline} from "stream"
 import {createTransform} from "./transform-stream"
 import {configureZeekPool} from "./configure-zeek-pool"
-import {createAnalyzeProcess} from "./analyze"
-import {trackProgress} from "./track-progress"
+import {createAnalyzeProcess, monitorAnalyzeProgress} from "./analyze"
 import {createCli} from "./cli"
 import errors from "src/js/errors"
+import {errorToString} from "src/util/error-to-string"
 
 class BrimcapLoader implements Loader {
   constructor(private ctx: LoadContext, private root: string) {}
@@ -23,48 +23,41 @@ class BrimcapLoader implements Loader {
     if (this.ctx.files.length > 1) {
       throw new Error("Only one PCAP can be loaded at a time")
     }
-    this.ctx.onProgress(0)
+    this.ctx.setProgress(0)
     await this.load(this.startPipeline())
-    this.ctx.onProgress(1)
+    this.index()
     configureZeekPool(this.ctx.poolId)
+    this.ctx.setProgress(1)
   }
 
   startPipeline() {
-    return pipeline(
-      fs.createReadStream(this.pcap),
-      this.analyze(),
-      this.onComplete()
-    )
+    return pipeline(fs.createReadStream(this.pcap), this.analyze(), (err) => {
+      if (err) {
+        this.ctx.abort()
+        this.ctx.addError(errorToString(err))
+      }
+    })
   }
 
   analyze() {
     const process = createAnalyzeProcess(this.ctx.signal)
     const stream = createTransform(process)
     const totalSize = fs.statSync(this.pcap).size
-    trackProgress(process, ({type, ...status}) => {
+    monitorAnalyzeProgress(process, ({type, ...status}) => {
       switch (type) {
         case "status":
-          this.ctx.onProgress(status.pcap_read_size / totalSize || 0)
+          this.ctx.setProgress(status.pcap_read_size / totalSize || 0)
           this.ctx.onPoolChanged()
           break
         case "warning":
-          if (status.warning) this.ctx.onWarning(status.warning)
+          if (status.warning) this.ctx.addError(status.warning)
           break
         case "error":
-          if (status.error) stream.destroy(status.error)
+          if (status.error) stream.destroy(new Error(status.error))
           break
       }
     })
     return stream
-  }
-
-  onComplete() {
-    return (err) => {
-      if (err) {
-        this.ctx.abort()
-        throw err
-      }
-    }
   }
 
   index() {
@@ -95,8 +88,6 @@ class BrimcapLoader implements Loader {
   get pcap() {
     return this.ctx.files[0]
   }
-
-  rollback() {}
 }
 
 export function activateBrimcapLoader(root: string) {

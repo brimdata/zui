@@ -15,5 +15,5 @@ export type LoadOptions = {
 export interface Loader {
   when(): PromiseLike<boolean> | boolean
   run(): PromiseLike<void> | void
-  rollback(): PromiseLike<void> | void
+  rollback?(): PromiseLike<void> | void
 }

@@ -9,6 +9,7 @@ import {syncPoolOp} from "src/electron/ops/sync-pool-op"
 import {LoadOptions} from "src/core/loader/types"
 import {getMainObject} from "src/core/main"
 import {TypedEmitter} from "src/util/typed-emitter"
+import {call} from "src/util/call"
 
 type Events = {
   create: (event: {pool: Pool}) => void
@@ -46,9 +47,9 @@ export class PoolsApi extends TypedEmitter<Events> {
       await waitForPoolStats(context)
       loads.emit("success", context.ref)
     } catch (e) {
-      await loader.rollback()
+      await call(loader.rollback)
       loads.emit("error", context.ref)
-      throw e
+      throw context.abortError || e
     } finally {
       context.teardown()
     }

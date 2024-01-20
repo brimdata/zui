@@ -1,4 +1,4 @@
-import {DefaultLoader, defaultLoader} from "./default-loader"
+import {DefaultLoader} from "./default-loader"
 import {LoadContext} from "./load-context"
 import {Loader} from "src/core/loader/types"
 import Loads from "src/js/state/Loads"

@@ -17,7 +17,9 @@ export function createTransform(sub: ChildProcessWithoutNullStreams) {
       else sub.stdout.on("close", () => callback())
     },
   })
-  stream.on("error", () => sub.kill("SIGKILL"))
+  stream.on("error", () => {
+    sub.kill("SIGKILL")
+  })
 
   // STDIN HANLDERS
   sub.stdin.on("error", (e: Error & {code: string}) => {

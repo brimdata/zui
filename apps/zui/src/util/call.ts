@@ -6,5 +6,5 @@ export function call<Fn extends (...a: any[]) => any>(
   fn: Fn,
   ...args: Parameters<Fn>
 ) {
-  if (fn) fn(...args)
+  if (fn) return fn(...args)
 }

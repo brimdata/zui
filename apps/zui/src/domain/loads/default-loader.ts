@@ -29,7 +29,7 @@ export class DefaultLoader implements Loader {
 
     let res
     try {
-      ctx.onProgress(0)
+      ctx.setProgress(0)
       res = await client.load(body, {
         pool: ctx.poolId,
         branch: ctx.branch,
@@ -41,13 +41,13 @@ export class DefaultLoader implements Loader {
       })
     } catch (e) {
       const error = streamError ? new Error(streamError) : e
-      ctx.onWarning(errorToString(error))
-      ctx.onProgress(null)
+      ctx.addError(errorToString(error))
+      ctx.setProgress(null)
       throw error
     }
-    for (const warning of res?.warnings ?? []) ctx.onWarning(warning)
+    for (const warning of res?.warnings ?? []) ctx.addError(warning)
     await ctx.onPoolChanged()
-    ctx.onProgress(1)
+    ctx.setProgress(1)
   }
 
   rollback() {}
@@ -67,7 +67,7 @@ function createShaper(ctx) {
 }
 
 function createProgressTracker(ctx) {
-  const onProgress = throttle((n) => ctx.onProgress(n), 500)
+  const onProgress = throttle((n) => ctx.setProgress(n), 500)
 
   let total = ctx.files.reduce((sum, file) => sum + getFileSize(file), 0)
   let bytes = 0
