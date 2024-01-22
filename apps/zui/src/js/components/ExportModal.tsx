@@ -8,6 +8,8 @@ import classNames from "classnames"
 import forms from "src/components/forms.module.css"
 import modals from "src/components/modals.module.css"
 import {H1} from "src/components/h1"
+import {SectionTabs} from "src/components/section-tabs"
+import {ToolbarTabs} from "src/components/toolbar-tabs"
 
 const showDialog = (format) => {
   return invoke("showSaveDialogOp", {
@@ -19,9 +21,24 @@ const showDialog = (format) => {
   })
 }
 
+// add default for zng or the last most recent format
+const formatOptions = [
+  {value: "arrows", label: "Arrow IPC Stream"},
+  {value: "csv", label: "CSV"},
+  {value: "json", label: "JSON"},
+  {value: "ndjson", label: "NDJSON"},
+  {value: "tsv", label: "TSV"},
+  {value: "vng", label: "VNG"},
+  {value: "zeek", label: "Zeek"},
+  {value: "zjson", label: "ZJSON"},
+  {value: "zng", label: "ZNG"},
+  {value: "zson", label: "ZSON"},
+]
+
 const ExportModal = ({onClose}) => {
   const api = useZuiApi()
   const [format, setFormat] = useState("zng")
+  const [dest, setDest] = useState("file")
 
   const onExport = async () => {
     const {canceled, filePath} = await showDialog(format)
@@ -53,59 +70,33 @@ const ExportModal = ({onClose}) => {
       <H1 className={modals.title}>Export Results</H1>
       <section className={forms.fields}>
         <div>
+          <label>Export To</label>
+          <ToolbarTabs
+            options={[
+              {
+                label: "File",
+                iconName: "file_border",
+                checked: dest === "file",
+                click: () => setDest("file"),
+              },
+              {
+                label: "Pool",
+                iconName: "pool",
+                checked: dest == "pool",
+                click: () => setDest("pool"),
+              },
+            ]}
+          />
+        </div>
+        <div>
           <label>Format</label>
-          <div
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setFormat(e.target.value)
-            }}
-          >
-            <div className={forms.radioInput}>
-              <input type="radio" id="arrows" value="arrows" name="format" />
-              <label htmlFor="arrows">Arrow IPC Stream</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input type="radio" id="csv" value="csv" name="format" />
-              <label htmlFor="csv">CSV</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input type="radio" id="json" value="json" name="format" />
-              <label htmlFor="json">JSON</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input type="radio" id="ndjson" value="ndjson" name="format" />
-              <label htmlFor="ndjson">NDJSON</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input type="radio" id="tsv" value="tsv" name="format" />
-              <label htmlFor="tsv">TSV</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input type="radio" id="vng" value="vng" name="format" />
-              <label htmlFor="vng">VNG</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input type="radio" id="zeek" value="zeek" name="format" />
-              <label htmlFor="zeek">Zeek</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input type="radio" id="zjson" value="zjson" name="format" />
-              <label htmlFor="zjson">ZJSON</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input
-                type="radio"
-                id="zng"
-                value="zng"
-                name="format"
-                defaultChecked
-              />
-              <label htmlFor="zng">ZNG</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input type="radio" id="zson" value="zson" name="format" />
-              <label htmlFor="zson">ZSON</label>
-            </div>
-          </div>
+          <select name="format" onChange={(e) => setFormat(e.target.value)}>
+            {formatOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
         </div>
       </section>
       <div className={classNames(modals.submission, forms.submission)}>

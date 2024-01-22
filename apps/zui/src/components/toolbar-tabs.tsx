@@ -23,6 +23,7 @@ export function ToolbarTabs(props: {
         const button = pressed.getBoundingClientRect()
         const x = button.x - parent.x
         const width = button.width
+        console.log({x, width})
         setPos({x, width})
       }
     }

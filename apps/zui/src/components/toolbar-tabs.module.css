@@ -1,6 +1,6 @@
 .tabs {
   height: 26px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   position: relative;
   background: var(--chrome-color);
