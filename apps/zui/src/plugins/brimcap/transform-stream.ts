@@ -1,5 +1,6 @@
 import {ChildProcessWithoutNullStreams} from "node:child_process"
 import {Stream} from "node:stream"
+import {isAbortError} from "src/util/is-abort-error"
 
 export function createTransform(sub: ChildProcessWithoutNullStreams) {
   const stream = new Stream.Transform({
@@ -17,8 +18,15 @@ export function createTransform(sub: ChildProcessWithoutNullStreams) {
       else sub.stdout.on("close", () => callback())
     },
   })
+  // Transform stream handlers
   stream.on("error", () => {
     sub.kill("SIGKILL")
+  })
+
+  // Sub Hanlers
+  sub.on("error", (e) => {
+    if (isAbortError(e)) return
+    stream.destroy(e)
   })
 
   // STDIN HANLDERS
