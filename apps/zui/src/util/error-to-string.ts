@@ -15,9 +15,6 @@ export function errorToString(e: unknown) {
     if ("error" in e && typeof e.error == "string") {
       return e.error
     } else if ("message" in e && typeof e.message === "string") {
-      if ("details" in e && Array.isArray(e.details)) {
-        return [e.message, ...e.details].join("\n")
-      }
       return e.message
     }
   }
