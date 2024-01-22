@@ -1,0 +1,11 @@
+.width\:measure {
+    inline-size: var(--measure);
+}
+
+.max-width\:measure {
+    max-inline-size: var(--measure);
+}
+
+.justify\:between {
+    justify-content: space-between;
+}

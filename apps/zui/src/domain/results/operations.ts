@@ -1,15 +1,17 @@
 import {createOperation} from "src/core/operations"
-import {QueryFormat} from "@brimdata/zed-js"
+import {ResponseFormat} from "@brimdata/zed-js"
 import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
 import {lake} from "src/zui"
+import {clipboard} from "electron"
+import {addLoad} from "./utils"
 
 const pipe = util.promisify(pipeline)
 
-export const resultsExport = createOperation(
-  "results.export",
-  async (ctx, query: string, format: QueryFormat, outPath: string) => {
+export const exportToFile = createOperation(
+  "results.exportToFile",
+  async (ctx, query: string, format: ResponseFormat, outPath: string) => {
     const res = await lake.query(query, {
       format,
       controlMessages: false,
@@ -25,5 +27,28 @@ export const resultsExport = createOperation(
       throw e
     }
     return outPath
+  }
+)
+
+export const copyToClipboard = createOperation(
+  "results.copyToClipboard",
+  async (ctx, query: string, format: ResponseFormat) => {
+    const res = await lake.query(query, {
+      format,
+      controlMessages: false,
+      timeout: Infinity,
+    })
+    const result = await res.resp.text()
+    clipboard.writeText(result)
+  }
+)
+
+export const exportToPool = createOperation(
+  "results.exportToPool",
+  async (ctx, query: string, poolId: string) => {
+    const loadQuery = addLoad(query, poolId)
+    const res = await lake.query(loadQuery)
+    const result = await res.js()
+    console.log(result)
   }
 )

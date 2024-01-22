@@ -4,11 +4,11 @@ import WhoisModal from "./WhoisModal"
 import React from "react"
 import NewLakeModal from "./LakeModals/NewLakeModal"
 import ViewLakeModal from "./LakeModals/ViewLakeModal"
-import ExportModal from "./ExportModal"
 import {NewPoolModal} from "src/views/new-pool-modal"
 import {Debut, useDebut} from "src/components/debut"
 import {Dialog} from "src/components/dialog"
 import modalStyle from "src/components/modals.module.css"
+import {ExportModal} from "src/views/export-modal"
 
 const MODALS = {
   whois: WhoisModal,

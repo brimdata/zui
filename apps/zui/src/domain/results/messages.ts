@@ -1,10 +1,15 @@
+import * as ops from "./operations"
+import * as hands from "./handlers"
+
 export type ResultsHandlers = {
-  "results.expandAll": () => void
-  "results.collapseAll": () => void
-  "results.showExportDialog": () => void
-  "results.toggleHistogram": () => void
+  "results.expandAll": typeof hands.expandAllHandler
+  "results.collapseAll": typeof hands.collapseAllHandler
+  "results.showExportDialog": typeof hands.showExportDialog
+  "results.toggleHistogram": typeof hands.toggleHistogram
 }
 
 export type ResultsOperations = {
-  "results.export": (query: string, format: string, filePath: string) => string
+  "results.exportToFile": typeof ops.exportToFile
+  "results.copyToClipboard": typeof ops.copyToClipboard
+  "results.exportToPool": typeof ops.exportToPool
 }

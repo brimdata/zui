@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useRef, useState} from "react"
+import React, {CSSProperties, useLayoutEffect, useRef, useState} from "react"
 import {MenuItem} from "src/core/menu"
 import styles from "./toolbar-tabs.module.css"
 import {Icon} from "src/components/icon"
@@ -8,6 +8,7 @@ export function ToolbarTabs(props: {
   onlyIcon?: boolean
   labelClassName?: string
   options: MenuItem[]
+  style?: CSSProperties
 }) {
   const changeCount = useRef(0)
   const ref = useRef<HTMLDivElement>()
@@ -17,22 +18,24 @@ export function ToolbarTabs(props: {
   function run() {
     const el = ref.current
     if (el) {
-      const parent = el.getBoundingClientRect()
-      const pressed = el.querySelector(`[aria-pressed="true"]`)
-      if (pressed) {
-        const button = pressed.getBoundingClientRect()
-        const x = button.x - parent.x
-        const width = button.width
-        console.log({x, width})
-        setPos({x, width})
-      }
+      requestAnimationFrame(() => {
+        const parent = el.getBoundingClientRect()
+        const pressed = el.querySelector(`[aria-pressed="true"]`)
+        if (pressed) {
+          const button = pressed.getBoundingClientRect()
+          const x = button.x - parent.x
+          const width = button.width
+          console.log({x, width})
+          setPos({x, width})
+        }
+      })
     }
   }
 
   useLayoutEffect(run, [pressedIndex, props.onlyIcon])
 
   return (
-    <div className={styles.tabs}>
+    <div className={styles.tabs} style={props.style}>
       <nav className={styles.nav} ref={ref}>
         {props.options.map((opts, i) => (
           <button

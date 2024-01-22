@@ -12,6 +12,7 @@ html,
 body {
   height: 100%;
   width: 100%;
+  font-size: 14px;
 }
 
 body {
@@ -19,7 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-family: var(--body-font);
   color: var(--fg-color);
-  font-size: 14px;
+
 
   &:not(.is-mac) {
     background-color: var(--window-color);
