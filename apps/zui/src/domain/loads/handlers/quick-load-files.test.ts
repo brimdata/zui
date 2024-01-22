@@ -7,6 +7,8 @@ import {loads} from "src/zui"
 
 new SystemTest("quick-load")
 
+jest.setTimeout(3 * 60_000)
+
 test("pcap", (done) => {
   loads.on("error", (ref) => {
     expect(ref.errors[0]).toContain("zeekrunner exited with code 1")
