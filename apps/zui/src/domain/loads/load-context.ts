@@ -8,6 +8,7 @@ import {createLoadRef} from "./load-ref"
 import {select} from "src/core/main/select"
 
 export class LoadContext {
+  abortMsg = undefined as string
   private ctl = new AbortController()
   private id = nanoid()
   private window: SearchWindow
@@ -41,13 +42,13 @@ export class LoadContext {
     )
   }
 
-  onProgress(progress: number) {
+  setProgress(progress: number) {
     this.main.dispatch(Loads.update({id: this.id, changes: {progress}}))
   }
 
-  onWarning(warning: string) {
+  addError(error: string) {
     const load = Loads.find(this.main.store.getState(), this.id)
-    const errors = [...load.errors, warning]
+    const errors = [...load.errors, error]
     this.main.dispatch(Loads.update({id: this.id, changes: {errors}}))
   }
 
@@ -55,8 +56,13 @@ export class LoadContext {
     await syncPoolOp(this.opts.lakeId, this.opts.poolId)
   }
 
-  abort() {
+  abort(msg?: string) {
+    this.abortMsg = msg
     this.ctl.abort()
+  }
+
+  get abortError() {
+    if (this.abortMsg) return new Error(this.abortMsg)
   }
 
   get ref() {

@@ -1,4 +1,4 @@
-import {defaultLoader} from "./default-loader"
+import {DefaultLoader} from "./default-loader"
 import {LoadContext} from "./load-context"
 import {Loader} from "src/core/loader/types"
 import Loads from "src/js/state/Loads"
@@ -12,38 +12,24 @@ type Events = {
   error: (load: LoadReference) => void
 }
 
-export class LoadsApi extends TypedEmitter<Events> {
-  private list: LoaderApi[] = []
+type LoaderRef = {name: string; initialize: (ctx: LoadContext) => Loader}
 
-  // Don't use this...or rename to addLoader
-  create(name: string, impl: Loader) {
-    this.list.push(new LoaderApi(name, impl))
+export class LoadsApi extends TypedEmitter<Events> {
+  private list: LoaderRef[] = []
+
+  addLoader(name: string, initialize: (ctx: LoadContext) => Loader) {
+    this.list.push({name, initialize})
   }
 
-  async getMatch(context: LoadContext) {
-    let loader = defaultLoader
-    for (const pluginLoader of this.list) {
-      if (await pluginLoader.when(context)) {
-        loader = pluginLoader
-        break
-      }
+  async initialize(context: LoadContext) {
+    for (const ref of this.list) {
+      const customLoader = ref.initialize(context)
+      if (await customLoader.when()) return customLoader
     }
-    return loader
+    return new DefaultLoader(context)
   }
 
   get all() {
     return select(Loads.all)
-  }
-}
-
-class LoaderApi {
-  when: Loader["when"]
-  run: Loader["run"]
-  rollback: Loader["rollback"]
-
-  constructor(public name: string, impl: Loader) {
-    this.when = impl.when
-    this.run = impl.run
-    this.rollback = impl.rollback
   }
 }
