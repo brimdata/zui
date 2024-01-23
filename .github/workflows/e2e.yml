@@ -56,7 +56,8 @@ jobs:
         id: playwright
         run: |
           if [ "$RUNNER_OS" = "Linux" ]; then
-            # Mock for pcap slice opening to avoid hanging Actions Runner. See 
+            # Mock for pcap slice opening to avoid hanging Actions Runner.
+            # See https://github.com/brimdata/zui/pull/2987
             echo "application/vnd.tcpdump.pcap; /usr/bin/true" >> /home/runner/.mailcap
             /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" ${{ inputs.run-target }}
           else
