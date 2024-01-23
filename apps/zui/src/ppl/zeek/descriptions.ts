@@ -244,19 +244,14 @@ export default {
       desc: "An identifier associated with a single file.",
     },
     {
-      name: "tx_hosts",
-      type: "table",
-      desc: "If this file was transferred over a network connection this should show the host or hosts that the data sourced from.",
+      name: "uid",
+      type: "string",
+      desc: "Unique ID for the connection.",
     },
     {
-      name: "rx_hosts",
-      type: "table",
-      desc: "If this file was transferred over a network connection this should show the host or hosts that the data traveled to.",
-    },
-    {
-      name: "conn_uids",
-      type: "table",
-      desc: "Connection UIDs over which the file was transferred.",
+      name: "id",
+      type: "record conn_id",
+      desc: "The connection's 4-tuple of endpoint addresses/ports.",
     },
     {
       name: "source",

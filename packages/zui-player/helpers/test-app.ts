@@ -35,7 +35,11 @@ export default class TestApp {
       args: [`--user-data-dir=${userDataDir}`, entry],
       bypassCSP: true,
       timeout: 10000,
-    };
+    } as any;
+
+    if (process.env.VIDEO == 'true') {
+      launchOpts.recordVideo = { dir: path.join('run', 'videos') };
+    }
 
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin;
@@ -219,6 +223,10 @@ export default class TestApp {
   debugLogs() {
     this.zui.process().stdout.on('data', (d) => console.log(d.toString()));
     this.zui.process().stderr.on('data', (d) => console.log(d.toString()));
+  }
+
+  async takeScreenshot(filename: string) {
+    return await this.page.screenshot({ path: path.join('run', 'screenshots', filename), fullPage: true });
   }
 }
 

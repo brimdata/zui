@@ -6,7 +6,7 @@ export function uidQuery(pool: string, uid: string) {
 }
 
 export function uidFilter(uid: string) {
-  return zedScript`uid==${uid} or ${uid} in conn_uids or ${uid} in uids or referenced_file.uid==${uid}`
+  return zedScript`uid==${uid} or ${uid} in uids or referenced_file.uid==${uid}`
 }
 
 export function communityConnFilter(data: CommunityConnArgs) {
@@ -25,6 +25,7 @@ export function findConnLog(pool: string, uid: string) {
   | (` +
     uidFilter(uid) +
     `)
+  | _path=="conn" 
   | is(ts, <time>) 
   | is(duration, <duration>) 
   | is(uid, <string>)

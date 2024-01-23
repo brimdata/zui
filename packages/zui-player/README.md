@@ -8,7 +8,7 @@ The Zui end-to-end test suite uses [Playwright](https://playwright.dev/) as the 
 
 When you are writing or debugging tests, you will usually be changing code in zui, then running the tests. To make this workflow streamlined, you will need to start the Zui dev renderer server and watch the main process code for changes.
 
-You can do this with the commaned:
+You can do this with the command:
 
 ```
 nx watch-code zui
@@ -20,7 +20,7 @@ In another terminal instance, you may run your tests like so:
 nx test zui-player
 ```
 
-To run just one of the tests, specify the name of the file in the `tests` directory, e.g., The -g stands for 'grep' and can take a regex pattern argument.
+To run just one of the tests, specify the name of the file in the `tests` directory, e.g., The `-g` stands for 'grep' and can take a regex pattern argument.
 
 ```
 nx test zui-player -g pool-loads.spec.ts
@@ -28,13 +28,23 @@ nx test zui-player -g pool-loads.spec.ts
 
 ## Running Tests in CI
 
-When the tests run in CI, there will not be a dev server running, serving the HTML. Instead, the workflow will build the app and place static html files on the disk. Zui Player will then test agains those files.
+When the tests run in CI, there will not be a dev server running, serving the HTML. Instead, the workflow will build the app and place static html files on the disk. Zui Player will then test against those files.
 
 To simulate this locally, run the following commands:
 
 ```
 nx build zui
 NODE_ENV=production nx test zui-player
+```
+
+## Artifacts
+
+The [user data folder](https://zui.brimdata.io/docs/support/Filesystem-Paths#user-data) at the end of each test run can be found below the `run/playwright-itest` directory.
+
+If you also want Playwright to record each test run, set the environment variable `VIDEO=true` and the videos can be found in the `run/videos` directory.
+
+```
+VIDEO=true NODE_ENV=production nx test zui-player
 ```
 
 ## Writing a test
@@ -70,7 +80,7 @@ These are the four methods you need to know to get most work done.
 ```ts
 await app.click();
 await app.attached();
-await app.detacted();
+await app.detached();
 await app.hidden();
 await app.visible();
 await app.locate();
