@@ -82,7 +82,7 @@ export function Form(props: {
     >
       <ScrollShadow threshold={45} className={styles.formBody}>
         <section className={styles.fields}>
-          <div>
+          <div className="field">
             <div className={baseForm.actionLabel}>
               <label>Files</label>
               <a onClick={() => fileInput.current?.click()}>
@@ -115,7 +115,7 @@ export function Form(props: {
               ))}
             </ul>
           </div>
-          <div>
+          <div className="field">
             <label htmlFor="format">Data Format</label>
             <select
               id="format"
@@ -126,7 +126,7 @@ export function Form(props: {
               <DataFormatOptions />
             </select>
           </div>
-          <div>
+          <div className="field">
             <label htmlFor="poolId">Pool</label>
             <select {...register("poolId")} id="poolId">
               <option value="new">+ New Pool</option>
@@ -147,7 +147,7 @@ export function Form(props: {
               </div>
             </summary>
             <section className={styles.fields}>
-              <div>
+              <div className="field">
                 <label htmlFor="name">Name</label>
                 <input
                   type="text"
@@ -156,7 +156,7 @@ export function Form(props: {
                   placeholder="Derive from filenames..."
                 />
               </div>
-              <div>
+              <div className="field">
                 <label htmlFor="key">Pool Key</label>
                 <input
                   id="key"
@@ -165,28 +165,30 @@ export function Form(props: {
                   defaultValue={"ts"}
                 />
               </div>
-              <div>
+              <div className="field">
                 <label>Sort Order</label>
-                <div className={baseForm.radioInput}>
-                  <input
-                    id="ascending"
-                    name="order"
-                    type="radio"
-                    value="asc"
-                    {...register("order")}
-                  />
-                  <label htmlFor="ascending">Ascending</label>
-                </div>
-                <div className={baseForm.radioInput}>
-                  <input
-                    id="descending"
-                    name="order"
-                    type="radio"
-                    value="desc"
-                    defaultChecked
-                    {...register("order")}
-                  />
-                  <label htmlFor="descending">Descending</label>
+                <div>
+                  <div className={baseForm.radioInput}>
+                    <input
+                      id="ascending"
+                      name="order"
+                      type="radio"
+                      value="asc"
+                      {...register("order")}
+                    />
+                    <label htmlFor="ascending">Ascending</label>
+                  </div>
+                  <div className={baseForm.radioInput}>
+                    <input
+                      id="descending"
+                      name="order"
+                      type="radio"
+                      value="desc"
+                      defaultChecked
+                      {...register("order")}
+                    />
+                    <label htmlFor="descending">Descending</label>
+                  </div>
                 </div>
               </div>
             </section>
@@ -200,7 +202,7 @@ export function Form(props: {
             </div>
           </summary>
           <section className={styles.fields}>
-            <div>
+            <div className="field">
               <label htmlFor="author">Author</label>
               <input
                 type="text"
@@ -208,7 +210,7 @@ export function Form(props: {
                 {...register("author")}
               />
             </div>
-            <div>
+            <div className="field">
               <label htmlFor="body">Message</label>
               <textarea {...register("body")} defaultValue="Import from Zui" />
             </div>

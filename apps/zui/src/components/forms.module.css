@@ -63,7 +63,7 @@
 
 .form .horizontalFields > * > *:not(label) {
   max-width: 50%;
-    }
+}
 
 .form select {
   appearance: none;
@@ -165,10 +165,14 @@
   padding-top: 0;
   padding: var(--form-padding);
   height: 1.6em;
+  gap: var(--s-3);
+  cursor: pointer;
 }
 
 .form .radioInput label {
   font-weight: 400;
+  cursor: pointer;
+  user-select: none;
 }
 
 .form .submission {

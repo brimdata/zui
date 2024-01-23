@@ -85,7 +85,7 @@
     cursor: pointer;
     letter-spacing: 0.3px;
     color: var(--fg-color-less);
-    padding: calc(var(--form-field-gap) / 3) 6px;
+    padding: calc(var(--form-field-gap) / 3) 0;
     padding-right: 0;
     font-weight: 500;
     user-select: none;
@@ -111,8 +111,9 @@
     display: inline-flex;
     align-items: center;
     width: calc(100% - 1em);
+    padding-left: var(--s-5);
     /* The em is the marker */
-    gap: 0.5em;
+    gap: var(--s0);
 }
 
 .summaryRule hr {
@@ -138,5 +139,5 @@
 }
 
 .form details>*:not(summary) {
-    margin-left: var(--side-padding);
+    /* margin-left: var(--side-padding); */
 }
