@@ -197,8 +197,3 @@
   flex-direction: column;
   gap: 10px;
 }
-
-.form input[readonly] {
-  border: none;
-  padding: 0 var(--form-border-radius);
-}

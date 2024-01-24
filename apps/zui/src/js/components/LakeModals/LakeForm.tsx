@@ -147,8 +147,8 @@ const LakeForm = ({onClose, lake}: Props) => {
 
   return (
     <form ref={setFormRef} className={forms.form}>
-      <section className={modals.fields}>
-        <div>
+      <section className="stack-1">
+        <div className="field">
           <label>{config.name.label}</label>
           <input
             type="text"
@@ -158,7 +158,7 @@ const LakeForm = ({onClose, lake}: Props) => {
             autoFocus
           />
         </div>
-        <div>
+        <div className="field">
           <label>{config.host.label}</label>
           <input
             type="text"

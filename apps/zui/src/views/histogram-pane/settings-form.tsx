@@ -43,8 +43,8 @@ export function SettingsForm(props: Props) {
       onSubmit={form.handleSubmit(onSubmit)}
       className={classNames(styles.settingsForm, forms.form)}
     >
-      <section className={forms.fields}>
-        <div>
+      <section className="stack-1">
+        <div className="field">
           <label>Time Field</label>
           <input
             type="text"
@@ -52,7 +52,7 @@ export function SettingsForm(props: Props) {
             placeholder={defaults.timeField}
           />
         </div>
-        <div>
+        <div className="field">
           <label>Color Field</label>
           <input
             type="text"

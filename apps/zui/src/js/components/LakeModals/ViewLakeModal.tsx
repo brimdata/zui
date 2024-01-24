@@ -57,8 +57,8 @@ const ViewLake = ({onClose, onEdit}) => {
     <div className={classNames(forms.form, modals.form)}>
       <H1 className={modals.title}>{name}</H1>
 
-      <section className={forms.fields}>
-        <div>
+      <section className="stack-1">
+        <div className="field">
           <label>Lake URL</label>
           <input
             type="text"
@@ -66,15 +66,15 @@ const ViewLake = ({onClose, onEdit}) => {
             value={port ? [host, port].join(":") : host}
           />
         </div>
-        <div>
+        <div className="field">
           <label>Status</label>
           <input type="text" readOnly value={capitalize(status)} />
         </div>
-        <div>
+        <div className="field">
           <label>Zed Version</label>
           <input type="text" readOnly value={version} />
         </div>
-        <div>
+        <div className="field">
           <label>Pool Count</label>
           <input type="text" readOnly value={poolCount.toString()} />
         </div>
