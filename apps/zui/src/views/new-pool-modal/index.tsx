@@ -29,12 +29,12 @@ export function NewPoolModal(props) {
   return (
     <form className={classNames(forms.form, styles.form)} onSubmit={onSubmit}>
       <H1 className={styles.title}>New Pool</H1>
-      <section className={styles.fields}>
-        <div>
+      <section className="stack-1">
+        <div className="field">
           <label>Name</label>
           <input type="text" {...register("name")} autoFocus required />
         </div>
-        <div>
+        <div className="field">
           <label>Pool Key</label>
           <input
             type="text"
@@ -43,28 +43,30 @@ export function NewPoolModal(props) {
             required
           />
         </div>
-        <div>
+        <div className="field">
           <label>Sort Order</label>
-          <div className={forms.radioInput}>
-            <input
-              id="ascending"
-              name="order"
-              type="radio"
-              value="asc"
-              {...register("order")}
-            />
-            <label htmlFor="ascending">Ascending</label>
-          </div>
-          <div className={forms.radioInput}>
-            <input
-              id="descending"
-              name="order"
-              type="radio"
-              value="desc"
-              defaultChecked
-              {...register("order")}
-            />
-            <label htmlFor="descending">Descending</label>
+          <div className="cluster">
+            <div className={forms.radioInput}>
+              <input
+                id="ascending"
+                name="order"
+                type="radio"
+                value="asc"
+                {...register("order")}
+              />
+              <label htmlFor="ascending">Ascending</label>
+            </div>
+            <div className={forms.radioInput}>
+              <input
+                id="descending"
+                name="order"
+                type="radio"
+                value="desc"
+                defaultChecked
+                {...register("order")}
+              />
+              <label htmlFor="descending">Descending</label>
+            </div>
           </div>
         </div>
         {error && <div className={forms.error}>{formatError(error)}</div>}

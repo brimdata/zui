@@ -3,8 +3,11 @@
     grid-template-columns: 0.2fr 0.8fr;
     grid-template-rows: 1fr;
     min-height: 0;
-    padding-top: 10px;
-    gap: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.resultsGroup > *+* {
+    border-left: 1px solid var(--border-color);
 }
 
 .resultsContainer {

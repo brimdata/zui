@@ -18,6 +18,8 @@ import {LoadFormat} from "@brimdata/zed-js"
 import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
 import {basename} from "src/util/basename"
+import {Show} from "src/components/show"
+import {PoolForm} from "../pool-form"
 
 export function Form(props: {
   onClose: () => any
@@ -81,7 +83,11 @@ export function Form(props: {
       className={classNames(styles.form, baseForm.form)}
     >
       <ScrollShadow threshold={45} className={styles.formBody}>
-        <section className={styles.fields}>
+        <section className="stack-1">
+          <p>
+            Data will be loaded into{" "}
+            <b title={lake.getAddress()}>{lake.name}</b>.
+          </p>
           <div className="field">
             <div className={baseForm.actionLabel}>
               <label>Files</label>
@@ -137,90 +143,22 @@ export function Form(props: {
               ))}
             </select>
           </div>
-        </section>
-        {watch("poolId") === "new" && (
-          <details>
-            <summary role="button" aria-label="Pool Settings">
-              <div className={styles.summaryRule}>
-                <label>Pool Settings</label>
-                <hr />
-              </div>
-            </summary>
-            <section className={styles.fields}>
-              <div className="field">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  {...register("name")}
-                  placeholder="Derive from filenames..."
-                />
-              </div>
-              <div className="field">
-                <label htmlFor="key">Pool Key</label>
-                <input
-                  id="key"
-                  type="text"
-                  {...register("key")}
-                  defaultValue={"ts"}
-                />
-              </div>
-              <div className="field">
-                <label>Sort Order</label>
-                <div>
-                  <div className={baseForm.radioInput}>
-                    <input
-                      id="ascending"
-                      name="order"
-                      type="radio"
-                      value="asc"
-                      {...register("order")}
-                    />
-                    <label htmlFor="ascending">Ascending</label>
-                  </div>
-                  <div className={baseForm.radioInput}>
-                    <input
-                      id="descending"
-                      name="order"
-                      type="radio"
-                      value="desc"
-                      defaultChecked
-                      {...register("order")}
-                    />
-                    <label htmlFor="descending">Descending</label>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </details>
-        )}
-        <details>
-          <summary>
-            <div className={styles.summaryRule}>
-              <label>Commit Settings</label>
-              <hr />
-            </div>
-          </summary>
-          <section className={styles.fields}>
-            <div className="field">
-              <label htmlFor="author">Author</label>
-              <input
-                type="text"
-                defaultValue={defaultUser}
-                {...register("author")}
-              />
-            </div>
-            <div className="field">
-              <label htmlFor="body">Message</label>
-              <textarea {...register("body")} defaultValue="Import from Zui" />
-            </div>
-          </section>
-        </details>
-        <section className={styles.well}>
-          <p>
-            Data will be loaded into{" "}
-            <b title={lake.getAddress()}>{lake.name}</b>.
-          </p>
+
+          <Show when={watch("poolId") == "new"}>
+            <PoolForm register={register} />
+          </Show>
+          <div className="field">
+            <label htmlFor="author">Author</label>
+            <input
+              type="text"
+              defaultValue={defaultUser}
+              {...register("author")}
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="body">Message</label>
+            <textarea {...register("body")} defaultValue="Import from Zui" />
+          </div>
         </section>
       </ScrollShadow>
       <div>

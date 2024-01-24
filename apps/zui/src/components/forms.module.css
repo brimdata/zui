@@ -1,12 +1,12 @@
 .form label {
   display: block;
   font-weight: bold;
-  /* padding-left: var(--form-border-radius); */
   color: var(--fg-color-less);
+  opacity: 0.9;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  font-size: 80%;
+  font-size: 78%;
 }
 
 .form input,
@@ -14,17 +14,16 @@
 .form select {
   display: block;
   width: 100%;
-  height: var(--form-height);
   border-radius: var(--form-border-radius);
   background: var(--form-bg-color);
   border: var(--form-border);
   line-height: var(--form-line-height);
-  padding: var(--form-padding);
+  padding: var(--s-2);
 }
 
-.form input:focus-visible {
-  outline: none;
-  border-color: var(--primary-color);
+.form select {
+  width: auto;
+  padding-inline-end: var(--s3);
 }
 
 .form input:disabled {
@@ -162,15 +161,23 @@
   display: grid;
   grid-template-columns: 1.1em auto;
   align-items: center;
-  padding-top: 0;
-  padding: var(--form-padding);
-  height: 1.6em;
-  gap: var(--s-3);
+  padding: var(--s-5);
+  gap: var(--s-1);
   cursor: pointer;
 }
 
+.form .radioInput input {
+  min-height: auto;
+  height: var(--s1);
+  width: var(--s1);
+}
+
 .form .radioInput label {
-  font-weight: 400;
+  font-size: var(--s0);
+  text-transform: none;
+  color: var(--color-fg);
+  letter-spacing: 0;
+  font-weight: normal;
   cursor: pointer;
   user-select: none;
 }

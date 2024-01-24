@@ -1,143 +1,137 @@
 .form {
-    display: contents;
-    --side-padding: 16px;
+  display: contents;
+  --side-padding: 16px;
 }
 
 .formBody {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: var(--side-padding);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--side-padding);
 }
 
-.formBody>* {
-    padding: 0 var(--side-padding);
+.formBody > * {
+  padding: 0 var(--side-padding);
 }
 
 .well {
-    padding: 1em var(--form-border-radius);
-    border-radius: var(--form-border-radius);
-    margin: var(--side-padding);
-    margin-top: auto;
-    margin-bottom: 1em;
-    color: var(--fg-color-less);
-    text-align: center;
-    font-size: 13px;
-    box-shadow: inset 0 0 6px -2px rgb(0 0 0 / 0.15);
-    border: 1px solid var(--border-color-more);
-    background: transparent;
+  padding: 1em var(--form-border-radius);
+  border-radius: var(--form-border-radius);
+  color: var(--fg-color-less);
+  text-align: center;
+  box-shadow: inset 0 0 6px -2px rgb(0 0 0 / 0.15);
+  border: 1px solid var(--border-color-more);
+  background: transparent;
 }
 
 .well p {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .well p:last-child {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .files {
-    padding: 0;
-    background: var(--form-bg-color);
-    border: var(--form-border);
-    border-radius: var(--form-border-radius);
-    overflow: hidden auto;
-    max-height: 400px;
-    min-height: var(--form-height);
+  padding: 0;
+  background: var(--form-bg-color);
+  border: var(--form-border);
+  border-radius: var(--form-border-radius);
+  overflow: hidden auto;
+  max-height: 400px;
+  min-height: var(--form-height);
 }
 
 .fileItem {
-    height: var(--form-height);
-    font-weight: normal;
-    padding: 0 2px 0 8px;
-    margin: 0;
-    display: grid;
-    grid-template-columns: max-content 1fr max-content;
-    align-items: center;
+  height: var(--form-height);
+  font-weight: normal;
+  padding: 0 2px 0 8px;
+  margin: 0;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  align-items: center;
 }
 
 .fileName {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding-left: 8px;
-    direction: rtl;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 8px;
+  direction: rtl;
 }
 
 .submission {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    bottom: 0;
-    padding: var(--side-padding);
-    background: var(--chrome-color);
-    padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  padding: var(--side-padding);
+  padding-bottom: 10px;
 }
 
 .fields {
-    display: flex;
-    flex-direction: column;
-    gap: var(--form-field-gap);
-    margin-bottom: calc(var(--form-field-gap) * 2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-field-gap);
+  margin-bottom: calc(var(--form-field-gap) * 2);
 }
 
-
 .form summary {
-    cursor: pointer;
-    letter-spacing: 0.3px;
-    color: var(--fg-color-less);
-    padding: calc(var(--form-field-gap) / 3) 0;
-    padding-right: 0;
-    font-weight: 500;
-    user-select: none;
-    transition: none;
-    white-space: nowrap;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  color: var(--fg-color-less);
+  padding: calc(var(--form-field-gap) / 3) 0;
+  padding-right: 0;
+  font-weight: 500;
+  user-select: none;
+  transition: none;
+  white-space: nowrap;
 }
 
 .form summary::marker {
-    display: inline-block;
-    width: 3em;
-    outline: 1px solid blue;
+  display: inline-block;
+  width: 3em;
+  outline: 1px solid blue;
 }
 
 .form summary * {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .form summary label {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .summaryRule {
-    display: inline-flex;
-    align-items: center;
-    width: calc(100% - 1em);
-    padding-left: var(--s-5);
-    /* The em is the marker */
-    gap: var(--s0);
+  display: inline-flex;
+  align-items: center;
+  width: calc(100% - 1em);
+  padding-left: var(--s-5);
+  /* The em is the marker */
+  gap: var(--s0);
 }
 
 .summaryRule hr {
-    flex: 0;
-    height: 1px;
-    border: none;
-    border-top: 1px solid var(--border-color-more);
-    transition: all 200ms;
+  flex: 0;
+  height: 1px;
+  border: none;
+  border-top: 1px solid var(--border-color-more);
+  transition: all 200ms;
 }
 
 .form details[open] .summaryRule hr {
-    transition: all 400ms;
-    flex: 1;
+  transition: all 400ms;
+  flex: 1;
 }
 
-.form details[open]>summary {
-    margin-bottom: 10px;
-    transition: all 400ms;
+.form details[open] > summary {
+  margin-bottom: 10px;
+  transition: all 400ms;
 }
 
 .form details[open] {
-    padding-bottom: calc(var(--form-field-gap));
+  padding-bottom: calc(var(--form-field-gap));
 }
 
-.form details>*:not(summary) {
-    /* margin-left: var(--side-padding); */
+.form details > *:not(summary) {
+  /* margin-left: var(--side-padding); */
 }
