@@ -1,9 +1,11 @@
 import {createSelector} from "@reduxjs/toolkit"
 import {useEffect} from "react"
 import {useSelector} from "react-redux"
+import {whichRoute} from "src/app/router/routes"
 import {invoke} from "src/core/invoke"
 import {SearchAppMenuState} from "src/electron/windows/search/app-menu"
 import Appearance from "src/js/state/Appearance"
+import Current from "src/js/state/Current"
 import Layout from "src/js/state/Layout"
 import {State} from "src/js/state/types"
 
@@ -19,11 +21,13 @@ const getAppMenuState = createSelector(
   Appearance.sidebarIsOpen,
   Appearance.secondarySidebarIsOpen,
   tryShowHistogram,
-  (showLeftPane, showRightPane, showHistogram) => {
+  Current.getRouteName,
+  (showLeftPane, showRightPane, showHistogram, routeName) => {
     return {
       showLeftPane,
       showRightPane,
       showHistogram,
+      routeName,
     } as SearchAppMenuState
   }
 )

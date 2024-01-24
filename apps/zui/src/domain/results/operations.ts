@@ -6,6 +6,7 @@ import util from "util"
 import {lake} from "src/zui"
 import {clipboard} from "electron"
 import {addLoad} from "./utils"
+import { debug } from "src/core/log"
 
 const pipe = util.promisify(pipeline)
 
@@ -45,8 +46,11 @@ export const copyToClipboard = createOperation(
 
 export const exportToPool = createOperation(
   "results.exportToPool",
-  async (ctx, query: string, poolId: string) => {
+  async (ctx, query: string, poolId) => {
+    if (!poolId) throw new Error("Argument missing: poolId")
+    if (!query) throw new Error("Argument missing: query")
     const loadQuery = addLoad(query, poolId)
+    debug(loadQuery)
     const res = await lake.query(loadQuery)
     const result = await res.js()
     console.log(result)

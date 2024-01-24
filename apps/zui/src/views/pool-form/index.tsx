@@ -5,7 +5,13 @@ export function PoolForm() {
     <>
       <div className="field">
         <label htmlFor="name">Pool Name</label>
-        <input type="text" name="name" id="name" placeholder="my_pool" />
+        <input
+          required
+          type="text"
+          name="name"
+          id="name"
+          placeholder="my_pool"
+        />
       </div>
 
       <div className="field">

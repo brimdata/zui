@@ -1,5 +1,5 @@
 import * as ops from "./operations"
-import * as hands from "./handlers"
+import * as hands from "./handlers/view"
 
 export type ResultsHandlers = {
   "results.expandAll": typeof hands.expandAllHandler

@@ -43,7 +43,11 @@ export function ExportModal({onClose}) {
         <section className="stack-1 max-width:measure">
           <div className="field">
             <label>Export To</label>
-            <ToolbarTabs style={{blockSize: "35px"}} options={tabs} />
+            <ToolbarTabs
+              name="dest"
+              style={{blockSize: "35px"}}
+              options={tabs}
+            />
           </div>
 
           <Show when={toFile}>
@@ -59,7 +63,12 @@ export function ExportModal({onClose}) {
         </section>
 
         <div className="cluster-3 justify:between">
-          <button type="button" name="close" className={forms.button}>
+          <button
+            type="button"
+            name="close"
+            className={forms.button}
+            onClick={() => ctl.close()}
+          >
             Close
           </button>
 

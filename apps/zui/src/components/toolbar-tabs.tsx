@@ -1,4 +1,10 @@
-import React, {CSSProperties, useLayoutEffect, useRef, useState} from "react"
+import React, {
+  CSSProperties,
+  Fragment,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react"
 import {MenuItem} from "src/core/menu"
 import styles from "./toolbar-tabs.module.css"
 import {Icon} from "src/components/icon"
@@ -7,6 +13,7 @@ import {call} from "src/util/call"
 export function ToolbarTabs(props: {
   onlyIcon?: boolean
   labelClassName?: string
+  name: string
   options: MenuItem[]
   style?: CSSProperties
 }) {
@@ -25,7 +32,6 @@ export function ToolbarTabs(props: {
           const button = pressed.getBoundingClientRect()
           const x = button.x - parent.x
           const width = button.width
-          console.log({x, width})
           setPos({x, width})
         }
       })
@@ -38,24 +44,35 @@ export function ToolbarTabs(props: {
     <div className={styles.tabs} style={props.style}>
       <nav className={styles.nav} ref={ref}>
         {props.options.map((opts, i) => (
-          <button
-            data-tooltip={props.onlyIcon ? opts.label : null}
-            className={styles.button}
-            key={opts.id ?? i}
-            onClick={() => {
-              changeCount.current += 1
-              call(opts.click)
-            }}
-            aria-pressed={opts.checked}
-            aria-label={opts.label}
-            data-section-tab-value={opts.label.toLowerCase()}
-            disabled={opts.enabled === false}
-          >
-            {opts.iconName && <Icon name={opts.iconName} size="14px" />}
-            {!props.onlyIcon && (
-              <span className={props.labelClassName}>{opts.label}</span>
-            )}
-          </button>
+          <Fragment key={opts.id ?? i}>
+            <input
+              type="radio"
+              name={props.name}
+              id={props.name + "_" + opts.label}
+              value={opts.label}
+              style={{display: "none"}}
+              checked={opts.checked}
+              readOnly
+            />
+            <button
+              type="button"
+              data-tooltip={props.onlyIcon ? opts.label : null}
+              className={styles.button}
+              onClick={() => {
+                changeCount.current += 1
+                call(opts.click)
+              }}
+              aria-pressed={opts.checked}
+              aria-label={opts.label}
+              data-section-tab-value={opts.label.toLowerCase()}
+              disabled={opts.enabled === false}
+            >
+              {opts.iconName && <Icon name={opts.iconName} size="14px" />}
+              {!props.onlyIcon && (
+                <span className={props.labelClassName}>{opts.label}</span>
+              )}
+            </button>
+          </Fragment>
         ))}
       </nav>
       <div

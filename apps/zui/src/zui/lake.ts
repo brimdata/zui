@@ -3,6 +3,7 @@ import {Client} from "@brimdata/zed-node"
 
 class LakeApi {
   public client: Client | null = null
+  public id: string | null
 
   query(program: string, options?: QueryOpts) {
     if (!this.client) throw new Error("No client configured for this lake")

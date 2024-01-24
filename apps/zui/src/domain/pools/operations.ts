@@ -11,15 +11,9 @@ import {Update} from "@reduxjs/toolkit"
 
 export const create = createOperation(
   "pools.create",
-  async (
-    {main},
-    lakeId: string,
-    name: string,
-    opts: Partial<CreatePoolOpts> = {}
-  ) => {
-    const client = await main.createClient(lakeId)
-    const {pool} = await client.createPool(name, opts)
-    main.dispatch(Pools.setData({lakeId, data: pool}))
+  async ({main}, name: string, opts: Partial<CreatePoolOpts> = {}) => {
+    const {pool} = await lake.client.createPool(name, opts)
+    main.dispatch(Pools.setData({lakeId: lake.id, data: pool}))
     pools.emit("create", {pool})
     return pool.id as string
   }

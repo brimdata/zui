@@ -18,7 +18,7 @@ import {NoTabsPane} from "src/views/no-tabs-pane"
 function AppRoutes() {
   return (
     <Switch>
-      <Route path={routes.lakeReleaseNotes.path}>
+      <Route path={routes.releaseNotes.path}>
         <ReleaseNotes />
       </Route>
       <Route path={routes.poolShow.path}>
@@ -28,9 +28,6 @@ function AppRoutes() {
       </Route>
       <Route path={routes.query.path}>
         <SessionRoute />
-      </Route>
-      <Route path={routes.releaseNotes.path}>
-        <ReleaseNotes />
       </Route>
       <Route path={routes.welcome.path}>
         <WelcomePage />
