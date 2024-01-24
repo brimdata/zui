@@ -1,5 +1,4 @@
 import fs from "fs"
-import {Loader} from "src/core/loader/types"
 import {LoadContext} from "src/domain/loads/load-context"
 import {isPcap} from "./packets/is-pcap"
 import {loads} from "src/zui"
@@ -10,6 +9,7 @@ import {createAnalyzeProcess, monitorAnalyzeProgress} from "./analyze"
 import {createCli} from "./cli"
 import errors from "src/js/errors"
 import {errorToString} from "src/util/error-to-string"
+import {Loader} from "src/domain/loads/types"
 
 class BrimcapLoader implements Loader {
   constructor(private ctx: LoadContext, private root: string) {}

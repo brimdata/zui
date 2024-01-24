@@ -44,6 +44,7 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       <ToolbarTabs
+        name="resultsView"
         onlyIcon={true}
         options={[
           {

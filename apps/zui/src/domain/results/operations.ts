@@ -3,10 +3,8 @@ import {ResponseFormat} from "@brimdata/zed-js"
 import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
-import {lake} from "src/zui"
+import {lake, pools} from "src/zui"
 import {clipboard} from "electron"
-import {addLoad} from "./utils"
-import { debug } from "src/core/log"
 
 const pipe = util.promisify(pipeline)
 
@@ -46,13 +44,18 @@ export const copyToClipboard = createOperation(
 
 export const exportToPool = createOperation(
   "results.exportToPool",
-  async (ctx, query: string, poolId) => {
+  async (ctx, query: string, poolId: string, windowId: string) => {
     if (!poolId) throw new Error("Argument missing: poolId")
     if (!query) throw new Error("Argument missing: query")
-    const loadQuery = addLoad(query, poolId)
-    debug(loadQuery)
-    const res = await lake.query(loadQuery)
-    const result = await res.js()
-    console.log(result)
+    return pools.load({
+      windowId,
+      lakeId: lake.id,
+      poolId,
+      branch: "main",
+      query,
+      files: [],
+      author: "Zui",
+      body: "Export to pool",
+    })
   }
 )

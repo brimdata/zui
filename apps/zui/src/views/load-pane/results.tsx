@@ -83,6 +83,7 @@ function Toolbar(props: {
       </div>
       <div className={styles.middle}>
         <ToolbarTabs
+          name="resultsView"
           onlyIcon={props.smallWidth}
           options={[
             {

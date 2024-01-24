@@ -83,7 +83,7 @@ function Pane(props: {onClose: any}) {
   const onCancel = () => {
     const files = select(LoadDataForm.getFiles)
     const poolId = select(LoadDataForm.getPoolId)
-    invoke("loads.cancel", poolId, files)
+    invoke("loads.cancel", poolId, files, "")
     debut.exit()
   }
 

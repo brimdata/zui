@@ -145,7 +145,7 @@ export function Form(props: {
           </div>
 
           <Show when={watch("poolId") == "new"}>
-            <PoolForm register={register} />
+            <PoolForm />
           </Show>
           <div className="field">
             <label htmlFor="author">Author</label>

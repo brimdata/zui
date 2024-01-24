@@ -15,7 +15,12 @@ export const exportToPool = createHandler(
     const query = getExportQuery(null)
     try {
       const poolId = await getOrCreatePool(data)
-      const promise = invoke("results.exportToPool", query, poolId)
+      const promise = invoke(
+        "results.exportToPool",
+        query,
+        poolId,
+        globalThis.windowId
+      )
       toast.promise(promise, {
         loading: "Exporting to pool...",
         success: "Export to pool complete",
@@ -58,9 +63,12 @@ export const exportToFile = createHandler(
 export const exportToClipboard = createHandler(
   async (ctx, format: ResponseFormat) => {
     const query = getExportQuery(format)
-    await ctx.invoke("results.copyToClipboard", query, format)
-
-    ctx.toast.success(`Copied ${format} data to clipboard.`)
+    const promise = ctx.invoke("results.copyToClipboard", query, format)
+    ctx.toast.promise(promise, {
+      loading: "Copying...",
+      error: (e) => errorToString(e),
+      success: `Copied ${format} data to clipboard.`,
+    })
   }
 )
 

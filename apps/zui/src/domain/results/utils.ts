@@ -9,7 +9,3 @@ export function cutColumns(query: string, names: string[]) {
 export function addFuse(query: string) {
   return query + " | fuse"
 }
-
-export function addLoad(query: string, poolId) {
-  return query + " | load " + poolId
-}

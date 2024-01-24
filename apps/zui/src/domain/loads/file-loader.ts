@@ -6,11 +6,11 @@ import {createReadableStream} from "src/core/zq"
 import {throttle} from "lodash"
 import {errorToString} from "src/util/error-to-string"
 
-export class DefaultLoader implements Loader {
+export class FileLoader implements Loader {
   constructor(private ctx: LoadContext) {}
 
   when() {
-    return true
+    return this.ctx.files.length > 0
   }
 
   async run() {

@@ -36,7 +36,7 @@ export function RecentLoads(props: {id: string}) {
           .map((load) => (
             <Job
               key={load.id}
-              name={load.humanizeFiles}
+              name={load.title}
               message={statusMessage(load)}
               status={load.status}
               progress={load.progress}
