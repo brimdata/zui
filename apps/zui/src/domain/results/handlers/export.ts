@@ -15,8 +15,14 @@ export const exportToPool = createHandler(
     const query = getExportQuery(null)
     try {
       const poolId = await getOrCreatePool(data)
-      await invoke("results.exportToPool", query, poolId)
+      const promise = invoke("results.exportToPool", query, poolId)
+      toast.promise(promise, {
+        loading: "Exporting to pool...",
+        success: "Export to pool complete",
+        error: (e) => errorToString(e),
+      })
       dispatch(Tabs.activateUrl(poolPath(poolId)))
+      await promise
     } catch (e) {
       toast.error(errorToString(e))
     }
@@ -32,7 +38,7 @@ export const exportToFile = createHandler(
       properties: ["createDirectory"],
       showsTagField: false,
     })
-    if (canceled) return
+    if (canceled) return false
 
     const query = getExportQuery(format)
     const promise = ctx.invoke("results.exportToFile", query, format, filePath)
@@ -45,6 +51,7 @@ export const exportToFile = createHandler(
       .catch((e) => {
         console.error(e)
       })
+    return true
   }
 )
 
