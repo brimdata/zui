@@ -7,6 +7,7 @@ export function PoolForm() {
         <label htmlFor="name">Pool Name</label>
         <input
           required
+          autoFocus
           type="text"
           name="name"
           id="name"

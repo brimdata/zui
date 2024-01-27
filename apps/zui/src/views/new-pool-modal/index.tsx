@@ -1,74 +1,25 @@
-import {useForm} from "react-hook-form"
 import forms from "src/components/forms.module.css"
 import styles from "./index.module.css"
 import classNames from "classnames"
 import {H1} from "src/components/h1"
-import {useZuiApi} from "src/app/core/context"
-import {poolPath} from "src/app/router/utils/paths"
-import Tabs from "src/js/state/Tabs"
-import {useDispatch} from "src/app/core/state"
 import {useState} from "react"
 import {formatError} from "./format-error"
+import {PoolForm} from "../pool-form"
+import {NewPoolModalController} from "./controller"
 
 export function NewPoolModal(props) {
-  const {register, handleSubmit} = useForm()
-  const api = useZuiApi()
-  const dispatch = useDispatch()
   const [error, setError] = useState("")
-  const onSubmit = handleSubmit(async (data: any) => {
-    try {
-      const id = await api.pools.create(data.name, data)
-      dispatch(Tabs.activateUrl(poolPath(id)))
-      api.toast.success("Pool Created")
-      props.onClose()
-    } catch (e) {
-      setError(e)
-    }
-  })
+  const state = {error, setError}
+  const ctl = new NewPoolModalController(props, state)
 
   return (
-    <form className={classNames(forms.form, styles.form)} onSubmit={onSubmit}>
+    <form
+      className={classNames(forms.form, styles.form)}
+      onSubmit={(e) => ctl.onSubmit(e)}
+    >
       <H1 className={styles.title}>New Pool</H1>
       <section className="stack-1">
-        <div className="field">
-          <label>Name</label>
-          <input type="text" {...register("name")} autoFocus required />
-        </div>
-        <div className="field">
-          <label>Pool Key</label>
-          <input
-            type="text"
-            {...register("key")}
-            defaultValue={"ts"}
-            required
-          />
-        </div>
-        <div className="field">
-          <label>Sort Order</label>
-          <div className="cluster">
-            <div className={forms.radioInput}>
-              <input
-                id="ascending"
-                name="order"
-                type="radio"
-                value="asc"
-                {...register("order")}
-              />
-              <label htmlFor="ascending">Ascending</label>
-            </div>
-            <div className={forms.radioInput}>
-              <input
-                id="descending"
-                name="order"
-                type="radio"
-                value="desc"
-                defaultChecked
-                {...register("order")}
-              />
-              <label htmlFor="descending">Descending</label>
-            </div>
-          </div>
-        </div>
+        <PoolForm />
         {error && <div className={forms.error}>{formatError(error)}</div>}
         <div className={classNames(forms.submission, styles.submission)}>
           <button
