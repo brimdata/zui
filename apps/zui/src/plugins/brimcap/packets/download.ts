@@ -2,9 +2,10 @@ import * as zed from "@brimdata/zed-js"
 import {join} from "path"
 import {createCli} from "../cli"
 import os from "os"
-import {window, env, commands} from "src/zui"
+import {window, commands} from "src/zui"
 import {queryForConnLog} from "./query-conn-log"
 import {DOWNLOAD} from "./types"
+import {shell} from "electron"
 
 function getSearchArgsFromConn(conn: zed.Record) {
   const dur = conn.try("duration") as zed.Duration
@@ -38,7 +39,7 @@ export async function downloadPackets(root: string, pool: string, uid: string) {
       const msg = JSON.parse(err)?.error || `brimcap search failed: ${err}`
       window.showErrorMessage(msg)
     } else {
-      env.openExternal(dest)
+      shell.openPath(dest)
       window.showSuccessMessage("Packets extracted. Opening...")
     }
   }
