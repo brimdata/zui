@@ -1,50 +1,64 @@
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
 }
 
 .pin {
-    margin-bottom: 0.25rem;
-    white-space: nowrap;
-    display: relative;
-    font-family: var(--mono-font);
-    font-weight: 500;
-    font-size: 0.75rem;
-    height: 1.375rem;
-    background: var(--chrome-color);
-    border: none;
-    padding: 0 1.25rem;
+  text-align: left;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  margin-bottom: 0.25rem;
+  display: relative;
+  font-family: var(--mono-font);
+  font-weight: 500;
+  font-size: 0.75rem;
+  background: var(--chrome-color);
+  border: none;
+  padding: var(--s-5) var(--s-1);
 
-    --indent: 0.5rem;
-    --end: calc(100% - var(--indent));
-    --start: var(--indent);
-    --right-point: polygon(0% 0%, var(--end) 0%, 100% 50%, var(--end) 100%, 0% 100%);
-    --right-chevron: polygon(var(--end) 0%, 100% 50%, var(--end) 100%, 0% 100%, var(--start) 50%, 0% 0%);
-    clip-path: var(--right-chevron);
-    margin-left: calc(calc(var(--indent) * -1) + 4px);
+  --indent: 0.5rem;
+  --end: calc(100% - var(--indent));
+  --start: var(--indent);
+  --right-point: polygon(
+    0% 0%,
+    var(--end) 0%,
+    100% 50%,
+    var(--end) 100%,
+    0% 100%
+  );
+  --right-chevron: polygon(
+    var(--end) 0%,
+    100% 50%,
+    var(--end) 100%,
+    0% 100%,
+    var(--start) 50%,
+    0% 0%
+  );
+  clip-path: var(--right-chevron);
+  margin-left: calc(calc(var(--indent) * -1) + 4px);
 }
 
 .pin:hover {
-    transition: all var(--quick);
-    background: var(--chrome-color-more);
-    cursor: pointer;
+  transition: all var(--quick);
+  background: var(--chrome-color-more);
+  cursor: pointer;
 }
 
 .pin span {
-    color: var(--orange);
+  color: var(--orange);
 }
 
 .pin:first-child {
-    margin-left: 0;
-    padding-left: 1.225rem;
-    clip-path: var(--right-point);
+  margin-left: 0;
+  padding-left: 1.225rem;
+  clip-path: var(--right-point);
 }
 
 .disabled {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .hovering {
-    background: var(--primary-color-lighter);
+  background: var(--primary-color-lighter);
 }

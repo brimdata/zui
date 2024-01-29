@@ -53,3 +53,23 @@
 .scroll\:y {
     overflow-y: auto;
 }
+
+.break\:all {
+    word-wrap: break-all;
+}
+
+.overflow\:hidden {
+    overflow: hidden;
+}
+
+.overflow-wrap\:anywhere {
+    overflow-wrap: anywhere;
+}
+
+.border\:bottom {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.min-height\:full {
+    min-height: 100%;
+}

@@ -14,12 +14,12 @@
 }
 
 .toolbar > :nth-child(2) {
-  flex: 1 0 0;
+  flex: 0 999 auto;
+  min-width: 10ch;
 }
 
 .toolbar > :nth-child(3) {
-  flex: 0 1 auto;
-  width: auto;
+  flex: 1 1 fit-content;
   min-width: 32px;
 }
 
