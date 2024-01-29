@@ -6841,12 +6841,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@brimdata/brimcap#v1.6.0-beta2":
+"brimcap@brimdata/brimcap#v1.6.0":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=979db041f1431ee74dd6549dda60528bb6e35c79"
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=3aaa41225c6aeb2dcf64179cf2c67d61b4721ea5"
   bin:
     brimcap: build/dist/brimcap
-  checksum: 8b989f4f733247241f8b23280c839134b7b5a6ebf1e3a89249e95fcff4888f4a8d5fe4855bcafd9ead45d03be0ec39c3828e96196ca534e4619568f6c5b0b677
+  checksum: 0f8ae038108819bbba3b7e690350fd2c1cdcb81bec8619e12ed89bdf8a9a5bf430dff6dcfe841c6d2aa8e163859f0357915574aa44b04cc9bff6bd2e7b9269c2
   languageName: node
   linkType: hard
 
@@ -19093,10 +19093,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#4eba82a1304f86997326279cfbeeb7449f415571":
+"zed@brimdata/zed#v1.13.0":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=4eba82a1304f86997326279cfbeeb7449f415571"
-  checksum: 27520ee2c4763055449c2f891184ca262c37eef07fc17033f261a341665e4faafca6f3dbebc3871c55506d94490190a3e755b4339f320951b51bbb63a83cb334
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=ca0c3a2e98c5758178e1f69e10a16c9675b89aa9"
+  checksum: 0f7ec3e5d71012c83382971ea95546d7ac912178928891d6258e6710577ed3eeaf0c07351d06f25b27920949c7586cfc815db5ddd2b1db004f501476a94a9562
   languageName: node
   linkType: hard
 
@@ -19207,7 +19207,7 @@ __metadata:
     acorn: ^7.4.1
     ajv: ^6.9.1
     animejs: ^3.2.0
-    brimcap: "brimdata/brimcap#v1.6.0-beta2"
+    brimcap: "brimdata/brimcap#v1.6.0"
     chalk: ^4.1.0
     chevrotain: ^10.5.0
     chrono-node: ^2.5.0
@@ -19290,7 +19290,7 @@ __metadata:
     use-resize-observer: ^8.0.0
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#4eba82a1304f86997326279cfbeeb7449f415571"
+    zed: "brimdata/zed#v1.13.0"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
