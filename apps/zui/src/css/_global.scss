@@ -2,6 +2,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
 * {
@@ -80,6 +81,7 @@ button {
   height: 0.75rem;
 }
 
+
 *::-webkit-scrollbar-track {
   background-color: var(--emphasis-bg-less);
 }
@@ -92,4 +94,12 @@ button {
 
 *::-webkit-scrollbar-corner {
   background-color: var(--emphasis-bg-less);
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  font-family: var(--mono-font);
 }
