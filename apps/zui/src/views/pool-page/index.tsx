@@ -69,10 +69,10 @@ export const Show = () => {
   const isEmpty = pool.empty()
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={classNames(styles.wrap, styles.headerContent)}>
+      <header className="box-1 border:bottom">
+        <div className="cluster">
           <div>
-            <H1>{pool.name}</H1>
+            <H1 className="overflow-wrap:anywhere">{pool.name}</H1>
             <Subtitle>
               {isEmpty ? "This pool is empty." : bytes(pool.stats.size)}
             </Subtitle>

@@ -1,0 +1,71 @@
+.width\:measure {
+    inline-size: var(--measure);
+}
+
+.max-width\:measure {
+    max-inline-size: var(--measure);
+}
+
+.justify\:between {
+    justify-content: space-between;
+}
+
+.align\:center {
+    align-items: center;
+}
+
+.width\:viewport {
+    width: 100vw;
+}
+
+.height\:viewport {
+    height: 100vh;
+}
+
+.z\:1 {
+    z-index: 1;
+}
+
+.z\:2 {
+    z-index: 2;
+}
+
+.bg\:bg {
+    background-color: var(--bg-color);
+}
+
+.bg\:backdrop {
+    background: rgba(0, 0, 0, var(--backdrop-transparency, 0.3));
+}
+
+.bg\:transparent {
+    background: transparent;
+}
+
+.width\:fit {
+    inline-size: fit-content;
+}
+
+.max-height\:viewport {
+    max-block-size: 100vh;
+}
+
+.scroll\:y {
+    overflow-y: auto;
+}
+
+.break\:all {
+    word-wrap: break-all;
+}
+
+.overflow\:hidden {
+    overflow: hidden;
+}
+
+.overflow-wrap\:anywhere {
+    overflow-wrap: anywhere;
+}
+
+.border\:bottom {
+    border-bottom: 1px solid var(--border-color);
+}
