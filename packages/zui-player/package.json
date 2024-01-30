@@ -7,9 +7,9 @@
     "ci": "playwright test -c ci.config.js"
   },
   "dependencies": {
-    "@playwright/test": "next",
+    "@playwright/test": "1.41.1",
     "fs-extra": "^11.2.0",
-    "playwright": "next",
-    "playwright-chromium": "next"
+    "playwright": "1.41.1",
+    "playwright-chromium": "1.41.1"
   }
 }
