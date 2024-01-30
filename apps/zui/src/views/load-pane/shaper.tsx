@@ -57,7 +57,6 @@ export const Shaper = memo(function Shaper(props: {onSubmit: () => any}) {
       </div>
       <DragAnchor
         position="bottom"
-        showOnHover
         style={{bottom: -8}}
         {...drag.anchorProps}
       />

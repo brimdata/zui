@@ -9,6 +9,8 @@
   margin: 0;
 }
 
+
+
 html,
 body {
   height: 100%;
@@ -26,6 +28,8 @@ body {
   &:not(.is-mac) {
     background-color: var(--window-color);
   }
+
+
 }
 
 input,
@@ -103,4 +107,8 @@ dt {
 
 dd {
   font-family: var(--mono-font);
+}
+
+.is-dragging {
+  user-select: none;
 }

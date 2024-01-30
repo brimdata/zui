@@ -65,7 +65,7 @@ export const Show = () => {
           </Toolbar>
         </div>
       </header>
-      <div className="box-1">
+      <div className="box-1 stack-3">
         <RecentLoads id={pool.id} />
         <Details pool={pool} />
       </div>

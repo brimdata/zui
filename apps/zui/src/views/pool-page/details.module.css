@@ -1,17 +1,6 @@
-.details {
-    padding: var(--page-padding);
-    max-width: var(--page-max-width);
-    width: 100%;
-    margin: 0 auto;
-}
-
-.title {
-    margin-bottom: 1em;
-}
-
 .list {
-    background: var(--chrome-color);
-    padding: 1rem;
-    border-radius: 16px;
-    max-width: max-content;
+  background: var(--chrome-color);
+  padding: 1rem;
+  border-radius: 16px;
+  max-width: max-content;
 }

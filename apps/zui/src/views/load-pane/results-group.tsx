@@ -50,7 +50,6 @@ export const ResultsGroup = memo(function ResultsGroup(props: {
         />
         <DragAnchor
           position="right"
-          showOnHover
           {...resultsDrag.anchorProps}
           style={{right: -8}}
         />

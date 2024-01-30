@@ -47,7 +47,6 @@ export function Sidebar(props: {
       <DragAnchor
         position="left"
         {...sidebarDrag.anchorProps}
-        showOnHover
         style={{left: 0}}
       />
     </aside>

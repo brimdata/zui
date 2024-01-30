@@ -6,8 +6,8 @@ import classNames from "classnames"
 export function Details({pool}: {pool: Pool}) {
   const keys = pool.keys.map((k) => (k ? k.join(".") : "null"))
   return (
-    <section className={styles.details}>
-      <h2 className={styles.title}>Pool Details</h2>
+    <section className="stack-0">
+      <h2>Pool Details</h2>
       <div className={classNames(styles.list, "stack--1")}>
         <dl>
           <dt>ID </dt>
