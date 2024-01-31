@@ -36,10 +36,12 @@
   --window-color: #F3F3F3;
 
 
+
   @media (prefers-color-scheme: dark) {
     --fg-color: white;
     --fg-color-less: rgba(255, 255, 255, 0.7);
     --bg-color: hsl(44deg 8% 10%);
+    --backdrop-color: rgba(0, 0, 0, 0.5);
     --window-color: #303231;
   }
 }
@@ -164,5 +166,16 @@
 
   @media (prefers-color-scheme: dark) {
     --table-stripe-bg: rgba(255, 255, 255, 0.01);
+  }
+}
+
+/** 
+ * Backdrops
+ */
+*::backdrop {
+  --backdrop-color: rgba(0, 0, 0, 0.6);
+
+  @media (prefers-color-scheme: dark) {
+    --backdrop-color: rgba(0, 0, 0, 0.7);
   }
 }

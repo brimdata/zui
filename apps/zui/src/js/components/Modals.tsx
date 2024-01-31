@@ -1,14 +1,13 @@
 import {useSelector, useDispatch} from "react-redux"
 import Modal from "../state/Modal"
 import WhoisModal from "./WhoisModal"
-import React from "react"
+import React, {useRef} from "react"
 import NewLakeModal from "./LakeModals/NewLakeModal"
 import ViewLakeModal from "./LakeModals/ViewLakeModal"
 import {NewPoolModal} from "src/views/new-pool-modal"
-import {Debut, useDebut} from "src/components/debut"
 import {Dialog} from "src/components/dialog"
-import modalStyle from "src/components/modals.module.css"
 import {ExportModal} from "src/views/export-modal"
+import {transitionsComplete} from "src/util/watch-transition"
 
 const MODALS = {
   whois: WhoisModal,
@@ -22,20 +21,25 @@ export function Modals() {
   const name = useSelector(Modal.getName)
   const dispatch = useDispatch()
   const Component = MODALS[name]
-  const debut = useDebut({afterExit: () => dispatch(Modal.hide())})
+  const dialog = useRef(null)
 
   if (!Component) return null
+
+  async function onClose(e) {
+    await transitionsComplete(e.currentTarget)
+    dispatch(Modal.hide())
+  }
+
   return (
-    <Debut {...debut.props} classNames="modal">
-      <Dialog
-        onClose={() => debut.exit()}
-        dialogPoint="center center"
-        isOpen={true}
-        className={modalStyle.modal}
-        modal
-      >
-        <Component onClose={() => debut.exit()} />
-      </Dialog>
-    </Debut>
+    <Dialog
+      ref={dialog}
+      onClose={onClose}
+      dialogPoint="center center"
+      isOpen={true}
+      className="modal popover"
+      modal
+    >
+      <Component onClose={() => dialog.current.close()} />
+    </Dialog>
   )
 }

@@ -4,10 +4,14 @@ import {
   exportToPool,
 } from "src/domain/results/handlers"
 import {getFormData} from "src/util/get-form-data"
+import {ExportModalProps, ExportModalState} from "."
 
 export class ExportModalController {
   // add default for zng or the last most recent format
-  constructor(public close: any) {}
+  constructor(
+    private props: ExportModalProps,
+    private state: ExportModalState
+  ) {}
 
   async submit(e) {
     e.preventDefault()
@@ -24,5 +28,9 @@ export class ExportModalController {
         exportToClipboard(data.format)
         return
     }
+  }
+
+  close() {
+    this.props.onClose()
   }
 }

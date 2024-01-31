@@ -1,0 +1,40 @@
+.popover[open] {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.popover {
+    opacity: 0;
+    transform: translateY(-30px);
+    transition:
+        opacity 200ms ease-in,
+        transform 500ms var(--pop-easing),
+        overlay 500ms ease-out allow-discrete,
+        display 500ms ease-out allow-discrete;
+}
+
+@starting-style {
+    .popover[open] {
+        opacity: 0.5;
+        transform: translateY(-30px);
+    }
+}
+
+.popover[open]::backdrop {
+    background-color: var(--backdrop-color);
+
+}
+
+.popover::backdrop {
+    background-color: rgba(0, 0, 0, 0);
+    transition:
+        background-color 200ms linear,
+        overlay 200ms allow-discrete,
+        display 200ms allow-discrete;
+}
+
+@starting-style {
+    .popover[open]::backdrop {
+        background-color: rgba(0, 0, 0, 0);
+    }
+}

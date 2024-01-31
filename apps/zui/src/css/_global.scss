@@ -112,3 +112,14 @@ dd {
 .is-dragging {
   user-select: none;
 }
+
+label {
+  display: block;
+  font-weight: bold;
+  color: var(--fg-color-less);
+  opacity: 0.9;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 78%;
+}
