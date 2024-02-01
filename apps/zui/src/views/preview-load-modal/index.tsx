@@ -1,36 +1,22 @@
 // @refresh reset
 
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 
 import styles from "./index.module.css"
 import * as _ from "lodash"
 import LoadDataForm from "src/js/state/LoadDataForm"
-import {useDispatch} from "src/app/core/state"
 import {useCallback, useEffect, useRef} from "react"
 import {ResultsControl, useResultsControl} from "./results"
-import modal from "src/components/modals.module.css"
 import {Shaper} from "./shaper"
 import {Sidebar} from "./sidebar"
 import {ResultsGroup} from "./results-group"
 import useSelect from "src/app/core/hooks/use-select"
-import {Debut, useDebut} from "src/components/debut"
-import {Dialog} from "src/components/dialog"
 import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
 import {call} from "src/util/call"
 import {invoke} from "src/core/invoke"
-
-export function LoadPane() {
-  const dispatch = useDispatch()
-  const show = useSelector(LoadDataForm.getShow)
-
-  const hide = () => {
-    dispatch(LoadDataForm.reset())
-  }
-
-  if (!show) return null
-  else return <Pane onClose={hide} />
-}
+import Modal from "src/js/state/Modal"
+import {useDialog} from "src/components/use-dialog"
 
 function Main(props: {
   original: ResultsControl
@@ -63,9 +49,8 @@ function Grid(props: {children: any}) {
   )
 }
 
-function Pane(props: {onClose: any}) {
+export function PreviewLoadModal() {
   const select = useSelect()
-  const debut = useDebut({afterExit: props.onClose})
   const files = useSelector(LoadDataForm.getFiles)
   const format = useSelector(LoadDataForm.getFormat)
   const original = useResultsControl(files, format)
@@ -81,10 +66,10 @@ function Pane(props: {onClose: any}) {
   }, [files, format])
 
   const onCancel = () => {
+    // Cleanup the tmp files created by paste if you cancel
     const files = select(LoadDataForm.getFiles)
     const poolId = select(LoadDataForm.getPoolId)
     invoke("loads.cancel", poolId, files, "")
-    debut.exit()
   }
 
   useEffect(() => onSubmit(), [files, format])
@@ -94,27 +79,25 @@ function Pane(props: {onClose: any}) {
     return abort
   }, [files, format])
 
+  const dispatch = useDispatch()
+  const dialog = useDialog({
+    showModalOnMount: true,
+    waitForTransitions: true,
+    onClose: () => dispatch(Modal.hide()),
+    onCancel,
+  })
+
   return (
-    <Debut {...debut.props} classNames="modal">
-      <Dialog
-        aria-label="preview-load"
-        onClose={debut.exit}
-        onCancel={onCancel}
-        dialogPoint="center center"
-        isOpen={true}
-        className={modal.modal}
-        modal
-      >
-        <Grid>
-          <Main original={original} preview={preview} onSubmit={onSubmit} />
-          <Sidebar
-            onClose={debut.exit}
-            onCancel={onCancel}
-            isValid={!original.error && !preview.error}
-          />
-        </Grid>
-      </Dialog>
-    </Debut>
+    <dialog ref={dialog.ref} className="modal popover">
+      <Grid>
+        <Main original={original} preview={preview} onSubmit={onSubmit} />
+        <Sidebar
+          onClose={() => dialog.close()}
+          onCancel={onCancel}
+          isValid={!original.error && !preview.error}
+        />
+      </Grid>
+    </dialog>
   )
 }
 

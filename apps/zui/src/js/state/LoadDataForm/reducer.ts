@@ -12,12 +12,8 @@ const slice = createSlice({
     sidebarSize: 360,
     resultsRatio: 0.5,
     poolId: null,
-    show: false,
   },
   reducers: {
-    setShow: (state, action: PayloadAction<boolean>) => {
-      state.show = action.payload
-    },
     setPoolId: (state, action: PayloadAction<string>) => {
       state.poolId = action.payload
     },
@@ -43,7 +39,6 @@ const slice = createSlice({
       state.resultsRatio = action.payload
     },
     reset: (state) => {
-      state.show = false
       state.format = "auto"
       state.files = []
       state.shaper = ""
