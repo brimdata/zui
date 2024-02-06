@@ -1,6 +1,6 @@
 import {createOperation} from "../../core/operations"
-import open from "src/js/lib/open"
+import {shell} from "electron"
 
 export const openLinkOp = createOperation("openLinkOp", (_ctx, url: string) => {
-  open(url)
+  shell.openExternal(url)
 })
