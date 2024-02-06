@@ -54,11 +54,7 @@ export default class ZuiApi {
   }
 
   createAbortable(tab?: string, tag?: string) {
-    try {
-      this.abortables.abort({tab, tag})
-    } catch (e) {
-      console.log("Abort Handled", e)
-    }
+    this.abortables.abort({tab, tag})
     const ctl = new AbortController()
     const id = this.abortables.add({
       abort: () => ctl.abort(),
@@ -74,7 +70,7 @@ export default class ZuiApi {
     const [signal, cleanup] = this.createAbortable(opts.tabId, opts.id)
     try {
       const resp = await zealot.query(body, {signal})
-      resp.promise.finally(cleanup)
+      resp.on("success", cleanup)
       return resp
     } catch (e) {
       cleanup()
