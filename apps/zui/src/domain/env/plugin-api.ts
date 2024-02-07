@@ -1,6 +1,5 @@
 import env from "src/app/core/env"
 import {getPath} from "src/js/api/core/get-path"
-import open from "src/js/lib/open"
 import {join} from "path"
 
 export class EnvApi {
@@ -18,10 +17,6 @@ export class EnvApi {
 
   get isTest() {
     return env.isTest
-  }
-
-  openExternal(uri: string, opts: {newWindow?: boolean} = {}) {
-    return open(uri, opts)
   }
 
   getExePath(relPath: string) {
