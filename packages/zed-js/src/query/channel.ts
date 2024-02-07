@@ -56,7 +56,9 @@ export class Channel extends EventEmitter {
     let timeId: ReturnType<typeof setTimeout>;
 
     const flush = () => {
-      collector({ rows: this.rows, shapesMap: this.shapesMap });
+      // Return shallow copies so that comsumers can do what they want
+      // with the rows and shapes
+      collector({ rows: [...this.rows], shapesMap: { ...this.shapesMap } });
       first = false;
       count = 0;
       clearTimeout(timeId);
