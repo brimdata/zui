@@ -1,3 +1,4 @@
+import { EventEmitter } from 'events';
 import { eachLine } from '../ndjson/lines';
 import { JSOptions } from '../values/types';
 import * as zjson from '../zjson';
@@ -5,14 +6,16 @@ import { Channel } from './channel';
 import { Collector } from '../types';
 import { IsoResponse } from '../client/types';
 
-export class ResultStream {
+export class ResultStream extends EventEmitter {
   public status: 'idle' | 'pending' | 'error' | 'aborted' | 'success' = 'idle';
 
   private currentChannelId: number | undefined;
   private channelsMap = new Map<number, Channel>();
   private _promise?: Promise<void>;
 
-  constructor(public resp: IsoResponse, private ctl: AbortController) {}
+  constructor(public resp: IsoResponse, private ctl: AbortController) {
+    super();
+  }
 
   get body() {
     return this.resp.body;
@@ -80,9 +83,11 @@ export class ResultStream {
           this.consumeLine(json);
         }
         this.status = 'success';
+        this.emit('success');
         resolve();
-      } catch (e) {
+      } catch (e: unknown) {
         if (
+          (e instanceof Object && 'name' in e && e.name === 'AbortError') ||
           (e instanceof DOMException && e.message.match(/user aborted/)) ||
           (e instanceof Error && e.message.match(/context canceled/))
         ) {
