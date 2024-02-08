@@ -1,12 +1,10 @@
-import {useEffect, useRef} from "react"
-import useListener from "src/js/components/hooks/useListener"
+import {useCallback, useEffect, useRef} from "react"
 import {call} from "src/util/call"
-import {transitionsComplete} from "src/util/watch-transition"
+import {useDocListener} from "src/util/hooks/use-doc-listener"
+import {useRefListener} from "src/util/hooks/use-ref-listener"
 
 type Options = {
-  showModalOnMount?: boolean
-  showOnMount?: boolean
-  waitForTransitions?: boolean
+  onMount?: () => any
   onClose?: (e: CloseEvent) => any
   onCancel?: () => any
 }
@@ -15,30 +13,28 @@ export function useDialog(opts: Options = {}) {
   const ref = useRef<HTMLDialogElement>()
 
   useEffect(() => {
-    if (opts.showModalOnMount) {
-      ref.current?.showModal()
-    } else if (opts.showOnMount) {
-      ref.current?.show()
-    }
+    call(opts.onMount)
   }, [])
 
-  useListener(ref.current, "close", async (e: CloseEvent) => {
-    if (opts.waitForTransitions) {
-      await transitionsComplete(e.currentTarget)
-    }
-    call(opts.onClose, e)
-  })
+  useRefListener(
+    ref,
+    "close",
+    useCallback((e) => call(opts.onClose, e), [opts.onClose])
+  )
 
-  // The "cancel" does not fire when the dialog is not focused
-  // The "keydown" event also doesn't fire if the dialog is not focused
-  // Listening for the escape key is more reliable
-  useListener(document, "keydown", (e: any) => {
-    if (e.key === "Escape") {
-      e.preventDefault()
-      call(opts.onCancel)
-      ref.current?.close()
-    }
-  })
+  useDocListener(
+    "keydown",
+    useCallback((e: any) => {
+      // The "cancel" does not fire when the dialog is not focused
+      // The "keydown" event also doesn't fire if the dialog is not focused
+      // Listening for the escape key is more reliable
+      if (e.key === "Escape") {
+        e.preventDefault()
+        call(opts.onCancel)
+        ref.current?.close()
+      }
+    }, [])
+  )
 
   return {
     ref,

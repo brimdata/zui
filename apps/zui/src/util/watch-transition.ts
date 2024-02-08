@@ -15,6 +15,13 @@ class SetStack {
   map = new Map<any, Set<any>>()
   pristine = true
 
+  has(key, item) {
+    if (this.map.has(key)) {
+      return this.map.get(key).has(item)
+    }
+    return false
+  }
+
   push(key, item) {
     if (this.map.has(key)) {
       this.map.get(key).add(item)
@@ -37,29 +44,45 @@ class SetStack {
 }
 
 export function transitionsComplete(node) {
+  let allEnded = true
   const transitions = new SetStack()
   const signal = new Signal()
 
-  function add(e) {
+  function checkDone() {
+    if (transitions.empty) {
+      off()
+      signal.resolve(allEnded)
+    }
+  }
+
+  function onRun(e) {
     transitions.push(e.target, e.propertyName)
   }
 
-  function remove(e) {
-    transitions.pop(e.target, e.propertyName)
-    if (transitions.empty && !transitions.pristine) {
-      signal.resolve()
+  function onEnd(e) {
+    if (transitions.has(e.target, e.propertyName)) {
+      transitions.pop(e.target, e.propertyName)
+      checkDone()
+    }
+  }
+
+  function onCancel(e) {
+    if (transitions.has(e.target, e.propertyName)) {
+      allEnded = false
+      transitions.pop(e.target, e.propertyName)
+      checkDone()
     }
   }
 
   function off() {
-    node.removeEventListener("transitionrun", add)
-    node.removeEventListener("transitionend", remove)
-    node.removeEventListener("transitioncancel", remove)
+    node.removeEventListener("transitionrun", onRun)
+    node.removeEventListener("transitionend", onEnd)
+    node.removeEventListener("transitioncancel", onCancel)
   }
 
-  node.addEventListener("transitionrun", add)
-  node.addEventListener("transitionend", remove)
-  node.addEventListener("transitioncancel", remove)
+  node.addEventListener("transitionrun", onRun)
+  node.addEventListener("transitionend", onEnd)
+  node.addEventListener("transitioncancel", onCancel)
 
-  return signal.promise.finally(off)
+  return signal.promise
 }

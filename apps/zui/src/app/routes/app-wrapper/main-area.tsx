@@ -18,7 +18,7 @@ const BG = styled.main`
   margin: 10px;
   margin-top: 0;
   border-radius: 6px;
-  box-shadow: var(--shadow-small);
+  box-shadow: var(--shadow-s);
   border: 1px solid var(--border-color);
 
   @media (prefers-color-scheme: light) {

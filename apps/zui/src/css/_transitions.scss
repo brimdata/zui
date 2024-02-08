@@ -1,40 +1,117 @@
-.popover[open] {
-    opacity: 1;
-    transform: scale(1);
+/**
+ * Overlay content with transparent bg-color
+ */
+.overlay--before-enter {
+    background-color: rgba(0, 0, 0, 0)
 }
 
-.popover {
-    opacity: 0;
-    transform: translateY(-30px);
-    transition:
-        opacity 200ms ease-in,
-        transform 500ms var(--pop-easing),
-        overlay 500ms ease-out allow-discrete,
-        display 500ms ease-out allow-discrete;
+.overlay--enter {
+    transition: background-color 300ms;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-@starting-style {
-    .popover[open] {
-        opacity: 0.5;
-        transform: translateY(-30px);
-    }
+.overlay--after-enter {
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.popover[open]::backdrop {
-    background-color: var(--backdrop-color);
-
+.overlay--before-exit {
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-.popover::backdrop {
+.overlay--exit {
+    transition: background-color 300ms;
     background-color: rgba(0, 0, 0, 0);
-    transition:
-        background-color 200ms linear,
-        overlay 200ms allow-discrete,
-        display 200ms allow-discrete;
 }
 
-@starting-style {
-    .popover[open]::backdrop {
-        background-color: rgba(0, 0, 0, 0);
-    }
+.overlay--after-exit {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+/**
+ * Fade in content with opacity
+ */
+.fade--before-enter {
+    opacity: 0;
+}
+
+.fade--enter {
+    transition: all 300ms;
+    transition-delay: var(--fade-enter-delay, 0s);
+    opacity: 1;
+}
+
+.fade--after-enter {
+    opacity: 1;
+}
+
+.fade--before-exit {
+    opacity: 1;
+}
+
+.fade--exit {
+    transition: all 300ms;
+    transition-delay: var(--fade-exit-delay, 0s);
+    opacity: 0;
+}
+
+.fade--after-exit {
+    opacity: 0;
+}
+
+/**
+ * Modal Transitions
+ */
+
+.drop-in {
+    --scale: 0.9;
+    --t-start: translateY(-30px) scale(1);
+    transition-timing-function: var(--pop-easing);
+    transition-duration: 500ms;
+    transition-property: none;
+}
+
+.drop-in--before-enter {
+    transform: var(--t-start);
+    opacity: 0;
+}
+
+.drop-in--enter {
+    transition-property: all;
+    opacity: 1;
+}
+
+.drop-in--exit {
+    transition-property: all;
+    transform: var(--t-start);
+    opacity: 0;
+}
+
+.drop-in--after-exit {
+    transform: var(--t-start);
+    opacity: 0;
+}
+
+/* Scale Back */
+
+.scale-back {
+    transition-duration: 300ms;
+    transition-timing-function: var(--pop-easing);
+}
+
+.scale-back--enter {
+    transition-property: all;
+    transform: scale(0.5);
+}
+
+.scale-back--after-enter {
+    transform: scale(0.5);
+}
+
+.scale-back--before-exit {
+    transform: scale(0.5);
+}
+
+.scale-back--exit {
+    transition-property: all;
+    transform: scale(1);
 }

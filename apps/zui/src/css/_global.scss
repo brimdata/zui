@@ -9,7 +9,11 @@
   margin: 0;
 }
 
-
+*:focus-visible {
+  outline-offset: 4px;
+  outline-color: var(--primary-color);
+  outline-width: 2px;
+}
 
 html,
 body {
@@ -122,4 +126,14 @@ label {
   text-transform: uppercase;
   letter-spacing: 0.8px;
   font-size: 78%;
+}
+
+dialog {
+  max-height: none;
+  max-width: none;
+  border: none;
+
+  &::backdrop {
+    background: transparent;
+  }
 }

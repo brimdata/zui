@@ -10,7 +10,7 @@ async function start() {
   const renderer = sub("yarn", `start:renderer`)
   await Promise.all([
     main.waitForOutput(/watching for changes/),
-    renderer.waitForOutput(/compiled client and server successfully/),
+    renderer.waitForOutput(/started server on/),
   ])
   log("Launching...")
   sub("yarn", `start:electron ${electronArgs}`).p.on("exit", () => {

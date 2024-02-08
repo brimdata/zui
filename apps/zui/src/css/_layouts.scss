@@ -126,3 +126,10 @@
 .flex {
     display: flex;
 }
+
+.with-popover {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-block-start: 10vh;
+}

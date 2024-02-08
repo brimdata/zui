@@ -139,10 +139,20 @@
  * Shadows
  */
 :root {
-  --shadow-small: 0px 0px 3px 0px rgb(0 0 0 / 30%);
-  --shadow-medium: 0px 3px 3px 6px rgb(0 0 0 / 30%);
+  --shadow-s: 0px 0px 3px 0px rgb(0 0 0 / 30%);
+  --shadow-m: 0px 3px 3px 6px rgb(0 0 0 / 30%);
+  --shadow-l: 12px 12px 48px rgba(0, 0, 0, 0.45);
 }
 
+
+/**
+ * Radius
+ */
+:root {
+  --radius-s: 3px;
+  --radius-m: 6px;
+  --radius-l: 12px;
+}
 
 
 /**

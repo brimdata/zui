@@ -14,7 +14,9 @@ export default function useListener<T>(
 
   useEffect(() => {
     const listener = (e) => savedCallback.current(e)
-    et && et.addEventListener(event, listener, opts)
+    if (et) {
+      et.addEventListener(event, listener, opts)
+    }
     return () => {
       if (et) et.removeEventListener(event, listener, opts)
     }

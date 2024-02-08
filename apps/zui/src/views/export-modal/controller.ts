@@ -4,14 +4,9 @@ import {
   exportToPool,
 } from "src/domain/results/handlers"
 import {getFormData} from "src/util/get-form-data"
-import {ExportModalProps, ExportModalState} from "."
 
 export class ExportModalController {
-  // add default for zng or the last most recent format
-  constructor(
-    private props: ExportModalProps,
-    private state: ExportModalState
-  ) {}
+  constructor(private onClose: () => void) {}
 
   async submit(e) {
     e.preventDefault()
@@ -31,6 +26,6 @@ export class ExportModalController {
   }
 
   close() {
-    this.props.onClose()
+    this.onClose()
   }
 }
