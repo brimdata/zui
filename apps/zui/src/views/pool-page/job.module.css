@@ -1,111 +1,111 @@
 .job {
-    display: grid;
-    grid-template-columns: 3rem 1fr min-content;
-    grid-template-rows: min-content min-content;
-    align-content: center;
-    align-items: center;
-    column-gap: 1em;
-    grid-template-areas: "icon info actions"
-        ". details .";
-    min-height: 86px;
+  display: grid;
+  grid-template-columns: 3rem 1fr min-content;
+  grid-template-rows: min-content min-content;
+  align-content: center;
+  align-items: center;
+  column-gap: 1em;
+  grid-template-areas:
+    "icon info actions"
+    ". details .";
+  min-height: 86px;
 }
 
 .icon {
-    grid-area: icon;
+  grid-area: icon;
 }
 
 .info {
-    grid-area: info;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25em;
+  grid-area: info;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
 }
 
 .actions {
-    grid-area: actions;
+  grid-area: actions;
 }
 
 .name {
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .progress {
-    grid-area: progress;
-    display: flex;
-    gap: 0.25em;
+  grid-area: progress;
+  display: flex;
+  gap: 0.25em;
 }
 
 .status {
-    grid-area: status;
-    color: var(--fg-color-less);
-    font-size: 0.8rem;
+  grid-area: status;
+  color: var(--fg-color-less);
+  font-size: var(--step--1);
 }
 
 .loadingIcon,
 .successIcon,
 .errorIcon {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loadingIcon path:nth-child(1) {
-    animation: upload 1.6s 532ms infinite var(--pop-easing);
+  animation: upload 1.6s 532ms infinite var(--pop-easing);
 }
 
 .loadingIcon path:nth-child(2) {
-    animation: upload 1.6s 266ms infinite var(--pop-easing);
+  animation: upload 1.6s 266ms infinite var(--pop-easing);
 }
 
 .loadingIcon path:nth-child(3) {
-    animation: upload 1.6s infinite var(--pop-easing);
+  animation: upload 1.6s infinite var(--pop-easing);
 }
 
 @keyframes upload {
-    from {
-        transform: translateY(80%);
-        opacity: 0;
-    }
+  from {
+    transform: translateY(80%);
+    opacity: 0;
+  }
 
-    50% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-    to {
-        opacity: 0;
-        transform: translateY(-80%);
-    }
-
+  to {
+    opacity: 0;
+    transform: translateY(-80%);
+  }
 }
 
 .loadingIcon {
-    color: var(--fg-color-less);
-    color: var(--blue);
-    background: var(--chrome-color-more);
+  color: var(--fg-color-less);
+  color: var(--blue);
+  background: var(--chrome-color-more);
 }
 
 .successIcon {
-    color: white;
-    background: var(--success-color);
+  color: white;
+  background: var(--success-color);
 }
 
 .errorIcon {
-    color: white;
-    background: var(--error-color);
+  color: white;
+  background: var(--error-color);
 }
 
 .details {
-    border-top: 1px solid var(--border-color);
-    margin-top: 0.5rem;
-    padding-top: 0.75rem;
-    color: var(--fg-color-less);
-    grid-area: details;
+  border-top: 1px solid var(--border-color);
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  color: var(--fg-color-less);
+  grid-area: details;
 }

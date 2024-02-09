@@ -12,7 +12,7 @@
   display: relative;
   font-family: var(--mono-font);
   font-weight: 500;
-  font-size: 90%;
+  font-size: var(--step--1);
   background: var(--chrome-color);
   border: none;
   padding: var(--s-5) var(--s-1);

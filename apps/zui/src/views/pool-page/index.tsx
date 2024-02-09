@@ -23,8 +23,8 @@ const Toolbar = styled.div`
 `
 
 const Subtitle = styled.p`
-  font-size: 13px;
-  opacity: 0.5;
+  font-size: var(--step-0);
+  color: var(--fg-color-less);
   margin: 0;
 `
 

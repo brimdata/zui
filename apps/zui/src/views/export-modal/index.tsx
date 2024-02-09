@@ -21,8 +21,8 @@ export function ExportModal() {
   useShowWhen(ref)
 
   return (
-    <PopoverModal ref={popover.ref}>
-      <div className="stack-3 box-1" style={{inlineSize: "fit-content"}}>
+    <PopoverModal ref={popover.ref} className="max-width:fit">
+      <div className="stack-3 box-1">
         <H1>Export Results</H1>
         <form
           ref={ref}

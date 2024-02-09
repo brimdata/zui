@@ -1,12 +1,12 @@
 .field {
     &>*+* {
-        margin-block-start: var(--s-3);
+        margin-block-start: var(--space-2xs);
     }
 }
 
 .field-stack {
     &>*+* {
-        margin-block-start: var(--s1);
+        margin-block-start: var(--space-s);
     }
 }
 

@@ -4,8 +4,6 @@
   border-bottom: 1px solid var(--border-color-more);
 }
 
-
-
 .dialog {
   z-index: 99999;
   position: fixed;
@@ -76,7 +74,6 @@ div.toolbar {
 }
 
 .title {
-  font-size: 0.7rem;
+  font-size: var(--step--2);
   color: var(--fg-color-less);
-  /* color: var(--border-color); */
 }

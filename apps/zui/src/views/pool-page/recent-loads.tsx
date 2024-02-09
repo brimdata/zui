@@ -29,7 +29,7 @@ export function RecentLoads(props: {id: string}) {
 
   return (
     <section className="stack-0">
-      <h2>Recent Loads</h2>
+      <h3>Recent Loads</h3>
       <div className={classNames(styles.list, "stack-0")}>
         {loads
           .map((ref) => new LoadModel(ref))

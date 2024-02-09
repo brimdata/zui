@@ -1,7 +1,6 @@
 .tabs {
   min-height: 26px;
   display: inline-flex;
-  align-items: center;
   position: relative;
   background: var(--chrome-color);
   border-radius: 6px;
@@ -12,7 +11,7 @@
   align-items: center;
   min-width: 0;
   padding: 2px;
-  height: 100%;
+  min-height: 100%;
   gap: 0.25rem;
 }
 
