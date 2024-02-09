@@ -6,34 +6,38 @@ import {useState} from "react"
 import {formatError} from "./format-error"
 import {PoolForm} from "../pool-form"
 import {NewPoolModalController} from "./controller"
+import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 
-export function NewPoolModal(props) {
+export function NewPoolModal() {
   const [error, setError] = useState("")
   const state = {error, setError}
-  const ctl = new NewPoolModalController(props, state)
+  const modal = usePopoverModal()
+  const ctl = new NewPoolModalController(modal.close, state)
 
   return (
-    <form
-      className={classNames(forms.form, styles.form)}
-      onSubmit={(e) => ctl.onSubmit(e)}
-    >
-      <H1 className={styles.title}>New Pool</H1>
-      <section className="stack-1">
-        <PoolForm />
-        {error && <div className={forms.error}>{formatError(error)}</div>}
-        <div className={classNames(forms.submission, styles.submission)}>
-          <button
-            type="button"
-            onClick={props.onClose}
-            className={forms.button}
-          >
-            Cancel
-          </button>
-          <button type="submit" className={forms.submit}>
-            Create
-          </button>
-        </div>
-      </section>
-    </form>
+    <PopoverModal ref={modal.ref}>
+      <form
+        className={classNames(forms.form, styles.form)}
+        onSubmit={(e) => ctl.onSubmit(e)}
+      >
+        <H1 className={styles.title}>New Pool</H1>
+        <section className="stack-1">
+          <PoolForm />
+          {error && <div className={forms.error}>{formatError(error)}</div>}
+          <div className={classNames(forms.submission, styles.submission)}>
+            <button
+              type="button"
+              onClick={modal.close}
+              className={forms.button}
+            >
+              Cancel
+            </button>
+            <button type="submit" className={forms.submit}>
+              Create
+            </button>
+          </div>
+        </section>
+      </form>
+    </PopoverModal>
   )
 }

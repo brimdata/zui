@@ -10,10 +10,8 @@ export function usePopoverModal() {
       dialog.showModal()
       debut.enter()
     },
-    onClose: async () => {
-      await debut.exit()
-      hideModal()
-    },
+    beforeClose: () => debut.exit(),
+    onClose: () => hideModal(),
   })
   return dialog
 }

@@ -10,13 +10,13 @@ const createPool = createHandler(async ({invoke, dispatch, toast}, data) => {
 })
 
 export class NewPoolModalController {
-  constructor(private props, private state) {}
+  constructor(private close, private state) {}
 
   async onSubmit(e) {
     try {
       const data = getFormData(e)
       createPool(data)
-      this.props.onClose()
+      this.close()
     } catch (e) {
       this.state.setError(e)
     }
