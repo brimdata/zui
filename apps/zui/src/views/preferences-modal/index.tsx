@@ -9,7 +9,6 @@ import styles from "./index.module.css"
 import {H1} from "src/components/h1"
 import {useFields} from "./use-fields"
 import {objectIsEmpty} from "src/util/object-is-empty"
-import {FullModal, useFullModal} from "src/components/full-modal"
 import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 
 export function SettingsModal() {
