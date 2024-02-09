@@ -12,6 +12,10 @@ export class DebutElement {
     this.className(name)
   }
 
+  reset() {
+    this.el.classList.remove(...this.classes.all, this.effect)
+  }
+
   async setOnEnd(name: string) {
     if (await transitionsComplete(this.el)) {
       this.set(name)

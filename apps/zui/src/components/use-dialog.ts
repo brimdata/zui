@@ -1,10 +1,11 @@
-import {useCallback, useEffect, useRef} from "react"
+import {useCallback, useLayoutEffect, useRef} from "react"
 import {call} from "src/util/call"
 import {useDocListener} from "src/util/hooks/use-doc-listener"
 import {useRefListener} from "src/util/hooks/use-ref-listener"
 
 type Options = {
   onMount?: () => any
+  beforeClose?: () => any
   onClose?: (e: CloseEvent) => any
   onCancel?: () => any
 }
@@ -12,7 +13,13 @@ type Options = {
 export function useDialog(opts: Options = {}) {
   const ref = useRef<HTMLDialogElement>()
 
-  useEffect(() => {
+  async function close() {
+    const result = await call(opts.beforeClose)
+    if (result === false) return
+    ref.current?.close()
+  }
+
+  useLayoutEffect(() => {
     call(opts.onMount)
   }, [])
 
@@ -31,14 +38,14 @@ export function useDialog(opts: Options = {}) {
       if (e.key === "Escape") {
         e.preventDefault()
         call(opts.onCancel)
-        ref.current?.close()
+        close()
       }
     }, [])
   )
 
   return {
     ref,
-    close: () => ref.current?.close(),
+    close,
     showModal: () => ref.current?.showModal(),
     show: () => ref.current?.show(),
   }

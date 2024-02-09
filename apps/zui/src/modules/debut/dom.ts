@@ -12,6 +12,5 @@ export function selectGroup(name: string) {
     const config = configs.find((c) => c.group === name)
     if (config) elements.push(new DebutElement(el, config.effect, config.group))
   }
-
   return new DebutGroup(elements)
 }

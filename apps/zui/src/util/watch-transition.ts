@@ -13,7 +13,6 @@ class Signal {
 
 class SetStack {
   map = new Map<any, Set<any>>()
-  pristine = true
 
   has(key, item) {
     if (this.map.has(key)) {
@@ -28,7 +27,6 @@ class SetStack {
     } else {
       this.map.set(key, new Set([item]))
     }
-    this.pristine = false
   }
 
   pop(key, item) {
@@ -56,20 +54,20 @@ export function transitionsComplete(node) {
   }
 
   function onRun(e) {
-    transitions.push(e.target, e.propertyName)
+    transitions.push(e.currentTarget, e.propertyName)
   }
 
   function onEnd(e) {
-    if (transitions.has(e.target, e.propertyName)) {
-      transitions.pop(e.target, e.propertyName)
+    if (transitions.has(e.currentTarget, e.propertyName)) {
+      transitions.pop(e.currentTarget, e.propertyName)
       checkDone()
     }
   }
 
   function onCancel(e) {
-    if (transitions.has(e.target, e.propertyName)) {
+    if (transitions.has(e.currentTarget, e.propertyName)) {
       allEnded = false
-      transitions.pop(e.target, e.propertyName)
+      transitions.pop(e.currentTarget, e.propertyName)
       checkDone()
     }
   }
@@ -79,6 +77,9 @@ export function transitionsComplete(node) {
     node.removeEventListener("transitionend", onEnd)
     node.removeEventListener("transitioncancel", onCancel)
   }
+
+  // add an expectation that a transition run will start in a few milliseconds,
+  // otherwise throw an error indicating that the transition is maybe not working.
 
   node.addEventListener("transitionrun", onRun)
   node.addEventListener("transitionend", onEnd)

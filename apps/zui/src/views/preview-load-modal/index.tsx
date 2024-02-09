@@ -1,6 +1,6 @@
 // @refresh reset
 
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 
 import styles from "./index.module.css"
 import * as _ from "lodash"
@@ -15,8 +15,7 @@ import {ErrorWell} from "src/components/error-well"
 import {errorToString} from "src/util/error-to-string"
 import {call} from "src/util/call"
 import {invoke} from "src/core/invoke"
-import Modal from "src/js/state/Modal"
-import {useDialog} from "src/components/use-dialog"
+import {FullModal, useFullModal} from "src/components/full-modal"
 
 function Main(props: {
   original: ResultsControl
@@ -50,11 +49,13 @@ function Grid(props: {children: any}) {
 }
 
 export function PreviewLoadModal() {
+  // Too much in here. We need a ctl
   const select = useSelect()
   const files = useSelector(LoadDataForm.getFiles)
   const format = useSelector(LoadDataForm.getFormat)
   const original = useResultsControl(files, format)
   const preview = useResultsControl(files, format)
+  const modal = useFullModal()
 
   const abortSubmit = useRef(null)
   const cancelSubmit = () => call(abortSubmit.current)
@@ -79,25 +80,17 @@ export function PreviewLoadModal() {
     return abort
   }, [files, format])
 
-  const dispatch = useDispatch()
-  const dialog = useDialog({
-    showModalOnMount: true,
-    waitForTransitions: true,
-    onClose: () => dispatch(Modal.hide()),
-    onCancel,
-  })
-
   return (
-    <dialog ref={dialog.ref} className="modal popover">
+    <FullModal ref={modal.ref}>
       <Grid>
         <Main original={original} preview={preview} onSubmit={onSubmit} />
         <Sidebar
-          onClose={() => dialog.close()}
+          onClose={() => modal.close()}
           onCancel={onCancel}
           isValid={!original.error && !preview.error}
         />
       </Grid>
-    </dialog>
+    </FullModal>
   )
 }
 

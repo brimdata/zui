@@ -9,7 +9,7 @@ export class DebutGroup {
     if (!this.isExiting) this.set("beforeEnter")
     await nextAnimationFrame()
     this.set("enter")
-    await this.setOnEnd("afterEnter")
+    return this.setOnEnd("afterEnter")
   }
 
   async exit() {
@@ -17,11 +17,15 @@ export class DebutGroup {
     if (!this.isEntering) this.set("beforeExit")
     await nextAnimationFrame()
     this.set("exit")
-    await this.setOnEnd("afterExit")
+    return this.setOnEnd("afterExit")
   }
 
   set(state) {
     this.elements.map((m) => m.set(state))
+  }
+
+  reset() {
+    this.elements.map((m) => m.reset())
   }
 
   setOnEnd(state) {
