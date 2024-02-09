@@ -33,6 +33,7 @@ export const submit = createOperation(
       })
       .catch((e) => {
         if (isAbortError(e)) return
+        console.log(e)
         zui.window.showErrorMessage("Load error " + errorToString(e))
       })
 
