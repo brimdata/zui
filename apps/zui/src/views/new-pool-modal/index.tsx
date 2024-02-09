@@ -1,6 +1,4 @@
 import forms from "src/components/forms.module.css"
-import styles from "./index.module.css"
-import classNames from "classnames"
 import {H1} from "src/components/h1"
 import {useState} from "react"
 import {formatError} from "./format-error"
@@ -15,29 +13,30 @@ export function NewPoolModal() {
   const ctl = new NewPoolModalController(modal.close, state)
 
   return (
-    <PopoverModal ref={modal.ref}>
-      <form
-        className={classNames(forms.form, styles.form)}
-        onSubmit={(e) => ctl.onSubmit(e)}
-      >
-        <H1 className={styles.title}>New Pool</H1>
-        <section className="stack-1">
-          <PoolForm />
-          {error && <div className={forms.error}>{formatError(error)}</div>}
-          <div className={classNames(forms.submission, styles.submission)}>
-            <button
-              type="button"
-              onClick={modal.close}
-              className={forms.button}
-            >
-              Cancel
-            </button>
-            <button type="submit" className={forms.submit}>
-              Create
-            </button>
+    <PopoverModal ref={modal.ref} className="max-width:measure">
+      <div className="box-s">
+        <form className={forms.form} onSubmit={(e) => ctl.onSubmit(e)}>
+          <div className="stack-3">
+            <H1>New Pool</H1>
+            <section className="stack-1">
+              <PoolForm />
+              {error && <div className={forms.error}>{formatError(error)}</div>}
+              <div className={forms.submission}>
+                <button
+                  type="button"
+                  onClick={modal.close}
+                  className={forms.button}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className={forms.submit}>
+                  Create
+                </button>
+              </div>
+            </section>
           </div>
-        </section>
-      </form>
+        </form>
+      </div>
     </PopoverModal>
   )
 }

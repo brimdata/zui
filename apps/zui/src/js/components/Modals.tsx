@@ -3,12 +3,14 @@ import Modal from "../state/Modal"
 import WhoisModal from "./WhoisModal"
 import React from "react"
 import NewLakeModal from "./LakeModals/NewLakeModal"
-import ViewLakeModal from "./LakeModals/ViewLakeModal"
+import {ViewLakeModal} from "./LakeModals/ViewLakeModal"
 import {NewPoolModal} from "src/views/new-pool-modal"
 import {ExportModal} from "src/views/export-modal"
 import {PreviewLoadModal} from "src/views/preview-load-modal"
+import {SettingsModal} from "src/views/preferences-modal"
 
 export const MODALS = {
+  settings: SettingsModal,
   whois: WhoisModal,
   "new-lake": NewLakeModal,
   "view-lake": ViewLakeModal,

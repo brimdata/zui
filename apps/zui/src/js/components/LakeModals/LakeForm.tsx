@@ -11,8 +11,6 @@ import useEventListener from "../hooks/useEventListener"
 import {isDefaultLake} from "../../initializers/initLakeParams"
 import {LakeModel} from "src/js/models/lake"
 import forms from "src/components/forms.module.css"
-import modals from "src/components/modals.module.css"
-import classNames from "classnames"
 import {ErrorWell} from "src/components/error-well"
 
 type Props = {
@@ -169,7 +167,7 @@ const LakeForm = ({onClose, lake}: Props) => {
         </div>
         <FormErrors errors={errors} />
       </section>
-      <section className={classNames(modals.submission, forms.submission)}>
+      <section className={forms.submission}>
         <button
           type="button"
           onClick={isSubmitting ? onCancel : onClickClose}

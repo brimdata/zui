@@ -1,7 +1,8 @@
-import {Ref, forwardRef} from "react"
+import {CSSProperties, Ref, forwardRef} from "react"
 import {hideModal} from "src/domain/window/handlers"
 import {useDialog} from "./use-dialog"
 import {useDebut} from "src/modules/debut/react"
+import classNames from "classnames"
 
 export function usePopoverModal() {
   const debut = useDebut("popover")
@@ -18,6 +19,8 @@ export function usePopoverModal() {
 
 type Props = {
   children: any
+  className?: string
+  style?: CSSProperties
 }
 
 export const PopoverModal = forwardRef(function PopoverModal(
@@ -28,11 +31,15 @@ export const PopoverModal = forwardRef(function PopoverModal(
     <dialog
       ref={ref}
       data-debut="popover:overlay"
-      className="with-popover size:viewport bg:backdrop z:2"
+      className="with-popover size:viewport bg:backdrop z:2 box-s"
     >
       <div
+        style={props.style}
         data-debut="popover:drop-in"
-        className="bg:normal max-width:fit shadow:l radius:l"
+        className={classNames(
+          props.className,
+          "width:full bg:normal shadow:l radius:l"
+        )}
       >
         {props.children}
       </div>

@@ -22,6 +22,18 @@
     width: 100vw;
 }
 
+.width\:full {
+    width: 100%;
+}
+
+.width\:fit {
+    width: fit-content;
+}
+
+.width\:max-content {
+    width: max-content;
+}
+
 .height\:viewport {
     height: 100vh;
 }
