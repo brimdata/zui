@@ -21,7 +21,6 @@ export default function ErrorNotice() {
 
 function ErrorMessage({error}: {error: ErrorData}) {
   const Component = getComponent(error)
-  const dispatch = useDispatch()
   return <Component error={error} />
 }
 

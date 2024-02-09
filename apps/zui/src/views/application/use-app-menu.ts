@@ -1,7 +1,6 @@
 import {createSelector} from "@reduxjs/toolkit"
 import {useEffect} from "react"
 import {useSelector} from "react-redux"
-import {whichRoute} from "src/app/router/routes"
 import {invoke} from "src/core/invoke"
 import {SearchAppMenuState} from "src/electron/windows/search/app-menu"
 import Appearance from "src/js/state/Appearance"
