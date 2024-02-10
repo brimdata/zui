@@ -1,17 +1,20 @@
 import forms from "src/components/forms.module.css"
 
-export function PoolForm() {
+type Props = {
+  nameInput?: any
+}
+
+export function PoolForm(props: Props) {
   return (
     <>
       <div className="field">
         <label htmlFor="name">Pool Name</label>
         <input
-          required
-          autoFocus
           type="text"
           name="name"
           id="name"
           placeholder="my_pool"
+          {...props.nameInput}
         />
       </div>
 

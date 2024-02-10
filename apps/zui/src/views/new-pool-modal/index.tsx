@@ -19,7 +19,7 @@ export function NewPoolModal() {
           <div className="stack-3">
             <H1>New Pool</H1>
             <section className="stack-1">
-              <PoolForm />
+              <PoolForm nameInput={{required: true, autoFocus: true}} />
               {error && <div className={forms.error}>{formatError(error)}</div>}
               <div className={forms.submission}>
                 <button
