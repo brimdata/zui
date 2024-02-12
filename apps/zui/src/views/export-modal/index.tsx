@@ -13,17 +13,19 @@ import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 
 export function ExportModal() {
   const popover = usePopoverModal()
-  const ctl = new ExportModalController(() => popover.close())
   const state = useExportModalState()
+  const ctl = new ExportModalController(() => popover.close(), state)
   const ref = useRef<HTMLFormElement>()
-
   useMemoryForm(ref, "export-form")
   useShowWhen(ref)
 
   return (
     <PopoverModal ref={popover.ref} className="max-width:fit">
       <div className="stack-3 box-1">
-        <H1>Export Results</H1>
+        <div className="stack--2">
+          <H1>Export Results</H1>
+          <p style={{fontSize: "16px"}}>{ctl.summary}</p>
+        </div>
         <form
           ref={ref}
           className={classNames(forms.form, "stack-4")}
@@ -88,11 +90,10 @@ export function ExportModal() {
 
             <div className="cluster--1" data-show-when="dest==file">
               <button type="submit" name="toClipboard" className={forms.submit}>
-                Copy To Clipboard
+                Copy to Clipboard
               </button>
-
               <button type="submit" name="toFile" className={forms.submit}>
-                Export To File
+                Export to File
               </button>
             </div>
           </div>

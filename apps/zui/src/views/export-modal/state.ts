@@ -1,9 +1,14 @@
 import {useState} from "react"
+import {useSelector} from "react-redux"
 import {MenuItem} from "src/core/menu"
+import Results from "src/js/state/Results"
+import {RESULTS_QUERY_COUNT} from "../results-pane/run-results-query"
 
 export function useExportModalState() {
   const [dest, setDest] = useState("file")
   const [poolId, setPoolId] = useState("new")
+  const countStatus = useSelector(Results.getStatus(RESULTS_QUERY_COUNT))
+  const count = useSelector(Results.getValues(RESULTS_QUERY_COUNT))[0]?.toJS()
   const toPool = dest === "pool"
   const toFile = dest === "file"
   const newPool = poolId === "new"
@@ -30,5 +35,7 @@ export function useExportModalState() {
     setPoolId,
     dest,
     setDest,
+    count,
+    countStatus,
   }
 }

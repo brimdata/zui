@@ -4,9 +4,13 @@ import {
   exportToPool,
 } from "src/domain/results/handlers"
 import {getFormData} from "src/util/get-form-data"
+import {useExportModalState} from "./state"
+import {pluralize} from "src/util/pluralize"
+
+type ExportModalState = ReturnType<typeof useExportModalState>
 
 export class ExportModalController {
-  constructor(private onClose: () => void) {}
+  constructor(private onClose: () => void, private state: ExportModalState) {}
 
   async submit(e) {
     e.preventDefault()
@@ -27,5 +31,17 @@ export class ExportModalController {
 
   close() {
     this.onClose()
+  }
+
+  get summary() {
+    const {count, countStatus} = this.state
+    if (countStatus === "FETCHING") {
+      return "Calculating number of rows..."
+    } else {
+      return `This export will include ${count?.toLocaleString()} ${pluralize(
+        "row",
+        count
+      )}.`
+    }
   }
 }
