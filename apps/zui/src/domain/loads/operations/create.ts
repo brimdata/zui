@@ -46,7 +46,7 @@ async function createPool(data: LoadFormData): Promise<Pool> {
     const poolNames = zui.pools.all.map((pool) => pool.name)
     const derivedName = await deriveName(data.files, poolNames)
     const name = data.name?.trim() || derivedName
-    const key = data.key
+    const key = data.key?.trim() || "ts"
     const order = data.order
     return zui.pools.create(name, {key, order})
   } else {

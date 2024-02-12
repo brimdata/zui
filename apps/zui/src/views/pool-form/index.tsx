@@ -2,6 +2,7 @@ import forms from "src/components/forms.module.css"
 
 type Props = {
   nameInput?: any
+  keyInput?: any
 }
 
 export function PoolForm(props: Props) {
@@ -25,6 +26,7 @@ export function PoolForm(props: Props) {
           name="key"
           type="text"
           placeholder="id, ts, primary_key "
+          {...props.keyInput}
         />
       </div>
 

@@ -110,7 +110,14 @@ export function Form(props: {
           </div>
 
           <Show when={state.newPool}>
-            <PoolForm />
+            <PoolForm
+              nameInput={{
+                placeholder: "Defaults to name of file(s)",
+              }}
+              keyInput={{
+                placeholder: "Defaults to 'ts'",
+              }}
+            />
           </Show>
           <div className="field">
             <label htmlFor="author">Author</label>
