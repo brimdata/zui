@@ -60,4 +60,28 @@ test.describe('Export tests', () => {
       expect(fsExtra.statSync(file).size).toBe(expectedSize);
     });
   });
+
+  test('Copy to clipboard', async () => {
+    await app.click('button', 'Export Results');
+    await app.attached('dialog');
+    await app.select('Format', 'JSON');
+    await app.click('button', 'Copy to Clipboard');
+    await app.attached(/copied JSON data to clipboard/i);
+    await app.click('button', 'Close');
+  });
+
+  test('Export to Pool', async () => {
+    await app.query('head 5');
+    await app.click('button', 'Export Results');
+    await app.attached('dialog');
+    await app.locate('radio', 'Pool').check();
+    await app.fill('Name', 'five_row_pool');
+    await app.click('button', 'Export To Pool');
+    // Redirected to the new pool page
+    await app.attached(/from 'sample.zeektsv' | head 5/);
+    await app.attached('heading', 'five_row_pool');
+    // Ensure the records are present
+    await app.click('button', 'Query Pool');
+    await app.attached(/5 Total Rows/);
+  });
 });
