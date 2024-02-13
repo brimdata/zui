@@ -9,6 +9,7 @@ export function useExportModalState() {
   const [poolId, setPoolId] = useState("new")
   const countStatus = useSelector(Results.getStatus(RESULTS_QUERY_COUNT))
   const count = useSelector(Results.getValues(RESULTS_QUERY_COUNT))[0]?.toJS()
+  const [isCopying, setIsCopying] = useState(false)
   const toPool = dest === "pool"
   const toFile = dest === "file"
   const newPool = poolId === "new"
@@ -28,6 +29,8 @@ export function useExportModalState() {
   ] as MenuItem[]
 
   return {
+    isCopying,
+    setIsCopying,
     tabs,
     toPool,
     toFile,

@@ -10,6 +10,7 @@ import {useExportModalState} from "./state"
 import {useShowWhen} from "src/util/hooks/use-show-when"
 import {useMemoryForm} from "src/util/hooks/use-memory-form"
 import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
+import {Show} from "src/components/show"
 
 export function ExportModal() {
   const popover = usePopoverModal()
@@ -89,12 +90,28 @@ export function ExportModal() {
             </button>
 
             <div className="cluster--1" data-show-when="dest==file">
-              <button type="submit" name="toClipboard" className={forms.submit}>
-                Copy to Clipboard
-              </button>
-              <button type="submit" name="toFile" className={forms.submit}>
-                Export to File
-              </button>
+              <Show when={state.isCopying} delay={150}>
+                <p>Copying to Clipboard...</p>
+                <button
+                  type="button"
+                  className={forms.button}
+                  onClick={ctl.cancelCopyToClipboard}
+                >
+                  Cancel
+                </button>
+              </Show>
+              <Show when={!state.isCopying} delay={150}>
+                <button
+                  type="submit"
+                  name="toClipboard"
+                  className={forms.submit}
+                >
+                  Copy to Clipboard
+                </button>
+                <button type="submit" name="toFile" className={forms.submit}>
+                  Export to File
+                </button>
+              </Show>
             </div>
           </div>
         </form>

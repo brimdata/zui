@@ -29,16 +29,26 @@ export const exportToFile = createOperation(
   }
 )
 
+const CLIPBOARD_ID = "copy-to-clipboard"
 export const copyToClipboard = createOperation(
   "results.copyToClipboard",
   async (ctx, query: string, format: ResponseFormat) => {
+    const ctl = ctx.main.abortables.create(CLIPBOARD_ID)
     const res = await lake.query(query, {
       format,
       controlMessages: false,
       timeout: Infinity,
+      signal: ctl.signal,
     })
     const result = await res.resp.text()
     clipboard.writeText(result)
+  }
+)
+
+export const cancelCopyToClipboard = createOperation(
+  "results.cancelCopyToClipboard",
+  (ctx) => {
+    ctx.main.abortables.abort({id: CLIPBOARD_ID})
   }
 )
 

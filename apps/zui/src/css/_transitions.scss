@@ -71,9 +71,9 @@
 
 .drop-in {
     --scale: 0.9;
-    --t-start: translateY(-30px) scale(1);
-    transition-timing-function: var(--pop-easing);
-    transition-duration: 500ms;
+    --t-start: translateY(-100px) scale(1);
+    transition-timing-function: var(--spring-easing);
+    transition-duration: 1300ms;
     transition-property: none;
 }
 
@@ -102,7 +102,7 @@
 
 .shrink-in {
     --dur: var(--dur-l);
-    --ease: ease-out;
+    --ease: var(--emphasis-easing);
     --enter-delay: 0s;
     --exit-delay: 0s;
     --scale-from: 1.5;

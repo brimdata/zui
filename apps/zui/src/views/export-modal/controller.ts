@@ -6,6 +6,8 @@ import {
 import {getFormData} from "src/util/get-form-data"
 import {useExportModalState} from "./state"
 import {pluralize} from "src/util/pluralize"
+import {invoke} from "src/core/invoke"
+import {isAbortError} from "src/util/is-abort-error"
 
 type ExportModalState = ReturnType<typeof useExportModalState>
 
@@ -24,13 +26,24 @@ export class ExportModalController {
         if (await exportToFile(data.format)) this.close()
         return
       case "toClipboard":
-        exportToClipboard(data.format)
+        this.state.setIsCopying(true)
+        try {
+          await exportToClipboard(data.format)
+        } catch (e) {
+          if (isAbortError(e)) return
+        } finally {
+          this.state.setIsCopying(false)
+        }
         return
     }
   }
 
   close() {
     this.onClose()
+  }
+
+  cancelCopyToClipboard() {
+    invoke("results.cancelCopyToClipboard")
   }
 
   get summary() {
