@@ -31,9 +31,9 @@ export const FullModal = forwardRef(function FullModal(
       data-debut="fullmodal:shrink-in"
       style={
         {
-          "--dur": "1000ms",
-          "--ease": "var(--pop-easing)",
-          "--scale-from": 1.05,
+          "--dur": "800ms",
+          "--ease": "var(--emphasis-easing)",
+          "--scale-from": 1.2,
         } as any
       }
     >

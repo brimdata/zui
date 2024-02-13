@@ -33,6 +33,7 @@ body {
   }
 }
 
+
 input,
 button,
 textarea,
@@ -148,9 +149,11 @@ input {
 }
 
 dialog {
+  color: var(--fg-color);
   max-height: none;
   max-width: none;
   border: none;
+  padding: 0;
 
   &::backdrop {
     background: transparent;

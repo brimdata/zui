@@ -96,6 +96,10 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+.border\:solid {
+    border: 1px solid var(--border-color);
+}
+
 .min-height\:full {
     min-height: 100%;
 }

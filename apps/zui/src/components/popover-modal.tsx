@@ -38,7 +38,7 @@ export const PopoverModal = forwardRef(function PopoverModal(
         data-debut="popover:drop-in"
         className={classNames(
           props.className,
-          "width:full bg:normal shadow:l radius:l"
+          "width:full bg:normal shadow:l radius:l border:solid"
         )}
       >
         {props.children}

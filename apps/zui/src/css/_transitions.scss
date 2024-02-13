@@ -72,8 +72,8 @@
 .drop-in {
     --scale: 0.9;
     --t-start: translateY(-100px) scale(1);
-    transition-timing-function: var(--spring-easing);
-    transition-duration: 1300ms;
+    transition-timing-function: var(--emphasis-easing);
+    transition-duration: 800ms;
     transition-property: none;
 }
 
@@ -89,6 +89,7 @@
 
 .drop-in--exit {
     transition-property: all;
+    transition-duration: 300ms;
     transform: var(--t-start);
     opacity: 0;
 }
@@ -101,8 +102,8 @@
 /* Shrink In */
 
 .shrink-in {
-    --dur: var(--dur-l);
-    --ease: var(--emphasis-easing);
+    --dur: 500ms;
+    --ease: var(--pop-easing);
     --enter-delay: 0s;
     --exit-delay: 0s;
     --scale-from: 1.5;

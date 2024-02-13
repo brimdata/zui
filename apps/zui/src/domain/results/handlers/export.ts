@@ -9,7 +9,6 @@ import Layout from "src/js/state/Layout"
 import Table from "src/js/state/Table"
 import Tabs from "src/js/state/Tabs"
 import {poolPath} from "src/app/router/utils/paths"
-import {isAbortError} from "src/util/is-abort-error"
 
 export const exportToPool = createHandler(
   async ({invoke, toast, dispatch}, data) => {
@@ -64,19 +63,15 @@ export const exportToFile = createHandler(
 export const exportToClipboard = createHandler(
   async (ctx, format: ResponseFormat) => {
     const query = getExportQuery(format)
-    try {
-      const promise = ctx.invoke("results.copyToClipboard", query, format)
-      return ctx.toast.promise(promise, {
-        loading: "Copying...",
-        error: (e) => {
-          if (isAbortError(e)) return "Copy Cancelled"
-          return errorToString(e)
-        },
-        success: `Copied ${format} data to clipboard.`,
-      })
-    } catch (e) {
-      if (isAbortError(e)) return
-    }
+    const promise = ctx.invoke("results.copyToClipboard", query, format)
+    return ctx.toast.promise(promise, {
+      loading: "Copying...",
+      error: errorToString,
+      success: (result) => {
+        if (result === "success") return `Copied ${format} data to clipboard.`
+        return "Copy Cancelled"
+      },
+    })
   }
 )
 
