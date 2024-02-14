@@ -16,7 +16,12 @@ export function useMemoryForm(
     localStorage.setItem(key, val)
   }
 
+  function optOut(element) {
+    return element.dataset.memory === "false"
+  }
+
   function onInput(e) {
+    if (optOut(e.target)) return
     const key = getKey(e.target)
     const val = e.target.value
     setVal(key, val)
@@ -35,6 +40,7 @@ export function useMemoryForm(
 
   function init() {
     for (const e of ref.current.elements) {
+      if (optOut(e)) continue
       const key = getKey(e)
       const val = getVal(key)
       if (val) setInput(e as HTMLFormElement, val)

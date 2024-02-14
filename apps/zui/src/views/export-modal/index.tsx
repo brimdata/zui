@@ -65,7 +65,16 @@ export function ExportModal() {
                 onChange={(e) => state.setPoolId(e.currentTarget.value)}
               />
               <div className="stack-1" data-show-when="poolId==new">
-                <PoolForm nameInput={{required: false, autoFocus: true}} />
+                <PoolForm
+                  nameInput={{
+                    required: false,
+                    autoFocus: true,
+                    "data-memory": false,
+                  }}
+                  keyInput={{
+                    "data-memory": false,
+                  }}
+                />
               </div>
             </div>
           </section>
