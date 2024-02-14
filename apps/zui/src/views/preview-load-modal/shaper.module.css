@@ -1,35 +1,39 @@
 .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+
+:global(.is-mac) .toolbar {
+  padding-left: 85px;
 }
 
 .toolbar .title {
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-    color: var(--fg-color-less);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--fg-color-less);
 }
 
 .toolbarActions {
-    margin-left: auto;
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
 }
 
 .shaper {
-    position: relative;
-    min-width: 0;
-    display: grid;
-    grid-template-rows: 44px 1fr;
-    background: var(--bg-color);
+  position: relative;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 44px 1fr;
+  background: var(--bg-color);
 }
 
 .editor {
-    min-width: 0;
-    min-height: 0;
-    border-radius: 0 0 6px 6px;
-    overflow: hidden;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 0 0 6px 6px;
+  overflow: hidden;
 }

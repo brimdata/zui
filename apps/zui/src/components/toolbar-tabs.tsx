@@ -10,6 +10,28 @@ import styles from "./toolbar-tabs.module.css"
 import {Icon} from "src/components/icon"
 import {call} from "src/util/call"
 
+function isScaled(el) {
+  const diff = el.clientWidth - el.getBoundingClientRect().width
+  return Math.floor(Math.abs(diff)) !== 0
+}
+
+let time = null
+function startTimer() {
+  if (time === null) time = new Date()
+}
+
+function cancelTimer() {
+  time = null
+}
+
+function checkTimer() {
+  const ellapsed = new Date().getTime() - time.getTime()
+  console.log(ellapsed)
+  if (ellapsed > 10 * 1000) {
+    throw new Error("Expected Scaling to Be Finished After 10 Seconds")
+  }
+}
+
 export function ToolbarTabs(props: {
   onlyIcon?: boolean
   labelClassName?: string
@@ -25,16 +47,24 @@ export function ToolbarTabs(props: {
   function run() {
     const el = ref.current
     if (el) {
-      requestAnimationFrame(() => {
-        const parent = el.getBoundingClientRect()
-        const pressed = el.querySelector(`[aria-pressed="true"]`)
-        if (pressed) {
-          const button = pressed.getBoundingClientRect()
-          const x = button.x - parent.x
-          const width = button.width
-          setPos({x, width})
-        }
-      })
+      if (isScaled(el)) {
+        // Warn the developer if this remains scaled for longer than 10s
+        startTimer()
+        checkTimer()
+        // We're being scaled, run this again after the transition completes
+        requestAnimationFrame(run)
+      } else {
+        cancelTimer()
+      }
+
+      const parent = el.getBoundingClientRect()
+      const pressed = el.querySelector(`[aria-pressed="true"]`)
+      if (pressed) {
+        const button = pressed.getBoundingClientRect()
+        const x = button.x - parent.x
+        const width = button.width
+        setPos({x, width})
+      }
     }
   }
 

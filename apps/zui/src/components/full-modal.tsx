@@ -4,7 +4,7 @@ import {useDebut} from "src/modules/debut/react"
 import {hideModal} from "src/domain/window/handlers"
 
 export function useFullModal() {
-  const debut = useDebut("fullmodal")
+  const debut = useDebut("full-modal")
   const dialog = useDialog({
     onMount: async () => {
       dialog.showModal()
@@ -27,8 +27,8 @@ export const FullModal = forwardRef(function FullModal(
   return (
     <dialog
       ref={ref}
-      className="size:viewport bg:normal z:2"
-      data-debut="fullmodal:shrink-in"
+      className="full-modal size:viewport bg:normal z:2"
+      data-debut="full-modal:shrink-in"
       style={
         {
           "--dur": "800ms",
