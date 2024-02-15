@@ -89,6 +89,7 @@ export function useSubmitKey(ref) {
           const match = keyMatch(event, expr)
           return match
         })
+
         if (button) {
           event.preventDefault()
           button.click()

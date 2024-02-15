@@ -85,7 +85,7 @@ export function ExportModal() {
             </div>
           </section>
 
-          <div className="cluster-3 justify:between width:measure">
+          <div className="cluster justify:between">
             <button
               type="button"
               name="close"
@@ -125,7 +125,7 @@ export function ExportModal() {
                   data-disabled-when="dest==pool"
                   data-submit-key="CmdOrCtrl+Enter"
                 >
-                  Copy to Clipboard
+                  Copy to Clipboard ⌘↩
                 </button>
                 <button
                   type="submit"
@@ -134,7 +134,7 @@ export function ExportModal() {
                   data-disabled-when="dest==pool"
                   data-submit-key="Enter"
                 >
-                  Export to File
+                  Export to File ↩
                 </button>
               </Show>
             </div>
