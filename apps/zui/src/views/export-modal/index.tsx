@@ -125,7 +125,7 @@ export function ExportModal() {
                   data-disabled-when="dest==pool"
                   data-submit-key="CmdOrCtrl+Enter"
                 >
-                  Copy to Clipboard ⌘↩
+                  Copy to Clipboard {globalThis.env.isMac ? "⌘" : "^"}↩
                 </button>
                 <button
                   type="submit"

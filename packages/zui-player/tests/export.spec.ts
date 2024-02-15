@@ -65,7 +65,7 @@ test.describe('Export tests', () => {
     await app.click('button', 'Export Results');
     await app.attached('dialog');
     await app.select('Format', 'JSON');
-    await app.click('button', 'Copy to Clipboard');
+    await app.click(/Copy to Clipboard/i);
     await app.attached(/copied JSON data to clipboard/i);
     await app.click('button', 'Close');
   });
