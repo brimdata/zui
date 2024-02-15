@@ -1,4 +1,5 @@
-import {MutableRefObject, useLayoutEffect} from "react"
+import {MutableRefObject, useEffect, useLayoutEffect} from "react"
+import {cmdOrCtrl} from "src/app/core/utils/keyboard"
 
 // This should be called use form conditionals
 
@@ -57,3 +58,46 @@ export const useDisabledWhen = createHook("disabled", (element, isTrue) => {
 export const useShowWhen = createHook("show", (element, isTrue) => {
   element.style.display = isTrue ? "" : "none"
 })
+
+function keyMatch(event, expr) {
+  return expr.split("+").every((token) => {
+    switch (token) {
+      case "Enter":
+        return true
+      case "CmdOrCtrl":
+        return cmdOrCtrl(event)
+      default:
+        throw new Error("Unknown key token in data-submit-key")
+    }
+  })
+}
+
+export function useSubmitKey(ref) {
+  const attr = "data-submit-key"
+  const selector = "[" + attr + "]:not([disabled])"
+
+  useEffect(() => {
+    function run(event) {
+      if (!ref.current) return
+      if (event.key === "Enter") {
+        const buttons = Array.from(
+          ref.current.querySelectorAll(selector)
+        ) as HTMLElement[]
+
+        const button = buttons.find((button) => {
+          const expr = button.getAttribute(attr)
+          const match = keyMatch(event, expr)
+          return match
+        })
+        if (button) {
+          event.preventDefault()
+          button.click()
+        }
+      }
+    }
+    ref.current?.addEventListener("keydown", run)
+    return () => {
+      ref.current?.addEventListener("keydown", run)
+    }
+  }, [])
+}

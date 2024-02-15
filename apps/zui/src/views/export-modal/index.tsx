@@ -7,7 +7,12 @@ import {PoolSelect} from "../pool-select"
 import {PoolForm} from "../pool-form"
 import {FormatSelect} from "../format-select"
 import {useExportModalState} from "./state"
-import {useRequiredWhen, useShowWhen} from "src/util/hooks/use-show-when"
+import {
+  useDisabledWhen,
+  useRequiredWhen,
+  useShowWhen,
+  useSubmitKey,
+} from "src/util/hooks/use-show-when"
 import {useMemoryForm} from "src/util/hooks/use-memory-form"
 import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 import {Show} from "src/components/show"
@@ -20,6 +25,8 @@ export function ExportModal() {
   useMemoryForm(ref, "export-form")
   useShowWhen(ref)
   useRequiredWhen(ref)
+  useDisabledWhen(ref)
+  useSubmitKey(ref)
 
   return (
     <PopoverModal ref={popover.ref} className="max-width:fit">
@@ -93,6 +100,7 @@ export function ExportModal() {
               type="submit"
               name="toPool"
               className={forms.submit}
+              data-disabled-when="dest==file"
             >
               Export To Pool
             </button>
@@ -104,6 +112,7 @@ export function ExportModal() {
                   type="button"
                   className={forms.button}
                   onClick={ctl.cancelCopyToClipboard}
+                  data-disabled-when="dest==pool"
                 >
                   Cancel
                 </button>
@@ -113,10 +122,18 @@ export function ExportModal() {
                   type="submit"
                   name="toClipboard"
                   className={forms.submit}
+                  data-disabled-when="dest==pool"
+                  data-submit-key="CmdOrCtrl+Enter"
                 >
                   Copy to Clipboard
                 </button>
-                <button type="submit" name="toFile" className={forms.submit}>
+                <button
+                  type="submit"
+                  name="toFile"
+                  className={forms.submit}
+                  data-disabled-when="dest==pool"
+                  data-submit-key="Enter"
+                >
                   Export to File
                 </button>
               </Show>
