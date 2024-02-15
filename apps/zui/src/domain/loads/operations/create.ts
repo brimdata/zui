@@ -9,7 +9,7 @@ import {poolPath} from "src/app/router/utils/paths"
 import {isAbortError} from "src/util/is-abort-error"
 
 /* Called when the user submits the preview & load form */
-export const submit = createOperation(
+export const create = createOperation(
   "loads.create",
   async (ctx, data: LoadFormData) => {
     const pool = await createPool(data)
@@ -23,6 +23,7 @@ export const submit = createOperation(
         poolId: pool.id,
         lakeId: zui.window.lakeId,
         branch: "main",
+        query: data.query,
         files: data.files,
         shaper: script.isEmpty() ? "*" : data.shaper,
         author: data.author,

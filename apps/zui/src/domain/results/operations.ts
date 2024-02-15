@@ -58,21 +58,3 @@ export const cancelCopyToClipboard = createOperation(
     ctx.main.abortables.abort({id: CLIPBOARD_ID})
   }
 )
-
-export const exportToPool = createOperation(
-  "results.exportToPool",
-  async (ctx, query: string, poolId: string, windowId: string) => {
-    if (!poolId) throw new Error("Argument missing: poolId")
-    if (!query) throw new Error("Argument missing: query")
-    return pools.load({
-      windowId,
-      lakeId: lake.id,
-      poolId,
-      branch: "main",
-      query,
-      files: [],
-      author: "Zui",
-      body: "Export to pool",
-    })
-  }
-)

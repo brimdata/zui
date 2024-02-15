@@ -2,37 +2,30 @@ import {addFuse, cutColumns} from "../utils"
 import Results from "src/js/state/Results"
 import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import {ResponseFormat} from "@brimdata/zed-js"
-import {getOrCreatePool} from "../../pools/handlers"
 import {errorToString} from "src/util/error-to-string"
 import {createHandler} from "src/core/handlers"
 import Layout from "src/js/state/Layout"
 import Table from "src/js/state/Table"
-import Tabs from "src/js/state/Tabs"
-import {poolPath} from "src/app/router/utils/paths"
 
-export const exportToPool = createHandler(
-  async ({invoke, toast, dispatch}, data) => {
-    const query = getExportQuery(null)
-    try {
-      const poolId = await getOrCreatePool(data)
-      const promise = invoke(
-        "results.exportToPool",
-        query,
-        poolId,
-        globalThis.windowId
-      )
-      toast.promise(promise, {
-        loading: "Exporting to pool...",
-        success: "Export to pool complete",
-        error: (e) => errorToString(e),
-      })
-      dispatch(Tabs.activateUrl(poolPath(poolId)))
-      await promise
-    } catch (e) {
-      toast.error(errorToString(e))
-    }
+export const exportToPool = createHandler(async ({invoke, toast}, data) => {
+  const query = getExportQuery(null)
+
+  try {
+    await invoke("loads.create", {
+      query,
+      poolId: data.poolId,
+      name: data.name,
+      order: data.order,
+      key: data.key,
+      windowId: globalThis.windowId,
+      files: [],
+      author: "Zui",
+      body: "Export to Pool",
+    })
+  } catch (e) {
+    toast.error(errorToString(e))
   }
-)
+})
 
 export const exportToFile = createHandler(
   async (ctx, format: ResponseFormat) => {

@@ -11,8 +11,9 @@ export class QueryLoader implements Loader {
   async run() {
     this.ctx.setProgress(0)
     const client = await this.ctx.createClient()
-    const res = await client.query(this.loadQuery).then((r) => r.js())
-    console.log(res)
+    await client
+      .query(this.loadQuery, {signal: this.ctx.signal})
+      .then((r) => r.js())
     this.ctx.setProgress(1)
   }
 

@@ -12,5 +12,4 @@ export type ResultsOperations = {
   "results.exportToFile": typeof ops.exportToFile
   "results.copyToClipboard": typeof ops.copyToClipboard
   "results.cancelCopyToClipboard": typeof ops.cancelCopyToClipboard
-  "results.exportToPool": typeof ops.exportToPool
 }
