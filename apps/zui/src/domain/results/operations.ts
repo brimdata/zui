@@ -3,7 +3,7 @@ import {ResponseFormat} from "@brimdata/zed-js"
 import fs from "fs"
 import {pipeline} from "stream"
 import util from "util"
-import {lake, pools} from "src/zui"
+import {lake} from "src/zui"
 import {clipboard} from "electron"
 import {isAbortError} from "src/util/is-abort-error"
 
