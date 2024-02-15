@@ -7,7 +7,7 @@ import {PoolSelect} from "../pool-select"
 import {PoolForm} from "../pool-form"
 import {FormatSelect} from "../format-select"
 import {useExportModalState} from "./state"
-import {useShowWhen} from "src/util/hooks/use-show-when"
+import {useRequiredWhen, useShowWhen} from "src/util/hooks/use-show-when"
 import {useMemoryForm} from "src/util/hooks/use-memory-form"
 import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 import {Show} from "src/components/show"
@@ -19,6 +19,7 @@ export function ExportModal() {
   const ref = useRef<HTMLFormElement>()
   useMemoryForm(ref, "export-form")
   useShowWhen(ref)
+  useRequiredWhen(ref)
 
   return (
     <PopoverModal ref={popover.ref} className="max-width:fit">
@@ -61,15 +62,13 @@ export function ExportModal() {
               <FormatSelect defaultValue="zng" />
             </div>
             <div className="stack-1" data-show-when="dest==pool">
-              <PoolSelect
-                onChange={(e) => state.setPoolId(e.currentTarget.value)}
-              />
+              <PoolSelect />
               <div className="stack-1" data-show-when="poolId==new">
                 <PoolForm
                   nameInput={{
-                    required: false,
                     autoFocus: true,
                     "data-memory": false,
+                    "data-required-when": "poolId==new && dest==pool",
                   }}
                   keyInput={{
                     "data-memory": false,
