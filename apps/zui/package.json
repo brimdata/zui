@@ -154,7 +154,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#709b64e4f819ff03652af4f1755fdd3960514dca",
+    "zed": "brimdata/zed#4dc623694f5c31a32758cb10765c1b1c6914b63f",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {
