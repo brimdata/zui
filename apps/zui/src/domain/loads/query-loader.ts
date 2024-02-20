@@ -9,7 +9,7 @@ export class QueryLoader implements Loader {
   }
 
   async run() {
-    this.ctx.setProgress(0)
+    this.ctx.setProgress(Infinity)
     const client = await this.ctx.createClient()
     await client
       .query(this.loadQuery, {signal: this.ctx.signal})
