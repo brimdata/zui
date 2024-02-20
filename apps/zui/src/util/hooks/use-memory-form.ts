@@ -27,13 +27,16 @@ export function useMemoryForm(
     setVal(key, val)
   }
 
-  function setInput(e: HTMLFormElement, val: string) {
-    switch (e.type) {
+  function setInput(el: HTMLFormElement, val: string) {
+    switch (el.type) {
       case "radio":
-        if (e.value == val) e.checked = true
+        if (el.value == val) el.checked = true
+        break
+      case "select-one":
+        if (selectHasOption(el, val)) el.value = val
         break
       default:
-        e.value = val
+        el.value = val
         break
     }
   }
@@ -55,4 +58,10 @@ export function useMemoryForm(
       ref.current.removeEventListener("input", onInput)
     }
   }, [])
+}
+
+function selectHasOption(select, value) {
+  return Array.from(select.options)
+    .map((opt: HTMLOptionElement) => opt.value)
+    .includes(value)
 }
