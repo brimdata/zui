@@ -8,7 +8,13 @@ export class LoadModel {
     return this.ref.id
   }
 
+  get title() {
+    if (this.ref.files.length) return this.humanizeFiles
+    else return this.ref.query
+  }
+
   get humanizeFiles() {
+    if (!this.ref.files) return "No files"
     return this.ref.files.map(basename).join(", ")
   }
 

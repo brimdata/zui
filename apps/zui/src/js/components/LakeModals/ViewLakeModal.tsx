@@ -12,11 +12,11 @@ import removeLake from "../../flows/lake/removeLake"
 import {useDispatch} from "src/app/core/state"
 import {showMessageBox} from "src/js/lib/System"
 import forms from "src/components/forms.module.css"
-import modals from "src/components/modals.module.css"
 import {H1} from "src/components/h1"
 import classNames from "classnames"
 import styles from "./lake-modal.module.css"
 import {capitalize} from "lodash"
+import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 
 const ViewLake = ({onClose, onEdit}) => {
   const dispatch = useDispatch()
@@ -54,51 +54,51 @@ const ViewLake = ({onClose, onEdit}) => {
   }
 
   return (
-    <div className={classNames(forms.form, modals.form)}>
-      <H1 className={modals.title}>{name}</H1>
-
-      <section className={forms.fields}>
-        <div>
-          <label>Lake URL</label>
-          <input
-            type="text"
-            readOnly
-            value={port ? [host, port].join(":") : host}
-          />
+    <div className={classNames(forms.form, "box-s")}>
+      <div className="stack-3">
+        <H1>{name}</H1>
+        <section className="stack-1">
+          <div className="field">
+            <label>Lake URL</label>
+            <input
+              type="text"
+              readOnly
+              value={port ? [host, port].join(":") : host}
+            />
+          </div>
+          <div className="field">
+            <label>Status</label>
+            <input type="text" readOnly value={capitalize(status)} />
+          </div>
+          <div className="field">
+            <label>Zed Version</label>
+            <input type="text" readOnly value={version} />
+          </div>
+          <div className="field">
+            <label>Pool Count</label>
+            <input type="text" readOnly value={poolCount.toString()} />
+          </div>
+        </section>
+        <div className={forms.submission}>
+          <button type="button" onClick={onClose} className={forms.button}>
+            OK
+          </button>
+          <button type="submit" onClick={onEdit} className={forms.submit}>
+            Edit
+          </button>
         </div>
-        <div>
-          <label>Status</label>
-          <input type="text" readOnly value={capitalize(status)} />
-        </div>
-        <div>
-          <label>Zed Version</label>
-          <input type="text" readOnly value={version} />
-        </div>
-        <div>
-          <label>Pool Count</label>
-          <input type="text" readOnly value={poolCount.toString()} />
-        </div>
-      </section>
-      <div className={classNames(forms.submission, modals.submission)}>
-        <button type="button" onClick={onClose} className={forms.button}>
-          OK
-        </button>
-        <button type="submit" onClick={onEdit} className={forms.submit}>
-          Edit
-        </button>
+        {!isDefault && (
+          <div className={styles.logout}>
+            <Link onClick={onRemove}>Logout</Link>
+          </div>
+        )}
       </div>
-      {!isDefault && (
-        <div className={styles.logout}>
-          <Link onClick={onRemove}>Logout</Link>
-        </div>
-      )}
     </div>
   )
 }
 
-const ViewLakeModal = ({onClose}) => {
+const Content = ({onClose}) => {
   const [editing, setEditing] = useState(false)
-
   if (editing) {
     return <EditLakeModal onClose={() => setEditing(false)} />
   } else {
@@ -106,4 +106,11 @@ const ViewLakeModal = ({onClose}) => {
   }
 }
 
-export default ViewLakeModal
+export function ViewLakeModal() {
+  const modal = usePopoverModal()
+  return (
+    <PopoverModal ref={modal.ref} className="max-width:measure">
+      <Content onClose={modal.close} />
+    </PopoverModal>
+  )
+}

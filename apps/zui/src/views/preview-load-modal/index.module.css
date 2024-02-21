@@ -1,0 +1,28 @@
+.grid {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 360px;
+  overflow: hidden;
+  background-color: var(--bg-color);
+}
+
+.main {
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  border-right: 1px solid var(--border-color);
+}
+
+.error {
+  margin: 18px;
+  box-shadow: var(--shadow-elevation-low);
+}

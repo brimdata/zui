@@ -48,7 +48,7 @@ export class PoolsApi extends ApiDomain {
   }
 
   async create(name: string, opts: Partial<CreatePoolOpts> = {}) {
-    const id = await invoke("pools.create", this.lakeId, name, opts)
+    const id = await invoke("pools.create", name, opts)
     await this.sync(id)
     return id
   }

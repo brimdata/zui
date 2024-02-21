@@ -15,6 +15,9 @@ const Toaster = () => {
         success: {
           duration: 6000,
         },
+        error: {
+          duration: 15_000,
+        },
       }}
     />
   )

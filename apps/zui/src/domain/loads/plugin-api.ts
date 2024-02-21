@@ -1,20 +1,11 @@
-import {DefaultLoader} from "./default-loader"
 import {LoadContext} from "./load-context"
-import {Loader} from "src/core/loader/types"
 import Loads from "src/js/state/Loads"
 import {select} from "src/core/main/select"
 import {TypedEmitter} from "src/util/typed-emitter"
-import {LoadReference} from "src/js/state/Loads/types"
+import {DEFAULT_LOADERS} from "./default-loaders"
+import {LoadEvents, Loader, LoaderRef} from "./types"
 
-type Events = {
-  success: (load: LoadReference) => void
-  abort: (load: LoadReference) => void
-  error: (load: LoadReference) => void
-}
-
-type LoaderRef = {name: string; initialize: (ctx: LoadContext) => Loader}
-
-export class LoadsApi extends TypedEmitter<Events> {
+export class LoadsApi extends TypedEmitter<LoadEvents> {
   private list: LoaderRef[] = []
 
   addLoader(name: string, initialize: (ctx: LoadContext) => Loader) {
@@ -22,11 +13,15 @@ export class LoadsApi extends TypedEmitter<Events> {
   }
 
   async initialize(context: LoadContext) {
-    for (const ref of this.list) {
-      const customLoader = ref.initialize(context)
-      if (await customLoader.when()) return customLoader
+    for (const {initialize} of this.loaders) {
+      const loader = initialize(context)
+      if (await loader.when()) return loader
     }
-    return new DefaultLoader(context)
+    throw new Error("Loader not found")
+  }
+
+  private get loaders() {
+    return [...this.list, ...DEFAULT_LOADERS]
   }
 
   get all() {

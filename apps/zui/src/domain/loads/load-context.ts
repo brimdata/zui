@@ -26,7 +26,14 @@ export class LoadContext {
     this.window.loadsInProgress++
     this.main.abortables.add({id: this.id, abort: () => this.ctl.abort()})
     this.main.dispatch(
-      Loads.create(createLoadRef(this.id, this.opts.poolId, this.opts.files))
+      Loads.create(
+        createLoadRef(
+          this.id,
+          this.opts.poolId,
+          this.opts.files,
+          this.opts.query
+        )
+      )
     )
   }
 
@@ -74,7 +81,11 @@ export class LoadContext {
   }
 
   get files() {
-    return this.opts.files
+    return this.opts.files || []
+  }
+
+  get query() {
+    return this.opts.query
   }
 
   get lakeId() {

@@ -1,86 +1,42 @@
-import {useForm} from "react-hook-form"
 import forms from "src/components/forms.module.css"
-import styles from "./index.module.css"
-import classNames from "classnames"
 import {H1} from "src/components/h1"
-import {useZuiApi} from "src/app/core/context"
-import {poolPath} from "src/app/router/utils/paths"
-import Tabs from "src/js/state/Tabs"
-import {useDispatch} from "src/app/core/state"
 import {useState} from "react"
 import {formatError} from "./format-error"
+import {PoolForm} from "../pool-form"
+import {NewPoolModalController} from "./controller"
+import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 
-export function NewPoolModal(props) {
-  const {register, handleSubmit} = useForm()
-  const api = useZuiApi()
-  const dispatch = useDispatch()
+export function NewPoolModal() {
   const [error, setError] = useState("")
-  const onSubmit = handleSubmit(async (data: any) => {
-    try {
-      const id = await api.pools.create(data.name, data)
-      dispatch(Tabs.activateUrl(poolPath(id)))
-      api.toast.success("Pool Created")
-      props.onClose()
-    } catch (e) {
-      setError(e)
-    }
-  })
+  const state = {error, setError}
+  const modal = usePopoverModal()
+  const ctl = new NewPoolModalController(modal.close, state)
 
   return (
-    <form className={classNames(forms.form, styles.form)} onSubmit={onSubmit}>
-      <H1 className={styles.title}>New Pool</H1>
-      <section className={styles.fields}>
-        <div>
-          <label>Name</label>
-          <input type="text" {...register("name")} autoFocus required />
-        </div>
-        <div>
-          <label>Pool Key</label>
-          <input
-            type="text"
-            {...register("key")}
-            defaultValue={"ts"}
-            required
-          />
-        </div>
-        <div>
-          <label>Sort Order</label>
-          <div className={forms.radioInput}>
-            <input
-              id="ascending"
-              name="order"
-              type="radio"
-              value="asc"
-              {...register("order")}
-            />
-            <label htmlFor="ascending">Ascending</label>
+    <PopoverModal ref={modal.ref} className="max-width:measure">
+      <div className="box-s">
+        <form className={forms.form} onSubmit={(e) => ctl.onSubmit(e)}>
+          <div className="stack-3">
+            <H1>New Pool</H1>
+            <section className="stack-1">
+              <PoolForm nameInput={{required: true, autoFocus: true}} />
+              {error && <div className={forms.error}>{formatError(error)}</div>}
+              <div className={forms.submission}>
+                <button
+                  type="button"
+                  onClick={modal.close}
+                  className={forms.button}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className={forms.submit}>
+                  Create
+                </button>
+              </div>
+            </section>
           </div>
-          <div className={forms.radioInput}>
-            <input
-              id="descending"
-              name="order"
-              type="radio"
-              value="desc"
-              defaultChecked
-              {...register("order")}
-            />
-            <label htmlFor="descending">Descending</label>
-          </div>
-        </div>
-        {error && <div className={forms.error}>{formatError(error)}</div>}
-        <div className={classNames(forms.submission, styles.submission)}>
-          <button
-            type="button"
-            onClick={props.onClose}
-            className={forms.button}
-          >
-            Cancel
-          </button>
-          <button type="submit" className={forms.submit}>
-            Create
-          </button>
-        </div>
-      </section>
-    </form>
+        </form>
+      </div>
+    </PopoverModal>
   )
 }

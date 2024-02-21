@@ -115,6 +115,10 @@
     margin-block-start: var(--s8);
 }
 
+.box-s {
+    padding: var(--s1);
+}
+
 .box-1 {
     padding: var(--s1);
 }
@@ -125,4 +129,11 @@
 
 .flex {
     display: flex;
+}
+
+.with-popover {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-block-start: 10vh;
 }

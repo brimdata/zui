@@ -68,7 +68,7 @@ const BG = styled.div`
   &[aria-selected="true"] {
     border-radius: 0;
     outline: none;
-    box-shadow: var(--shadow-small);
+    box-shadow: var(--shadow-s);
     background: var(--selected-bg);
 
     svg {

@@ -14,11 +14,32 @@
     align-items: center;
 }
 
+.align\:start {
+    align-items: flex-start;
+}
+
 .width\:viewport {
     width: 100vw;
 }
 
+.width\:full {
+    width: 100%;
+}
+
+.width\:fit {
+    width: fit-content;
+}
+
+.width\:max-content {
+    width: max-content;
+}
+
 .height\:viewport {
+    height: 100vh;
+}
+
+.size\:viewport {
+    width: 100vw;
     height: 100vh;
 }
 
@@ -30,7 +51,8 @@
     z-index: 2;
 }
 
-.bg\:bg {
+
+.bg\:normal {
     background-color: var(--bg-color);
 }
 
@@ -44,6 +66,10 @@
 
 .width\:fit {
     inline-size: fit-content;
+}
+
+.max-width\:fit {
+    max-inline-size: fit-content;
 }
 
 .max-height\:viewport {
@@ -70,6 +96,72 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+.border\:solid {
+    border: 1px solid var(--border-color);
+}
+
 .min-height\:full {
     min-height: 100%;
+}
+
+.display\:none {
+    display: none;
+}
+
+.shadow\:s {
+    box-shadow: var(--shadow-s);
+}
+
+.shadow\:m {
+    box-shadow: var(--shadow-m);
+}
+
+.shadow\:l {
+    box-shadow: var(--shadow-l);
+}
+
+.radius\:s {
+    border-radius: var(--radius-s);
+}
+
+.radius\:m {
+    border-radius: var(--radius-m);
+}
+
+.radius\:l {
+    border-radius: var(--radius-l);
+}
+
+.overflow\:ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.overflow\:hidden {
+    overflow: hidden;
+}
+
+.font\:mono {
+    font-family: var(--mono-font);
+}
+
+.color\:fg-less {
+    color: var(--fg-color-less);
+}
+
+.font-size\:-2 {
+    font-size: var(--step--2);
+}
+
+.font-size\:-1 {
+    font-size: var(--step--1);
+}
+
+.font-size\:0 {
+    font-size: var(--step-0);
+}
+
+.weight\:bold {
+    font-weight: bold;
 }

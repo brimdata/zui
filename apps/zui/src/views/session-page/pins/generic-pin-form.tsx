@@ -1,16 +1,7 @@
 import React from "react"
 import {GenericQueryPin} from "src/js/state/Editor/types"
 import {PinFormProps} from "./base-pin"
-import {
-  Actions,
-  Field,
-  getFormData,
-  Input,
-  Label,
-  TextArea,
-  RedLink,
-  ActionsGroup,
-} from "./form-helpers"
+import {getFormData, TextArea, RedLink} from "./form-helpers"
 import forms from "src/components/forms.module.css"
 
 export function GenericPinForm(props: PinFormProps<GenericQueryPin>) {
@@ -21,33 +12,35 @@ export function GenericPinForm(props: PinFormProps<GenericQueryPin>) {
       onSubmit={(e) => props.onSubmit(getFormData(e))}
       onReset={props.onReset}
     >
-      <Field>
-        <Label htmlFor="value">Zed Snippet</Label>
-        <TextArea autoFocus name="value" defaultValue={props.pin.value} />
-      </Field>
-      <Field>
-        <Label htmlFor="label">Label</Label>
-        <Input
-          name="label"
-          placeholder="Same as Zed Snippet text"
-          defaultValue={props.pin.label}
-          style={{width: "66%"}}
-        />
-      </Field>
-      <Actions>
-        <ActionsGroup>
-          <RedLink onClick={props.onDelete}>Delete</RedLink>
-        </ActionsGroup>
+      <div className="stack-1">
+        <div className="field">
+          <label htmlFor="value">Zed Snippet</label>
+          <TextArea autoFocus name="value" defaultValue={props.pin.value} />
+        </div>
+        <div className="field">
+          <label htmlFor="label">Label</label>
+          <input
+            type="text"
+            name="label"
+            placeholder="Same as Zed Snippet text"
+            defaultValue={props.pin.label}
+            style={{width: "66%"}}
+          />
+        </div>
 
-        <ActionsGroup>
-          <button className={forms.button} type="reset">
-            Cancel
-          </button>
-          <button className={forms.submit} type="submit">
-            OK
-          </button>
-        </ActionsGroup>
-      </Actions>
+        <div className="cluster-1 justify:between">
+          <RedLink onClick={props.onDelete}>Delete</RedLink>
+
+          <div className="cluster">
+            <button className={forms.button} type="reset">
+              Cancel
+            </button>
+            <button className={forms.submit} type="submit">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
     </form>
   )
 }

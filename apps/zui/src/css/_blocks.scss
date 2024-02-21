@@ -1,11 +1,37 @@
 .field {
     &>*+* {
-        margin-block-start: var(--s-3);
+        margin-block-start: var(--space-2xs);
     }
 }
 
 .field-stack {
     &>*+* {
-        margin-block-start: var(--s1);
+        margin-block-start: var(--space-s);
+    }
+}
+
+.modal {
+    background: var(--bg-color);
+    box-shadow: 0 20px 50px 10px rgb(0 0 0 /0.25);
+    border-radius: 8px;
+    border: none;
+    padding: 0;
+    will-change: opacity, transform;
+    color: var(--fg-color);
+}
+
+.modal::backdrop {
+    background-color: black;
+    opacity: 0.25;
+    will-change: opacity;
+}
+
+@media (prefers-color-scheme: dark) {
+    .modal::backdrop {
+        opacity: 0.8;
+    }
+
+    .modal {
+        border: 1px solid var(--border-color);
     }
 }

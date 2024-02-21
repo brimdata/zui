@@ -19,6 +19,7 @@ export function QueriesSection() {
       </Content>
       <Toolbar>
         <ToolbarTabs
+          name="querySource"
           options={[
             {
               label: "Local",

@@ -1,27 +1,19 @@
-.form label {
-  display: block;
-  font-weight: bold;
-  padding-left: var(--form-border-radius);
-}
-
 .form input,
 .form textarea,
 .form select {
   display: block;
   width: 100%;
   max-width: 100%;
-  overflow: hidden;
-  height: var(--form-height);
   border-radius: var(--form-border-radius);
   background: var(--form-bg-color);
   border: var(--form-border);
   line-height: var(--form-line-height);
-  padding: var(--form-padding);
+  padding: var(--s-2);
 }
 
-.form input:focus-visible {
-  outline: none;
-  border-color: var(--primary-color);
+.form select {
+  width: auto;
+  padding-inline-end: var(--s3);
 }
 
 .form input:disabled {
@@ -156,16 +148,42 @@
 }
 
 .form .radioInput {
-  display: grid;
-  grid-template-columns: 1.1em auto;
+  display: inline-flex;
   align-items: center;
-  padding-top: 0;
-  padding: var(--form-padding);
-  height: 1.6em;
+  cursor: pointer;
+  padding-inline: var(--s-4);
+  border-radius: var(--form-border-radius);
+  transition: all 200ms;
+}
+
+.form .radioInput:hover:has(input:not(:checked)) {
+  background: var(--form-bg-color);
+}
+
+.form .radioInput:hover label {
+  color: var(--fg-color);
+}
+
+.form .radioInput input {
+  min-height: auto;
+  height: var(--s1);
+  width: var(--s1);
+  cursor: pointer;
 }
 
 .form .radioInput label {
-  font-weight: 400;
+  font-size: var(--s0);
+  text-transform: none;
+  color: var(--fg-color-less);
+  letter-spacing: 0;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  padding: var(--s-2);
+}
+
+.form .radioInput:has(input:checked) label {
+  color: var(--fg-color);
 }
 
 .form .submission {
@@ -182,9 +200,4 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.form input[readonly] {
-  border: none;
-  padding: 0 var(--form-border-radius);
 }

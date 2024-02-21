@@ -6,7 +6,6 @@ import {Config} from "../configurations/plugin-api"
 import {CompiledCorrelation} from "../correlations/plugin-api"
 import {MenuItem} from "src/core/menu"
 import {AnyAction} from "@reduxjs/toolkit"
-import {LoadOptions} from "src/core/loader/types"
 import {MainArgs} from "src/electron/run-main/args"
 import {
   MenuItemConstructorOptions,
@@ -20,6 +19,7 @@ import {
 import {SearchAppMenuState} from "src/electron/windows/search/app-menu"
 import {Pool} from "src/app/core/pools/pool"
 import {Command} from "src/app/commands/command"
+import {LoadOptions} from "../loads/types"
 
 export type LegacyOperations = {
   autosaveOp: (windowId: string, windowState: State) => void

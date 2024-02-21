@@ -23,7 +23,6 @@ test.describe('Export tests', () => {
   const app = new TestApp('Export tests');
 
   test.beforeAll(async () => {
-
     // Increase timeout due to observed long load times on test data in CI.
     // See https://github.com/brimdata/zui/pull/2967
     test.setTimeout(60000);
@@ -48,10 +47,11 @@ test.describe('Export tests', () => {
       await app.click('button', 'Export Results');
       await app.attached('dialog');
       const dialog = app.mainWin.getByRole('dialog');
+      await app.select('Format', label);
       await dialog
-        .getByRole('radio', { name: `${label}`, exact: true })
+        .getByRole('button')
+        .filter({ hasText: 'Export To File' })
         .click();
-      await dialog.getByRole('button').filter({ hasText: 'Export' }).click();
       await app.detached('dialog');
       await app.mainWin
         .getByText(new RegExp('Export Completed: .*results\\.' + label))
@@ -59,5 +59,29 @@ test.describe('Export tests', () => {
 
       expect(fsExtra.statSync(file).size).toBe(expectedSize);
     });
+  });
+
+  test('Copy to clipboard', async () => {
+    await app.click('button', 'Export Results');
+    await app.attached('dialog');
+    await app.select('Format', 'JSON');
+    await app.click(/Copy to Clipboard/i);
+    await app.attached(/copied JSON data to clipboard/i);
+    await app.click('button', 'Close');
+  });
+
+  test('Export to Pool', async () => {
+    await app.query('head 5');
+    await app.click('button', 'Export Results');
+    await app.attached('dialog');
+    await app.locate('radio', 'Pool').check();
+    await app.fill('Name', 'five_row_pool');
+    await app.click('button', 'Export To Pool');
+    // Redirected to the new pool page
+    await app.attached(/from 'sample.zeektsv' | head 5/);
+    await app.attached('heading', 'five_row_pool');
+    // Ensure the records are present
+    await app.click('button', 'Query Pool');
+    await app.attached(/5 Total Rows/);
   });
 });

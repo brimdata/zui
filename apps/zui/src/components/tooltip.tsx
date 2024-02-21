@@ -32,7 +32,7 @@ export function Tooltip() {
   useListener(document.body, "mouseover", (e: any) => {
     const node = findAncestor(e.target, needsTooltip)
     if (node) set(node)
-    else debut.exit()
+    else if (!debut.isExiting) debut.exit()
   })
 
   const style = useFixedPosition({

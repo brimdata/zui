@@ -7,7 +7,7 @@ import {Pool} from "src/app/core/pools/pool"
 import Queries from "../Queries"
 import {QueryModel} from "src/js/models/query-model"
 import QueryVersions from "../QueryVersions"
-import {query, queryVersion} from "src/app/router/routes"
+import {query, queryVersion, whichRoute} from "src/app/router/routes"
 import SessionHistories from "../SessionHistories"
 import {createSelector} from "@reduxjs/toolkit"
 import {QueryVersion} from "../QueryVersions/types"
@@ -183,3 +183,9 @@ export const getPoolFromQuery = createSelector(
     return pools.find((p) => p.data.name === name) ?? null
   }
 )
+
+export const getRouteName = createSelector(getLocation, (location) => {
+  const route = whichRoute(location.pathname)
+  if (route) return route.name
+  else return null
+})

@@ -6,8 +6,8 @@ import {ErrorData} from "../errors/types"
 import NetworkErrorNotice from "./NetworkErrorNotice"
 import Notice from "../state/Notice"
 import NoticeBanner from "./NoticeBanner"
-import useEscapeKey from "./hooks/useEscapeKey"
 
+// Remove This
 export default function ErrorNotice() {
   const error = useSelector(Notice.getError)
   const visible = useSelector(Notice.getVisible)
@@ -21,8 +21,6 @@ export default function ErrorNotice() {
 
 function ErrorMessage({error}: {error: ErrorData}) {
   const Component = getComponent(error)
-  const dispatch = useDispatch()
-  useEscapeKey(() => dispatch(Notice.dismiss()))
   return <Component error={error} />
 }
 

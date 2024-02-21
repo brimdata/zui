@@ -6,10 +6,11 @@ import {loads, window} from "src/zui"
 import * as ops from "./operations"
 import {LoadContext} from "src/domain/loads/load-context"
 import {syncPoolOp} from "src/electron/ops/sync-pool-op"
-import {LoadOptions} from "src/core/loader/types"
 import {getMainObject} from "src/core/main"
 import {TypedEmitter} from "src/util/typed-emitter"
 import {call} from "src/util/call"
+import {LoadOptions} from "../loads/types"
+import {debug} from "src/core/log"
 
 type Events = {
   create: (event: {pool: Pool}) => void
@@ -29,7 +30,7 @@ export class PoolsApi extends TypedEmitter<Events> {
   }
 
   async create(name: string, opts: Partial<CreatePoolOpts> = {}) {
-    const id = await ops.create(window.lakeId, name, opts)
+    const id = await ops.create(name, opts)
     return this.get(id)
   }
 
@@ -41,6 +42,7 @@ export class PoolsApi extends TypedEmitter<Events> {
     const main = getMainObject()
     const context = new LoadContext(main, opts)
     const loader = await loads.initialize(context)
+    debug("Using Loader", loader)
     try {
       await context.setup()
       await loader.run()

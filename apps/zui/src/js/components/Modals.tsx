@@ -1,41 +1,27 @@
-import {useSelector, useDispatch} from "react-redux"
+import {useSelector} from "react-redux"
 import Modal from "../state/Modal"
 import WhoisModal from "./WhoisModal"
 import React from "react"
 import NewLakeModal from "./LakeModals/NewLakeModal"
-import ViewLakeModal from "./LakeModals/ViewLakeModal"
-import ExportModal from "./ExportModal"
+import {ViewLakeModal} from "./LakeModals/ViewLakeModal"
 import {NewPoolModal} from "src/views/new-pool-modal"
-import {Debut, useDebut} from "src/components/debut"
-import {Dialog} from "src/components/dialog"
-import modalStyle from "src/components/modals.module.css"
+import {ExportModal} from "src/views/export-modal"
+import {PreviewLoadModal} from "src/views/preview-load-modal"
+import {SettingsModal} from "src/views/preferences-modal"
 
-const MODALS = {
+export const MODALS = {
+  settings: SettingsModal,
   whois: WhoisModal,
   "new-lake": NewLakeModal,
   "view-lake": ViewLakeModal,
   export: ExportModal,
   "new-pool": NewPoolModal,
+  "preview-load": PreviewLoadModal,
 }
 
 export function Modals() {
   const name = useSelector(Modal.getName)
-  const dispatch = useDispatch()
   const Component = MODALS[name]
-  const debut = useDebut({afterExit: () => dispatch(Modal.hide())})
-
   if (!Component) return null
-  return (
-    <Debut {...debut.props} classNames="modal">
-      <Dialog
-        onClose={() => debut.exit()}
-        dialogPoint="center center"
-        isOpen={true}
-        className={modalStyle.modal}
-        modal
-      >
-        <Component onClose={() => debut.exit()} />
-      </Dialog>
-    </Debut>
-  )
+  return <Component />
 }

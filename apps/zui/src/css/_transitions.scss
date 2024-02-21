@@ -1,0 +1,190 @@
+/**
+ * Overlay content with transparent bg-color
+ */
+.overlay--before-enter {
+    background-color: rgba(0, 0, 0, 0)
+}
+
+.overlay--enter {
+    transition: background-color 300ms;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.overlay--after-enter {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.overlay--before-exit {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.overlay--exit {
+    transition: background-color 300ms;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.overlay--after-exit {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+/**
+ * Fade in content with opacity
+ */
+.fade {
+    --dur: 300ms;
+    --ease: ease-out;
+    --enter-delay: 0s;
+    --exit-delay: 0s;
+}
+
+.fade--before-enter {
+    opacity: 0;
+}
+
+.fade--enter {
+    transition: all var(--dur);
+    transition-delay: var(--enter-delay);
+    opacity: 1;
+}
+
+.fade--after-enter {
+    opacity: 1;
+}
+
+.fade--before-exit {
+    opacity: 1;
+}
+
+.fade--exit {
+    transition: all var(--dur);
+    transition-delay: var(--exit-delay);
+    opacity: 0;
+}
+
+.fade--after-exit {
+    opacity: 0;
+}
+
+/**
+ * Modal Transitions
+ */
+
+.drop-in {
+    --scale: 0.9;
+    --t-start: translateY(-100px) scale(1);
+    transition-timing-function: var(--emphasis-easing);
+    transition-duration: 800ms;
+    transition-property: none;
+}
+
+.drop-in--before-enter {
+    transform: var(--t-start);
+    opacity: 0;
+}
+
+.drop-in--enter {
+    transition-property: all;
+    opacity: 1;
+}
+
+.drop-in--exit {
+    transition-property: all;
+    transition-duration: 300ms;
+    transform: var(--t-start);
+    opacity: 0;
+}
+
+.drop-in--after-exit {
+    transform: var(--t-start);
+    opacity: 0;
+}
+
+/* Shrink In */
+
+.shrink-in {
+    --dur: 500ms;
+    --ease: var(--pop-easing);
+    --enter-delay: 0s;
+    --exit-delay: 0s;
+    --scale-from: 1.5;
+    --scale-to: 1;
+    --fade-from: 0;
+    --fade-to: 1;
+}
+
+.shrink-in--before-enter {
+    transform: scale(var(--scale-from));
+    opacity: var(--fade-from);
+}
+
+.shrink-in--enter {
+    transition: all var(--dur) var(--ease) var(--enter-delay);
+    transform: scale(var(--scale-to));
+    opacity: var(--fade-to);
+}
+
+.shrink-in--after-enter {
+    transform: scale(var(--scale-to));
+    opacity: var(--fade-to);
+}
+
+.shrink-in--before-exit {
+    transform: scale(var(--scale-to));
+    opacity: var(--fade-to);
+}
+
+.shrink-in--exit {
+    transition: all var(--dur) var(--ease) var(--exit-delay);
+    transform: scale(var(--scale-from));
+    opacity: var(--fade-from);
+}
+
+.shrink-in--after-exit {
+    transform: scale(var(--scale-from));
+    opacity: var(--fade-from);
+}
+
+/* Shrink Out */
+
+.shrink-out {
+    --dur: var(--dur-l);
+    --ease: ease-out;
+    --enter-delay: 0s;
+    --exit-delay: 0s;
+    --scale-from: 1;
+    --scale-to: 0.5;
+    --fade-from: 1;
+    --fade-to: 0;
+}
+
+.shrink-out--before-enter {
+    transform: scale(var(--scale-from));
+    opacity: var(--fade-from);
+}
+
+.shrink-out--enter {
+    transition: all var(--dur) var(--ease) var(--enter-delay);
+    transform: scale(var(--scale-to));
+    opacity: var(--fade-to);
+}
+
+.shrink-out--after-enter {
+    transform: scale(var(--scale-to));
+    opacity: var(--fade-to);
+}
+
+.shrink-out--before-exit {
+    transform: scale(var(--scale-to));
+    opacity: var(--fade-to);
+}
+
+.shrink-out--exit {
+    transition: all var(--dur) var(--ease) var(--exit-delay);
+    transform: scale(var(--scale-from));
+    opacity: var(--fade-from);
+}
+
+.shrink-out--after-exit {
+    transform: scale(var(--scale-from));
+    opacity: var(--fade-from);
+}

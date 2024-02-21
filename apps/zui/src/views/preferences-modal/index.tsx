@@ -5,35 +5,22 @@ import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {Form} from "./form"
 import forms from "src/components/forms.module.css"
 import classNames from "classnames"
-import {Dialog} from "src/components/dialog"
-import {Debut, useDebut} from "src/components/debut"
-import modals from "src/components/modals.module.css"
 import styles from "./index.module.css"
-import Modal from "src/js/state/Modal"
-import {useSelector} from "react-redux"
-import {useDispatch} from "src/app/core/state"
 import {H1} from "src/components/h1"
 import {useFields} from "./use-fields"
 import {objectIsEmpty} from "src/util/object-is-empty"
+import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 
-export function PreferencesModal() {
-  const name = useSelector(Modal.getName)
-  if (name !== "settings") return null
-
-  return <ModalWithFields />
-}
-
-export function ModalWithFields() {
+export function SettingsModal() {
   const fields = useFields()
   if (objectIsEmpty(fields)) return null
-  return <ModalDialog fields={fields} />
+  return <Content fields={fields} />
 }
 
-export function ModalDialog(props: {fields: FormConfig}) {
-  const dispatch = useDispatch()
+function Content(props: {fields: FormConfig}) {
+  const modal = usePopoverModal()
   const [formEl, setForm] = useCallbackRef<HTMLFormElement>()
   const [errors, setErrors] = useState([])
-  const debut = useDebut({afterExit: () => dispatch(Modal.hide())})
 
   const onSubmit = useCallback(
     async (e) => {
@@ -44,7 +31,7 @@ export function ModalDialog(props: {fields: FormConfig}) {
       if (await f.isValid()) {
         setErrors([])
         f.submit()
-        debut.exit()
+        modal.close()
       } else {
         setErrors(f.getErrors())
       }
@@ -52,39 +39,35 @@ export function ModalDialog(props: {fields: FormConfig}) {
     [formEl, props.fields]
   )
 
-  const onCancel = () => {
-    debut.exit()
-  }
-
   return (
-    <Debut classNames="modal" {...debut.props}>
-      <Dialog
-        modal
-        isOpen={true}
-        onClose={() => debut.exit()}
-        className={classNames(styles.modal, modals.modal)}
-        dialogPoint="center center"
-      >
+    <PopoverModal ref={modal.ref} style={{maxWidth: "75ch"}}>
+      <div className="box-s">
         <FormErrors errors={errors} />
         <form
           ref={setForm}
           onSubmit={onSubmit}
-          className={classNames(forms.form, "settings-form")}
+          className={classNames(forms.form)}
         >
-          <H1 className={classNames(forms.title, styles.title)}>Settings</H1>
-          <div className={forms.horizontalFields}>
-            <Form configs={props.fields} />
-          </div>
-          <div className={forms.submission}>
-            <button type="button" onClick={onCancel} className={forms.button}>
-              Cancel
-            </button>
-            <button type="submit" className={forms.submit}>
-              Save
-            </button>
+          <div className="stack-3">
+            <H1 className={classNames(forms.title, styles.title)}>Settings</H1>
+            <div className={forms.horizontalFields}>
+              <Form configs={props.fields} />
+            </div>
+            <div className={forms.submission}>
+              <button
+                type="button"
+                onClick={modal.close}
+                className={forms.button}
+              >
+                Cancel
+              </button>
+              <button type="submit" className={forms.submit}>
+                Save
+              </button>
+            </div>
           </div>
         </form>
-      </Dialog>
-    </Debut>
+      </div>
+    </PopoverModal>
   )
 }

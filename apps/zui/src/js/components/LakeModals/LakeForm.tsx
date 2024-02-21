@@ -11,8 +11,6 @@ import useEventListener from "../hooks/useEventListener"
 import {isDefaultLake} from "../../initializers/initLakeParams"
 import {LakeModel} from "src/js/models/lake"
 import forms from "src/components/forms.module.css"
-import modals from "src/components/modals.module.css"
-import classNames from "classnames"
 import {ErrorWell} from "src/components/error-well"
 
 type Props = {
@@ -147,8 +145,8 @@ const LakeForm = ({onClose, lake}: Props) => {
 
   return (
     <form ref={setFormRef} className={forms.form}>
-      <section className={modals.fields}>
-        <div>
+      <section className="stack-1">
+        <div className="field">
           <label>{config.name.label}</label>
           <input
             type="text"
@@ -158,7 +156,7 @@ const LakeForm = ({onClose, lake}: Props) => {
             autoFocus
           />
         </div>
-        <div>
+        <div className="field">
           <label>{config.host.label}</label>
           <input
             type="text"
@@ -169,7 +167,7 @@ const LakeForm = ({onClose, lake}: Props) => {
         </div>
         <FormErrors errors={errors} />
       </section>
-      <section className={classNames(modals.submission, forms.submission)}>
+      <section className={forms.submission}>
         <button
           type="button"
           onClick={isSubmitting ? onCancel : onClickClose}

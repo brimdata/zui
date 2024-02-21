@@ -23,7 +23,7 @@ export type DialogProps = {
 
 const BG = styled.dialog`
   border: none;
-  box-shadow: var(--shadow-medium);
+  box-shadow: var(--shadow-elevation-medium);
   border-radius: 6px;
   background: var(--bg-color);
   color: var(--fg-color);

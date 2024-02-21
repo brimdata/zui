@@ -6,6 +6,7 @@ import {QueryParams} from "src/js/api/queries/types"
 import {PaneName} from "src/js/state/Layout/types"
 import Appearance from "src/js/state/Appearance"
 import Layout from "src/js/state/Layout"
+import Modal from "src/js/state/Modal"
 
 export const showErrorMessage = createHandler(
   "window.showErrorMessage",
@@ -69,3 +70,7 @@ export const togglePane = createHandler(
     }
   }
 )
+
+export const hideModal = createHandler(({dispatch}) => {
+  dispatch(Modal.hide())
+})
