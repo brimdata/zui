@@ -12,8 +12,6 @@ import {NotFound} from "./404"
 import {ButtonMenu} from "src/components/button-menu"
 import {RecentLoads} from "./recent-loads"
 import {Details} from "./details"
-import styles from "./index.module.css"
-import classNames from "classnames"
 
 const Toolbar = styled.div`
   display: flex;
@@ -28,21 +26,6 @@ const Subtitle = styled.p`
   font-size: 13px;
   opacity: 0.5;
   margin: 0;
-`
-
-const Body = styled.section`
-  height: 100%;
-  h4 {
-    margin-bottom: 6px;
-    opacity: 0.6;
-  }
-  dt {
-    font-weight: bold;
-  }
-  dd {
-    margin-bottom: 6px;
-    font-family: var(--mono-font);
-  }
 `
 
 export function InitPool({children}) {
@@ -68,11 +51,11 @@ export const Show = () => {
   const menu = poolToolbarMenu(pool)
   const isEmpty = pool.empty()
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
-        <div className={classNames(styles.wrap, styles.headerContent)}>
+    <div className="min-height:full scroll:y">
+      <header className="box-1 border:bottom">
+        <div className="cluster">
           <div>
-            <H1>{pool.name}</H1>
+            <H1 className="overflow-wrap:anywhere">{pool.name}</H1>
             <Subtitle>
               {isEmpty ? "This pool is empty." : bytes(pool.stats.size)}
             </Subtitle>
@@ -82,10 +65,10 @@ export const Show = () => {
           </Toolbar>
         </div>
       </header>
-      <Body>
+      <div className="box-1">
         <RecentLoads id={pool.id} />
         <Details pool={pool} />
-      </Body>
+      </div>
     </div>
   )
 }

@@ -10,9 +10,7 @@ import Login from "./Login"
 import {rest} from "msw"
 import LakeStatuses from "../state/LakeStatuses"
 import lake from "../models/lake"
-import open from "src/js/lib/open"
-
-jest.mock("src/js/lib/open", () => jest.fn())
+import {shell} from "electron"
 
 const system = new SystemTest("Login.test.ts")
 
@@ -76,12 +74,12 @@ function getLake() {
 }
 
 async function expectBrowserToOpen() {
-  await waitFor(() =>
-    expect(open).toHaveBeenCalledWith(
+  await waitFor(() => {
+    expect(shell.openExternal).toHaveBeenCalledWith(
       expect.stringContaining("http://test.com/authorize?")
     )
-  )
-  const auth0Url = (open as jest.Mock).mock.calls[0][0]
+  })
+  const auth0Url = (shell.openExternal as jest.Mock).mock.calls[0][0]
   const urlParts = url.parse(auth0Url, true)
   return urlParts.query.state
 }

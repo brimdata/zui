@@ -1,3 +1,15 @@
+## v1.6.0
+- Update Zed to [v1.13.0](https://github.com/brimdata/zed/releases/tag/v1.13.0)
+- Update Brimcap to [v1.6.0](https://github.com/brimdata/brimcap/releases/tag/v1.6.0), which includes a new Zeek [v6.0.3-brim1](https://github.com/brimdata/build-zeek/releases/tag/v6.0.3-brim1)
+- Update Electron dependency to 28.0.0 (#2934, #2953)
+- Enhance the [Zui Installation docs](https://zui.brimdata.io/docs/Installation) to describe the new feature to control when the app is [updated](https://zui.brimdata.io/docs/Installation#updates) to newer releases (#2950)
+- Simplify how the termination of a spawned `zed serve` process is tied to the parent Zui process (#2956, #2957)
+- Add a dark mode and new designs for pins, toolbars, detail/history panes, and saving queries (#2895)
+- Adjust how Zui correlates new Zeek events in reaction to changes in Zeek's `files` events (#2981)
+- Fix an issue where repository links in [Zui Insiders](https://github.com/brimdata/zui-insiders) had been incorrectly pointing to the regular Zui repo (#2935)
+- Fix an issue where Zui incorrectly surfaced Brimcap errors as "Error: write EPIPE" or "Error: write EPIPE" instead of the detailed errors from pcap analyzers (#2955, #2991)
+- Fix an issue where very long pool names caused the **Load Data** and **Query Pool** buttons to disappear (#2993)
+
 ## v1.5.0
 - Update Zed to [v1.12.0](https://github.com/brimdata/zed/releases/tag/v1.12.0)
 - Update Brimcap to [v1.5.5](https://github.com/brimdata/brimcap/releases/tag/v1.5.5)

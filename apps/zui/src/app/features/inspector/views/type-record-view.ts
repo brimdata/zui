@@ -8,7 +8,7 @@ export class TypeRecordView extends ContainerView<zed.TypeRecord> {
   }
 
   count() {
-    return this.value.fields.length
+    return this.value.fields?.length || 0
   }
 
   openToken() {
@@ -21,6 +21,7 @@ export class TypeRecordView extends ContainerView<zed.TypeRecord> {
 
   *iterate(n?: number) {
     const fields = this.value.fields
+    if (!fields) return
     const length = n ? Math.min(n, fields.length) : fields.length
 
     for (let i = 0; i < fields.length; ++i) {

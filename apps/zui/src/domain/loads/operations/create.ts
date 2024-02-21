@@ -15,6 +15,7 @@ export const submit = createOperation(
     const pool = await createPool(data)
     const script = new ZedScript(data.shaper || "")
     // Async so that we can return this and subscribe to updates on the load.
+    // Do not wait for the load to finish in this operation.
     zui.pools
       .load({
         windowId: data.windowId,

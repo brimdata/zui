@@ -6,12 +6,15 @@ import {createReadableStream} from "src/core/zq"
 import {throttle} from "lodash"
 import {errorToString} from "src/util/error-to-string"
 
-export const defaultLoader: Loader = {
+export class DefaultLoader implements Loader {
+  constructor(private ctx: LoadContext) {}
+
   when() {
     return true
-  },
+  }
 
-  async run(ctx: LoadContext) {
+  async run() {
+    const {ctx} = this
     const client = await ctx.createClient()
     const progress = createProgressTracker(ctx)
     const shaper = createShaper(ctx)
@@ -26,7 +29,7 @@ export const defaultLoader: Loader = {
 
     let res
     try {
-      ctx.onProgress(0)
+      ctx.setProgress(0)
       res = await client.load(body, {
         pool: ctx.poolId,
         branch: ctx.branch,
@@ -38,16 +41,16 @@ export const defaultLoader: Loader = {
       })
     } catch (e) {
       const error = streamError ? new Error(streamError) : e
-      ctx.onWarning(errorToString(error))
-      ctx.onProgress(null)
+      ctx.addError(errorToString(error))
+      ctx.setProgress(null)
       throw error
     }
-    for (const warning of res?.warnings ?? []) ctx.onWarning(warning)
+    for (const warning of res?.warnings ?? []) ctx.addError(warning)
     await ctx.onPoolChanged()
-    ctx.onProgress(1)
-  },
+    ctx.setProgress(1)
+  }
 
-  rollback() {},
+  rollback() {}
 }
 
 function getFileSize(path: string) {
@@ -64,7 +67,7 @@ function createShaper(ctx) {
 }
 
 function createProgressTracker(ctx) {
-  const onProgress = throttle((n) => ctx.onProgress(n), 500)
+  const onProgress = throttle((n) => ctx.setProgress(n), 500)
 
   let total = ctx.files.reduce((sum, file) => sum + getFileSize(file), 0)
   let bytes = 0

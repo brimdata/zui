@@ -7,7 +7,6 @@ export function findUid(value: zed.Value) {
   }
 
   const specialUids = {
-    files: "conn_uids",
     dhcp: "uids",
   }
   if (value.has("_path")) {

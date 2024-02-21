@@ -29,7 +29,7 @@ export function activateZeekCorrelations() {
       return zedScript`
         from ${session.poolName} 
         | md5==${getMd5()} 
-        | count() by tx_hosts 
+        | count() by tx_host := (is_orig ? id.orig_h : id.resp_h)
         | sort -r 
         | head 5`
     },
@@ -41,7 +41,7 @@ export function activateZeekCorrelations() {
       return zedScript`
           from ${session.poolName} 
           | md5==${getMd5()} 
-          | count() by rx_hosts 
+          | count() by rx_host := (is_orig ? id.resp_h : id.orig_h)
           | sort -r 
           | head 5`
     },

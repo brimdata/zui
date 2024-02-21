@@ -41,6 +41,7 @@ export class Lake {
       ':' + this.port,
       '-lake',
       this.root,
+      '-manage=5m',
       '-log.level=info',
       '-log.filemode=rotate',
       '-log.path',

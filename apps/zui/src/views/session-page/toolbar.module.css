@@ -1,94 +1,94 @@
 .toolbar {
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0 10px;
-    gap: 6px;
-    min-inline-size: 0;
-    overflow: hidden;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 10px;
+  gap: 6px;
+  min-inline-size: 0;
+  overflow: hidden;
 }
 
-.toolbar> :nth-child(1) {
-    flex: 0 0 auto
+.toolbar > :nth-child(1) {
+  flex: 0 0 auto;
 }
 
-.toolbar>:nth-child(2) {
-    flex: 1 0 0;
+.toolbar > :nth-child(2) {
+  flex: 0 999 auto;
+  min-width: 10ch;
 }
 
-.toolbar>:nth-child(3) {
-    flex: 0 1 auto;
-    width: auto;
-    min-width: 32px;
+.toolbar > :nth-child(3) {
+  flex: 1 1 fit-content;
+  min-width: 32px;
 }
 
 .nav {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .toolbar h1 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .toolbar h1 {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .form {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    gap: 6px;
+  flex: 1;
+  width: 100%;
+  display: flex;
+  gap: 6px;
 }
 
 .input {
-    background: transparent;
-    font-size: 1rem;
-    font-weight: bold;
-    width: 100%;
-    border-radius: 0;
-    border: none;
-    border-bottom: 1px dashed var(--border-color);
-    background: var(--emphasis-bg);
-    outline: none;
-    padding: 0 6px;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px dashed var(--border-color);
+  background: var(--emphasis-bg);
+  outline: none;
+  padding: 0 6px;
 }
 
 .input:focus-visible {
-    outline: none;
+  outline: none;
 }
 
 .untitled {
-    opacity: 0.3;
+  opacity: 0.3;
 }
 
 .modified {
-    font-style: italic;
+  font-style: italic;
 }
 
 .outdated {
-    display: flex;
-    background: var(--emphasis-bg-more);
-    border-radius: 6px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.66rem;
-    padding: 0 0.5rem;
-    color: var(--fg-color-less);
+  display: flex;
+  background: var(--emphasis-bg-more);
+  border-radius: 6px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.66rem;
+  padding: 0 0.5rem;
+  color: var(--fg-color-less);
 }
 
 .button {
-    padding: 0;
-    margin: 0;
-    background: none;
-    border: none;
-    cursor: text;
-    text-align: left;
-    flex: 1;
-    overflow: hidden;
-    min-inline-size: 5ch;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+  cursor: text;
+  text-align: left;
+  flex: 1;
+  overflow: hidden;
+  min-inline-size: 5ch;
 }

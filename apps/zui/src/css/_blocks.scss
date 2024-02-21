@@ -1,0 +1,11 @@
+.field {
+    &>*+* {
+        margin-block-start: var(--s-3);
+    }
+}
+
+.field-stack {
+    &>*+* {
+        margin-block-start: var(--s1);
+    }
+}

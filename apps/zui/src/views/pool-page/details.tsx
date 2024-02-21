@@ -1,13 +1,14 @@
 import React from "react"
 import {Pool} from "src/app/core/pools/pool"
 import styles from "./details.module.css"
+import classNames from "classnames"
 
 export function Details({pool}: {pool: Pool}) {
   const keys = pool.keys.map((k) => (k ? k.join(".") : "null"))
   return (
     <section className={styles.details}>
       <h2 className={styles.title}>Pool Details</h2>
-      <div className={styles.list}>
+      <div className={classNames(styles.list, "stack--1")}>
         <dl>
           <dt>ID </dt>
           <dd>{pool.id}</dd>

@@ -43,10 +43,11 @@ jobs:
       - run: yarn build
       - name: End to end tests
         id: playwright
-        uses: GabrielBB/xvfb-action@v1
-        with:
-          options: -screen 0 1280x1024x24
-          run: yarn e2e:ci
+        run: |
+          # Mock for pcap slice opening to avoid hanging Actions Runner.
+          # See https://github.com/brimdata/zui/pull/2987
+          echo "application/vnd.tcpdump.pcap; /usr/bin/true" >> /home/runner/.mailcap
+          /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" yarn e2e:ci
 
       - run: git -c user.name='Brim Automation' -c user.email=automation@brimdata.io commit -a -m 'upgrade Zed to ${{ env.zed_ref }}'
 

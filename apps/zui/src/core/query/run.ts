@@ -36,19 +36,13 @@ function run(id: string): Thunk<Promise<ResultStream | null>> {
     const paginatedQuery = Results.getPaginatedQuery(id)(getState())
 
     try {
-      const res = await api.query(paginatedQuery, {
-        id,
-        tabId,
-      })
-      res.collect(({rows, shapesMap}) => {
-        const values = isFirstPage ? [...rows] : [...prevVals, ...rows]
-        const shapes = isFirstPage
-          ? {...shapesMap}
-          : {...prevShapes, ...shapesMap}
+      const res = await api.query(paginatedQuery, {id, tabId})
+      await res.collect(({rows, shapesMap}) => {
+        const values = isFirstPage ? rows : [...prevVals, ...rows]
+        const shapes = isFirstPage ? shapesMap : {...prevShapes, ...shapesMap}
         dispatch(Results.setValues({id, tabId, values}))
         dispatch(Results.setShapes({id, tabId, shapes}))
       })
-      await res.promise
       dispatch(Results.success({id, tabId, count: res.rows.length}))
       return res
     } catch (e) {

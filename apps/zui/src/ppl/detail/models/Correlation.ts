@@ -2,7 +2,6 @@ import {get} from "lodash"
 import * as zed from "@brimdata/zed-js"
 
 const specialUids = {
-  files: "conn_uids",
   dhcp: "uids",
 }
 
