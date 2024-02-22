@@ -33,7 +33,6 @@
     "release-insiders": "electron-builder --config electron-builder-insiders.json --publish always"
   },
   "dependencies": {
-    "@brimdata/zed-wasm": "workspace:*",
     "keytar": "^7.7.0"
   },
   "devDependencies": {
