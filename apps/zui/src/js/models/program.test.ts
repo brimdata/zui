@@ -1,6 +1,13 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {createField, createRecord} from "@brimdata/zed-js"
 import program, {drillDown, getFilter} from "./program"
 import ast from "./ast"
+import {SystemTest} from "src/test/system"
+
+new SystemTest("program.test")
 
 describe("excluding and including", () => {
   const field = createField("uid", "123")

@@ -10,7 +10,7 @@ import {EnvOperations} from "./env/messages"
 import {UpdatesOperations} from "./updates/messages"
 import {LoadsHandlers, LoadsOperations} from "./loads/messages"
 import {CommandsOperations} from "./commands/messages"
-import {EditorHandlers} from "./editor/messages"
+import {EditorHandlers, EditorOperations} from "./editor/messages"
 
 export type Handlers = ResultsHandlers &
   MenusHandlers &
@@ -31,7 +31,8 @@ export type Operations = PoolsOperations &
   LoadsOperations &
   WindowOperations &
   MenusOperations &
-  CommandsOperations
+  CommandsOperations &
+  EditorOperations
 
 export type OperationName = keyof Operations
 export type HandlerName = keyof Handlers

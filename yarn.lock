@@ -1930,7 +1930,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@brimdata/zed-wasm@workspace:*, @brimdata/zed-wasm@workspace:packages/zed-wasm":
+"@brimdata/zed-wasm@workspace:packages/zed-wasm":
   version: 0.0.0-use.local
   resolution: "@brimdata/zed-wasm@workspace:packages/zed-wasm"
   dependencies:
@@ -19262,7 +19262,6 @@ __metadata:
     "@babel/core": ^7.17.9
     "@brimdata/zed-js": "workspace:*"
     "@brimdata/zed-node": "workspace:*"
-    "@brimdata/zed-wasm": "workspace:*"
     "@js-joda/core": ^3.2.0
     "@monaco-editor/react": ^4.5.1
     "@reduxjs/toolkit": ^1.9.3

@@ -1,7 +1,8 @@
+import {invoke} from "src/core/invoke"
 import {toFieldPath} from "../zed-script/toZedScript"
 
 function parse(s: string) {
-  return globalThis.zedWasm.parse(s)
+  return invoke("editor.parse", s)
 }
 
 type ColumnName = string | string[]
@@ -9,12 +10,9 @@ type ColumnName = string | string[]
 export default async function ast(string: string) {
   let tree
   try {
-    let res = await parse(string)
-    if (res.error) throw res.error
-    tree = res.ast
+    tree = await parse(string)
   } catch (error) {
-    console.error(error)
-    tree = {error}
+    tree = error
   }
 
   return {
