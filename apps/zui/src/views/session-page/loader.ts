@@ -9,7 +9,10 @@ import {Location} from "history"
 import Pools from "src/js/state/Pools"
 import {invoke} from "src/core/invoke"
 import {runHistogramQuery} from "src/views/histogram-pane/run-query"
-import {runResultsQuery} from "src/views/results-pane/run-results-query"
+import {
+  runResultsCount,
+  runResultsMain,
+} from "src/views/results-pane/run-results-query"
 import Layout from "src/js/state/Layout"
 import {syncPool} from "src/app/core/pools/sync-pool"
 
@@ -51,7 +54,8 @@ function fetchData() {
 
     startTransition(() => {
       if (version) {
-        dispatch(runResultsQuery())
+        runResultsMain()
+        runResultsCount()
         if (histogramVisible) {
           runHistogramQuery(api)
         }

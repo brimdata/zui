@@ -1,18 +1,19 @@
 import {useSelector} from "react-redux"
 import React, {useEffect, useState} from "react"
 
-import modal from "../state/Modal"
+import Modal from "../state/Modal"
 import whois from "../services/whois"
 import useEnterKey from "./hooks/useEnterKey"
-import modals from "src/components/modals.module.css"
 import {H1} from "src/components/h1"
 import forms from "src/components/forms.module.css"
 import classNames from "classnames"
+import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
 
-export default function WhoisModal({onClose}) {
-  useEnterKey(onClose)
+export default function WhoisModal() {
+  const modal = usePopoverModal()
+  useEnterKey(modal.close)
   const [text, setText] = useState("...Fetching...")
-  const {addr} = useSelector(modal.getArgs)
+  const {addr} = useSelector(Modal.getArgs)
 
   useEffect(() => {
     setTimeout(() => {
@@ -21,23 +22,29 @@ export default function WhoisModal({onClose}) {
   }, [])
 
   return (
-    <div style={{width: 600}} className={classNames(modals.form, forms.form)}>
-      <H1 className={modals.title}>Whois Lookup</H1>
-      <div>
-        <label>Address</label>
-        <input type="text" readOnly value={addr} />
+    <PopoverModal ref={modal.ref} className="box-s" style={{maxWidth: "75ch"}}>
+      <div className={forms.form + " stack-3"}>
+        <H1>Whois Lookup</H1>
+        <div className="field">
+          <label>Address</label>
+          <input type="text" readOnly value={addr} />
+        </div>
+        <div className="field">
+          <label>Whois Result</label>
+          <div style={{overflow: "auto"}}>
+            <pre>{text}</pre>
+          </div>
+        </div>
+        <div className={classNames(forms.submission)}>
+          <button
+            type="button"
+            onClick={modal.close}
+            style={{marginLeft: "auto"}}
+          >
+            Done
+          </button>
+        </div>
       </div>
-      <div>
-        <label>Whois Result</label>
-      </div>
-      <div style={{overflow: "auto"}}>
-        <pre className={modals.pre}>{text}</pre>
-      </div>
-      <div className={classNames(forms.submission, modals.submission)}>
-        <button type="button" onClick={onClose} style={{marginLeft: "auto"}}>
-          Done
-        </button>
-      </div>
-    </div>
+    </PopoverModal>
   )
 }

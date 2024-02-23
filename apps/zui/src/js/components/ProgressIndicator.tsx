@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import React from "react"
+import {Case} from "src/components/case"
 
 type Props = {
   percent: number
@@ -13,7 +14,11 @@ export default function ProgressIndicator({percent, ...rest}: Props) {
   return (
     <div {...rest} className={classNames("progress-indicator", rest.className)}>
       <div className="progress-track">
-        <div className="progress-fill" style={style} />
+        <Case
+          if={percent === Infinity}
+          true={<div className="progress-fill progress-indeterminate" />}
+          false={<div className="progress-fill" style={style} />}
+        />
       </div>
     </div>
   )

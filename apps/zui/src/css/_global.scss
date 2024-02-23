@@ -9,6 +9,12 @@
   margin: 0;
 }
 
+*:focus-visible {
+  outline-offset: 4px;
+  outline-color: var(--primary-color);
+  outline-width: 2px;
+}
+
 html,
 body {
   height: 100%;
@@ -17,15 +23,16 @@ body {
 
 body {
   line-height: 1.5;
+  font-size: var(--step-0);
   -webkit-font-smoothing: antialiased;
   font-family: var(--body-font);
   color: var(--fg-color);
-  font-size: 14px;
 
   &:not(.is-mac) {
     background-color: var(--window-color);
   }
 }
+
 
 input,
 button,
@@ -44,6 +51,24 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
+h4 {
+  font-size: var(--step-1);
+}
+
+h3 {
+  font-size: var(--step-2);
+}
+
+h2 {
+  font-size: var(--step-3);
+}
+
+h1 {
+  font-size: var(--step-4);
+}
+
+
 
 pre,
 code {
@@ -102,4 +127,35 @@ dt {
 
 dd {
   font-family: var(--mono-font);
+}
+
+.is-dragging {
+  user-select: none;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: var(--fg-color-less);
+  opacity: 0.9;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: var(--step--1);
+}
+
+input {
+  font-size: inherit;
+}
+
+dialog {
+  color: var(--fg-color);
+  max-height: none;
+  max-width: none;
+  border: none;
+  padding: 0;
+
+  &::backdrop {
+    background: transparent;
+  }
 }

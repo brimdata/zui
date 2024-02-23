@@ -194,6 +194,10 @@ export default class TestApp {
     return this.page.keyboard.press(key);
   }
 
+  async select(label: string, value: string) {
+    return this.page.getByLabel(label).selectOption(value);
+  }
+
   locate(role: Role | RegExp, name?: string) {
     if (role instanceof RegExp) {
       return this.mainWin.getByText(role).first();
@@ -226,7 +230,10 @@ export default class TestApp {
   }
 
   async takeScreenshot(filename: string) {
-    return await this.page.screenshot({ path: path.join('run', 'screenshots', filename), fullPage: true });
+    return await this.page.screenshot({
+      path: path.join('run', 'screenshots', filename),
+      fullPage: true,
+    });
   }
 }
 

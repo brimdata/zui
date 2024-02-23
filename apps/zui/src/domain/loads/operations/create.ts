@@ -9,7 +9,7 @@ import {poolPath} from "src/app/router/utils/paths"
 import {isAbortError} from "src/util/is-abort-error"
 
 /* Called when the user submits the preview & load form */
-export const submit = createOperation(
+export const create = createOperation(
   "loads.create",
   async (ctx, data: LoadFormData) => {
     const pool = await createPool(data)
@@ -23,6 +23,7 @@ export const submit = createOperation(
         poolId: pool.id,
         lakeId: zui.window.lakeId,
         branch: "main",
+        query: data.query,
         files: data.files,
         shaper: script.isEmpty() ? "*" : data.shaper,
         author: data.author,
@@ -33,6 +34,7 @@ export const submit = createOperation(
       })
       .catch((e) => {
         if (isAbortError(e)) return
+        console.log(e)
         zui.window.showErrorMessage("Load error " + errorToString(e))
       })
 
@@ -45,7 +47,7 @@ async function createPool(data: LoadFormData): Promise<Pool> {
     const poolNames = zui.pools.all.map((pool) => pool.name)
     const derivedName = await deriveName(data.files, poolNames)
     const name = data.name?.trim() || derivedName
-    const key = data.key
+    const key = data.key?.trim() || "ts"
     const order = data.order
     return zui.pools.create(name, {key, order})
   } else {

@@ -21,32 +21,12 @@ const LakeNameGroup = styled.div`
   border-radius: 6px;
   min-width: 0;
   position: relative;
-
+  transition: all var(--dur-s);
   &:hover {
-    background: var(--sidebar-item-hover);
+    background: var(--emphasis-bg);
   }
   &:active {
-    background: var(--sidebar-item-active);
-    box-shadow: var(--sidebar-item-active-shadow);
-  }
-`
-
-const NameColumn = styled.div`
-  overflow: hidden;
-  label {
-    display: block;
-    font-size: 15px;
-    font-weight: bold;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  label:last-child {
-    font-size: 12px;
-    font-weight: normal;
-    font-family: var(--mono-font);
-    opacity: 0.5;
+    background: var(--emphasis-bg-more);
   }
 `
 
@@ -85,10 +65,10 @@ export default function LakePicker() {
 
   return (
     <LakeNameGroup onClick={() => dispatch(showLakeSelectMenu())}>
-      <NameColumn>
-        <label>{`${current?.name}`}</label>
-        <label>{`${current?.getAddress()}`}</label>
-      </NameColumn>
+      <div className="overflow:hidden">
+        <p className="overflow:ellipsis weight:bold">{`${current?.name}`}</p>
+        <p className="overflow:ellipsis font:mono font-size:-2 color:fg-less">{`${current?.getAddress()}`}</p>
+      </div>
     </LakeNameGroup>
   )
 }

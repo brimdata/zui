@@ -8,15 +8,16 @@ export type LoadFormData = {
   name?: string | null
   key?: string | null
   order?: "asc" | "desc" | null
+  query?: string
+  shaper?: string
+  format?: LoadFormat
   files: string[]
   author: string
   body: string
-  shaper?: string
-  format?: LoadFormat
 }
 
 export type LoadsOperations = {
-  "loads.create": typeof ops.submit
+  "loads.create": typeof ops.create
   "loads.preview": typeof ops.preview
   "loads.getFileTypes": typeof ops.getFileTypes
   "loads.abortPreview": typeof ops.abortPreview

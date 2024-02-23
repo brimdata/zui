@@ -82,20 +82,37 @@ type Props = {
 export default class DragAnchor extends React.Component<Props> {
   private startX: number
   private startY: number
+  private cleanup = () => {}
 
   componentWillUnmount() {
     this.up()
   }
 
   down = (e: React.MouseEvent) => {
+    const body = document.body
+    const el = e.currentTarget
     this.startX = e.clientX
     this.startY = e.clientY
-    const body = document.body
     body.style.cursor = this.getCursor()
     body.style.userSelect = "none"
     body.classList.add("is-dragging")
+    el.classList.add("is-dragging")
     document.addEventListener("mousemove", this.move)
     document.addEventListener("mouseup", this.up)
+
+    this.cleanup = () => {
+      document.removeEventListener("mousemove", this.move)
+      document.removeEventListener("mouseup", this.up)
+      if (body) {
+        body.style.cursor = ""
+        body.style.userSelect = ""
+        body.classList.remove("is-dragging")
+      }
+      if (el) {
+        el.classList.remove("is-dragging")
+      }
+    }
+
     call(this.props.onStart, e)
   }
 
@@ -106,14 +123,7 @@ export default class DragAnchor extends React.Component<Props> {
   }
 
   up = () => {
-    const body = document.body
-    if (body) {
-      body.style.cursor = ""
-      body.style.userSelect = ""
-      body.classList.remove("is-dragging")
-      document.removeEventListener("mousemove", this.move)
-      document.removeEventListener("mouseup", this.up)
-    }
+    this.cleanup()
     call(this.props.onEnd)
   }
 

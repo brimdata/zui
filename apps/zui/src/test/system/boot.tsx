@@ -10,7 +10,7 @@ import {Store} from "src/js/state/types"
 import ZuiApi from "src/js/api/zui-api"
 import {MainObject} from "src/core/main/main-object"
 import Current from "src/js/state/Current"
-import {window} from "src/zui"
+import {lake, window} from "src/zui"
 
 const defaults = () => ({
   page: "search",
@@ -56,10 +56,11 @@ export async function boot(name: string, args: Partial<BootArgs> = {}) {
   })
   const windowId = mainObject.windows.byName("search")[0].id
   const brimRenderer = await initialize(windowId, "search")
-  window.sync({
-    id: windowId,
-    lakeId: Current.getLakeId(mainObject.store.getState()),
-  })
+  const lakeId = Current.getLakeId(mainObject.store.getState())
+  // This syncing could maybe be one function
+  window.sync({id: windowId, lakeId})
+  lake.id = lakeId
+  lake.client = await mainObject.createClient(lakeId)
   return {
     main: mainObject,
     store: brimRenderer.store,

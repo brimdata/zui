@@ -23,22 +23,18 @@ export function Content(props: EnvAboutApp) {
       </div>
       <TextContent>
         <div className="about-content">
-          <section>
-            <label>Version</label>
+          <div className="about-grid">
+            <p className="weight:bold">Version</p>
             <p>{props.version}</p>
-          </section>
-          <section>
-            <label>Website</label>
+            <p className="weight:bold">Website</p>
             <a onClick={() => invoke("openLinkOp", props.website)}>
               {props.website}
             </a>
-          </section>
-          <section>
-            <label>Source</label>
+            <p className="weight:bold">Source</p>
             <a onClick={() => invoke("openLinkOp", props.repository)}>
               {props.repository}
             </a>
-          </section>
+          </div>
           <hr />
           <footer>
             <section>

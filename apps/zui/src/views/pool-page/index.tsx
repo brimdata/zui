@@ -23,8 +23,8 @@ const Toolbar = styled.div`
 `
 
 const Subtitle = styled.p`
-  font-size: 13px;
-  opacity: 0.5;
+  font-size: var(--step-0);
+  color: var(--fg-color-less);
   margin: 0;
 `
 
@@ -65,7 +65,7 @@ export const Show = () => {
           </Toolbar>
         </div>
       </header>
-      <div className="box-1">
+      <div className="box-1 stack-3">
         <RecentLoads id={pool.id} />
         <Details pool={pool} />
       </div>

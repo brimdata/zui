@@ -3,6 +3,7 @@ import Current from "src/js/state/Current"
 import LoadDataForm from "src/js/state/LoadDataForm"
 import Pools from "src/js/state/Pools"
 import {quickLoadFiles} from "./quick-load-files"
+import Modal from "src/js/state/Modal"
 
 export const previewLoadFiles = createHandler(
   "loads.previewLoadFiles",
@@ -23,8 +24,8 @@ export const previewLoadFiles = createHandler(
         dispatch(LoadDataForm.addFiles(opts.files))
       } else {
         dispatch(LoadDataForm.setFiles(opts.files))
-        dispatch(LoadDataForm.setShow(true))
         dispatch(LoadDataForm.setPoolId(poolId))
+        dispatch(Modal.show("preview-load"))
       }
     }
   }

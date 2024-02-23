@@ -5,6 +5,7 @@ export type LoadReference = {
   poolId: string
   progress: number
   files: string[]
+  query: string
   startedAt: string
   finishedAt: string | null
   abortedAt: string | null

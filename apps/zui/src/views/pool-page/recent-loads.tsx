@@ -8,17 +8,17 @@ import {invoke} from "src/core/invoke"
 import {LoadModel} from "src/domain/loads/load-model"
 import * as fmt from "date-fns"
 import {ErrorLines} from "src/components/errors-lines"
+import classNames from "classnames"
 
 export function RecentLoads(props: {id: string}) {
   const loads = useSelector((s: State) => Loads.wherePoolId(s, props.id))
   const dispatch = useDispatch()
 
   const cancelLoad = async (load) => {
-    if (
-      load.status == "loading" &&
-      confirm("Are you sure you want to abort this load?")
-    ) {
-      await invoke("loads.abort", load.id)
+    if (load.status == "loading") {
+      if (confirm("Are you sure you want to abort this load?")) {
+        await invoke("loads.abort", load.id)
+      }
     } else {
       dispatch(Loads.delete(load.id))
     }
@@ -27,16 +27,16 @@ export function RecentLoads(props: {id: string}) {
   if (loads.length === 0) return null
 
   return (
-    <section className={styles.recentLoads}>
-      <h2 className={styles.title}>Recent Loads</h2>
-      <div className={styles.list}>
+    <section className="stack-0">
+      <h3>Recent Loads</h3>
+      <div className={classNames(styles.list, "stack-0")}>
         {loads
           .map((ref) => new LoadModel(ref))
           .sort((a, b) => b.startedAt.getTime() - a.startedAt.getTime())
           .map((load) => (
             <Job
               key={load.id}
-              name={load.humanizeFiles}
+              name={load.title}
               message={statusMessage(load)}
               status={load.status}
               progress={load.progress}

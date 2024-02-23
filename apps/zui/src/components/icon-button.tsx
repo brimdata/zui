@@ -49,7 +49,6 @@ const BG = styled.button`
     padding: 0 8px;
     border: 1px solid var(--border-color-more);
     font-weight: 500;
-    font-size: 14px;
     height: 28px;
   }
 `

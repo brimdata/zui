@@ -36,6 +36,7 @@ const BG = styled.div`
 
 const Text = styled.p`
   font-family: var(--mono-font);
+  font-size: var(--step--1);
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;

@@ -18,6 +18,7 @@ export const defaultAppMenuState = () => ({
   showRightPane: true,
   showLeftPane: true,
   showHistogram: true,
+  routeName: null as null | string,
 })
 
 export type SearchAppMenuState = ReturnType<typeof defaultAppMenuState>
@@ -27,6 +28,7 @@ export function compileTemplate(
   state: SearchAppMenuState = defaultAppMenuState()
 ) {
   const mac = env.isMac
+  const querySessionActive = state.routeName === "querySession"
   const __: MenuItemConstructorOptions = {type: "separator"}
 
   const newWindow: MenuItemConstructorOptions = {
@@ -70,7 +72,9 @@ export function compileTemplate(
 
   const exportResults: MenuItemConstructorOptions = {
     label: "Export Results As...",
+    accelerator: "CmdOrCtrl+Shift+E",
     click: () => window.send("showExportResults"),
+    enabled: querySessionActive,
   }
 
   const checkForUpdates: MenuItemConstructorOptions = {

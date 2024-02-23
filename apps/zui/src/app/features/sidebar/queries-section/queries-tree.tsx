@@ -16,9 +16,9 @@ import {FillFlexParent} from "src/components/fill-flex-parent"
 import QueryItem from "./query-item"
 import {selectQuery} from "src/app/events/select-query-event"
 import Appearance from "src/js/state/Appearance"
-import {Empty} from "./empty"
 import {TREE_ITEM_HEIGHT} from "../item"
 import {showMenu} from "src/core/menu"
+import EmptySection from "src/js/components/common/EmptySection"
 
 type Props = {
   source: "local" | "remote"
@@ -41,7 +41,9 @@ function LocalQueriesTree({searchTerm}: Props) {
   if (queries.length) {
     return <QueryTree queries={queries} searchTerm={searchTerm} type="local" />
   } else {
-    return <Empty message="Local queries you've saved will be listed here." />
+    return (
+      <EmptySection message="Local queries you've saved will be listed here." />
+    )
   }
 }
 
@@ -54,7 +56,9 @@ function RemoteQueriesTree({searchTerm}) {
   if (queries.length) {
     return <QueryTree queries={queries} searchTerm={searchTerm} type="remote" />
   } else {
-    return <Empty message="Remove queries from the lake will be listed here." />
+    return (
+      <EmptySection message="Remote queries from the lake will be listed here." />
+    )
   }
 }
 
