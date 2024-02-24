@@ -4,6 +4,7 @@ import Editor from "src/js/state/Editor"
 import Layout from "src/js/state/Layout"
 import {plusOne} from "src/util/plus-one"
 import {submitSearch} from "./submit-search"
+import {ZedAst} from "src/app/core/models/zed-ast"
 
 export const editQuery = createHandler("session.editQuery", ({dispatch}) => {
   dispatch(Layout.showTitleForm())
@@ -48,3 +49,25 @@ export const resetQuery = createHandler(
     oldApi.queries.open(snapshot)
   }
 )
+
+const fetchAst = createHandler(async ({invoke}, string) => {
+  let tree
+  try {
+    tree = await invoke("editor.parse", string)
+  } catch (error) {
+    tree = error
+  }
+  return tree
+})
+
+export const fetchQueryInfo = createHandler(async (_, query: string) => {
+  const tree = await fetchAst(query)
+  const ast = new ZedAst(tree, tree.error)
+  return {
+    isSummarized: ast.isSummarized,
+    poolName: ast.poolName,
+    sorts: ast.sorts,
+    error: ast.error,
+    groupByKeys: ast.groupByKeys,
+  }
+})

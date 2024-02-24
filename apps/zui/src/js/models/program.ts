@@ -1,7 +1,6 @@
 import * as zed from "@brimdata/zed-js"
 import {isEmpty, last} from "lodash"
 import {trim} from "../lib/Str"
-import ast from "./ast"
 import syntax from "./syntax"
 
 export default function program(p = "") {
@@ -57,12 +56,11 @@ export default function program(p = "") {
   }
 }
 
-export async function getFilter(string) {
+export function getFilter(string: string, isSummarized: boolean) {
   const [head, ...tail] = string.split(
     /\|?\s*(summarize|count|countdistinct|sum)/i
   )
-  const tree = await ast(string)
-  if (isEmpty(tail) && tree.hasAnalytics()) {
+  if (isEmpty(tail) && isSummarized) {
     return "*"
   } else {
     if (isEmpty(trim(head))) return "*"
@@ -70,12 +68,16 @@ export async function getFilter(string) {
   }
 }
 
-export async function drillDown(script: string, log: zed.Record) {
-  let filter = await getFilter(script)
+export async function drillDown(
+  script: string,
+  value: zed.Record,
+  isSummarized: boolean,
+  groupByKeys: string[]
+) {
+  let filter = await getFilter(script, isSummarized)
 
-  const newFilters = (await ast(script))
-    .groupByKeys()
-    .map((name) => log.tryField(name))
+  const newFilters = groupByKeys
+    .map((name) => value.tryField(name))
     .filter((f) => !!f)
     .map(syntax.include)
     .join(" ")

@@ -1,19 +1,19 @@
 import Current from "src/js/state/Current"
 import PoolSettings from "src/js/state/PoolSettings"
-import {QueryModel} from "src/js/models/query-model"
 import {getInterval, timeUnits} from "./get-interval"
 import Histogram from "src/js/state/Histogram"
 import {QueryPin, TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Results from "src/js/state/Results"
-import ZuiApi from "src/js/api/zui-api"
 import {isAbortError} from "src/util/is-abort-error"
+import {createHandler} from "src/core/handlers"
 
 export const HISTOGRAM_RESULTS = "histogram"
 const POOL_RANGE = "pool-range"
 const NULL_TIME_COUNT = "null-time-count"
 const MISSING_TIME_COUNT = "missing-time-count"
 
-export async function runHistogramQuery(api: ZuiApi) {
+export const runHistogramQuery = createHandler(async ({oldApi}) => {
+  const api = oldApi
   // all these queries should maybe be attached to the same abort signal
   // this would change the abortables api a bit
   api.abortables.abort({tag: POOL_RANGE})
@@ -26,7 +26,7 @@ export async function runHistogramQuery(api: ZuiApi) {
   const key = api.current.location.key
   const version = api.select(Current.getVersion)
   const poolId = api.select(Current.getPoolFromQuery)?.id
-  const baseQuery = QueryModel.versionToZed(version)
+  const baseQuery = api.select(Current.getQueryText)
   const {timeField, colorField} = api.select((s) =>
     PoolSettings.findWithDefaults(s, poolId)
   )
@@ -119,4 +119,4 @@ export async function runHistogramQuery(api: ZuiApi) {
   } catch (e) {
     error(e)
   }
-}
+})

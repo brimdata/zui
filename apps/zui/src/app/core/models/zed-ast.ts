@@ -1,19 +1,8 @@
-import {parse as parseAst} from "zed/compiler/parser/parser"
-import {fieldExprToName} from "src/js/models/ast"
 import {toFieldPath} from "src/js/zed-script/toZedScript"
+import {fieldExprToName} from "./zed-expr"
 
 export class ZedAst {
-  public tree: any
-  public error: Error | null
-
-  constructor(public script: string) {
-    try {
-      this.tree = parseAst(script)
-    } catch (e) {
-      this.tree = null
-      this.error = e
-    }
-  }
+  constructor(public tree: any, public error: Error | null) {}
 
   get poolName() {
     const from = this.from
@@ -32,6 +21,12 @@ export class ZedAst {
   get pools() {
     const trunks = this.from?.trunks || []
     return trunks.filter((t) => t.source.kind === "Pool").map((t) => t.source)
+  }
+
+  get groupByKeys() {
+    const g = this.ops.find((op) => op.kind === "Summarize")
+    const keys = g ? g.keys : []
+    return keys.map((k) => fieldExprToName(k.lhs || k.rhs))
   }
 
   private _ops: any[]
@@ -77,3 +72,11 @@ export class ZedAst {
 
 export const OP_EXPR_PROC = "OpExpr"
 export const PARALLEL_PROC = "Parallel"
+// are all these needed?
+export const HEAD_PROC = "Head"
+export const TAIL_PROC = "Tail"
+export const SORT_PROC = "Sort"
+export const FILTER_PROC = "Filter"
+export const PRIMITIVE_PROC = "Primitive"
+export const REGEXP_SEARCH_PROC = "RegexpSearch"
+export const ANALYTIC_PROCS = ["Summarize"]

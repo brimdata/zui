@@ -7,6 +7,7 @@ import logDetails from "../LogDetails/reducer"
 import {reducer as results} from "../Results/reducer"
 import {reducer as histogram} from "../Histogram/reducer"
 import {reducer as selection} from "../Selection/reducer"
+import {reducer as queryInfo} from "../QueryInfo/reducer"
 import {nanoid} from "@reduxjs/toolkit"
 
 const tabReducer = combineReducers({
@@ -22,6 +23,7 @@ const tabReducer = combineReducers({
   histogram,
   table,
   selection,
+  queryInfo,
 })
 
 export type TabReducer = typeof tabReducer

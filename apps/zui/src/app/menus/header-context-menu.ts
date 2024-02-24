@@ -7,16 +7,16 @@ import {
 } from "src/js/flows/searchBar/actions"
 import {createMenu} from "src/core/menu"
 import {submitSearch} from "src/domain/session/handlers"
+import QueryInfo from "src/js/state/QueryInfo"
 
 function getWhenContext(api: ZuiApi, column: ZedColumn) {
-  const query = api.current.query
-  const ast = query.toAst()
+  const {isSummarized} = api.select(QueryInfo.get)
   return {
     isRecord: column.isRecordType,
     isGrouped: column.isGrouped,
     isSortedAsc: column.isSortedAsc,
     isSortedDesc: column.isSortedDesc,
-    isSummarized: ast.isSummarized,
+    isSummarized,
   }
 }
 

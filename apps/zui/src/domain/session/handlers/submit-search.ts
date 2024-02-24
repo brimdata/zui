@@ -2,14 +2,14 @@ import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import Results from "src/js/state/Results"
 import QueryVersions from "../../../js/state/QueryVersions"
-import {QueryModel} from "../../../js/models/query-model"
 import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import Table from "src/js/state/Table"
 import Inspector from "src/js/state/Inspector"
 import {createHandler} from "src/core/handlers"
 import Selection from "src/js/state/Selection"
+import {fetchQueryInfo} from "./queries"
 
-export const submitSearch = createHandler((ctx) => {
+export const submitSearch = createHandler(async (ctx) => {
   const {dispatch, select, oldApi} = ctx
   const api = oldApi
 
@@ -19,7 +19,7 @@ export const submitSearch = createHandler((ctx) => {
 
   const nextVersion = select(Editor.getSnapshot)
   const active = select(Current.getActiveQuery)
-  const error = QueryModel.checkSyntax(nextVersion)
+  const {error} = await fetchQueryInfo(active.toZed())
 
   // An error with the syntax
   if (error) {

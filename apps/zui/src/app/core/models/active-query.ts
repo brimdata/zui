@@ -1,4 +1,3 @@
-import {ZedAst} from "src/app/core/models/zed-ast"
 import {QueryModel} from "src/js/models/query-model"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 
@@ -62,9 +61,5 @@ export class ActiveQuery {
 
   toZed() {
     return QueryModel.versionToZed(this.version)
-  }
-
-  toAst() {
-    return new ZedAst(QueryModel.versionToZed(this.version))
   }
 }
