@@ -29,7 +29,7 @@ export function ExportModal() {
   useSubmitKey(ref)
 
   return (
-    <PopoverModal ref={popover.ref} className="max-width:fit">
+    <PopoverModal ref={popover.ref} style={{maxWidth: "53ch"}}>
       <div className="stack-3 box-1">
         <div className="stack--2">
           <H1>Export Results</H1>
@@ -40,7 +40,7 @@ export function ExportModal() {
           className={classNames(forms.form, "stack-4")}
           onSubmit={(e) => ctl.submit(e)}
         >
-          <section className="stack-1 max-width:measure">
+          <section className="stack-1">
             <div className="field">
               <label>Export To</label>
               <div className="cluster">
