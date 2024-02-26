@@ -15,7 +15,7 @@ export function DefaultError(props: {error: unknown}) {
   return (
     <BG>
       <h2>Error</h2>
-      <p>{props.error.toString()}</p>
+      <pre>{props.error.toString()}</pre>
     </BG>
   )
 }
