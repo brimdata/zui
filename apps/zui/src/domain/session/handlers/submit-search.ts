@@ -1,13 +1,10 @@
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
-import Results from "src/js/state/Results"
 import QueryVersions from "../../../js/state/QueryVersions"
-import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import Table from "src/js/state/Table"
 import Inspector from "src/js/state/Inspector"
 import {createHandler} from "src/core/handlers"
 import Selection from "src/js/state/Selection"
-import {fetchQueryInfo} from "./queries"
 
 export const submitSearch = createHandler(async (ctx) => {
   const {dispatch, select, oldApi} = ctx
@@ -19,14 +16,6 @@ export const submitSearch = createHandler(async (ctx) => {
 
   const nextVersion = select(Editor.getSnapshot)
   const active = select(Current.getActiveQuery)
-  const {error} = await fetchQueryInfo(active.toZed())
-
-  // An error with the syntax
-  if (error) {
-    const tabId = select(Current.getTabId)
-    dispatch(Results.error({id: RESULTS_QUERY, error, tabId}))
-    return
-  }
 
   // Reuse the version url if the next version is the same as the latest
   // of this query, either session or saved.
