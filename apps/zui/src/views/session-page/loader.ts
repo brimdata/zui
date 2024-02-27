@@ -22,19 +22,12 @@ export const loadRoute = createHandler(
     const lakeId = select(Current.getLakeId)
     const version = select(Current.getVersion)
     const program = select(Current.getQueryText)
-    const info = await fetchQueryInfo(program)
-    const {poolName} = info
-    const pool = select(Pools.getByName(lakeId, poolName))
     const histogramVisible = select(Layout.getShowHistogram)
 
-    invoke("updatePluginSessionOp", {poolName, program})
-    dispatch(QueryInfo.set(info))
+    dispatch(QueryInfo.reset())
     dispatch(Tabs.loaded(location.key))
     dispatch(Notice.dismiss())
 
-    if (pool && !pool.hasSpan()) {
-      dispatch(syncPool(pool.id, lakeId))
-    }
     // Give editor a chance to update by scheduling this update
     setTimeout(() => {
       dispatch(Editor.setValue(version?.value ?? ""))
@@ -46,6 +39,18 @@ export const loadRoute = createHandler(
         runResultsMain()
         runResultsCount()
         if (histogramVisible) runHistogramQuery()
+      }
+    })
+
+    // Now we fetch query information...
+
+    fetchQueryInfo(program).then((info) => {
+      dispatch(QueryInfo.set({isParsed: true, ...info}))
+      const {poolName} = info
+      invoke("updatePluginSessionOp", {poolName, program})
+      const pool = select(Pools.getByName(lakeId, poolName))
+      if (pool && !pool.hasSpan()) {
+        dispatch(syncPool(pool.id, lakeId))
       }
     })
   }
