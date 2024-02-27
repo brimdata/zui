@@ -139,7 +139,7 @@ function TotalCount() {
         {count?.toLocaleString()} Total {pluralize("Row", count)}
       </span>
     )
-  } else {
+  } else if (status === "FETCHING") {
     return <span>Fetching Total Rows...</span>
   }
 }
