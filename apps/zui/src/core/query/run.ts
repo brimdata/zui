@@ -1,7 +1,6 @@
 import {ResultStream} from "@brimdata/zed-js"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Current from "src/js/state/Current"
-import QueryInfo from "src/js/state/QueryInfo"
 import Results from "src/js/state/Results"
 import {Thunk} from "src/js/state/types"
 import {isAbortError} from "src/util/is-abort-error"
@@ -21,8 +20,7 @@ export function firstPage(opts: {id: string; query: string}): Thunk {
     const {id, query} = opts
     const key = Current.getLocation(getState()).key
     const tabId = api.current.tabId
-    const aggregation = QueryInfo.get(getState()).isSummarized
-    dispatch(Results.init({query, key, id, tabId, aggregation}))
+    dispatch(Results.init({query, key, id, tabId}))
     dispatch(run(id))
   }
 }

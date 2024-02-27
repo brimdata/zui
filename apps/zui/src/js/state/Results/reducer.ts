@@ -22,14 +22,12 @@ const slice = createSlice({
       a: Pay<{
         id: string
         query: string
-        aggregation: boolean
         key: string
         tabId: string
       }>
     ) {
       const r = access(s, a.payload.id)
       r.query = a.payload.query
-      r.aggregation = a.payload.aggregation
       r.key = a.payload.key
       r.page = 1
       r.status = "FETCHING"
@@ -58,9 +56,7 @@ const slice = createSlice({
 
     success(s, a: Pay<{id: string; count?: number; tabId: string}>) {
       const r = access(s, a.payload.id)
-      if (r.aggregation && a.payload.count === r.aggregationLimit) {
-        r.status = "LIMIT"
-      } else if (a.payload.count === r.perPage) {
+      if (a.payload.count === r.perPage) {
         r.status = "INCOMPLETE"
       } else {
         r.status = "COMPLETE"
