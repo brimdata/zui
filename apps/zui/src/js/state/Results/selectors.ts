@@ -30,11 +30,7 @@ export const getStatus = resultsSelect((results) => {
 })
 
 export const getPaginatedQuery = resultsSelect((results) => {
-  if (results.aggregation) {
-    return paginate(results.query, results.aggregationLimit, 1)
-  } else {
-    return paginate(results.query, results.perPage, results.page)
-  }
+  return paginate(results.query, results.perPage, results.page)
 })
 
 export const getQuery = resultsSelect((results) => {
