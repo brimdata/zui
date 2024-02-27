@@ -32,7 +32,7 @@ export const runHistogramQuery = createHandler(async ({oldApi}) => {
   )
 
   function setup() {
-    api.dispatch(Results.init({id, tabId, key, query: "", aggregation: false}))
+    api.dispatch(Results.init({id, tabId, key, query: ""}))
     api.dispatch(Histogram.init())
   }
 
