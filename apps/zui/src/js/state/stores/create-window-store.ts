@@ -1,11 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit"
 import {State, ThunkExtraArg} from "../types"
-import {ipcRendererReduxMiddleware} from "./ipc-redux-middleware"
+
 import rootReducer from "./root-reducer"
 
 export function createWindowStore(
   initialState: State,
-  extraArgument: ThunkExtraArg
+  extraArgument: ThunkExtraArg,
+  middleware = []
 ) {
   return configureStore({
     reducer: rootReducer,
@@ -16,7 +17,7 @@ export function createWindowStore(
         serializableCheck: false,
         immutableCheck: false,
       })
-      return defaults.concat(ipcRendererReduxMiddleware)
+      return defaults.concat(middleware)
     },
   })
 }

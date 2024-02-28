@@ -2,6 +2,8 @@ import {enableMapSet} from "immer"
 import ZuiApi from "../api/zui-api"
 import {createWindowStore} from "../state/stores/create-window-store"
 import {invoke} from "src/core/invoke"
+import {ipcRendererReduxMiddleware} from "../state/stores/ipc-redux-middleware"
+import {createRendererEventsMiddleware} from "../state/stores/renderer-events-middleware"
 
 enableMapSet()
 
@@ -15,9 +17,13 @@ function getInitialState(windowId) {
   })
 }
 
-export default async (api: ZuiApi) => {
+export default async (api: ZuiApi, renderer) => {
   const windowId = global.windowId
   const initialState = await getInitialState(windowId)
   const extraArgument = {api}
-  return createWindowStore(initialState, extraArgument)
+  const middleware = [
+    ipcRendererReduxMiddleware,
+    createRendererEventsMiddleware(renderer),
+  ]
+  return createWindowStore(initialState, extraArgument, middleware)
 }

@@ -17,6 +17,9 @@ import toast from "react-hot-toast"
 import {startTransition} from "react"
 import {initResizeListener} from "./init-resize-listener"
 import {setMenuContext} from "src/core/menu"
+import {createWaitForSelector} from "src/app/core/state/create-wait-for-selector"
+import {initAsyncTasks} from "./init-async-tasks"
+import {Renderer} from "src/core/renderer"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -32,12 +35,14 @@ export default async function initialize(
   windowId: string = getWindowId(),
   windowName: WindowName = getWindowName()
 ) {
+  const renderer = new Renderer()
   global.featureFlags = globalThis.zui.featureFlags
   global.windowId = windowId
   global.windowName = windowName
 
   const api = new ZuiApi()
-  const store = await initStore(api)
+  const store = await initStore(api, renderer)
+  const asyncTasks = initAsyncTasks(renderer)
   await initGlobals(store)
   await initLake(store)
   api.init(store.dispatch, store.getState)
@@ -47,9 +52,11 @@ export default async function initialize(
     transition: startTransition,
     oldApi: api,
     dispatch: store.dispatch,
+    waitForSelector: createWaitForSelector(store),
     select: (fn) => fn(store.getState()),
     invoke: invoke,
-    toast: toast,
+    toast,
+    asyncTasks,
   })
   setMenuContext({select: (fn) => fn(store.getState()), api})
   initDebugGlobals(store, api)
@@ -60,5 +67,6 @@ export default async function initialize(
   initializeMonaco()
   initializePluginContextSync(store)
   initResizeListener()
+
   return {store, api}
 }

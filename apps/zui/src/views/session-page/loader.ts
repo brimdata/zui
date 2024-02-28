@@ -42,13 +42,16 @@ export const loadRoute = createHandler(
       }
     })
 
-    // Now we fetch query information...
-
+    // We parse the query text on the server. In order to minimize
+    // latency, we run the query first, then get the query info.
+    // If you need to wait for the query info, use the waitForSelector
+    // function and look for QueryInfo.getIsParsed to be true.
     fetchQueryInfo(program).then((info) => {
-      dispatch(QueryInfo.set({isParsed: true, ...info}))
       const {poolName} = info
-      invoke("updatePluginSessionOp", {poolName, program})
       const pool = select(Pools.getByName(lakeId, poolName))
+
+      dispatch(QueryInfo.set({isParsed: true, ...info}))
+      invoke("updatePluginSessionOp", {poolName, program})
       if (pool && !pool.hasSpan()) {
         dispatch(syncPool(pool.id, lakeId))
       }
