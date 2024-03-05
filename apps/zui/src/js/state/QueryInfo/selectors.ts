@@ -6,3 +6,4 @@ export const get = activeTabSelect((tab) => {
 })
 
 export const getIsParsed = createSelector(get, (info) => info.isParsed)
+export const getIsSummarized = createSelector(get, (info) => info.isSummarized)

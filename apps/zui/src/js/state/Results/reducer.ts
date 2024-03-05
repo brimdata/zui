@@ -29,6 +29,7 @@ const slice = createSlice({
       const r = access(s, a.payload.id)
       r.query = a.payload.query
       r.key = a.payload.key
+      r.canPaginate = false
       r.page = 1
       r.status = "FETCHING"
       r.values = []
@@ -52,6 +53,14 @@ const slice = createSlice({
     ) {
       const r = access(s, a.payload.id)
       r.shapes = a.payload.shapes
+    },
+
+    setCanPaginate(
+      s,
+      a: Pay<{id: string; canPaginate: boolean; tabId: string}>
+    ) {
+      const r = access(s, a.payload.id)
+      r.canPaginate = a.payload.canPaginate
     },
 
     success(s, a: Pay<{id: string; count?: number; tabId: string}>) {

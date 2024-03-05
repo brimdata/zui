@@ -6,16 +6,19 @@ import {isAbortError} from "src/util/is-abort-error"
 import {createHandler} from "../handlers"
 import {query} from "src/domain/lake/handlers"
 
+// Add a signal param here
 export function nextPage(id: string): Thunk {
   return async (dispatch, getState) => {
     if (Results.isFetching(id)(getState())) return
     if (Results.isComplete(id)(getState())) return
-    if (Results.isLimited(id)(getState())) return
-    dispatch(Results.nextPage({id}))
-    run(id)
+    if (Results.canPaginate(id)(getState())) {
+      dispatch(Results.nextPage({id}))
+      run(id)
+    }
   }
 }
 
+// Add a signal param here
 export function firstPage(opts: {id: string; query: string}): Thunk {
   return async (dispatch, getState, {api}) => {
     const {id, query} = opts
@@ -26,6 +29,7 @@ export function firstPage(opts: {id: string; query: string}): Thunk {
   }
 }
 
+// Add a signal param here
 const run = createHandler(
   async ({select, dispatch, asyncTasks}, id: string) => {
     const tabId = select(Current.getTabId)

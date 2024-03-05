@@ -41,6 +41,10 @@ export const isFetching = resultsSelect((results) => {
   return results.status === "FETCHING"
 })
 
+export const canPaginate = resultsSelect((results) => {
+  return results.canPaginate
+})
+
 export const isLimited = resultsSelect((results) => {
   return results.status === "LIMIT"
 })

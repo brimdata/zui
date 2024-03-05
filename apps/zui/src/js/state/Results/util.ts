@@ -9,6 +9,7 @@ export const initialResultData = () => ({
   perPage: 500,
   aggregationLimit: 2000,
   aggregation: false,
+  canPaginate: false,
   key: "",
   query: "*",
   error: null as null | any,
