@@ -87,6 +87,7 @@ const Span = styled.span`
 export function RowCount() {
   const status = useSelector(Results.getStatus(RESULTS_QUERY))
   const count = useSelector(Results.getCount(RESULTS_QUERY))
+  const canPaginate = useSelector(Results.canPaginate(RESULTS_QUERY))
   if (status === "FETCHING") {
     return (
       <Span aria-label="fetching" role="status">
@@ -99,13 +100,13 @@ export function RowCount() {
         {count?.toLocaleString()} {pluralize("Row", count)}
       </span>
     )
-  } else if (status === "INCOMPLETE") {
+  } else if (status === "INCOMPLETE" && canPaginate) {
     return (
       <span role="status" aria-label="results">
         First {count?.toLocaleString()} {pluralize("Row", count)}
       </span>
     )
-  } else if (status === "LIMIT") {
+  } else if (status === "INCOMPLETE" && !canPaginate) {
     return (
       <span role="status" aria-label="results">
         Limited to {count?.toLocaleString()} {pluralize("Row", count)}
@@ -118,7 +119,7 @@ function ShapeCount() {
   const shapes = useSelector(Results.getShapes(RESULTS_QUERY))
   const status = useSelector(Results.getStatus(RESULTS_QUERY))
   const count = Object.keys(shapes).length
-  if (["COMPLETE", "LIMIT", "INCOMPLETE"].includes(status)) {
+  if (["COMPLETE", "INCOMPLETE"].includes(status)) {
     return (
       <span aria-label="shapes">
         {count?.toLocaleString()} {pluralize("Shape", count)}
@@ -133,7 +134,7 @@ function TotalCount() {
   const status = useSelector(Results.getStatus(RESULTS_QUERY_COUNT))
   const values = useSelector(Results.getValues(RESULTS_QUERY_COUNT))
   const count = values[0]?.toJS()
-  if (["COMPLETE", "LIMIT", "INCOMPLETE"].includes(status)) {
+  if (["COMPLETE", "INCOMPLETE"].includes(status)) {
     return (
       <span>
         {count?.toLocaleString()} Total {pluralize("Row", count)}

@@ -7,8 +7,6 @@ export const initialResultData = () => ({
   status: "INIT" as ResultsStatus,
   page: 1,
   perPage: 500,
-  aggregationLimit: 2000,
-  aggregation: false,
   canPaginate: false,
   key: "",
   query: "*",
