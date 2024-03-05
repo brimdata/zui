@@ -55,7 +55,7 @@ const fetchAst = createHandler(async ({invoke}, string) => {
   try {
     tree = await invoke("editor.parse", string)
   } catch (error) {
-    tree = error
+    tree = {error}
   }
   return tree
 })
