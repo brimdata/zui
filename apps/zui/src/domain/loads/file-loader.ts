@@ -33,6 +33,7 @@ export class FileLoader implements Loader {
       res = await client.load(body, {
         pool: ctx.poolId,
         branch: ctx.branch,
+        format: 'zng',
         message: {
           author: ctx.author,
           body: ctx.body,
