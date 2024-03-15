@@ -1,16 +1,15 @@
 import {Ref, forwardRef} from "react"
 import {useDialog} from "./use-dialog"
-import {useDebut} from "src/modules/debut/react"
+import {enter, exit} from "debut-css"
 import {hideModal} from "src/domain/window/handlers"
 
 export function useFullModal() {
-  const debut = useDebut("full-modal")
   const dialog = useDialog({
     onMount: async () => {
       dialog.showModal()
-      debut.enter()
+      enter("full-modal")
     },
-    beforeClose: () => debut.exit(),
+    beforeClose: () => exit("full-modal"),
     onClose: () => hideModal(),
   })
   return dialog

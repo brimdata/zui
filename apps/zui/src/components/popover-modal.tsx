@@ -1,17 +1,16 @@
 import {CSSProperties, Ref, forwardRef} from "react"
 import {hideModal} from "src/domain/window/handlers"
 import {useDialog} from "./use-dialog"
-import {useDebut} from "src/modules/debut/react"
+import {enter, exit} from "debut-css"
 import classNames from "classnames"
 
 export function usePopoverModal() {
-  const debut = useDebut("popover")
   const dialog = useDialog({
     onMount: async () => {
       dialog.showModal()
-      debut.enter()
+      enter("popover")
     },
-    beforeClose: () => debut.exit(),
+    beforeClose: () => exit("popover"),
     onClose: () => hideModal(),
   })
   return dialog
