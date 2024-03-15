@@ -100,6 +100,7 @@ const Input = styled.input`
   outline: none;
   flex: 1;
   min-width: 0;
+  background-color: var(--form-bg-color);
 `
 
 const ItemIconBG = styled.div<{isFolder: boolean}>`
