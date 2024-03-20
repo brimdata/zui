@@ -16,7 +16,7 @@ export const updateQuery = createHandler(
     const snapshot = select(Editor.getSnapshot)
     const active = select(Current.getActiveQuery)
     const id = active.query.id
-    oldApi.queries.addVersion(id, snapshot)
+    oldApi.queries.createEditorSnapshot(id, snapshot)
     oldApi.queries.open(id, {history: "replace"})
   }
 )

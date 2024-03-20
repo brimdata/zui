@@ -46,7 +46,9 @@ export class QueriesApi {
 
     if (type === "local") {
       this.dispatch(Queries.addItem(query, params.parentId))
-      versions.forEach((version) => this.addVersion(query.id, version))
+      versions.forEach((version) =>
+        this.createEditorSnapshot(query.id, version)
+      )
       return this.find(query.id)
     } else if (type === "remote") {
       const records = versions.map((version) => ({...query, ...version}))
@@ -100,7 +102,7 @@ export class QueriesApi {
     this.update({id, changes: {name}})
   }
 
-  addVersion(queryId: string, params: QueryVersion | QueryParams) {
+  createEditorSnapshot(queryId: string, params: QueryVersion | QueryParams) {
     const ts = new Date().toISOString()
     const id = nanoid()
     const version = {ts, version: id, ...params}
@@ -142,7 +144,7 @@ export class QueriesApi {
     } else {
       queryId = tabId
       versionId = nanoid()
-      this.addVersion(queryId, {
+      this.createEditorSnapshot(queryId, {
         ...id,
         version: versionId,
         ts: new Date().toISOString(),

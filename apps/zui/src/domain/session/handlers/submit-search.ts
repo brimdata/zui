@@ -26,6 +26,6 @@ export const submitSearch = createHandler(async (ctx) => {
 
   // This is a new query, add a new version to the session,
   // And open the current active query with the version set to the new one.
-  api.queries.addVersion(active.session.id, nextVersion)
+  api.queries.createEditorSnapshot(active.session.id, nextVersion)
   api.queries.open(active.id(), {version: nextVersion.version})
 })
