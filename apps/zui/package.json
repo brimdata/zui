@@ -81,6 +81,7 @@
     "cross-fetch": "^3.1.6",
     "d3": "^6.7.0",
     "date-fns": "^2.16.1",
+    "debut-css": "^0.7.0",
     "decompress": "^4.2.1",
     "electron": "28.0.0",
     "electron-builder": "^23.6.0",
@@ -154,7 +155,7 @@
     "use-resize-observer": "^8.0.0",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#14e9f6f909a75b426aa89ada09d84bb1fa64d424",
+    "zed": "brimdata/zed#3e5febe7566593bb4cac19954695caf8f99b2f60",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {

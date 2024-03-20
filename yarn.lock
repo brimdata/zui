@@ -8275,6 +8275,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"debut-css@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "debut-css@npm:0.7.0"
+  dependencies:
+    transitions-all-settled: ^0.2.0
+  checksum: 97eabc73f86d0138f2ebd33c7aea1c399b2593d31fc0812940856a5439316f43cfc3d3d80ab7ac2d7e3a54719c7475ec777838fb343ad3de8fa466ad82ac4057
+  languageName: node
+  linkType: hard
+
 "decamelize-keys@npm:^1.1.0":
   version: 1.1.1
   resolution: "decamelize-keys@npm:1.1.1"
@@ -17979,6 +17988,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"transitions-all-settled@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "transitions-all-settled@npm:0.2.0"
+  checksum: 3f226367d661b7323580c2b8703dd23fbea5217db9dddc2d349d9d4d8559640b329b17b021b4ffd281280545a872de4ebb575198052ea8f9dbb4efab960ab47f
+  languageName: node
+  linkType: hard
+
 "tree-model@npm:^1.0.7":
   version: 1.0.7
   resolution: "tree-model@npm:1.0.7"
@@ -19181,10 +19197,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#14e9f6f909a75b426aa89ada09d84bb1fa64d424":
+"zed@brimdata/zed#3e5febe7566593bb4cac19954695caf8f99b2f60":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=14e9f6f909a75b426aa89ada09d84bb1fa64d424"
-  checksum: 2720bbfa73bbe4af6901a5de11caddf215167b19888e1ed2dd04e877b35393295822c91b432c6b4f0eb0ad881315af3c14b56cdbac781282e7bf434ba05ebdb4
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=3e5febe7566593bb4cac19954695caf8f99b2f60"
+  checksum: 783d6a7eaeb22f63386a35f365ad90996615ce19dba387f0912fabd32be16eb9039ebf1cb499356c2b200f16da729c47e0d98776fcdf8ad1583dc85587442d32
   languageName: node
   linkType: hard
 
@@ -19304,6 +19320,7 @@ __metadata:
     cross-fetch: ^3.1.6
     d3: ^6.7.0
     date-fns: ^2.16.1
+    debut-css: ^0.7.0
     decompress: ^4.2.1
     electron: 28.0.0
     electron-builder: ^23.6.0
@@ -19378,7 +19395,7 @@ __metadata:
     use-resize-observer: ^8.0.0
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#14e9f6f909a75b426aa89ada09d84bb1fa64d424"
+    zed: "brimdata/zed#3e5febe7566593bb4cac19954695caf8f99b2f60"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
