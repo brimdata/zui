@@ -97,10 +97,13 @@ _Query Text_
 
 This is text of the final Zed Query we will send to the backend.
 
-
 _Session Query_
 
 A session query is like an unnamed Query. Each session (tab) has exactly one SessionQuery associated with it. The SessionQuery has many EditorSnapshots associated with it.
+
+_Acitve Query_
+
+This refers to whatever query is currently being presented in the query session page. This can either be a query or a session query.
 
 _Store_
 
