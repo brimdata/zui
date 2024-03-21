@@ -72,11 +72,11 @@ const getSessionVersions = (state: State) => {
 }
 
 export const getNamedQuery = (state: State) => {
-  const queryId = getQueryId(state)
+  const queryId = getSessionRouteParentId(state)
   return Queries.build(state, queryId)
 }
 
-export const getQueryId = (state: State) => {
+export const getSessionRouteParentId = (state: State) => {
   const {queryId} = getQueryUrlParams(state)
   return queryId
 }
