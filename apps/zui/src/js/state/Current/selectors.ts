@@ -37,7 +37,7 @@ export const getLocation = (state: State) => {
   return getHistory(state)?.location
 }
 
-const getQueryUrlParams = createSelector(getLocation, (location) => {
+export const getQueryUrlParams = createSelector(getLocation, (location) => {
   const path = location.pathname
   const routes = [queryVersion.path, query.path]
   const match = matchPath<{queryId: string; version: string}>(path, routes)

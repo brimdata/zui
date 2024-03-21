@@ -16,9 +16,11 @@ import {syncPool} from "src/app/core/pools/sync-pool"
 import {fetchQueryInfo} from "src/domain/session/handlers"
 import QueryInfo from "src/js/state/QueryInfo"
 import {createHandler} from "src/core/handlers"
+import {Active} from "src/models/active"
 
 export const loadRoute = createHandler(
   async ({select, dispatch}, location: Location) => {
+    const history = select(Current.getHistory)
     const lakeId = select(Current.getLakeId)
     const version = select(Current.getVersion)
     const program = select(Current.getQueryText)
@@ -46,14 +48,20 @@ export const loadRoute = createHandler(
     // latency, we run the query first, then get the query info.
     // If you need to wait for the query info, use the waitForSelector
     // function and look for QueryInfo.getIsParsed to be true.
+    const {session} = Active
+    const {lastSnapshot} = session
     fetchQueryInfo(program).then((info) => {
-      const {poolName} = info
+      const {poolName, error} = info
       const pool = select(Pools.getByName(lakeId, poolName))
 
       dispatch(QueryInfo.set({isParsed: true, ...info}))
       invoke("updatePluginSessionOp", {poolName, program})
       if (pool && !pool.hasSpan()) {
         dispatch(syncPool(pool.id, lakeId))
+      }
+
+      if (!error && history.action === "PUSH") {
+        session.history.push(lastSnapshot)
       }
     })
   }
