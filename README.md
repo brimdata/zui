@@ -60,7 +60,7 @@ Please browse the [support resources](https://zui.brimdata.io/docs/support) to r
 
 ## Contributing
 
-We welcome your contributions! Please refer to our [contributing guide](CONTRIBUTING.md) for information on how to get involved in development.
+We welcome your contributions! Please refer to our [contributing guide](apps/zui/CONTRIBUTING.md) for information on how to get involved in development.
 
 ## Join the Community
 
