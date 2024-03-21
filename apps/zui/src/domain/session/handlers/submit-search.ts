@@ -1,18 +1,15 @@
 import Current from "src/js/state/Current"
 import Editor from "src/js/state/Editor"
 import QueryVersions from "../../../js/state/QueryVersions"
-import Table from "src/js/state/Table"
-import Inspector from "src/js/state/Inspector"
 import {createHandler} from "src/core/handlers"
-import Selection from "src/js/state/Selection"
+import {Active} from "src/models/active"
 
 export const submitSearch = createHandler(async (ctx) => {
-  const {dispatch, select, oldApi} = ctx
+  const {select, oldApi} = ctx
   const api = oldApi
+  const {querySession} = Active
 
-  dispatch(Selection.reset())
-  dispatch(Table.setScrollPosition({top: 0, left: 0}))
-  dispatch(Inspector.setScrollPosition({top: 0, left: 0}))
+  querySession.reset()
 
   const nextVersion = select(Editor.getSnapshot)
   const active = select(Current.getActiveQuery)
