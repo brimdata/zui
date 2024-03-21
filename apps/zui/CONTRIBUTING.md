@@ -144,7 +144,7 @@ See the [Adding Migrations](https://zui.brimdata.io/docs/developer/Adding-Migrat
 
 ### Zed
 
-The [Zed service](https://zed.brimdata.io/docs/commands/zed#213-serve) is the daemon responsible for data ingestion and query execution. As a postinstall step, the `zed` binary is downloaded and stored in the `./zdeps` directory. Zui will automatically execute and terminate the service when it starts and stops.
+The [Zed service](https://zed.brimdata.io/docs/commands/zed#serve) is the daemon responsible for data ingestion and query execution. As a postinstall step, the `zed` binary is downloaded and stored in the `./zdeps` directory. Zui will automatically execute and terminate the service when it starts and stops.
 
 ## Pull Requests
 
