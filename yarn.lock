@@ -19109,10 +19109,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#08c04de635dce9f8c19c77423e537ce8433b6fbe":
+"zed@brimdata/zed#7740693028d3dc5f3af2da9b0f6b46115cb8f4ca":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=08c04de635dce9f8c19c77423e537ce8433b6fbe"
-  checksum: 8469ec0d30b99870612c62c7d842e0bba34cc35291f48b714154ecef82b47a9d53ea996bdd20c4731850408357e090e3b0da7f41916f65b1b3495e615c962c05
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=7740693028d3dc5f3af2da9b0f6b46115cb8f4ca"
+  checksum: ad678fbc35f7103fdeeac852ddbdf37153bc599caf9d4d50f776fbce866bdb3b01fe9e2e69c8065b2f154f865f369b7300974a78b6aeb3f980744942540cf16d
   languageName: node
   linkType: hard
 
@@ -19307,7 +19307,7 @@ __metadata:
     use-resize-observer: ^8.0.0
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#08c04de635dce9f8c19c77423e537ce8433b6fbe"
+    zed: "brimdata/zed#7740693028d3dc5f3af2da9b0f6b46115cb8f4ca"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
