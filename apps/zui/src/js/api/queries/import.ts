@@ -17,7 +17,6 @@ export const queriesImport =
       }
       if (id) {
         dispatch(Appearance.setCurrentSectionName("queries"))
-        dispatch(Appearance.setQueriesView("local"))
         setTimeout(() => {
           selectQuery.trigger(resp.id)
         })

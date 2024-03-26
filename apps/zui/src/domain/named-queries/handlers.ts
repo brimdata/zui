@@ -14,7 +14,6 @@ export const create = createHandler(async ({oldApi}, name: string) => {
   const namedQuery = new NamedQuery({
     id: query.id,
     name: query.name,
-    type: "local",
   })
   Active.session.navigate(namedQuery.lastSnapshot, namedQuery)
 })

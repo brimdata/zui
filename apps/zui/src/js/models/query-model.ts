@@ -34,14 +34,6 @@ export class QueryModel implements Query {
     return this.current?.pins ?? []
   }
 
-  get isLocal() {
-    return this.source === "local"
-  }
-
-  get isRemote() {
-    return this.source === "remote"
-  }
-
   hasVersion(version: string): boolean {
     return !!this.versions?.map((v) => v.version).includes(version)
   }

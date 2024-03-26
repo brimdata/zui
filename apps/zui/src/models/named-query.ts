@@ -5,7 +5,6 @@ import {EditorSnapshot} from "./editor-snapshot"
 type Attrs = {
   name: string
   id: string
-  type: "local" | "remote"
 }
 
 export class NamedQuery extends DomainModel<Attrs> {
@@ -13,19 +12,11 @@ export class NamedQuery extends DomainModel<Attrs> {
     const attrs = this.select((state) => Queries.find(state, id))
     if (!attrs) return null
     const {name} = attrs
-    return new NamedQuery({id, name, type: "local"})
+    return new NamedQuery({id, name})
   }
 
   get id() {
     return this.attrs.id
-  }
-
-  get isLocal() {
-    return this.attrs.type === "local"
-  }
-
-  get isRemote() {
-    return !this.isLocal
   }
 
   get lastSnapshot() {

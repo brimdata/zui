@@ -23,4 +23,4 @@ export type Select = <T extends (...args: any) => any>(
   selector: T
 ) => ReturnType<T>
 
-export type QuerySource = "local" | "remote" | "session"
+export type QuerySource = "local" | "session"
