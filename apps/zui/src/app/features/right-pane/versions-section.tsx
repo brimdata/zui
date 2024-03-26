@@ -6,7 +6,6 @@ import Current from "src/js/state/Current"
 import {QueryModel} from "src/js/models/query-model"
 import {EmptyText} from "./common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
-import {useZuiApi} from "src/app/core/context"
 import {TREE_ITEM_HEIGHT} from "../sidebar/item"
 import {NamedQueries} from "src/domain/handlers"
 
@@ -24,7 +23,6 @@ const VersionsSection = () => {
 }
 
 const VersionsList = ({query}: {query: QueryModel}) => {
-  const api = useZuiApi()
   const data = useMemo(() => {
     return query.versions
       .map((v) => ({...v, id: v.version}))

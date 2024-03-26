@@ -1,7 +1,5 @@
-import {queryPath} from "src/app/router/utils/paths"
 import {createHandler} from "src/core/handlers"
 import {Active} from "src/models/active"
-import {EditorSnapshot} from "src/models/editor-snapshot"
 
 /**
  * Save the active snapshot under the session id.

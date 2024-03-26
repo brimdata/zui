@@ -1,6 +1,5 @@
 import {createHandler} from "src/core/handlers"
 import Current from "src/js/state/Current"
-import Editor from "src/js/state/Editor"
 import Layout from "src/js/state/Layout"
 import {plusOne} from "src/util/plus-one"
 import {submitSearch} from "./submit-search"
