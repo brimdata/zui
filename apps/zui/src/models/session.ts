@@ -65,9 +65,8 @@ export class Session extends DomainModel<Attrs> {
       console.warn(
         "Did not find snapshot on the session, falling back to named query snapshot"
       )
+      return EditorSnapshot.find(this.attrs.parentId, this.attrs.snapshotId) // remove after some time has gone by
     }
-    return null // comment the next line back in for back compat
-    // return EditorSnapshot.find(this.attrs.parentId, this.attrs.snapshotId)
   }
 
   get snapshots() {
