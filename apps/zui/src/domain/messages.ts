@@ -11,6 +11,7 @@ import {UpdatesOperations} from "./updates/messages"
 import {LoadsHandlers, LoadsOperations} from "./loads/messages"
 import {CommandsOperations} from "./commands/messages"
 import {EditorHandlers, EditorOperations} from "./editor/messages"
+import {NamedQueriesHandlers} from "./named-queries/messages"
 
 export type Handlers = ResultsHandlers &
   MenusHandlers &
@@ -19,7 +20,8 @@ export type Handlers = ResultsHandlers &
   SessionHandlers &
   LoadsHandlers &
   PoolsHandlers &
-  EditorHandlers
+  EditorHandlers &
+  NamedQueriesHandlers
 
 export type Operations = PoolsOperations &
   LegacyOperations &

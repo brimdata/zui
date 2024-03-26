@@ -1,7 +1,6 @@
 import {formatDistanceToNowStrict} from "date-fns"
 import React, {useMemo} from "react"
 import {useSelector} from "react-redux"
-import {useZuiApi} from "src/app/core/context"
 import Current from "src/js/state/Current"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
@@ -10,6 +9,7 @@ import {useEntryMenu} from "./use-entry-menu"
 import {State} from "src/js/state/types"
 import {ActiveQuery} from "src/app/core/models/active-query"
 import {NodeRendererProps} from "react-arborist"
+import {Snapshots} from "src/domain/handlers"
 
 const Wrap = styled.div`
   height: 100%;
@@ -101,7 +101,6 @@ function getTimestamp(active: ActiveQuery) {
 }
 
 export function HistoryItem({node}: NodeRendererProps<Props>) {
-  const api = useZuiApi()
   const {index, queryId, version} = node.data
   const onContextMenu = useEntryMenu(index)
   const sessionId = useSelector(Current.getSessionId)
@@ -118,7 +117,11 @@ export function HistoryItem({node}: NodeRendererProps<Props>) {
   const active = new ActiveQuery(session, query, versionObj)
   const onClick = () => {
     if (active.isDeleted()) return
-    api.queries.open(active.id(), {version: active.versionId(), history: false})
+    Snapshots.show({
+      sessionId,
+      namedQueryId: queryId,
+      snapshotId: version,
+    })
   }
   const type = getType(active)
   const value = getValue(active)

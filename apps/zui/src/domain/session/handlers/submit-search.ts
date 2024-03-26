@@ -1,16 +1,26 @@
+import {queryPath} from "src/app/router/utils/paths"
 import {createHandler} from "src/core/handlers"
 import {Active} from "src/models/active"
+import {EditorSnapshot} from "src/models/editor-snapshot"
 
+/**
+ * Save the active snapshot under the session id.
+ *
+ * Redirect the app to the previous parent id,
+ * but the active snapshot id that was just saved.
+ *
+ * The session page is essentially a form to create
+ * a new editor snapshot under that session id.
+ *
+ * It's should be thought of as POST /session/:id/snapshots
+ */
 export const submitSearch = createHandler(async () => {
   const {session} = Active
-  const {lastSnapshot, nextSnapshot} = session
+  const nextSnapshot = Active.snapshot
 
-  session.reset()
-
-  if (nextSnapshot.equals(lastSnapshot)) {
-    session.load(lastSnapshot.pathname)
+  if (nextSnapshot.equals(session.snapshot)) {
+    session.load()
   } else {
-    nextSnapshot.save()
-    session.load(nextSnapshot.pathname)
+    session.navigate(Active.snapshot, session.namedQuery)
   }
 })

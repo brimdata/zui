@@ -1,10 +1,10 @@
 import {FormEvent} from "react"
 import {useSelector} from "react-redux"
-import * as queries from "src/app/commands/queries"
 import {useZuiApi} from "src/app/core/context"
 import {useDispatch} from "src/app/core/state"
 import Layout from "src/js/state/Layout"
 import Current from "src/js/state/Current"
+import {create} from "src/domain/named-queries/handlers"
 
 export function useTitleForm() {
   const active = useSelector(Current.getActiveQuery)
@@ -18,10 +18,10 @@ export function useTitleForm() {
       const name = input.value.trim() || ""
 
       if (name.length) {
-        if (active.isSaved()) {
+        if (active.isSaved() && !active.isModified()) {
           api.queries.rename(active.query.id, name)
         } else {
-          queries.save.run(name)
+          create(name)
         }
       }
       dispatch(Layout.hideTitleForm())

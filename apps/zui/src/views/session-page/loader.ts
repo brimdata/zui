@@ -49,7 +49,7 @@ export const loadRoute = createHandler(
     // If you need to wait for the query info, use the waitForSelector
     // function and look for QueryInfo.getIsParsed to be true.
     const {session} = Active
-    const {lastSnapshot} = session
+
     fetchQueryInfo(program).then((info) => {
       const {poolName, error} = info
       const pool = select(Pools.getByName(lakeId, poolName))
@@ -61,7 +61,7 @@ export const loadRoute = createHandler(
       }
 
       if (!error && history.action === "PUSH") {
-        session.history.push(lastSnapshot)
+        session.pushHistory()
       }
     })
   }

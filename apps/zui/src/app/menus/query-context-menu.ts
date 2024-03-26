@@ -3,8 +3,8 @@ import {Group, Query} from "src/js/state/Queries/types"
 import {copyQueryToClipboard} from "../commands/copy-query-to-clipboard"
 import {deleteQueries} from "../commands/delete-queries"
 import {exportQueryGroup} from "../commands/export-query-group"
-import {openQuery} from "../commands/open-query"
 import {createMenu} from "src/core/menu"
+import {NamedQueries} from "src/domain/handlers"
 
 export const queryContextMenu = createMenu(
   (_, tree: TreeApi<Query | Group>, node: NodeApi<Query | Group>) => {
@@ -32,7 +32,7 @@ export const queryContextMenu = createMenu(
       {
         label: "Open Query",
         visible: node.isLeaf,
-        click: () => openQuery.run(node.id),
+        click: () => NamedQueries.show(node.id),
       },
       {type: "separator"},
       {

@@ -5,7 +5,7 @@ export const sessionToolbarMenu = createMenu((_, query: ActiveQuery) => {
   return [
     {
       label: "Update Query",
-      command: "session.updateQuery",
+      command: "namedQueries.update",
       iconName: "check",
       visible: query.isModified(),
     },

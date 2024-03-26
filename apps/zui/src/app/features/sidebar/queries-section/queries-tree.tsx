@@ -19,6 +19,7 @@ import Appearance from "src/js/state/Appearance"
 import {TREE_ITEM_HEIGHT} from "../item"
 import {showMenu} from "src/core/menu"
 import EmptySection from "src/js/components/common/EmptySection"
+import {NamedQueries} from "src/domain/handlers"
 
 type Props = {
   source: "local" | "remote"
@@ -69,7 +70,7 @@ function QueryTree(props: {
 }) {
   const dispatch = useDispatch()
   const api = useZuiApi()
-  const id = useSelector(Current.getQueryId)
+  const id = useSelector(Current.getSessionRouteParentId)
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()
   const initialOpenState = useSelector(Appearance.getQueriesOpenState)
@@ -103,7 +104,9 @@ function QueryTree(props: {
               data={props.queries}
               childrenAccessor="items"
               onActivate={(node) => {
-                if (node.isLeaf && id !== node.id) api.queries.open(node.id)
+                if (node.isLeaf && id !== node.id) {
+                  NamedQueries.show(node.id)
+                }
               }}
               onMove={(args) => {
                 dispatch(

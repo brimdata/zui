@@ -29,6 +29,7 @@ test.describe('Query tests', () => {
       "from 'sample.zeektsv' | 3 now",
       "from 'sample.zeektsv' | 2 now",
       "from 'sample.zeektsv' | 1 now",
+      "from 'sample.zeektsv' now",
     ];
     expect(entries).toEqual(expected);
   });

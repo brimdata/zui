@@ -7,7 +7,6 @@ import {isEmpty} from "lodash"
 import {EmptyText} from "../common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import {Tree} from "react-arborist"
-import {useZuiApi} from "src/app/core/context"
 import {TREE_ITEM_HEIGHT} from "../../sidebar/item"
 
 const BG = styled.div`
@@ -18,7 +17,6 @@ const BG = styled.div`
 `
 
 export function HistorySection() {
-  const api = useZuiApi()
   const sessionHistory = useSelector(Current.getSessionHistory) || []
   const history = useMemo(
     () =>
@@ -46,12 +44,6 @@ export function HistorySection() {
               indent={8}
               disableDrag
               disableDrop
-              onActivate={(node) => {
-                api.queries.open(node.data.queryId, {
-                  version: node.data.version,
-                  history: false,
-                })
-              }}
             >
               {HistoryItem}
             </Tree>
