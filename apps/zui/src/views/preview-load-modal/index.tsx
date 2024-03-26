@@ -16,6 +16,7 @@ import {errorToString} from "src/util/error-to-string"
 import {call} from "src/util/call"
 import {invoke} from "src/core/invoke"
 import {FullModal, useFullModal} from "src/components/full-modal"
+import {useDispatch} from "src/app/core/state"
 
 function Main(props: {
   original: ResultsControl
@@ -79,13 +80,17 @@ export function PreviewLoadModal() {
     const abort = original.queryAll("*")
     return abort
   }, [files, format])
+  const dispatch = useDispatch()
 
   return (
     <FullModal ref={modal.ref}>
       <Grid>
         <Main original={original} preview={preview} onSubmit={onSubmit} />
         <Sidebar
-          onClose={() => modal.close()}
+          onClose={() => {
+            dispatch(LoadDataForm.reset())
+            modal.close()
+          }}
           onCancel={onCancel}
           isValid={!original.error && !preview.error}
         />
