@@ -14140,6 +14140,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"monaco-editor@npm:^0.47.0":
+  version: 0.47.0
+  resolution: "monaco-editor@npm:0.47.0"
+  checksum: a1c5fe6a0d71214aa2fd4fd635f89a7df6ad599e4e01492a268eb70a456e7a29dfa301324e00b577eaf9fa69813b8a28924980ab8457d89faf14d13fcbbc2d6e
+  languageName: node
+  linkType: hard
+
 "mousetrap@npm:^1.6.5":
   version: 1.6.5
   resolution: "mousetrap@npm:1.6.5"
@@ -19356,6 +19363,7 @@ __metadata:
     memoize-one: ^6.0.0
     moment: ^2.27.0
     moment-timezone: ^0.5.31
+    monaco-editor: ^0.47.0
     mousetrap: ^1.6.5
     msw: ^0.36.8
     next: ^13.3.0

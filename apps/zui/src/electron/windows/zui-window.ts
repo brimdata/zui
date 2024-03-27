@@ -40,6 +40,7 @@ export abstract class ZuiWindow {
       ...getWindowDimens(this.dimens, pickDimens(this.options), getDisplays()),
       webPreferences: {
         preload: path.join(__dirname, "../build/preload.js"),
+        webSecurity: env.isRelease,
       },
     })
     this.touch()
@@ -69,7 +70,7 @@ export abstract class ZuiWindow {
     this.beforeLoad()
     const url = env.isDevelopment
       ? `http://localhost:4567${this.path}?id=${this.id}&name=${this.name}`
-      : `file://${this.path}.html?id=${this.id}&name=${this.name}`
+      : `app-asset://zui${this.path}.html?id=${this.id}&name=${this.name}`
     return this.ref.loadURL(url)
   }
 
