@@ -55,18 +55,27 @@ jobs:
       - name: End to end tests
         id: playwright
         run: |
-          if [ "$RUNNER_OS" = "Linux" ]; then
-            # Mock for pcap slice opening to avoid hanging Actions Runner.
-            # See https://github.com/brimdata/zui/pull/2987
-            echo "application/vnd.tcpdump.pcap; /usr/bin/true" >> /home/runner/.mailcap
-            /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" ${{ inputs.run-target }}
-          else
-            ${{ inputs.run-target }}
-          fi
+          num=1
+          success=0
+          fail=0
+          while [ $num -le 1000 ]; do
+            if [ "$RUNNER_OS" = "Linux" ]; then
+              { /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" ${{ inputs.run-target }}; err="$?"; } || true
+            else
+              { ${{ inputs.run-target }}; err="$?"; } || true
+            fi
+            if [ $err -eq 0 ]; then
+              success=$(expr $success + 1)
+            else
+              fail=$(expr $fail + 1)
+            fi
+            num=$(expr $num + 1)
+            echo "success=$success fail=$fail"
+          done
         env:
           VIDEO: ${{ inputs.video }}
           DEBUG: ${{ inputs.debug }}
-        shell: sh
+        shell: bash
       - name: Put system logs alongside other artifacts
         run: |
           mkdir -p packages/zui-player/run/var_log
