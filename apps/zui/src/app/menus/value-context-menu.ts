@@ -1,12 +1,13 @@
 import * as zed from "@brimdata/zed-js"
 import {createMenu} from "src/core/menu"
 import ZuiApi from "src/js/api/zui-api"
+import QueryInfo from "src/js/state/QueryInfo"
 
 function getWhenContext(api: ZuiApi, value: zed.Any) {
   return {
     isPrimitive: zed.isPrimitive(value),
     isIterable: zed.isIterable(value),
-    isGroupBy: api.current.query.toAst().isSummarized,
+    isGroupBy: api.select(QueryInfo.get).isSummarized,
     selectedText: document.getSelection().toString() || null,
     isIp: value instanceof zed.Ip,
   }

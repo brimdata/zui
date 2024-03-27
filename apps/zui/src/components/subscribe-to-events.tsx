@@ -7,10 +7,6 @@ import {useDispatch} from "src/app/core/state"
 import {subscribeEvents} from "src/js/flows/subscribeEvents"
 import lake from "src/js/models/lake"
 import Lakes from "src/js/state/Lakes"
-import {
-  getRemotePoolForLake,
-  refreshRemoteQueries,
-} from "src/js/state/RemoteQueries/flows/remote-queries"
 
 type LakeSourceMap = {[lakeId: string]: EventSource}
 const lakeSourceMap: LakeSourceMap = {}
@@ -53,9 +49,6 @@ export function SubscribeToEvents() {
                 new Error("No 'pool_id' from branch-commit event")
               )
 
-            const remotePool = dispatch(getRemotePoolForLake(l.id))
-            if (poolId === remotePool?.id)
-              dispatch(refreshRemoteQueries(lake(l)))
             dispatch(syncPool(poolId, l.id)).catch((e) => {
               console.error("branch-commit update failed: ", e)
             })

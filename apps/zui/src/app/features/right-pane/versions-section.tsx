@@ -6,8 +6,8 @@ import Current from "src/js/state/Current"
 import {QueryModel} from "src/js/models/query-model"
 import {EmptyText} from "./common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
-import {useZuiApi} from "src/app/core/context"
 import {TREE_ITEM_HEIGHT} from "../sidebar/item"
+import {NamedQueries} from "src/domain/handlers"
 
 const EmptyMessage = () => {
   return <EmptyText>Open a saved query to see the previous versions.</EmptyText>
@@ -23,7 +23,6 @@ const VersionsSection = () => {
 }
 
 const VersionsList = ({query}: {query: QueryModel}) => {
-  const api = useZuiApi()
   const data = useMemo(() => {
     return query.versions
       .map((v) => ({...v, id: v.version}))
@@ -43,9 +42,7 @@ const VersionsList = ({query}: {query: QueryModel}) => {
             padding={8}
             data={data}
             selection={currentId}
-            onActivate={(node) =>
-              api.queries.open(query.id, {version: node.id})
-            }
+            onActivate={(node) => NamedQueries.show(query.id, node.id)}
           >
             {VersionItem}
           </Tree>

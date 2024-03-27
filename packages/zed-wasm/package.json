@@ -3,6 +3,25 @@
   "version": "0.0.17",
   "homepage": "https://github.com/brimdata/zed",
   "type": "module",
+  "files": [
+    "dist/browser.js",
+    "dist/index.js",
+    "dist/main.wasm",
+    "src/**/*.js"
+  ],
+  "main": "./dist/index.cjs",
+  "jsdelivr": "./dist/browser.js",
+  "scripts": {
+    "test": "run-s 'test:*'",
+    "test:node": "node --test test/node",
+    "test:browser": "playwright test",
+    "test:cjs": "jest test/cjs",
+    "build": "run-s 'build:*'",
+    "build:browser": "esbuild src/browser.js --outfile=dist/browser.js --format=esm --bundle",
+    "build:cjs": "esbuild src/index.js --outfile=dist/index.cjs --format=cjs --bundle --platform=node --packages=external",
+    "build:go": "GOARCH=wasm GOOS=js go build -tags=noasm -o dist/main.wasm main.go",
+    "start-test-server": "serve -p 2000"
+  },
   "keywords": [
     "zed",
     "data",
@@ -11,10 +30,17 @@
     "wasm"
   ],
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
     "@types/golang-wasm": "^1.15.0",
-    "golang-wasm": "github:teamortix/golang-wasm#master"
+    "@types/node": "^20.11.0",
+    "esbuild": "^0.17.12",
+    "golang-wasm": "github:teamortix/golang-wasm#master",
+    "jest": "^29.4.1",
+    "npm-run-all": "^4.1.5",
+    "serve": "^14.2.1"
   },
   "dependencies": {
-    "@brimdata/zed-js": "workspace:*"
+    "@brimdata/zed-js": "workspace:*",
+    "polyfill-crypto.getrandomvalues": "^1.0.0"
   }
 }

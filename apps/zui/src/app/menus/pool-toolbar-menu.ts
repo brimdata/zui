@@ -1,8 +1,9 @@
 import {Pool} from "../core/pools/pool"
 import {createMenu} from "src/core/menu"
+import {Snapshots} from "src/domain/handlers"
 import {chooseFiles} from "src/domain/loads/handlers"
 
-export const poolToolbarMenu = createMenu(({api}, pool: Pool) => {
+export const poolToolbarMenu = createMenu((_, pool: Pool) => {
   return [
     {
       display: "icon-label",
@@ -18,7 +19,7 @@ export const poolToolbarMenu = createMenu(({api}, pool: Pool) => {
       label: "Query Pool",
       iconName: "query",
       click: () => {
-        api.queries.open({
+        Snapshots.createAndShow({
           pins: [{type: "from", value: pool.name}],
           value: "",
         })

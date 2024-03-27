@@ -1,6 +1,7 @@
 import * as zed from "@brimdata/zed-js"
 import Current from "src/js/state/Current"
 import LogDetails from "src/js/state/LogDetails"
+import QueryInfo from "src/js/state/QueryInfo"
 import {GetState} from "src/js/state/types"
 
 export class CurrentApi {
@@ -21,7 +22,7 @@ export class CurrentApi {
   }
 
   get poolName() {
-    return Current.getActiveQuery(this.getState()).toAst().poolName
+    return QueryInfo.get(this.getState()).poolName
   }
 
   get value() {

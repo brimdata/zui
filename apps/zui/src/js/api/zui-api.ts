@@ -65,19 +65,6 @@ export default class ZuiApi {
     return [ctl.signal, cleanup] as const
   }
 
-  async query(body: string, opts: {id?: string; tabId?: string} = {}) {
-    const zealot = await this.getZealot()
-    const [signal, cleanup] = this.createAbortable(opts.tabId, opts.id)
-    try {
-      const resp = await zealot.query(body, {signal})
-      resp.on("success", cleanup)
-      return resp
-    } catch (e) {
-      cleanup()
-      throw e
-    }
-  }
-
   select<T extends (s: State) => ReturnType<T>>(fn: T) {
     return fn(this.getState())
   }

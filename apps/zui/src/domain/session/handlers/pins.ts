@@ -10,6 +10,7 @@ import {submitSearch} from "src/domain/session/handlers"
 import {createHandler} from "src/core/handlers"
 import ZuiApi from "src/js/api/zui-api"
 import Selection from "src/js/state/Selection"
+import {Snapshots} from "src/domain/handlers"
 
 export const createPinFromEditor = createHandler(
   "session.createPinFromEditor",
@@ -42,9 +43,9 @@ export const createFromPin = createHandler(
 
 export const setFromPin = createHandler(
   "session.setFromPin",
-  ({dispatch, select, oldApi}, value: string) => {
+  ({dispatch, select}, value: string) => {
     if (select(Tabs.none)) {
-      oldApi.queries.open({pins: [{type: "from", value}], value: ""})
+      Snapshots.createAndShow({pins: [{type: "from", value}], value: ""})
     } else {
       dispatch(Editor.setFrom(value))
       submitSearch()

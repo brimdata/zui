@@ -99,9 +99,23 @@ export default class TestApp {
     }
   }
 
+  getLocationKey() {
+    return this.page
+      .locator('[data-location-key]')
+      .getAttribute('data-location-key');
+  }
+
+  waitForNextLocationKey(prevKey) {
+    return this.page
+      .locator(`[data-location-key="${prevKey}"]`)
+      .waitFor({ state: 'detached' });
+  }
+
   async query(zed: string): Promise<void> {
+    const prevKey = await this.getLocationKey();
     await this.setEditor(zed);
     await this.mainWin.getByRole('button', { name: 'Run Query' }).click();
+    await this.waitForNextLocationKey(prevKey);
     await this.mainWin.getByRole('status', { name: 'fetching' }).isHidden();
   }
 

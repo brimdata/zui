@@ -2,7 +2,8 @@
   "name": "@brimdata/zed-js",
   "version": "0.0.17",
   "type": "commonjs",
-  "exports": "./src/index.js",
+  "main": "./dist/cjs/src/index.js",
+  "jsdelivr": "./dist/browser/index.js",
   "devDependencies": {
     "@types/event-source-polyfill": "^1.0.1"
   },

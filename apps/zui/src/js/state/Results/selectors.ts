@@ -30,11 +30,7 @@ export const getStatus = resultsSelect((results) => {
 })
 
 export const getPaginatedQuery = resultsSelect((results) => {
-  if (results.aggregation) {
-    return paginate(results.query, results.aggregationLimit, 1)
-  } else {
-    return paginate(results.query, results.perPage, results.page)
-  }
+  return paginate(results.query, results.perPage, results.page)
 })
 
 export const getQuery = resultsSelect((results) => {
@@ -45,8 +41,8 @@ export const isFetching = resultsSelect((results) => {
   return results.status === "FETCHING"
 })
 
-export const isLimited = resultsSelect((results) => {
-  return results.status === "LIMIT"
+export const canPaginate = resultsSelect((results) => {
+  return results.canPaginate
 })
 
 export const isComplete = resultsSelect(
@@ -57,14 +53,8 @@ export const isIncomplete = resultsSelect(
   (results) => results.status === "INCOMPLETE"
 )
 
-export const isAggregation = resultsSelect((results) => results.aggregation)
-
 export const getKey = resultsSelect((results) => {
   return results.key
-})
-
-export const getAggregationLimit = resultsSelect((results) => {
-  return results.aggregationLimit
 })
 
 export const getError = resultsSelect((results) => results.error)

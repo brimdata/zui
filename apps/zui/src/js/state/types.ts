@@ -49,7 +49,6 @@ export type State = {
   poolSettings: PoolSettingsState
   queries: QueriesState
   queryVersions: QueryVersionsState
-  remoteQueries: QueriesState
   sessionHistories: SessionHistoriesState
   sessionQueries: SessionQueriesState
   tabHistories: TabHistoriesState

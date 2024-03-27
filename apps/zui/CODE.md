@@ -81,13 +81,29 @@ _Main Process Initializers_
 
 Code that needs to be run one time before the app starts up can be put in an initializer. An initializer is a file that lives in the folder `src/electron/initializers/`. It must export a function named _initialize(main)_ that takes the Main Object as its only argument. See the FAQ for an example of creating a new initializer.
 
+_Query Session_
+
+This is a type of page that a tab can hold it the app. The page contains an editor pane, a results pane, and an inspector with various tabs related to querying data. These are session history, global history, data details, columns, and more.
+
 _Query_
 
-A query in the app is like a container object. It holds the name and id of the query. It does not contain the zed code. Those are stored in a QueryVersion. Each Query has many QueryVersions, showing the history of that query.
+A query in the app is like a container object. It holds the name and id of the query. It does not contain the zed code. Those are stored in a EditorSnapshot. Each Query has many EditorSnapshots, showing the history of that query.
+
+_Editor Snapshot_ - formerly QueryVersion
+
+This is an object that represents the state of a query editor at a given point in time. It contains fields like: pins, value, createdAt, lastRanAt, and queryId. The editor snapshot object will belong to either a named query, or a session query.
+
+_Query Text_
+
+This is text of the final Zed Query we will send to the backend.
 
 _Session Query_
 
-A session query is like an unnamed Query. Each session (tab) has exactly one SessionQuery associated with it. The SessionQuery has many QueryVersions associated with it.
+A session query is like an unnamed Query. Each session (tab) has exactly one SessionQuery associated with it. The SessionQuery has many EditorSnapshots associated with it.
+
+_Acitve Query_
+
+This refers to whatever query is currently being presented in the query session page. This can either be a query or a session query.
 
 _Store_
 

@@ -15,12 +15,6 @@ export const find = (state: State, id: string): Query | null => {
     .first((n) => n.model.id === id)?.model
 }
 
-export const findRemoteQuery = (state: State, id: string): Query | null => {
-  return new TreeModel({childrenPropertyName: "items"})
-    .parse(state.remoteQueries)
-    .first((n) => n.model.id === id && !("items" in n.model))?.model
-}
-
 export const findSessionQuery = (state: State, id: string): Query | null => {
   return state.sessionQueries[id]
 }
@@ -35,12 +29,10 @@ const getQueryVersions = (state: State, id: string) => {
 
 export const build = createSelector(
   find,
-  findRemoteQuery,
   findSessionQuery,
   getQueryVersions,
-  (localMeta, remoteMeta, sessionMeta, versions) => {
+  (localMeta, sessionMeta, versions) => {
     if (localMeta) return new QueryModel(localMeta, versions, "local")
-    if (remoteMeta) return new QueryModel(remoteMeta, versions, "remote")
     if (sessionMeta) return new QueryModel(sessionMeta, versions, "session")
     return null
   }

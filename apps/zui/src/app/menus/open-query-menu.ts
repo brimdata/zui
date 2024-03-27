@@ -1,6 +1,7 @@
 import {MenuItemConstructorOptions} from "electron"
 import {Item} from "src/js/state/Queries/types"
 import {createMenu} from "src/core/menu"
+import {NamedQueries} from "src/domain/handlers"
 
 export const openQueryMenu = createMenu(({api}) => {
   function createMenuItems(items: Item[]) {
@@ -13,7 +14,7 @@ export const openQueryMenu = createMenu(({api}) => {
       } else {
         return {
           label: query.name,
-          click: () => api.queries.open(query.id),
+          click: () => NamedQueries.show(query.id),
         }
       }
     })

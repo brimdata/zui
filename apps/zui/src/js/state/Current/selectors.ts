@@ -18,6 +18,7 @@ import {entitiesToArray} from "../utils"
 import lake from "src/js/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
+import QueryInfo from "../QueryInfo"
 
 export const getHistory = (
   state,
@@ -36,7 +37,7 @@ export const getLocation = (state: State) => {
   return getHistory(state)?.location
 }
 
-const getQueryUrlParams = createSelector(getLocation, (location) => {
+export const getQueryUrlParams = createSelector(getLocation, (location) => {
   const path = location.pathname
   const routes = [queryVersion.path, query.path]
   const match = matchPath<{queryId: string; version: string}>(path, routes)
@@ -51,6 +52,10 @@ export const getVersion = (state: State): QueryVersion => {
     QueryVersions.at(tabId).find(state, version)
   )
 }
+
+export const getQueryText = createSelector(getVersion, (version) => {
+  return QueryModel.versionToZed(version)
+})
 
 const getRawSession = (state: State) => {
   const id = getSessionId(state)
@@ -67,11 +72,11 @@ const getSessionVersions = (state: State) => {
 }
 
 export const getNamedQuery = (state: State) => {
-  const queryId = getQueryId(state)
+  const queryId = getSessionRouteParentId(state)
   return Queries.build(state, queryId)
 }
 
-export const getQueryId = (state: State) => {
+export const getSessionRouteParentId = (state: State) => {
   const {queryId} = getQueryUrlParams(state)
   return queryId
 }
@@ -166,21 +171,17 @@ export const getSessionId = getTabId
 export function getOpEventContext(state: State) {
   return {
     lakeId: getLakeId(state),
-    poolName: getActiveQuery(state).toAst().poolName as string | null,
+    poolName: QueryInfo.get(state).poolName,
   }
 }
 
 export type OpEventContext = ReturnType<typeof getOpEventContext>
 
-export const getPoolNameFromQuery = createSelector(getActiveQuery, (q) => {
-  return q.toAst().poolName
-})
-
 export const getPoolFromQuery = createSelector(
-  getPoolNameFromQuery,
+  QueryInfo.get,
   getPools,
-  (name, pools) => {
-    return pools.find((p) => p.data.name === name) ?? null
+  (info, pools) => {
+    return pools.find((p) => p.data.name === info.poolName) ?? null
   }
 )
 

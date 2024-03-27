@@ -12,7 +12,6 @@ export const GLOBAL_PERSIST: StateKey[] = [
   "launches",
   "queries",
   "queryVersions",
-  "remoteQueries",
   "sessionQueries",
   "poolSettings",
 ]

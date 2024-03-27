@@ -21,7 +21,7 @@ export const createQuerySession =
   (dispatch, getState, {api}) => {
     const sessionId = nanoid()
     const version = "0"
-    api.queries.addVersion(sessionId, {version, value: "", pins: []})
+    api.queries.createEditorSnapshot(sessionId, {version, value: "", pins: []})
     const url = queryPath(sessionId, version)
     return dispatch(create(url, sessionId))
   }

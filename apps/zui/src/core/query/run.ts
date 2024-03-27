@@ -1,40 +1,45 @@
-import {ResultStream} from "@brimdata/zed-js"
 import ErrorFactory from "src/js/models/ErrorFactory"
 import Current from "src/js/state/Current"
 import Results from "src/js/state/Results"
 import {Thunk} from "src/js/state/types"
 import {isAbortError} from "src/util/is-abort-error"
+import {createHandler} from "../handlers"
+import {query} from "src/domain/lake/handlers"
 
+// Add a signal param here
 export function nextPage(id: string): Thunk {
   return async (dispatch, getState) => {
     if (Results.isFetching(id)(getState())) return
     if (Results.isComplete(id)(getState())) return
-    if (Results.isLimited(id)(getState())) return
-    dispatch(Results.nextPage({id}))
-    dispatch(run(id))
+    if (Results.canPaginate(id)(getState())) {
+      dispatch(Results.nextPage({id}))
+      run(id)
+    }
   }
 }
 
+// Add a signal param here
 export function firstPage(opts: {id: string; query: string}): Thunk {
   return async (dispatch, getState, {api}) => {
     const {id, query} = opts
     const key = Current.getLocation(getState()).key
     const tabId = api.current.tabId
     dispatch(Results.init({query, key, id, tabId}))
-    dispatch(run(id))
+    run(id)
   }
 }
 
-function run(id: string): Thunk<Promise<ResultStream | null>> {
-  return async (dispatch, getState, {api}) => {
-    const tabId = api.current.tabId
-    const isFirstPage = Results.getPage(id)(getState()) === 1
-    const prevVals = Results.getValues(id)(getState())
-    const prevShapes = Results.getShapes(id)(getState())
-    const paginatedQuery = Results.getPaginatedQuery(id)(getState())
-
+// Add a signal param here
+const run = createHandler(
+  async ({select, dispatch, asyncTasks}, id: string) => {
+    const tabId = select(Current.getTabId)
+    const isFirstPage = select(Results.getPage(id)) === 1
+    const prevVals = select(Results.getValues(id))
+    const prevShapes = select(Results.getShapes(id))
+    const paginatedQuery = select(Results.getPaginatedQuery(id))
+    const {signal} = asyncTasks.createOrReplace([tabId, id])
     try {
-      const res = await api.query(paginatedQuery, {id, tabId})
+      const res = await query(paginatedQuery, {signal})
       await res.collect(({rows, shapesMap}) => {
         const values = isFirstPage ? rows : [...prevVals, ...rows]
         const shapes = isFirstPage ? shapesMap : {...prevShapes, ...shapesMap}
@@ -54,4 +59,4 @@ function run(id: string): Thunk<Promise<ResultStream | null>> {
       return null
     }
   }
-}
+)

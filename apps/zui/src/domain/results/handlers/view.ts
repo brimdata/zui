@@ -38,9 +38,9 @@ export const showExportDialog = createHandler(
 
 export const toggleHistogram = createHandler(
   "results.toggleHistogram",
-  ({dispatch, select, oldApi}) => {
+  ({dispatch, select}) => {
     const isShown = select(Layout.getShowHistogram)
-    if (!isShown) runHistogramQuery(oldApi)
+    if (!isShown) runHistogramQuery()
     dispatch(Layout.toggleHistogram())
   }
 )

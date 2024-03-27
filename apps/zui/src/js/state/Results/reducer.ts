@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction as Pay} from "@reduxjs/toolkit"
 import * as zed from "@brimdata/zed-js"
-import program from "src/js/models/program"
 import {ResultsState} from "./types"
 import {initialResultData} from "./util"
 
@@ -18,11 +17,19 @@ const slice = createSlice({
   name: "TAB_RESULTS",
   initialState: {} as ResultsState,
   reducers: {
-    init(s, a: Pay<{id: string; query: string; key: string; tabId: string}>) {
+    init(
+      s,
+      a: Pay<{
+        id: string
+        query: string
+        key: string
+        tabId: string
+      }>
+    ) {
       const r = access(s, a.payload.id)
       r.query = a.payload.query
-      r.aggregation = program(a.payload.query).hasAnalytics()
       r.key = a.payload.key
+      r.canPaginate = false
       r.page = 1
       r.status = "FETCHING"
       r.values = []
@@ -48,11 +55,17 @@ const slice = createSlice({
       r.shapes = a.payload.shapes
     },
 
+    setCanPaginate(
+      s,
+      a: Pay<{id: string; canPaginate: boolean; tabId: string}>
+    ) {
+      const r = access(s, a.payload.id)
+      r.canPaginate = a.payload.canPaginate
+    },
+
     success(s, a: Pay<{id: string; count?: number; tabId: string}>) {
       const r = access(s, a.payload.id)
-      if (r.aggregation && a.payload.count === r.aggregationLimit) {
-        r.status = "LIMIT"
-      } else if (a.payload.count === r.perPage) {
+      if (a.payload.count === r.perPage) {
         r.status = "INCOMPLETE"
       } else {
         r.status = "COMPLETE"

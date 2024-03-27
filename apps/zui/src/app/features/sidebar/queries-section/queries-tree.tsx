@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react"
+import React, {useRef} from "react"
 import {Tree, TreeApi} from "react-arborist"
 import {useSelector} from "react-redux"
 import {deleteQueries} from "src/app/commands/delete-queries"
@@ -8,8 +8,6 @@ import {queryTreeContextMenu} from "src/app/menus/query-tree-context-menu"
 import Current from "src/js/state/Current"
 import Queries from "src/js/state/Queries"
 import {Group, Query} from "src/js/state/Queries/types"
-import RemoteQueries from "src/js/state/RemoteQueries"
-import {refreshRemoteQueries} from "src/js/state/RemoteQueries/flows/remote-queries"
 import {DropOverlay} from "../drop-overlay"
 import {useQueryImportOnDrop} from "../hooks"
 import {FillFlexParent} from "src/components/fill-flex-parent"
@@ -19,27 +17,16 @@ import Appearance from "src/js/state/Appearance"
 import {TREE_ITEM_HEIGHT} from "../item"
 import {showMenu} from "src/core/menu"
 import EmptySection from "src/js/components/common/EmptySection"
+import {NamedQueries} from "src/domain/handlers"
 
 type Props = {
-  source: "local" | "remote"
   searchTerm: string
 }
 
-export function QueriesTree(props: Props) {
-  switch (props.source) {
-    case "local":
-      return <LocalQueriesTree {...props} />
-    case "remote":
-      return <RemoteQueriesTree {...props} />
-    default:
-      return null
-  }
-}
-
-function LocalQueriesTree({searchTerm}: Props) {
+export function QueriesTree({searchTerm}: Props) {
   const queries = useSelector(Queries.raw).items
   if (queries.length) {
-    return <QueryTree queries={queries} searchTerm={searchTerm} type="local" />
+    return <TreeOfQueries queries={queries} searchTerm={searchTerm} />
   } else {
     return (
       <EmptySection message="Local queries you've saved will be listed here." />
@@ -47,29 +34,13 @@ function LocalQueriesTree({searchTerm}: Props) {
   }
 }
 
-function RemoteQueriesTree({searchTerm}) {
-  const dispatch = useDispatch()
-  const queries = useSelector(RemoteQueries.raw).items
-  useEffect(() => {
-    dispatch(refreshRemoteQueries())
-  }, [])
-  if (queries.length) {
-    return <QueryTree queries={queries} searchTerm={searchTerm} type="remote" />
-  } else {
-    return (
-      <EmptySection message="Remote queries from the lake will be listed here." />
-    )
-  }
-}
-
-function QueryTree(props: {
+function TreeOfQueries(props: {
   queries: (Query | Group)[]
   searchTerm: string
-  type: "local" | "remote"
 }) {
   const dispatch = useDispatch()
   const api = useZuiApi()
-  const id = useSelector(Current.getQueryId)
+  const id = useSelector(Current.getSessionRouteParentId)
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()
   const initialOpenState = useSelector(Appearance.getQueriesOpenState)
@@ -90,7 +61,6 @@ function QueryTree(props: {
               initialOpenState={initialOpenState}
               openByDefault={false}
               padding={8}
-              disableDrag={props.type === "remote"}
               ref={tree}
               selection={id}
               className="sidebar-tree"
@@ -103,7 +73,9 @@ function QueryTree(props: {
               data={props.queries}
               childrenAccessor="items"
               onActivate={(node) => {
-                if (node.isLeaf && id !== node.id) api.queries.open(node.id)
+                if (node.isLeaf && id !== node.id) {
+                  NamedQueries.show(node.id)
+                }
               }}
               onMove={(args) => {
                 dispatch(
@@ -121,7 +93,6 @@ function QueryTree(props: {
                   return api.queries.create({
                     name: "",
                     parentId,
-                    type: props.type,
                   })
                 } else {
                   return api.queries.createGroup("", parentId)

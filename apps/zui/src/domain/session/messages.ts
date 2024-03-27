@@ -7,7 +7,6 @@ export type SessionHandlers = {
   "session.canGoForward": typeof handlers.canGoForward
   "session.createPinFromEditor": typeof handlers.createPinFromEditor
   "session.editQuery": typeof handlers.editQuery
-  "session.updateQuery": typeof handlers.updateQuery
   "session.runQuery": typeof handlers.runQuery
   "session.saveAsNewQuery": typeof handlers.saveAsNewQuery
   "session.resetQuery": typeof handlers.resetQuery

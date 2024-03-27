@@ -5,14 +5,18 @@ import toast from "react-hot-toast"
 import {isFunction, isString} from "lodash"
 import ZuiApi from "src/js/api/zui-api"
 import {startTransition} from "react"
+import {createWaitForSelector} from "src/app/core/state/create-wait-for-selector"
+import {AsyncTasks} from "src/modules/async-tasks"
 
 export type HandlerContext = {
   dispatch: AppDispatch
   select<Fn extends (...a: any[]) => any>(selector: Fn): ReturnType<Fn>
+  waitForSelector: ReturnType<typeof createWaitForSelector>
   invoke: typeof invoke
   toast: typeof toast
   oldApi: ZuiApi
   transition: typeof startTransition
+  asyncTasks: AsyncTasks
 }
 
 let context: HandlerContext | null = null

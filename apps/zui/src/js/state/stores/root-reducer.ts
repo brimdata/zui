@@ -13,7 +13,6 @@ import Toolbars from "../Toolbars"
 import ConfigPropValues from "../ConfigPropValues"
 import Launches from "../Launches"
 import Appearance from "../Appearance"
-import RemoteQueries from "../RemoteQueries"
 import Loads from "../Loads"
 import QueryVersions from "../QueryVersions"
 import SessionQueries from "../SessionQueries"
@@ -38,7 +37,6 @@ const rootReducer = combineReducers<any, any>({
   poolSettings: PoolSettings.reducer,
   queries: Queries.reducer,
   queryVersions: QueryVersions.reducer,
-  remoteQueries: RemoteQueries.reducer,
   sessionHistories: SessionHistories.reducer,
   sessionQueries: SessionQueries.reducer,
   tabHistories: TabHistories.reducer,

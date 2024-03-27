@@ -1,7 +1,6 @@
 import {Query} from "src/js/state/Queries/types"
 import {isEmpty, last} from "lodash"
 import {QueryPinInterface} from "../state/Editor/types"
-import {parse as parseAst} from "zed/compiler/parser/parser"
 import buildPin from "src/js/state/Editor/models/build-pin"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {QuerySource} from "src/js/api/queries/types"
@@ -35,14 +34,6 @@ export class QueryModel implements Query {
     return this.current?.pins ?? []
   }
 
-  get isLocal() {
-    return this.source === "local"
-  }
-
-  get isRemote() {
-    return this.source === "remote"
-  }
-
   hasVersion(version: string): boolean {
     return !!this.versions?.map((v) => v.version).includes(version)
   }
@@ -67,17 +58,6 @@ export class QueryModel implements Query {
       tags: this.tags,
       isReadOnly: this.isReadOnly,
     }
-  }
-
-  static checkSyntax(version: QueryVersion) {
-    const zed = this.versionToZed(version)
-    let error = null
-    try {
-      parseAst(zed)
-    } catch (e) {
-      error = e
-    }
-    return error
   }
 
   static versionToZed(version: QueryVersion): string {

@@ -5,6 +5,7 @@
 }
 
 .dialog {
+  padding: var(--gutter);
   z-index: 99999;
   position: fixed;
   width: 260px;

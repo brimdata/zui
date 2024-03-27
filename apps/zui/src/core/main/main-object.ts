@@ -137,4 +137,11 @@ export class MainObject {
     const auth = await this.dispatch(getAuthToken(lake))
     return new Client(lake.getAddress(), {auth})
   }
+
+  async createDefaultClient() {
+    const port = this.args.lakePort
+    const user = this.appMeta.userName
+    const lake = Lakes.getDefaultLake(port, user)
+    return this.createClient(lake.id)
+  }
 }

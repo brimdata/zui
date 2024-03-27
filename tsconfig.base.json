@@ -18,7 +18,6 @@
       "@brimdata/sample-data": ["packages/sample-data/src/index.ts"],
       "@brimdata/zed-js": ["packages/zed-js/src/index.ts"],
       "@brimdata/zed-node": ["packages/zed-node/src/index.ts"],
-      "@brimdata/zed-wasm": ["packages/zed-wasm/src/index.ts"],
       "zui-test-data": ["packages/zui-test-data/src/index.ts"]
     }
   },

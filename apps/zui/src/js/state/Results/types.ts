@@ -5,7 +5,6 @@ export type ResultsStatus =
   | "FETCHING"
   | "INCOMPLETE"
   | "COMPLETE"
-  | "LIMIT"
   | "ERROR"
 
 export type ResultData = ReturnType<typeof initialResultData>
