@@ -37,20 +37,20 @@ export class Session extends DomainModel<Attrs> {
     return new Session({id})
   }
 
+  get hasUrl() {
+    return !!this.parentId && !!this.snapshotId
+  }
+
   get id() {
     return this.attrs.id
   }
 
   get parentId() {
-    if (!this.attrs.parentId)
-      throw new Error("Session has not yet navigated to a url")
-    else return this.attrs.parentId
+    return this.attrs.parentId
   }
 
   get snapshotId() {
-    if (!this.attrs.snapshotId)
-      throw new Error("Session has not yet navigated to a url")
-    else return this.attrs.snapshotId
+    return this.attrs.snapshotId
   }
 
   get pathname() {
@@ -78,7 +78,7 @@ export class Session extends DomainModel<Attrs> {
   }
 
   get hasNamedQuery() {
-    return this.id !== this.parentId
+    return this.parentId && this.id !== this.parentId
   }
 
   get namedQuery() {

@@ -5,12 +5,12 @@ import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import Pools from "src/js/state/Pools"
 import Current from "src/js/state/Current"
 import PoolSettings from "src/js/state/PoolSettings"
-import Tabs from "src/js/state/Tabs"
 import {submitSearch} from "src/domain/session/handlers"
 import {createHandler} from "src/core/handlers"
 import ZuiApi from "src/js/api/zui-api"
 import Selection from "src/js/state/Selection"
-import {Snapshots} from "src/domain/handlers"
+import {Session} from "src/models/session"
+import {Active} from "src/models/active"
 
 export const createPinFromEditor = createHandler(
   "session.createPinFromEditor",
@@ -43,13 +43,10 @@ export const createFromPin = createHandler(
 
 export const setFromPin = createHandler(
   "session.setFromPin",
-  ({dispatch, select}, value: string) => {
-    if (select(Tabs.none)) {
-      Snapshots.createAndShow({pins: [{type: "from", value}], value: ""})
-    } else {
-      dispatch(Editor.setFrom(value))
-      submitSearch()
-    }
+  ({dispatch}, value: string) => {
+    Session.activateLastFocused()
+    dispatch(Editor.setFrom(value))
+    Active.session.navigate(Active.snapshot, Active.session.namedQuery)
   }
 )
 
