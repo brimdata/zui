@@ -83,7 +83,7 @@ Code that needs to be run one time before the app starts up can be put in an ini
 
 _Query Session_
 
-This is a type of page that a tab can hold in the app. The page contains an editor pane, a results pane, and a details pane. The detail pane holds tabs for session history, global history, data details, columns, and more. When you "run a query" it will get the active editor snapshot, save it under the session id, then navigate the location to that newly saved snapshot id. When a query session loads a url, it will always look for the snapshot id living under its own session id. If there is a named query id in the url as well, it will display the name in the editor header. However, each session only pulls from it's own collection of snapshots, not the named query snapshots. Therefore, every time a session navigates, the snapshot id it's loading must belong to that session id.
+This is a type of page that a tab can hold in the app. The page contains an editor pane, a results pane, and a details pane. The detail pane holds tabs for session history, global history, data details, columns, and more. When you "run a query" it will get the active editor snapshot, save it under the session id, then navigate the location to that newly saved snapshot id. When a query session loads a url, it will always look for the snapshot id living under its own session id. If there is a named query id in the url as well, it will display the name in the editor header. However, each session only pulls from its own collection of snapshots, not the named query snapshots. Therefore, every time a session navigates, the snapshot id it's loading must belong to that session id.
 
 _Named Query_
 
