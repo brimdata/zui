@@ -59,7 +59,7 @@ export function ZedEditor(props: {
         minimap: {enabled: false},
         renderLineHighlight: "none",
         renderControlCharacters: false,
-        fontSize: "14px",
+        fontSize: 14,
         fontFamily: "var(--mono-font)",
         fontVariations: "inherit",
         lineNumbersMinChars: 4,
