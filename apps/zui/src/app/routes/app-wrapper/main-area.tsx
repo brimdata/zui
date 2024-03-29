@@ -47,7 +47,13 @@ export function MainArea({children}) {
   }
 
   return (
-    <BG onMouseDown={touched} onKeyDown={touched} style={style}>
+    <BG
+      onMouseDown={touched}
+      onKeyDown={touched}
+      style={style}
+      role="tabpanel"
+      id="main-area"
+    >
       <AppErrorBoundary>{children}</AppErrorBoundary>
     </BG>
   )

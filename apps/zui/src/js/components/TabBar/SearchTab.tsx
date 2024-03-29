@@ -40,6 +40,9 @@ const SearchTab = React.forwardRef<HTMLAnchorElement, Props>(function SearchTab(
     <a
       {...rest}
       ref={ref}
+      role="tab"
+      aria-selected={active}
+      aria-controls="main-area"
       className={classNames("tab", {active, "is-new": isNew, preview})}
     >
       <div className="tab-content">

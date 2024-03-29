@@ -129,6 +129,12 @@ export default class TestApp {
     return await this.mainWin.getByTestId('main-editor').textContent();
   }
 
+  async getTabCount() {
+    const tablist = this.page.locator('[role=tablist][id=main-area-tabs]');
+    const tabs = tablist.getByRole('tab');
+    return await tabs.count();
+  }
+
   async getViewerResults(includeHeaders = true): Promise<string[]> {
     const fields = await this.mainWin.locator('.zed-table__cell');
     await fields.waitFor();
