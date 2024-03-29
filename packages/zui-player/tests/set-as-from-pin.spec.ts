@@ -14,7 +14,7 @@ play('Set As From Pin', (app, test) => {
     test.expect(await app.getTabCount()).toBe(tabCount + 1);
   });
 
-  test('when a session tab does exists', async () => {
+  test('when a session tab does exist', async () => {
     // it re-uses the existing session tab
     await app.dropFile(getPath('small-zeek.zng'));
     await app.click('button', 'Load');
