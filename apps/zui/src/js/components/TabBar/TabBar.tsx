@@ -83,7 +83,12 @@ export default function TabBar() {
         </TrafficLightBG>
       )}
       {sidebarCollapsed && !global.env.isMac && <SidebarToggleButton />}
-      <Container ref={ref} onMouseLeave={ctl.onMouseLeave}>
+      <Container
+        ref={ref}
+        onMouseLeave={ctl.onMouseLeave}
+        role="tablist"
+        id="main-area-tabs"
+      >
         {ids.map((id: string) => {
           const tabModel = tab(id, lakes, pools, queryIdNameMap, lakeId)
           return (
