@@ -1,15 +1,16 @@
 ## v1.7.0
 - Update Zed to [v1.15.0](https://github.com/brimdata/zed/releases/tag/v1.15.0)
 - Update Brimcap to [v1.7.0](https://github.com/brimdata/brimcap/releases/tag/v1.7.0), which includes a new Zeek [v6.2.0-brim1](https://github.com/brimdata/build-zeek/releases/tag/v6.2.0-brim1)
-- For Zeek `files` events, the `is_orig` value is now used to determine the `tx_host` and `rx_host` values in the Correaltion view (#3004)
+- For Zeek `files` events, the `is_orig` value is now used to determine the `tx_host` and `rx_host` values in the Correlation view (#3004)
 - The Zed service launched by Zui now attempts to compact stored data every 5 minutes (#3006)
 - **Export Results** has been enhanced to allow export to pools or the clipboard (paste buffer) (#2985, #3017)
 - Improve syntax error presentation by using the `/compile` endpoint of the Zed service rather than the JS Zed query parser (#2972, #3034)
-- Fix an issue where Zui's query editor would not load when running airgapped (i.e., no Internet connection) (#3032)
+- Fix an issue where Zui's query editor would not load when running air-gapped (i.e., no Internet connection) (#3032)
 - Fix an issue where issuing the query `yield typeof({})` produced a stack trace (#2996)
-- Fix an issue where issuing a new query while the stacked bar chart is loading trigged an error (#2996)
+- Fix an issue where issuing a new query while the stacked bar chart is loading triggered an error (#2996)
 - Fix an issue in dark mode where font colors made text invisible during pool renames (#3028)
 - Fix an issue where a large JSON object could not be loaded in Zui (#3026)
+- Fix an issue where hitting the Back button too many times could cause the lost of session history (#3041)
 
 ## v1.6.0
 - Update Zed to [v1.13.0](https://github.com/brimdata/zed/releases/tag/v1.13.0)
