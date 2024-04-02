@@ -38,7 +38,18 @@ export class BrowserTab extends DomainModel<Attrs> {
     if (this.history.location.pathname === pathname) {
       this.history.replace(pathname)
     } else {
+      // Whenever a tab is created it constructs itself with a root entry "/".
+      // This can mess up the tab history back button, allowing the user to
+      // get back to this "root" url which does not contain forward/back buttons.
+      // Instead, this if statement resets the entries and index for this tab
+      // if the only url in the entries array is "/", making it the
+      // first entry in the history the first pathname given to browerTab.load()
+      if (this.history.length == 1 && this.history.location.pathname === "/") {
+        this.history.entries = []
+        this.history.index = -1
+      }
       this.history.push(pathname)
+      console.log(this.history)
     }
   }
 

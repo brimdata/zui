@@ -15,6 +15,11 @@ test.describe('Query tests', () => {
     await app.shutdown();
   });
 
+  test('session initializes with the back button disabled', async () => {
+    const backButton = app.locate('button', 'Go Back');
+    await expect(backButton).toBeDisabled();
+  });
+
   test('session queries are the default and ordered properly in history', async () => {
     await app.query('1');
     await app.query('2');
