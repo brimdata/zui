@@ -9,7 +9,7 @@ export function fieldExprToName(expr) {
 function _fieldExprToName(expr): string | string[] {
   switch (expr.kind) {
     case "BinaryExpr":
-      if (expr.op == "." || expr.op == "[") {
+      if (expr.op == ".") {
         return []
           .concat(_fieldExprToName(expr.lhs), _fieldExprToName(expr.rhs))
           .filter((n) => n !== "this")
@@ -17,6 +17,10 @@ function _fieldExprToName(expr): string | string[] {
       return "<not-a-field>"
     case "ID":
       return expr.name
+    case "IndexExpr":
+      return []
+        .concat(_fieldExprToName(expr.expr), _fieldExprToName(expr.index))
+        .filter((n) => n !== "this")
     case "This":
       return "this"
     case "Primitive":
