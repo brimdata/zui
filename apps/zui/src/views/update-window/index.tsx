@@ -1,7 +1,6 @@
 import {useSelector} from "react-redux"
 import Updates from "src/js/state/Updates"
 import styles from "./index.module.css"
-import forms from "src/components/forms.module.css"
 import classNames from "classnames"
 import ProgressIndicator from "src/js/components/ProgressIndicator"
 import {isNumber} from "lodash"
@@ -88,14 +87,14 @@ export function UpdateWindow() {
           />
         )}
       </main>
-      <footer className={classNames(styles.footer, forms.form)}>
+      <footer className={classNames(styles.footer, "repel")}>
         {data.button && (
-          <button onClick={data.button[1] as any} className={forms.button}>
+          <button onClick={data.button[1] as any} className="button">
             {data.button[0] as string}
           </button>
         )}
         {data.submit && (
-          <button onClick={data.submit[1] as any} className={forms.submit}>
+          <button onClick={data.submit[1] as any} className="button submit">
             {data.submit[0] as string}
           </button>
         )}
