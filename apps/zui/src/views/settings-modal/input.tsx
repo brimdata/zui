@@ -35,6 +35,7 @@ export function Input(props: SettingProps) {
       return (
         <div className="flex items-center gap-s">
           <input
+            key={value}
             type="text"
             defaultValue={value}
             onBlur={onChange}
@@ -51,7 +52,7 @@ export function Input(props: SettingProps) {
             className="hidden"
             id={name}
             name={name}
-            onChange={(e) => update(e.currentTarget.files[0].path!)}
+            onChange={(e) => update(e.currentTarget.files[0]?.path)}
           />
         </div>
       )

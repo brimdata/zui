@@ -2,7 +2,8 @@ input,
 button,
 textarea,
 select,
-button {
+button,
+.input {
   color: var(--fg-color);
   font: inherit;
   padding-inline: 0.66em;
@@ -12,7 +13,8 @@ button {
 
 select,
 input,
-textarea {
+textarea,
+.input {
   border: 1px solid var(--border-color);
   display: block;
   width: 100%;
@@ -54,4 +56,21 @@ form label {
 
 form label + * {
   --flow-space: 0.33em;
+}
+
+label:has(input) {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  text-transform: none;
+  font-size: var(--step-0);
+  font-weight: normal;
+  letter-spacing: normal;
+  user-select: none;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  width: 1.3em;
+  height: 1.3em;
 }

@@ -195,3 +195,18 @@
 .hidden {
   display: none;
 }
+
+.scroll-shadow {
+  animation: scroll-shadow-inset linear;
+  animation-timeline: scroll(self block);
+}
+
+@keyframes scroll-shadow-inset {
+  from {
+    box-shadow: inset 0 -3px 4px rgb(0 0 0 / 0.15);
+  }
+
+  to {
+    box-shadow: inset 0 3px 4px rgb(0 0 0 / 0.15);
+  }
+}

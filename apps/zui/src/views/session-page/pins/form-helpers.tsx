@@ -85,6 +85,7 @@ const red = cssVar("--red") as string
 const darkRed = darken(0.1, red)
 
 export const RedLink = styled.a`
+  user-select: none;
   color: ${red};
   cursor: default;
   &:active {

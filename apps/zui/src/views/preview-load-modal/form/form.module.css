@@ -43,7 +43,6 @@
 
 .fileItem {
   font-weight: normal;
-  padding: 0 2px 0 8px;
   margin: 0;
   display: grid;
   grid-template-columns: max-content 1fr max-content;

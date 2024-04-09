@@ -22,9 +22,9 @@
       "positiveSteps": (
         1.5,
         2,
-        2.5,
         3,
-        3.5,
+        4,
+        6,
       ),
       "negativeSteps": (
         0.75,
@@ -36,6 +36,7 @@
 }
 
 :root {
+  
   --gutter-space: var(--space-s);
   --hover-duration: 75ms;
 

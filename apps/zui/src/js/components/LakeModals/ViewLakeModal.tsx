@@ -11,9 +11,6 @@ import Notice from "../../state/Notice"
 import removeLake from "../../flows/lake/removeLake"
 import {useDispatch} from "src/app/core/state"
 import {showMessageBox} from "src/js/lib/System"
-import forms from "src/components/forms.module.css"
-import {H1} from "src/components/h1"
-import classNames from "classnames"
 import styles from "./lake-modal.module.css"
 import {capitalize} from "lodash"
 import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
@@ -54,46 +51,36 @@ const ViewLake = ({onClose, onEdit}) => {
   }
 
   return (
-    <div className={classNames(forms.form, "box-s")}>
-      <div className="stack-3">
-        <H1>{name}</H1>
-        <section className="stack-1">
-          <div className="field">
-            <label>Lake URL</label>
-            <input
-              type="text"
-              readOnly
-              value={port ? [host, port].join(":") : host}
-            />
-          </div>
-          <div className="field">
-            <label>Status</label>
-            <input type="text" readOnly value={capitalize(status)} />
-          </div>
-          <div className="field">
-            <label>Zed Version</label>
-            <input type="text" readOnly value={version} />
-          </div>
-          <div className="field">
-            <label>Pool Count</label>
-            <input type="text" readOnly value={poolCount.toString()} />
-          </div>
-        </section>
-        <div className={forms.submission}>
-          <button type="button" onClick={onClose} className={forms.button}>
-            OK
-          </button>
-          <button type="submit" onClick={onEdit} className={forms.submit}>
-            Edit
-          </button>
-        </div>
+    <form className="box gutter-space-m">
+      <h1>{name}</h1>
+      <div className="flow region region-space-xl">
+        <label>Lake URL</label>
+        <input
+          type="text"
+          readOnly
+          value={port ? [host, port].join(":") : host}
+        />
+        <label>Status</label>
+        <input type="text" readOnly value={capitalize(status)} />
+        <label>Zed Version</label>
+        <input type="text" readOnly value={version} />
+        <label>Pool Count</label>
+        <input type="text" readOnly value={poolCount.toString()} />
+      </div>
+      <div className="repel">
+        <button type="button" onClick={onClose} className="button">
+          OK
+        </button>
+        <button type="submit" onClick={onEdit} className="button submit">
+          Edit
+        </button>
         {!isDefault && (
           <div className={styles.logout}>
             <Link onClick={onRemove}>Logout</Link>
           </div>
         )}
       </div>
-    </div>
+    </form>
   )
 }
 

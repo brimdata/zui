@@ -1,5 +1,4 @@
 import React from "react"
-import {H1} from "src/components/h1"
 import styled from "styled-components"
 
 const BG = styled.div`
@@ -12,7 +11,7 @@ const BG = styled.div`
 export function NotFound() {
   return (
     <BG>
-      <H1>Pool Not Found</H1>
+      <h1>Pool Not Found</h1>
       <p>This pool has been deleted.</p>
     </BG>
   )

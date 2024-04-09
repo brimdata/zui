@@ -23,6 +23,7 @@ button {
   border-color: var(--border-color);
   box-shadow: inset 0 1px 0 var(--button-shine);
   transition: all var(--hover-duration);
+  padding-inline: var(--space-m);
 
   &:hover {
     filter: var(--hover-filter);
@@ -33,4 +34,15 @@ button {
     filter: var(--active-filter);
     box-shadow: none;
   }
+}
+
+.submit {
+  --button-bg: linear-gradient(to bottom, #4c91e2, #3170de);
+  --button-shine: rgba(255, 255, 255, 0.1);
+  --border-color: #206cc6;
+
+  --hover-filter: brightness(105%);
+  --active-filter: brightness(115%);
+
+  color: white;
 }

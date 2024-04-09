@@ -1,4 +1,4 @@
-$space-sizes: "3xs", "2xs", "xs", "s", "m", "l", "xl", "2xs";
+$space-sizes: "3xs", "2xs", "xs", "s", "m", "l", "xl", "2xl", "3xl";
 
 @each $size in $space-sizes {
   .flow-space-#{$size} {

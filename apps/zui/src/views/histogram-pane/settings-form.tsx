@@ -3,11 +3,8 @@ import PoolSettings from "src/js/state/PoolSettings"
 import {useForm} from "react-hook-form"
 import {useDispatch} from "src/app/core/state"
 import {State} from "src/js/state/types"
-import styles from "./histogram-pane.module.css"
 import {runHistogramQuery} from "./run-query"
 import {getDefaults} from "src/js/state/PoolSettings/selectors"
-import forms from "src/components/forms.module.css"
-import classNames from "classnames"
 
 type Inputs = {
   timeField: string
@@ -39,32 +36,27 @@ export function SettingsForm(props: Props) {
     <form
       method="dialog"
       onSubmit={form.handleSubmit(onSubmit)}
-      className={classNames(styles.settingsForm, forms.form)}
+      className="flow"
     >
-      <section className="stack-1">
-        <div className="field">
-          <label>Time Field</label>
-          <input
-            type="text"
-            {...form.register("timeField")}
-            placeholder={defaults.timeField}
-          />
-        </div>
-        <div className="field">
-          <label>Color Field</label>
-          <input
-            type="text"
-            {...form.register("colorField")}
-            placeholder={defaults.colorField}
-          />
-        </div>
-      </section>
-      <div className={forms.submission}>
-        <div></div>
-        <button type="submit" className={forms.submit}>
-          Save
-        </button>
-      </div>
+      <label>Time Field</label>
+      <input
+        type="text"
+        {...form.register("timeField")}
+        placeholder={defaults.timeField}
+      />
+      <label>Color Field</label>
+      <input
+        type="text"
+        {...form.register("colorField")}
+        placeholder={defaults.colorField}
+      />
+      <button
+        type="submit"
+        className="button submit"
+        style={{display: "block", marginInlineStart: "auto"}}
+      >
+        Save
+      </button>
     </form>
   )
 }
