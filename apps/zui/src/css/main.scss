@@ -1,19 +1,38 @@
 /* This file is for your main application css. */
 
 /* Settings */
+@import "settings/variables";
 @import "settings/fonts";
 @import "settings/colors";
 @import "settings/spacing";
 @import "settings/shared-styles";
 
-/* Shared */
+/* Global */
+
 @import "shared/shadows";
 @import "shared/type-colors";
 @import "shared/typography";
 @import "shared/effects";
+@import "transitions";
 
-/* Specific */
+@import "global/body";
+@import "global/star";
+@import "global/type";
+@import "global/forms";
+@import "global/lists";
+@import "global/buttons";
 @import "global";
+
+/* Compositions */
+
+@import "layouts";
+@import "compositions/flow";
+@import "compositions/box";
+@import "compositions/sidebar";
+@import "compositions/region";
+@import "compositions/repel";
+
+/* Blocks */
 @import "buttons";
 @import "tags";
 @import "text-content";
@@ -58,7 +77,6 @@
 @import "ingest-warnings-modal";
 @import "log-detail-window";
 @import "sidebar";
-/* Common */
 @import "history-buttons";
 @import "x-button";
 @import "html-context-menu";
@@ -72,9 +90,12 @@
 @import "zed-view";
 @import "modal-animation";
 @import "editor";
-
-// The CUBE Model
-@import "layouts";
 @import "blocks";
+
+@import "blocks/sidebar-item";
+@import "blocks/settings-modal";
+
+/* Utilities */
 @import "utilities";
-@import "transitions";
+@import "utilities/spacing";
+@import "utilities/flex";

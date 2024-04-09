@@ -1,0 +1,13 @@
+.settings-modal {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  --sidebar-target-width: 20ch;
+}
+
+.settings-modal .sidebar {
+  gap: 0;
+}
+
+.settings-modal header {
+  border-bottom-style: solid;
+}

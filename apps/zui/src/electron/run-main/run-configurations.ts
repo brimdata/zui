@@ -26,7 +26,7 @@ export function runConfigurations() {
       nameDelimiter: {
         name: "nameDelimiter",
         label: "Group Pools By",
-        type: "string",
+        type: "char",
         defaultValue: "/",
       },
     },
@@ -55,13 +55,13 @@ export function runConfigurations() {
       thousandsSeparator: {
         name: "thousandsSeparator",
         label: "Thousands Separator",
-        type: "string",
+        type: "char",
         defaultValue: ",",
       },
       decimal: {
         name: "decimal",
         label: "Decimal",
-        type: "string",
+        type: "char",
         defaultValue: ".",
       },
     },

@@ -18615,6 +18615,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"utopia-core-scss@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "utopia-core-scss@npm:1.0.1"
+  checksum: 0df9a9814d4d87457effdb4ddb783a4bea2829e98f75501cfd6beb4f821827c33e3a314113be05acda523ce5e4241f0332698189e2ff4a826154c496a2067733
+  languageName: node
+  linkType: hard
+
 "v8-compile-cache-lib@npm:^3.0.1":
   version: 3.0.1
   resolution: "v8-compile-cache-lib@npm:3.0.1"
@@ -19401,6 +19408,7 @@ __metadata:
     tmp: ^0.1.0
     tree-model: ^1.0.7
     use-resize-observer: ^8.0.0
+    utopia-core-scss: ^1.0.1
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
     zed: "brimdata/zed#v1.15.0"

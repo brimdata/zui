@@ -1,0 +1,34 @@
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+  letter-spacing: -0.4px;
+}
+
+h4 {
+  font-size: var(--step-1);
+}
+
+h3 {
+  font-size: var(--step-2);
+}
+
+h2 {
+  font-size: var(--step-3);
+}
+
+h1 {
+  font-size: var(--step-4);
+  font-weight: 900;
+}

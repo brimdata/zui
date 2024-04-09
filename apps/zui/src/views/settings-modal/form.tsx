@@ -1,6 +1,6 @@
 import {isArray} from "lodash"
 import get from "lodash/get"
-import React from "react"
+import React, {Fragment} from "react"
 import {useSelector} from "react-redux"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {FormConfig} from "src/js/models/form"
@@ -38,7 +38,7 @@ export function Form(props: {configs: FormConfig}) {
     switch (c.type) {
       case "boolean":
         return (
-          <div className="setting-panel" key={name}>
+          <Fragment key={name}>
             {itemLabel}
             <input
               id={name}
@@ -46,11 +46,11 @@ export function Form(props: {configs: FormConfig}) {
               name={name}
               defaultChecked={val === undefined ? defaultValue : val}
             />
-          </div>
+          </Fragment>
         )
       case "file":
         return (
-          <div key={name} className="setting-panel">
+          <Fragment>
             {itemLabel}
             <input
               type="file"
@@ -59,11 +59,24 @@ export function Form(props: {configs: FormConfig}) {
               defaultValue={val === undefined ? defaultValue : val}
               placeholder="default"
             />
-          </div>
+          </Fragment>
+        )
+      case "char":
+        return (
+          <Fragment>
+            {itemLabel}
+            <input
+              type="input"
+              style={{inlineSize: "8ch"}}
+              id={name}
+              name={name}
+              defaultValue={val === undefined ? defaultValue : val}
+            />
+          </Fragment>
         )
       case "directory":
         return (
-          <div key={name} className="setting-panel">
+          <Fragment>
             {itemLabel}
             <input
               type="file"
@@ -74,12 +87,12 @@ export function Form(props: {configs: FormConfig}) {
               defaultValue={val === undefined ? defaultValue : val}
               placeholder="default"
             />
-          </div>
+          </Fragment>
         )
       case "string":
         if (isArray(c.enum)) {
           return (
-            <div className="setting-panel" key={name}>
+            <Fragment key={name}>
               {itemLabel}
               <select
                 id={name}
@@ -96,11 +109,12 @@ export function Form(props: {configs: FormConfig}) {
                   )
                 })}
               </select>
-            </div>
+            </Fragment>
           )
         }
+
         return (
-          <div key={name} className="setting-panel">
+          <Fragment key={name}>
             {itemLabel}
             <input
               id={name}
@@ -109,7 +123,7 @@ export function Form(props: {configs: FormConfig}) {
               placeholder=""
               defaultValue={val === undefined ? defaultValue : val}
             />
-          </div>
+          </Fragment>
         )
     }
   })

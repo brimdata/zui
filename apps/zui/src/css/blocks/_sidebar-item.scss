@@ -1,0 +1,34 @@
+.sidebar-item {
+  border-radius: 6px;
+  width: 100%;
+  cursor: default;
+  user-select: none;
+  background-color: transparent;
+  border-style: solid;
+  border-color: transparent;
+  transition: all 150ms;
+
+  --gutter-space: 0.33em 0.66em;
+  --selected-bg: var(--primary-color);
+  --selected-color: white;
+  --selected-shadow: var(--shadow-s);   
+  --selected-border: var(--primary-color-dark);
+}
+
+.sidebar-item:hover {
+  background-color: var(--bg-color);
+  filter: brightness(0.97);
+}
+
+.sidebar-item[aria-selected="true"] {
+  box-shadow: var(--selected-shadow);
+  background: var(--selected-bg);
+  color: var(--selected-color);
+  border-color: var(--selected-border);
+}
+
+.white-selection {
+  --selected-bg: white;
+  --selected-color: var(--fg-color);
+  --selected-border: var(--border-color);
+}
