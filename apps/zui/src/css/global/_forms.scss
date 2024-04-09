@@ -1,9 +1,13 @@
 input,
 button,
 textarea,
-select {
+select,
+button {
   color: var(--fg-color);
   font: inherit;
+  padding-inline: 0.66em;
+  padding-block: 0.2em;
+  border-radius: var(--form-border-radius);
 }
 
 select,
@@ -16,9 +20,6 @@ textarea {
   border-radius: var(--form-border-radius);
   background: var(--form-bg-color);
   border: 1px solid var(--border-color);
-  line-height: var(--form-line-height);
-  padding-inline: 0.66em;
-  padding-block: 0.35em;
 
   &:disabled {
     background: var(--border-color);

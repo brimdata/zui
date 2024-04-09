@@ -1,9 +1,7 @@
 .form .submit {
-  height: var(--form-height);
   border-radius: var(--form-border-radius);
   background: var(--form-bg-color);
   line-height: var(--form-line-height);
-  padding: var(--form-padding);
   background: var(--primary-color);
   border: 1px solid var(--primary-color-dark);
   color: white;
@@ -23,19 +21,6 @@
 
 .form .button:active:not(:disabled) {
   background: var(--primary-color-darker);
-}
-
-.form .button {
-  height: var(--form-height);
-  border-radius: var(--form-border-radius);
-  background: var(--form-bg-color);
-  line-height: var(--form-line-height);
-  padding: var(--form-padding);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 3px 4px -4px var(--bg-color-less);
-  font-weight: 500;
-  min-width: 80px;
-  user-select: none;
 }
 
 .form .button:hover:not(:disabled) {
@@ -115,12 +100,6 @@
 
 .form .radioInput:has(input:checked) label {
   color: var(--fg-color);
-}
-
-.form .submission {
-  display: flex;
-  justify-content: space-between;
-  margin-top: calc(var(--form-field-gap) * 3);
 }
 
 .form .error {

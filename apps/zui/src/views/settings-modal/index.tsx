@@ -14,7 +14,7 @@ export function SettingsModal() {
 function Content(props: {configs: Config[]}) {
   const modal = usePopoverModal()
   const sections = props.configs.sort((a, b) => (a.title < b.title ? -1 : 1))
-  const [active, setActive] = useState(sections[0].name)
+  const [active, setActive] = useState(sections[1].name)
   const section = props.configs.find((config) => config.name === active)
 
   return (

@@ -1,4 +1,36 @@
+/**
+ * Button Settings
+ */
+
+:root {
+  --button-bg: linear-gradient(to bottom, hsl(0 0% 97%), hsl(0 0% 94%));
+  --button-shine: white;
+
+  @media (prefers-color-scheme: dark) {
+    --button-bg: linear-gradient(to top, hsl(0 0% 28%), hsl(0 0% 18%));
+    --button-shine: tranparent;
+  }
+}
+
 button {
   border: none;
-  outline: none;
+  white-space: nowrap;
+}
+
+.button {
+  background: var(--button-bg);
+  border-style: solid;
+  border-color: var(--border-color);
+  box-shadow: inset 0 1px 0 var(--button-shine);
+  transition: all var(--hover-duration);
+
+  &:hover {
+    filter: var(--hover-filter);
+  }
+
+  &:active {
+    transition: none;
+    filter: var(--active-filter);
+    box-shadow: none;
+  }
 }

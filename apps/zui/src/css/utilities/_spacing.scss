@@ -17,3 +17,9 @@ $space-sizes: "3xs", "2xs", "xs", "s", "m", "l", "xl", "2xs";
     --region-space: var(--space-#{$size});
   }
 }
+
+@each $size in $space-sizes {
+  .gap-#{$size} {
+    gap: var(--space-#{$size});
+  }
+}

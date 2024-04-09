@@ -10,12 +10,7 @@
   --blue: hsl(212, 72%, 59%);
 
   /* Forms */
-  --form-font-size: 14px;
-  --form-line-height: 20px;
-  --form-border-radius: 6px;
-  --form-padding: 3px 10px;
-  --form-height: var(--s3);
-  --form-field-gap: 12px;
+  --form-border-radius: 3px;
 
   /*  Easings */
   --pop-easing: cubic-bezier(0.16, 1, 0.3, 1);
@@ -102,6 +97,8 @@
     --bg-color: hsl(44deg 8% 10%);
     --backdrop-color: rgba(0, 0, 0, 0.5);
     --window-color: #303231;
+    --button-bg: linear-gradient(to bottom, hsl(0 0% 20%), hsl(0 0% 10%));
+    --button-shine: tranparent;
   }
 }
 
@@ -113,8 +110,8 @@
   --chrome-color-more: #e9eaeb;
 
   @media (prefers-color-scheme: dark) {
-    --chrome-color: rgba(255, 255, 255, 0.15);
-    --chrome-color-more: rgba(255, 255, 255, 0.4);
+    --chrome-color: hsl(0deg 0% 16.02%);
+    --chrome-color-more: hsl(0deg 0% 46.02%);
   }
 }
 
@@ -154,7 +151,7 @@
   --border-color-more: hsl(216, 10%, 80%);
 
   @media (prefers-color-scheme: dark) {
-    --border-color: rgba(255, 255, 255, 0.3);
+    --border-color: #393939;
     --border-color-more: rgba(255, 255, 255, 0.5);
   }
 }

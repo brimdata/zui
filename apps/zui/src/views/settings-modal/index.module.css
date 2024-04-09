@@ -1,8 +1,0 @@
-.modal {
-    min-width: 500px;
-    padding: 2rem;
-}
-
-.title {
-    margin-bottom: calc(var(--form-field-gap) * 3);
-}

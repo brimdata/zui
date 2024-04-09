@@ -6,18 +6,23 @@
   background-color: transparent;
   border-style: solid;
   border-color: transparent;
-  transition: all 150ms;
+  transition: all var(--hover-duration);
 
   --gutter-space: 0.33em 0.66em;
   --selected-bg: var(--primary-color);
   --selected-color: white;
-  --selected-shadow: var(--shadow-s);   
+  --selected-shadow: var(--shadow-s);
   --selected-border: var(--primary-color-dark);
 }
 
 .sidebar-item:hover {
-  background-color: var(--bg-color);
-  filter: brightness(0.97);
+  background-color: inherit;
+  filter: var(--hover-filter);
+}
+
+.sidebar-item:active {
+  background-color: inherit;
+  filter: var(--active-filter);
 }
 
 .sidebar-item[aria-selected="true"] {
