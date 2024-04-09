@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {useTimeZone} from "src/app/core/format"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import {PinFormProps} from "./base-pin"
-import {getFormData, RedLink} from "./form-helpers"
+import {getFormData} from "./form-helpers"
 import {getTimeString} from "./get-time-string"
 
 export default function TimeRangePinForm(
@@ -47,7 +47,13 @@ export default function TimeRangePinForm(
         {getTimeString(toValue, zone)}
       </p>
       <footer className="repel flow-space-xl">
-        <RedLink onClick={props.onDelete}>Delete</RedLink>
+        <button
+          className="button delete"
+          type="button"
+          onClick={props.onDelete}
+        >
+          Delete
+        </button>
         <div className="repel">
           <button className="button" type="reset">
             Cancel
