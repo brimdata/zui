@@ -1,0 +1,51 @@
+@use "../../node_modules/utopia-core-scss/src/utopia" as utopia;
+
+:root {
+  @include utopia.generateTypeScale(
+    (
+      "minWidth": 320,
+      "maxWidth": 1240,
+      "minFontSize": 15,
+      "maxFontSize": 15,
+      "minTypeScale": 1.2,
+      "maxTypeScale": 1.2,
+      "positiveSteps": 5,
+      "negativeSteps": 2,
+    )
+  );
+  @include utopia.generateSpaceScale(
+    (
+      "minWidth": 320,
+      "maxWidth": 1240,
+      "minSize": 15,
+      "maxSize": 15,
+      "positiveSteps": (
+        1.5,
+        2,
+        3,
+        4,
+        6,
+      ),
+      "negativeSteps": (
+        0.75,
+        0.5,
+        0.35,
+      ),
+    )
+  );
+}
+
+:root {
+  
+  --gutter-space: var(--space-s);
+  --hover-duration: 75ms;
+
+  /* Hover and Active Filters */
+  --hover-filter: brightness(95%);
+  --active-filter: brightness(93%);
+
+  @media (prefers-color-scheme: dark) {
+    --hover-filter: brightness(125%);
+    --active-filter: brightness(135%);
+  }
+}

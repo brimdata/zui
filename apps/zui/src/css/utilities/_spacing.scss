@@ -1,0 +1,25 @@
+$space-sizes: "3xs", "2xs", "xs", "s", "m", "l", "xl", "2xl", "3xl";
+
+@each $size in $space-sizes {
+  .flow-space-#{$size} {
+    --flow-space: var(--space-#{$size});
+  }
+}
+
+@each $size in $space-sizes {
+  .gutter-space-#{$size} {
+    --gutter-space: var(--space-#{$size});
+  }
+}
+
+@each $size in $space-sizes {
+  .region-space-#{$size} {
+    --region-space: var(--space-#{$size});
+  }
+}
+
+@each $size in $space-sizes {
+  .gap-#{$size} {
+    gap: var(--space-#{$size});
+  }
+}

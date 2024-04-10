@@ -2,7 +2,6 @@ import React, {useState} from "react"
 import styled from "styled-components"
 import links from "src/app/core/links"
 import Link from "./common/Link"
-import {H1} from "src/components/h1"
 import {Content} from "./Content"
 import {SubmitButton} from "src/components/submit-button"
 import Current from "../state/Current"
@@ -198,7 +197,7 @@ const ConnectionError = (props: {onRetry: () => void | Promise<void>}) => {
     <Wrap>
       <Image />
       <Content>
-        <H1>Connection Error</H1>
+        <h1>Connection Error</h1>
         <p>{errorMsg}</p>
       </Content>
       <Content>

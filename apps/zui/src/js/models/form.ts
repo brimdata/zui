@@ -14,12 +14,14 @@ export type StringField = Common & {type: "string"; defaultValue: string}
 export type BooleanField = Common & {type: "boolean"; defaultValue: boolean}
 export type FileField = Common & {type: "file"; defaultValue: string}
 export type DirectoryField = Common & {type: "directory"; defaultValue: string}
+export type CharField = Common & {type: "char"; defaultValue: string}
 
 export type FormFieldConfig =
   | StringField
   | BooleanField
   | FileField
   | DirectoryField
+  | CharField
 
 export type FormConfig = {
   [key: string]: FormFieldConfig

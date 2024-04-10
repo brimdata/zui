@@ -7,7 +7,6 @@ import {AppDispatch} from "src/js/state/types"
 import {bytes} from "src/js/lib/fmt"
 import styled from "styled-components"
 import {poolToolbarMenu} from "src/app/menus/pool-toolbar-menu"
-import {H1} from "src/components/h1"
 import {NotFound} from "./404"
 import {ButtonMenu} from "src/components/button-menu"
 import {RecentLoads} from "./recent-loads"
@@ -55,7 +54,7 @@ export const Show = () => {
       <header className="box-1 border:bottom">
         <div className="cluster">
           <div>
-            <H1 className="overflow-wrap:anywhere">{pool.name}</H1>
+            <h1 className="overflow-wrap:anywhere">{pool.name}</h1>
             <Subtitle>
               {isEmpty ? "This pool is empty." : bytes(pool.stats.size)}
             </Subtitle>

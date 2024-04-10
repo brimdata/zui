@@ -1,5 +1,3 @@
-import forms from "src/components/forms.module.css"
-import {H1} from "src/components/h1"
 import {useState} from "react"
 import {formatError} from "./format-error"
 import {PoolForm} from "../pool-form"
@@ -15,25 +13,19 @@ export function NewPoolModal() {
   return (
     <PopoverModal ref={modal.ref} className="max-width:measure">
       <div className="box-s">
-        <form className={forms.form} onSubmit={(e) => ctl.onSubmit(e)}>
-          <div className="stack-3">
-            <H1>New Pool</H1>
-            <section className="stack-1">
-              <PoolForm nameInput={{required: true, autoFocus: true}} />
-              {error && <div className={forms.error}>{formatError(error)}</div>}
-              <div className={forms.submission}>
-                <button
-                  type="button"
-                  onClick={modal.close}
-                  className={forms.button}
-                >
-                  Cancel
-                </button>
-                <button type="submit" className={forms.submit}>
-                  Create
-                </button>
-              </div>
-            </section>
+        <form onSubmit={(e) => ctl.onSubmit(e)}>
+          <h1>New Pool</h1>
+          <div className="flow region region-space-l">
+            <PoolForm nameInput={{required: true, autoFocus: true}} />
+            {error && <div>{formatError(error)}</div>}
+          </div>
+          <div className="repel">
+            <button type="button" onClick={modal.close} className="button">
+              Cancel
+            </button>
+            <button type="submit" className="button submit">
+              Create
+            </button>
           </div>
         </form>
       </div>

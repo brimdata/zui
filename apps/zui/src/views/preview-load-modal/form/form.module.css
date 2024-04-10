@@ -38,13 +38,11 @@
   border-radius: var(--form-border-radius);
   overflow: hidden auto;
   max-height: 400px;
-  min-height: var(--form-height);
+  min-height: 1lh;
 }
 
 .fileItem {
-  height: var(--form-height);
   font-weight: normal;
-  padding: 0 2px 0 8px;
   margin: 0;
   display: grid;
   grid-template-columns: max-content 1fr max-content;
@@ -71,15 +69,12 @@
 .fields {
   display: flex;
   flex-direction: column;
-  gap: var(--form-field-gap);
-  margin-bottom: calc(var(--form-field-gap) * 2);
 }
 
 .form summary {
   cursor: pointer;
   letter-spacing: 0.3px;
   color: var(--fg-color-less);
-  padding: calc(var(--form-field-gap) / 3) 0;
   padding-right: 0;
   font-weight: 500;
   user-select: none;
@@ -126,12 +121,4 @@
 .form details[open] > summary {
   margin-bottom: 10px;
   transition: all 400ms;
-}
-
-.form details[open] {
-  padding-bottom: calc(var(--form-field-gap));
-}
-
-.form details > *:not(summary) {
-  /* margin-left: var(--side-padding); */
 }

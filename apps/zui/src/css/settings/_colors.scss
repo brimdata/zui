@@ -1,72 +1,75 @@
-/* @link https://utopia.fyi/type/calculator?c=320,13,1.067,1240,15,1.125,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
-
-:root {
-  --step--2: clamp(0.7137rem, 0.7042rem + 0.0471vi, 0.7407rem);
-  --step--1: clamp(0.7615rem, 0.7365rem + 0.125vi, 0.8333rem);
-  --step-0: clamp(0.8125rem, 0.769rem + 0.2174vi, 0.9375rem);
-  --step-1: clamp(0.8669rem, 0.8016rem + 0.3265vi, 1.0547rem);
-  --step-2: clamp(0.925rem, 0.8341rem + 0.4548vi, 1.1865rem);
-  --step-3: clamp(0.987rem, 0.866rem + 0.6049vi, 1.3348rem);
-  --step-4: clamp(1.0531rem, 0.8971rem + 0.7801vi, 1.5017rem);
-  --step-5: clamp(1.1237rem, 0.9269rem + 0.9839vi, 1.6894rem);
-}
-
-/* @link https://utopia.fyi/space/calculator?c=320,14,1.2,1240,16,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,&g=s,l,xl,12 */
-
-:root {
-  --space-3xs: clamp(0.25rem, 0.25rem + 0vi, 0.25rem);
-  --space-2xs: clamp(0.4375rem, 0.4158rem + 0.1087vi, 0.5rem);
-  --space-xs: clamp(0.6875rem, 0.6658rem + 0.1087vi, 0.75rem);
-  --space-s: clamp(0.875rem, 0.8315rem + 0.2174vi, 1rem);
-  --space-m: clamp(1.3125rem, 1.2473rem + 0.3261vi, 1.5rem);
-  --space-l: clamp(1.75rem, 1.663rem + 0.4348vi, 2rem);
-  --space-xl: clamp(2.625rem, 2.4946rem + 0.6522vi, 3rem);
-  --space-2xl: clamp(3.5rem, 3.3261rem + 0.8696vi, 4rem);
-  --space-3xl: clamp(5.25rem, 4.9891rem + 1.3043vi, 6rem);
-
-  /* One-up pairs */
-  --space-3xs-2xs: clamp(0.25rem, 0.163rem + 0.4348vi, 0.5rem);
-  --space-2xs-xs: clamp(0.4375rem, 0.3288rem + 0.5435vi, 0.75rem);
-  --space-xs-s: clamp(0.6875rem, 0.5788rem + 0.5435vi, 1rem);
-  --space-s-m: clamp(0.875rem, 0.6576rem + 1.087vi, 1.5rem);
-  --space-m-l: clamp(1.3125rem, 1.0734rem + 1.1957vi, 2rem);
-  --space-l-xl: clamp(1.75rem, 1.3152rem + 2.1739vi, 3rem);
-  --space-xl-2xl: clamp(2.625rem, 2.1467rem + 2.3913vi, 4rem);
-  --space-2xl-3xl: clamp(3.5rem, 2.6304rem + 4.3478vi, 6rem);
-}
-
 /**
  * Constants
  */
 :root {
   /* Colors */
-  --red: #F13737;
-  --green: #1ADB91;
+  --red: #f13737;
+  --green: #1adb91;
   --orange: #ff7f00;
   --yellow: #ffc933;
   --blue: hsl(212, 72%, 59%);
 
   /* Forms */
-  --form-font-size: 14px;
-  --form-line-height: 20px;
-  --form-border-radius: 6px;
-  --form-padding: 3px 10px;
-  --form-height: var(--s3);
-  --form-field-gap: 12px;
+  --form-border-radius: 4px;
 
   /*  Easings */
   --pop-easing: cubic-bezier(0.16, 1, 0.3, 1);
-  --spring-easing: linear(0, 0.0022, 0.0087 1.01%, 0.0346 2.07%, 0.0782 3.2%, 0.1407 4.43%,
-      0.2809 6.65%, 0.7229 12.91%, 0.9383 16.72%, 1.0168, 1.0774 20.43%,
-      1.1213 22.33%, 1.1493 24.31%, 1.159 25.6%, 1.1629 26.95%, 1.1611 28.38%,
-      1.1536 29.93%, 1.1289 32.78%, 1.0506 39.61%, 1.0168 43.09%, 0.9906 46.97%,
-      0.9766 51%, 0.9735 53.84%, 0.9749 57.06%, 0.9966 69.83%, 1.0033 76.88%,
-      1.0042 83.81%, 1);
-  --emphasis-easing: linear(0, 0.0025 1.75%, 0.0099 3.55%, 0.0341 6.4%, 0.0738 9.06%, 0.1281 11.41%,
-      0.194 13.37%, 0.2714 14.97%, 0.344 16.05%, 0.5443 18.34%, 0.6069 19.39%,
-      0.6604 20.61%, 0.7167 22.4%, 0.7653 24.59%, 0.8083 27.28%, 0.8448 30.42%,
-      0.8833 35.06%, 0.9155 40.62%, 0.9421 47.24%, 0.9633 54.99%, 0.9795 64.01%,
-      0.9909 74.43%, 0.9977 86.37%, 1);
+  --spring-easing: linear(
+    0,
+    0.0022,
+    0.0087 1.01%,
+    0.0346 2.07%,
+    0.0782 3.2%,
+    0.1407 4.43%,
+    0.2809 6.65%,
+    0.7229 12.91%,
+    0.9383 16.72%,
+    1.0168,
+    1.0774 20.43%,
+    1.1213 22.33%,
+    1.1493 24.31%,
+    1.159 25.6%,
+    1.1629 26.95%,
+    1.1611 28.38%,
+    1.1536 29.93%,
+    1.1289 32.78%,
+    1.0506 39.61%,
+    1.0168 43.09%,
+    0.9906 46.97%,
+    0.9766 51%,
+    0.9735 53.84%,
+    0.9749 57.06%,
+    0.9966 69.83%,
+    1.0033 76.88%,
+    1.0042 83.81%,
+    1
+  );
+  --emphasis-easing: linear(
+    0,
+    0.0025 1.75%,
+    0.0099 3.55%,
+    0.0341 6.4%,
+    0.0738 9.06%,
+    0.1281 11.41%,
+    0.194 13.37%,
+    0.2714 14.97%,
+    0.344 16.05%,
+    0.5443 18.34%,
+    0.6069 19.39%,
+    0.6604 20.61%,
+    0.7167 22.4%,
+    0.7653 24.59%,
+    0.8083 27.28%,
+    0.8448 30.42%,
+    0.8833 35.06%,
+    0.9155 40.62%,
+    0.9421 47.24%,
+    0.9633 54.99%,
+    0.9795 64.01%,
+    0.9909 74.43%,
+    0.9977 86.37%,
+    1
+  );
   --dur-s: 150ms;
   --dur-m: 300ms;
   --dur-l: 500ms;
@@ -86,9 +89,7 @@
   --fg-color: #0f1e2e;
   --fg-color-less: hsl(210, 4%, 40%);
   --bg-color: white;
-  --window-color: #F3F3F3;
-
-
+  --window-color: #f3f3f3;
 
   @media (prefers-color-scheme: dark) {
     --fg-color: white;
@@ -96,6 +97,8 @@
     --bg-color: hsl(44deg 8% 10%);
     --backdrop-color: rgba(0, 0, 0, 0.5);
     --window-color: #303231;
+    --button-bg: linear-gradient(to bottom, hsl(0 0% 20%), hsl(0 0% 10%));
+    --button-shine: tranparent;
   }
 }
 
@@ -104,11 +107,11 @@
  */
 :root {
   --chrome-color: hsl(212, 10%, 97%);
-  --chrome-color-more: #E9EAEB;
+  --chrome-color-more: #e9eaeb;
 
   @media (prefers-color-scheme: dark) {
-    --chrome-color: rgba(255, 255, 255, 0.15);
-    --chrome-color-more: rgba(255, 255, 255, 0.4);
+    --chrome-color: hsl(0deg 0% 16.02%);
+    --chrome-color-more: hsl(0deg 0% 46.02%);
   }
 }
 
@@ -148,7 +151,7 @@
   --border-color-more: hsl(216, 10%, 80%);
 
   @media (prefers-color-scheme: dark) {
-    --border-color: rgba(255, 255, 255, 0.3);
+    --border-color: #393939;
     --border-color-more: rgba(255, 255, 255, 0.5);
   }
 }
@@ -197,7 +200,6 @@
   --shadow-l: 12px 12px 48px rgba(0, 0, 0, 0.45);
 }
 
-
 /**
  * Radius
  */
@@ -206,7 +208,6 @@
   --radius-m: 6px;
   --radius-l: 12px;
 }
-
 
 /**
  * Selection

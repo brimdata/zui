@@ -21,54 +21,9 @@ body {
   width: 100%;
 }
 
-body {
-  line-height: 1.5;
-  font-size: var(--step-0);
-  -webkit-font-smoothing: antialiased;
-  font-family: var(--body-font);
-  color: var(--fg-color);
-
-  &:not(.is-mac) {
-    background-color: var(--window-color);
-  }
+body:not(.is-mac) {
+  background-color: var(--window-color);
 }
-
-
-input,
-button,
-textarea,
-select {
-  color: var(--fg-color);
-  font: inherit;
-}
-
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
-}
-
-h4 {
-  font-size: var(--step-1);
-}
-
-h3 {
-  font-size: var(--step-2);
-}
-
-h2 {
-  font-size: var(--step-3);
-}
-
-h1 {
-  font-size: var(--step-4);
-}
-
-
 
 pre,
 code {
@@ -106,7 +61,6 @@ button {
   height: 0.75rem;
 }
 
-
 *::-webkit-scrollbar-track {
   background-color: var(--emphasis-bg-less);
 }
@@ -131,17 +85,6 @@ dd {
 
 .is-dragging {
   user-select: none;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  color: var(--fg-color-less);
-  opacity: 0.9;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  font-size: var(--step--1);
 }
 
 input {

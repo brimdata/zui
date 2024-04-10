@@ -22,7 +22,7 @@ const BG = styled.button`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background var(--quick), transform var(--quick);
+  transition: background var(--hover-duration), transform var(--hover-duration);
   -webkit-app-region: no-drag;
 
   &:disabled {

@@ -9,10 +9,9 @@ $space-xxs: 4.584px;
 $bro-log-row-height: 25px;
 
 
-
 /* Sizing */
 :root {
-  --ratio: 1.35;
+  --ratio: 1.38;
   --s-5: calc(var(--s-4) / var(--ratio));
   --s-4: calc(var(--s-3) / var(--ratio));
   --s-3: calc(var(--s-2) / var(--ratio));

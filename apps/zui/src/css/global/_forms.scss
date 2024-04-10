@@ -1,0 +1,76 @@
+input,
+button,
+textarea,
+select,
+button,
+.input {
+  color: var(--fg-color);
+  font: inherit;
+  padding-inline: 0.66em;
+  padding-block: 0.2em;
+  border-radius: var(--form-border-radius);
+}
+
+select,
+input,
+textarea,
+.input {
+  border: 1px solid var(--border-color);
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-radius: var(--form-border-radius);
+  background: var(--form-bg-color);
+  border: 1px solid var(--border-color);
+
+  &:disabled {
+    background: var(--border-color);
+    background: transparent;
+    border-color: transparent;
+    color: currentColor;
+  }
+}
+
+select {
+  appearance: none;
+  background-image: url(/select-input-arrow.svg);
+  background-repeat: no-repeat;
+  background-size: 1.2em 1.2em;
+  background-position: calc(100% - 10px) center;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: var(--fg-color);
+  opacity: 0.9;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: var(--step--2);
+}
+
+form label {
+  --flow-space: 2em;
+}
+
+form label + * {
+  --flow-space: 0.33em;
+}
+
+label:has(input) {
+  display: flex;
+  align-items: center;
+  gap: 1ch;
+  text-transform: none;
+  font-size: var(--step-0);
+  font-weight: normal;
+  letter-spacing: normal;
+  user-select: none;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  width: 1.3em;
+  height: 1.3em;
+}

@@ -10,7 +10,6 @@ import useCallbackRef from "../hooks/useCallbackRef"
 import useEventListener from "../hooks/useEventListener"
 import {isDefaultLake} from "../../initializers/initLakeParams"
 import {LakeModel} from "src/js/models/lake"
-import forms from "src/components/forms.module.css"
 import {ErrorWell} from "src/components/error-well"
 
 type Props = {
@@ -144,34 +143,30 @@ const LakeForm = ({onClose, lake}: Props) => {
   }
 
   return (
-    <form ref={setFormRef} className={forms.form}>
-      <section className="stack-1">
-        <div className="field">
-          <label>{config.name.label}</label>
-          <input
-            type="text"
-            name={config.name.name}
-            defaultValue={defaultName}
-            disabled={isSubmitting}
-            autoFocus
-          />
-        </div>
-        <div className="field">
-          <label>{config.host.label}</label>
-          <input
-            type="text"
-            name={config.host.name}
-            defaultValue={getDefaultHost()}
-            disabled={isSubmitting}
-          />
-        </div>
-        <FormErrors errors={errors} />
-      </section>
-      <section className={forms.submission}>
+    <form ref={setFormRef}>
+      <div className="flow region region-space-xl">
+        <label>{config.name.label}</label>
+        <input
+          type="text"
+          name={config.name.name}
+          defaultValue={defaultName}
+          disabled={isSubmitting}
+          autoFocus
+        />
+        <label>{config.host.label}</label>
+        <input
+          type="text"
+          name={config.host.name}
+          defaultValue={getDefaultHost()}
+          disabled={isSubmitting}
+        />
+      </div>
+      <FormErrors errors={errors} />
+      <div className="repel">
         <button
           type="button"
           onClick={isSubmitting ? onCancel : onClickClose}
-          className={forms.button}
+          className="button"
         >
           Close
         </button>
@@ -179,11 +174,11 @@ const LakeForm = ({onClose, lake}: Props) => {
           type="submit"
           disabled={isSubmitting}
           onClick={onSave}
-          className={forms.submit}
+          className="button submit"
         >
           {isSubmitting ? "Connecting..." : isNewLake ? "Connect" : "Save"}
         </button>
-      </section>
+      </div>
     </form>
   )
 }
