@@ -44,6 +44,7 @@ export function Input(props: SettingProps) {
           <button
             onClick={() => document.getElementById(name).click()}
             className="button"
+            type="button"
           >
             Choose File
           </button>
