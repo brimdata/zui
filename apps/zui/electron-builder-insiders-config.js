@@ -1,0 +1,16 @@
+const config = {
+  extends: "./electron-builder-config.js",
+  appId: "io.brimdata.zui-insiders",
+  mac: {
+    icon: "build/insiders/icon.icns"
+  },
+  win: {
+    icon: "build/insiders/icon.ico"
+  },
+  publish: {
+    provider: "github",
+    releaseType: "release"
+  }
+}
+
+module.exports = config;

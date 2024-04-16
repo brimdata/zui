@@ -25,8 +25,10 @@ jobs:
           cmd: yarn nx package-zui zui
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
-          csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
-          csc_link: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+          ssl_com_username: ${{ secrets.WINDOWS_SIGNING_SSL_COM_USERNAME }}
+          ssl_com_password: ${{ secrets.WINDOWS_SIGNING_SSL_COM_PASSWORD }}
+          ssl_com_totp_secret: ${{ secrets.WINDOWS_SIGNING_SSL_COM_TOTP_SECRET }}
+          ssl_com_credential_id: ${{ secrets.WINDOWS_SIGNING_SSL_COM_CREDENTIAL_ID }}
           # Mac
           apple_id: ${{ secrets.APPLEID_USER }}
           apple_id_password: ${{ secrets.APPLEID_PASSWORD }}
