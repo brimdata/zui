@@ -21,6 +21,8 @@ import {PoolSettingsState} from "./PoolSettings/types"
 import {WindowState} from "./Window/types"
 import {LoadDataFormState} from "./LoadDataForm/types"
 import {UpdatesState} from "./Updates/types"
+import {EntityStateAdapter} from "@reduxjs/toolkit"
+import {WorkspaceEntity} from "./Workspaces"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -55,4 +57,5 @@ export type State = {
   toolbars: ToolbarsState
   window: WindowState
   updates: UpdatesState
+  workspaces: EntityStateAdapter<WorkspaceEntity>
 }

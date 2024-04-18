@@ -60,3 +60,10 @@ export function createCrudSlice<T>(opts: {
     },
   })
 }
+
+export function createCrudSelectors(selectors) {
+  return {
+    all: selectors.selectAll,
+    find: (id) => (s) => selectors.selectById(s, id),
+  }
+}

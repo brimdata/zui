@@ -26,18 +26,21 @@ export function QueriesPanel() {
   const {ref, width, height} = useResizeObserver()
 
   return (
-    <section className="grow min-h-0" ref={ref}>
-      <TreeView
-        nodes={nodes}
-        openByDefault={false}
-        width={width}
-        height={height}
-        renderNode={NodeRenderer}
-        indent={24}
-        className="sidebar-tree"
-        rowClassName="sidebar-row gutter"
-      />
-    </section>
+    <div>
+      <select></select>
+      <section className="grow min-h-0" ref={ref}>
+        <TreeView
+          nodes={nodes}
+          openByDefault={false}
+          width={width}
+          height={height}
+          renderNode={NodeRenderer}
+          indent={24}
+          className="sidebar-tree"
+          rowClassName="sidebar-row gutter"
+        />
+      </section>
+    </div>
   )
 }
 
