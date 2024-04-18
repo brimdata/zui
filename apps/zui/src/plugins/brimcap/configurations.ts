@@ -22,8 +22,8 @@ export function activateBrimcapConfigurations() {
       },
       [suricataLocalRulesPropName]: {
         name: suricataLocalRulesPropName,
-        type: "file",
-        label: "Local Suricata Rules",
+        type: "folder",
+        label: "Local Suricata Rule Folder",
         defaultValue: "",
       },
     },
