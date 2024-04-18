@@ -1,5 +1,6 @@
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {Store} from "src/js/state/types"
+import {onStateChange} from "src/core/on-state-change"
 
 export type ConfigItemType = "file" | "string" | "folder" | "boolean" | "char"
 
@@ -50,5 +51,9 @@ export class ConfigurationsApi {
       if (this.get(config.name, prop) !== undefined) continue
       this.set(config.name, prop, config.properties[prop].defaultValue)
     }
+  }
+
+  watch(namespace: string, name: string, onChange: (val: any) => void) {
+    onStateChange(this.store, ConfigPropValues.get(namespace, name), onChange)
   }
 }
