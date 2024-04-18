@@ -28,6 +28,7 @@
 @import "layouts";
 @import "compositions/flow";
 @import "compositions/box";
+@import "compositions/gutter";
 @import "compositions/sidebar";
 @import "compositions/region";
 @import "compositions/repel";
@@ -92,6 +93,7 @@
 @import "editor";
 @import "blocks";
 
+@import "blocks/sidebar-tree";
 @import "blocks/sidebar-item";
 @import "blocks/settings-modal";
 

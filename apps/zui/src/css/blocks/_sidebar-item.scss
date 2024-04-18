@@ -1,4 +1,11 @@
-.sidebar-item {
+.sidebar-row {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-item,
+.sidebar-node {
   border-radius: 6px;
   width: 100%;
   cursor: default;
@@ -7,6 +14,9 @@
   border-style: solid;
   border-color: transparent;
   transition: all var(--hover-duration);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   --gutter-space: 0.33em 0.66em;
   --selected-bg: var(--primary-color);
@@ -15,17 +25,20 @@
   --selected-border: var(--primary-color-dark);
 }
 
-.sidebar-item:hover {
-  background-color: inherit;
+.sidebar-item:hover,
+.sidebar-row:hover .sidebar-node {
+  background-color: var(--bg-color);
   filter: var(--hover-filter);
 }
 
-.sidebar-item:active {
+.sidebar-item:active,
+.sidebar-row:active .sidebar-node {
   background-color: inherit;
   filter: var(--active-filter);
 }
 
-.sidebar-item[aria-selected="true"] {
+.sidebar-item[aria-selected="true"],
+.sidebar-row[aria-selected="true"] .sidebar-node {
   box-shadow: var(--selected-shadow);
   background: var(--selected-bg);
   color: var(--selected-color);

@@ -214,3 +214,20 @@
 .nowrap {
   white-space: nowrap;
 }
+
+.grow {
+  flex-grow: 1;
+}
+
+.min-h-0 {
+  min-block-size: 0;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.v-center {
+  display: flex;
+  align-items: center;
+}
