@@ -1,4 +1,8 @@
-import {pluginNamespace, yamlConfigPropName} from "./config"
+import {
+  pluginNamespace,
+  yamlConfigPropName,
+  suricataLocalRulesPropName,
+} from "./config"
 import {configurations} from "src/zui"
 
 export function activateBrimcapConfigurations() {
@@ -15,6 +19,12 @@ export function activateBrimcapConfigurations() {
           label: "docs",
           url: "https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config",
         },
+      },
+      [suricataLocalRulesPropName]: {
+        name: suricataLocalRulesPropName,
+        type: "folder",
+        label: "Local Suricata Rules Folder",
+        defaultValue: "",
       },
     },
   })

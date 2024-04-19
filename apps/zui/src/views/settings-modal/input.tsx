@@ -3,6 +3,7 @@ import {useSelector} from "react-redux"
 import {useDispatch} from "src/app/core/state"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {SettingProps} from "./section"
+import {invoke} from "src/core/invoke"
 
 export function Input(props: SettingProps) {
   const dispatch = useDispatch()
@@ -55,6 +56,30 @@ export function Input(props: SettingProps) {
             name={name}
             onChange={(e) => update(e.currentTarget.files[0]?.path)}
           />
+        </div>
+      )
+    case "folder":
+      return (
+        <div className="flex items-center gap-s">
+          <input
+            key={value}
+            type="text"
+            defaultValue={value}
+            onBlur={onChange}
+            placeholder="None"
+          />
+          <button
+            onClick={async () => {
+              const {canceled, filePaths} = await invoke("openDirectory")
+              if (!canceled && filePaths[0]) {
+                update(filePaths[0])
+              }
+            }}
+            className="button"
+            type="button"
+          >
+            Choose Folder
+          </button>
         </div>
       )
     case "string":
