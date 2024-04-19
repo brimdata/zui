@@ -4,12 +4,6 @@ import {useSelector} from "react-redux"
 import Appearance from "src/js/state/Appearance"
 import {SectionName} from "src/js/state/Appearance/types"
 import {SectionTabs} from "src/components/section-tabs"
-import styled from "styled-components"
-
-const BG = styled.div`
-  height: 36px;
-  padding: 0 8px;
-`
 
 export function Menu() {
   const dispatch = useDispatch()
@@ -22,13 +16,9 @@ export function Menu() {
     },
   })
   return (
-    <BG>
-      <SectionTabs
-        options={[
-          makeOption("Pools", "pools"),
-          makeOption("Queries", "queries"),
-        ]}
-      />
-    </BG>
+    <SectionTabs
+      options={[makeOption("Pools", "pools"), makeOption("Queries", "queries")]}
+      className="grow-0 border-b gutter-half"
+    />
   )
 }

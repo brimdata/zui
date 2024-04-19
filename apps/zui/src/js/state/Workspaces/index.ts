@@ -1,16 +1,15 @@
-import {createEntitySlice} from "src/modules/every-reducer/entity"
+import {entitySlice} from "src/modules/every-reducer"
 import {State} from "../types"
 
 export type WorkspaceEntity = {
   path: string
   id: string
-  name: string
   openedAt: string
 }
 
-export default createEntitySlice<WorkspaceEntity>({
+export default entitySlice<WorkspaceEntity>({
   name: "$workspaces",
   sort: (a, b) => (a.openedAt > b.openedAt ? -1 : 1),
-  select: (state: State) => state.workspaces,
   id: (t) => t.id,
+  select: (state: State) => state.workspaces,
 })

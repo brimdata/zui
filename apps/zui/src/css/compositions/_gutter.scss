@@ -1,3 +1,7 @@
 .gutter {
-  padding-inline: var(--gutter-space);
+  padding-inline: var(--gutter);
+}
+
+.gutter-half {
+  padding-inline: var(--gutter-half);
 }

@@ -18,7 +18,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  --gutter-space: 0.33em 0.66em;
+  --gutter: 0.33em 0.66em;
   --selected-bg: var(--primary-color);
   --selected-color: white;
   --selected-shadow: var(--shadow-s);
@@ -27,14 +27,12 @@
 
 .sidebar-item:hover,
 .sidebar-row:hover .sidebar-node {
-  background-color: var(--bg-color);
-  filter: var(--hover-filter);
+  background-color: var(--hover-bg);
 }
 
 .sidebar-item:active,
 .sidebar-row:active .sidebar-node {
-  background-color: inherit;
-  filter: var(--active-filter);
+  background-color: var(--active-bg);
 }
 
 .sidebar-item[aria-selected="true"],

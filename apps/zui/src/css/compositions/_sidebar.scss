@@ -21,7 +21,7 @@ EXCEPTIONS
 .sidebar {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gutter-space, var(--space-s-l));
+  gap: var(--gutter, var(--space-s-l));
 }
 
 .sidebar > :first-child {

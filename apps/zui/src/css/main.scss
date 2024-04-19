@@ -93,9 +93,12 @@
 @import "editor";
 @import "blocks";
 
+@import "blocks/surfaces";
 @import "blocks/sidebar-tree";
 @import "blocks/sidebar-item";
 @import "blocks/settings-modal";
+@import "blocks/workspace-picker";
+@import "blocks/section-tabs";
 
 /* Utilities */
 @import "utilities";

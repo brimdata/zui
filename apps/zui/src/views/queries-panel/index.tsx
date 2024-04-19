@@ -1,11 +1,14 @@
 import {useEffect} from "react"
-import {NodeApi} from "react-arborist"
 import {TreeView, useNodes} from "react-arborist-v4"
 import {Icon} from "src/components/icon"
 import {IconButton} from "src/components/icon-button"
 import {invoke} from "src/core/invoke"
 import useResizeObserver from "use-resize-observer"
 import {ItemController} from "./item-controller"
+import {WorkspacesController} from "./workspaces-controller"
+import Current from "src/js/state/Current"
+import {useSelector} from "react-redux"
+import {Workspace} from "src/models/workspace"
 
 export function QueriesPanel() {
   const nodes = useNodes([], {
@@ -24,12 +27,12 @@ export function QueriesPanel() {
   }, [])
 
   const {ref, width, height} = useResizeObserver()
-
   return (
-    <div>
-      <select></select>
+    <>
+      <WorkspacePicker />
       <section className="grow min-h-0" ref={ref}>
         <TreeView
+          padding={3}
           nodes={nodes}
           openByDefault={false}
           width={width}
@@ -40,7 +43,7 @@ export function QueriesPanel() {
           rowClassName="sidebar-row gutter"
         />
       </section>
-    </div>
+    </>
   )
 }
 
@@ -74,5 +77,20 @@ function FolderItem({attrs, node}) {
     >
       <Icon name="folder" /> {node.data.name}
     </div>
+  )
+}
+
+function WorkspacePicker() {
+  const workspaces = new WorkspacesController()
+  const attrs = useSelector(Current.getWorkspace)
+  const workspace = attrs ? new Workspace(attrs) : Workspace.default
+  return (
+    <nav className="workspace-picker repel">
+      <label>{workspace.name}</label>{" "}
+      <IconButton
+        iconName="chevron_down"
+        onClick={(e) => workspaces.showMenu(e)}
+      />
+    </nav>
   )
 }

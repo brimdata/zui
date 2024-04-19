@@ -1,6 +1,7 @@
 import {
   EntityAdapter,
   EntityId,
+  EntitySelectors,
   EntityState,
   PayloadAction,
   Update,
@@ -61,9 +62,12 @@ export function createCrudSlice<T>(opts: {
   })
 }
 
-export function createCrudSelectors(selectors) {
+export function createCrudSelectors<T>(selectors: EntitySelectors<T, unknown>) {
   return {
     all: selectors.selectAll,
     find: (id) => (s) => selectors.selectById(s, id),
+    entities: selectors.selectEntities,
+    ids: selectors.selectIds,
+    count: selectors.selectTotal,
   }
 }

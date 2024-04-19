@@ -1,0 +1,44 @@
+.section-tabs-container {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  position: relative;
+  padding-block: 1px;
+}
+
+.section-tabs {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.section-tab-button {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding-block: 0;
+  padding-inline: var(--gutter-half);
+  line-height: 2;
+  color: var(--fg-color);
+
+  &[aria-pressed="true"] {
+    color: var(--fg-color);
+    color: var(--primary-color-dark);
+    opacity: 1;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.active-tab-underline {
+  height: 2px;
+  background: var(--primary-color);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-radius: 1px;
+}

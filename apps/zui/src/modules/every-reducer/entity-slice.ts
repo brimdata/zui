@@ -1,7 +1,7 @@
 import {createEntityAdapter} from "@reduxjs/toolkit"
 import {createCrudSelectors, createCrudSlice} from "./create-crud-slice"
 
-export function createEntitySlice<T>(opts) {
+export function entitySlice<T>(opts) {
   const adapter = createEntityAdapter<T>({
     selectId: opts.id,
     sortComparer: opts.sort,

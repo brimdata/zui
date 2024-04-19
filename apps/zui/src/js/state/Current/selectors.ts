@@ -19,6 +19,8 @@ import lake from "src/js/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
+import {getWorkspaceId} from "../Window/selectors"
+import Workspaces from "../Workspaces"
 
 export const getHistory = (
   state,
@@ -190,3 +192,12 @@ export const getRouteName = createSelector(getLocation, (location) => {
   if (route) return route.name
   else return null
 })
+
+export const getWorkspace = createSelector(
+  getWorkspaceId,
+  Workspaces.entities,
+  (id, entities) => {
+    console.log(id, entities)
+    return entities[id]
+  }
+)

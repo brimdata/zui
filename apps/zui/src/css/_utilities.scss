@@ -231,3 +231,15 @@
   display: flex;
   align-items: center;
 }
+
+.grow-0 {
+  flex-grow: 0;
+}
+
+.border-b {
+  border-bottom-style: solid;
+}
+
+.step--1 {
+  font-size: var(--step--1);
+}

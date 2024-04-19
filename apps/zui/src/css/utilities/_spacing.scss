@@ -8,7 +8,7 @@ $space-sizes: "3xs", "2xs", "xs", "s", "m", "l", "xl", "2xl", "3xl";
 
 @each $size in $space-sizes {
   .gutter-space-#{$size} {
-    --gutter-space: var(--space-#{$size});
+    --gutter: var(--space-#{$size});
   }
 }
 

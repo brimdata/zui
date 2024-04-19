@@ -6,6 +6,8 @@ import {BrowserTab} from "./browser-tab"
 import Editor from "src/js/state/Editor"
 import {Frame} from "./frame"
 import {getActiveTab} from "src/js/state/Tabs/selectors"
+import {Workspace} from "./workspace"
+import Window from "src/js/state/Window"
 
 export class Active extends DomainModel {
   static get tab() {
@@ -35,5 +37,9 @@ export class Active extends DomainModel {
     return new Frame({
       id: globalThis.windowId,
     })
+  }
+
+  static set workspace(active: Workspace) {
+    this.dispatch(Window.setWorkspaceId(active.attrs.id))
   }
 }
