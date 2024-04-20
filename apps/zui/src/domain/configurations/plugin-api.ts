@@ -15,6 +15,7 @@ export type ConfigItem = {
   command?: string
   defaultValue?: string | boolean
   enum?: string[] | [string, string][]
+  placeholder?: string
 }
 
 export type Config = {

@@ -2,6 +2,7 @@ import {
   pluginNamespace,
   yamlConfigPropName,
   suricataLocalRulesPropName,
+  pcapFolderPropName,
 } from "./config"
 import {configurations} from "src/zui"
 
@@ -25,6 +26,13 @@ export function activateBrimcapConfigurations() {
         type: "folder",
         label: "Local Suricata Rules Folder",
         defaultValue: "",
+      },
+      [pcapFolderPropName]: {
+        name: pcapFolderPropName,
+        type: "folder",
+        label: "Folder For Extracted pcaps",
+        defaultValue: "",
+        placeholder: "Default OS tmpdir",
       },
     },
   })
