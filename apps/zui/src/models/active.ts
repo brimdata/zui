@@ -42,4 +42,9 @@ export class Active extends DomainModel {
   static set workspace(active: Workspace) {
     this.dispatch(Window.setWorkspaceId(active.attrs.id))
   }
+
+  static get workspace() {
+    const id = this.select(Window.getWorkspaceId)
+    return Workspace.find(id)
+  }
 }

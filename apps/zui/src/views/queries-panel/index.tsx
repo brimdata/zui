@@ -9,6 +9,8 @@ import {WorkspacesController} from "./workspaces-controller"
 import Current from "src/js/state/Current"
 import {useSelector} from "react-redux"
 import {Workspace} from "src/models/workspace"
+import {Active} from "src/models/active"
+import Window from "src/js/state/Window"
 
 export function QueriesPanel() {
   const nodes = useNodes([], {
@@ -17,14 +19,15 @@ export function QueriesPanel() {
     sortBy: [(d) => d.isDir, (d) => d.name],
     sortOrder: ["desc", "asc"],
   })
+  const workspaceId = useSelector(Window.getWorkspaceId)
 
   async function refresh() {
-    nodes.setSourceData(await invoke("workspaceFiles.index"))
+    nodes.setSourceData(await invoke("workspaceFiles.index", workspaceId))
   }
 
   useEffect(() => {
     refresh()
-  }, [])
+  }, [workspaceId])
 
   const {ref, width, height} = useResizeObserver()
   return (
@@ -83,13 +86,13 @@ function FolderItem({attrs, node}) {
 function WorkspacePicker() {
   const workspaces = new WorkspacesController()
   const attrs = useSelector(Current.getWorkspace)
-  const workspace = attrs ? new Workspace(attrs) : Workspace.default
+  const workspace = new Workspace(attrs ? attrs : Workspace.defaultAttrs)
   return (
     <nav className="workspace-picker repel">
       <label>{workspace.name}</label>{" "}
       <IconButton
         iconName="chevron_down"
-        onClick={(e) => workspaces.showMenu(e)}
+        onClick={(e) => workspaces.showMenu()}
       />
     </nav>
   )

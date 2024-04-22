@@ -2,6 +2,8 @@ import {createOperation} from "src/core/operations"
 import fs from "node:fs"
 import pathmod from "node:path"
 import {cache} from "src/util/cache"
+import Workspaces from "src/js/state/Workspaces"
+import {Workspace} from "src/models/workspace"
 
 class FSEntry {
   children: FSEntry[] | null = null
@@ -54,11 +56,14 @@ class QueryFile {
   }
 }
 
-export const index = createOperation("workspaceFiles.index", async () => {
-  const workspace = "/Users/jkerr/brimdata/james-query-workspace"
-  const entry = new FSEntry(workspace)
-  return entry.attrs.children
-})
+export const index = createOperation(
+  "workspaceFiles.index",
+  async (ctx, id: string) => {
+    const workspace = ctx.select(Workspaces.find(id))
+    const entry = new FSEntry(workspace.path)
+    return entry.attrs.children
+  }
+)
 
 export const show = createOperation(
   "workspaceFiles.show",
