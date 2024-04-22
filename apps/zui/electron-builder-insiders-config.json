@@ -1,5 +1,5 @@
 {
-  "extends": "./electron-builder-config.js",
+  "extends": "./electron-builder-config.json",
   "appId": "io.brimdata.zui-insiders",
   "mac": {
     "icon": "build/insiders/icon.icns"
