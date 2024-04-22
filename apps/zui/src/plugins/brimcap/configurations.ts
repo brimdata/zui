@@ -8,7 +8,7 @@ import {configurations} from "src/zui"
 export function activateBrimcapConfigurations() {
   configurations.create({
     name: pluginNamespace,
-    title: "pcap Settings",
+    title: "Packet Captures",
     properties: {
       [yamlConfigPropName]: {
         name: yamlConfigPropName,

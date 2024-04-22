@@ -19,9 +19,7 @@ class Controller {
   constructor(public props: Props, public state: State) {}
 
   get sections() {
-    return this.props.configs.sort((a, b) =>
-      a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1
-    )
+    return this.props.configs.sort((a, b) => (a.title < b.title ? -1 : 1))
   }
 
   get activeSection() {
