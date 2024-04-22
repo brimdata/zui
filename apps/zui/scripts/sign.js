@@ -34,8 +34,7 @@ function shouldSign(filePath) {
   if (filePath !== artifact.path) {
     console.log("Signing Skipped: path not in whitelist '", filePath, "'")
     return false
-  }
-  if (filePath === artifact.path) {
+  } else {
     console.log("Signing Started: '" + filePath + "'")
     return true
   }
