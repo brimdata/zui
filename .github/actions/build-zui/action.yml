@@ -55,14 +55,12 @@ runs:
       if: runner.os == 'Windows'
       uses: actions/checkout@v3
       with:
-       repository: 'SSLcom/esigner-codesign'
-       path: esigner-codesign
+        repository: 'SSLcom/esigner-codesign'
+        path: esigner-codesign
 
-    - name: Make values from package.json available in Actions steps
-      id: zui-package
-      uses: RadovanPelka/github-action-json@v1.0.1
-      with:
-        path: apps/zui/package.json
+    - name: Expose the Artifact Path
+      id: paths
+      run: echo "artifact='$(yarn artifact-path)'" >> "$GITHUB_OUTPUT"
 
     - name: Build & Publish
       run: ${{ inputs.cmd }}
@@ -74,7 +72,7 @@ runs:
         APPLE_TEAM_ID: ${{ inputs.apple_team_id }}
         CODE_SIGN_SCRIPT_PATH: ${{ github.workspace }}/esigner-codesign/dist/index.js
         INPUT_COMMAND: sign
-        INPUT_FILE_PATH: ${{ github.workspace }}/dist/apps/zui/${{ fromJSON(steps.zui-package.outputs.productName) }} Setup ${{ fromJSON(steps.zui-package.outputs.version) }}.exe
+        INPUT_FILE_PATH: ${{ steps.paths.outputs.artifact }}
         INPUT_OVERRIDE: true
         INPUT_MALWARE_BLOCK: false
         INPUT_CLEAN_LOGS: false
@@ -88,7 +86,7 @@ runs:
     - name: Check for successful signing with SignTool
       if: runner.os == 'Windows'
       run: |
-        "C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" verify /pa "${{ github.workspace }}/dist/apps/zui/${{ fromJSON(steps.zui-package.outputs.productName) }} Setup ${{ fromJSON(steps.zui-package.outputs.version) }}.exe"
+        "C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" verify /pa "${{ steps.paths.outputs.artifact }}"
       shell: cmd
 
     - name: Check notorization with gatekeeper
