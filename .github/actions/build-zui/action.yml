@@ -71,13 +71,7 @@ runs:
         APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
         APPLE_TEAM_ID: ${{ inputs.apple_team_id }}
         CODE_SIGN_SCRIPT_PATH: ${{ github.workspace }}/esigner-codesign/dist/index.js
-        INPUT_COMMAND: sign
         INPUT_FILE_PATH: ${{ steps.paths.outputs.artifact }}
-        INPUT_OVERRIDE: true
-        INPUT_MALWARE_BLOCK: false
-        INPUT_CLEAN_LOGS: false
-        INPUT_JVM_MAX_MEMORY: 1024M
-        INPUT_ENVIRONMENT_NAME: PROD
         INPUT_USERNAME: ${{ inputs.ssl_com_username }}
         INPUT_PASSWORD: ${{ inputs.ssl_com_password }}
         INPUT_TOTP_SECRET: ${{ inputs.ssl_com_totp_secret }}
