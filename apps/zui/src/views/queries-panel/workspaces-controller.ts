@@ -16,6 +16,7 @@ export class WorkspacesController {
       label: "Remove Workspace",
       click: () => {
         Active.workspace.destroy()
+        Active.workspace = null
         toast("Workspace removed.")
       },
     }

@@ -39,8 +39,12 @@ export class Active extends DomainModel {
     })
   }
 
-  static set workspace(active: Workspace) {
-    this.dispatch(Window.setWorkspaceId(active.attrs.id))
+  static set workspace(active: Workspace | null) {
+    if (active) {
+      this.dispatch(Window.setWorkspaceId(active.attrs.id))
+    } else {
+      this.dispatch(Window.setWorkspaceId(null))
+    }
   }
 
   static get workspace() {

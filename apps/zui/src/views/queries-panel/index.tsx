@@ -1,5 +1,5 @@
-import {useEffect} from "react"
-import {TreeView, useNodes} from "react-arborist-v4"
+import {useEffect, useState} from "react"
+import {TreeModel, TreeView} from "react-arborist-v4"
 import {Icon} from "src/components/icon"
 import {IconButton} from "src/components/icon-button"
 import {invoke} from "src/core/invoke"
@@ -9,20 +9,16 @@ import {WorkspacesController} from "./workspaces-controller"
 import Current from "src/js/state/Current"
 import {useSelector} from "react-redux"
 import {Workspace} from "src/models/workspace"
-import {Active} from "src/models/active"
 import Window from "src/js/state/Window"
 
 export function QueriesPanel() {
-  const nodes = useNodes([], {
-    id: (d) => d.path,
-    isLeaf: (d) => !d.isDir,
-    sortBy: [(d) => d.isDir, (d) => d.name],
-    sortOrder: ["desc", "asc"],
-  })
   const workspaceId = useSelector(Window.getWorkspaceId)
 
   async function refresh() {
-    nodes.setSourceData(await invoke("workspaceFiles.index", workspaceId))
+    if (workspaceId) {
+      const workspace = Workspace.find(workspaceId)
+      setData(await invoke("workspaceFiles.contents", workspace.attrs.path))
+    }
   }
 
   useEffect(() => {
@@ -30,13 +26,47 @@ export function QueriesPanel() {
   }, [workspaceId])
 
   const {ref, width, height} = useResizeObserver()
+
+  const [data, setData] = useState([])
+  const tree = new TreeModel(data, {
+    id: (d) => d.path,
+    isLeaf: (d) => !d.isDir,
+    sortBy: [(d) => d.isDir, (d) => d.name],
+    sortOrder: ["desc", "asc"],
+  })
+
+  const [opens, setOpens] = useState({})
+
   return (
     <>
       <WorkspacePicker />
       <section className="grow min-h-0" ref={ref}>
         <TreeView
           padding={3}
-          nodes={nodes}
+          nodes={{
+            value: tree.nodes,
+            initialize: tree.initialize,
+            onChange: (e) => {
+              // @ts-ignore
+              tree[e.type](e)
+              setData([...tree.sourceData])
+            },
+          }}
+          opens={{
+            value: opens,
+            onChange: async (e) => {
+              for (const id of e.ids) {
+                const node = tree.find(id)
+                const files = await invoke(
+                  "workspaceFiles.contents",
+                  node.sourceData.path
+                )
+                node.setChildren(files)
+                setData([...tree.sourceData])
+              }
+              setOpens(e.value)
+            },
+          }}
           openByDefault={false}
           width={width}
           height={height}
@@ -86,13 +116,14 @@ function FolderItem({attrs, node}) {
 function WorkspacePicker() {
   const workspaces = new WorkspacesController()
   const attrs = useSelector(Current.getWorkspace)
-  const workspace = new Workspace(attrs ? attrs : Workspace.defaultAttrs)
+  const workspace = attrs ? new Workspace(attrs) : null
+  const name = workspace ? workspace.name : "(No Workspace Selected)"
   return (
     <nav className="workspace-picker repel">
-      <label>{workspace.name}</label>{" "}
+      <label>{name}</label>{" "}
       <IconButton
         iconName="chevron_down"
-        onClick={(e) => workspaces.showMenu()}
+        onClick={() => workspaces.showMenu()}
       />
     </nav>
   )

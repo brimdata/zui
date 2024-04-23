@@ -17270,7 +17270,7 @@ __metadata:
 
 "react-arborist-v4@file:../../../react-arborist/modules/react-arborist::locator=zui%40workspace%3Aapps%2Fzui":
   version: 3.4.0
-  resolution: "react-arborist-v4@file:../../../react-arborist/modules/react-arborist#../../../react-arborist/modules/react-arborist::hash=892e94&locator=zui%40workspace%3Aapps%2Fzui"
+  resolution: "react-arborist-v4@file:../../../react-arborist/modules/react-arborist#../../../react-arborist/modules/react-arborist::hash=faca4f&locator=zui%40workspace%3Aapps%2Fzui"
   dependencies:
     react-aria: ^3.32.1
     react-window: ^1.8.10
@@ -17278,7 +17278,7 @@ __metadata:
   peerDependencies:
     react: ">= 16.14"
     react-dom: ">= 16.14"
-  checksum: 59589652496e8f8c1c8d321533a4975492a40adcc1e5f2987b56af4c699c00b25ad444f4bfe65f266470a9b6a1cc5711294c514e17caf1639a15f3f2fc159139
+  checksum: 2c0358f7b8b085888648b71e408115b7a4235270d8ce53a258c030bb46184cdf8542be3b1088847e5de30d283429b5bd2fddce5312f0950bdf0090d469a101d5
   languageName: node
   linkType: hard
 

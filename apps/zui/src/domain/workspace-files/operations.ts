@@ -2,17 +2,19 @@ import {createOperation} from "src/core/operations"
 import fs from "node:fs"
 import pathmod from "node:path"
 import {cache} from "src/util/cache"
-import Workspaces from "src/js/state/Workspaces"
-import {Workspace} from "src/models/workspace"
 
 class FSEntry {
   children: FSEntry[] | null = null
 
-  constructor(public path: string) {
+  constructor(public path: string, opts: {children?: boolean} = {}) {
     if (this.isDir) {
-      this.children = fs.readdirSync(path).map((name) => {
-        return new FSEntry(pathmod.join(path, name))
-      })
+      if (opts.children) {
+        this.children = fs.readdirSync(path).map((name) => {
+          return new FSEntry(pathmod.join(path, name))
+        })
+      } else {
+        this.children = []
+      }
     }
   }
 
@@ -56,17 +58,17 @@ class QueryFile {
   }
 }
 
-export const index = createOperation(
-  "workspaceFiles.index",
-  async (ctx, id: string) => {
-    const workspace = ctx.select(Workspaces.find(id))
-    const entry = new FSEntry(workspace.path)
-    return entry.attrs.children
+export const contents = createOperation(
+  "workspaceFiles.contents",
+  async (_ctx, path: string) => {
+    return fs
+      .readdirSync(path)
+      .map((name) => new FSEntry(pathmod.join(path, name)).attrs)
   }
 )
 
-export const show = createOperation(
-  "workspaceFiles.show",
+export const read = createOperation(
+  "workspaceFiles.read",
   async (_ctx, path: string) => {
     console.log("PATH: ", path)
     const content = new QueryFile(path).read()
