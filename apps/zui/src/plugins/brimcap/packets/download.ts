@@ -6,6 +6,8 @@ import {window, commands} from "src/zui"
 import {queryForConnLog} from "./query-conn-log"
 import {DOWNLOAD} from "./types"
 import {shell} from "electron"
+import {configurations} from "src/zui"
+import {pluginNamespace, pcapFolderPropName} from "../config"
 
 function getSearchArgsFromConn(conn: zed.Record) {
   const dur = conn.try("duration") as zed.Duration
@@ -22,7 +24,9 @@ function getSearchArgsFromConn(conn: zed.Record) {
 
 function getPacketDest(conn: zed.Record) {
   const tsString = conn.get("ts").toString()
-  return join(os.tmpdir(), `packets-${tsString}.pcap`.replace(/:/g, "_"))
+  const pcapExtractionDir =
+    configurations.get(pluginNamespace, pcapFolderPropName) || os.tmpdir()
+  return join(pcapExtractionDir, `packets-${tsString}.pcap`.replace(/:/g, "_"))
 }
 
 export async function downloadPackets(root: string, pool: string, uid: string) {

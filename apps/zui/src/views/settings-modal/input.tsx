@@ -66,7 +66,7 @@ export function Input(props: SettingProps) {
             type="text"
             defaultValue={value}
             onBlur={onChange}
-            placeholder="None"
+            placeholder={field.placeholder || "None"}
           />
           <button
             onClick={async () => {
