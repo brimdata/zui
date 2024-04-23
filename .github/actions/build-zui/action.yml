@@ -60,7 +60,7 @@ runs:
 
     - name: Expose the Artifact Path
       id: paths
-      run: echo "artifact='$(yarn artifact-path)'" >> "$GITHUB_OUTPUT"
+      run: echo "artifact=$(yarn artifact-path)" >> "$GITHUB_OUTPUT"
       shell: bash
 
     - name: Build & Publish
