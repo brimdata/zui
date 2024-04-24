@@ -1,0 +1,14 @@
+.panels {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+}
+
+.panels > * {
+  flex: 0 0 auto;
+}
+
+.panels > .principle {
+  flex: 1 1 0;
+  overflow: hidden;
+}
