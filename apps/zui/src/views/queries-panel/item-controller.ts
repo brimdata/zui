@@ -1,5 +1,8 @@
+import {fileShow} from "src/app/router/routes"
+import {filePath} from "src/app/router/utils/paths"
 import {invoke} from "src/core/invoke"
 import {Active} from "src/models/active"
+import {BrowserTab} from "src/models/browser-tab"
 import {EditorSnapshot} from "src/models/editor-snapshot"
 
 export class ItemController {
@@ -9,6 +12,10 @@ export class ItemController {
       const {content} = await invoke("workspaceFiles.read", node.data.path)
       const snapshot = new EditorSnapshot({value: content})
       Active.session.navigate(snapshot)
+    } else {
+      const tab = BrowserTab.create()
+      tab.load(filePath(node.data.path))
+      tab.activate()
     }
   }
 }

@@ -13,3 +13,7 @@ export function releaseNotesPath() {
 export function welcomePath() {
   return "/welcome"
 }
+
+export function filePath(path: string) {
+  return `/file/${encodeURIComponent(path)}`
+}
