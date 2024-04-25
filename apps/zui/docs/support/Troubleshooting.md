@@ -17,6 +17,7 @@ also want to review the [current open issues](https://github.com/brimdata/zui/is
 * [Zui seems unable to restart normally, such as after a bad crash](#zui-seems-unable-to-restart-normally-such-as-after-a-bad-crash)
 * [Zui shows an error: "The service could not be reached"](#zui-shows-an-error-the-service-could-not-be-reached)
 * [My antivirus software has flagged Zui as potentially malicious](#my-antivirus-software-has-flagged-zui-as-potentially-malicious)
+* [Microsoft Defender SmartScreen has flagged the Zui installer as an "unrecognized app"](#microsoft-defender-smartscreen-has-flagged-the-zui-installer-as-an-unrecognized-app)
 
 #### I've clicked to open a packet capture in Zui, but it failed to open
 
@@ -290,6 +291,42 @@ turned into an executable by other open source tools. If your conclusion
 matches our own that this is a "false positive", you can help others by
 [flagging it as harmless in VirusTotal](https://support.virustotal.com/hc/en-us/articles/115002146769-Comments),
 as multiple community members have already done.
+
+#### Microsoft Defender SmartScreen has flagged the Zui installer as an "unrecognized app"
+
+When launching the `.exe` to install Zui on Windows, you may be presented with
+a warning screen like the one shown below. Per
+[Microsoft's documentation](https://learn.microsoft.com/en-us/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/),
+this warning will be presented if Defender believes the Zui installer is not
+"well known and downloaded frequently".
+
+![Windows Defender Unrecognized App](media/Windows-Defender-Unrecognized-App.gif)
+
+Based on our experience supporting Zui, it seems the appearance of this
+warning is related to Zui's
+[code signing certificate](https://learn.microsoft.com/en-us/windows/security/application-security/application-control/windows-defender-application-control/deployment/use-code-signing-for-better-control-and-protection).
+Per industry best practices, all Zui releases are signed with such a
+certificate to provide assurance that the installer came from Brim Data and
+has not been tampered with since it was built. The current certificate details
+can be viewed by right-clicking on the Zui `.exe` installer in Windows
+Explorer and clicking to **Properties > Digital Signatures**, clicking the
+entry in the signature list, then clicking **Details > View Certificate**. Each
+certificate used to sign Zui each has a time span for which it is
+"valid", and Zui's certificates have traditionally been acquired in 1-year
+spans.
+
+What we've observed is that the Defender warning temporarily resurfaces among
+users after Zui starts being signed with a new certificate.
+[Articles online](https://www.advancedinstaller.com/prevent-smartscreen-from-appearing.html)
+describe the common phenomenon that favorable "reputation" with Defender
+does not carry over from prior certificates to new ones, so this warning
+is expected to appear on new Zui installers for a period of weeks/months after
+a new certificate is put into use.
+
+As shown in the video above, the warning can easily be bypassed so
+installation may proceed. However, we understand the instinct to take such
+warnings seriously. We encourage the use of anti-virus software and other
+tools to make your own assessment of Zui's safety.
 
 ## Gathering Info
 
