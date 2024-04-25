@@ -34,6 +34,10 @@ export class BrowserTab extends DomainModel<Attrs> {
     return new BrowserTab({id, lastFocused})
   }
 
+  static preview(url: string) {
+    return this.dispatch(Tabs.previewUrl(url))
+  }
+
   load(pathname: string) {
     if (this.history.location.pathname === pathname) {
       this.history.replace(pathname)

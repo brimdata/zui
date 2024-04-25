@@ -11,9 +11,10 @@ export class ItemController {
       const snapshot = new EditorSnapshot({value: content})
       Active.session.navigate(snapshot)
     } else {
-      const tab = BrowserTab.create()
-      tab.load(filePath(node.data.path))
-      tab.activate()
+      BrowserTab.preview(filePath(node.data.path))
+      // const tab = BrowserTab.create()
+      // tab.load(filePath(node.data.path))
+      // tab.activate()
     }
   }
 }
