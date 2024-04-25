@@ -2,7 +2,8 @@
   inline-size: var(--measure);
 }
 
-.max-width\:measure {
+.max-width\:measure,
+.max-w-measure {
   max-inline-size: var(--measure);
 }
 
@@ -246,4 +247,16 @@
 
 .border-b {
   border-bottom: 1px solid var(--border-color);
+}
+
+.w-fit {
+  inline-size: fit-content;
+}
+
+.overflow-y-auto {
+  overflow-y: auto !important;
+}
+
+.font-size-120 {
+  font-size: 120%;
 }

@@ -9,6 +9,6 @@ const components = {
   },
 }
 
-export default function Markdown({children}) {
-  return <ReactMarkdown components={components}>{children}</ReactMarkdown>
+export default function Markdown(props: any) {
+  return <ReactMarkdown components={components} {...props} />
 }

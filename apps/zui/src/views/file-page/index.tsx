@@ -1,28 +1,15 @@
-import {basename} from "path"
 import {useParams} from "react-router"
-import {IconButton} from "src/components/icon-button"
-import {Results, useResultsControl} from "../preview-load-modal/results"
-import {useEffect} from "react"
+import {DataFile} from "./data-file"
+import {ext} from "src/util/ext"
+import {MarkdownFile} from "./markdown-file"
 
 export function FilePage() {
   const params = useParams<any>()
   const path = decodeURIComponent(params.path)
-  const ctl = useResultsControl([path], "auto")
 
-  useEffect(() => {
-    ctl.queryAll("* | head 50")
-  }, [path])
-
-  return (
-    <>
-      <div className="panels">
-        <section className="flow border-b box">
-          <h1>{basename(path)}</h1>
-          <p>{path}</p>
-          <IconButton iconName="pool" label="Load" display="icon-label" />
-        </section>
-        <Results {...ctl} title="preview" className="principle" />
-      </div>
-    </>
-  )
+  if (ext(path).toLowerCase() === "md") {
+    return <MarkdownFile path={path} />
+  } else {
+    return <DataFile path={path} />
+  }
 }
