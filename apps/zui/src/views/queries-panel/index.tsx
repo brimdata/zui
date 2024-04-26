@@ -10,11 +10,14 @@ import Current from "src/js/state/Current"
 import {useSelector} from "react-redux"
 import {Workspace} from "src/models/workspace"
 import Window from "src/js/state/Window"
+import {ipc} from "src/modules/bullet/view"
 
 export function QueriesPanel() {
   const workspaceId = useSelector(Window.getWorkspaceId)
 
   async function refresh() {
+    const ret = await ipc.request("files#index", {id: "names"})
+    alert(ret)
     if (workspaceId) {
       const workspace = Workspace.find(workspaceId)
       setData(await invoke("workspaceFiles.contents", workspace.attrs.path))
@@ -93,8 +96,10 @@ function QueryItem({attrs, node}) {
   return (
     <div
       {...attrs}
-      onClick={() => ctl.runQuery(node)}
-      className="sidebar-node h-full v-center gap-2xs"
+      onClick={() => {
+        ctl.runQuery(node)
+      }}
+      className="sidebar-node h-full v-center gap-2xs "
     >
       <Icon name="query" /> {node.data.name}
     </div>

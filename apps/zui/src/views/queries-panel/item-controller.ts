@@ -12,9 +12,6 @@ export class ItemController {
       Active.session.navigate(snapshot)
     } else {
       BrowserTab.preview(filePath(node.data.path))
-      // const tab = BrowserTab.create()
-      // tab.load(filePath(node.data.path))
-      // tab.activate()
     }
   }
 }

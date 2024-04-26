@@ -13,7 +13,6 @@
   background-color: transparent;
   border-style: solid;
   border-color: transparent;
-  transition: all var(--hover-duration);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -23,11 +22,6 @@
   --selected-color: white;
   --selected-shadow: var(--shadow-s);
   --selected-border: var(--primary-color-dark);
-}
-
-.sidebar-item:hover,
-.sidebar-row:hover .sidebar-node {
-  background-color: var(--hover-bg);
 }
 
 .sidebar-item:active,
