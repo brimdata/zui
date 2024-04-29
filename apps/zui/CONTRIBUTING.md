@@ -199,15 +199,13 @@ xcrun notarytool history --apple-id <apple-user-id> --password <app-specific-pas
 
 ### Windows Code Signing
 
-To create signed Windows packages by hand, set the following environment
-variables before running the `yarn` commands shown above.
-
-```bash
-export WIN_CSC_LINK=<base64-encoded-certificate>
-export WIN_CSC_KEY_PASSWORD=<certificate-password>
-```
-
-Where `WIN_CSC_LINK` contains the base64-encoded code signing certificate and `WIN_CSC_KEY_PASSWORD` is the password used to decrypt it (details [here](https://www.electron.build/code-signing.html#windows)).
+The changes in [ballot CSC-17](https://cabforum.org/2022/09/27/ballot-csc-17-subscriber-private-key-extension/)
+from the [CA/B Forum](https://cabforum.org/) have made it such that GA Zui
+releases on Windows are currently only signed using a cloud service.
+PR [zui/3050](https://github.com/brimdata/zui/pull/3050) provides details of
+how this is currently performed with [SSL.com's eSigner](https://www.ssl.com/esigner/).
+If you successfully sign Zui with another service or sign manually and have
+tips to share based on your experience, please [contact us](#questions).
 
 ## Licensing
 
