@@ -1,10 +1,8 @@
-import {createOperation} from "src/core/operations"
+import {cache} from "src/util/cache"
 import fs from "node:fs"
 import pathmod from "node:path"
-import {cache} from "src/util/cache"
-import matter from "gray-matter"
 
-class FSEntry {
+export class FSEntry {
   children: FSEntry[] | null = null
 
   constructor(public path: string, opts: {children?: boolean} = {}) {
@@ -50,27 +48,3 @@ class FSEntry {
     }
   }
 }
-
-class QueryFile {
-  constructor(public path: string) {}
-
-  read() {
-    return matter(fs.readFileSync(this.path, {encoding: "utf-8"}))
-  }
-}
-
-export const contents = createOperation(
-  "workspaceFiles.contents",
-  async (_ctx, path: string) => {
-    return fs
-      .readdirSync(path)
-      .map((name) => new FSEntry(pathmod.join(path, name)).attrs)
-  }
-)
-
-export const read = createOperation(
-  "workspaceFiles.read",
-  async (_ctx, path: string) => {
-    return new QueryFile(path).read()
-  }
-)

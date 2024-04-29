@@ -3,7 +3,7 @@ export const poolPath = (poolId: string) => {
 }
 
 export function queryPath(queryId: string, version: string) {
-  return `/queries/${queryId}/versions/${version}`
+  return `/queries/${encodeURIComponent(queryId)}/versions/${version}`
 }
 
 export function releaseNotesPath() {

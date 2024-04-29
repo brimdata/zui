@@ -11,7 +11,6 @@ import {SessionPage} from "."
 export function SessionRoute() {
   const location = useSelector(Current.getLocation)
   const lastKey = useSelector(Tab.getLastLocationKey)
-
   useLayoutEffect(() => {
     if (lastKey !== location.key) {
       loadRoute(location)

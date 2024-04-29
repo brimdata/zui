@@ -16,11 +16,9 @@ export function QueriesPanel() {
   const workspaceId = useSelector(Window.getWorkspaceId)
 
   async function refresh() {
-    const ret = await ipc.request("files#index", {id: "names"})
-    alert(ret)
     if (workspaceId) {
       const workspace = Workspace.find(workspaceId)
-      setData(await invoke("workspaceFiles.contents", workspace.attrs.path))
+      setData(await ipc.request("files#index", {path: workspace.attrs.path}))
     }
   }
 

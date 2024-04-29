@@ -53,7 +53,6 @@ export class BrowserTab extends DomainModel<Attrs> {
         this.history.index = -1
       }
       this.history.push(pathname)
-      console.log(this.history)
     }
   }
 

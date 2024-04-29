@@ -80,7 +80,7 @@ export const getNamedQuery = (state: State) => {
 
 export const getSessionRouteParentId = (state: State) => {
   const {queryId} = getQueryUrlParams(state)
-  return queryId
+  return decodeURIComponent(queryId)
 }
 
 export const getSession = createSelector(
