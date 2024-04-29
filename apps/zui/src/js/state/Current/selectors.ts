@@ -43,7 +43,12 @@ export const getQueryUrlParams = createSelector(getLocation, (location) => {
   const path = location.pathname
   const routes = [queryVersion.path, query.path]
   const match = matchPath<{queryId: string; version: string}>(path, routes)
-  return match?.params ?? {queryId: "", version: ""}
+  const queryId = match?.params?.queryId ?? ""
+  const version = match?.params?.version ?? ""
+  return {
+    queryId: decodeURIComponent(queryId),
+    version,
+  }
 })
 
 export const getVersion = (state: State): QueryVersion => {
@@ -197,7 +202,6 @@ export const getWorkspace = createSelector(
   getWorkspaceId,
   Workspaces.entities,
   (id, entities) => {
-    console.log(id, entities)
     return entities[id]
   }
 )

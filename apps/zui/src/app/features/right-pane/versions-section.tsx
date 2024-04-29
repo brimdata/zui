@@ -8,6 +8,7 @@ import {EmptyText} from "./common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import {TREE_ITEM_HEIGHT} from "../sidebar/item"
 import {NamedQueries} from "src/domain/handlers"
+import {NamedQueriesHandler} from "src/handlers"
 
 const EmptyMessage = () => {
   return <EmptyText>Open a saved query to see the previous versions.</EmptyText>
@@ -42,7 +43,9 @@ const VersionsList = ({query}: {query: QueryModel}) => {
             padding={8}
             data={data}
             selection={currentId}
-            onActivate={(node) => NamedQueries.show(query.id, node.id)}
+            onActivate={(node) =>
+              new NamedQueriesHandler().show(query.id, node.id)
+            }
           >
             {VersionItem}
           </Tree>

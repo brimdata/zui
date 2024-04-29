@@ -1,15 +1,15 @@
 import {useParams} from "react-router"
-import {DataFile} from "./data-file"
 import {ext} from "src/util/ext"
-import {MarkdownFile} from "./markdown-file"
+import {MarkdownFilePage} from "../markdown-file-page"
+import {DataFilePage} from "../data-file-page"
 
 export function FilePage() {
   const params = useParams<any>()
   const path = decodeURIComponent(params.path)
 
   if (ext(path).toLowerCase() === "md") {
-    return <MarkdownFile path={path} />
+    return <MarkdownFilePage path={path} />
   } else {
-    return <DataFile path={path} />
+    return <DataFilePage path={path} />
   }
 }

@@ -12,7 +12,6 @@ import {LoadsHandlers, LoadsOperations} from "./loads/messages"
 import {CommandsOperations} from "./commands/messages"
 import {EditorHandlers, EditorOperations} from "./editor/messages"
 import {NamedQueriesHandlers} from "./named-queries/messages"
-import {WorkspaceFilesOperations} from "./workspace-files/messages"
 
 export type Handlers = ResultsHandlers &
   MenusHandlers &
@@ -35,8 +34,7 @@ export type Operations = PoolsOperations &
   WindowOperations &
   MenusOperations &
   CommandsOperations &
-  EditorOperations &
-  WorkspaceFilesOperations
+  EditorOperations
 
 export type OperationName = keyof Operations
 export type HandlerName = keyof Handlers

@@ -18,6 +18,7 @@ import {useMenuExtension} from "src/core/menu"
 import {createSelector} from "reselect"
 import {sessionToolbarMenu} from "src/domain/session/menus/toolbar-menu"
 import {useMemo} from "react"
+import {SessionPageProps} from "."
 
 const getWhenContext = createSelector(Layout.getResultsView, (resultsView) => {
   return {
@@ -25,7 +26,7 @@ const getWhenContext = createSelector(Layout.getResultsView, (resultsView) => {
   }
 })
 
-export function Toolbar() {
+export function Toolbar(props: SessionPageProps) {
   const context = useSelector(getWhenContext)
   const query = useSelector(Current.getActiveQuery)
   const defaultItems = useMemo(() => sessionToolbarMenu(query), [query])
@@ -49,14 +50,14 @@ export function Toolbar() {
           enabled={canGoForward()}
         />
       </nav>
-      <QueryTitle />
+      <QueryTitle {...props} />
       <ButtonMenu items={items} label={"Results Toolbar Menu"} />
     </div>
   )
 }
 
-function QueryTitle() {
-  const query = useSelector(Current.getActiveQuery)
+function QueryTitle(props: SessionPageProps) {
+  const {namedQuery, isModified} = props
   const isEditing = useSelector(Layout.getIsEditingTitle)
   const form = useTitleForm()
   const select = useSelect()
@@ -78,20 +79,22 @@ function QueryTitle() {
     }
   }
 
+  let name = ""
+  if (namedQuery) name = namedQuery.name + (isModified ? "*" : "")
+
   if (!isEditing) {
     return (
       <>
         <button className={styles.button}>
           <h1
             onClick={editQuery}
-            className={classNames({[styles.modified]: query.isModified()})}
+            className={classNames({[styles.modified]: isModified})}
           >
-            {query.isSaved() ? (
-              query.name()
+            {namedQuery ? (
+              name
             ) : (
               <span className={styles.untitled}>Untitled</span>
             )}
-            {query.isModified() && "*"}
           </h1>
         </button>
       </>
@@ -112,7 +115,7 @@ function QueryTitle() {
           placeholder="Name your query..."
           autoFocus
           className={styles.input}
-          defaultValue={query.name()}
+          defaultValue={namedQuery?.name}
         />
       </form>
     )

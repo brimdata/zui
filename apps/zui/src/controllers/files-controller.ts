@@ -12,6 +12,12 @@ export class FilesController extends BulletController {
   }
 
   show(params: {path: string}) {
-    return matter(fs.readFileSync(params.path, {encoding: "utf-8"}))
+    const {path} = params
+    const name = pathmod.basename(path)
+    const ext = pathmod.extname(path)
+    const {content, data} = matter(
+      fs.readFileSync(params.path, {encoding: "utf-8"})
+    )
+    return {name, ext, content, meta: data, path}
   }
 }

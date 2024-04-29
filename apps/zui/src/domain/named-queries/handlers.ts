@@ -9,33 +9,24 @@ import {Session} from "src/models/session"
  * query for the first time.
  */
 export const create = createHandler(async ({oldApi}, name: string) => {
-  const {parentId: _, ...attrs} = Active.snapshot.attrs
-  const query = await oldApi.queries.create({name, versions: [attrs]})
-  const namedQuery = new NamedQuery({
-    id: query.id,
-    name: query.name,
-  })
-  Active.session.navigate(namedQuery.lastSnapshot, namedQuery)
+  // const {parentId: _, ...attrs} = Active.snapshot.attrs
+  // const query = await oldApi.queries.create({name, versions: [attrs]})
+  // const namedQuery = new NamedQuery({
+  //   id: query.id,
+  //   name: query.name,
+  // })
+  // Active.session.navigate(namedQuery.lastSnapshot, namedQuery)
+  alert("todo")
 })
 
 /**
  * This handler is called when the user updates a query to a new version.
  */
 export const update = createHandler("namedQueries.update", () => {
-  const {session, snapshot} = Active
-  const {namedQuery} = session
-  const newSnapshot = snapshot.clone({parentId: namedQuery.id})
-  newSnapshot.save()
-  session.navigate(newSnapshot, namedQuery)
-})
-
-/* This handler is called when you want to display a named query in a session */
-export const show = createHandler((_, id: string, snapshotId?: string) => {
-  const query = NamedQuery.find(id)
-  const snapshot = snapshotId
-    ? EditorSnapshot.find(query.id, snapshotId)
-    : query.lastSnapshot
-
-  Session.activateLastFocused()
-  Active.session.navigate(snapshot, query)
+  // TODO FOR WORKSPACES
+  // const {session, snapshot} = Active
+  // const newSnapshot = snapshot.clone({parentId: session.namedQueryId})
+  // newSnapshot.save()
+  // session.navigate(newSnapshot, session.namedQueryId)
+  alert("todo")
 })

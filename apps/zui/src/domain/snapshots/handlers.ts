@@ -1,7 +1,6 @@
 import {createHandler} from "src/core/handlers"
 import {Active} from "src/models/active"
 import {EditorSnapshot} from "src/models/editor-snapshot"
-import {NamedQuery} from "src/models/named-query"
 import {Session} from "src/models/session"
 
 /**
@@ -16,9 +15,8 @@ type Args = {
 
 export const show = createHandler((ctx, args: Args) => {
   const {session} = Active
-  const namedQuery = NamedQuery.find(args.namedQueryId)
   const snapshot = EditorSnapshot.find(session.id, args.snapshotId)
-  Active.session.navigate(snapshot, namedQuery)
+  Active.session.navigate(snapshot, args.namedQueryId)
 })
 
 export const createAndShow = createHandler(

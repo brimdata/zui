@@ -28,7 +28,7 @@ export function useZq(files: string[], format: zed.LoadFormat) {
 
           start(() => {
             setIsLoading(false)
-            setData(zed.decode(data))
+            setData(zed.decode(data as any[]))
             if (!isAbortError(error)) setError(errorToString(error))
           })
         })

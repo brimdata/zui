@@ -74,7 +74,7 @@ function TreeOfQueries(props: {
               childrenAccessor="items"
               onActivate={(node) => {
                 if (node.isLeaf && id !== node.id) {
-                  NamedQueries.show(node.id)
+                  // NamedQueries.show(node.id)
                 }
               }}
               onMove={(args) => {

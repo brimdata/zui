@@ -81,28 +81,20 @@ export class Session extends DomainModel<Attrs> {
     return this.parentId && this.id !== this.parentId
   }
 
-  get namedQuery() {
-    return this.hasNamedQuery ? NamedQuery.find(this.parentId) : null
-  }
-
-  get isModified() {
-    return (
-      this.hasNamedQuery &&
-      !!this.namedQuery &&
-      this.snapshot.equals(this.namedQuery.lastSnapshot)
-    )
+  get namedQueryId() {
+    return this.hasNamedQuery ? this.parentId : null
   }
 
   get tab() {
     return BrowserTab.find(this.id)
   }
 
-  navigate(snapshot: EditorSnapshot, namedQuery?: NamedQuery) {
+  navigate(snapshot: EditorSnapshot, namedQueryId?: string) {
     const sessionSnapshot = snapshot.clone({parentId: this.id})
     sessionSnapshot.save()
     new Session({
       id: this.id,
-      parentId: namedQuery ? namedQuery.id : this.id,
+      parentId: namedQueryId ?? this.id,
       snapshotId: sessionSnapshot.id,
     }).load()
   }

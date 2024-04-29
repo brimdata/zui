@@ -1,29 +1,40 @@
 import {DomainModel} from "src/core/domain-model"
-import Queries from "src/js/state/Queries"
 import {EditorSnapshot} from "./editor-snapshot"
 
 type Attrs = {
+  text: string
+  meta: any
+  path: string
   name: string
   id: string
 }
 
 export class NamedQuery extends DomainModel<Attrs> {
-  static find(id: string) {
-    const attrs = this.select((state) => Queries.find(state, id))
-    if (!attrs) return null
-    const {name} = attrs
-    return new NamedQuery({id, name})
+  static async read(path: string) {
+    const {content, meta, name} = await this.request("files#show", {path})
+    return new NamedQuery({id: path, text: content, name, meta, path})
   }
 
   get id() {
     return this.attrs.id
   }
 
-  get lastSnapshot() {
-    return this.snapshots[this.snapshots.length - 1]
+  get name() {
+    return this.attrs.name
   }
 
-  get snapshots() {
-    return EditorSnapshot.where({parentId: this.attrs.id})
+  get text() {
+    return this.attrs.text
+  }
+
+  get pins() {
+    return this.attrs.meta?.pins || []
+  }
+
+  get snapshot() {
+    return new EditorSnapshot({
+      pins: this.pins,
+      value: this.text,
+    })
   }
 }

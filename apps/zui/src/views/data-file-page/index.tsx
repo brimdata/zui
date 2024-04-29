@@ -1,12 +1,11 @@
 import {basename} from "path"
-import {useParams} from "react-router"
 import {IconButton} from "src/components/icon-button"
 import {Results, useResultsControl} from "../preview-load-modal/results"
 import {useEffect, useState} from "react"
 import {FormatSelect} from "../format-select"
 import {LoadFormat} from "@brimdata/zed-js"
 
-export function DataFile(props: {path: string}) {
+export function DataFilePage(props: {path: string}) {
   const {path} = props
   const [format, setFormat] = useState<LoadFormat>(null)
   const ctl = useResultsControl([path], format)

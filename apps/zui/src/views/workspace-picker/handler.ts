@@ -3,8 +3,9 @@ import {toast} from "src/core/toast"
 import {showMenu} from "src/core/menu"
 import {Active} from "src/models/active"
 import {Workspace} from "src/models/workspace"
+import {ViewHandler} from "src/core/view-handler"
 
-export class WorkspacesController {
+export class WorkspacePickerHandler extends ViewHandler {
   showMenu() {
     const workspaces = Workspace.all.map((workspace) => {
       return {

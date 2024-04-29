@@ -32,7 +32,7 @@ export const queryContextMenu = createMenu(
       {
         label: "Open Query",
         visible: node.isLeaf,
-        click: () => NamedQueries.show(node.id),
+        // click: () => NamedQueries.show(node.id),
       },
       {type: "separator"},
       {
