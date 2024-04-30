@@ -17,11 +17,15 @@ export function SessionRoute() {
   const [isModified, setIsModified] = useState(false)
 
   async function getProps() {
-    const handler = new SessionPageHandler()
-    const namedQuery = await handler.readQuery()
-
-    setNamedQuery(namedQuery)
-    setIsModified(!Active.session.snapshot.equals(namedQuery.snapshot))
+    const sessionPage = new SessionPageHandler()
+    if (Active.session.hasNamedQuery) {
+      const namedQuery = await sessionPage.readQuery()
+      setNamedQuery(namedQuery)
+      setIsModified(!Active.session.snapshot.equals(namedQuery.snapshot))
+    } else {
+      setNamedQuery(null)
+      setIsModified(false)
+    }
   }
 
   useLayoutEffect(() => {
