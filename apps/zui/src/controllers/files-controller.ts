@@ -20,4 +20,8 @@ export class FilesController extends BulletController {
     )
     return {name, ext, content, meta: data, path}
   }
+
+  create(params: {path: string; text: string; meta: any}) {
+    fs.writeFileSync(params.path, params.text)
+  }
 }

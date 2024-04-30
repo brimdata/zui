@@ -15,6 +15,11 @@ export class NamedQuery extends DomainModel<Attrs> {
     return new NamedQuery({id: path, text: content, name, meta, path})
   }
 
+  static async create(attrs: Omit<Attrs, "id">) {
+    await this.request("files#create", attrs)
+    return await this.read(attrs.path)
+  }
+
   get id() {
     return this.attrs.id
   }

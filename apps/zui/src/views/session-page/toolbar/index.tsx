@@ -16,7 +16,7 @@ import {useMenuExtension} from "src/core/menu"
 import {createSelector} from "reselect"
 import {sessionToolbarMenu} from "src/domain/session/menus/toolbar-menu"
 import {useMemo} from "react"
-import {SessionPageProps} from ".."
+import {NamedQuery} from "src/models/named-query"
 
 const getWhenContext = createSelector(Layout.getResultsView, (resultsView) => {
   return {
@@ -24,7 +24,9 @@ const getWhenContext = createSelector(Layout.getResultsView, (resultsView) => {
   }
 })
 
-export function Toolbar(props: SessionPageProps) {
+export type Props = {namedQuery: NamedQuery | null; isModified: boolean}
+
+export function Toolbar(props: Props) {
   const context = useSelector(getWhenContext)
   const defaultItems = useMemo(
     () =>
@@ -88,8 +90,8 @@ function TitleForm({handler}: {handler: ToolbarHandler}) {
   return (
     <form
       className={classNames(styles.form)}
-      onBlur={handler.onBlur}
-      onKeyUp={handler.onKeyUp}
+      onBlur={(e) => handler.onBlur(e)}
+      onKeyUp={(e) => handler.onKeyUp(e)}
     >
       <label htmlFor="query-name" style={{display: "none"}}>
         Query Name

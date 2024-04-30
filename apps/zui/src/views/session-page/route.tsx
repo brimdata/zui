@@ -1,39 +1,12 @@
-import React, {useLayoutEffect, useState} from "react"
+import React, {memo} from "react"
 import {useSelector} from "react-redux"
 import Current from "src/js/state/Current"
-import Tab from "src/js/state/Tab"
-import {loadRoute} from "./loader"
 import {SessionPage} from "."
-import {SessionPageHandler} from "./session-page-handler"
-import {Active} from "src/models/active"
 
-// If this is a nice pattern for routes,
-// we could make it a generic component.
+const MemoSessionPage = memo(SessionPage)
 
 export function SessionRoute() {
   const location = useSelector(Current.getLocation)
-  const lastKey = useSelector(Tab.getLastLocationKey)
-  const [namedQuery, setNamedQuery] = useState(null)
-  const [isModified, setIsModified] = useState(false)
 
-  async function getProps() {
-    const sessionPage = new SessionPageHandler()
-    if (Active.session.hasNamedQuery) {
-      const namedQuery = await sessionPage.readQuery()
-      setNamedQuery(namedQuery)
-      setIsModified(!Active.session.snapshot.equals(namedQuery.snapshot))
-    } else {
-      setNamedQuery(null)
-      setIsModified(false)
-    }
-  }
-
-  useLayoutEffect(() => {
-    if (lastKey !== location.key) {
-      loadRoute(location)
-      getProps()
-    }
-  }, [location.key, lastKey])
-
-  return <SessionPage namedQuery={namedQuery} isModified={isModified} />
+  return <MemoSessionPage locationKey={location.key} />
 }

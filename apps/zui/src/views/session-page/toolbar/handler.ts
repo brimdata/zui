@@ -1,14 +1,16 @@
 import {FormEvent} from "react"
 import Layout from "src/js/state/Layout"
 import {ViewHandler} from "src/core/view-handler"
-import {SessionPageProps} from ".."
+import {Props} from "."
+import {Active} from "src/models/active"
+import {NamedQuery} from "src/models/named-query"
 
 export class ToolbarHandler extends ViewHandler {
-  constructor(public props: SessionPageProps) {
+  constructor(public props: Props) {
     super()
   }
 
-  onSubmit(e: FormEvent<HTMLFormElement>) {
+  async onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const input = e.currentTarget.elements.namedItem("query-name") as any
     const name = input.value.trim() || ""
@@ -17,10 +19,10 @@ export class ToolbarHandler extends ViewHandler {
         alert("todo rename")
         this.request("files#rename", {path: this.namedQueryId, name})
       } else {
-        // create a named query
-        alert("todo create")
-        this.request("files#create")
-        // create(name)
+        const path = Active.workspace.attrs.path + "/" + name + ".zed"
+        const text = Active.snapshot.attrs.value
+        const meta = {}
+        await NamedQuery.create({path, name, text, meta})
       }
     }
     this.dispatch(Layout.hideTitleForm())
