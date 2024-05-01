@@ -1,7 +1,6 @@
 import { ChildProcess, spawn, SpawnOptions } from 'child_process';
 import { mkdirpSync } from 'fs-extra';
 import { join } from 'path';
-import fetch from 'node-fetch';
 import { getZedPath } from './binpath';
 
 type ConstructorOpts = {
@@ -83,7 +82,7 @@ export class Lake {
 
   async isUp() {
     try {
-      const response = await fetch(`http://${this.addr()}/status`);
+      const response = await globalThis.fetch(`http://${this.addr()}/status`);
       const text = await response.text();
       return text === 'ok';
     } catch (e) {
