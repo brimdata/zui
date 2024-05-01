@@ -3,12 +3,19 @@
  */
 import {SystemTest} from "src/test/system"
 import {parse} from "./operations"
+import {ZedAst} from "src/app/core/models/zed-ast"
 
 new SystemTest("editor.parse op")
 
 test("editor.parse", async () => {
   const result = await parse("from source | count() by name")
-  expect(result.map((o) => o.kind)).toEqual(["From", "Summarize"])
+  expect(result.map((o) => o.kind)).toEqual(["Pool", "Summarize"])
+})
+
+test("Zed Ast Pool Name", async () => {
+  const result = await parse("from source | count() by name")
+  const ast = new ZedAst(result, null)
+  expect(ast.poolName).toBe("source")
 })
 
 test("editor.parse error", async () => {
