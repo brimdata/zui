@@ -1923,7 +1923,6 @@ __metadata:
     "@types/fs-extra": ^11.0.1
     "@types/node-fetch": ^2.6.2
     fs-extra: ^11.1.1
-    node-fetch: ^2.6.2
     zed: "github:brimdata/zed#main"
   peerDependencies:
     zed: "*"
@@ -14367,7 +14366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:*, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.11, node-fetch@npm:^2.6.2, node-fetch@npm:^2.6.7":
+"node-fetch@npm:*, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.11, node-fetch@npm:^2.6.7":
   version: 2.6.11
   resolution: "node-fetch@npm:2.6.11"
   dependencies:
