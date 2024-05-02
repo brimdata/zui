@@ -5,5 +5,6 @@ export const get = activeTabSelect((tab) => {
   return tab.queryInfo
 })
 
+export const getParseError = createSelector(get, (info) => info.error)
 export const getIsParsed = createSelector(get, (info) => info.isParsed)
 export const getIsSummarized = createSelector(get, (info) => info.isSummarized)

@@ -32,18 +32,8 @@ export const resetQuery = createHandler("session.resetQuery", () => {
   session.navigate(session.snapshot)
 })
 
-const fetchAst = createHandler(async ({invoke}, string) => {
-  let tree
-  try {
-    tree = await invoke("editor.parse", string)
-  } catch (error) {
-    tree = {error}
-  }
-  return tree
-})
-
-export const fetchQueryInfo = createHandler(async (_, query: string) => {
-  const tree = await fetchAst(query)
+export const fetchQueryInfo = createHandler(async ({invoke}, query: string) => {
+  const tree = await invoke("editor.parse", query)
   const ast = new ZedAst(tree, tree.error)
   return {
     isSummarized: ast.isSummarized,
