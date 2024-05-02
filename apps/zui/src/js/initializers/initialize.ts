@@ -21,6 +21,7 @@ import {createWaitForSelector} from "src/app/core/state/create-wait-for-selector
 import {initAsyncTasks} from "./init-async-tasks"
 import {Renderer} from "src/core/renderer"
 import {initDomainModels} from "./init-domain-models"
+import {ViewHandler} from "src/core/view-handler"
 
 const getWindowId = () => {
   const params = new URLSearchParams(window.location.search)
@@ -62,6 +63,7 @@ export default async function initialize(
   initDomainModels({
     store,
   })
+  ViewHandler.store = store
   setMenuContext({select: (fn) => fn(store.getState()), api})
   initDebugGlobals(store, api)
   initAutosave(store)
