@@ -18,6 +18,12 @@ test("Zed Ast Pool Name", async () => {
   expect(ast.poolName).toBe("source")
 })
 
+test("Zed Ast Multi Pool", async () => {
+  const result = await parse("from (pool test1 pool test2) | count() by name")
+  const ast = new ZedAst(result, null)
+  expect(ast.poolNames).toEqual(["test1", "test2"])
+})
+
 test("editor.parse error", async () => {
   await expect(parse("from source | ;;;(")).rejects.toHaveProperty(
     "error",

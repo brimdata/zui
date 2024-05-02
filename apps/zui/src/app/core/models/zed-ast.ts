@@ -10,6 +10,17 @@ export class ZedAst {
     return pool.spec?.pool?.text ?? null
   }
 
+  get poolNames() {
+    const from = this.fromOp
+    if (!from) return []
+    return from.trunks
+      .map((trunk) => trunk?.source)
+      .map((source) => source?.spec)
+      .map((spec) => spec?.pool)
+      .map((pool) => pool?.text)
+      .filter((text) => !!text)
+  }
+
   get fromOp() {
     return this.ops.find((op) => op.kind === "From")
   }
