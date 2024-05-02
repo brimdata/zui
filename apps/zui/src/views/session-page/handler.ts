@@ -1,8 +1,5 @@
 import {ViewHandler} from "src/core/view-handler"
 import {Active} from "src/models/active"
-import {NamedQuery} from "src/models/named-query"
-import {Props, State} from "."
-import {StateObject} from "src/core/state-object"
 import QueryInfo from "src/js/state/QueryInfo"
 import Tabs from "src/js/state/Tabs"
 import Notice from "src/js/state/Notice"
@@ -19,27 +16,20 @@ import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import {syncPool} from "src/app/core/pools/sync-pool"
 
+type Props = {
+  locationKey: string
+}
+
 export class SessionPageHandler extends ViewHandler {
-  constructor(public props: Props, public state: StateObject<State>) {
+  constructor(public props: Props) {
     super()
   }
 
   load() {
     this.reset()
     this.setEditorValues()
-    this.setNamedQuery()
     this.fetchResults()
     this.parseQueryText()
-  }
-
-  private async setNamedQuery() {
-    if (Active.session.hasNamedQuery) {
-      const namedQuery = await NamedQuery.read(Active.session.parentId)
-      const isModified = !Active.session.snapshot.equals(namedQuery.snapshot)
-      this.state.set({namedQuery, isModified})
-    } else {
-      this.state.set({namedQuery: null, isModified: false})
-    }
   }
 
   private reset() {
