@@ -151,6 +151,7 @@ export abstract class BaseClient {
     headers?: Record<string, string>;
     timeout?: number;
     contentType?: string;
+    duplex?: 'half';
   }) {
     const abortCtl = wrapAbort(opts.signal);
     const clearTimer = this.setTimeout(() => {
@@ -174,6 +175,9 @@ export abstract class BaseClient {
       // eslint-disable-next-line
       // @ts-ignore
       body: opts.body,
+      // eslint-disable-next-line
+      // @ts-ignore
+      duplex: opts.duplex,
     });
     clearTimer();
     if (resp.ok) {

@@ -5,13 +5,9 @@ import {
   getLoadContentType,
   jsonHeader,
 } from '@brimdata/zed-js';
-import nodeFetch from 'node-fetch';
 
 export class Client extends BaseClient {
-  // eslint-disable-next-line
-  // @ts-ignore
-  // eslint-disable-next-line
-  public fetch = (...args: any[]) => nodeFetch(...args);
+  public fetch = globalThis.fetch;
 
   async load(
     data: string | NodeJS.ReadableStream,
@@ -29,6 +25,7 @@ export class Client extends BaseClient {
       // eslint-disable-next-line
       // @ts-ignore
       body: data,
+      duplex: 'half',
       headers,
       contentType: getLoadContentType(opts.format) ?? '',
       signal: opts.signal,
