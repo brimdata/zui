@@ -3822,14 +3822,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.41.1":
-  version: 1.41.1
-  resolution: "@playwright/test@npm:1.41.1"
+"@playwright/test@npm:1.43.1":
+  version: 1.43.1
+  resolution: "@playwright/test@npm:1.43.1"
   dependencies:
-    playwright: 1.41.1
+    playwright: 1.43.1
   bin:
     playwright: cli.js
-  checksum: d9877e777a1a7f60f097df57b6abc2478e2ae342930a409c8546c8aa40d6e206cbc16bf1c71b23414ac3fbad36dcae1ad79635d7f4eb705ab54d3c705e82ea04
+  checksum: f9db387b488a03125e5dc22dd7ffed9c661d1f2428188912a35a2235b3bd9d826b390e7600d04998639994f5a96695b9dc9034ca9cb59e261d2fdee93a60df3f
   languageName: node
   linkType: hard
 
@@ -15312,14 +15312,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-chromium@npm:1.41.1":
-  version: 1.41.1
-  resolution: "playwright-chromium@npm:1.41.1"
+"playwright-chromium@npm:1.43.1":
+  version: 1.43.1
+  resolution: "playwright-chromium@npm:1.43.1"
   dependencies:
-    playwright-core: 1.41.1
+    playwright-core: 1.43.1
   bin:
     playwright: cli.js
-  checksum: c341090ed603b285cc4cbb8e35d1764c2d5ea4b60718c969e448f3a638480bc8696bbbc65acb38beafbcd20029e4480117118da8cfcb1fc59596b57f40c279f4
+  checksum: 5a4521a56f2789124f7bcc6a23c4effe96018ea0f867672f222994c5842372e44909dbe395184ee59cfff53abc10f970fbed036738dace82873233115f8e360c
   languageName: node
   linkType: hard
 
@@ -15332,12 +15332,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.41.1":
-  version: 1.41.1
-  resolution: "playwright-core@npm:1.41.1"
+"playwright-core@npm:1.43.1":
+  version: 1.43.1
+  resolution: "playwright-core@npm:1.43.1"
   bin:
     playwright-core: cli.js
-  checksum: c83446a560c6bd85f6f0cd586ff8c643b77e2005567386e12f85890936cc370673114b94cd883246018797cc1580e93b0296ade7d07275bb611b8962f5bb9693
+  checksum: 7c96b3a4a4bce2ee22c3cd680c9b0bb9e4bf07ee4b51d1e9a7f47a6489c7b0b960d4b550e530b8f41d1ffeadd26c7c6bb626ae8689dfd90dce1cb8e35ae78ff7
   languageName: node
   linkType: hard
 
@@ -15356,18 +15356,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright@npm:1.41.1":
-  version: 1.41.1
-  resolution: "playwright@npm:1.41.1"
+"playwright@npm:1.43.1":
+  version: 1.43.1
+  resolution: "playwright@npm:1.43.1"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.41.1
+    playwright-core: 1.43.1
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 3da7fb929abdec6adbdd8829f840580f5f210713214a8d230b130127f2270403eb2113c6c1418012221149707250fff896794c7c22c260dd09a92bf800227f31
+  checksum: de9db021f93018a18275bbb5af09ebf1804aa0534f47578b35b440064abc774509740205802824afc94a99fc84dd55ffe9e215718ad3ecc691b251ab3882b096
   languageName: node
   linkType: hard
 
@@ -19249,10 +19249,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "zui-player@workspace:packages/zui-player"
   dependencies:
-    "@playwright/test": 1.41.1
+    "@playwright/test": 1.43.1
     fs-extra: ^11.2.0
-    playwright: 1.41.1
-    playwright-chromium: 1.41.1
+    playwright: 1.43.1
+    playwright-chromium: 1.43.1
   languageName: unknown
   linkType: soft
 
