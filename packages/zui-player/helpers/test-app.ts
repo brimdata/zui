@@ -45,6 +45,11 @@ export default class TestApp {
     if (bin) launchOpts.executablePath = bin;
     this.zui = await electron.launch(launchOpts);
 
+    // Pipe the stdout from the electron process into the test runner process
+    if (process.env['VERBOSE']) {
+      this.zui.process().stdout.pipe(process.stdout);
+    }
+
     await waitForTrue(() => this.zui.windows().length === 2);
     await waitForTrue(async () => !!(await this.getWindowByTitle('Zui')));
     await waitForTrue(
