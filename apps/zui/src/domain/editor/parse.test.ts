@@ -12,8 +12,7 @@ test("editor.parse", async () => {
 })
 
 test("editor.parse error", async () => {
-  await expect(parse("from source | ;;;(")).rejects.toHaveProperty(
-    "error",
-    expect.stringContaining("error parsing Zed at column 15")
-  )
+  await expect(parse("from source | ;;;(")).resolves.toEqual({
+    error: expect.stringContaining("error parsing Zed at column 15"),
+  })
 })
