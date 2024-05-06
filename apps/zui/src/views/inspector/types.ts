@@ -1,6 +1,6 @@
 import * as zed from "@brimdata/zed-js"
 import React, {MouseEvent, ReactNode} from "react"
-import {ViewContext} from "../../../zui-kit/core/value-view/view-context"
+import {ViewContext} from "../../zui-kit/core/value-view/view-context"
 import {View} from "./views/view"
 
 type InspectorMouseEvent = (

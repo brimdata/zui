@@ -1,6 +1,6 @@
 import React from "react"
 import TabBar from "src/js/components/TabBar/TabBar"
-import {Sidebar} from "src/app/features/sidebar"
+import {Sidebar} from "src/views/sidebar"
 import {AppModals} from "./app-modals"
 import {MainArea} from "./main-area"
 import {AppGrid} from "./app-grid"

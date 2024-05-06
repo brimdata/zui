@@ -9,7 +9,7 @@ import {useSelector} from "react-redux"
 import Table from "src/js/state/Table"
 import {TableColumn} from "src/js/state/Table/selectors"
 import {collapseColumn, expandColumn} from "src/domain/results/handlers"
-import {TREE_ITEM_HEIGHT} from "src/app/features/sidebar/item"
+import {TREE_ITEM_HEIGHT} from "src/views/sidebar/item"
 
 function Node(props: NodeRendererProps<TableColumn>) {
   const {node} = props

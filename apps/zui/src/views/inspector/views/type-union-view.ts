@@ -1,5 +1,5 @@
 import * as zed from "@brimdata/zed-js"
-import {createView} from "../views/create"
+import {createView} from "./create"
 import {ContainerView} from "./container-view"
 
 export class TypeUnionView extends ContainerView<zed.TypeUnion> {

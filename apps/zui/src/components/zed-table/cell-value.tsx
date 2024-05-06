@@ -1,5 +1,5 @@
 import React from "react"
-import {View} from "src/app/features/inspector/views/view"
+import {View} from "src/views/inspector/views/view"
 
 export const CellValue = React.memo(function CellValue(props: {view: View}) {
   if (!props.view) return null

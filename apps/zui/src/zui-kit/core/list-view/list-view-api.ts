@@ -1,8 +1,8 @@
 import * as zed from "@brimdata/zed-js"
 import {isNumber} from "lodash"
 import {ViewContext} from "../value-view/view-context"
-import {RowData} from "../../../app/features/inspector/types"
-import {createView} from "../../../app/features/inspector/views/create"
+import {RowData} from "../../../views/inspector/types"
+import {createView} from "../../../views/inspector/views/create"
 import {ListViewArgs} from "./types"
 import {call} from "src/util/call"
 

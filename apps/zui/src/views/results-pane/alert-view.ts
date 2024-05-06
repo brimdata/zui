@@ -1,6 +1,6 @@
 import * as zed from "@brimdata/zed-js"
-import {InspectArgs} from "src/app/features/inspector/types"
-import {View} from "src/app/features/inspector/views/view"
+import {InspectArgs} from "src/views/inspector/types"
+import {View} from "src/views/inspector/views/view"
 
 export class AlertView extends View {
   static when(args: InspectArgs) {

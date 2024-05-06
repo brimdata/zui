@@ -17,7 +17,7 @@ import Appearance from "src/js/state/Appearance"
 import {
   SidebarToggleButton,
   RightSidebarToggleButton,
-} from "src/app/features/sidebar/sidebar-toggle-button"
+} from "src/views/sidebar/sidebar-toggle-button"
 import tab from "src/js/models/tab"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import {bounded} from "src/util/bounded"

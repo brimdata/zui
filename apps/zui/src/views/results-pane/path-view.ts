@@ -1,5 +1,5 @@
 import * as zed from "@brimdata/zed-js"
-import {InspectArgs} from "src/app/features/inspector/types"
+import {InspectArgs} from "src/views/inspector/types"
 import {BareStringView} from "./bare-string-view"
 
 export class PathView extends BareStringView {

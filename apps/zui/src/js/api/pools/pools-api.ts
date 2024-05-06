@@ -1,5 +1,5 @@
 import {Pool} from "src/app/core/pools/pool"
-import {PoolName} from "src/app/features/sidebar/pools-section/pool-name"
+import {PoolName} from "src/views/sidebar/pools-section/pool-name"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import {ApiDomain} from "../api-domain"

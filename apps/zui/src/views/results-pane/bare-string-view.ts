@@ -1,6 +1,6 @@
 import * as zed from "@brimdata/zed-js"
-import {InspectArgs} from "src/app/features/inspector/types"
-import {StringView} from "src/app/features/inspector/views/string-view"
+import {InspectArgs} from "src/views/inspector/types"
+import {StringView} from "src/views/inspector/views/string-view"
 
 export class BareStringView extends StringView {
   static when(args: InspectArgs) {

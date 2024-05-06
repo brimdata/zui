@@ -1,8 +1,8 @@
 import * as zed from "@brimdata/zed-js"
-import {createView} from "../views/create"
+import {createView} from "./create"
 import {ContainerView} from "./container-view"
 
-export class RecordView extends ContainerView<zed.Record> {
+export class TypeRecordView extends ContainerView<zed.TypeRecord> {
   name() {
     return "Record"
   }
@@ -12,15 +12,16 @@ export class RecordView extends ContainerView<zed.Record> {
   }
 
   openToken() {
-    return "{"
+    return "<{"
   }
 
   closeToken() {
-    return "}"
+    return "}>"
   }
 
   *iterate(n?: number) {
     const fields = this.value.fields
+    if (!fields) return
     const length = n ? Math.min(n, fields.length) : fields.length
 
     for (let i = 0; i < fields.length; ++i) {
@@ -28,11 +29,12 @@ export class RecordView extends ContainerView<zed.Record> {
       const last = i === length - 1
       yield createView({
         ...this.args,
-        value: field.value,
+        value: field.type,
+        // @ts-ignore need to think about rendering types
         field,
         last,
         key: field.name,
-        type: field.value.type,
+        type: field.type,
         indexPath: [...this.args.indexPath, i],
       })
       if (last) break
