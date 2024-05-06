@@ -6,12 +6,12 @@ import Loads from "src/js/state/Loads"
 import {Item} from "../item"
 import {NodeRendererProps} from "react-arborist"
 import {poolContextMenu} from "src/app/menus/pool-context-menu"
-import {useAfterDelayOf} from "src/app/core/hooks/use-after-delay-of"
 import Config from "src/js/state/Config"
 import {PoolName} from "./pool-name"
 import {State} from "src/js/state/types"
 import {showMenu} from "src/core/menu"
 import {setFromPin} from "src/domain/session/handlers"
+import {useAfterDelayOf} from "src/util/hooks/use-after-delay-of"
 
 const PoolItem = ({node, tree, style, dragHandle}: NodeRendererProps<Pool>) => {
   const pool = node.data

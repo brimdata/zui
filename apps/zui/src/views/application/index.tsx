@@ -12,7 +12,7 @@ import {useReleaseNotes} from "./use-release-notes"
 import {InitPool, Show} from "src/views/pool-page"
 import {SessionRoute} from "src/views/session-page/route"
 import Head from "next/head"
-import {useTabId} from "src/app/core/hooks/use-tab-id"
+import {useTabId} from "src/util/hooks/use-tab-id"
 import {NoTabsPane} from "src/views/no-tabs-pane"
 
 function AppRoutes() {

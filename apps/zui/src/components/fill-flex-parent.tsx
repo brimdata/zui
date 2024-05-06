@@ -1,5 +1,5 @@
 import React, {ReactElement} from "react"
-import mergeRefs from "src/app/core/utils/merge-refs"
+import mergeRefs from "src/util/merge-refs"
 import styled from "styled-components"
 import useResizeObserver from "use-resize-observer"
 

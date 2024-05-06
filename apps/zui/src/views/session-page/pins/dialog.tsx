@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react"
 import {createPortal} from "react-dom"
-import mergeRefs from "src/app/core/utils/merge-refs"
+import mergeRefs from "src/util/merge-refs"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import useListener from "src/js/components/hooks/useListener"
 import styled from "styled-components"

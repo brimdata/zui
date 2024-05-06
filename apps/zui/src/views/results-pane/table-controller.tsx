@@ -1,7 +1,7 @@
 import {useEffect, useMemo} from "react"
 import Slice from "src/js/state/Table"
 import {useResultsPaneContext} from "./context"
-import useSelect from "src/app/core/hooks/use-select"
+import useSelect from "src/util/hooks/use-select"
 
 export function useScrollPosition(table) {
   const ctx = useResultsPaneContext()

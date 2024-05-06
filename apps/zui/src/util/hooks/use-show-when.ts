@@ -1,5 +1,5 @@
 import {MutableRefObject, useEffect, useLayoutEffect} from "react"
-import {cmdOrCtrl} from "src/app/core/utils/keyboard"
+import {cmdOrCtrl} from "src/util/keyboard"
 
 // This should be called use form conditionals
 

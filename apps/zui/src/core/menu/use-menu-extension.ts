@@ -2,7 +2,7 @@ import {useEffect, useLayoutEffect, useState} from "react"
 import {MenuItem} from "src/core/menu"
 import {compile} from "../when/compile"
 import {invoke} from "../invoke"
-import {useTabId} from "src/app/core/hooks/use-tab-id"
+import {useTabId} from "src/util/hooks/use-tab-id"
 
 export function useMenuExtension(
   name: string,

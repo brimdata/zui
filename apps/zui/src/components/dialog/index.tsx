@@ -4,7 +4,7 @@ import {useOutsideClick} from "./use-outside-click"
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
 import {omit} from "lodash"
 import {useFixedPosition} from "src/util/hooks/use-fixed-position"
-import mergeRefs from "src/app/core/utils/merge-refs"
+import mergeRefs from "src/util/merge-refs"
 import useListener from "src/js/components/hooks/useListener"
 import {call} from "src/util/call"
 

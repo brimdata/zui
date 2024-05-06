@@ -5,7 +5,7 @@ import {Item} from "../item"
 import {NodeRendererProps} from "react-arborist"
 import {Query} from "src/js/state/Queries/types"
 import {queryContextMenu} from "src/app/menus/query-context-menu"
-import {useAfterDelayOf} from "src/app/core/hooks/use-after-delay-of"
+import {useAfterDelayOf} from "src/util/hooks/use-after-delay-of"
 import {showMenu} from "src/core/menu"
 
 const FolderIcon = styled(Icon).attrs({name: "folder"})``
