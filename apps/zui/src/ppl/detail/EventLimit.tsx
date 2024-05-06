@@ -1,4 +1,4 @@
-import {Caption} from "src/app/detail/Shared"
+import {Caption} from "src/views/detail-pane/Shared"
 import React, {memo, useCallback} from "react"
 import {useDispatch} from "src/app/core/state"
 import {Link} from "src/components/link"

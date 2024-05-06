@@ -1,5 +1,5 @@
 import {InitLake} from "src/app/lakes/root"
-import ReleaseNotes from "src/app/release-notes/release-notes"
+import ReleaseNotes from "src/views/release-notes/release-notes"
 import AppTabsRouter from "src/app/router/app-tabs-router"
 import * as routes from "src/app/router/routes"
 import AppWrapper from "src/app/routes/app-wrapper/app-wrapper"

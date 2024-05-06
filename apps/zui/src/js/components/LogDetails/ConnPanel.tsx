@@ -1,4 +1,4 @@
-import PanelHeading from "src/app/detail/PanelHeading"
+import PanelHeading from "src/views/detail-pane/PanelHeading"
 import React from "react"
 import * as zed from "@brimdata/zed-js"
 import ConnVersation from "../ConnVersation"

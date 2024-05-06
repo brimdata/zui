@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {HTMLProps} from "react"
 import LogDetails from "../../js/state/LogDetails"
-import DetailPane from "src/app/detail/Pane"
+import DetailPane from "src/views/detail-pane/Pane"
 import classNames from "classnames"
 import {HistoryButtons} from "./history-buttons"
 
