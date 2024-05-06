@@ -1,5 +1,5 @@
 import toast from "react-hot-toast"
-import {toAccessTokenKey, toRefreshTokenKey} from "../../auth0/utils"
+import {toAccessTokenKey, toRefreshTokenKey} from "../../../core/auth0/utils"
 import {isDefaultLake} from "../../initializers/initLakeParams"
 import Pools from "../../state/Pools"
 import {Thunk} from "../../state/types"

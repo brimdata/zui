@@ -9,7 +9,7 @@ import {
   deserializeState,
   toAccessTokenKey,
   toRefreshTokenKey,
-} from "../../js/auth0/utils"
+} from "../auth0/utils"
 import {getPersistedGlobalState} from "../../js/state/stores/get-persistable"
 import Lakes from "../../js/state/Lakes"
 import {installExtensions} from "../../electron/extensions"
