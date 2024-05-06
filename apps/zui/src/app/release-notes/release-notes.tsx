@@ -1,4 +1,4 @@
-import Markdown from "src/app/core/components/markdown"
+import Markdown from "src/components/markdown"
 import React from "react"
 import styled from "styled-components"
 import {useReleaseNotes} from "./use-release-notes"
