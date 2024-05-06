@@ -7,7 +7,7 @@ import {isEmpty} from "lodash"
 import {EmptyText} from "../common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import {Tree} from "react-arborist"
-import {TREE_ITEM_HEIGHT} from "../../sidebar/item"
+import {TREE_ITEM_HEIGHT} from "../../../app/features/sidebar/item"
 
 const BG = styled.div`
   display: flex;

@@ -4,7 +4,7 @@
 
 import React from "react"
 import VersionsSection from "./versions-section"
-import {queryPath} from "../../router/utils/paths"
+import {queryPath} from "../../app/router/utils/paths"
 import Queries from "src/js/state/Queries"
 import QueryVersions from "src/js/state/QueryVersions"
 import {QueryVersion} from "src/js/state/QueryVersions/types"

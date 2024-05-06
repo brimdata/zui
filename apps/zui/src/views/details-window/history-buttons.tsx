@@ -1,6 +1,6 @@
 import React from "react"
-import Back from "../icons/back-arrow"
-import Forward from "../icons/forward-arrow"
+import Back from "../../js/components/icons/back-arrow"
+import Forward from "../../js/components/icons/forward-arrow"
 
 type Props = {
   prevExists: boolean
@@ -9,7 +9,7 @@ type Props = {
   forwardFunc: (ClickEvent) => void
 }
 
-export default class HistoryButtons extends React.Component<Props> {
+export class HistoryButtons extends React.Component<Props> {
   render() {
     const {prevExists, nextExists, backFunc, forwardFunc} = this.props
 

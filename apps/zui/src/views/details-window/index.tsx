@@ -1,9 +1,9 @@
 import {useDispatch, useSelector} from "react-redux"
 import React, {HTMLProps} from "react"
-import HistoryButtons from "../common/HistoryButtons"
-import LogDetails from "../../state/LogDetails"
+import LogDetails from "../../js/state/LogDetails"
 import DetailPane from "src/app/detail/Pane"
 import classNames from "classnames"
+import {HistoryButtons} from "./history-buttons"
 
 type Pass = HTMLProps<any>
 
@@ -14,7 +14,7 @@ const PaneHeader = (props: Pass) => (
 const Left = ({className, ...props}: Pass) => (
   <div {...props} className={classNames("left", className)} />
 )
-export default function LogDetailsWindow() {
+export function DetailsWindow() {
   const dispatch = useDispatch()
   const prevExists = useSelector(LogDetails.getHistory).canGoBack()
   const nextExists = useSelector(LogDetails.getHistory).canGoForward()

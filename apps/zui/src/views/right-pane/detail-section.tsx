@@ -4,11 +4,11 @@ import {useSelector} from "react-redux"
 import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
 import ExpandWindow from "src/js/icons/ExpandWindow"
 import LogDetails from "src/js/state/LogDetails"
-import HistoryButtons from "src/js/components/common/HistoryButtons"
-import {useDispatch} from "../../core/state"
-import NoSelection from "../../detail/NoSelection"
+import {useDispatch} from "../../app/core/state"
+import NoSelection from "../../app/detail/NoSelection"
 import {Left, PaneBody, PaneHeader, Right} from "./common"
 import * as zed from "@brimdata/zed-js"
+import {HistoryButtons} from "../details-window/history-buttons"
 
 const DetailSection = () => {
   const dispatch = useDispatch()

@@ -6,7 +6,7 @@ import Current from "src/js/state/Current"
 import {QueryModel} from "src/js/models/query-model"
 import {EmptyText} from "./common"
 import {FillFlexParent} from "src/components/fill-flex-parent"
-import {TREE_ITEM_HEIGHT} from "../sidebar/item"
+import {TREE_ITEM_HEIGHT} from "../../app/features/sidebar/item"
 import {NamedQueries} from "src/domain/handlers"
 
 const EmptyMessage = () => {
