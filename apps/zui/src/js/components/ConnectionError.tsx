@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import styled from "styled-components"
 import links from "src/app/core/links"
-import Link from "./common/Link"
+import {Link} from "../../components/link"
 import {Content} from "./Content"
 import {SubmitButton} from "src/components/submit-button"
 import Current from "../state/Current"

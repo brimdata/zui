@@ -5,7 +5,6 @@ import Pools from "../../state/Pools"
 import EditLakeModal from "./EditLakeModal"
 import useEnterKey from "../hooks/useEnterKey"
 import LakeStatuses from "../../state/LakeStatuses"
-import Link from "../common/Link"
 import ErrorFactory from "../../models/ErrorFactory"
 import Notice from "../../state/Notice"
 import removeLake from "../../flows/lake/removeLake"
@@ -14,6 +13,7 @@ import {showMessageBox} from "src/js/lib/System"
 import styles from "./lake-modal.module.css"
 import {capitalize} from "lodash"
 import {PopoverModal, usePopoverModal} from "src/components/popover-modal"
+import {Link} from "src/components/link"
 
 const ViewLake = ({onClose, onEdit}) => {
   const dispatch = useDispatch()

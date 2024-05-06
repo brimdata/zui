@@ -16,7 +16,7 @@ import {selectQuery} from "src/app/events/select-query-event"
 import Appearance from "src/js/state/Appearance"
 import {TREE_ITEM_HEIGHT} from "../item"
 import {showMenu} from "src/core/menu"
-import EmptySection from "src/js/components/common/EmptySection"
+import EmptySection from "src/components/empty-section"
 import {NamedQueries} from "src/domain/handlers"
 
 type Props = {

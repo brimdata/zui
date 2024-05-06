@@ -1,7 +1,7 @@
 import {Caption} from "src/app/detail/Shared"
 import React, {memo, useCallback} from "react"
 import {useDispatch} from "src/app/core/state"
-import Link from "src/js/components/common/Link"
+import {Link} from "src/components/link"
 import {openNewSearchTab} from "src/js/flows/openNewSearchWindow"
 import Editor from "src/js/state/Editor"
 import {submitSearch} from "src/domain/session/handlers"

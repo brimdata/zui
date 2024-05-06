@@ -6,7 +6,7 @@ import ProgressIndicator from "src/js/components/ProgressIndicator"
 import {isNumber} from "lodash"
 import {invoke} from "src/core/invoke"
 import {errorToString} from "src/util/error-to-string"
-import Link from "src/js/components/common/Link"
+import {Link} from "src/components/link"
 
 function useStatus() {
   const nextVersion = useSelector(Updates.getNextVersion)

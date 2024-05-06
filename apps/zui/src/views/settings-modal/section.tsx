@@ -1,7 +1,7 @@
 import {ConfigItem} from "src/domain/configurations/plugin-api"
 import {Config} from "src/zui"
 import {Input} from "./input"
-import Link from "src/js/components/common/Link"
+import {Link} from "src/components/link"
 
 export type SettingProps = {field: ConfigItem; sectionName: string}
 

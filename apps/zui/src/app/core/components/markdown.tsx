@@ -1,6 +1,6 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
-import Link from "src/js/components/common/Link"
+import {Link} from "src/components/link"
 
 const components = {
   // eslint-disable-next-line
