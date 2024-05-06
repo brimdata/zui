@@ -4,7 +4,6 @@ import {BulletApplication} from "./application"
 
 class MainIpc {
   listen() {
-    console.log("Listening")
     ipcMain.handle("bullet:view-request", (e, controllerAction, params) => {
       const [shortName, action] = controllerAction.split("#")
       const name = capitalize(camelCase(shortName)) + "Controller"
