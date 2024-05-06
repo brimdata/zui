@@ -2,7 +2,7 @@ import React from "react"
 import DetailSection from "./detail-section"
 
 import styled from "styled-components"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import {useSelector} from "react-redux"
 import Layout from "src/js/state/Layout"
 import {DraggablePane} from "src/js/components/draggable-pane"

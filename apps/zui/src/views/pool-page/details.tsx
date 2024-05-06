@@ -1,5 +1,5 @@
 import React from "react"
-import {Pool} from "src/app/core/pools/pool"
+import {Pool} from "src/models/pool"
 import styles from "./details.module.css"
 import classNames from "classnames"
 

@@ -7,7 +7,7 @@ import QueryVersions from "src/js/state/QueryVersions"
 import styled from "styled-components"
 import {useEntryMenu} from "./use-entry-menu"
 import {State} from "src/js/state/types"
-import {ActiveQuery} from "src/app/core/models/active-query"
+import {ActiveQuery} from "src/models/active-query"
 import {NodeRendererProps} from "react-arborist"
 import {Snapshots} from "src/domain/handlers"
 

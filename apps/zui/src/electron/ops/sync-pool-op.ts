@@ -1,6 +1,6 @@
 import {createOperation} from "../../core/operations"
 import Pools from "src/js/state/Pools"
-import {Pool} from "src/app/core/pools/pool"
+import {Pool} from "src/models/pool"
 
 export const syncPoolOp = createOperation(
   "syncPoolOp",

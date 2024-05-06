@@ -1,6 +1,6 @@
 import {Caption} from "src/views/detail-pane/Shared"
 import React, {memo, useCallback} from "react"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import {Link} from "src/components/link"
 import {openNewSearchTab} from "src/js/flows/openNewSearchWindow"
 import Editor from "src/js/state/Editor"

@@ -1,5 +1,5 @@
 import {createMenu} from "src/core/menu"
-import {ActiveQuery} from "src/app/core/models/active-query"
+import {ActiveQuery} from "src/models/active-query"
 
 export const sessionToolbarMenu = createMenu((_, query: ActiveQuery) => {
   return [

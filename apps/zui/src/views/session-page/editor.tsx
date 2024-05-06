@@ -2,7 +2,7 @@ import React, {useRef} from "react"
 
 import {useSelector} from "react-redux"
 import MainEditor from "src/js/state/Editor"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import {cmdOrCtrl} from "src/util/keyboard"
 import Config from "src/js/state/Config"
 import {useTabId} from "src/util/hooks/use-tab-id"

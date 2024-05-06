@@ -27,7 +27,7 @@ import {AppDispatch, State} from "../../js/state/types"
 import {PathName, getPath} from "../../js/api/core/get-path"
 import createLake from "src/js/models/lake"
 import {getAuthToken} from "../../js/api/core/get-zealot"
-import {Abortables} from "src/app/core/models/abortables"
+import {Abortables} from "src/modules/abortables"
 import * as zui from "src/zui"
 import log from "electron-log"
 

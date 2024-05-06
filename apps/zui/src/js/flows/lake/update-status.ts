@@ -1,5 +1,5 @@
 import {Client} from "@brimdata/zed-js"
-import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
+import {syncPoolsData} from "src/models/sync-pools-data"
 import lake from "src/js/models/lake"
 import {validateToken} from "../../../core/auth0/utils"
 import Lakes from "../../state/Lakes"

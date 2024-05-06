@@ -1,5 +1,5 @@
 import {isEqual} from "lodash"
-import {Pool} from "src/app/core/pools/pool"
+import {Pool} from "src/models/pool"
 import {PoolName} from "./pool-name"
 
 export type Internal = {

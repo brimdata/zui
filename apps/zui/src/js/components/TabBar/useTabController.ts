@@ -2,7 +2,7 @@ import {useSelector} from "react-redux"
 import {startTransition, useEffect, useRef, useState} from "react"
 
 import Tabs from "../../state/Tabs"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 
 export default function (count: number, calcWidths: Function) {
   const trueActiveId = useSelector(Tabs.getActive)

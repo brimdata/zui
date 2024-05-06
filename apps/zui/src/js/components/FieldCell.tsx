@@ -1,4 +1,4 @@
-import {useZedFormatter} from "src/app/core/format"
+import {useZedFormatter} from "src/components/format"
 import {zedTypeClassName} from "src/components/zed-type-class-name"
 import classNames from "classnames"
 import React from "react"

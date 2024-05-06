@@ -1,4 +1,4 @@
-import {Abortables} from "src/app/core/models/abortables"
+import {Abortables} from "src/modules/abortables"
 import toast from "react-hot-toast"
 import {getZealot} from "./core/get-zealot"
 import {AppDispatch, GetState, State} from "../state/types"

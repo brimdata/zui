@@ -1,4 +1,4 @@
-import Histories from "src/app/core/models/histories"
+import Histories from "src/modules/histories"
 import TabHistories from "../state/TabHistories"
 import {Store} from "../state/types"
 import {createMemoryHistory} from "history"

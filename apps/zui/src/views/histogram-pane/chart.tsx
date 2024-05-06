@@ -1,4 +1,4 @@
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import {D3StackedHistogram} from "./d3-stacked-histogram"
 import {useTooltip} from "./use-tooltip"
 import {formatData} from "./format-data"

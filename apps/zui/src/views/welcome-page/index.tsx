@@ -3,7 +3,7 @@ import {connectToLake} from "src/app/commands/connect-to-lake"
 import {Subtitle} from "src/components/subtitle"
 import {Title} from "src/components/title"
 import styled from "styled-components"
-import links from "src/app/core/links"
+import links from "src/config/links"
 import {invoke} from "src/core/invoke"
 import {chooseFiles} from "src/domain/loads/handlers"
 

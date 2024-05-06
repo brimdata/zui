@@ -1,4 +1,4 @@
-import Histories from "src/app/core/models/histories"
+import Histories from "src/modules/histories"
 import {Location} from "history"
 import React from "react"
 import {

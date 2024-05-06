@@ -3,7 +3,7 @@ import Mousetrap from "mousetrap"
 
 import Modal from "../../js/state/Modal"
 import Tabs from "../../js/state/Tabs"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 
 export default function () {
   const dispatch = useDispatch()

@@ -3,7 +3,7 @@ import Current from "src/js/state/Current"
 import Layout from "src/js/state/Layout"
 import {plusOne} from "src/util/plus-one"
 import {submitSearch} from "./submit-search"
-import {ZedAst} from "src/app/core/models/zed-ast"
+import {ZedAst} from "src/models/zed-ast"
 import {Active} from "src/models/active"
 import {create} from "src/domain/named-queries/handlers"
 

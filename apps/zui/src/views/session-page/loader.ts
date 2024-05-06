@@ -12,7 +12,7 @@ import {
   runResultsMain,
 } from "src/views/results-pane/run-results-query"
 import Layout from "src/js/state/Layout"
-import {syncPool} from "src/app/core/pools/sync-pool"
+import {syncPool} from "src/models/sync-pool"
 import {fetchQueryInfo} from "src/domain/session/handlers"
 import QueryInfo from "src/js/state/QueryInfo"
 import {createHandler} from "src/core/handlers"

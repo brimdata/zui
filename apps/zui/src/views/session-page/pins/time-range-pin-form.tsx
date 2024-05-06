@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {useTimeZone} from "src/app/core/format"
+import {useTimeZone} from "src/components/format"
 import {TimeRangeQueryPin} from "src/js/state/Editor/types"
 import {PinFormProps} from "./base-pin"
 import {getFormData} from "./form-helpers"

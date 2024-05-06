@@ -1,6 +1,6 @@
 import React, {CSSProperties} from "react"
 import {useSelector} from "react-redux"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import Appearance from "src/js/state/Appearance"
 import Tabs from "src/js/state/Tabs"

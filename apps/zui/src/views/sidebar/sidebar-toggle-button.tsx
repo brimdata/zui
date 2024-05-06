@@ -1,5 +1,5 @@
 import React from "react"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import Appearance from "src/js/state/Appearance"
 import {IconButton} from "src/components/icon-button"
 import {useSelector} from "react-redux"

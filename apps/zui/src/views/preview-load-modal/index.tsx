@@ -16,7 +16,7 @@ import {errorToString} from "src/util/error-to-string"
 import {call} from "src/util/call"
 import {invoke} from "src/core/invoke"
 import {FullModal, useFullModal} from "src/components/full-modal"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 
 function Main(props: {
   original: ResultsControl

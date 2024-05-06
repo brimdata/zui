@@ -1,4 +1,4 @@
-import {syncPoolsData} from "src/app/core/pools/sync-pools-data"
+import {syncPoolsData} from "src/models/sync-pools-data"
 import {LakeModel} from "src/js/models/lake"
 import Lakes from "../../state/Lakes"
 import LakeStatuses from "../../state/LakeStatuses"

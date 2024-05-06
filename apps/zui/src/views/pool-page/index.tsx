@@ -1,4 +1,4 @@
-import {syncPool} from "src/app/core/pools/sync-pool"
+import {syncPool} from "src/models/sync-pool"
 import usePoolId from "src/app/router/hooks/use-pool-id"
 import React, {useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux"

@@ -17,7 +17,7 @@ import {
   SaveDialogReturnValue,
 } from "electron"
 import {SearchAppMenuState} from "src/electron/windows/search/app-menu"
-import {Pool} from "src/app/core/pools/pool"
+import {Pool} from "src/models/pool"
 import {Command} from "src/app/commands/command"
 import {LoadOptions} from "../loads/types"
 

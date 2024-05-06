@@ -1,4 +1,4 @@
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import {nextPage} from "./run"
 import {useCallback} from "react"
 

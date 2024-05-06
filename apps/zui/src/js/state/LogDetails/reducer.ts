@@ -1,5 +1,5 @@
 import {LogDetails, LogDetailsAction, LogDetailsState} from "./types"
-import History from "src/app/core/models/history"
+import History from "src/modules/history"
 
 const init = (): LogDetailsState => ({
   entries: [],

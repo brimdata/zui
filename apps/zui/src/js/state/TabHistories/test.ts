@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import Histories from "src/app/core/models/histories"
+import Histories from "src/modules/histories"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 import TabHistories from "./index"
 
