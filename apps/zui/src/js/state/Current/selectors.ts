@@ -19,6 +19,8 @@ import lake from "src/js/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
+import {getWorkspaceId} from "../Window/selectors"
+import Workspaces from "../Workspaces"
 
 export const getHistory = (
   state,
@@ -41,7 +43,12 @@ export const getQueryUrlParams = createSelector(getLocation, (location) => {
   const path = location.pathname
   const routes = [queryVersion.path, query.path]
   const match = matchPath<{queryId: string; version: string}>(path, routes)
-  return match?.params ?? {queryId: "", version: ""}
+  const queryId = match?.params?.queryId ?? ""
+  const version = match?.params?.version ?? ""
+  return {
+    queryId: decodeURIComponent(queryId),
+    version,
+  }
 })
 
 export const getVersion = (state: State): QueryVersion => {
@@ -78,7 +85,7 @@ export const getNamedQuery = (state: State) => {
 
 export const getSessionRouteParentId = (state: State) => {
   const {queryId} = getQueryUrlParams(state)
-  return queryId
+  return decodeURIComponent(queryId)
 }
 
 export const getSession = createSelector(
@@ -190,3 +197,11 @@ export const getRouteName = createSelector(getLocation, (location) => {
   if (route) return route.name
   else return null
 })
+
+export const getWorkspace = createSelector(
+  getWorkspaceId,
+  Workspaces.entities,
+  (id, entities) => {
+    return entities[id]
+  }
+)

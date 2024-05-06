@@ -36,13 +36,9 @@
 }
 
 :root {
-  
-  --gutter-space: var(--space-s);
+  --gutter: var(--space-s);
+  --gutter-half: calc(var(--space-s) / 2);
   --hover-duration: 75ms;
-
-  /* Hover and Active Filters */
-  --hover-filter: brightness(95%);
-  --active-filter: brightness(93%);
 
   @media (prefers-color-scheme: dark) {
     --hover-filter: brightness(125%);

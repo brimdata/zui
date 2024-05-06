@@ -47,6 +47,13 @@ export const welcome: Route = {
   icon: "zui",
 }
 
+export const fileShow: Route = {
+  name: "fileShow",
+  title: "File",
+  path: "/file/:path",
+  icon: "file_border",
+}
+
 type Route = {
   name: string
   title: string
@@ -55,6 +62,7 @@ type Route = {
 }
 
 export const allRoutes: Route[] = [
+  fileShow,
   poolShow,
   query,
   queryVersion,

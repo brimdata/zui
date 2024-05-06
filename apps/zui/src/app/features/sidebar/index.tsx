@@ -5,12 +5,12 @@ import styled from "styled-components"
 import Current from "src/js/state/Current"
 import {DraggablePane} from "src/js/components/draggable-pane"
 import PoolsSection from "./pools-section"
-import {QueriesSection} from "./queries-section"
 import Header from "./header"
 import {Menu} from "./menu"
 import {SidebarToggleButton} from "./sidebar-toggle-button"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {Body} from "./body"
+import {WorkspacePanel} from "src/views/workspace-panel"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -25,7 +25,7 @@ const PaneSwitch = ({name}) => {
     case "pools":
       return <PoolsSection />
     case "queries":
-      return <QueriesSection />
+      return <WorkspacePanel />
     default:
       return null
   }
@@ -67,7 +67,12 @@ export function Sidebar() {
   if (!isOpen) return null
 
   return (
-    <Pane dragAnchor="right" onDrag={onDragPane} aria-label="sidebar">
+    <Pane
+      dragAnchor="right"
+      onDrag={onDragPane}
+      aria-label="sidebar"
+      className="transparent-surface"
+    >
       <SidebarTop>
         <SidebarToggleButton />
       </SidebarTop>

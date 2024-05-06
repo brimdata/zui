@@ -147,7 +147,7 @@ export const Results = memo(function Results(
       <section>
         {props.error ? (
           <ErrorWell
-            title="Shaper Error"
+            title="Error"
             error={props.error}
             className={styles.error}
           />

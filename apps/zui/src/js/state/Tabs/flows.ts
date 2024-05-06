@@ -33,7 +33,6 @@ export const previewUrl =
     const previewId = Tabs.getPreview(getState())
     const previewTab = previewId && findTabById(tabs, previewId)
     const tab = findTabByUrl(tabs, url)
-
     if (tab) {
       dispatch(Tabs.activate(tab.id))
     } else if (previewTab) {

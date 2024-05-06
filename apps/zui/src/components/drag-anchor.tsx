@@ -10,7 +10,7 @@ const Area = styled.div`
   z-index: 99;
   --size: 11px;
   --padding: 1px;
-  --offset: -4px;
+  --offset: -9px;
 
   &.debug {
     background: red;

@@ -1,6 +1,6 @@
 import {createEntityAdapter} from "@reduxjs/toolkit"
-import {createCrudSlice} from "src/core/state/create-crud-slice"
 import {PoolSetting} from "./types"
+import {createCrudSlice} from "src/modules/every-reducer/create-crud-slice"
 
 const adapter = createEntityAdapter<PoolSetting>()
 const slice = createCrudSlice<PoolSetting>({name: "$POOL_SETTINGS", adapter})

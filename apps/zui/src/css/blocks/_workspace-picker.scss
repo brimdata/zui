@@ -1,0 +1,9 @@
+.workspace-picker {
+  flex-basis: 1.3lh;
+  flex-shrink: 0;
+  flex-grow: 0;
+  padding-inline: var(--gutter);
+  border-bottom-style: solid;
+  cursor: default;
+  user-select: none;
+}

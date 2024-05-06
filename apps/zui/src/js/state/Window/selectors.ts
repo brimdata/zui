@@ -14,3 +14,7 @@ export function activeTabsSelect<T>(
 ): (state: State) => T {
   return createSelector(getActiveTabs, (state) => state, selector)
 }
+
+export function getWorkspaceId(state: State) {
+  return state.window.workspaceId
+}

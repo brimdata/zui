@@ -14,10 +14,14 @@ import {SessionRoute} from "src/views/session-page/route"
 import Head from "next/head"
 import {useTabId} from "src/app/core/hooks/use-tab-id"
 import {NoTabsPane} from "src/views/no-tabs-pane"
+import {FilePage} from "src/views/file-page"
 
 function AppRoutes() {
   return (
     <Switch>
+      <Route path={routes.fileShow.path}>
+        <FilePage />
+      </Route>
       <Route path={routes.releaseNotes.path}>
         <ReleaseNotes />
       </Route>

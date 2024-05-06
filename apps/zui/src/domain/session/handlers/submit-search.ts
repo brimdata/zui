@@ -15,10 +15,11 @@ import {Active} from "src/models/active"
 export const submitSearch = createHandler(async () => {
   const {session} = Active
   const nextSnapshot = Active.snapshot
+  const namedQueryId = session.hasNamedQuery ? session.parentId : null
 
   if (nextSnapshot.equals(session.snapshot)) {
     session.load()
   } else {
-    session.navigate(Active.snapshot, session.namedQuery)
+    session.navigate(Active.snapshot, namedQueryId)
   }
 })

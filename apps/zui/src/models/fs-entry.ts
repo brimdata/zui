@@ -1,0 +1,50 @@
+import {cache} from "src/util/cache"
+import fs from "node:fs"
+import pathmod from "node:path"
+
+export class FSEntry {
+  children: FSEntry[] | null = null
+
+  constructor(public path: string, opts: {children?: boolean} = {}) {
+    if (this.isDir) {
+      if (opts.children) {
+        this.children = fs.readdirSync(path).map((name) => {
+          return new FSEntry(pathmod.join(path, name))
+        })
+      } else {
+        this.children = []
+      }
+    }
+  }
+
+  get name() {
+    return pathmod.basename(this.path)
+  }
+
+  get ext() {
+    return pathmod.extname(this.path)
+  }
+
+  get dir() {
+    return pathmod.dirname(this.path)
+  }
+
+  get stats() {
+    return cache(this, "_stats", () => fs.statSync(this.path))
+  }
+
+  get isDir() {
+    return this.stats.isDirectory()
+  }
+
+  get attrs() {
+    return {
+      name: this.name,
+      path: this.path,
+      isDir: this.isDir,
+      children: this.children
+        ? this.children.map((child) => child.attrs)
+        : null,
+    }
+  }
+}

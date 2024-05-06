@@ -13,6 +13,7 @@ const slice = createSlice({
   initialState: {
     tabs: {} as Record<string, TabsState>,
     lakeId: null as string | null,
+    workspaceId: null as string | null,
   },
   reducers: {
     setLakeId: (state, action: PayloadAction<string>) => {
@@ -20,6 +21,10 @@ const slice = createSlice({
       const next = Tabs.reducer(state.tabs[id], INIT)
       state.lakeId = id
       state.tabs[id] = next
+    },
+    setWorkspaceId: (state, action: PayloadAction<string>) => {
+      const id = action.payload
+      state.workspaceId = id
     },
   },
   extraReducers: (builder) => {

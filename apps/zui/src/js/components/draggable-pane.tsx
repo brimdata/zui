@@ -6,6 +6,7 @@ type Props = {
   onDrag: (e: MouseEvent, args: {dx: number; dy: number}) => void
   dragAnchor: "right" | "left" | "top" | "bottom"
   children: ReactNode
+  className?: string
 }
 
 const Pane = styled.div<any>`

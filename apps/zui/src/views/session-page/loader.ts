@@ -3,7 +3,6 @@ import Editor from "src/js/state/Editor"
 import {startTransition} from "react"
 import Notice from "src/js/state/Notice"
 import Tabs from "src/js/state/Tabs"
-import {Location} from "history"
 import Pools from "src/js/state/Pools"
 import {invoke} from "src/core/invoke"
 import {runHistogramQuery} from "src/views/histogram-pane/run-query"
@@ -19,7 +18,7 @@ import {createHandler} from "src/core/handlers"
 import {Active} from "src/models/active"
 
 export const loadRoute = createHandler(
-  async ({select, dispatch}, location: Location) => {
+  async ({select, dispatch}, locationKey: string) => {
     const history = select(Current.getHistory)
     const lakeId = select(Current.getLakeId)
     const version = select(Current.getVersion)
@@ -27,10 +26,9 @@ export const loadRoute = createHandler(
     const histogramVisible = select(Layout.getShowHistogram)
 
     dispatch(QueryInfo.reset())
-    dispatch(Tabs.loaded(location.key))
+    dispatch(Tabs.loaded(locationKey))
     dispatch(Notice.dismiss())
 
-    // Give editor a chance to update by scheduling this update
     setTimeout(() => {
       dispatch(Editor.setValue(version?.value ?? ""))
       dispatch(Editor.setPins(version?.pins || []))
