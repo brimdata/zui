@@ -1,8 +1,7 @@
-import {BulletController} from "./controller"
 import {ipc} from "./ipc"
 
 class Application {
-  controllers: typeof BulletController[] = []
+  controllers: any[] = []
 
   config(fn) {
     return fn(this)
