@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react"
 import styled from "styled-components"
 
 import useCallbackRef from "src/js/components/hooks/useCallbackRef"
-import {useZuiApi} from "src/app/core/context"
+import {useZuiApi} from "src/views/application/context"
 import {MenuItem, showContextMenu} from "src/core/menu"
 import {useDispatch} from "src/app/core/state"
 import useLakeId from "src/app/router/hooks/use-lake-id"

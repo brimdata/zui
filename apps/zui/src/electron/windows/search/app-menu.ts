@@ -1,5 +1,5 @@
 import {app, MenuItemConstructorOptions, shell, Menu} from "electron"
-import env from "src/app/core/env"
+import env from "src/core/env"
 import links from "src/app/core/links"
 import pkg from "src/electron/pkg"
 import {closeWindowOp} from "../../ops/close-window-op"

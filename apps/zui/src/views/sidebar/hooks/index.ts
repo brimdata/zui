@@ -1,4 +1,4 @@
-import {useZuiApi} from "src/app/core/context"
+import {useZuiApi} from "src/views/application/context"
 import {useFilesDrop} from "src/util/hooks/use-files-drop"
 
 export const useQueryImportOnDrop = () => {

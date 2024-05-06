@@ -1,4 +1,4 @@
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {LinuxUpdater} from "./linux-updater"
 import {MacWinUpdater} from "./mac-win-updater"
 

@@ -1,4 +1,4 @@
-import {selectQuery} from "src/app/events/select-query-event"
+import {selectQuery} from "src/views/sidebar/queries-section/select-query-event"
 import {invoke} from "src/core/invoke"
 import Appearance from "src/js/state/Appearance"
 import {Thunk} from "src/js/state/types"

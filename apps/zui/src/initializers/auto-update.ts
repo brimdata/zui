@@ -1,4 +1,4 @@
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {MainObject} from "../core/main/main-object"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {Scheduler} from "src/domain/updates/scheduler"

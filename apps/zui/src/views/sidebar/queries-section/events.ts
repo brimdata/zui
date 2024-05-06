@@ -1,5 +1,6 @@
 import useListener from "src/js/components/hooks/useListener"
 
+// don't use this...a bad experiement
 export function createEvent<Args extends any[]>(name: string) {
   return {
     trigger(...args: Args) {

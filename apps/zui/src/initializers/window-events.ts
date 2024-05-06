@@ -1,6 +1,6 @@
 import {app, autoUpdater} from "electron"
 import log from "electron-log"
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {MainObject} from "../core/main/main-object"
 import {moveToCurrentDisplayOp} from "../electron/ops/move-to-current-display-op"
 import {debug} from "src/core/log"

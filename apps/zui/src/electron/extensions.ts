@@ -1,4 +1,4 @@
-import env from "src/app/core/env"
+import env from "src/core/env"
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
 } from "electron-devtools-assembler"

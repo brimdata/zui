@@ -3,7 +3,7 @@ import path from "path"
 import fs from "fs-extra"
 import log from "electron-log"
 import {isFirstRun, setFirstRun} from "../first-run"
-import env from "src/app/core/env"
+import env from "src/core/env"
 
 // On first ever run of a ZUI release, check if there is existing Brim app
 // data and if so, copy it into ZUI.

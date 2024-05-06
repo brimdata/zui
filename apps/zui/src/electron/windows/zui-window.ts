@@ -7,7 +7,7 @@ import {getDisplays} from "./get-displays"
 import {SerializedWindow, WindowProps} from "./types"
 import {TimedPromise} from "src/util/timed-promise"
 import path from "path"
-import env from "src/app/core/env"
+import env from "src/core/env"
 
 export abstract class ZuiWindow {
   abstract name: WindowName

@@ -1,7 +1,7 @@
 import {render as rtlRender} from "@testing-library/react"
 import React, {ComponentType, ReactElement} from "react"
 import HTMLContextMenu from "src/js/components/HTMLContextMenu"
-import {AppProvider} from "src/app/core/context"
+import {AppProvider} from "src/views/application/context"
 
 export function render(ui: ReactElement, {store, api}) {
   function Wrapper({children}) {

@@ -1,5 +1,5 @@
 import filter from "filter-console"
-import env from "src/app/core/env"
+import env from "src/core/env"
 
 export async function initialize() {
   if (env.isTest) return

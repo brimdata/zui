@@ -1,4 +1,4 @@
-import {Data, Name, Value} from "src/app/core/Data"
+import {Data, Name, Value} from "src/components/data"
 import Panel from "src/views/detail-pane/Panel"
 import PanelHeading from "src/views/detail-pane/PanelHeading"
 import {Caption, ChartWrap, TableWrap} from "src/views/detail-pane/Shared"

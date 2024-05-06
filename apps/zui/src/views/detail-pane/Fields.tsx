@@ -1,4 +1,4 @@
-import {Data, Name, Value} from "src/app/core/Data"
+import {Data, Name, Value} from "src/components/data"
 import {useZedFormatter} from "src/app/core/format"
 import {zedTypeClassName} from "src/components/zed-type-class-name"
 import React, {memo, useMemo} from "react"

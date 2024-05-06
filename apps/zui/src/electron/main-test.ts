@@ -1,3 +1,3 @@
-import env from "src/app/core/env"
+import env from "src/core/env"
 
 console.log(env)

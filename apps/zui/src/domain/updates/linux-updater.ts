@@ -1,7 +1,7 @@
 import {app, shell} from "electron"
 import fetch from "node-fetch"
 import semver from "semver"
-import env from "src/app/core/env"
+import env from "src/core/env"
 import links from "src/app/core/links"
 import pkg from "src/electron/pkg"
 import {Updater} from "./types"

@@ -1,6 +1,6 @@
 import {invoke} from "lodash"
 import React, {useEffect, useState} from "react"
-import {AppProvider} from "src/app/core/context"
+import {AppProvider} from "src/views/application/context"
 import AppWindowRouter from "src/app/router/app-window-router"
 import {Modals} from "src/js/components/Modals"
 import {Tooltip} from "src/components/tooltip"

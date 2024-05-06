@@ -1,4 +1,4 @@
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {app} from "electron"
 import path from "path"
 
