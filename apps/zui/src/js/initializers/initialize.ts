@@ -37,7 +37,6 @@ export default async function initialize(
   windowName: WindowName = getWindowName()
 ) {
   const renderer = new Renderer()
-  global.featureFlags = globalThis.zui.featureFlags
   global.windowId = windowId
   global.windowName = windowName
 

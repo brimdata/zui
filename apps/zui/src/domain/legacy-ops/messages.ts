@@ -29,7 +29,6 @@ export type LegacyOperations = {
   emitRowDetailChangeOp: (event: OpEventContext, zjson: zjson.Obj) => void
   exportQueries: (groupId: string, filePath: string) => void
   exportResultsOp: (filePath: string, format: string) => void
-  featureFlags: () => string[]
   getAppMeta: () => MainObject["appMeta"]
   getConfigurationsOp: () => Config[]
   getCorrelationsOp: () => CompiledCorrelation[]

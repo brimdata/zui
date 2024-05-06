@@ -9,7 +9,7 @@
     "strict": false,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "typeRoots": ["src/js/@types", "node_modules/@types"],
+    "typeRoots": ["node_modules/@types"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,7 +21,7 @@
     "paths": {
       "@brimdata/zed-js": ["../../packages/zed-js/src/index.ts"],
       "@brimdata/zed-node": ["../../packages/zed-node/src/index.ts"],
-      "zui-test-data": ["../../packages/zui-test-data/src/index.ts"],
+      "zui-test-data": ["../../packages/zui-test-data/src/index.ts"]
     }
   },
   "exclude": ["scripts", "dist", "run"],
