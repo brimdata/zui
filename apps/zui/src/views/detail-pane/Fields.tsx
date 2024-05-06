@@ -1,6 +1,6 @@
 import {Data, Name, Value} from "src/app/core/Data"
 import {useZedFormatter} from "src/app/core/format"
-import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
+import {zedTypeClassName} from "src/components/zed-type-class-name"
 import React, {memo, useMemo} from "react"
 import * as zed from "@brimdata/zed-js"
 import Panel from "./Panel"

@@ -1,5 +1,5 @@
 import {useZedFormatter} from "src/app/core/format"
-import {zedTypeClassName} from "src/app/core/utils/zed-type-class-name"
+import {zedTypeClassName} from "src/components/zed-type-class-name"
 import classNames from "classnames"
 import React from "react"
 import * as zed from "@brimdata/zed-js"
