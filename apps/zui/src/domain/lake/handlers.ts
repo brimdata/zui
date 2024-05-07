@@ -6,7 +6,6 @@ import {validateToken} from "src/js/auth0/utils"
 import {getAuthCredentials} from "src/js/flows/lake/getAuthCredentials"
 import Lakes from "src/js/state/Lakes"
 import LakeStatuses from "src/js/state/LakeStatuses"
-import {ElectronZedClient} from "src/core/electron-zed-client"
 
 export const getAuthToken = createHandler(
   async ({dispatch}, lake: LakeModel) => {
@@ -31,7 +30,7 @@ export const getAuthToken = createHandler(
 export const createClient = createHandler(async ({select}) => {
   const lake = select(Current.mustGetLake)
   const auth = await getAuthToken(lake)
-  return new ElectronZedClient(lake.getAddress(), {auth})
+  return new Client(lake.getAddress(), {auth})
 })
 
 type Options = {
