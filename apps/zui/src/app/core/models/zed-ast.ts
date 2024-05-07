@@ -4,10 +4,6 @@ import {fieldExprToName} from "./zed-expr"
 export class ZedAst {
   constructor(public tree: any, public error: Error | null) {}
 
-  get poolName() {
-    return this.poolNames[0] || null
-  }
-
   get poolNames() {
     const pool = this.poolOp
     const from = this.fromOp

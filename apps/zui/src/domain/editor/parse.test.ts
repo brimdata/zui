@@ -15,7 +15,7 @@ test("editor.parse", async () => {
 test("Zed Ast Pool Name", async () => {
   const result = await parse("from source | count() by name")
   const ast = new ZedAst(result, null)
-  expect(ast.poolName).toBe("source")
+  expect(ast.poolNames).toEqual(["source"])
 })
 
 test("Zed Ast Multi Pool", async () => {
