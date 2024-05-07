@@ -7,6 +7,7 @@ import Results from "src/js/state/Results"
 import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
 import {useDataTransition} from "src/util/hooks/use-data-transition"
 import useResizeObserver from "use-resize-observer"
+import QueryInfo from "src/js/state/QueryInfo"
 
 function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
   const rect = useResizeObserver({ref: parentRef})
@@ -15,12 +16,12 @@ function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
   const r = useResults(RESULTS_QUERY)
   const results = useDataTransition(r, r.data.length === 0 && fetching)
   const shapes = useMemo(() => Object.values(results.shapes), [results.shapes])
-
+  const parseError = useSelector(QueryInfo.getParseError)
   return {
     width: rect.width ?? 1000,
     height: rect.height ?? 1000,
     view: useSelector(Layout.getResultsView),
-    error: results.error,
+    error: parseError || results.error,
     values: results.data,
     shapes,
     isSingleShape: shapes.length === 1,
