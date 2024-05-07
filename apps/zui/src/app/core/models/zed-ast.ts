@@ -5,14 +5,14 @@ export class ZedAst {
   constructor(public tree: any, public error: Error | null) {}
 
   get poolName() {
-    const pool = this.poolOp
-    if (!pool) return null
-    return pool.spec?.pool?.text ?? null
+    return this.poolNames[0] || null
   }
 
   get poolNames() {
+    const pool = this.poolOp
     const from = this.fromOp
-    if (!from) return []
+    if (!pool && !from) return []
+    if (pool) return [pool?.spec?.pool?.text].filter((text) => !!text)
     return from.trunks
       .map((trunk) => trunk?.source)
       .map((source) => source?.spec)
