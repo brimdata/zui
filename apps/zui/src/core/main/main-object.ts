@@ -2,7 +2,7 @@ import {app} from "electron"
 import keytar from "keytar"
 import {EventEmitter} from "events"
 import os from "os"
-import {Client, Lake} from "@brimdata/zed-node"
+import {Lake} from "@brimdata/zed-node"
 import {Store as ReduxStore} from "redux"
 import url from "url"
 import {
