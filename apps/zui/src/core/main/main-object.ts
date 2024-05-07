@@ -30,6 +30,7 @@ import {getAuthToken} from "../../js/api/core/get-zealot"
 import {Abortables} from "src/app/core/models/abortables"
 import * as zui from "src/zui"
 import log from "electron-log"
+import {ElectronZedClient} from "../electron-zed-client"
 
 export class MainObject {
   public isQuitting = false
@@ -135,7 +136,7 @@ export class MainObject {
     const lakeData = Lakes.id(lakeId)(this.store.getState())
     const lake = createLake(lakeData)
     const auth = await this.dispatch(getAuthToken(lake))
-    return new Client(lake.getAddress(), {auth})
+    return new ElectronZedClient(lake.getAddress(), {auth})
   }
 
   async createDefaultClient() {
