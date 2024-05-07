@@ -24,7 +24,6 @@ export class Client extends BaseClient {
     const res = await this.send({
       path: `/pool/${poolId}/branch/${encodeURIComponent(branch)}`,
       method: 'POST',
-      // eslint-disable-next-line
       // @ts-ignore
       body: data,
       duplex: 'half',
