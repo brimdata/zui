@@ -4,23 +4,25 @@ import {fieldExprToName} from "./zed-expr"
 export class ZedAst {
   constructor(public tree: any, public error: Error | null) {}
 
-  get poolName() {
-    const from = this.from
-    if (!from) return null
-    const trunk = from.trunks.find((t) => t.source.kind === "Pool")
-    if (!trunk) return null
-    const name = trunk.source.spec.pool?.text
-    if (!name) return null
-    return name
+  get poolNames() {
+    const pool = this.poolOp
+    const from = this.fromOp
+    if (!pool && !from) return []
+    if (pool) return [pool?.spec?.pool?.text].filter((text) => !!text)
+    return from.trunks
+      .map((trunk) => trunk?.source)
+      .map((source) => source?.spec)
+      .map((spec) => spec?.pool)
+      .map((pool) => pool?.text)
+      .filter((text) => !!text)
   }
 
-  get from() {
-    return this.ops.find((o) => o.kind === "From")
+  get fromOp() {
+    return this.ops.find((op) => op.kind === "From")
   }
 
-  get pools() {
-    const trunks = this.from?.trunks || []
-    return trunks.filter((t) => t.source.kind === "Pool").map((t) => t.source)
+  get poolOp() {
+    return this.ops.find((op) => op.kind === "Pool")
   }
 
   get groupByKeys() {

@@ -37,7 +37,7 @@ export const fetchQueryInfo = createHandler(async ({invoke}, query: string) => {
   const ast = new ZedAst(tree, tree.error)
   return {
     isSummarized: ast.isSummarized,
-    poolName: ast.poolName,
+    poolName: ast.poolNames.length === 1 ? ast.poolNames[0] : null,
     sorts: ast.sorts,
     error: ast.error,
     groupByKeys: ast.groupByKeys,
