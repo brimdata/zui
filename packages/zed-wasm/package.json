@@ -30,7 +30,7 @@
     "wasm"
   ],
   "devDependencies": {
-    "@playwright/test": "^1.40.1",
+    "@playwright/test": "^1.44.0",
     "@types/golang-wasm": "^1.15.0",
     "@types/node": "^20.11.0",
     "esbuild": "^0.17.12",

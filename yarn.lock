@@ -1934,7 +1934,7 @@ __metadata:
   resolution: "@brimdata/zed-wasm@workspace:packages/zed-wasm"
   dependencies:
     "@brimdata/zed-js": "workspace:*"
-    "@playwright/test": ^1.40.1
+    "@playwright/test": ^1.44.0
     "@types/golang-wasm": ^1.15.0
     "@types/node": ^20.11.0
     esbuild: ^0.17.12
@@ -3823,25 +3823,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.43.1":
-  version: 1.43.1
-  resolution: "@playwright/test@npm:1.43.1"
+"@playwright/test@npm:1.44.0, @playwright/test@npm:^1.44.0":
+  version: 1.44.0
+  resolution: "@playwright/test@npm:1.44.0"
   dependencies:
-    playwright: 1.43.1
+    playwright: 1.44.0
   bin:
     playwright: cli.js
-  checksum: f9db387b488a03125e5dc22dd7ffed9c661d1f2428188912a35a2235b3bd9d826b390e7600d04998639994f5a96695b9dc9034ca9cb59e261d2fdee93a60df3f
-  languageName: node
-  linkType: hard
-
-"@playwright/test@npm:^1.40.1":
-  version: 1.40.1
-  resolution: "@playwright/test@npm:1.40.1"
-  dependencies:
-    playwright: 1.40.1
-  bin:
-    playwright: cli.js
-  checksum: ae094e6cb809365c0707ee2b184e42d2a2542569ada020d2d44ca5866066941262bd9a67af185f86c2fb0133c9b712ea8cb73e2959a289e4261c5fd17077283c
+  checksum: 64cb12e26156e0530d16cec629d82c228db7a57fe29096a6961a18fc8b7fc5f35e28f8905af7039fad5d3af0224d38e93dba479760db2ce16a63c5e2fbe2990c
   languageName: node
   linkType: hard
 
@@ -15327,62 +15316,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-chromium@npm:1.43.1":
-  version: 1.43.1
-  resolution: "playwright-chromium@npm:1.43.1"
+"playwright-chromium@npm:1.44.0":
+  version: 1.44.0
+  resolution: "playwright-chromium@npm:1.44.0"
   dependencies:
-    playwright-core: 1.43.1
+    playwright-core: 1.44.0
   bin:
     playwright: cli.js
-  checksum: 5a4521a56f2789124f7bcc6a23c4effe96018ea0f867672f222994c5842372e44909dbe395184ee59cfff53abc10f970fbed036738dace82873233115f8e360c
+  checksum: 517ef8c80993adf2a193f3ca638b945d62b9d72b6121becdbb59442ceed1bca73377067f218fe1b77ab3817378fa2264526dc0417e93c572002d2daed431fbc3
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.40.1":
-  version: 1.40.1
-  resolution: "playwright-core@npm:1.40.1"
+"playwright-core@npm:1.44.0":
+  version: 1.44.0
+  resolution: "playwright-core@npm:1.44.0"
   bin:
     playwright-core: cli.js
-  checksum: 84d92fb9b86e3c225b16b6886bf858eb5059b4e60fa1205ff23336e56a06dcb2eac62650992dede72f406c8e70a7b6a5303e511f9b4bc0b85022ede356a01ee0
+  checksum: 7bee257c830153578753a6dfb34b8216f8c552d750e24a0be6d3ba10baff013fb1320a1c3d487fbb0df9d1ce5d1f027ccf6e990d4514989da63691f177141ba4
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.43.1":
-  version: 1.43.1
-  resolution: "playwright-core@npm:1.43.1"
-  bin:
-    playwright-core: cli.js
-  checksum: 7c96b3a4a4bce2ee22c3cd680c9b0bb9e4bf07ee4b51d1e9a7f47a6489c7b0b960d4b550e530b8f41d1ffeadd26c7c6bb626ae8689dfd90dce1cb8e35ae78ff7
-  languageName: node
-  linkType: hard
-
-"playwright@npm:1.40.1":
-  version: 1.40.1
-  resolution: "playwright@npm:1.40.1"
+"playwright@npm:1.44.0":
+  version: 1.44.0
+  resolution: "playwright@npm:1.44.0"
   dependencies:
     fsevents: 2.3.2
-    playwright-core: 1.40.1
+    playwright-core: 1.44.0
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 9e36791c1b4a649c104aa365fdd9d049924eeb518c5967c0e921aa38b9b00994aa6ee54784d6c2af194b3b494b6f69772673081ef53c6c4a4b2065af9955c4ba
-  languageName: node
-  linkType: hard
-
-"playwright@npm:1.43.1":
-  version: 1.43.1
-  resolution: "playwright@npm:1.43.1"
-  dependencies:
-    fsevents: 2.3.2
-    playwright-core: 1.43.1
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    playwright: cli.js
-  checksum: de9db021f93018a18275bbb5af09ebf1804aa0534f47578b35b440064abc774509740205802824afc94a99fc84dd55ffe9e215718ad3ecc691b251ab3882b096
+  checksum: 22653ded652f436c1a837842009a175e8acb91ab340bb3deee87dbdb7205b439bd174f5f20591eb67f0171728c9f8f4bdfa3668a517da6bc7b45a4a79eabdbd5
   languageName: node
   linkType: hard
 
@@ -19203,10 +19168,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#9c5320097ec6925925624806c0373974bc63529a":
+"zed@brimdata/zed#183e432f39938c48ae3226ba2e45479131288959":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=9c5320097ec6925925624806c0373974bc63529a"
-  checksum: 0b58fe3cdda8eef1165f6d97696be4eeea73b6d2a7481692c022b2c9e49a060b43070e02f256e9f69fb3a455f377a7c1c1c0484c4124a893d2e343035eca0b4f
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=183e432f39938c48ae3226ba2e45479131288959"
+  checksum: 590b1aaafe28fe1c1bde281aa7567c9e1f07d706bb80d3acb8081c1e70fababe3b8bfe699ad5c01bec2612ba66e8058ac9a87c6d69eca49de9cfd8606fb89828
   languageName: node
   linkType: hard
 
@@ -19264,10 +19229,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "zui-player@workspace:packages/zui-player"
   dependencies:
-    "@playwright/test": 1.43.1
+    "@playwright/test": 1.44.0
     fs-extra: ^11.2.0
-    playwright: 1.43.1
-    playwright-chromium: 1.43.1
+    playwright: 1.44.0
+    playwright-chromium: 1.44.0
   languageName: unknown
   linkType: soft
 
@@ -19403,7 +19368,7 @@ __metadata:
     utopia-core-scss: ^1.0.1
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#9c5320097ec6925925624806c0373974bc63529a"
+    zed: "brimdata/zed#183e432f39938c48ae3226ba2e45479131288959"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
