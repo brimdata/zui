@@ -6845,12 +6845,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@brimdata/brimcap#v1.7.0":
+"brimcap@brimdata/brimcap#65795e31ef4147d2356df4912f6f3bb4a40c28e1":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=bf7fb4996738767bb4f27eee939ec67dd21aab52"
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=65795e31ef4147d2356df4912f6f3bb4a40c28e1"
   bin:
     brimcap: build/dist/brimcap
-  checksum: 373040f07d9708cdced76c98d261488186633193d817dc448db783b3073671f8c9e88147d97a09794e2cdca93f678afb4d6a19f6ddee650cc5e361046c6d7e0f
+  checksum: 5da28423c1e13a5f4e31ae21bc0016ced8f63e8856b4c82a8fbd310501f84091332bd4ea43b2b51ab69fe3924af85bc1ef91c6903b53c1c6e1fa3cdfe5b36174
   languageName: node
   linkType: hard
 
@@ -19267,7 +19267,7 @@ __metadata:
     acorn: ^7.4.1
     ajv: ^6.9.1
     animejs: ^3.2.0
-    brimcap: "brimdata/brimcap#v1.7.0"
+    brimcap: "brimdata/brimcap#65795e31ef4147d2356df4912f6f3bb4a40c28e1"
     chalk: ^4.1.0
     chevrotain: ^10.5.0
     chrono-node: ^2.5.0
