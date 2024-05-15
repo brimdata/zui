@@ -29,7 +29,7 @@ jobs:
     needs: check_latest
     strategy:
       matrix:
-        platform: [windows-2019, macos-12, ubuntu-20.04]
+        platform: [windows-2019, macos-12, macos-14, ubuntu-20.04]
 
     runs-on: ${{ matrix.platform }}
     steps:

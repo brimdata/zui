@@ -6,7 +6,7 @@ runs:
   steps:
     - uses: actions/upload-artifact@v3
       with:
-        name: Mac Artifact
+        name: Mac Artifact (${{ runner.arch }})
         path: dist/apps/zui/*.dmg
 
     - uses: actions/upload-artifact@v3
