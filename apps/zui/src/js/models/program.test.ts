@@ -7,9 +7,10 @@ import program, {drillDown, getFilter} from "./program"
 import {SystemTest} from "src/test/system"
 import {fetchQueryInfo} from "src/domain/session/handlers"
 
-new SystemTest("program.test")
-
-const ast = (string) => fetchQueryInfo(string)
+const system = new SystemTest("program.test")
+beforeAll(() => {
+  return system.api.pools.create("test")
+})
 
 describe("excluding and including", () => {
   const field = createField("uid", "123")
@@ -58,13 +59,13 @@ describe("drill down", () => {
   })
 
   async function run(value: any, text: string) {
-    const info = await fetchQueryInfo(text)
-    return drillDown(text, value, info.isSummarized, info.groupByKeys)
+    const info = await fetchQueryInfo(text, "test")
+    const hasAggs = !!info.channels[0].aggregations_keys
+    return drillDown(text, value, hasAggs, info.channels[0].aggregation_keys)
   }
 
   test("when there is no leading filter", async () => {
     const script = await run(result, 'count() by this["i d"]["orig h"]')
-
     expect(script).toBe('this["i d"]["orig h"]==192.168.0.54')
   })
 
@@ -97,12 +98,6 @@ describe("drill down", () => {
     expect(script).toBe(
       '_path=="dns" | id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
     )
-  })
-
-  test("removes *", async () => {
-    const script = await run(result, "* | count() by id.orig_h")
-
-    expect(script).toBe("id.orig_h==192.168.0.54")
   })
 
   test("easy peasy", async () => {
@@ -182,62 +177,6 @@ describe("sort by", () => {
     const script = program("* | sort name").sortBy("count", "desc").string()
 
     expect(script).toBe("* | sort -r count")
-  })
-})
-
-jest.setTimeout(30_000)
-describe("#isSummarized", () => {
-  test("head proc does not have analytics", async () => {
-    const tree = await ast("* | head 2")
-    expect(tree.isSummarized).toBe(false)
-  })
-
-  test("sort proc does not have analytics", async () => {
-    const tree = await ast("* | sort -r id.resp_p")
-    expect(tree.isSummarized).toBe(false)
-  })
-
-  test("every proc does contain analytics", async () => {
-    const tree = await ast("* | count() by every(1h)")
-    expect(tree.isSummarized).toBe(true)
-  })
-
-  test("parallel procs when one does have analytics", async () => {
-    const tree = await ast(
-      "* | fork ( => count() by every(1h) => count() by id.resp_h )"
-    )
-    expect(tree.isSummarized).toBe(true)
-  })
-
-  test("parallel procs when both do not have analytics", async () => {
-    jest.spyOn(global.console, "error").mockImplementation(() => {})
-    const tree = await ast("* | head 100; head 200")
-    expect(tree.isSummarized).toBe(false)
-  })
-
-  test("when there are no procs", async () => {
-    const tree = await ast("*")
-    expect(tree.isSummarized).toBe(false)
-  })
-
-  test("for a crappy string", async () => {
-    const tree = await ast("-r")
-    expect(tree.isSummarized).toBe(false)
-  })
-
-  test("for sequential proc", async () => {
-    const tree = await ast("*google* | head 3 | sort -r id.resp_p")
-    expect(tree.isSummarized).toBe(false)
-  })
-
-  test("for cut proc", async () => {
-    const tree = await ast("* | fork ( => cut uid, _path => cut uid ) | tail 1")
-    expect(tree.isSummarized).toBe(false)
-  })
-
-  test("for filter proc", async () => {
-    const tree = await ast('* | filter _path=="conn"')
-    expect(tree.isSummarized).toBe(false)
   })
 })
 

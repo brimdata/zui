@@ -22,7 +22,7 @@ export class CurrentApi {
   }
 
   get poolName() {
-    return QueryInfo.get(this.getState()).poolName
+    return QueryInfo.getPoolName(this.getState())
   }
 
   get value() {

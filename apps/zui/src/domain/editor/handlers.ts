@@ -89,17 +89,16 @@ export const newSearchWithValue = createHandler(
 
 export const pivotToValues = createHandler(
   "editor.pivotToValues",
-  async ({select, dispatch}) => {
+  ({select, dispatch}) => {
     const field = select(Selection.getField)
     const query = select(Editor.getValue)
-    const info = select(QueryInfo.get)
     // So this only works if the count() by field is in the editor, not in a pin.
     const record = field.rootRecord
-    const newProgram = await drillDown(
+    const newProgram = drillDown(
       query,
       record as zed.Record,
-      info.isSummarized,
-      info.groupByKeys
+      select(QueryInfo.hasAggregation),
+      select(QueryInfo.getGroupByKeys)
     )
 
     if (newProgram) {
