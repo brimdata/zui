@@ -1,5 +1,8 @@
 name: Upload Build Artifacts
 description: Upload artifacts for each platform
+inputs:
+  gh_token:
+    required: true
 
 runs:
   using: 'composite'
@@ -8,6 +11,14 @@ runs:
       with:
         name: Mac Artifact (${{ runner.arch }})
         path: dist/apps/zui/*.dmg
+
+    - name: Merge latest-mac.yml Mac release files for Intel/ARM64
+      if: runner.os == 'macOS'
+      run: |
+        node apps/zui/scripts/merge-mac-release-files.mjs
+      env:
+        GH_TOKEN: ${{ inputs.gh_token }}
+      shell: bash
 
     - uses: actions/upload-artifact@v3
       with:

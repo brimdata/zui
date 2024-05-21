@@ -38,3 +38,5 @@ jobs:
 
       - name: Upload Artifacts
         uses: ./.github/actions/upload-build-artifacts
+        with:
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
