@@ -18,7 +18,6 @@ const client = new Octokit({
 const OWNER = pkg.repository.split('/')[3];
 const REPO = pkg.repository.split('/')[4];
 const PRODUCT_NAME= pkg.productName.replaceAll(' ', '-');
-const REPO = 'zui';
 const URL = `/repos/${OWNER}/${REPO}/releases`;
 const VERSION = pkg.version;
 const RELEASE_NAME = (PRODUCT_NAME == 'Zui') ? 'v' + VERSION : VERSION;
