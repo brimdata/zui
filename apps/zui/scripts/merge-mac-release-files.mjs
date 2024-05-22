@@ -1,4 +1,4 @@
-// Based on https://github.com/electron-userland/electron-builder/issues/5592#issuecomment-1695500578
+// Based on https://github.com/electron-userland/electron-builder/issues/5592#issuecomment-2004803764
 import { Octokit } from "octokit";
 import pkg from '../package.json' assert {type: 'json'};
 import { TextDecoder } from 'node:util';
