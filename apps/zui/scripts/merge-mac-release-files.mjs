@@ -13,10 +13,15 @@ const client = new Octokit({
   auth: token
 });
 
+// These are derived from settings in package.json so the script will work on
+// both regular Zui and Zui Insiders.
 const OWNER = pkg.repository.split('/')[3];
+const REPO = pkg.repository.split('/')[4];
+const PRODUCT_NAME= pkg.productName.replaceAll(' ', '-');
 const REPO = 'zui';
 const URL = `/repos/${OWNER}/${REPO}/releases`;
 const VERSION = pkg.version;
+const RELEASE_NAME = (PRODUCT_NAME == 'Zui') ? 'v' + VERSION : VERSION;
 const FILE_NAME = 'latest-mac.yml';
 const LOCAL_FILE_PATH = `dist/apps/zui/${FILE_NAME}`;
 
@@ -43,8 +48,8 @@ const mergeFiles = (intel, arm) => {
 }
 
 const getPlatformFromLatestMacYml = (content) => {
-  const intelRe = `Zui-${VERSION}.dmg`
-  const armRe = `Zui-${VERSION}-arm64.dmg`
+  const intelRe = `${PRODUCT_NAME}-${VERSION}.dmg`
+  const armRe = `${PRODUCT_NAME}-${VERSION}-arm64.dmg`
   const isIntel = content.includes(intelRe);
   const isArm = content.includes(armRe);
 
@@ -58,7 +63,7 @@ const getPlatformFromLatestMacYml = (content) => {
 (async () => {
   const allReleases = await client.request(`GET ${URL}`);
   const currentRelease = allReleases.data.find(release => {
-    return release.name === 'v' + VERSION;
+    return release.name === RELEASE_NAME;
   })
 
   if (!currentRelease) {
@@ -132,7 +137,7 @@ const getPlatformFromLatestMacYml = (content) => {
   })
 
   if (!remotePlatformFileExists) {
-    console.log(`[remote] latest-mac-${remotePlatform}.yml does not exists. Skipping merge`)
+    console.log(`[remote] latest-mac-${remotePlatform}.yml does not exist. Skipping merge`)
     return;
   } else {
     console.log(`[remote] latest-mac-${remotePlatform}.yml found`)
@@ -201,7 +206,7 @@ const getPlatformFromLatestMacYml = (content) => {
   // cleanup
   const updatedRelease = await client.request(`GET ${URL}`);
   const updatedCurrentRelease = updatedRelease.data.find(release => {
-    return release.name === 'v' + VERSION;
+    return release.name === RELEASE_NAME;
   })
 
   const assetsToClean = updatedCurrentRelease.assets.filter(asset => {

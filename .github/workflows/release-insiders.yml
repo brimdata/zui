@@ -67,6 +67,14 @@ jobs:
           cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
 
+      - name: Merge latest-mac.yml Mac release files for Intel/ARM64
+        if: runner.os == 'macOS'
+        run: |
+          node apps/zui/scripts/merge-mac-release-files.mjs
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        shell: bash
+
       - name: Inform Slack users of failure
         uses: tiloio/slack-webhook-action@v1.1.2
         if: ${{ failure() }}
