@@ -31,6 +31,7 @@ jobs:
     if: ${{ needs.check_latest.outputs.latest_sha != github.sha }}
     strategy:
       matrix:
+        # macos-12 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
         platform: [windows-2019, macos-12, macos-14, ubuntu-20.04]
 
     runs-on: ${{ matrix.platform }}
