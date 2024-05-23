@@ -80,9 +80,8 @@ const getPlatformFromLatestMacYml = (content) => {
   if (localPlatform === 'none' || localPlatform === 'both') {
     console.log(`[local] ${FILE_NAME} invalid. Platform: ${localPlatform}. Skipping merge`)
     return;
-  } else {
-    console.log(`[local] ${FILE_NAME} valid: Platform: ${localPlatform}`)
   }
+  console.log(`[local] ${FILE_NAME} valid: Platform: ${localPlatform}`)
 
   const localPlatformPresentRemotely = currentRelease.assets.find(asset => {
     return asset.name === `latest-mac-${localPlatform}.yml`;
