@@ -129,7 +129,7 @@ const getPlatformFromLatestMacYml = (content) => {
     console.log(`[remote] latest-mac-${remotePlatform}.yml found`)
   }
 
-  let remotePlatformFile = null;
+  let remotePlatformFile;
 
   try {
     remotePlatformFile = await client.request(`GET ${URL}/assets/${remotePlatformFileExists.id}`, {
