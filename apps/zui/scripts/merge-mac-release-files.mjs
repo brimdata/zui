@@ -47,7 +47,7 @@ const mergeFiles = (intel, arm) => {
 }
 
 const getPlatformFromLatestMacYml = (content) => {
-  const intelRe = `${PRODUCT_NAME}-${VERSION}.dmg`
+  const intelRe = `${PRODUCT_NAME}-${VERSION}-x86.dmg`
   const armRe = `${PRODUCT_NAME}-${VERSION}-arm64.dmg`
   const isIntel = content.includes(intelRe);
   const isArm = content.includes(armRe);
