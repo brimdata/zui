@@ -64,9 +64,8 @@ const getPlatformFromLatestMacYml = (content) => {
   if (!currentRelease) {
     console.log('No release found. Skipping merge')
     return;
-  } else {
-    console.log('Release found')
   }
+  console.log('Release found')
 
   const localLatestMacYmlExists = fs.existsSync(LOCAL_FILE_PATH);
 
