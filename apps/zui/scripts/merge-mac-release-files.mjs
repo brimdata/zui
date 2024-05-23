@@ -118,9 +118,7 @@ const getPlatformFromLatestMacYml = (content) => {
 
   const remotePlatform = localPlatform === 'intel' ? 'arm' : 'intel';
 
-  const remotePlatformFileExists = currentRelease.assets.find(asset => {
-    return asset.name === `latest-mac-${remotePlatform}.yml`;
-  })
+  const remotePlatformFileExists = currentRelease.assets.find(asset => asset.name === `latest-mac-${remotePlatform}.yml`)
 
   if (!remotePlatformFileExists) {
     console.log(`[remote] latest-mac-${remotePlatform}.yml does not exist. Skipping merge`)
