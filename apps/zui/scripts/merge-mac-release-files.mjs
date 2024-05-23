@@ -99,10 +99,6 @@ const getPlatformFromLatestMacYml = (content) => {
   }
 
   const uploadUrl = currentRelease.upload_url;
-  const localAssetStream = new Readable();
-  localAssetStream.push(localLatestMacYmlContent);
-  localAssetStream.push(null);
-
   try {
     await client.rest.repos.uploadReleaseAsset({
       url: uploadUrl,
@@ -111,7 +107,7 @@ const getPlatformFromLatestMacYml = (content) => {
         'content-length': Buffer.byteLength(localLatestMacYmlContent),
       },
       name: `latest-mac-${localPlatform}.yml`,
-      data: localAssetStream,
+      data: Readable.from(localLatestMacYmlContent),
     })
     console.log(`[remote] latest-mac-${localPlatform}.yml uploaded`)
   } catch(e) {
