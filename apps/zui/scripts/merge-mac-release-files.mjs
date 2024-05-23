@@ -30,12 +30,8 @@ const mergeFiles = (intel, arm) => {
 
   const mergedObject = {
     ...intelObject,
+    files: [...intelObject.files, ...armObject.files]
   };
-
-  mergedObject.files = [
-    ...intelObject.files,
-    ...armObject.files,
-  ];
 
   const dumpOptions = {
     // avoids moving the sha512 checksum into its own line
