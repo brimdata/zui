@@ -67,14 +67,11 @@ const getPlatformFromLatestMacYml = (content) => {
   }
   console.log('Release found')
 
-  const localLatestMacYmlExists = fs.existsSync(LOCAL_FILE_PATH);
-
-  if (!localLatestMacYmlExists) {
+  if (!fs.existsSync(LOCAL_FILE_PATH)) {
     console.log(`[local] could not find ${FILE_NAME}. Skipping merge`);
     return;
-  } else {
-    console.log(`[local] ${FILE_NAME} found`);
   }
+  console.log(`[local] ${FILE_NAME} found`);
 
   const localLatestMacYmlContent = fs.readFileSync(LOCAL_FILE_PATH, { encoding: 'utf8' });
 
