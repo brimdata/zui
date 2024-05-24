@@ -33,10 +33,8 @@ const mergeFiles = (intel, arm) => {
     files: [...intelObject.files, ...armObject.files]
   };
 
-  const dumpOptions = {
-    // avoids moving the sha512 checksum into its own line
-    lineWidth: -1,
-  };
+  // avoids moving the sha512 checksum into its own line
+  const dumpOptions = { lineWidth: -1 };
 
   const mergedString = yaml.dump(mergedObject, dumpOptions);
   return mergedString;
