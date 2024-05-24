@@ -120,9 +120,8 @@ const getPlatformFromLatestMacYml = (content) => {
   if (!remotePlatformFileExists) {
     console.log(`[remote] latest-mac-${remotePlatform}.yml does not exist. Skipping merge`)
     return;
-  } else {
-    console.log(`[remote] latest-mac-${remotePlatform}.yml found`)
   }
+  console.log(`[remote] latest-mac-${remotePlatform}.yml found`)
 
   let remotePlatformFile;
 
