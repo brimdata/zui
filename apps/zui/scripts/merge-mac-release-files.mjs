@@ -146,9 +146,8 @@ const getPlatformFromLatestMacYml = (content) => {
     if (!originalAsset) {
       console.log(`[remote] ${FILE_NAME} not found. Skipping merge`);
       return;
-    } else {
-      console.log(`[remote] ${FILE_NAME} found`)
     }
+    console.log(`[remote] ${FILE_NAME} found`)
 
     await client.request(`DELETE ${URL}/assets/${originalAsset.id}`);
     console.log(`[remote] deleted ${FILE_NAME}`)
