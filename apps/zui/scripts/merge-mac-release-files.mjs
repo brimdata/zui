@@ -80,9 +80,7 @@ const getPlatformFromLatestMacYml = (content) => {
   }
   console.log(`[local] ${FILE_NAME} valid: Platform: ${localPlatform}`)
 
-  const localPlatformPresentRemotely = currentRelease.assets.find(asset => {
-    return asset.name === `latest-mac-${localPlatform}.yml`
-  })
+  const localPlatformPresentRemotely = currentRelease.assets.find(asset => asset.name === `latest-mac-${localPlatform}.yml`)
 
   if (localPlatformPresentRemotely) {
     try {
