@@ -164,10 +164,6 @@ const getPlatformFromLatestMacYml = (content) => {
 
   const mergedContent = remotePlatform === 'intel' ? mergeFiles(remoteLatestMacYmlContent, localLatestMacYmlContent) : mergeFiles(localLatestMacYmlContent, remoteLatestMacYmlContent);
 
-  const assetStream = new Readable();
-  assetStream.push(mergedContent);
-  assetStream.push(null);
-
   try {
     await client.rest.repos.uploadReleaseAsset({
       url: uploadUrl,
@@ -176,7 +172,7 @@ const getPlatformFromLatestMacYml = (content) => {
         'content-length': Buffer.byteLength(mergedContent),
       },
       name: FILE_NAME,
-      data: assetStream,
+      data: Readable.from(mergedContent),
     })
     console.log(`[remote] uploaded merged ${FILE_NAME}`)
   } catch(e) {
