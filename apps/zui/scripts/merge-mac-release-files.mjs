@@ -145,9 +145,7 @@ const getPlatformFromLatestMacYml = (content) => {
   const remoteLatestMacYmlContent = new TextDecoder().decode(remotePlatformFile.data);
 
   try {
-    const originalAsset = currentRelease.assets.find(asset => {
-      return asset.name === FILE_NAME;
-    })
+    const originalAsset = currentRelease.assets.find(asset => asset.name === FILE_NAME)
 
     if (!originalAsset) {
       console.log(`[remote] ${FILE_NAME} not found. Skipping merge`);
