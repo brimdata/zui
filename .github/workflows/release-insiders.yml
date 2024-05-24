@@ -68,7 +68,7 @@ jobs:
           cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
 
-      - name: Merge latest-mac.yml Mac release files for x86/arm64
+      - name: Merge latest-mac.yml Mac release files for x64/arm64
         if: runner.os == 'macOS'
         run: |
           node apps/zui/scripts/merge-mac-release-files.mjs

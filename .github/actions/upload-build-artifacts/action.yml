@@ -12,7 +12,7 @@ runs:
         name: Mac Artifact (${{ runner.arch }})
         path: dist/apps/zui/*.dmg
 
-    - name: Merge latest-mac.yml Mac release files for x86/arm64
+    - name: Merge latest-mac.yml Mac release files for x64/arm64
       if: runner.os == 'macOS'
       run: |
         node apps/zui/scripts/merge-mac-release-files.mjs
