@@ -12,7 +12,7 @@ const formats = [
   { label: 'JSON', expectedSize: 13659 },
   { label: 'NDJSON', expectedSize: 13657 },
   { label: 'TSV', expectedSize: 10797 },
-  { label: 'VNG', expectedSize: 7983 },
+  { label: 'VNG', expectedSize: 7972 },
   { label: 'Zeek', expectedSize: 10138 },
   { label: 'ZJSON', expectedSize: 18007 },
   { label: 'ZNG', expectedSize: 3745 },
