@@ -140,15 +140,15 @@ const getPlatformFromLatestMacYml = (content) => {
 
   const remoteLatestMacYmlContent = new TextDecoder().decode(remotePlatformFile.data)
 
+  const originalAsset = currentRelease.assets.find(asset => asset.name === FILE_NAME)
+
+  if (!originalAsset) {
+    console.log(`[remote] ${FILE_NAME} not found. Skipping merge`)
+    return
+  }
+  console.log(`[remote] ${FILE_NAME} found`)
+
   try {
-    const originalAsset = currentRelease.assets.find(asset => asset.name === FILE_NAME)
-
-    if (!originalAsset) {
-      console.log(`[remote] ${FILE_NAME} not found. Skipping merge`)
-      return
-    }
-    console.log(`[remote] ${FILE_NAME} found`)
-
     await client.request(`DELETE ${URL}/assets/${originalAsset.id}`)
     console.log(`[remote] deleted ${FILE_NAME}`)
   } catch(e) {
