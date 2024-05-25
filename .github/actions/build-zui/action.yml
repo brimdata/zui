@@ -69,7 +69,7 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.gh_token }}
         APPLE_ID: ${{ inputs.apple_id }}
-        APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.apple_id_password }}
         APPLE_TEAM_ID: ${{ inputs.apple_team_id }}
         CODE_SIGN_SCRIPT_PATH: ${{ github.workspace }}/esigner-codesign/dist/index.js
         INPUT_FILE_PATH: ${{ steps.paths.outputs.artifact }}
@@ -87,5 +87,5 @@ runs:
     - name: Check notorization with gatekeeper
       if: runner.os == 'macOS'
       run: |
-        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/apps/zui/mac/*.app
+        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/apps/zui/mac*/*.app
       shell: bash

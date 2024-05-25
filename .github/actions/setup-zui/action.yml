@@ -11,7 +11,8 @@ runs:
     - name: Install Node
       uses: actions/setup-node@v3
       with:
-        cache: yarn
+        # Caching is disabled because it resulted in getting amd64 Zed binaries
+        # on arm64 builds. See https://github.com/actions/setup-node/issues/1008.
         node-version-file: .node-version
 
     - name: Cache NextJS Artifacts

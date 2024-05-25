@@ -10,11 +10,15 @@
     "sign": "./scripts/sign.js"
   },
   "linux": {"target": ["deb", "rpm"]},
+  "mac": {
+    "entitlements": "darwin.plist",
+    "notarize": {"teamId": "2DBXHXV7KJ"},
+    "artifactName": "${productName}-${version}-${arch}.${ext}"
+  },
   "rpm": {"depends": ["openssl"]},
   "deb": {"depends": ["openssl"]},
   "nsis": {"oneClick": false, "perMachine": false},
   "forceCodeSigning": true,
-  "afterSign": "electron-builder-notarize",
   "publish": {
     "provider": "github"
   },
