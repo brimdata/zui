@@ -16,5 +16,5 @@ export type EditorHandlers = {
 }
 
 export type EditorOperations = {
-  "editor.parse": typeof ops.parse
+  "editor.describe": typeof ops.describe
 }

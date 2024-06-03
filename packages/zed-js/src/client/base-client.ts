@@ -51,15 +51,17 @@ export abstract class BaseClient {
     return new ResultStream(result, abortCtl);
   }
 
-  async compile(
+  async describeQuery(
     query: string,
+    pool?: string,
     options: { signal?: AbortSignal; timeout?: number } = {}
   ) {
+    const head = pool ? { pool } : null
     const abortCtl = wrapAbort(options.signal);
     const result = await this.send({
       method: 'POST',
-      path: `/compile`,
-      body: JSON.stringify({ query }),
+      path: `/query/describe`,
+      body: JSON.stringify({ query, head }),
       contentType: 'application/json',
       signal: abortCtl.signal,
       timeout: options.timeout,

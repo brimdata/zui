@@ -68,13 +68,13 @@ export function getFilter(string: string, isSummarized: boolean) {
   }
 }
 
-export async function drillDown(
+export function drillDown(
   script: string,
   value: zed.Record,
   isSummarized: boolean,
   groupByKeys: string[]
 ) {
-  let filter = await getFilter(script, isSummarized)
+  let filter = getFilter(script, isSummarized)
 
   const newFilters = groupByKeys
     .map((name) => value.tryField(name))

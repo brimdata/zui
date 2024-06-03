@@ -66,16 +66,18 @@ export class SessionPageHandler extends ViewHandler {
     const history = this.select(Current.getHistory)
 
     fetchQueryInfo(program).then((info) => {
-      const {poolName, error} = info
-      const pool = this.select(Pools.getByName(lakeId, poolName))
-
+      if (info.error) {
+        return
+      }
       this.dispatch(QueryInfo.set({isParsed: true, ...info}))
+      const poolName = this.select(QueryInfo.getPoolName)
       this.invoke("updatePluginSessionOp", {poolName, program})
+      const pool = this.select(Pools.getByName(lakeId, poolName))
       if (pool && !pool.hasSpan()) {
         this.dispatch(syncPool(pool.id, lakeId))
       }
 
-      if (!error && history.action === "PUSH") {
+      if (history.action === "PUSH") {
         session.pushHistory()
       }
     })

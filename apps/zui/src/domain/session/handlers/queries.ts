@@ -3,7 +3,6 @@ import Current from "src/js/state/Current"
 import Layout from "src/js/state/Layout"
 import {plusOne} from "src/util/plus-one"
 import {submitSearch} from "./submit-search"
-import {ZedAst} from "src/app/core/models/zed-ast"
 import {Active} from "src/models/active"
 import {create} from "src/domain/named-queries/handlers"
 
@@ -32,14 +31,7 @@ export const resetQuery = createHandler("session.resetQuery", () => {
   session.navigate(session.snapshot)
 })
 
-export const fetchQueryInfo = createHandler(async ({invoke}, query: string) => {
-  const tree = await invoke("editor.parse", query)
-  const ast = new ZedAst(tree, tree.error)
-  return {
-    isSummarized: ast.isSummarized,
-    poolName: ast.poolNames.length === 1 ? ast.poolNames[0] : null,
-    sorts: ast.sorts,
-    error: ast.error,
-    groupByKeys: ast.groupByKeys,
-  }
-})
+export const fetchQueryInfo = createHandler(
+  ({invoke}, query: string, pool?: string) =>
+    invoke("editor.describe", query, pool)
+)
