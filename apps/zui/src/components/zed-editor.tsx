@@ -1,9 +1,11 @@
-import {Editor} from "@monaco-editor/react"
+import {Editor, useMonaco} from "@monaco-editor/react"
 import {useEffect, useRef} from "react"
 import {useSelector} from "react-redux"
 import {cmdOrCtrl} from "src/app/core/utils/keyboard"
 import Config from "src/js/state/Config"
+import {Marker} from "src/js/state/Editor/types"
 import {useColorScheme} from "src/util/hooks/use-color-scheme"
+// import {MarkerSeverity} from "monaco-editor"
 
 /**
  *
@@ -30,7 +32,9 @@ export function ZedEditor(props: {
   value: string
   onChange: (value: string | undefined, ev: any) => void
   autoFocus?: boolean
+  markers?: Marker[]
 }) {
+  const monaco = useMonaco()
   const ref = useRef<any>()
   const {isDark} = useColorScheme()
 
@@ -43,6 +47,19 @@ export function ZedEditor(props: {
       }
     })
   }, [props.path, props.value])
+
+  useEffect(() => {
+    const ms = props.markers.map(m => {
+      return {...m}
+    })
+    if (!monaco) return
+    let zedModel = monaco.editor.getModels().find(m => m.getLanguageId() == "zed")
+    if (!zedModel) {
+      console.log("zed model not found, cannot curiously do zed valdiation")
+    }
+    monaco.editor.setModelMarkers(zedModel, "zed", ms)
+    console.log("markers did change m'fer", props.markers, monaco.editor.setModelMarkers)
+  }, [props.markers])
 
   return (
     <Editor

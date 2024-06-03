@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import buildPin from "./models/build-pin"
-import {FromQueryPin, QueryPin, TimeRangeQueryPin} from "./types"
+import {FromQueryPin, QueryPin, TimeRangeQueryPin, Marker} from "./types"
 
 const slice = createSlice({
   name: "TAB_EDITOR",
@@ -9,6 +9,7 @@ const slice = createSlice({
     pins: [] as QueryPin[],
     pinEditIndex: null as null | number,
     pinHoverIndex: null as null | number,
+    markers: [] as Marker[],
   },
   reducers: {
     setValue(s, a: PayloadAction<string>) {
@@ -113,6 +114,9 @@ const slice = createSlice({
         })
       }
     },
+    setMarkers(s, a: PayloadAction<Marker[]>) {
+      s.markers = a.payload
+    }
   },
 })
 

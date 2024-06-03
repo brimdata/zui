@@ -63,10 +63,12 @@ export abstract class BaseClient {
       path: `/query/describe`,
       body: JSON.stringify({ query, head }),
       contentType: 'application/json',
+      format: "json",
       signal: abortCtl.signal,
       timeout: options.timeout,
+      dontRejectError: true,
     });
-    return decode(await result.json());
+    return result.json()
   }
 
   async createPool(name: string, opts: Partial<Types.CreatePoolOpts> = {}) {
@@ -154,6 +156,7 @@ export abstract class BaseClient {
     timeout?: number;
     contentType?: string;
     duplex?: 'half';
+    dontRejectError?: boolean;
   }) {
     const abortCtl = wrapAbort(opts.signal);
     const clearTimer = this.setTimeout(() => {
@@ -182,7 +185,7 @@ export abstract class BaseClient {
       duplex: opts.duplex,
     });
     clearTimer();
-    if (resp.ok) {
+    if (resp.ok || opts.dontRejectError) {
       return resp;
     } else {
       return Promise.reject(createError(await parseContent(resp)));
