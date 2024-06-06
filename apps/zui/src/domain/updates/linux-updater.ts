@@ -1,15 +1,19 @@
-import {app, shell} from "electron"
-import fetch from "node-fetch"
+import {autoUpdater} from "electron-updater"
+import {Updater} from "./types"
 import semver from "semver"
+import {app, shell} from "electron"
 import env from "src/app/core/env"
 import links from "src/app/core/links"
 import pkg from "src/electron/pkg"
-import {Updater} from "./types"
-import {getMainObject} from "src/core/main"
+
+autoUpdater.autoDownload = false
+autoUpdater.autoInstallOnAppQuit = false
+autoUpdater.forceDevUpdateConfig = true
 
 export class LinuxUpdater implements Updater {
   async check() {
-    const latest = await this.latest()
+    const {updateInfo} = await autoUpdater.checkForUpdates()
+    const latest = updateInfo.version
     const current = app.getVersion()
     if (semver.lt(current, latest)) {
       return latest
@@ -20,19 +24,6 @@ export class LinuxUpdater implements Updater {
 
   async install() {
     shell.openExternal(this.downloadUrl())
-  }
-
-  private async latest() {
-    const resp = await fetch(this.latestUrl())
-    if (resp.status === 204) return app.getVersion()
-    const data = await resp.json()
-    return data.name
-  }
-
-  private latestUrl() {
-    const repo = getMainObject().appMeta.repo
-    const platform = "darwin-x64" // If the mac version exists, the linux does too
-    return `https://update.electronjs.org/${repo}/${platform}/${app.getVersion()}`
   }
 
   private downloadUrl() {

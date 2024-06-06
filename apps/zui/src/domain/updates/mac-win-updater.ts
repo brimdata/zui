@@ -6,6 +6,7 @@ import {getMainObject} from "src/core/main"
 
 autoUpdater.autoDownload = false
 autoUpdater.autoInstallOnAppQuit = false
+autoUpdater.forceDevUpdateConfig = true
 
 export class MacWinUpdater implements Updater {
   async check() {
