@@ -11,6 +11,7 @@ type ConstructorOpts = {
   corsOrigins?: string[];
 };
 export class Lake {
+  fetch = globalThis.fetch;
   lake?: ChildProcess;
   root: string;
   port: number;
@@ -82,7 +83,7 @@ export class Lake {
 
   async isUp() {
     try {
-      const response = await globalThis.fetch(`http://${this.addr()}/status`);
+      const response = await this.fetch(`http://${this.addr()}/status`);
       const text = await response.text();
       return text === 'ok';
     } catch (e) {
