@@ -87,7 +87,7 @@ export function UpdateWindow() {
           />
         )}
       </main>
-      <footer className={classNames(styles.footer, "repel")}>
+      <footer className={classNames(styles.footer, "repel", "flex-nowrap")}>
         {data.button && (
           <button onClick={data.button[1] as any} className="button">
             {data.button[0] as string}
