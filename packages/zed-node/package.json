@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "@brimdata/zed-js": "workspace:*",
-    "fs-extra": "^11.1.1",
-    "node-fetch": "^2.6.2"
+    "fs-extra": "^11.1.1"
   },
   "peerDependencies": {
     "zed": "*"
