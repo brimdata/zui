@@ -11,7 +11,6 @@ autoUpdater.forceDevUpdateConfig = true
 export class MacWinUpdater implements Updater {
   async check() {
     const {updateInfo} = await autoUpdater.checkForUpdates()
-    console.log(updateInfo)
     const latest = updateInfo.version
     const current = app.getVersion()
     if (semver.lt(current, latest)) {
