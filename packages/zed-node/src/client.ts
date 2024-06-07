@@ -7,7 +7,7 @@ import {
 } from '@brimdata/zed-js';
 
 export class Client extends BaseClient {
-  public fetch = globalThis.fetch;
+  public fetch = globalThis.fetch.bind(globalThis);
 
   async load(
     data: string | NodeJS.ReadableStream,

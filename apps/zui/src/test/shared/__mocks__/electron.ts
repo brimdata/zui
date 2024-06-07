@@ -10,6 +10,11 @@ export const dialog = {
   showSaveDialog: jest.fn(),
 }
 
+export const net = {
+  // @ts-ignore
+  fetch: (...args) => globalThis.fetch(...args),
+}
+
 class WebContents extends EventEmitter {
   send(channel, ...args) {
     ipcRenderer.emitter.emit("receive-from-main", channel, ...args)
