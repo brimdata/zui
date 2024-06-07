@@ -40,7 +40,9 @@ export const runHistogramQuery = createHandler(
       async function getPoolRange() {
         const queryText = `from ${poolId} | min(${timeField}), max(${timeField})`
         const resp = await query(queryText, {signal})
-        const [{min, max}] = await resp.js()
+        const data = await resp.js()
+        if (data.length == 0) return null
+        const [{min, max}] = data
         if (!(min instanceof Date && max instanceof Date)) return null
         return [min, max] as [Date, Date]
       }
