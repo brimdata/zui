@@ -70,6 +70,7 @@ export class SessionPageHandler extends ViewHandler {
       const poolName = this.select(QueryInfo.getPoolName)
       this.invoke("updatePluginSessionOp", {poolName, program})
       const pool = this.select(Pools.getByName(lakeId, poolName))
+
       if (pool && !pool.hasSpan()) {
         this.dispatch(syncPool(pool.id, lakeId))
       }
