@@ -37,7 +37,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout Zui
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
