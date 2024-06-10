@@ -3,7 +3,6 @@ import {createSelector} from "@reduxjs/toolkit"
 import {initialSettings} from "./reducer"
 import * as zed from "@brimdata/zed-js"
 import {TableSettingsState} from "./types"
-import QueryInfo from "../QueryInfo"
 
 export const getShape = activeTabSelect((tab) => tab.table.shape)
 export const getSettings = activeTabSelect((tab) => tab.table.settings)
@@ -20,11 +19,6 @@ export const getScrollPosition = activeTabSelect(
 
 export const getColumnExpandedDefault = activeTabSelect(
   (tab) => tab.table.columnExpandedDefault
-)
-
-export const getColumnSorts = createSelector(
-  QueryInfo.get,
-  (info) => info.sorts
 )
 
 export const getColumnVisible = createSelector(

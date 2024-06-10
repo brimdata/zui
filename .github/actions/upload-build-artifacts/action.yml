@@ -1,25 +1,36 @@
 name: Upload Build Artifacts
 description: Upload artifacts for each platform
+inputs:
+  gh_token:
+    required: true
 
 runs:
   using: 'composite'
   steps:
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
-        name: Mac Artifact
+        name: Mac Artifact (${{ runner.arch }})
         path: dist/apps/zui/*.dmg
 
-    - uses: actions/upload-artifact@v3
+    - name: Merge latest-mac.yml Mac release files for x64/arm64
+      if: runner.os == 'macOS'
+      run: |
+        node apps/zui/scripts/merge-mac-release-files.mjs
+      env:
+        GH_TOKEN: ${{ inputs.gh_token }}
+      shell: bash
+
+    - uses: actions/upload-artifact@v4
       with:
         name: Windows Artifact
         path: dist/apps/zui/*.exe
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: Debian Artifact
         path: dist/apps/zui/*.deb
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: RPM Artifact
         path: dist/apps/zui/*.rpm

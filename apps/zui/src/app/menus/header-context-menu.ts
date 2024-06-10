@@ -10,7 +10,7 @@ import {submitSearch} from "src/domain/session/handlers"
 import QueryInfo from "src/js/state/QueryInfo"
 
 function getWhenContext(api: ZuiApi, column: ZedColumn) {
-  const {isSummarized} = api.select(QueryInfo.get)
+  const isSummarized = api.select(QueryInfo.hasAggregation)
   return {
     isRecord: column.isRecordType,
     isGrouped: column.isGrouped,

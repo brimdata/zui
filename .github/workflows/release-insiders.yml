@@ -31,12 +31,13 @@ jobs:
     if: ${{ needs.check_latest.outputs.latest_sha != github.sha }}
     strategy:
       matrix:
-        platform: [windows-2019, macos-12, ubuntu-20.04]
+        # macos-12 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
+        platform: [windows-2019, macos-12, macos-14, ubuntu-20.04]
 
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout Zui
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
@@ -66,6 +67,14 @@ jobs:
           apple_team_id: ${{ secrets.APPLE_TEAM_ID }}
           cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
+
+      - name: Merge latest-mac.yml Mac release files for x64/arm64
+        if: runner.os == 'macOS'
+        run: |
+          node apps/zui/scripts/merge-mac-release-files.mjs
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        shell: bash
 
       - name: Inform Slack users of failure
         uses: tiloio/slack-webhook-action@v1.1.2

@@ -171,17 +171,17 @@ export const getSessionId = getTabId
 export function getOpEventContext(state: State) {
   return {
     lakeId: getLakeId(state),
-    poolName: QueryInfo.get(state).poolName,
+    poolName: QueryInfo.getPoolName(state),
   }
 }
 
 export type OpEventContext = ReturnType<typeof getOpEventContext>
 
 export const getPoolFromQuery = createSelector(
-  QueryInfo.get,
+  QueryInfo.getPoolName,
   getPools,
-  (info, pools) => {
-    return pools.find((p) => p.data.name === info.poolName) ?? null
+  (poolName, pools) => {
+    return pools.find((p) => p.data.name === poolName) ?? null
   }
 )
 

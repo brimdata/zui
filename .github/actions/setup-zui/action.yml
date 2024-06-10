@@ -4,14 +4,15 @@ runs:
   using: 'composite'
   steps:
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
         go-version: '1.21'
 
     - name: Install Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        cache: yarn
+        # Caching is disabled because it resulted in getting amd64 Zed binaries
+        # on arm64 builds. See https://github.com/actions/setup-node/issues/1008.
         node-version-file: .node-version
 
     - name: Cache NextJS Artifacts

@@ -12,10 +12,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-12, ubuntu-20.04, windows-2019]
+        # macos-12 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
+        os: [macos-12, macos-14, ubuntu-20.04, windows-2019]
     steps:
       - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-zui
       - run: yarn lint
       - run: yarn test

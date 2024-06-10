@@ -15,7 +15,7 @@ export const runResultsMain = createHandler(
 
     // See if we can paginate this query
     await waitForSelector(QueryInfo.getIsParsed).toReturn(true)
-    const canPaginate = !select(QueryInfo.getIsSummarized)
+    const canPaginate = !select(QueryInfo.hasAggregation)
     dispatch(Results.setCanPaginate({id: RESULTS_QUERY, canPaginate, tabId}))
   }
 )

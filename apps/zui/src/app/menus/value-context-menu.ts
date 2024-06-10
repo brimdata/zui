@@ -7,7 +7,7 @@ function getWhenContext(api: ZuiApi, value: zed.Any) {
   return {
     isPrimitive: zed.isPrimitive(value),
     isIterable: zed.isIterable(value),
-    isGroupBy: api.select(QueryInfo.get).isSummarized,
+    isGroupBy: api.select(QueryInfo.hasAggregation),
     selectedText: document.getSelection().toString() || null,
     isIp: value instanceof zed.Ip,
   }

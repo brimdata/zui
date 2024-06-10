@@ -3,11 +3,9 @@ import {createSlice} from "@reduxjs/toolkit"
 const getInitialState = () => {
   return {
     isParsed: false,
-    isSummarized: false,
-    poolName: null,
-    sorts: [],
+    sources: null,
+    channels: null,
     error: null,
-    groupByKeys: [],
   }
 }
 

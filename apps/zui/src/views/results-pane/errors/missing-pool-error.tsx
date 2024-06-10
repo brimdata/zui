@@ -44,7 +44,7 @@ const Card = styled.section`
 `
 
 export function isMissingPoolError(e: unknown) {
-  return e === "pool name missing"
+  return typeof e === "string" && /no pool name given/.test(e)
 }
 
 function PoolsList({pools}: {pools: Pool[]}) {

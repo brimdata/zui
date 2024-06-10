@@ -10,11 +10,12 @@ jobs:
   release:
     strategy:
       matrix:
-        platform: [macos-12, ubuntu-20.04, windows-2019]
+        # macos-12 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
+        platform: [macos-12, macos-14, ubuntu-20.04, windows-2019]
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout Zui
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
@@ -38,3 +39,5 @@ jobs:
 
       - name: Upload Artifacts
         uses: ./.github/actions/upload-build-artifacts
+        with:
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
