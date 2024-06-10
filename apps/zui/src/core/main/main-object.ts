@@ -2,7 +2,6 @@ import {app} from "electron"
 import keytar from "keytar"
 import {EventEmitter} from "events"
 import os from "os"
-import {Client, Lake} from "@brimdata/zed-node"
 import {Store as ReduxStore} from "redux"
 import url from "url"
 import {
@@ -30,6 +29,8 @@ import {getAuthToken} from "../../js/api/core/get-zealot"
 import {Abortables} from "src/app/core/models/abortables"
 import * as zui from "src/zui"
 import log from "electron-log"
+import {ElectronZedClient} from "../electron-zed-client"
+import {ElectronZedLake} from "../electron-zed-lake"
 
 export class MainObject {
   public isQuitting = false
@@ -43,7 +44,7 @@ export class MainObject {
     const windows = new WindowManager(data)
     const store = createMainStore(data?.globalState)
     const appMeta = await getAppMeta()
-    const lake = new Lake({
+    const lake = new ElectronZedLake({
       root: args.lakeRoot,
       port: args.lakePort,
       logs: args.lakeLogs,
@@ -55,7 +56,7 @@ export class MainObject {
 
   // Only call this from boot
   constructor(
-    readonly lake: Lake,
+    readonly lake: ElectronZedLake,
     readonly windows: WindowManager,
     readonly store: ReduxStore<State, any>,
     readonly session: Session,
@@ -135,7 +136,7 @@ export class MainObject {
     const lakeData = Lakes.id(lakeId)(this.store.getState())
     const lake = createLake(lakeData)
     const auth = await this.dispatch(getAuthToken(lake))
-    return new Client(lake.getAddress(), {auth})
+    return new ElectronZedClient(lake.getAddress(), {auth})
   }
 
   async createDefaultClient() {
