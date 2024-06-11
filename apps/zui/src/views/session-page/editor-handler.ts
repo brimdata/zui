@@ -26,7 +26,6 @@ export class EditorHandler extends ViewHandler {
   }
 
   private async validate() {
-    console.log("validate")
     const {snapshot} = Active
     if (await snapshot.isValid()) {
       this.dispatch(Editor.setMarkers([]))
