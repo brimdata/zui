@@ -84,7 +84,7 @@
     "date-fns": "^2.16.1",
     "debut-css": "^0.7.0",
     "decompress": "^4.2.1",
-    "electron": "30.0.1",
+    "electron": "30.0.5",
     "electron-builder": "^24.13.3",
     "electron-devtools-assembler": "^1.2.0",
     "electron-dl": "^3.0.1",
