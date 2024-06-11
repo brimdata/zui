@@ -8,13 +8,15 @@ import {Toolbar} from "src/components/toolbar"
 import {Title} from "./title"
 import {Resizer} from "./resizer"
 import {useRef} from "react"
+import QueryInfo from "src/js/state/QueryInfo"
 
 export function HistogramPane() {
   const {Parent, width = 0, height = 0} = useParentSize()
   const show = useSelector(Layout.getShowHistogram)
   const chartHeight = useSelector(Layout.getChartHeight)
+  const parseError = useSelector(QueryInfo.getParseError)
   const ref = useRef<HTMLDivElement>()
-  if (!show) return null
+  if (!show || parseError) return null
 
   return (
     <div
