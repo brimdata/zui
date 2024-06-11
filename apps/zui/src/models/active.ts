@@ -3,9 +3,9 @@ import {Session} from "./session"
 import Current from "src/js/state/Current"
 import {EditorSnapshot} from "./editor-snapshot"
 import {BrowserTab} from "./browser-tab"
-import Editor from "src/js/state/Editor"
 import {Frame} from "./frame"
 import {getActiveTab} from "src/js/state/Tabs/selectors"
+import Editor from "src/js/state/Editor"
 
 export class Active extends DomainModel {
   static get tab() {

@@ -1,11 +1,11 @@
 import {Editor, useMonaco} from "@monaco-editor/react"
-import {useEffect, useRef} from "react"
+import {useEffect, useMemo, useRef} from "react"
 import {useSelector} from "react-redux"
 import {cmdOrCtrl} from "src/app/core/utils/keyboard"
 import Config from "src/js/state/Config"
 import {Marker} from "src/js/state/Editor/types"
 import {useColorScheme} from "src/util/hooks/use-color-scheme"
-// import {MarkerSeverity} from "monaco-editor"
+import {ZedEditorHandler} from "./zed-editor-handler"
 
 /**
  *
@@ -34,44 +34,30 @@ export function ZedEditor(props: {
   autoFocus?: boolean
   markers?: Marker[]
 }) {
-  const monaco = useMonaco()
   const ref = useRef<any>()
   const {isDark} = useColorScheme()
+  const monaco = useMonaco()
+  const handler = useMemo(
+    () => new ZedEditorHandler(monaco, ref.current),
+    [monaco, ref.current]
+  )
 
-  // Keep this thing in focus as much as possible.
-  // Probably want to move this into parent.
-  useEffect(() => {
-    setTimeout(() => {
-      if (ref.current) {
-        ref.current.focus()
-      }
-    })
-  }, [props.path, props.value])
-
-  useEffect(() => {
-    const ms = props.markers.map(m => {
-      return {...m}
-    })
-    if (!monaco) return
-    let zedModel = monaco.editor.getModels().find(m => m.getLanguageId() == "zed")
-    if (!zedModel) {
-      console.log("zed model not found, cannot curiously do zed valdiation")
-    }
-    monaco.editor.setModelMarkers(zedModel, "zed", ms)
-    console.log("markers did change m'fer", props.markers, monaco.editor.setModelMarkers)
-  }, [props.markers])
+  useEffect(() => handler.focus(), [props.path, props.value, handler])
+  useEffect(() => handler.setErrors(props.markers), [props.markers, handler])
 
   return (
     <Editor
+      height="100%"
+      language="zed"
+      onChange={props.onChange}
+      onMount={(editor) => (ref.current = editor)}
+      path={props.path}
+      theme={isDark ? "vs-dark" : "vs-light"}
+      value={props.value}
+      width="100%"
       wrapperProps={{
         "data-testid": props.testId,
       }}
-      height="100%"
-      width="100%"
-      value={props.value}
-      onChange={props.onChange}
-      language="zed"
-      theme={isDark ? "vs-dark" : "vs-light"}
       options={{
         minimap: {enabled: false},
         renderLineHighlight: "none",
@@ -81,10 +67,6 @@ export function ZedEditor(props: {
         fontVariations: "inherit",
         lineNumbersMinChars: 4,
       }}
-      onMount={(editor) => {
-        ref.current = editor
-      }}
-      path={props.path}
     />
   )
 }

@@ -4,7 +4,6 @@ import { ResultStream } from '../query/result-stream';
 import { createError } from '../util/error';
 import * as Types from './types';
 import { accept, defaults, parseContent, toJS, wrapAbort } from './utils';
-import { decode } from '../encoder';
 
 export abstract class BaseClient {
   public abstract fetch: Types.IsoFetch;
@@ -56,19 +55,19 @@ export abstract class BaseClient {
     pool?: string,
     options: { signal?: AbortSignal; timeout?: number } = {}
   ) {
-    const head = pool ? { pool } : null
+    const head = pool ? { pool } : null;
     const abortCtl = wrapAbort(options.signal);
     const result = await this.send({
       method: 'POST',
       path: `/query/describe`,
       body: JSON.stringify({ query, head }),
       contentType: 'application/json',
-      format: "json",
+      format: 'json',
       signal: abortCtl.signal,
       timeout: options.timeout,
       dontRejectError: true,
     });
-    return result.json()
+    return result.json();
   }
 
   async createPool(name: string, opts: Partial<Types.CreatePoolOpts> = {}) {

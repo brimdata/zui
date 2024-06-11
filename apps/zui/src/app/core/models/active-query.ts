@@ -1,5 +1,6 @@
 import {QueryModel} from "src/js/models/query-model"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
+import {EditorSnapshot} from "src/models/editor-snapshot"
 
 export class ActiveQuery {
   constructor(
@@ -60,6 +61,6 @@ export class ActiveQuery {
   }
 
   toZed() {
-    return QueryModel.versionToZed(this.version)
+    return new EditorSnapshot(this.version).toQueryText()
   }
 }

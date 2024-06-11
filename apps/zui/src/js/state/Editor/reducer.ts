@@ -116,7 +116,7 @@ const slice = createSlice({
     },
     setMarkers(s, a: PayloadAction<Marker[]>) {
       s.markers = a.payload
-    }
+    },
   },
 })
 

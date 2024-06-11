@@ -20,5 +20,4 @@ export type SessionHandlers = {
   "session.showWhoIs": typeof handlers.showWhoIs
   "session.openVirusTotal": typeof handlers.openVirusTotal
   "session.showValueDetails": typeof handlers.showValueDetails
-  "session.validateQuery": typeof handlers.validateQuery
 }

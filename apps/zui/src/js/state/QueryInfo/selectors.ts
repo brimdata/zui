@@ -6,7 +6,7 @@ export const get = activeTabSelect((tab) => {
   return tab.queryInfo
 })
 
-export const getParseError = createSelector(get, (info) => info.error)
+export const getParseError = createSelector(get, (info) => info.error?.error)
 export const getIsParsed = createSelector(get, (info) => info.isParsed)
 export const getPoolName = createSelector(get, (info) => {
   let source = find(info.sources || [], {kind: "Pool"})
