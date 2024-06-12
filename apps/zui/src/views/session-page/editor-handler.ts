@@ -1,5 +1,5 @@
 import {debounce} from "lodash"
-import {cmdOrCtrl} from "src/app/core/utils/keyboard"
+import {cmdOrCtrl} from "src/util/keyboard"
 import {ViewHandler} from "src/core/view-handler"
 import {submitSearch} from "src/domain/session/handlers"
 import Config from "src/js/state/Config"
