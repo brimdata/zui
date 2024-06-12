@@ -8,7 +8,7 @@ export const getRange = activeTabSelect((t) => t.histogram.range)
 export const getInterval = activeTabSelect((t) => t.histogram.interval)
 
 export const getNullXCount = activeTabSelect((t) => t.histogram.nullXCount)
-
+export const getCanRender = activeTabSelect((t) => t.histogram.canRender)
 export const getMissingXCount = activeTabSelect(
   (t) => t.histogram.missingXCount
 )

@@ -27,6 +27,7 @@ export function Editor() {
         path={tabId}
         testId="main-editor"
         markers={markers}
+        autoFocus
       />
       <EditorResizer container={container} />
     </div>

@@ -61,3 +61,8 @@ export const openVirusTotal = createHandler(
     }
   }
 )
+
+export const focusEditor = createHandler("session.focusEditor", () => {
+  // @ts-ignore If we split tabs, or have more than one editor, rethink this
+  document.querySelector("[data-testid=main-editor] textarea")?.focus()
+})

@@ -1,5 +1,5 @@
-import {Editor, useMonaco} from "@monaco-editor/react"
-import {useEffect, useMemo, useRef} from "react"
+import {Editor} from "@monaco-editor/react"
+import {useEffect, useRef} from "react"
 import {useSelector} from "react-redux"
 import {cmdOrCtrl} from "src/app/core/utils/keyboard"
 import Config from "src/js/state/Config"
@@ -34,23 +34,19 @@ export function ZedEditor(props: {
   autoFocus?: boolean
   markers?: Marker[]
 }) {
-  const ref = useRef<any>()
   const {isDark} = useColorScheme()
-  const monaco = useMonaco()
-  const handler = useMemo(
-    () => new ZedEditorHandler(monaco, ref.current),
-    [monaco, ref.current]
-  )
+  const handler = useRef(new ZedEditorHandler()).current
 
-  useEffect(() => handler.focus(), [props.path, props.value, handler])
-  useEffect(() => handler.setErrors(props.markers), [props.markers, handler])
+  handler.props = props
+
+  useEffect(() => handler.setErrors(props.markers), [props.markers])
 
   return (
     <Editor
       height="100%"
       language="zed"
       onChange={props.onChange}
-      onMount={(editor) => (ref.current = editor)}
+      onMount={handler.onMount.bind(handler)}
       path={props.path}
       theme={isDark ? "vs-dark" : "vs-light"}
       value={props.value}

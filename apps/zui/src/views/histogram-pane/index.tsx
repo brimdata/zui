@@ -4,6 +4,7 @@ import Layout from "src/js/state/Layout"
 import {SettingsButton} from "./settings-button"
 import {useParentSize} from "src/util/hooks/use-parent-size"
 import {Histogram} from "./histogram"
+import HistogramState from "src/js/state/Histogram"
 import {Toolbar} from "src/components/toolbar"
 import {Title} from "./title"
 import {Resizer} from "./resizer"
@@ -15,8 +16,9 @@ export function HistogramPane() {
   const show = useSelector(Layout.getShowHistogram)
   const chartHeight = useSelector(Layout.getChartHeight)
   const parseError = useSelector(QueryInfo.getParseError)
+  const canRender = useSelector(HistogramState.getCanRender)
   const ref = useRef<HTMLDivElement>()
-  if (!show || parseError) return null
+  if (!show || !canRender || parseError) return null
 
   return (
     <div

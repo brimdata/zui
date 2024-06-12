@@ -9,11 +9,13 @@ const slice = createSlice({
     range: null as null | DateTuple,
     nullXCount: 0,
     missingXCount: 0,
+    canRender: true,
   },
   reducers: {
     init(s) {
       s.nullXCount = 0
       s.missingXCount = 0
+      s.canRender = true
     },
     setRange(s, a: PayloadAction<DateTuple | null>) {
       s.range = a.payload
@@ -26,6 +28,9 @@ const slice = createSlice({
     },
     setMissingXCount(s, a: PayloadAction<number>) {
       s.missingXCount = a.payload
+    },
+    setCanRender(s, a: PayloadAction<boolean>) {
+      s.canRender = a.payload
     },
   },
 })

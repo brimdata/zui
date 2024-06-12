@@ -1,5 +1,14 @@
 export class ZedEditorHandler {
-  constructor(public monaco, public editor) {}
+  public monaco
+  public editor
+  public props
+
+  onMount(editor, monaco) {
+    this.editor = editor
+    this.monaco = monaco
+    if (this.props.autoFocus) editor.focus()
+    this.setErrors(this.props.markers)
+  }
 
   focus() {
     if (!this.mounted) return

@@ -26,6 +26,7 @@ export const runHistogramQuery = createHandler(
       const {timeField, colorField} = select((s) =>
         PoolSettings.findWithDefaults(s, poolId)
       )
+
       function getPinRange() {
         const rangePin = version.pins.find(
           (pin: QueryPin) =>
@@ -77,6 +78,13 @@ export const runHistogramQuery = createHandler(
         //setup
         dispatch(Results.init({id, tabId, key, query: ""}))
         dispatch(Histogram.init())
+
+        // Check if there is a pool
+        if (!poolId) {
+          dispatch(Histogram.setCanRender(false))
+          return
+        }
+
         // run
         const range = getPinRange() || (await getPoolRange())
         if (!range)
