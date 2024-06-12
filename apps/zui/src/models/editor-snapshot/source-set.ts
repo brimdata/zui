@@ -1,13 +1,10 @@
 import {Source} from "./source"
 
 export class SourceSet {
-  sources: Source[]
-  contents: string
+  sources: Source[] = []
+  contents: string = ""
 
   constructor(prefixes: string[], mainText: string) {
-    this.sources = []
-    this.contents = ""
-
     prefixes
       .concat(mainText)
       .filter((snippet) => snippet.trim().length)
