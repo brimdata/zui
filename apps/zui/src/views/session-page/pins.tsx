@@ -33,6 +33,7 @@ function renderPin(pin: QueryPin, index: number) {
     case "generic":
       return (
         <BasePin
+          key={index}
           pin={pin}
           index={index}
           label={pin.label || pin.value || "Empty pin..."}
@@ -42,6 +43,7 @@ function renderPin(pin: QueryPin, index: number) {
     case "time-range":
       return (
         <BasePin
+          key={index}
           pin={pin}
           prefix="range"
           label={`${pin.from} — ${pin.to}`}

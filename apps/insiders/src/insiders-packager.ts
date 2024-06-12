@@ -40,7 +40,7 @@ export class InsidersPackager {
     const version =
       this.strategy === 'match-stable'
         ? this.stableVersion
-        : semver.inc(this.lastVersion, 'prerelease');
+        : semver.inc(this.lastVersion, 'prerelease', 'insiders');
 
     return version;
   }

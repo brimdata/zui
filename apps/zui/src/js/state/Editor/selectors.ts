@@ -34,3 +34,7 @@ export const getSnapshot = activeTabSelect((tab) => {
 export const isEmpty = createSelector(getValue, getPins, (value, pins) => {
   return value.trim() === "" && pins.length === 0
 })
+
+export const getMarkers = activeTabSelect((tab) => {
+  return tab.editor.markers
+})
