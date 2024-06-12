@@ -6,7 +6,7 @@ export const describe = createOperation(
   async (ctx, string, pool?) => {
     try {
       const resp = await lake.client.describeQuery(string, pool)
-      return resp.toJS()
+      return resp.error ? {error: resp} : resp
     } catch (error) {
       return {error: error.toString()}
     }

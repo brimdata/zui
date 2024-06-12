@@ -19,6 +19,7 @@ import lake from "src/js/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
+import {EditorSnapshot} from "src/models/editor-snapshot"
 
 export const getHistory = (
   state,
@@ -54,7 +55,7 @@ export const getVersion = (state: State): QueryVersion => {
 }
 
 export const getQueryText = createSelector(getVersion, (version) => {
-  return QueryModel.versionToZed(version)
+  return new EditorSnapshot(version).toQueryText()
 })
 
 const getRawSession = (state: State) => {

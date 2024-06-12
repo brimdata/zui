@@ -1,7 +1,5 @@
 import {Query} from "src/js/state/Queries/types"
-import {isEmpty, last} from "lodash"
-import {QueryPinInterface} from "../state/Editor/types"
-import buildPin from "src/js/state/Editor/models/build-pin"
+import {last} from "lodash"
 import {QueryVersion} from "src/js/state/QueryVersions/types"
 import {QuerySource} from "src/js/api/queries/types"
 
@@ -58,27 +56,5 @@ export class QueryModel implements Query {
       tags: this.tags,
       isReadOnly: this.isReadOnly,
     }
-  }
-
-  static versionToZed(version: QueryVersion): string {
-    let pinS = []
-    if (!isEmpty(version?.pins))
-      pinS = version.pins
-        .filter((p) => !p.disabled)
-        .map<QueryPinInterface>(buildPin)
-        .map((p) => p.toZed())
-    let s = pinS
-      .concat(version?.value ?? "")
-      .filter((s) => s.trim() !== "")
-      .join(" | ")
-      .trim()
-
-    if (isEmpty(s)) s = "*"
-
-    return s
-  }
-
-  toString(): string {
-    return QueryModel.versionToZed(this.current)
   }
 }

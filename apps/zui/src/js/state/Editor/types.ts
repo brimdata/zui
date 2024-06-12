@@ -24,3 +24,11 @@ export interface QueryPinInterface {
   empty(): boolean
   toZed(): string
 }
+
+export type Marker = {
+  message: string
+  startLineNumber: number
+  startColumn: number
+  endLineNumber: number
+  endColumn: number
+}
