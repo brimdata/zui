@@ -17,7 +17,7 @@ import {
   SaveDialogReturnValue,
 } from "electron"
 import {SearchAppMenuState} from "src/electron/windows/search/app-menu"
-import {Pool} from "src/app/core/pools/pool"
+import {Pool} from "src/models/pool"
 import {Command} from "src/app/commands/command"
 import {LoadOptions} from "../loads/types"
 
@@ -29,7 +29,6 @@ export type LegacyOperations = {
   emitRowDetailChangeOp: (event: OpEventContext, zjson: zjson.Obj) => void
   exportQueries: (groupId: string, filePath: string) => void
   exportResultsOp: (filePath: string, format: string) => void
-  featureFlags: () => string[]
   getAppMeta: () => MainObject["appMeta"]
   getConfigurationsOp: () => Config[]
   getCorrelationsOp: () => CompiledCorrelation[]

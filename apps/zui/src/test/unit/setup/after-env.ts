@@ -1,6 +1,6 @@
 import "regenerator-runtime/runtime"
 import {configure} from "@testing-library/react"
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {ipcRenderer} from "electron"
 
 const preloadApi = () => ({

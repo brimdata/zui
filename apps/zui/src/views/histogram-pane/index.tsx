@@ -2,17 +2,17 @@ import {useSelector} from "react-redux"
 import styles from "./histogram-pane.module.css"
 import Layout from "src/js/state/Layout"
 import {SettingsButton} from "./settings-button"
-import {useParentSize} from "src/util/hooks/use-parent-size"
 import {Histogram} from "./histogram"
 import HistogramState from "src/js/state/Histogram"
 import {Toolbar} from "src/components/toolbar"
 import {Title} from "./title"
 import {Resizer} from "./resizer"
 import {useRef} from "react"
+import {useParentSizeComponent} from "src/util/hooks/use-parent-size-component"
 import QueryInfo from "src/js/state/QueryInfo"
 
 export function HistogramPane() {
-  const {Parent, width = 0, height = 0} = useParentSize()
+  const {Parent, width = 0, height = 0} = useParentSizeComponent()
   const show = useSelector(Layout.getShowHistogram)
   const chartHeight = useSelector(Layout.getChartHeight)
   const parseError = useSelector(QueryInfo.getParseError)

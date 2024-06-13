@@ -1,6 +1,6 @@
 import {app} from "electron"
 import log from "electron-log"
-import env from "src/app/core/env"
+import env from "src/core/env"
 
 export function setLogLevel() {
   if (env.isTest) return

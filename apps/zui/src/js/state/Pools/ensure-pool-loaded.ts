@@ -1,5 +1,5 @@
-import {Pool} from "src/app/core/pools/pool"
-import {syncPool} from "src/app/core/pools/sync-pool"
+import {Pool} from "src/models/pool"
+import {syncPool} from "src/models/sync-pool"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import {Thunk} from "src/js/state/types"

@@ -2,7 +2,7 @@ import React, {useRef} from "react"
 
 import {useSelector} from "react-redux"
 import MainEditor from "src/js/state/Editor"
-import {useTabId} from "src/app/core/hooks/use-tab-id"
+import {useTabId} from "src/util/hooks/use-tab-id"
 import {ZedEditor} from "src/components/zed-editor"
 import {EditorResizer} from "src/views/session-page/editor-resizer"
 import styles from "./editor.module.css"

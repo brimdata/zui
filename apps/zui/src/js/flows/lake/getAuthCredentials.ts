@@ -3,7 +3,7 @@ import {
   toAccessTokenKey,
   toRefreshTokenKey,
   validateToken,
-} from "../../auth0/utils"
+} from "../../../core/auth0/utils"
 import {Thunk} from "../../state/types"
 import {getAuth0} from "./getAuth0"
 import {invoke} from "src/core/invoke"

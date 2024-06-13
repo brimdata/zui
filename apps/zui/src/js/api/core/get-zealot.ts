@@ -1,5 +1,5 @@
 import {Client} from "@brimdata/zed-js"
-import {validateToken} from "src/js/auth0/utils"
+import {validateToken} from "src/core/auth0/utils"
 import {LakeModel} from "src/js/models/lake"
 import {getAuthCredentials} from "src/js/flows/lake/getAuthCredentials"
 import Current from "src/js/state/Current"

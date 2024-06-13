@@ -1,6 +1,6 @@
 import React, {useEffect, useLayoutEffect} from "react"
 import {useSelector} from "react-redux"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import ConnectionError from "src/js/components/ConnectionError"
 import Login from "src/js/components/Login"
 import MacSpinner from "src/js/components/MacSpinner"

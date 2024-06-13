@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {AppProvider} from "src/app/core/context"
+import {AppProvider} from "src/views/application/context"
 import {invoke} from "src/core/invoke"
 import Application from "src/views/application"
 import initialize from "src/js/initializers/initialize"

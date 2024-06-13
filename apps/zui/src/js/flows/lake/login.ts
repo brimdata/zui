@@ -3,7 +3,7 @@ import {
   serializeState,
   toAccessTokenKey,
   toRefreshTokenKey,
-} from "../../auth0/utils"
+} from "../../../core/auth0/utils"
 import {getAuth0} from "./getAuth0"
 import {invoke} from "src/core/invoke"
 

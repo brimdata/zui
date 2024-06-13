@@ -4,12 +4,12 @@ import {ListItem} from "src/components/list-item"
 import {NodeRendererProps, Tree} from "react-arborist"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import classNames from "classnames"
-import {EmptyText} from "src/app/features/right-pane/common"
+import {EmptyText} from "src/views/right-pane/common"
 import {useSelector} from "react-redux"
 import Table from "src/js/state/Table"
 import {TableColumn} from "src/js/state/Table/selectors"
 import {collapseColumn, expandColumn} from "src/domain/results/handlers"
-import {TREE_ITEM_HEIGHT} from "src/app/features/sidebar/item"
+import {TREE_ITEM_HEIGHT} from "src/views/sidebar/item"
 
 function Node(props: NodeRendererProps<TableColumn>) {
   const {node} = props

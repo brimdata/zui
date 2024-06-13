@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {useResultsPaneContext} from "./context"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import Slice from "src/js/state/Table"
 import {headerContextMenu} from "src/app/menus/header-context-menu"
 import {valueContextMenu} from "src/app/menus/value-context-menu"

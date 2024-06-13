@@ -1,6 +1,6 @@
 import {isArray} from "lodash"
 import {useSelector} from "react-redux"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 import ConfigPropValues from "src/js/state/ConfigPropValues"
 import {SettingProps} from "./section"
 import {invoke} from "src/core/invoke"

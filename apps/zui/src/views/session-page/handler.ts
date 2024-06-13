@@ -14,7 +14,7 @@ import {runHistogramQuery} from "../histogram-pane/run-query"
 import {fetchQueryInfo} from "src/domain/session/handlers"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
-import {syncPool} from "src/app/core/pools/sync-pool"
+import {syncPool} from "src/models/sync-pool"
 
 type Props = {
   locationKey: string

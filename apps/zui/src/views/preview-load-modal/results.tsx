@@ -1,7 +1,7 @@
 import * as zed from "@brimdata/zed-js"
 import classNames from "classnames"
 import {memo, useCallback, useState} from "react"
-import {ZedScript} from "src/app/core/models/zed-script"
+import {ZedScript} from "src/models/zed-script"
 import {ButtonMenu} from "src/components/button-menu"
 import {ToolbarTabs} from "src/components/toolbar-tabs"
 import {pluralize} from "src/util/pluralize"

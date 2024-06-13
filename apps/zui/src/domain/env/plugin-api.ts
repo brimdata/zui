@@ -1,4 +1,4 @@
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {getPath} from "src/js/api/core/get-path"
 import {join} from "path"
 

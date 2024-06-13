@@ -1,7 +1,7 @@
-import {Data, Name, Value} from "src/app/core/Data"
-import Panel from "src/app/detail/Panel"
-import PanelHeading from "src/app/detail/PanelHeading"
-import {Caption, ChartWrap, TableWrap} from "src/app/detail/Shared"
+import {Data, Name, Value} from "src/components/data"
+import Panel from "src/views/detail-pane/Panel"
+import PanelHeading from "src/views/detail-pane/PanelHeading"
+import {Caption, ChartWrap, TableWrap} from "src/views/detail-pane/Shared"
 import {
   SecurityEvent,
   SecurityEventInterface,

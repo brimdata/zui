@@ -1,9 +1,9 @@
 import {autoUpdater} from "electron-updater"
 import {Updater} from "./types"
 import semver from "semver"
+import env from "src/core/env"
+import links from "src/config/links"
 import {app, shell} from "electron"
-import env from "src/app/core/env"
-import links from "src/app/core/links"
 import pkg from "src/electron/pkg"
 
 autoUpdater.autoDownload = false

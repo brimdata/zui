@@ -3,7 +3,7 @@ import {app} from "electron"
 import {MainObject} from "../core/main/main-object"
 import {installExtensions} from "./extensions"
 import {main} from "./run-main/run-main"
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {teardown} from "src/test/system/teardown"
 
 jest.mock("./extensions", () => ({

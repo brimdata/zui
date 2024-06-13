@@ -1,5 +1,5 @@
 import {Menu, BrowserWindowConstructorOptions, dialog} from "electron"
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {WindowName} from "../types"
 import {ZuiWindow} from "../zui-window"
 import {createMenu, SearchAppMenuState} from "./app-menu"

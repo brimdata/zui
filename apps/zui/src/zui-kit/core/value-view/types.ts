@@ -1,5 +1,5 @@
 import * as zed from "@brimdata/zed-js"
-import {View} from "src/app/features/inspector/views/view"
+import {View} from "src/views/inspector/views/view"
 
 export type ViewConfig = {
   customViews?: typeof View[]

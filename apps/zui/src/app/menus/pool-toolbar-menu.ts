@@ -1,4 +1,4 @@
-import {Pool} from "../core/pools/pool"
+import {Pool} from "../../models/pool"
 import {createMenu} from "src/core/menu"
 import {Snapshots} from "src/domain/handlers"
 import {chooseFiles} from "src/domain/loads/handlers"

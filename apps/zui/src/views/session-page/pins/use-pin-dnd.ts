@@ -1,7 +1,7 @@
 import {useRef} from "react"
 import {useDrag, useDrop} from "react-dnd"
-import {useDispatch} from "src/app/core/state"
-import mergeRefs from "src/app/core/utils/merge-refs"
+import {useDispatch} from "src/core/use-dispatch"
+import mergeRefs from "src/util/merge-refs"
 import Editor from "src/js/state/Editor"
 
 export function usePinContainerDnd() {

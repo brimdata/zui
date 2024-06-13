@@ -1,4 +1,4 @@
-import {PoolName} from "../features/sidebar/pools-section/pool-name"
+import {PoolName} from "../../views/sidebar/pools-section/pool-name"
 import {createCommand} from "./command"
 import {deletePools} from "./delete-pools"
 

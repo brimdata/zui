@@ -1,7 +1,7 @@
 import {Editor} from "@monaco-editor/react"
 import {useEffect, useRef} from "react"
 import {useSelector} from "react-redux"
-import {cmdOrCtrl} from "src/app/core/utils/keyboard"
+import {cmdOrCtrl} from "src/util/keyboard"
 import Config from "src/js/state/Config"
 import {Marker} from "src/js/state/Editor/types"
 import {useColorScheme} from "src/util/hooks/use-color-scheme"

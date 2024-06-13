@@ -1,6 +1,6 @@
 import {app, MenuItemConstructorOptions, shell, Menu} from "electron"
-import env from "src/app/core/env"
-import links from "src/app/core/links"
+import env from "src/core/env"
+import links from "src/config/links"
 import pkg from "src/electron/pkg"
 import {closeWindowOp} from "../../ops/close-window-op"
 import {moveToCurrentDisplayOp} from "../../ops/move-to-current-display-op"

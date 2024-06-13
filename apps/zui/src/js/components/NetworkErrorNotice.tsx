@@ -6,7 +6,7 @@ import Notice from "../state/Notice"
 import Current from "../state/Current"
 import LakeStatuses from "../state/LakeStatuses"
 import {checkStatus} from "../flows/lake/checkStatus"
-import {useDispatch} from "src/app/core/state"
+import {useDispatch} from "src/core/use-dispatch"
 
 type Props = {
   error: ErrorData

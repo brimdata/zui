@@ -17,7 +17,7 @@ import toast from "react-hot-toast"
 import {startTransition} from "react"
 import {initResizeListener} from "./init-resize-listener"
 import {setMenuContext} from "src/core/menu"
-import {createWaitForSelector} from "src/app/core/state/create-wait-for-selector"
+import {createWaitForSelector} from "src/core/create-wait-for-selector"
 import {initAsyncTasks} from "./init-async-tasks"
 import {Renderer} from "src/core/renderer"
 import {initDomainModels} from "./init-domain-models"
@@ -38,7 +38,6 @@ export default async function initialize(
   windowName: WindowName = getWindowName()
 ) {
   const renderer = new Renderer()
-  global.featureFlags = globalThis.zui.featureFlags
   global.windowId = windowId
   global.windowName = windowName
 

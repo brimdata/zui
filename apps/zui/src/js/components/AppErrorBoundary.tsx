@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from "react"
-import Link from "./common/Link"
+import {Link} from "src/components/link"
 
 type Props = {children: any}
 type State = {error: Error | null | undefined}

@@ -3,7 +3,6 @@ export default function initDOM() {
   appendDivId("modal-root")
   appendDivId("tooltip-root")
   appendDivId("context-menu-root")
-  appendDivId("measure-layer", {hidden: true})
   if (globalThis.env.isMac) {
     document.body.classList.add("is-mac")
   }

@@ -1,7 +1,7 @@
 import {app} from "electron"
 import {execSync} from "child_process"
 import {join} from "path"
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {createOperation} from "src/core/operations"
 import {getPackageJSON} from "./packageJSON"
 

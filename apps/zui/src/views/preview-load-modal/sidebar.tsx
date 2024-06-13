@@ -1,6 +1,6 @@
 import {useRef} from "react"
 import {useDispatch} from "react-redux"
-import useSelect from "src/app/core/hooks/use-select"
+import useSelect from "src/util/hooks/use-select"
 import DragAnchor from "src/components/drag-anchor"
 import LoadDataForm from "src/js/state/LoadDataForm"
 import styles from "./sidebar.module.css"

@@ -1,4 +1,4 @@
-import env from "src/app/core/env"
+import env from "src/core/env"
 import {createOperation} from "src/core/operations"
 
 export const getFilePaths = createOperation("e2e.getFilePaths", () => {
