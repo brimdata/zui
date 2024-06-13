@@ -201,9 +201,9 @@ export function compileTemplate(
         click: () => window.send("clearPins"),
       },
       {
-        label: "Focus Search Bar",
+        label: "Focus Editor",
         accelerator: "CmdOrCtrl+L",
-        click: () => window.send("focusSearchBar"),
+        click: () => sendToFocusedWindow("session.focusEditor"),
       },
       __,
       {
