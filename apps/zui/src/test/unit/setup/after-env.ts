@@ -16,5 +16,5 @@ if (env.isCI) {
   configure({asyncUtilTimeout: 5000})
 }
 
-// @ts-ignore Quiets electron-updater during tests on Linux
+// @ts-ignore Quiets electron-updater during tests on Linux (see https://github.com/brimdata/zui/pull/3097)
 process.resourcesPath = "DoesNotExist"
