@@ -15,3 +15,6 @@ global.zui = preloadApi()
 if (env.isCI) {
   configure({asyncUtilTimeout: 5000})
 }
+
+// @ts-ignore Quiets electron-updater during tests on Linux
+process.resourcesPath = "DoesNotExist"
