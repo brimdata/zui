@@ -9,7 +9,7 @@ import {defaultLake} from "../initializers/initLakeParams"
 import Login from "./Login"
 import {rest} from "msw"
 import LakeStatuses from "../state/LakeStatuses"
-import lake from "../models/lake"
+import {Lake} from "../models/lake"
 import {shell} from "electron"
 
 const system = new SystemTest("Login.test.ts")
@@ -61,7 +61,7 @@ const brimSuccessUrl = (state) =>
   `//brim://auth/auth0/callback?code=SemkqWmI3Tv_NWaI&state=${state}`
 
 function getLake() {
-  return lake({
+  return new Lake({
     ...defaultLake(),
     authType: "auth0",
     authData: {

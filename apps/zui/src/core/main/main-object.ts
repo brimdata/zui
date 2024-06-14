@@ -24,7 +24,7 @@ import {getAppMeta, AppMeta} from "../../electron/meta"
 import {createMainStore} from "../../js/state/stores/create-main-store"
 import {AppDispatch, State} from "../../js/state/types"
 import {PathName, getPath} from "../../js/api/core/get-path"
-import createLake from "src/js/models/lake"
+import {Lake} from "src/js/models/lake"
 import {getAuthToken} from "../../js/api/core/get-zealot"
 import {Abortables} from "src/modules/abortables"
 import * as zui from "src/zui"
@@ -134,7 +134,7 @@ export class MainObject {
 
   async createClient(lakeId: string) {
     const lakeData = Lakes.id(lakeId)(this.store.getState())
-    const lake = createLake(lakeData)
+    const lake = new Lake(lakeData)
     const auth = await this.dispatch(getAuthToken(lake))
     return new ElectronZedClient(lake.getAddress(), {auth})
   }

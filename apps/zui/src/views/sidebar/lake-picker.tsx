@@ -8,7 +8,7 @@ import Modal from "src/js/state/Modal"
 import {AppDispatch} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
 import {LakeAttrs} from "src/js/state/Lakes/types"
-import lake from "src/js/models/lake"
+import {Lake} from "src/js/models/lake"
 import Window from "src/js/state/Window"
 
 const LakeNameGroup = styled.div`
@@ -61,7 +61,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
 export default function LakePicker() {
   const dispatch = useDispatch<AppDispatch>()
   const lakeId = useLakeId()
-  const current = lake(useSelector(Lakes.id(lakeId)))
+  const current = new Lake(useSelector(Lakes.id(lakeId)))
 
   return (
     <LakeNameGroup onClick={() => dispatch(showLakeSelectMenu())}>

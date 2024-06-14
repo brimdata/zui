@@ -15,7 +15,7 @@ import {ActiveQuery} from "src/models/active-query"
 import SessionQueries from "../SessionQueries"
 import memoizeOne from "memoize-one"
 import {entitiesToArray} from "../utils"
-import lake from "src/js/models/lake"
+import {Lake} from "src/js/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
@@ -116,7 +116,7 @@ export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
   if (!id) throw new Error("Current lake id is unset")
   if (!lakes[id]) throw new Error(`Missing lake id: ${id}`)
 
-  return lake(lakes[id])
+  return new Lake(lakes[id])
 })
 
 export const mustGetPool = createSelector(
