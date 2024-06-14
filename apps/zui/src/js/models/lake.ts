@@ -1,23 +1,14 @@
+import {DomainModel} from "src/core/domain-model"
 import {LakeAttrs} from "../state/Lakes/types"
 
-export type Lake = ReturnType<typeof lake>
+export class Lake extends DomainModel<LakeAttrs> {
+  getAddress(): string {
+    return this.attrs.port
+      ? [this.attrs.host, this.attrs.port].join(":")
+      : this.attrs.host
+  }
 
-export default function lake(lake: LakeAttrs) {
-  return {
-    ...lake,
-    getAddress(): string {
-      return this.port ? [this.host, this.port].join(":") : this.host
-    },
-    serialize(): LakeAttrs {
-      return {
-        host: this.host,
-        id: this.id,
-        name: this.name,
-        port: this.port,
-        version: this.version,
-        authType: this.authType,
-        authData: this.authData,
-      }
-    },
+  serialize(): LakeAttrs {
+    return {...this.attrs}
   }
 }
