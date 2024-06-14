@@ -7,7 +7,7 @@ import Current from "src/js/state/Current"
 import Modal from "src/js/state/Modal"
 import {AppDispatch} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
-import {Lake} from "src/js/state/Lakes/types"
+import {LakeAttrs} from "src/js/state/Lakes/types"
 import lake from "src/js/models/lake"
 import Window from "src/js/state/Window"
 
@@ -42,7 +42,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
     {type: "separator"},
   ]
 
-  lakes.forEach((l: Lake) => {
+  lakes.forEach((l: LakeAttrs) => {
     const isCurrent = l.id === currentId
     template.push({
       type: "checkbox",

@@ -1,14 +1,14 @@
-import {Lake} from "../state/Lakes/types"
+import {LakeAttrs} from "../state/Lakes/types"
 
 export type LakeModel = ReturnType<typeof lake>
 
-export default function lake(lake: Lake) {
+export default function lake(lake: LakeAttrs) {
   return {
     ...lake,
     getAddress(): string {
       return this.port ? [this.host, this.port].join(":") : this.host
     },
-    serialize(): Lake {
+    serialize(): LakeAttrs {
       return {
         host: this.host,
         id: this.id,

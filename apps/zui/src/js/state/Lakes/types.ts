@@ -1,4 +1,4 @@
-export type Lake = {
+export type LakeAttrs = {
   id: string
   name: string
   host: string
@@ -19,5 +19,5 @@ export interface Auth0Data {
 }
 
 export type LakesState = {
-  [key: string]: Lake
+  [key: string]: LakeAttrs
 }

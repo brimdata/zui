@@ -1,11 +1,11 @@
 import {PayloadAction, createSlice} from "@reduxjs/toolkit"
-import {Lake, LakesState} from "./types"
+import {LakeAttrs, LakesState} from "./types"
 
 const slice = createSlice({
   name: "$LAKES",
   initialState: {} as LakesState,
   reducers: {
-    add: (state, action: PayloadAction<Lake>) => {
+    add: (state, action: PayloadAction<LakeAttrs>) => {
       const lake = action.payload
       state[lake.id] = lake
     },

@@ -1,5 +1,5 @@
 import {Thunk} from "../../state/types"
-import {Lake} from "../../state/Lakes/types"
+import {LakeAttrs} from "../../state/Lakes/types"
 import {buildLake} from "./buildLake"
 import {getAuthCredentials} from "./getAuthCredentials"
 import {saveLake} from "./saveLake"
@@ -29,7 +29,7 @@ type LakeError = LoginError | ConnectionError | null
 
 export const buildAndAuthenticateLake =
   (
-    lake: Partial<Lake>,
+    lake: Partial<LakeAttrs>,
     abortSignal: AbortSignal
   ): Thunk<Promise<[Cancelled, LakeError]>> =>
   async (dispatch) => {

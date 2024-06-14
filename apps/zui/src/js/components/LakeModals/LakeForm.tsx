@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux"
 import form, {FormConfig} from "../../models/form"
 import {buildAndAuthenticateLake} from "../../flows/lake/buildAndAuthenticateLake"
 import {AppDispatch} from "../../state/types"
-import {Lake} from "../../state/Lakes/types"
+import {LakeAttrs} from "../../state/Lakes/types"
 import useCallbackRef from "../hooks/useCallbackRef"
 import useEventListener from "../hooks/useEventListener"
 import {isDefaultLake} from "../../initializers/initLakeParams"
@@ -58,7 +58,7 @@ const LakeForm = ({onClose, lake}: Props) => {
     },
   }
 
-  const setFields = ({hostPort, name}, l?: Lake): Partial<Lake> => {
+  const setFields = ({hostPort, name}, l?: LakeAttrs): Partial<LakeAttrs> => {
     const {port, hostname, protocol} = new URL("/", hostPort)
     const host = [protocol, hostname].join("//")
     if (l) return {...l, host, port, name}

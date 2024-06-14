@@ -4,12 +4,12 @@ import {isDefaultLake} from "../../initializers/initLakeParams"
 import Pools from "../../state/Pools"
 import {Thunk} from "../../state/types"
 import Lakes from "../../state/Lakes"
-import {Lake} from "../../state/Lakes/types"
+import {LakeAttrs} from "../../state/Lakes/types"
 import LakeStatuses from "../../state/LakeStatuses"
 import {invoke} from "src/core/invoke"
 
 const removeLake =
-  (l: Lake): Thunk =>
+  (l: LakeAttrs): Thunk =>
   (dispatch, _getState) => {
     const {name, id, authType} = l
 
