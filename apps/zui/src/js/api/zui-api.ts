@@ -13,7 +13,7 @@ import {EditorApi} from "./editor/editor-api"
 import {NoticeApi} from "./notice/notice-api"
 import {UrlApi} from "./url/url-api"
 import {TableViewApi} from "src/zui-kit"
-import {LakeModel} from "../models/lake"
+import {Lake} from "../models/lake"
 
 // This is deprecated in favor of domain handlers and operations
 export default class ZuiApi {
@@ -49,7 +49,7 @@ export default class ZuiApi {
     this.url = new UrlApi(this)
   }
 
-  getZealot(lake?: LakeModel) {
+  getZealot(lake?: Lake) {
     return this.dispatch(getZealot(lake))
   }
 

@@ -9,11 +9,11 @@ import {LakeAttrs} from "../../state/Lakes/types"
 import useCallbackRef from "../hooks/useCallbackRef"
 import useEventListener from "../hooks/useEventListener"
 import {isDefaultLake} from "../../initializers/initLakeParams"
-import {LakeModel} from "src/js/models/lake"
+import {Lake} from "src/js/models/lake"
 import {ErrorWell} from "src/components/error-well"
 
 type Props = {
-  lake?: LakeModel
+  lake?: Lake
   onClose: () => void
 }
 

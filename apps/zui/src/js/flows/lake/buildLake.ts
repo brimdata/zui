@@ -2,10 +2,10 @@ import isEmpty from "lodash/isEmpty"
 import {Thunk} from "../../state/types"
 import {LakeAttrs} from "../../state/Lakes/types"
 import {Client} from "@brimdata/zed-js"
-import lake, {LakeModel} from "src/js/models/lake"
+import lake, {Lake} from "src/js/models/lake"
 
 export const buildLake =
-  (l: Partial<LakeAttrs>, _signal: AbortSignal): Thunk<Promise<LakeModel>> =>
+  (l: Partial<LakeAttrs>, _signal: AbortSignal): Thunk<Promise<Lake>> =>
   async (_dispatch, _getState) => {
     if (!l.host || !l.id || !l.name)
       throw new Error("must provide host, id, and name to build lake")

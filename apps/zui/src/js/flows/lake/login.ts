@@ -1,4 +1,4 @@
-import {LakeModel} from "src/js/models/lake"
+import {Lake} from "src/js/models/lake"
 import {
   serializeState,
   toAccessTokenKey,
@@ -8,7 +8,7 @@ import {getAuth0} from "./getAuth0"
 import {invoke} from "src/core/invoke"
 
 export const login =
-  (l: LakeModel, abortSignal: AbortSignal) =>
+  (l: Lake, abortSignal: AbortSignal) =>
   (dispatch): Promise<string> => {
     const client = dispatch(getAuth0(l))
 

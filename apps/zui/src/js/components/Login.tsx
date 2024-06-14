@@ -8,7 +8,7 @@ import MacSpinner from "./MacSpinner"
 import {isString} from "lodash"
 import {updateStatus} from "../flows/lake/update-status"
 import {login} from "../flows/lake/login"
-import {LakeModel} from "../models/lake"
+import {Lake} from "../models/lake"
 
 const PageWrap = styled.div`
   width: 100%;
@@ -33,7 +33,7 @@ const StyledButton = styled.button`
 `
 
 type Props = {
-  lake: LakeModel
+  lake: Lake
 }
 
 const Login = ({lake}: Props) => {
