@@ -4,7 +4,7 @@
 
 import Lakes from "./"
 import initTestStore from "src/test/unit/helpers/initTestStore"
-import {Lake} from "./types"
+import {LakeAttrs} from "./types"
 import dispatchAll from "src/test/unit/helpers/dispatchAll"
 
 let store
@@ -16,7 +16,7 @@ afterEach(async () => {
   await new Promise((r) => setTimeout(r))
 })
 
-const lake: Lake = {
+const lake: LakeAttrs = {
   id: "123",
   name: "123",
   host: "boom.com",

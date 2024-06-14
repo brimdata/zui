@@ -1,4 +1,4 @@
-import {LakeModel} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import {
   toAccessTokenKey,
   toRefreshTokenKey,
@@ -9,7 +9,7 @@ import {getAuth0} from "./getAuth0"
 import {invoke} from "src/core/invoke"
 
 export const getAuthCredentials =
-  (lake: LakeModel): Thunk<Promise<string | null>> =>
+  (lake: Lake): Thunk<Promise<string | null>> =>
   async (dispatch) => {
     if (!lake.authType || lake.authType !== "auth0" || !lake.authData)
       throw new Error("No authentication data set for lake")

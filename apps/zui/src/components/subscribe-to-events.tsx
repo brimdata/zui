@@ -5,7 +5,7 @@ import {syncPool} from "src/models/sync-pool"
 import {syncPoolsData} from "src/models/sync-pools-data"
 import {useDispatch} from "src/core/use-dispatch"
 import {subscribeEvents} from "src/js/flows/subscribeEvents"
-import lake from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import Lakes from "src/js/state/Lakes"
 
 type LakeSourceMap = {[lakeId: string]: EventSource}
@@ -19,7 +19,7 @@ export function SubscribeToEvents() {
     lakes.forEach((l) => {
       if (l.id in lakeSourceMap) return
       try {
-        dispatch(subscribeEvents(lake(l))).then((lSource) => {
+        dispatch(subscribeEvents(new Lake(l))).then((lSource) => {
           lakeSourceMap[l.id] = lSource
 
           lSource.addEventListener("pool-new", (_e) => {

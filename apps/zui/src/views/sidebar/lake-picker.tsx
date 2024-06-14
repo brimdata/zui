@@ -7,8 +7,8 @@ import Current from "src/js/state/Current"
 import Modal from "src/js/state/Modal"
 import {AppDispatch} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
-import {Lake} from "src/js/state/Lakes/types"
-import lake from "src/js/models/lake"
+import {LakeAttrs} from "src/js/state/Lakes/types"
+import {Lake} from "src/models/lake"
 import Window from "src/js/state/Window"
 
 const LakeNameGroup = styled.div`
@@ -42,7 +42,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
     {type: "separator"},
   ]
 
-  lakes.forEach((l: Lake) => {
+  lakes.forEach((l: LakeAttrs) => {
     const isCurrent = l.id === currentId
     template.push({
       type: "checkbox",
@@ -61,7 +61,7 @@ const showLakeSelectMenu = () => (dispatch, getState) => {
 export default function LakePicker() {
   const dispatch = useDispatch<AppDispatch>()
   const lakeId = useLakeId()
-  const current = lake(useSelector(Lakes.id(lakeId)))
+  const current = new Lake(useSelector(Lakes.id(lakeId)))
 
   return (
     <LakeNameGroup onClick={() => dispatch(showLakeSelectMenu())}>

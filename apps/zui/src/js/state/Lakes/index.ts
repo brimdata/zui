@@ -1,8 +1,8 @@
 import {reducer, actions} from "./reducer"
 import selectors from "./selectors"
-import {Lake} from "./types"
+import {LakeAttrs} from "./types"
 
-const getDefaultLake = (port: string, user: string): Lake => {
+const getDefaultLake = (port: string, user: string): LakeAttrs => {
   return {
     host: "http://localhost",
     port,

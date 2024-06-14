@@ -1,5 +1,5 @@
 import {Thunk} from "../../state/types"
-import {Lake} from "../../state/Lakes/types"
+import {LakeAttrs} from "../../state/Lakes/types"
 import {buildLake} from "./buildLake"
 import {getAuthCredentials} from "./getAuthCredentials"
 import {saveLake} from "./saveLake"
@@ -29,22 +29,25 @@ type LakeError = LoginError | ConnectionError | null
 
 export const buildAndAuthenticateLake =
   (
-    lake: Partial<Lake>,
+    attrs: Partial<LakeAttrs>,
     abortSignal: AbortSignal
   ): Thunk<Promise<[Cancelled, LakeError]>> =>
   async (dispatch) => {
     try {
-      const l = await dispatch(buildLake(lake, abortSignal))
+      const lake = await dispatch(buildLake(attrs, abortSignal))
 
-      if (l.authType === "none") {
-        dispatch(saveLake(l, "connected"))
+      if (lake.authType === "none") {
+        dispatch(saveLake(lake, "connected"))
         return [false, null]
       }
 
-      let accessToken = await dispatch(getAuthCredentials(l))
+      let accessToken = await dispatch(getAuthCredentials(lake))
       if (accessToken) {
         dispatch(
-          saveLake({...l, authData: {...l.authData, accessToken}}, "connected")
+          saveLake(
+            {...lake.attrs, authData: {...lake.authData, accessToken}},
+            "connected"
+          )
         )
         return [false, null]
       }
@@ -59,11 +62,14 @@ export const buildAndAuthenticateLake =
       if (dialogChoice.response === 1) return [true, null]
 
       try {
-        accessToken = await dispatch(login(l, abortSignal))
+        accessToken = await dispatch(login(lake, abortSignal))
         if (abortSignal.aborted) return [true, null]
-        l.authData.accessToken = accessToken
+        lake.authData.accessToken = accessToken
         dispatch(
-          saveLake({...l, authData: {...l.authData, accessToken}}, "connected")
+          saveLake(
+            {...lake.attrs, authData: {...lake.authData, accessToken}},
+            "connected"
+          )
         )
         return [false, null]
       } catch (e) {

@@ -1,4 +1,4 @@
-import lake from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
 import Pools from "src/js/state/Pools"
@@ -9,7 +9,7 @@ export const syncPool =
   (poolId: string, lakeId?: string): Thunk<Promise<Pool | null>> =>
   async (dispatch, getState, {api}) => {
     const lakeModel = lakeId
-      ? lake(Lakes.id(lakeId)(getState()))
+      ? new Lake(Lakes.id(lakeId)(getState()))
       : Current.getLake(getState())
 
     const zealot = await api.getZealot(lakeModel)

@@ -1,6 +1,6 @@
 import {Client} from "@brimdata/zed-js"
 import {syncPoolsData} from "src/models/sync-pools-data"
-import lake from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import {validateToken} from "../../../core/auth0/utils"
 import Lakes from "../../state/Lakes"
 import LakeStatuses from "../../state/LakeStatuses"
@@ -13,7 +13,7 @@ import {getAuthCredentials} from "./getAuthCredentials"
 export const updateStatus =
   (lakeId: string) =>
   async (dispatch, getState): Promise<void> => {
-    const lakeModel = lake(Lakes.id(lakeId)(getState()))
+    const lakeModel = new Lake(Lakes.id(lakeId)(getState()))
     const zealot = new Client(lakeModel.getAddress())
 
     const activate = async () => {
@@ -25,7 +25,7 @@ export const updateStatus =
       try {
         // check version to test that zqd is available, update lake version while doing so
         const {version} = await zealot.version()
-        lakeModel.version = version
+        lakeModel.attrs.version = version
         return false
       } catch (e) {
         console.error(e)

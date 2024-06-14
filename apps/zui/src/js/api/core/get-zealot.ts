@@ -1,6 +1,6 @@
 import {Client} from "@brimdata/zed-js"
 import {validateToken} from "src/core/auth0/utils"
-import {LakeModel} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import {getAuthCredentials} from "src/js/flows/lake/getAuthCredentials"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
@@ -8,7 +8,7 @@ import LakeStatuses from "src/js/state/LakeStatuses"
 import {Thunk} from "src/js/state/types"
 
 export const getZealot =
-  (lake?: LakeModel): Thunk<Promise<Client>> =>
+  (lake?: Lake): Thunk<Promise<Client>> =>
   async (dispatch, getState) => {
     const l = lake || Current.mustGetLake(getState())
     const auth = await dispatch(getAuthToken(l))
@@ -16,7 +16,7 @@ export const getZealot =
   }
 
 export const getAuthToken =
-  (lake: LakeModel): Thunk<Promise<string>> =>
+  (lake: Lake): Thunk<Promise<string>> =>
   async (dispatch) => {
     if (!lake.authType) return null
     if (lake.authType === "none") return null
