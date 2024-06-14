@@ -1,4 +1,4 @@
-import {Lake} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import Auth0Client from "../../../core/auth0"
 import Current from "../../state/Current"
 import {Thunk} from "../../state/types"

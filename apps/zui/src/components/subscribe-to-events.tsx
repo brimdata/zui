@@ -5,7 +5,7 @@ import {syncPool} from "src/models/sync-pool"
 import {syncPoolsData} from "src/models/sync-pools-data"
 import {useDispatch} from "src/core/use-dispatch"
 import {subscribeEvents} from "src/js/flows/subscribeEvents"
-import {Lake} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import Lakes from "src/js/state/Lakes"
 
 type LakeSourceMap = {[lakeId: string]: EventSource}

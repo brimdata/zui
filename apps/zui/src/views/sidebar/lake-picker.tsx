@@ -8,7 +8,7 @@ import Modal from "src/js/state/Modal"
 import {AppDispatch} from "src/js/state/types"
 import Lakes from "src/js/state/Lakes"
 import {LakeAttrs} from "src/js/state/Lakes/types"
-import {Lake} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import Window from "src/js/state/Window"
 
 const LakeNameGroup = styled.div`

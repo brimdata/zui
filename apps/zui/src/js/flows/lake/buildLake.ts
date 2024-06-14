@@ -2,7 +2,7 @@ import isEmpty from "lodash/isEmpty"
 import {Thunk} from "../../state/types"
 import {LakeAttrs} from "../../state/Lakes/types"
 import {Client} from "@brimdata/zed-js"
-import {Lake} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 
 export const buildLake =
   (l: Partial<LakeAttrs>, _signal: AbortSignal): Thunk<Promise<Lake>> =>

@@ -1,4 +1,4 @@
-import {Lake} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import {
   serializeState,
   toAccessTokenKey,

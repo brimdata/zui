@@ -1,6 +1,6 @@
 import {Client} from "@brimdata/zed-js"
 import {validateToken} from "src/core/auth0/utils"
-import {Lake} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import {getAuthCredentials} from "src/js/flows/lake/getAuthCredentials"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"

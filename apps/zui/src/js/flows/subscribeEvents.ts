@@ -1,4 +1,4 @@
-import {Lake} from "../models/lake"
+import {Lake} from "../../models/lake"
 import {Thunk} from "../state/types"
 
 export const subscribeEvents =

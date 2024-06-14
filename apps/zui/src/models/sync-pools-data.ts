@@ -1,4 +1,4 @@
-import {Lake} from "src/js/models/lake"
+import {Lake} from "src/models/lake"
 import Current from "src/js/state/Current"
 import Lakes from "src/js/state/Lakes"
 import Pools from "src/js/state/Pools"

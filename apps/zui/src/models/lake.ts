@@ -1,5 +1,5 @@
 import {DomainModel} from "src/core/domain-model"
-import {LakeAttrs} from "../state/Lakes/types"
+import {LakeAttrs} from "../js/state/Lakes/types"
 
 export class Lake extends DomainModel<LakeAttrs> {
   getAddress(): string {
