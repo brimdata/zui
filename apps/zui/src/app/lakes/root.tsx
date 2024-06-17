@@ -8,7 +8,6 @@ import {updateStatus} from "src/js/flows/lake/update-status"
 import Current from "src/js/state/Current"
 import LakeStatuses from "src/js/state/LakeStatuses"
 import styled from "styled-components"
-import {initCurrentTab} from "src/js/flows/initCurrentTab"
 import {invoke} from "src/core/invoke"
 
 const SpinnerWrap = styled.div`
@@ -35,7 +34,7 @@ export function InitLake({children}) {
 
   switch (status) {
     case "disconnected":
-      return <ConnectionError onRetry={() => dispatch(initCurrentTab())} />
+      return <ConnectionError onRetry={() => dispatch(updateStatus(lake.id))} />
     case "login-required":
       return <Login lake={lake} />
     case "connected":
