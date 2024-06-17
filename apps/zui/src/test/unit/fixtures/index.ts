@@ -1,4 +1,4 @@
-import {Lake} from "src/js/state/Lakes/types"
+import {LakeAttrs} from "src/js/state/Lakes/types"
 import {PoolState} from "src/js/state/Pools/types"
 
 const pool1 = (): PoolState => ({
@@ -21,7 +21,7 @@ const pool1 = (): PoolState => ({
   warnings: null,
 })
 
-const lake1 = (): Lake => ({
+const lake1 = (): LakeAttrs => ({
   id: "test:9867",
   name: "testName1",
   host: "test",
@@ -29,7 +29,7 @@ const lake1 = (): Lake => ({
   authType: "none",
 })
 
-const lake2 = (): Lake => ({
+const lake2 = (): LakeAttrs => ({
   id: "test:9868",
   name: "testName2",
   host: "test",

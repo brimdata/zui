@@ -13,7 +13,13 @@ export class DomainModel<Attrs extends {} = {}> {
     return this.store.dispatch(action)
   }
 
-  constructor(public attrs: Attrs) {}
+  public attrs: Attrs
+
+  constructor(attrs: Attrs) {
+    // Since these attrs often come from redux, they may be non-extensible.
+    // Cloning them makes them regular objects again.
+    this.attrs = {...attrs}
+  }
 
   protected dispatch(action: Parameters<Dispatch>[0]) {
     return DomainModel.dispatch(action)

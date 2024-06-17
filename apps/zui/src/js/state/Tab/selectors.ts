@@ -1,10 +1,10 @@
 import {createSelector} from "reselect"
 import Current from "../Current"
-import {Lake} from "../Lakes/types"
+import {LakeAttrs} from "../Lakes/types"
 import {State} from "../types"
 import activeTabSelect from "./activeTabSelect"
 
-const lakeUrl = createSelector<State, Lake | null, string>(
+const lakeUrl = createSelector<State, LakeAttrs | null, string>(
   Current.getLake,
   (c) => {
     if (c) return c.host + ":" + c.port
