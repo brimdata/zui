@@ -25,6 +25,7 @@ export const toFieldPath = (arg: string | string[] | zed.Field) => {
 export function toZedScript(object: unknown): string {
   if (object instanceof zed.Field) return toFieldPath(object)
   if (object instanceof zed.Primitive) return toZedScriptPrimitive(object)
+  if (object instanceof zed.Union) return toZedScript(object.value)
   if (isString(object)) return toZedScriptString(object)
   if (object instanceof Date) return toZedScriptDate(object)
   if (typeof object === "boolean") return toZedScriptBool(object)
