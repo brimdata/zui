@@ -2,17 +2,12 @@ import {DomainModel} from "src/core/domain-model"
 import {LakeAttrs} from "../js/state/Lakes/types"
 import {Client} from "@brimdata/zed-js"
 import Slice from "src/js/state/Lakes"
-import LakeStatuses from "src/js/state/LakeStatuses"
-import {LakeStatus} from "src/js/state/LakeStatuses/types"
 import {FeatureDetector} from "./lake/feature-detector"
 
-type LakeModelAttrs = LakeAttrs & {status: LakeStatus}
-
-export class Lake extends DomainModel<LakeModelAttrs> {
+export class Lake extends DomainModel<LakeAttrs> {
   static find(id: string) {
     const attrs = this.select(Slice.id(id))
-    const status = this.select(LakeStatuses.get(id))
-    return new Lake({...attrs, status})
+    return new Lake(attrs)
   }
 
   getAddress(): string {
@@ -69,14 +64,13 @@ export class Lake extends DomainModel<LakeModelAttrs> {
     this.update({features})
   }
 
-  update(attrs: Partial<LakeModelAttrs>) {
+  update(attrs: Partial<LakeAttrs>) {
     this.attrs = {...this.attrs, ...attrs}
     this.save()
   }
 
   save() {
-    const {status: _, ...attrs} = this.attrs
-    this.dispatch(Slice.add(attrs))
+    this.dispatch(Slice.add({...this.attrs}))
   }
 
   isRunning() {
