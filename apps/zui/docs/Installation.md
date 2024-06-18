@@ -42,7 +42,9 @@ and we'll be happy to help.
 
 ## macOS Installation
 
-* Download the Zui installer via the **macOS** link at the [Zui download](https://www.brimdata.io/download/) page
+* Download the Zui installer via a **macOS** link at the [Zui download](https://www.brimdata.io/download/) page
+   * The **x64/amd64** installer is for older Intel-based Macs, though it will also run (slower) on newer Macs based on Apple silicon
+   * The **arm64** installer is exclusively for newer Macs based on Apple Silicon and provides the best performance on these models
 * Launch the downloaded `.dmg` file to begin installation
 * Click and drag the Zui icon into the Applications folder
 * Click the Zui icon in the Applications folder to start Zui now and in the future
@@ -83,7 +85,7 @@ performed. If **Install** is clicked, the result on each platform is as follows:
 |**Platform**|**Result**|
 |-|-|
 |**Windows**|An interactive wizard for the newer release will launch, just like the one from initial [installation](#windows-installation).|
-|**macOS**|The newer release will install in the background and Zui will automatically relaunch into the newer version.|
+|**macOS**|The newer release will install in the background and Zui will automatically relaunch into the newer version. See below for more [details on macOS updates](#macos-details).|
 |**Linux**|The [Zui download](https://www.brimdata.io/download/) page will open in your browser. Manual uninstall/reinstall is necessary on Linux, so repeat the same download/uninstall/reinstall steps as during initial [installation](#linux-installation).|
 
 In all cases, updating to a newer version of the app will preserve your existing
@@ -105,3 +107,15 @@ Regardless of settings, manually clicking the pull-down menu option
 **Help > Check for Updates** on Windows/Linux or **Zui > Check for Updates**
 on macOS will perform an immediate check and a notification will pop up if a newer
 release is detected.
+
+### macOS Details
+
+In Zui release [v1.7.0](https://github.com/brimdata/zui/releases/tag/v1.7.0) and older, the only available `.dmg` installer was built for Intel-based Macs, though these could still run on newer Macs (based on Apple silicon) thanks to [Rosetta](https://support.apple.com/en-us/102527). With Zui release [v1.8.0](https://github.com/brimdata/zui/releases/tag/v1.8.0) and newer, [separate `.dmg` installers](#macos-installation) are now available for each Mac chipset.
+
+If you've been running Zui release [v1.7.0](https://github.com/brimdata/zui/releases/tag/v1.7.0) or older on an Apple silicon Mac and click **Install** in an auto-update notification, _the newer Zui release for Intel-based Macs will still be installed_. If you want the benefit of improved performance by running a build for Apple silicon, you'll need to perform the following one-time steps to complete the transition.
+
+1. Quit Zui
+2. Download the **arm64** `.dmg` installer from the [Zui download](https://www.brimdata.io/download/) page and begin the installation
+3. When prompted, click to **Replace** the existing Zui application (your existing settings and data in pools will be maintained)
+
+Once you've done this, as other Zui releases are published, auto-update will keep you on **arm64** (Apple silicon) builds.
