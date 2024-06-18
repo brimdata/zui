@@ -6,6 +6,9 @@ export type LakeAttrs = {
   version?: string
   authType: AuthType
   authData?: AuthData
+  features?: {
+    describe: boolean
+  }
 }
 
 export type AuthType = "none" | "auth0"

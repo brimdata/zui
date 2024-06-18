@@ -6,6 +6,7 @@ import {BrowserTab} from "./browser-tab"
 import {Frame} from "./frame"
 import {getActiveTab} from "src/js/state/Tabs/selectors"
 import Editor from "src/js/state/Editor"
+import {Lake} from "./lake"
 
 export class Active extends DomainModel {
   static get tab() {
@@ -35,5 +36,10 @@ export class Active extends DomainModel {
     return new Frame({
       id: globalThis.windowId,
     })
+  }
+
+  static get lake() {
+    const id = this.select(Current.getLakeId)
+    return Lake.find(id)
   }
 }

@@ -65,6 +65,11 @@ export class SessionPageHandler extends ViewHandler {
     const program = this.select(Current.getQueryText)
     const history = this.select(Current.getHistory)
 
+    if (!Active.lake.features.describe) {
+      this.dispatch(QueryInfo.merge({isParsed: true}))
+      return
+    }
+
     fetchQueryInfo(program).then((info) => {
       this.dispatch(QueryInfo.set({isParsed: true, ...info}))
       const poolName = this.select(QueryInfo.getPoolName)

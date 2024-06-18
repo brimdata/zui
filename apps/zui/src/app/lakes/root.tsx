@@ -9,6 +9,7 @@ import Current from "src/js/state/Current"
 import LakeStatuses from "src/js/state/LakeStatuses"
 import styled from "styled-components"
 import {invoke} from "src/core/invoke"
+import {Active} from "src/models/active"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -26,6 +27,7 @@ export function InitLake({children}) {
   useLayoutEffect(() => {
     if (status) return
     if (lake) dispatch(updateStatus(lake.id))
+    Active.lake.sync()
   }, [lake?.id, status])
 
   useEffect(() => {

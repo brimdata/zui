@@ -44,11 +44,7 @@ export default async function initialize(
   const api = new ZuiApi()
   const store = await initStore(api, renderer)
   const asyncTasks = initAsyncTasks(renderer)
-  await initGlobals(store)
-  await initLake(store)
-  api.init(store.dispatch, store.getState)
-  initDOM()
-  initIpcListeners(store)
+  initDomainModels({store})
   initHandlers({
     transition: startTransition,
     oldApi: api,
@@ -59,9 +55,13 @@ export default async function initialize(
     toast,
     asyncTasks,
   })
-  initDomainModels({
-    store,
-  })
+
+  await initGlobals(store)
+  await initLake(store)
+  api.init(store.dispatch, store.getState)
+  initDOM()
+  initIpcListeners(store)
+
   ViewHandler.store = store
   setMenuContext({select: (fn) => fn(store.getState()), api})
   initDebugGlobals(store, api)

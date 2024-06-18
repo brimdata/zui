@@ -52,12 +52,11 @@ export abstract class BaseClient {
 
   async describeQuery(
     query: string,
-    pool?: string,
-    options: { signal?: AbortSignal; timeout?: number } = {}
+    options: { signal?: AbortSignal; timeout?: number; pool?: string } = {}
   ) {
-    const head = pool ? { pool } : null;
+    const head = options.pool ? { pool: options.pool } : null;
     const abortCtl = wrapAbort(options.signal);
-    const result = await this.send({
+    const response = await this.request({
       method: 'POST',
       path: `/query/describe`,
       body: JSON.stringify({ query, head }),
@@ -65,9 +64,12 @@ export abstract class BaseClient {
       format: 'json',
       signal: abortCtl.signal,
       timeout: options.timeout,
-      dontRejectError: true,
     });
-    return result.json();
+    if (response.ok || response.status === 400) {
+      return response.json();
+    } else {
+      throw createError(await parseContent(response));
+    }
   }
 
   async createPool(name: string, opts: Partial<Types.CreatePoolOpts> = {}) {
@@ -145,18 +147,7 @@ export abstract class BaseClient {
   ${this.baseURL}/query`;
   }
 
-  protected async send(opts: {
-    method: 'GET' | 'POST' | 'DELETE' | 'PUT';
-    path: string;
-    body?: Types.IsoBody;
-    format?: Types.ResponseFormat;
-    signal?: Types.IsoAbortSignal;
-    headers?: Record<string, string>;
-    timeout?: number;
-    contentType?: string;
-    duplex?: 'half';
-    dontRejectError?: boolean;
-  }) {
+  protected request(opts: Types.RequestOpts) {
     const abortCtl = wrapAbort(opts.signal);
     const clearTimer = this.setTimeout(() => {
       abortCtl.abort();
@@ -169,22 +160,21 @@ export abstract class BaseClient {
     if (this.auth) {
       headers['Authorization'] = `Bearer ${this.auth}`;
     }
-
-    const resp = await this.fetch(this.baseURL + opts.path, {
+    const promise = this.fetch(this.baseURL + opts.path, {
       method: opts.method,
       headers: headers,
-      // eslint-disable-next-line
-      // @ts-ignore
       signal: abortCtl.signal,
-      // eslint-disable-next-line
-      // @ts-ignore
       body: opts.body,
-      // eslint-disable-next-line
       // @ts-ignore
       duplex: opts.duplex,
     });
-    clearTimer();
-    if (resp.ok || opts.dontRejectError) {
+    promise.finally(clearTimer);
+    return promise;
+  }
+
+  protected async send(opts: Types.RequestOpts) {
+    const resp = await this.request(opts);
+    if (resp.ok) {
       return resp;
     } else {
       return Promise.reject(createError(await parseContent(resp)));
