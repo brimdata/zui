@@ -26,7 +26,9 @@ const DataPanel = React.memo<DTProps>(function DataTable({
         <Data key={index}>
           <Name>{field.path.join(" ‣ ")}</Name>
           <Value className={zedTypeClassName(field.data)}>
-            {format(field.data as zed.Primitive)}
+            {field.data instanceof zed.Union
+              ? format(field.data.value as zed.Primitive)
+              : format(field.data as zed.Primitive)}
           </Value>
         </Data>
       ))}
