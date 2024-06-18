@@ -4,9 +4,7 @@ import Current from "src/js/state/Current"
 import QueryInfo from "src/js/state/QueryInfo"
 import Results from "src/js/state/Results"
 import {Active} from "src/models/active"
-
-export const RESULTS_QUERY = "zui-results/main"
-export const RESULTS_QUERY_COUNT = "zui-results/main-count"
+import {RESULTS_QUERY, RESULTS_QUERY_COUNT} from "./config"
 
 export const runResultsMain = createHandler(
   async ({select, dispatch, waitForSelector}) => {

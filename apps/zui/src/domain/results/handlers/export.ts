@@ -1,6 +1,6 @@
 import {addFuse, cutColumns} from "../utils"
 import Results from "src/js/state/Results"
-import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
+import {RESULTS_QUERY} from "src/views/results-pane/config"
 import {ResponseFormat} from "@brimdata/zed-js"
 import {errorToString} from "src/util/error-to-string"
 import {createHandler} from "src/core/handlers"

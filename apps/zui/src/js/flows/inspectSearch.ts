@@ -1,5 +1,5 @@
 import Results from "../state/Results"
-import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
+import {RESULTS_QUERY} from "src/views/results-pane/config"
 import {Thunk} from "../state/types"
 
 export const inspectSearch =
