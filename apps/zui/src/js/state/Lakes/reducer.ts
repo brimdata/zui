@@ -13,6 +13,13 @@ const slice = createSlice({
       const id = action.payload
       delete state[id]
     },
+    update: (
+      state,
+      action: PayloadAction<{id: string; changes: Partial<LakeAttrs>}>
+    ) => {
+      const {id, changes} = action.payload
+      state[id] = {...state[id], ...changes}
+    },
     setAccessToken: (
       state,
       action: PayloadAction<{lakeId: string; accessToken: string}>

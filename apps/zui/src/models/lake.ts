@@ -65,9 +65,9 @@ export class Lake extends DomainModel<LakeAttrs> {
     this.update({features})
   }
 
-  update(attrs: Partial<LakeAttrs>) {
-    this.attrs = {...this.attrs, ...attrs}
-    this.save()
+  update(changes: Partial<LakeAttrs>) {
+    this.attrs = {...this.attrs, ...changes}
+    this.dispatch(Slice.update({id: this.id, changes}))
   }
 
   save() {
