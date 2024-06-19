@@ -7,6 +7,7 @@ import {FeatureDetector} from "./lake/feature-detector"
 export class Lake extends DomainModel<LakeAttrs> {
   static find(id: string) {
     const attrs = this.select(Slice.id(id))
+    if (!attrs) return null
     return new Lake(attrs)
   }
 

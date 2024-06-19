@@ -25,9 +25,10 @@ export function InitLake({children}) {
   const status = useSelector(LakeStatuses.get(lake?.id))
 
   useLayoutEffect(() => {
-    if (status) return
-    if (lake) dispatch(updateStatus(lake.id))
-    Active.lake.sync()
+    if (Active.lake) {
+      dispatch(updateStatus(lake.id))
+      Active.lake.sync()
+    }
   }, [lake?.id, status])
 
   useEffect(() => {
