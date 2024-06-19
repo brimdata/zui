@@ -37,7 +37,7 @@ export const buildAndAuthenticateLake =
       const lake = await dispatch(buildLake(attrs, abortSignal))
 
       if (lake.authType === "none") {
-        dispatch(saveLake(lake, "connected"))
+        dispatch(saveLake(lake.attrs, "connected"))
         return [false, null]
       }
 
