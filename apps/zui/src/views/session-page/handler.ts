@@ -67,6 +67,7 @@ export class SessionPageHandler extends ViewHandler {
 
     if (!Active.lake.features.describe) {
       this.dispatch(QueryInfo.merge({isParsed: true}))
+      this.invoke("updatePluginSessionOp", {poolName: null, program})
       return
     }
 
