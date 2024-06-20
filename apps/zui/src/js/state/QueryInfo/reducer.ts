@@ -16,6 +16,9 @@ const slice = createSlice({
     set(_, action) {
       return action.payload
     },
+    merge(state, action) {
+      return {...state, ...action.payload}
+    },
     reset(_) {
       return getInitialState()
     },

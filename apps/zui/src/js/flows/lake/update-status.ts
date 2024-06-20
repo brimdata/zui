@@ -25,7 +25,7 @@ export const updateStatus =
       try {
         // check version to test that zqd is available, update lake version while doing so
         const {version} = await zealot.version()
-        lakeModel.attrs.version = version
+        lakeModel.update({version})
         return false
       } catch (e) {
         console.error(e)
@@ -35,9 +35,6 @@ export const updateStatus =
     }
 
     if (await isDown()) return
-
-    // update version
-    dispatch(Lakes.add(lakeModel.serialize()))
 
     // no auth required
     if (lakeModel.authType === "none") {

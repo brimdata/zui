@@ -74,12 +74,12 @@ const ViewLake = ({onClose, onEdit}) => {
         <button type="submit" onClick={onEdit} className="button submit">
           Edit
         </button>
-        {!isDefault && (
-          <div className={styles.logout}>
-            <Link onClick={onRemove}>Logout</Link>
-          </div>
-        )}
       </div>
+      {!isDefault && (
+        <div className={styles.logout}>
+          <Link onClick={onRemove}>Logout</Link>
+        </div>
+      )}
     </form>
   )
 }

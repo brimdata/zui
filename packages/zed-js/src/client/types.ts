@@ -2,6 +2,18 @@ export type ClientOpts = {
   auth: string | null;
 };
 
+export type RequestOpts = {
+  method: 'GET' | 'POST' | 'DELETE' | 'PUT';
+  path: string;
+  body?: IsoBody;
+  format?: ResponseFormat;
+  signal?: IsoAbortSignal;
+  headers?: Record<string, string>;
+  timeout?: number;
+  contentType?: string;
+  duplex?: 'half';
+};
+
 export type ResponseFormat =
   | 'arrows'
   | 'csv'

@@ -1,6 +1,6 @@
 import {createSelector} from "@reduxjs/toolkit"
 import activeTabSelect from "../Tab/activeTabSelect"
-import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
+import {RESULTS_QUERY} from "src/views/results-pane/config"
 import {getShapes} from "../Results/selectors"
 
 const getResultsView = activeTabSelect((s) => s.layout.resultsView)

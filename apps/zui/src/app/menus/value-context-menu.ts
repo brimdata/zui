@@ -2,12 +2,14 @@ import * as zed from "@brimdata/zed-js"
 import {createMenu} from "src/core/menu"
 import ZuiApi from "src/js/api/zui-api"
 import QueryInfo from "src/js/state/QueryInfo"
+import {Active} from "src/models/active"
 
 function getWhenContext(api: ZuiApi, value: zed.Any) {
   return {
     isPrimitive: zed.isPrimitive(value),
     isIterable: zed.isIterable(value),
-    isGroupBy: api.select(QueryInfo.hasAggregation),
+    isGroupBy:
+      Active.lake.features.describe && api.select(QueryInfo.hasAggregation),
     selectedText: document.getSelection().toString() || null,
     isIp: value instanceof zed.Ip,
   }

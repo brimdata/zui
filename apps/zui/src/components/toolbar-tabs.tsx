@@ -26,7 +26,6 @@ function cancelTimer() {
 
 function checkTimer() {
   const ellapsed = new Date().getTime() - time.getTime()
-  console.log(ellapsed)
   if (ellapsed > 10 * 1000) {
     throw new Error("Expected Scaling to Be Finished After 10 Seconds")
   }

@@ -13,10 +13,7 @@ import {
   toggleHistogram,
 } from "src/domain/results/handlers"
 import React from "react"
-import {
-  RESULTS_QUERY,
-  RESULTS_QUERY_COUNT,
-} from "src/views/results-pane/run-results-query"
+import {RESULTS_QUERY, RESULTS_QUERY_COUNT} from "src/views/results-pane/config"
 import styled from "styled-components"
 import Results from "src/js/state/Results"
 import {pluralize} from "src/util/pluralize"

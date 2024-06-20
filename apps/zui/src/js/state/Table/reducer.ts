@@ -7,7 +7,7 @@ import * as zed from "@brimdata/zed-js"
 import {TableSettingsState} from "./types"
 import {ColumnSizingInfoState} from "@tanstack/react-table"
 import {actions as results} from "../Results/reducer"
-import {RESULTS_QUERY} from "src/views/results-pane/run-results-query"
+import {RESULTS_QUERY} from "src/views/results-pane/config"
 
 const table = createSlice({
   name: "TAB_TABLE",

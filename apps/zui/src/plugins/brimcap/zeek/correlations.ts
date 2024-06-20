@@ -60,7 +60,7 @@ export function activateZeekCorrelations() {
   })
 
   correlations.create(UID_CORRELATION, {
-    when: () => !!findUid(session.selectedRow),
+    when: () => !!session.poolName && !!findUid(session.selectedRow),
     query: async () => {
       const uid = findUid(session.selectedRow)
       const pool = session.poolName

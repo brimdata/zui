@@ -105,6 +105,7 @@ export class MainObject {
   }
 
   openUrl(uri: string) {
+    // This is written to handle an auth0 url
     const urlParts = url.parse(uri, true)
     const {code, state, error, error_description} = urlParts.query as {
       [key: string]: string
