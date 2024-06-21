@@ -18,7 +18,7 @@ export function activateBrimcapConfigurations() {
         defaultValue: "",
         helpLink: {
           label: "docs",
-          url: "https://github.com/brimdata/brimcap/wiki/Custom-Brimcap-Config",
+          url: "https://zui.brimdata.io/docs/features/Packet-Captures#brimcap-yaml-config-file",
         },
       },
       [suricataLocalRulesPropName]: {
@@ -26,6 +26,10 @@ export function activateBrimcapConfigurations() {
         type: "folder",
         label: "Local Suricata Rules Folder",
         defaultValue: "",
+        helpLink: {
+          label: "docs",
+          url: "https://zui.brimdata.io/docs/features/Packet-Captures#local-suricata-rules-folder",
+        },
       },
       [pcapFolderPropName]: {
         name: pcapFolderPropName,
@@ -33,6 +37,10 @@ export function activateBrimcapConfigurations() {
         label: "Folder For Extracted pcaps",
         defaultValue: "",
         placeholder: "Default OS tmpdir",
+        helpLink: {
+          label: "docs",
+          url: "https://zui.brimdata.io/docs/features/Packet-Captures#folder-for-extracted-pcaps",
+        },
       },
     },
   })
