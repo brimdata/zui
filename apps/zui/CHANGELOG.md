@@ -1,3 +1,21 @@
+## v1.8.0
+- Update Zed to [v1.16.0](https://github.com/brimdata/zed/releases/tag/v1.16.0)
+- Update Brimcap to [v1.8.0](https://github.com/brimdata/brimcap/releases/tag/v1.8.0), which includes a new Zeek [v6.2.0-brim2](https://github.com/brimdata/build-zeek/releases/tag/v6.2.0-brim2)
+- Zui macOS installers are now available for [Apple silicon](https://zui.brimdata.io/docs/Installation#macos-details) (ARM64) hardware (#3077, #3102)
+- A new Windows code signing certificate is now in use, which will likely result in a period of [Microsoft Defender SmartScreen warnings](https://zui.brimdata.io/docs/support/Troubleshooting#microsoft-defender-smartscreen-has-flagged-the-zui-installer-as-an-unrecognized-app) (#3050, #3055, #3057)
+- The title of the section in **Settings** formerly called **Brimcap Settings** is now called **Packet Captures** (#3054)
+- Zed queries are now parsed via a lake service endpoint, which adds red squiggly lines with tooltip details in the editor when errors are detected (#3076, #3085, #3087, #3094, #3104)
+- Fix an issue where the Zed lake service launched by Zui was incorrectly open to remote connections (#3061, #3069, #3091, #3106)
+- Add an option in **Settings** to point at local sets of [additional Suricata rules](https://zui.brimdata.io/docs/features/Packet-Captures#local-suricata-rules-folder) (#3049)
+- Add an option in **Settings** to specify a [folder for storing extracted pcap slices](https://zui.brimdata.io/docs/features/Packet-Captures#folder-for-extracted-pcaps) (#3053)
+- Add updated docs and a video for [Packet Capture functionality](https://zui.brimdata.io/docs/features/Packet-Captures) (#3060)
+- Fix an issue where populating the [**Brimcap YAML Config File**](https://zui.brimdata.io/docs/features/Packet-Captures#brimcap-yaml-config-file) option in **Settings** could cause a crash (#3044)
+- Fix an issue where a parsing error displayed incorrect Zed code (#3065)
+- Fix an issue where maximizing the Zui window could cause a crash on Linux (#3090)
+- Fix an issue where [Zui Insiders](https://github.com/brimdata/zui-insiders) on Linux was not correctly detecting the availability of newer releases (#3084)
+- Fix an issue where right-click **Pivot to Values** failed when clicking a Zed [union](https://zed.brimdata.io/docs/formats/zed#25-union) value (#3099)
+- Fix an issue where Zed [union](https://zed.brimdata.io/docs/formats/zed#25-union) values were rendered blank in the **Detail** pane/window (#3103)
+
 ## v1.7.0
 - Update Zed to [v1.15.0](https://github.com/brimdata/zed/releases/tag/v1.15.0)
 - Update Brimcap to [v1.7.0](https://github.com/brimdata/brimcap/releases/tag/v1.7.0), which includes a new Zeek [v6.2.0-brim1](https://github.com/brimdata/build-zeek/releases/tag/v6.2.0-brim1)
