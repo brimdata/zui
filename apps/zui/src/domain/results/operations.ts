@@ -17,7 +17,6 @@ export const exportToFile = createOperation(
       controlMessages: false,
       timeout: Infinity,
     })
-    console.log("queryText:", query)
 
     try {
       await pipe(
@@ -25,7 +24,9 @@ export const exportToFile = createOperation(
         fs.createWriteStream(outPath)
       )
       const status = await lake.client.queryStatus(res.requestId)
-      console.log(status)
+      if (status.error) {
+        throw new Error(status.error)
+      }
     } catch (e) {
       fs.unlink(outPath, () => {})
       throw e
