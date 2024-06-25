@@ -31,6 +31,7 @@ import * as zui from "src/zui"
 import log from "electron-log"
 import {ElectronZedClient} from "../electron-zed-client"
 import {ElectronZedLake} from "../electron-zed-lake"
+import ConfigPropValues from "src/js/state/ConfigPropValues"
 
 export class MainObject {
   public isQuitting = false
@@ -46,6 +47,11 @@ export class MainObject {
     const appMeta = await getAppMeta()
     const lake = new ElectronZedLake({
       root: args.lakeRoot,
+      addr:
+        ConfigPropValues.get(
+          "zedLakeService",
+          "lakeServiceAddr"
+        )(store.getState()) ?? "localhost",
       port: args.lakePort,
       logs: args.lakeLogs,
       bin: zdeps.zed,
