@@ -17,11 +17,15 @@ export const exportToFile = createOperation(
       controlMessages: false,
       timeout: Infinity,
     })
+    console.log("queryText:", query)
+
     try {
       await pipe(
         res.body as unknown as NodeJS.ReadableStream,
         fs.createWriteStream(outPath)
       )
+      const status = await lake.client.queryStatus(res.requestId)
+      console.log(status)
     } catch (e) {
       fs.unlink(outPath, () => {})
       throw e

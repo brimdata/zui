@@ -50,6 +50,14 @@ export abstract class BaseClient {
     return new ResultStream(result, abortCtl);
   }
 
+  async queryStatus(id: string) {
+    return this.send({
+      method: 'GET',
+      path: `/query/status/${id}`,
+      contentType: 'application/json',
+    });
+  }
+
   async describeQuery(
     query: string,
     options: { signal?: AbortSignal; timeout?: number; pool?: string } = {}
