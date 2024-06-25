@@ -37,6 +37,10 @@ select {
   background-repeat: no-repeat;
   background-size: 1.2em 1.2em;
   background-position: calc(100% - 10px) center;
+  field-sizing: content;
+  inline-size: auto;
+  max-inline-size: 100%;
+  padding-inline-end: 3em;
 }
 
 label {
