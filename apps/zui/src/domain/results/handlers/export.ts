@@ -44,7 +44,7 @@ export const exportToFile = createHandler(
       .promise(promise, {
         loading: "Exporting...",
         success: "Export Completed: " + filePath,
-        error: (e) => e.toString(),
+        error: (e) => e.message,
       })
       .catch((e) => {
         console.error(e)
