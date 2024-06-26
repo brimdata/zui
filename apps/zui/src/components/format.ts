@@ -65,6 +65,9 @@ export function formatValue(
   if (data instanceof zed.Map) {
     return `|{...${data.value.size}}|`
   }
+  if (data instanceof zed.Union) {
+    return formatValue(data.value, config)
+  }
   return null
 }
 
