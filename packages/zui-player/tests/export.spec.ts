@@ -40,10 +40,7 @@ test.describe('Export tests', () => {
   formats.forEach(({ label, expectedSize }) => {
     test(`Exporting in ${label} format succeeds`, async () => {
       const file = path.join(tempDir, `results.${label}`);
-      app.zui.evaluate(async ({ dialog }, filePath) => {
-        dialog.showSaveDialog = () =>
-          Promise.resolve({ canceled: false, filePath });
-      }, file);
+      app.mockSaveDialog({ canceled: false, filePath: file });
       await app.click('button', 'Export Results');
       await app.attached('dialog');
       const dialog = app.mainWin.getByRole('dialog');
@@ -83,5 +80,18 @@ test.describe('Export tests', () => {
     // Ensure the records are present
     await app.click('button', 'Query Pool');
     await app.attached(/5 Total Rows/);
+  });
+
+  test('Export with error', async () => {
+    const filePath = path.join(tempDir, `error.csv`);
+    app.mockSaveDialog({ canceled: false, filePath });
+    await app.query('yield uid');
+    await app.click('button', 'Export Results');
+    await app.attached('dialog');
+    await app.locate('radio', 'File').check();
+    await app.select('Format', 'CSV');
+    await app.click('button', 'Export to File ↩');
+    await app.attached(/Error: CSV output encountered non-record value/);
+    await expect(fsExtra.stat(filePath)).rejects.toThrowError('no such file');
   });
 });
