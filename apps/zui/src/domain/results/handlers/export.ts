@@ -69,7 +69,7 @@ export const exportToClipboard = createHandler(
 )
 
 export const getExportQuery = createHandler((ctx, format: ResponseFormat) => {
-  const formatNeedsFuse = ["csv", "tsv", "arrows"]
+  const formatNeedsFuse = ["arrows", "csv", "parquet", "tsv"]
   const query = ctx.select(Results.getQuery(RESULTS_QUERY))
   const isTable = ctx.select(Layout.getEffectiveResultsView) == "TABLE"
   const hiddenColCount = ctx.select(Table.getHiddenColumnCount)
