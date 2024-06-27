@@ -1,0 +1,89 @@
+:root {
+  // type colors
+  --zed-null: #abadaf;
+  --zed-time: hsl(275, 55%, 50%);
+  --zed-symbol: hsl(212, 95%, 55%);
+  --zed-type: hsla(212, 70%, 50%);
+  --interval: #544aa6;
+  --bool: #3eaef4;
+  --zed-string: var(--fg-color);
+  --zed-key: hsl(212, 20%, 40%);
+  --zed-number: #e65835;
+  --zed-syntax: hsl(212, 17%, 55%);
+  --zed-note: hsl(212, 17%, 80%);
+  --zed-container: var(--fg-color);
+
+  // Suricata Alerts
+  --alert-3: #fbc00e;
+  --alert-2: #f4912f;
+  --alert-1: #d0250b;
+}
+
+.zed-syntax {
+  color: var(--zed-syntax);
+}
+
+.zed-key {
+  color: var(--zed-key);
+}
+
+.zed-ip,
+.zed-net {
+  color: var(--zed-symbol);
+}
+
+.zed-duration {
+  color: var(--zed-symbol);
+}
+
+.zed-uint8,
+.zed-uint16,
+.zed-uint32,
+.zed-uint64,
+.zed-int8,
+.zed-int16,
+.zed-int32,
+.zed-int64,
+.zed-float64,
+.zed-float32,
+.zed-float16 {
+  color: var(--zed-number);
+}
+
+.zed-bool {
+  color: var(--zed-symbol);
+}
+
+.zed-time {
+  color: var(--zed-time);
+}
+
+.zed-null {
+  color: var(--zed-null);
+}
+
+.zed-string {
+  color: var(--zed-string);
+}
+
+.zed-error {
+  color: hsl(6, 97%, 40%);
+}
+
+.zed-type {
+  color: var(--zed-symbol);
+}
+
+.zed-annotation {
+  color: var(--zed-type);
+  font-weight: bold;
+}
+
+.zed-note {
+  color: var(--zed-note);
+  font-style: italic;
+}
+
+.zed-container {
+  color: var(--zed-container);
+}

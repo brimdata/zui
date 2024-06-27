@@ -1,0 +1,69 @@
+.tabs {
+  min-height: 26px;
+  display: inline-flex;
+  position: relative;
+  background: var(--chrome-color);
+  border-radius: 6px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 2px;
+  min-height: 100%;
+  gap: 0.25rem;
+}
+
+.button {
+  white-space: nowrap;
+  background: none;
+  border: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 1.33em;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1px;
+  z-index: 1;
+  color: var(--fg-color-less);
+  transition: all 200ms;
+  height: 100%;
+}
+
+.button:hover:not([aria-pressed="true"]):not(:disabled) {
+  background: var(--emphasis-bg-less);
+  color: var(--fg-color);
+}
+
+.button:active:not([aria-pressed="true"]):not(:disabled) {
+  background: var(--emphasis-bg);
+}
+
+.button[aria-pressed="true"] {
+  color: var(--fg-color);
+}
+
+.button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.button span {
+  padding: 0 2px;
+  display: block;
+}
+
+.selection {
+  background: var(--selected-bg);
+  border-radius: 5px;
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 0px;
+  box-shadow: var(--shadow-elevation-low);
+}

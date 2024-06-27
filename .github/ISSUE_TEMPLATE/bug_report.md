@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us fix a problem in Brim
+about: Create a report to help us fix a problem in Zui
 title: ''
 labels: bug
 assignees: ''
@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 Before opening a new issue, please make sure you've reviewed the troubleshooting guide:
-https://github.com/brimdata/brim/wiki/Troubleshooting
+https://zui.brimdata.io/docs/support/Troubleshooting
 
 **Describe the bug**
 [A description of what the bug is]
@@ -25,4 +25,4 @@ https://github.com/brimdata/brim/wiki/Troubleshooting
 **Desktop Info**
 [Please complete the following information]
  - OS: [e.g. Windows, Linux, macOS]
- - Brim Version: [copy from **Help > About Brim** on Windows and Linux, or **Brim > About Brim** on macOS]
+ - Zui Version: [copy from **Help > About Zui** on Windows and Linux, or **Zui > About Zui** on macOS]

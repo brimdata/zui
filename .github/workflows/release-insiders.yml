@@ -1,0 +1,111 @@
+name: Create Insiders Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 03 * * *' # Every day at 10:15am UTC / 3:15am PT
+
+jobs:
+  check_latest:
+    name: Check If Release Is Needed
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Get last released version
+        id: latest_release
+        uses: thebritican/fetch-latest-release@v2.0.0
+        with:
+          repo_path: brimdata/zui-insiders
+      - name: Download last build_sha
+        id: latest_sha
+        run: |
+          curl -L https://github.com/brimdata/zui-insiders/releases/download/${{ steps.latest_release.outputs.tag_name }}/build_sha.txt > build_sha.txt
+          echo "sha=$(cat build_sha.txt)" >> $GITHUB_OUTPUT
+
+    outputs:
+      version: ${{ steps.latest_release.outputs.tag_name }}
+      latest_sha: ${{ steps.latest_sha.outputs.sha }}
+
+  release:
+    name: Publish Release
+    needs: check_latest
+    if: ${{ needs.check_latest.outputs.latest_sha != github.sha }}
+    strategy:
+      matrix:
+        # macos-12 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
+        platform: [windows-2019, macos-12, macos-14, ubuntu-20.04]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout Zui
+        uses: actions/checkout@v4
+
+      - name: Setup Zui
+        uses: ./.github/actions/setup-zui
+
+      - name: Inject package.json
+        run: yarn nx inject insiders ${{ needs.check_latest.outputs.version }}
+
+      - name: Disable yarn immutable installs
+        run: yarn config set enableImmutableInstalls false
+
+      - name: Re-run yarn
+        run: yarn
+
+      - name: Build Zui
+        uses: ./.github/actions/build-zui
+        with:
+          cmd: yarn nx release-insiders zui
+          gh_token: ${{ secrets.PAT_TOKEN }}
+          # Windows
+          ssl_com_username: ${{ secrets.WINDOWS_SIGNING_SSL_COM_USERNAME }}
+          ssl_com_password: ${{ secrets.WINDOWS_SIGNING_SSL_COM_PASSWORD }}
+          ssl_com_totp_secret: ${{ secrets.WINDOWS_SIGNING_SSL_COM_TOTP_SECRET }}
+          ssl_com_credential_id: ${{ secrets.WINDOWS_SIGNING_SSL_COM_CREDENTIAL_ID }}
+          # Mac
+          apple_id: ${{ secrets.APPLEID_USER }}
+          apple_id_password: ${{ secrets.APPLEID_PASSWORD }}
+          apple_team_id: ${{ secrets.APPLE_TEAM_ID }}
+          cert_p12: ${{ secrets.APPLE_DEVELOPER_ID_CERT_P12_BASE64 }}
+          cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
+
+      - name: Merge latest-mac.yml Mac release files for x64/arm64
+        if: runner.os == 'macOS'
+        run: |
+          node apps/zui/scripts/merge-mac-release-files.mjs
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        shell: bash
+
+      - name: Inform Slack users of failure
+        uses: tiloio/slack-webhook-action@v1.1.2
+        if: ${{ failure() }}
+        with:
+          slack_web_hook_url: ${{ secrets.SLACK_WEBHOOK_BRIMLABS_TEST }}
+          slack_json: |
+            {
+              "username": "{{GITHUB_REPOSITORY}}",
+              "text": "Release failed: https://github.com/{{GITHUB_REPOSITORY}}/actions/runs/{{GITHUB_RUN_ID}}"
+            }
+
+  record_build_sha:
+    needs: release
+    name: Upload the Build Sha
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Create the build_sha file
+        run: echo ${{ github.sha }} > build_sha.txt
+
+      - name: Get the just released tag
+        id: just_released
+        uses: thebritican/fetch-latest-release@v2.0.0
+        with:
+          repo_path: brimdata/zui-insiders
+
+      - name: Upload build_sha file to the latest release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: build_sha.txt
+          tag: ${{ steps.just_released.outputs.tag_name }}
+          repo_name: brimdata/zui-insiders
+          repo_token: ${{ secrets.PAT_TOKEN }}
+          overwrite: true

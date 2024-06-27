@@ -1,0 +1,66 @@
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--mono-font);
+
+  tbody tr:nth-child(odd) {
+    background: var(--table-stripe-bg);
+  }
+
+  tbody tr:hover {
+    background: var(--emphasis-bg-less);
+  }
+
+  th,
+  td {
+    padding: 3px 6px;
+  }
+
+  th {
+    text-align: left;
+    font-size: 9px;
+    font-weight: bold;
+  }
+
+  td {
+    @extend .mono;
+  }
+}
+
+.table.light {
+  tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  tbody tr:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.vertical-table {
+
+  th,
+  td {
+    word-break: break-word;
+  }
+
+  th {
+    white-space: nowrap;
+    border-radius: 3px 0 0 3px;
+  }
+
+  td {
+    border-radius: 0 3px 3px 0;
+  }
+}
+
+.horizontal-table {
+  td {
+    word-break: break-all;
+  }
+
+  .count {
+    text-align: right;
+    word-break: keep-all;
+  }
+}

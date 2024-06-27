@@ -4,17 +4,18 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - "build/**"
+      - 'build/**'
 
 jobs:
   release:
     strategy:
       matrix:
-        platform: [macos-11, ubuntu-20.04, windows-2019]
+        # macos-12 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
+        platform: [macos-12, macos-14, ubuntu-20.04, windows-2019]
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout Zui
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Zui
         uses: ./.github/actions/setup-zui
@@ -22,11 +23,13 @@ jobs:
       - name: Build Zui
         uses: ./.github/actions/build-zui
         with:
-          cmd: yarn electron-builder --publish never
+          cmd: yarn nx package-zui zui
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
-          csc_key_password: ${{ secrets.WINDOWS_SIGNING_PASSPHRASE }}
-          csc_link: ${{ secrets.WINDOWS_SIGNING_PFX_BASE64 }}
+          ssl_com_username: ${{ secrets.WINDOWS_SIGNING_SSL_COM_USERNAME }}
+          ssl_com_password: ${{ secrets.WINDOWS_SIGNING_SSL_COM_PASSWORD }}
+          ssl_com_totp_secret: ${{ secrets.WINDOWS_SIGNING_SSL_COM_TOTP_SECRET }}
+          ssl_com_credential_id: ${{ secrets.WINDOWS_SIGNING_SSL_COM_CREDENTIAL_ID }}
           # Mac
           apple_id: ${{ secrets.APPLEID_USER }}
           apple_id_password: ${{ secrets.APPLEID_PASSWORD }}
@@ -35,7 +38,4 @@ jobs:
           cert_passphrase: ${{ secrets.APPLE_DEVELOPER_ID_CERT_PASSPHRASE }}
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: zui-installers
-          path: dist/installers
+        uses: ./.github/actions/upload-build-artifacts

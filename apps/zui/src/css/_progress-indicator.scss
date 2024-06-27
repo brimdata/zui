@@ -1,0 +1,45 @@
+.progress-indicator {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.progress-track {
+  box-sizing: content-box;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 0%;
+  background: var(--primary-color);
+  height: 100%;
+  transition: width 1000ms;
+}
+
+
+.progress-indeterminate {
+  width: 30%;
+  animation-name: indeterminate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  box-sizing: content-box;
+  animation-direction: alternate;
+
+  transform: translateX(-80%);
+}
+
+@keyframes indeterminate {
+  from {
+    transform: translateX(-80%);
+  }
+
+  to {
+    transform: translateX(310%);
+  }
+}

@@ -1,4 +1,4 @@
-name: Brim CI
+name: Zui CI
 
 on:
   pull_request:
@@ -12,20 +12,23 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-11, ubuntu-20.04, windows-2019]
+        # macos-12 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
+        os: [macos-12, macos-14, ubuntu-20.04, windows-2019]
     steps:
       - run: git config --global core.autocrlf false
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-zui
       - run: yarn lint
       - run: yarn test
       - name: Build and install package
         if: runner.os != 'Windows'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -x
           case ${{ runner.os }} in
             Linux )
-              yarn electron-builder --linux=deb --publish never
-              sudo apt install -y --no-install-recommends ./dist/installers/*.deb
+              yarn nx package-zui zui --linux=deb --publish never
+              sudo apt install -y --no-install-recommends ./dist/apps/zui/*.deb
               ;;
           esac

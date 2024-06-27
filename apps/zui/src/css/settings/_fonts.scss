@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "Recursive";
+  src: url(/fonts/recursive.woff2) format("woff2-variations");
+  font-style: oblique 0deg 15deg;
+  font-weight: 300 1000;
+  font-display: block;
+
+}
+
+$heading-font: system-ui, sans-serif;
+$body-font: system-ui, sans-serif;
+$menu-font: system-ui, sans-serif;
+
+// Don't use these anymore
+$font-size-1: 0.7rem;
+$font-size-2: 0.85rem;
+$font-size-3: 1rem;
+$font-size-4: 1.25rem;
+$line-height-2: 1.125rem;
+
+:root {
+  --mono-font: "Recursive";
+  --body-font: "system-ui";
+
+
+}
+
+html,
+body {
+  // Tweek these here https: //www.recursive.design/
+  font-variation-settings: "MONO" 1, "CASL" 0.3, "CRSV" 0.5;
+}

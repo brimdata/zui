@@ -1,0 +1,45 @@
+.notice-banner {
+  @include error-bg;
+  padding: $space-s $space-m;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    padding-left: $space-s;
+    text-decoration: underline;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 400;
+
+    &:hover {
+      color: var(--fg-color-less);
+    }
+
+    &:active {
+      color: inherit;
+    }
+  }
+
+  .error-details {
+    margin-top: 12px;
+
+    p {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 17px;
+    }
+  }
+
+  &.fixed {
+    position: absolute;
+    z-index: 5;
+    top: 22px;
+    left: 50%;
+    max-width: 90%;
+  }
+}

@@ -1,0 +1,30 @@
+.error-boundary {
+  overflow: auto;
+  height: 100%;
+  background: linear-gradient(to bottom right, #f8eee3, #fae1e0);
+  padding: 24px;
+  line-height: 1.5;
+
+  h1 {
+    padding-top: $space-l;
+    display: flex;
+    align-items: center;
+    color: var(--red);
+
+    svg {
+      fill: var(--red);
+      margin: 0;
+      height: 30px * 1.5;
+      width: 30px * 1.5;
+      margin-right: $space-l;
+    }
+  }
+
+  pre,
+  li,
+  code,
+  a {
+    overflow: auto;
+    font-size: 11px;
+  }
+}

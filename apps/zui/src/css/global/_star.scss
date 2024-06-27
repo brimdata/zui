@@ -1,0 +1,19 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  border-width: 1px;
+  border-color: var(--border-color);
+  border-style: none;
+}
+
+* {
+  margin: 0;
+}
+
+*:focus-visible {
+  outline-offset: 4px;
+  outline-color: var(--primary-color);
+  outline-width: 2px;
+}

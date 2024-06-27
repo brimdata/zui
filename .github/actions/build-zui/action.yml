@@ -8,9 +8,13 @@ inputs:
     required: true
 
   # Windows Inputs
-  csc_key_password:
+  ssl_com_username:
     required: true
-  csc_link:
+  ssl_com_password:
+    required: true
+  ssl_com_totp_secret:
+    required: true
+  ssl_com_credential_id:
     required: true
 
   # Mac Inputs
@@ -26,18 +30,12 @@ inputs:
     required: true
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - name: Install rpm
       if: runner.os == 'Linux'
       run: sudo apt-get install -y rpm
       shell: bash
-
-    - name: Setup Xcode 13 # This lets us use the new notarytool cli
-      if: runner.os == 'macOS'
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: "13.0"
 
     - name: Set developer ID certificate in keychain
       if: runner.os == 'macOS'
@@ -53,19 +51,41 @@ runs:
         security find-identity -p codesigning -v
       shell: bash
 
+    - name: Checkout esigner-codesign repository
+      if: runner.os == 'Windows'
+      uses: actions/checkout@v4
+      with:
+        repository: 'SSLcom/esigner-codesign'
+        path: esigner-codesign
+
+    - name: Expose the Artifact Path
+      id: paths
+      run: echo "artifact=$(yarn artifact-path)" >> "$GITHUB_OUTPUT"
+      shell: bash
+
     - name: Build & Publish
       run: ${{ inputs.cmd }}
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.gh_token }}
-        WIN_CSC_KEY_PASSWORD: ${{ inputs.csc_key_password }}
-        WIN_CSC_LINK: ${{ inputs.csc_link }}
         APPLE_ID: ${{ inputs.apple_id }}
-        APPLE_ID_PASSWORD: ${{ inputs.apple_id_password }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ inputs.apple_id_password }}
         APPLE_TEAM_ID: ${{ inputs.apple_team_id }}
+        CODE_SIGN_SCRIPT_PATH: ${{ github.workspace }}/esigner-codesign/dist/index.js
+        INPUT_FILE_PATH: ${{ steps.paths.outputs.artifact }}
+        INPUT_USERNAME: ${{ inputs.ssl_com_username }}
+        INPUT_PASSWORD: ${{ inputs.ssl_com_password }}
+        INPUT_TOTP_SECRET: ${{ inputs.ssl_com_totp_secret }}
+        INPUT_CREDENTIAL_ID: ${{ inputs.ssl_com_credential_id }}
+
+    - name: Check for successful signing with SignTool
+      if: runner.os == 'Windows'
+      run: |
+        "C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" verify /pa "${{ steps.paths.outputs.artifact }}"
+      shell: cmd
 
     - name: Check notorization with gatekeeper
       if: runner.os == 'macOS'
       run: |
-        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/installers/mac/*.app
+        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/apps/zui/mac*/*.app
       shell: bash

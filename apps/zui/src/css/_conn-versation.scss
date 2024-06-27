@@ -1,0 +1,106 @@
+.conn-versation {
+  margin-bottom: $space-s;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+
+  td,
+  th {
+    white-space: nowrap;
+    user-select: all;
+  }
+
+  .host {
+    border: 1px solid var(--fg-color-less);
+    border-radius: 3px;
+  }
+
+  .fieldset {
+    text-align: center;
+    padding: 6px 3px;
+  }
+
+  .ip,
+  .port {
+    margin: 0;
+    color: white;
+    background: var(--primary-color);
+    font-size: 12px;
+    text-align: center;
+    line-height: 20px;
+    font-family: var(--mono-font);
+    user-select: all;
+  }
+
+  .ip.small {
+    font-size: 8px;
+  }
+
+  .port {
+    background: #65bef6;
+  }
+
+  .responder {
+    .ip {
+      background: var(--green);
+    }
+
+    .port {
+      background: #5ec4a8;
+    }
+  }
+
+  .history {
+    align-self: center;
+    flex: 1;
+    padding: $space-s;
+  }
+
+  .history-packet {
+    display: flex;
+    align-items: center;
+    line-height: 18px;
+
+    span {
+      font-weight: bold;
+      font-family: var(--mono-font);
+      text-transform: uppercase;
+      font-size: 12px;
+      padding: 1px 6px;
+    }
+
+    hr {
+      flex: 1;
+      border: none;
+      border-bottom: 1px solid var(--yellow);
+      margin: 0;
+    }
+
+    .triangle {
+      fill: var(--yellow);
+      stroke: var(--yellow);
+      width: 10px;
+    }
+  }
+
+  .history-packet.arrow-right {
+    padding-right: $space-s*0.5;
+  }
+
+  .history-packet.arrow-left {
+    padding-left: $space-s*0.5;
+
+    .triangle {
+      order: 1;
+      transform: rotate(180deg);
+    }
+
+    hr {
+      order: 2;
+    }
+
+    span {
+      order: 3;
+    }
+  }
+}

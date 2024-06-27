@@ -1,0 +1,104 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+* {
+  margin: 0;
+}
+
+*:focus-visible {
+  outline-offset: 4px;
+  outline-color: var(--primary-color);
+  outline-width: 2px;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+body:not(.is-mac) {
+  background-color: var(--window-color);
+}
+
+pre,
+code {
+  border-radius: 3px;
+  font-family: var(--mono-font);
+}
+
+pre {
+  overflow-x: auto;
+}
+
+code {
+  padding: 2px 3px;
+}
+
+body.no-select {
+  user-select: none;
+}
+
+body.col-resize {
+  cursor: col-resize;
+}
+
+a {
+  color: var(--primary-color);
+}
+
+button {
+  user-select: none;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: var(--emphasis-bg-less);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--emphasis-bg);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+*::-webkit-scrollbar-corner {
+  background-color: var(--emphasis-bg-less);
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  font-family: var(--mono-font);
+}
+
+.is-dragging {
+  user-select: none;
+}
+
+input {
+  font-size: inherit;
+}
+
+dialog {
+  color: var(--fg-color);
+  max-height: none;
+  max-width: none;
+  border: none;
+  padding: 0;
+
+  &::backdrop {
+    background: transparent;
+  }
+}

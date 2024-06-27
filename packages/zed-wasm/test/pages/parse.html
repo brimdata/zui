@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>Parse Test</title>
+    <style>
+      * {
+        max-inline-size: 66ch;
+      }
+
+      pre {
+        background: #eee;
+      }
+    </style>
+
+    <script type="module">
+      import { initZedWasm } from '/dist/browser.js';
+      window.zedWasm = await initZedWasm(fetch('/dist/main.wasm'));
+      document.getElementById('wasm-status').innerText = 'Wasm Ready';
+    </script>
+    <script>
+      function puts(string) {
+        const output = document.querySelector('pre');
+        output.innerText = string;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form');
+        const output = document.querySelector('pre');
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const data = new FormData(form);
+          const script = data.get('script');
+          puts('loading');
+          try {
+            const result = await zedWasm.parse(script);
+            puts(JSON.stringify(result, null, 2));
+          } catch (e) {
+            puts(JSON.stringify(e, null, 2));
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Parse Test</h1>
+    <p id="wasm-status">Wasm Not Ready</p>
+    <form>
+      <label for="script">Zed Script</label>
+      <input name="script" type="text" />
+      <button>Parse</button>
+    </form>
+    <pre>
+      Output
+    </pre>
+  </body>
+</html>

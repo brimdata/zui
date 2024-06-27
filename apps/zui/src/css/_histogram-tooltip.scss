@@ -1,0 +1,48 @@
+.histogram-tooltip-wrapper {
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  pointer-events: none;
+  transition: opacity 200ms 50ms, right 75ms, left 75ms;
+  opacity: 1;
+
+}
+
+.histogram-tooltip {
+  pointer-events: none;
+  color: var(--fg-color);
+  background: var(--bg-color);
+  box-shadow: var(--shadow-s);
+  font-family: var(--mono-font);
+  font-size: 11px;
+  border-radius: 8px;
+
+  table {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .count {
+    text-align: right;
+  }
+
+  .ts {
+    white-space: nowrap;
+    height: 22px;
+    line-height: 22px;
+    border-radius: 8px 8px 0 0;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .total-row {
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+    font-weight: bold;
+  }
+
+  td .path-tag {
+    border-radius: 3px;
+    padding: 0 6px;
+  }
+}
