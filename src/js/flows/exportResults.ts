@@ -25,7 +25,7 @@ function cutColumns(program, columns) {
 
 export function prepareProgram(format, program, columns) {
   let p = cutColumns(program, columns)
-  if (["csv", "parquet"].includes(format)) p += " | fuse"
+  if (format === "csv") p += " | fuse"
   return p
 }
 

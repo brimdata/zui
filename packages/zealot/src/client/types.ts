@@ -12,7 +12,6 @@ export type ResponseFormat =
   | "json"
   | "zjson"
   | "zson"
-  | "parquet"
 
 export type QueryOpts = {
   format: ResponseFormat
