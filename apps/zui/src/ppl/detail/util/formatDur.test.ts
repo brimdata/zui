@@ -14,7 +14,7 @@ test("No end", () => {
 })
 
 test("500 ms", () => {
-  expect(formatDur(new Date(0), new Date(500))).toBe("0.5 seconds")
+  expect(formatDur(new Date(0), new Date(500))).toBe("500 milliseconds")
 })
 
 test("10 seconds", () => {

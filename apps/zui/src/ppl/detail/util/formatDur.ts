@@ -14,7 +14,11 @@ export default function formatDir(start, end) {
     parts.push(formatPart(obj[unit], unit))
   }
   if (allZero) {
-    parts.push(formatPart((end.getTime() - start.getTime()) / 1000, "seconds"))
+    if (end.getTime() === start.getTime()) {
+      return "less than 1 millisecond"
+    } else {
+      parts.push(formatPart(end.getTime() - start.getTime(), "milliseconds"))
+    }
   }
   return firstTwo(parts).join(" ")
 }
