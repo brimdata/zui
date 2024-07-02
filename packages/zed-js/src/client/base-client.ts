@@ -4,6 +4,7 @@ import { ResultStream } from '../query/result-stream';
 import { createError } from '../util/error';
 import * as Types from './types';
 import { accept, defaults, parseContent, toJS, wrapAbort } from './utils';
+import { decode } from '..';
 
 export abstract class BaseClient {
   public abstract fetch: Types.IsoFetch;
@@ -48,6 +49,15 @@ export abstract class BaseClient {
       timeout: options.timeout,
     });
     return new ResultStream(result, abortCtl);
+  }
+
+  async queryStatus(id: string) {
+    const response = await this.send({
+      method: 'GET',
+      path: `/query/status/${id}`,
+      contentType: 'application/json',
+    });
+    return decode(await response.json()).toJS();
   }
 
   async describeQuery(

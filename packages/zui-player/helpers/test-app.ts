@@ -260,6 +260,12 @@ export default class TestApp {
       fullPage: true,
     });
   }
+
+  mockSaveDialog(result: { canceled: boolean; filePath: string | null }) {
+    this.zui.evaluate(async ({ dialog }, result) => {
+      dialog.showSaveDialog = () => Promise.resolve(result);
+    }, result);
+  }
 }
 
 const getAppInfo = () => {

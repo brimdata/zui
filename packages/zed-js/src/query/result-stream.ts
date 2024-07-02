@@ -17,6 +17,10 @@ export class ResultStream extends EventEmitter {
     super();
   }
 
+  get requestId() {
+    return this.resp.headers.get('x-request-id');
+  }
+
   get body() {
     return this.resp.body;
   }
