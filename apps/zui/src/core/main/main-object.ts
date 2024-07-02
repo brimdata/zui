@@ -155,10 +155,6 @@ export class MainObject {
     return this.store.dispatch as AppDispatch
   }
 
-  select(fn) {
-    return fn(this.store.getState())
-  }
-
   getPath(name: PathName) {
     return getPath(name)
   }
