@@ -54,7 +54,17 @@ export class ConfigurationsApi {
     }
   }
 
-  watch(namespace: string, name: string, onChange: (val: any) => void) {
-    onStateChange(this.store, ConfigPropValues.get(namespace, name), onChange)
+  watch(
+    namespace: string,
+    name: string,
+    onChange: (val: any) => void,
+    options: {skipInitial?: boolean} = {}
+  ) {
+    onStateChange(
+      this.store,
+      ConfigPropValues.get(namespace, name),
+      onChange,
+      options
+    )
   }
 }
