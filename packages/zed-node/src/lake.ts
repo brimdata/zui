@@ -6,6 +6,7 @@ import { getZedPath } from './binpath';
 type ConstructorOpts = {
   root: string;
   logs: string;
+  addr: string;
   port?: number;
   bin?: string;
   corsOrigins?: string[];
@@ -14,6 +15,7 @@ export class Lake {
   fetch = globalThis.fetch;
   lake?: ChildProcess;
   root: string;
+  addr: string;
   port: number;
   logs: string;
   bin: string;
@@ -22,13 +24,14 @@ export class Lake {
   constructor(opts: ConstructorOpts) {
     this.root = opts.root;
     this.logs = opts.logs;
+    this.addr = opts.addr ?? 'localhost';
     this.port = opts.port || 9867;
     this.bin = opts.bin || getZedPath();
     this.cors = opts.corsOrigins || [];
   }
 
-  addr(): string {
-    return `localhost:${this.port}`;
+  listenOn(): string {
+    return `${this.addr}:${this.port}`;
   }
 
   start() {
@@ -38,7 +41,7 @@ export class Lake {
     const args = [
       'serve',
       '-l',
-      this.addr(),
+      this.listenOn(),
       '-lake',
       this.root,
       '-manage=5m',
@@ -83,7 +86,7 @@ export class Lake {
 
   async isUp() {
     try {
-      const response = await this.fetch(`http://${this.addr()}/status`);
+      const response = await this.fetch(`http://localhost:${this.port}/status`);
       const text = await response.text();
       return text === 'ok';
     } catch (e) {
