@@ -43,8 +43,14 @@ export async function downloadPackets(root: string, pool: string, uid: string) {
       const msg = JSON.parse(err)?.error || `brimcap search failed: ${err}`
       window.showErrorMessage(msg)
     } else {
-      shell.openPath(dest)
-      window.showSuccessMessage("Packets extracted. Opening...")
+      const msg = await shell.openPath(dest)
+      if (msg) {
+        window.showErrorMessage(
+          "Could not open extracted pcap. Is Wireshark installed?"
+        )
+      } else {
+        window.showSuccessMessage("Packets extracted. Opening...")
+      }
     }
   }
 }
