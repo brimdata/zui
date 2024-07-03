@@ -19,6 +19,7 @@ export type ResponseFormat =
   | 'csv'
   | 'json'
   | 'ndjson'
+  | 'parquet'
   | 'tsv'
   | 'vng'
   | 'zeek'
