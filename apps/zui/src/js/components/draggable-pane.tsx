@@ -1,22 +1,25 @@
 import React, {ReactNode} from "react"
-import styled from "styled-components"
 import DragAnchor from "src/components/drag-anchor"
+import classNames from "classnames"
 
 type Props = {
   onDrag: (e: MouseEvent, args: {dx: number; dy: number}) => void
   dragAnchor: "right" | "left" | "top" | "bottom"
   children: ReactNode
-}
+  className?: string
+} & React.HTMLAttributes<any>
 
-const Pane = styled.div<any>`
-  position: relative;
-`
-
-export function DraggablePane({onDrag, dragAnchor, children, ...props}: Props) {
+export function DraggablePane({
+  onDrag,
+  dragAnchor,
+  children,
+  className,
+  ...props
+}: Props) {
   return (
-    <Pane {...props}>
+    <div className={classNames("relative", className)} {...props}>
       {children}
       <DragAnchor onDrag={onDrag} position={dragAnchor} />
-    </Pane>
+    </div>
   )
 }

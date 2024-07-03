@@ -31,10 +31,7 @@
   // Title
   .title {
     font-family: system-ui;
-    font-size: 14px;
-    line-height: 16px;
     margin: 0;
-    font-weight: 400;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -51,7 +48,7 @@
     }
 
     .close-button {
-      opacity: 1
+      opacity: 1;
     }
 
     .tab-content {

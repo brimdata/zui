@@ -10,6 +10,10 @@
   justify-content: space-between;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .align\:center {
   align-items: center;
 }
@@ -217,4 +221,24 @@
 
 .flex-nowrap {
   flex-wrap: nowrap;
+}
+
+.relative {
+  position: relative;
+}
+
+.border-b-solid {
+  border-bottom-style: solid;
+}
+
+.border-more {
+  border-color: var(--border-color-more);
+}
+
+.h-toolbar {
+  height: var(--toolbar-height);
+}
+
+.w-full {
+  width: 100%;
 }
