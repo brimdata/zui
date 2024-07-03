@@ -94,4 +94,26 @@ test.describe('Export tests', () => {
     await app.attached(/Error: CSV output encountered non-record value/);
     await expect(fsExtra.stat(filePath)).rejects.toThrowError('no such file');
   });
+
+  test(`Exporting in Parquet format succeeds`, async () => {
+    await app.createPool([getPath('cities.json')]);
+    await app.click('button', 'Query Pool');
+    const file = path.join(tempDir, `results.Parquet]`);
+    app.mockSaveDialog({ canceled: false, filePath: file });
+    await app.click('button', 'Export Results');
+    await app.attached('dialog');
+    const dialog = app.mainWin.getByRole('dialog');
+    await app.select('Format', 'Parquet');
+    await dialog
+      .getByRole('button')
+      .filter({ hasText: 'Export To File' })
+      .click();
+    await app.detached('dialog');
+    await app.mainWin
+      .getByText(new RegExp('Export Completed: .*results\\.Parquet'))
+      .waitFor();
+
+    expect(fsExtra.statSync(file).size).toBe(851913);
+  });
+
 });
