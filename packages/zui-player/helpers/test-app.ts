@@ -1,5 +1,7 @@
+import { expect } from '@playwright/test';
 import { Client } from '@brimdata/zed-node';
 import { existsSync } from 'fs';
+import * as fsExtra from 'fs-extra';
 import { reject } from 'lodash';
 import * as path from 'path';
 import {
@@ -265,6 +267,25 @@ export default class TestApp {
     this.zui.evaluate(async ({ dialog }, result) => {
       dialog.showSaveDialog = () => Promise.resolve(result);
     }, result);
+  }
+
+  async exportAsFormat(label: string, expectedSize: number, tempDir: string) {
+    const file = path.join(tempDir, `results.${label}`);
+    this.mockSaveDialog({ canceled: false, filePath: file });
+    await this.click('button', 'Export Results');
+    await this.attached('dialog');
+    const dialog = this.mainWin.getByRole('dialog');
+    await this.select('Format', label);
+    await dialog
+        .getByRole('button')
+        .filter({ hasText: 'Export To File' })
+        .click();
+    await this.detached('dialog');
+    await this.mainWin
+      .getByText(new RegExp('Export Completed: .*results\\.' + label))
+      .waitFor();
+
+    expect(fsExtra.statSync(file).size).toBe(expectedSize);
   }
 }
 

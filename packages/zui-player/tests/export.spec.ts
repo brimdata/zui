@@ -39,22 +39,7 @@ test.describe('Export tests', () => {
 
   formats.forEach(({ label, expectedSize }) => {
     test(`Exporting in ${label} format succeeds`, async () => {
-      const file = path.join(tempDir, `results.${label}`);
-      app.mockSaveDialog({ canceled: false, filePath: file });
-      await app.click('button', 'Export Results');
-      await app.attached('dialog');
-      const dialog = app.mainWin.getByRole('dialog');
-      await app.select('Format', label);
-      await dialog
-        .getByRole('button')
-        .filter({ hasText: 'Export To File' })
-        .click();
-      await app.detached('dialog');
-      await app.mainWin
-        .getByText(new RegExp('Export Completed: .*results\\.' + label))
-        .waitFor();
-
-      expect(fsExtra.statSync(file).size).toBe(expectedSize);
+      await app.exportAsFormat(label, expectedSize, tempDir);
     });
   });
 
@@ -98,22 +83,7 @@ test.describe('Export tests', () => {
   test(`Exporting in Parquet format succeeds`, async () => {
     await app.createPool([getPath('cities.json')]);
     await app.click('button', 'Query Pool');
-    const file = path.join(tempDir, `results.Parquet]`);
-    app.mockSaveDialog({ canceled: false, filePath: file });
-    await app.click('button', 'Export Results');
-    await app.attached('dialog');
-    const dialog = app.mainWin.getByRole('dialog');
-    await app.select('Format', 'Parquet');
-    await dialog
-      .getByRole('button')
-      .filter({ hasText: 'Export To File' })
-      .click();
-    await app.detached('dialog');
-    await app.mainWin
-      .getByText(new RegExp('Export Completed: .*results\\.Parquet'))
-      .waitFor();
-
-    expect(fsExtra.statSync(file).size).toBe(851913);
+    await app.exportAsFormat('Parquet', 851913, tempDir);
   });
 
 });
