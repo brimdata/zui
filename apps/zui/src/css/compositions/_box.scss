@@ -1,3 +1,11 @@
 .box {
   padding: var(--gutter-space);
 }
+
+.gutter {
+  padding-inline: var(--gutter-space);
+}
+
+.gutter-block {
+  padding-block: var(--gutter-space);
+}

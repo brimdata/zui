@@ -13,7 +13,6 @@ import Current from "src/js/state/Current"
 import {CorrelationsPane} from "../correlations-pane"
 import {Header} from "./header"
 import {RightPaneHandler} from "./right-pane-handler"
-import {Show} from "src/components/show"
 
 function Contents() {
   switch (useSelector(Layout.getCurrentPaneName)) {

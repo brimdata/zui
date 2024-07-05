@@ -8,12 +8,15 @@ export function Header() {
   const handler = new HeaderHandler(name)
 
   return (
-    <header className="h-toolbar flex">
+    <header
+      className="flex gap-2xs"
+      style={{blockSize: "calc(var(--toolbar-height) + 1px)"}}
+    >
       <div
         className="vertical-rule border-more"
         style={{marginBlock: "var(--space-2xs)"}}
       />
-      <div className="border-b-solid border-more w-full">
+      <div className="w-full border-b-solid border-more" style={{}}>
         <SectionTabs options={handler.options} />
       </div>
     </header>

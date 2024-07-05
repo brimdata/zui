@@ -1,0 +1,24 @@
+.section-tab-button {
+  background: none;
+  opacity: 0.75;
+  padding: 0;
+
+  &[aria-pressed="true"] {
+    opacity: 1;
+    color: var(--primary-color-darker);
+  }
+
+  span {
+    padding: 0 var(--half-gutter);
+    display: block;
+  }
+}
+
+.section-tab-button-underline {
+  height: 2px;
+  border-radius: 2px;
+  background: var(--primary-color);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
