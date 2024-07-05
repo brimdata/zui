@@ -1,16 +1,9 @@
 import React, {useLayoutEffect, useRef} from "react"
 import {useSelector} from "react-redux"
 import LogDetails from "src/js/state/LogDetails"
-import styled from "styled-components"
 import Fields from "./Fields"
 import NoSelection from "./NoSelection"
 import * as zed from "@brimdata/zed-js"
-
-const Wrap = styled.div`
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-`
 
 export default function Pane() {
   const record = useSelector(LogDetails.build)
