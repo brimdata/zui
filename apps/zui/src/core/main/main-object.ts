@@ -31,11 +31,14 @@ import * as zui from "src/zui"
 import log from "electron-log"
 import {ElectronZedClient} from "../electron-zed-client"
 import {ElectronZedLake} from "../electron-zed-lake"
+import {DefaultLake} from "src/models/default-lake"
+import {DomainModel} from "../domain-model"
 
 export class MainObject {
   public isQuitting = false
   abortables = new Abortables()
   emitter = new EventEmitter()
+  lake: ElectronZedLake
 
   static async boot(params: Partial<MainArgs> = {}) {
     const args = {...mainDefaults(), ...params}
@@ -43,40 +46,63 @@ export class MainObject {
     const data = decodeSessionState(await session.load())
     const windows = new WindowManager(data)
     const store = createMainStore(data?.globalState)
+    DomainModel.store = store
     const appMeta = await getAppMeta()
-    const lake = new ElectronZedLake({
-      root: args.lakeRoot,
-      port: args.lakePort,
-      logs: args.lakeLogs,
-      bin: zdeps.zed,
-      corsOrigins: ["*"],
-    })
-    return new MainObject(lake, windows, store, session, args, appMeta)
+    return new MainObject(windows, store, session, args, appMeta)
   }
 
   // Only call this from boot
   constructor(
-    readonly lake: ElectronZedLake,
     readonly windows: WindowManager,
     readonly store: ReduxStore<State, any>,
     readonly session: Session,
     readonly args: MainArgs,
     readonly appMeta: AppMeta
-  ) {}
+  ) {
+    this.lake = this.initLake()
+  }
+
+  async stopLake() {
+    const result = await this.lake.stop()
+    if (result) {
+      log.info("Lake stopped:", this.lake.asJSON())
+    } else {
+      log.error("Failed to stop lake: ", this.lake.asJSON())
+    }
+    return result
+  }
+
+  startLake() {
+    this.lake = this.initLake()
+    const result = this.lake.start()
+    if (result) {
+      log.info("Lake started:", this.lake.asJSON())
+    } else {
+      log.error("Failed to start lake:", this.lake.asJSON())
+    }
+    return result
+  }
+
+  initLake() {
+    return new ElectronZedLake({
+      root: this.args.lakeRoot,
+      addr: DefaultLake.listenAddr,
+      port: this.args.lakePort,
+      logs: this.args.lakeLogs,
+      bin: zdeps.zed,
+      corsOrigins: ["*"],
+    })
+  }
 
   async start() {
-    if (this.args.lake) {
-      if (!(await this.lake.start())) {
-        log.error("Failed to start lake process after 5 seconds")
-      }
-    }
+    if (this.args.lake) await this.startLake()
     if (this.args.devtools) await installExtensions()
     await this.windows.init()
   }
 
   async stop() {
     await this.abortables.abortAll()
-    await this.lake.stop()
+    await this.stopLake()
   }
 
   async resetState() {

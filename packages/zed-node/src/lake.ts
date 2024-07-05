@@ -2,18 +2,22 @@ import { ChildProcess, spawn, SpawnOptions } from 'child_process';
 import { mkdirpSync } from 'fs-extra';
 import { join } from 'path';
 import { getZedPath } from './binpath';
+import { waitFor } from './util';
 
 type ConstructorOpts = {
   root: string;
   logs: string;
+  addr: string;
   port?: number;
   bin?: string;
   corsOrigins?: string[];
 };
+
 export class Lake {
   fetch = globalThis.fetch;
   lake?: ChildProcess;
   root: string;
+  addr: string;
   port: number;
   logs: string;
   bin: string;
@@ -22,13 +26,21 @@ export class Lake {
   constructor(opts: ConstructorOpts) {
     this.root = opts.root;
     this.logs = opts.logs;
+    this.addr = opts.addr ?? 'localhost';
     this.port = opts.port || 9867;
     this.bin = opts.bin || getZedPath();
     this.cors = opts.corsOrigins || [];
   }
 
-  addr(): string {
-    return `localhost:${this.port}`;
+  asJSON() {
+    return {
+      root: this.root,
+      logs: this.logs,
+      addr: this.addr,
+      port: this.port,
+      bin: this.bin,
+      cors: this.cors,
+    };
   }
 
   start() {
@@ -38,7 +50,7 @@ export class Lake {
     const args = [
       'serve',
       '-l',
-      this.addr(),
+      `${this.addr}:${this.port}`,
       '-lake',
       this.root,
       '-manage=5m',
@@ -47,6 +59,7 @@ export class Lake {
       '-log.path',
       join(this.logs, 'zlake.log'),
     ];
+
     for (const origin of this.cors) {
       args.push(`--cors.origin=${origin}`);
     }
@@ -72,18 +85,18 @@ export class Lake {
     return waitFor(async () => this.isUp());
   }
 
-  async stop(): Promise<boolean> {
+  stop(): Promise<boolean> {
     if (this.lake) {
       this.lake.kill('SIGTERM');
       return waitFor(() => this.isDown());
     } else {
-      return true;
+      return Promise.resolve(true);
     }
   }
 
   async isUp() {
     try {
-      const response = await this.fetch(`http://${this.addr()}/status`);
+      const response = await this.fetch(this.statusUrl);
       const text = await response.text();
       return text === 'ok';
     } catch (e) {
@@ -94,21 +107,10 @@ export class Lake {
   async isDown() {
     return !(await this.isUp());
   }
-}
 
-async function waitFor(condition: () => Promise<boolean>) {
-  let giveUp = false;
-  const id = setTimeout(() => {
-    giveUp = true;
-  }, 5000);
-
-  while (!giveUp) {
-    if (await condition()) break;
-    await sleep(50);
+  get statusUrl() {
+    // 'localhost' will always get us to the zed service,
+    // even when the addr is set to an empty string.
+    return `http://localhost:${this.port}/status`;
   }
-
-  clearTimeout(id);
-  return !giveUp;
 }
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));

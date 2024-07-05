@@ -82,4 +82,20 @@ export function runConfigurations() {
       },
     },
   })
+  configurations.create({
+    name: "defaultLake",
+    title: "Zed Lake Service",
+    properties: {
+      address: {
+        name: "listenAddr",
+        label: "Listen For Incoming Connections From...",
+        type: "string",
+        enum: [
+          ["Localhost only", "localhost"],
+          ["Anywhere", ""],
+        ],
+        defaultValue: "localhost",
+      },
+    },
+  })
 }
