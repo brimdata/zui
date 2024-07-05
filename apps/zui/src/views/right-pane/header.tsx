@@ -10,8 +10,10 @@ export function Header() {
 
   return (
     <header
-      className="flex gap-2xs border-more overflow-hidden"
-      style={{blockSize: "calc(var(--toolbar-height) + 1px)"}}
+      className="flex border-more overflow-hidden"
+      style={{
+        blockSize: "calc(var(--toolbar-height) + 1px)",
+      }}
     >
       <div
         className="vertical-rule"
@@ -19,7 +21,7 @@ export function Header() {
       />
       <div
         className="flex items-center w-full border-b-solid overflow-hidden"
-        style={{marginInlineEnd: "var(--gutter-space)"}}
+        style={{marginInline: "var(--gutter)"}}
       >
         <RightSidebarToggleButton />
         <SectionTabs options={handler.options} className="justify-end" />

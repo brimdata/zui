@@ -8,7 +8,7 @@ import initialize from "src/js/initializers/initialize"
 import TabHistories from "src/js/state/TabHistories"
 import Tabs from "src/js/state/Tabs"
 import {getPersistedWindowState} from "src/js/state/stores/get-persistable"
-import {DetailsWindow} from "src/views/details-window"
+import DetailPane from "src/views/detail-pane/Pane"
 
 export default function DetailPage() {
   const [app, setApp] = useState(null)
@@ -34,7 +34,7 @@ export default function DetailPage() {
   return (
     <AppProvider store={app.store} api={app.api}>
       <AppWindowRouter>
-        <DetailsWindow />
+        <DetailPane />
         <Modals />
         <Tooltip />
       </AppWindowRouter>
