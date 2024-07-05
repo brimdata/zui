@@ -34,7 +34,9 @@ export default function DetailPage() {
   return (
     <AppProvider store={app.store} api={app.api}>
       <AppWindowRouter>
-        <DetailPane />
+        <div className="scroll-y">
+          <DetailPane />
+        </div>
         <Modals />
         <Tooltip />
       </AppWindowRouter>
