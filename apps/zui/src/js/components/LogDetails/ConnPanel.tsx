@@ -10,7 +10,7 @@ type Props = {
 const ConnPanel = ({record}: Props) => {
   if (!ConnVersation.shouldShow(record)) return null
   return (
-    <section className="conn-versation-panel detail-panel">
+    <section>
       <PanelHeading>Conn History</PanelHeading>
       <ConnVersation record={record} />
     </section>

@@ -17,8 +17,13 @@ export function Menu() {
   })
   return (
     <div
-      className="h-toolbar border-b-solid border-more gutter"
-      style={{"--gutter-space": "var(--half-gutter)"} as any}
+      className="border-b-solid border-more gutter flex-shrink-0"
+      style={
+        {
+          "--gutter-space": "var(--half-gutter)",
+          flexBasis: "var(--toolbar-height)",
+        } as any
+      }
     >
       <SectionTabs
         options={[

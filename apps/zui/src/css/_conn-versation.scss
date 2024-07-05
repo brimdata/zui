@@ -1,7 +1,9 @@
 .conn-versation {
   margin-bottom: $space-s;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  justify-content: flex-start;
   user-select: none;
 
   td,
@@ -25,15 +27,13 @@
     margin: 0;
     color: white;
     background: var(--primary-color);
-    font-size: 12px;
     text-align: center;
-    line-height: 20px;
     font-family: var(--mono-font);
     user-select: all;
   }
 
   .ip.small {
-    font-size: 8px;
+    font-size: var(--step--2);
   }
 
   .port {
@@ -84,11 +84,11 @@
   }
 
   .history-packet.arrow-right {
-    padding-right: $space-s*0.5;
+    padding-right: $space-s * 0.5;
   }
 
   .history-packet.arrow-left {
-    padding-left: $space-s*0.5;
+    padding-left: $space-s * 0.5;
 
     .triangle {
       order: 1;

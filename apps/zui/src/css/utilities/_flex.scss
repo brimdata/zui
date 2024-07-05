@@ -1,3 +1,7 @@
+.justify-end {
+  justify-content: flex-end;
+}
+
 .justify-between {
   justify-content: space-between;
 }
@@ -8,4 +12,8 @@
 
 .items-center {
   align-items: center;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
 }

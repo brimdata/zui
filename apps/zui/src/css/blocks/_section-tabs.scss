@@ -2,10 +2,18 @@
   background: none;
   opacity: 0.75;
   padding: 0;
+  border-radius: 0;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
 
   &[aria-pressed="true"] {
     opacity: 1;
     color: var(--primary-color-darker);
+    border-bottom: 2px solid var(--primary-color);
+  }
+
+  &:hover {
+    background: var(--emphasis-bg-less);
   }
 
   span {

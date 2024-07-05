@@ -8,7 +8,7 @@ export const Data = styled.dl`
   position: relative;
   margin: 0;
   cursor: default;
-  min-height: 26px;
+  line-height: 1.7;
 `
 
 export const Name = styled.dt`

@@ -22,7 +22,7 @@ export default function Pane() {
   }, [record])
 
   return (
-    <Wrap ref={ref}>
+    <div ref={ref} className="gutter region">
       {record && record instanceof zed.Record ? (
         <div className="detail-pane-content">
           <Fields record={record} />
@@ -30,6 +30,6 @@ export default function Pane() {
       ) : (
         <NoSelection />
       )}
-    </Wrap>
+    </div>
   )
 }

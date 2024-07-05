@@ -232,7 +232,7 @@
 }
 
 .border-more {
-  border-color: var(--border-color-more);
+  --border-color: var(--border-color-more);
 }
 
 .h-toolbar {
