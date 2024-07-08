@@ -43,7 +43,7 @@ export default memo(function RelatedAlerts({record}: Props) {
   }, [])
 
   return (
-    <section>
+    <section className="data-card box">
       <PanelHeading isLoading={isFetching}>Related Alerts</PanelHeading>
       <Panel>
         <div>

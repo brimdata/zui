@@ -1,10 +1,10 @@
 .conn-versation {
-  margin-bottom: $space-s;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-s);
+  gap: var(--space-3xs);
   justify-content: flex-start;
   user-select: none;
+  font-size: var(--step--1);
 
   td,
   th {
@@ -13,13 +13,12 @@
   }
 
   .host {
-    border: 1px solid var(--fg-color-less);
-    border-radius: 3px;
+    border: 1px solid var(--border-color);
   }
 
   .fieldset {
     text-align: center;
-    padding: 6px 3px;
+    padding: var(--space-3xs);
   }
 
   .ip,
@@ -53,7 +52,6 @@
   .history {
     align-self: center;
     flex: 1;
-    padding: $space-s;
   }
 
   .history-packet {
@@ -72,13 +70,13 @@
     hr {
       flex: 1;
       border: none;
-      border-bottom: 1px solid var(--yellow);
+      border-bottom: 1px solid var(--fg-color-less);
       margin: 0;
     }
 
     .triangle {
-      fill: var(--yellow);
-      stroke: var(--yellow);
+      fill: var(--fg-color-less);
+      stroke: var(--fg-color-less);
       width: 10px;
     }
   }

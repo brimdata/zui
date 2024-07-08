@@ -41,7 +41,7 @@ export default memo(function UidPanel({record}: {record: zed.Record}) {
   }, [])
 
   return (
-    <section>
+    <section className="data-card box">
       <PanelHeading isLoading={isLoading}>Correlation</PanelHeading>
       <Panel isLoading={isLoading && events.length === 0}>
         <div>

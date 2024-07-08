@@ -38,7 +38,7 @@ export default memo(function RelatedConns() {
   }, [])
 
   return (
-    <section>
+    <section className="data-card box">
       <PanelHeading isLoading={isFetching}>Related Connections</PanelHeading>
       <Panel>
         <div>
