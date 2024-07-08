@@ -1,6 +1,7 @@
 import React from "react"
 import Back from "../../js/components/icons/back-arrow"
 import Forward from "../../js/components/icons/forward-arrow"
+import {useSelector} from "react-redux"
 
 type Props = {
   prevExists: boolean
@@ -12,6 +13,8 @@ type Props = {
 export class HistoryButtons extends React.Component<Props> {
   render() {
     const {prevExists, nextExists, backFunc, forwardFunc} = this.props
+    const prevExists = useSelector(LogDetails.getHistory).canGoBack()
+    const nextExists = useSelector(LogDetails.getHistory).canGoForward()
 
     return (
       <div className="history-buttons">

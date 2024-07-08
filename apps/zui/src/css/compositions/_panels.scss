@@ -1,0 +1,14 @@
+.panels {
+  display: flex;
+  overflow: hidden;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.panels > * {
+  flex: 0 0 0;
+}
+
+.panels > .principle {
+  flex: 1;
+}

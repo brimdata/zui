@@ -13,11 +13,12 @@ import Current from "src/js/state/Current"
 import {CorrelationsPane} from "../correlations-pane"
 import {Header} from "./header"
 import {RightPaneHandler} from "./right-pane-handler"
+import {DetailPane} from "../detail-pane"
 
 function Contents() {
   switch (useSelector(Layout.getCurrentPaneName)) {
     case "detail":
-      return <DetailSection />
+      return <DetailPane />
     case "versions":
       return <VersionsSection />
     case "history":
