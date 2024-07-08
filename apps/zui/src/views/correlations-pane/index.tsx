@@ -31,7 +31,7 @@ function Correlations({record}) {
   const isConn = isZeek && record.try("_path")?.toString() === "conn"
   const hasMd5 = isZeek && record.has("md5")
   return (
-    <div className="box stack gap-xl region region-space-l">
+    <div className="box stack gap-xl region region-space-l scroll-y">
       {isZeek && uid && <UidPanel record={record} />}
       {isSuricata && cid && <RelatedAlerts record={record} />}
       {isSuricata && cid && <RelatedConns />}

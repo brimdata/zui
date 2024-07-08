@@ -10,7 +10,7 @@ export function Header() {
 
   return (
     <header
-      className="flex border-more overflow-hidden"
+      className="flex flex-fixed border-more overflow-hidden"
       style={{
         blockSize: "calc(var(--toolbar-height) + 1px)",
       }}

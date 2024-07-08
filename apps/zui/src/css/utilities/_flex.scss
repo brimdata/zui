@@ -17,3 +17,8 @@
 .flex-shrink-0 {
   flex-shrink: 0;
 }
+
+.flex-fixed {
+  flex-shrink: 0;
+  flex-grow: 0;
+}

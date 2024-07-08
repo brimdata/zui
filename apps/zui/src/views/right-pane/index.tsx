@@ -41,7 +41,7 @@ export default function RightPane() {
     <DraggablePane
       onDrag={(e) => handler.onDrag(e)}
       dragAnchor="left"
-      className="flex-stack"
+      className="stack"
       style={{gridArea: "secondary-sidebar"}}
     >
       <Header />
