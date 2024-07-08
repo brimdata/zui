@@ -17,7 +17,7 @@ type Props = {children: ReactNode; isLoading?: boolean}
 export default function PanelHeading({children, isLoading}: Props) {
   return (
     <BG className="flow">
-      <label>{children}</label>
+      <label role="heading">{children}</label>
       <LoadingBurst show={isLoading} />
     </BG>
   )
