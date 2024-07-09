@@ -189,28 +189,28 @@ export default class TestApp {
     return this.mainWin.getByTestId('results-pane');
   }
 
-  async click(role: Role | RegExp, name?: string) {
-    return this.locate(role, name).click();
+  async click(role: Role | RegExp, name?: string, options?: object) {
+    return this.locate(role, name, options).click();
   }
 
-  async rightClick(role: Role | RegExp, name?: string) {
-    return this.locate(role, name).click({ button: 'right' });
+  async rightClick(role: Role | RegExp, name?: string, options?: object) {
+    return this.locate(role, name, options).click({ button: 'right' });
   }
 
-  async attached(role: Role | RegExp, name?: string) {
-    return this.locate(role, name).waitFor();
+  async attached(role: Role | RegExp, name?: string, options?: object) {
+    return this.locate(role, name, options).waitFor();
   }
 
-  async detached(role: Role | RegExp, name?: string) {
-    return this.locate(role, name).waitFor({ state: 'detached' });
+  async detached(role: Role | RegExp, name?: string, options?: object) {
+    return this.locate(role, name, options).waitFor({ state: 'detached' });
   }
 
-  async hidden(role: Role | RegExp, name?: string) {
-    return this.locate(role, name).waitFor({ state: 'hidden' });
+  async hidden(role: Role | RegExp, name?: string, options?: object) {
+    return this.locate(role, name, options).waitFor({ state: 'hidden' });
   }
 
-  async visible(role: Role | RegExp, name?: string) {
-    return this.locate(role, name).waitFor({ state: 'visible' });
+  async visible(role: Role | RegExp, name?: string, options?: object) {
+    return this.locate(role, name, options).waitFor({ state: 'visible' });
   }
 
   async fill(label: string, value: string) {
@@ -225,11 +225,13 @@ export default class TestApp {
     return this.page.getByLabel(label).selectOption(value);
   }
 
-  locate(role: Role | RegExp, name?: string) {
+  locate(role: Role | RegExp, name?: string, options?: any) {
     if (role instanceof RegExp) {
       return this.mainWin.getByText(role).first();
     } else {
-      return this.mainWin.getByRole(role, { name, exact: true }).first();
+      return this.mainWin
+        .getByRole(role, { name, exact: true, ...options })
+        .first();
     }
   }
 
@@ -277,9 +279,9 @@ export default class TestApp {
     const dialog = this.mainWin.getByRole('dialog');
     await this.select('Format', label);
     await dialog
-        .getByRole('button')
-        .filter({ hasText: 'Export To File' })
-        .click();
+      .getByRole('button')
+      .filter({ hasText: 'Export To File' })
+      .click();
     await this.detached('dialog');
     await this.mainWin
       .getByText(new RegExp('Export Completed: .*results\\.' + label))
