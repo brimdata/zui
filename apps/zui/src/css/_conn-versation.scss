@@ -1,8 +1,6 @@
 .conn-versation {
-  margin-bottom: $space-s;
-  display: flex;
-  justify-content: space-between;
   user-select: none;
+  font-size: var(--step--1);
 
   td,
   th {
@@ -11,13 +9,14 @@
   }
 
   .host {
-    border: 1px solid var(--fg-color-less);
-    border-radius: 3px;
+    margin-inline: auto;
+    max-inline-size: fit-content;
+    border: 1px solid var(--border-color);
   }
 
   .fieldset {
     text-align: center;
-    padding: 6px 3px;
+    padding: var(--space-3xs);
   }
 
   .ip,
@@ -25,15 +24,13 @@
     margin: 0;
     color: white;
     background: var(--primary-color);
-    font-size: 12px;
     text-align: center;
-    line-height: 20px;
     font-family: var(--mono-font);
     user-select: all;
   }
 
   .ip.small {
-    font-size: 8px;
+    font-size: var(--step--2);
   }
 
   .port {
@@ -53,7 +50,6 @@
   .history {
     align-self: center;
     flex: 1;
-    padding: $space-s;
   }
 
   .history-packet {
@@ -72,23 +68,23 @@
     hr {
       flex: 1;
       border: none;
-      border-bottom: 1px solid var(--yellow);
+      border-bottom: 1px solid var(--fg-color-less);
       margin: 0;
     }
 
     .triangle {
-      fill: var(--yellow);
-      stroke: var(--yellow);
+      fill: var(--fg-color-less);
+      stroke: var(--fg-color-less);
       width: 10px;
     }
   }
 
   .history-packet.arrow-right {
-    padding-right: $space-s*0.5;
+    padding-right: $space-s * 0.5;
   }
 
   .history-packet.arrow-left {
-    padding-left: $space-s*0.5;
+    padding-left: $space-s * 0.5;
 
     .triangle {
       order: 1;

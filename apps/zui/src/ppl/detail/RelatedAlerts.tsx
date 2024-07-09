@@ -1,7 +1,7 @@
 import {Data, Name, Value} from "src/components/data"
 import Panel from "src/views/detail-pane/Panel"
 import PanelHeading from "src/views/detail-pane/PanelHeading"
-import {Caption, ChartWrap, TableWrap} from "src/views/detail-pane/Shared"
+import {Caption, TableWrap} from "src/views/detail-pane/Shared"
 import {isEqual} from "lodash"
 import {SecurityEvent} from "src/ppl/detail/models/security-event"
 import React, {memo, useCallback, useMemo} from "react"
@@ -43,13 +43,13 @@ export default memo(function RelatedAlerts({record}: Props) {
   }, [])
 
   return (
-    <section>
+    <section className="sidebar-card box">
       <PanelHeading isLoading={isFetching}>Related Alerts</PanelHeading>
       <Panel>
-        <ChartWrap>
+        <div>
           <EventTimeline events={events} current={current}></EventTimeline>
           <EventLimit count={events.length} query={query} limit={perPage} />
-        </ChartWrap>
+        </div>
         <TableWrap>
           {data.map(([name, value]) => (
             <Data key={name}>

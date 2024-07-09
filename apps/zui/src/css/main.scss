@@ -31,6 +31,8 @@
 @import "compositions/sidebar";
 @import "compositions/region";
 @import "compositions/repel";
+@import "compositions/stack";
+@import "compositions/switcher";
 
 /* Blocks */
 @import "buttons";
@@ -94,8 +96,13 @@
 
 @import "blocks/sidebar-item";
 @import "blocks/settings-modal";
+@import "blocks/vertical-rule";
+@import "blocks/section-tabs";
+@import "blocks/cards";
 
 /* Utilities */
 @import "utilities";
 @import "utilities/spacing";
 @import "utilities/flex";
+@import "utilities/surfaces";
+@import "utilities/radius";

@@ -21,6 +21,7 @@ import {
 import tab from "src/js/models/tab"
 import useLakeId from "src/app/router/hooks/use-lake-id"
 import {bounded} from "src/util/bounded"
+import {Show} from "src/components/show"
 
 const AnimatedSearchTab = animated(SearchTab)
 const MAX_WIDTH = 200
@@ -113,7 +114,9 @@ export default function TabBar() {
         })}
         <AddTab onClick={ctl.onAddClick} left={width * count} />
       </Container>
-      <RightSidebarToggleButton />
+      <Show when={rightbarCollapse}>
+        <RightSidebarToggleButton />
+      </Show>
     </BG>
   )
 }

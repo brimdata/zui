@@ -26,7 +26,7 @@ export const PaneHeader = styled.header`
 `
 
 export const EmptyText = styled.p`
-  padding: 24px;
+  padding: var(--gutter-space);
   opacity: 0.5;
   text-align: center;
   display: flex;

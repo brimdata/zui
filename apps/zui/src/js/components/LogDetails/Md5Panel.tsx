@@ -14,7 +14,7 @@ import {
 
 export const Md5Panel = () => {
   return (
-    <section className="hash-correlation detail-panel">
+    <section className="hash-correlation sidebar-card box">
       <PanelHeading isLoading={false}>Md5 Correlation</PanelHeading>
       <AsyncTable resultId={MD5_CORRELATION} expect={1} />
       <AsyncTable resultId={FILENAME_CORRELATION} expect={1} />

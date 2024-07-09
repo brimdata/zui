@@ -6,7 +6,7 @@ const init = () => ({
   sidebarIsOpen: true,
   sidebarWidth: 250,
   secondarySidebarIsOpen: true,
-  secondarySidebarWidth: 250,
+  secondarySidebarWidth: 400,
   currentSectionName: "pools" as SectionName,
   historyView: "linear" as HistoryView,
   poolsOpenState: {} as OpenMap,

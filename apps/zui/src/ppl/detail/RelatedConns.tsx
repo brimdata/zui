@@ -1,7 +1,7 @@
 import {Data, Name, Value} from "src/components/data"
 import Panel from "src/views/detail-pane/Panel"
 import PanelHeading from "src/views/detail-pane/PanelHeading"
-import {Caption, ChartWrap, TableWrap} from "src/views/detail-pane/Shared"
+import {Caption, TableWrap} from "src/views/detail-pane/Shared"
 import {
   SecurityEvent,
   SecurityEventInterface,
@@ -38,13 +38,13 @@ export default memo(function RelatedConns() {
   }, [])
 
   return (
-    <section>
+    <section className="sidebar-card box">
       <PanelHeading isLoading={isFetching}>Related Connections</PanelHeading>
       <Panel>
-        <ChartWrap>
+        <div>
           <EventTimeline events={events} />
           <EventLimit query={query} count={events.length} limit={perPage} />
-        </ChartWrap>
+        </div>
         <TableWrap>
           {data.map(([name, value]) => (
             <Data key={name}>

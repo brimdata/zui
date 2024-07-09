@@ -58,7 +58,7 @@ export function Sidebar() {
   const currentSectionName = useSelector(Appearance.getCurrentSectionName)
   const l = useSelector(Current.getLake)
   const id = get(l, ["id"], "")
-  function onDragPane(e: MouseEvent) {
+  function onDragPane(e: any) {
     const width = e.clientX
     const max = window.innerWidth
     dispatch(Appearance.resizeSidebar(Math.min(width, max)))

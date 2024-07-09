@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux"
 import React, {memo, useCallback, useMemo} from "react"
 
-import {Caption, ChartWrap, TableWrap} from "src/views/detail-pane/Shared"
+import {Caption, TableWrap} from "src/views/detail-pane/Shared"
 import PanelHeading from "src/views/detail-pane/PanelHeading"
 import EventTimeline from "src/ppl/detail/EventTimeline"
 import {SecurityEvent} from "src/ppl/detail/models/security-event"
@@ -41,13 +41,13 @@ export default memo(function UidPanel({record}: {record: zed.Record}) {
   }, [])
 
   return (
-    <section>
+    <section className="sidebar-card box">
       <PanelHeading isLoading={isLoading}>Correlation</PanelHeading>
       <Panel isLoading={isLoading && events.length === 0}>
-        <ChartWrap>
+        <div>
           <EventTimeline events={events} current={index} />
           <EventLimit query={query} count={events.length} limit={perPage} />
-        </ChartWrap>
+        </div>
         <TableWrap>
           <Data>
             <Name>Duration</Name>

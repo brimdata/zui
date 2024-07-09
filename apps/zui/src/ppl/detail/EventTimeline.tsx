@@ -112,7 +112,7 @@ export default memo(function EventTimeline({events, current}: Props) {
     i === events.length - 1 && events.length > 1 ? lastItemRef : undefined
 
   return (
-    <div ref={resizeRef}>
+    <div ref={resizeRef} className="border-more">
       {events.map((e, i) => (
         <Lane key={i}>
           <Layer>

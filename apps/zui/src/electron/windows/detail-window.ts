@@ -7,9 +7,9 @@ export class DetailWindow extends ZuiWindow {
   persistable = false
   options = {
     resizable: true,
-    width: 680,
-    height: 480,
-    minWidth: 500,
+    width: 480,
+    height: 680,
+    minWidth: 300,
   }
 
   beforeLoad() {

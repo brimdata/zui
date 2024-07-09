@@ -18,8 +18,8 @@
 
   th {
     text-align: left;
-    font-size: 9px;
     font-weight: bold;
+    font-size: var(--step--1);
   }
 
   td {
@@ -38,7 +38,6 @@
 }
 
 .vertical-table {
-
   th,
   td {
     word-break: break-word;

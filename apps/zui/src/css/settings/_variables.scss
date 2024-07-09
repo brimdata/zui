@@ -36,9 +36,10 @@
 }
 
 :root {
-  
   --gutter-space: var(--space-s);
+  --half-gutter: calc(var(--gutter-space) / 2);
   --hover-duration: 75ms;
+  --toolbar-height: 40px;
 
   /* Hover and Active Filters */
   --hover-filter: brightness(95%);

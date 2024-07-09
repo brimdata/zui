@@ -1,0 +1,32 @@
+.section-tab-button {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  color: var(--fg-color-less);
+
+  &[aria-pressed="true"] {
+    opacity: 1;
+    color: var(--text-active);
+    border-bottom: 2px solid var(--primary-color);
+  }
+
+  &:hover {
+    background: var(--emphasis-bg-less);
+  }
+
+  span {
+    padding: 0 var(--half-gutter);
+    display: block;
+  }
+}
+
+.section-tab-button-underline {
+  height: 2px;
+  border-radius: 2px;
+  background: var(--primary-color);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}

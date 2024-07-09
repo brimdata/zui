@@ -1,28 +1,21 @@
 import React from "react"
 import DetailSection from "./detail-section"
 
-import styled from "styled-components"
-import {useDispatch} from "src/core/use-dispatch"
 import {useSelector} from "react-redux"
 import Layout from "src/js/state/Layout"
 import {DraggablePane} from "src/js/components/draggable-pane"
 import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {HistorySection} from "./history/section"
-import {SectionTabs} from "src/components/section-tabs"
-import {PaneName} from "src/js/state/Layout/types"
 import {ColumnsPane} from "src/views/columns-pane"
 import Appearance from "src/js/state/Appearance"
 import Current from "src/js/state/Current"
+import {CorrelationsPane} from "../correlations-pane"
+import {Header} from "./header"
+import {RightPaneHandler} from "./right-pane-handler"
 
-const Pane = styled(DraggablePane)`
-  display: flex;
-  flex-direction: column;
-  grid-area: secondary-sidebar;
-`
-
-const PaneContentSwitch = ({paneName}) => {
-  switch (paneName) {
+function Contents() {
+  switch (useSelector(Layout.getCurrentPaneName)) {
     case "detail":
       return <DetailSection />
     case "versions":
@@ -31,84 +24,30 @@ const PaneContentSwitch = ({paneName}) => {
       return <HistorySection />
     case "columns":
       return <ColumnsPane />
+    case "correlations":
+      return <CorrelationsPane />
     default:
       return null
   }
 }
 
-const BG = styled.div`
-  height: 41px;
-  flex-shrink: 0;
-  padding: 0 8px;
-`
-
-export function Menu(props: {paneName: string}) {
-  const dispatch = useDispatch()
-
-  const onChange = (name: string) => {
-    if (name === props.paneName) return
-    dispatch(Layout.setCurrentPaneName(name as PaneName))
-  }
-
-  function makeOption(label: string, value: string) {
-    return {
-      label,
-      click: () => onChange(value),
-      checked: props.paneName === value,
-    }
-  }
-
-  return (
-    <BG>
-      <SectionTabs
-        options={[
-          makeOption("History", "history"),
-          makeOption("Detail", "detail"),
-          makeOption("Versions", "versions"),
-          makeOption("Columns", "columns"),
-        ]}
-      />
-    </BG>
-  )
-}
-
-function Container({children}) {
-  const dispatch = useDispatch()
+export default function RightPane() {
   const isOpen = useSelector(Appearance.secondarySidebarIsOpen)
-
-  const onDrag = (e: React.MouseEvent) => {
-    const width = window.innerWidth - e.clientX
-    const max = window.innerWidth
-    dispatch(Appearance.resizeSecondarySidebar(Math.min(width, max)))
-  }
-
-  if (!isOpen) return null
-
-  return (
-    // @ts-ignore
-    <Pane onDrag={onDrag} dragAnchor="left">
-      {children}
-    </Pane>
-  )
-}
-
-const RightPane = () => {
-  const currentPaneName = useSelector(Layout.getCurrentPaneName)
-
-  return (
-    <Container>
-      <Menu paneName={currentPaneName} />
-      <AppErrorBoundary>
-        <PaneContentSwitch paneName={currentPaneName} />
-      </AppErrorBoundary>
-    </Container>
-  )
-}
-
-const WithRightPane = () => {
   const tab = useSelector(Current.getTabId)
-  if (!tab) return null
-  return <RightPane />
-}
+  const handler = new RightPaneHandler()
+  if (!tab && isOpen) return null
 
-export default WithRightPane
+  return (
+    <DraggablePane
+      onDrag={(e) => handler.onDrag(e)}
+      dragAnchor="left"
+      className="stack border-more"
+      style={{gridArea: "secondary-sidebar"}}
+    >
+      <Header />
+      <AppErrorBoundary>
+        <Contents />
+      </AppErrorBoundary>
+    </DraggablePane>
+  )
+}

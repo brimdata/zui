@@ -26,7 +26,7 @@ export function AppGrid({children}) {
   const width = sidebarIsOpen ? sidebarWidth : 0
   const width2 = secondarySidebarIsOpen ? secondarySidebarWidth : 0
   const rows = ["40px", "1fr"]
-  const columns = [`min(${width}px, 70vw)`, "1fr", `min(${width2}px, 30vw)`]
+  const columns = [`min(${width}px, 50vw)`, "1fr", `min(${width2}px, 50vw)`]
   const style = {
     gridTemplateAreas: areas,
     gridTemplateRows: rows.join(" "),

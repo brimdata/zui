@@ -1,9 +1,5 @@
 import styled from "styled-components"
 
-export const ChartWrap = styled.div`
-  padding: 12px;
-`
-
 export const TableWrap = styled.div`
   padding-bottom: 4px;
 `
