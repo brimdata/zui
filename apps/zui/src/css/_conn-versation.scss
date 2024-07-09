@@ -1,8 +1,4 @@
 .conn-versation {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3xs);
-  justify-content: flex-start;
   user-select: none;
   font-size: var(--step--1);
 
@@ -13,6 +9,8 @@
   }
 
   .host {
+    margin-inline: auto;
+    max-inline-size: fit-content;
     border: 1px solid var(--border-color);
   }
 

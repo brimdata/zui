@@ -28,22 +28,29 @@ function filter(record: zed.Record, names: string[]) {
 
 const ConnVersation = ({record}: Props) => {
   return (
-    <div className="conn-versation">
-      <Host
-        title="Originator"
-        className="originator"
-        record={filter(record, ORIG_FIELDS)}
-        ip={record.getField(["id", "orig_h"])}
-        port={record.getField(["id", "orig_p"])}
-      />
+    <div
+      className="conn-versation switcher gap-s"
+      style={{"--threshold": "390px"} as any}
+    >
+      <div>
+        <Host
+          title="Originator"
+          className="originator"
+          record={filter(record, ORIG_FIELDS)}
+          ip={record.getField(["id", "orig_h"])}
+          port={record.getField(["id", "orig_p"])}
+        />
+      </div>
       <ConnHistory history={record.get("history").toString()} />
-      <Host
-        title="Responder"
-        className="responder"
-        record={filter(record, RESP_FIELDS)}
-        ip={record.getField(["id", "resp_h"])}
-        port={record.getField(["id", "resp_p"])}
-      />
+      <div>
+        <Host
+          title="Responder"
+          className="responder"
+          record={filter(record, RESP_FIELDS)}
+          ip={record.getField(["id", "resp_h"])}
+          port={record.getField(["id", "resp_p"])}
+        />
+      </div>
     </div>
   )
 }
