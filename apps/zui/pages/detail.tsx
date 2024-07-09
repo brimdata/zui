@@ -8,7 +8,7 @@ import initialize from "src/js/initializers/initialize"
 import TabHistories from "src/js/state/TabHistories"
 import Tabs from "src/js/state/Tabs"
 import {getPersistedWindowState} from "src/js/state/stores/get-persistable"
-import DetailPane from "src/views/detail-pane/Pane"
+import {DetailPane} from "src/views/detail-pane"
 
 export default function DetailPage() {
   const [app, setApp] = useState(null)
@@ -34,7 +34,7 @@ export default function DetailPage() {
   return (
     <AppProvider store={app.store} api={app.api}>
       <AppWindowRouter>
-        <div className="scroll-y">
+        <div className="detail-window scroll-y w-full h-full overflow-hidden">
           <DetailPane />
         </div>
         <Modals />

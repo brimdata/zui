@@ -1,5 +1,4 @@
 import React from "react"
-import DetailSection from "./detail-section"
 
 import {useSelector} from "react-redux"
 import Layout from "src/js/state/Layout"
