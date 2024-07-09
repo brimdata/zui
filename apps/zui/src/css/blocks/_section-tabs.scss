@@ -1,14 +1,14 @@
 .section-tab-button {
   background: none;
-  opacity: 0.75;
   padding: 0;
   border-radius: 0;
   border-top: 2px solid transparent;
   border-bottom: 2px solid transparent;
+  color: var(--fg-color-less);
 
   &[aria-pressed="true"] {
     opacity: 1;
-    color: var(--primary-color-darker);
+    color: var(--text-active);
     border-bottom: 2px solid var(--primary-color);
   }
 
