@@ -1,14 +1,30 @@
 .panels {
   display: flex;
   overflow: hidden;
-  inline-size: 100%;
+
   block-size: 100%;
-}
 
-.panels > * {
-  flex: 0 0 0;
-}
+  & > *:not(.principle) {
+    flex-shrink: 0;
+  }
 
-.panels > .principle {
-  flex: 1;
+  & > .principle {
+    flex-grow: 1;
+    overflow: hidden;
+  }
+
+  &.vertical {
+    flex-direction: column;
+    block-size: 100%;
+    &.principle {
+      min-block-size: 0;
+    }
+  }
+
+  &.horizontal {
+    inline-size: 100%;
+    &.prinicple {
+      min-inline-size: 0;
+    }
+  }
 }

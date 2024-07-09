@@ -66,7 +66,7 @@ export const Row: React.ComponentType<
     if (!data[index]) return null
     const {render, indent} = data[index]
     const innerStyle = {
-      paddingLeft: 16 * (indent + 1),
+      paddingLeft: `calc(var(--gutter) * ${indent + 1})`,
       top: (style.top as number) + padding,
     }
 

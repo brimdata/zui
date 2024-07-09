@@ -2,10 +2,9 @@ import {useSelector} from "react-redux"
 import LogDetails from "src/js/state/LogDetails"
 import {ListView} from "src/zui-kit"
 import {EmptyText} from "../right-pane/common"
-import {useState} from "react"
 import {IconButton} from "src/components/icon-button"
-import {openLogDetailsWindow} from "src/js/flows/openLogDetailsWindow"
-import {useDispatch} from "src/core/use-dispatch"
+import {DetailPaneHandler} from "./handler"
+import {PathView} from "../results-pane/path-view"
 
 export function DetailPane() {
   const value = useSelector(LogDetails.build)
@@ -17,38 +16,46 @@ export function DetailPane() {
 }
 
 export function Detail({value}) {
-  const dispatch = useDispatch()
-  const [expanded, setExpanded] = useState({})
-  const [page, setPage] = useState({})
-  const prevExists = useSelector(LogDetails.getHistory).canGoBack()
-  const nextExists = useSelector(LogDetails.getHistory).canGoForward()
-  const backFunc = () => dispatch(LogDetails.back())
-  const forwardFunc = () => dispatch(LogDetails.forward())
-  const onClick = () => dispatch(openLogDetailsWindow(value))
+  const handler = new DetailPaneHandler(value)
 
   return (
-    <article className="panels direction-column">
-      <header className="h-toolbar">
-        <nav className="flex gutter">
+    <article className="panels vertical">
+      <header className="gutter">
+        <nav className="repel gutter-block gutter-space-3xs border-b-solid">
+          <div className="cluster">
+            <IconButton
+              enabled={handler.canGoBack()}
+              onClick={() => handler.goBack()}
+              iconName="left_arrow"
+              label="Previous Selected Value"
+            />
+            <IconButton
+              enabled={handler.canGoForward()}
+              onClick={() => handler.goForward()}
+              iconName="right_arrow"
+              label="Next Selected Value"
+            />
+          </div>
           <IconButton
-            enabled={prevExists}
-            onClick={backFunc}
-            iconName="left_arrow"
+            iconName="external_link"
+            onClick={() => handler.openInNewWindow()}
+            label="Open in New Window"
           />
-          <IconButton
-            onClick={forwardFunc}
-            enabled={nextExists}
-            iconName="right_arrow"
-          />
-          <IconButton iconName="external_link" onClick={onClick} />
         </nav>
       </header>
-      <section className="principle gutter">
+      <section className="principle">
         <ListView
+          viewConfig={{customViews: [PathView]}}
           values={[value]}
           valueExpandedDefaultState={{value: true}}
-          valueExpandedState={{value: expanded, onChange: setExpanded}}
-          valuePageState={{value: page, onChange: setPage}}
+          valueExpandedState={{
+            value: handler.state.expanded,
+            onChange: (next) => handler.state.setItem("expanded", next),
+          }}
+          valuePageState={{
+            value: handler.state.page,
+            onChange: (next) => handler.state.setItem("page", next),
+          }}
         />
       </section>
     </article>

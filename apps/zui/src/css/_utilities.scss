@@ -243,6 +243,18 @@
   width: 100%;
 }
 
+.w-fit {
+  width: fit-content;
+}
+
 .h-full {
   height: 100%;
+}
+
+.debug-red {
+  outline: 1px dashed red;
+}
+
+.debug-blue {
+  outline: 1px dashed blue;
 }
