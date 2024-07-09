@@ -77,7 +77,7 @@ play('right-click-menus', (app, test) => {
     await app.click('button', 'Expand Rows');
     await app.rightClick('gridcell', 'conn');
     await app.click('listitem', 'Show In Detail Pane');
-    await app.attached('heading', 'Fields');
+    await app.attached('button', 'Detail', { pressed: true });
     await app.click('button', 'Toggle Right Sidebar'); // Hide It Again
   });
 
@@ -86,7 +86,7 @@ play('right-click-menus', (app, test) => {
     await app.click('button', 'Table');
     await app.rightClick('gridcell', 'conn');
     await app.click('listitem', 'Show In Detail Pane');
-    await app.attached('heading', 'Fields');
+    await app.attached('button', 'Detail', { pressed: true });
     await app.click('button', 'Toggle Right Sidebar'); // Hide It Again
   });
 });

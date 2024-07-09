@@ -33,6 +33,9 @@
 @import "compositions/repel";
 @import "compositions/stack";
 @import "compositions/switcher";
+@import "compositions/panels";
+@import "compositions/cluster";
+@import "compositions/flex-center";
 
 /* Blocks */
 @import "buttons";
@@ -77,7 +80,7 @@
 @import "about-window";
 @import "tab-search-loading";
 @import "ingest-warnings-modal";
-@import "log-detail-window";
+@import "detail-window";
 @import "sidebar";
 @import "history-buttons";
 @import "x-button";

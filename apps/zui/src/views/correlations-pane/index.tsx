@@ -10,7 +10,7 @@ import {Correlation} from "src/ppl/detail/models/Correlation"
 import {SuricataEvent} from "src/ppl/detail/models/SuricataEvent"
 import {ZeekEvent} from "src/ppl/detail/models/ZeekEvent"
 import {SecurityEvent} from "src/ppl/detail/models/security-event"
-import {EmptyText} from "../right-pane/common"
+import {EmptyText} from "src/components/empty-text"
 
 export function CorrelationsPane() {
   const record = useSelector(LogDetails.build)

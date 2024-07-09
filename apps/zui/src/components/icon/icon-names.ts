@@ -55,6 +55,7 @@ export const iconNames = {
   layout_leftbar_open: "layout_leftbar_open",
   layout_leftbar_close: "layout_leftbar_close",
   file_upload: "file_upload",
+  external_link: "external_link",
 }
 
 export const customIconNames = {

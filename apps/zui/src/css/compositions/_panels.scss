@@ -1,0 +1,30 @@
+.panels {
+  display: flex;
+  overflow: hidden;
+
+  block-size: 100%;
+
+  & > *:not(.principle) {
+    flex-shrink: 0;
+  }
+
+  & > .principle {
+    flex-grow: 1;
+    overflow: hidden;
+  }
+
+  &.vertical {
+    flex-direction: column;
+    block-size: 100%;
+    &.principle {
+      min-block-size: 0;
+    }
+  }
+
+  &.horizontal {
+    inline-size: 100%;
+    &.prinicple {
+      min-inline-size: 0;
+    }
+  }
+}
