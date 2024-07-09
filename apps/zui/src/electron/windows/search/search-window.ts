@@ -16,8 +16,8 @@ export class SearchWindow extends ZuiWindow {
     resizable: true,
     minWidth: 480,
     minHeight: 100,
-    width: 1250,
-    height: 750,
+    width: 1470,
+    height: 900,
   }
   loadsInProgress = 0
 

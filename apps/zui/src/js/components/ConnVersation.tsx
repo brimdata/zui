@@ -75,7 +75,7 @@ const Host = ({className, title, ip, port, record}: HostProps) => {
   if (!port) return null
 
   return (
-    <div className={`host ${className} data-card`}>
+    <div className={`host ${className} sidebar-card`}>
       <Fieldset>{title}</Fieldset>
       <p className={`ip ${ip.data.toString().length > 16 ? "small" : ""}`}>
         {ip.data.toString()}
