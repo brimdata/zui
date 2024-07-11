@@ -27,6 +27,7 @@
 
 @import "layouts";
 @import "compositions/flow";
+@import "compositions/gutter";
 @import "compositions/box";
 @import "compositions/sidebar";
 @import "compositions/region";
@@ -109,3 +110,4 @@
 @import "utilities/flex";
 @import "utilities/surfaces";
 @import "utilities/radius";
+@import "utilities/sizing";

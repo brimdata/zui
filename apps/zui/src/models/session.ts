@@ -18,6 +18,12 @@ type Attrs = {
 }
 
 export class Session extends DomainModel<Attrs> {
+  static selectAll(state) {
+    return BrowserTab.selectAll(state)
+      .filter((tab) => tab.matchesPath(queryVersion.path))
+      .map((tab) => new Session({id: tab.attrs.id}))
+  }
+
   static activateLastFocused() {
     const tab = BrowserTab.orderBy("lastFocused", "desc").find((tab) =>
       tab.matchesPath(queryVersion.path)
@@ -95,6 +101,10 @@ export class Session extends DomainModel<Attrs> {
 
   get tab() {
     return BrowserTab.find(this.id)
+  }
+
+  get name() {
+    return "Bloop"
   }
 
   navigate(snapshot: EditorSnapshot, namedQuery?: NamedQuery) {
