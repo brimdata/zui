@@ -13,11 +13,13 @@ export function SessionsPane() {
             style={style}
             key={item.id}
             onClick={() => item.tab.activate()}
-            className="sidebar-item white-selection font:mono step--1 center-y gutter gap-2xs truncate"
+            className="sidebar-item white-selection font:mono step--1 center-y gutter gap-2xs"
             aria-selected={item.tab.isActive}
           >
             <Icon name="session" />
-            {last(item.snapshots).toQueryText().replace("\n", " ")}
+            <span className="truncate">
+              {last(item.snapshots).toQueryText().replace("\n", " ")}
+            </span>
           </li>
         )}
       </VirtualList>
