@@ -33,6 +33,11 @@ const slice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(tabs.remove, (s, a: ReturnType<typeof tabs.remove>) => {
+      delete s[a.payload]
+    })
+  },
 })
 
 export const reducer = slice.reducer
