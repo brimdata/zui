@@ -1,4 +1,3 @@
-import {last} from "lodash"
 import {SessionsPaneHandler} from "./handler"
 import {VirtualList} from "src/js/components/virtual-list"
 import {Icon} from "src/components/icon"
@@ -12,12 +11,12 @@ export function SessionsPane() {
           <li
             style={style}
             key={item.id}
-            onClick={() => item.tab.activate()}
+            aria-selected={handler.isOpen(item)}
+            onClick={() => item.activate()}
             className="sidebar-item white-selection font:mono step--1 center-y gutter gap-2xs truncate"
-            aria-selected={item.tab.isActive}
           >
             <Icon name="session" />
-            {last(item.snapshots).toQueryText().replace("\n", " ")}
+            {item.displayName}
           </li>
         )}
       </VirtualList>

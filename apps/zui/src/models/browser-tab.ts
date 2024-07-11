@@ -38,6 +38,10 @@ export class BrowserTab extends DomainModel<Attrs> {
     return new BrowserTab({id, lastFocused})
   }
 
+  static restore(id: string) {
+    this.dispatch(Tabs.add(id))
+  }
+
   load(pathname: string) {
     if (this.history.location.pathname === pathname) {
       this.history.replace(pathname)

@@ -21,6 +21,7 @@ export const WINDOW_PERSIST: StateKey[] = [
   "sessionHistories",
   "tabHistories",
   "window",
+  "session_entry",
 ]
 
 export const TAB_PERSIST: TabKey[] = ["editor", "id", "lastFocused", "layout"]

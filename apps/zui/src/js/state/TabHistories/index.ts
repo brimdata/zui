@@ -11,15 +11,6 @@ const slice = createSlice({
   reducers: {
     save: adapter.setAll,
   },
-  extraReducers: (builder) => {
-    builder.addCase(
-      tabs.remove,
-      (state, action: ReturnType<typeof tabs.remove>) => {
-        global.tabHistories.delete(action.payload)
-        return state
-      }
-    )
-  },
 })
 
 export default {

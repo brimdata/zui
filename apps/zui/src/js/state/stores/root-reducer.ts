@@ -21,6 +21,7 @@ import PoolSettings from "../PoolSettings"
 import Window from "../Window"
 import LoadDataForm from "../LoadDataForm"
 import Updates from "../Updates"
+import {SessionEntry} from "src/models/session-entry"
 
 const rootReducer = combineReducers<any, any>({
   appearance: Appearance.reducer,
@@ -44,6 +45,7 @@ const rootReducer = combineReducers<any, any>({
   url: Url.reducer,
   window: Window.reducer,
   updates: Updates.reducer,
+  ...SessionEntry.slice,
 })
 
 // A proof of concept. This would be a much nicer way to go

@@ -1,14 +1,27 @@
 import {useSelector} from "react-redux"
 import {ViewHandler} from "src/core/view-handler"
-import {Session} from "src/models/session"
+import SessionHistories from "src/js/state/SessionHistories"
+import Tabs from "src/js/state/Tabs"
+import {BrowserTab} from "src/models/browser-tab"
+import {SessionEntry} from "src/models/session-entry"
 
 export class SessionsPaneHandler extends ViewHandler {
-  sessions: Session[]
+  sessions: SessionEntry[]
 
   constructor() {
     super()
-    this.sessions = useSelector(Session.selectAll).sort(
-      (a, b) => a.tab.attrs.lastFocused - b.tab.attrs.lastFocused
-    )
+    useSelector(SessionHistories.raw)
+    this.activeTabId = useSelector(Tabs.getActive)
+    this.sessions = useSelector(SessionEntry.selectors.all)
+      .map((attrs) => new SessionEntry(attrs))
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+  }
+
+  isOpen(session) {
+    return session.id == this.activeTabId
+  }
+
+  activate(session) {
+    BrowserTab.find(session.id).activate()
   }
 }

@@ -10,6 +10,7 @@ import {BrowserTab} from "./browser-tab"
 import SessionQueries from "src/js/state/SessionQueries"
 import {nanoid} from "@reduxjs/toolkit"
 import {queryVersion} from "src/app/router/routes"
+import {SessionEntry} from "./session-entry"
 
 type Attrs = {
   id: string
@@ -40,6 +41,7 @@ export class Session extends DomainModel<Attrs> {
     const now = new Date().toISOString()
     this.dispatch(SessionQueries.init(id))
     BrowserTab.create({id, lastFocused: now})
+    SessionEntry.create({id})
     return new Session({id})
   }
 
@@ -101,10 +103,6 @@ export class Session extends DomainModel<Attrs> {
 
   get tab() {
     return BrowserTab.find(this.id)
-  }
-
-  get name() {
-    return "Bloop"
   }
 
   navigate(snapshot: EditorSnapshot, namedQuery?: NamedQuery) {
