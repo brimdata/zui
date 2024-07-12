@@ -35,7 +35,7 @@ export default function RightPane() {
   const isOpen = useSelector(Appearance.secondarySidebarIsOpen)
   const tab = useSelector(Current.getTabId)
   const handler = new RightPaneHandler()
-  if (!tab && isOpen) return null
+  if (!tab || !isOpen) return null
 
   return (
     <DraggablePane
