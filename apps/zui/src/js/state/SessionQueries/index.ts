@@ -4,6 +4,7 @@ import * as selectors from "./selectors"
 
 export default {
   reducer,
+  ...flows,
   ...actions,
   ...selectors,
 }
