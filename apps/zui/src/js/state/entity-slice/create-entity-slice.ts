@@ -13,14 +13,14 @@ import {
 type Options<T> = {
   name: string
   id?: (model: T) => EntityId
-  select?: (state: unknown) => EntityState<T>
+  select?: (state: unknown) => EntityState<T, string>
   sort?: Comparer<T>
 }
 
 type NestedOptions<T, Meta, NestedArgs extends any[]> = {
   name: string
   id?: (model: T) => EntityId
-  select?: (state: unknown, meta: Meta) => EntityState<T>
+  select?: (state: unknown, meta: Meta) => EntityState<T, string>
   sort?: Comparer<T>
   meta: (...args: NestedArgs) => Meta
 }
@@ -28,7 +28,7 @@ type NestedOptions<T, Meta, NestedArgs extends any[]> = {
 export function createEntitySlice<T>(options: Options<T>) {
   const id = options.id ?? ((thing) => thing["id"])
   const sort = options.sort ?? false
-  const adapter = makeAdapter<T>(id, sort)
+  const adapter = makeAdapter<T>(id, sort) as any
   const actions = makeActions<T>(options.name)
   const reducer = makeReducer<T>(adapter, actions, id)
   const selectors = makeSelectors<T>(adapter, options.select)
@@ -45,7 +45,7 @@ export function createNestedEntitySlice<T, Meta, NestedArgs extends any[]>(
 ) {
   const id = options.id ?? ((thing) => thing["id"])
   const sort = options.sort ?? false
-  const adapter = makeAdapter<T>(id, sort)
+  const adapter = makeAdapter<T>(id, sort) as any
   const actions = makeActions<T>(options.name) // Just to make the reducer
   const reducer = makeReducer<T>(adapter, actions, id)
   function at(...args: NestedArgs) {
@@ -64,10 +64,10 @@ export function createNestedEntitySlice<T, Meta, NestedArgs extends any[]>(
 }
 
 function makeAdapter<T>(
-  selectId: IdSelector<T>,
+  selectId: IdSelector<T, string>,
   sortComparer: Comparer<T> | false
 ) {
-  return createEntityAdapter<T>({selectId, sortComparer})
+  return createEntityAdapter<T, string>({selectId, sortComparer})
 }
 
 function makeAction<Payload, Meta = undefined>(
@@ -82,7 +82,11 @@ function makeAction<Payload, Meta = undefined>(
 function makeActions<T>(slice: string, meta = undefined) {
   return {
     create: makeAction<T | T[]>(slice, "create", meta),
-    update: makeAction<Update<T> | Update<T>[]>(slice, "update", meta),
+    update: makeAction<Update<T, string> | Update<T, string>[]>(
+      slice,
+      "update",
+      meta
+    ),
     upsert: makeAction<T | T[]>(slice, "upsert", meta),
     delete: makeAction<string | string[] | T | T[]>(slice, "delete", meta),
     deleteAll: makeAction<void>(slice, "deleteAll", meta),
@@ -90,8 +94,11 @@ function makeActions<T>(slice: string, meta = undefined) {
   }
 }
 
-function makeSelectors<T>(adapter: EntityAdapter<T>, selector = undefined) {
-  const select = adapter.getSelectors(selector)
+function makeSelectors<T>(
+  adapter: EntityAdapter<T, string>,
+  selector = undefined
+) {
+  const select = adapter.getSelectors<any>(selector)
   return {
     find: select.selectById,
     all: select.selectAll,
@@ -102,7 +109,7 @@ function makeSelectors<T>(adapter: EntityAdapter<T>, selector = undefined) {
 }
 
 function makeReducer<T>(
-  adapter: EntityAdapter<T>,
+  adapter: EntityAdapter<T, string>,
   actions: any,
   id: (item: T) => EntityId = (thing) => thing["id"]
 ) {
@@ -112,43 +119,49 @@ function makeReducer<T>(
 
   return createReducer(adapter.getInitialState(), (builder) => {
     builder.addCase(actions.sync, (state, action) => {
-      adapter.setAll(state as EntityState<T>, action.payload)
+      adapter.setAll(state as EntityState<T, string>, action.payload)
     })
 
     builder.addCase(actions.create, (state, action) => {
       if (Array.isArray(action.payload)) {
-        adapter.addMany(state as EntityState<T>, action.payload)
+        adapter.addMany(state as EntityState<T, string>, action.payload)
       } else {
-        adapter.addOne(state as EntityState<T>, action.payload)
+        adapter.addOne(state as EntityState<T, string>, action.payload)
       }
     })
 
     builder.addCase(actions.update, (state, action) => {
       if (Array.isArray(action.payload)) {
-        adapter.updateMany(state as EntityState<T>, action.payload)
+        adapter.updateMany(state as EntityState<T, string>, action.payload)
       } else {
-        adapter.updateOne(state as EntityState<T>, action.payload)
+        adapter.updateOne(state as EntityState<T, string>, action.payload)
       }
     })
 
     builder.addCase(actions.upsert, (state, action) => {
       if (Array.isArray(action.payload)) {
-        adapter.upsertMany(state as EntityState<T>, action.payload)
+        adapter.upsertMany(state as EntityState<T, string>, action.payload)
       } else {
-        adapter.upsertOne(state as EntityState<T>, action.payload)
+        adapter.upsertOne(state as EntityState<T, string>, action.payload)
       }
     })
 
     builder.addCase(actions.delete, (state, action) => {
       if (Array.isArray(action.payload)) {
-        adapter.removeMany(state as EntityState<T>, action.payload.map(getId))
+        adapter.removeMany(
+          state as EntityState<T, string>,
+          action.payload.map(getId)
+        )
       } else {
-        adapter.removeOne(state as EntityState<T>, getId(action.payload))
+        adapter.removeOne(
+          state as EntityState<T, string>,
+          getId(action.payload) as string
+        )
       }
     })
 
     builder.addCase(actions.deleteAll, (state) => {
-      adapter.removeAll(state as EntityState<T>)
+      adapter.removeAll(state as EntityState<T, string>)
     })
   })
 }

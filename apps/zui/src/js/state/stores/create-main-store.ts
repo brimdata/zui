@@ -1,6 +1,6 @@
 import {Middleware, configureStore} from "@reduxjs/toolkit"
 import rootReducer from "./root-reducer"
-import {State} from "../types"
+import {State, Store} from "../types"
 import {shouldForward} from "./ipc-redux-middleware"
 import {globalDispatchFromMain} from "src/electron/ops/global-dispatch-op"
 
@@ -11,8 +11,8 @@ import {globalDispatchFromMain} from "src/electron/ops/global-dispatch-op"
 const ipcMainReduxMiddleware: Middleware = (_store) => (next) => (action) => {
   const result = next(action)
 
-  if (shouldForward(action)) {
-    globalDispatchFromMain(action)
+  if (shouldForward(action as any)) {
+    globalDispatchFromMain(action as any)
   }
 
   return result
@@ -27,6 +27,7 @@ export function createMainStore(initState: Partial<State> | undefined) {
   return configureStore({
     reducer: rootReducer,
     preloadedState: initState,
+    // @ts-ignore
     middleware: (getDefaultMiddleware) => {
       return [
         ...getDefaultMiddleware({
@@ -37,5 +38,5 @@ export function createMainStore(initState: Partial<State> | undefined) {
         ipcMainReduxMiddleware,
       ]
     },
-  })
+  }) as Store
 }

@@ -26,7 +26,7 @@ export default {
     type: "$QUERIES_REMOVE_ITEMS",
     itemIds,
   }),
-  editItem: (args: Update<Item>): QUERIES_EDIT_ITEM => ({
+  editItem: (args: Update<Item, string>): QUERIES_EDIT_ITEM => ({
     type: "$QUERIES_EDIT_ITEM",
     item: args.changes,
     itemId: args.id.toString(),

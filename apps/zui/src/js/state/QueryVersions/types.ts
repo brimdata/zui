@@ -1,7 +1,7 @@
 import {EntityState} from "@reduxjs/toolkit"
 import {QueryPin} from "../Editor/types"
 
-export type VersionsState = EntityState<QueryVersion>
+export type VersionsState = EntityState<QueryVersion, string>
 export type QueryVersionsState = {
   [queryId: string]: VersionsState
 }

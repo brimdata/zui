@@ -6814,16 +6814,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bullet@file:../../../../jk/bullet::locator=zui%40workspace%3Aapps%2Fzui":
-  version: 0.0.1
-  resolution: "bullet@file:../../../../jk/bullet#../../../../jk/bullet::hash=d6af88&locator=zui%40workspace%3Aapps%2Fzui"
-  dependencies:
-    "@reduxjs/toolkit": ^2.2.5
-    lodash-es: ^4.17.21
-  checksum: ca73e1b7eac72239cdb40875ff3a940515d0a7c36e24614d791a4b30f98f1c979a2191818c3fe3c9a6c95e2ab5817d7543ff31859f787bf0d49d49a45454d888
-  languageName: node
-  linkType: hard
-
 "bundle-name@npm:^3.0.0":
   version: 3.0.0
   resolution: "bundle-name@npm:3.0.0"
@@ -12445,13 +12435,6 @@ __metadata:
   dependencies:
     p-locate: ^6.0.0
   checksum: c1b653bdf29beaecb3d307dfb7c44d98a2a98a02ebe353c9ad055d1ac45d6ed4e1142563d222df9b9efebc2bcb7d4c792b507fad9e7150a04c29530b7db570f8
-  languageName: node
-  linkType: hard
-
-"lodash-es@npm:^4.17.21":
-  version: 4.17.21
-  resolution: "lodash-es@npm:4.17.21"
-  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
   languageName: node
   linkType: hard
 
@@ -18339,7 +18322,6 @@ __metadata:
     ajv: ^6.9.1
     animejs: ^3.2.0
     brimcap: "brimdata/brimcap#v1.8.0"
-    bullet: ../../../../jk/bullet
     chalk: ^4.1.0
     chevrotain: ^10.5.0
     chrono-node: ^2.5.0

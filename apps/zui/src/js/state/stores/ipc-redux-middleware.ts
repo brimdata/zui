@@ -1,11 +1,11 @@
-import {AnyAction, Middleware} from "@reduxjs/toolkit"
+import {Action, Middleware} from "@reduxjs/toolkit"
 
 /**
  * This goes on the window store and will send actions
  * to the main store and other windows.
  */
 export const ipcRendererReduxMiddleware: Middleware =
-  (_store) => (next) => (action) => {
+  (_store) => (next) => (action: Action) => {
     const result = next(action)
 
     if (shouldForward(action)) {
@@ -20,7 +20,7 @@ export const ipcRendererReduxMiddleware: Middleware =
 /**
  * A global action starts with a $
  */
-export const isGlobalAction = (action: AnyAction) => action.type.startsWith("$")
-export const shouldForward = (action: AnyAction) =>
+export const isGlobalAction = (action: Action) => action.type.startsWith("$")
+export const shouldForward = (action: any) =>
   isGlobalAction(action) && !action.remote
 /* {remote: true} means this was already sent to you from elsewhere */

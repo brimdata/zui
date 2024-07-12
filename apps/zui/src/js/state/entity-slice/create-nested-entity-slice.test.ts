@@ -9,7 +9,7 @@ type StuffType = {
 const Stuff = createNestedEntitySlice<StuffType, {bagId: string}, [id: string]>(
   {
     name: "stuff",
-    select: (state: EntityState<StuffType>, {bagId}) => state[bagId],
+    select: (state: EntityState<StuffType, string>, {bagId}) => state[bagId],
     id: (stuff) => stuff.name,
     sort: (a, b) => (a.name > b.name ? 1 : -1),
     meta: (bagId: string) => ({bagId}),
@@ -17,11 +17,11 @@ const Stuff = createNestedEntitySlice<StuffType, {bagId: string}, [id: string]>(
 )
 
 const reducer = createReducer(
-  {} as {[id: string]: EntityState<StuffType>},
+  {} as {[id: string]: EntityState<StuffType, string>},
   (builder) => {
     builder.addMatcher(
       (a) => a.type.startsWith(Stuff.name),
-      (state, action) => {
+      (state, action: any) => {
         const key = action.meta.bagId
         state[key] = Stuff.reducer(state[key], action)
       }
@@ -29,7 +29,7 @@ const reducer = createReducer(
   }
 )
 
-const store = createStore(reducer)
+const store = createStore(reducer) as any
 
 test("nested entity slice", () => {
   // Create one

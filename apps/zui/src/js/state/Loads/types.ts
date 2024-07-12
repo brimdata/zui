@@ -12,4 +12,4 @@ export type LoadReference = {
   errors: string[]
 }
 
-export type LoadsState = EntityState<LoadReference>
+export type LoadsState = EntityState<LoadReference, string>

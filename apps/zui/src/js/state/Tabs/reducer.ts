@@ -66,7 +66,7 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(isTabAction, (s, a) => {
+    builder.addMatcher(isTabAction, (s, a: any) => {
       const id = a.tabId || a.payload?.tabId || s.active
       if (!findTab(s, id)) return
 

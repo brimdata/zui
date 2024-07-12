@@ -8,7 +8,7 @@ type StuffType = {
 
 const Stuff = createEntitySlice<StuffType>({
   name: "stuff",
-  select: (state: EntityState<StuffType>) => state,
+  select: (state: EntityState<StuffType, string>) => state,
   id: (stuff) => stuff.name,
   sort: (a, b) => (a.name > b.name ? 1 : -1),
 })
