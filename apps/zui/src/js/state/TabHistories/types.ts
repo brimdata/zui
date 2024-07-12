@@ -5,4 +5,4 @@ export interface SerializedHistory {
   entries: string[]
 }
 
-export type TabHistoriesState = EntityState<SerializedHistory>
+export type TabHistoriesState = EntityState<SerializedHistory, string>

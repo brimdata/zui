@@ -110,7 +110,7 @@ export function HistoryItem({node}: NodeRendererProps<Props>) {
   const sVersion = useSelector((state) =>
     QueryVersions.at(sessionId).find(state, version)
   )
-  const qVersion = useSelector((state) =>
+  const qVersion = useSelector((state: State) =>
     QueryVersions.at(queryId).find(state, version)
   )
   const versionObj = sVersion || qVersion

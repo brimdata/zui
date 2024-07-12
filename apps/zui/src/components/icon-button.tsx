@@ -33,15 +33,13 @@ const BG = styled.button`
   &:hover:not(:disabled) {
     background: var(--emphasis-bg);
     svg {
-      transform: scale(1.1);
+      transform: scale(1.03);
     }
   }
 
   &:active:not(:disabled) {
-    background: var(--emphasis-bg-more);
-    svg {
-      transform: scale(1.05);
-    }
+    background: var(--emphasis-bg);
+    transform: scale(0.99);
   }
 
   &.icon-label {

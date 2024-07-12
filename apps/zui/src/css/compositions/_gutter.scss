@@ -1,0 +1,15 @@
+.gutter {
+  padding-inline: var(--gutter-space);
+}
+
+.gutter-block {
+  padding-block: var(--gutter-space);
+}
+
+.half-gutter {
+  --gutter-space: var(--half-gutter);
+}
+
+.gutter-inline-end {
+  padding-inline-end: var(--gutter);
+}

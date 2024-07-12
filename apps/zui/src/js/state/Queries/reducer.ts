@@ -1,5 +1,5 @@
 import {QueriesAction, QueriesState, Item} from "./types"
-import produce from "immer"
+import {produce} from "immer"
 import TreeModel from "tree-model"
 
 const itemToNode = (item: Item): TreeModel.Node<Item> =>

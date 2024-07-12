@@ -1,4 +1,4 @@
-import {Action as ReduxAction, Store as ReduxStore} from "redux"
+import {Action as ReduxAction} from "redux"
 import {ThunkAction, ThunkDispatch} from "redux-thunk"
 import ZuiApi from "../api/zui-api"
 import {AppearanceState} from "./Appearance"
@@ -21,6 +21,7 @@ import {PoolSettingsState} from "./PoolSettings/types"
 import {WindowState} from "./Window/types"
 import {LoadDataFormState} from "./LoadDataForm/types"
 import {UpdatesState} from "./Updates/types"
+import {EnhancedStore} from "@reduxjs/toolkit"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -28,7 +29,7 @@ export type ThunkExtraArg = {
 
 export type Action = ReduxAction<string>
 export type Thunk<R = void> = ThunkAction<R, State, ThunkExtraArg, Action>
-export type Store = ReduxStore<State, any>
+export type Store = EnhancedStore<State, any, any>
 export type AppDispatch = ThunkDispatch<State, ThunkExtraArg, Action>
 export type Dispatch = AppDispatch
 export type GetState = () => State

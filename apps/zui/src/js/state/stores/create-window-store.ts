@@ -8,7 +8,8 @@ export function createWindowStore(
   extraArgument: ThunkExtraArg,
   middleware = []
 ) {
-  return configureStore({
+  return configureStore<State, any, any>({
+    // @ts-ignore
     reducer: rootReducer,
     preloadedState: initialState,
     middleware: (getDefaults) => {

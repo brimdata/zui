@@ -259,3 +259,9 @@
 .debug-blue {
   outline: 1px dashed blue;
 }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

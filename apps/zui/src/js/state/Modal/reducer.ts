@@ -1,5 +1,5 @@
 import {ModalAction, ModalState} from "./types"
-import produce from "immer"
+import {produce} from "immer"
 
 const init = (): ModalState => ({
   name: "",

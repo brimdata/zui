@@ -36,7 +36,7 @@ export const reducer = createReducer({}, (builder) => {
 
   builder.addMatcher(
     ({type}) => type == tabs.remove.toString(),
-    (s, a) => {
+    (s, a: PayloadAction<string>) => {
       delete s[a.payload]
     }
   )

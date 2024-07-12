@@ -5,6 +5,7 @@ export type IconMapping = {[name: string]: MingCuteIconName}
 export type IconName = keyof typeof iconNames | keyof typeof customIconNames
 
 export const iconNames = {
+  session: "layout_top",
   chevron_down: "down",
   chevron_left: "left",
   chevron_right: "right",

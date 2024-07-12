@@ -42,7 +42,7 @@
     "@brimdata/zed-node": "workspace:*",
     "@js-joda/core": "^3.2.0",
     "@monaco-editor/react": "^4.5.1",
-    "@reduxjs/toolkit": "^1.9.3",
+    "@reduxjs/toolkit": "^2.2.5",
     "@swc/cli": "^0.1.55",
     "@swc/core": "^1.2.144",
     "@swc/jest": "^0.2.17",

@@ -1,4 +1,4 @@
-import produce from "immer"
+import {produce} from "immer"
 import {LakeStatusesAction, LakeStatusesState} from "./types"
 
 const init = (): LakeStatusesState => {

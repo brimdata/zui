@@ -5,6 +5,7 @@
   border-top: 2px solid transparent;
   border-bottom: 2px solid transparent;
   color: var(--fg-color-less);
+  transition: all var(--hover-duration);
 
   &[aria-pressed="true"] {
     opacity: 1;
@@ -12,8 +13,13 @@
     border-bottom: 2px solid var(--primary-color);
   }
 
-  &:hover {
+  &:hover,
+  &:active {
     background: var(--emphasis-bg-less);
+  }
+
+  &:active {
+    transform: scale(0.985);
   }
 
   span {

@@ -1,0 +1,7 @@
+$font-sizes: "-2", "-1", "0", "1", "2", "3", "4", "5";
+
+@each $size in $font-sizes {
+  .step-#{$size} {
+    font-size: var(--step-#{$size});
+  }
+}

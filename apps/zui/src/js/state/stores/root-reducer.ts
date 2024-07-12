@@ -22,7 +22,7 @@ import Window from "../Window"
 import LoadDataForm from "../LoadDataForm"
 import Updates from "../Updates"
 
-const rootReducer = combineReducers<any, any>({
+const rootReducer = combineReducers<any>({
   appearance: Appearance.reducer,
   configPropValues: ConfigPropValues.reducer,
   errors: Errors.reducer,
