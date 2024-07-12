@@ -29,7 +29,6 @@ export function Menu() {
         options={[
           makeOption("Pools", "pools"),
           makeOption("Queries", "queries"),
-          makeOption("Sessions", "sessions"),
         ]}
       />
     </div>

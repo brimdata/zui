@@ -10,7 +10,6 @@ import {BrowserTab} from "./browser-tab"
 import SessionQueries from "src/js/state/SessionQueries"
 import {nanoid} from "@reduxjs/toolkit"
 import {queryVersion} from "src/app/router/routes"
-import {SessionEntry} from "./session-entry"
 
 type Attrs = {
   id: string
@@ -19,12 +18,6 @@ type Attrs = {
 }
 
 export class Session extends DomainModel<Attrs> {
-  static selectAll(state) {
-    return BrowserTab.selectAll(state)
-      .filter((tab) => tab.matchesPath(queryVersion.path))
-      .map((tab) => new Session({id: tab.attrs.id}))
-  }
-
   static activateLastFocused() {
     const tab = BrowserTab.orderBy("lastFocused", "desc").find((tab) =>
       tab.matchesPath(queryVersion.path)
@@ -41,7 +34,6 @@ export class Session extends DomainModel<Attrs> {
     const now = new Date().toISOString()
     this.dispatch(SessionQueries.init(id))
     BrowserTab.create({id, lastFocused: now})
-    SessionEntry.create({id})
     return new Session({id})
   }
 

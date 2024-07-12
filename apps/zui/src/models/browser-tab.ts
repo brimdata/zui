@@ -10,10 +10,6 @@ type Attrs = {
 }
 
 export class BrowserTab extends DomainModel<Attrs> {
-  static selectAll(state) {
-    return Tabs.getData(state).map((data) => new BrowserTab(data))
-  }
-
   static find(id: string) {
     const attrs = this.select(Tabs.findById(id))
     return attrs ? new BrowserTab(attrs) : null
@@ -38,10 +34,6 @@ export class BrowserTab extends DomainModel<Attrs> {
     return new BrowserTab({id, lastFocused})
   }
 
-  static restore(id: string) {
-    this.dispatch(Tabs.add(id))
-  }
-
   load(pathname: string) {
     if (this.history.location.pathname === pathname) {
       this.history.replace(pathname)
@@ -62,14 +54,6 @@ export class BrowserTab extends DomainModel<Attrs> {
 
   activate() {
     this.dispatch(Tabs.activate(this.attrs.id))
-  }
-
-  get id() {
-    return this.attrs.id
-  }
-
-  get isActive() {
-    return this.select(Tabs.getActive) === this.id
   }
 
   matchesPath(path) {

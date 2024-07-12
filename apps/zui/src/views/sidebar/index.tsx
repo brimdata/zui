@@ -11,7 +11,6 @@ import {Menu} from "./menu"
 import {SidebarToggleButton} from "./sidebar-toggle-button"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {Body} from "./body"
-import {SessionsPane} from "../sessions-pane"
 
 const EmptyText = styled.div`
   ${(p) => p.theme.typography.labelNormal}
@@ -27,8 +26,6 @@ const PaneSwitch = ({name}) => {
       return <PoolsSection />
     case "queries":
       return <QueriesSection />
-    case "sessions":
-      return <SessionsPane />
     default:
       return null
   }
