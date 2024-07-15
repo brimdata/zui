@@ -112,7 +112,7 @@ export default function TabBar() {
             />
           )
         })}
-        <AddTab onClick={ctl.onAddClick} left={width * count} />
+        <AddTab left={width * count} />
       </Container>
       <Show when={rightbarCollapse}>
         <RightSidebarToggleButton />

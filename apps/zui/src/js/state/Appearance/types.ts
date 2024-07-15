@@ -1,3 +1,3 @@
 export type HistoryView = "tree" | "linear"
-export type SectionName = "pools" | "queries" | "history"
+export type SectionName = "pools" | "queries" | "sessions"
 export type OpenMap = {[id: string]: boolean}

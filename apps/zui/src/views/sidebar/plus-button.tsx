@@ -6,10 +6,10 @@ import {useZuiApi} from "src/views/application/context"
 import {MenuItem, showContextMenu} from "src/core/menu"
 import {useDispatch} from "src/core/use-dispatch"
 import useLakeId from "src/app/router/hooks/use-lake-id"
-import Tabs from "src/js/state/Tabs"
 import {Icon} from "src/components/icon"
 import {connectToLake} from "src/app/commands/connect-to-lake"
 import Modal from "src/js/state/Modal"
+import {Session} from "src/models/session"
 
 export const Button = styled.button`
   color: white;
@@ -50,7 +50,7 @@ export default function PlusButton() {
     const template: MenuItem[] = [
       {
         label: "New Query Session",
-        click: () => dispatch(Tabs.createQuerySession()),
+        click: () => Session.createWithTab(),
       },
       {
         label: "New Pool",

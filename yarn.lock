@@ -6814,6 +6814,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bullet@file:../../../../jk/bullet::locator=zui%40workspace%3Aapps%2Fzui":
+  version: 0.0.1
+  resolution: "bullet@file:../../../../jk/bullet#../../../../jk/bullet::hash=cbabb8&locator=zui%40workspace%3Aapps%2Fzui"
+  dependencies:
+    "@reduxjs/toolkit": ^2.2.5
+    lodash-es: ^4.17.21
+    pluralize: ^8.0.0
+  checksum: 6a2a73598958c4edc052b69485cee3c83732558f1ba4be6b96e594ad6045ff2b24bacdacf88d0b4870bed134d0feef1c53bcc359a4e3ed645bb718d2c4fc0cdf
+  languageName: node
+  linkType: hard
+
 "bundle-name@npm:^3.0.0":
   version: 3.0.0
   resolution: "bundle-name@npm:3.0.0"
@@ -12438,6 +12449,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash-es@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash-es@npm:4.17.21"
+  checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -14424,6 +14442,13 @@ __metadata:
     base64-js: ^1.5.1
     xmlbuilder: ^15.1.1
   checksum: c8ea013da8646d4c50dff82f9be39488054621cc229957621bb00add42b5d4ce3657cf58d4b10c50f7dea1a81118f825838f838baeb4e6f17fab453ecf91d424
+  languageName: node
+  linkType: hard
+
+"pluralize@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "pluralize@npm:8.0.0"
+  checksum: 08931d4a6a4a5561a7f94f67a31c17e6632cb21e459ab3ff4f6f629d9a822984cf8afef2311d2005fbea5d7ef26016ebb090db008e2d8bce39d0a9a9d218736e
   languageName: node
   linkType: hard
 
@@ -18322,6 +18347,7 @@ __metadata:
     ajv: ^6.9.1
     animejs: ^3.2.0
     brimcap: "brimdata/brimcap#v1.8.0"
+    bullet: ../../../../jk/bullet
     chalk: ^4.1.0
     chevrotain: ^10.5.0
     chrono-node: ^2.5.0

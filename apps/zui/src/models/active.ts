@@ -1,12 +1,12 @@
 import {DomainModel} from "src/core/domain-model"
 import {SessionLocation} from "./session-location"
 import Current from "src/js/state/Current"
-import {EditorSnapshot} from "./editor-snapshot"
 import {BrowserTab} from "./browser-tab"
 import {Frame} from "./frame"
 import {getActiveTab} from "src/js/state/Tabs/selectors"
 import Editor from "src/js/state/Editor"
 import {Lake} from "./lake"
+import {Snapshot} from "./snapshot"
 
 export class Active extends DomainModel {
   static get tab() {
@@ -25,9 +25,11 @@ export class Active extends DomainModel {
 
   static get snapshot() {
     const params = this.select(Current.getQueryUrlParams)
-
-    return new EditorSnapshot({
-      parentId: params.queryId,
+    const sessionId = this.session.id
+    const queryId = sessionId === params.queryId ? null : params.queryId
+    return new Snapshot({
+      sessionId,
+      queryId,
       ...this.select(Editor.getSnapshot),
     })
   }

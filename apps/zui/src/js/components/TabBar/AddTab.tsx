@@ -1,5 +1,6 @@
 import React from "react"
 import {IconButton} from "src/components/icon-button"
+import {Session} from "src/models/session"
 import styled from "styled-components"
 
 const BG = styled.div`
@@ -11,18 +12,17 @@ const BG = styled.div`
 `
 
 type Props = {
-  onClick: () => void
   left: number
 }
 
-export default function AddTab({onClick, left}: Props) {
+export default function AddTab({left}: Props) {
   return (
     <BG style={{transform: `translateX(${left}px)`}}>
       <IconButton
         label="New Tab"
         iconName="plus"
         iconSize={18}
-        click={onClick}
+        click={() => Session.createWithTab()}
       />
     </BG>
   )
