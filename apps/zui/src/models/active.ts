@@ -1,5 +1,5 @@
 import {DomainModel} from "src/core/domain-model"
-import {Session} from "./session"
+import {SessionLocation} from "./session-location"
 import Current from "src/js/state/Current"
 import {EditorSnapshot} from "./editor-snapshot"
 import {BrowserTab} from "./browser-tab"
@@ -16,7 +16,7 @@ export class Active extends DomainModel {
 
   static get session() {
     const params = this.select(Current.getQueryUrlParams)
-    return new Session({
+    return new SessionLocation({
       id: this.tab.attrs.id,
       parentId: params.queryId,
       snapshotId: params.version,

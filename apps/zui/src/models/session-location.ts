@@ -17,7 +17,7 @@ type Attrs = {
   snapshotId?: string
 }
 
-export class Session extends DomainModel<Attrs> {
+export class SessionLocation extends DomainModel<Attrs> {
   static activateLastFocused() {
     const tab = BrowserTab.orderBy("lastFocused", "desc").find((tab) =>
       tab.matchesPath(queryVersion.path)
@@ -25,7 +25,7 @@ export class Session extends DomainModel<Attrs> {
     if (tab) {
       tab.activate()
     } else {
-      Session.create().tab.activate()
+      SessionLocation.create().tab.activate()
     }
   }
 
@@ -34,7 +34,7 @@ export class Session extends DomainModel<Attrs> {
     const now = new Date().toISOString()
     this.dispatch(SessionQueries.init(id))
     BrowserTab.create({id, lastFocused: now})
-    return new Session({id})
+    return new SessionLocation({id})
   }
 
   get hasUrl() {
@@ -100,7 +100,7 @@ export class Session extends DomainModel<Attrs> {
   navigate(snapshot: EditorSnapshot, namedQuery?: NamedQuery) {
     const sessionSnapshot = snapshot.clone({parentId: this.id})
     sessionSnapshot.save()
-    new Session({
+    new SessionLocation({
       id: this.id,
       parentId: namedQuery ? namedQuery.id : this.id,
       snapshotId: sessionSnapshot.id,
