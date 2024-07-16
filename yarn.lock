@@ -6661,12 +6661,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@brimdata/brimcap#v1.8.0":
+"brimcap@brimdata/brimcap#v1.17.0":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=e1242c7029d8207d5e69ec3a13e531b57b65b046"
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=68798b88189eb402c37e22ade6bd12cf808cc0e9"
   bin:
     brimcap: build/dist/brimcap
-  checksum: 42f050137fae0f4d9b3dfd898e2d9c58be359e11307d46256836ed6fc9e38eee2ec0b7d95c136f5cc99dd3eae6fe854d7b5e6fab795fb072f6dd8841187c0675
+  checksum: 1a587aabc241ef34f3d335220d6e02b5e04fe4f224618644941035bdd0b4e2c9210472474a5319a546704c323ab4a24b40deb1257c3facbe1290ed4213161786
   languageName: node
   linkType: hard
 
@@ -18207,10 +18207,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#c81efd6a868a855ed6b7de983491b5f3a5832d19":
+"zed@brimdata/zed#v1.17.0":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=c81efd6a868a855ed6b7de983491b5f3a5832d19"
-  checksum: d441383685329940af301b30e2675cee5c02794758381ceca4d52f5593514dc2adc48210a569224b293f095db6bd9e05d1e7d49f6c4184607744f85fc4f17a10
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=89ddf2533b6e28bdee4f1c537e82860f1ff595ef"
+  checksum: 9f7383ff50954c611619257c88c5bc547b9507fc433fd021bd33216d085b0abe8b5a2e50f516bc4d32d5bf61f54d95c3f47ca5bea459df245a7bee206776cd55
   languageName: node
   linkType: hard
 
@@ -18321,7 +18321,7 @@ __metadata:
     acorn: ^7.4.1
     ajv: ^6.9.1
     animejs: ^3.2.0
-    brimcap: "brimdata/brimcap#v1.8.0"
+    brimcap: "brimdata/brimcap#v1.17.0"
     chalk: ^4.1.0
     chevrotain: ^10.5.0
     chrono-node: ^2.5.0
@@ -18408,7 +18408,7 @@ __metadata:
     utopia-core-scss: ^1.0.1
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#c81efd6a868a855ed6b7de983491b5f3a5832d19"
+    zed: "brimdata/zed#v1.17.0"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
