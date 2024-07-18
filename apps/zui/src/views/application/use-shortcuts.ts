@@ -4,7 +4,6 @@ import Mousetrap from "mousetrap"
 import Modal from "../../js/state/Modal"
 import Tabs from "../../js/state/Tabs"
 import {useDispatch} from "src/core/use-dispatch"
-import {Session} from "src/models/session"
 
 export default function () {
   const dispatch = useDispatch()
@@ -12,7 +11,7 @@ export default function () {
     const el = document.documentElement
     if (!el) throw new Error("No Document Element")
     const bindings = new Mousetrap(el)
-      .bind("mod+t", () => Session.createWithTab())
+      .bind("mod+t", () => dispatch(Tabs.createQuerySession()))
       .bind("mod+w", (e) => {
         e.preventDefault()
         dispatch(Tabs.closeActive())

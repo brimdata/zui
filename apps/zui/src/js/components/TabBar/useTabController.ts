@@ -22,6 +22,10 @@ export default function (count: number, calcWidths: Function) {
     activeId,
     previewId: useSelector(Tabs.getPreview),
 
+    onAddClick() {
+      dispatch(Tabs.createQuerySession())
+    },
+
     onRemoveClick(event: MouseEvent, id: string) {
       event.stopPropagation()
       removedByClick.current = true
