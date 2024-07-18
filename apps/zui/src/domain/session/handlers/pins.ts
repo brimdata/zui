@@ -9,7 +9,7 @@ import {submitSearch} from "src/domain/session/handlers"
 import {createHandler} from "src/core/handlers"
 import ZuiApi from "src/js/api/zui-api"
 import Selection from "src/js/state/Selection"
-import {SessionLocation} from "src/models/session-location"
+import {Session} from "src/models/session"
 import {Active} from "src/models/active"
 
 export const createPinFromEditor = createHandler(
@@ -44,7 +44,7 @@ export const createFromPin = createHandler(
 export const setFromPin = createHandler(
   "session.setFromPin",
   ({dispatch}, value: string) => {
-    SessionLocation.activateLastFocused()
+    Session.activateLastFocused()
     dispatch(Editor.setFrom(value))
     Active.session.navigate(Active.snapshot, Active.session.namedQuery)
   }

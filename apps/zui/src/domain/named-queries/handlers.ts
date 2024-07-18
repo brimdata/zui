@@ -2,7 +2,7 @@ import {createHandler} from "src/core/handlers"
 import {Active} from "src/models/active"
 import {EditorSnapshot} from "src/models/editor-snapshot"
 import {NamedQuery} from "src/models/named-query"
-import {SessionLocation} from "src/models/session-location"
+import {Session} from "src/models/session"
 
 /**
  * This handler is called when the user submits the form to name their
@@ -36,6 +36,6 @@ export const show = createHandler((_, id: string, snapshotId?: string) => {
     ? EditorSnapshot.find(query.id, snapshotId)
     : query.lastSnapshot
 
-  SessionLocation.activateLastFocused()
+  Session.activateLastFocused()
   Active.session.navigate(snapshot, query)
 })
