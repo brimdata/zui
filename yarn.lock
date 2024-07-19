@@ -6661,12 +6661,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@brimdata/brimcap#v1.8.0":
+"brimcap@brimdata/brimcap#v1.17.0":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=e1242c7029d8207d5e69ec3a13e531b57b65b046"
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=68798b88189eb402c37e22ade6bd12cf808cc0e9"
   bin:
     brimcap: build/dist/brimcap
-  checksum: 42f050137fae0f4d9b3dfd898e2d9c58be359e11307d46256836ed6fc9e38eee2ec0b7d95c136f5cc99dd3eae6fe854d7b5e6fab795fb072f6dd8841187c0675
+  checksum: 1a587aabc241ef34f3d335220d6e02b5e04fe4f224618644941035bdd0b4e2c9210472474a5319a546704c323ab4a24b40deb1257c3facbe1290ed4213161786
   languageName: node
   linkType: hard
 
@@ -18232,10 +18232,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#6e61673c6dd5272230fce02246c8c8f26051f396":
+"zed@brimdata/zed#9766d17d787cc41d96e09972d0e9bdc82c83bd5a":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=6e61673c6dd5272230fce02246c8c8f26051f396"
-  checksum: 451bfc194b8dc4d0d90901106a22ff2942f9d9b3121fa819bbf5ff7a09c4f0fa0fac1465de4b42683acfd121655cb3ff5999c89b9bb0bbbc081d9e597d7e6a67
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=9766d17d787cc41d96e09972d0e9bdc82c83bd5a"
+  checksum: c78a55d52207a84e0d1a9d27a82f13581ec3c92d50e2a58a575b69b0e4ded03e87b7aec7c4fc0e5ed859905c7f4a9509abc2a9bb408fcae0ab076d257a726d5d
   languageName: node
   linkType: hard
 
@@ -18346,7 +18346,7 @@ __metadata:
     acorn: ^7.4.1
     ajv: ^6.9.1
     animejs: ^3.2.0
-    brimcap: "brimdata/brimcap#v1.8.0"
+    brimcap: "brimdata/brimcap#v1.17.0"
     bullet: ../../../../jk/bullet
     chalk: ^4.1.0
     chevrotain: ^10.5.0
@@ -18434,7 +18434,7 @@ __metadata:
     utopia-core-scss: ^1.0.1
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#6e61673c6dd5272230fce02246c8c8f26051f396"
+    zed: "brimdata/zed#9766d17d787cc41d96e09972d0e9bdc82c83bd5a"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0

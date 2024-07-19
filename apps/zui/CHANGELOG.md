@@ -1,3 +1,16 @@
+## v1.17.0
+- Because Zui is dependent on the [Zed project](https://zed.brimdata.io/), GA Zui release major/minor version numbers are now synchronized to the corresponding [Zed release](https://github.com/brimdata/zed/releases)
+- Update Zed to [v1.17.0](https://github.com/brimdata/zed/releases/tag/v1.17.0)
+- Update Brimcap to [v1.17.0](https://github.com/brimdata/brimcap/releases/tag/v1.17.0)
+- The Correlations view has been moved to its own tab in the right panel separate from the Detail view (#3123)
+- The Detail view (both when in the right panel and as a separate window) now uses a hierarchical display format similar to the main Inspector results view (#3127)
+- Add Parquet as an available format for **Export** (#3122)
+- Add an option in **Settings** to allow the Zed lake service launched by Zui to accept remote connections if desired (#3116)
+- Fix an issue where the **Export** feature was not surfacing some failures (#3115)
+- Fix an issue where the presence of `null` [union values](https://zed.brimdata.io/docs/formats/zed#25-union) could cause a crash when displayed (#3118)
+- Fix an issue where connections with small durations were shown as "Not available" in the Correlations view (#3119)
+- Fix an issue where no notification was shown if the **Packets** button was clicked and there was no app installed to open the pcap slice (e.g., Wireshark) (#3114)
+
 ## v1.8.0
 - Update Zed to [v1.16.0](https://github.com/brimdata/zed/releases/tag/v1.16.0)
 - Update Brimcap to [v1.8.0](https://github.com/brimdata/brimcap/releases/tag/v1.8.0), which includes a new Zeek [v6.2.0-brim2](https://github.com/brimdata/build-zeek/releases/tag/v6.2.0-brim2)
