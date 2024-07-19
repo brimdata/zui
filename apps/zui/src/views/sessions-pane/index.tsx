@@ -1,7 +1,7 @@
-import {Session} from "src/models/session"
+import {QuerySession} from "src/models/query-session"
 
 export function SessionsPane() {
-  const sessions = Session.useAll()
+  const sessions = QuerySession.useAll()
 
   return (
     <ul className="gutter-block">
