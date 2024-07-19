@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {SessionHistoriesState, SessionHistoryEntry} from "./types"
-import {actions as tabs} from "../Tabs/reducer"
 
 const slice = createSlice({
   name: "sessionHistories",
@@ -32,11 +31,6 @@ const slice = createSlice({
         session.splice(a.payload.index, 1)
       }
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(tabs.remove, (s, a: ReturnType<typeof tabs.remove>) => {
-      delete s[a.payload]
-    })
   },
 })
 

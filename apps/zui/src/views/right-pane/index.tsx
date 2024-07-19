@@ -5,6 +5,7 @@ import Layout from "src/js/state/Layout"
 import {DraggablePane} from "src/js/components/draggable-pane"
 import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
+import {HistorySection} from "./history/section"
 import {ColumnsPane} from "src/views/columns-pane"
 import Appearance from "src/js/state/Appearance"
 import Current from "src/js/state/Current"
@@ -12,7 +13,6 @@ import {CorrelationsPane} from "../correlations-pane"
 import {Header} from "./header"
 import {RightPaneHandler} from "./right-pane-handler"
 import {DetailPane} from "../detail-pane"
-import {HistoryPane} from "../history-pane"
 
 function Contents() {
   switch (useSelector(Layout.getCurrentPaneName)) {
@@ -21,7 +21,7 @@ function Contents() {
     case "versions":
       return <VersionsSection />
     case "history":
-      return <HistoryPane />
+      return <HistorySection />
     case "columns":
       return <ColumnsPane />
     case "correlations":
