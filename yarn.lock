@@ -6816,12 +6816,12 @@ __metadata:
 
 "bullet@file:../../../../jk/bullet::locator=zui%40workspace%3Aapps%2Fzui":
   version: 0.0.1
-  resolution: "bullet@file:../../../../jk/bullet#../../../../jk/bullet::hash=9391c2&locator=zui%40workspace%3Aapps%2Fzui"
+  resolution: "bullet@file:../../../../jk/bullet#../../../../jk/bullet::hash=8cc4c4&locator=zui%40workspace%3Aapps%2Fzui"
   dependencies:
     "@reduxjs/toolkit": ^2.2.5
     lodash-es: ^4.17.21
     pluralize: ^8.0.0
-  checksum: 504610a6b1b1b9898abff12effa242b84d3e046f18794cfd1d5fcfb743c1559130d1afef13285ef24b6a6a7ae0d269dff25cdd569062736e28c52de8f63332c4
+  checksum: ddb854ff77707d9d11c633c84b626696abd2182f7ec03d8dce983c015afbe814e94713aacb03e242129554d0ab60442f4463246cacfe683aab4b064ea56a2b86
   languageName: node
   linkType: hard
 
