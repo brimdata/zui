@@ -3,7 +3,8 @@ import {ApplicationEntity} from "./application-entity"
 import {EntityState} from "@reduxjs/toolkit"
 import {BrowserTab} from "./browser-tab"
 import Tabs from "src/js/state/Tabs"
-import SessionHistories from "src/js/state/SessionHistories"
+import {actions} from "src/js/state/SessionHistories/reducer"
+import {getById} from "src/js/state/SessionHistories/selectors"
 import {queryPath} from "src/app/router/utils/paths"
 import {last} from "lodash"
 import {EditorSnapshot} from "./editor-snapshot"
@@ -28,7 +29,7 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   }
 
   get history() {
-    return this.select(SessionHistories.getById(this.id)) || []
+    return this.select(getById(this.id)) || []
   }
 
   get lastSnapshot() {
@@ -48,8 +49,8 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   }
 
   restore() {
-    const histories = this.select(SessionHistories.getById(this.id))
-    const entry = histories && last(histories)
+    const history = this.history
+    const entry = history && last(history)
     if (entry) {
       const url = queryPath(entry.queryId, entry.version)
       this.dispatch(Tabs.create(url, this.id))
@@ -66,7 +67,7 @@ export class QuerySession extends ApplicationEntity<Attributes> {
 
   destroy() {
     super.destroy()
-    this.dispatch(SessionHistories.deleteById({sessionId: this.id}))
+    this.dispatch(actions.deleteById({sessionId: this.id}))
     global.tabHistories.delete(this.id)
     if (this.isActive) {
       this.dispatch(Tabs.closeActive())
