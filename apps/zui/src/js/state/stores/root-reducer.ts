@@ -21,7 +21,6 @@ import PoolSettings from "../PoolSettings"
 import Window from "../Window"
 import LoadDataForm from "../LoadDataForm"
 import Updates from "../Updates"
-import {Snapshot} from "src/models/snapshot"
 import {QuerySession} from "src/models/query-session"
 
 const rootReducer = combineReducers<any>({
@@ -47,7 +46,6 @@ const rootReducer = combineReducers<any>({
   window: Window.reducer,
   updates: Updates.reducer,
   ...QuerySession.slice,
-  ...Snapshot.slice,
 })
 
 // A proof of concept. This would be a much nicer way to go
