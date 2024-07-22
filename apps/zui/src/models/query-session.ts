@@ -5,6 +5,8 @@ import {BrowserTab} from "./browser-tab"
 import Tabs from "src/js/state/Tabs"
 import SessionHistories from "src/js/state/SessionHistories"
 import {queryPath} from "src/app/router/utils/paths"
+import {last} from "lodash"
+import {EditorSnapshot} from "./editor-snapshot"
 
 const schema = {
   name: {type: String, default: null as string},
@@ -16,7 +18,6 @@ export type QuerySessionState = EntityState<Attributes, string>
 
 export class QuerySession extends ApplicationEntity<Attributes> {
   static schema = schema
-
   activate() {
     if (this.tab) this.tab.activate()
     else this.restore()
@@ -26,15 +27,51 @@ export class QuerySession extends ApplicationEntity<Attributes> {
     return BrowserTab.find(this.id)
   }
 
+  get history() {
+    return this.select(SessionHistories.getById(this.id)) || []
+  }
+
+  get lastSnapshot() {
+    const entry = last(this.history)
+    if (!entry) return null
+    return EditorSnapshot.find(entry.queryId, entry.version)
+  }
+
+  get displayName() {
+    const snapshot = this.lastSnapshot
+    if (snapshot) return snapshot.toQueryText()
+    else return "(New Session)"
+  }
+
+  get isActive() {
+    return this.select(Tabs.getActive) === this.id
+  }
+
   restore() {
     const histories = this.select(SessionHistories.getById(this.id))
-    const entry = histories && histories[0]
+    const entry = histories && last(histories)
     if (entry) {
       const url = queryPath(entry.queryId, entry.version)
-      console.log({url, entry})
       this.dispatch(Tabs.create(url, this.id))
     } else {
-      throw new Error("Figure this case out")
+      const snapshot = new EditorSnapshot({
+        pins: [],
+        value: "",
+        parentId: this.id,
+      })
+      snapshot.save()
+      this.dispatch(Tabs.create(snapshot.pathname, this.id))
+    }
+  }
+
+  destroy() {
+    super.destroy()
+    this.dispatch(SessionHistories.deleteById({sessionId: this.id}))
+    global.tabHistories.delete(this.id)
+    if (this.isActive) {
+      this.dispatch(Tabs.closeActive())
+    } else {
+      this.dispatch(Tabs.remove(this.id))
     }
   }
 }

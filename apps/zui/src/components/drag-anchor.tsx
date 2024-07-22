@@ -142,7 +142,6 @@ export default class DragAnchor extends React.Component<Props> {
         className={classNames(
           `align-${this.props.position}`,
           this.props.className,
-
           {
             debug: this.props.debug,
             showOnHover: this.props.showOnHover,

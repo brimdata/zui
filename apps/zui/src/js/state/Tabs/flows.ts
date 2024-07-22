@@ -12,7 +12,14 @@ export const create =
   (dispatch) => {
     dispatch(SessionQueries.init(id))
     dispatch(Tabs.add(id))
-    global.tabHistories.create(id, [{pathname: url}], 0)
+    // move to tabHistories.restore(id, url)
+    const history = global.tabHistories.get(id)
+    if (history) {
+      if (history.location.pathname !== url) history.push(url)
+    } else {
+      global.tabHistories.create(id, [{pathname: url}], 0)
+    }
+    // end
     dispatch(Tabs.activate(id))
     return id
   }

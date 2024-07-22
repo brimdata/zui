@@ -33,11 +33,4 @@ export const reducer = createReducer({}, (builder) => {
       if (!state[id].ids.length) delete state[id]
     }
   )
-
-  builder.addMatcher(
-    ({type}) => type == tabs.remove.toString(),
-    (s, a: PayloadAction<string>) => {
-      delete s[a.payload]
-    }
-  )
 })
