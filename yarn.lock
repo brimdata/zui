@@ -6814,14 +6814,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bullet@file:../../../../jk/bullet::locator=zui%40workspace%3Aapps%2Fzui":
+"bullet@jameskerr/bullet#main":
   version: 0.0.1
-  resolution: "bullet@file:../../../../jk/bullet#../../../../jk/bullet::hash=3d1c52&locator=zui%40workspace%3Aapps%2Fzui"
+  resolution: "bullet@https://github.com/jameskerr/bullet.git#commit=bd006cfd3286e26e8b63e92bb8fa80a5c4e149b9"
   dependencies:
     "@reduxjs/toolkit": ^2.2.5
     lodash-es: ^4.17.21
     pluralize: ^8.0.0
-  checksum: a16ada9432bed2ceebddc99a07e6945923e51a02466c7f9e633cd21cc0c51320cad2d01ecd28f1d6eacf124f005e2f906536a6770f25999e3b5dab84f5c8a145
+  checksum: 7ba7dee4f7c23bc3799c3f84db4ede5037ebac052af1b3b40a63dcd15021b5696764d658cb2b89904bcd3c5e598a5a0cce338d05ae13d0c9e51181e813116d21
   languageName: node
   linkType: hard
 
@@ -18347,7 +18347,7 @@ __metadata:
     ajv: ^6.9.1
     animejs: ^3.2.0
     brimcap: "brimdata/brimcap#v1.17.0"
-    bullet: ../../../../jk/bullet
+    bullet: "jameskerr/bullet#main"
     chalk: ^4.1.0
     chevrotain: ^10.5.0
     chrono-node: ^2.5.0
