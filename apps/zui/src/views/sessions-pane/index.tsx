@@ -9,7 +9,9 @@ import Tabs from "src/js/state/Tabs"
 export function SessionsPane() {
   useSelector(SessionHistories.raw) // We need this here to update the display name
   useSelector(Tabs.getActive) // We need this to update isActive
-  const sessions = QuerySession.useAll()
+  const sessions = QuerySession.useAll().sort(
+    (item, pivot) => pivot.createdAt - item.createdAt
+  )
   const handler = new SessionsPaneHandler()
 
   return (

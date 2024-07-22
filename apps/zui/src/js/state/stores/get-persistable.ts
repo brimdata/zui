@@ -14,14 +14,14 @@ export const GLOBAL_PERSIST: StateKey[] = [
   "queryVersions",
   "sessionQueries",
   "poolSettings",
+  "query_sessions",
+  "sessionHistories",
 ]
 
 export const WINDOW_PERSIST: StateKey[] = [
   "appearance",
-  "sessionHistories",
   "tabHistories",
   "window",
-  "query_sessions",
 ]
 
 export const TAB_PERSIST: TabKey[] = ["editor", "id", "lastFocused", "layout"]

@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {SessionHistoriesState, SessionHistoryEntry} from "./types"
 
 const slice = createSlice({
-  name: "sessionHistories",
+  name: "$sessionHistories",
   initialState: {} as SessionHistoriesState,
   reducers: {
     replaceById(

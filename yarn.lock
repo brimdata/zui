@@ -6816,12 +6816,12 @@ __metadata:
 
 "bullet@jameskerr/bullet#main":
   version: 0.0.1
-  resolution: "bullet@https://github.com/jameskerr/bullet.git#commit=b3d8decc2f49bc19ae4a77b34e7dd603e2999018"
+  resolution: "bullet@https://github.com/jameskerr/bullet.git#commit=2f2f2099c4d162cff711f0a38408ea82396e5a4b"
   dependencies:
     "@reduxjs/toolkit": ^2.2.5
     lodash-es: ^4.17.21
     pluralize: ^8.0.0
-  checksum: 2712e0b87a76164051cb9c9252196dc155d6b1f25ca9bbfdd922b534ba6367e9f216b94a3c9dbb564731173581ddb8d25e9482763c037b74d2e1ce90e6a483f7
+  checksum: 736b30cbdf4044e58d87a13e83435258946341b0a37282f6c2107cdc2455ec357f7e335f41f3db846fe5b6d6e8e5bc985aefec804b57ebb2201172a77d616817
   languageName: node
   linkType: hard
 
