@@ -3,7 +3,6 @@ import {
   createNestedEntitySlice,
   initialState,
 } from "../entity-slice/create-entity-slice"
-import {actions as tabs} from "../Tabs/reducer"
 import {State} from "../types"
 import {QueryVersion} from "./types"
 
