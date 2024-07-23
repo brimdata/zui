@@ -8,6 +8,8 @@ import {QueryVersion} from "./types"
 
 type VersionMeta = {queryId: string}
 
+const initial = initialState()
+
 export const versionSlice = createNestedEntitySlice<
   QueryVersion,
   {queryId: string},
@@ -18,8 +20,8 @@ export const versionSlice = createNestedEntitySlice<
   sort: (a, b) => (a.ts > b.ts ? 1 : -1),
   meta: (queryId) => ({queryId}),
   select: (state: State, meta) => {
-    if (!state.queryVersions) return initialState()
-    return state.queryVersions[meta.queryId] ?? initialState()
+    if (!state.queryVersions) return initial
+    return state.queryVersions[meta.queryId] ?? initial
   },
 })
 
