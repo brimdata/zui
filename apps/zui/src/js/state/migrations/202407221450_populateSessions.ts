@@ -17,7 +17,12 @@ export default function populateSessions(state: any) {
     // Push those tab ides to the session
     sessions = sessions.concat(
       sessionTabs.map((tab) => {
-        return {id: tab.id, name: null}
+        return {
+          id: tab.id,
+          name: null,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        }
       })
     )
   }

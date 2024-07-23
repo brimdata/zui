@@ -9,14 +9,20 @@ test("migrating 202407221450_populateSessions", async () => {
       KbZNe9FuSHnKKfB398B0Z: {
         id: "KbZNe9FuSHnKKfB398B0Z",
         name: null,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
       },
       Zf8vsxTZ4mqT7IK1OtvRf: {
         id: "Zf8vsxTZ4mqT7IK1OtvRf",
         name: null,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
       },
       sIpManYfhNgo6gWdu10bA: {
         id: "sIpManYfhNgo6gWdu10bA",
         name: null,
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
       },
     },
     ids: [

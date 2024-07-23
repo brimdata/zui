@@ -10,7 +10,7 @@ export function SessionsPane() {
   useSelector(SessionHistories.raw) // We need this here to update the display name
   useSelector(Tabs.getActive) // We need this to update isActive
   const sessions = QuerySession.useAll().sort(
-    (item, pivot) => pivot.createdAt - item.createdAt
+    (item, pivot) => pivot.createdAt.getTime() - item.createdAt.getTime()
   )
   const handler = new SessionsPaneHandler()
 
