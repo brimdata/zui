@@ -6814,14 +6814,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bullet@jameskerr/bullet#main":
-  version: 0.0.1
-  resolution: "bullet@https://github.com/jameskerr/bullet.git#commit=2f2f2099c4d162cff711f0a38408ea82396e5a4b"
+"bullet@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "bullet@npm:0.0.2"
   dependencies:
     "@reduxjs/toolkit": ^2.2.5
     lodash-es: ^4.17.21
     pluralize: ^8.0.0
-  checksum: 736b30cbdf4044e58d87a13e83435258946341b0a37282f6c2107cdc2455ec357f7e335f41f3db846fe5b6d6e8e5bc985aefec804b57ebb2201172a77d616817
+  checksum: 9e99282d52e346f2f7612a581f65d3693c2aa9ddd9ac5352abf7990d79c34748d1d196d88e9fcc96243d9d286a7e25d876d174e93d99a8519598c36a9be85ae5
   languageName: node
   linkType: hard
 
@@ -18347,7 +18347,7 @@ __metadata:
     ajv: ^6.9.1
     animejs: ^3.2.0
     brimcap: "brimdata/brimcap#v1.17.0"
-    bullet: "jameskerr/bullet#main"
+    bullet: ^0.0.2
     chalk: ^4.1.0
     chevrotain: ^10.5.0
     chrono-node: ^2.5.0
