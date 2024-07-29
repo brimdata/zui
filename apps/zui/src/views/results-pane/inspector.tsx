@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useRef} from "react"
 import {useSelector} from "react-redux"
-import {ListView} from "src/zui-kit/react/list-view"
+import {ListView} from "src/zui-kit"
 import {useResultsPaneContext} from "./context"
 import Slice from "src/js/state/Inspector"
 import {useDispatch} from "src/core/use-dispatch"
