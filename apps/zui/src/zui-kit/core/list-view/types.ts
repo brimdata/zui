@@ -21,4 +21,5 @@ export type ListViewArgs = {
   }
   onScroll?: (props: {top: number; left: number}, list: ListViewApi) => void
   state?: ControllerOpts<ListViewState>
+  rowHeight?: number
 } & ListViewControllers
