@@ -1,6 +1,6 @@
 import * as zed from "@brimdata/zed-js"
 import {createView} from "src/views/inspector/views/create"
-import {TableViewApi} from "../../zui-kit/core/table-view/table-view-api"
+import {TableViewApi} from "../table/table-view-api"
 import {View} from "src/views/inspector/views/view"
 import {Position} from "./position"
 import {ViewContext} from "src/zui-kit/core/value-view/view-context"

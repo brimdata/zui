@@ -1,6 +1,6 @@
 import React from "react"
 import {createContext, ReactElement, useContext} from "react"
-import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
+import {TableViewApi} from "./table-view-api"
 
 const ZedTableContext = createContext<TableViewApi | null>(null)
 
