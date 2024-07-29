@@ -5,7 +5,7 @@ import {RowData} from "../../../views/inspector/types"
 import {createView} from "../../../views/inspector/views/create"
 import {ListViewArgs} from "./types"
 import {call} from "src/util/call"
-import {config} from "src/components/zed-table/config"
+import {config} from "../../table/config"
 
 /**
  * This calculates the total number of
