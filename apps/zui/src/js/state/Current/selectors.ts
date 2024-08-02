@@ -7,7 +7,12 @@ import {Pool} from "src/models/pool"
 import Queries from "../Queries"
 import {QueryModel} from "src/js/models/query-model"
 import QueryVersions from "../QueryVersions"
-import {query, queryVersion, whichRoute} from "src/app/router/routes"
+import {
+  query,
+  queryVersion,
+  snapshotShow,
+  whichRoute,
+} from "src/app/router/routes"
 import SessionHistories from "../SessionHistories"
 import {createSelector} from "@reduxjs/toolkit"
 import {QueryVersion} from "../QueryVersions/types"
@@ -110,6 +115,13 @@ export const getPoolId = (state) => {
 
 export const getLakeId = (state: State) => {
   return state.window.lakeId ?? defaultLake().id
+}
+
+export const getSnapshotId = (state) => {
+  const {pathname} = getLocation(state)
+  const route = snapshotShow.path
+  const match = matchPath<any>(pathname, [route])
+  return match?.params?.id || null
 }
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
