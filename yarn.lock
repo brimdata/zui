@@ -18207,10 +18207,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#efcb3db16a736f9967dcfb13e978d8f9870c7d27":
+"zed@brimdata/zed#dba2fd36c3019d0c71fb51108ff6d06548d2eae2":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=efcb3db16a736f9967dcfb13e978d8f9870c7d27"
-  checksum: 8579d74107962b03fd90e9762087cd6b3c6e2270f3247d478c9e947f1b7b93e987ba1189d66bcfdc8ea0503ad35efd6ab0bb9b3fef6cf5a84f13e877894cf389
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=dba2fd36c3019d0c71fb51108ff6d06548d2eae2"
+  checksum: f0f684be198e1935122bc5c47da71f75098b375d7b9e9fb258f941ac5b5ed9ca685e18e0a61b0aaa9a9228dcd569c61ed1abcb8c4e4dffa045f8d80582c41e99
   languageName: node
   linkType: hard
 
@@ -18408,7 +18408,7 @@ __metadata:
     utopia-core-scss: ^1.0.1
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#efcb3db16a736f9967dcfb13e978d8f9870c7d27"
+    zed: "brimdata/zed#dba2fd36c3019d0c71fb51108ff6d06548d2eae2"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
