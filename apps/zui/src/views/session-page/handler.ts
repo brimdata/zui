@@ -39,11 +39,11 @@ export class SessionPageHandler extends ViewHandler {
   }
 
   private setEditorValues() {
-    const snapshot = Active.session.snapshot
+    const snapshot = Active.snapshot
     // Give editor a chance to update by scheduling this update
     setTimeout(() => {
-      this.dispatch(Editor.setValue(snapshot.attrs.value ?? ""))
-      this.dispatch(Editor.setPins(snapshot.attrs.pins || []))
+      this.dispatch(Editor.setValue(snapshot.value ?? ""))
+      this.dispatch(Editor.setPins(snapshot.pins || []))
     })
   }
 
@@ -62,7 +62,7 @@ export class SessionPageHandler extends ViewHandler {
   private async parseQueryText() {
     const {session} = Active
     const lakeId = this.select(Current.getLakeId)
-    const program = this.select(Current.getQueryText)
+    const program = Active.snapshot.queryText
     const history = this.select(Current.getHistory)
 
     if (!Active.lake.features.describe) {

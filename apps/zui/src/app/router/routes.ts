@@ -33,6 +33,14 @@ export const queryVersion: Route = {
   path: `${query.path}/versions/:version`,
   icon: "query",
 }
+
+export const snapshotShow: Route = {
+  name: "snapshot",
+  title: "<query>",
+  path: "/snapshots/:id",
+  icon: "query",
+}
+
 export const releaseNotes: Route = {
   name: "releaseNotes",
   title: "Release Notes",

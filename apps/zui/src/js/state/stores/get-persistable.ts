@@ -16,6 +16,7 @@ export const GLOBAL_PERSIST: StateKey[] = [
   "poolSettings",
   "query_sessions",
   "sessionHistories",
+  "snapshots",
 ]
 
 export const WINDOW_PERSIST: StateKey[] = [

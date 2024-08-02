@@ -32,6 +32,9 @@ function AppRoutes() {
       <Route path={routes.welcome.path}>
         <WelcomePage />
       </Route>
+      <Route path={routes.snapshotShow.path}>
+        <SessionPage />
+      </Route>
       <Route default>
         <WelcomePage />
       </Route>

@@ -7,7 +7,12 @@ import {Pool} from "src/models/pool"
 import Queries from "../Queries"
 import {QueryModel} from "src/js/models/query-model"
 import QueryVersions from "../QueryVersions"
-import {query, queryVersion, whichRoute} from "src/app/router/routes"
+import {
+  query,
+  queryVersion,
+  snapshotShow,
+  whichRoute,
+} from "src/app/router/routes"
 import SessionHistories from "../SessionHistories"
 import {createSelector} from "@reduxjs/toolkit"
 import {QueryVersion} from "../QueryVersions/types"
@@ -19,7 +24,7 @@ import {Lake} from "src/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
-import {EditorSnapshot} from "src/models/editor-snapshot"
+import {Snapshot} from "src/models/snapshot"
 
 export const getHistory = (
   state,
@@ -53,10 +58,6 @@ export const getVersion = (state: State): QueryVersion => {
     QueryVersions.at(tabId).find(state, version)
   )
 }
-
-export const getQueryText = createSelector(getVersion, (version) => {
-  return new EditorSnapshot(version).toQueryText()
-})
 
 const getRawSession = (state: State) => {
   const id = getSessionId(state)
@@ -111,6 +112,17 @@ export const getPoolId = (state) => {
 export const getLakeId = (state: State) => {
   return state.window.lakeId ?? defaultLake().id
 }
+
+export const getSnapshotId = (state) => {
+  const {pathname} = getLocation(state)
+  const route = snapshotShow.path
+  const match = matchPath<any>(pathname, [route])
+  return match?.params?.id || null
+}
+
+export const getQueryText = createSelector(getSnapshotId, (id) => {
+  return Snapshot.find(id).queryText
+})
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
   if (!id) throw new Error("Current lake id is unset")

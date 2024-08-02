@@ -3,6 +3,7 @@ import {Active} from "src/models/active"
 import {EditorSnapshot} from "src/models/editor-snapshot"
 import {NamedQuery} from "src/models/named-query"
 import {Session} from "src/models/session"
+import {Snapshot} from "src/models/snapshot"
 
 /**
  * This is called when you click on a session history entry.
@@ -24,6 +25,12 @@ export const show = createHandler((ctx, args: Args) => {
 export const createAndShow = createHandler(
   (ctx, args: Partial<EditorSnapshot["attrs"]>) => {
     Session.activateLastFocused()
-    Active.session.navigate(new EditorSnapshot(args))
+    const snapshot = Snapshot.create({
+      value: args.value,
+      pins: args.pins,
+      sessionId: Active.session.id,
+      queryId: null,
+    })
+    Active.session.navigate(snapshot)
   }
 )

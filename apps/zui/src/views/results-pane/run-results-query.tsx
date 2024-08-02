@@ -8,7 +8,7 @@ import {RESULTS_QUERY, RESULTS_QUERY_COUNT} from "./config"
 
 export const runResultsMain = createHandler(
   async ({select, dispatch, waitForSelector}) => {
-    const query = select(Current.getQueryText)
+    const query = Active.snapshot.queryText
     const tabId = select(Current.getTabId)
     dispatch(firstPage({id: RESULTS_QUERY, query}))
 
