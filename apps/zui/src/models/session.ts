@@ -8,8 +8,9 @@ import {SessionHistory} from "./session-history"
 import {NamedQuery} from "./named-query"
 import {BrowserTab} from "./browser-tab"
 import SessionQueries from "src/js/state/SessionQueries"
-import {queryVersion} from "src/app/router/routes"
+import {snapshotShow} from "src/app/router/routes"
 import {QuerySession} from "./query-session"
+import {Snapshot} from "./snapshot"
 
 type Attrs = {
   id: string
@@ -20,7 +21,7 @@ type Attrs = {
 export class Session extends DomainModel<Attrs> {
   static activateLastFocused() {
     const tab = BrowserTab.orderBy("lastFocused", "desc").find((tab) =>
-      tab.matchesPath(queryVersion.path)
+      tab.matchesPath(snapshotShow.path)
     )
     if (tab) {
       tab.activate()
@@ -97,14 +98,9 @@ export class Session extends DomainModel<Attrs> {
     return BrowserTab.find(this.id)
   }
 
-  navigate(snapshot: EditorSnapshot, namedQuery?: NamedQuery) {
-    const sessionSnapshot = snapshot.clone({parentId: this.id})
-    sessionSnapshot.save()
-    new Session({
-      id: this.id,
-      parentId: namedQuery ? namedQuery.id : this.id,
-      snapshotId: sessionSnapshot.id,
-    }).load()
+  navigate(snapshot: Snapshot) {
+    this.reset()
+    this.tab.load(snapshot.pathname)
   }
 
   load() {

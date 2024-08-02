@@ -22,6 +22,7 @@ import Window from "../Window"
 import LoadDataForm from "../LoadDataForm"
 import Updates from "../Updates"
 import {QuerySession} from "src/models/query-session"
+import {Snapshot} from "src/models/snapshot"
 
 const rootReducer = combineReducers<any>({
   appearance: Appearance.reducer,
@@ -46,6 +47,7 @@ const rootReducer = combineReducers<any>({
   window: Window.reducer,
   updates: Updates.reducer,
   ...QuerySession.slice,
+  ...Snapshot.slice,
 })
 
 // A proof of concept. This would be a much nicer way to go

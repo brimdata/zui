@@ -24,7 +24,7 @@ import {Lake} from "src/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
-import {EditorSnapshot} from "src/models/editor-snapshot"
+import {Snapshot} from "src/models/snapshot"
 
 export const getHistory = (
   state,
@@ -58,10 +58,6 @@ export const getVersion = (state: State): QueryVersion => {
     QueryVersions.at(tabId).find(state, version)
   )
 }
-
-export const getQueryText = createSelector(getVersion, (version) => {
-  return new EditorSnapshot(version).toQueryText()
-})
 
 const getRawSession = (state: State) => {
   const id = getSessionId(state)
@@ -123,6 +119,10 @@ export const getSnapshotId = (state) => {
   const match = matchPath<any>(pathname, [route])
   return match?.params?.id || null
 }
+
+export const getQueryText = createSelector(getSnapshotId, (id) => {
+  return Snapshot.find(id).queryText
+})
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
   if (!id) throw new Error("Current lake id is unset")
