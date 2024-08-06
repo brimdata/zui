@@ -101,12 +101,14 @@ export type EncodedField = {
 
 export type QueryChannelSet = {
   type: 'QueryChannelSet';
-  value: { channel_id: number };
+  // XXX channel_id is here to support backwards compatability.
+  value: { channel?: string, channel_id?: number};
 };
 
 export type QueryChannelEnd = {
   type: 'QueryChannelEnd';
-  value: { channel_id: number };
+  // XXX channel_id is here to support backwards compatability.
+  value: { channel?: string, channel_id?: number };
 };
 
 export type QueryStats = {
