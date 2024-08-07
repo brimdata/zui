@@ -1,5 +1,5 @@
-import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
-import {ZedColumn} from "src/components/zed-table/column"
+import {TableViewApi} from "src/zui-kit/table/table-view-api"
+import {ZedColumn} from "src/zui-kit/table/column"
 import ZuiApi from "src/js/api/zui-api"
 import {
   appendQueryCountBy,

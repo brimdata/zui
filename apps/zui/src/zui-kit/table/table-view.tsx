@@ -1,12 +1,12 @@
 import React, {forwardRef, useImperativeHandle, useMemo} from "react"
-import {Provider} from "../../components/zed-table/context"
-import {Grid} from "../../components/zed-table/grid"
+import {Provider} from "./context"
+import {Grid} from "./grid"
 import classNames from "classnames"
 import {TableViewArgs} from "../core/table-view/types"
-import {ReactAdapterProps} from "./types"
+import {ReactAdapterProps} from "../types/types"
 import {defaultTableViewState} from "../core/table-view/state"
-import {TableViewApi} from "../core/table-view/table-view-api"
-import {useStateControllers} from "./use-state-controllers"
+import {TableViewApi} from "./table-view-api"
+import {useStateControllers} from "../utils/use-state-controllers"
 import * as zed from "@brimdata/zed-js"
 
 function useEnsureRecord(shape, values) {

@@ -1,5 +1,5 @@
 import React from "react"
-import {config} from "src/components/zed-table/config"
+import {config} from "src/zui-kit/table/config"
 import styled from "styled-components"
 import {useResultsPaneContext} from "./context"
 import {Inspector} from "./inspector"

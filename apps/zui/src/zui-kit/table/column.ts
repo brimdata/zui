@@ -2,7 +2,7 @@ import * as zed from "@brimdata/zed-js"
 import {createColumnHelper} from "@tanstack/react-table"
 import {createColumns} from "./create-columns"
 import {toFieldPath} from "src/js/zed-script/toZedScript"
-import {TableViewApi} from "src/zui-kit/core/table-view/table-view-api"
+import {TableViewApi} from "./table-view-api"
 
 type Args = {
   api: TableViewApi
