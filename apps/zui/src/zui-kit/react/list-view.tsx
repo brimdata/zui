@@ -14,15 +14,9 @@ import {defaultListViewState} from "../core/list-view/state"
 import {ListViewArgs} from "../core/list-view/types"
 import {ReactAdapterProps} from "./types"
 import {useStateControllers} from "./use-state-controllers"
-import {mergeRefs, useInitialScrollPosition, useOnScroll} from "./utils"
+import {useInitialScrollPosition, useOnScroll} from "./utils"
 import classNames from "classnames"
 import {useParentSize} from "src/util/hooks/use-parent-size"
-import {
-  TopShadow,
-  useScrollShadow,
-} from "src/views/preview-load-modal/scroll-shadow"
-import {call} from "src/util/call"
-import {config} from "src/components/zed-table/config"
 
 const padding = 8
 
@@ -31,32 +25,6 @@ export const InnerElement = forwardRef<any, any>(function Inner(props, ref) {
   const height = `${parseFloat(style.height) + (padding ?? 0) * 2}px`
 
   return <div role="list" ref={ref} style={{...style, height}} {...rest} />
-})
-
-export const OuterElement = forwardRef<any, any>(function Outer(props, ref) {
-  const {children, ...rest} = props
-  const shadow = useScrollShadow(200)
-  return (
-    <div style={{height: "100%", width: "100%", position: "relative"}}>
-      <TopShadow
-        opacity={shadow.top}
-        style={{
-          height: "2px",
-          background: "linear-gradient(rgba(0,0,0,0.25), transparent)",
-        }}
-      />
-      <div
-        {...rest}
-        ref={mergeRefs(shadow.ref, ref)}
-        onScroll={(e) => {
-          call(rest.onScroll, e)
-          shadow.onScroll()
-        }}
-      >
-        {children}
-      </div>
-    </div>
-  )
 })
 
 export const Row: React.ComponentType<
@@ -104,7 +72,8 @@ export const ListView = forwardRef(function ListView(
   }, [list])
 
   const {width, height} = useParentSize(outerRef)
-
+  list.width = width
+  list.height = height
   return (
     <FixedSizeList
       className={classNames(props.className, "zed-list-view")}
@@ -113,11 +82,10 @@ export const ListView = forwardRef(function ListView(
       width={props.width ?? width}
       outerRef={outerRef}
       itemCount={list.count}
-      itemSize={config.rowHeight}
+      itemSize={list.rowHeight}
       itemData={[...list.rows]}
       itemKey={(i) => i.toString()}
       innerElementType={InnerElement}
-      // outerElementType={OuterElement}
       overscanCount={8}
       onItemsRendered={(args) => {
         setRendered({
