@@ -9,8 +9,8 @@ import { IsoResponse } from '../client/types';
 export class ResultStream extends EventEmitter {
   public status: 'idle' | 'pending' | 'error' | 'aborted' | 'success' = 'idle';
 
-  private currentChannelId: number | undefined;
-  private channelsMap = new Map<number, Channel>();
+  private currentChannel: string | undefined;
+  private channelsMap = new Map<string, Channel>();
   private _promise?: Promise<void>;
 
   constructor(public resp: IsoResponse, private ctl: AbortController) {
@@ -34,19 +34,19 @@ export class ResultStream extends EventEmitter {
   }
 
   get shapes() {
-    return this.channel(0).shapes;
+    return this.channel("main").shapes;
   }
 
   get rows() {
-    return this.channel(0).rows;
+    return this.channel("main").rows;
   }
 
-  channel(id: number | undefined = this.currentChannelId) {
-    if (id === undefined) throw new Error('Current channel not set');
-    let channel = this.channelsMap.get(id);
+  channel(name: string | undefined = this.currentChannel) {
+    if (name === undefined) throw new Error('Current channel not set');
+    let channel = this.channelsMap.get(name);
     if (!channel) {
       channel = new Channel();
-      this.channelsMap.set(id, channel);
+      this.channelsMap.set(name, channel);
     }
     return channel;
   }
@@ -54,21 +54,21 @@ export class ResultStream extends EventEmitter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async js(opts: JSOptions = {}): Promise<any> {
     this.consume();
-    const channel = this.channel(0);
+    const channel = this.channel("main");
     await this.promise;
     return channel.rows.map((r) => r.toJS(opts));
   }
 
   async zed() {
     this.consume();
-    const channel = this.channel(0);
+    const channel = this.channel("main");
     await this.promise;
     return channel.rows;
   }
 
   collect(collector: Collector) {
     this.consume();
-    this.channel(0).collect(collector);
+    this.channel("main").collect(collector);
     return this.promise;
   }
 
@@ -107,13 +107,23 @@ export class ResultStream extends EventEmitter {
     return this._promise;
   }
 
+  private getChannel(o: any): string {
+    // XXX This is here to support backwards compatibility for the channel name
+    // in the query API. This can be removed after a reasonable period from
+    // 8/2024.
+    if ("channel_id" in o) {
+      return o.channel_id === 0 ? "main" : o.channel_id.toString()
+    }
+    return o.channel
+  }
+
   private consumeLine(json: zjson.QueryObject) {
     switch (json.type) {
       case 'QueryChannelSet':
-        this.currentChannelId = json.value.channel_id;
+        this.currentChannel = this.getChannel(json.value)
         break;
       case 'QueryChannelEnd':
-        this.currentChannelId = json.value.channel_id;
+        this.currentChannel = this.getChannel(json.value)
         this.channel().done();
         break;
       case 'QueryStats':
