@@ -8,8 +8,8 @@ import {SessionHistory} from "./session-history"
 import {NamedQuery} from "./named-query"
 import {BrowserTab} from "./browser-tab"
 import SessionQueries from "src/js/state/SessionQueries"
-import {nanoid} from "@reduxjs/toolkit"
 import {queryVersion} from "src/app/router/routes"
+import {QuerySession} from "./query-session"
 
 type Attrs = {
   id: string
@@ -30,7 +30,7 @@ export class Session extends DomainModel<Attrs> {
   }
 
   static create() {
-    const id = nanoid()
+    const {id} = QuerySession.create()
     const now = new Date().toISOString()
     this.dispatch(SessionQueries.init(id))
     BrowserTab.create({id, lastFocused: now})

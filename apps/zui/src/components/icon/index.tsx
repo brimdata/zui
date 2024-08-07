@@ -23,7 +23,7 @@ export function Icon(props: Props) {
 
   return (
     <svg
-      className={classNames("icon", styles.icon)}
+      className={classNames("icon", styles.icon, props.className)}
       fill={props.fill || "currentColor"}
       style={style}
     >

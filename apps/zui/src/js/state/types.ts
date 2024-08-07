@@ -22,6 +22,7 @@ import {WindowState} from "./Window/types"
 import {LoadDataFormState} from "./LoadDataForm/types"
 import {UpdatesState} from "./Updates/types"
 import {EnhancedStore} from "@reduxjs/toolkit"
+import {QuerySessionState} from "src/models/query-session"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -56,4 +57,5 @@ export type State = {
   toolbars: ToolbarsState
   window: WindowState
   updates: UpdatesState
+  query_sessions: QuerySessionState
 }

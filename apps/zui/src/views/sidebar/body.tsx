@@ -6,4 +6,6 @@ export const Body = styled.section`
   height: 100%;
   display: flex;
   flex-direction: column;
+  z-index: 199; /* Above the drag anchor */
+  margin-inline-end: 1px;
 `

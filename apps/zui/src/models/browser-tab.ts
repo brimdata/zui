@@ -22,6 +22,10 @@ export class BrowserTab extends DomainModel<Attrs> {
     })
   }
 
+  static get count() {
+    return this.all.length
+  }
+
   static orderBy(attr: keyof Attrs, direction: "asc" | "desc") {
     return orderBy(this.all, [(tab) => tab.attrs[attr]], [direction])
   }
