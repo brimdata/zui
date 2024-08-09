@@ -62,7 +62,7 @@ export class SessionPageHandler extends ViewHandler {
   private async parseQueryText() {
     const {session} = Active
     const lakeId = this.select(Current.getLakeId)
-    const program = Active.snapshot.queryText
+    const program = this.select(Current.getQueryText)
     const history = this.select(Current.getHistory)
 
     if (!Active.lake.features.describe) {
