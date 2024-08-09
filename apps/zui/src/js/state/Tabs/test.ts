@@ -38,6 +38,11 @@ test("remove tab", () => {
   expect(Tabs.getCount(state)).toBe(0)
 })
 
+test("remove the id of a tab that doesn't exist", () => {
+  const state = dispatchAll(store, [Tabs.add("1"), Tabs.remove("999999")])
+  expect(Tabs.getCount(state)).toBe(1)
+})
+
 test("remove last, active tab", () => {
   const state = dispatchAll(store, [
     Tabs.add("1"),

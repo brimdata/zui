@@ -28,6 +28,7 @@ const slice = createSlice({
     remove(s, a: PayloadAction<string>) {
       const id = a.payload
       const index = findTabIndex(s, id)
+      if (index === -1) return
       const isLast = index === s.data.length - 1
       s.data.splice(index, 1)
       if (id === s.active) {
