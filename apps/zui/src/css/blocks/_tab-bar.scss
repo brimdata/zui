@@ -1,0 +1,72 @@
+.tab-bar {
+  grid-area: tabs;
+  display: flex;
+  padding-inline: var(--gutter);
+  align-items: center;
+  overflow: hidden;
+  gap: var(--space-xs);
+  -webkit-app-region: drag;
+  & > * {
+    flex: 0 0 auto;
+  }
+}
+
+.tab-list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  flex: 1 1 auto;
+  height: 100%;
+  padding-block: 5px;
+  overflow: hidden;
+}
+
+.tab-item {
+  -webkit-app-region: no-drag;
+  user-select: none;
+  flex: 0 1 200px;
+  min-inline-size: 0;
+  border-radius: var(--radius-m);
+  height: 100%;
+  cursor: default;
+  -webkit-app-region: no-drag;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline-start: var(--gutter);
+  padding-inline-end: var(--half-gutter);
+  background-color: var(--emphasis-bg-less);
+
+  &:hover {
+    background-color: var(--emphasis-bg);
+    & .tab-item-close-button {
+      visibility: visible;
+    }
+  }
+
+  &[aria-selected="true"] {
+    border-color: transparent;
+    background-color: var(--bg-color);
+  }
+
+  .tab-icon {
+    vertical-align: -3.5px;
+    margin-inline-end: 0.3em;
+  }
+}
+
+button.tab-item-close-button {
+  visibility: hidden;
+  min-width: 0px;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.mac-placeholder {
+  -webkit-app-region: drag;
+  inline-size: 54px;
+}
+
+.tab-close-button {
+  background: none;
+}

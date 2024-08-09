@@ -13,6 +13,7 @@ export default function (
   const history = global.tabHistories.getOrCreate(tabId)
   const route = whichRoute(history.location.pathname)
   return {
+    id: tabId,
     title() {
       if (route) {
         return compileTitle(
