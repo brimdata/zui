@@ -4,8 +4,8 @@ import {
   RightSidebarToggleButton,
   SidebarToggleButton,
 } from "../sidebar/sidebar-toggle-button"
-import {Icon} from "src/components/icon"
 import classNames from "classnames"
+import {TabItem} from "./tab-item"
 
 export function TabBar() {
   const handler = new TabBarHandler()
@@ -20,25 +20,7 @@ export function TabBar() {
 
       <nav className="tab-list">
         {handler.tabs.map((tab) => {
-          return (
-            <div
-              key={tab.id}
-              className="tab-item"
-              aria-selected={handler.isActive(tab.id)}
-              onClick={() => handler.activate(tab.id)}
-            >
-              <span className="tab-item-title truncate">
-                <Icon name={tab.icon()} className="tab-icon" />
-                {tab.title()}
-              </span>
-              <IconButton
-                className="tab-item-close-button"
-                aria-label="Close Tab"
-                onClick={(e) => handler.destroy(e, tab.id)}
-                iconName="close"
-              />
-            </div>
-          )
+          return <TabItem key={tab.id} tab={tab} handler={handler} />
         })}
       </nav>
       <IconButton iconName="plus" click={() => handler.create()} />

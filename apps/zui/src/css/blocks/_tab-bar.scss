@@ -49,6 +49,7 @@
   background-color: var(--emphasis-bg-less);
   border: 1px solid var(--emphasis-bg-less);
   border-radius: var(--radius-m);
+  transition: transform 500ms var(--emphasis-easing);
   &:hover {
     background-color: var(--emphasis-bg);
     & .tab-item-close-button {
@@ -81,4 +82,8 @@ button.tab-item-close-button {
 
 .tab-close-button {
   background: none;
+}
+
+.scoot-left {
+  transform: translateX(-50%);
 }
