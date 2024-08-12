@@ -5,16 +5,21 @@ import {
   SidebarToggleButton,
 } from "../sidebar/sidebar-toggle-button"
 import {Icon} from "src/components/icon"
+import classNames from "classnames"
 
 export function TabBar() {
   const handler = new TabBarHandler()
   return (
-    <div className="tab-bar">
+    <div
+      className={classNames("tab-bar", {
+        "flush-left": !handler.showSidebarToggle,
+      })}
+    >
       {handler.showMacPlaceholder && <div className="mac-placeholder" />}
       {handler.showSidebarToggle && <SidebarToggleButton />}
 
       <nav className="tab-list">
-        {handler.tabs.map((tab, index) => {
+        {handler.tabs.map((tab) => {
           return (
             <div
               key={tab.id}

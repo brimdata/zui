@@ -269,3 +269,19 @@
 .list-none {
   list-style-type: none;
 }
+
+.flush-left {
+  padding-inline-start: 0;
+}
+
+.flush-right {
+  padding-inline-end: 0;
+}
+
+.flush-top {
+  padding-block-start: 0;
+}
+
+.flush-bottom {
+  padding-block-end: 0;
+}
