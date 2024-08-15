@@ -6,9 +6,21 @@ import {
 } from "../sidebar/sidebar-toggle-button"
 import classNames from "classnames"
 import {TabItem} from "./tab-item"
+import {useDrop} from "react-aria"
+import {useRef} from "react"
+import {SortHandler} from "./sort-handler"
 
 export function TabBar() {
   const handler = new TabBarHandler()
+  const sorter = new SortHandler(handler.tabs.length)
+  const ref = useRef()
+  const {dropProps} = useDrop({
+    ref,
+    onDropEnter: (e) => sorter.onDropEnter(e),
+    onDropMove: (e) => sorter.onDropMove(e),
+    onDrop: (e) => sorter.onDrop(e),
+  })
+
   return (
     <div
       className={classNames("tab-bar", {
@@ -17,10 +29,17 @@ export function TabBar() {
     >
       {handler.showMacPlaceholder && <div className="mac-placeholder" />}
       {handler.showSidebarToggle && <SidebarToggleButton />}
-
-      <nav className="tab-list">
-        {handler.tabs.map((tab) => {
-          return <TabItem key={tab.id} tab={tab} handler={handler} />
+      <nav className="tab-list" ref={ref} {...dropProps}>
+        {handler.tabs.map((tab, index) => {
+          return (
+            <TabItem
+              key={tab.id}
+              tab={tab}
+              handler={handler}
+              onDragStart={(element) => sorter.onDragStart(element, index)}
+              className={sorter.classNames(index)}
+            />
+          )
         })}
       </nav>
       <IconButton iconName="plus" click={() => handler.create()} />

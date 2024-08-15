@@ -1,33 +1,23 @@
 import {Icon} from "src/components/icon"
 import {IconButton} from "src/components/icon-button"
-import {useDrag, useDrop} from "react-aria"
+import {useDrag} from "react-aria"
 import classNames from "classnames"
 import {useRef} from "react"
 
-export function TabItem({tab, handler}) {
+export function TabItem({tab, handler, onDragStart, className}) {
   const ref = useRef()
-  let {dragProps, isDragging} = useDrag({getItems: () => [tab.id]})
-  let {dropProps, isDropTarget} = useDrop({
-    ref,
-    onDrop(e) {
-      console.log("dropped")
-    },
-    onDropEnter(e) {
-      console.log(e)
-    },
+  let {dragProps, isDragging} = useDrag({
+    getItems: () => [tab.id],
+    onDragStart: (e) => onDragStart(ref.current),
   })
-  console.log(isDropTarget)
+
   return (
     <div
       ref={ref}
-      className={classNames("tab-item", {
-        "opacity-0": isDragging,
-        "scoot-left": isDropTarget,
-      })}
+      className={classNames("tab-item", className, {"opacity-0": isDragging})}
       aria-selected={handler.isActive(tab.id)}
       onClick={() => handler.activate(tab.id)}
       {...dragProps}
-      {...dropProps}
     >
       <span className="tab-item-title truncate">
         <Icon name={tab.icon()} className="tab-icon" />

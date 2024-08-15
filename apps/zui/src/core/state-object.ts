@@ -9,6 +9,9 @@ export function useStateObject<T>(init: T) {
     setItem: (key: string, value: any) => {
       setState((prev) => ({...prev, [key]: value}))
     },
+    merge: (newState: Partial<T>) => {
+      setState({...state, ...newState})
+    },
   }
 }
 
