@@ -1,12 +1,12 @@
 import {DomainModel} from "src/core/domain-model"
 import {Session} from "./session"
 import Current from "src/js/state/Current"
-import {EditorSnapshot} from "./editor-snapshot"
 import {BrowserTab} from "./browser-tab"
 import {Frame} from "./frame"
 import {getActiveTab} from "src/js/state/Tabs/selectors"
 import Editor from "src/js/state/Editor"
 import {Lake} from "./lake"
+import {EditorSnapshot} from "./editor-snapshot"
 
 export class Active extends DomainModel {
   static get tab() {

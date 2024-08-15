@@ -17,7 +17,7 @@ export function Menu() {
   })
   return (
     <div
-      className="border-b-solid border-more gutter flex-shrink-0"
+      className="border-b-solid border-more gutter shrink-0"
       style={
         {
           "--gutter-space": "var(--half-gutter)",
@@ -29,6 +29,7 @@ export function Menu() {
         options={[
           makeOption("Pools", "pools"),
           makeOption("Queries", "queries"),
+          makeOption("Sessions", "sessions"),
         ]}
       />
     </div>

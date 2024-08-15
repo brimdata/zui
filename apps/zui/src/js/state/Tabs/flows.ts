@@ -5,13 +5,21 @@ import {Thunk} from "../types"
 import Tabs from "./"
 import {findTabById, findTabByUrl} from "./find"
 import {invoke} from "src/core/invoke"
+import {QuerySession} from "src/models/query-session"
 
 export const create =
   (url = "/", id = nanoid()): Thunk<string> =>
   (dispatch) => {
     dispatch(SessionQueries.init(id))
     dispatch(Tabs.add(id))
-    global.tabHistories.create(id, [{pathname: url}], 0)
+    // move to tabHistories.restore(id, url)
+    const history = global.tabHistories.get(id)
+    if (history) {
+      if (history.location.pathname !== url) history.push(url)
+    } else {
+      global.tabHistories.create(id, [{pathname: url}], 0)
+    }
+    // end
     dispatch(Tabs.activate(id))
     return id
   }
@@ -19,10 +27,12 @@ export const create =
 export const createQuerySession =
   (): Thunk<string> =>
   (dispatch, getState, {api}) => {
-    const sessionId = nanoid()
+    const session = QuerySession.create()
+    const sessionId = session.id
     const version = "0"
     api.queries.createEditorSnapshot(sessionId, {version, value: "", pins: []})
     const url = queryPath(sessionId, version)
+
     return dispatch(create(url, sessionId))
   }
 
