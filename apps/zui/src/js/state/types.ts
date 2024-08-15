@@ -57,5 +57,5 @@ export type State = {
   toolbars: ToolbarsState
   window: WindowState
   updates: UpdatesState
-  query_sessions: QuerySessionState
+  querySessions: QuerySessionState
 }
