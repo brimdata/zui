@@ -6661,12 +6661,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"brimcap@brimdata/brimcap#v1.17.0":
+"brimcap@brimdata/brimcap#0c3a564771dd204e9ce93e4600de2dbcf97bd446":
   version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=68798b88189eb402c37e22ade6bd12cf808cc0e9"
+  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=0c3a564771dd204e9ce93e4600de2dbcf97bd446"
   bin:
     brimcap: build/dist/brimcap
-  checksum: 1a587aabc241ef34f3d335220d6e02b5e04fe4f224618644941035bdd0b4e2c9210472474a5319a546704c323ab4a24b40deb1257c3facbe1290ed4213161786
+  checksum: 3c0f096477a146d7f5e1de82380e32c8c747decae0f9f37ccf2348c6fac54163190c018cecf2670cf82dea63ca3dffa7d7878e136a3bc7812495e89f762e2ec5
   languageName: node
   linkType: hard
 
@@ -18232,10 +18232,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#9766d17d787cc41d96e09972d0e9bdc82c83bd5a":
+"zed@brimdata/zed#71e35c5dbaaed41f8c002039627fce82656975dc":
   version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=9766d17d787cc41d96e09972d0e9bdc82c83bd5a"
-  checksum: c78a55d52207a84e0d1a9d27a82f13581ec3c92d50e2a58a575b69b0e4ded03e87b7aec7c4fc0e5ed859905c7f4a9509abc2a9bb408fcae0ab076d257a726d5d
+  resolution: "zed@https://github.com/brimdata/zed.git#commit=71e35c5dbaaed41f8c002039627fce82656975dc"
+  checksum: 5f251592e29eb83a5d74b013f6ed3820b989d8d0ef15ff550f132a52fbec914d02c4095cac35100742028e3d5ba23e8a568f635040b376112002a03dc7ae06ec
   languageName: node
   linkType: hard
 
@@ -18346,7 +18346,7 @@ __metadata:
     acorn: ^7.4.1
     ajv: ^6.9.1
     animejs: ^3.2.0
-    brimcap: "brimdata/brimcap#v1.17.0"
+    brimcap: "brimdata/brimcap#0c3a564771dd204e9ce93e4600de2dbcf97bd446"
     bullet: ^0.0.2
     chalk: ^4.1.0
     chevrotain: ^10.5.0
@@ -18434,7 +18434,7 @@ __metadata:
     utopia-core-scss: ^1.0.1
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
-    zed: "brimdata/zed#9766d17d787cc41d96e09972d0e9bdc82c83bd5a"
+    zed: "brimdata/zed#71e35c5dbaaed41f8c002039627fce82656975dc"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
