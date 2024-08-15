@@ -47,7 +47,6 @@ const rootReducer = combineReducers<any>({
   updates: Updates.reducer,
   ...QuerySession.slice,
 })
-
 // A proof of concept. This would be a much nicer way to go
 // once we have time to convert to it.
 // type RootState = ReturnType<typeof rootReducer>

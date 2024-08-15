@@ -19,7 +19,8 @@ export type QuerySessionState = EntityState<Attributes, string>
 
 export class QuerySession extends ApplicationEntity<Attributes> {
   static schema = schema
-  static actionPrefix = "$query_sessions"
+  static actionPrefix = "$querySessions"
+  static sliceName = "querySessions"
 
   activate() {
     if (this.tab) this.tab.activate()
