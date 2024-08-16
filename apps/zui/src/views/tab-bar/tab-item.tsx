@@ -4,11 +4,12 @@ import {useDrag} from "react-aria"
 import classNames from "classnames"
 import {useRef} from "react"
 
-export function TabItem({tab, handler, onDragStart, className}) {
+export function TabItem({tab, handler, onDragStart, onDragMove, className}) {
   const ref = useRef()
   let {dragProps, isDragging} = useDrag({
     getItems: () => [tab.id],
-    onDragStart: (e) => onDragStart(ref.current),
+    onDragStart: (e) => onDragStart(e.x, ref.current),
+    onDragMove: (e) => onDragMove(e.x),
   })
 
   return (

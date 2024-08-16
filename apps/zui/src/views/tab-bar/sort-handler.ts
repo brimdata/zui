@@ -1,50 +1,60 @@
-import {MutableRefObject} from "react"
 import {StateObject, useStateObject} from "src/core/state-object"
 import {ViewHandler} from "src/core/view-handler"
-import {
-  SortableList,
-  SortableListArgs,
-} from "src/modules/sortable-list-algorithm"
-import {getGap, getSize} from "./utils"
+import {SortableList} from "src/modules/sortable-list-algorithm"
+import {getGap, getSize, getX} from "./utils"
 import classNames from "classnames"
 
 export class SortHandler extends ViewHandler {
-  ref: MutableRefObject<any>
   props: object
-  state: StateObject<SortableListArgs>
+  state: StateObject<any>
   list: SortableList
 
   constructor(public itemCount: number) {
     super()
-    this.state = useStateObject<SortableListArgs>({
+    this.state = useStateObject({
       src: null,
       offset: 0,
       offsetAtStart: 0,
+      offsetOfParent: 0,
       itemGap: 0,
       itemSize: 0,
       itemCount,
     })
-    this.list = new SortableList(this.state)
+    this.list = new SortableList(this.listArgs)
   }
 
-  onDragStart(element: HTMLElement, index: number) {
+  get listArgs() {
+    return {
+      src: this.state.src,
+      offset: this.state.offset - this.state.offsetOfParent,
+      offsetAtStart: this.state.offsetAtStart - this.state.offsetOfParent,
+      itemGap: this.state.itemGap,
+      itemSize: this.state.itemSize,
+      itemCount: this.state.itemCount,
+    }
+  }
+
+  onDragStart(
+    parent: HTMLElement,
+    item: HTMLElement,
+    offset: number,
+    index: number
+  ) {
     this.state.merge({
       src: index,
-      itemSize: getSize(element),
-      itemGap: getGap(element.parentElement),
+      itemSize: getSize(item),
+      itemGap: getGap(parent),
+      offsetAtStart: offset,
+      offsetOfParent: getX(parent),
     })
   }
 
-  onDropEnter(e) {
-    this.state.merge({offsetAtStart: e.x})
-  }
-
-  onDropMove(e) {
-    this.state.merge({offset: e.x})
+  onDragMove(offset) {
+    this.state.merge({offset})
   }
 
   onDrop(e) {
-    this.state.merge({src: null})
+    this.state.reset()
   }
 
   classNames(index: number) {

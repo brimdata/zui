@@ -5,3 +5,7 @@ export function getSize(element: HTMLElement) {
 export function getGap(element) {
   return parseInt(getComputedStyle(element).gap)
 }
+
+export function getX(element: HTMLElement) {
+  return element.getBoundingClientRect().x
+}

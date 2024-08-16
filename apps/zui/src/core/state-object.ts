@@ -1,6 +1,7 @@
-import {useState} from "react"
+import {useRef, useState} from "react"
 
 export function useStateObject<T>(init: T) {
+  const initialState = useRef(init).current
   const [state, setState] = useState<T>(init)
 
   return {
@@ -11,6 +12,9 @@ export function useStateObject<T>(init: T) {
     },
     merge: (newState: Partial<T>) => {
       setState({...state, ...newState})
+    },
+    reset() {
+      setState({...initialState})
     },
   }
 }

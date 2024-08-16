@@ -13,11 +13,9 @@ import {SortHandler} from "./sort-handler"
 export function TabBar() {
   const handler = new TabBarHandler()
   const sorter = new SortHandler(handler.tabs.length)
-  const ref = useRef()
+  const ref = useRef<any>()
   const {dropProps} = useDrop({
     ref,
-    onDropEnter: (e) => sorter.onDropEnter(e),
-    onDropMove: (e) => sorter.onDropMove(e),
     onDrop: (e) => sorter.onDrop(e),
   })
 
@@ -36,7 +34,10 @@ export function TabBar() {
               key={tab.id}
               tab={tab}
               handler={handler}
-              onDragStart={(element) => sorter.onDragStart(element, index)}
+              onDragStart={(offset, element) =>
+                sorter.onDragStart(ref.current, element, offset, index)
+              }
+              onDragMove={(offset) => sorter.onDragMove(offset)}
               className={sorter.classNames(index)}
             />
           )
