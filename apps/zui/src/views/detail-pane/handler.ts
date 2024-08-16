@@ -5,6 +5,7 @@ import LogDetails from "src/js/state/LogDetails"
 import {useSelector} from "react-redux"
 import {LogDetailHistory} from "src/js/state/LogDetails/reducer"
 import {StateObject, useStateObject} from "src/core/state-object"
+import {useTimeFormat, useTimeZone} from "src/components/format"
 
 const initial = {expanded: {}, page: {}}
 
@@ -14,6 +15,8 @@ export class DetailPaneHandler extends ViewHandler {
 
   constructor(public value: zed.Value) {
     super()
+    useTimeZone()
+    useTimeFormat()
     this.history = useSelector(LogDetails.getHistory)
     this.state = useStateObject(initial)
   }

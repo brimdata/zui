@@ -49,7 +49,7 @@ export function runConfigurations() {
         defaultValue: "",
         helpLink: {
           label: "docs",
-          url: "https://momentjs.com/docs/#/displaying/format/",
+          url: "https://date-fns.org/v3.6.0/docs/format",
         },
       },
       thousandsSeparator: {

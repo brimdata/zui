@@ -4,8 +4,8 @@ import { Primitive } from './primitive';
 import { format } from 'date-fns';
 
 export class Time extends Primitive {
-  static zone = 'UTC';
-  static format = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+  static zone = null;
+  static format = null;
 
   type: typeof TypeTime = TypeTime;
 
@@ -15,7 +15,7 @@ export class Time extends Primitive {
 
   toZonedDate() {
     if (!this.value) return null;
-    return toZonedTime(this.value, Time.zone);
+    return toZonedTime(this.value, this.zone);
   }
 
   toDate() {
@@ -29,6 +29,14 @@ export class Time extends Primitive {
 
   override toString(): string {
     if (!this.value) return 'null';
-    return format(this.toZonedDate()!, Time.format);
+    return format(this.toZonedDate()!, this.format);
+  }
+
+  get zone() {
+    return Time.zone || 'UTC';
+  }
+
+  get format() {
+    return Time.format || "yyyy-MM-dd'T'HH:mm:ss.SSS";
   }
 }

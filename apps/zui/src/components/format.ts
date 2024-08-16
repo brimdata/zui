@@ -28,8 +28,22 @@ export const getFormatConfig = createSelector(
 )
 
 const getTimeZone = createSelector(getFormatConfig, (config) => config.timeZone)
+const getTimeFormat = createSelector(
+  getFormatConfig,
+  (config) => config.timeFormat
+)
 
-export const useTimeZone = () => useSelector(getTimeZone)
+export const useTimeZone = () => {
+  const zone = useSelector(getTimeZone)
+  zed.Time.zone = zone
+  return zone
+}
+
+export const useTimeFormat = () => {
+  const format = useSelector(getTimeFormat)
+  zed.Time.format = format
+  return format
+}
 
 export function formatValue(
   data: zed.Value,
