@@ -39,7 +39,7 @@ export function ExportModal() {
 
         <section className="flow region region-space-xl">
           <label>Export To</label>
-          <div className="cluster">
+          <div className="cluster gap-s">
             <label htmlFor="dest_file">
               <input
                 type="radio"
