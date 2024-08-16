@@ -13,6 +13,7 @@ import {PathView} from "./path-view"
 import {AlertView} from "./alert-view"
 import {showMenu} from "src/core/menu"
 import Selection from "src/js/state/Selection"
+import {useTimeZone} from "src/components/format"
 
 export function Inspector(props: {height?: number}) {
   const {values, shapes, width, height, loadMore, key} = useResultsPaneContext()
@@ -33,6 +34,8 @@ export function Inspector(props: {height?: number}) {
     const pos = select(Slice.getScrollPosition)
     list.current?.scrollTo(pos)
   }, [key])
+
+  zed.Time.zone = useTimeZone()
 
   return (
     <ListView

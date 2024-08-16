@@ -1,7 +1,7 @@
 import { toZonedTime } from 'date-fns-tz';
 import { TypeTime } from '../types/type-time';
 import { Primitive } from './primitive';
-import { format } from 'date-fns/format';
+import { format } from 'date-fns';
 
 export class Time extends Primitive {
   static zone = 'UTC';
