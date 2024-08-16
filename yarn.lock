@@ -1910,6 +1910,8 @@ __metadata:
   resolution: "@brimdata/zed-js@workspace:packages/zed-js"
   dependencies:
     "@types/event-source-polyfill": ^1.0.1
+    date-fns: ^3.6.0
+    date-fns-tz: ^3.1.3
     event-source-polyfill: ^1.0.31
     events: ^3.3.0
   languageName: unknown
@@ -8037,10 +8039,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns-tz@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "date-fns-tz@npm:3.1.3"
+  peerDependencies:
+    date-fns: ^3.0.0
+  checksum: b184841dddf825adcfecbe0812546e4c7332d79eb2e898ca746cb9081e6efdbfd1af4804caafb64d90da02e57025f8042e2fc521bdf86bffbae4a4e5b5040acc
+  languageName: node
+  linkType: hard
+
 "date-fns@npm:^2.16.1":
   version: 2.16.1
   resolution: "date-fns@npm:2.16.1"
   checksum: f19c2b3b9bd62fdbc55b160c87b4656b3a260d79ee7a32a9cbc19107c3d61d71b569c0957351f9a07fc84c35283f74b0af5276620d4a37e36eef1898fa6c25b2
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "date-fns@npm:3.6.0"
+  checksum: 0daa1e9a436cf99f9f2ae9232b55e11f3dd46132bee10987164f3eebd29f245b2e066d7d7db40782627411ecf18551d8f4c9fcdf2226e48bb66545407d448ab7
   languageName: node
   linkType: hard
 

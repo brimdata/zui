@@ -23,3 +23,21 @@ test('keeps the milliseconds', () => {
   const date = new Time('2020-02-25T16:03:17.838527Z').toDate();
   expect(date?.toISOString()).toEqual('2020-02-25T16:03:17.838Z');
 });
+
+test('returns dates in the desired timezone', () => {
+  const time = new Time('2000-01-01T00:00:00Z');
+  Time.zone = 'America/Los_Angeles';
+  expect(time.toString()).toEqual('1999-12-31T16:00:00.000');
+});
+
+test('returns dates in utc', () => {
+  const time = new Time('2000-01-01T00:00:00Z');
+  Time.zone = 'UTC';
+  expect(time.toString()).toEqual('2000-01-01T00:00:00.000');
+});
+
+test('return dates in a time zone', () => {
+  const time = new Time('2000-01-01T00:00:00Z');
+  Time.zone = 'America/Los_Angeles';
+  expect(time.toString()).toEqual('1999-12-31T16:00:00.000');
+});

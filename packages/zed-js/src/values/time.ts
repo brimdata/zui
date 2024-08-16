@@ -1,21 +1,34 @@
+import { toZonedTime } from 'date-fns-tz';
 import { TypeTime } from '../types/type-time';
-import { isNull } from '../utils/is-null';
 import { Primitive } from './primitive';
+import { format } from 'date-fns/format';
 
 export class Time extends Primitive {
+  static zone = 'UTC';
+  static format = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
   type: typeof TypeTime = TypeTime;
-  _date: Date | null;
 
   constructor(value: string) {
     super(value);
-    this._date = isNull(value) ? null : new Date(value);
+  }
+
+  toZonedDate() {
+    if (!this.value) return null;
+    return toZonedTime(this.value, Time.zone);
   }
 
   toDate() {
-    return this._date;
+    if (!this.value) return null;
+    return new Date(this.value);
   }
 
   toJS() {
     return this.toDate();
+  }
+
+  override toString(): string {
+    if (!this.value) return 'null';
+    return format(this.toZonedDate()!, Time.format);
   }
 }
