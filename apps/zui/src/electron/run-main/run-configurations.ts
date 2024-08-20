@@ -47,6 +47,7 @@ export function runConfigurations() {
         label: "Time Format",
         type: "string",
         defaultValue: "",
+        placeholder: "%Y-%m-%dT%H:%M:%S.%L%:z",
         helpLink: {
           label: "docs",
           url: "https://github.com/samsonjs/strftime?tab=readme-ov-file#supported-specifiers",
