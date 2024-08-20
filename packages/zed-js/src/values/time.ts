@@ -39,9 +39,12 @@ export class Time extends Primitive {
 
   override toString() {
     if (!this.value) return 'null';
-    if (Time.config.format || Time.config.zone || this.zone != 'UTC')
+    console.log(Time.config);
+    if (Time.config.format || this.zone != 'UTC') {
       return this.format();
-    else return this.value;
+    } else {
+      return this.value;
+    }
   }
 
   get offset() {
