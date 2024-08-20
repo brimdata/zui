@@ -6,8 +6,11 @@ import {Inspector} from "./inspector"
 import {Table} from "./table"
 import {TableInspector} from "./table-inspector"
 import styles from "./results-pane.module.css"
+import {useTimeFormat, useTimeZone} from "src/components/format"
 
 export function ResultsPane() {
+  useTimeZone()
+  useTimeFormat()
   const ref = useRef()
   return (
     <div

@@ -8,7 +8,7 @@ import {invoke} from "src/core/invoke"
 export function Input(props: SettingProps) {
   const dispatch = useDispatch()
   const {field} = props
-  const {name, defaultValue} = field
+  const {name, defaultValue, placeholder} = field
   const value = useSelector(ConfigPropValues.get(props.sectionName, field.name))
   const update = (value) =>
     dispatch(
@@ -29,6 +29,7 @@ export function Input(props: SettingProps) {
           id={name}
           name={name}
           onBlur={onChange}
+          placeholder={placeholder}
           defaultValue={value === undefined ? defaultValue : value}
         />
       )
@@ -109,7 +110,7 @@ export function Input(props: SettingProps) {
             name={name}
             onBlur={onChange}
             type="text"
-            placeholder=""
+            placeholder={placeholder}
             defaultValue={value === undefined ? defaultValue : value}
           />
         )

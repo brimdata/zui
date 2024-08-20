@@ -37,6 +37,7 @@ export const TableView = forwardRef(function TableView(
       shape,
       args.columnVisibleState.value,
       args.columnExpandedState.value,
+      ...args.deps,
     ]
   )
 

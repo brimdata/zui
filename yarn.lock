@@ -1910,8 +1910,12 @@ __metadata:
   resolution: "@brimdata/zed-js@workspace:packages/zed-js"
   dependencies:
     "@types/event-source-polyfill": ^1.0.1
+    "@types/strftime": ^0.9.8
+    date-fns: ^3.6.0
+    date-fns-tz: ^3.1.3
     event-source-polyfill: ^1.0.31
     events: ^3.3.0
+    strftime: ^0.10.3
   languageName: unknown
   linkType: soft
 
@@ -5194,6 +5198,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/strftime@npm:^0.9.8":
+  version: 0.9.8
+  resolution: "@types/strftime@npm:0.9.8"
+  checksum: 57cc48e28b5dbdff18525f8191e878c852000c417ad665b4bace9c79eafc8f2b3b5bd54851b64fb1868824057a2107169de3eb57eaf57c6c8d911a1a933c8397
+  languageName: node
+  linkType: hard
+
 "@types/styled-components@npm:^5.1.3":
   version: 5.1.3
   resolution: "@types/styled-components@npm:5.1.3"
@@ -8037,10 +8048,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns-tz@npm:^3.1.3":
+  version: 3.1.3
+  resolution: "date-fns-tz@npm:3.1.3"
+  peerDependencies:
+    date-fns: ^3.0.0
+  checksum: b184841dddf825adcfecbe0812546e4c7332d79eb2e898ca746cb9081e6efdbfd1af4804caafb64d90da02e57025f8042e2fc521bdf86bffbae4a4e5b5040acc
+  languageName: node
+  linkType: hard
+
 "date-fns@npm:^2.16.1":
   version: 2.16.1
   resolution: "date-fns@npm:2.16.1"
   checksum: f19c2b3b9bd62fdbc55b160c87b4656b3a260d79ee7a32a9cbc19107c3d61d71b569c0957351f9a07fc84c35283f74b0af5276620d4a37e36eef1898fa6c25b2
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "date-fns@npm:3.6.0"
+  checksum: 0daa1e9a436cf99f9f2ae9232b55e11f3dd46132bee10987164f3eebd29f245b2e066d7d7db40782627411ecf18551d8f4c9fcdf2226e48bb66545407d448ab7
   languageName: node
   linkType: hard
 
@@ -16317,6 +16344,13 @@ __metadata:
   version: 1.1.0
   resolution: "streamsearch@npm:1.1.0"
   checksum: 1cce16cea8405d7a233d32ca5e00a00169cc0e19fbc02aa839959985f267335d435c07f96e5e0edd0eadc6d39c98d5435fb5bbbdefc62c41834eadc5622ad942
+  languageName: node
+  linkType: hard
+
+"strftime@npm:^0.10.3":
+  version: 0.10.3
+  resolution: "strftime@npm:0.10.3"
+  checksum: 8bc118b828ac4122df5ba58647d6ffa606319dc926edfae4e378b4979757d4e6d7d1390ada5b8fe14995edd3952f687abfef14db232f88e414c239014bcb588f
   languageName: node
   linkType: hard
 

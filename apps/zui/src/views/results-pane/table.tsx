@@ -14,6 +14,7 @@ import {BareStringView} from "./bare-string-view"
 import {PathView} from "./path-view"
 import {showMenu} from "src/core/menu"
 import Selection from "src/js/state/Selection"
+import {useTimeFormat, useTimeZone} from "src/components/format"
 
 // 1. Don't forget to save the shape using zed.typeunder
 
@@ -24,6 +25,8 @@ export function Table() {
   const settings = useSelector(Slice.getShapeSettings)
   const shape = useSelector(Slice.getShape)
   const initialScrollPosition = useScrollPosition(table)
+  const format = useTimeFormat()
+  const zone = useTimeZone()
 
   return (
     <TableView
@@ -33,6 +36,7 @@ export function Table() {
       width={ctx.width}
       height={ctx.height}
       initialScrollPosition={initialScrollPosition}
+      deps={[format, zone]}
       valuePageState={{
         value: settings.valuePage,
         onChange: (next) => dispatch(Slice.setValuePage(next)),
