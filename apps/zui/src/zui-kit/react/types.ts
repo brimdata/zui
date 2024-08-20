@@ -7,4 +7,5 @@ export type ReactAdapterProps = {
   innerRef?: Ref<HTMLDivElement>
   outerRef?: Ref<HTMLDivElement>
   initialScrollPosition?: {top?: number; left?: number}
+  deps?: any[]
 }
