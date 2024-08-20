@@ -34,11 +34,11 @@ export class ResultStream extends EventEmitter {
   }
 
   get shapes() {
-    return this.channel("main").shapes;
+    return this.channel('main').shapes;
   }
 
   get rows() {
-    return this.channel("main").rows;
+    return this.channel('main').rows;
   }
 
   channel(name: string | undefined = this.currentChannel) {
@@ -54,21 +54,21 @@ export class ResultStream extends EventEmitter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async js(opts: JSOptions = {}): Promise<any> {
     this.consume();
-    const channel = this.channel("main");
+    const channel = this.channel('main');
     await this.promise;
     return channel.rows.map((r) => r.toJS(opts));
   }
 
   async zed() {
     this.consume();
-    const channel = this.channel("main");
+    const channel = this.channel('main');
     await this.promise;
     return channel.rows;
   }
 
   collect(collector: Collector) {
     this.consume();
-    this.channel("main").collect(collector);
+    this.channel('main').collect(collector);
     return this.promise;
   }
 
@@ -111,19 +111,19 @@ export class ResultStream extends EventEmitter {
     // XXX This is here to support backwards compatibility for the channel name
     // in the query API. This can be removed after a reasonable period from
     // 8/2024.
-    if ("channel_id" in o) {
-      return o.channel_id === 0 ? "main" : o.channel_id.toString()
+    if ('channel_id' in o) {
+      return o.channel_id === 0 ? 'main' : o.channel_id.toString();
     }
-    return o.channel
+    return o.channel;
   }
 
   private consumeLine(json: zjson.QueryObject) {
     switch (json.type) {
       case 'QueryChannelSet':
-        this.currentChannel = this.getChannel(json.value)
+        this.currentChannel = this.getChannel(json.value);
         break;
       case 'QueryChannelEnd':
-        this.currentChannel = this.getChannel(json.value)
+        this.currentChannel = this.getChannel(json.value);
         this.channel().done();
         break;
       case 'QueryStats':

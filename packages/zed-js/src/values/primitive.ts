@@ -2,6 +2,8 @@ import { Type } from '../types/types';
 import { isNull } from '../utils/is-null';
 import { Value } from './types';
 
+
+
 export abstract class Primitive implements Value {
   abstract type: Type;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

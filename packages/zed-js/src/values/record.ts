@@ -51,8 +51,8 @@ export class Record implements Value {
     return this.fields.map((f) => stream.encodeValue(f.value));
   }
 
-  at(index: number | number[]) {
-    return this.fieldAt(index)?.value ?? null;
+  at<T = Value>(index: number | number[]) {
+    return (this.fieldAt(index)?.value ?? null) as T;
   }
 
   fieldAt(index: number | number[]): null | Field {

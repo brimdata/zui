@@ -1,21 +1,17 @@
 import { toZonedTime } from 'date-fns-tz';
 import { TypeTime } from '../types/type-time';
 import { Primitive } from './primitive';
-import { format } from 'date-fns';
+import { JSOptions } from './types';
+import strftime from 'strftime';
 
 export class Time extends Primitive {
-  static zone = null;
-  static format = null;
-
   type: typeof TypeTime = TypeTime;
+  _zone?: string;
+
+  static config: { zone?: string; format?: string } = {};
 
   constructor(value: string) {
     super(value);
-  }
-
-  toZonedDate() {
-    if (!this.value) return null;
-    return toZonedTime(this.value, this.zone);
   }
 
   toDate() {
@@ -23,20 +19,42 @@ export class Time extends Primitive {
     return new Date(this.value);
   }
 
-  toJS() {
-    return this.toDate();
+  toJS(opts: JSOptions = {}) {
+    if (opts.zonedDates) {
+      return this.toZonedDate();
+    } else {
+      return this.toDate();
+    }
   }
 
-  override toString(): string {
+  toZonedDate() {
+    if (!this.value) return null;
+    return toZonedTime(this.value, this.zone);
+  }
+
+  format(specifier = this.formatSpecifier) {
     if (!this.value) return 'null';
-    return format(this.toZonedDate()!, this.format);
+    return strftime.timezone(this.offset)(specifier, this.toDate()!);
+  }
+
+  get offset() {
+    const timeZone = this.zone;
+    const date = this.toDate();
+    if (!date) return 0;
+    const utcDate = new Date(date.toLocaleString('en-US', { timeZone: 'UTC' }));
+    const tzDate = new Date(date.toLocaleString('en-US', { timeZone }));
+    return (tzDate.getTime() - utcDate.getTime()) / 6e4;
   }
 
   get zone() {
-    return Time.zone || 'UTC';
+    return this._zone || Time.config.zone || 'UTC';
   }
 
-  get format() {
-    return Time.format || "yyyy-MM-dd'T'HH:mm:ss.SSS";
+  set zone(value: string) {
+    this._zone = value;
+  }
+
+  get formatSpecifier() {
+    return Time.config.format || '%Y-%m-%dT%H:%M:%S.%L%:z';
   }
 }
