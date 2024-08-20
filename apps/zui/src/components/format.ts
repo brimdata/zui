@@ -35,13 +35,13 @@ const getTimeFormat = createSelector(
 
 export const useTimeZone = () => {
   const zone = useSelector(getTimeZone)
-  zed.Time.zone = zone
+  zed.Time.config.zone = zone
   return zone
 }
 
 export const useTimeFormat = () => {
   const format = useSelector(getTimeFormat)
-  zed.Time.format = format
+  zed.Time.config.format = format
   return format
 }
 

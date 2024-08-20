@@ -15,7 +15,7 @@ test('toDate()', () => {
 });
 
 test('create record with time field', () => {
-  const t = createData(new Date(0)) as Time;
+  const t = createData(new Date(0)) as unknown as Time;
   expect(t.toDate()).toEqual(new Date(0));
 });
 
@@ -49,9 +49,30 @@ test('format using local specifier and static ime zone', () => {
   );
 });
 
-test.only('format using static format', () => {
+test('format using static format', () => {
   const time = new Time('2000-01-01T00:00:00Z');
   Time.config.zone = 'America/New_York';
   Time.config.format = '%a, %B %d %Y at %H:%M, %z';
   expect(time.format()).toEqual('Fri, December 31 1999 at 19:00, -0500');
+});
+
+test('toString when nothing is set', () => {
+  Time.config.zone = null;
+  Time.config.format = null;
+  const time = new Time('2000-01-01T00:00:00Z');
+  expect(time.toString()).toBe(time.value);
+});
+
+test('toString when zone is set', () => {
+  Time.config.zone = 'America/New_York';
+  Time.config.format = null;
+  const time = new Time('1999-12-31T19:00:00.000-05:00');
+  expect(time.toString()).toBe(time.value);
+});
+
+test('toString when format is set', () => {
+  Time.config.zone = null;
+  Time.config.format = '%A';
+  const time = new Time('1999-12-31T19:00:00.000-05:00');
+  expect(time.toString()).toBe('Saturday');
 });

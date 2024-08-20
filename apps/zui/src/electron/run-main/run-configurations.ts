@@ -49,7 +49,7 @@ export function runConfigurations() {
         defaultValue: "",
         helpLink: {
           label: "docs",
-          url: "https://date-fns.org/v3.6.0/docs/format",
+          url: "https://github.com/samsonjs/strftime?tab=readme-ov-file#supported-specifiers",
         },
       },
       thousandsSeparator: {

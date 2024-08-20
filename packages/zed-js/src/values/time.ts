@@ -8,7 +8,7 @@ export class Time extends Primitive {
   type: typeof TypeTime = TypeTime;
   _zone?: string;
 
-  static config: { zone?: string; format?: string } = {};
+  static config: { zone?: string | null; format?: string | null } = {};
 
   constructor(value: string) {
     super(value);
@@ -35,6 +35,13 @@ export class Time extends Primitive {
   format(specifier = this.formatSpecifier) {
     if (!this.value) return 'null';
     return strftime.timezone(this.offset)(specifier, this.toDate()!);
+  }
+
+  override toString() {
+    if (!this.value) return 'null';
+    if (Time.config.format || Time.config.zone || this.zone != 'UTC')
+      return this.format();
+    else return this.value;
   }
 
   get offset() {
