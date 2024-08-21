@@ -1,7 +1,3 @@
----
-sidebar_position: 1
----
-
 # Preview & Load
 
 The video below shows how you can preview and
