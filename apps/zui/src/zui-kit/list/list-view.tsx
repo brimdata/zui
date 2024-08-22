@@ -12,11 +12,11 @@ import {ListViewApi} from "../core"
 import {createListView} from "../core/list-view/create-list-view"
 import {defaultListViewState} from "../core/list-view/state"
 import {ListViewArgs} from "../core/list-view/types"
-import {ReactAdapterProps} from "./types"
-import {useStateControllers} from "./use-state-controllers"
-import {useInitialScrollPosition, useOnScroll} from "./utils"
+import {ReactAdapterProps} from "../types/types"
+import {useStateControllers} from "../utils/use-state-controllers"
+import {useInitialScrollPosition, useOnScroll} from "../utils/utils"
 import classNames from "classnames"
-import {useParentSize} from "src/util/hooks/use-parent-size"
+import {useParentSize} from "../utils/use-parent-size"
 
 const padding = 8
 
