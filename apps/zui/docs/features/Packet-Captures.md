@@ -1,7 +1,3 @@
----
-sidebar_position: 2
----
-
 # Packet Captures
 
 The video below describes Zui's features for working with packet capture
