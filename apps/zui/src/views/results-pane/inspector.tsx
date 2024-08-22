@@ -26,7 +26,7 @@ export function Inspector(props: {height?: number}) {
 
   function onScroll({top, left}) {
     dispatch(Slice.setScrollPosition({top, left}))
-    if (list.current?.nearBottom(30)) loadMore()
+    if (list.current?.nearBottom(30, top)) loadMore()
   }
 
   useEffect(() => {

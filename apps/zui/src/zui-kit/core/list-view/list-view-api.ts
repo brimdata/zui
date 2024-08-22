@@ -5,6 +5,7 @@ import {RowData} from "../../../views/inspector/types"
 import {createView} from "../../../views/inspector/views/create"
 import {ListViewArgs} from "./types"
 import {call} from "src/util/call"
+import {config} from "src/components/zed-table/config"
 
 /**
  * This calculates the total number of
@@ -16,6 +17,8 @@ import {call} from "src/util/call"
  * filled in more and more as you travel (scroll) around.
  */
 export class ListViewApi {
+  width?: number
+  height?: number
   element?: HTMLDivElement
   count = 0
   rows = [] as (RowData | null)[]
@@ -41,6 +44,10 @@ export class ListViewApi {
     })
     this.rows = Array(this.count).fill(null)
     this.rendered = {startIndex: 0, stopIndex: 0}
+  }
+
+  get rowHeight() {
+    return this.args.rowHeight || config.rowHeight
   }
 
   fill() {
@@ -87,8 +94,9 @@ export class ListViewApi {
     return call(this.args?.onScroll, pos, this)
   }
 
-  nearBottom(n: number) {
-    return this.rendered.stopIndex >= this.count - n
+  nearBottom(n: number, scrollTop: number) {
+    const lastIndex = (scrollTop + this.height) / this.rowHeight
+    return lastIndex >= this.count - n
   }
 
   scrollTo(args: {top: number; left: number}) {
