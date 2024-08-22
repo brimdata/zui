@@ -25,7 +25,7 @@ may be used to change the presentation of time values.
 2. If the **Time Format** setting is changed from its empty default, any
    [strftime directives](https://github.com/samsonjs/strftime?tab=readme-ov-file#supported-specifiers)
    in the setting are used to format time values. For instance the setting
-   `%m/%d/%Y %Z` would produce the displayed value `08/14/2024 Pacific Daylight Time`.
+   `%m/%d/%Y` would produce the displayed value `08/14/2024`.
 
 :::tip Note
 These settings do not currently change the times shown on the X axis of the
