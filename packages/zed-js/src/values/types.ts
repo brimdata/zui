@@ -66,6 +66,7 @@ export type ZedInt =
 
 export type JSOptions = {
   bigint?: boolean;
+  zonedDates?: boolean;
 };
 
 export interface Value {

@@ -2,6 +2,7 @@ import {getAllRendererStates, getAllStates} from "./utils/getTestState"
 
 export default function populateSessions(state: any) {
   let sessions = []
+  let histories = {}
 
   // First gather all the tab histories,
   for (const win of getAllRendererStates(state)) {
@@ -25,10 +26,16 @@ export default function populateSessions(state: any) {
         }
       })
     )
+
+    // Now gather the session histories to make them global
+    histories = {
+      ...histories,
+      ...win.sessionHistories,
+    }
   }
 
   // Put these in the entity state shape
-  const query_sessions = {
+  const querySessions = {
     ids: sessions.map((session) => session.id),
     entities: sessions.reduce((entities, session) => {
       entities[session.id] = session
@@ -38,7 +45,8 @@ export default function populateSessions(state: any) {
 
   // Next add all those sessions to each state object, since these will be global
   for (const s of getAllStates(state)) {
-    s.query_sessions = query_sessions
+    s.querySessions = querySessions
+    s.sessionHistories = histories
   }
 
   return state

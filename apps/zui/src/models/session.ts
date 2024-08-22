@@ -9,8 +9,8 @@ import {NamedQuery} from "./named-query"
 import {BrowserTab} from "./browser-tab"
 import SessionQueries from "src/js/state/SessionQueries"
 import {snapshotShow} from "src/app/router/routes"
-import {QuerySession} from "./query-session"
 import {Snapshot} from "./snapshot"
+import {QuerySession} from "./query-session"
 
 type Attrs = {
   id: string

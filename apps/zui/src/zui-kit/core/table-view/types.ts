@@ -2,8 +2,8 @@ import {ColumnSizingInfoState} from "@tanstack/react-table"
 import * as zed from "@brimdata/zed-js"
 import {Controller, MakeControllers} from "src/zui-kit/types/utils"
 import {ViewConfig} from "../value-view/types"
-import {ZedColumn} from "src/components/zed-table/column"
-import {Cell} from "src/components/zed-table/cell"
+import {ZedColumn} from "../../table/column"
+import {Cell} from "src/zui-kit/table/cell"
 
 export type TableViewState = {
   valueExpanded: Record<string, boolean>

@@ -14,7 +14,7 @@ export const GLOBAL_PERSIST: StateKey[] = [
   "queryVersions",
   "sessionQueries",
   "poolSettings",
-  "query_sessions",
+  "querySessions",
   "sessionHistories",
   "snapshots",
 ]

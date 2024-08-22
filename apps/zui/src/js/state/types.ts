@@ -21,7 +21,7 @@ import {PoolSettingsState} from "./PoolSettings/types"
 import {WindowState} from "./Window/types"
 import {LoadDataFormState} from "./LoadDataForm/types"
 import {UpdatesState} from "./Updates/types"
-import {EnhancedStore, EntityState} from "@reduxjs/toolkit"
+import {EnhancedStore} from "@reduxjs/toolkit"
 import {QuerySessionState} from "src/models/query-session"
 
 export type ThunkExtraArg = {
@@ -57,6 +57,6 @@ export type State = {
   toolbars: ToolbarsState
   window: WindowState
   updates: UpdatesState
-  query_sessions: QuerySessionState
+  querySessions: QuerySessionState
   snapshots: any // Fix
 }
