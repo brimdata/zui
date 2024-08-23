@@ -61,6 +61,10 @@ export class SortableItem {
     return this.index > this.list.args.src && this.index <= this.list.dst
   }
 
+  get isSource() {
+    return this.list.srcItem?.index === this.index
+  }
+
   containsPoint(px: number) {
     return px > this.enterPoint && px <= this.exitPoint
   }

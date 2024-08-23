@@ -19,7 +19,7 @@
 .tab-list {
   /* Layout */
   display: flex;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   align-items: center;
   height: 100%;
   overflow: hidden;
@@ -34,6 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 
   /* Sizes */
   flex: 0 1 200px;
@@ -49,11 +50,11 @@
   background-color: var(--emphasis-bg-less);
   border: 1px solid var(--emphasis-bg-less);
   border-radius: var(--radius-m);
-  transition: transform 500ms var(--emphasis-easing);
+  transition: transform 300ms var(--emphasis-easing);
   &:hover {
     background-color: var(--emphasis-bg);
     & .tab-item-close-button {
-      visibility: visible;
+      opacity: 1;
     }
   }
   &[aria-selected="true"] {
@@ -68,8 +69,13 @@
   }
 }
 
+.tab-item-title {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 button.tab-item-close-button {
-  visibility: hidden;
+  opacity: 0;
   min-width: 0px;
   width: 1.5em;
   height: 1.5em;
@@ -85,9 +91,15 @@ button.tab-item-close-button {
 }
 
 .move-forward {
-  transform: translateX(100%);
+  user-select: none;
+  transform: translateX(calc(100% + var(--space-3xs)));
 }
 
 .move-back {
-  transform: translateX(-100%);
+  user-select: none;
+  transform: translateX(calc(-100% - var(--space-3xs)));
+}
+
+.no-transition {
+  transition-duration: 0ms;
 }

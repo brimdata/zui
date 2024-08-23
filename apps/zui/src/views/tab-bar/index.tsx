@@ -6,7 +6,7 @@ import {
 } from "../sidebar/sidebar-toggle-button"
 import classNames from "classnames"
 import {TabItem} from "./tab-item"
-import {useDrop} from "react-aria"
+import {useDrop} from "@react-aria/dnd"
 import {useRef} from "react"
 import {SortHandler} from "./sort-handler"
 
@@ -16,7 +16,10 @@ export function TabBar() {
   const ref = useRef<any>()
   const {dropProps} = useDrop({
     ref,
-    onDrop: (e) => sorter.onDrop(e),
+    onDrop: () => sorter.onDrop(),
+    onDropEnter: () => sorter.onDropEnter(),
+    onDropExit: () => sorter.onDropExit(),
+    getDropOperation: () => "move",
   })
 
   return (
@@ -38,6 +41,7 @@ export function TabBar() {
                 sorter.onDragStart(ref.current, element, offset, index)
               }
               onDragMove={(offset) => sorter.onDragMove(offset)}
+              onDragEnd={() => sorter.onDragEnd()}
               className={sorter.classNames(index)}
             />
           )
