@@ -61,15 +61,13 @@ export function Inspector(props: {height?: number}) {
       }}
       valueProps={{
         onClick: (e, value, field) => {
-          const rootValue = field.rootRecord
+          const rootValue = field?.rootRecord || value
           dispatch(Selection.set({value, field, rootValue}))
-          if (field && field instanceof zed.Field) {
-            dispatch(viewLogDetail(field.rootRecord))
-          }
+          dispatch(viewLogDetail(rootValue))
         },
         onContextMenu: (e, value, field) => {
           e.preventDefault()
-          const rootValue = field.rootRecord
+          const rootValue = field?.rootRecord || value
           dispatch(Selection.set({value, field, rootValue}))
           if (field && field instanceof zed.Field) {
             showMenu(valueContextMenu(value, field, field.rootRecord))
