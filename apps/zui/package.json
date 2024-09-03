@@ -159,7 +159,7 @@
     "utopia-core-scss": "^1.0.1",
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
-    "zed": "brimdata/zed#598911cb4daabd814100c550916e337be1df4fd2",
+    "zed": "brimdata/zed#17e513f03c94a0299353b7cf17be4d0d1cc0d325",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {
