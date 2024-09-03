@@ -1,21 +1,19 @@
 import {poolPath} from "src/app/router/utils/paths"
-import {createHandler} from "src/core/handlers"
+import {ViewHandler} from "src/core/view-handler"
 import Tabs from "src/js/state/Tabs"
 import {getFormData} from "src/util/get-form-data"
 
-const createPool = createHandler(async ({invoke, dispatch, toast}, data) => {
-  const id = await invoke("pools.create", data.name, data)
-  dispatch(Tabs.activateUrl(poolPath(id)))
-  toast.success("Pool Created")
-})
-
-export class NewPoolModalController {
-  constructor(private close, private state) {}
+export class NewPoolModalController extends ViewHandler {
+  constructor(private close, private state) {
+    super()
+  }
 
   async onSubmit(e) {
     try {
       const data = getFormData(e)
-      createPool(data)
+      const id = await this.invoke("pools.create", data.name, data)
+      this.dispatch(Tabs.activateUrl(poolPath(id)))
+      this.toast.success("Pool Created")
       this.close()
     } catch (e) {
       this.state.setError(e)
