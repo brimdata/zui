@@ -26,7 +26,7 @@ function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
     values: results.data,
     shapes,
     isSingleRecordShape:
-      shapes.length === 1 && shapes[0] instanceof zed.TypeRecord,
+      shapes.length === 1 && zed.typeunder(shapes[0]) instanceof zed.TypeRecord,
     firstShape: shapes[0],
     loadMore: nextPage,
     key: useSelector(Results.getKey(RESULTS_QUERY)),

@@ -20,8 +20,8 @@ test.describe('Pool Loads (successes)', () => {
     await app.query('count()');
     await app.hidden('generic', 'Load Successful');
 
-    const results = await app.getViewerResults();
-    expect(results).toEqual(['this', '1']);
+    const results = await app.getInspectorResults();
+    expect(results).toEqual(['1 ( uint64 )']);
   });
 
   test('load more data into the pool', async () => {
@@ -35,7 +35,7 @@ test.describe('Pool Loads (successes)', () => {
     await app.attached(/successfully loaded/i);
     await app.click('button', 'Query Pool');
     await app.query('count()');
-    const results = await app.getViewerResults();
-    expect(results).toEqual(['this', '2']);
+    const results = await app.getInspectorResults();
+    expect(results).toEqual(['2 ( uint64 )']);
   });
 });
