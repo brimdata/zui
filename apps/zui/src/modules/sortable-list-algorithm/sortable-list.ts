@@ -6,7 +6,7 @@ export class SortableList {
   public items: SortableItem[]
 
   constructor(public args: SortableListArgs) {
-    this.items = upTo(args.itemCount).map(
+    this.items = upTo(args.items.count).map(
       (index) => new SortableItem(index, this)
     )
   }
@@ -24,14 +24,18 @@ export class SortableList {
   }
 
   get pivot() {
-    return this.args.offset + this.distanceToPivot
+    return this.args.offset.x + this.distanceToPivot
   }
 
   get distanceToPivot() {
-    return this.srcItem.centerPoint - this.args.offsetAtStart
+    return this.srcItem.centerPoint - this.args.startingOffset.x
   }
 
   get srcItem() {
     return this.items[this.args.src]
+  }
+
+  get startPoint() {
+    return this.args.listRect.x
   }
 }

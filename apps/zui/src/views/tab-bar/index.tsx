@@ -37,12 +37,14 @@ export function TabBar() {
               key={tab.id}
               tab={tab}
               handler={handler}
+              sorter={sorter}
               onDragStart={(offset, element) =>
                 sorter.onDragStart(ref.current, element, offset, index)
               }
               onDragMove={(offset) => sorter.onDragMove(offset)}
               onDragEnd={() => sorter.onDragEnd()}
               className={sorter.classNames(index)}
+              onClick={() => handler.activate(tab.id)}
             />
           )
         })}

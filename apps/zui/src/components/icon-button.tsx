@@ -55,6 +55,7 @@ export const IconButton = forwardRef(function IconButton(
   props: MenuItem & {
     className?: string
     onClick?: MouseEventHandler<HTMLButtonElement>
+    onMouseDown?: MouseEventHandler<HTMLButtonElement>
     buildMenu?: () => MenuItem[]
   },
   ref: MutableRefObject<HTMLButtonElement>
@@ -76,6 +77,7 @@ export const IconButton = forwardRef(function IconButton(
         props.display === "icon-label" ? null : props.description ?? props.label
       }
       onClick={onClick}
+      onMouseDown={(e) => props.onMouseDown(e)}
       disabled={props.enabled === false || props.whenResult === false}
       aria-label={props.label}
       type="button"

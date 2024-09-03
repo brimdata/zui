@@ -4,7 +4,7 @@ export class SortableItem {
   constructor(public index: number, public list: SortableList) {}
 
   get startPoint() {
-    return this.index * this.size + this.index * this.gap
+    return this.list.startPoint + this.index * this.size + this.index * this.gap
   }
 
   get endPoint() {
@@ -36,15 +36,15 @@ export class SortableItem {
   }
 
   get isLast() {
-    return this.index === this.list.args.itemCount - 1
+    return this.index === this.list.args.items.count - 1
   }
 
   get size() {
-    return this.list.args.itemSize
+    return this.list.args.items.size
   }
 
   get gap() {
-    return this.list.args.itemGap
+    return this.list.args.items.gap
   }
 
   get halfGap() {
@@ -66,6 +66,12 @@ export class SortableItem {
   }
 
   containsPoint(px: number) {
-    return px > this.enterPoint && px <= this.exitPoint
+    if (this.isFirst) {
+      return px <= this.exitPoint
+    } else if (this.isLast) {
+      return px > this.enterPoint
+    } else {
+      return px > this.enterPoint && px <= this.exitPoint
+    }
   }
 }
