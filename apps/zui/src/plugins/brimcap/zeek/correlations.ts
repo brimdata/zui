@@ -9,6 +9,7 @@ import {
   FILENAME_CORRELATION,
   UID_CORRELATION,
 } from "./ids"
+import * as zed from "@brimdata/zed-js"
 
 export function activateZeekCorrelations() {
   correlations.create(MD5_CORRELATION, {
@@ -60,7 +61,10 @@ export function activateZeekCorrelations() {
   })
 
   correlations.create(UID_CORRELATION, {
-    when: () => !!session.poolName && !!findUid(session.selectedRow),
+    when: () =>
+      session.selectedRow instanceof zed.Record &&
+      !!session.poolName &&
+      !!findUid(session.selectedRow),
     query: async () => {
       const uid = findUid(session.selectedRow)
       const pool = session.poolName

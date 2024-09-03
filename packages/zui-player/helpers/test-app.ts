@@ -142,7 +142,7 @@ export default class TestApp {
     return await tabs.count();
   }
 
-  async getViewerResults(includeHeaders = true): Promise<string[]> {
+  async getTableResults(includeHeaders = true): Promise<string[]> {
     const fields = await this.mainWin.locator('.zed-table__cell');
     await fields.waitFor();
     let results = await fields.evaluateAll<string[], HTMLElement>((nodes) =>
@@ -155,6 +155,16 @@ export default class TestApp {
       );
       results = headerResults.concat(results);
     }
+
+    return results;
+  }
+
+  async getInspectorResults(): Promise<string[]> {
+    const fields = await this.mainWin.locator('.zed-view');
+    await fields.waitFor();
+    let results = await fields.evaluateAll<string[], HTMLElement>((nodes) =>
+      nodes.map((n) => n.innerText.trim().replaceAll(/\s+/g, ' '))
+    );
 
     return results;
   }

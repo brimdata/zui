@@ -11,14 +11,17 @@ import {SuricataEvent} from "src/ppl/detail/models/SuricataEvent"
 import {ZeekEvent} from "src/ppl/detail/models/ZeekEvent"
 import {SecurityEvent} from "src/ppl/detail/models/security-event"
 import {EmptyText} from "src/components/empty-text"
+import * as zed from "@brimdata/zed-js"
 
 export function CorrelationsPane() {
   const record = useSelector(LogDetails.build)
-  if (record) {
+  if (record && zed.typeunder(record) instanceof zed.Record) {
     return <Correlations record={record} />
   } else {
     return (
-      <EmptyText>Select a value in the results to run correlations.</EmptyText>
+      <EmptyText>
+        Select a record value in the results to run correlations.
+      </EmptyText>
     )
   }
 }
