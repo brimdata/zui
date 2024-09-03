@@ -32,7 +32,7 @@ function ResultsView() {
   if (ctx.error) return <Error error={ctx.error} />
   if (ctx.view === "TABLE") {
     if (!ctx.firstShape) return null
-    if (ctx.isSingleShape) return <Table />
+    if (ctx.isSingleRecordShape) return <Table />
     return <TableInspector />
   }
   if (ctx.view === "INSPECTOR") return <Inspector />

@@ -8,6 +8,7 @@ import {RESULTS_QUERY} from "src/views/results-pane/config"
 import {useDataTransition} from "src/util/hooks/use-data-transition"
 import useResizeObserver from "use-resize-observer"
 import QueryInfo from "src/js/state/QueryInfo"
+import * as zed from "@brimdata/zed-js"
 
 function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
   const rect = useResizeObserver({ref: parentRef})
@@ -24,7 +25,8 @@ function useContextValue(parentRef: React.RefObject<HTMLDivElement>) {
     error: parseError || results.error,
     values: results.data,
     shapes,
-    isSingleShape: shapes.length === 1,
+    isSingleRecordShape:
+      shapes.length === 1 && shapes[0] instanceof zed.TypeRecord,
     firstShape: shapes[0],
     loadMore: nextPage,
     key: useSelector(Results.getKey(RESULTS_QUERY)),
