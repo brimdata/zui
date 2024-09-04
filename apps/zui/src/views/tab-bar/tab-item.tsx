@@ -24,7 +24,7 @@ export function TabItem({tab, handler, index}: Props) {
   return (
     <div
       ref={ref}
-      className={classNames()}
+      className={handler.tabItemClassNames(index)}
       aria-selected={handler.isActive(tab.id)}
       {...dragProps}
     >
