@@ -1,28 +1,32 @@
 import {Icon} from "src/components/icon"
 import {IconButton} from "src/components/icon-button"
-import {DragPreview, useDrag} from "@react-aria/dnd"
+import {useDrag} from "@react-aria/dnd"
 import classNames from "classnames"
 import {useRef} from "react"
+import tab from "src/js/models/tab"
+import {TabBarHandler} from "./handler"
 
-export function TabItem({tab, handler}) {
+type Props = {
+  tab: ReturnType<typeof tab>
+  handler: TabBarHandler
+  index: number
+}
+
+export function TabItem({tab, handler, index}: Props) {
   const ref = useRef()
-  let {onDragStart, onDragMove, onDragEnd, ...rest} = props
-  let {dragProps, isDragging} = useDrag({
-    getItems: () => [tab.id],
-    onDragStart: (e) => onDragStart(e.x, ref.current),
-    onDragMove: (e) => onDragMove(e.x),
-    onDragEnd: () => onDragEnd(),
+  let {dragProps} = useDrag({
+    getItems: () => [{type: "tab", id: tab.id}],
+    onDragStart: (e) => handler.onDragStart(e, index, ref.current),
+    onDragMove: (e) => handler.onDragMove(e),
+    onDragEnd: () => handler.onDragEnd(),
   })
 
   return (
     <div
       ref={ref}
-      className={classNames("tab-item", rest.className, {
-        "opacity-0": isDragging,
-      })}
+      className={classNames()}
       aria-selected={handler.isActive(tab.id)}
       {...dragProps}
-      {...rest}
     >
       <span className="tab-item-title">
         <Icon name={tab.icon()} className="tab-icon" />

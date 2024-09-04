@@ -38,4 +38,29 @@ export class SortableList {
   get startPoint() {
     return this.args.listRect.x
   }
+
+  static initialState() {
+    return {
+      src: null,
+      items: {
+        size: 0,
+        count: 0,
+        gap: 0,
+      },
+      listRect: {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+      },
+      startingOffset: {
+        x: 0,
+        y: 0,
+      },
+      offset: {
+        x: 0,
+        y: 0,
+      },
+    }
+  }
 }

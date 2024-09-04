@@ -6,6 +6,7 @@ import QueryVersions from "../QueryVersions"
 import {QueryModel} from "src/js/models/query-model"
 import {entitiesToArray} from "../utils"
 import memoizeOne from "memoize-one"
+import SessionQueries from "../SessionQueries"
 
 export const raw = (state: State): QueriesState => state.queries
 
@@ -83,3 +84,22 @@ export const getTags = createSelector<State, QueriesState, string[]>(
 export const any = createSelector(getGroupById("root"), (group) => {
   return group.items.length > 0
 })
+
+export const getQueryIdToName = createSelector(
+  raw,
+  SessionQueries.raw,
+  (localRaw, sessionRaw) => {
+    const idNameMap = {}
+    Object.values<Query>(sessionRaw).forEach(
+      (session) => (idNameMap[session.id] = session.name)
+    )
+    new TreeModel({childrenPropertyName: "items"}).parse(localRaw).walk((n) => {
+      if (!("items" in n.model)) {
+        idNameMap[n.model.id] = n.model.name
+      }
+      return true
+    })
+
+    return idNameMap
+  }
+)

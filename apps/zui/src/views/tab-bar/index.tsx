@@ -4,48 +4,23 @@ import {
   RightSidebarToggleButton,
   SidebarToggleButton,
 } from "../sidebar/sidebar-toggle-button"
-import classNames from "classnames"
 import {TabItem} from "./tab-item"
-import {useDrop} from "@react-aria/dnd"
-import {useRef} from "react"
-import {SortHandler} from "./sort-handler"
+import {Show} from "src/components/show"
 
 export function TabBar() {
   const handler = new TabBarHandler()
-  const sorter = new SortHandler(handler.tabs.length)
-  const ref = useRef<any>()
-  const {dropProps} = useDrop({
-    ref,
-    onDrop: () => sorter.onDrop(),
-    onDropEnter: () => sorter.onDropEnter(),
-    onDropExit: () => sorter.onDropExit(),
-    getDropOperation: () => "move",
-  })
-
   return (
-    <div
-      className={classNames("tab-bar", {
-        "flush-left": !handler.showSidebarToggle,
-      })}
-    >
-      {handler.showMacPlaceholder && <div className="mac-placeholder" />}
-      {handler.showSidebarToggle && <SidebarToggleButton />}
-      <nav className="tab-list" ref={ref} {...dropProps}>
+    <div className={handler.tabBarClassNames}>
+      <Show when={handler.showMacPlaceholder}>
+        <div className="mac-placeholder" />
+      </Show>
+      <Show when={handler.showSidebarToggle}>
+        <SidebarToggleButton />
+      </Show>
+      <nav className="tab-list">
         {handler.tabs.map((tab, index) => {
           return (
-            <TabItem
-              key={tab.id}
-              tab={tab}
-              handler={handler}
-              sorter={sorter}
-              onDragStart={(offset, element) =>
-                sorter.onDragStart(ref.current, element, offset, index)
-              }
-              onDragMove={(offset) => sorter.onDragMove(offset)}
-              onDragEnd={() => sorter.onDragEnd()}
-              className={sorter.classNames(index)}
-              onClick={() => handler.activate(tab.id)}
-            />
+            <TabItem key={tab.id} tab={tab} handler={handler} index={index} />
           )
         })}
       </nav>
