@@ -5,6 +5,7 @@ import {ViewHandler} from "src/core/view-handler"
 import tab from "src/js/models/tab"
 import Appearance from "src/js/state/Appearance"
 import Tabs from "src/js/state/Tabs"
+import {getTabModels} from "src/js/state/Tabs/get-tab-models"
 import {
   SortableList,
   SortableListArgs,
@@ -25,7 +26,7 @@ export class TabBarHandler extends ViewHandler {
     this.activeId = useSelector(Tabs.getActive)
     this.sidebarOpen = useSelector(Appearance.sidebarIsOpen)
     this.secondarySidebarOpen = useSelector(Appearance.secondarySidebarIsOpen)
-    this.tabs = useSelector(Tabs.getTabModels)
+    this.tabs = useSelector(getTabModels)
     this.sortableState = useStateObject(SortableList.initialState())
     this.sortableList = new SortableList(this.sortableState)
   }
