@@ -32,11 +32,11 @@ export function TableInspector() {
       {shapes.length > 1 && (
         <div style={{height: config.headerHeight}}>
           <Warning>
-            <b>{shapes.length} Shapes</b> — Filter to one shape or{" "}
+            <b>{shapes.length} Shapes</b> — Filter or{" "}
             <b>
               <a onClick={() => fuse()}>fuse</a>
             </b>{" "}
-            results to view as a table.
+            to view results as one shape.
           </Warning>
         </div>
       )}
