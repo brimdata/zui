@@ -8,7 +8,7 @@ import {getById} from "src/js/state/SessionHistories/selectors"
 import {queryPath} from "src/app/router/utils/paths"
 import {last} from "lodash"
 import {EditorSnapshot} from "./editor-snapshot"
-import cmd from "src/commands/cmd"
+import cmd from "src/cmd"
 
 const schema = {
   name: {type: String, default: null as string},

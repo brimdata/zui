@@ -7,7 +7,7 @@ import Current from "../Current"
 import {Store} from "../types"
 import Tabs from "./"
 import initTestStore from "src/test/unit/helpers/initTestStore"
-import cmd from "src/commands/cmd"
+import cmd from "src/cmd"
 
 let store: Store
 beforeEach(async () => {

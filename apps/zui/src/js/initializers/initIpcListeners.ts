@@ -11,7 +11,7 @@ import {viewLogDetail} from "../flows/viewLogDetail"
 import tabHistory from "src/app/router/tab-history"
 import {submitSearch} from "src/domain/session/handlers"
 import commands from "src/commands"
-import cmd from "src/commands/cmd"
+import cmd from "src/cmd"
 
 export default (store: Store) => {
   global.zui.on("clearPins", () => {

@@ -12,7 +12,7 @@ import {
 } from "./get-persistable"
 import Lakes from "../Lakes"
 import Tabs from "../Tabs"
-import cmd from "src/commands/cmd"
+import cmd from "src/cmd"
 
 let store
 
