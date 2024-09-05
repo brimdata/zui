@@ -5,11 +5,13 @@ import Tabs from "../state/Tabs"
 import {Store} from "../state/types"
 import initNewSearchTab from "./initNewSearchTab"
 import Editor from "../state/Editor"
-import {commands} from "src/app/commands/command"
+import {commands as cmds} from "src/app/commands/command"
 import * as zed from "@brimdata/zed-js"
 import {viewLogDetail} from "../flows/viewLogDetail"
 import tabHistory from "src/app/router/tab-history"
 import {submitSearch} from "src/domain/session/handlers"
+import commands from "src/commands"
+import cmd from "src/commands/cmd"
 
 export default (store: Store) => {
   global.zui.on("clearPins", () => {
@@ -43,7 +45,7 @@ export default (store: Store) => {
   })
 
   global.zui.on("closeTab", () => {
-    store.dispatch(Tabs.closeActive())
+    cmd.tabs.closeActive()
   })
 
   global.zui.on("windows:newSearchTab", (e, {params}) => {
@@ -59,7 +61,7 @@ export default (store: Store) => {
   })
 
   global.zui.on("runCommand", (e, id, ...args) => {
-    commands.run(id, ...args)
+    cmds.run(id, ...args)
   })
 
   global.zui.on("detail-window-args", (e, opts) => {
