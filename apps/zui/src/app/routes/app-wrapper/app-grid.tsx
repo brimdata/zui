@@ -1,4 +1,5 @@
-import React from "react"
+import {useDrop} from "@react-aria/dnd"
+import React, {useRef} from "react"
 import {useSelector} from "react-redux"
 import Appearance from "src/js/state/Appearance"
 import styled from "styled-components"
@@ -32,6 +33,11 @@ export function AppGrid({children}) {
     gridTemplateRows: rows.join(" "),
     gridTemplateColumns: columns.join(" "),
   }
-
-  return <BG style={style}>{children}</BG>
+  const ref = useRef()
+  const {dropProps} = useDrop({ref})
+  return (
+    <BG style={style} {...dropProps} ref={ref}>
+      {children}
+    </BG>
+  )
 }

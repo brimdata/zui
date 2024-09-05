@@ -6,6 +6,7 @@ import {
 } from "../sidebar/sidebar-toggle-button"
 import {TabItem} from "./tab-item"
 import {Show} from "src/components/show"
+import {TabItemDragPreview} from "./tab-item-drag-preview"
 
 export function TabBar() {
   const handler = new TabBarHandler()
@@ -17,13 +18,14 @@ export function TabBar() {
       <Show when={handler.showSidebarToggle}>
         <SidebarToggleButton />
       </Show>
-      <nav className="tab-list">
+      <nav className="tab-list" ref={handler.listRef}>
         {handler.tabs.map((tab, index) => {
           return (
             <TabItem key={tab.id} tab={tab} handler={handler} index={index} />
           )
         })}
       </nav>
+      {handler.srcTab && <TabItemDragPreview handler={handler} />}
       <IconButton iconName="plus" click={() => handler.create()} />
       {handler.showSecondarySidebarToggle && <RightSidebarToggleButton />}
     </div>

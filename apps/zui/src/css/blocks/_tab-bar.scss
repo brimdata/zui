@@ -29,6 +29,10 @@
   padding-block: 4px;
 }
 
+.is-sorting .tab-item {
+  transition: transform 300ms var(--emphasis-easing);
+}
+
 .tab-item {
   /* Layout */
   display: flex;
@@ -42,6 +46,7 @@
   min-inline-size: 0;
   padding-inline-start: var(--gutter);
   padding-inline-end: var(--half-gutter);
+  gap: 0.5em;
 
   /* Theme */
   user-select: none;
@@ -50,13 +55,7 @@
   background-color: var(--emphasis-bg-less);
   border: 1px solid var(--emphasis-bg-less);
   border-radius: var(--radius-m);
-  transition: transform 300ms var(--emphasis-easing);
-  &:hover {
-    background-color: var(--emphasis-bg);
-    & .tab-item-close-button {
-      opacity: 1;
-    }
-  }
+
   &[aria-selected="true"] {
     border-color: transparent;
     background-color: var(--bg-color);
@@ -75,10 +74,25 @@
 }
 
 button.tab-item-close-button {
-  opacity: 0;
   min-width: 0px;
   width: 1.5em;
   height: 1.5em;
+}
+
+.tab-item.preview {
+  transition: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  user-select: none;
+  pointer-events: none;
+  z-index: 999;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color-more);
+
+  &.dropping {
+    transition: transform 300ms var(--emphasis-easing);
+  }
 }
 
 .mac-placeholder {

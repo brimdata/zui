@@ -9,3 +9,7 @@ export function getGap(element) {
 export function getX(element: HTMLElement) {
   return element.getBoundingClientRect().x
 }
+
+export function getRect(element: HTMLElement) {
+  return element.getBoundingClientRect()
+}

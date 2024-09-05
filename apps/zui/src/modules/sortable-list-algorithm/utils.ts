@@ -8,3 +8,9 @@ export function move(array: any[], src: number, dst: number) {
   arr.splice(dst, 0, item)
   return arr
 }
+
+export function clamp(min: number, desired: number, max: number) {
+  if (min > desired) return min
+  if (max < desired) return max
+  return desired
+}

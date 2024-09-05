@@ -3,7 +3,7 @@ import get from "lodash/get"
 import {PoolsState} from "../state/Pools/types"
 import {LakesState} from "../state/Lakes/types"
 
-export default function (
+export default function tab(
   tabId: string,
   lakes: LakesState,
   pools: PoolsState,
@@ -56,3 +56,5 @@ function compileTitle(route, location, lakes, pools, queryIdNameMap, lakeId) {
   }
   return title
 }
+
+export type TabModel = ReturnType<typeof tab>

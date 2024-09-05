@@ -40,7 +40,7 @@ export class SortableItem {
   }
 
   get size() {
-    return this.list.args.items.size
+    return this.list.args.items.width
   }
 
   get gap() {

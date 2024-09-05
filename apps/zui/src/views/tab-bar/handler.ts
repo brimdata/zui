@@ -1,4 +1,5 @@
 import classNames from "classnames"
+import {MutableRefObject, useRef} from "react"
 import {useSelector} from "react-redux"
 import {StateObject, useStateObject} from "src/core/state-object"
 import {ViewHandler} from "src/core/view-handler"
@@ -10,8 +11,14 @@ import {
   SortableList,
   SortableListArgs,
 } from "src/modules/sortable-list-algorithm"
+import {getGap, getRect} from "./utils"
+import {move} from "src/modules/sortable-list-algorithm/utils"
 
 type XY = {x: number; y: number}
+
+export const initialState = {
+  isDropping: false,
+}
 
 export class TabBarHandler extends ViewHandler {
   tabs: ReturnType<typeof tab>[]
@@ -20,6 +27,8 @@ export class TabBarHandler extends ViewHandler {
   secondarySidebarOpen: boolean
   sortableState: StateObject<SortableListArgs>
   sortableList: SortableList
+  listRef: MutableRefObject<HTMLElement>
+  state: StateObject<typeof initialState>
 
   constructor() {
     super()
@@ -29,6 +38,8 @@ export class TabBarHandler extends ViewHandler {
     this.tabs = useSelector(getTabModels)
     this.sortableState = useStateObject(SortableList.initialState())
     this.sortableList = new SortableList(this.sortableState)
+    this.listRef = useRef<HTMLElement>()
+    this.state = useStateObject(initialState)
   }
 
   isActive(id: string) {
@@ -63,6 +74,7 @@ export class TabBarHandler extends ViewHandler {
   get tabBarClassNames() {
     return classNames("tab-bar", {
       "flush-left": !this.showSidebarToggle,
+      "is-sorting": this.sortableList.isSorting,
     })
   }
 
@@ -82,9 +94,64 @@ export class TabBarHandler extends ViewHandler {
     })
   }
 
-  onDragStart(offset: XY, index: number, element: HTMLElement) {}
+  onDragStart(offset: XY, index: number, element: HTMLElement) {
+    const list = this.listRef.current
+    this.sortableState.set({
+      src: index,
+      listRect: getRect(list),
+      dragRect: getRect(element),
+      items: {
+        gap: getGap(list),
+        height: getRect(element).height,
+        width: getRect(element).width,
+        count: this.tabs.length,
+      },
+      startingOffset: offset,
+      offset,
+    })
+  }
 
-  onDragMove(offset: XY) {}
+  onDragMove(offset: XY) {
+    this.sortableState.merge({offset})
+  }
 
-  onDragEnd() {}
+  onDragEnd() {
+    this.state.setItem("isDropping", true)
+    const indices = this.tabs.map((t, index) => index)
+    const newOrder = move(
+      indices,
+      this.sortableState.src,
+      this.sortableList.dst
+    )
+    setTimeout(() => {
+      this.sortableState.reset()
+      this.state.reset()
+      requestAnimationFrame(() => {
+        this.dispatch(Tabs.order(newOrder))
+      })
+    }, 300) /* this is the time it takes for the transition to settle */
+  }
+
+  get srcTab() {
+    return this.tabs[this.sortableState.src]
+  }
+
+  get dragPreviewClassNames() {
+    return classNames({
+      "tab-item": true,
+      preview: true,
+      dropping: this.state.isDropping,
+    })
+  }
+
+  get dragPreviewDimens() {
+    if (this.state.isDropping) {
+      return {
+        ...this.sortableList.previewDimens,
+        x: this.sortableList.dstItem.startPoint,
+      }
+    } else {
+      return this.sortableList.previewDimens
+    }
+  }
 }
