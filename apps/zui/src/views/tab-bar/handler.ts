@@ -13,6 +13,8 @@ import {
 } from "src/modules/sortable-list-algorithm"
 import {getGap, getRect} from "./utils"
 import {move} from "src/modules/sortable-list-algorithm/utils"
+import {QuerySession} from "src/models/query-session"
+import {BrowserTab} from "src/models/browser-tab"
 
 type XY = {x: number; y: number}
 
@@ -56,7 +58,7 @@ export class TabBarHandler extends ViewHandler {
 
   destroy(e: any, id: string) {
     e.stopPropagation()
-    return this.dispatch(Tabs.remove(id))
+    BrowserTab.find(id)?.destroy()
   }
 
   get showMacPlaceholder() {

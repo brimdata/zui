@@ -3,6 +3,7 @@ import {orderBy} from "lodash"
 import {matchPath} from "react-router"
 import {DomainModel} from "src/core/domain-model"
 import Tabs from "src/js/state/Tabs"
+import {QuerySession} from "./query-session"
 
 type Attrs = {
   id: string
@@ -66,5 +67,13 @@ export class BrowserTab extends DomainModel<Attrs> {
 
   get history() {
     return globalThis.tabHistories.getOrCreate(this.attrs.id)
+  }
+
+  destroy() {
+    const session = QuerySession.find(this.attrs.id)
+    if (session && session.history.length === 0) {
+      session.destroy()
+    }
+    this.dispatch(Tabs.remove(this.attrs.id))
   }
 }

@@ -6,6 +6,8 @@ import Tabs from "./"
 import {findTabById, findTabByUrl} from "./find"
 import {invoke} from "src/core/invoke"
 import {QuerySession} from "src/models/query-session"
+import {BrowserTab} from "src/models/browser-tab"
+import {Active} from "src/models/active"
 
 export const create =
   (url = "/", id = nanoid()): Thunk<string> =>
@@ -72,13 +74,11 @@ export const activateUrl =
     }
   }
 
-export const closeActive = (): Thunk => (dispatch, getState) => {
-  const tabs = Tabs.getData(getState())
-  if (tabs.length === 0) {
+export const closeActive = (): Thunk => () => {
+  if (BrowserTab.count === 0) {
     invoke("closeWindow")
   } else {
-    const id = Tabs.getActive(getState())
-    dispatch(Tabs.remove(id))
+    Active.tab.destroy()
   }
 }
 
