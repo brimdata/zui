@@ -5,8 +5,15 @@ const args: SortableListArgs = {
   src: null,
   startingOffset: {x: 0, y: 0},
   offset: {x: 0, y: 0},
+  dragRect: {
+    width: 100,
+    height: 40,
+    x: 0,
+    y: 0,
+  },
   items: {
-    size: 100,
+    width: 100,
+    height: 100,
     count: 5,
     gap: 1,
   },
