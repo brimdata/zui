@@ -14,3 +14,17 @@ export function clamp(min: number, desired: number, max: number) {
   if (max < desired) return max
   return desired
 }
+
+export function elasticClamp(min: number, desired: number, max: number) {
+  if (min > desired) {
+    const diff = min - desired
+    const overdrag = Math.log(diff) * 4
+    return min - overdrag
+  }
+  if (max < desired) {
+    const diff = desired - max
+    const overdrag = Math.log(diff) * 4
+    return max + overdrag
+  }
+  return desired
+}

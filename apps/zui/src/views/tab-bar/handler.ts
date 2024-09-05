@@ -112,6 +112,7 @@ export class TabBarHandler extends ViewHandler {
   }
 
   onDragMove(offset: XY) {
+    if (offset.x === 0 && offset.y === 0) return
     this.sortableState.merge({offset})
   }
 

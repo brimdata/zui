@@ -1,6 +1,6 @@
 import {SortableItem} from "./sortable-item"
 import {SortableListArgs} from "./types"
-import {clamp, upTo} from "./utils"
+import {clamp, elasticClamp, upTo} from "./utils"
 
 export class SortableList {
   public items: SortableItem[]
@@ -48,10 +48,15 @@ export class SortableList {
   }
 
   get previewDimens() {
+    console.log(this.args.offset)
     const x =
       this.srcItem.startPoint - this.args.startingOffset.x + this.args.offset.x
     return {
-      x: clamp(this.startPoint, x, this.endPoint - this.args.items.width),
+      x: elasticClamp(
+        this.startPoint,
+        x,
+        this.endPoint - this.args.items.width
+      ),
       y: this.args.dragRect.y,
       width: this.args.items.width,
       height: this.args.items.height,
