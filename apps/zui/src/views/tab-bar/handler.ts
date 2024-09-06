@@ -16,7 +16,6 @@ import {move} from "src/modules/sortable-list-algorithm/utils"
 import {BrowserTab} from "src/models/browser-tab"
 
 type XY = {x: number; y: number}
-
 export const initialState = {
   isDropping: false,
 }
@@ -24,6 +23,7 @@ export const initialState = {
 export class TabBarHandler extends ViewHandler {
   tabs: ReturnType<typeof tab>[]
   activeId: string
+  previewId: string
   sidebarOpen: boolean
   secondarySidebarOpen: boolean
   sortableState: StateObject<SortableListArgs>
@@ -34,6 +34,7 @@ export class TabBarHandler extends ViewHandler {
   constructor() {
     super()
     this.activeId = useSelector(Tabs.getActive)
+    this.previewId = useSelector(Tabs.getPreview)
     this.sidebarOpen = useSelector(Appearance.sidebarIsOpen)
     this.secondarySidebarOpen = useSelector(Appearance.secondarySidebarIsOpen)
     this.tabs = useSelector(getTabModels)
@@ -45,6 +46,10 @@ export class TabBarHandler extends ViewHandler {
 
   isActive(id: string) {
     return this.activeId === id
+  }
+
+  isPreview(id: string) {
+    return this.previewId === id
   }
 
   activate(id: string) {
@@ -92,6 +97,7 @@ export class TabBarHandler extends ViewHandler {
       "no-transition": !isSorting,
       "move-back": item?.moveBack,
       "move-forward": item?.moveForward,
+      "tab-item-preview": this.isPreview(this.tabs[index]?.id),
     })
   }
 

@@ -62,6 +62,10 @@
     border: 1px solid var(--border-color-more);
   }
 
+  &.tab-item-preview {
+    font-style: italic;
+  }
+
   .tab-icon {
     vertical-align: -3.5px;
     margin-inline-end: 0.3em;
