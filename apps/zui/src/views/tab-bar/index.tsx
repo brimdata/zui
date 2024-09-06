@@ -31,7 +31,11 @@ export function TabBar() {
         })}
       </nav>
       {handler.srcTab && <TabItemDragPreview handler={handler} />}
-      <IconButton iconName="plus" click={() => handler.create()} />
+      <IconButton
+        iconName="plus"
+        click={() => handler.create()}
+        label="New Tab"
+      />
       {handler.showSecondarySidebarToggle && <RightSidebarToggleButton />}
     </div>
   )
