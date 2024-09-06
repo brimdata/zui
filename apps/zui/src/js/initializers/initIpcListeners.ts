@@ -10,7 +10,6 @@ import * as zed from "@brimdata/zed-js"
 import {viewLogDetail} from "../flows/viewLogDetail"
 import tabHistory from "src/app/router/tab-history"
 import {submitSearch} from "src/domain/session/handlers"
-import commands from "src/commands"
 import cmd from "src/cmd"
 
 export default (store: Store) => {

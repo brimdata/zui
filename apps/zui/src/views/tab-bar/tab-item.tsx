@@ -27,6 +27,7 @@ export function TabItem({tab, handler, index}: Props) {
       ref={ref}
       className={handler.tabItemClassNames(index)}
       aria-selected={handler.isActive(tab.id)}
+      role="tab"
       onMouseDown={() => handler.activate(tab.id)}
     >
       <span className="tab-item-title">

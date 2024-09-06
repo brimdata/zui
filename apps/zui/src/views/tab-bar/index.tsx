@@ -18,7 +18,12 @@ export function TabBar() {
       <Show when={handler.showSidebarToggle}>
         <SidebarToggleButton />
       </Show>
-      <nav className="tab-list" ref={handler.listRef}>
+      <nav
+        className="tab-list"
+        ref={handler.listRef}
+        role="tablist"
+        id="main-area-tabs"
+      >
         {handler.tabs.map((tab, index) => {
           return (
             <TabItem key={tab.id} tab={tab} handler={handler} index={index} />
