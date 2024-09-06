@@ -1,6 +1,6 @@
 import {SortableItem} from "./sortable-item"
 import {SortableListArgs} from "./types"
-import {clamp, elasticClamp, upTo} from "./utils"
+import {elasticClamp, upTo} from "./utils"
 
 export class SortableList {
   public items: SortableItem[]
