@@ -1747,7 +1747,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.13, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.9.2":
   version: 7.17.9
   resolution: "@babel/runtime@npm:7.17.9"
   dependencies:
@@ -15384,19 +15384,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-spring@npm:^8.0.27":
-  version: 8.0.27
-  resolution: "react-spring@npm:8.0.27"
-  dependencies:
-    "@babel/runtime": ^7.3.1
-    prop-types: ^15.5.8
-  peerDependencies:
-    react: ">= 16.8.0"
-    react-dom: ">= 16.8.0"
-  checksum: 4f306e30c3a425fd2b11c265ca0a7c261de0f63c0250fa6fa19eddd58c50fc9eaa463927571ee1dec39659a1bf619aaacf3352602b7724695da240ec0bc106cf
-  languageName: node
-  linkType: hard
-
 "react-transition-group@npm:^4.4.5":
   version: 4.4.5
   resolution: "react-transition-group@npm:4.4.5"
@@ -18799,7 +18786,6 @@ __metadata:
     react-markdown: ^6.0.2
     react-redux: ^8.0.5
     react-router: 5.3.1
-    react-spring: ^8.0.27
     react-transition-group: ^4.4.5
     react-window: ^1.8.7
     regenerator-runtime: ^0.13.6
