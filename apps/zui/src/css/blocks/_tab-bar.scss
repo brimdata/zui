@@ -19,7 +19,7 @@
 .tab-list {
   /* Layout */
   display: flex;
-  flex: 0 1 auto;
+  flex: 0 1 max-content;
   align-items: center;
   height: 100%;
   overflow: hidden;
@@ -41,7 +41,7 @@
   position: relative;
 
   /* Sizes */
-  flex: 0 1 200px;
+  flex: 0 1 max-content;
   block-size: 100%;
   min-inline-size: 0;
   padding-inline-start: var(--gutter);
