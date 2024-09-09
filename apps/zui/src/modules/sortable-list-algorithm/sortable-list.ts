@@ -48,7 +48,6 @@ export class SortableList {
   }
 
   get previewDimens() {
-    console.log(this.args.offset)
     const x =
       this.srcItem.startPoint - this.args.startingOffset.x + this.args.offset.x
     return {

@@ -34,7 +34,10 @@ export function AppGrid({children}) {
     gridTemplateColumns: columns.join(" "),
   }
   const ref = useRef()
-  const {dropProps} = useDrop({ref})
+  const {dropProps} = useDrop({
+    ref,
+    isDisabled: !useSelector(Appearance.getIsSortingTabs),
+  })
   return (
     <BG style={style} {...dropProps} ref={ref}>
       {children}

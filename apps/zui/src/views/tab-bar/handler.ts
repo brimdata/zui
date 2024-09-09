@@ -94,7 +94,7 @@ export class TabBarHandler extends ViewHandler {
       "transform-shrink": isSource,
       "cursor-grabbing": isSource,
       "pointer-events-none": isSorting && !isSource,
-      "no-transition": !isSorting,
+      "no-transition": !isSorting || this.state.isDropping,
       "move-back": item?.moveBack,
       "move-forward": item?.moveForward,
       "tab-item-preview": this.isPreview(this.tabs[index]?.id),
@@ -102,6 +102,10 @@ export class TabBarHandler extends ViewHandler {
   }
 
   onDragStart(offset: XY, index: number, element: HTMLElement) {
+    this.dispatch(Appearance.setIsSortingTabs(true))
+    this.state.setItem("isDropping", false)
+    clearTimeout(this.dropTimeout)
+
     const list = this.listRef.current
     this.sortableState.set({
       src: index,
@@ -123,7 +127,9 @@ export class TabBarHandler extends ViewHandler {
     this.sortableState.merge({offset})
   }
 
+  dropTimeout: any
   onDragEnd() {
+    this.dispatch(Appearance.setIsSortingTabs(false))
     this.state.setItem("isDropping", true)
     const indices = this.tabs.map((t, index) => index)
     const newOrder = move(
@@ -131,9 +137,9 @@ export class TabBarHandler extends ViewHandler {
       this.sortableState.src,
       this.sortableList.dst
     )
-    setTimeout(() => {
-      this.sortableState.reset()
+    this.dropTimeout = setTimeout(() => {
       this.state.reset()
+      this.sortableState.reset()
       requestAnimationFrame(() => {
         this.dispatch(Tabs.order(newOrder))
       })
