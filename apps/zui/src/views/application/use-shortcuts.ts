@@ -4,6 +4,7 @@ import Mousetrap from "mousetrap"
 import Modal from "../../js/state/Modal"
 import Tabs from "../../js/state/Tabs"
 import {useDispatch} from "src/core/use-dispatch"
+import cmd from "src/cmd"
 
 export default function () {
   const dispatch = useDispatch()
@@ -14,7 +15,7 @@ export default function () {
       .bind("mod+t", () => dispatch(Tabs.createQuerySession()))
       .bind("mod+w", (e) => {
         e.preventDefault()
-        dispatch(Tabs.closeActive())
+        cmd.tabs.closeActive()
       })
       .bind("ctrl+tab", () => dispatch(Tabs.activateNext()))
       .bind("ctrl+shift+tab", () => dispatch(Tabs.activatePrev()))

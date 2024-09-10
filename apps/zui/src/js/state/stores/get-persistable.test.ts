@@ -12,6 +12,7 @@ import {
 } from "./get-persistable"
 import Lakes from "../Lakes"
 import Tabs from "../Tabs"
+import cmd from "src/cmd"
 
 let store
 
@@ -62,7 +63,7 @@ test("delete accessToken for authType none", () => {
 })
 
 test("keeps the tabs", () => {
-  store.dispatch(Tabs.closeActive())
+  cmd.tabs.closeActive()
   store.dispatch(Tabs.create("/", "1"))
   store.dispatch(Tabs.create("/", "2"))
   store.dispatch(Tabs.create("/", "3"))
