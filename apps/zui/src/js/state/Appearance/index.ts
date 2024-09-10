@@ -11,6 +11,7 @@ const init = () => ({
   historyView: "linear" as HistoryView,
   poolsOpenState: {} as OpenMap,
   queriesOpenState: {} as OpenMap,
+  isSortingTabs: false,
 })
 
 const select = {
@@ -24,6 +25,7 @@ const select = {
   getHistoryView: (state: State) => state.appearance.historyView,
   getPoolsOpenState: (state: State) => state.appearance.poolsOpenState,
   getQueriesOpenState: (state: State) => state.appearance.queriesOpenState,
+  getIsSortingTabs: (state: State) => state.appearance.isSortingTabs,
 }
 
 // This is the window level appearance state
@@ -57,6 +59,9 @@ const slice = createSlice({
     },
     setPoolsOpenState: (s, a: PayloadAction<OpenMap>) => {
       s.poolsOpenState = a.payload
+    },
+    setIsSortingTabs: (s, a: PayloadAction<boolean>) => {
+      s.isSortingTabs = a.payload
     },
   },
 })

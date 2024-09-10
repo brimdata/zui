@@ -37,7 +37,7 @@ export function runConfigurations() {
     properties: {
       timeZone: {
         name: "timeZone",
-        label: "Timezone",
+        label: "Time Zone",
         type: "string",
         defaultValue: "UTC",
         enum: time.getZoneNames(),
@@ -50,7 +50,7 @@ export function runConfigurations() {
         placeholder: "%Y-%m-%dT%H:%M:%S.%L%:z",
         helpLink: {
           label: "docs",
-          url: "https://github.com/samsonjs/strftime?tab=readme-ov-file#supported-specifiers",
+          url: "https://zui.brimdata.io/docs/features/Time-Display",
         },
       },
       thousandsSeparator: {

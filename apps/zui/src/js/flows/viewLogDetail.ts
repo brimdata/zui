@@ -8,7 +8,7 @@ import Current from "../state/Current"
 import {invoke} from "src/core/invoke"
 
 export const viewLogDetail =
-  (record: zed.Record): Thunk =>
+  (record: zed.Value): Thunk =>
   (dispatch, getState) => {
     const current = LogDetails.build(getState())
     if (record && !isEqual(record, current)) {

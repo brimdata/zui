@@ -73,13 +73,11 @@
 @import "expand-button";
 @import "button-row";
 @import "debug-modal";
-@import "tab";
 @import "brand";
 @import "empty-search-page";
 @import "mac-spinner";
 @import "progress-indicator";
 @import "about-window";
-@import "tab-search-loading";
 @import "ingest-warnings-modal";
 @import "detail-window";
 @import "sidebar";
@@ -103,6 +101,7 @@
 @import "blocks/vertical-rule";
 @import "blocks/section-tabs";
 @import "blocks/cards";
+@import "blocks/tab-bar";
 
 /* Utilities */
 @import "utilities";
@@ -111,3 +110,4 @@
 @import "utilities/surfaces";
 @import "utilities/radius";
 @import "utilities/sizing";
+@import "utilities/cursor";

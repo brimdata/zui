@@ -7,11 +7,12 @@ import Current from "../Current"
 import {Store} from "../types"
 import Tabs from "./"
 import initTestStore from "src/test/unit/helpers/initTestStore"
+import cmd from "src/cmd"
 
 let store: Store
 beforeEach(async () => {
   store = await initTestStore()
-  store.dispatch(Tabs.closeActive()) // start from a clean slate
+  cmd.tabs.closeActive() // start from a clean slate
 })
 
 test("initial state has one tab", () => {

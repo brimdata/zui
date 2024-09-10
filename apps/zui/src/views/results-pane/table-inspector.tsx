@@ -29,15 +29,17 @@ export function TableInspector() {
   const {height, shapes} = useResultsPaneContext()
   return (
     <>
-      <div style={{height: config.headerHeight}}>
-        <Warning>
-          <b>{shapes.length} Shapes</b> — Filter to one shape or{" "}
-          <b>
-            <a onClick={() => fuse()}>fuse</a>
-          </b>{" "}
-          results to view as a table.
-        </Warning>
-      </div>
+      {shapes.length > 1 && (
+        <div style={{height: config.headerHeight}}>
+          <Warning>
+            <b>{shapes.length} Shapes</b> — Filter or{" "}
+            <b>
+              <a onClick={() => fuse()}>fuse</a>
+            </b>{" "}
+            to view results as one shape.
+          </Warning>
+        </div>
+      )}
       <Inspector height={height - config.headerHeight} />
     </>
   )

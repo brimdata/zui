@@ -17,7 +17,7 @@ play('Copy Paste Data', (app, test) => {
     await app.invoke('loads.paste');
     await app.click('button', 'Load');
     await app.click('button', 'Query Pool');
-    const results = await app.getViewerResults();
+    const results = await app.getTableResults();
     test.expect(results).toEqual(['a', '1']);
   });
 

@@ -9,7 +9,7 @@ import {
 } from "./types"
 
 export default {
-  push: (record: zed.Record): LOG_DETAIL_PUSH => ({
+  push: (record: zed.Value): LOG_DETAIL_PUSH => ({
     type: "LOG_DETAIL_PUSH",
     record,
   }),

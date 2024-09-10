@@ -1,0 +1,123 @@
+.tab-bar {
+  /* Layout */
+  grid-area: tabs;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  & > * {
+    flex: 0 0 auto;
+  }
+
+  /* Spacing */
+  padding-inline: var(--gutter);
+  gap: var(--space-xs);
+
+  /* Theme */
+  -webkit-app-region: drag;
+}
+
+.tab-list {
+  /* Layout */
+  display: flex;
+  flex: 0 1 max-content;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+
+  /* Sizing */
+  gap: var(--space-3xs);
+  padding-block: 4px;
+}
+
+.is-sorting .tab-item {
+  transition: transform 300ms var(--emphasis-easing);
+}
+
+.tab-item {
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+
+  /* Sizes */
+  flex: 0 1 max-content;
+  block-size: 100%;
+  min-inline-size: 0;
+  padding-inline-start: var(--gutter);
+  padding-inline-end: var(--half-gutter);
+  gap: 0.5em;
+
+  /* Theme */
+  user-select: none;
+  -webkit-app-region: no-drag;
+  cursor: default;
+  background-color: var(--emphasis-bg-less);
+  border: 1px solid var(--emphasis-bg-less);
+  border-radius: var(--radius-m);
+
+  &[aria-selected="true"] {
+    border-color: transparent;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color-more);
+  }
+
+  &.tab-item-preview {
+    font-style: italic;
+  }
+
+  .tab-icon {
+    vertical-align: -3.5px;
+    margin-inline-end: 0.3em;
+  }
+}
+
+.tab-item-title {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+button.tab-item-close-button {
+  min-width: 0px;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.tab-item.preview {
+  transition: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  user-select: none;
+  pointer-events: none;
+  z-index: 999;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color-more);
+
+  &.dropping {
+    transition: transform 300ms var(--emphasis-easing);
+  }
+}
+
+.mac-placeholder {
+  -webkit-app-region: drag;
+  inline-size: 54px;
+}
+
+.tab-close-button {
+  background: none;
+}
+
+.move-forward {
+  user-select: none;
+  transform: translateX(calc(100% + var(--space-3xs)));
+}
+
+.move-back {
+  user-select: none;
+  transform: translateX(calc(-100% - var(--space-3xs)));
+}
+
+.no-transition {
+  transition-duration: 0ms;
+}

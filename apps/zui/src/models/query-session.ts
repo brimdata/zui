@@ -8,6 +8,7 @@ import {getById} from "src/js/state/SessionHistories/selectors"
 import {queryPath} from "src/app/router/utils/paths"
 import {last} from "lodash"
 import {EditorSnapshot} from "./editor-snapshot"
+import cmd from "src/cmd"
 
 const schema = {
   name: {type: String, default: null as string},
@@ -73,7 +74,7 @@ export class QuerySession extends ApplicationEntity<Attributes> {
     this.dispatch(actions.deleteById({sessionId: this.id}))
     global.tabHistories.delete(this.id)
     if (this.isActive) {
-      this.dispatch(Tabs.closeActive())
+      cmd.tabs.closeActive()
     } else {
       this.dispatch(Tabs.remove(this.id))
     }
