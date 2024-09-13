@@ -9,13 +9,8 @@ import {Session} from "src/models/session"
  * query for the first time.
  */
 export const create = createHandler(async ({oldApi}, name: string) => {
-  const {parentId: _, ...attrs} = Active.snapshot.attrs
-  const query = await oldApi.queries.create({name, versions: [attrs]})
-  const namedQuery = new NamedQuery({
-    id: query.id,
-    name: query.name,
-  })
-  Active.session.navigate(namedQuery.lastSnapshot, namedQuery)
+  const query = await oldApi.queries.create({name})
+  Active.snapshot.update({queryId: query.id})
 })
 
 /**

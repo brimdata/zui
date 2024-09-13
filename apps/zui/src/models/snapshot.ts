@@ -3,7 +3,9 @@ import {ApplicationEntity} from "./application-entity"
 import {snapshotPath} from "src/app/router/utils/paths"
 import {QueryPin} from "src/js/state/Editor/types"
 import buildPin from "src/js/state/Editor/models/build-pin"
-import {SourceSet} from "./editor-snapshot/source-set"
+import {SourceSet} from "./snapshot/source-set"
+import {Validator} from "./snapshot/validator"
+import {isEqual} from "lodash"
 
 /* Schema */
 const schema = {
@@ -47,5 +49,18 @@ export class Snapshot extends ApplicationEntity<Attributes> {
       this.activePins.map((pin) => pin.toZed()),
       this.value
     )
+  }
+
+  validator = new Validator()
+  async isValid() {
+    return this.validator.validate(this)
+  }
+
+  get errors() {
+    return this.validator.errors
+  }
+
+  equals(other: Snapshot) {
+    return isEqual(this.pins, other.pins) && isEqual(this.value, other.value)
   }
 }

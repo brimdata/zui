@@ -5,6 +5,7 @@ import {Thunk} from "../types"
 import Tabs from "./"
 import {findTabById, findTabByUrl} from "./find"
 import {QuerySession} from "src/models/query-session"
+import {Snapshot} from "src/models/snapshot"
 
 export const create =
   (url = "/", id = nanoid()): Thunk<string> =>
@@ -23,17 +24,13 @@ export const create =
     return id
   }
 
-export const createQuerySession =
-  (): Thunk<string> =>
-  (dispatch, getState, {api}) => {
-    const session = QuerySession.create()
-    const sessionId = session.id
-    const version = "0"
-    api.queries.createEditorSnapshot(sessionId, {version, value: "", pins: []})
-    const url = queryPath(sessionId, version)
+export const createQuerySession = (): Thunk<string> => (dispatch) => {
+  const session = QuerySession.create()
+  const sessionId = session.id
+  const snapshot = Snapshot.create({value: "", pins: [], sessionId})
 
-    return dispatch(create(url, sessionId))
-  }
+  return dispatch(create(snapshot.pathname, sessionId))
+}
 
 export const previewUrl =
   (url: string): Thunk =>

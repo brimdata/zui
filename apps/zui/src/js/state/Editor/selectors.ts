@@ -26,8 +26,6 @@ export const getSnapshot = activeTabSelect((tab) => {
   return {
     value: tab.editor.value,
     pins: tab.editor.pins,
-    version: nanoid(),
-    ts: new Date().toISOString(),
   } as QueryVersion
 })
 

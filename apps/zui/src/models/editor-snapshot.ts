@@ -5,8 +5,8 @@ import {DomainModel} from "src/core/domain-model"
 import buildPin from "src/js/state/Editor/models/build-pin"
 import {QueryPin, QueryPinInterface} from "src/js/state/Editor/types"
 import QueryVersions from "src/js/state/QueryVersions"
-import {SourceSet} from "./editor-snapshot/source-set"
-import {Validator} from "./editor-snapshot/validator"
+import {SourceSet} from "./snapshot/source-set"
+import {Validator} from "./snapshot/validator"
 
 type Attrs = {
   version: string

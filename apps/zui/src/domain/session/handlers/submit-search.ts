@@ -1,5 +1,7 @@
 import {createHandler} from "src/core/handlers"
+import Editor from "src/js/state/Editor"
 import {Active} from "src/models/active"
+import {Snapshot} from "src/models/snapshot"
 
 /**
  * Save the active snapshot under the session id.
@@ -12,13 +14,18 @@ import {Active} from "src/models/active"
  *
  * It's should be thought of as POST /session/:id/snapshots
  */
-export const submitSearch = createHandler(async () => {
-  const {session} = Active
-  const nextSnapshot = Active.snapshot
+export const submitSearch = createHandler(async ({select}) => {
+  const session = Active.session
+  const currentSnapshot = Active.snapshot
+  const nextSnapshot = new Snapshot({
+    ...select(Editor.getSnapshot),
+    sessionId: session.id,
+  })
 
-  if (nextSnapshot.equals(session.snapshot)) {
-    session.load()
+  if (currentSnapshot.equals(nextSnapshot)) {
+    Active.tab.reload()
   } else {
-    session.navigate(Active.snapshot, session.namedQuery)
+    nextSnapshot.save()
+    session.navigate(nextSnapshot)
   }
 })

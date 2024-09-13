@@ -61,6 +61,10 @@ export class BrowserTab extends DomainModel<Attrs> {
     }
   }
 
+  reload() {
+    this.history.replace(this.history.location.pathname)
+  }
+
   activate() {
     this.dispatch(Tabs.activate(this.attrs.id))
   }
