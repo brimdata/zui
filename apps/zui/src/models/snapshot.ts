@@ -6,6 +6,7 @@ import buildPin from "src/js/state/Editor/models/build-pin"
 import {SourceSet} from "./snapshot/source-set"
 import {Validator} from "./snapshot/validator"
 import {isEqual} from "lodash"
+import Queries from "src/js/state/Queries"
 
 /* Schema */
 const schema = {
@@ -28,7 +29,7 @@ export class Snapshot extends ApplicationEntity<Attributes> {
   value: string
   pins: QueryPin[]
   sessionId: string
-
+  queryId: string
   /* Instance Methods */
   get pathname() {
     return snapshotPath(this.id)
@@ -62,5 +63,13 @@ export class Snapshot extends ApplicationEntity<Attributes> {
 
   equals(other: Snapshot) {
     return isEqual(this.pins, other.pins) && isEqual(this.value, other.value)
+  }
+
+  get query() {
+    return this.select((state) => Queries.find(state, this.queryId))
+  }
+
+  get isSaved() {
+    return !!this.query
   }
 }

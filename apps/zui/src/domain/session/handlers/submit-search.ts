@@ -1,7 +1,6 @@
 import {createHandler} from "src/core/handlers"
-import Editor from "src/js/state/Editor"
+import Current from "src/js/state/Current"
 import {Active} from "src/models/active"
-import {Snapshot} from "src/models/snapshot"
 
 /**
  * Save the active snapshot under the session id.
@@ -17,10 +16,7 @@ import {Snapshot} from "src/models/snapshot"
 export const submitSearch = createHandler(async ({select}) => {
   const session = Active.session
   const currentSnapshot = Active.snapshot
-  const nextSnapshot = new Snapshot({
-    ...select(Editor.getSnapshot),
-    sessionId: session.id,
-  })
+  const nextSnapshot = select(Current.getNextSnapshot)
 
   if (currentSnapshot.equals(nextSnapshot)) {
     Active.tab.reload()

@@ -25,6 +25,7 @@ import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
 import {Snapshot} from "src/models/snapshot"
+import Editor from "../Editor"
 
 export const getHistory = (
   state,
@@ -119,10 +120,13 @@ export const getSnapshotId = (state) => {
   const match = matchPath<any>(pathname, [route])
   return match?.params?.id || null
 }
-
-export const getQueryText = createSelector(getSnapshotId, (id) => {
-  return Snapshot.find(id).queryText
-})
+export const getSnapshot = createSelector(getSnapshotId, (id) =>
+  Snapshot.find(id)
+)
+export const getQueryText = createSelector(
+  getSnapshot,
+  (snapshot) => snapshot.queryText
+)
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
   if (!id) throw new Error("Current lake id is unset")
@@ -203,3 +207,15 @@ export const getRouteName = createSelector(getLocation, (location) => {
   if (route) return route.name
   else return null
 })
+
+export const getNextSnapshot = createSelector(
+  getSnapshot,
+  Editor.getSnapshot,
+  (snapshot, editorState) => {
+    return new Snapshot({
+      ...editorState,
+      sessionId: snapshot.sessionId,
+      queryId: snapshot.queryId,
+    })
+  }
+)

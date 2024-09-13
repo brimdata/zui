@@ -1,19 +1,18 @@
-import {createMenu} from "src/core/menu"
-import {ActiveQuery} from "src/models/active-query"
+import {MenuItem} from "src/core/menu"
 
-export const sessionToolbarMenu = createMenu((_, query: ActiveQuery) => {
+export function createMenu(args: {isModified: boolean; isSaved: boolean}) {
   return [
     {
       label: "Update Query",
       command: "namedQueries.update",
       iconName: "check",
-      visible: query.isModified(),
+      visible: args.isModified,
     },
     {
       label: "Detach from Query",
       command: "session.resetQuery",
       iconName: "close_circle",
-      visible: query.isSaved(),
+      visible: args.isSaved,
     },
     {
       label: "Save as New Query",
@@ -54,5 +53,5 @@ export const sessionToolbarMenu = createMenu((_, query: ActiveQuery) => {
       iconName: "run",
       command: "session.runQuery",
     },
-  ]
-})
+  ] as MenuItem[]
+}

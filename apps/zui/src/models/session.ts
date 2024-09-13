@@ -1,4 +1,4 @@
-import {queryPath} from "src/app/router/utils/paths"
+import {queryPath, snapshotPath} from "src/app/router/utils/paths"
 import {DomainModel} from "src/core/domain-model"
 import Inspector from "src/js/state/Inspector"
 import Table from "src/js/state/Table"
