@@ -6,6 +6,8 @@ import {Frame} from "./frame"
 import {getActiveTab} from "src/js/state/Tabs/selectors"
 import {Lake} from "./lake"
 import {Snapshot} from "./snapshot"
+import {QuerySession} from "./query-session"
+import Editor from "src/js/state/Editor"
 
 export class Active extends DomainModel {
   static get tab() {
@@ -13,13 +15,23 @@ export class Active extends DomainModel {
     return new BrowserTab({id, lastFocused})
   }
 
+  static get querySession() {
+    const {id} = this.select(getActiveTab)
+    return QuerySession.find(id)
+  }
+
   static get session() {
+    this.select(Current.getSession)
     const params = this.select(Current.getQueryUrlParams)
     return new Session({
       id: this.tab.attrs.id,
       parentId: params.queryId,
       snapshotId: params.version,
     })
+  }
+
+  static get editorState() {
+    return this.select(Editor.getSnapshot)
   }
 
   static get snapshot() {

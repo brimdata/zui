@@ -4,7 +4,6 @@ import Layout from "src/js/state/Layout"
 import {plusOne} from "src/util/plus-one"
 import {submitSearch} from "./submit-search"
 import {Active} from "src/models/active"
-import {create} from "src/domain/named-queries/handlers"
 
 export const editQuery = createHandler("session.editQuery", ({dispatch}) => {
   dispatch(Layout.showTitleForm())

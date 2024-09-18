@@ -11,7 +11,7 @@ export function Title({handler}: {handler: ToolbarHandler}) {
             onClick={() => handler.onEdit()}
             className={classNames({[styles.modified]: handler.isModified})}
           >
-            {handler.isSaved ? (
+            {handler.hasQuery ? (
               handler.queryName
             ) : (
               <span className={styles.untitled}>Untitled</span>
@@ -37,7 +37,6 @@ export function Title({handler}: {handler: ToolbarHandler}) {
           placeholder="Name your query..."
           autoFocus
           className={styles.input}
-          defaultValue={handler.queryName}
         />
       </form>
     )

@@ -18,6 +18,7 @@ import {TREE_ITEM_HEIGHT} from "../item"
 import {showMenu} from "src/core/menu"
 import EmptySection from "src/components/empty-section"
 import {NamedQueries} from "src/domain/handlers"
+import {NamedQuery} from "src/models/named-query"
 
 type Props = {
   searchTerm: string
@@ -83,16 +84,15 @@ function TreeOfQueries(props: {
                 )
               }}
               onRename={async (args) => {
-                await api.queries.update({
-                  id: args.id,
-                  changes: {name: args.name},
-                })
+                NamedQuery.find(args.id).update({name: args.name})
               }}
               onCreate={({type, parentId}) => {
                 if (type === "leaf") {
-                  return api.queries.create({
+                  return NamedQuery.create({
                     name: "",
                     parentId,
+                    value: "",
+                    pins: [],
                   })
                 } else {
                   return api.queries.createGroup("", parentId)

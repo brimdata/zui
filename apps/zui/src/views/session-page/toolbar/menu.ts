@@ -1,18 +1,12 @@
 import {MenuItem} from "src/core/menu"
 
-export function createMenu(args: {isModified: boolean; isSaved: boolean}) {
+export function createMenu(args: {hasQuery: boolean}) {
   return [
-    {
-      label: "Update Query",
-      command: "namedQueries.update",
-      iconName: "check",
-      visible: args.isModified,
-    },
     {
       label: "Detach from Query",
       command: "session.resetQuery",
       iconName: "close_circle",
-      visible: args.isSaved,
+      visible: args.hasQuery,
     },
     {
       label: "Save as New Query",

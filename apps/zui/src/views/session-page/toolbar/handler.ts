@@ -10,24 +10,22 @@ import {Snapshot} from "src/models/snapshot"
 import {useZuiApi} from "src/views/application/context"
 import ZuiApi from "src/js/api/zui-api"
 import Layout from "src/js/state/Layout"
-import {create} from "src/domain/named-queries/handlers"
 import {editQuery} from "src/domain/session/handlers"
+import {Active} from "src/models/active"
+import {NamedQuery} from "src/models/named-query"
 
 export class ToolbarHandler extends ViewHandler {
   nav = nav
   menuItems: MenuItem[]
-  isSaved: boolean
-  isModified: boolean
   isEditing: boolean
   snapshot: Snapshot
   oldApi: ZuiApi
+  isModified: boolean = false
 
   constructor() {
     super()
     this.oldApi = useZuiApi()
     this.snapshot = useSelector(Current.getSnapshot)
-    this.isModified = useSelector(get.isModified)
-    this.isSaved = useSelector(get.isSaved)
     this.isEditing = useSelector(Layout.getIsEditingTitle)
     const context = useSelector(get.whenContext)
     const defaultItems = createMenu(this)
@@ -42,15 +40,28 @@ export class ToolbarHandler extends ViewHandler {
     e.preventDefault()
     const input = e.currentTarget.elements.namedItem("query-name") as any
     const name = input.value.trim() || ""
-
     if (name.length) {
-      if (this.isSaved && !this.isModified) {
-        this.oldApi.queries.rename(this.queryId, name)
-      } else {
-        create(name)
-      }
+      this.hasQuery ? this.onRename(name) : this.onCreate(name)
     }
     this.hideForm()
+  }
+
+  onCreate(name: string) {
+    const {pins, value} = Active.editorState
+    const session = Active.querySession
+    const query = NamedQuery.create({name, value, pins})
+    const snapshot = Snapshot.create({
+      queryId: query.id,
+      sessionId: session.id,
+      pins,
+      value,
+    })
+    session.tab.load(snapshot.pathname)
+  }
+
+  onRename(name: string) {
+    const query = NamedQuery.find(this.queryId)
+    query.update({name})
   }
 
   onReset() {
@@ -76,8 +87,16 @@ export class ToolbarHandler extends ViewHandler {
     editQuery()
   }
 
+  get hasQuery() {
+    return !!this.snapshot.query
+  }
+
   get queryName() {
-    return this.snapshot.query.name
+    if (this.hasQuery) {
+      return this.snapshot.query.name
+    } else {
+      return undefined
+    }
   }
 
   get queryId() {
