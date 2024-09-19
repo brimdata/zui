@@ -25,11 +25,6 @@ export const saveAsNewQuery = createHandler(
   }
 )
 
-export const resetQuery = createHandler("session.resetQuery", () => {
-  const {session} = Active
-  session.navigate(session.snapshot)
-})
-
 export const fetchQueryInfo = createHandler(
   ({invoke}, query: string, pool?: string) =>
     invoke("editor.describe", query, pool)

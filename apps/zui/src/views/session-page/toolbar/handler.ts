@@ -4,7 +4,7 @@ import {useSelector} from "react-redux"
 import {MenuItem, useMenuExtension} from "src/core/menu"
 import * as get from "./selectors"
 import {createMenu} from "./menu"
-import {FormEvent} from "react"
+import {FormEvent, useEffect} from "react"
 import Current from "src/js/state/Current"
 import {Snapshot} from "src/models/snapshot"
 import {useZuiApi} from "src/views/application/context"
@@ -34,6 +34,9 @@ export class ToolbarHandler extends ViewHandler {
       defaultItems,
       context
     )
+    this.listen({
+      "session.resetQuery": () => this.onDetach(),
+    })
   }
 
   onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -66,6 +69,16 @@ export class ToolbarHandler extends ViewHandler {
 
   onReset() {
     this.hideForm()
+  }
+
+  onDetach() {
+    const session = Active.querySession
+    const next = Snapshot.create({
+      sessionId: session.id,
+      queryId: null,
+      ...Active.editorState,
+    })
+    session.tab.load(next.pathname)
   }
 
   onBlur(e: FormEvent<any>) {
