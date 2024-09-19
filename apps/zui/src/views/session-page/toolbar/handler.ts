@@ -4,7 +4,7 @@ import {useSelector} from "react-redux"
 import {MenuItem, useMenuExtension} from "src/core/menu"
 import * as get from "./selectors"
 import {createMenu} from "./menu"
-import {FormEvent, useEffect} from "react"
+import {FormEvent} from "react"
 import Current from "src/js/state/Current"
 import {Snapshot} from "src/models/snapshot"
 import {useZuiApi} from "src/views/application/context"
@@ -21,18 +21,17 @@ export class ToolbarHandler extends ViewHandler {
   snapshot: Snapshot
   oldApi: ZuiApi
   isModified: boolean = false
+  isSubmitting = false
 
   constructor() {
     super()
     this.oldApi = useZuiApi()
     this.snapshot = useSelector(Current.getSnapshot)
     this.isEditing = useSelector(Layout.getIsEditingTitle)
-    const context = useSelector(get.whenContext)
-    const defaultItems = createMenu(this)
     this.menuItems = useMenuExtension(
       "results.toolbarMenu",
-      defaultItems,
-      context
+      createMenu(),
+      useSelector(get.whenContext)
     )
     this.listen({
       "session.resetQuery": () => this.onDetach(),
@@ -40,6 +39,8 @@ export class ToolbarHandler extends ViewHandler {
   }
 
   onSubmit(e: FormEvent<HTMLFormElement>) {
+    if (this.isSubmitting) return
+    this.isSubmitting = true
     e.preventDefault()
     const input = e.currentTarget.elements.namedItem("query-name") as any
     const name = input.value.trim() || ""

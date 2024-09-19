@@ -36,6 +36,14 @@ export class NamedQuery extends DomainModel<Attrs> {
     return this.attrs.id
   }
 
+  get pins() {
+    return this.attrs.pins
+  }
+
+  get value() {
+    return this.attrs.value
+  }
+
   get lastSnapshot() {
     return this.snapshots[this.snapshots.length - 1]
   }

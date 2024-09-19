@@ -1,8 +1,8 @@
 import {useEffect, useLayoutEffect, useState} from "react"
 import {MenuItem} from "src/core/menu"
-import {compile} from "../when/compile"
 import {invoke} from "../invoke"
 import {useTabId} from "src/util/hooks/use-tab-id"
+import {evaluate} from "when-clause"
 
 export function useMenuExtension(
   name: string,
@@ -35,7 +35,7 @@ function compileMenuItems(items: MenuItem[], context: Record<string, any>) {
     .map<MenuItem>((item) => {
       return {
         ...item,
-        whenResult: compile(item.when, context),
+        whenResult: item.when && evaluate(item.when, context),
         priority: item.priority ?? 0,
       }
     })

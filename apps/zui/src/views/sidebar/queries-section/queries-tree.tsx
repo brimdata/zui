@@ -17,8 +17,8 @@ import Appearance from "src/js/state/Appearance"
 import {TREE_ITEM_HEIGHT} from "../item"
 import {showMenu} from "src/core/menu"
 import EmptySection from "src/components/empty-section"
-import {NamedQueries} from "src/domain/handlers"
 import {NamedQuery} from "src/models/named-query"
+import {QueriesRunner} from "src/runners/queries-runner"
 
 type Props = {
   searchTerm: string
@@ -75,7 +75,7 @@ function TreeOfQueries(props: {
               childrenAccessor="items"
               onActivate={(node) => {
                 if (node.isLeaf && id !== node.id) {
-                  NamedQueries.show(node.id)
+                  new QueriesRunner().open(node.id)
                 }
               }}
               onMove={(args) => {

@@ -1,12 +1,12 @@
 import {MenuItem} from "src/core/menu"
 
-export function createMenu(args: {hasQuery: boolean}) {
+export function createMenu() {
   return [
     {
       label: "Detach from Query",
       command: "session.resetQuery",
       iconName: "close_circle",
-      visible: args.hasQuery,
+      when: "session.hasQuery",
     },
     {
       label: "Save as New Query",

@@ -18300,6 +18300,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"when-clause@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "when-clause@npm:0.0.4"
+  checksum: 711a2a281a47d672923f9a4f2bc6c2c9ff8845f5a8463a6b7155d099bd385aec292e780010ad00bd1505326d189e0096cbb72771658c86dbef90bfc5a7d0832b
+  languageName: node
+  linkType: hard
+
 "which-boxed-primitive@npm:^1.0.2":
   version: 1.0.2
   resolution: "which-boxed-primitive@npm:1.0.2"
@@ -18802,6 +18809,7 @@ __metadata:
     utopia-core-scss: ^1.0.1
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
+    when-clause: ^0.0.4
     zed: "brimdata/zed#556f5868b2e3302f0906909114bb0d22059d1ffd"
     zui-test-data: "workspace:*"
   peerDependencies:
