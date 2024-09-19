@@ -13,6 +13,7 @@ import Layout from "src/js/state/Layout"
 import {editQuery} from "src/domain/session/handlers"
 import {Active} from "src/models/active"
 import {NamedQuery} from "src/models/named-query"
+import {plusOne} from "src/util/plus-one"
 
 export class ToolbarHandler extends ViewHandler {
   nav = nav
@@ -35,6 +36,7 @@ export class ToolbarHandler extends ViewHandler {
     )
     this.listen({
       "session.resetQuery": () => this.onDetach(),
+      "session.saveAsNewQuery": () => this.onSaveAs(),
     })
   }
 
@@ -66,6 +68,15 @@ export class ToolbarHandler extends ViewHandler {
   onRename(name: string) {
     const query = NamedQuery.find(this.queryId)
     query.update({name})
+  }
+
+  onSaveAs() {
+    const name = this.queryName
+    const newName = plusOne(name)
+    this.onCreate(newName)
+    setTimeout(() => {
+      this.dispatch(Layout.showTitleForm())
+    })
   }
 
   onReset() {

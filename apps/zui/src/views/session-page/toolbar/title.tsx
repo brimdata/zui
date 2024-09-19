@@ -37,6 +37,7 @@ export function Title({handler}: {handler: ToolbarHandler}) {
           placeholder="Name your query..."
           autoFocus
           className={styles.input}
+          defaultValue={handler.queryName}
         />
       </form>
     )
