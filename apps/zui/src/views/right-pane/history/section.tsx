@@ -8,6 +8,7 @@ import {EmptyText} from "src/components/empty-text"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import {Tree} from "react-arborist"
 import {TREE_ITEM_HEIGHT} from "../../sidebar/item"
+import {HistoryHandler} from "./handler"
 
 const BG = styled.div`
   display: flex;
@@ -17,16 +18,8 @@ const BG = styled.div`
 `
 
 export function HistorySection() {
-  const sessionHistory = useSelector(Current.getSessionHistory) || []
-  const history = useMemo(
-    () =>
-      [...sessionHistory].reverse().map((d, index) => ({
-        ...d,
-        id: (sessionHistory.length - 1 - index).toString(),
-        index: sessionHistory.length - 1 - index,
-      })),
-    [sessionHistory]
-  )
+  const handler = new HistoryHandler()
+  const history = handler.entries.reverse()
 
   return (
     <BG aria-label="history-pane">
@@ -45,7 +38,7 @@ export function HistorySection() {
               disableDrag
               disableDrop
             >
-              {HistoryItem}
+              {(props) => <HistoryItem {...props} handler={handler} />}
             </Tree>
           )
         }}
