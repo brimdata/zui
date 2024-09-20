@@ -46,7 +46,7 @@ export const setFromPin = createHandler(
   ({dispatch}, value: string) => {
     Session.activateLastFocused()
     dispatch(Editor.setFrom(value))
-    Active.session.navigate(Active.snapshot, Active.session.namedQuery)
+    Active.querySession.navigate(Active.editorState)
   }
 )
 

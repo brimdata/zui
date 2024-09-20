@@ -9,6 +9,8 @@ import {queryPath} from "src/app/router/utils/paths"
 import {last} from "lodash"
 import {EditorSnapshot} from "./editor-snapshot"
 import cmd from "src/cmd"
+import {Snapshot, SnapshotAttrs} from "./snapshot"
+import {Active} from "./active"
 
 const schema = {
   name: {type: String, default: null as string},
@@ -26,6 +28,12 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   activate() {
     if (this.tab) this.tab.activate()
     else this.restore()
+  }
+
+  navigate(attrs: Partial<SnapshotAttrs>) {
+    const next = Active.snapshot.clone(attrs)
+    next.save()
+    this.tab.load(next.pathname)
   }
 
   get tab() {

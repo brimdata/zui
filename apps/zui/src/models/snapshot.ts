@@ -17,10 +17,10 @@ const schema = {
 }
 
 /* Types */
-type Attributes = AttributeTypes<typeof schema>
+export type SnapshotAttrs = AttributeTypes<typeof schema>
 
 /* Model */
-export class Snapshot extends ApplicationEntity<Attributes> {
+export class Snapshot extends ApplicationEntity<SnapshotAttrs> {
   /* Configuration */
   static schema = schema
   static actionPrefix = "$snapshots"
@@ -30,7 +30,18 @@ export class Snapshot extends ApplicationEntity<Attributes> {
   pins: QueryPin[]
   sessionId: string
   queryId: string
+
   /* Instance Methods */
+  clone(attrs: Partial<SnapshotAttrs>) {
+    return new Snapshot({
+      value: this.value,
+      pins: this.pins,
+      sessionId: this.sessionId,
+      queryId: this.queryId,
+      ...attrs,
+    })
+  }
+
   get pathname() {
     return snapshotPath(this.id)
   }
