@@ -9,22 +9,32 @@ const excludeTestQueries: Query[] = [
   {
     id: "1",
     name: "Exclude me please",
+    pins: [],
+    value: "",
   },
   {
     id: "2",
     name: "query #1",
+    pins: [],
+    value: "",
   },
   {
     id: "3",
     name: "Query#1",
+    pins: [],
+    value: "",
   },
   {
     id: "4",
     name: "Query #1s1",
+    pins: [],
+    value: "",
   },
   {
     id: "5",
     name: "Query #1 ",
+    pins: [],
+    value: "",
   },
 ]
 
