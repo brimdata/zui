@@ -19,7 +19,7 @@ const BG = styled.div`
 
 export function HistorySection() {
   const handler = new HistoryHandler()
-  const history = handler.entries.reverse()
+  const history = handler.entries
 
   return (
     <BG aria-label="history-pane">

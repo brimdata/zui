@@ -1,3 +1,4 @@
+import {useMemo} from "react"
 import {ViewHandler} from "src/core/view-handler"
 import {Active} from "src/models/active"
 import {Snapshot} from "src/models/snapshot"
@@ -7,10 +8,15 @@ export class HistoryHandler extends ViewHandler {
 
   constructor() {
     super()
-    this.entries = Snapshot.useAll()
+    this.entries = this.useEntries()
   }
 
-  onClick(id: string) {
+  useEntries() {
+    const snapshots = Snapshot.useAll()
+    return useMemo(() => snapshots.slice(0).reverse(), [snapshots])
+  }
+
+  onActivate(id: string) {
     const snapshot = Snapshot.find(id)
     Active.querySession.tab.load(snapshot.pathname)
   }
