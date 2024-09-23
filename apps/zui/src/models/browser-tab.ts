@@ -11,6 +11,12 @@ type Attrs = {
 }
 
 export class BrowserTab extends DomainModel<Attrs> {
+  static findByRoute(routePattern: string) {
+    return this.orderBy("lastFocused", "desc").find((tab) =>
+      tab.matchesPath(routePattern)
+    )
+  }
+
   static find(id: string) {
     const attrs = this.select(Tabs.findById(id))
     return attrs ? new BrowserTab(attrs) : null

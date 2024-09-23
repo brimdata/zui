@@ -14,7 +14,7 @@ import {Active} from "src/models/active"
  * It's should be thought of as POST /session/:id/snapshots
  */
 export const submitSearch = createHandler(async ({select}) => {
-  const session = Active.session
+  const session = Active.querySession
   const currentSnapshot = Active.snapshot
   const nextSnapshot = select(Current.getNextSnapshot)
 

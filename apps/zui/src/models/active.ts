@@ -20,16 +20,6 @@ export class Active extends DomainModel {
     return QuerySession.find(id)
   }
 
-  static get session() {
-    this.select(Current.getSession)
-    const params = this.select(Current.getQueryUrlParams)
-    return new Session({
-      id: this.tab.attrs.id,
-      parentId: params.queryId,
-      snapshotId: params.version,
-    })
-  }
-
   static get editorState() {
     return this.select(Editor.getSnapshot)
   }

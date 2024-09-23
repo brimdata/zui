@@ -1,11 +1,11 @@
 import {Active} from "src/models/active"
 import {NamedQuery} from "src/models/named-query"
-import {Session} from "src/models/session"
+import {QuerySession} from "src/models/query-session"
 import {Snapshot} from "src/models/snapshot"
 
 export class QueriesRunner {
   open(id: string) {
-    Session.activateLastFocused()
+    QuerySession.activateOrCreate()
     const query = NamedQuery.find(id)
     const session = Active.querySession
     const snapshot = Snapshot.create({

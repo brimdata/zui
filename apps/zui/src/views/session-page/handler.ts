@@ -15,6 +15,9 @@ import {fetchQueryInfo} from "src/domain/session/handlers"
 import Current from "src/js/state/Current"
 import Pools from "src/js/state/Pools"
 import {syncPool} from "src/models/sync-pool"
+import Table from "src/js/state/Table"
+import Inspector from "src/js/state/Inspector"
+import Selection from "src/js/state/Selection"
 
 type Props = {
   locationKey: string
@@ -33,6 +36,9 @@ export class SessionPageHandler extends ViewHandler {
   }
 
   private reset() {
+    this.dispatch(Selection.reset())
+    this.dispatch(Table.setScrollPosition({top: 0, left: 0}))
+    this.dispatch(Inspector.setScrollPosition({top: 0, left: 0}))
     this.dispatch(QueryInfo.reset())
     this.dispatch(Tabs.loaded(this.props.locationKey))
     this.dispatch(Notice.dismiss()) // This may not be needed any more
@@ -60,10 +66,8 @@ export class SessionPageHandler extends ViewHandler {
   }
 
   private async parseQueryText() {
-    const {session} = Active
     const lakeId = this.select(Current.getLakeId)
     const program = this.select(Current.getQueryText)
-    const history = this.select(Current.getHistory)
 
     if (!Active.lake.features.describe) {
       this.dispatch(QueryInfo.merge({isParsed: true}))
@@ -81,8 +85,8 @@ export class SessionPageHandler extends ViewHandler {
         this.dispatch(syncPool(pool.id, lakeId))
       }
 
-      if (!info.error && history.action === "PUSH") {
-        session.pushHistory()
+      if (info.error) {
+        // Maybe update the snapshot to indicate there is an error
       }
     })
   }
