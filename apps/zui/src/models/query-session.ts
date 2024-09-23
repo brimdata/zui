@@ -66,6 +66,11 @@ export class QuerySession extends ApplicationEntity<Attributes> {
     this.tab.load(snapshot.pathname)
   }
 
+  /* Reload */
+  reload() {
+    this.tab.reload()
+  }
+
   get tab() {
     return BrowserTab.find(this.id)
   }
@@ -88,6 +93,7 @@ export class QuerySession extends ApplicationEntity<Attributes> {
 
   restore() {
     this.createTab()
+    this.tab.activate()
     const prev = this.lastSnapshot
     if (prev) {
       this.load(prev)

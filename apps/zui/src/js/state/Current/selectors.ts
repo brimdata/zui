@@ -4,21 +4,13 @@ import {State} from "../types"
 import Lakes from "../Lakes"
 import {MemoryHistory} from "history"
 import {Pool} from "src/models/pool"
-import QueryVersions from "../QueryVersions"
-import {
-  query,
-  queryVersion,
-  snapshotShow,
-  whichRoute,
-} from "src/app/router/routes"
+import {snapshotShow, whichRoute} from "src/app/router/routes"
 import {createSelector} from "@reduxjs/toolkit"
-import {QueryVersion} from "../QueryVersions/types"
 import {Lake} from "src/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
 import {Snapshot} from "src/models/snapshot"
-import Editor from "../Editor"
 
 export const getHistory = (
   state,
@@ -35,22 +27,6 @@ export const getHistory = (
 
 export const getLocation = (state: State) => {
   return getHistory(state)?.location
-}
-
-export const getQueryUrlParams = createSelector(getLocation, (location) => {
-  const path = location.pathname
-  const routes = [queryVersion.path, query.path]
-  const match = matchPath<{queryId: string; version: string}>(path, routes)
-  return match?.params ?? {queryId: "", version: ""}
-})
-
-export const getVersion = (state: State): QueryVersion => {
-  const {queryId, version} = getQueryUrlParams(state)
-  const tabId = getTabId(state)
-  return (
-    QueryVersions.at(queryId).find(state, version) ||
-    QueryVersions.at(tabId).find(state, version)
-  )
 }
 
 export const getPoolId = (state) => {
@@ -153,15 +129,3 @@ export const getRouteName = createSelector(getLocation, (location) => {
   if (route) return route.name
   else return null
 })
-
-export const getNextSnapshot = createSelector(
-  getSnapshot,
-  Editor.getSnapshot,
-  (snapshot, editorState) => {
-    return new Snapshot({
-      ...editorState,
-      sessionId: snapshot.sessionId,
-      queryId: snapshot.queryId,
-    })
-  }
-)

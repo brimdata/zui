@@ -20,20 +20,6 @@ export const poolShow: Route = {
   icon: "pool",
 }
 
-export const query: Route = {
-  name: "querySession",
-  title: "<query>",
-  path: `/queries/:queryId`,
-  icon: "query",
-}
-
-export const queryVersion: Route = {
-  name: "querySession",
-  title: "<query>",
-  path: `${query.path}/versions/:version`,
-  icon: "query",
-}
-
 export const snapshotShow: Route = {
   name: "snapshot",
   title: "<query>",
@@ -64,8 +50,7 @@ type Route = {
 
 export const allRoutes: Route[] = [
   poolShow,
-  query,
-  queryVersion,
+  snapshotShow,
   releaseNotes,
   welcome,
   root,

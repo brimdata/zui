@@ -26,9 +26,6 @@ function AppRoutes() {
           <Show />
         </InitPool>
       </Route>
-      <Route path={routes.query.path}>
-        <SessionPage />
-      </Route>
       <Route path={routes.welcome.path}>
         <WelcomePage />
       </Route>

@@ -4,6 +4,8 @@ import {matchPath} from "react-router"
 import {DomainModel} from "src/core/domain-model"
 import Tabs from "src/js/state/Tabs"
 import {QuerySession} from "./query-session"
+import {whichRoute} from "src/app/router/routes"
+import {IconName} from "src/components/icon"
 
 type Attrs = {
   id: string
@@ -93,6 +95,18 @@ export class BrowserTab extends DomainModel<Attrs> {
       session.destroy()
     }
     this.remove()
+  }
+
+  get route() {
+    return whichRoute(this.history.location.pathname)
+  }
+
+  get iconName(): IconName {
+    return this.route?.icon || "zui"
+  }
+
+  setTitle(title: string) {
+    this.dispatch(Tabs.setTitle({tabId: this.attrs.id, title}))
   }
 
   remove() {

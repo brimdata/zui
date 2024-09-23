@@ -10,6 +10,7 @@ import Tabs from "src/js/state/Tabs"
 import {Icon} from "src/components/icon"
 import {connectToLake} from "src/app/commands/connect-to-lake"
 import Modal from "src/js/state/Modal"
+import {QuerySession} from "src/models/query-session"
 
 export const Button = styled.button`
   color: white;
@@ -50,7 +51,7 @@ export default function PlusButton() {
     const template: MenuItem[] = [
       {
         label: "New Query Session",
-        click: () => dispatch(Tabs.createQuerySession()),
+        click: () => QuerySession.createWithTab(),
       },
       {
         label: "New Pool",

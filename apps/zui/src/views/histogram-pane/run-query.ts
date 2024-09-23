@@ -20,7 +20,7 @@ export const runHistogramQuery = createHandler(
       await waitForSelector(QueryInfo.getIsParsed, {signal}).toReturn(true)
       const id = HISTOGRAM_RESULTS
       const key = select(Current.getLocation).key
-      const version = select(Current.getVersion)
+      const snapshot = select(Current.getSnapshot)
       const poolId = select(Current.getPoolFromQuery)?.id
       const baseQuery = select(Current.getQueryText)
       const {timeField, colorField} = select((s) =>
@@ -28,7 +28,7 @@ export const runHistogramQuery = createHandler(
       )
 
       function getPinRange() {
-        const rangePin = version.pins.find(
+        const rangePin = snapshot.pins.find(
           (pin: QueryPin) =>
             pin.type === "time-range" &&
             !pin.disabled &&

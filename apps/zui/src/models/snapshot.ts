@@ -72,7 +72,7 @@ export class Snapshot extends ApplicationEntity<SnapshotAttrs> {
     return this.validator.errors
   }
 
-  equals(other: Snapshot) {
+  equals(other: {pins: QueryPin[]; value: string}) {
     return isEqual(this.pins, other.pins) && isEqual(this.value, other.value)
   }
 
