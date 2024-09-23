@@ -1,5 +1,4 @@
 import {DomainModel} from "src/core/domain-model"
-import {Session} from "./session"
 import Current from "src/js/state/Current"
 import {BrowserTab} from "./browser-tab"
 import {Frame} from "./frame"

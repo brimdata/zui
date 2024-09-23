@@ -20,10 +20,6 @@ export class QueriesApi {
     return invoke("exportQueries", groupId, filePath)
   }
 
-  find(id: string) {
-    return Queries.build(this.getState(), id)
-  }
-
   createGroup(name: string, parentId: string) {
     const item = {name, id: nanoid(), items: []}
     this.dispatch(Queries.addItem(item, parentId))

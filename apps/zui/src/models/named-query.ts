@@ -1,9 +1,9 @@
 import {DomainModel} from "src/core/domain-model"
 import Queries from "src/js/state/Queries"
-import {EditorSnapshot} from "./editor-snapshot"
 import {nanoid} from "@reduxjs/toolkit"
 import {QueryPin} from "src/js/state/Editor/types"
 import {Query} from "src/js/state/Queries/types"
+import {Snapshot} from "./snapshot"
 
 type Attrs = {
   name: string
@@ -49,7 +49,7 @@ export class NamedQuery extends DomainModel<Attrs> {
   }
 
   get snapshots() {
-    return EditorSnapshot.where({parentId: this.attrs.id})
+    return Snapshot.where({queryId: this.attrs.id})
   }
 
   update(changes: Partial<Query>) {

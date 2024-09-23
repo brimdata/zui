@@ -4,8 +4,6 @@ import {State} from "../types"
 import Lakes from "../Lakes"
 import {MemoryHistory} from "history"
 import {Pool} from "src/models/pool"
-import Queries from "../Queries"
-import {QueryModel} from "src/js/models/query-model"
 import QueryVersions from "../QueryVersions"
 import {
   query,
@@ -13,13 +11,8 @@ import {
   snapshotShow,
   whichRoute,
 } from "src/app/router/routes"
-import SessionHistories from "../SessionHistories"
 import {createSelector} from "@reduxjs/toolkit"
 import {QueryVersion} from "../QueryVersions/types"
-import {ActiveQuery} from "src/models/active-query"
-import SessionQueries from "../SessionQueries"
-import memoizeOne from "memoize-one"
-import {entitiesToArray} from "../utils"
 import {Lake} from "src/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
@@ -59,48 +52,6 @@ export const getVersion = (state: State): QueryVersion => {
     QueryVersions.at(tabId).find(state, version)
   )
 }
-
-const getRawSession = (state: State) => {
-  const id = getSessionId(state)
-  return SessionQueries.find(state, id)
-}
-
-const memoGetVersions = memoizeOne(entitiesToArray)
-
-const getSessionVersions = (state: State) => {
-  const id = getSessionId(state)
-  const entities = QueryVersions.at(id).entities(state)
-  const ids = QueryVersions.at(id).ids(state)
-  return memoGetVersions(ids, entities)
-}
-
-export const getNamedQuery = (state: State) => {
-  const queryId = getSessionRouteParentId(state)
-  return Queries.build(state, queryId)
-}
-
-export const getSessionRouteParentId = (state: State) => {
-  const {queryId} = getQueryUrlParams(state)
-  return queryId
-}
-
-export const getSession = createSelector(
-  getRawSession,
-  getSessionVersions,
-  (query, versions) => {
-    if (!query) return null
-    return new QueryModel(query, versions, "session")
-  }
-)
-
-export const getActiveQuery = createSelector(
-  getSession,
-  getNamedQuery,
-  getVersion,
-  (session, query, version) => {
-    return new ActiveQuery(session, query, version || QueryVersions.initial())
-  }
-)
 
 export const getPoolId = (state) => {
   type Params = {poolId?: string}
@@ -177,11 +128,6 @@ export const getPools = createSelector(getLake, Pools.raw, (l, pools) => {
 })
 
 export const getTabId = getActive
-
-export const getSessionHistory = createSelector(
-  [getTabId, SessionHistories.raw],
-  (tabId, histories) => histories[tabId]
-)
 
 export const getSessionId = getTabId
 

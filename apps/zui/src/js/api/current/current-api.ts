@@ -28,8 +28,4 @@ export class CurrentApi {
   get value() {
     return LogDetails.build(this.getState())
   }
-
-  get query() {
-    return Current.getActiveQuery(this.getState())
-  }
 }

@@ -1,7 +1,7 @@
 import {Pool} from "../../models/pool"
 import {createMenu} from "src/core/menu"
-import {Snapshots} from "src/domain/handlers"
 import {chooseFiles} from "src/domain/loads/handlers"
+import {QuerySession} from "src/models/query-session"
 
 export const poolToolbarMenu = createMenu((_, pool: Pool) => {
   return [
@@ -19,7 +19,7 @@ export const poolToolbarMenu = createMenu((_, pool: Pool) => {
       label: "Query Pool",
       iconName: "query",
       click: () => {
-        Snapshots.createAndShow({
+        QuerySession.activateOrCreate().navigate({
           pins: [{type: "from", value: pool.name}],
           value: "",
         })

@@ -42,14 +42,20 @@ const includeTestQueries: Query[] = [
   {
     id: "6",
     name: "Query #1",
+    pins: [],
+    value: "",
   },
   {
     id: "7",
     name: "Query #3",
+    pins: [],
+    value: "",
   },
   {
     id: "8",
     name: "Query #2",
+    pins: [],
+    value: "",
   },
 ]
 
@@ -62,7 +68,7 @@ test("getNextCount", () => {
   expect(
     getNextCount(
       [
-        {id: "9", name: "Query #10"},
+        {id: "9", name: "Query #10", pins: [], value: ""},
         ...excludeTestQueries,
         ...includeTestQueries,
       ],

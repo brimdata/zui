@@ -8,7 +8,6 @@ export type SessionHandlers = {
   "session.createPinFromEditor": typeof handlers.createPinFromEditor
   "session.editQuery": typeof handlers.editQuery
   "session.runQuery": typeof handlers.runQuery
-  "session.saveAsNewQuery": typeof handlers.saveAsNewQuery
   "session.toggleHistoryPane": typeof handlers.toggleHistoryPane
   "session.createFromPin": typeof handlers.createFromPin
   "session.createPin": typeof handlers.createPin

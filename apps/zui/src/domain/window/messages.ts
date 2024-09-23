@@ -6,7 +6,6 @@ export type WindowHandlers = {
   "window.showMessage": typeof handlers.showMessage
   "window.showSuccessMessage": typeof handlers.showSuccessMessage
   "window.showWelcomePage": typeof handlers.showWelcomePage
-  "window.query": typeof handlers.query
   "window.openTab": typeof handlers.openTab
 }
 

@@ -16,7 +16,6 @@ import {ToolbarsState} from "./Toolbars"
 import {LakeStatusesState} from "./LakeStatuses/types"
 import {SessionQueriesState} from "./SessionQueries/types"
 import {QueryVersionsState} from "./QueryVersions/types"
-import {SessionHistoriesState} from "./SessionHistories/types"
 import {PoolSettingsState} from "./PoolSettings/types"
 import {WindowState} from "./Window/types"
 import {LoadDataFormState} from "./LoadDataForm/types"
@@ -51,7 +50,6 @@ export type State = {
   poolSettings: PoolSettingsState
   queries: QueriesState
   queryVersions: QueryVersionsState
-  sessionHistories: SessionHistoriesState
   sessionQueries: SessionQueriesState
   tabHistories: TabHistoriesState
   toolbars: ToolbarsState

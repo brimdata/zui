@@ -16,7 +16,6 @@ import Appearance from "../Appearance"
 import Loads from "../Loads"
 import QueryVersions from "../QueryVersions"
 import SessionQueries from "../SessionQueries"
-import SessionHistories from "../SessionHistories"
 import PoolSettings from "../PoolSettings"
 import Window from "../Window"
 import LoadDataForm from "../LoadDataForm"
@@ -39,7 +38,6 @@ const rootReducer = combineReducers<any>({
   poolSettings: PoolSettings.reducer,
   queries: Queries.reducer,
   queryVersions: QueryVersions.reducer,
-  sessionHistories: SessionHistories.reducer,
   sessionQueries: SessionQueries.reducer,
   tabHistories: TabHistories.reducer,
   toolbars: Toolbars.reducer,
@@ -49,8 +47,5 @@ const rootReducer = combineReducers<any>({
   ...QuerySession.slice,
   ...Snapshot.slice,
 })
-// A proof of concept. This would be a much nicer way to go
-// once we have time to convert to it.
-// type RootState = ReturnType<typeof rootReducer>
 
 export default rootReducer

@@ -11,6 +11,10 @@ type Attrs = {
 }
 
 export class BrowserTab extends DomainModel<Attrs> {
+  get id() {
+    return this.attrs.id
+  }
+
   static findByRoute(routePattern: string) {
     return this.orderBy("lastFocused", "desc").find((tab) =>
       tab.matchesPath(routePattern)
@@ -88,6 +92,10 @@ export class BrowserTab extends DomainModel<Attrs> {
     if (session && session.history.length === 0) {
       session.destroy()
     }
+    this.remove()
+  }
+
+  remove() {
     this.dispatch(Tabs.remove(this.attrs.id))
   }
 }
