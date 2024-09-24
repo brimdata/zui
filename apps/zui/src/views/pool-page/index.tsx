@@ -11,6 +11,7 @@ import {NotFound} from "./404"
 import {ButtonMenu} from "src/components/button-menu"
 import {RecentLoads} from "./recent-loads"
 import {Details} from "./details"
+import {Active} from "src/models/active"
 
 const Toolbar = styled.div`
   display: flex;
@@ -35,6 +36,10 @@ export function InitPool({children}) {
   useEffect(() => {
     if (poolId) dispatch(syncPool(poolId))
   }, [poolId])
+
+  useEffect(() => {
+    if (pool) Active.tab.setTitle(pool.name)
+  }, [pool])
 
   if (!pool) {
     return <NotFound />

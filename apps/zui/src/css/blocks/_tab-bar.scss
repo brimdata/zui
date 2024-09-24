@@ -41,7 +41,8 @@
   position: relative;
 
   /* Sizes */
-  flex: 0 1 max-content;
+  inline-size: 180px;
+  flex: 0 1 180px;
   block-size: 100%;
   min-inline-size: 0;
   padding-inline-start: var(--gutter);

@@ -37,6 +37,7 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   static createWithTab() {
     const instance = this.create()
     instance.createTab()
+    instance.tab.activate()
     return instance
   }
 
@@ -63,6 +64,7 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   /* Load is used when you already have a saved snapshot */
   load(snapshot: Snapshot) {
     this.update({title: snapshot.queryText})
+    this.tab.setTitle(snapshot.queryText)
     this.tab.load(snapshot.pathname)
   }
 

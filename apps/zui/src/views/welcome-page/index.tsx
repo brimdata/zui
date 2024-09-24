@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useLayoutEffect} from "react"
 import {connectToLake} from "src/app/commands/connect-to-lake"
 import {Subtitle} from "src/components/subtitle"
 import {Title} from "src/components/title"
@@ -6,6 +6,7 @@ import styled from "styled-components"
 import links from "src/config/links"
 import {invoke} from "src/core/invoke"
 import {chooseFiles} from "src/domain/loads/handlers"
+import {Active} from "src/models/active"
 
 const BG = styled.div`
   background-image: url(/welcome-page-background.svg);
@@ -43,6 +44,10 @@ const Actions = styled.section`
 `
 
 export function WelcomePage() {
+  useLayoutEffect(() => {
+    Active.tab.setTitle("Welcome")
+  }, [])
+
   return (
     <BG>
       <Title>
