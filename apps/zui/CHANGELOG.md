@@ -1,3 +1,12 @@
+## v1.18.0
+- Update Zed to [v1.18.0](https://github.com/brimdata/zed/releases/tag/v1.18.0)
+- Update Brimcap to [v1.18.0](https://github.com/brimdata/brimcap/releases/tag/v1.18.0), which includes a new Zeek [v7.0.0-brim1](https://github.com/brimdata/build-zeek/releases/tag/v7.0.0-brim1)
+- Introduce the **Sessions** tab in the left panel to persist Query Session histories (#3132)
+- Update [time display](https://zui.brimdata.io/docs/features/Time-Display) functionality to support local time zones and [strftime directives](https://github.com/samsonjs/strftime?tab=readme-ov-file#supported-specifiers) (#3139)
+- Fix an issue where the Zui window could not be dragged when **Preview & Load** was open (#3146)
+- Fix a crash that would occur when attempting to create a pool with the same name as an existing pool (#3147)
+- Fix an issue where top-level primitive Zed values were incorrectly wrapped in records in the Table view (#3145, #3150)
+
 ## v1.17.0
 - Because Zui is dependent on the [Zed project](https://zed.brimdata.io/), GA Zui release major/minor version numbers are now synchronized to the corresponding [Zed release](https://github.com/brimdata/zed/releases)
 - Update Zed to [v1.17.0](https://github.com/brimdata/zed/releases/tag/v1.17.0)

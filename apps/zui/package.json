@@ -5,7 +5,7 @@
   "description": "Zed User Interface",
   "repository": "https://github.com/brimdata/zui",
   "license": "BSD-3-Clause",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "main": "dist/main.js",
   "author": "Brim Data <support@brimdata.io> (http://www.brimdata.io)",
   "lake": {
@@ -74,7 +74,7 @@
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
-    "brimcap": "brimdata/brimcap#0c3a564771dd204e9ce93e4600de2dbcf97bd446",
+    "brimcap": "brimdata/brimcap#v1.18.0",
     "bullet": "^0.0.6",
     "chalk": "^4.1.0",
     "chevrotain": "^10.5.0",
@@ -160,7 +160,7 @@
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
     "when-clause": "^0.0.4",
-    "zed": "brimdata/zed#556f5868b2e3302f0906909114bb0d22059d1ffd",
+    "zed": "brimdata/zed#961e86ba611a837f02b6e967985397a4ca166ac3",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {
