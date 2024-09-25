@@ -1,6 +1,7 @@
 import {useMemo} from "react"
 import {ViewHandler} from "src/core/view-handler"
 import {Active} from "src/models/active"
+import {QuerySession} from "src/models/query-session"
 import {Snapshot} from "src/models/snapshot"
 
 export class HistoryHandler extends ViewHandler {
@@ -18,6 +19,6 @@ export class HistoryHandler extends ViewHandler {
 
   onActivate(id: string) {
     const snapshot = Snapshot.find(id)
-    Active.querySession.tab.load(snapshot.pathname)
+    QuerySession.load(snapshot)
   }
 }

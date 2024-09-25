@@ -6,9 +6,9 @@ import SessionQueries from "../SessionQueries"
 
 export const raw = (state: State): QueriesState => state.queries
 
-export const find = (state: State, id: string): Query | null => {
+export const find = (queries: QueriesState, id: string): Query | null => {
   return new TreeModel({childrenPropertyName: "items"})
-    .parse(state.queries)
+    .parse(queries)
     .first((n) => n.model.id === id)?.model
 }
 

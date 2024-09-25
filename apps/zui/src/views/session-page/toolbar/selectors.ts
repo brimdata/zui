@@ -4,11 +4,13 @@ import Layout from "src/js/state/Layout"
 
 export const whenContext = createSelector(
   Layout.getResultsView,
-  Current.getSnapshot,
-  (resultsView, snapshot) => {
+  Current.getQuery,
+  Current.getQueryIsModified,
+  (resultsView, query, isModified) => {
     return {
       "results.view": resultsView.toLowerCase(),
-      "session.hasQuery": !!snapshot.queryId,
+      "session.hasQuery": !!query,
+      "session.hasModifiedQuery": isModified,
     }
   }
 )

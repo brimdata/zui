@@ -23,6 +23,11 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   static actionPrefix = "$querySessions"
   static sliceName = "querySessions"
 
+  static load(snapshot: Snapshot) {
+    const session = this.activateOrCreate()
+    session.load(snapshot)
+  }
+
   static findLastFocused() {
     const tab = BrowserTab.findByRoute(snapshotShow.path)
     return tab ? this.find(tab.id) : null
@@ -37,7 +42,6 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   static createWithTab() {
     const instance = this.create()
     instance.createTab()
-    instance.tab.activate()
     return instance
   }
 
@@ -56,7 +60,9 @@ export class QuerySession extends ApplicationEntity<Attributes> {
 
   /* Navigate creates a new snapshot based on the last one */
   navigate(attrs: Partial<SnapshotAttrs>) {
-    const next = Active.snapshot.clone(attrs)
+    const next = this.lastSnapshot
+      ? this.lastSnapshot.clone(attrs)
+      : new Snapshot(attrs)
     next.save()
     this.load(next)
   }

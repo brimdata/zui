@@ -12,8 +12,10 @@ import ZuiApi from "src/js/api/zui-api"
 import Layout from "src/js/state/Layout"
 import {editQuery} from "src/domain/session/handlers"
 import {Active} from "src/models/active"
-import {NamedQuery} from "src/models/named-query"
 import {plusOne} from "src/util/plus-one"
+import {NamedQuery} from "src/models/named-query"
+import Queries from "src/js/state/Queries"
+import {Query} from "src/js/state/Queries/types"
 
 export class ToolbarHandler extends ViewHandler {
   nav = nav
@@ -21,13 +23,16 @@ export class ToolbarHandler extends ViewHandler {
   isEditing: boolean
   snapshot: Snapshot
   oldApi: ZuiApi
-  isModified: boolean = false
   isSubmitting = false
+  isModified: boolean
+  query: Query | null
 
   constructor() {
     super()
     this.oldApi = useZuiApi()
     this.snapshot = useSelector(Current.getSnapshot)
+    this.query = useSelector(Current.getQuery)
+    this.isModified = useSelector(Current.getQueryIsModified)
     this.isEditing = useSelector(Layout.getIsEditingTitle)
     this.menuItems = useMenuExtension(
       "results.toolbarMenu",
@@ -37,6 +42,7 @@ export class ToolbarHandler extends ViewHandler {
     this.listen({
       "session.resetQuery": () => this.onDetach(),
       "session.saveAsNewQuery": () => this.onSaveAs(),
+      "session.updateQuery": () => this.onUpdate(),
     })
   }
 
@@ -79,6 +85,15 @@ export class ToolbarHandler extends ViewHandler {
     })
   }
 
+  onUpdate() {
+    this.dispatch(
+      Queries.editItem({
+        id: this.queryId,
+        changes: Active.editorState,
+      })
+    )
+  }
+
   onReset() {
     this.hideForm()
   }
@@ -113,12 +128,12 @@ export class ToolbarHandler extends ViewHandler {
   }
 
   get hasQuery() {
-    return !!this.snapshot.query
+    return !!this.query
   }
 
   get queryName() {
     if (this.hasQuery) {
-      return this.snapshot.query.name
+      return this.query.name
     } else {
       return undefined
     }

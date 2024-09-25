@@ -42,7 +42,7 @@ function TreeOfQueries(props: {
   const dispatch = useDispatch()
   const api = useZuiApi()
   const snapshot = useSelector(Current.getSnapshot)
-  const id = snapshot.queryId
+  const id = snapshot?.queryId
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()
   const initialOpenState = useSelector(Appearance.getQueriesOpenState)

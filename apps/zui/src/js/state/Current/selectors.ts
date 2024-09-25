@@ -11,6 +11,8 @@ import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
 import {Snapshot} from "src/models/snapshot"
+import Queries from "../Queries"
+import Editor from "../Editor"
 
 export const getHistory = (
   state,
@@ -50,9 +52,27 @@ export const getSnapshotId = (state) => {
 export const getSnapshot = createSelector(getSnapshotId, (id) =>
   Snapshot.find(id)
 )
+
+export const getQuery = createSelector(
+  getSnapshot,
+  (state) => state.queries,
+  (snapshot, queries) => {
+    return Queries.find(queries, snapshot.queryId)
+  }
+)
+
 export const getQueryText = createSelector(
   getSnapshot,
   (snapshot) => snapshot.queryText
+)
+
+export const getQueryIsModified = createSelector(
+  getQuery,
+  Editor.getSnapshot,
+  (query, editorState) => {
+    const snapshot = new Snapshot(editorState)
+    return !!query && !snapshot.equals(query)
+  }
 )
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {

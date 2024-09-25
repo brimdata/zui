@@ -77,7 +77,6 @@
     "brimcap": "brimdata/brimcap#v1.18.0",
     "bullet": "^0.0.6",
     "chalk": "^4.1.0",
-    "chevrotain": "^10.5.0",
     "chrono-node": "^2.5.0",
     "classnames": "^2.2.6",
     "commander": "^2.20.3",

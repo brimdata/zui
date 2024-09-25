@@ -3,6 +3,12 @@ import {MenuItem} from "src/core/menu"
 export function createMenu() {
   return [
     {
+      label: "Update Query",
+      command: "session.updateQuery",
+      iconName: "check",
+      when: "session.hasModifiedQuery",
+    },
+    {
       label: "Detach from Query",
       command: "session.resetQuery",
       iconName: "close_circle",

@@ -14,7 +14,7 @@ type Attrs = {
 
 export class NamedQuery extends DomainModel<Attrs> {
   static find(id: string) {
-    const attrs = this.select((state) => Queries.find(state, id))
+    const attrs = this.select((state) => Queries.find(state.queries, id))
     if (!attrs) return null
     return new NamedQuery(attrs)
   }

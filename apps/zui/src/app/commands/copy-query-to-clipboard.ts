@@ -6,7 +6,7 @@ import {Snapshot} from "src/models/snapshot"
 export const copyQueryToClipboard = createCommand(
   "copyQueryToClipboard",
   ({api, getState}, id: string) => {
-    const query = Queries.find(getState(), id)
+    const query = Queries.find(getState().queries, id)
     if (query) {
       const text = new Snapshot(query).queryText
       copyToClipboard(text)

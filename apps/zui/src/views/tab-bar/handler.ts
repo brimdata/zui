@@ -57,7 +57,9 @@ export class TabBarHandler extends ViewHandler {
   }
 
   create() {
-    QuerySession.createWithTab()
+    const session = QuerySession.createWithTab()
+    session.activate()
+    session.navigate({value: "", pins: []})
   }
 
   destroy(e: any, id: string) {
@@ -162,7 +164,7 @@ export class TabBarHandler extends ViewHandler {
     if (this.state.isDropping) {
       return {
         ...this.sortableList.previewDimens,
-        x: this.sortableList.dstItem.startPoint,
+        x: (this.sortableList.dstItem || this.sortableList.srcItem)?.startPoint,
       }
     } else {
       return this.sortableList.previewDimens

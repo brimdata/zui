@@ -77,7 +77,7 @@ export class Snapshot extends ApplicationEntity<SnapshotAttrs> {
   }
 
   get query() {
-    return this.select((state) => Queries.find(state, this.queryId))
+    return this.select((state) => Queries.find(state.queries, this.queryId))
   }
 
   get isSaved() {
