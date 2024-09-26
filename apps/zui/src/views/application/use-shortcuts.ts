@@ -13,7 +13,7 @@ export default function () {
     const el = document.documentElement
     if (!el) throw new Error("No Document Element")
     const bindings = new Mousetrap(el)
-      .bind("mod+t", () => QuerySession.createWithTab())
+      .bind("mod+t", () => QuerySession.createAndActivate())
       .bind("mod+w", (e) => {
         e.preventDefault()
         cmd.tabs.closeActive()

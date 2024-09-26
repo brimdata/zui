@@ -83,4 +83,8 @@ export class Snapshot extends ApplicationEntity<SnapshotAttrs> {
   get isSaved() {
     return !!this.query
   }
+
+  get isEmpty() {
+    return this.equals({pins: [], value: ""})
+  }
 }

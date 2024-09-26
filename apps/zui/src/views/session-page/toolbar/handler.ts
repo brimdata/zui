@@ -77,7 +77,7 @@ export class ToolbarHandler extends ViewHandler {
   }
 
   onSaveAs() {
-    const name = this.queryName
+    const name = this.hasQuery ? this.queryName : ""
     const newName = plusOne(name)
     this.onCreate(newName)
     setTimeout(() => {

@@ -31,10 +31,10 @@ test.describe('Query tests', () => {
       nodes.map((n) => n.innerText.trim().replaceAll(/\s+/g, ' '))
     );
     const expected = [
-      "from 'sample.zeektsv' | 3 now",
-      "from 'sample.zeektsv' | 2 now",
-      "from 'sample.zeektsv' | 1 now",
-      "from 'sample.zeektsv' now",
+      "from 'sample.zeektsv' | 3",
+      "from 'sample.zeektsv' | 2",
+      "from 'sample.zeektsv' | 1",
+      "from 'sample.zeektsv'",
     ];
     expect(entries).toEqual(expected);
   });

@@ -44,6 +44,12 @@ export class QuerySession extends ApplicationEntity<Attributes> {
     return instance
   }
 
+  static createAndActivate() {
+    const session = this.createWithTab()
+    session.activate()
+    session.navigate({value: "", pins: []})
+  }
+
   createTab() {
     if (this.tab) return
     return BrowserTab.create({
@@ -69,7 +75,7 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   /* Load is used when you already have a saved snapshot */
   load(snapshot: Snapshot) {
     this.update({title: snapshot.queryText})
-    this.tab.setTitle(snapshot.queryText)
+    this.tab.setTitle(snapshot.isEmpty ? "Query Session" : snapshot.queryText)
     this.tab.load(snapshot.pathname)
   }
 

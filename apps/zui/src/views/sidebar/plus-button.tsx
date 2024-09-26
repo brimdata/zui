@@ -50,7 +50,7 @@ export default function PlusButton() {
     const template: MenuItem[] = [
       {
         label: "New Query Session",
-        click: () => QuerySession.createWithTab(),
+        click: () => QuerySession.createAndActivate(),
       },
       {
         label: "New Pool",

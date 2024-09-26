@@ -57,9 +57,7 @@ export class TabBarHandler extends ViewHandler {
   }
 
   create() {
-    const session = QuerySession.createWithTab()
-    session.activate()
-    session.navigate({value: "", pins: []})
+    QuerySession.createAndActivate()
   }
 
   destroy(e: any, id: string) {
