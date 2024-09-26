@@ -5,6 +5,7 @@ import {submitSearch} from "src/domain/session/handlers"
 import Config from "src/js/state/Config"
 import Editor from "src/js/state/Editor"
 import {Active} from "src/models/active"
+import {Snapshot} from "src/models/snapshot"
 
 export class EditorHandler extends ViewHandler {
   onChange(value) {
@@ -26,7 +27,7 @@ export class EditorHandler extends ViewHandler {
   }
 
   private async validate() {
-    const {snapshot} = Active
+    const snapshot = new Snapshot(Active.editorState)
     if (await snapshot.isValid()) {
       this.dispatch(Editor.setMarkers([]))
     } else {
