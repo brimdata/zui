@@ -42,7 +42,6 @@ export default class TestApp {
     if (process.env.VIDEO == 'true') {
       launchOpts.recordVideo = { dir: path.join('run', 'videos') };
     }
-    console.log('Launching');
     // @ts-ignore
     if (bin) launchOpts.executablePath = bin;
     this.zui = await electron.launch(launchOpts);
@@ -51,15 +50,11 @@ export default class TestApp {
     if (process.env['VERBOSE']) {
       this.zui.process().stdout.pipe(process.stdout);
     }
-    console.log('Waiting for 2 windows');
     await waitForTrue(() => this.zui.windows().length === 2);
-    console.log('Waiting for zui window');
     await waitForTrue(async () => !!(await this.getWindowByTitle('Zui')));
-    console.log('Waiting for background window');
     await waitForTrue(
       async () => !!(await this.getWindowByTitle('Background'))
     );
-    console.log('Get the zui window');
     this.mainWin = await this.getWindowByTitle('Zui');
 
     const debug = false;
