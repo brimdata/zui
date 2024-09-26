@@ -67,7 +67,7 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   navigate(attrs: Partial<SnapshotAttrs>) {
     const next = this.lastSnapshot
       ? this.lastSnapshot.clone(attrs)
-      : new Snapshot(attrs)
+      : new Snapshot({sessionId: this.id, ...attrs})
     next.save()
     this.load(next)
   }

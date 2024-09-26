@@ -75,7 +75,7 @@
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
     "brimcap": "brimdata/brimcap#v1.18.0",
-    "bullet": "^0.0.6",
+    "bullet": "^0.0.7",
     "chalk": "^4.1.0",
     "chrono-node": "^2.5.0",
     "classnames": "^2.2.6",

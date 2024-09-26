@@ -7118,14 +7118,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bullet@npm:^0.0.6":
-  version: 0.0.6
-  resolution: "bullet@npm:0.0.6"
+"bullet@npm:^0.0.7":
+  version: 0.0.7
+  resolution: "bullet@npm:0.0.7"
   dependencies:
     "@reduxjs/toolkit": ^2.2.5
     lodash-es: ^4.17.21
     pluralize: ^8.0.0
-  checksum: e2b181c6b5878bce3293beb16176660bd53c198968d970f855604c610a75442de1a92d61318394f7c3e1d109496849a1916f1a4e429e4de2a176e4a6b707d488
+  checksum: 068df123e5bb1160d3294d2a2d46db8e28d564f78f5bcc88a96cb06d7acbc33878f7e1e9b6f06d40b43976c57ecc366ed9879e522cd032bcc6c8ade0d9f44889
   languageName: node
   linkType: hard
 
@@ -18667,7 +18667,7 @@ __metadata:
     ajv: ^6.9.1
     animejs: ^3.2.0
     brimcap: "brimdata/brimcap#v1.18.0"
-    bullet: ^0.0.6
+    bullet: ^0.0.7
     chalk: ^4.1.0
     chrono-node: ^2.5.0
     classnames: ^2.2.6

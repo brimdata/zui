@@ -1,5 +1,7 @@
 import {useMemo} from "react"
+import {useSelector} from "react-redux"
 import {ViewHandler} from "src/core/view-handler"
+import Current from "src/js/state/Current"
 import {QuerySession} from "src/models/query-session"
 import {Snapshot} from "src/models/snapshot"
 
@@ -12,7 +14,8 @@ export class HistoryHandler extends ViewHandler {
   }
 
   useEntries() {
-    const snapshots = Snapshot.useAll()
+    const sessionId = useSelector(Current.getSnapshot).sessionId
+    const snapshots = Snapshot.useWhere({sessionId})
     return useMemo(() => snapshots.slice(0).reverse(), [snapshots])
   }
 
