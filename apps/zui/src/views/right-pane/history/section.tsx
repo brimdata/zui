@@ -1,7 +1,5 @@
-import React, {useMemo} from "react"
+import React from "react"
 import styled from "styled-components"
-import Current from "src/js/state/Current"
-import {useSelector} from "react-redux"
 import {HistoryItem} from "./history-item"
 import {isEmpty} from "lodash"
 import {EmptyText} from "src/components/empty-text"

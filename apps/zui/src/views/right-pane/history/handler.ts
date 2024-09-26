@@ -1,6 +1,5 @@
 import {useMemo} from "react"
 import {ViewHandler} from "src/core/view-handler"
-import {Active} from "src/models/active"
 import {QuerySession} from "src/models/query-session"
 import {Snapshot} from "src/models/snapshot"
 

@@ -6,7 +6,6 @@ import Tabs from "src/js/state/Tabs"
 import {last} from "lodash"
 import cmd from "src/cmd"
 import {Snapshot, SnapshotAttrs} from "./snapshot"
-import {Active} from "./active"
 import {snapshotShow} from "src/app/router/routes"
 
 const schema = {

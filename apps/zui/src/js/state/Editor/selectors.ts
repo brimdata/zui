@@ -1,4 +1,4 @@
-import {createSelector, nanoid} from "@reduxjs/toolkit"
+import {createSelector} from "@reduxjs/toolkit"
 import {QueryVersion} from "../QueryVersions/types"
 import activeTabSelect from "../Tab/activeTabSelect"
 
