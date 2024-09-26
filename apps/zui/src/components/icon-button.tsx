@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import React, {
+  CSSProperties,
   MouseEvent,
   MouseEventHandler,
   MutableRefObject,
@@ -54,6 +55,7 @@ const BG = styled.button`
 export const IconButton = forwardRef(function IconButton(
   props: MenuItem & {
     className?: string
+    style?: CSSProperties
     onClick?: MouseEventHandler<HTMLButtonElement>
     onMouseDown?: MouseEventHandler<HTMLButtonElement>
     buildMenu?: () => MenuItem[]
@@ -73,6 +75,7 @@ export const IconButton = forwardRef(function IconButton(
     <BG
       ref={ref}
       className={classNames(props.className, props.display)}
+      style={props.style}
       data-tooltip={
         props.display === "icon-label" ? null : props.description ?? props.label
       }

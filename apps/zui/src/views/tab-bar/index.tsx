@@ -36,7 +36,9 @@ export function TabBar() {
         click={() => handler.create()}
         label="New Tab"
       />
-      {handler.showSecondarySidebarToggle && <RightSidebarToggleButton />}
+      {handler.showSecondarySidebarToggle && (
+        <RightSidebarToggleButton style={{marginInlineStart: "auto"}} />
+      )}
     </div>
   )
 }
