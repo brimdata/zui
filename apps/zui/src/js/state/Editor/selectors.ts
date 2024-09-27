@@ -1,5 +1,4 @@
 import {createSelector} from "@reduxjs/toolkit"
-import {QueryVersion} from "../QueryVersions/types"
 import activeTabSelect from "../Tab/activeTabSelect"
 
 export const getPins = activeTabSelect((tab) => {
@@ -26,7 +25,7 @@ export const getSnapshot = activeTabSelect((tab) => {
   return {
     value: tab.editor.value,
     pins: tab.editor.pins,
-  } as QueryVersion
+  }
 })
 
 export const isEmpty = createSelector(getValue, getPins, (value, pins) => {

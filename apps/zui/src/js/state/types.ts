@@ -18,9 +18,9 @@ import {PoolSettingsState} from "./PoolSettings/types"
 import {WindowState} from "./Window/types"
 import {LoadDataFormState} from "./LoadDataForm/types"
 import {UpdatesState} from "./Updates/types"
-import {EnhancedStore, EntityState} from "@reduxjs/toolkit"
+import {EnhancedStore} from "@reduxjs/toolkit"
 import {QuerySessionState} from "src/models/query-session"
-import {SnapshotState} from "src/models/snapshot"
+import {SnapshotsState} from "src/models/snapshot"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -53,5 +53,5 @@ export type State = {
   window: WindowState
   updates: UpdatesState
   querySessions: QuerySessionState
-  snapshots: SnapshotState
+  snapshots: SnapshotsState
 }

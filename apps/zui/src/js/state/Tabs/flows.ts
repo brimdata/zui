@@ -1,5 +1,4 @@
 import {nanoid} from "@reduxjs/toolkit"
-import SessionQueries from "../SessionQueries"
 import {Thunk} from "../types"
 import Tabs from "./"
 import {findTabById, findTabByUrl} from "./find"
@@ -7,7 +6,6 @@ import {findTabById, findTabByUrl} from "./find"
 export const create =
   (url = "/", id = nanoid()): Thunk<string> =>
   (dispatch) => {
-    dispatch(SessionQueries.init(id))
     dispatch(Tabs.add(id))
     // move to tabHistories.restore(id, url)
     const history = global.tabHistories.get(id)

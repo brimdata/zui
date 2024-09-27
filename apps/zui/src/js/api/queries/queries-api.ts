@@ -1,6 +1,5 @@
 import {nanoid} from "@reduxjs/toolkit"
 import Queries from "src/js/state/Queries"
-import QueryVersions from "src/js/state/QueryVersions"
 import {AppDispatch, GetState} from "../../state/types"
 import {queriesImport} from "./import"
 import {invoke} from "src/core/invoke"
@@ -30,7 +29,6 @@ export class QueriesApi {
     const ids = Array.isArray(id) ? id : [id]
     await Promise.all(
       ids.map(async (id) => {
-        this.dispatch(QueryVersions.at(id).deleteAll())
         this.dispatch(Queries.removeItems([id]))
       })
     )
