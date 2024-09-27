@@ -7,6 +7,7 @@ import {SourceSet} from "./snapshot/source-set"
 import {Validator} from "./snapshot/validator"
 import {isEqual} from "lodash"
 import Queries from "src/js/state/Queries"
+import {EntityState} from "@reduxjs/toolkit"
 
 /* Schema */
 const schema = {
@@ -18,6 +19,7 @@ const schema = {
 
 /* Types */
 export type SnapshotAttrs = AttributeTypes<typeof schema>
+export type SnapshotsState = EntityState<SnapshotAttrs, string>
 
 /* Model */
 export class Snapshot extends ApplicationEntity<SnapshotAttrs> {
