@@ -10,7 +10,7 @@ import {snapshotShow} from "src/app/router/routes"
 
 const schema = {
   name: {type: String, default: null as string},
-  title: {type: String, default: "(New Session)"},
+  title: {type: String, default: null as string},
 }
 
 type Attributes = AttributeTypes<typeof schema>
@@ -93,7 +93,12 @@ export class QuerySession extends ApplicationEntity<Attributes> {
   }
 
   get displayName() {
-    return this.attributes.name || this.attributes.title
+    return (
+      this.attributes.name ||
+      this.attributes.title ||
+      this.lastSnapshot?.queryText ||
+      "(New Session)"
+    )
   }
 
   get isActive() {
