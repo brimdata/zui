@@ -41,7 +41,7 @@ export const serializeQueryLib = (group: Group): JSONGroup => {
   return jsonGroup as JSONGroup
 }
 
-const flattenItemTree = (root) => {
+export const flattenItemTree = (root) => {
   const items = [root]
   for (let i = 0; i < items.length; i++) {
     const current = items[i]

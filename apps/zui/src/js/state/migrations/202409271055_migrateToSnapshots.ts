@@ -60,6 +60,7 @@ export default function migrateToSnapshots(appState: any) {
 
   /* Now Migrate the Paths in the Tab Histories */
   for (const win of getAllRendererStates(appState)) {
+    if (!win.tabHistories) continue
     const histories = win.tabHistories.entities
     for (const sessionId in histories as any) {
       const entity = histories[sessionId]

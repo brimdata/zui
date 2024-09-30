@@ -1,6 +1,6 @@
 import Queries from "src/js/state/Queries"
 import {isGroup, isQuery} from "src/js/state/Queries/helpers"
-import {parseJSONLib} from "src/js/state/Queries/parsers"
+import {flattenItemTree, parseJSONLib} from "src/js/state/Queries/parsers"
 import {createOperation} from "../../core/operations"
 
 export const importQueriesOp = createOperation(
@@ -17,10 +17,11 @@ export const importQueriesOp = createOperation(
       return {error: "Incorrect query format"}
     }
 
+    const flatTree = flattenItemTree(libRoot)
+    const size = flatTree.filter((item) => !!item.value).length
     main.store.dispatch(Queries.addItem(libRoot, "root"))
 
-    // TODO: TEST THIS FUNCTION AND FIX
-    return {size: 0, id: libRoot.id}
+    return {size, id: libRoot.id}
   }
 )
 

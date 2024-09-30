@@ -32,7 +32,6 @@ export default function session(path: string | null) {
       const f = file(path)
 
       version = migrator.getLatestVersion()
-
       if (await f.exists()) {
         return await f
           .read()
@@ -79,8 +78,10 @@ async function migrate(appState, migrator): Promise<VersionedState> {
       log.info("migrations started")
       const nextState = migrator.runPending(state)
       log.info(`migrated to version: ${nextState.version}`)
+      console.log(nextState)
       return nextState
     } catch (e) {
+      console.log(e)
       log.error("unable to migrate")
       log.error(e)
       return freshState(migrator.getLatestVersion())
