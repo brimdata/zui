@@ -16,7 +16,7 @@ export class HistoryHandler extends ViewHandler {
   }
 
   useEntries() {
-    const sessionId = useSelector(Current.getSnapshot).sessionId
+    const sessionId = useSelector(Current.getSnapshot)?.sessionId
     const snapshots = Snapshot.useWhere({sessionId})
     const _queries = useSelector(Queries.raw)
     return useMemo(() => snapshots.slice(0).reverse(), [snapshots])
