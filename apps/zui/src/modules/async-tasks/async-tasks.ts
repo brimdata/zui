@@ -16,7 +16,7 @@ export class AsyncTasks {
 
   createOrReplace(tags: string[]) {
     this.abort(tags)
-    return this.create(tags)
+    return Promise.resolve(this.create(tags))
   }
 
   abort(tags: string[]) {

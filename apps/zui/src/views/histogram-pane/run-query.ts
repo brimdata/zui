@@ -16,7 +16,8 @@ export const runHistogramQuery = createHandler(
     const tabId = select(Current.getTabId)
     const taskId = "run-histogram-query-task"
 
-    asyncTasks.createOrReplace([tabId, taskId]).run(async (signal) => {
+    const task = await asyncTasks.createOrReplace([tabId, taskId])
+    task.run(async (signal) => {
       await waitForSelector(QueryInfo.getIsParsed, {signal}).toReturn(true)
       const id = HISTOGRAM_RESULTS
       const key = select(Current.getLocation).key
