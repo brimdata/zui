@@ -66,6 +66,7 @@ export default function migrateToSnapshots(appState: any) {
       const entity = histories[sessionId]
       for (let i = 0; i < entity.entries.length; i++) {
         const path = entity.entries[i]
+
         const match = matchPath(path, {
           path: "/queries/:queryId/versions/:versionId",
           exact: true,
@@ -73,30 +74,26 @@ export default function migrateToSnapshots(appState: any) {
         /* Find the snapshot */
         if (match) {
           const {queryId, versionId} = match.params as any
-          if (versionId === "0") {
-            entity.entries[i] = null
-          } else {
-            let snapshot = snapshots.find((s) => s.id == versionId)
-            if (!snapshot) {
-              /* The Snapshot is missing because it has invalid syntax */
-              /* But it is stored in the queryVersions */
-              const version = state.queryVersions[queryId].entities[versionId]
-              const isNamed = !!queries[queryId]
-              snapshot = {
-                createdAt: version.ts,
-                updatedAt: version.ts,
-                id: version.version,
-                pins: version.pins,
-                value: version.value,
-                sessionId: sessionId,
-                queryId: isNamed ? queryId : null,
-              }
-              snapshots.push(snapshot)
+          let snapshot = snapshots.find((s) => s.id == versionId)
+          if (!snapshot) {
+            /* The Snapshot is missing because it has invalid syntax */
+            /* But it is stored in the queryVersions */
+            const version = state.queryVersions[queryId].entities[versionId]
+            const isNamed = !!queries[queryId]
+            snapshot = {
+              createdAt: version.ts,
+              updatedAt: version.ts,
+              id: version.version,
+              pins: version.pins,
+              value: version.value,
+              sessionId: sessionId,
+              queryId: isNamed ? queryId : null,
             }
-            /* Re-write the path */
-            const newPath = `/snapshots/${snapshot.id}`
-            entity.entries[i] = newPath
+            snapshots.push(snapshot)
           }
+          /* Re-write the path */
+          const newPath = `/snapshots/${snapshot.id}`
+          entity.entries[i] = newPath
         }
       }
       // Remove the nulls

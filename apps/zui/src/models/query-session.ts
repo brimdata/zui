@@ -74,8 +74,8 @@ export class QuerySession extends ApplicationEntity<Attributes> {
 
   /* Load is used when you already have a saved snapshot */
   load(snapshot: Snapshot) {
-    this.update({title: snapshot.queryText})
-    this.tab.setTitle(snapshot.isEmpty ? "Query Session" : snapshot.queryText)
+    this.update({title: snapshot.title})
+    this.tab.setTitle(snapshot.title)
     this.tab.load(snapshot.pathname)
   }
 

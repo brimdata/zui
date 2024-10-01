@@ -6,6 +6,9 @@ import Tabs from "src/js/state/Tabs"
 import {QuerySession} from "./query-session"
 import {whichRoute} from "src/app/router/routes"
 import {IconName} from "src/components/icon"
+import {Snapshot} from "./snapshot"
+import Pools from "src/js/state/Pools"
+import Current from "src/js/state/Current"
 
 type Attrs = {
   id: string
@@ -119,5 +122,35 @@ export class BrowserTab extends DomainModel<Attrs> {
 
   get pathname() {
     return this.history.location.pathname
+  }
+
+  updateTitle() {
+    // Not the prettiest of code
+    const lakeId = this.select(Current.getLakeId)
+    switch (this.route.name) {
+      case "snapshot":
+        var id = this.params.id
+        var snapshot = Snapshot.find(id)
+        this.setTitle(snapshot?.title || "Query Session")
+        break
+      case "poolShow":
+        var id = this.params.poolId
+        var pool = this.select(Pools.get(lakeId, id))
+        if (pool) {
+          this.setTitle(pool.name)
+        } else {
+          this.setTitle("Pool")
+        }
+        break
+      case "welcome":
+        this.setTitle("Welcome")
+        break
+      case "releaseNotes":
+        this.setTitle("Release Notes")
+        break
+      case "root":
+        // not sure yet
+        break
+    }
   }
 }
