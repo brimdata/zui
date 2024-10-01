@@ -112,4 +112,12 @@ export class BrowserTab extends DomainModel<Attrs> {
   remove() {
     this.dispatch(Tabs.remove(this.attrs.id))
   }
+
+  get params(): any {
+    return matchPath(this.pathname, this.route.path).params ?? {}
+  }
+
+  get pathname() {
+    return this.history.location.pathname
+  }
 }
