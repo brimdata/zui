@@ -12,6 +12,7 @@ export function initializeTabs(store: Store) {
   }
   const lakeId = getLakeId(store.getState())
 
+  // This only needs to be here for a few releases until people update.
   for (const tab of BrowserTab.all) {
     switch (tab.route.name) {
       case "snapshot":
