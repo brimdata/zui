@@ -21,6 +21,9 @@ export const parseJSONLib = (filePath: string): {libRoot: Group} => {
     item.id = nanoid()
     if ("items" in item) {
       item.isOpen = false
+    } else {
+      item.value ??= ""
+      item.pins ??= []
     }
   })
 
