@@ -1,6 +1,6 @@
 module zqjs
 
-go 1.21
+go 1.23
 
 require (
 	github.com/brimdata/zed v1.12.0
