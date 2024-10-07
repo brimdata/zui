@@ -10,7 +10,7 @@ export class AsyncTask {
   }
 
   abort() {
-    this.controller.abort()
+    this.controller.abort("Aborting task")
   }
 
   get signal() {

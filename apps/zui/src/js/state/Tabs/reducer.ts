@@ -65,6 +65,10 @@ const slice = createSlice({
       const tab = findTab(s, s.active)
       tab.lastLocationKey = a.payload
     },
+    setTitle(s, a: PayloadAction<{tabId: string; title: string}>) {
+      const tab = findTab(s, a.payload.tabId)
+      tab.title = a.payload.title
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(isTabAction, (s, a: any) => {

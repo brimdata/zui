@@ -4,7 +4,7 @@ import {copyQueryToClipboard} from "../commands/copy-query-to-clipboard"
 import {deleteQueries} from "../commands/delete-queries"
 import {exportQueryGroup} from "../commands/export-query-group"
 import {createMenu} from "src/core/menu"
-import {NamedQueries} from "src/domain/handlers"
+import {QueriesRunner} from "src/runners/queries-runner"
 
 export const queryContextMenu = createMenu(
   (_, tree: TreeApi<Query | Group>, node: NodeApi<Query | Group>) => {
@@ -32,7 +32,7 @@ export const queryContextMenu = createMenu(
       {
         label: "Open Query",
         visible: node.isLeaf,
-        click: () => NamedQueries.show(node.id),
+        click: () => new QueriesRunner().open(node.id),
       },
       {type: "separator"},
       {

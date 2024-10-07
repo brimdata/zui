@@ -10,6 +10,10 @@ import {reducer as selection} from "../Selection/reducer"
 import {reducer as queryInfo} from "../QueryInfo/reducer"
 import {nanoid} from "@reduxjs/toolkit"
 
+// The names of all actions sent to these reducers
+// must start with "TAB_" so that it will route it
+// to the active tab reducer.
+
 const tabReducer = combineReducers({
   editor,
   id: (state: string = nanoid(), _): string => state,
@@ -24,6 +28,7 @@ const tabReducer = combineReducers({
   table,
   selection,
   queryInfo,
+  title: (state = "Zui") => state,
 })
 
 export type TabReducer = typeof tabReducer

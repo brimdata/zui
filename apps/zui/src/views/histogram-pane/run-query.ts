@@ -16,11 +16,12 @@ export const runHistogramQuery = createHandler(
     const tabId = select(Current.getTabId)
     const taskId = "run-histogram-query-task"
 
-    asyncTasks.createOrReplace([tabId, taskId]).run(async (signal) => {
+    const task = await asyncTasks.createOrReplace([tabId, taskId])
+    task.run(async (signal) => {
       await waitForSelector(QueryInfo.getIsParsed, {signal}).toReturn(true)
       const id = HISTOGRAM_RESULTS
       const key = select(Current.getLocation).key
-      const version = select(Current.getVersion)
+      const snapshot = select(Current.getSnapshot)
       const poolId = select(Current.getPoolFromQuery)?.id
       const baseQuery = select(Current.getQueryText)
       const {timeField, colorField} = select((s) =>
@@ -28,7 +29,7 @@ export const runHistogramQuery = createHandler(
       )
 
       function getPinRange() {
-        const rangePin = version.pins.find(
+        const rangePin = snapshot.pins.find(
           (pin: QueryPin) =>
             pin.type === "time-range" &&
             !pin.disabled &&

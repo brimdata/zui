@@ -39,6 +39,7 @@ export function ButtonMenu(props: {
   const menu = useResponsiveMenu(items)
 
   const buttons = menu.items.map((item: MenuItem, i: number) => {
+    if (item.whenResult === false) return null
     return (
       <IconButton
         {...item}

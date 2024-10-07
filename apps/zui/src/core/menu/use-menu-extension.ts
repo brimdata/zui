@@ -1,8 +1,8 @@
 import {useEffect, useLayoutEffect, useState} from "react"
 import {MenuItem} from "src/core/menu"
-import {compile} from "../when/compile"
 import {invoke} from "../invoke"
 import {useTabId} from "src/util/hooks/use-tab-id"
+import {evaluate} from "when-clause"
 
 export function useMenuExtension(
   name: string,
@@ -13,23 +13,21 @@ export function useMenuExtension(
   const tabId = useTabId()
 
   useLayoutEffect(() => {
-    invoke("menus.extend", name, menuItems)
-      .then((extended) => compileMenuItems(extended, whenContext))
-      .then((compiled) => setItems(compiled))
-  }, [name, menuItems, whenContext, tabId])
+    invoke("menus.extend", name, menuItems).then((items) => setItems(items))
+  }, [name, tabId])
 
   useEffect(() => {
     return global.zui.on("menus.update", (e, menu, id, update) => {
       if (menu !== name) return
-      setItems(
+      setItems((items) =>
         items.map((item: MenuItem) => {
           return item.id === id ? {...item, ...update} : item
         })
       )
     })
-  }, [items, name])
+  }, [name])
 
-  return items
+  return compileMenuItems(items, whenContext)
 }
 
 function compileMenuItems(items: MenuItem[], context: Record<string, any>) {
@@ -37,7 +35,7 @@ function compileMenuItems(items: MenuItem[], context: Record<string, any>) {
     .map<MenuItem>((item) => {
       return {
         ...item,
-        whenResult: compile(item.when, context),
+        whenResult: item.when && evaluate(item.when, context),
         priority: item.priority ?? 0,
       }
     })

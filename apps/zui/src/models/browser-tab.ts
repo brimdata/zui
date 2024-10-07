@@ -4,6 +4,11 @@ import {matchPath} from "react-router"
 import {DomainModel} from "src/core/domain-model"
 import Tabs from "src/js/state/Tabs"
 import {QuerySession} from "./query-session"
+import {whichRoute} from "src/app/router/routes"
+import {IconName} from "src/components/icon"
+import {Snapshot} from "./snapshot"
+import Pools from "src/js/state/Pools"
+import Current from "src/js/state/Current"
 
 type Attrs = {
   id: string
@@ -11,6 +16,16 @@ type Attrs = {
 }
 
 export class BrowserTab extends DomainModel<Attrs> {
+  get id() {
+    return this.attrs.id
+  }
+
+  static findByRoute(routePattern: string) {
+    return this.orderBy("lastFocused", "desc").find((tab) =>
+      tab.matchesPath(routePattern)
+    )
+  }
+
   static find(id: string) {
     const attrs = this.select(Tabs.findById(id))
     return attrs ? new BrowserTab(attrs) : null
@@ -61,6 +76,10 @@ export class BrowserTab extends DomainModel<Attrs> {
     }
   }
 
+  reload() {
+    this.history.replace(this.history.location.pathname)
+  }
+
   activate() {
     this.dispatch(Tabs.activate(this.attrs.id))
   }
@@ -78,6 +97,60 @@ export class BrowserTab extends DomainModel<Attrs> {
     if (session && session.history.length === 0) {
       session.destroy()
     }
+    this.remove()
+  }
+
+  get route() {
+    return whichRoute(this.history.location.pathname)
+  }
+
+  get iconName(): IconName {
+    return this.route?.icon || "zui"
+  }
+
+  setTitle(title: string) {
+    this.dispatch(Tabs.setTitle({tabId: this.attrs.id, title}))
+  }
+
+  remove() {
     this.dispatch(Tabs.remove(this.attrs.id))
+  }
+
+  get params(): any {
+    return matchPath(this.pathname, this.route.path).params ?? {}
+  }
+
+  get pathname() {
+    return this.history.location.pathname
+  }
+
+  updateTitle() {
+    // Not the prettiest of code
+    const lakeId = this.select(Current.getLakeId)
+    switch (this.route.name) {
+      case "snapshot":
+        var id = this.params.id
+        var snapshot = Snapshot.find(id)
+        this.setTitle(snapshot?.title || "Query Session")
+        break
+      case "poolShow":
+        var id = this.params.poolId
+        var pool = this.select(Pools.get(lakeId, id))
+        if (pool) {
+          this.setTitle(pool.name)
+        } else {
+          this.setTitle("Pool")
+        }
+        break
+      case "welcome":
+        this.setTitle("Welcome")
+        break
+      case "releaseNotes":
+        this.setTitle("Release Notes")
+        break
+      case "root":
+        // not sure yet
+        break
+    }
   }
 }

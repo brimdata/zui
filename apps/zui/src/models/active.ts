@@ -1,12 +1,12 @@
 import {DomainModel} from "src/core/domain-model"
-import {Session} from "./session"
 import Current from "src/js/state/Current"
 import {BrowserTab} from "./browser-tab"
 import {Frame} from "./frame"
 import {getActiveTab} from "src/js/state/Tabs/selectors"
-import Editor from "src/js/state/Editor"
 import {Lake} from "./lake"
-import {EditorSnapshot} from "./editor-snapshot"
+import {Snapshot} from "./snapshot"
+import {QuerySession} from "./query-session"
+import Editor from "src/js/state/Editor"
 
 export class Active extends DomainModel {
   static get tab() {
@@ -14,22 +14,18 @@ export class Active extends DomainModel {
     return new BrowserTab({id, lastFocused})
   }
 
-  static get session() {
-    const params = this.select(Current.getQueryUrlParams)
-    return new Session({
-      id: this.tab.attrs.id,
-      parentId: params.queryId,
-      snapshotId: params.version,
-    })
+  static get querySession() {
+    const {id} = this.select(getActiveTab)
+    return QuerySession.find(id)
+  }
+
+  static get editorState() {
+    return this.select(Editor.getSnapshot)
   }
 
   static get snapshot() {
-    const params = this.select(Current.getQueryUrlParams)
-
-    return new EditorSnapshot({
-      parentId: params.queryId,
-      ...this.select(Editor.getSnapshot),
-    })
+    const id = this.select(Current.getSnapshotId)
+    return Snapshot.find(id)
   }
 
   static get frame() {

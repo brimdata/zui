@@ -1,5 +1,4 @@
 import {sendToWindow} from "src/core/ipc"
-import {QueryParams} from "src/js/api/queries/types"
 
 export class WindowApi {
   id: string | null = null
@@ -15,10 +14,6 @@ export class WindowApi {
 
   showSuccessMessage(message: string) {
     sendToWindow(this.id, "window.showSuccessMessage", message)
-  }
-
-  query(params: QueryParams) {
-    sendToWindow(this.id, "window.query", params)
   }
 
   sync(args: {id: string; lakeId: string}) {

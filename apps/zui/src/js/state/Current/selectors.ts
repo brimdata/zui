@@ -4,22 +4,15 @@ import {State} from "../types"
 import Lakes from "../Lakes"
 import {MemoryHistory} from "history"
 import {Pool} from "src/models/pool"
-import Queries from "../Queries"
-import {QueryModel} from "src/js/models/query-model"
-import QueryVersions from "../QueryVersions"
-import {query, queryVersion, whichRoute} from "src/app/router/routes"
-import SessionHistories from "../SessionHistories"
+import {snapshotShow, whichRoute} from "src/app/router/routes"
 import {createSelector} from "@reduxjs/toolkit"
-import {QueryVersion} from "../QueryVersions/types"
-import {ActiveQuery} from "src/models/active-query"
-import SessionQueries from "../SessionQueries"
-import memoizeOne from "memoize-one"
-import {entitiesToArray} from "../utils"
 import {Lake} from "src/models/lake"
 import {defaultLake} from "src/js/initializers/initLakeParams"
 import {getActive} from "../Tabs/selectors"
 import QueryInfo from "../QueryInfo"
-import {EditorSnapshot} from "src/models/editor-snapshot"
+import {Snapshot} from "src/models/snapshot"
+import Queries from "../Queries"
+import Editor from "../Editor"
 
 export const getHistory = (
   state,
@@ -38,68 +31,6 @@ export const getLocation = (state: State) => {
   return getHistory(state)?.location
 }
 
-export const getQueryUrlParams = createSelector(getLocation, (location) => {
-  const path = location.pathname
-  const routes = [queryVersion.path, query.path]
-  const match = matchPath<{queryId: string; version: string}>(path, routes)
-  return match?.params ?? {queryId: "", version: ""}
-})
-
-export const getVersion = (state: State): QueryVersion => {
-  const {queryId, version} = getQueryUrlParams(state)
-  const tabId = getTabId(state)
-  return (
-    QueryVersions.at(queryId).find(state, version) ||
-    QueryVersions.at(tabId).find(state, version)
-  )
-}
-
-export const getQueryText = createSelector(getVersion, (version) => {
-  return new EditorSnapshot(version).toQueryText()
-})
-
-const getRawSession = (state: State) => {
-  const id = getSessionId(state)
-  return SessionQueries.find(state, id)
-}
-
-const memoGetVersions = memoizeOne(entitiesToArray)
-
-const getSessionVersions = (state: State) => {
-  const id = getSessionId(state)
-  const entities = QueryVersions.at(id).entities(state)
-  const ids = QueryVersions.at(id).ids(state)
-  return memoGetVersions(ids, entities)
-}
-
-export const getNamedQuery = (state: State) => {
-  const queryId = getSessionRouteParentId(state)
-  return Queries.build(state, queryId)
-}
-
-export const getSessionRouteParentId = (state: State) => {
-  const {queryId} = getQueryUrlParams(state)
-  return queryId
-}
-
-export const getSession = createSelector(
-  getRawSession,
-  getSessionVersions,
-  (query, versions) => {
-    if (!query) return null
-    return new QueryModel(query, versions, "session")
-  }
-)
-
-export const getActiveQuery = createSelector(
-  getSession,
-  getNamedQuery,
-  getVersion,
-  (session, query, version) => {
-    return new ActiveQuery(session, query, version || QueryVersions.initial())
-  }
-)
-
 export const getPoolId = (state) => {
   type Params = {poolId?: string}
   const match = matchPath<Params>(getLocation(state).pathname, [
@@ -111,6 +42,38 @@ export const getPoolId = (state) => {
 export const getLakeId = (state: State) => {
   return state.window.lakeId ?? defaultLake().id
 }
+
+export const getSnapshotId = (state) => {
+  const {pathname} = getLocation(state)
+  const route = snapshotShow.path
+  const match = matchPath<any>(pathname, [route])
+  return match?.params?.id || null
+}
+export const getSnapshot = createSelector(getSnapshotId, (id) =>
+  Snapshot.find(id)
+)
+
+export const getQuery = createSelector(
+  getSnapshot,
+  (state) => state.queries,
+  (snapshot, queries) => {
+    return Queries.find(queries, snapshot.queryId)
+  }
+)
+
+export const getQueryText = createSelector(
+  getSnapshot,
+  (snapshot) => snapshot.queryText
+)
+
+export const getQueryIsModified = createSelector(
+  getQuery,
+  Editor.getSnapshot,
+  (query, editorState) => {
+    const snapshot = new Snapshot(editorState)
+    return !!query && !snapshot.equals(query)
+  }
+)
 
 export const mustGetLake = createSelector(Lakes.raw, getLakeId, (lakes, id) => {
   if (!id) throw new Error("Current lake id is unset")
@@ -161,11 +124,6 @@ export const getPools = createSelector(getLake, Pools.raw, (l, pools) => {
 })
 
 export const getTabId = getActive
-
-export const getSessionHistory = createSelector(
-  [getTabId, SessionHistories.raw],
-  (tabId, histories) => histories[tabId]
-)
 
 export const getSessionId = getTabId
 

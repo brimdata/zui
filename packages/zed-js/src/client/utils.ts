@@ -75,7 +75,7 @@ export function jsonHeader(obj: object) {
 
 export function wrapAbort(signal?: IsoAbortSignal) {
   const ctl = new AbortController();
-  signal?.addEventListener('abort', () => ctl.abort());
+  signal?.addEventListener('abort', () => ctl.abort(signal.reason));
   return ctl;
 }
 

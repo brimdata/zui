@@ -17,7 +17,8 @@ import Appearance from "src/js/state/Appearance"
 import {TREE_ITEM_HEIGHT} from "../item"
 import {showMenu} from "src/core/menu"
 import EmptySection from "src/components/empty-section"
-import {NamedQueries} from "src/domain/handlers"
+import {NamedQuery} from "src/models/named-query"
+import {QueriesRunner} from "src/runners/queries-runner"
 
 type Props = {
   searchTerm: string
@@ -40,7 +41,8 @@ function TreeOfQueries(props: {
 }) {
   const dispatch = useDispatch()
   const api = useZuiApi()
-  const id = useSelector(Current.getSessionRouteParentId)
+  const snapshot = useSelector(Current.getSnapshot)
+  const id = snapshot?.queryId
   const tree = useRef<TreeApi<Query | Group>>()
   const [{isOver}, drop] = useQueryImportOnDrop()
   const initialOpenState = useSelector(Appearance.getQueriesOpenState)
@@ -74,7 +76,7 @@ function TreeOfQueries(props: {
               childrenAccessor="items"
               onActivate={(node) => {
                 if (node.isLeaf && id !== node.id) {
-                  NamedQueries.show(node.id)
+                  new QueriesRunner().open(node.id)
                 }
               }}
               onMove={(args) => {
@@ -83,16 +85,15 @@ function TreeOfQueries(props: {
                 )
               }}
               onRename={async (args) => {
-                await api.queries.update({
-                  id: args.id,
-                  changes: {name: args.name},
-                })
+                NamedQuery.find(args.id).update({name: args.name})
               }}
               onCreate={({type, parentId}) => {
                 if (type === "leaf") {
-                  return api.queries.create({
+                  return NamedQuery.create({
                     name: "",
                     parentId,
+                    value: "",
+                    pins: [],
                   })
                 } else {
                   return api.queries.createGroup("", parentId)

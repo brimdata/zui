@@ -1,13 +1,11 @@
 import {useSelector} from "react-redux"
 import {Icon} from "src/components/icon"
 import {VirtualList} from "src/js/components/virtual-list"
-import SessionHistories from "src/js/state/SessionHistories"
 import {QuerySession} from "src/models/query-session"
 import {SessionsPaneHandler} from "./handler"
 import Tabs from "src/js/state/Tabs"
 
 export function SessionsPane() {
-  useSelector(SessionHistories.raw) // We need this here to update the display name
   useSelector(Tabs.getActive) // We need this to update isActive
   const sessions = QuerySession.useAll().sort(
     (item, pivot) => pivot.createdAt.getTime() - item.createdAt.getTime()

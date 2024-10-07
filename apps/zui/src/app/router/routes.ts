@@ -10,54 +10,41 @@ import {IconName} from "../../components/icon"
 export const root: Route = {
   name: "root",
   path: "/",
-  title: "Zui",
 }
 
 export const poolShow: Route = {
   name: "poolShow",
-  title: "<pool>",
   path: `/pools/:poolId`,
   icon: "pool",
 }
 
-export const query: Route = {
-  name: "querySession",
-  title: "<query>",
-  path: `/queries/:queryId`,
+export const snapshotShow: Route = {
+  name: "snapshot",
+  path: "/snapshots/:id",
   icon: "query",
 }
 
-export const queryVersion: Route = {
-  name: "querySession",
-  title: "<query>",
-  path: `${query.path}/versions/:version`,
-  icon: "query",
-}
 export const releaseNotes: Route = {
   name: "releaseNotes",
-  title: "Release Notes",
   path: `/release-notes`,
   icon: "doc_plain",
 }
 
 export const welcome: Route = {
   name: "welcome",
-  title: "Welcome to Zui",
   path: "/welcome",
   icon: "zui",
 }
 
 type Route = {
   name: string
-  title: string
   path: string
   icon?: IconName
 }
 
 export const allRoutes: Route[] = [
   poolShow,
-  query,
-  queryVersion,
+  snapshotShow,
   releaseNotes,
   welcome,
   root,

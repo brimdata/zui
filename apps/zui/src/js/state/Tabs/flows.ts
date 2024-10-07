@@ -1,15 +1,11 @@
 import {nanoid} from "@reduxjs/toolkit"
-import {queryPath} from "src/app/router/utils/paths"
-import SessionQueries from "../SessionQueries"
 import {Thunk} from "../types"
 import Tabs from "./"
 import {findTabById, findTabByUrl} from "./find"
-import {QuerySession} from "src/models/query-session"
 
 export const create =
   (url = "/", id = nanoid()): Thunk<string> =>
   (dispatch) => {
-    dispatch(SessionQueries.init(id))
     dispatch(Tabs.add(id))
     // move to tabHistories.restore(id, url)
     const history = global.tabHistories.get(id)
@@ -21,18 +17,6 @@ export const create =
     // end
     dispatch(Tabs.activate(id))
     return id
-  }
-
-export const createQuerySession =
-  (): Thunk<string> =>
-  (dispatch, getState, {api}) => {
-    const session = QuerySession.create()
-    const sessionId = session.id
-    const version = "0"
-    api.queries.createEditorSnapshot(sessionId, {version, value: "", pins: []})
-    const url = queryPath(sessionId, version)
-
-    return dispatch(create(url, sessionId))
   }
 
 export const previewUrl =

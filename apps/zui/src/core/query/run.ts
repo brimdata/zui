@@ -37,26 +37,28 @@ const run = createHandler(
     const prevVals = select(Results.getValues(id))
     const prevShapes = select(Results.getShapes(id))
     const paginatedQuery = select(Results.getPaginatedQuery(id))
-    const {signal} = asyncTasks.createOrReplace([tabId, id])
-    try {
-      const res = await query(paginatedQuery, {signal})
-      await res.collect(({rows, shapesMap}) => {
-        const values = isFirstPage ? rows : [...prevVals, ...rows]
-        const shapes = isFirstPage ? shapesMap : {...prevShapes, ...shapesMap}
-        dispatch(Results.setValues({id, tabId, values}))
-        dispatch(Results.setShapes({id, tabId, shapes}))
-      })
-      dispatch(Results.success({id, tabId, count: res.rows.length}))
-      return res
-    } catch (e) {
-      if (isAbortError(e)) {
+    const task = await asyncTasks.createOrReplace([tabId, id])
+    task.run(async (signal) => {
+      try {
+        const res = await query(paginatedQuery, {signal})
+        await res.collect(({rows, shapesMap}) => {
+          const values = isFirstPage ? rows : [...prevVals, ...rows]
+          const shapes = isFirstPage ? shapesMap : {...prevShapes, ...shapesMap}
+          dispatch(Results.setValues({id, tabId, values}))
+          dispatch(Results.setShapes({id, tabId, shapes}))
+        })
+        dispatch(Results.success({id, tabId, count: res.rows.length}))
+        return res
+      } catch (e) {
+        if (isAbortError(e)) {
+          return null
+        } else {
+          dispatch(
+            Results.error({id, tabId, error: ErrorFactory.create(e).message})
+          )
+        }
         return null
-      } else {
-        dispatch(
-          Results.error({id, tabId, error: ErrorFactory.create(e).message})
-        )
       }
-      return null
-    }
+    })
   }
 )

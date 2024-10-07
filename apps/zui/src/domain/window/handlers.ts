@@ -2,12 +2,10 @@ import {createHandler} from "src/core/handlers"
 import toast from "react-hot-toast"
 import Tabs from "src/js/state/Tabs"
 import {welcomePath} from "src/app/router/utils/paths"
-import {QueryParams} from "src/js/api/queries/types"
 import {PaneName} from "src/js/state/Layout/types"
 import Appearance from "src/js/state/Appearance"
 import Layout from "src/js/state/Layout"
 import Modal from "src/js/state/Modal"
-import {Snapshots} from "../handlers"
 
 export const showErrorMessage = createHandler(
   "window.showErrorMessage",
@@ -34,13 +32,6 @@ export const showWelcomePage = createHandler(
   "window.showWelcomePage",
   ({dispatch}) => {
     dispatch(Tabs.activateUrl(welcomePath()))
-  }
-)
-
-export const query = createHandler(
-  "window.query",
-  (ctx, params: QueryParams) => {
-    Snapshots.createAndShow(params)
   }
 )
 

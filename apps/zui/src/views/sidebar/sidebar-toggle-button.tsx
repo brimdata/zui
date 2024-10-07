@@ -1,4 +1,4 @@
-import React from "react"
+import React, {CSSProperties} from "react"
 import {useDispatch} from "src/core/use-dispatch"
 import Appearance from "src/js/state/Appearance"
 import {IconButton} from "src/components/icon-button"
@@ -19,12 +19,13 @@ export const SidebarToggleButton = () => {
   )
 }
 
-export const RightSidebarToggleButton = () => {
+export const RightSidebarToggleButton = (props: {style?: CSSProperties}) => {
   const dispatch = useDispatch()
   const open = useSelector(Appearance.secondarySidebarIsOpen)
   const name = open ? "layout_rightbar_close" : "layout_rightbar_open"
   return (
     <IconButton
+      style={props.style}
       iconName={name}
       label="Toggle Right Sidebar"
       data-tooltip="Toggle Right Sidebar"

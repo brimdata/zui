@@ -14,9 +14,10 @@ play('title bar buttons', (app, test) => {
   });
 
   test('toggle right sidebar', async () => {
+    await app.attached('button', 'History');
     await app.click('button', 'Toggle Right Sidebar');
-    await app.detached('button', 'HISTORY');
+    await app.detached('button', 'History');
     await app.click('button', 'Toggle Right Sidebar');
-    await app.attached(/Session history will appear here/);
+    await app.attached('button', 'History');
   });
 });

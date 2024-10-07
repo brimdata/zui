@@ -38,6 +38,10 @@ export function getAllRendererStates(sessionState: SessionState): any[] {
   return compact(states)
 }
 
+export function getGlobalState(sessionState: SessionState): any {
+  return sessionState.globalState
+}
+
 export function getAllTabs_before_202307101053(
   sessionState: SessionState
 ): any[] {

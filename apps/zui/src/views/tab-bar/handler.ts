@@ -3,10 +3,8 @@ import {MutableRefObject, useRef} from "react"
 import {useSelector} from "react-redux"
 import {StateObject, useStateObject} from "src/core/state-object"
 import {ViewHandler} from "src/core/view-handler"
-import tab from "src/js/models/tab"
 import Appearance from "src/js/state/Appearance"
 import Tabs from "src/js/state/Tabs"
-import {getTabModels} from "src/js/state/Tabs/get-tab-models"
 import {
   SortableList,
   SortableListArgs,
@@ -14,6 +12,8 @@ import {
 import {getGap, getRect} from "./utils"
 import {move} from "src/modules/sortable-list-algorithm/utils"
 import {BrowserTab} from "src/models/browser-tab"
+import {getTabDisplayProps} from "src/js/state/Tabs/get-display-props"
+import {QuerySession} from "src/models/query-session"
 
 type XY = {x: number; y: number}
 export const initialState = {
@@ -21,7 +21,7 @@ export const initialState = {
 }
 
 export class TabBarHandler extends ViewHandler {
-  tabs: ReturnType<typeof tab>[]
+  tabs: {id: string; title: string}[]
   activeId: string
   previewId: string
   sidebarOpen: boolean
@@ -37,7 +37,7 @@ export class TabBarHandler extends ViewHandler {
     this.previewId = useSelector(Tabs.getPreview)
     this.sidebarOpen = useSelector(Appearance.sidebarIsOpen)
     this.secondarySidebarOpen = useSelector(Appearance.secondarySidebarIsOpen)
-    this.tabs = useSelector(getTabModels)
+    this.tabs = useSelector(getTabDisplayProps)
     this.sortableState = useStateObject(SortableList.initialState())
     this.sortableList = new SortableList(this.sortableState)
     this.listRef = useRef<HTMLElement>()
@@ -57,7 +57,7 @@ export class TabBarHandler extends ViewHandler {
   }
 
   create() {
-    this.dispatch(Tabs.createQuerySession())
+    QuerySession.createAndActivate()
   }
 
   destroy(e: any, id: string) {
@@ -162,7 +162,7 @@ export class TabBarHandler extends ViewHandler {
     if (this.state.isDropping) {
       return {
         ...this.sortableList.previewDimens,
-        x: this.sortableList.dstItem.startPoint,
+        x: (this.sortableList.dstItem || this.sortableList.srcItem)?.startPoint,
       }
     } else {
       return this.sortableList.previewDimens

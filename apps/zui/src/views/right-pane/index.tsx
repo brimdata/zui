@@ -3,7 +3,6 @@ import React from "react"
 import {useSelector} from "react-redux"
 import Layout from "src/js/state/Layout"
 import {DraggablePane} from "src/js/components/draggable-pane"
-import VersionsSection from "./versions-section"
 import AppErrorBoundary from "src/js/components/AppErrorBoundary"
 import {HistorySection} from "./history/section"
 import {ColumnsPane} from "src/views/columns-pane"
@@ -18,8 +17,6 @@ function Contents() {
   switch (useSelector(Layout.getCurrentPaneName)) {
     case "detail":
       return <DetailPane />
-    case "versions":
-      return <VersionsSection />
     case "history":
       return <HistorySection />
     case "columns":

@@ -151,7 +151,8 @@
 }
 
 .color\:fg-less,
-.text-less {
+.text-less,
+.text-meta {
   color: var(--fg-color-less);
 }
 
@@ -169,6 +170,10 @@
 
 .weight\:bold {
   font-weight: bold;
+}
+
+.weight\:medium {
+  font-weight: 500;
 }
 
 .text-center {

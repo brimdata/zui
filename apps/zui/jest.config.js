@@ -13,6 +13,7 @@ const esModules = [
   "immer",
   "redux",
   "lodash-es",
+  "when-clause",
 ].join("|")
 // https://github.com/gravitational/teleport/issues/33810
 

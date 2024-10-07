@@ -2,11 +2,11 @@ import {Icon} from "src/components/icon"
 import {IconButton} from "src/components/icon-button"
 import {useDrag} from "@react-aria/dnd"
 import {useRef} from "react"
-import tab from "src/js/models/tab"
 import {TabBarHandler} from "./handler"
+import {BrowserTab} from "src/models/browser-tab"
 
 type Props = {
-  tab: ReturnType<typeof tab>
+  tab: {id: string; title: string}
   handler: TabBarHandler
   index: number
 }
@@ -20,6 +20,7 @@ export function TabItem({tab, handler, index}: Props) {
     onDragMove: (e) => handler.onDragMove(e),
     onDragEnd: () => handler.onDragEnd(),
   })
+  const browserTab = BrowserTab.find(tab.id)
 
   return (
     <div
@@ -31,8 +32,8 @@ export function TabItem({tab, handler, index}: Props) {
       onMouseDown={() => handler.activate(tab.id)}
     >
       <span className="tab-item-title">
-        <Icon name={tab.icon()} className="tab-icon" />
-        {tab.title()}
+        <Icon name={browserTab.iconName} className="tab-icon" />
+        {tab.title}
       </span>
       <IconButton
         className="tab-item-close-button"

@@ -26,11 +26,11 @@ function AppRoutes() {
           <Show />
         </InitPool>
       </Route>
-      <Route path={routes.query.path}>
-        <SessionPage />
-      </Route>
       <Route path={routes.welcome.path}>
         <WelcomePage />
+      </Route>
+      <Route path={routes.snapshotShow.path}>
+        <SessionPage />
       </Route>
       <Route default>
         <WelcomePage />

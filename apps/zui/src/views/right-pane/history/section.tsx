@@ -1,13 +1,12 @@
-import React, {useMemo} from "react"
+import React from "react"
 import styled from "styled-components"
-import Current from "src/js/state/Current"
-import {useSelector} from "react-redux"
 import {HistoryItem} from "./history-item"
 import {isEmpty} from "lodash"
 import {EmptyText} from "src/components/empty-text"
 import {FillFlexParent} from "src/components/fill-flex-parent"
 import {Tree} from "react-arborist"
 import {TREE_ITEM_HEIGHT} from "../../sidebar/item"
+import {HistoryHandler} from "./handler"
 
 const BG = styled.div`
   display: flex;
@@ -17,16 +16,8 @@ const BG = styled.div`
 `
 
 export function HistorySection() {
-  const sessionHistory = useSelector(Current.getSessionHistory) || []
-  const history = useMemo(
-    () =>
-      [...sessionHistory].reverse().map((d, index) => ({
-        ...d,
-        id: (sessionHistory.length - 1 - index).toString(),
-        index: sessionHistory.length - 1 - index,
-      })),
-    [sessionHistory]
-  )
+  const handler = new HistoryHandler()
+  const history = handler.entries
 
   return (
     <BG aria-label="history-pane">
@@ -45,7 +36,7 @@ export function HistorySection() {
               disableDrag
               disableDrop
             >
-              {HistoryItem}
+              {(props) => <HistoryItem {...props} handler={handler} />}
             </Tree>
           )
         }}

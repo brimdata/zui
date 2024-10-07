@@ -28,6 +28,7 @@ const testLib = {
           // .items[0].items[0]
           id: "testId2",
           name: "testName2",
+          pins: [],
           description: "testDescription2",
           value: "testValue2",
           tags: ["testTag1", "testTag2"],
@@ -43,6 +44,7 @@ const testLib = {
               name: "testName4",
               description: "testDescription4",
               value: "testValue4",
+              pins: [],
               tags: ["testTag2"],
             },
           ],
@@ -52,6 +54,7 @@ const testLib = {
           id: "testId5",
           name: "testName5",
           description: "testDescription5",
+          pins: [],
           value: "testValue5",
           tags: ["testTag1"],
         },
@@ -65,6 +68,7 @@ const newQuery = {
   name: "newQueryName",
   description: "newQueryDescription",
   value: "newQueryValue",
+  pins: [],
   tags: [],
 }
 

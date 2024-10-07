@@ -14,15 +14,13 @@ import {QueriesState} from "./Queries/types"
 import {TabHistoriesState} from "./TabHistories/types"
 import {ToolbarsState} from "./Toolbars"
 import {LakeStatusesState} from "./LakeStatuses/types"
-import {SessionQueriesState} from "./SessionQueries/types"
-import {QueryVersionsState} from "./QueryVersions/types"
-import {SessionHistoriesState} from "./SessionHistories/types"
 import {PoolSettingsState} from "./PoolSettings/types"
 import {WindowState} from "./Window/types"
 import {LoadDataFormState} from "./LoadDataForm/types"
 import {UpdatesState} from "./Updates/types"
 import {EnhancedStore} from "@reduxjs/toolkit"
 import {QuerySessionState} from "src/models/query-session"
+import {SnapshotsState} from "src/models/snapshot"
 
 export type ThunkExtraArg = {
   api: ZuiApi
@@ -50,12 +48,10 @@ export type State = {
   pools: PoolsState
   poolSettings: PoolSettingsState
   queries: QueriesState
-  queryVersions: QueryVersionsState
-  sessionHistories: SessionHistoriesState
-  sessionQueries: SessionQueriesState
   tabHistories: TabHistoriesState
   toolbars: ToolbarsState
   window: WindowState
   updates: UpdatesState
   querySessions: QuerySessionState
+  snapshots: SnapshotsState
 }

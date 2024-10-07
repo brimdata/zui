@@ -10,6 +10,7 @@ import LakeStatuses from "src/js/state/LakeStatuses"
 import styled from "styled-components"
 import {invoke} from "src/core/invoke"
 import {Active} from "src/models/active"
+import {BrowserTab} from "src/models/browser-tab"
 
 const SpinnerWrap = styled.div`
   width: 100%;
@@ -26,7 +27,9 @@ export function InitLake({children}) {
 
   useLayoutEffect(() => {
     if (Active.lake) {
-      dispatch(updateStatus(lake.id))
+      dispatch(updateStatus(lake.id)).then(() => {
+        BrowserTab.all.forEach((tab) => tab.updateTitle())
+      })
       Active.lake.sync()
     }
   }, [lake?.id, status])

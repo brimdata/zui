@@ -1,8 +1,9 @@
 import Markdown from "src/components/markdown"
-import React from "react"
+import React, {useLayoutEffect} from "react"
 import styled from "styled-components"
 import {useReleaseNotes} from "./use-release-notes"
 import {Content} from "src/js/components/Content"
+import {Active} from "src/models/active"
 
 const Scrollable = styled.div`
   overflow: auto;
@@ -15,6 +16,9 @@ const BG = styled(Content)`
 `
 
 export default function ReleaseNotes() {
+  useLayoutEffect(() => {
+    Active.tab.setTitle("Release Notes")
+  }, [])
   const {notes, version, fetching} = useReleaseNotes()
   if (fetching) return null
 
