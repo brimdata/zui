@@ -159,7 +159,7 @@
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
     "when-clause": "^0.0.4",
-    "zed": "brimdata/zed#13b4447c38fe6a1503508b763fe863cb165e6342",
+    "zed": "brimdata/zed#e8d0ecccf83700247e3c9ad7690058dc80e1b9fa",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {
