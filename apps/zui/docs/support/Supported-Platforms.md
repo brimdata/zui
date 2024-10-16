@@ -12,7 +12,7 @@ recommendations on which to run Zui:
   - Windows 10 or newer
   - Windows Server 2019 or newer
 - macOS
-  - macOS Monterey 12.6.5 or newer (see [below](#hardware) for hardware considerations)
+  - macOS Ventura 13.7 or newer
 - Linux
   - Ubuntu 20.04 or newer
   - Debian 11.0.0 or newer
@@ -43,25 +43,16 @@ we do _not_ recommend attempting to run Zui on Windows 8.1 or older.
 
 #### Software
 
-Zui's [test automation](#automated-testing) runs on Monterey 12 and
+Zui's [test automation](#automated-testing) runs on Ventura 13.7 and
 therefore this is the macOS version on which we are best able to ensure quality
-and prevent regressions. Several Zui developers also run macOS Sonoma 14.1
+and prevent regressions. Several Zui developers also run macOS Sonoma 14.7
 and regularly perform ad hoc testing with it to reproduce reported issues.
 
 #### Hardware
 
-The build procedure for Zui's macOS releases creates binaries intended to
-run on Intel-based Mac hardware. Zui releases are not yet available that
-are built specifically for [M1-based hardware](https://en.wikipedia.org/wiki/Apple_M1).
-However, Apple's [Rosetta 2](https://support.apple.com/en-us/HT211861) makes
-it possible to run Intel-targeted binaries on M1-based Macs.
-
-M1-based hardware has only recently become
-[available](https://github.com/actions/virtual-environments/issues/2187) for
-our automation where we run tests and create builds for Zui. Therefore our
-planned work to deliver M1-specific builds ([zui/1266](https://github.com/brimdata/zui/issues/1266))
-is still ongoing. In the meantime, please [open an issue](./Troubleshooting.md#opening-an-issue)
-if you experience a problem specific to M1-based Macs.
+The build procedure for Zui's macOS releases creates separate binaries
+intended to run on Intel-based or [M1-based](https://en.wikipedia.org/wiki/Apple_M1)
+Mac hardware.
 
 ### Linux
 
