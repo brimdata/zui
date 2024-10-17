@@ -12,6 +12,20 @@ test.before(async () => {
 
 test('input is string', async (t) => {
   const input = '1 2 3';
-  const resp = await zq({ input, program: 'this + 1' });
+  const resp = await zq({
+    input,
+    program: 'this + 1',
+    outputFormat: 'zjson',
+    decodeAs: 'js',
+  });
   assert.deepEqual(resp, [2, 3, 4]);
+});
+
+test('output as zson', async (t) => {
+  const input = '1 2 3';
+  const resp = await zq({
+    input,
+    program: 'this + 1',
+  });
+  assert.deepEqual(resp, '2\n3\n4\n');
 });
