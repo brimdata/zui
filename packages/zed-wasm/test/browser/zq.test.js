@@ -9,5 +9,5 @@ test('run zq', async ({ page }) => {
   await page.fill('[name=input]', '1 2 3');
   await page.fill('[name=script]', 'this * 10');
   await page.click('button');
-  await expect(page.locator('pre')).toContainText('[10,20,30]');
+  await expect(page.locator('pre')).toContainText('102030');
 });

@@ -39,6 +39,8 @@ test('zq works in cjs env', async () => {
   const resp = await wasm.zq({
     input: '1 2 3',
     program: 'this * 10',
+    outputFormat: 'zjson',
+    decodeAs: 'js',
   });
   expect(resp).toEqual([10, 20, 30]);
 });
