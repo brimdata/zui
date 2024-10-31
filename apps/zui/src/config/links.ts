@@ -3,7 +3,7 @@ import pkg from "../../package.json"
 const currentZedTag = pkg.devDependencies.zed.split("#")[1] || "main"
 const zedDocsTag = currentZedTag.startsWith("v")
   ? currentZedTag.replace(/\.\d+$/, ".0")
-  : "next"
+  : "v1.18.0" // Change back to "next" when we make the zed->super transition
 
 export default {
   ZED_DOCS_ROOT: `https://zed.brimdata.io/docs/${zedDocsTag}/commands/zed`,
