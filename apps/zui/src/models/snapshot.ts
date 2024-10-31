@@ -26,6 +26,7 @@ export class Snapshot extends ApplicationEntity<SnapshotAttrs> {
   /* Configuration */
   static schema = schema
   static actionPrefix = "$snapshots"
+  static sliceName = "snapshots"
 
   /* Attributes */
   value: string
