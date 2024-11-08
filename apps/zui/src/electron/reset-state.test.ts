@@ -15,10 +15,12 @@ test("reset state", async () => {
     lake: false,
   })
 
+  const reset = jest.spyOn(main.appState, "reset")
+  const save = jest.spyOn(main.appState, "save")
   await main.start()
   await main.resetState()
 
-  expect(main.session.delete).toHaveBeenCalled()
-  expect(main.session.save).not.toHaveBeenCalled()
+  expect(reset).toHaveBeenCalled()
+  expect(save).not.toHaveBeenCalled()
   expect(app.relaunch).toHaveBeenCalled()
 })

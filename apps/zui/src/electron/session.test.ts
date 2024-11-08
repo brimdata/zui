@@ -23,14 +23,13 @@ afterEach(() => fsExtra.remove(dir))
 
 test("session loading with migrations", async () => {
   const state = (await initTestStore()).getState()
-  const migrations = await Migrations.init()
   const session = createSession(file)
   const data = encodeSessionState([], state)
 
   await session.save(data)
   await session.load()
 
-  expect(session.getVersion()).toEqual(migrations.getLatestVersion())
+  expect(session.getVersion()).toEqual(Migrations.latestVersion)
 })
 
 test("loading state from release 0.8.0 resets state", async () => {
@@ -43,10 +42,9 @@ test("loading state from release 0.8.0 resets state", async () => {
 
   const session = createSession(file)
   const data = await session.load()
-  const latestVersion = (await Migrations.init()).getLatestVersion()
 
   expect(data).toBe(undefined)
-  expect(session.getVersion()).toBe(latestVersion)
+  expect(session.getVersion()).toBe(Migrations.latestVersion)
 })
 
 test("loading state from a 0.9.1 release migrates", () => {
@@ -65,8 +63,7 @@ test("failing to load sets session to latest version", async () => {
   fsExtra.writeFileSync(file, "this aint json")
   const session = createSession(file)
   const data = await session.load()
-  const latestVersion = (await Migrations.init()).getLatestVersion()
 
-  expect(session.getVersion()).toEqual(latestVersion)
+  expect(session.getVersion()).toEqual(Migrations.latestVersion)
   expect(data).toBe(undefined)
 })

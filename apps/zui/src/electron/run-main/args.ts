@@ -10,6 +10,7 @@ export const mainDefaults = () => ({
   lake: true,
   devtools: isDev,
   appState: join(app.getPath("userData"), "appState.json") as string | null,
+  backupDir: join(app.getPath("userData"), "backups"),
   autosave: true,
   releaseNotes: true,
   autoUpdater: true,

@@ -33,6 +33,7 @@ import {ElectronZedClient} from "../electron-zed-client"
 import {ElectronZedLake} from "../electron-zed-lake"
 import {DefaultLake} from "src/models/default-lake"
 import {DomainModel} from "../domain-model"
+import {AppState} from "src/electron/app-state"
 
 export class MainObject {
   public isQuitting = false
@@ -42,20 +43,23 @@ export class MainObject {
 
   static async boot(params: Partial<MainArgs> = {}) {
     const args = {...mainDefaults(), ...params}
-    const session = createSession(args.appState)
-    const data = decodeSessionState(await session.load())
+    const appState = new AppState({
+      path: args.appState,
+      backupDir: args.backupDir,
+    })
+    const data = appState.data
     const windows = new WindowManager(data)
     const store = createMainStore(data?.globalState)
     DomainModel.store = store
     const appMeta = await getAppMeta()
-    return new MainObject(windows, store, session, args, appMeta)
+    return new MainObject(windows, store, appState, args, appMeta)
   }
 
   // Only call this from boot
   constructor(
     readonly windows: WindowManager,
     readonly store: ReduxStore<State, any>,
-    readonly session: Session,
+    readonly appState: AppState,
     readonly args: MainArgs,
     readonly appMeta: AppMeta
   ) {
@@ -112,15 +116,19 @@ export class MainObject {
       keytar.deletePassword(toRefreshTokenKey(l.id), os.userInfo().username)
       keytar.deletePassword(toAccessTokenKey(l.id), os.userInfo().username)
     })
-    await this.session.delete()
+    await this.appState.reset()
     app.relaunch()
     app.exit(0)
   }
 
   saveSession() {
+    this.appState.save(this.appStateData)
+  }
+
+  get appStateData() {
     const windowState = this.windows.serialize()
     const mainState = getPersistedGlobalState(this.store.getState())
-    this.session.saveSync(encodeSessionState(windowState, mainState))
+    return encodeSessionState(windowState, mainState)
   }
 
   onBeforeQuit() {

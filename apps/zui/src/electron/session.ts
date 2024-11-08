@@ -31,7 +31,7 @@ export default function session(path: string | null) {
       const migrator = await Migrations.init()
       const f = file(path)
 
-      version = migrator.getLatestVersion()
+      version = Migrations.latestVersion
       if (await f.exists()) {
         return await f
           .read()
