@@ -174,7 +174,7 @@ When Brim began as a company, we intended to build a security-focused desktop ap
 
 As we developed Zed, we started to realize we had something big on our hands. Zed's data model, language, query engine, and storage formats provide revolutionary new ways to work with all kinds of data. In April 2021, we decided to pivot, making Zed the company's flagship technology. Brim Security became Brim Data.
 
-This change made us reevaluate the purpose of the app. We were now leading with the [Zed lake](https://zed.brimdata.io/docs/next/commands/zed/), so we decided the app would support the lake. Users would be able to explore a lake's data and manage its configuration with the app. It would be a GUI for Zed.
+This change made us reevaluate the purpose of the app. We were now leading with the [Zed lake](https://zed.brimdata.io/docs/commands/zed), so we decided the app would support the lake. Users would be able to explore a lake's data and manage its configuration with the app. It would be a GUI for Zed.
 
 At this point, having the app named after the company was confusing. We needed a name that clearly tied the app to Zed. After many fun naming sessions, we played off the word "GUI" and landed on "Zui": The Zed user interface.
 
