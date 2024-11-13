@@ -79,12 +79,46 @@ test("app state is backed if migration is needed", () => {
   init()
   expect(fsExtra.existsSync(backupDir)).toBe(true)
   const backup = fsExtra.readdirSync(backupDir)[0]
-  expect(backup).toMatch(/^\d{12}_appState.json$/)
+  expect(backup).toMatch(/^\d{12}_backup.json$/)
   const backupFile = path.join(backupDir, backup)
   expect(fsExtra.readJSONSync(backupFile)).toEqual(oldState)
 })
 
 test("app state is not backed up if no migration is needed", () => {
   init()
-  expect(fsExtra.existsSync(backupDir)).toBe(false)
+  expect(fsExtra.existsSync(backupDir)).toBe(true)
+  expect(fsExtra.readdirSync(backupDir)).toEqual([])
+})
+
+test("backing up the same version twice creates distict backups", () => {
+  fsExtra.cpSync(states.getPath("v1.18.0.json"), file)
+  init()
+  expect(fsExtra.readdirSync(backupDir)).toEqual(["202407221450_backup.json"])
+  fsExtra.cpSync(states.getPath("v1.18.0.json"), file)
+  init()
+  expect(fsExtra.readdirSync(backupDir)).toEqual([
+    "202407221450_backup.json",
+    "202407221450_backup_2.json",
+  ])
+  fsExtra.cpSync(states.getPath("v1.18.0.json"), file)
+  init()
+  expect(fsExtra.readdirSync(backupDir)).toEqual([
+    "202407221450_backup.json",
+    "202407221450_backup_2.json",
+    "202407221450_backup_3.json",
+  ])
+})
+
+test("a migration error does not affect the state file", () => {
+  const fixture = states.getPath("v1.18.0.json")
+  fsExtra.cpSync(fixture, file)
+  Migrations.all.push({
+    version: 9999_99_99_99_99,
+    migrate: (bang) => bang.boom.boom,
+  })
+  expect(() => {
+    init()
+  }).toThrow(/Cannot read properties of undefined \(reading 'boom'\)/)
+
+  expect(fsExtra.readJSONSync(file)).toEqual(fsExtra.readJSONSync(fixture))
 })
