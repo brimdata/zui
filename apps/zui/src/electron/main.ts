@@ -7,6 +7,8 @@ process.on("unhandledRejection", (e) => {
 })
 
 main().catch((e) => {
+  log.error(e)
+  log.info("The error above prevented the application from starting.")
   dialog.showErrorBox("This Error Prevented The App From Starting", e.stack)
   app.quit()
 })

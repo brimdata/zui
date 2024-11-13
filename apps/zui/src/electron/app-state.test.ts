@@ -119,6 +119,28 @@ test("a migration error does not affect the state file", () => {
   expect(() => {
     init()
   }).toThrow(/Cannot read properties of undefined \(reading 'boom'\)/)
-
+  Migrations.all.pop()
   expect(fsExtra.readJSONSync(file)).toEqual(fsExtra.readJSONSync(fixture))
+})
+
+test("app state saves new data", () => {
+  const appState = init()
+  appState.save({hello: "test"})
+
+  expect(fsExtra.readJSONSync(file)).toEqual({
+    version: Migrations.latestVersion,
+    data: {hello: "test"},
+  })
+  expect(appState.data).toEqual({hello: "test"})
+  expect(appState.version).toEqual(Migrations.latestVersion)
+})
+
+test("app state reset", () => {
+  const appState = init()
+  appState.save({hello: "test"})
+
+  appState.reset()
+  expect(fsExtra.readJSONSync(file)).toEqual({
+    version: Migrations.latestVersion,
+  })
 })
