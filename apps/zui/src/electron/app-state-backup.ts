@@ -1,7 +1,6 @@
 import path from "path"
 import fs from "fs"
 import {AppStateFile} from "./app-state-file"
-import {plusOne} from "src/util/plus-one"
 
 export class AppStateBackup {
   constructor(public dir: string) {
