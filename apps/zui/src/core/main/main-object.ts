@@ -12,14 +12,10 @@ import {
 import {getPersistedGlobalState} from "../../js/state/stores/get-persistable"
 import Lakes from "../../js/state/Lakes"
 import {installExtensions} from "../../electron/extensions"
-import {
-  decodeSessionState,
-  encodeSessionState,
-} from "../../electron/session-state"
+import {encodeSessionState} from "../../electron/session-state"
 import {WindowManager} from "../../electron/windows/window-manager"
 import * as zdeps from "../../electron/zdeps"
 import {MainArgs, mainDefaults} from "../../electron/run-main/args"
-import createSession, {Session} from "../../electron/session"
 import {getAppMeta, AppMeta} from "../../electron/meta"
 import {createMainStore} from "../../js/state/stores/create-main-store"
 import {AppDispatch, State} from "../../js/state/types"

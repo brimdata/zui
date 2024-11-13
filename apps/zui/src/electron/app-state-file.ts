@@ -7,7 +7,24 @@ export class AppStateFile {
 
   constructor(public path: string) {
     if (this.path && fs.existsSync(path)) {
-      this.state = JSON.parse(fs.readFileSync(this.path, "utf8"))
+      const contents = fs.readFileSync(this.path, "utf-8").toString()
+      if (contents == "") return
+      let object
+      try {
+        object = JSON.parse(fs.readFileSync(this.path, "utf8"))
+      } catch (e) {
+        throw new Error(
+          "The application state file could not be parsed as JSON:\npath: " +
+            this.path
+        )
+      }
+      if (!object || typeof object !== "object" || !isNumber(object.version)) {
+        throw new Error(
+          "The application state file is a JSON object but is missing the top-level version key of type number\npath: " +
+            this.path
+        )
+      }
+      this.state = object
     }
   }
 

@@ -22,7 +22,6 @@ export class AppState {
     if (file.isEmpty) file.create(Migrations.latestVersion)
     const migrations = Migrations.init({from: file.version})
     const backup = new AppStateBackup(args.backupDir)
-
     if (migrations.arePending) {
       backup.save(file)
       file.write(migrations.runPending(file.state))
@@ -32,6 +31,10 @@ export class AppState {
 
   get data() {
     return this.file.data
+  }
+
+  get version() {
+    return this.file.version
   }
 
   reset() {

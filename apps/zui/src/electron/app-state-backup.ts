@@ -8,6 +8,7 @@ export class AppStateBackup {
   save(file: AppStateFile) {
     const backupName = `${file.version}_${file.name}`
     const backupPath = this.join(backupName)
+    if (!fs.existsSync(this.dir)) fs.mkdirSync(this.dir)
     fs.copyFileSync(file.path, backupPath)
   }
 

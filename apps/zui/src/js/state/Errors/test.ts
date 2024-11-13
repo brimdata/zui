@@ -12,7 +12,7 @@ beforeEach(async () => {
   store = await initTestStore()
 })
 
-test.only("ERROR_CREATE", () => {
+test("ERROR_CREATE", () => {
   const state = dispatchAll(store, [Errors.createError("Bug")])
 
   expect(Errors.getErrors(state)[0]).toEqual({
