@@ -78,18 +78,23 @@ export default function migrateToSnapshots(appState: any) {
           if (!snapshot) {
             /* The Snapshot is missing because it has invalid syntax */
             /* But it is stored in the queryVersions */
-            const version = state.queryVersions[queryId].entities[versionId]
+            /* If it is not stored under the queryId, it is stored under the sessionId. */
+            const version =
+              state.queryVersions[queryId].entities[versionId] ||
+              state.queryVersions[sessionId].entities[versionId]
             const isNamed = !!queries[queryId]
-            snapshot = {
-              createdAt: version.ts,
-              updatedAt: version.ts,
-              id: version.version,
-              pins: version.pins,
-              value: version.value,
-              sessionId: sessionId,
-              queryId: isNamed ? queryId : null,
+            if (version) {
+              snapshot = {
+                createdAt: version.ts,
+                updatedAt: version.ts,
+                id: version.version,
+                pins: version.pins,
+                value: version.value,
+                sessionId: sessionId,
+                queryId: isNamed ? queryId : null,
+              }
+              snapshots.push(snapshot)
             }
-            snapshots.push(snapshot)
           }
           /* Re-write the path */
           const newPath = `/snapshots/${snapshot.id}`
