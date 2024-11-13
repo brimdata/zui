@@ -5,7 +5,7 @@ import {boot} from "./boot"
 import {afterBoot} from "./after-boot"
 
 export async function main(args: Partial<MainArgs> = {}) {
-  /* 
+  /*
     BEFORE BOOT: Can affect the default main args
   */
   const err = await beforeBoot(args)
@@ -18,7 +18,7 @@ export async function main(args: Partial<MainArgs> = {}) {
   log.info("booting main with:", mainArgs)
   const zuiMain = await boot(mainArgs)
 
-  /* 
+  /*
     AFTER BOOT: Non-critical setup items
   */
   await afterBoot(zuiMain)
