@@ -10,7 +10,6 @@ export default async (): Promise<Store> => {
     lake: false,
     devtools: false,
     releaseNotes: false,
-    appState: null,
     autosave: null,
     autoUpdater: false,
   })) as MainObject

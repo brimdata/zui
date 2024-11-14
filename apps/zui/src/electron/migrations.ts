@@ -12,26 +12,27 @@ type VersionedData = {
 }
 
 export class Migrations {
+  static all = Object.entries(migrationMap)
+    .map(build)
+    .sort((a, b) => a.version - b.version)
+
+  static get latestVersion() {
+    return last(this.all).version || 0
+  }
+
   constructor(
-    public migrations: Migration[],
-    public cv: number,
+    public currentVersion: number,
     public from: string | number,
     public to?: string | number
   ) {}
 
-  static async init(
-    args: {from: string | number; to?: string | number} = {from: 0}
-  ) {
-    const cv = parseInt(args.from.toString())
-    const migrations = Object.entries(migrationMap)
-      .map(build)
-      .sort((a, b) => a.version - b.version)
-
-    return new Migrations(migrations, cv, args.from, args.to)
+  static init(args: {from: string | number; to?: string | number} = {from: 0}) {
+    const currentVersion = parseInt(args.from.toString())
+    return new Migrations(currentVersion, args.from, args.to)
   }
 
   runPending(state: VersionedData) {
-    return this.run(state, this.getPending())
+    return this.run(state, this.pending)
   }
 
   run(state: VersionedData, migrations: Migration[]) {
@@ -39,26 +40,20 @@ export class Migrations {
       state.data = state.data ? migrate(state.data) : undefined
       state.version = version
     }
+    this.currentVersion = state.version
     return state
   }
 
-  getLatestVersion() {
-    return last(this.migrations).version || 0
-  }
-
-  getPending() {
+  get pending() {
     const upperBound = this.to ? parseInt(this.to.toString()) : Infinity
-    return this.migrations.filter(
-      (m: Migration) => m.version > this.cv && m.version <= upperBound
+    return Migrations.all.filter(
+      (m: Migration) =>
+        m.version > this.currentVersion && m.version <= upperBound
     )
   }
 
-  getAll() {
-    return this.migrations
-  }
-
-  setCurrentVersion(version: number) {
-    this.cv = version
+  get arePending() {
+    return this.pending.length > 0
   }
 }
 
