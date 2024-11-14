@@ -31,11 +31,7 @@ export class AppStateFile {
   }
 
   get isEmpty() {
-    return (
-      !this.state ||
-      typeof this.state != "object" ||
-      !isNumber(this.state.version)
-    )
+    return !this.state
   }
 
   get name() {
