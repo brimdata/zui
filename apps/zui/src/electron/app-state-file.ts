@@ -1,4 +1,4 @@
-import fs from "fs"
+import fs from "fs-extra"
 import path from "path"
 import {isNumber} from "lodash"
 
@@ -18,6 +18,7 @@ export class AppStateFile {
   }
 
   write(state) {
+    fs.ensureDirSync(path.dirname(this.path))
     fs.writeFileSync(this.path, JSON.stringify(state))
     this.state = state
   }
