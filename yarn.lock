@@ -16960,6 +16960,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"super@brimdata/super#main":
+  version: 0.33.0-dev
+  resolution: "super@https://github.com/brimdata/super.git#commit=90c1f364e183d467f9dfd8d754735dc01fa22a92"
+  checksum: 6ed4f6991b0300d2944be97655eb7d6ec0aa2bfc3a495251158cd3a6eb3562ad01273843d2893fade97118aec800b00934b7251fdcc36925165b58a2b72b6001
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^5.3.0, supports-color@npm:^5.5.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
@@ -18551,13 +18558,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#f62dfb623defc702d8e2fe62adf21d1184792b19":
-  version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=f62dfb623defc702d8e2fe62adf21d1184792b19"
-  checksum: 5bccf855d9008db5d05597e4593c9f0dc44d4fe9313da767c9c27655b04677fb76cdd4d03220fd25b64e429c8ab6c036b1158ff334bee2d2fcc9dd93615ae661
-  languageName: node
-  linkType: hard
-
 "zed@github:brimdata/zed#main":
   version: 0.33.0-dev
   resolution: "zed@https://github.com/brimdata/zed.git#commit=f733ef3722f78d988cb94071e5ba8d2539a39da9"
@@ -18746,6 +18746,7 @@ __metadata:
     set-tz: ^0.2.0
     sprintf-js: ^1.1.2
     styled-components: ^5.3.5
+    super: "brimdata/super#main"
     tmp: ^0.1.0
     tree-model: ^1.0.7
     use-resize-observer: ^8.0.0
@@ -18753,7 +18754,6 @@ __metadata:
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
     when-clause: ^0.0.4
-    zed: "brimdata/zed#f62dfb623defc702d8e2fe62adf21d1184792b19"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0
