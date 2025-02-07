@@ -30,7 +30,7 @@ export class LinuxUpdater implements Updater {
     if (env.isInsiders) {
       return pkg.repository + "/releases/latest"
     } else {
-      return links.ZUI_DOWNLOAD
+      return links.DESKTOP_DOWNLOAD
     }
   }
 }

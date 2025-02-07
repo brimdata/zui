@@ -65,7 +65,7 @@ export function WelcomePage() {
           </button>
           <button
             className="button"
-            onClick={() => invoke("openLinkOp", links.ZUI_DOCS_ROOT)}
+            onClick={() => invoke("openLinkOp", links.DESKTOP_DOCS_ROOT)}
           >
             Documentation
           </button>
