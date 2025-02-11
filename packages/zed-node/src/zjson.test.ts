@@ -75,7 +75,7 @@ test('decode, then encode a fused input', async () => {
 
 test('decode, encode with type values', async () => {
   const input: zed.zjson.Obj[] = (await zq({
-    query: '* | count() by typeof(this) | sort count, typeof',
+    query: 'count() by typeof(this) | sort count, typeof',
     file,
     as: 'zjson',
   })) as zed.zjson.Obj[];
@@ -85,7 +85,7 @@ test('decode, encode with type values', async () => {
 
 test('types from one search are the same', async () => {
   const groupBy = (await zq({
-    query: '* | count() by typeof(this) | sort count, typeof',
+    query: 'count() by typeof(this) | sort count, typeof',
     file,
     as: 'zjson',
   })) as zed.zjson.Obj[];
@@ -105,7 +105,7 @@ test('types from one search are the same', async () => {
 
 test('encode decode a field', async () => {
   const input: zed.zjson.Obj[] = (await zq({
-    query: '*',
+    query: '',
     file,
     as: 'zjson',
   })) as zed.zjson.Obj[];
