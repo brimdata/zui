@@ -1,5 +1,6 @@
 import { join } from 'path';
 import { Lake } from './lake';
+// @ts-ignore
 import nodeFetch from 'node-fetch';
 import * as os from 'os';
 
