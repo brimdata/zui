@@ -5,7 +5,8 @@
   "exports": "./src/index.js",
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
-    "zed": "github:brimdata/zed#main"
+    "zed": "github:brimdata/zed#main",
+    "node-fetch": "^2.6.1"
   },
   "dependencies": {
     "@brimdata/zed-js": "workspace:*",
