@@ -12,5 +12,4 @@ function getBin(name) {
   return path.join(getDirectory(), name)
 }
 
-export const zed = getBin("zed")
-export const zq = getBin("zq")
+export const superdb = getBin("super")
