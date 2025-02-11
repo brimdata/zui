@@ -21,7 +21,7 @@ const HEAD_LIMIT = 100
 
 function append(script: string, suffix: string) {
   const zed = new ZedScript(script)
-  const s = zed.isEmpty() ? "*" : script
+  const s = zed.isEmpty() ? "pass" : script
   return s + "\n" + suffix
 }
 

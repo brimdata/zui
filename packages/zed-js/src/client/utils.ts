@@ -89,10 +89,10 @@ export function getLoadContentType(
   if (format === 'json') return 'application/json';
   if (format === 'line') return 'application/x-line';
   if (format === 'parquet') return 'application/x-parquet';
-  if (format === 'vng') return 'application/x-vng';
+  if (format === 'csup') return 'application/x-csup';
   if (format === 'zeek') return 'application/x-zeek';
   if (format === 'zjson') return 'application/x-zjson';
-  if (format === 'zng') return 'application/x-zng';
-  if (format === 'zson') return 'application/x-zson';
+  if (format === 'bsup') return 'application/x-bsup';
+  if (format === 'jsup') return 'application/x-jsup';
   throw new Error('Unknown load format: ' + format);
 }

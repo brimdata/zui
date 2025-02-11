@@ -84,11 +84,11 @@ export type LoadFormat =
   | 'line'
   | 'parquet'
   | 'tsv'
-  | 'vng'
+  | 'csup'
   | 'zeek'
   | 'zjson'
-  | 'zng'
-  | 'zson';
+  | 'bsup'
+  | 'jsup';
 
 export type LoadContentType =
   | '*/*'
