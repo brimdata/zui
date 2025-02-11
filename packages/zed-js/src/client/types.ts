@@ -98,11 +98,11 @@ export type LoadContentType =
   | 'application/x-line'
   | 'application/x-parquet'
   | 'text/tab-separated-values'
-  | 'application/x-vng'
+  | 'application/x-csup'
   | 'application/x-zeek'
   | 'application/x-zjson'
-  | 'application/x-zng'
-  | 'application/x-zson';
+  | 'application/x-bsup'
+  | 'application/x-jsup';
 
 export type IsoResponse = Response;
 export type IsoFetch = typeof fetch;
