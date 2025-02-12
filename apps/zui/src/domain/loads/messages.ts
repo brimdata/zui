@@ -19,7 +19,6 @@ export type LoadFormData = {
 export type LoadsOperations = {
   "loads.create": typeof ops.create
   "loads.preview": typeof ops.preview
-  "loads.getFileTypes": typeof ops.getFileTypes
   "loads.abortPreview": typeof ops.abortPreview
   "loads.abort": typeof ops.abort
   "loads.paste": typeof ops.paste

@@ -1,7 +1,6 @@
 import {createOperation} from "src/core/operations"
 import * as zui from "src/zui"
 import {Pool} from "src/models/pool"
-import {ZedScript} from "src/models/zed-script"
 import {LoadFormData} from "../messages"
 import {errorToString} from "src/util/error-to-string"
 import {deriveName} from "src/domain/pools/utils"

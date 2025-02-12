@@ -6,5 +6,5 @@ export const zq = ((opts) => {
 }) as typeof zed.zq
 
 export const createReadableStream = ((opts) => {
-  return zed.createReadableStream({...opts, bin: zdeps.zq})
+  return zed.createReadableStream({...opts, bin: zdeps.superdb})
 }) as typeof zed.createReadableStream
