@@ -8,7 +8,7 @@ on:
 jobs:
   check_latest:
     name: Check If Release Is Needed
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Get last released version
         id: latest_release
@@ -32,7 +32,7 @@ jobs:
     strategy:
       matrix:
         # macos-13 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
-        platform: [windows-2019, macos-13, macos-14, ubuntu-20.04]
+        platform: [windows-2019, macos-13, macos-14, ubuntu-22.04]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -90,7 +90,7 @@ jobs:
   record_build_sha:
     needs: release
     name: Upload the Build Sha
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Create the build_sha file
         run: echo ${{ github.sha }} > build_sha.txt
