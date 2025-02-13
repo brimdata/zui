@@ -1927,9 +1927,9 @@ __metadata:
     "@types/fs-extra": ^11.0.1
     fs-extra: ^11.1.1
     node-fetch: ^2.6.1
-    zed: "github:brimdata/zed#main"
+    super: "github:brimdata/super#main"
   peerDependencies:
-    zed: "*"
+    super: "*"
   languageName: unknown
   linkType: soft
 
@@ -16952,10 +16952,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"super@brimdata/super#main":
-  version: 0.33.0-dev
-  resolution: "super@https://github.com/brimdata/super.git#commit=90c1f364e183d467f9dfd8d754735dc01fa22a92"
-  checksum: 6ed4f6991b0300d2944be97655eb7d6ec0aa2bfc3a495251158cd3a6eb3562ad01273843d2893fade97118aec800b00934b7251fdcc36925165b58a2b72b6001
+"super@github:brimdata/super#main":
+  version: 0.0.1-dev
+  resolution: "super@https://github.com/brimdata/super.git#commit=457a8912335aa76e177d1a59e31ab1eb5efe3819"
+  checksum: c6bfbda610f3fe5f4f28a53d846a4d13abc7c807a61ab808a152569881d03479c6a5a4b07edc910db50a2460e3e9e4274b9d299c471245724435e66772816b71
   languageName: node
   linkType: hard
 
@@ -18550,13 +18550,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@github:brimdata/zed#main":
-  version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=f733ef3722f78d988cb94071e5ba8d2539a39da9"
-  checksum: a6659e318e80becff2616b5fd45378e08440d3c938adb0d05fe5e7da6b46c87464249b77978bed4ce9eca533d2183f55bfe36fbef6cf883762b6827e83dcab69
-  languageName: node
-  linkType: hard
-
 "zod@npm:3.21.4":
   version: 3.21.4
   resolution: "zod@npm:3.21.4"
@@ -18737,7 +18730,7 @@ __metadata:
     set-tz: ^0.2.0
     sprintf-js: ^1.1.2
     styled-components: ^5.3.5
-    super: "brimdata/super#main"
+    super: "github:brimdata/super#main"
     tmp: ^0.1.0
     tree-model: ^1.0.7
     use-resize-observer: ^8.0.0
