@@ -77,7 +77,7 @@ export function PreviewLoadModal() {
   useEffect(() => onSubmit(), [files, format])
   useEffect(() => cancelSubmit, [files, format])
   useEffect(() => {
-    const abort = original.queryAll("*")
+    const abort = original.queryAll("pass")
     return abort
   }, [files, format])
   const dispatch = useDispatch()

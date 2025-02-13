@@ -1926,9 +1926,10 @@ __metadata:
     "@brimdata/zed-js": "workspace:*"
     "@types/fs-extra": ^11.0.1
     fs-extra: ^11.1.1
-    zed: "github:brimdata/zed#main"
+    node-fetch: ^2.6.1
+    super: "github:brimdata/super#main"
   peerDependencies:
-    zed: "*"
+    super: "*"
   languageName: unknown
   linkType: soft
 
@@ -6962,15 +6963,6 @@ __metadata:
   dependencies:
     fill-range: ^7.0.1
   checksum: e2a8e769a863f3d4ee887b5fe21f63193a891c68b612ddb4b68d82d1b5f3ff9073af066c343e9867a393fe4c2555dcb33e89b937195feb9c1613d259edfcd459
-  languageName: node
-  linkType: hard
-
-"brimcap@brimdata/brimcap#v1.18.0":
-  version: 1.1.2
-  resolution: "brimcap@https://github.com/brimdata/brimcap.git#commit=d56a90061787dbf55f2aa447bfb642dfce0a61bb"
-  bin:
-    brimcap: build/dist/brimcap
-  checksum: 7ca008f65923b0b2d5f1356c7a16a0651a0619a15fb98516f7e53cae914326f252d80e660ff6046d738b5ed602f7d0c217daf6c7d8b490a83b9cc02e1a9457da
   languageName: node
   linkType: hard
 
@@ -16960,6 +16952,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"super@github:brimdata/super#main":
+  version: 0.0.1-dev
+  resolution: "super@https://github.com/brimdata/super.git#commit=457a8912335aa76e177d1a59e31ab1eb5efe3819"
+  checksum: c6bfbda610f3fe5f4f28a53d846a4d13abc7c807a61ab808a152569881d03479c6a5a4b07edc910db50a2460e3e9e4274b9d299c471245724435e66772816b71
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^5.3.0, supports-color@npm:^5.5.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
@@ -18551,20 +18550,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zed@brimdata/zed#f62dfb623defc702d8e2fe62adf21d1184792b19":
-  version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=f62dfb623defc702d8e2fe62adf21d1184792b19"
-  checksum: 5bccf855d9008db5d05597e4593c9f0dc44d4fe9313da767c9c27655b04677fb76cdd4d03220fd25b64e429c8ab6c036b1158ff334bee2d2fcc9dd93615ae661
-  languageName: node
-  linkType: hard
-
-"zed@github:brimdata/zed#main":
-  version: 0.33.0-dev
-  resolution: "zed@https://github.com/brimdata/zed.git#commit=f733ef3722f78d988cb94071e5ba8d2539a39da9"
-  checksum: a6659e318e80becff2616b5fd45378e08440d3c938adb0d05fe5e7da6b46c87464249b77978bed4ce9eca533d2183f55bfe36fbef6cf883762b6827e83dcab69
-  languageName: node
-  linkType: hard
-
 "zod@npm:3.21.4":
   version: 3.21.4
   resolution: "zod@npm:3.21.4"
@@ -18666,7 +18651,6 @@ __metadata:
     acorn: ^7.4.1
     ajv: ^6.9.1
     animejs: ^3.2.0
-    brimcap: "brimdata/brimcap#v1.18.0"
     bullet: ^0.0.7
     chalk: ^4.1.0
     chrono-node: ^2.5.0
@@ -18746,6 +18730,7 @@ __metadata:
     set-tz: ^0.2.0
     sprintf-js: ^1.1.2
     styled-components: ^5.3.5
+    super: "github:brimdata/super#main"
     tmp: ^0.1.0
     tree-model: ^1.0.7
     use-resize-observer: ^8.0.0
@@ -18753,7 +18738,6 @@ __metadata:
     web-file-polyfill: ^1.0.4
     web-streams-polyfill: ^3.2.0
     when-clause: ^0.0.4
-    zed: "brimdata/zed#f62dfb623defc702d8e2fe62adf21d1184792b19"
     zui-test-data: "workspace:*"
   peerDependencies:
     react: ^18.0.0

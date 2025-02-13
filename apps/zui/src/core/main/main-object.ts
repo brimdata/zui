@@ -89,7 +89,7 @@ export class MainObject {
       addr: DefaultLake.listenAddr,
       port: this.args.lakePort,
       logs: this.args.lakeLogs,
-      bin: zdeps.zed,
+      bin: zdeps.superdb,
       corsOrigins: ["*"],
     })
   }

@@ -5,13 +5,14 @@
   "exports": "./src/index.js",
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
-    "zed": "github:brimdata/zed#main"
+    "node-fetch": "^2.6.1",
+    "super": "github:brimdata/super#main"
   },
   "dependencies": {
     "@brimdata/zed-js": "workspace:*",
     "fs-extra": "^11.1.1"
   },
   "peerDependencies": {
-    "zed": "*"
+    "super": "*"
   }
 }

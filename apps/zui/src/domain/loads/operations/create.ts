@@ -1,7 +1,6 @@
 import {createOperation} from "src/core/operations"
 import * as zui from "src/zui"
 import {Pool} from "src/models/pool"
-import {ZedScript} from "src/models/zed-script"
 import {LoadFormData} from "../messages"
 import {errorToString} from "src/util/error-to-string"
 import {deriveName} from "src/domain/pools/utils"
@@ -13,7 +12,6 @@ export const create = createOperation(
   "loads.create",
   async (ctx, data: LoadFormData) => {
     const pool = await createPool(data)
-    const script = new ZedScript(data.shaper || "")
     // Async so that we can return this and subscribe to updates on the load.
     // Do not wait for the load to finish in this operation.
     zui.pools
@@ -25,7 +23,7 @@ export const create = createOperation(
         branch: "main",
         query: data.query,
         files: data.files,
-        shaper: script.isEmpty() ? "*" : data.shaper,
+        shaper: data.shaper,
         author: data.author,
         body: data.body,
       })

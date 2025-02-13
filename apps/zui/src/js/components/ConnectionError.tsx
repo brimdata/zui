@@ -205,7 +205,7 @@ const ConnectionError = (props: {onRetry: () => void | Promise<void>}) => {
           <SubmitButton onClick={onClick}>Retry</SubmitButton>
         </p>
         <p>
-          <Link href={links.ZUI_DOCS_CONNNECTION_TROUBLESHOOTING}>
+          <Link href={links.DESKTOP_DOCS_CONNNECTION_TROUBLESHOOTING}>
             View Troubleshooting Docs
           </Link>
         </p>

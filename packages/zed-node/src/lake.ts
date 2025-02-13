@@ -48,6 +48,7 @@ export class Lake {
     mkdirpSync(this.logs, { mode: 0o755 });
 
     const args = [
+      'db',
       'serve',
       '-l',
       `${this.addr}:${this.port}`,

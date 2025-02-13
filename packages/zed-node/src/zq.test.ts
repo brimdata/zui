@@ -9,7 +9,7 @@ if (process.env['GITHUB_ACTIONS'] === 'true') {
 
 test('zq.stream', async () => {
   const input = Stream.Readable.from('1 2 3', { encoding: 'utf-8' });
-  const zq = createTransformStream({ query: '{num: this}', f: 'zson' });
+  const zq = createTransformStream({ query: '{num: this}', f: 'jsup' });
   let text = '';
   for await (const chunk of input.pipe(zq)) {
     if (chunk) text += chunk.toString();
@@ -111,13 +111,15 @@ test('zq with a bad zed ', async () => {
     input: createReadStream(path),
   });
 
-  await expect(promise).rejects.toThrowError('error parsing Zed');
+  await expect(promise).rejects.toThrowError(
+    /parse error at line 1, column 20/
+  );
 });
 
 test('head 100 on guns ', async () => {
   const path = getPath('background_checks.csv');
   const data = await zq({
-    query: '* | head 100',
+    query: 'head 100',
     as: 'zjson',
     input: createReadStream(path),
   });

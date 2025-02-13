@@ -96,7 +96,8 @@ export const runHistogramQuery = createHandler(
         const {unit, number, fn} = getInterval(range)
         const interval = `${number}${timeUnits[unit]}`
         // Newline after baseQuery in case it ends with a comment.
-        const queryText = `${baseQuery}\n | ${timeField} != null | count() by time := bucket(${timeField}, ${interval}), group := ${colorField} | sort time`
+        const queryText = `${baseQuery}\n | ${timeField} is not null | count() by time := bucket(${timeField}, ${interval}), group := ${colorField} | sort time`
+        console.log(queryText)
         const resp = await query(queryText, {signal})
         dispatch(Histogram.setInterval({unit, number, fn}))
         dispatch(Histogram.setRange(range))

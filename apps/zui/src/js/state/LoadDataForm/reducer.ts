@@ -7,7 +7,7 @@ const slice = createSlice({
   initialState: {
     format: "auto" as LoadFormat,
     files: [] as string[],
-    shaper: "// Transform the data here before loading it.\n",
+    shaper: "// Transform the data here before loading it.\npass",
     editorSize: 200,
     sidebarSize: 360,
     resultsRatio: 0.5,

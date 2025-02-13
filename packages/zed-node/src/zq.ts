@@ -117,7 +117,7 @@ export function createProcess(args: ZqArgs) {
   const spawnargs = [];
   if (args.i) spawnargs.push('-i', args.i);
   if (args.f) spawnargs.push('-f', args.f);
-  if (args.query) spawnargs.push(args.query);
+  if (args.query) spawnargs.push('-c', args.query);
   if (args.file) spawnargs.push(...arrayWrap(args.file));
   else spawnargs.push('-');
 
@@ -125,6 +125,7 @@ export function createProcess(args: ZqArgs) {
     // This error must be caught in order to not throw an exception in main process
     // Also, really make sure this process is killed. It wasn't with only the SIGTERM
     if (e?.name == 'AbortError') zq.kill('SIGKILL');
+    else console.error(e);
   });
   return zq;
 }
