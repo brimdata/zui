@@ -14,5 +14,9 @@
   },
   "peerDependencies": {
     "super": "*"
+  },
+  "scripts": {
+    "test": "run -T jest",
+    "build": "run -T tsc"
   }
 }
