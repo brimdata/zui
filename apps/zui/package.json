@@ -74,7 +74,6 @@
     "acorn": "^7.4.1",
     "ajv": "^6.9.1",
     "animejs": "^3.2.0",
-    "brimcap": "brimdata/brimcap#v1.18.0",
     "bullet": "^0.0.7",
     "chalk": "^4.1.0",
     "chrono-node": "^2.5.0",
@@ -152,6 +151,7 @@
     "set-tz": "^0.2.0",
     "sprintf-js": "^1.1.2",
     "styled-components": "^5.3.5",
+    "super": "github:brimdata/super#main",
     "tmp": "^0.1.0",
     "tree-model": "^1.0.7",
     "use-resize-observer": "^8.0.0",
@@ -159,7 +159,6 @@
     "web-file-polyfill": "^1.0.4",
     "web-streams-polyfill": "^3.2.0",
     "when-clause": "^0.0.4",
-    "zed": "brimdata/zed#f62dfb623defc702d8e2fe62adf21d1184792b19",
     "zui-test-data": "workspace:*"
   },
   "peerDependencies": {

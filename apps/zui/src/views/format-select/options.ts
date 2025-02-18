@@ -5,9 +5,9 @@ export const FORMAT_OPTIONS = [
   {value: "ndjson", label: "NDJSON"},
   {value: "parquet", label: "Parquet"},
   {value: "tsv", label: "TSV"},
-  {value: "vng", label: "VNG"},
+  // {value: "csup", label: "CSUP"},
   {value: "zeek", label: "Zeek"},
   {value: "zjson", label: "ZJSON"},
-  {value: "zng", label: "ZNG"},
-  {value: "zson", label: "ZSON"},
+  // {value: "bsup", label: "BSUP"},
+  // {value: "jsup", label: "JSUP"},
 ]

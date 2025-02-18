@@ -60,6 +60,7 @@ describe("drill down", () => {
 
   async function run(value: any, text: string) {
     const info = await fetchQueryInfo(text, "test")
+    if (info.error) throw new Error(info.error.error)
     const hasAggs = !!info.channels[0].aggregations_keys
     return drillDown(text, value, hasAggs, info.channels[0].aggregation_keys)
   }
@@ -81,11 +82,11 @@ describe("drill down", () => {
   test("when there is a grep with a star", async () => {
     const script = await run(
       result,
-      'grep(/(*|Elm)/) Category=="Furnishings" | count() by proto'
+      'grep(/(*|Elm)/) | Category=="Furnishings" | count() by proto'
     )
 
     expect(script).toBe(
-      'grep(/(*|Elm)/) Category=="Furnishings" | proto=="udp"'
+      'grep(/(*|Elm)/) | Category=="Furnishings" | proto=="udp"'
     )
   })
 
@@ -101,9 +102,9 @@ describe("drill down", () => {
   })
 
   test("easy peasy", async () => {
-    const script = await run(result, "names james | count() by proto")
+    const script = await run(result, 'name=="james" | count() by proto')
 
-    expect(script).toBe('names james | proto=="udp"')
+    expect(script).toBe('name=="james" | proto=="udp"')
   })
 
   test("count by and filter the same", async () => {
@@ -125,11 +126,11 @@ describe("drill down", () => {
 
     const script = await run(
       result,
-      '_path=="files" filename!="-" | count() by md5,filename | count() by md5 | sort -r | filter count > 1'
+      '_path=="files" | filename!="-" | count() by md5,filename | count() by md5 | sort -r | count > 1'
     )
 
     expect(script).toEqual(
-      '_path=="files" filename!="-" | md5=="9f51ef98c42df4430a978e4157c43dd5"'
+      '_path=="files" | filename!="-" | md5=="9f51ef98c42df4430a978e4157c43dd5"'
     )
   })
 })

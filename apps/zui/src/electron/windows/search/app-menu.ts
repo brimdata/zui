@@ -263,13 +263,13 @@ export function compileTemplate(
       {
         label: "Zui Documentation",
         click() {
-          shell.openExternal(links.ZUI_DOCS_ROOT)
+          shell.openExternal(links.DESKTOP_DOCS_ROOT)
         },
       },
       {
         label: "Zed Language Documentation",
         click() {
-          shell.openExternal(links.ZED_DOCS_LANGUAGE)
+          shell.openExternal(links.DOCS_LANGUAGE)
         },
       },
 

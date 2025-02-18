@@ -3,11 +3,11 @@ import { platform } from 'os';
 const isWindows = platform() == 'win32';
 
 export function getZedPath() {
-  return require.resolve('zed/dist/' + exeName('zed'));
+  return require.resolve('super/dist/' + exeName('super'));
 }
 
 export function getZqPath() {
-  return require.resolve('zed/dist/' + exeName('zq'));
+  return require.resolve('super/dist/' + exeName('super'));
 }
 
 function exeName(name: string) {

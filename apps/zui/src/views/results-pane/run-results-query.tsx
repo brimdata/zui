@@ -10,6 +10,7 @@ export const runResultsMain = createHandler(
   async ({select, dispatch, waitForSelector}) => {
     const query = Active.snapshot.queryText
     const tabId = select(Current.getTabId)
+    console.log(query)
     dispatch(firstPage({id: RESULTS_QUERY, query}))
 
     // See if we can paginate this query

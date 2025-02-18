@@ -9,8 +9,6 @@ export class SourceSet {
       .concat(mainText)
       .filter((snippet) => snippet.trim().length)
       .forEach((snippet) => this.appendSource(snippet))
-
-    if (!this.sources.length) this.appendSource("*")
   }
 
   appendSource(text: string) {

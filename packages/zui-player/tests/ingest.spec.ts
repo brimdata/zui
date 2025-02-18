@@ -5,11 +5,11 @@ import { getPath } from 'zui-test-data';
 
 const testQueries = [
   {
-    zed: '* | count()',
+    zed: 'count()',
     expectedStats: { results: 1, shapes: 1 },
   },
   {
-    zed: '* | count() by _path | sort _path',
+    zed: 'count() by _path | sort _path',
     expectedStats: { results: 8, shapes: 1 },
   },
   {
