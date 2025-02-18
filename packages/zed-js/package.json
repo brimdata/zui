@@ -16,7 +16,6 @@
     "strftime": "^0.10.3"
   },
   "scripts": {
-    "lint": "run -T eslint .",
     "test": "run -T jest",
     "build": "run -T tsc"
   }

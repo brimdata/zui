@@ -1,13 +1,13 @@
-const esModules = ['d3-time-format', 'd3-time', 'd3-array', 'internmap'].join(
-  '|'
-);
-
-export default {
-  displayName: 'zed-js',
-  preset: '../../jest.preset.js',
+/** @type {import('ts-jest').JestConfigWithTsJest} **/
+module.exports = {
+  testEnvironment: 'node',
   transform: {
-    '^.+\\.[tj]s$': ['@swc/jest'],
+    '^.+.tsx?$': ['ts-jest', {}],
   },
-  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
-  moduleFileExtensions: ['ts', 'js', 'html'],
+  transformIgnorePatterns: [
+    'd3-time-format',
+    'd3-time',
+    'd3-array',
+    'internmap',
+  ].map((name) => `/node_modules/${name}`),
 };

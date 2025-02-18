@@ -10,8 +10,9 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "outDir": "../../dist"
   },
   "files": [],
-  "include": []
+  "include": ["src/**/*"]
 }
