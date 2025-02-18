@@ -2,7 +2,7 @@ import { toZonedTime } from 'date-fns-tz';
 import { TypeTime } from '../types/type-time';
 import { Primitive } from './primitive';
 import { JSOptions } from './types';
-import strftime from 'strftime';
+import * as strftime from 'strftime';
 
 export class Time extends Primitive {
   type: typeof TypeTime = TypeTime;
