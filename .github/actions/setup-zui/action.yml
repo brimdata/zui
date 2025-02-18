@@ -22,10 +22,6 @@ runs:
       run: yarn --inline-builds
       shell: bash
 
-    - name: Install Playwright Deps
-      run: yarn workspace @brimdata/zed-wasm run playwright install
-      shell: bash
-
     - name: Yarn Build
       run: yarn run build
       shell: bash

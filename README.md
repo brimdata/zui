@@ -51,7 +51,6 @@ This Zui code repository is actually a [monorepo](https://en.wikipedia.org/wiki/
 
 - [**zed-js**](packages/zed-js): the JavaScript library for browsers
 - [**zed-node**](packages/zed-node): the JavaScript library for [Node.js](https://nodejs.org/)
-- [**zed-wasm**](packages/zed-wasm): the Zed [command-line tools](https://zed.brimdata.io/docs/commands) in the browser
 - [**zui-player**](packages/zui-player): the end-to-end testing framework for Zui
 
 ## Need Help?
