@@ -1,4 +1,4 @@
-const path = require("path")
+const path = require('path');
 
 module.exports = {
   /**
@@ -6,6 +6,6 @@ module.exports = {
    * @returns string
    */
   getPath(name) {
-    return path.join(__dirname, "data", name)
+    return path.join(__dirname, 'data', name);
   },
-}
+};
