@@ -1,20 +1,17 @@
 {
-  "extends": ["../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "@typescript-eslint/ban-types": "off"
+  "root": true,
+  "ignorePatterns": ["dist"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
       }
-    },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
-    }
-  ]
+    ],
+    "@typescript-eslint/no-explicit-any": ["off", {}],
+    "@typescript-eslint/ban-ts-comment": ["off", {}],
+    "@typescript-eslint/ban-types": ["off", {}]
+  }
 }

@@ -14,5 +14,8 @@
     "event-source-polyfill": "^1.0.31",
     "events": "^3.3.0",
     "strftime": "^0.10.3"
+  },
+  "scripts": {
+    "lint": "run -T eslint ."
   }
 }
