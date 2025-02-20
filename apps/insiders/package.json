@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "type": "commonjs",
   "scripts": {
-    "inject": "ts-node src/inject"
+    "inject": "ts-node src/inject",
+    "build": "run -T tsc"
   },
   "devDependencies": {
     "fs-extra": "^10.1.0",
