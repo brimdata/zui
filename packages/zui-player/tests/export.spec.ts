@@ -3,7 +3,7 @@ import * as path from 'path';
 import TestApp from '../helpers/test-app';
 import * as os from 'os';
 import * as fsExtra from 'fs-extra';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 
 const tempDir = os.tmpdir();
 const formats = [

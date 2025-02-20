@@ -57,7 +57,7 @@ Here's a template for getting started.
 
 ```ts
 import { play } from 'zui-player';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 
 play('Preview & Load', (app, test) => {
   test('create new pool, change key, type <enter>', async () => {

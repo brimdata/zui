@@ -21,7 +21,7 @@
     "paths": {
       "@brimdata/zed-js": ["../../packages/zed-js/src/index.ts"],
       "@brimdata/zed-node": ["../../packages/zed-node/src/index.ts"],
-      "zui-test-data": ["../../packages/zui-test-data/src/index.ts"]
+      "@brimdata/sample-data": ["../../packages/zui-test-data/src/index.js"]
     }
   },
   "exclude": ["scripts", "dist", "run"],

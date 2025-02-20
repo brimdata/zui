@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import TestApp from '../helpers/test-app';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 
 test.describe('Pool Loads (failures)', () => {
   const app = new TestApp('Pool Loads (failures)');

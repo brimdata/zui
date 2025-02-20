@@ -1,5 +1,5 @@
 import { play } from 'zui-player';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 
 play('right-click-menus', (app, test) => {
   test.beforeAll(async () => {

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import TestApp from '../helpers/test-app';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 
 test.describe('Histogram Spec', () => {
   const app = new TestApp('Histogram Spec');

@@ -3,7 +3,7 @@
  */
 
 import "src/test/system/real-paths"
-import {getPath} from "zui-test-data"
+import {getPath} from "@brimdata/sample-data"
 import {importQueriesOp} from "./import-queries-op"
 import initTestStore from "src/test/unit/helpers/initTestStore"
 

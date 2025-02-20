@@ -1,5 +1,5 @@
 import { play } from 'zui-player';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 
 play('Set As From Pin', (app, test) => {
   test('when no session tab exists', async () => {
