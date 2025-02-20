@@ -1,12 +1,3 @@
-const {pathsToModuleNameMapper} = require("ts-jest")
-// In the following statement, replace `./tsconfig` with the path to your `tsconfig` file
-// which contains the path mapping (ie the `compilerOptions.paths` option):
-const config = require("../../tsconfig.base")
-
-const moduleNameMapper = pathsToModuleNameMapper(config.compilerOptions.paths, {
-  prefix: "<rootDir>/../../",
-})
-
 const esModules = [
   "bullet",
   "@reduxjs/toolkit",
@@ -29,8 +20,11 @@ module.exports = {
     testURL: "http://localhost:4567/?name=search&id=test-1",
   },
   globalSetup: "./src/test/unit/setup/global.ts",
-  modulePaths: ["<rootDir>"],
   roots: ["./src"],
   maxWorkers: 4,
-  moduleNameMapper,
+  moduleNameMapper: {
+    "@brimdata/sample-data": "<rootDir>../../packages/sample-data/index.js",
+    "@brimdata/zed-js": "<rootDir>../../packages/zed-js/src/index.ts",
+    "@brimdata/zed-node": "<rootDir>../../packages/zed-node/src/index.ts",
+  },
 }
