@@ -13448,7 +13448,6 @@ __metadata:
     serve: ^14.2.0
     ts-node: 10.9.1
     tslib: ^2.3.0
-    typescript: 5.1.5
   languageName: unknown
   linkType: soft
 
@@ -13578,6 +13577,7 @@ __metadata:
     super: "github:brimdata/super#main"
     tmp: ^0.1.0
     tree-model: ^1.0.7
+    typescript: 5.1.5
     use-resize-observer: ^8.0.0
     utopia-core-scss: ^1.0.1
     web-file-polyfill: ^1.0.4

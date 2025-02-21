@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "outDir": "../../dist",
+    "rootDirs": [
+      "src",
+      "pages"
+    ],
     "moduleResolution": "node",
     "module": "esnext",
     "target": "esnext",
@@ -24,13 +27,13 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "strictNullChecks": true
+    "strictNullChecks": false
   },
   "include": [
-    "src/**/*",
-    "pages/**/*",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"

@@ -11,7 +11,6 @@ import {
 } from "../auth0/utils"
 import {getPersistedGlobalState} from "../../js/state/stores/get-persistable"
 import Lakes from "../../js/state/Lakes"
-import {installExtensions} from "../../electron/extensions"
 import {encodeSessionState} from "../../electron/session-state"
 import {WindowManager} from "../../electron/windows/window-manager"
 import * as zdeps from "../../electron/zdeps"
@@ -96,7 +95,6 @@ export class MainObject {
 
   async start() {
     if (this.args.lake) await this.startLake()
-    if (this.args.devtools) await installExtensions()
     await this.windows.init()
   }
 

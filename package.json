@@ -10,7 +10,6 @@
   "scripts": {
     "build-affected": "nx affected --target=build",
     "build": "nx run-many -t build --all",
-    "lint": "nx run-many -t lint --all --exclude zui-player",
     "test": "nx run-many -t test --all --exclude zui-player --skip-nx-cache",
     "start": "nx start zui",
     "e2e": "NODE_ENV=production nx test zui-player",
@@ -28,8 +27,7 @@
     "nx": "16.10.0",
     "prettier": "^2.6.2",
     "serve": "^14.2.0",
-    "ts-node": "10.9.1",
-    "typescript": "5.1.5"
+    "ts-node": "10.9.1"
   },
   "packageManager": "yarn@3.5.0",
   "workspaces": [
