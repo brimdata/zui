@@ -1,12 +1,13 @@
 {
   "name": "@brimdata/zed-js",
   "version": "0.0.17",
-  "type": "commonjs",
-  "main": "./dist/cjs/src/index.js",
-  "jsdelivr": "./dist/browser/index.js",
+  "type": "module",
+  "main": "./dist/index.js",
   "devDependencies": {
     "@types/event-source-polyfill": "^1.0.1",
-    "@types/strftime": "^0.9.8"
+    "@types/strftime": "^0.9.8",
+    "jest": "^29.7.0",
+    "typescript": "5.1.5"
   },
   "dependencies": {
     "date-fns": "^3.6.0",
@@ -16,7 +17,7 @@
     "strftime": "^0.10.3"
   },
   "scripts": {
-    "test": "run -T jest",
-    "build": "run -T tsc"
+    "test": "jest",
+    "build": "tsc"
   }
 }

@@ -1,18 +1,10 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "CommonJS",
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "target": "ES2022",
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
-    "outDir": "../../dist"
-  },
-  "files": [],
-  "include": ["src/**/*"]
+    "outDir": "dist",
+    "rootDir": "src"
+  }
 }
