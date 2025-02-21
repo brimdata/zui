@@ -1,47 +1,38 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
+    "outDir": "../../dist",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "target": "ES2020",
-    "module": "ES2020",
+    "target": "esnext",
     "jsx": "preserve",
-    "noEmit": true,
     "downlevelIteration": true,
-    "strict": false,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types"],
-    "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "incremental": true,
-    "isolatedModules": true,
+    "lib": [
+      "esnext"
+    ],
     "baseUrl": ".",
-    "paths": {
-      "@brimdata/zed-js": ["../../packages/zed-js/src/index.ts"],
-      "@brimdata/zed-node": ["../../packages/zed-node/src/index.ts"],
-      "@brimdata/sample-data": ["../../packages/zui-test-data/src/index.js"]
-    },
     "plugins": [
       {
         "name": "next"
       }
     ],
+    "allowJs": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "strictNullChecks": true
   },
-  "exclude": ["scripts", "dist", "run"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
+  "include": [
+    "src/**/*",
+    "pages/**/*",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

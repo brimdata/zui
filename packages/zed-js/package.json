@@ -3,11 +3,10 @@
   "version": "0.0.17",
   "type": "module",
   "main": "./dist/index.js",
-  "devDependencies": {
-    "@types/event-source-polyfill": "^1.0.1",
-    "@types/strftime": "^0.9.8",
-    "jest": "^29.7.0",
-    "typescript": "5.1.5"
+  "exports": "./dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
   },
   "dependencies": {
     "date-fns": "^3.6.0",
@@ -16,8 +15,10 @@
     "events": "^3.3.0",
     "strftime": "^0.10.3"
   },
-  "scripts": {
-    "test": "jest",
-    "build": "tsc"
+  "devDependencies": {
+    "@types/event-source-polyfill": "^1.0.1",
+    "@types/strftime": "^0.9.8",
+    "jest": "^29.7.0",
+    "typescript": "5.1.5"
   }
 }

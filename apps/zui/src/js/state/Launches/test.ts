@@ -8,7 +8,7 @@ import initTestStore from "src/test/unit/helpers/initTestStore"
 let store
 beforeEach(async () => {
   store = await initTestStore()
-  jest.useFakeTimers("modern")
+  jest.useFakeTimers("modern" as any)
   jest.setSystemTime(new Date("20 Aug 2020 00:12:00 GMT").getTime())
 })
 
