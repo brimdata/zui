@@ -5,7 +5,7 @@ const fs = require("fs-extra")
 const got = require("got")
 const path = require("path")
 const tmp = require("tmp")
-const package = require("../../package.json")
+const packageJSON = require("../package.json")
 const decompress = require("decompress")
 const depsDir = path.resolve("zdeps")
 
@@ -96,7 +96,6 @@ async function devBuild(destPath) {
     "..",
     "..",
     "..",
-    "..",
     "node_modules",
     "super"
   )
@@ -114,7 +113,7 @@ async function main() {
     // begins with "v*" is expected to be a released artifact, and will
     // be downloaded from the Zed repository. Otherwise, copy Zed
     // artifacts from node_modules via zedDevBuild.
-    const version = package.devDependencies.super.split("#")[1]
+    const version = packageJSON.devDependencies.super.split("#")[1]
     if (version.startsWith("v")) {
       await artifactsDownload(version, depsDir)
       console.log("downloaded artifacts version " + version)

@@ -27,7 +27,7 @@
     "test": "run -T jest",
     "format": "prettier '**/*.{js,ts,tsx,scss}' --write --loglevel warn",
     "tsc": "",
-    "postinstall": "node scripts/post-install",
+    "postinstall": "node scripts/post-install.cjs",
     "prepare": "husky install",
     "package-zui": "electron-builder --publish never",
     "release-zui": "electron-builder",
