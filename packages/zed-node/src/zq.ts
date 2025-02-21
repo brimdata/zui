@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { getZqPath } from './binpath';
 import { Readable, Stream, pipeline } from 'stream';

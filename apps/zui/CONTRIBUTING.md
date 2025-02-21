@@ -32,7 +32,6 @@ Zui is a TypeScript, React, Electron app.
 
 - [Electron](https://www.electronjs.org/docs/latest) - it's helpful to understand the [main vs renderer processes](https://www.electronjs.org/docs/latest/tutorial/quick-start#main-and-renderer-processes)
 - [TypeScript](https://www.typescriptlang.org/)
-- [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/docs/en/index.html)
 - [React](https://reactjs.org/docs/getting-started.html)
 - [Styled Components](https://styled-components.com/)
@@ -148,11 +147,10 @@ The [Zed service](https://zed.brimdata.io/docs/commands/zed#serve) is the daemon
 
 ## Pull Requests
 
-Our CI server checks for code format diffs, type errors, eslint errors, unit test failures, and integration test failures. You can check all these things locally before pushing your branch.
+Our CI server checks for code format diffs, type errors, unit test failures, and integration test failures. You can check all these things locally before pushing your branch.
 
 ```bash
 yarn format           # Prettier format
-yarn lint             # Check eslint
 yarn tsc              # Check the types
 yarn test             # Unit tests with jest
 yarn test:api         # API tests

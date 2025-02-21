@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import * as zjson from '../zjson';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';

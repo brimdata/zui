@@ -1,6 +1,18 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
     "target": "ES2020",
     "module": "ES2020",
     "jsx": "preserve",
@@ -22,8 +34,14 @@
       "@brimdata/zed-js": ["../../packages/zed-js/src/index.ts"],
       "@brimdata/zed-node": ["../../packages/zed-node/src/index.ts"],
       "@brimdata/sample-data": ["../../packages/zui-test-data/src/index.js"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "exclude": ["scripts", "dist", "run"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
 }

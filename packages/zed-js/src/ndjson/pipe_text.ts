@@ -9,7 +9,6 @@ export function pipeText(
   }
 }
 
-// eslint-disable-next-line
 async function* noop() {}
 
 async function* browserPipeText(stream: ReadableStream<Uint8Array>) {

@@ -2,6 +2,7 @@ import "regenerator-runtime/runtime"
 import {configure} from "@testing-library/react"
 import env from "src/core/env"
 import {ipcRenderer} from "electron"
+import log from "electron-log"
 
 const preloadApi = () => ({
   on: ipcRenderer.on.bind(ipcRenderer),
@@ -18,3 +19,5 @@ if (env.isCI) {
 
 // @ts-ignore Quiets electron-updater during tests on Linux (see https://github.com/brimdata/zui/pull/3097)
 process.resourcesPath = "DoesNotExist"
+
+log.transports.console.level = "error"

@@ -70,7 +70,6 @@ export type JSOptions = {
 };
 
 export interface Value {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toJS(opts?: JSOptions): any;
   toString(): string;
   serialize(stream: EncodeStream): zjson.Value;

@@ -142,7 +142,6 @@ export class Record implements Value {
     return this.fields.reduce((obj, field) => {
       obj[field.name] = field.value.toJS(opts);
       return obj;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }, {} as { [key: string]: any });
   }
 }
