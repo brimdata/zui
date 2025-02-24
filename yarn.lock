@@ -478,8 +478,7 @@ __metadata:
   resolution: "@brimdata/zed-node@workspace:packages/zed-node"
   dependencies:
     "@brimdata/zed-js": "workspace:*"
-    "@types/fs-extra": ^11.0.1
-    fs-extra: ^11.1.1
+    fs-extra: ^11.3.0
     jest: ^29.7.0
     node-fetch: ^2.6.1
     super: "github:brimdata/super#main"
@@ -2861,22 +2860,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/fs-extra@npm:9.0.13, @types/fs-extra@npm:^9.0.1, @types/fs-extra@npm:^9.0.11":
+"@types/fs-extra@npm:9.0.13, @types/fs-extra@npm:^9.0.11":
   version: 9.0.13
   resolution: "@types/fs-extra@npm:9.0.13"
   dependencies:
     "@types/node": "*"
   checksum: add79e212acd5ac76b97b9045834e03a7996aef60a814185e0459088fd290519a3c1620865d588fa36c4498bf614210d2a703af5cf80aa1dbc125db78f6edac3
-  languageName: node
-  linkType: hard
-
-"@types/fs-extra@npm:^11.0.1":
-  version: 11.0.1
-  resolution: "@types/fs-extra@npm:11.0.1"
-  dependencies:
-    "@types/jsonfile": "*"
-    "@types/node": "*"
-  checksum: 3e930346e5d84f419deb8ced1c582beef8cb20d0bd8a0eb145a37d75bab0572a1895f0e48a0d681d386b3a58b9a992b2d2acecc464bcaec2548f53ea00718651
   languageName: node
   linkType: hard
 
@@ -2999,15 +2988,6 @@ __metadata:
     "@types/tough-cookie": "*"
     parse5: ^7.0.0
   checksum: d55402c5256ef451f93a6e3d3881f98339fe73a5ac2030588df056d6835df8367b5a857b48d27528289057e26dcdd3f502edc00cb877c79174cb3a4c7f2198c1
-  languageName: node
-  linkType: hard
-
-"@types/jsonfile@npm:*":
-  version: 6.1.1
-  resolution: "@types/jsonfile@npm:6.1.1"
-  dependencies:
-    "@types/node": "*"
-  checksum: 0f8fe0a9221a00e8413cffba723dfe16553868724b830237256fb0052ecd5cac96498189d1235a001cfa815f352008261c9ceb373f0aa58227f891e0c7a12c4d
   languageName: node
   linkType: hard
 
@@ -6343,7 +6323,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^11.1.0, fs-extra@npm:^11.1.1":
+"fs-extra@npm:^11.1.0":
   version: 11.1.1
   resolution: "fs-extra@npm:11.1.1"
   dependencies:
@@ -6354,14 +6334,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^11.2.0":
-  version: 11.2.0
-  resolution: "fs-extra@npm:11.2.0"
+"fs-extra@npm:^11.3.0":
+  version: 11.3.0
+  resolution: "fs-extra@npm:11.3.0"
   dependencies:
     graceful-fs: ^4.2.0
     jsonfile: ^6.0.1
     universalify: ^2.0.0
-  checksum: b12e42fa40ba47104202f57b8480dd098aa931c2724565e5e70779ab87605665594e76ee5fb00545f772ab9ace167fe06d2ab009c416dc8c842c5ae6df7aa7e8
+  checksum: f983c706e0c22b0c0747a8e9c76aed6f391ba2d76734cf2757cd84da13417b402ed68fe25bace65228856c61d36d3b41da198f1ffbf33d0b34283a2f7a62c6e9
   languageName: node
   linkType: hard
 
@@ -7101,7 +7081,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "insiders@workspace:apps/insiders"
   dependencies:
-    fs-extra: ^10.1.0
+    fs-extra: ^11.3.0
     semver: ^7.3.7
     ts-node: 10.9.1
     typescript: 5.1.5
@@ -13093,7 +13073,7 @@ __metadata:
   resolution: "zui-player@workspace:packages/zui-player"
   dependencies:
     "@playwright/test": 1.44.0
-    fs-extra: ^11.2.0
+    fs-extra: ^11.3.0
     playwright: 1.44.0
     playwright-chromium: 1.44.0
   languageName: unknown
@@ -13119,7 +13099,6 @@ __metadata:
     "@types/classnames": ^2.2.10
     "@types/d3": ^6.7.0
     "@types/electron-devtools-installer": ^2.2.0
-    "@types/fs-extra": ^9.0.1
     "@types/lodash": ^4.14.161
     "@types/mousetrap": ^1.6.3
     "@types/node-fetch": ^3.0.3
@@ -13159,7 +13138,7 @@ __metadata:
     event-source-polyfill: ^1.0.25
     event-stream: ^4.0.1
     filter-console: ^0.1.1
-    fs-extra: ^9.0.1
+    fs-extra: ^11.3.0
     glob: ^9.3.4
     got: ^10.7.0
     husky: ^7.0.4

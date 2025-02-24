@@ -1,8 +1,7 @@
 import { expect } from '@playwright/test';
 import { Client } from '@brimdata/zed-node';
 import { existsSync } from 'fs';
-import * as fsExtra from 'fs-extra';
-import { reject } from 'lodash';
+import fsExtra from 'fs-extra';
 import * as path from 'path';
 import {
   ElectronApplication,
@@ -325,7 +324,7 @@ const getAppInfo = () => {
 };
 
 function waitForTrue(check: () => boolean | Promise<boolean>) {
-  return new Promise<void>((resolve) => {
+  return new Promise<void>((resolve, reject) => {
     const id = setTimeout(() => reject('Gave up'), 30000);
     const run = async () => {
       if (await check()) {

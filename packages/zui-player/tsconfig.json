@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
     "target": "ES2022",
-    "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["node"],
-    "lib": ["es2022", "dom"]
+    "module": "ESNext",
+    "strict": true
   }
 }

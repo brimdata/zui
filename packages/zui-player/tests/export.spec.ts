@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import * as path from 'path';
 import TestApp from '../helpers/test-app';
 import * as os from 'os';
-import * as fsExtra from 'fs-extra';
+import fsExtra from 'fs-extra';
 import { getPath } from '@brimdata/sample-data';
 
 const tempDir = os.tmpdir();

@@ -10,10 +10,9 @@
   },
   "dependencies": {
     "@brimdata/zed-js": "workspace:*",
-    "fs-extra": "^11.1.1"
+    "fs-extra": "^11.3.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^11.0.1",
     "jest": "^29.7.0",
     "node-fetch": "^2.6.1",
     "super": "github:brimdata/super#main",
