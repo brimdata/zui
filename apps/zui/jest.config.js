@@ -12,6 +12,7 @@ export default {
   transform: {"^.+\\.(t|j)sx?$": "@swc/jest"},
   transformIgnorePatterns: [`/node_modules/(?!${needsToBeTransformed})`],
   setupFilesAfterEnv: ["./src/test/unit/setup/after-env.ts"],
+  globalSetup: "./src/test/unit/setup/global.ts",
   maxWorkers: 4,
   moduleNameMapper: {
     "^src/(.*)$": "<rootDir>/src/$1",
