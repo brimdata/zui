@@ -13076,6 +13076,7 @@ __metadata:
     fs-extra: ^11.3.0
     playwright: 1.44.0
     playwright-chromium: 1.44.0
+    typescript: 5.1.5
   languageName: unknown
   linkType: soft
 
