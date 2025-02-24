@@ -1,7 +1,6 @@
 import { expect } from '@playwright/test';
 import { Client } from '@brimdata/zed-node';
-import { existsSync } from 'fs';
-import fsExtra from 'fs-extra';
+import { existsSync, statSync } from 'fs';
 import * as path from 'path';
 import {
   ElectronApplication,
@@ -67,6 +66,7 @@ export default class TestApp {
 
   async dropFile(file: string) {
     await this.mainWin.evaluate((file) => {
+      // @ts-ignore
       globalThis.dropFiles([file]);
     }, file);
   }
@@ -80,6 +80,7 @@ export default class TestApp {
     expectedResult = /Successfully finished loading/
   ): Promise<void> {
     await this.mainWin.evaluate((filepaths) => {
+      // @ts-ignore
       globalThis.dropFiles(filepaths);
     }, filepaths);
     await this.click('button', 'Load');
@@ -87,7 +88,7 @@ export default class TestApp {
     await this.attached(expectedResult);
   }
 
-  async chooseFiles(locator, paths: string[]) {
+  async chooseFiles(locator: any, paths: string[]) {
     const [chooser] = await Promise.all([
       this.mainWin.waitForEvent('filechooser'),
       locator.click(),
@@ -109,7 +110,7 @@ export default class TestApp {
       .getAttribute('data-location-key');
   }
 
-  waitForNextLocationKey(prevKey) {
+  waitForNextLocationKey(prevKey: string) {
     return this.page
       .locator(`[data-location-key="${prevKey}"]`)
       .waitFor({ state: 'detached' });
@@ -294,7 +295,7 @@ export default class TestApp {
       .getByText(new RegExp('Export Completed: .*results\\.' + label))
       .waitFor();
 
-    expect(fsExtra.statSync(file).size).toBe(expectedSize);
+    expect(statSync(file).size).toBe(expectedSize);
   }
 }
 

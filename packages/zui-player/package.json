@@ -4,6 +4,7 @@
   "main": "./index.ts",
   "type": "module",
   "scripts": {
+    "lint": "tsc",
     "test": "playwright test -c playwright.config.js",
     "ci": "playwright test -c ci.config.js"
   },
@@ -11,6 +12,7 @@
     "@playwright/test": "1.44.0",
     "fs-extra": "^11.3.0",
     "playwright": "1.44.0",
-    "playwright-chromium": "1.44.0"
+    "playwright-chromium": "1.44.0",
+    "typescript": "5.1.5"
   }
 }

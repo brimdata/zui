@@ -1,15 +1,15 @@
 import { play } from 'zui-player';
-import * as fs from 'fs-extra';
+import { existsSync } from 'fs-extra';
 
 play('Copy Paste Data', (app, test) => {
   test('paste cleans up after itself', async () => {
     await app.evalMain(({ clipboard }) => clipboard.writeText('{a: 1}'));
     const file = await app.invoke('loads.paste');
-    test.expect(fs.existsSync(file)).toBe(true);
+    test.expect(existsSync(file)).toBe(true);
     await app.click('button', 'Load');
     await app.attached(/Successfully loaded/);
     await app.click('button', 'Query Pool');
-    test.expect(fs.existsSync(file)).toBe(false);
+    test.expect(existsSync(file)).toBe(false);
   });
 
   test('pasting data loads into pool', async () => {
