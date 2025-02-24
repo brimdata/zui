@@ -1,5 +1,5 @@
 import { play } from 'zui-player';
-import { existsSync } from 'fs-extra';
+import { existsSync } from 'fs';
 
 play('Copy Paste Data', (app, test) => {
   test('paste cleans up after itself', async () => {
