@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import TestApp from '../helpers/test-app';
 import { sprintf } from 'sprintf-js';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 
 const testQueries = [
   {

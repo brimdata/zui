@@ -5,6 +5,7 @@ const args = process.argv.slice(2)
 const context = await esbuild.context({
   entryPoints: ["./src/electron/main.ts"],
   outdir: "dist",
+  outExtension: { ".js": ".cjs" },
   bundle: true,
   minify: false,
   platform: "node",

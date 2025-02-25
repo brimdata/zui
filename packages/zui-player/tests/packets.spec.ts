@@ -1,5 +1,5 @@
 import { play } from 'zui-player';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 
 // Timeouts are increased due to observed long pcap load times in CI.
 // See https://github.com/brimdata/zui/pull/2978

@@ -1,6 +1,6 @@
-const sub = require("./util/sub")
-const log = require("./util/log")
-const fs = require("fs-extra")
+import sub  from "./util/sub.js"
+import log  from "./util/log.js"
+import fs from "fs-extra"
 
 async function start() {
   fs.removeSync("dist")

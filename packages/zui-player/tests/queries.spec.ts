@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { getPath } from 'zui-test-data';
+import { getPath } from '@brimdata/sample-data';
 import TestApp from '../helpers/test-app';
 
 test.describe('Query tests', () => {

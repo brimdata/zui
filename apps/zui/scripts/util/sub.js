@@ -1,4 +1,4 @@
-const {spawn} = require("child_process")
+import {spawn} from "child_process"
 
 class Sub {
   constructor(bin, args) {
@@ -45,4 +45,4 @@ class Sub {
   }
 }
 
-module.exports = (bin, args) => new Sub(bin, args)
+export default (bin, args) => new Sub(bin, args)

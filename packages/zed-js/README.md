@@ -1,7 +1,5 @@
 # zed-js
 
-This library was generated with [Nx](https://nx.dev).
-
 ## Building
 
 Run `nx build zed-js` to build the library.

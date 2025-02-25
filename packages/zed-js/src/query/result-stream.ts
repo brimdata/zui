@@ -51,7 +51,6 @@ export class ResultStream extends EventEmitter {
     return channel;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async js(opts: JSOptions = {}): Promise<any> {
     this.consume();
     const channel = this.channel('main');
@@ -80,7 +79,6 @@ export class ResultStream extends EventEmitter {
     if (this._promise) return this._promise;
 
     this.status = 'pending';
-    // eslint-disable-next-line
     this._promise = new Promise(async (resolve, reject) => {
       try {
         for await (const json of eachLine(this.resp.body)) {

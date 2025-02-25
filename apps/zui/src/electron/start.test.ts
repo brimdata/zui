@@ -1,14 +1,9 @@
 import "src/test/system/real-paths"
 import {app} from "electron"
 import {MainObject} from "../core/main/main-object"
-import {installExtensions} from "./extensions"
 import {main} from "./run-main/run-main"
 import env from "src/core/env"
 import {teardown} from "src/test/system/teardown"
-
-jest.mock("./extensions", () => ({
-  installExtensions: jest.fn(),
-}))
 
 jest.mock("@brimdata/zed-node")
 
@@ -45,26 +40,6 @@ test("activates shows the window", async () => {
   appMain.windows.visible.forEach((win) => {
     expect(win.ref.isVisible()).toBe(true)
   })
-})
-
-test("start installs dev extensions if is dev", async () => {
-  await main({
-    devtools: true,
-    autoUpdater: false,
-    lake: false,
-  })
-  expect(installExtensions).toHaveBeenCalled()
-  // @ts-ignore
-  installExtensions.mockReset()
-})
-
-test("start does not install dev extensions if not dev", async () => {
-  await main({
-    devtools: false,
-    autoUpdater: false,
-    lake: false,
-  })
-  expect(installExtensions).not.toHaveBeenCalled()
 })
 
 test("last window closed hides on mac", async () => {

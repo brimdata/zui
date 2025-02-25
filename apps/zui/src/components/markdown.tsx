@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown"
 import {Link} from "src/components/link"
 
 const components = {
-  // eslint-disable-next-line
   a: ({children, ...props}) => {
     return <Link {...props}>{children}</Link>
   },

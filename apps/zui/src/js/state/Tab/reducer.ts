@@ -18,7 +18,6 @@ const tabReducer = combineReducers({
   editor,
   id: (state: string = nanoid(), _): string => state,
   lastFocused: (state: string = new Date().toISOString()): string => state,
-  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   lastLocationKey: (state: string = ""): string => state,
   inspector,
   layout,

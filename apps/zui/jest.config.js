@@ -1,13 +1,5 @@
-const {pathsToModuleNameMapper} = require("ts-jest")
-// In the following statement, replace `./tsconfig` with the path to your `tsconfig` file
-// which contains the path mapping (ie the `compilerOptions.paths` option):
-const config = require("../../tsconfig.base")
-
-const moduleNameMapper = pathsToModuleNameMapper(config.compilerOptions.paths, {
-  prefix: "<rootDir>/../../",
-})
-
-const esModules = [
+// https://github.com/gravitational/teleport/issues/33810
+const needsToBeTransformed = [
   "bullet",
   "@reduxjs/toolkit",
   "immer",
@@ -15,22 +7,17 @@ const esModules = [
   "lodash-es",
   "when-clause",
 ].join("|")
-// https://github.com/gravitational/teleport/issues/33810
 
-module.exports = {
-  transform: {
-    "^.+\\.(t|j)sx?$": ["@swc/jest"],
-    ".+\\.(css|styl|less|sass|scss)$": "jest-css-modules-transform",
-  },
-  transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
-  setupFiles: ["./src/test/unit/setup/before-env.ts"],
+export default {
+  transform: {"^.+\\.(t|j)sx?$": "@swc/jest"},
+  transformIgnorePatterns: [`/node_modules/(?!${needsToBeTransformed})`],
   setupFilesAfterEnv: ["./src/test/unit/setup/after-env.ts"],
-  testEnvironmentOptions: {
-    testURL: "http://localhost:4567/?name=search&id=test-1",
-  },
   globalSetup: "./src/test/unit/setup/global.ts",
-  modulePaths: ["<rootDir>"],
-  roots: ["./src"],
   maxWorkers: 4,
-  moduleNameMapper,
+  moduleNameMapper: {
+    "^src/(.*)$": "<rootDir>/src/$1",
+    "@brimdata/sample-data": "<rootDir>../../packages/sample-data/index.js",
+    "@brimdata/zed-js": "<rootDir>../../packages/zed-js/src/index.ts",
+    "@brimdata/zed-node": "<rootDir>../../packages/zed-node/src/index.ts",
+  },
 }

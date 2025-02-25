@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-array-constructor */
 import * as zjson from '../zjson';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';

@@ -1,29 +1,41 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ES2020",
-    "jsx": "preserve",
-    "noEmit": true,
-    "downlevelIteration": true,
-    "strict": false,
+    "rootDirs": [
+      "src",
+      "pages"
+    ],
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types"],
-    "esModuleInterop": true,
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "preserve",
+    "downlevelIteration": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "incremental": true,
-    "isolatedModules": true,
+    "lib": [
+      "esnext"
+    ],
     "baseUrl": ".",
-    "paths": {
-      "@brimdata/zed-js": ["../../packages/zed-js/src/index.ts"],
-      "@brimdata/zed-node": ["../../packages/zed-node/src/index.ts"],
-      "zui-test-data": ["../../packages/zui-test-data/src/index.ts"]
-    }
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "allowJs": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strictNullChecks": false
   },
-  "exclude": ["scripts", "dist", "run"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

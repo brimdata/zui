@@ -2,8 +2,8 @@ import { test, expect } from '@playwright/test';
 import * as path from 'path';
 import TestApp from '../helpers/test-app';
 import * as os from 'os';
-import * as fsExtra from 'fs-extra';
-import { getPath } from 'zui-test-data';
+import { stat } from 'fs/promises';
+import { getPath } from '@brimdata/sample-data';
 
 const tempDir = os.tmpdir();
 const formats = [
@@ -77,7 +77,7 @@ test.describe('Export tests', () => {
     await app.select('Format', 'CSV');
     await app.click('button', 'Export to File ↩');
     await app.attached(/Error: CSV output encountered non-record value/);
-    await expect(fsExtra.stat(filePath)).rejects.toThrowError('no such file');
+    await expect(stat(filePath)).rejects.toThrowError('no such file');
   });
 
   test(`Exporting in Parquet format succeeds`, async () => {

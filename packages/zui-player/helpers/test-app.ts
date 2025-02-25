@@ -1,8 +1,6 @@
 import { expect } from '@playwright/test';
 import { Client } from '@brimdata/zed-node';
-import { existsSync } from 'fs';
-import * as fsExtra from 'fs-extra';
-import { reject } from 'lodash';
+import { existsSync, statSync } from 'fs';
 import * as path from 'path';
 import {
   ElectronApplication,
@@ -68,6 +66,7 @@ export default class TestApp {
 
   async dropFile(file: string) {
     await this.mainWin.evaluate((file) => {
+      // @ts-ignore
       globalThis.dropFiles([file]);
     }, file);
   }
@@ -81,6 +80,7 @@ export default class TestApp {
     expectedResult = /Successfully finished loading/
   ): Promise<void> {
     await this.mainWin.evaluate((filepaths) => {
+      // @ts-ignore
       globalThis.dropFiles(filepaths);
     }, filepaths);
     await this.click('button', 'Load');
@@ -88,7 +88,7 @@ export default class TestApp {
     await this.attached(expectedResult);
   }
 
-  async chooseFiles(locator, paths: string[]) {
+  async chooseFiles(locator: any, paths: string[]) {
     const [chooser] = await Promise.all([
       this.mainWin.waitForEvent('filechooser'),
       locator.click(),
@@ -110,7 +110,7 @@ export default class TestApp {
       .getAttribute('data-location-key');
   }
 
-  waitForNextLocationKey(prevKey) {
+  waitForNextLocationKey(prevKey: string) {
     return this.page
       .locator(`[data-location-key="${prevKey}"]`)
       .waitFor({ state: 'detached' });
@@ -295,7 +295,7 @@ export default class TestApp {
       .getByText(new RegExp('Export Completed: .*results\\.' + label))
       .waitFor();
 
-    expect(fsExtra.statSync(file).size).toBe(expectedSize);
+    expect(statSync(file).size).toBe(expectedSize);
   }
 }
 
@@ -325,7 +325,7 @@ const getAppInfo = () => {
 };
 
 function waitForTrue(check: () => boolean | Promise<boolean>) {
-  return new Promise<void>((resolve) => {
+  return new Promise<void>((resolve, reject) => {
     const id = setTimeout(() => reject('Gave up'), 30000);
     const run = async () => {
       if (await check()) {
