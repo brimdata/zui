@@ -23,7 +23,7 @@ jobs:
       - name: Build Zui
         uses: ./.github/actions/build-zui
         with:
-          cmd: yarn nx package-zui zui
+          cmd: yarn nx package-app zui
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           # Windows
           ssl_com_username: ${{ secrets.WINDOWS_SIGNING_SSL_COM_USERNAME }}
