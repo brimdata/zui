@@ -1,4 +1,4 @@
-name: Zui CI
+name: SuperDB CI
 
 on:
   pull_request:
@@ -17,7 +17,7 @@ jobs:
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-zui
+      - uses: ./.github/actions/setup-app
       - run: yarn lint
       - run: yarn test
       - name: Build and install package

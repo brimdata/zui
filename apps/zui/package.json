@@ -1,8 +1,8 @@
 {
-  "name": "zui",
-  "productName": "Zui",
+  "name": "superdb-desktop",
+  "productName": "SuperDB",
   "private": true,
-  "description": "Zed User Interface",
+  "description": "SuperDB User Interface",
   "repository": "https://github.com/brimdata/zui",
   "license": "BSD-3-Clause",
   "version": "1.18.0",

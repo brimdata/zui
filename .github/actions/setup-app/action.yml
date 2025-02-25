@@ -1,5 +1,5 @@
-name: Setup Zui
-description: Shared steps for setting up Zui in workflows
+name: Setup SuperDB Desktop
+description: Shared steps for setting up SuperDB Desktop in workflows
 runs:
   using: 'composite'
   steps:
