@@ -1,5 +1,5 @@
-name: Setup SuperDB Desktop
-description: Shared steps for setting up SuperDB Desktop in workflows
+name: Setup App
+description: Shared steps for setting up the app in workflows
 runs:
   using: 'composite'
   steps:

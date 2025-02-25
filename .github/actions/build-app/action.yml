@@ -1,4 +1,4 @@
-name: Build SuperDB Desktop App
+name: Build App
 description: Build app for the current platform
 inputs:
   cmd:
