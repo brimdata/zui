@@ -2,7 +2,7 @@
   "name": "superdb-desktop",
   "productName": "SuperDB",
   "private": true,
-  "description": "SuperDB User Interface",
+  "description": "SuperDB Desktop",
   "repository": "https://github.com/brimdata/zui",
   "license": "BSD-3-Clause",
   "version": "1.18.0",
