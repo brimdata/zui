@@ -1,4 +1,4 @@
-name: SuperDB CI
+name: CI
 
 on:
   pull_request:
