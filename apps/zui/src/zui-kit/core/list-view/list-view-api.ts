@@ -61,7 +61,11 @@ export class ListViewApi {
       const value = this.args.values[index]
       if (this.rows[rowIndex]) continue
       const newRows = this.inspect(value, index)
-      this.rows.splice(rowIndex, newRows.length, ...newRows)
+      this.rows = [
+        ...this.rows.slice(0, rowIndex),
+        ...newRows,
+        ...this.rows.slice(rowIndex + newRows.length)
+      ]
     }
   }
 
