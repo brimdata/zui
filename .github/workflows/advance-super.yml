@@ -1,26 +1,26 @@
-name: Advance Zed
+name: Advance Super
 
 concurrency: ${{ github.workflow }}
 
-# This type must match the event type from Zed.
+# This type must match the event type received from the super repo.
 # https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
 # These events only trigger on the GitHub default branch (usually main
 # or master).
 on:
   repository_dispatch:
-    types: [zed-pr-merged]
+    types: [super-pr-merged]
   workflow_dispatch:
     inputs:
-      zed_ref:
+      super_ref:
         required: true
         type: string
 
 env:
-  zed_ref: ${{ github.event.client_payload.merge_commit_sha || inputs.zed_ref }}
+  super_ref: ${{ github.event.client_payload.merge_commit_sha || inputs.super_ref }}
 
 jobs:
-  advance-zed:
-    name: Advance Zed
+  advance-super:
+    name: Advance Super
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -34,22 +34,19 @@ jobs:
           # that caused it to wait, reducing push failures down below.
           ref: ${{ github.ref }}
           # We need a token with permission to push.
-          token: ${{ secrets.ZQ_UPDATE_PAT }}
+          token: ${{ secrets.PAT_TOKEN }}
       - uses: ./.github/actions/setup-app
       - run: sudo apt-get -y install whois
-      - run: yarn workspace zui add zed@brimdata/zed#${{ env.zed_ref }}
+      - run: yarn workspace zui add super@brimdata/super#${{ env.super_ref }}
       - run: yarn lint
       - run: yarn test
       - run: yarn build
       - name: End to end tests
         id: playwright
         run: |
-          # Mock for pcap slice opening to avoid hanging Actions Runner.
-          # See https://github.com/brimdata/zui/pull/2987
-          echo "application/vnd.tcpdump.pcap; /usr/bin/true" >> /home/runner/.mailcap
           /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" yarn e2e:ci
 
-      - run: git -c user.name='Brim Automation' -c user.email=automation@brimdata.io commit -a -m 'upgrade Zed to ${{ env.zed_ref }}'
+      - run: git -c user.name='Brim Automation' -c user.email=automation@brimdata.io commit -a -m 'upgrade super to ${{ env.super_ref }}'
 
       # If this push fails because a PR was merged while this job was
       # running, you can re-run the failed job via
