@@ -8,6 +8,7 @@
     "build": "tsc"
   },
   "devDependencies": {
+    "@types/node": "^22.13.9",
     "fs-extra": "^11.3.0",
     "semver": "^7.3.7",
     "ts-node": "10.9.1",
