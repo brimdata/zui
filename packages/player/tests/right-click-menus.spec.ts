@@ -1,4 +1,4 @@
-import { play } from 'zui-player';
+import { play } from 'player';
 import { getPath } from '@brimdata/sample-data';
 
 play('right-click-menus', (app, test) => {

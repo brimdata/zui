@@ -1,4 +1,4 @@
-import { play } from 'zui-player';
+import { play } from 'player';
 import { getPath } from '@brimdata/sample-data';
 
 play('Preview & Load', (app, test) => {

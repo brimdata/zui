@@ -1,4 +1,4 @@
-import { play } from 'zui-player';
+import { play } from 'player';
 
 play('title bar buttons', (app, test) => {
   test('click new tab', async () => {

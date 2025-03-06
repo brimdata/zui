@@ -69,13 +69,13 @@ jobs:
         shell: sh
       - name: Put system logs alongside other artifacts
         run: |
-          mkdir -p packages/zui-player/run/var_log
-          cp /var/log/sys*log* /var/log/kern.log* packages/zui-player/run/var_log || true
+          mkdir -p packages/player/run/var_log
+          cp /var/log/sys*log* /var/log/kern.log* packages/player/run/var_log || true
         shell: sh
       - uses: actions/upload-artifact@v2
         if: (failure() && steps.playwright.outcome == 'failure') || inputs.always-upload
         with:
           name: artifacts-${{ matrix.os }}
           path: |
-            packages/zui-player/run/**
-            packages/zui-player/test-results
+            packages/player/run/**
+            packages/player/test-results

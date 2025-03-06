@@ -17,13 +17,13 @@ nx watch-code zui
 In another terminal instance, you may run your tests like so:
 
 ```
-nx test zui-player
+nx test player
 ```
 
 To run just one of the tests, specify the name of the file in the `tests` directory, e.g., The `-g` stands for 'grep' and can take a regex pattern argument.
 
 ```
-nx test zui-player -g pool-loads.spec.ts
+nx test player -g pool-loads.spec.ts
 ```
 
 ## Running Tests in CI
@@ -34,7 +34,7 @@ To simulate this locally, run the following commands:
 
 ```
 nx build zui
-NODE_ENV=production nx test zui-player
+NODE_ENV=production nx test player
 ```
 
 ## Artifacts
@@ -44,19 +44,19 @@ The [user data folder](https://zui.brimdata.io/docs/support/Filesystem-Paths#use
 If you also want Playwright to record each test run, set the environment variable `VIDEO=true` and the videos can be found in the `run/videos` directory.
 
 ```
-VIDEO=true NODE_ENV=production nx test zui-player
+VIDEO=true NODE_ENV=production nx test player
 ```
 
 ## Writing a test
 
 To write an e2e test, create a file called `[my-test].spec.ts` in the `tests` directory.
 
-Import the `play` function from the "zui-player" package.
+Import the `play` function from the "player" package.
 
 Here's a template for getting started.
 
 ```ts
-import { play } from 'zui-player';
+import { play } from 'player';
 import { getPath } from '@brimdata/sample-data';
 
 play('Preview & Load', (app, test) => {

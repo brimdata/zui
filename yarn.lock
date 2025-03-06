@@ -13310,9 +13310,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"zui-player@workspace:packages/zui-player":
+"player@workspace:packages/player":
   version: 0.0.0-use.local
-  resolution: "zui-player@workspace:packages/zui-player"
+  resolution: "player@workspace:packages/player"
   dependencies:
     "@playwright/test": 1.44.0
     fs-extra: ^11.3.0

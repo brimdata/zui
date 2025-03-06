@@ -1,4 +1,4 @@
-import { play } from 'zui-player';
+import { play } from 'player';
 import { existsSync } from 'fs';
 
 play('Copy Paste Data', (app, test) => {
