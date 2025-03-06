@@ -1,5 +1,5 @@
 {
-  "name": "zui-monorepo",
+  "name": "superdb",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -12,11 +12,11 @@
     "build-deps": "nx run-many -t build -p @brimdata/zed-js @brimdata/zed-node",
     "build": "nx run-many -t build --all",
     "lint": "nx run-many -t lint --all",
-    "test": "nx run-many -t test --all --exclude zui-player --skip-nx-cache",
+    "test": "nx run-many -t test --all --exclude player --skip-nx-cache",
     "start": "nx start superdb-desktop",
     "clean": "nx run-many -t clean --all",
-    "e2e": "NODE_ENV=production nx test zui-player",
-    "e2e:ci": "NODE_ENV=production nx ci zui-player",
+    "e2e": "NODE_ENV=production nx test player",
+    "e2e:ci": "NODE_ENV=production nx ci player",
     "artifact-path": "node tools/scripts/artifact-path.js",
     "postinstall": "yarn build-deps"
   },

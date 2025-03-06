@@ -1,5 +1,5 @@
 {
-  "name": "zui-player",
+  "name": "player",
   "private": true,
   "main": "./index.ts",
   "type": "module",
