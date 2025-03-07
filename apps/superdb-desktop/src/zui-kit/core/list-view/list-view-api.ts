@@ -53,6 +53,7 @@ export class ListViewApi {
   fill() {
     const {startIndex, stopIndex} = this.rendered
     const valStart = this.rowToValue[startIndex]
+    const valStop = this.rowToValue[stopIndex]
     if (!isNumber(valStart) || !isNumber(valStop)) return
 
     for (let index = valStart; index <= valStop; index++) {
