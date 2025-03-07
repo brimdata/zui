@@ -22,7 +22,7 @@ const URL = `/repos/${OWNER}/${REPO}/releases`
 const VERSION = pkg.version
 const RELEASE_NAME = (PRODUCT_NAME == 'Zui') ? 'v' + VERSION : VERSION
 const FILE_NAME = 'latest-mac.yml'
-const LOCAL_FILE_PATH = `dist/apps/zui/${FILE_NAME}`
+const LOCAL_FILE_PATH = `dist/apps/superdb-desktop/${FILE_NAME}`
 
 const mergeFiles = (intel, arm) => {
   const intelObject = yaml.load(intel)

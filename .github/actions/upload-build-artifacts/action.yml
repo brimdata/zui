@@ -10,12 +10,12 @@ runs:
     - uses: actions/upload-artifact@v4
       with:
         name: Mac Artifact (${{ runner.arch }})
-        path: dist/apps/zui/*.dmg
+        path: dist/apps/superdb-desktop/*.dmg
 
     - name: Merge latest-mac.yml Mac release files for x64/arm64
       if: runner.os == 'macOS'
       run: |
-        node apps/zui/scripts/merge-mac-release-files.mjs
+        node apps/superdb-desktop/scripts/merge-mac-release-files.mjs
       env:
         GH_TOKEN: ${{ inputs.gh_token }}
       shell: bash
@@ -23,14 +23,14 @@ runs:
     - uses: actions/upload-artifact@v4
       with:
         name: Windows Artifact
-        path: dist/apps/zui/*.exe
+        path: dist/apps/superdb-desktop/*.exe
 
     - uses: actions/upload-artifact@v4
       with:
         name: Debian Artifact
-        path: dist/apps/zui/*.deb
+        path: dist/apps/superdb-desktop/*.deb
 
     - uses: actions/upload-artifact@v4
       with:
         name: RPM Artifact
-        path: dist/apps/zui/*.rpm
+        path: dist/apps/superdb-desktop/*.rpm

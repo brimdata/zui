@@ -2,7 +2,7 @@
   "appId": "io.brimdata.zui",
   "asar": true,
   "asarUnpack": ["zdeps", "LICENSE.txt", "acknowledgments.txt", "**/*.node"],
-  "directories": {"output": "../../dist/apps/zui"},
+  "directories": {"output": "../../dist/apps/superdb-desktop"},
   "protocols": [{"name": "zui", "schemes": ["zui"]}],
   "win": {
     "target": ["nsis"],

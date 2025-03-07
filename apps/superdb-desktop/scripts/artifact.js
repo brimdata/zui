@@ -7,7 +7,7 @@ class Artifact {
   }
 
   get dir() {
-    return join(__dirname, "../../../dist/apps/zui")
+    return join(__dirname, "../../../dist/apps/superdb-desktop")
   }
 
   get path() {
