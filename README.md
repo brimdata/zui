@@ -22,11 +22,11 @@ Highlights:
 Refer to the [installation guide](https://zui.brimdata.io/docs/Installation) and
 [release notes](https://github.com/brimdata/zui/releases) for more information.
 
-## Powered By Zed
+## Powered By SuperDB
 
-[Zed](https://zed.brimdata.io/docs) offers an innovative approach to working with data known as "[Super-Structured Data](https://www.brimdata.io/blog/super-structured-data/)".
+[SuperDB](https://superdb.org/docs) offers an innovative approach to working with data known as "[Super-Structured Data](https://www.brimdata.io/blog/super-structured-data/)".
 
-Behind Zui is a local [Zed Lake](https://zed.brimdata.io/docs/commands/zed) instance where you can load your data into [pools](https://zed.brimdata.io/docs/commands/zed#data-pools) and use the powerful Zed [language](https://zed.brimdata.io/docs/language) to search, analyze, and transform it. Use it to:
+Behind this app runs a local [server](https://superdb.org/docs/commands/super-db) instance where you can load your data into [pools](https://superdb.org/docs/commands/super-db/#data-pools) and use [SuperSQL](https://superdb.org/docs/language) to search, analyze, and transform it. Use it to:
 
 - Explore deeply nested JSON objects
 - View Parquet and Arrow IPC stream files
@@ -35,21 +35,15 @@ Behind Zui is a local [Zed Lake](https://zed.brimdata.io/docs/commands/zed) inst
 - Transform data from a legacy database's CDC logs
 - Investigate [Zeek](https://zeek.org/) security logs
 
-Zed provides a system to make working with data easier and more efficient. The [storage layer](https://zed.brimdata.io/docs/formats), [type system](https://zed.brimdata.io/docs/formats/zed), [query language](https://zed.brimdata.io/docs/language/overview), and [`zq`](https://zed.brimdata.io/docs/commands/zq) command-line utility are just a few of the tools Zed offers to the data community.
-
-## Formerly Known as "Brim"
-
-For many years, the app was known as Brim, named after the company [Brim Data](https://www.brimdata.io/) that created it. In 2023, it was renamed to Zui (a play on "Zed User Interface") to better reflect its connection to the Zed technology that powers it.
-
-Zui retains the security-specific features that made Brim popular while expanding its reach to anyone who has data to work with. For example, you'll still find the customized views, histograms, and correlations relevant to the security domain appearing in Zui via its nascent plugin system. In the future, developers will be able to create custom plugins that make Zui even more effective for their specific needs.
+SuperDB provides a system to make working with data easier and more efficient. The [storage layer](https://superdb.org/docs/formats), [type system](https://superdb.org/docs/formats/zed), [query language](https://superdb.org/docs/language/overview), and [cli tooling](https://superdb.org/docs/commands/zq) are just a few of the tools Zed offers to the data community.
 
 ## Related Packages
 
-This Zui code repository is actually a [monorepo](https://en.wikipedia.org/wiki/Monorepo) (managed with [nx](https://nx.dev)) that includes several [packages](packages) on which the app depends. They may also be used as standalone tools. These include:
+This code repository is actually a [monorepo](https://en.wikipedia.org/wiki/Monorepo) (managed with [nx](https://nx.dev)) that includes several [packages](packages) on which the app depends. They may also be used as standalone tools. These include:
 
-- [**zed-js**](packages/zed-js): the JavaScript library for browsers
-- [**zed-node**](packages/zed-node): the JavaScript library for [Node.js](https://nodejs.org/)
-- [**player**](packages/player): the end-to-end testing framework for Zui
+- [**superdb-types**](packages/superdb-types): the JavaScript library for the data types return from a server.
+- [**superdb-node-client**](packages/superdb-node-client): the JavaScript library for [Node.js](https://nodejs.org/)
+- [**player**](packages/player): the end-to-end testing framework for the desktop app
 
 ## Need Help?
 

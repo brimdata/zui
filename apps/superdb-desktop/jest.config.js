@@ -17,7 +17,7 @@ export default {
   moduleNameMapper: {
     "^src/(.*)$": "<rootDir>/src/$1",
     "@brimdata/sample-data": "<rootDir>../../packages/sample-data/index.js",
-    "superdb-types": "<rootDir>../../packages/zed-js/src/index.ts",
-    "superdb-node-client": "<rootDir>../../packages/zed-node/src/index.ts",
+    "superdb-types": "<rootDir>../../packages/superdb-types/src/index.ts",
+    "superdb-node-client": "<rootDir>../../packages/superdb-node-client/src/index.ts",
   },
 }
