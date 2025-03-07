@@ -1,10 +1,8 @@
-# Zui
+# SuperDB Desktop
 
-_The Official Front-End to the [Zed Lake](https://zed.brimdata.io/docs/commands/zed)_
+_The Official Front-End to the [SuperDB](https://superdb.org)_
 
-![Zui](https://user-images.githubusercontent.com/3460638/216508967-6936f8fd-0579-4e85-8097-f0e22e6ebc27.png)
-
-Zui is a desktop app for exploring and working with data.
+The desktop app for exploring your data.
 
 Highlights:
 
@@ -19,7 +17,7 @@ Highlights:
 
 ## Ready To Try It Out?
 
-**[Download Zui](https://www.brimdata.io/download/)** for your operating system.
+**[Download](https://www.brimdata.io/download/)** for your operating system.
 
 Refer to the [installation guide](https://zui.brimdata.io/docs/Installation) and
 [release notes](https://github.com/brimdata/zui/releases) for more information.
