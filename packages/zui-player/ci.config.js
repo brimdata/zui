@@ -1,6 +1,6 @@
-const baseConfig = require('./playwright.config');
+import baseConfig from './playwright.config';
 
-module.exports = {
+export default {
   ...baseConfig,
   /* This is the list of flaky tests to ignore when running on CI */
   testIgnore: /(pool-load-fail|pool-groups).spec/,
