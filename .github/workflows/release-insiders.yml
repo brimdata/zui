@@ -36,10 +36,10 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: Checkout Zui
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Zui
+      - name: Setup
         uses: ./.github/actions/setup-app
 
       - name: Inject package.json
@@ -51,10 +51,10 @@ jobs:
       - name: Re-run yarn
         run: yarn
 
-      - name: Build Zui
-        uses: ./.github/actions/build-zui
+      - name: Build
+        uses: ./.github/actions/build-app
         with:
-          cmd: yarn nx release-insiders zui
+          cmd: yarn nx release-insiders superdb-desktop
           gh_token: ${{ secrets.PAT_TOKEN }}
           # Windows
           ssl_com_username: ${{ secrets.WINDOWS_SIGNING_SSL_COM_USERNAME }}
