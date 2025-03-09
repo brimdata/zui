@@ -35,7 +35,7 @@ Behind this app runs a local [server](https://superdb.org/docs/commands/super-db
 - Transform data from a legacy database's CDC logs
 - Investigate [Zeek](https://zeek.org/) security logs
 
-SuperDB provides a system to make working with data easier and more efficient. The [storage layer](https://superdb.org/docs/formats), [type system](https://superdb.org/docs/formats/zed), [query language](https://superdb.org/docs/language/overview), and [cli tooling](https://superdb.org/docs/commands/zq) are just a few of the tools Zed offers to the data community.
+SuperDB provides a system to make working with data easier and more efficient. The [storage layer](https://superdb.org/docs/formats), [type system](https://superdb.org/docs/formats/data-model), [query language](https://superdb.org/docs/language/overview), and [cli tooling](https://superdb.org/docs/commands/super) are just a few of the tools SuperDB offers to the data community.
 
 ## Related Packages
 
