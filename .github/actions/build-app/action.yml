@@ -87,5 +87,5 @@ runs:
     - name: Check notorization with gatekeeper
       if: runner.os == 'macOS'
       run: |
-        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/apps/zui/mac*/*.app
+        spctl --assess --type execute --verbose --ignore-cache --no-cache dist/apps/superdb-desktop/mac*/*.app
       shell: bash

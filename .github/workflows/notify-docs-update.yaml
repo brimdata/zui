@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/zui/docs/**'
+      - 'apps/superdb-desktop/docs/**'
 
 jobs:
   build:

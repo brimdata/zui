@@ -3,8 +3,8 @@ name: Create Insiders Dev Build
 on:
   workflow_dispatch:
     inputs:
-      zui-branch:
-        description: 'Zui branch on which to base this Zui Insiders build'
+      target-branch:
+        description: 'Target branch on which to base this Insiders build'
         default: 'main'
         required: false
   push:
@@ -34,12 +34,12 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: Checkout Zui
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.zui-branch }}
+          ref: ${{ github.event.inputs.target-branch }}
 
-      - name: Setup Zui
+      - name: Setup
         uses: ./.github/actions/setup-app
 
       - name: Inject package.json
@@ -51,10 +51,10 @@ jobs:
       - name: Re-run yarn
         run: yarn
 
-      - name: Build Zui
-        uses: ./.github/actions/build-zui
+      - name: Build
+        uses: ./.github/actions/build-app
         with:
-          cmd: yarn nx package-insiders zui
+          cmd: yarn nx package-insiders superdb-desktop
           gh_token: ${{ secrets.PAT_TOKEN }}
           # Windows
           ssl_com_username: ${{ secrets.WINDOWS_SIGNING_SSL_COM_USERNAME }}
