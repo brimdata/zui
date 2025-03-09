@@ -43,7 +43,7 @@ This code repository is actually a [monorepo](https://en.wikipedia.org/wiki/Mono
 
 - [**superdb-types**](packages/superdb-types): the JavaScript library for the data types return from a server.
 - [**superdb-node-client**](packages/superdb-node-client): the JavaScript library for [Node.js](https://nodejs.org/)
-- [**player**](packages/player): the end-to-end testing framework for the desktop app
+- [**player**](packages/app-player): the end-to-end testing framework for the desktop app
 
 ## Need Help?
 
