@@ -3595,6 +3595,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"app-player@workspace:packages/app-player":
+  version: 0.0.0-use.local
+  resolution: "app-player@workspace:packages/app-player"
+  dependencies:
+    "@playwright/test": 1.44.0
+    fs-extra: ^11.3.0
+    playwright: 1.44.0
+    playwright-chromium: 1.44.0
+    rimraf: ^6.0.1
+    typescript: 5.1.5
+  languageName: unknown
+  linkType: soft
+
 "aproba@npm:^1.0.3":
   version: 1.2.0
   resolution: "aproba@npm:1.2.0"
@@ -10112,19 +10125,6 @@ __metadata:
   checksum: 9863e3f35132bf99ae1636d31ff1e1e3501251d480336edb1c211133c8d58906bed80f154a1d723652df1fda91e01c7442c2eeaf9dc83157c7ae89087e43c8d6
   languageName: node
   linkType: hard
-
-"player@workspace:packages/app-player":
-  version: 0.0.0-use.local
-  resolution: "player@workspace:packages/app-player"
-  dependencies:
-    "@playwright/test": 1.44.0
-    fs-extra: ^11.3.0
-    playwright: 1.44.0
-    playwright-chromium: 1.44.0
-    rimraf: ^6.0.1
-    typescript: 5.1.5
-  languageName: unknown
-  linkType: soft
 
 "playwright-chromium@npm:1.44.0":
   version: 1.44.0

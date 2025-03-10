@@ -1,5 +1,5 @@
 {
-  "name": "player",
+  "name": "app-player",
   "private": true,
   "main": "./index.ts",
   "type": "module",
