@@ -29,6 +29,6 @@ jobs:
           case ${{ runner.os }} in
             Linux )
               yarn nx package-app superdb-desktop --linux=deb --publish never
-              sudo apt install -y --no-install-recommends ./dist/apps/zui/*.deb
+              sudo apt install -y --no-install-recommends ./dist/apps/superdb-desktop/*.deb
               ;;
           esac
