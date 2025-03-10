@@ -56,7 +56,7 @@ Import the `play` function from the "player" package.
 Here's a template for getting started.
 
 ```ts
-import { play } from 'player';
+import { play } from 'app-player';
 import { getPath } from '@brimdata/sample-data';
 
 play('Preview & Load', (app, test) => {

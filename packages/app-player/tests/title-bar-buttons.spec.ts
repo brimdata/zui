@@ -1,4 +1,4 @@
-import { play } from 'player';
+import { play } from 'app-player';
 
 play('title bar buttons', (app, test) => {
   test('click new tab', async () => {

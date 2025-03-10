@@ -1,4 +1,4 @@
-import { play } from 'player';
+import { play } from 'app-player';
 import { existsSync } from 'fs';
 
 play('Copy Paste Data', (app, test) => {

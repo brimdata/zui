@@ -1,4 +1,4 @@
-import { play } from 'player';
+import { play } from 'app-player';
 import { getPath } from '@brimdata/sample-data';
 
 play('right-click-menus', (app, test) => {
