@@ -56,9 +56,6 @@ jobs:
         id: playwright
         run: |
           if [ "$RUNNER_OS" = "Linux" ]; then
-            # Mock for pcap slice opening to avoid hanging Actions Runner.
-            # See https://github.com/brimdata/zui/pull/2987
-            echo "application/vnd.tcpdump.pcap; /usr/bin/true" >> /home/runner/.mailcap
             /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" ${{ inputs.run-target }}
           else
             ${{ inputs.run-target }}
@@ -69,13 +66,13 @@ jobs:
         shell: sh
       - name: Put system logs alongside other artifacts
         run: |
-          mkdir -p packages/player/run/var_log
-          cp /var/log/sys*log* /var/log/kern.log* packages/player/run/var_log || true
+          mkdir -p packages/app-player/run/var_log
+          cp /var/log/sys*log* /var/log/kern.log* packages/app-player/run/var_log || true
         shell: sh
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         if: (failure() && steps.playwright.outcome == 'failure') || inputs.always-upload
         with:
           name: artifacts-${{ matrix.os }}
           path: |
-            packages/player/run/**
-            packages/player/test-results
+            packages/app-player/run/**
+            packages/app-player/test-results
