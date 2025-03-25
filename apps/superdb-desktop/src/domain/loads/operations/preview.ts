@@ -24,8 +24,10 @@ export const preview = createOperation(
         signal: ctl.signal,
         file: files,
       })
+      console.log("Preview Success: " + id, data)
       return {error: null, data: data as zjson.Obj[], id}
     } catch (e) {
+      console.log("Preview Error: " + id, e)
       return {error: e, data: [] as zjson.Obj[], id}
     } finally {
       main.abortables.remove(id)
@@ -36,6 +38,7 @@ export const preview = createOperation(
 export const abortPreview = createOperation(
   "loads.abortPreview",
   async ({main}, id: string) => {
+    console.log("Preview Abort: " + id)
     await main.abortables.abort(id)
   }
 )
