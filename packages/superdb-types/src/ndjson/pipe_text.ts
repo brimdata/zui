@@ -29,7 +29,9 @@ async function* browserPipeText(stream: ReadableStream<Uint8Array>) {
 }
 
 async function* nodePipeText(stream: NodeJS.ReadableStream) {
+  console.log('NODE PIPE TEXT');
   for await (const chunk of stream) {
+    console.log('CHUNK OF STREAM', chunk);
     yield chunk.toString();
   }
 }
