@@ -11,6 +11,7 @@ export const preview = createOperation(
     format: LoadFormat,
     id: string
   ) => {
+    console.log("Preview Start: " + id, files, shaper)
     if (files.length === 0) {
       return {data: [], error: null, id}
     }
