@@ -38,12 +38,12 @@ export function useResultsControl(files: string[], format: zed.LoadFormat) {
   const queryAll = useCallback(
     (script: string) => {
       const abortValues = values.query(limit(script))
-      // const abortTypes = types.query(append(script, " | by typeof(this)"))
-      // const abortCount = count.query(append(script, " | count()"))
+      const abortTypes = types.query(append(script, " | by typeof(this)"))
+      const abortCount = count.query(append(script, " | count()"))
       return () => {
         abortValues()
-        // abortTypes()
-        // abortCount()
+        abortTypes()
+        abortCount()
       }
     },
     [values, types, count]
