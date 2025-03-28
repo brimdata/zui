@@ -74,12 +74,10 @@ export function PreviewLoadModal() {
     invoke("loads.cancel", poolId, files, "")
   }
 
-  useEffect(() => onSubmit(), [files, format])
+  // useEffect(() => onSubmit(), [files, format])
   useEffect(() => cancelSubmit, [files, format])
-  useEffect(() => {
-    const abort = original.queryAll("pass")
-    return abort
-  }, [files, format])
+  useEffect(() => original.queryAll("pass"), [files, format])
+
   const dispatch = useDispatch()
 
   return (
