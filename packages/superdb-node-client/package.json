@@ -17,7 +17,7 @@
     "jest": "^29.7.0",
     "node-fetch": "^2.6.1",
     "rimraf": "^6.0.1",
-    "super": "github:brimdata/super#main",
+    "super": "github:brimdata/super#1c03a538c5b50ff869400da5a9ca823791dd527a",
     "typescript": "5.1.5"
   },
   "peerDependencies": {

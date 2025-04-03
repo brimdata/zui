@@ -3,11 +3,11 @@ import {join} from "path"
 import {zjson} from "../../../../../packages/superdb-types/dist"
 import os from "os"
 
-export function toZJSON(zson: string): zjson.Obj[] {
+export function toZJSON(sup: string): zjson.Obj[] {
   let zq = join(__dirname, "../../zdeps/zq")
   if (os.platform() === "win32") zq += ".exe"
   const cmd = `${zq} -f zjson -`
-  const result = execSync(cmd, {encoding: "utf-8", input: zson})
+  const result = execSync(cmd, {encoding: "utf-8", input: sup})
   return result
     .trim()
     .split("\n")

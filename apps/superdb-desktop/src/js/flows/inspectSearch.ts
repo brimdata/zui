@@ -8,6 +8,6 @@ export const inspectSearch =
     const zealot = await api.getZealot()
 
     return zealot.curl(Results.getQuery(RESULTS_QUERY)(getState()), {
-      format: "zson",
+      format: "sup",
     })
   }

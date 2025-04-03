@@ -63,7 +63,7 @@ export function ExportModal() {
           </div>
 
           <div className="flow" data-show-when="dest==file">
-            <FormatSelect defaultValue="zng" />
+            <FormatSelect defaultValue="bsup" />
           </div>
 
           <div className="flow" data-show-when="dest==pool">

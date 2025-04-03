@@ -1,7 +1,7 @@
 import { Type } from './types/types';
 import { Value } from './values/types';
 
-export type QueryFormat = 'zjson' | 'zng' | 'ndjson' | 'csv' | 'json';
+export type QueryFormat = 'zjson' | 'bsup' | 'ndjson' | 'csv' | 'json';
 
 export type Order = 'desc' | 'asc';
 
