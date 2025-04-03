@@ -8,15 +8,15 @@ import { getPath } from '@brimdata/sample-data';
 const tempDir = os.tmpdir();
 const formats = [
   { label: 'Arrow IPC Stream', expectedSize: 46512 },
+  // { label: 'CSUP', expectedSize: 7984 },
+  { label: 'BSUP', expectedSize: 3745 },
   { label: 'CSV', expectedSize: 10851 },
   { label: 'JSON', expectedSize: 13659 },
   { label: 'NDJSON', expectedSize: 13657 },
+  { label: 'SUP', expectedSize: 15137 },
   { label: 'TSV', expectedSize: 10797 },
-  // { label: 'CSUP', expectedSize: 7984 },
   { label: 'Zeek', expectedSize: 10138 },
   { label: 'ZJSON', expectedSize: 18007 },
-  // { label: 'BSUP', expectedSize: 3745 },
-  // { label: 'JSUP', expectedSize: 15137 },
 ];
 
 test.describe('Export tests', () => {

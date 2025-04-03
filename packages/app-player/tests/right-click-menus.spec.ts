@@ -3,7 +3,7 @@ import { getPath } from '@brimdata/sample-data';
 
 play('right-click-menus', (app, test) => {
   test.beforeAll(async () => {
-    await app.dropFile(getPath('small-zeek.zng'));
+    await app.dropFile(getPath('small-zeek.bsup'));
     await app.click('button', 'Load');
     await app.attached(/Successfully/);
     await app.click('button', 'Query Pool');

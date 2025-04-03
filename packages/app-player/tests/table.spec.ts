@@ -14,7 +14,7 @@ test.describe('Table Testing', () => {
   });
 
   test('named type shows columns', async () => {
-    const path = getPath('named-type.zson');
+    const path = getPath('named-type.sup');
     await app.createPool([path]);
     await app.click('button', 'Query Pool');
     await app.query('yield value.after'); // This is a named type

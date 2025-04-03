@@ -33,16 +33,16 @@ export function parseContent(resp: IsoResponse) {
 export function accept(format: ResponseFormat) {
   const formats = {
     arrows: 'application/vnd.apache.arrow.stream',
+    bsup: 'application/x-bsup',
+    csup: 'application/x-csup',
     csv: 'text/csv',
     json: 'application/json',
     ndjson: 'application/x-ndjson',
     parquet: 'application/x-parquet',
+    sup: 'application/x-sup',
     tsv: 'text/tab-separated-values',
-    vng: 'application/x-vng',
     zeek: 'application/x-zeek',
     zjson: 'application/x-zjson',
-    zng: 'application/x-zng',
-    zson: 'application/x-zson',
   };
   const value = formats[format];
   if (!value) {
@@ -85,14 +85,14 @@ export function getLoadContentType(
   if (!format) return null;
   if (format === 'auto') return '*/*';
   if (format === 'arrows') return 'application/vnd.apache.arrow.stream';
+  if (format === 'bsup') return 'application/x-bsup';
+  if (format === 'csup') return 'application/x-csup';
   if (format === 'csv') return 'text/csv';
   if (format === 'json') return 'application/json';
   if (format === 'line') return 'application/x-line';
   if (format === 'parquet') return 'application/x-parquet';
-  if (format === 'csup') return 'application/x-csup';
+  if (format === 'sup') return 'application/x-sup';
   if (format === 'zeek') return 'application/x-zeek';
   if (format === 'zjson') return 'application/x-zjson';
-  if (format === 'bsup') return 'application/x-bsup';
-  if (format === 'jsup') return 'application/x-jsup';
   throw new Error('Unknown load format: ' + format);
 }

@@ -14,7 +14,7 @@ test.describe('Histogram Spec', () => {
   });
 
   test('Histogram appears for zeek data', async () => {
-    await app.createPool([getPath('small-zeek.zng')]);
+    await app.createPool([getPath('small-zeek.bsup')]);
     await app.click('button', 'Query Pool');
     await app.query('');
 

@@ -135,6 +135,7 @@ export function createProcess(args: ZqArgs) {
  * transform stream.
  */
 export function createTransformStream(args: ZqArgs) {
+  console.log(args)
   const zq = createProcess(args);
   return transformStream(zq);
 }

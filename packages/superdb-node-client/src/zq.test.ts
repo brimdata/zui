@@ -9,7 +9,7 @@ if (process.env['GITHUB_ACTIONS'] === 'true') {
 
 test('zq.stream', async () => {
   const input = Stream.Readable.from('1 2 3', { encoding: 'utf-8' });
-  const zq = createTransformStream({ query: '{num: this}', f: 'jsup' });
+  const zq = createTransformStream({ query: '{num: this}', f: 'sup' });
   let text = '';
   for await (const chunk of input.pipe(zq)) {
     if (chunk) text += chunk.toString();
