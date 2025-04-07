@@ -38,6 +38,7 @@ jobs:
       - uses: ./.github/actions/setup-app
       - run: sudo apt-get -y install whois
       - run: yarn workspace superdb-desktop add super@brimdata/super#${{ env.super_ref }}
+      - run: yarn workspace superdb-node-client add super@brimdata/super#${{ env.super_ref }}
       - run: yarn lint
       - run: yarn test
       - run: yarn build
