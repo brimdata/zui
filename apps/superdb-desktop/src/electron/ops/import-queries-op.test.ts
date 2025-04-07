@@ -18,7 +18,7 @@ test("import valid queries", () => {
 })
 
 test("import non-json data", () => {
-  const filepath = getPath("small-zeek.zng")
+  const filepath = getPath("small-zeek.bsup")
   const resp = importQueriesOp(filepath)
   expect(resp).toEqual({error: "File is not JSON"})
 })

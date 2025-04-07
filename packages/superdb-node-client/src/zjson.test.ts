@@ -2,7 +2,7 @@ import { zq } from './zq';
 import { getPath } from '@brimdata/sample-data';
 import * as zed from '../../superdb-types/dist';
 
-const file = getPath('sample.zson');
+const file = getPath('sample.sup');
 
 jest.setTimeout(60_000);
 

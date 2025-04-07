@@ -16,16 +16,16 @@ export type RequestOpts = {
 
 export type ResponseFormat =
   | 'arrows'
+  | 'bsup'
+  | 'csup'
   | 'csv'
   | 'json'
   | 'ndjson'
   | 'parquet'
+  | 'sup'
   | 'tsv'
-  | 'vng'
   | 'zeek'
-  | 'zjson'
-  | 'zng'
-  | 'zson';
+  | 'zjson';
 
 export type QueryOpts = {
   format: ResponseFormat;
@@ -79,30 +79,30 @@ export type LoadOpts = {
 export type LoadFormat =
   | 'auto'
   | 'arrows'
+  | 'bsup'
+  | 'csup'
   | 'csv'
   | 'json'
   | 'line'
   | 'parquet'
   | 'tsv'
-  | 'csup'
+  | 'sup'
   | 'zeek'
-  | 'zjson'
-  | 'bsup'
-  | 'jsup';
+  | 'zjson';
 
 export type LoadContentType =
   | '*/*'
-  | 'application/vnd.apache.arrow.stream'
-  | 'text/csv'
   | 'application/json'
+  | 'application/vnd.apache.arrow.stream'
+  | 'application/x-bsup'
+  | 'application/x-csup'
   | 'application/x-line'
   | 'application/x-parquet'
-  | 'text/tab-separated-values'
-  | 'application/x-csup'
+  | 'application/x-sup'
   | 'application/x-zeek'
   | 'application/x-zjson'
-  | 'application/x-bsup'
-  | 'application/x-jsup';
+  | 'text/csv'
+  | 'text/tab-separated-values';
 
 export type IsoResponse = Response;
 export type IsoFetch = typeof fetch;
