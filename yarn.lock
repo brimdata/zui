@@ -11916,13 +11916,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"super@github:brimdata/super#28294a64f823856cf28809d477d75faecde36742":
-  version: 0.0.1-dev
-  resolution: "super@https://github.com/brimdata/super.git#commit=28294a64f823856cf28809d477d75faecde36742"
-  checksum: 332c18fa9a858a756f3abe7fdda12a442ba5f21216241a25ceee4e1f3b1be503db342ed6c7bfdf3d26412f17c4a38c191929f19af17add36d0f5a1068f452629
-  languageName: node
-  linkType: hard
-
 "superdb-desktop@workspace:apps/superdb-desktop":
   version: 0.0.0-use.local
   resolution: "superdb-desktop@workspace:apps/superdb-desktop"
@@ -12057,7 +12050,7 @@ __metadata:
     jest: ^29.7.0
     node-fetch: ^2.6.1
     rimraf: ^6.0.1
-    super: "github:brimdata/super#28294a64f823856cf28809d477d75faecde36742"
+    super: "brimdata/super#68fa0d6f73612487114b62464af1777621758327"
     superdb-types: "workspace:*"
     typescript: 5.1.5
   peerDependencies:
