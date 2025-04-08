@@ -11,16 +11,13 @@
   },
   "dependencies": {
     "fs-extra": "^11.3.0",
+    "super": "brimdata/super#cc30b87cc286ce7fbb783bb463d519a0ae86ea02",
     "superdb-types": "workspace:*"
   },
   "devDependencies": {
     "jest": "^29.7.0",
     "node-fetch": "^2.6.1",
     "rimraf": "^6.0.1",
-    "super": "github:brimdata/super#28294a64f823856cf28809d477d75faecde36742",
     "typescript": "5.1.5"
-  },
-  "peerDependencies": {
-    "super": "*"
   }
 }
