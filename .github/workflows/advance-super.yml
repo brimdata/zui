@@ -1,22 +1,7 @@
 name: Advance Super
 
-concurrency: ${{ github.workflow }}
-
-# This type must match the event type received from the super repo.
-# https://help.github.com/en/actions/reference/events-that-trigger-workflows#external-events-repository_dispatch
-# These events only trigger on the GitHub default branch (usually main
-# or master).
 on:
-  repository_dispatch:
-    types: [super-pr-merged]
   workflow_dispatch:
-    inputs:
-      super_ref:
-        required: true
-        type: string
-
-env:
-  super_ref: ${{ github.event.client_payload.merge_commit_sha || inputs.super_ref }}
 
 jobs:
   advance-super:
@@ -36,23 +21,3 @@ jobs:
           # We need a token with permission to push.
           token: ${{ secrets.PAT_TOKEN }}
       - uses: ./.github/actions/setup-app
-      - run: sudo apt-get -y install whois
-      - run: yarn workspace superdb-desktop add super@brimdata/super#${{ env.super_ref }}
-      - run: yarn workspace superdb-node-client add super@brimdata/super#${{ env.super_ref }}
-      - run: yarn lint
-      - run: yarn test
-      - run: yarn build
-      - name: End to end tests
-        id: playwright
-        run: |
-          /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" yarn e2e:ci
-
-      - run: git -c user.name='Brim Automation' -c user.email=automation@brimdata.io commit -a -m 'upgrade super to ${{ env.super_ref }}'
-
-      # If this push fails because a PR was merged while this job was
-      # running, you can re-run the failed job via
-      # https://github.com/brimdata/zui/actions.  Or, if you expect
-      # this workflow to be dispatched again soon, you can simply ignore
-      # the failure.
-      - run: git push
-        if: github.event_name != 'workflow_dispatch'
