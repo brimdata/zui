@@ -55,7 +55,7 @@ export default class TestApp {
     );
     this.mainWin = await this.getWindowByTitle('Zui');
 
-    const debug = false;
+    const debug = true;
     if (debug) {
       this.mainWin.on('console', console.log);
       this.zui.process().stdout.on('data', (data) => {
