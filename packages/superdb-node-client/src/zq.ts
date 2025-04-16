@@ -18,8 +18,12 @@ type ZqArgs = {
 type Output = 'js' | 'zed' | 'zjson';
 
 export async function decodeZJSON(stream: Readable) {
+  console.log('DECODING ZJSON');
   const values = [];
-  for await (const value of ndjson.eachLine(stream)) values.push(value);
+  for await (const value of ndjson.eachLine(stream)) {
+    values.push(value);
+  }
+  console.log('DECODED ZJSON INTO', values);
   return values;
 }
 
@@ -119,8 +123,9 @@ export function createProcess(args: ZqArgs) {
   if (args.query) spawnargs.push('-c', args.query);
   if (args.file) spawnargs.push(...arrayWrap(args.file));
   else spawnargs.push('-');
-
+  console.log('SPAWN START', spawnargs);
   const zq = spawn(bin, spawnargs, { signal: args.signal }).on('error', (e) => {
+    console.log('SPAWN ERROR', e);
     // This error must be caught in order to not throw an exception in main process
     // Also, really make sure this process is killed. It wasn't with only the SIGTERM
     if (e?.name == 'AbortError') zq.kill('SIGKILL');
