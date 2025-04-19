@@ -39,7 +39,7 @@ found in the `zdeps` subdirectory as follows:
 | **Linux**     |                | `/opt/Zui/resources/app.asar.unpacked/zdeps`                                 |
 
 While these binaries are also available for download as standalone release
-packages for [Zed](https://github.com/brimdata/zed/releases) or [Brimcap](https://github.com/brimdata/brimcap/releases), if you're
+packages for [Zed](https://github.com/brimdata/zed-archive/releases) or [Brimcap](https://github.com/brimdata/brimcap/releases), if you're
 using CLI commands to interact with a pool in the Zed lake that runs behind
 Zui, you should typically use these bundled `zdeps` binaries since they've
 been tested with the same version of Zui and can be considered API-compatible
