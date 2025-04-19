@@ -1,5 +1,5 @@
 ## v1.18.0
-- Update Zed to [v1.18.0](https://github.com/brimdata/zed/releases/tag/v1.18.0)
+- Update Zed to [v1.18.0](https://github.com/brimdata/zed-archive/releases/tag/v1.18.0)
 - Update Brimcap to [v1.18.0](https://github.com/brimdata/brimcap/releases/tag/v1.18.0), which includes a new Zeek [v7.0.0-brim1](https://github.com/brimdata/build-zeek/releases/tag/v7.0.0-brim1)
 - Introduce the **Sessions** tab in the left panel to persist Query Session histories (#3132)
 - Update [time display](https://zui.brimdata.io/docs/features/Time-Display) functionality to support local time zones and [strftime directives](https://github.com/samsonjs/strftime?tab=readme-ov-file#supported-specifiers) (#3139)
@@ -8,8 +8,8 @@
 - Fix an issue where top-level primitive Zed values were incorrectly wrapped in records in the Table view (#3145, #3150)
 
 ## v1.17.0
-- Because Zui is dependent on the [Zed project](https://zed.brimdata.io/), GA Zui release major/minor version numbers are now synchronized to the corresponding [Zed release](https://github.com/brimdata/zed/releases)
-- Update Zed to [v1.17.0](https://github.com/brimdata/zed/releases/tag/v1.17.0)
+- Because Zui is dependent on the [Zed project](https://zed.brimdata.io/), GA Zui release major/minor version numbers are now synchronized to the corresponding [Zed release](https://github.com/brimdata/zed-archive/releases)
+- Update Zed to [v1.17.0](https://github.com/brimdata/super/commit/c81efd6a868a855ed6b7de983491b5f3a5832d19)
 - Update Brimcap to [v1.17.0](https://github.com/brimdata/brimcap/releases/tag/v1.17.0)
 - The Correlations view has been moved to its own tab in the right panel separate from the Detail view (#3123)
 - The Detail view (both when in the right panel and as a separate window) now uses a hierarchical display format similar to the main Inspector results view (#3127)
@@ -21,7 +21,7 @@
 - Fix an issue where no notification was shown if the **Packets** button was clicked and there was no app installed to open the pcap slice (e.g., Wireshark) (#3114)
 
 ## v1.8.0
-- Update Zed to [v1.16.0](https://github.com/brimdata/zed/releases/tag/v1.16.0)
+- Update Zed to [v1.16.0](https://github.com/brimdata/super/commit/eff539fbfcfd10f136038de1a52192819137b2c1)
 - Update Brimcap to [v1.8.0](https://github.com/brimdata/brimcap/releases/tag/v1.8.0), which includes a new Zeek [v6.2.0-brim2](https://github.com/brimdata/build-zeek/releases/tag/v6.2.0-brim2)
 - Zui macOS installers are now available for [Apple silicon](https://zui.brimdata.io/docs/Installation#macos-details) (ARM64) hardware (#3077, #3102)
 - A new Windows code signing certificate is now in use, which will likely result in a period of [Microsoft Defender SmartScreen warnings](https://zui.brimdata.io/docs/support/Troubleshooting#microsoft-defender-smartscreen-has-flagged-the-zui-installer-as-an-unrecognized-app) (#3050, #3055, #3057)
@@ -39,7 +39,7 @@
 - Fix an issue where Zed [union](https://zed.brimdata.io/docs/formats/zed#25-union) values were rendered blank in the **Detail** pane/window (#3103)
 
 ## v1.7.0
-- Update Zed to [v1.15.0](https://github.com/brimdata/zed/releases/tag/v1.15.0)
+- Update Zed to [v1.15.0](https://github.com/brimdata/super/commit/2a487ee2a63ed09700bb26f70f08324244227cc2)
 - Update Brimcap to [v1.7.0](https://github.com/brimdata/brimcap/releases/tag/v1.7.0), which includes a new Zeek [v6.2.0-brim1](https://github.com/brimdata/build-zeek/releases/tag/v6.2.0-brim1)
 - For Zeek `files` events, the `is_orig` value is now used to determine the `tx_host` and `rx_host` values in the Correlation view (#3004)
 - The Zed service launched by Zui now attempts to compact stored data every 5 minutes (#3006)
@@ -53,7 +53,7 @@
 - Fix an issue where hitting the Back button too many times could cause the lost of session history (#3041)
 
 ## v1.6.0
-- Update Zed to [v1.13.0](https://github.com/brimdata/zed/releases/tag/v1.13.0)
+- Update Zed to [v1.13.0](https://github.com/brimdata/super/commit/4eba82a1304f86997326279cfbeeb7449f415571)
 - Update Brimcap to [v1.6.0](https://github.com/brimdata/brimcap/releases/tag/v1.6.0), which includes a new Zeek [v6.0.3-brim1](https://github.com/brimdata/build-zeek/releases/tag/v6.0.3-brim1)
 - Update Electron dependency to 28.0.0 (#2934, #2953)
 - Enhance the [Zui Installation docs](https://zui.brimdata.io/docs/Installation) to describe the new feature to control when the app is [updated](https://zui.brimdata.io/docs/Installation#updates) to newer releases (#2950)
@@ -65,7 +65,7 @@
 - Fix an issue where very long pool names caused the **Load Data** and **Query Pool** buttons to disappear (#2993)
 
 ## v1.5.0
-- Update Zed to [v1.12.0](https://github.com/brimdata/zed/releases/tag/v1.12.0)
+- Update Zed to [v1.12.0](https://github.com/brimdata/super/commit/371645806d3c3712c25d0b6057468491f1387ca2)
 - Update Brimcap to [v1.5.5](https://github.com/brimdata/brimcap/releases/tag/v1.5.5)
 - A new option in **Settings** now determines if checks for available Zui updates are performed at startup (default), at startup & daily, or manually (#2866)
 - Add functionality to load data from the paste buffer (#2928)
@@ -74,10 +74,10 @@
 - Fix an issue where the cursor position could become inaccurate while typing in the editor (#2922)
 
 ## v1.4.1
-- Update Zed to [v1.11.1](https://github.com/brimdata/zed/releases/tag/v1.11.1)
+- Update Zed to [v1.11.1](https://github.com/brimdata/super/commit/e9be7a0b3d88c01b67ed2cebbea592396bcef882)
 
 ## v1.4.0
-- Update Zed to [v1.11.0](https://github.com/brimdata/zed/releases/tag/v1.11.0)
+- Update Zed to [v1.11.0](https://github.com/brimdata/super/commit/cd36eaab38d4c0c8a607ef4fa561b0b43f80b1dc)
 - Update Brimcap to [v1.5.3](https://github.com/brimdata/brimcap/releases/tag/v1.5.3)
 - Zui has a new [Preview & Load](https://zui.brimdata.io/docs/features/Preview-Load) workflow that allows for shaping data as it's loaded in to a Zed lake (#2834, #2864)
 - Fix an issue where editing the "month" portion of a time range pin caused a crash (#2854)
@@ -89,7 +89,7 @@
 - Due to malware false positives, Windows releases no longer include a full initial set of Suricata rules (as always, up-to-date rules will be downloaded on first Internet-connected launch of Zui) (#2858)
 
 ## v1.3.0
-- Update Zed to [v1.10.0](https://github.com/brimdata/zed/releases/tag/v1.10.0)
+- Update Zed to [v1.10.0](https://github.com/brimdata/super/commit/a5b76573a29b760cf9ceb1414d74e27ded0bf244)
 - Update Brimcap to [v1.5.2](https://github.com/brimdata/brimcap/releases/tag/v1.5.2)
 - The [Zui GitHub repo](https://github.com/brimdata/zui) is now structured as a monorepo (#2818)
 - Fix an issue where a `community_id` field was incorrectly being treated as a prerequisite to activating the **Packets** button (#2830)
@@ -98,7 +98,7 @@
 - Upgrade Electron dependency to 22.3.25 (#2848)
 
 ## v1.2.0
-- Update Zed to [v1.9.0](https://github.com/brimdata/zed/releases/tag/v1.9.0)
+- Update Zed to [v1.9.0](https://github.com/brimdata/super/commit/a4a2b64e3277f4fb6509722ade9b9639a8cd2a0f)
 - Update Brimcap to [v1.5.1](https://github.com/brimdata/brimcap/releases/tag/v1.5.1)
 - The stacked bar chart is now generalized for any time-based data (not just Zeek-like with `_path` & `ts` fields) (#2785, #2794, #2805)
 - The stacked bar chart is now resizable and can be toggled off/on (#2806, #2810)
@@ -109,7 +109,7 @@
 
 ## v1.1.0
 
-- Update Zed to [v1.8.0](https://github.com/brimdata/zed/releases/tag/v1.8.0)
+- Update Zed to [v1.8.0](https://github.com/brimdata/super/commit/c4f6d46454232ee9a4ca999758136d3f75c0ca0d)
 - Update Brimcap to [v1.5.0](https://github.com/brimdata/brimcap/releases/tag/v1.5.0)
 - Restore "alert" tiles for Suricata events (#2740)
 - Fix an issue where use of Chinese and other wide characters caused errors during data import (#2744)
@@ -119,7 +119,7 @@
 
 ## v1.0.1
 
-- Update Zed to [v1.7.0](https://github.com/brimdata/zed/releases/tag/v1.7.0)
+- Update Zed to [v1.7.0](https://github.com/brimdata/super/commit/e5ad1f9998f654496b3038bb9433ca154d01edbc)
 - Update Brimcap to [v1.4.1](https://github.com/brimdata/brimcap/releases/tag/v1.4.1), which fixes issue #2715 with per-machine installs on Windows
 
 ## v1.0.0
@@ -138,7 +138,7 @@ Zed lake storage format. See the
 ### Other Changes
 
 - Zui docs now are available at [zui.brimdata.io/docs](https://zui.brimdata.io/docs) rather than the wiki on GitHub (#2531, #2692)
-- Update Zed to [v1.6.0](https://github.com/brimdata/zed/releases/tag/v1.6.0)
+- Update Zed to [v1.6.0](https://github.com/brimdata/super/commit/6e15e99971b2c3f5ebb447457c18a7cad4ebe09a)
 - Update Brimcap to [v1.4.0](https://github.com/brimdata/brimcap/releases/tag/v1.4.0)
 - Introduce a multi-line editor (#2286)
 - Redesign query pins (#2334, #2530)
@@ -221,7 +221,7 @@ Brim now uses the excellent, open source [Recursive](https://www.recursive.desig
 
 ### Other Interesting Changes
 
-- Update Zed to [v1.0.0](https://github.com/brimdata/zed/releases/tag/v1.0.0)
+- Update Zed to [v1.0.0](https://github.com/brimdata/super/commit/2cc33836b61dc10d7a1988e3381b09e7b7c2e1ff)
 - Save the scroll position when switching between table and inspector (#2271)
 - Add a JSON export format (#2269)
 - Use Recursive Mono as our data font (#2259)
@@ -240,7 +240,7 @@ Brim now uses the excellent, open source [Recursive](https://www.recursive.desig
 
 ## v0.28.0
 
-- Update Zed to [v0.33.0](https://github.com/brimdata/zed/releases/tag/v0.33.0)
+- Update Zed to [v0.33.0](https://github.com/brimdata/super/commit/9aa2ba94496b7809c0a25e8bf55284aa65d98ca3)
 - Update Auth0 authentication (#1956)
 - Add Query Library folder export (#1958)
 - Rename "workspace" to "lake" (#1957)
@@ -250,7 +250,7 @@ Brim now uses the excellent, open source [Recursive](https://www.recursive.desig
 
 ## v0.27.0
 
-- Update Zed to [v0.32.0](https://github.com/brimdata/zed/releases/tag/v0.32.0)
+- Update Zed to [v0.32.0](https://github.com/brimdata/super/commit/0594b010324639a68a151a0aec432acd241b2aca)
 - Fix an issue where entering relative dates in the time range caused a crash (#1932)
 - Fix an issue where selecting a large pool made the app unresponsive (#1919)
 - Fix an issue where exporting data failed (#1909)
@@ -265,7 +265,7 @@ Brim now uses the excellent, open source [Recursive](https://www.recursive.desig
 
 ## v0.26.0
 
-- Update Zed to [v0.31.0](https://github.com/brimdata/zed/releases/tag/v0.31.0)
+- Update Zed to [v0.31.0](https://github.com/brimdata/super/commit/674691723c8d9ec171a4bb786f6aee098ed6d621)
 - Brim now uses the Zed API `/query` endpoint, which allows for full use of Zed lake language features (e.g., referencing branches and pools using `from`) (#1792, #1836)
 - Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting#my-antivirus-software-has-flagged-brim-as-potentially-malicious) regarding the false flagging of Brim as potentially malicious by some antivirus software (#1840)
 - The keyboard shortcut for "zoom in" (`Cmd+` on macOS, `Ctrl+` on Windows/Linux) no longer requires holding down the Shift key (#1842)
@@ -342,7 +342,7 @@ questions.
 
 ---
 
-- Update Zed to [v0.30.0](https://github.com/brimdata/zed/releases/tag/v0.30.0)
+- Update Zed to [v0.30.0](https://github.com/brimdata/super/commit/f5024835c57a412755c5332e5202de4bc5e4f215)
 - Make the toolbar "responsive" such that buttons hide when the window is made small (#1416, #1553)
 - Add a [Troubleshooting wiki entry](https://github.com/brimdata/brim/wiki/Troubleshooting#brim-shows-connection-error-the-service-at-localhost9867-could-not-be-reached) for the case when Brim shows "Connection Error: The service at localhost:9867 could not be reached" (#1448, #1491)
 - Fix an issue where the "Back" button in the **Log Detail** view was not returning to the previously-viewed record (#1447)
@@ -388,7 +388,7 @@ questions.
 
 ## v0.24.0
 
-- Update zq to [v0.29.0](https://github.com/brimdata/zed/releases/tag/v0.29.0)
+- Update zq to [v0.29.0](https://github.com/brimdata/super/commit/db76d01008af00888cee7cd69c4215138f0c0ef5)
 - Consolidate the colors used in Brim (#1405)
 - Fix an issue where the arrows in the sidebar were incorrectly pointed (#1414)
 - Add a wiki doc and script showing how to transfer contents of the Query Library (#1415)
@@ -431,7 +431,7 @@ We've become aware of an issue in Brim v0.22.0 where custom entries in the Query
 
 ---
 
-- Update zq to [v0.28.0](https://github.com/brimdata/zed/releases/tag/v0.28.0)
+- Update zq to [v0.28.0](https://github.com/brimdata/super/commit/10b0e2c0672413f0b788489809b19e762d1cb963)
 - Revise the [Troubleshooting doc](https://github.com/brimdata/brim/wiki/Troubleshooting) to describe the use of the **Window > Reset State** pull-down menu option (#1350)
 - Fix an issue where scrolling to the bottom of the main window did not bring up additional events (#1348)
 - Fix an issue with inconsistently-created pinned items in the **History** panel (#1349)
@@ -453,11 +453,11 @@ We've become aware of an issue in Brim v0.22.0 where custom entries in the Query
 - Re-style the Log Detail panel and window (#1310)
 - Ensure `_path` and `event_type` fields are always displayed directly to the right of the `ts` timestamp field (#1339)
 - Pull-down menu option **Window > Reset State** now clears app state after user confirmation (#1338)
-- Update zq to [v0.27.1](https://github.com/brimdata/zed/releases/tag/v0.27.1) (follow that link for details of additional changes that may affect Brim)
+- Update zq to [v0.27.1](https://github.com/brimdata/super/commit/e5a8cf5988956a2709fc9fc43569f55ec3eab74b) (follow that link for details of additional changes that may affect Brim)
 
 ## v0.21.1
 
-- Update zq to [v0.26.0](https://github.com/brimdata/zed/releases/tag/v0.26.0), which fixes an issue that was causing pcap import failures, and also delivers other enhancements
+- Update zq to [v0.26.0](https://github.com/brimdata/super/commit/fc90da422f847cff90c15cc3aa4763a183de4b38), which fixes an issue that was causing pcap import failures, and also delivers other enhancements
 
 ## v0.21.0
 
@@ -487,7 +487,7 @@ incidents of the issues described above.
 
 ---
 
-- Update zq to [v0.25.0](https://github.com/brimdata/zed/releases/tag/v0.25.0)
+- Update zq to [v0.25.0](https://github.com/brimdata/super/commit/05b6f80f9a4c36fabd1bf5ef29cee3bf903f1cc1)
 - Add Suricata support to generate alerts from imported pcaps (#1207)
 - Include Suricata alerts in the correlation visualization in the Log Detail view (#1262)
 - Update the [Supported Platforms](https://github.com/brimdata/brim/wiki/Supported-Platforms) article with detail from recent testing (#1267, #1273)
@@ -502,7 +502,7 @@ incidents of the issues described above.
 
 ## v0.20.0
 
-- Update zq to [v0.24.0](https://github.com/brimdata/zed/releases/tag/v0.24.0)
+- Update zq to [v0.24.0](https://github.com/brimdata/super/commit/a144052aeff2bd6a79146dba4756431fdfddc7bd)
 - Begin bundling the same Zeek artifact referenced in [zq's `package.json`](https://github.com/brimdata/zed/blob/main/package.json) (#1215)
 - Support log imports over the network, such as to a remote `zqd` (#1195, #1228)
 - Fix an issue where an excess "Space does not exist" message was shown when clicking Retry after a `zqd` restart (#1200)
@@ -515,7 +515,7 @@ incidents of the issues described above.
 ## v0.19.0
 
 - **NOTE** - Due to the ZNG storage format change described in the
-  [`zq` v0.23.0 release notes](https://github.com/brimdata/zed/releases/tag/v0.23.0),
+  [`zq` v0.23.0 release notes](https://github.com/brimdata/super/commit/78762bb069a1662eb4b2cf9a0c57740dfc2c59d4),
   when you first launch the new version of Brim, a one-time bulk background
   update of the stored data for all of your existing Spaces will automatically
   begin. If you click to access a Space while migration is in progress, an
@@ -526,7 +526,7 @@ incidents of the issues described above.
 
 ---
 
-- Update zq to [v0.23.0](https://github.com/brimdata/zed/releases/tag/v0.23.0)
+- Update zq to [v0.23.0](https://github.com/brimdata/super/commit/78762bb069a1662eb4b2cf9a0c57740dfc2c59d4)
 - Update Zeek to [v3.2.1-brim4](https://github.com/brimdata/zeek/releases/tag/v3.2.1-brim4) which provides [Community ID](https://github.com/corelight/community-id-spec) generation and the latest [geolocation](https://github.com/brimdata/brim/blob/v0.19.0/docs/Geolocation.md) data (#1202)
 - Binaries for `pcap`, `zapi`, and `zar` are now bundled with Brim (#1098)
 - Fix an issue where Brim presented a blank white screen when it failed to initialize (#1035)
@@ -549,7 +549,7 @@ incidents of the issues described above.
 
 ## v0.18.0
 
-- Update zq to [v0.22.0](https://github.com/brimdata/zed/releases/tag/v0.22.0)
+- Update zq to [v0.22.0](https://github.com/brimdata/super/commit/d73171bb7aeb00573c46d75f2b0819a05edfc674)
 - Update Zeek to [v3.2.0-dev-brim10](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim10) to take advantage of latest [geolocation](https://github.com/brimdata/brim/blob/v0.18.0/docs/Geolocation.md) data (#1096)
 - Move the code base from Flow to TypeScript (#1075)
 - Point to new Slack community URL https://www.brimsecurity.com/join-slack/ (#1089)
@@ -560,7 +560,7 @@ incidents of the issues described above.
 
 ## v0.17.0
 
-- Update zq to [v0.21.0](https://github.com/brimdata/zed/releases/tag/v0.21.0)
+- Update zq to [v0.21.0](https://github.com/brimdata/super/commit/f6ae6099c913e53d96b3667a4a2ea788d0850483)
 - Update Zeek to [v3.2.0-dev-brim9](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim9) to take advantage of latest [geolocation](https://github.com/brimdata/brim/blob/v0.17.0/docs/Geolocation.md) data (#1071)
 - Fix an issue where abruptly killing Brim on Linux or macOS would leave behind an orphaned `zqd` process (#1031)
 - Add an option for executing index searches on Archive Spaces (#1024)
@@ -569,7 +569,7 @@ incidents of the issues described above.
 
 ## v0.16.0
 
-- Update zq to [v0.20.0](https://github.com/brimdata/zed/releases/tag/v0.20.0)
+- Update zq to [v0.20.0](https://github.com/brimdata/super/commit/cae3cca70957b7d656bf6a28a1113cc1468af1d1)
 - Update Zeek to [v3.2.0-dev-brim8](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim8) to take advantage of latest [geolocation](https://github.com/brimdata/brim/blob/v0.16.0/docs/Geolocation.md) data (#1033)
 - Fix an issue where the Back button brought the user to the wrong place (#1011)
 - Fix an issue where opening/closing a Log Detail window during pcap import canceled the import (#1015)
@@ -582,12 +582,12 @@ incidents of the issues described above.
 
 ## v0.15.1
 
-- Update zq to [v0.19.1](https://github.com/brimdata/zed/releases/tag/v0.19.1) (fixes an issue with excess characters in Space names after upgrade)
+- Update zq to [v0.19.1](https://github.com/brimdata/super/commit/10f42e6703a91b0ca9587323ab28e3f5dbcc7282) (fixes an issue with excess characters in Space names after upgrade)
 - Fix an issue where opening Log Detail as the first action in a freshly-launched Brim threw an error (#1006)
 
 ## v0.15.0
 
-- Update zq to [v0.19.0](https://github.com/brimdata/zed/releases/tag/v0.19.0)
+- Update zq to [v0.19.0](https://github.com/brimdata/super/commit/6b23d638f1157210344c631e0b37d51d9d44be7f)
 - Update Zeek to [v3.2.0-dev-brim7](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim7) to take advantage of latest [geolocation](https://github.com/brimdata/brim/blob/v0.15.0/docs/Geolocation.md) data (#999)
 - Use blue background color for clicked rows in main event view (#971)
 - Fix an issue with brief white flashes during import auto-refresh (#972, #995)
@@ -602,7 +602,7 @@ incidents of the issues described above.
 
 ## v0.14.0
 
-- Update zq to [v0.18.0](https://github.com/brimdata/zed/releases/tag/v0.18.0)
+- Update zq to [v0.18.0](https://github.com/brimdata/super/commit/240df323b51d38a0a184331ee4be25673e281eef)
 - Add [geolocation](https://github.com/brimdata/brim/blob/v0.14.0/docs/Geolocation.md) data to Zeek `conn` logs generated from imported pcaps (#959, #957, #935)
 - Add developer documentation for [adding internal state migrations](https://github.com/brimdata/brim/wiki/Adding-Migrations) (#921)
 - Restore the scroll position when going back to prior search results (#929)
@@ -619,24 +619,24 @@ incidents of the issues described above.
 
 ## v0.13.0
 
-- Update zq to [v0.17.0](https://github.com/brimdata/zed/releases/tag/v0.17.0)
+- Update zq to [v0.17.0](https://github.com/brimdata/super/commit/4110704115a9e569e1492d28b579fa03e72e7b0c)
 - Add a "View in context" right-click option to zoom out to unfiltered data (#894)
 - Rework left panel to include Space selection (#903, #857, #909, #913)
 - "New version" notification on Linux now points to the Brim website download page (#914)
 
 ## v0.12.0
 
-- Update zq to [v0.16.0](https://github.com/brimdata/zed/releases/tag/v0.16.0)
+- Update zq to [v0.16.0](https://github.com/brimdata/super/commit/c67c46d4fc14516b4ae263442fc830f08317b4d6)
 
 ## v0.11.0
 
-- Update zq to [v0.15.0](https://github.com/brimdata/zed/releases/tag/v0.15.0), which fixes [an issue with ZNG export](https://github.com/brimdata/brim/issues/814#issuecomment-636130351)
+- Update zq to [v0.15.0](https://github.com/brimdata/super/commit/ea81bd973b8520c2fc44da742b64817ae8b387e1), which fixes [an issue with ZNG export](https://github.com/brimdata/brim/issues/814#issuecomment-636130351)
 - Update Zeek to [v3.2.0-dev-brim3](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim3), which adds [JA3](https://github.com/salesforce/ja3) and [HASSH](https://github.com/salesforce/hassh) support for pcaps imported into Brim (#861)
 - Provide notification on Linux when a new Brim version is available for download (#870)
 
 ## v0.10.0
 
-- Update zq to [v0.14.0](https://github.com/brimdata/zed/releases/tag/v0.14.0)
+- Update zq to [v0.14.0](https://github.com/brimdata/super/commit/b071817e97e51d2a250f4d86de2bc49460edf506)
 - Update Zeek to [v3.2.0-dev-brim2](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim2), with the following platform specific changes:
   - Windows: importing pcaps is much faster than previous releases
   - macOS: importing pcaps no longer works on macOS versions prior to 10.14. (#819)
@@ -655,12 +655,12 @@ incidents of the issues described above.
 ## v0.9.1
 
 - **NOTE**: Prior state such as Search History will be lost on upgrade to this version
-- Update zq to [v0.13.1](https://github.com/brimdata/zed/releases/tag/v0.13.1) (#756)
+- Update zq to [v0.13.1](https://github.com/brimdata/super/commit/647db0d727cfb26b2467538b67e44f109b2239a0) (#756)
 
 ## v0.9.0
 
 - **NOTE**: Prior state such as Search History will be lost on upgrade to this version
-- Update zq to [v0.13.0](https://github.com/brimdata/zed/releases/tag/v0.13.0) (#750)
+- Update zq to [v0.13.0](https://github.com/brimdata/super/commit/8d1ef0b6ab2532e954f6086b66516c6b8b6d9c7c) (#750)
 - Start the [Brim wiki](https://github.com/brimdata/brim/wiki) for documentation (#660)
 - Import of Zeek logs in TSV, JSON, and ZNG formats (see the [v0.24.0 docs](https://github.com/brimdata/brim/blob/v0.24.0/docs/Zeek-JSON-Import.md) for info on JSON). (#594, #720, #727, #625, #581, #643, #672, #716, #700, #717, #719, #735, #721, #729, #713)
 - Support for Brim on Linux: `.deb` (#631) and `.rpm` (#636) installer packages
@@ -678,7 +678,7 @@ incidents of the issues described above.
 
 ## v0.8.0
 
-- Update zq to [v0.11.1](https://github.com/brimdata/zed/releases/tag/v0.11.1) (fixes an issue that was causing the histogram to draw incorrectly) (#640)
+- Update zq to [v0.11.1](https://github.com/brimdata/super/commit/078497799f634db727954d28b8cc7e90ec31c15b) (fixes an issue that was causing the histogram to draw incorrectly) (#640)
 
 ## v0.7.0
 
