@@ -45,13 +45,16 @@ jobs:
       - uses: ./.github/actions/setup-app
       - name: Install dependencies (Linux)
         if: startsWith(matrix.os, 'ubuntu-')
-        run: sudo apt-get -y install whois
+        # Installing libsecret-1-dev was necessary to get e2e tests to run on ubuntu-24.04 Actions Runners
+        run: sudo apt-get -y install whois libsecret-1-dev
       - name: Install dependencies (Windows)
         if: startsWith(matrix.os, 'windows-')
         run: choco install -y --no-progress whois
       - run: yarn lint
       - run: yarn test
       - run: yarn build
+      # The following sysctl setting is to work around https://github.com/brimdata/zui/issues/3194
+      - run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       - name: End to end tests
         id: playwright
         run: |
