@@ -9,7 +9,7 @@ on:
         required: true
       platforms:
         description: OS platforms to test on (list of strings in JSON format)"
-        default: '["ubuntu-22.04"]'
+        default: '["ubuntu-24.04"]'
         required: true
       video:
         description: Whether to record videos of Playwright test runs
