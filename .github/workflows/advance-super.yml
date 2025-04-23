@@ -36,7 +36,6 @@ jobs:
           # We need a token with permission to push.
           token: ${{ secrets.PAT_TOKEN }}
       - uses: ./.github/actions/setup-app
-      - run: sudo apt-get -y install whois
       - run: yarn workspace superdb-desktop add super@brimdata/super#${{ env.super_ref }}
       - run: yarn workspace superdb-node-client add super@brimdata/super#${{ env.super_ref }}
       - run: yarn lint
@@ -45,8 +44,11 @@ jobs:
       - name: End to end tests
         id: playwright
         run: |
+          # Installing libsecret-1-0 was necessary to get e2e tests to run on ubuntu-24.04 Actions Runners (https://github.com/brimdata/zui/pull/3195)
+          sudo apt-get -y install whois libsecret-1-0
+          # The following sysctl setting is to work around https://github.com/brimdata/zui/issues/3194
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
           /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" yarn e2e:ci
-
       - run: git -c user.name='Brim Automation' -c user.email=automation@brimdata.io commit -a -m 'upgrade super to ${{ env.super_ref }}'
 
       # If this push fails because a PR was merged while this job was

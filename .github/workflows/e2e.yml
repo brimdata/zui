@@ -43,9 +43,6 @@ jobs:
         shell: sh
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-app
-      - name: Install dependencies (Linux)
-        if: startsWith(matrix.os, 'ubuntu-')
-        run: sudo apt-get -y install whois
       - name: Install dependencies (Windows)
         if: startsWith(matrix.os, 'windows-')
         run: choco install -y --no-progress whois
@@ -56,6 +53,10 @@ jobs:
         id: playwright
         run: |
           if [ "$RUNNER_OS" = "Linux" ]; then
+            # Installing libsecret-1-0 was necessary to get e2e tests to run on ubuntu-24.04 Actions Runners (https://github.com/brimdata/zui/pull/3195)
+            sudo apt-get -y install whois libsecret-1-0
+            # The following sysctl setting is to work around https://github.com/brimdata/zui/issues/3194
+            sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
             /usr/bin/xvfb-run --auto-servernum -s "-screen 0 1280x1024x24" ${{ inputs.run-target }}
           else
             ${{ inputs.run-target }}
