@@ -11909,10 +11909,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"super@brimdata/super#f6bf3902dc4e917a4b2100f8816a23662134a888":
+"super@brimdata/super#0e1507e68ea9cf7b51a40a82167677a76abf16bd":
   version: 0.0.1-dev
-  resolution: "super@https://github.com/brimdata/super.git#commit=f6bf3902dc4e917a4b2100f8816a23662134a888"
-  checksum: d3a664679d9a5e426bc8c02af1a3268d9c67f078546fa9a8fdfa61500f307263228487eaa9021beed143da8f326e4e79ea3489414af38243a033e6efb04663e8
+  resolution: "super@https://github.com/brimdata/super.git#commit=0e1507e68ea9cf7b51a40a82167677a76abf16bd"
+  checksum: a3fad8bdc33fad2a5ac243f8add3b5bad4219423dcc80f1f34942eab8ce86d785a32ed28ca5a84cafa5c7ee4ed09cad7e6cd0dd46ab502544b0a5aaf15ca756b
   languageName: node
   linkType: hard
 
@@ -12025,7 +12025,7 @@ __metadata:
     set-tz: ^0.2.0
     sprintf-js: ^1.1.2
     styled-components: ^5.3.5
-    super: "brimdata/super#f6bf3902dc4e917a4b2100f8816a23662134a888"
+    super: "brimdata/super#0e1507e68ea9cf7b51a40a82167677a76abf16bd"
     superdb-node-client: "workspace:*"
     superdb-types: "workspace:*"
     tmp: ^0.1.0
@@ -12050,7 +12050,7 @@ __metadata:
     jest: ^29.7.0
     node-fetch: ^2.6.1
     rimraf: ^6.0.1
-    super: "brimdata/super#f6bf3902dc4e917a4b2100f8816a23662134a888"
+    super: "brimdata/super#0e1507e68ea9cf7b51a40a82167677a76abf16bd"
     superdb-types: "workspace:*"
     typescript: 5.1.5
   languageName: unknown
