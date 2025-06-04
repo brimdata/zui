@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         # macos-13 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
-        os: [macos-13, macos-14, ubuntu-24.04, windows-2019]
+        os: [macos-13, macos-14, ubuntu-24.04, windows-2022]
     steps:
       - run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
