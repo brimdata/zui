@@ -552,7 +552,7 @@ incidents of the issues described above.
 - Update zq to [v0.22.0](https://github.com/brimdata/super/commit/d73171bb7aeb00573c46d75f2b0819a05edfc674)
 - Update Zeek to [v3.2.0-dev-brim10](https://github.com/brimdata/zeek/releases/tag/v3.2.0-dev-brim10) to take advantage of latest [geolocation](https://github.com/brimdata/zui/blob/v0.18.0/docs/Geolocation.md) data (#1096)
 - Move the code base from Flow to TypeScript (#1075)
-- Point to new Slack community URL https://www.brimsecurity.com/join-slack/ (#1089)
+- Point to new Slack community URL https://www.brimdata.io/join-slack/ (#1089)
 - Show a spinner if there's delays closing the "new connection" modal (#1084)
 - Add a right-click option to delete all Spaces (#1078)
 - Organize History entries by unique Space/Connection combination (#1078)
