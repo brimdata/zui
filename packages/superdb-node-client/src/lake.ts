@@ -52,7 +52,7 @@ export class Lake {
       'serve',
       '-l',
       `${this.addr}:${this.port}`,
-      '-lake',
+      '-db',
       this.root,
       '-manage=5m',
       '-log.level=info',
