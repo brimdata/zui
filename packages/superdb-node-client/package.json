@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "fs-extra": "^11.3.0",
-    "super": "brimdata/super#6b321d858b4d8767737ed6e6f9a11dc4770552fe",
+    "super": "brimdata/super#de942c97a055d40dc9bf6be6f19eced829e03229",
     "superdb-types": "workspace:*"
   },
   "devDependencies": {

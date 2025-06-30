@@ -70,7 +70,7 @@ test.describe('Export tests', () => {
   test('Export with error', async () => {
     const filePath = path.join(tempDir, `error.csv`);
     app.mockSaveDialog({ canceled: false, filePath });
-    await app.query('yield uid');
+    await app.query('values uid');
     await app.click('button', 'Export Results');
     await app.attached('dialog');
     await app.locate('radio', 'File').check();

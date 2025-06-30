@@ -48,8 +48,8 @@ const builtinOps = [
   "switch",
   "tail",
   "uniq",
+  "values",
   "where",
-  "yield",
 ]
 
 const builtinFuncs = [

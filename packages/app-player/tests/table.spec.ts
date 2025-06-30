@@ -17,7 +17,7 @@ test.describe('Table Testing', () => {
     const path = getPath('named-type.sup');
     await app.createPool([path]);
     await app.click('button', 'Query Pool');
-    await app.query('yield value.after'); // This is a named type
+    await app.query('values value.after'); // This is a named type
     const columnheader = app.results.getByRole('columnheader');
     await columnheader.first().waitFor();
     const texts = await columnheader.allInnerTexts();
