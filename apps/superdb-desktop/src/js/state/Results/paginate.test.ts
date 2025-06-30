@@ -8,6 +8,6 @@ test("works with a comment", () => {
   | { i: count(), v: this}
   | i > 0
   | head 10
-  | yield v`
+  | values v`
   )
 })
