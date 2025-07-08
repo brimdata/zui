@@ -9,7 +9,7 @@
         resp_p: 80 (port)
     } (=0),
     proto: "tcp" (=zenum),
-    service: null ((string, uint64)),
+    service: null (uint64|string),
     duration: 9.698493s (duration),
     orig_bytes: 0 (uint64),
     resp_bytes: 90453565 (uint64),
@@ -53,7 +53,7 @@
 {
     array: ["1", "2", "3"],
     set: |["a", "b", "c"]|,
-    union: "hi james" ((string, int64)),
+    union: "hi james" (int64|string),
     map: |{ "best": 1, "worst": 0 }|,
     null: null
 }

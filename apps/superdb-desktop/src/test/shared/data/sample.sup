@@ -53,7 +53,7 @@
 {
     array: ["1", "2", "3"],
     set: |["a", "b", "c"]|,
-    union: "hi james" ((string, int64)),
+    union: "hi james" (int64|string),
     map: |{ "best": 1, "worst": 0 }|,
     null: null
 }
