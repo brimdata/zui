@@ -12,7 +12,7 @@ export function parseContent(resp: IsoResponse) {
   const type = resp.headers.get('Content-Type');
   switch (type) {
     case 'application/json':
-    case 'application/x-zjson':
+    case 'application/x-jsup':
       try {
         return resp.json();
       } catch {
@@ -37,12 +37,12 @@ export function accept(format: ResponseFormat) {
     csup: 'application/x-csup',
     csv: 'text/csv',
     json: 'application/json',
+    jsup: 'application/x-jsup',
     ndjson: 'application/x-ndjson',
     parquet: 'application/x-parquet',
     sup: 'application/x-sup',
     tsv: 'text/tab-separated-values',
     zeek: 'application/x-zeek',
-    zjson: 'application/x-zjson',
   };
   const value = formats[format];
   if (!value) {
@@ -89,10 +89,10 @@ export function getLoadContentType(
   if (format === 'csup') return 'application/x-csup';
   if (format === 'csv') return 'text/csv';
   if (format === 'json') return 'application/json';
+  if (format === 'jsup') return 'application/x-jsup';
   if (format === 'line') return 'application/x-line';
   if (format === 'parquet') return 'application/x-parquet';
   if (format === 'sup') return 'application/x-sup';
   if (format === 'zeek') return 'application/x-zeek';
-  if (format === 'zjson') return 'application/x-zjson';
   throw new Error('Unknown load format: ' + format);
 }

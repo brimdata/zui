@@ -2,19 +2,19 @@ import { DefaultContext, ZedContext } from './context';
 import { DecodeStream } from './decode-stream';
 import { Field } from './values/field';
 import { Value } from './values/types';
-import * as zjson from './zjson';
+import * as jsup from './jsup';
 
 type DecodeOpts = {
   context?: ZedContext;
   stream?: DecodeStream;
 };
 
-export function decode(data: zjson.Obj[], opts: DecodeOpts): Value[];
-export function decode(data: zjson.Obj, opts?: DecodeOpts): Value;
-export function decode(data: zjson.Obj[], opts?: DecodeOpts): Value[];
-export function decode(data: zjson.EncodedField, opts?: DecodeOpts): Field;
+export function decode(data: jsup.Obj[], opts: DecodeOpts): Value[];
+export function decode(data: jsup.Obj, opts?: DecodeOpts): Value;
+export function decode(data: jsup.Obj[], opts?: DecodeOpts): Value[];
+export function decode(data: jsup.EncodedField, opts?: DecodeOpts): Field;
 export function decode(
-  data: zjson.Obj | zjson.Obj[] | zjson.EncodedField,
+  data: jsup.Obj | jsup.Obj[] | jsup.EncodedField,
   opts: DecodeOpts = {}
 ) {
   const defaults = { context: DefaultContext };
@@ -33,9 +33,9 @@ type EncodeOpts = {
   context?: ZedContext;
 };
 
-export function encode(data: Value, opts?: EncodeOpts): zjson.Obj;
-export function encode(data: Value[], opts?: EncodeOpts): zjson.Obj[];
-export function encode(data: Field, opts?: EncodeOpts): zjson.EncodedField;
+export function encode(data: Value, opts?: EncodeOpts): jsup.Obj;
+export function encode(data: Value[], opts?: EncodeOpts): jsup.Obj[];
+export function encode(data: Field, opts?: EncodeOpts): jsup.EncodedField;
 export function encode(data: Field | Value | Value[], opts: EncodeOpts = {}) {
   const defaults = { context: DefaultContext };
   const options = { ...defaults, ...opts };

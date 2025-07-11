@@ -4,7 +4,7 @@ import { DecodeStream } from '../decode-stream';
 import { CollectOpts, Collector, TypeDefs } from '../types';
 import { Type } from '../types/types';
 import { Value } from '../values/types';
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 export class Channel extends EventEmitter {
   rows: Value[] = [];
   shapesMap: TypeDefs = {};
@@ -32,7 +32,7 @@ export class Channel extends EventEmitter {
     this.emit('end');
   }
 
-  consume(json: zjson.Obj) {
+  consume(json: jsup.Obj) {
     const value = this.stream.decode(json);
     if ('id' in json.type && !this.hasShape(json.type.id)) {
       this.addShape(json.type.id, value.type);

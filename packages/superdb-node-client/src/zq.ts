@@ -2,7 +2,7 @@ import { ChildProcessWithoutNullStreams, spawn } from 'child_process';
 import { getZqPath } from './binpath';
 import { Readable, Stream, pipeline } from 'stream';
 import { pipeline as promisePipeline } from 'stream/promises';
-import { Value, decode, ndjson, zjson } from '../../superdb-types/dist';
+import { Value, decode, ndjson, jsup } from '../../superdb-types/dist';
 import { arrayWrap } from './util';
 
 type ZqArgs = {
@@ -15,16 +15,16 @@ type ZqArgs = {
   signal?: AbortSignal;
 };
 
-type Output = 'js' | 'zed' | 'zjson';
+type Output = 'js' | 'zed' | 'jsup';
 
-export async function decodeZJSON(stream: Readable) {
+export async function decodeJSUP(stream: Readable) {
   const values = [];
   for await (const value of ndjson.eachLine(stream)) values.push(value);
   return values;
 }
 
 export async function decodeZed(stream: Readable) {
-  return decode(await decodeZJSON(stream));
+  return decode(await decodeJSUP(stream));
 }
 
 export async function decodeJS(stream: Readable) {
@@ -36,8 +36,8 @@ export function decodeStream(as: Output) {
     switch (as) {
       case 'zed':
         return decodeZed(src as Readable);
-      case 'zjson':
-        return decodeZJSON(src as Readable);
+      case 'jsup':
+        return decodeJSUP(src as Readable);
       case 'js':
       default:
         return decodeJS(src as Readable);
@@ -151,11 +151,11 @@ export function createReadableStream(args: ZqArgs) {
 
 /**
  * Use this function to invoke the zq cli and receive an array of
- * results as either Zed objects, JS objects, or zjson objects.
+ * results as either Zed objects, JS objects, or JSUP objects.
  */
 export async function zq(
-  args: Omit<ZqArgs, 'f'> & { as: 'zjson' }
-): Promise<zjson.Obj[]>;
+  args: Omit<ZqArgs, 'f'> & { as: 'jsup' }
+): Promise<jsup.Obj[]>;
 export async function zq(
   args: Omit<ZqArgs, 'f'> & { as: 'js' }
 ): Promise<any[]>;
@@ -165,7 +165,7 @@ export async function zq(
 export async function zq(
   args: Omit<ZqArgs, 'f'> & { as: Output }
 ): Promise<object[]> {
-  const zq = createProcess({ ...args, f: 'zjson' });
+  const zq = createProcess({ ...args, f: 'jsup' });
 
   return await promisePipeline(
     readableStream(zq, args),

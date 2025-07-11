@@ -12,11 +12,11 @@ const formats = [
   { label: 'BSUP', expectedSize: 3745 },
   { label: 'CSV', expectedSize: 10897 },
   { label: 'JSON', expectedSize: 13659 },
+  { label: 'JSUP', expectedSize: 18007 },
   { label: 'NDJSON', expectedSize: 13657 },
   { label: 'SUP', expectedSize: 15183 },
   { label: 'TSV', expectedSize: 10843 },
   { label: 'Zeek', expectedSize: 10138 },
-  { label: 'ZJSON', expectedSize: 18007 },
 ];
 
 test.describe('Export tests', () => {

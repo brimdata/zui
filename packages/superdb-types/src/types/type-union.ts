@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
 import { Union } from '../values/union';
@@ -15,7 +15,7 @@ export class TypeUnion implements Type {
     return `(${types.map((t) => t.toString()).join(',')})`;
   }
 
-  create(value: zjson.UnionValue, stream: DecodeStream) {
+  create(value: jsup.UnionValue, stream: DecodeStream) {
     if (value === null) {
       return new Union(this, TypeNull, null, null);
     } else {
@@ -26,7 +26,7 @@ export class TypeUnion implements Type {
     }
   }
 
-  serialize(stream: EncodeStream): zjson.NoId<zjson.UnionType> {
+  serialize(stream: EncodeStream): jsup.NoId<jsup.UnionType> {
     return {
       kind: 'union',
       types: this.types.map((t) => stream.encodeType(t)),

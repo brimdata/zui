@@ -9,8 +9,8 @@ jest.setTimeout(60_000);
 test('super simple', async () => {
   const input = (await zq({
     input: '{hello: "world"}',
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
   for (let i = 0; i < input.length; ++i) {
@@ -19,10 +19,10 @@ test('super simple', async () => {
 });
 
 test('super simple 2 typedefs', async () => {
-  const input: zed.zjson.Obj[] = (await zq({
+  const input: zed.jsup.Obj[] = (await zq({
     input: '{hello: ["world"]}',
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
 
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
@@ -32,10 +32,10 @@ test('super simple 2 typedefs', async () => {
 });
 
 test('simply type value', async () => {
-  const input: zed.zjson.Obj[] = (await zq({
+  const input: zed.jsup.Obj[] = (await zq({
     input: '{hello: <string>}',
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
 
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
@@ -45,10 +45,10 @@ test('simply type value', async () => {
 });
 
 test('decode, then encode', async () => {
-  const input: zed.zjson.Obj[] = (await zq({
+  const input: zed.jsup.Obj[] = (await zq({
     file,
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
 
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
@@ -59,11 +59,11 @@ test('decode, then encode', async () => {
 });
 
 test('decode, then encode a fused input', async () => {
-  const input: zed.zjson.Obj[] = (await zq({
+  const input: zed.jsup.Obj[] = (await zq({
     query: 'fuse',
     file,
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
 
   const decoded = zed.decode(input);
   const encoded = zed.encode(decoded);
@@ -74,11 +74,11 @@ test('decode, then encode a fused input', async () => {
 });
 
 test('decode, encode with type values', async () => {
-  const input: zed.zjson.Obj[] = (await zq({
+  const input: zed.jsup.Obj[] = (await zq({
     query: 'count() by typeof(this) | sort count, typeof',
     file,
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
 
   expect(zed.encode(zed.decode(input))).toEqual(input);
 });
@@ -87,10 +87,10 @@ test('types from one search are the same', async () => {
   const groupBy = (await zq({
     query: 'count() by typeof(this) | sort count, typeof',
     file,
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
 
-  const list = (await zq({ file, as: 'zjson' })) as zed.zjson.Obj[];
+  const list = (await zq({ file, as: 'jsup' })) as zed.jsup.Obj[];
 
   const [row1] = zed.decode(groupBy) as zed.Record[];
   const accessType = row1.get<zed.TypeValue>('typeof').value;
@@ -104,11 +104,11 @@ test('types from one search are the same', async () => {
 });
 
 test('encode decode a field', async () => {
-  const input: zed.zjson.Obj[] = (await zq({
+  const input: zed.jsup.Obj[] = (await zq({
     query: '',
     file,
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
 
   const records = zed.decode(input) as zed.Record[];
   expect.assertions(250);
@@ -125,11 +125,11 @@ test('encode decode a field', async () => {
 });
 
 test('encode decode a typeof value', async () => {
-  const input: zed.zjson.Obj[] = (await zq({
+  const input: zed.jsup.Obj[] = (await zq({
     query: 'count() by typeof(this) | sort typeof',
     file,
-    as: 'zjson',
-  })) as zed.zjson.Obj[];
+    as: 'jsup',
+  })) as zed.jsup.Obj[];
 
   const records = zed.decode(input) as zed.Record[];
   expect.assertions(36);

@@ -1,5 +1,5 @@
 import { Record } from './values/record';
-import * as zjson from './zjson';
+import * as jsup from './jsup';
 import { DecodeStream } from './decode-stream';
 import { EncodeStream } from './encode-stream';
 import { TypeAlias } from './types/type-alias';
@@ -19,12 +19,12 @@ export type TypeDefs = { [key: string]: Type };
 export class ZedContext {
   private typeByShape: TypeDefs = {};
 
-  decode(objects: zjson.Obj[], stream = new DecodeStream(this)): Value[] {
+  decode(objects: jsup.Obj[], stream = new DecodeStream(this)): Value[] {
     return objects.map((o) => this.decodeOne(o, stream));
   }
 
   decodeOne(
-    object: zjson.Obj,
+    object: jsup.Obj,
     stream: DecodeStream = new DecodeStream(this)
   ): Value {
     return stream.decode(object);
@@ -38,17 +38,17 @@ export class ZedContext {
   encodeOne(
     value: Value,
     stream: EncodeStream = new EncodeStream()
-  ): zjson.Obj {
+  ): jsup.Obj {
     return stream.encode(value);
   }
 
-  decodeField(obj: zjson.EncodedField) {
+  decodeField(obj: jsup.EncodedField) {
     // Grab the first field and return it
     const transport = this.decodeOne(obj.record) as Record;
     return transport.getField(obj.path);
   }
 
-  encodeField(field: Field): zjson.EncodedField {
+  encodeField(field: Field): jsup.EncodedField {
     // Wrap a field in a record to encode
     const root = field.rootRecord;
     if (!root) throw new Error('Unable to encode field, no root record');

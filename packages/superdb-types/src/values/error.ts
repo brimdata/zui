@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { EncodeStream } from '../encode-stream';
 import { TypeError } from '../types/type-error';
 import { Value } from './types';
@@ -15,7 +15,7 @@ export class Error implements Value {
     return `Error(${this.value.toString()})`;
   }
 
-  serialize(stream: EncodeStream): zjson.Value {
+  serialize(stream: EncodeStream): jsup.Value {
     if (this.value === null) {
       return null;
     } else {

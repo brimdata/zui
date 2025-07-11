@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
 import { Field } from '../values/field';
@@ -15,10 +15,10 @@ export class TypeAlias implements Type {
     return name + '=(' + type.toString() + ')';
   }
 
-  create(value: zjson.Value, stream: DecodeStream, parent?: Field) {
+  create(value: jsup.Value, stream: DecodeStream, parent?: Field) {
     let v: Value;
     if (this.type instanceof TypeRecord || this.type instanceof TypeAlias) {
-      v = this.type.create(value as zjson.RecordValue, stream, parent);
+      v = this.type.create(value as jsup.RecordValue, stream, parent);
     } else {
       v = this.type.create(value, stream);
     }
@@ -26,7 +26,7 @@ export class TypeAlias implements Type {
     return v;
   }
 
-  serialize(stream: EncodeStream): zjson.NoId<zjson.NamedType> {
+  serialize(stream: EncodeStream): jsup.NoId<jsup.NamedType> {
     return {
       kind: 'named',
       name: this.name,

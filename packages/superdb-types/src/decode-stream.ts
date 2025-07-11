@@ -1,4 +1,4 @@
-import * as zjson from './zjson';
+import * as jsup from './jsup';
 import { TypeDefs, ZedContext } from './context';
 import { TypeField } from './types/type-field';
 import { PrimitiveName } from './types/type-primitives';
@@ -10,12 +10,12 @@ export class DecodeStream {
 
   constructor(private context: ZedContext) {}
 
-  decode(object: zjson.Obj) {
+  decode(object: jsup.Obj) {
     const type = this.decodeType(object.type);
     return type.create(object.value, this);
   }
 
-  decodeType(obj: zjson.Type): Type {
+  decodeType(obj: jsup.Type): Type {
     const type = this.buildType(obj);
     if ('id' in obj && obj.kind !== 'ref') {
       this.typedefs[obj.id] = type;
@@ -23,7 +23,7 @@ export class DecodeStream {
     return type;
   }
 
-  buildType(obj: zjson.Type) {
+  buildType(obj: jsup.Type) {
     switch (obj.kind) {
       case 'primitive':
         return getPrimitiveType(obj.name as PrimitiveName);

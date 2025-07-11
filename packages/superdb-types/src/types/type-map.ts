@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
 import { isNull } from '../utils/is-null';
@@ -14,7 +14,7 @@ export class TypeMap implements Type {
     return `|{` + keyType.toString() + ':' + valType.toString() + '}|';
   }
 
-  create(value: [zjson.Value, zjson.Value][] | null, stream: DecodeStream) {
+  create(value: [jsup.Value, jsup.Value][] | null, stream: DecodeStream) {
     return new ZedMap(
       this,
       isNull(value)
@@ -28,7 +28,7 @@ export class TypeMap implements Type {
     );
   }
 
-  serialize(stream: EncodeStream): zjson.NoId<zjson.MapType> {
+  serialize(stream: EncodeStream): jsup.NoId<jsup.MapType> {
     return {
       kind: 'map',
       key_type: stream.encodeType(this.keyType),

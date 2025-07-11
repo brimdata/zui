@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
 import { isNull } from '../utils/is-null';
@@ -18,7 +18,7 @@ export class TypeArray implements Type {
     return `[${type.toString()}]`;
   }
 
-  create(values: zjson.ArrayValue | null, stream: DecodeStream) {
+  create(values: jsup.ArrayValue | null, stream: DecodeStream) {
     return new Array(
       this,
       isNull(values)
@@ -27,7 +27,7 @@ export class TypeArray implements Type {
     );
   }
 
-  serialize(stream: EncodeStream): zjson.NoId<zjson.ArrayType> {
+  serialize(stream: EncodeStream): jsup.NoId<jsup.ArrayType> {
     return {
       kind: 'array',
       type: stream.encodeType(this.type),
