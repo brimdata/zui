@@ -84,7 +84,7 @@ export * from './utils/is-value';
 export * from './utils/typeunder';
 export type Any = Type | Value;
 export * from './encoder';
-export * as zjson from './zjson';
+export * as jsup from './jsup';
 export * as ndjson from './ndjson/index';
 export * from './decode-stream';
 export * from './encode-stream';

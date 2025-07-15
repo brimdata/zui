@@ -20,12 +20,12 @@ export type ResponseFormat =
   | 'csup'
   | 'csv'
   | 'json'
+  | 'jsup'
   | 'ndjson'
   | 'parquet'
   | 'sup'
   | 'tsv'
-  | 'zeek'
-  | 'zjson';
+  | 'zeek';
 
 export type QueryOpts = {
   format: ResponseFormat;
@@ -83,12 +83,12 @@ export type LoadFormat =
   | 'csup'
   | 'csv'
   | 'json'
+  | 'jsup'
   | 'line'
   | 'parquet'
   | 'tsv'
   | 'sup'
-  | 'zeek'
-  | 'zjson';
+  | 'zeek';
 
 export type LoadContentType =
   | '*/*'
@@ -97,10 +97,10 @@ export type LoadContentType =
   | 'application/x-bsup'
   | 'application/x-csup'
   | 'application/x-line'
+  | 'application/x-jsup'
   | 'application/x-parquet'
   | 'application/x-sup'
   | 'application/x-zeek'
-  | 'application/x-zjson'
   | 'text/csv'
   | 'text/tab-separated-values';
 

@@ -1,10 +1,10 @@
-import {zjson} from "../../../../../packages/superdb-types/dist"
+import {jsup} from "../../../../../packages/superdb-types/dist"
 import {createOperation} from "../../core/operations"
 import log from "electron-log"
 
 export const openDetailWindow = createOperation(
   "detailWindow.open",
-  async ({main}, opts: {value: zjson.Obj; url: string}) => {
+  async ({main}, opts: {value: jsup.Obj; url: string}) => {
     try {
       const win = await main.windows.create("detail")
       await win.whenInitialized()

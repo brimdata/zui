@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
 import { Error } from '../values/error';
@@ -12,7 +12,7 @@ export class TypeError implements Type {
     return `error<${type.toString()}>`;
   }
 
-  create(value: zjson.Value, stream: DecodeStream) {
+  create(value: jsup.Value, stream: DecodeStream) {
     if (value === null) {
       return new Error(this, null);
     } else {
@@ -20,7 +20,7 @@ export class TypeError implements Type {
     }
   }
 
-  serialize(stream: EncodeStream): zjson.NoId<zjson.ErrorType> {
+  serialize(stream: EncodeStream): jsup.NoId<jsup.ErrorType> {
     return {
       kind: 'error',
       type: stream.encodeType(this.type),

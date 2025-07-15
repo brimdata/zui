@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
 import { eachLine } from '../ndjson/lines';
 import { JSOptions } from '../values/types';
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { Channel } from './channel';
 import { Collector } from '../types';
 import { IsoResponse } from '../client/types';
@@ -115,7 +115,7 @@ export class ResultStream extends EventEmitter {
     return o.channel;
   }
 
-  private consumeLine(json: zjson.QueryObject) {
+  private consumeLine(json: jsup.QueryObject) {
     switch (json.type) {
       case 'QueryChannelSet':
         this.currentChannel = this.getChannel(json.value);
@@ -134,7 +134,7 @@ export class ResultStream extends EventEmitter {
           this.channel().consume(json);
           break;
         }
-        console.error('Unknown zjson object', json);
+        console.error('Unknown jsup object', json);
     }
   }
 }

@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { EncodeStream } from '../encode-stream';
 import { TypeUnion } from '../types/type-union';
 import { Type } from '../types/types';
@@ -23,7 +23,7 @@ export class Union implements Value {
     return [
       this.index.toString(),
       stream.encodeValue(this.value),
-    ] as zjson.UnionValue;
+    ] as jsup.UnionValue;
   }
 
   isUnset() {

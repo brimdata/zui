@@ -1,6 +1,6 @@
 import {createOperation} from "src/core/operations"
 import {zq} from "src/core/zq"
-import {LoadFormat, zjson} from "../../../../../../packages/superdb-types/dist"
+import {LoadFormat, jsup} from "../../../../../../packages/superdb-types/dist"
 
 export const preview = createOperation(
   "loads.preview",
@@ -19,14 +19,14 @@ export const preview = createOperation(
     try {
       const data = await zq({
         query: shaper,
-        as: "zjson",
+        as: "jsup",
         i: format,
         signal: ctl.signal,
         file: files,
       })
-      return {error: null, data: data as zjson.Obj[], id}
+      return {error: null, data: data as jsup.Obj[], id}
     } catch (e) {
-      return {error: e, data: [] as zjson.Obj[], id}
+      return {error: e, data: [] as jsup.Obj[], id}
     } finally {
       main.abortables.remove(id)
     }

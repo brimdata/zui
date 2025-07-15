@@ -35,7 +35,7 @@ export abstract class BaseClient {
 
   async query(query: string, opts: Partial<Types.QueryOpts> = {}) {
     const options = defaults<Types.QueryOpts>(opts, {
-      format: 'zjson',
+      format: 'jsup',
       controlMessages: true,
     });
     const abortCtl = wrapAbort(options.signal);
@@ -148,7 +148,7 @@ export abstract class BaseClient {
 
   curl(query: string, opts: Partial<Types.QueryOpts> = {}) {
     const options = defaults<Types.QueryOpts>(opts, {
-      format: 'zjson',
+      format: 'jsup',
       controlMessages: true,
     });
     return `curl -X POST -d '${JSON.stringify({ query })}' \\
@@ -163,7 +163,7 @@ export abstract class BaseClient {
       abortCtl.abort();
     }, opts.timeout);
     const headers = { ...opts.headers };
-    headers['Accept'] = accept(opts.format || 'zjson');
+    headers['Accept'] = accept(opts.format || 'jsup');
     if (opts.contentType !== undefined) {
       headers['Content-Type'] = opts.contentType;
     }

@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { EncodeStream } from '../encode-stream';
 import { Type } from '../types/types';
 import { Array } from './array';
@@ -72,7 +72,7 @@ export type JSOptions = {
 export interface Value {
   toJS(opts?: JSOptions): any;
   toString(): string;
-  serialize(stream: EncodeStream): zjson.Value;
+  serialize(stream: EncodeStream): jsup.Value;
   isUnset(): boolean;
   type: Type;
 }

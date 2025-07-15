@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
 import { Field } from '../index';
@@ -21,12 +21,12 @@ export type ZedType =
   | TypeAlias;
 
 export type SerializeTypeDefs = {
-  [key: string]: zjson.Type;
+  [key: string]: jsup.Type;
 };
 
 export interface Type {
   toString(): string;
-  serialize(stream: EncodeStream): zjson.NoId<zjson.Type> | zjson.PrimitiveType;
-  create(value: zjson.Value, stream: DecodeStream, parent?: Field): Value;
+  serialize(stream: EncodeStream): jsup.NoId<jsup.Type> | jsup.PrimitiveType;
+  create(value: jsup.Value, stream: DecodeStream, parent?: Field): Value;
   kind: string;
 }

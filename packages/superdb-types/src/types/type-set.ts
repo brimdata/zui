@@ -1,5 +1,5 @@
-import * as zjson from '../zjson';
-import { SetValue } from '../zjson';
+import * as jsup from '../jsup';
+import { SetValue } from '../jsup';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
 import { isNull } from '../utils/is-null';
@@ -22,7 +22,7 @@ export class TypeSet implements Type {
     );
   }
 
-  serialize(stream: EncodeStream): zjson.NoId<zjson.SetType> {
+  serialize(stream: EncodeStream): jsup.NoId<jsup.SetType> {
     return {
       kind: 'set',
       type: stream.encodeType(this.type),

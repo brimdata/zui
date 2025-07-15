@@ -9,12 +9,12 @@ export function DataFormatOptions() {
       <option value="csup">CSUP</option>
       <option value="csv">CSV</option>
       <option value="json">JSON</option>
+      <option value="jsup">JSUP</option>
       <option value="line">Line</option>
       <option value="parquet">Parquet</option>
       <option value="sup">SUP</option>
       <option value="tsv">TSV</option>
       <option value="zeek">Zeek</option>
-      <option value="zjson">ZJSON</option>
     </>
   )
 }

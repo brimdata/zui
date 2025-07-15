@@ -1,4 +1,4 @@
-import {zjson} from "../../../../../packages/superdb-types/dist"
+import {jsup} from "../../../../../packages/superdb-types/dist"
 import {MainObject} from "src/core/main/main-object"
 import {OpEventContext} from "src/js/state/Current/selectors"
 import {State} from "src/js/state/types"
@@ -26,7 +26,7 @@ export type LegacyOperations = {
   closeWindow: () => void
   deletePoolOp: (lakeId: string, poolId: string) => void
   derivePoolNameOp: (files: string[], existing: string[]) => string
-  emitRowDetailChangeOp: (event: OpEventContext, zjson: zjson.Obj) => void
+  emitRowDetailChangeOp: (event: OpEventContext, jsup: jsup.Obj) => void
   exportQueries: (groupId: string, filePath: string) => void
   exportResultsOp: (filePath: string, format: string) => void
   getAppMeta: () => MainObject["appMeta"]
@@ -45,7 +45,7 @@ export type LegacyOperations = {
   mainArgs: () => MainArgs
   moveToCurrentDisplay: () => void
   openAboutWindow: () => void
-  "detailWindow.open": (opts: {value: zjson.Obj; url: string}) => void
+  "detailWindow.open": (opts: {value: jsup.Obj; url: string}) => void
   openDirectory: () => OpenDialogReturnValue
   openLinkOp: (url: string) => void
   openSearchWindow: () => void

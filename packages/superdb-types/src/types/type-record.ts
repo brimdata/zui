@@ -1,4 +1,4 @@
-import * as zjson from '../zjson';
+import * as jsup from '../jsup';
 import { DecodeStream } from '../decode-stream';
 import { EncodeStream } from '../encode-stream';
 import { isNull } from '../utils/is-null';
@@ -44,7 +44,7 @@ export class TypeRecord implements Type {
   }
 
   create(
-    values: zjson.RecordValue | null,
+    values: jsup.RecordValue | null,
     stream: DecodeStream,
     parent?: Field
   ) {
@@ -69,7 +69,7 @@ export class TypeRecord implements Type {
     return record;
   }
 
-  serialize(stream: EncodeStream): zjson.NoId<zjson.RecordType> {
+  serialize(stream: EncodeStream): jsup.NoId<jsup.RecordType> {
     return {
       kind: 'record',
       fields: isNull(this.fields)
@@ -78,7 +78,7 @@ export class TypeRecord implements Type {
             return {
               name: f.name,
               type: stream.encodeType(f.type),
-            } as zjson.FieldType;
+            } as jsup.FieldType;
           }),
     };
   }

@@ -82,11 +82,11 @@ test('zq with file', async () => {
   `);
 });
 
-test('zq with zjson objects', async () => {
+test('zq with jsup objects', async () => {
   const path = getPath('prs.json');
   const input = createReadStream(path);
 
-  const data = await zq({ query: 'over this | head 10', as: 'zjson', input });
+  const data = await zq({ query: 'over this | head 10', as: 'jsup', input });
 
   expect(data).toHaveLength(10);
 });
@@ -96,7 +96,7 @@ test('zq with a file ', async () => {
 
   const data = await zq({
     query: 'over this | head 10',
-    as: 'zjson',
+    as: 'jsup',
     file: path,
   });
 
@@ -107,7 +107,7 @@ test('zq with a bad zed ', async () => {
   const path = getPath('prs.json');
   const promise = zq({
     query: 'over this | isNull(*) | head 10',
-    as: 'zjson',
+    as: 'jsup',
     input: createReadStream(path),
   });
 
@@ -120,7 +120,7 @@ test('head 100 on guns ', async () => {
   const path = getPath('background_checks.csv');
   const data = await zq({
     query: 'head 100',
-    as: 'zjson',
+    as: 'jsup',
     input: createReadStream(path),
   });
   expect(data).toHaveLength(100);
