@@ -19,13 +19,13 @@ export class QueryLoader implements Loader {
 
   private get loadQuery() {
     // This is the load op syntax
-    // load <pool>[@<branch>] [author <author>] [message <message>] [meta <meta>]
+    // load <pool>[@<branch>] ([author <author>] [message <message>] [meta <meta>])
     return [
       this.ctx.query,
       "| load",
       this.ctx.poolId + "@" + this.ctx.branch,
-      "author " + JSON.stringify(this.ctx.author),
-      "message " + JSON.stringify(this.ctx.body),
+      "(author " + JSON.stringify(this.ctx.author),
+      "message " + JSON.stringify(this.ctx.body) + ")",
     ].join(" ")
   }
 }
