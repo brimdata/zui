@@ -142,7 +142,7 @@
     "set-tz": "^0.2.0",
     "sprintf-js": "^1.1.2",
     "styled-components": "^5.3.5",
-    "super": "brimdata/super#886e33aacddb64f41fb322cb8d0f4beffce1ea87",
+    "super": "brimdata/super#687d6490f85dc45797dd056ee417203d0564e27f",
     "superdb-node-client": "workspace:*",
     "superdb-types": "workspace:*",
     "tmp": "^0.1.0",

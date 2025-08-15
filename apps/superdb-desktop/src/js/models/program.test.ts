@@ -82,11 +82,11 @@ describe("drill down", () => {
   test("when there is a grep with a star", async () => {
     const script = await run(
       result,
-      'grep(/(*|Elm)/) | Category=="Furnishings" | count() by proto'
+      'grep("(.*|Elm)", this) | Category=="Furnishings" | count() by proto'
     )
 
     expect(script).toBe(
-      'grep(/(*|Elm)/) | Category=="Furnishings" | proto=="udp"'
+      'grep("(.*|Elm)", this) | Category=="Furnishings" | proto=="udp"'
     )
   })
 
