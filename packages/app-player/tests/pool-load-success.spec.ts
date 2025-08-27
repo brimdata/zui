@@ -35,6 +35,8 @@ test.describe('Pool Loads (successes)', () => {
     await app.attached(/successfully loaded/i);
     await app.click('button', 'Query Pool');
     await app.query('count()');
+    await app.hidden(/successfully loaded/i);
+
     const results = await app.getInspectorResults();
     expect(results).toEqual(['2 ( uint64 )']);
   });
