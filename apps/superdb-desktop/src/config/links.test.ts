@@ -18,15 +18,21 @@ const fetchStatusCode = async (link: string): Promise<[string, number]> => {
   }
 }
 
+async function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 test("no broken links", async () => {
-  const statusCodes = await Promise.all<[string, number]>(
-    Object.values(links).map(fetchStatusCode)
-  )
-  statusCodes.forEach(([link, code]) => {
+  for (const [i, link] of Object.values(links).entries()) {
+    if (i > 0) {
+      // Sleep to avoid ECONNRESET from fetch.
+      await sleep(50)
+    }
+    const [, code] = await fetchStatusCode(link)
     try {
       expect(code).toBe(200)
     } catch {
       throw `Broken link => ${link}: ${code}`
     }
-  })
+  }
 })

@@ -27,12 +27,10 @@ jobs:
   release:
     name: Build
     needs: check_latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # macos-13 is is Intel-based (x64), macos-14 is Apple Silicon (arm64)
-        platform: [windows-2022, macos-13, macos-14, ubuntu-24.04]
-
-    runs-on: ${{ matrix.platform }}
+        os: [macos-15, macos-15-intel, ubuntu-24.04, windows-2022]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
