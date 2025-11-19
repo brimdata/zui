@@ -5,9 +5,7 @@ test("works with a comment", () => {
 
   expect(result).toEqual(
     `james // comment does not block suffix
-  | { i: count(), v: this}
-  | i > 0
-  | head 10
-  | values v`
+  | skip 0
+  | limit 10`
   )
 })
