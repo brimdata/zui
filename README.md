@@ -24,9 +24,9 @@ Refer to the [installation guide](https://zui.brimdata.io/docs/Installation) and
 
 ## Powered By SuperDB
 
-[SuperDB](https://superdb.org/docs) offers an innovative approach to working with data known as "[Super-Structured Data](https://www.brimdata.io/blog/super-structured-data/)".
+[SuperDB](https://superdb.org) offers an innovative approach to working with data known as "[Super-Structured Data](https://www.brimdata.io/blog/super-structured-data/)".
 
-Behind this app runs a local [server](https://superdb.org/docs/commands/super-db) instance where you can load your data into [pools](https://superdb.org/docs/commands/super-db/#data-pools) and use [SuperSQL](https://superdb.org/docs/language) to search, analyze, and transform it. Use it to:
+Behind this app runs a local [server](https://superdb.org/command/db-serve.html) instance where you can load your data into [pools](https://superdb.org/database/intro.html#data-pools-1) and use [SuperSQL](https://superdb.org/super-sql/intro.html) to search, analyze, and transform it. Use it to:
 
 - Explore deeply nested JSON objects
 - View Parquet and Arrow IPC stream files
@@ -35,7 +35,7 @@ Behind this app runs a local [server](https://superdb.org/docs/commands/super-db
 - Transform data from a legacy database's CDC logs
 - Investigate [Zeek](https://zeek.org/) security logs
 
-SuperDB provides a system to make working with data easier and more efficient. The [storage layer](https://superdb.org/docs/formats), [type system](https://superdb.org/docs/formats/data-model), [query language](https://superdb.org/docs/language/overview), and [cli tooling](https://superdb.org/docs/commands/super) are just a few of the tools SuperDB offers to the data community.
+SuperDB provides a system to make working with data easier and more efficient. The [storage layer](https://superdb.org/formats/intro.html), [type system](https://superdb.org/formats/model.html), [query language](https://superdb.org/super-sql/intro.html), and [CLI tooling](https://superdb.org/command/super.html) are just a few of the tools SuperDB offers to the data community.
 
 ## Related Packages
 
