@@ -66,45 +66,45 @@ describe("drill down", () => {
   }
 
   test("when there is no leading filter", async () => {
-    const script = await run(result, 'count() by this["i d"]["orig h"]')
-    expect(script).toBe('this["i d"]["orig h"]==192.168.0.54')
+    const script = await run(result, 'from test | count() by this["i d"]["orig h"]')
+    expect(script).toBe('from test | this["i d"]["orig h"]==192.168.0.54')
   })
 
   test("when there is a sort on there", async () => {
     const script = await run(
       result,
-      'name=="james" | count() by proto | sort -r count'
+      'from test | name=="james" | count() by proto | sort -r count'
     )
 
-    expect(script).toBe('name=="james" | proto=="udp"')
+    expect(script).toBe('from test | name=="james" | proto=="udp"')
   })
 
   test("when there is a grep with a star", async () => {
     const script = await run(
       result,
-      'grep("(.*|Elm)", this) | Category=="Furnishings" | count() by proto'
+      'from test | grep("(.*|Elm)", this) | Category=="Furnishings" | count() by proto'
     )
 
     expect(script).toBe(
-      'grep("(.*|Elm)", this) | Category=="Furnishings" | proto=="udp"'
+      'from test | grep("(.*|Elm)", this) | Category=="Furnishings" | proto=="udp"'
     )
   })
 
   test("combines keys in the group by proc", async () => {
     const script = await run(
       result,
-      '_path=="dns" | count() by id.orig_h, proto, query | sort -r'
+      'from test | _path=="dns" | count() by id.orig_h, proto, query | sort -r'
     )
 
     expect(script).toBe(
-      '_path=="dns" | id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
+      'from test | _path=="dns" | id.orig_h==192.168.0.54 proto=="udp" query=="WPAD"'
     )
   })
 
   test("easy peasy", async () => {
-    const script = await run(result, 'name=="james" | count() by proto')
+    const script = await run(result, 'from test | name=="james" | count() by proto')
 
-    expect(script).toBe('name=="james" | proto=="udp"')
+    expect(script).toBe('from test | name=="james" | proto=="udp"')
   })
 
   test("count by and filter the same", async () => {
@@ -112,10 +112,10 @@ describe("drill down", () => {
 
     const script = await run(
       result,
-      'md5=="123" | count() by md5 | sort -r | head 5'
+      'from test | md5=="123" | count() by md5 | sort -r | head 5'
     )
 
-    expect(script).toEqual('md5=="123"')
+    expect(script).toEqual('from test | md5=="123" | md5=="123"')
   })
 
   test("filter query", async () => {
@@ -126,11 +126,11 @@ describe("drill down", () => {
 
     const script = await run(
       result,
-      '_path=="files" | filename!="-" | count() by md5,filename | count() by md5 | sort -r | count > 1'
+      'from test | _path=="files" | filename!="-" | count() by md5,filename | count() by md5 | sort -r | count > 1'
     )
 
     expect(script).toEqual(
-      '_path=="files" | filename!="-" | md5=="9f51ef98c42df4430a978e4157c43dd5"'
+      'from test | _path=="files" | filename!="-" | md5=="9f51ef98c42df4430a978e4157c43dd5"'
     )
   })
 })
