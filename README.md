@@ -26,7 +26,7 @@ Refer to the [installation guide](https://zui.brimdata.io/docs/Installation) and
 
 [SuperDB](https://superdb.org) offers an innovative approach to working with data known as "[Super-Structured Data](https://www.brimdata.io/blog/super-structured-data/)".
 
-Behind this app runs a local [server](https://superdb.org/command/db-serve.html) instance where you can load your data into [pools](https://superdb.org/database/intro.html#data-pools-1) and use [SuperSQL](https://superdb.org/super-sql/intro.html) to search, analyze, and transform it. Use it to:
+Behind this app runs a local [server](https://superdb.org/command/db.html#super-db-serve) instance where you can load your data into [pools](https://superdb.org/command/db.html#storage-layer) and use [SuperSQL](https://superdb.org/super-sql/intro.html) to search, analyze, and transform it. Use it to:
 
 - Explore deeply nested JSON objects
 - View Parquet and Arrow IPC stream files
