@@ -401,7 +401,7 @@ questions.
 **NOTE** - Beginning with this release, a subset of the source code in the
 [github.com/brimdata/brim](https://github.com/brimdata/brim) GitHub repository is
 covered by a source-available style license, the
-[Polyform Perimeter License (PPL)](https://polyformproject.org/licenses/perimeter/1.0.0/).
+[Polyform Perimeter License (PPL)](https://polyformproject.org/licenses/perimeter/1.0.1).
 We've moved the PPL-covered code under a `ppl/` directory in the repository.
 The majority of our source code retains the existing BSD-3-Clause license.
 
